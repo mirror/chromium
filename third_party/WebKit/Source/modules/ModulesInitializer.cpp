@@ -7,6 +7,7 @@
 #include "bindings/modules/v8/ModuleBindingsInitializer.h"
 #include "core/EventTypeNames.h"
 #include "core/css/CSSPaintImageGenerator.h"
+#include "core/dom/ContextFeaturesClientImpl.h"
 #include "core/dom/Document.h"
 #include "core/exported/WebSharedWorkerImpl.h"
 #include "core/frame/LocalFrame.h"
@@ -34,6 +35,7 @@
 #include "modules/cachestorage/InspectorCacheStorageAgent.h"
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
 #include "modules/compositorworker/CompositorWorkerThread.h"
+#include "modules/credentialmanager/CredentialManagerClient.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
 #include "modules/device_orientation/DeviceMotionController.h"
 #include "modules/device_orientation/DeviceOrientationAbsoluteController.h"
@@ -41,6 +43,8 @@
 #include "modules/device_orientation/DeviceOrientationInspectorAgent.h"
 #include "modules/document_metadata/CopylessPasteServer.h"
 #include "modules/encryptedmedia/HTMLMediaElementEncryptedMedia.h"
+#include "modules/encryptedmedia/MediaKeysClient.h"
+#include "modules/encryptedmedia/MediaKeysController.h"
 #include "modules/exported/WebEmbeddedWorkerImpl.h"
 #include "modules/filesystem/DraggedIsolatedFileSystemImpl.h"
 #include "modules/filesystem/LocalFileSystemClient.h"
@@ -59,16 +63,21 @@
 #include "modules/presentation/PresentationController.h"
 #include "modules/presentation/PresentationReceiver.h"
 #include "modules/push_messaging/PushController.h"
+#include "modules/quota/StorageQuotaClient.h"
 #include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "modules/screen_orientation/ScreenOrientationControllerImpl.h"
 #include "modules/serviceworkers/NavigatorServiceWorker.h"
 #include "modules/serviceworkers/ServiceWorkerLinkResource.h"
+#include "modules/speech/SpeechRecognitionClientProxy.h"
 #include "modules/storage/DOMWindowStorageController.h"
 #include "modules/storage/InspectorDOMStorageAgent.h"
+#include "modules/storage/StorageClient.h"
+#include "modules/storage/StorageNamespaceController.h"
 #include "modules/time_zone_monitor/TimeZoneMonitorClient.h"
 #include "modules/vr/NavigatorVR.h"
 #include "modules/vr/VRController.h"
+#include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseManager.h"
 #include "modules/webdatabase/InspectorDatabaseAgent.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
@@ -77,6 +86,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebSecurityOrigin.h"
+#include "public/web/WebViewClient.h"
 
 namespace blink {
 
@@ -239,6 +249,46 @@ std::unique_ptr<WebMediaPlayer> ModulesInitializer::CreateWebMediaPlayer(
 WebRemotePlaybackClient* ModulesInitializer::CreateWebRemotePlaybackClient(
     HTMLMediaElement& html_media_element) {
   return HTMLMediaElementRemotePlayback::remote(html_media_element);
+}
+
+void ModulesInitializer::ProvideMediaKeysTo(Page& page) {
+  MediaKeysController::ProvideMediaKeysTo(page, new MediaKeysClient());
+}
+
+void ModulesInitializer::ProvideCredentialManagerClient(
+    Page& page,
+    WebCredentialManagerClient* web_credential_manager_client) {
+  ::blink::ProvideCredentialManagerClientTo(
+      page, new CredentialManagerClient(web_credential_manager_client));
+}
+
+void ModulesInitializer::ProvideSpeechRecognitionTo(Page& page,
+                                                    WebViewClient* client) {
+  ::blink::ProvideSpeechRecognitionTo(
+      page, SpeechRecognitionClientProxy::Create(
+                client ? client->SpeechRecognizer() : nullptr));
+}
+
+void ModulesInitializer::ProvideContextFeaturesTo(Page& page) {
+  ::blink::ProvideContextFeaturesTo(page, ContextFeaturesClientImpl::Create());
+}
+
+void ModulesInitializer::ProvideDatabaseClientTo(Page& page) {
+  ::blink::ProvideDatabaseClientTo(page, new DatabaseClient);
+}
+
+void ModulesInitializer::ProvideStorageQuotaClientTo(Page& page) {
+  ::blink::ProvideStorageQuotaClientTo(page, StorageQuotaClient::Create());
+}
+
+void ModulesInitializer::ProvideStorageNamespaceTo(Page& page,
+                                                   WebViewBase& web_view) {
+  StorageNamespaceController::ProvideStorageNamespaceTo(
+      page, new StorageClient(&web_view));
+}
+
+void ModulesInitializer::ForceNextWebGLContextCreationToFail() {
+  WebGLRenderingContext::ForceNextWebGLContextCreationToFail();
 }
 
 }  // namespace blink

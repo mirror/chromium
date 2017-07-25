@@ -36,6 +36,16 @@ class MODULES_EXPORT ModulesInitializer : public CoreInitializer {
       WebMediaPlayerClient*) override;
   WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
       HTMLMediaElement&) override;
+
+  void ProvideCredentialManagerClient(Page&,
+                                      WebCredentialManagerClient*) override;
+  void ProvideMediaKeysTo(Page&) override;
+  void ProvideSpeechRecognitionTo(Page&, WebViewClient*) override;
+  void ProvideContextFeaturesTo(Page&) override;
+  void ProvideDatabaseClientTo(Page&) override;
+  void ProvideStorageQuotaClientTo(Page&) override;
+  void ProvideStorageNamespaceTo(Page&, WebViewBase&) override;
+  void ForceNextWebGLContextCreationToFail() override;
 };
 
 }  // namespace blink

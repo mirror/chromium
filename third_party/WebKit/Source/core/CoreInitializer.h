@@ -48,11 +48,14 @@ class MediaControls;
 class Page;
 class Settings;
 class ShadowRoot;
+class WebCredentialManagerClient;
 class WebFrameClient;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
 class WebMediaPlayerSource;
 class WebRemotePlaybackClient;
+class WebViewBase;
+class WebViewClient;
 class WorkerClients;
 
 class CORE_EXPORT CoreInitializer {
@@ -103,6 +106,17 @@ class CORE_EXPORT CoreInitializer {
 
   virtual WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
       HTMLMediaElement&) = 0;
+
+  virtual void ProvideCredentialManagerClient(Page&,
+                                              WebCredentialManagerClient*) = 0;
+
+  virtual void ProvideMediaKeysTo(Page&) = 0;
+  virtual void ProvideSpeechRecognitionTo(Page&, WebViewClient*) = 0;
+  virtual void ProvideContextFeaturesTo(Page&) = 0;
+  virtual void ProvideDatabaseClientTo(Page&) = 0;
+  virtual void ProvideStorageQuotaClientTo(Page&) = 0;
+  virtual void ProvideStorageNamespaceTo(Page&, WebViewBase&) = 0;
+  virtual void ForceNextWebGLContextCreationToFail() = 0;
 
  protected:
   // CoreInitializer is only instantiated by subclass ModulesInitializer.

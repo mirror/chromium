@@ -14,8 +14,6 @@ class ExecutionContext;
 class WebEncryptedMediaClient;
 
 class MODULES_EXPORT MediaKeysClient {
-  DISALLOW_NEW();
-
  public:
   MediaKeysClient();
   ~MediaKeysClient() {}

@@ -7,6 +7,7 @@
 
 #include "core/page/Page.h"
 #include "modules/ModulesExport.h"
+#include "modules/encryptedmedia/MediaKeysClient.h"
 
 namespace blink {
 
@@ -15,7 +16,7 @@ class MediaKeysClient;
 class WebEncryptedMediaClient;
 
 class MODULES_EXPORT MediaKeysController final
-    : public GarbageCollected<MediaKeysController>,
+    : public GarbageCollectedFinalized<MediaKeysController>,
       public Supplement<Page> {
   USING_GARBAGE_COLLECTED_MIXIN(MediaKeysController);
 
@@ -34,10 +35,10 @@ class MODULES_EXPORT MediaKeysController final
   explicit MediaKeysController(MediaKeysClient*);
   static const char* SupplementName();
 
-  // Raw reference to the client implementation, which is currently owned
-  // by the WebView. Its lifetime extends past any m_client accesses.
-  // It is not on the Oilpan heap.
-  MediaKeysClient* client_;
+  // MediaKeysClient is owned by the controller. It contains a pointer to the
+  // WebViewBase which will always outlive the page that controls the
+  // lifetime of the MediaKeysController.
+  std::unique_ptr<MediaKeysClient> client_;
 };
 
 }  // namespace blink
