@@ -19,6 +19,8 @@ source_set("payments") {
     "payment_request_cache.mm",
     "payment_request_util.h",
     "payment_request_util.mm",
+    "payment_response_helper.h",
+    "payment_response_helper.mm",
   ]
   deps = [
     "//base",
@@ -45,6 +47,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "payment_request_unittest.mm",
+    "payment_response_helper_unittest.mm",
   ]
   deps = [
     ":payments",
@@ -56,6 +59,8 @@ source_set("unit_tests") {
     "//components/payments/core",
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state:test_support",
+    "//ios/chrome/browser/web:test_support",
+    "//ios/testing:ocmock_support",
     "//ios/web",
     "//ios/web/public/test/fakes",
     "//testing/gmock",
@@ -78,6 +83,7 @@ source_set("test_support") {
     "//components/autofill/core/browser",
     "//components/autofill/core/browser:test_support",
     "//components/payments/core",
+    "//components/payments/core:test_support",
     "//components/prefs",
     "//ios/web",
   ]
