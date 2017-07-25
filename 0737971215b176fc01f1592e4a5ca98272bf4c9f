@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78a1ec60_443f6878",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-25T19:31:53Z",
+      "side": 1,
+      "message": "Why not use WebappInfo#id() accessor?",
+      "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5176072_3550b6c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-25T19:31:53Z",
+      "side": 1,
+      "message": "We don\u0027t need to use WebappActivity#retrieveWebappInfoFromCache() here because we reverted the change to WebappDelegateFactory.java",
+      "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5529630_e65d37ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-25T19:31:53Z",
+      "side": 1,
+      "message": "Nit: You can use webappInfo.id() here as the key",
+      "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
