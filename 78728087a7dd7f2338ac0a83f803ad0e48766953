@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0abad8c_cbb331e6",
+        "filename": "build/package_mac_xcode.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-25T00:36:44Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "1024a27d_e9abdc82",
+      "revId": "78728087a7dd7f2338ac0a83f803ad0e48766953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3e7c5f7_b349d798",
         "filename": "build/package_mac_xcode.sh",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T12:21:33Z",
       "side": 1,
       "message": "can this just iterate all pkg files in this ${PKG_PATH}?",
+      "revId": "78728087a7dd7f2338ac0a83f803ad0e48766953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4343bb25_b5dd82c4",
+        "filename": "build/package_mac_xcode.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-07-25T00:36:44Z",
+      "side": 1,
+      "message": "Yep, done.",
+      "parentUuid": "f3e7c5f7_b349d798",
       "revId": "78728087a7dd7f2338ac0a83f803ad0e48766953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
