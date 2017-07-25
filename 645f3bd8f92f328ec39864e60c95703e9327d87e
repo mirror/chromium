@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3063f6bd_b449f41c",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-25T08:16:33Z",
+      "side": 1,
+      "message": "Thanks, updated.",
+      "parentUuid": "44c8ee0c_c2b70520",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6394d57f_a6e9b863",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60f40ea_0885bcde",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-25T08:16:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6394d57f_a6e9b863",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "014854a1_7bcc3b26",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-25T08:16:33Z",
+      "side": 1,
+      "message": "Oops... thanks. Updated.\nI think so because it uses the same task runner with fetch API.",
+      "parentUuid": "0a3222f6_ca34b063",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141c42e0_2c74ae69",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62176df_23249e72",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-25T08:16:33Z",
+      "side": 1,
+      "message": "Yes it is! Removed.",
+      "parentUuid": "141c42e0_2c74ae69",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
