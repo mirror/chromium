@@ -396,11 +396,11 @@ bool LinuxSandbox::LimitAddressSpace(const std::string& process_type) {
   // See crbug.com/169327 for a discussion.
   // On the GPU process, irrespective of V8, we can exhaust a 4GB address space
   // under normal usage, see crbug.com/271119
-  // For now, increase limit to 16GB for renderer and worker and gpu processes
+  // For now, increase limit to 32GB for renderer and worker and gpu processes
   // to accomodate.
   if (process_type == switches::kRendererProcess ||
       process_type == switches::kGpuProcess) {
-    address_space_limit = 1L << 34;
+    address_space_limit = 1L << 35;
   }
 #endif  // defined(__LP64__)
 
