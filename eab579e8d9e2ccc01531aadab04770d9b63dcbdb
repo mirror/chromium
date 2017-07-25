@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc5d877_421fedf4",
+        "filename": "cc/trees/layer_tree_host_unittest_scroll.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-25T04:17:31Z",
+      "side": 1,
+      "message": "May be these assertions could also go in CommitCompleteOnThread above? That function runs after UpdateDrawProperties so it should have updated the state on the TranformTree if it was marked dirty.",
+      "range": {
+        "startLine": 1044,
+        "startChar": 7,
+        "endLine": 1044,
+        "endChar": 40
+      },
+      "revId": "eab579e8d9e2ccc01531aadab04770d9b63dcbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ca9e72_f70ef33b",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-25T04:17:31Z",
+      "side": 1,
+      "message": "I think PushFromMainThread itself should return based on whether the current value on the pending tree changed after pushing this update. That would keep it consistent with PushPendingToActive, which is already doing this (it checks the base and delta values).\n\nThere are only 2 call-sites that use the return value and each of them wants to know if the current value on the pending tree changed. For the page scale, we are doing a Delta() check in addition to the current check (https://cs.chromium.org/chromium/src/cc/trees/layer_tree_impl.cc?sq\u003dpackage:chromium\u0026l\u003d777), which I suspect is to work around the same issue your change had. But I think that creates cases where we unnecessarily assume a scale change. For instance, if the main thread simply reflects back the delta sent, Delta() would not be identity, but the pending tree value would be the same as the main thread value.",
+      "range": {
+        "startLine": 1442,
+        "startChar": 37,
+        "endLine": 1442,
+        "endChar": 55
+      },
+      "revId": "eab579e8d9e2ccc01531aadab04770d9b63dcbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
