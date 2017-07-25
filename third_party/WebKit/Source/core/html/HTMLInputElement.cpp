@@ -1885,7 +1885,7 @@ bool HTMLInputElement::SupportsAutofocus() const {
   return input_type_->IsInteractiveContent();
 }
 
-PassRefPtr<ComputedStyle> HTMLInputElement::CustomStyleForLayoutObject() {
+RefPtr<ComputedStyle> HTMLInputElement::CustomStyleForLayoutObject() {
   return input_type_view_->CustomStyleForLayoutObject(
       OriginalStyleForLayoutObject());
 }
