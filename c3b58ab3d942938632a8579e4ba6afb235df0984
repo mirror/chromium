@@ -22,6 +22,30 @@
       "revId": "c3b58ab3d942938632a8579e4ba6afb235df0984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c116ccdc_05f16c98",
+        "filename": "chrome/utility/media_router/dial_device_description_parser_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-25T23:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e72d83b_e132c7b6",
+      "range": {
+        "startLine": 36,
+        "startChar": 78,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "c3b58ab3d942938632a8579e4ba6afb235df0984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
