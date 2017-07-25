@@ -324,6 +324,24 @@
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d511353_78ca3be3",
+        "filename": "chromeos/dbus/services/org.chromium.DisplayService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-25T18:04:29Z",
+      "side": 1,
+      "message": "Nope: \"Error org.freedesktop.DBus.Error.AccessDenied: Rejected send message\"\n\nI\u0027ll keep looking.",
+      "parentUuid": "94110e61_cdafb29b",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
