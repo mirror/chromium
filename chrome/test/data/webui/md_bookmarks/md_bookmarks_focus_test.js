@@ -44,20 +44,22 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
     }
 
     setup(function() {
+      var nodes = testTree(
+          createFolder(
+              '1',
+              [
+                createFolder(
+                    '2',
+                    [
+                      createFolder('3', []),
+                      createFolder('4', []),
+                    ]),
+                createItem('5'),
+              ]),
+          createFolder('7', []));
       store = new bookmarks.TestStore({
-        nodes: testTree(
-            createFolder(
-                '1',
-                [
-                  createFolder(
-                      '2',
-                      [
-                        createFolder('3', []),
-                        createFolder('4', []),
-                      ]),
-                  createItem('5'),
-                ]),
-            createFolder('7', [])),
+        nodes: nodes,
+        folderOpenState: getAllFoldersOpenState(nodes),
         selectedFolder: '1',
       });
       store.setReducersEnabled(true);
@@ -81,7 +83,7 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
             getFolderNode(newFocus).root.activeElement);
       }
 
-      store.data.closedFolders = new Set('2');
+      store.data.folderOpenState = new Map([['2', false]]);
       store.notifyObservers();
 
       // The selected folder is focus enabled on attach.
@@ -135,7 +137,7 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
     });
 
     test('keyboard left/right', function() {
-      store.data.closedFolders = new Set('2');
+      store.data.folderOpenState = new Map([['2', false]]);
       store.notifyObservers();
 
       // Give keyboard focus to the first item.
@@ -210,17 +212,17 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
     }
 
     setup(function() {
+      var nodes = testTree(createFolder('1', [
+        createItem('2'),
+        createItem('3'),
+        createItem('4'),
+        createItem('5'),
+        createItem('6'),
+        createFolder('7', []),
+      ]));
       store = new bookmarks.TestStore({
-        nodes: testTree(createFolder(
-            '1',
-            [
-              createItem('2'),
-              createItem('3'),
-              createItem('4'),
-              createItem('5'),
-              createItem('6'),
-              createFolder('7', []),
-            ])),
+        nodes: nodes,
+        folderOpenState: getAllFoldersOpenState(nodes),
         selectedFolder: '1',
       });
       store.setReducersEnabled(true);
@@ -372,7 +374,8 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
     test('keyboard commands are passed to command manager', function() {
       chrome.bookmarkManagerPrivate.removeTrees = function() {}
 
-      store.data.selection.items = new Set(['2', '3']);
+                                                  store.data.selection.items =
+          new Set(['2', '3']);
       store.notifyObservers();
 
       var focusedItem = items[4];
@@ -416,17 +419,17 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
     }
 
     setup(function() {
+      var nodes = testTree(createFolder('1', [
+        createItem('2'),
+        createItem('3'),
+        createItem('4'),
+        createItem('5'),
+        createItem('6'),
+        createFolder('7', []),
+      ]));
       store = new bookmarks.TestStore({
-        nodes: testTree(createFolder(
-            '1',
-            [
-              createItem('2'),
-              createItem('3'),
-              createItem('4'),
-              createItem('5'),
-              createItem('6'),
-              createFolder('7', []),
-            ])),
+        nodes: nodes,
+        folderOpenState: getAllFoldersOpenState(nodes),
         selectedFolder: '1',
       });
       store.setReducersEnabled(true);
@@ -479,14 +482,17 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
       var editDialog = commandManager.$.editDialog.get();
       editDialog.showEditDialog(store.data.nodes['2']);
 
-      return waitForClose(dropdown).then(() => {
-        editDialog.onCancelButtonTap_();
-        assertNotEquals(focusedItem, dialogFocusManager.getFocusedElement_());
+      return waitForClose(dropdown)
+          .then(() => {
+            editDialog.onCancelButtonTap_();
+            assertNotEquals(
+                focusedItem, dialogFocusManager.getFocusedElement_());
 
-        return waitForClose(editDialog);
-      }).then(() => {
-        assertEquals(focusedItem, dialogFocusManager.getFocusedElement_());
-      });
+            return waitForClose(editDialog);
+          })
+          .then(() => {
+            assertEquals(focusedItem, dialogFocusManager.getFocusedElement_());
+          });
     });
 
     test('restores focus after multiple shows of same dialog', function() {
@@ -503,16 +509,18 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
       focusedItem.focus();
       commandManager.openCommandMenuAtPosition(0, 0);
 
-      return waitForClose(dropdown).then(() => {
-        assertTrue(dropdown.open);
-        dropdown.close();
-        assertNotEquals(
-            focusedItem, dialogFocusManager.getFocusedElement_());
+      return waitForClose(dropdown)
+          .then(() => {
+            assertTrue(dropdown.open);
+            dropdown.close();
+            assertNotEquals(
+                focusedItem, dialogFocusManager.getFocusedElement_());
 
-        return waitForClose(dropdown);
-      }).then(() => {
-        assertEquals(focusedItem, dialogFocusManager.getFocusedElement_());
-      });
+            return waitForClose(dropdown);
+          })
+          .then(() => {
+            assertEquals(focusedItem, dialogFocusManager.getFocusedElement_());
+          });
     });
   });
 
