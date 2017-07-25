@@ -21,6 +21,8 @@
 #include "base/sys_info.h"
 #include "base/task_scheduler/switches.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
+#include "components/feature_engagement_tracker/public/feature_constants.h"
+#include "components/feature_engagement_tracker/public/feature_list.h"
 #include "components/flags_ui/feature_entry.h"
 #include "components/flags_ui/feature_entry_macros.h"
 #include "components/flags_ui/flags_storage.h"
@@ -64,7 +66,7 @@ const FeatureEntry::Choice kMarkHttpAsChoices[] = {
      security_state::switches::kMarkHttpAs,
      security_state::switches::kMarkHttpAsDangerous}};
 
-// To add a new entry, add to the end of kFeatureEntries. There are two
+// To add a new entry, add to the end of kFeatureEntries. There are three
 // distinct types of entries:
 // . SINGLE_VALUE: entry is either on or off. Use the SINGLE_VALUE_TYPE
 //   macro for this type supplying the command line to the macro.
@@ -72,6 +74,12 @@ const FeatureEntry::Choice kMarkHttpAsChoices[] = {
 //   deactivated state for this lab (i.e. no command line option).  To specify
 //   this type of entry use the macro MULTI_VALUE_TYPE supplying it the
 //   array of choices.
+// . FEATURE_WITH_PARAM_VALUES: a list of choices associated with a
+//   base::Feature instance. Choices corresponding to the default state, a
+//   universally enabled state, and a universally disabled state are
+//   automatically included. To specify this type of entry use the macro
+//   FEATURE_WITH_PARAMS_VALUE_TYPE supplying it the array of choices.
+//
 // See the documentation of FeatureEntry for details on the fields.
 //
 // When adding a new choice, add it to the end of the list.
@@ -97,8 +105,13 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"ios-captive-portal", flag_descriptions::kIosCaptivePortalName,
      flag_descriptions::kIosCaptivePortalDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(captive_portal::kIosCaptivePortal)},
-
-};
+    {"in-product-help-demo-mode-choice",
+     flag_descriptions::kInProductHelpDemoModeName,
+     flag_descriptions::kInProductHelpDemoModeDescription, flags_ui::kOsIos,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(
+         feature_engagement_tracker::kIPHDemoMode,
+         feature_engagement_tracker::kIPHDemoModeChoiceVariations,
+         "IPH_DemoMode")}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
