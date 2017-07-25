@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b1a6a33_9c963390",
+        "filename": "components/safe_browsing/web_ui/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "since we depend on function calls from this file, it is probably better to add +components/safe_browsing_db",
+      "range": {
+        "startLine": 6,
+        "startChar": 3,
+        "endLine": 6,
+        "endChar": 31
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8454341c_e99d57af",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "I noticed that .html files in Chrome codebase use the format: database-info",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be8ecd7_abebfaf0",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "The three Add* methods can go into the anon namespace and removed from the class.",
+      "range": {
+        "startLine": 79,
+        "startChar": 28,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ce9bc1_eda55428",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "Totally optional or a follow-up CL: Do you want to pull these string from resources?\nSimilar to IDS_SB_UNDER_CONSTRUCTION",
+      "range": {
+        "startLine": 86,
+        "startChar": 53,
+        "endLine": 86,
+        "endChar": 72
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a30cfa_26fac676",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "(in bytes)",
+      "range": {
+        "startLine": 95,
+        "startChar": 66,
+        "endLine": 95,
+        "endChar": 67
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96c4d96_12fc4f3c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "incorrect case. also, this is database manager info.\nsuggestion: database_manager_info .. don\u0027t need to specify the type of the value.\n\nAlso, this should be declared near first use.",
+      "range": {
+        "startLine": 132,
+        "startChar": 18,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0547757c_db6641ce",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "commonly, proto instances are suffixed with _proto.\nso: database_manager_info_proto",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 43
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa8957c_9f1be23a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "what happens if SafeBrowsing is disabled or we still haven\u0027t instantiated the V4LDBM?",
+      "range": {
+        "startLine": 136,
+        "startChar": 26,
+        "endLine": 136,
+        "endChar": 57
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606417a8_7aa6c792",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "Code is sufficient.",
+      "range": {
+        "startLine": 319,
+        "startChar": 2,
+        "endLine": 319,
+        "endChar": 66
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d170903a_53678a33",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "store_info",
+      "range": {
+        "startLine": 321,
+        "startChar": 49,
+        "endLine": 321,
+        "endChar": 65
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50c9c50_e1433c0d",
+        "filename": "components/safe_browsing_db/v4_database.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "CollectDatabaseInfo?",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 24
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b11235e_e9d6660a",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "Let\u0027s be consistent about what we want to call these functions.\nI suggest: CollectDatabaseManagerInfo, CollectUpdateInfo, CollectDatabaseInfo",
+      "range": {
+        "startLine": 188,
+        "startChar": 29,
+        "endLine": 188,
+        "endChar": 48
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d118a73f_c80d0efb",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "comment not useful",
+      "range": {
+        "startLine": 190,
+        "startChar": 7,
+        "endLine": 190,
+        "endChar": 38
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a78fa6_6b4c9b5c",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": ":)",
+      "range": {
+        "startLine": 181,
+        "startChar": 57,
+        "endLine": 181,
+        "endChar": 60
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7212ed5e_9c032056",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "last_response_code_ to be more explicit",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 20
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fc221f_96c2007c",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T20:48:31Z",
+      "side": 1,
+      "message": "nit: this move isn\u0027t useful.",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 198,
+        "endChar": 33
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
