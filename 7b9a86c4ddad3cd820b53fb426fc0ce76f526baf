@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f63089ec_05ff0d76",
+        "filename": "ios/web/public/web_state/web_state_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T15:56:58Z",
+      "side": 1,
+      "message": "This used to be weak, so is there a reason why we can\u0027t use __weak?",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "7b9a86c4ddad3cd820b53fb426fc0ce76f526baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
