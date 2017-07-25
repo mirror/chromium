@@ -149,7 +149,8 @@ void ImagePainter::PaintIntoRect(GraphicsContext& context,
     return;
 
   InterpolationQuality interpolation_quality =
-      layout_image_.StyleRef().GetInterpolationQuality();
+      layout_image_.StyleRef().GetInterpolationQuality(image &&
+                                                       image->MaybeAnimated());
 
   FloatRect src_rect = image->Rect();
   // If the content rect requires clipping, adjust |srcRect| and

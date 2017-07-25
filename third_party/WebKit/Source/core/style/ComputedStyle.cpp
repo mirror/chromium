@@ -856,12 +856,18 @@ bool ComputedStyle::RequireTransformOrigin(
   return Scale() || Rotate();
 }
 
-InterpolationQuality ComputedStyle::GetInterpolationQuality() const {
+InterpolationQuality ComputedStyle::GetInterpolationQuality(
+    bool for_animated_image) const {
   if (ImageRendering() == EImageRendering::kPixelated)
     return kInterpolationNone;
 
   if (ImageRendering() == EImageRendering::kWebkitOptimizeContrast)
     return kInterpolationLow;
+
+  // TODO(pdr): This is a workaround for crbug.com/747500 and should be removed
+  // by always reducing high quality to medium quality in the compositor.
+  if (for_animated_image && kInterpolationDefault == kInterpolationHigh)
+    return kInterpolationMedium;
 
   return kInterpolationDefault;
 }

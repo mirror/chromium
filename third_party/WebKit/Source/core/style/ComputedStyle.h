@@ -2285,7 +2285,8 @@ class ComputedStyle : public ComputedStyleBase,
   bool RequireTransformOrigin(ApplyTransformOrigin apply_origin,
                               ApplyMotionPath) const;
 
-  InterpolationQuality GetInterpolationQuality() const;
+  InterpolationQuality GetInterpolationQuality(
+      bool for_animated_image = false) const;
 
  private:
   void SetVisitedLinkBackgroundColor(const StyleColor& v) {
