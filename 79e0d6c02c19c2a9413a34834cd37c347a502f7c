@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec3cdf87_dff1cd2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalauth/UserRecoverableErrorHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-25T14:15:15Z",
+      "side": 1,
+      "message": "Nit: Javadoc please :)",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 34
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048398a3_82cf793d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-25T14:15:15Z",
+      "side": 1,
+      "message": "Do these also need return statements? Otherwise, won\u0027t we dismiss the dialogs in lines 336-337?",
+      "range": {
+        "startLine": 326,
+        "startChar": 20,
+        "endLine": 326,
+        "endChar": 73
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304c4031_a15f6e0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-25T14:15:15Z",
+      "side": 1,
+      "message": "Maybe return early if the dialog is already showing.",
+      "range": {
+        "startLine": 395,
+        "startChar": 12,
+        "endLine": 395,
+        "endChar": 40
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad695e79_6d5b5707",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-25T14:15:15Z",
+      "side": 1,
+      "message": "Javadoc for this method please. I really don\u0027t know what this method is supposed to do.",
+      "range": {
+        "startLine": 20,
+        "startChar": 52,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352024c1_d8838ef8",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-25T14:15:15Z",
+      "side": 1,
+      "message": "I wonder whether we should add something to AccountManagerResult that allows inspecting it and extracting the result or exception without actually throwing. That would make the control flow a bit easier to understand, I think.",
+      "range": {
+        "startLine": 218,
+        "startChar": 49,
+        "endLine": 218,
+        "endChar": 55
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52f8421_5121729c",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-25T14:15:15Z",
+      "side": 1,
+      "message": "Actually, you could use this as a base class with two subclasses. That would avoid having half of the fields be null, or conflicts between the two constructors, and get() could have very straightforward implementations in the two subclasses.",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00eaea46_5c2711ef",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/GmsAvailabilityException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-25T14:15:15Z",
+      "side": 1,
+      "message": "@Override?",
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
