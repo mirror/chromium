@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f79d80_2152af16",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-25T15:21:09Z",
+      "side": 1,
+      "message": "What about in Chromium on 10.13? Unless it\u0027s disabled here, I think it\u0027ll continue to crash browser_tests.",
+      "revId": "2632e55c02d592eb43729910b147dc04fcb44129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
