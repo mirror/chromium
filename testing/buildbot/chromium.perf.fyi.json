@@ -4442,7 +4442,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -4503,7 +4502,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -9514,7 +9512,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -9575,7 +9572,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
