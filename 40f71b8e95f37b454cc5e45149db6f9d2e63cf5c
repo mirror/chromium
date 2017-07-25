@@ -16,6 +16,24 @@
       "revId": "40f71b8e95f37b454cc5e45149db6f9d2e63cf5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ef4642_cf8d1805",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T09:43:20Z",
+      "side": 1,
+      "message": "As talked offline, this should not be a security error.",
+      "parentUuid": "a1661bb3_083bf9b2",
+      "revId": "40f71b8e95f37b454cc5e45149db6f9d2e63cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
