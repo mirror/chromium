@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4a59e1c6_779429fb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResourceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-25T09:57:13Z",
+      "side": 0,
+      "message": "Sorry I accidentally submitted stale comment. Thanks for addressing.",
+      "parentUuid": "8ed3f2be_499b5520",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 48
+      },
+      "revId": "bb9ea2f988eb1988f1349e4e70ca01171487c9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c92178d_89b68725",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 1
