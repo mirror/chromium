@@ -7,10 +7,95 @@
 #import <WebKit/WebKit.h>
 
 #include "base/logging.h"
+#include "base/mac/foundation_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+
+@interface CustomDropDelegate : NSObject<UIDropInteractionDelegate> {
+}
+- (instancetype)initWithOriginalDelegate:(id<UIDropInteractionDelegate>)o
+                                 webView:(WKWebView*)webview;
+
+@end
+
+@implementation CustomDropDelegate {
+  __weak id<UIDropInteractionDelegate> _originalDelegate;
+  __weak WKWebView* _webview;
+}
+
+- (instancetype)initWithOriginalDelegate:(id<UIDropInteractionDelegate>)o
+                                 webView:(WKWebView*)webview {
+  if (self = [super init]) {
+    _originalDelegate = o;
+    _webview = webview;
+  }
+  return self;
+}
+
+- (void)dropInteraction:(UIDropInteraction*)interaction
+            performDrop:(id<UIDropSession>)session {
+  UIDropProposal* dropProposal =
+      [_originalDelegate dropInteraction:interaction sessionDidUpdate:session];
+  if (dropProposal.operation == UIDropOperationCancel ||
+      dropProposal.operation == UIDropOperationForbidden) {
+    // Chrome should handle the drop
+    [session loadObjectsOfClass:[NSURL class]
+                     completion:^(NSArray<NSURL*>* objects) {
+                       NSURLRequest* req =
+                           [NSURLRequest requestWithURL:[objects firstObject]];
+                       [_webview loadRequest:req];
+                     }];
+  } else {
+    [_originalDelegate dropInteraction:interaction performDrop:session];
+  }
+}
+
+- (void)dropInteraction:(UIDropInteraction*)interaction
+        sessionDidEnter:(id<UIDropSession>)session {
+  [_originalDelegate dropInteraction:interaction sessionDidEnter:session];
+}
+
+- (void)dropInteraction:(UIDropInteraction*)interaction
+         sessionDidExit:(id<UIDropSession>)session {
+  [_originalDelegate dropInteraction:interaction sessionDidExit:session];
+}
+
+- (void)dropInteraction:(UIDropInteraction*)interaction
+          sessionDidEnd:(id<UIDropSession>)session {
+  [_originalDelegate dropInteraction:interaction sessionDidEnd:session];
+}
+
+- (BOOL)dropInteraction:(UIDropInteraction*)interaction
+       canHandleSession:(id<UIDropSession>)session {
+  BOOL val =
+      [_originalDelegate dropInteraction:interaction canHandleSession:session];
+  NSLog(@"can handle session: %i", val);
+  return val;
+}
+
+- (UIDropProposal*)dropInteraction:(UIDropInteraction*)interaction
+                  sessionDidUpdate:(id<UIDropSession>)session {
+  UIDropProposal* dropProposal =
+      [_originalDelegate dropInteraction:interaction sessionDidUpdate:session];
+  if (dropProposal.operation == UIDropOperationCancel ||
+      dropProposal.operation == UIDropOperationForbidden) {
+    dropProposal =
+        [[UIDropProposal alloc] initWithDropOperation:UIDropOperationCopy];
+    NSLog(@"Drop proposal is NO");
+  } else {
+    NSLog(@"Drop proposal is YES");
+  }
+  return dropProposal;
+}
+
+#pragma clang diagnostic pop
+
+@end
 
 namespace {
 
@@ -26,6 +111,8 @@ const CGFloat kBackgroundRGBComponents[] = {0.75f, 0.74f, 0.76f};
 @interface CRWWebViewContentView () {
   // Backs up property of the same name if |_webView| is a WKWebView.
   CGFloat _topContentPadding;
+
+  CustomDropDelegate* customDropDelegate;
 }
 
 // Changes web view frame to match |self.bounds| and optionally accomodates for
@@ -48,6 +135,43 @@ const CGFloat kBackgroundRGBComponents[] = {0.75f, 0.74f, 0.76f};
     DCHECK(scrollView);
     DCHECK([scrollView isDescendantOfView:webView]);
     _webView = webView;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+    WKWebView* wkwebview = base::mac::ObjCCast<WKWebView>(webView);
+
+    for (UIView* subview in wkwebview.scrollView.subviews) {
+      NSLog(@"%@", subview);
+      if ([subview isKindOfClass:NSClassFromString(@"WKContentView")]) {
+        id<UIDropInteractionDelegate> originalDelegate;
+        for (id<UIInteraction> interaction in subview.interactions) {
+          if ([interaction
+                  isKindOfClass:NSClassFromString(@"UIDropInteraction")]) {
+            UIDropInteraction* dropInteraction =
+                base::mac::ObjCCast<UIDropInteraction>(interaction);
+            DCHECK(dropInteraction);
+            originalDelegate = dropInteraction.delegate;
+          }
+        }
+
+        DCHECK(originalDelegate);
+
+        customDropDelegate = [[CustomDropDelegate alloc]
+            initWithOriginalDelegate:originalDelegate
+                             webView:wkwebview];
+
+        // customDropDelegate is *not* retained by the UIDropInteraction.
+        UIDropInteraction* dropInteraction =
+            [[UIDropInteraction alloc] initWithDelegate:customDropDelegate];
+
+        NSArray<id<UIInteraction>>* interactions2 =
+            [subview.interactions arrayByAddingObject:dropInteraction];
+        subview.interactions = interactions2;
+      }
+    }
+
+#pragma clang diagnostic pop
+
     _scrollView = scrollView;
   }
   return self;
