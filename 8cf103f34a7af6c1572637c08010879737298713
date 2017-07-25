@@ -160,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "ace27fb4_b6bacd52",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-25T02:29:18Z",
+      "side": 1,
+      "message": "Sorry for unclear.\nAs you said: 1) starting a job -\u003e 2) verifying the timer has started --\u003e 3) then manually calling the timer\u0027s task --\u003e 4)verifying the right stuff happens.\n\nI mean that if the timer timeout time is 5min, how we check step4? or waiting 5 min to see the result?",
+      "parentUuid": "38e7da63_21adbbf5",
+      "range": {
+        "startLine": 188,
+        "startChar": 33,
+        "endLine": 188,
+        "endChar": 51
+      },
+      "revId": "8cf103f34a7af6c1572637c08010879737298713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c71e481e_5324173f",
         "filename": "content/browser/service_worker/service_worker_register_job.h",
         "patchSetId": 6
