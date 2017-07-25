@@ -1255,6 +1255,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   if (firstRun || [self shouldOpenNTPTabOnActivationOfTabModel:tabModel]) {
     OpenNewTabCommand* command = [OpenNewTabCommand
         commandWithIncognito:(self.currentBVC == self.otrBVC)];
+    command.userInitiated = NO;
     [self.currentBVC.dispatcher openNewTab:command];
   }
 
