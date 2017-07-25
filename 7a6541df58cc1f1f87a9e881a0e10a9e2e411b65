@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a3254f_414a19c8",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:44:12Z",
+      "side": 1,
+      "message": "I just noticed that not doing anything with the return value of this function here looks a little weird. Can you add a comment here and for the previous sensor type explaining what holds the reference to the object created here?",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "7a6541df58cc1f1f87a9e881a0e10a9e2e411b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0aa4b56_50c3f2a2",
+        "filename": "services/device/generic_sensor/relative_orientation_quaternion_fusion_algorithm_using_euler_angles.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:44:12Z",
+      "side": 1,
+      "message": "nit: extra line",
+      "revId": "7a6541df58cc1f1f87a9e881a0e10a9e2e411b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16920b9b_94dc4bac",
+        "filename": "services/device/generic_sensor/relative_orientation_quaternion_fusion_algorithm_using_euler_angles.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:44:12Z",
+      "side": 1,
+      "message": "This algorithm is actually more generic than that. It can be used to create any quaternion-producing orientation sensor from any euler angle-producing orientation sensor. You could use it for absolute orientation as well.",
+      "revId": "7a6541df58cc1f1f87a9e881a0e10a9e2e411b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
