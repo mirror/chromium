@@ -255,6 +255,11 @@ class JourneyLogger {
   void RecordCanMakePaymentEffectOnCompletion(
       CompletionStatus completion_status);
 
+  // Records the completion status depending on the payment method section
+  // order.
+  void RecordPaymentMethodSectionOrderEffectOnCompletion(
+      CompletionStatus completion_status);
+
   // Records the metric about the different events that happened during the
   // Payment Request.
   void RecordEventsMetric(CompletionStatus completion_status);

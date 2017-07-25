@@ -6,8 +6,10 @@
 
 #include <algorithm>
 
+#include "base/feature_list.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "components/payments/core/features.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
@@ -170,6 +172,7 @@ void JourneyLogger::RecordJourneyStatsHistograms(
   RecordCanMakePaymentStats(completion_status);
   RecordUrlKeyedMetrics(completion_status);
   RecordEventsMetric(completion_status);
+  RecordPaymentMethodSectionOrderEffectOnCompletion(completion_status);
 
   // These following metrics only make sense if the UI was shown to the user.
   if (was_show_called_) {
@@ -320,6 +323,20 @@ void JourneyLogger::RecordCanMakePaymentEffectOnCompletion(
     histogram_name += "Used.TrueWithShowEffectOnCompletion";
   } else {
     histogram_name += "Used.FalseWithShowEffectOnCompletion";
+  }
+
+  base::UmaHistogramEnumeration(histogram_name, completion_status,
+                                COMPLETION_STATUS_MAX);
+}
+
+void JourneyLogger::RecordPaymentMethodSectionOrderEffectOnCompletion(
+    CompletionStatus completion_status) {
+  std::string histogram_name = "PaymentRequest.MethodSectionOrder.";
+  if (base::FeatureList::IsEnabled(
+          features::kWebPaymentsMethodSectionOrderV2)) {
+    histogram_name += "V2.MethodAboveAddress";
+  } else {
+    histogram_name += "V1.MethodBelowAddress";
   }
 
   base::UmaHistogramEnumeration(histogram_name, completion_status,
