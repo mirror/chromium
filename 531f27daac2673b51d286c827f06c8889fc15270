@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf5735fd_921d4f11",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-25T18:40:42Z",
+      "side": 1,
+      "message": "Hey did you end up trying to use MutationObserver for the classList?",
+      "revId": "531f27daac2673b51d286c827f06c8889fc15270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
