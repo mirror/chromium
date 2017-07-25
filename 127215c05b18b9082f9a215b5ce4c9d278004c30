@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba3b3e5_8daba4bd",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/http/tests/inspector/extensions/extensions-panel-expected.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T18:58:00Z",
+      "side": 1,
+      "message": "This file was probably unintentional?",
+      "revId": "127215c05b18b9082f9a215b5ce4c9d278004c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0cefa9_9599551b",
+        "filename": "third_party/WebKit/LayoutTests/platform/win/http/tests/inspector/extensions/extensions-panel-expected.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T18:58:00Z",
+      "side": 1,
+      "message": "And this",
+      "revId": "127215c05b18b9082f9a215b5ce4c9d278004c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e48d2c0_2b48a37a",
+        "filename": "third_party/WebKit/LayoutTests/platform/win7/http/tests/inspector/extensions/extensions-panel-expected.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T18:58:00Z",
+      "side": 1,
+      "message": "And this",
+      "revId": "127215c05b18b9082f9a215b5ce4c9d278004c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
