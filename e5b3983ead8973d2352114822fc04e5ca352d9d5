@@ -16,6 +16,24 @@
       "revId": "e5b3983ead8973d2352114822fc04e5ca352d9d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccae9c36_d46d276f",
+        "filename": "third_party/WebKit/LayoutTests/nfc/nfc-block-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T23:05:05Z",
+      "side": 1,
+      "message": "I don\u0027t know if we have a definitive style guide recommendation for this. I\u0027ve seen _ \u003d\u003e suggested externally in places. The Google style guide contains no recommendation but the one example of an arrow function taking no arguments uses () \u003d\u003e so if you\u0027d like I can update this patch to be consistent with that pattern.",
+      "parentUuid": "e433884d_43b3593c",
+      "revId": "e5b3983ead8973d2352114822fc04e5ca352d9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
