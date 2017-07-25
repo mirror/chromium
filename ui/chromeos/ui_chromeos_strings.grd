@@ -227,6 +227,36 @@
       <message name="IDS_LOGIN_DEFAULT_USER_DESC_53" desc="Description of the default user icon with a picture of geometric figure 6">
         Geometric figure 6
       </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_54" desc="Description of the default user icon with a picture of a bird">
+        Bird
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_55" desc="Description of the default user icon with a picture of ramen">
+        Ramen
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_56" desc="Description of the default user icon with a picture of a tamagochi">
+        Tamagochi
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_57" desc="Description of the default user icon with a picture of a cheese">
+        Cheese
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_58" desc="Description of the default user icon with a picture of a football">
+        Football
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_59" desc="Description of the default user icon with a picture of a basketball">
+        Basketball
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_60" desc="Description of the default user icon with a picture of a vinyl">
+        Vinyl
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_61" desc="Description of the default user icon with a picture of sushi">
+        Sushi
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_62" desc="Description of the default user icon with a picture of a bike">
+        Bike
+      </message>
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_63" desc="Description of the default user icon with a picture of a pair of sunglasses">
+        Sunglasses
+      </message>
 
       <!-- Attribution strings for stock user images, not translateable. -->
       <message translateable="false" name="IDS_LOGIN_DEFAULT_USER_AUTHOR">
