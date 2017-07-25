@@ -73,13 +73,12 @@ class WorkerThreadableLoader::AsyncTaskForwarder final
   ~AsyncTaskForwarder() override { DCHECK(IsMainThread()); }
 
   void ForwardTask(const WebTraceLocation& location,
-                   std::unique_ptr<CrossThreadClosure> task) override {
+                   CrossThreadClosure task) override {
     DCHECK(IsMainThread());
     worker_loading_task_runner_->PostTask(location, std::move(task));
   }
-  void ForwardTaskWithDoneSignal(
-      const WebTraceLocation& location,
-      std::unique_ptr<CrossThreadClosure> task) override {
+  void ForwardTaskWithDoneSignal(const WebTraceLocation& location,
+                                 CrossThreadClosure task) override {
     DCHECK(IsMainThread());
     worker_loading_task_runner_->PostTask(location, std::move(task));
   }
@@ -90,15 +89,14 @@ class WorkerThreadableLoader::AsyncTaskForwarder final
 };
 
 struct WorkerThreadableLoader::TaskWithLocation final {
-  TaskWithLocation(const WebTraceLocation& location,
-                   std::unique_ptr<CrossThreadClosure> task)
+  TaskWithLocation(const WebTraceLocation& location, CrossThreadClosure task)
       : location_(location), task_(std::move(task)) {}
   TaskWithLocation(TaskWithLocation&& task)
       : TaskWithLocation(task.location_, std::move(task.task_)) {}
   ~TaskWithLocation() = default;
 
   WebTraceLocation location_;
-  std::unique_ptr<CrossThreadClosure> task_;
+  CrossThreadClosure task_;
 };
 
 // Observing functions and wait() need to be called on the worker thread.
@@ -170,13 +168,12 @@ class WorkerThreadableLoader::SyncTaskForwarder final
   ~SyncTaskForwarder() override { DCHECK(IsMainThread()); }
 
   void ForwardTask(const WebTraceLocation& location,
-                   std::unique_ptr<CrossThreadClosure> task) override {
+                   CrossThreadClosure task) override {
     DCHECK(IsMainThread());
     event_with_tasks_->Append(TaskWithLocation(location, std::move(task)));
   }
-  void ForwardTaskWithDoneSignal(
-      const WebTraceLocation& location,
-      std::unique_ptr<CrossThreadClosure> task) override {
+  void ForwardTaskWithDoneSignal(const WebTraceLocation& location,
+                                 CrossThreadClosure task) override {
     DCHECK(IsMainThread());
     event_with_tasks_->Append(TaskWithLocation(location, std::move(task)));
     event_with_tasks_->Signal();
@@ -263,13 +260,13 @@ void WorkerThreadableLoader::Start(const ResourceRequest& original_request) {
     return;
   }
 
-  for (const auto& task : event_with_tasks->Take()) {
+  for (auto& task : event_with_tasks->Take()) {
     // Store the program counter where the task is posted from, and alias
     // it to ensure it is stored in the crash dump.
     const void* program_counter = task.location_.program_counter();
     WTF::debug::Alias(&program_counter);
 
-    (*task.task_)();
+    task.task_();
   }
 }
 

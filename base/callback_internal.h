@@ -113,6 +113,8 @@ class BASE_EXPORT CallbackBase<CopyMode::MoveOnly> {
   // Returns the Callback into an uninitialized state.
   void Reset();
 
+  uintptr_t Identifier() const;
+
  protected:
   using InvokeFuncStorage = BindStateBase::InvokeFuncStorage;
 
