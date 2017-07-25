@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "content/browser/service_worker/service_worker_register_job.h"
 #include "content/browser/service_worker/service_worker_unregister_job.h"
@@ -44,6 +45,17 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
               ServiceWorkerProviderHost* provider_host,
               const ServiceWorkerRegisterJob::RegistrationCallback& callback);
 
+  ServiceWorkerRegisterJobBase* PushOnJobQueue(
+      const GURL& pattern,
+      std::unique_ptr<ServiceWorkerRegisterJobBase> job);
+
+  // The job timeout timer periodically calls OnJobTimeoutTimer, which aborts
+  // the job if it is excessively pending to complete.
+  void StartJobTimeoutTimer();
+  void OnJobTimeoutTimer();
+
+  base::TimeDelta GetTickDuration(base::TimeTicks start_time) const;
+
   // Calls ServiceWorkerRegisterJobBase::Abort() on all jobs and removes them.
   void AbortAll();
 
@@ -52,10 +64,12 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
   void FinishJob(const GURL& pattern, ServiceWorkerRegisterJobBase* job);
 
  private:
+  friend class ServiceWorkerJobTest;
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerJobTest, RegistrationTimeout);
+
   class JobQueue {
    public:
     JobQueue();
-    JobQueue(JobQueue&&);
     ~JobQueue();
 
     // Adds a job to the queue. If an identical job is already at the end of the
@@ -64,11 +78,8 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
     ServiceWorkerRegisterJobBase* Push(
         std::unique_ptr<ServiceWorkerRegisterJobBase> job);
 
-    // Dooms the installing worker of the running register/update job if a
-    // register/update job is scheduled to run after it. This corresponds to
-    // the "Terminate installing worker" steps at the beginning of the spec's
-    // [[Update]] and [[Install]] algorithms.
-    void DoomInstallingWorkerIfNeeded();
+    // Gets the first job in the queue.
+    ServiceWorkerRegisterJobBase* front() { return jobs_.front().get(); }
 
     // Starts the first job in the queue.
     void StartOneJob();
@@ -95,6 +106,18 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
   // job coordinator, the core owns the coordinator.
   base::WeakPtr<ServiceWorkerContextCore> context_;
   std::map<GURL, JobQueue> job_queues_;
+
+  // The registration job timeout timer interval.
+  static constexpr base::TimeDelta kTimeoutTimerDelay =
+      base::TimeDelta::FromMinutes(30);
+
+  // Timer timeout for the current registration job.
+  static constexpr base::TimeDelta kJobTimeout =
+      base::TimeDelta::FromMinutes(5);
+
+  // Starts running in job registration and continues until all jobs are
+  // completed.
+  base::RepeatingTimer job_timeout_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerJobCoordinator);
 };

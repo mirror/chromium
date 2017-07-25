@@ -228,9 +228,11 @@ scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
   job_coordinator()->Register(
       script_url, ServiceWorkerRegistrationOptions(pattern), nullptr,
       SaveRegistration(expected_status, &called, &registration));
+  EXPECT_TRUE(job_coordinator()->job_timeout_timer_.IsRunning());
   EXPECT_FALSE(called);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(called);
+  EXPECT_FALSE(job_coordinator()->job_timeout_timer_.IsRunning());
   return registration;
 }
 
@@ -394,6 +396,31 @@ TEST_F(ServiceWorkerJobTest, Register) {
   EXPECT_EQ(valid_scope_2, version_->foreign_fetch_scopes_[1]);
   EXPECT_EQ(1u, version_->foreign_fetch_origins_.size());
   EXPECT_EQ(valid_origin, version_->foreign_fetch_origins_[0]);
+}
+
+// Make sure registration timeout timer is working.
+TEST_F(ServiceWorkerJobTest, RegistrationTimeout) {
+  bool called;
+  scoped_refptr<ServiceWorkerRegistration> registration;
+  job_coordinator()->Register(
+      GURL("http://www.example.com/service_worker.js"),
+      ServiceWorkerRegistrationOptions(GURL("http://www.example.com/")),
+      nullptr,
+      SaveRegistration(SERVICE_WORKER_ERROR_ABORT, &called, &registration));
+
+  EXPECT_EQ(1u, job_coordinator()->job_queues_.size());
+  EXPECT_TRUE(job_coordinator()->job_timeout_timer_.IsRunning());
+  EXPECT_FALSE(called);
+
+  ServiceWorkerRegisterJob* job = static_cast<ServiceWorkerRegisterJob*>(
+      job_coordinator()->job_queues_.begin()->second.front());
+  base::TimeDelta duration = base::TimeDelta::FromMinutes(5);
+  job->set_start_time(base::TimeTicks::Now() - duration);
+  job_coordinator()->OnJobTimeoutTimer();
+
+  EXPECT_TRUE(job_coordinator()->job_timeout_timer_.IsRunning());
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(job_coordinator()->job_queues_.empty());
 }
 
 // Make sure registrations are cleaned up when they are unregistered.
