@@ -49,10 +49,12 @@ class WorkerFetchContext final : public BaseFetchContext {
   void CountUsage(WebFeature) const override;
   void CountDeprecation(WebFeature) const override;
   bool ShouldBlockFetchByMixedContentCheck(
-      const ResourceRequest&,
+      WebURLRequest::RequestContext,
+      WebURLRequest::FrameType,
+      ResourceRequest::RedirectStatus,
       const KURL&,
       SecurityViolationReportingPolicy) const override;
-  bool ShouldBlockFetchAsCredentialedSubresource(const ResourceRequest&,
+  bool ShouldBlockFetchAsCredentialedSubresource(WebURLRequest::RequestContext,
                                                  const KURL&) const override;
   ReferrerPolicy GetReferrerPolicy() const override;
   String GetOutgoingReferrer() const override;
