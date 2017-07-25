@@ -10,7 +10,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "chrome/common/instant.mojom.h"
+#include "chrome/common/search.mojom.h"
 #include "chrome/common/search/instant_types.h"
 #include "chrome/common/search/ntp_logging_events.h"
 #include "chrome/renderer/instant_restricted_id_cache.h"
@@ -163,7 +163,7 @@ class SearchBox : public content::RenderFrameObserver,
   ThemeBackgroundInfo theme_info_;
   EmbeddedSearchRequestParams embedded_search_request_params_;
   InstantSuggestion suggestion_;
-  chrome::mojom::InstantAssociatedPtr instant_service_;
+  chrome::mojom::EmbeddedSearchAssociatedPtr embedded_search_service_;
   mojo::AssociatedBinding<chrome::mojom::SearchBox> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchBox);

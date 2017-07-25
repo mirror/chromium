@@ -11,7 +11,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/time/time.h"
-#include "chrome/common/instant.mojom.h"
+#include "chrome/common/search.mojom.h"
 #include "chrome/common/search/instant_types.h"
 #include "chrome/common/search/ntp_logging_events.h"
 #include "components/ntp_tiles/tile_source.h"
@@ -31,7 +31,7 @@ class SearchIPCRouterTest;
 // SearchIPCRouter is responsible for receiving and sending IPC messages between
 // the browser and the Instant page.
 class SearchIPCRouter : public content::WebContentsObserver,
-                        public chrome::mojom::Instant {
+                        public chrome::mojom::EmbeddedSearch {
  public:
   // SearchIPCRouter calls its delegate in response to messages received from
   // the page.
@@ -163,7 +163,7 @@ class SearchIPCRouter : public content::WebContentsObserver,
   // Called when the tab corresponding to |this| instance is deactivated.
   void OnTabDeactivated();
 
-  // chrome::mojom::Instant:
+  // chrome::mojom::EmbeddedSearch:
   void FocusOmnibox(int page_id, OmniboxFocusState state) override;
   void DeleteMostVisitedItem(int page_seq_no, const GURL& url) override;
   void UndoMostVisitedDeletion(int page_seq_no, const GURL& url) override;
@@ -228,7 +228,7 @@ class SearchIPCRouter : public content::WebContentsObserver,
   // Binding for the connected main frame. We only allow one frame to connect at
   // the moment, but this could be extended to a map of connected frames, if
   // desired.
-  mojo::AssociatedBinding<chrome::mojom::Instant> binding_;
+  mojo::AssociatedBinding<chrome::mojom::EmbeddedSearch> binding_;
 
   std::unique_ptr<SearchBoxClientFactory> search_box_client_factory_;
 
