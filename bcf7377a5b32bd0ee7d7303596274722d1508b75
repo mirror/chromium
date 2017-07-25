@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "e87f9712_9317c2b2",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-25T17:29:31Z",
+      "side": 1,
+      "message": "Aren\u0027t there code paths like: https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager.cc?l\u003d86 that have a routing id but require input messages (interstitial page?) So doing it on like 1749 might not encompass all those code paths.\n\nMy ultimate idea was if there is a widget routing id there should be a widget ptr/channel request. There is a lot of code complexity in these classes and I\u0027m not sure I fully understand it all. \n\nI\u0027m not sure how a path forward for making this sane is.",
+      "parentUuid": "d738ff91_05ef6859",
+      "range": {
+        "startLine": 1706,
+        "startChar": 25,
+        "endLine": 1706,
+        "endChar": 58
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8e85ddc_7e977135",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
         "patchSetId": 6
