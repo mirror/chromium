@@ -118,6 +118,30 @@
       "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d295de54_7705fe24",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/JavaUrlRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1140228
+      },
+      "writtenOn": "2017-07-25T02:19:13Z",
+      "side": 1,
+      "message": "Makes sense. Now that we\u0027re calling execute() while holding the lock, you should add a comment warning not to wrap a user supplied executor with this one.",
+      "parentUuid": "fc8b8671_6afb4009",
+      "range": {
+        "startLine": 180,
+        "startChar": 59,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
