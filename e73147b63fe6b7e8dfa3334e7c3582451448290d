@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b22a97_2c031144",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T17:51:09Z",
+      "side": 1,
+      "message": "Can you move more work into the \u003ctemplate\u003e and do less work here?\n\n\u003ctd\u003e\u003cinput type\u003d\"checkbox\" name\u003d\"stored\"\u003e\u003c/td\u003e\n\u003ctd\u003e\u003ca\u003e\u003c/a\u003e\u003c/td\u003e\n...\n\nThen in the JS, you simply have to plug in the values/attributes that differ among instantiations of the template, but don\u0027t have to re-create things that are common to all templates.",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b084615f_45916cc4",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T17:51:09Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
