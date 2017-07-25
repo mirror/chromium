@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d27f571_c77abb7c",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "Would make the comment stronger: These schemes MUST be enumerated...",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984ba14c_c0ebb0a4",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "This is not the PMI for BobPay. Can you ask Rouslan for the exact value?",
+      "range": {
+        "startLine": 13,
+        "startChar": 47,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6acc46_26c5ac1c",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "Should this be GetMethodNameToSchemeName or GetUniversalLinkToSchemeName?",
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce626a9d_2532aa46",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "Casing is a little off",
+      "range": {
+        "startLine": 20,
+        "startChar": 62,
+        "endLine": 20,
+        "endChar": 75
+      },
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d87259b_4bac81e9",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "Create a specific bug for this (it can be linked to a main bug about native ios payment apps)",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 26
+      },
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3659338c_853f5fa1",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "Create a specific bug for this",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d42f644_fbe15051",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 96,
+        "startChar": 10,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6f0499_213a52bb",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:14:34Z",
+      "side": 1,
+      "message": "Create a specific bug",
+      "range": {
+        "startLine": 767,
+        "startChar": 20,
+        "endLine": 767,
+        "endChar": 26
+      },
+      "revId": "e8b5ec7467946385be1f15687f3d26b94cc04899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
