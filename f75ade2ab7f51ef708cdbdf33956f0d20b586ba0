@@ -16,6 +16,24 @@
       "revId": "f75ade2ab7f51ef708cdbdf33956f0d20b586ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e297bf3d_e8ae5846",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-25T20:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4359042_fe8c2c75",
+      "revId": "f75ade2ab7f51ef708cdbdf33956f0d20b586ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
