@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30bfc5c2_8a4dd062",
+        "filename": "ppapi/proxy/ppp_pdf_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-25T18:07:19Z",
+      "side": 1,
+      "message": "nit: else *result \u003d false;",
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
