@@ -1554,8 +1554,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_FALSE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
   EXPECT_TRUE(observer.latest_explanations().summary.empty());
 
   // Visit an (otherwise valid) HTTPS page that displays mixed content.
@@ -1582,8 +1580,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
   EXPECT_TRUE(observer.latest_explanations().summary.empty());
-  EXPECT_TRUE(mixed_content_explanation.displayed_mixed_content);
-  EXPECT_FALSE(mixed_content_explanation.ran_mixed_content);
   EXPECT_EQ(blink::kWebSecurityStyleNeutral,
             mixed_content_explanation.displayed_insecure_content_style);
   EXPECT_EQ(blink::kWebSecurityStyleInsecure,
@@ -1607,8 +1603,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
   EXPECT_TRUE(observer.latest_explanations().summary.empty());
 
   // Before clicking through, navigate to a different page, and then go
@@ -1629,8 +1623,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
   EXPECT_TRUE(observer.latest_explanations().summary.empty());
 
   // After going back to the interstitial, an event for a broken lock
@@ -1648,8 +1640,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
   EXPECT_TRUE(observer.latest_explanations().summary.empty());
 
   // Since the next expected style is the same as the previous, clear
@@ -1671,8 +1661,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
   EXPECT_TRUE(observer.latest_explanations().summary.empty());
 }
 
@@ -1974,8 +1962,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
 
   // Navigate to a bad HTTPS page on a different host, and then click
   // Back to verify that the previous good security style is seen again.
@@ -2004,8 +1990,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
 
   content::WindowedNotificationObserver back_nav_load_observer(
       content::NOTIFICATION_LOAD_STOP,
@@ -2028,8 +2012,6 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
-  EXPECT_FALSE(observer.latest_explanations().displayed_mixed_content);
-  EXPECT_FALSE(observer.latest_explanations().ran_mixed_content);
 }
 
 // After AddNonsecureUrlHandler() is called, requests to this hostname

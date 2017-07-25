@@ -257,12 +257,11 @@ void ExplainContentSecurity(
   // Add the secure explanation unless there is an issue.
   bool add_secure_explanation = true;
 
-  security_style_explanations->ran_mixed_content =
-      security_info.mixed_content_status ==
-          security_state::CONTENT_STATUS_RAN ||
-      security_info.mixed_content_status ==
-          security_state::CONTENT_STATUS_DISPLAYED_AND_RAN;
-  if (security_style_explanations->ran_mixed_content) {
+  bool ran_mixed_content = security_info.mixed_content_status ==
+                               security_state::CONTENT_STATUS_RAN ||
+                           security_info.mixed_content_status ==
+                               security_state::CONTENT_STATUS_DISPLAYED_AND_RAN;
+  if (ran_mixed_content) {
     add_secure_explanation = false;
     security_style_explanations->insecure_explanations.push_back(
         content::SecurityStyleExplanation(
@@ -271,12 +270,12 @@ void ExplainContentSecurity(
             false, blink::WebMixedContentContextType::kBlockable));
   }
 
-  security_style_explanations->displayed_mixed_content =
+  bool displayed_mixed_content =
       security_info.mixed_content_status ==
           security_state::CONTENT_STATUS_DISPLAYED ||
       security_info.mixed_content_status ==
           security_state::CONTENT_STATUS_DISPLAYED_AND_RAN;
-  if (security_style_explanations->displayed_mixed_content) {
+  if (displayed_mixed_content) {
     add_secure_explanation = false;
     security_style_explanations->neutral_explanations.push_back(
         content::SecurityStyleExplanation(
@@ -285,9 +284,8 @@ void ExplainContentSecurity(
             false, blink::WebMixedContentContextType::kOptionallyBlockable));
   }
 
-  security_style_explanations->contained_mixed_form =
-      security_info.contained_mixed_form;
-  if (security_style_explanations->contained_mixed_form) {
+  bool contained_mixed_form = security_info.contained_mixed_form;
+  if (contained_mixed_form) {
     add_secure_explanation = false;
     security_style_explanations->neutral_explanations.push_back(
         content::SecurityStyleExplanation(
@@ -305,12 +303,12 @@ void ExplainContentSecurity(
   bool is_cert_status_minor_error =
       net::IsCertStatusMinorError(security_info.cert_status);
   if (!is_cert_status_error || is_cert_status_minor_error) {
-    security_style_explanations->ran_content_with_cert_errors =
+    bool ran_content_with_cert_errors =
         security_info.content_with_cert_errors_status ==
             security_state::CONTENT_STATUS_RAN ||
         security_info.content_with_cert_errors_status ==
             security_state::CONTENT_STATUS_DISPLAYED_AND_RAN;
-    if (security_style_explanations->ran_content_with_cert_errors) {
+    if (ran_content_with_cert_errors) {
       add_secure_explanation = false;
       security_style_explanations->insecure_explanations.push_back(
           content::SecurityStyleExplanation(
@@ -319,12 +317,12 @@ void ExplainContentSecurity(
                   IDS_CERT_ERROR_ACTIVE_CONTENT_DESCRIPTION)));
     }
 
-    security_style_explanations->displayed_content_with_cert_errors =
+    bool displayed_content_with_cert_errors =
         security_info.content_with_cert_errors_status ==
             security_state::CONTENT_STATUS_DISPLAYED ||
         security_info.content_with_cert_errors_status ==
             security_state::CONTENT_STATUS_DISPLAYED_AND_RAN;
-    if (security_style_explanations->displayed_content_with_cert_errors) {
+    if (displayed_content_with_cert_errors) {
       add_secure_explanation = false;
       security_style_explanations->neutral_explanations.push_back(
           content::SecurityStyleExplanation(
@@ -363,18 +361,6 @@ std::unique_ptr<security_state::VisibleSecurityState> GetVisibleSecurityState(
   state->key_exchange_group = ssl.key_exchange_group;
   state->security_bits = ssl.security_bits;
   state->pkp_bypassed = ssl.pkp_bypassed;
-  state->displayed_mixed_content =
-      !!(ssl.content_status & content::SSLStatus::DISPLAYED_INSECURE_CONTENT);
-  state->ran_mixed_content =
-      !!(ssl.content_status & content::SSLStatus::RAN_INSECURE_CONTENT);
-  state->displayed_content_with_cert_errors =
-      !!(ssl.content_status &
-         content::SSLStatus::DISPLAYED_CONTENT_WITH_CERT_ERRORS);
-  state->ran_content_with_cert_errors =
-      !!(ssl.content_status & content::SSLStatus::RAN_CONTENT_WITH_CERT_ERRORS);
-  state->contained_mixed_form =
-      !!(ssl.content_status &
-         content::SSLStatus::DISPLAYED_FORM_WITH_INSECURE_ACTION);
   state->displayed_password_field_on_http =
       !!(ssl.content_status &
          content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
