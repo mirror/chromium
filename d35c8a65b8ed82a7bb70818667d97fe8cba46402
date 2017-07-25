@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42d00e4a_f8c69b13",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-25T21:06:59Z",
+      "side": 1,
+      "message": "+jbroman, it looks like this check was added in https://codereview.chromium.org/1087063002/ but I\u0027m not quite sure why. What is the case that you expect to get 0 for?",
+      "revId": "d35c8a65b8ed82a7bb70818667d97fe8cba46402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6304057c_b35fa9e9",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-25T21:06:59Z",
+      "side": 1,
+      "message": "I\u0027m still not sure I understand why we skip 0 bytes for total_memory_in_bytes above - see my comment. It seems like we should maybe just always record, but I\u0027d be curious to know what case Jeremy wanted to avoid. If it\u0027s an empty tree we can use the same check on line 1114 above. Since he seems to be out for now, can you leave a TODO to look into why we need to skip zeros?",
+      "revId": "d35c8a65b8ed82a7bb70818667d97fe8cba46402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
