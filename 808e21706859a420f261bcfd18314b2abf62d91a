@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "0dfd29ca_ffdb888e",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-25T03:44:14Z",
+      "side": 1,
+      "message": "Changed back to TimeTicks because Time values are not guaranteed to be monotonically non-decreasing.",
+      "parentUuid": "d2947a36_546957f7",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e748d197_0b74637b",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.cc",
         "patchSetId": 2
