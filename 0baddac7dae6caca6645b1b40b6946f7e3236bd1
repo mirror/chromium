@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e23a5897_6c1768bc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T20:16:56Z",
+      "side": 1,
+      "message": "Nit: Not sure this comment adds much to the code.  I\u0027d maybe remove it.\n\nIf you\u0027re going to write blocks of code with comments, put a newline below the end of the block that the comment describes, so it\u0027s visually clear what range it refers to.\n\nFor comments within functions, write in imperative style rather than descriptive (\"inform\").",
+      "revId": "0baddac7dae6caca6645b1b40b6946f7e3236bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28faad21_34023fc4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T20:16:56Z",
+      "side": 1,
+      "message": "I\u0027m uncomfortable with this plumbing to get the profile.  I would expose profile() as a public getter on the controller directly, removing the need to cast here.  There\u0027s already a protected profile() getter in BrowserTabStripController, basically this would just be making it more accessible and moving the declaration to the abstract base.\n\nNit: Consider whether you could save wrapping with a temp for the profile.",
+      "revId": "0baddac7dae6caca6645b1b40b6946f7e3236bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef75c35c_db2fd22c",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T20:16:56Z",
+      "side": 1,
+      "message": "Nit: It seems like this is a notification that the promo was dismissed, not a command to do something.  The caller here shouldn\u0027t know or care what the tracker wants to do with this information.  So I\u0027d call this something like OnPromoClosed().",
+      "revId": "0baddac7dae6caca6645b1b40b6946f7e3236bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
