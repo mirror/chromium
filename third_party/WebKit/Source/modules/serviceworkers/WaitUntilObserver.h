@@ -62,8 +62,8 @@ class MODULES_EXPORT WaitUntilObserver final
       ScriptState*,
       ScriptPromise /* script_promise */,
       ExceptionState&,
-      std::unique_ptr<PromiseSettledCallback> on_promise_fulfilled = nullptr,
-      std::unique_ptr<PromiseSettledCallback> on_promise_rejected = nullptr);
+      PromiseSettledCallback on_promise_fulfilled = PromiseSettledCallback(),
+      PromiseSettledCallback on_promise_rejected = PromiseSettledCallback());
 
   DECLARE_VIRTUAL_TRACE();
 

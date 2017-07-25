@@ -113,6 +113,11 @@ class BASE_EXPORT CallbackBase<CopyMode::MoveOnly> {
   // Returns the Callback into an uninitialized state.
   void Reset();
 
+  // Returns a unique identifier of the internal state. Note that the value may
+  // be reused by another Callback object after a Callback object is destroyed.
+  // It's unique only while the instance keeps alive.
+  uintptr_t Identifier() const;
+
  protected:
   using InvokeFuncStorage = BindStateBase::InvokeFuncStorage;
 
