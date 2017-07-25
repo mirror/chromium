@@ -627,13 +627,11 @@ TEST_F(ShellSurfaceTest, SurfaceShadow) {
   EXPECT_EQ(wm::ShadowElevation::DEFAULT, GetShadowElevation(window));
   EXPECT_TRUE(shadow->layer()->visible());
 
-  // For surface shadow, the underlay is placed at the bottom of shell surfaces.
-  EXPECT_EQ(shell_surface->host_window(),
-            shell_surface->shadow_underlay()->parent());
+  // For surface shadow, the overlay is placed at the bottom of shell surfaces.
+  EXPECT_EQ(window, shell_surface->shadow_underlay()->parent());
   EXPECT_EQ(window, shell_surface->shadow_overlay()->parent());
 
-  EXPECT_EQ(*shell_surface->host_window()->children().begin(),
-            shell_surface->shadow_underlay());
+  EXPECT_EQ(*window->children().begin(), shell_surface->shadow_overlay());
 }
 
 TEST_F(ShellSurfaceTest, NonSurfaceShadow) {
@@ -912,7 +910,8 @@ TEST_F(ShellSurfaceTest, MaximizedAndImmersiveFullscreenBackdrop) {
   surface->Commit();
   EXPECT_EQ(shadow_bounds,
             shell_surface->GetWidget()->GetWindowBoundsInScreen());
-  ASSERT_EQ(shadow_bounds, shell_surface->shadow_underlay()->bounds());
+  ASSERT_EQ(shadow_bounds,
+            shell_surface->shadow_underlay()->GetBoundsInScreen());
   EXPECT_EQ(display::Screen::GetScreen()->GetPrimaryDisplay().size(),
             shell_surface->surface_for_testing()->window()->bounds().size());
 
