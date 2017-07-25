@@ -33,6 +33,24 @@
       "revId": "434dfaf68a437ea257a41652551dc2b2306631f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64091250_4450022e",
+        "filename": "net/nqe/socket_watcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-25T20:36:14Z",
+      "side": 1,
+      "message": "nvm",
+      "parentUuid": "0c134c06_80f9b724",
+      "revId": "434dfaf68a437ea257a41652551dc2b2306631f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
