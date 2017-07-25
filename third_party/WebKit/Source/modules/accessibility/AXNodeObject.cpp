@@ -1290,14 +1290,24 @@ bool AXNodeObject::CanSupportAriaReadOnly() const {
   switch (RoleValue()) {
     case kCellRole:
     case kCheckBoxRole:
+    case kColorWellRole:
     case kComboBoxRole:
+    case kDateRole:
+    case kDateTimeRole:
     case kGridRole:
+    case kInlineTextBoxRole:
+    case kInputTimeRole:
     case kListBoxRole:
     case kMenuButtonRole:
+    case kMenuItemCheckBoxRole:
+    case kMenuItemRadioRole:
+    case kPopUpButtonRole:
     case kRadioGroupRole:
     case kSliderRole:
     case kSpinButtonRole:
+    case kSearchBoxRole:
     case kTextFieldRole:
+    case kToggleButtonRole:
       return true;
     default:
       break;
