@@ -326,6 +326,10 @@ QuickViewController.prototype.onMetadataLoaded_ = function(
         this.quickView_.audioArtwork = params.audioArtwork || '';
         this.quickView_.autoplay = params.autoplay || false;
         this.quickView_.browsable = params.browsable || false;
+        this.quickView_.hasImageQuickView =
+            this.quickView_.hasTask && tasks.reduce(function(result, task) {
+              return FileTasks.isOpenTask(task) || result;
+            }, false) && this.quickView_.contentUrl !== '';
       }.bind(this));
 };
 

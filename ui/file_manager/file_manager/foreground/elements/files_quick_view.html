@@ -37,8 +37,8 @@
             </template>
             <!-- Image -->
             <template is="dom-if" if="[[isImage_(type)]]">
-              <files-safe-media hidden="[[!contentUrl]]" type="image" class="content no-close-on-click" src="[[contentUrl]]"></files-safe-media>
-              <template is="dom-if" if="[[!contentUrl]]">
+              <files-safe-media hidden="[[!hasImageQuickView]]" type="image" class="content no-close-on-click" src="[[contentUrl]]"></files-safe-media>
+              <template is="dom-if" if="[[!hasImageQuickView]]">
                 <div generic-thumbnail="image"></div>
                 <div class="no-preview">[[noPreviewText]]</div>
               </template>
