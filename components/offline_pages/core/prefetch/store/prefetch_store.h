@@ -49,10 +49,15 @@ class PrefetchStore {
   template <typename T>
   using ResultCallback = base::OnceCallback<void(T)>;
 
+  // Creates an instance of |PrefetchStore| with an in-memory SQLite database.
   explicit PrefetchStore(
       scoped_refptr<base::SequencedTaskRunner> blocking_task_runner);
+
+  // Creates an instance of |PrefetchStore| with a SQLite database stored in
+  // |database_dir|.
   PrefetchStore(scoped_refptr<base::SequencedTaskRunner> blocking_task_runner,
                 const base::FilePath& database_dir);
+
   ~PrefetchStore();
 
   // Executes a |run_callback| on SQL store on the blocking thread, and posts
