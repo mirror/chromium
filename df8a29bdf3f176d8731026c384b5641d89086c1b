@@ -81,6 +81,30 @@
       "revId": "df8a29bdf3f176d8731026c384b5641d89086c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967ad509_8d1f5758",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-25T02:07:01Z",
+      "side": 1,
+      "message": "If AWObjectProxy will be used as a proxy to communicate from the worklet thread to the main thread as the following diagram, the current design would be OK (we need to update the class-level comment of AWObjectProxy though).\n\n    AWMessagingProxy (main thread) \u003c--(bidirectional)--\u003e AWObjectProxy (worklet thread)\n\nIf not, a possible option would be to create another class living on the context thread:\n\n    AWMessagingProxy (main thread) --\u003e AWProcessorCreator(?) (worklet thread)\n\nor, to make AudioWorkletMessagingProxy post a task to itself:\n\n    AWMessagingProxy (main thread) --\u003e AWMessagingProxy (worklet thread)",
+      "parentUuid": "9d2a5bdd_d0939849",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "df8a29bdf3f176d8731026c384b5641d89086c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
