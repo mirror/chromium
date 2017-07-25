@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0316265_82b568ca",
+        "filename": "base/metrics/field_trial.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-25T04:54:26Z",
+      "side": 1,
+      "message": "nit: Perhaps IsFieldTrialListRegisteredForTesting()",
+      "range": {
+        "startLine": 640,
+        "startChar": 14,
+        "endLine": 640,
+        "endChar": 35
+      },
+      "revId": "ad4f6f9befa7b81cad45aaaa1f89e00cee54e139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef0f1e6_6894805a",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-25T04:54:26Z",
+      "side": 1,
+      "message": "nit: Please add curly braces, since the body spans multiple lines.",
+      "range": {
+        "startLine": 87,
+        "startChar": 28,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "ad4f6f9befa7b81cad45aaaa1f89e00cee54e139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cb05f6_86ca90d4",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-25T04:54:26Z",
+      "side": 1,
+      "message": "nit: Please update the ordering of these implementations to match the order of their declarations in the header file.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 1
+      },
+      "revId": "ad4f6f9befa7b81cad45aaaa1f89e00cee54e139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
