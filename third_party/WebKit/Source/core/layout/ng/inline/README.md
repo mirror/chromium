@@ -7,13 +7,65 @@ This README can be viewed in formatted form [here](https://chromium.googlesource
 
 Other parts of LayoutNG is explained [here](../README.md).
 
-## High level overview ##
+## What is Inline Layout ##
+
+Inline layout is one of [CSS normal flow] layout models.
+
+From the CSS2 spec on [inline formatting context]:
+an inline formatting context is established by a block container box
+that contains no [block-level] boxes.
+
+[block-level]: https://drafts.csswg.org/css2/visuren.html#block-level
+[CSS normal flow]: https://drafts.csswg.org/css2/visuren.html#normal-flow
+[inline formatting context]: https://drafts.csswg.org/css2/visuren.html#inline-formatting
+[inline-level]: https://drafts.csswg.org/css2/visuren.html#inline-level
+
+Following DOM tree is transformed to fragment tree
+as in the following.
+
+|||---|||
+#### DOM ####
+
+```html
+<div>
+  <span>
+    Hello
+  </span>
+</div>
+```
+
+#### LayoutObject ####
+
+* LayoutNGBlockFlow
+  - LayoutInine
+    - LayoutText
+
+#### NGLayoutInputNode ####
+
+* NGBlockNode
+  - NGInlineNode
+    - NGInlineItem (open tag, span)
+    - NGInlineItem (text, "Hello")
+    - NGInlineItem (close tag, span)
+
+#### NGPhysicalFragment ####
+
+* NGPhysicalBoxFragment
+  - NGPhysicalBoxFragment (anonymous wrapper)
+    - NGPhysicalLineBoxFragment
+      - NGPhysicalBoxFragment (span, may be omitted)
+        - NGPhysicalTextFragment ("Hello")
+|||---|||
+
+## Inline Layout Phases ##
 
 Inline layout is performed in the following phases:
 
-1. Pre-layout.
-2. Line breaking.
-3. Line box construction.
+1. **Pre-layout** converts LayoutObject tree to a concatenated string
+   and a list of [NGInlineItem].
+2. **Line breaking** breaks it into lines and
+   produces a list of [NGInlineItemResult] for each line.
+3. **Line box construction** produces a fragment tree.
 
 This is similar to [CSS Text Processing Order of Operations],
 but not exactly the same,
@@ -239,6 +291,7 @@ In a bird's‐eye view, it consists of two parts:
 [NGBaselineAlgorithmType]: ng_baseline.h
 [NGBaselineRequest]: ng_baseline.h
 [NGBidiParagraph]: ng_bidi_paragraph.h
+[NGBlockNode]: ../ng_block_node.h
 [NGBoxFragment]: ../ng_box_fragment.h
 [NGConstraintSpace]: ../ng_constraint_space_builder.h
 [NGConstraintSpaceBuilder]: ../ng_constraint_space_builder.h
