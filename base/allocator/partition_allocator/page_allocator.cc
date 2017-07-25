@@ -5,13 +5,16 @@
 #include "base/allocator/partition_allocator/page_allocator.h"
 
 #include <limits.h>
-
 #include <atomic>
 
 #include "base/allocator/partition_allocator/address_space_randomization.h"
 #include "base/base_export.h"
 #include "base/logging.h"
 #include "build/build_config.h"
+
+#if defined(OS_ANDROID)
+#include <sys/prctl.h>
+#endif
 
 #if defined(OS_MACOSX)
 #include <mach/mach.h>
@@ -83,6 +86,20 @@ static void* SystemAllocPages(
     ret = 0;
   }
 #endif
+
+#if defined(OS_ANDROID)
+// On Android, tag our mmap allocation with "partition_alloc" so these
+// allocations are identifiable via showmap.
+
+// Defined in bionic/libc/private/bionic_prctl.h without the PAGE_ALLOCATOR
+// prefix, but that's not available outside of bionic.
+#define PAGE_ALLOCATOR_PR_SET_VMA 0x53564d41
+#define PAGE_ALLOCATOR_PR_SET_VMA_ANON_NAME 0
+
+  prctl(PAGE_ALLOCATOR_PR_SET_VMA, PAGE_ALLOCATOR_PR_SET_VMA_ANON_NAME, ret,
+        length, "partition_alloc");
+#endif  // defined(OS_ANDROID)
+
   return ret;
 }
 
