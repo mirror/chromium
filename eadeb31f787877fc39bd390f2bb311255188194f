@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6424470b_675a396e",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1188742
+      },
+      "writtenOn": "2017-07-25T15:12:36Z",
+      "side": 1,
+      "message": "I forgot about this call! Thanks! There cannot be any pending tasks after StopEchoCancellationDump has been called.",
+      "parentUuid": "9f5cd536_b8568e21",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3932bfc4_0b525e4e",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611d737a_5eb29cf6",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1188742
+      },
+      "writtenOn": "2017-07-25T15:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3932bfc4_0b525e4e",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1bcac3f1_3d29dc5e",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1188742
+      },
+      "writtenOn": "2017-07-25T15:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01ac4cd2_1221e103",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67a01f97_389470f4",
         "filename": "content/renderer/media/media_stream_audio_processor.cc",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-25T13:55:58Z",
       "side": 1,
       "message": "Note that \"When a TaskQueue is deleted, pending tasks will not be executed\". Just checking that this is OK?",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb633d1_ceab49bb",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1188742
+      },
+      "writtenOn": "2017-07-25T15:12:36Z",
+      "side": 1,
+      "message": "Yes, that\u0027s expected. The webrtc::AudioProcessing ensures that no tasks are pending when it\u0027s destroyed. It flushes the TaskQueue in ::DetachAecDump().",
+      "parentUuid": "67a01f97_389470f4",
       "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e849da15_6ea68800",
+        "filename": "content/renderer/media/media_stream_audio_processor_options.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1188742
+      },
+      "writtenOn": "2017-07-25T15:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce717c43_f801dfee",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
