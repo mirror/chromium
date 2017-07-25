@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a4a0ea6_660c937a",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-25T09:16:08Z",
+      "side": 1,
+      "message": "Sure. See http://crrev.com/c/583881",
+      "parentUuid": "d987ddf0_0e95e446",
+      "revId": "e98f5ca80d99facd20a0a3e545c5b8d53614b2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e384d4cf_55232e29",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "writtenOn": "2017-07-25T08:22:46Z",
       "side": 1,
       "message": "This changes code flow:\nWhat if selection_type_ \u003d\u003d kNoSelection?",
+      "revId": "e98f5ca80d99facd20a0a3e545c5b8d53614b2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb55be93_5aff08d7",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-25T09:16:08Z",
+      "side": 1,
+      "message": "selection_type_ should not be kNoSelection.\nI\u0027ll add DCHECK.",
+      "parentUuid": "e384d4cf_55232e29",
       "revId": "e98f5ca80d99facd20a0a3e545c5b8d53614b2e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
