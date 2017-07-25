@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "303e0e97_631fab91",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "Should document index, and I recommend renaming it (offset is more consistent with other IOBuffer subclasses.  Also fine with something like initial_index or first_index)",
+      "range": {
+        "startLine": 62,
+        "startChar": 42,
+        "endLine": 62,
+        "endChar": 43
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1e7767_09a106e7",
+        "filename": "content/common/net_adapters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "While you\u0027re here, add DISALLOW_COPY_AND_ASSIGN?  Doesn\u0027t really matter too much here.",
+      "range": {
+        "startLine": 66,
+        "startChar": 56,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1391ed37_457bfb08",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "suggest adding:\n\n// Once the MIME type is sniffed, all data is sent as soon as it is read from the network.\nDCHECK(consumer_handle_ || (!pending_write_ \u0026\u0026 pending_buffer_read_ \u003d\u003d 0));",
+      "range": {
+        "startLine": 283,
+        "startChar": 32,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5877cdf0_af278581",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "nit:  DCHECK_GE?",
+      "range": {
+        "startLine": 291,
+        "startChar": 16,
+        "endLine": 291,
+        "endChar": 36
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ac6b95_8a48b1e2",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "Does the Mojo API provide any guarantees of this?",
+      "range": {
+        "startLine": 292,
+        "startChar": 28,
+        "endLine": 292,
+        "endChar": 36
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7cdf31_30fd1afd",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "Should this block be after the result checks?  If NetToMojoPendingBuffer::BeginWrite fails, I don\u0027t think we can rely on the value of pending_buffer_size_.",
+      "range": {
+        "startLine": 293,
+        "startChar": 5,
+        "endLine": 293,
+        "endChar": 0
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252b22bc_70ade8fa",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "Think this makes more sense to clear this below the \"pending_write_-\u003eComplete(pending_buffer_read_)\" call, so it always is actually the amount of unsent data in the buffer.  I\u0027d suggest clearing the buffer size there, too, though I\u0027m not as concerned about it.",
+      "range": {
+        "startLine": 294,
+        "startChar": 29,
+        "endLine": 294,
+        "endChar": 0
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8580f4_7d3734ba",
+        "filename": "content/network/url_loader_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "pending_buffer_... -\u003e pending_write_buffer_...\n\nAlso suggest read_ -\u003e offset_ (I read this as /reed/ rather than /red/, which confused me, at first)",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e12e0d_c08518fd",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "Maybe SlowWriter -\u003e MultipleWrites?  Slow is currently only used (For URLRequestJobs and test servers) used when there\u0027s a non-zero asynchronous delay between writes.",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23383fd_d437d512",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "include \u003cmemory\u003e",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905afac9_1f865aa9",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be called synchronously - we don\u0027t have DCHECKs about that (Though we should), but it\u0027s a part of the interface contract.",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 47
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93acc85c_d3a4169e",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "include string",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 23
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea0a4be_de03ed2e",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "nit:  There\u0027s generally a blank line before DISALLOW_COPY_AND_ASSIGN.",
+      "range": {
+        "startLine": 103,
+        "startChar": 27,
+        "endLine": 103,
+        "endChar": 48
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13faf935_429987fb",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "Is there some reason not to allow changing these after running one requset?",
+      "range": {
+        "startLine": 172,
+        "startChar": 18,
+        "endLine": 172,
+        "endChar": 0
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e997b7c_302e3100",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T18:26:32Z",
+      "side": 1,
+      "message": "Comment on this?  (Used to ensure text fixture is only used for a single request?)",
+      "range": {
+        "startLine": 216,
+        "startChar": 20,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "3a8164ef000c486080cac7818b1872f79d357ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
