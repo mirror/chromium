@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24aae12_84cf7354",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "Here and elsewhere, can we use the style |Process()| instead of just Process()? We\u0027ve been pretty inconsistent about this, but since you\u0027re doing this needed update now, let\u0027s make it all consistent and use || around code names.",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7b4190_6b5e04ba",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "This comment is wrong and should be updated since you\u0027re touching this already.",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18efe4e4_9d5b8135",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"TryLock()\" should be something else, because we didn\u0027t actually call a function named \"TryLock()\".",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a31e305_3c17e561",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"desination_frame_offset\" doesn\u0027t seem to exist here.  This is probably |destination_length|?",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5990840_d4686399",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "Bad phrasing here (not your fault): \"here since at\" should be something else.  Maybe rephrase like so:\n\nWith |playback_rate| \u003d\u003d 1, we call |TimeToSampleFrame()| because we don\u0027t want...",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065cbb99_f78dd0eb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"|when| \u003c currentTime\" should probably be \"|when| \u003c |currentTime()|\"",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455b9437_a3fdebb3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"|currentTime()|\"",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2062b172_d6d5d75a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "Maybe \"|did_set_looping| \u003d\u003d true\"?  (Note: \u003d\u003d not \u003d)",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6712892c_0c8d40ef",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "I can\u0027t be sure, but it looks like you are missing an underscore for \"playback_rate\".",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b3bf24_923cab08",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "While we\u0027re here, please change \"pannerNodes\" to \"PannerNode\u0027s\" since the node is actually called \"PannerNode\".",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7715836_4aaa452b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"|Disconnect()|\"\n\"the output_index\" -\u003e \"|output_index|\"",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673bdbb0_ad2ec458",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "I think \"SampleAccurate\" should be \"|sample_accurate|\", since this is refering to the third argument of |CalculateFinalValues()|.",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6253128a_0a11acc5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "While we\u0027re here, convert \"IT\" to \"It\".",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1685b4_1cf3cb84",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioScheduledSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"updateSchedulingInfo\" -\u003e \"|UpdateSchedulingInfo()|\"",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05487ae1_62fe1ec8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ChannelMergerNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "Might as well delete this because it\u0027s really redundant.",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716353b4_fb146c68",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ConvolverNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "Might as well delete this since it truly adds nothing to the code.",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8930396c_3e262fe6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/IIRFilterNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"createFilter\" -\u003e \"|CreateFilter()|\"?",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284e3930_09edf3ab",
+        "filename": "third_party/WebKit/Source/modules/webaudio/MediaStreamAudioDestinationNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"setAudioFormat\" -\u003e \"|SetAudioFormat()|\"",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d9a8e9_4a40707f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ScriptProcessorNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T17:04:31Z",
+      "side": 1,
+      "message": "\"with the buffersize\" -\u003e \"from the |buffer_size|\"?",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
