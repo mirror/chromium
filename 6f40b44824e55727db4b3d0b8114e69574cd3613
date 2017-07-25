@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26e4ba59_4d2ef75a",
+        "filename": "cc/trees/layer_tree_host_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-25T20:40:16Z",
+      "side": 1,
+      "message": "This is technical debt and a layering violation as well. cc should not know about OOPIFs. :-(",
+      "revId": "6f40b44824e55727db4b3d0b8114e69574cd3613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
