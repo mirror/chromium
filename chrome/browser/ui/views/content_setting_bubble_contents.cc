@@ -24,6 +24,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/web_contents.h"
@@ -32,8 +33,12 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/gfx/font_list.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/text_utils.h"
+#include "ui/views/controls/button/image_button.h"
+#include "ui/views/controls/button/image_button_factory.h"
 #include "ui/views/controls/button/label_button_border.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/button/radio_button.h"
@@ -172,7 +177,7 @@ ContentSettingBubbleContents::ContentSettingBubbleContents(
       custom_link_(nullptr),
       manage_link_(nullptr),
       manage_checkbox_(nullptr),
-      learn_more_link_(nullptr) {
+      learn_more_button_(nullptr) {
   // Compensate for built-in vertical padding in the anchor view's image.
   set_anchor_view_insets(gfx::Insets(
       GetLayoutConstant(LOCATION_BAR_BUBBLE_ANCHOR_VERTICAL_INSET), 0));
@@ -250,14 +255,6 @@ void ContentSettingBubbleContents::Init() {
     message_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     layout->StartRow(0, kSingleColumnSetId);
     layout->AddView(message_label);
-    bubble_content_empty = false;
-  }
-
-  if (!bubble_content.learn_more_link.empty()) {
-    learn_more_link_ = new views::Link(bubble_content.learn_more_link);
-    learn_more_link_->set_listener(this);
-    learn_more_link_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    layout->AddView(learn_more_link_);
     bubble_content_empty = false;
   }
 
@@ -399,12 +396,17 @@ void ContentSettingBubbleContents::Init() {
     bubble_content_empty = false;
   }
 
+  layout->AddPaddingRow(0, related_control_vertical_spacing);
   if (bubble_content.show_manage_text_as_checkbox) {
+    layout->StartRow(0, indented_kSingleColumnSetId);
     manage_checkbox_ = new views::Checkbox(bubble_content.manage_text);
     manage_checkbox_->set_listener(this);
-    layout->AddPaddingRow(0, related_control_vertical_spacing);
-    layout->StartRow(0, indented_kSingleColumnSetId);
     layout->AddView(manage_checkbox_);
+  } else {
+    layout->StartRow(0, kSingleColumnSetId);
+    manage_link_ = new views::Link(bubble_content.manage_text);
+    manage_link_->set_listener(this);
+    layout->AddView(manage_link_);
   }
 
   if (!bubble_content_empty) {
@@ -419,15 +421,22 @@ void ContentSettingBubbleContents::Init() {
 }
 
 views::View* ContentSettingBubbleContents::CreateExtraView() {
+  // Optionally add a help icon if the view wants to link to a help page.
   const ContentSettingBubbleModel::BubbleContent& bubble_content =
       content_setting_bubble_model_->bubble_content();
-  // Added as part of the primary view.
-  if (bubble_content.show_manage_text_as_checkbox)
-    return nullptr;
-
-  manage_link_ = new views::Link(bubble_content.manage_text);
-  manage_link_->set_listener(this);
-  return manage_link_;
+  if (bubble_content.show_learn_more) {
+    learn_more_button_ = views::CreateVectorImageButton(this);
+    learn_more_button_->SetImage(
+        views::CustomButton::STATE_NORMAL,
+        gfx::CreateVectorIcon(vector_icons::kHelpOutlineIcon, 16,
+                              gfx::kChromeIconGrey));
+    learn_more_button_->SetFocusForPlatform();
+    learn_more_button_->set_ink_drop_base_color(SK_ColorBLACK);
+    learn_more_button_->SetTooltipText(
+        l10n_util::GetStringUTF16(IDS_LEARN_MORE));
+    return learn_more_button_;
+  }
+  return nullptr;
 }
 
 bool ContentSettingBubbleContents::Accept() {
@@ -471,6 +480,9 @@ void ContentSettingBubbleContents::ButtonPressed(views::Button* sender,
     // Toggling the check state may change the dialog button text.
     GetDialogClientView()->UpdateDialogButtons();
     GetDialogClientView()->Layout();
+  } else if (learn_more_button_ == sender) {
+    content_setting_bubble_model_->OnLearnMoreClicked();
+    GetWidget()->Close();
   } else {
     RadioGroup::const_iterator i(
         std::find(radio_group_.begin(), radio_group_.end(), sender));
@@ -481,11 +493,6 @@ void ContentSettingBubbleContents::ButtonPressed(views::Button* sender,
 
 void ContentSettingBubbleContents::LinkClicked(views::Link* source,
                                                int event_flags) {
-  if (source == learn_more_link_) {
-    content_setting_bubble_model_->OnLearnMoreLinkClicked();
-    GetWidget()->Close();
-    return;
-  }
   if (source == custom_link_) {
     content_setting_bubble_model_->OnCustomLinkClicked();
     GetWidget()->Close();
