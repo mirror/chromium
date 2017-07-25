@@ -97,6 +97,7 @@ class WebServiceWorkerNetworkProviderImpl
   // Blink calls this method for each request starting with the main script,
   // we tag them with the provider id.
   void WillSendRequest(WebURLRequest& request) override {
+    DCHECK(!request.GetExtraData());
     std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
     extra_data->set_service_worker_provider_id(provider_->provider_id());
     extra_data->set_originated_from_service_worker(true);

@@ -438,6 +438,7 @@ WebURLRequest CreateURLRequestForNavigation(
   request.SetPreviewsState(
       static_cast<WebURLRequest::PreviewsState>(common_params.previews_state));
 
+  DCHECK(!request.GetExtraData());
   RequestExtraData* extra_data = new RequestExtraData();
   extra_data->set_stream_override(std::move(stream_override));
   extra_data->set_navigation_initiated_by_renderer(
