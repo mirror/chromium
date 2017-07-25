@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5f22edb_eec69824",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/LoadSemanticPageExample.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-25T01:15:30Z",
+      "side": 1,
+      "message": "To reduce these boiler plate, you can also make a helper method. Something like measureStyleTime (example: https://cs.chromium.org/chromium/src/third_party/WebKit/PerformanceTests/Paint/resources/paint.js?rcl\u003d620529aba9b0f9fa1ef7704b03af4ae2349e1216\u0026l\u003d5)",
+      "revId": "5e6d7b60f2c035f02b971d3abde39c4e47859548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
