@@ -45,6 +45,7 @@ class BubbleIconView : public views::InkDropHostView,
 
   // Sets the image that should be displayed in |image_|.
   void SetImage(const gfx::ImageSkia* image_skia);
+  void SetImage(const gfx::ImageSkia& img);
 
   // Returns the image currently displayed, which can be empty if not set.
   // The returned image is owned by |image_|.
@@ -99,7 +100,7 @@ class BubbleIconView : public views::InkDropHostView,
   void OnBoundsChanged(const gfx::Rect& previous_bounds) override;
 
   // Updates the icon after some state has changed.
-  void UpdateIcon();
+  virtual void UpdateIcon();
 
   // Sets the active state of the icon. An active icon will be displayed in a
   // "call to action" color.

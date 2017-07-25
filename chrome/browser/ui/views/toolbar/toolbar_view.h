@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/scoped_observer.h"
 #include "chrome/browser/command_observer.h"
 #include "chrome/browser/ui/toolbar/app_menu_icon_controller.h"
 #include "chrome/browser/ui/toolbar/back_forward_menu_model.h"
@@ -22,8 +23,10 @@
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/view.h"
+#include "ui/views/widget/widget_observer.h"
 
 class AppMenuButton;
+class BookmarkPromo;
 class Browser;
 class BrowserActionsContainer;
 class HomeButton;
@@ -47,7 +50,8 @@ class ToolbarView : public views::AccessiblePaneView,
                     public CommandObserver,
                     public views::ButtonListener,
                     public AppMenuIconController::Delegate,
-                    public UpgradeObserver {
+                    public UpgradeObserver,
+                    public views::WidgetObserver {
  public:
   // The view class name.
   static const char kViewClassName[];
@@ -81,6 +85,10 @@ class ToolbarView : public views::AccessiblePaneView,
   void ShowBookmarkBubble(const GURL& url,
                           bool already_bookmarked,
                           bookmarks::BookmarkBubbleObserver* observer);
+
+  // Shows the BookmarkPromo when the BookmarkFeatureEngagementTracker calls
+  // for it.
+  void ShowBookmarkPromoBubble();
 
   // Shows a bubble offering to save a credit card and anchors it appropriately.
   autofill::SaveCardBubbleView* ShowSaveCreditCardBubble(
@@ -166,6 +174,9 @@ class ToolbarView : public views::AccessiblePaneView,
                       AppMenuIconController::Severity severity,
                       bool animate) override;
 
+  // views::WidgetObserver:
+  void OnWidgetDestroying(views::Widget* widget) override;
+
   // Used to avoid duplicating the near-identical logic of
   // ToolbarView::CalculatePreferredSize() and ToolbarView::GetMinimumSize().
   // These two functions call through to GetSizeInternal(), passing themselves
@@ -210,6 +221,10 @@ class ToolbarView : public views::AccessiblePaneView,
 
   // The display mode used when laying out the toolbar.
   const DisplayMode display_mode_;
+
+  // Observes the BookmarkPromo's widget. Used to tell whether the promo is
+  // open and get called back when it closes.
+  ScopedObserver<views::Widget, WidgetObserver> bookmark_promo_observer_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(ToolbarView);
 };
