@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "703f3126_bb72057b",
+        "filename": "media/audio/android/audio_manager_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-25T17:50:28Z",
+      "side": 1,
+      "message": "Can you make this more of a \"why\" comment? IIUC, we want to avoid GetOptimalOutputFrameSize, which seems to equate \"optimal\" with lowest latency (with some guards to prevent buffer size from going crazy low?). GetOptimalOutputFrameSize could probably be renamed and documented to make its intentions more clear -- \"optimal\" is vague.",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 73
+      },
+      "revId": "f62858342de1cc8c070bd240746994fc1c281ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeee4a57_96dd80c2",
+        "filename": "media/audio/android/opensles_output.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-25T17:50:28Z",
+      "side": 1,
+      "message": "I have to pause and think about whether this includes 25. Make it \u003e\u003d?",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 21
+      },
+      "revId": "f62858342de1cc8c070bd240746994fc1c281ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
