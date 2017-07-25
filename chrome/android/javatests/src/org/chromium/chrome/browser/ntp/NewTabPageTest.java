@@ -33,6 +33,7 @@ import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout;
 import org.chromium.chrome.browser.omnibox.UrlBar;
+import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.suggestions.FakeMostVisitedSites;
 import org.chromium.chrome.browser.suggestions.TileSource;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
@@ -100,6 +101,9 @@ public class NewTabPageTest {
 
     @Before
     public void setUp() throws Exception {
+        // Disable peeking card animation.
+        ChromePreferenceManager.getInstance().setNewTabPageFirstCardAnimationRunCount(100);
+
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
 
@@ -113,6 +117,7 @@ public class NewTabPageTest {
         mMostVisitedSites.setTileSuggestions(FAKE_MOST_VISITED_TITLES, mSiteSuggestionUrls,
                 FAKE_MOST_VISITED_WHITELIST_ICON_PATHS, FAKE_MOST_VISITED_SOURCES);
         mSuggestionsDeps.getFactory().mostVisitedSites = mMostVisitedSites;
+
         mActivityTestRule.startMainActivityWithURL(UrlConstants.NTP_URL);
         mTab = mActivityTestRule.getActivity().getActivityTab();
         NewTabPageTestUtils.waitForNtpLoaded(mTab);
@@ -133,6 +138,7 @@ public class NewTabPageTest {
     @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     public void testRender() throws IOException {
+        mActivityTestRule.getInstrumentation().waitForIdleSync();
         mRenderTestRule.render(mTileGridLayout, "most_visited");
         mRenderTestRule.render(mFakebox, "fakebox");
         mRenderTestRule.render(mNtp.getView().getRootView(), "new_tab_page");
