@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "364309d4_267cec6a",
+        "filename": "chrome/common/media_router/mojo/dial_device_description_parser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-25T01:01:13Z",
+      "side": 1,
+      "message": "Nit: FAILED here and below?",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "015ee0811cb4290725712aafd6bd12e478664582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c2a6a5_a2195d67",
+        "filename": "chrome/utility/media_router/dial_device_description_parser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-25T01:01:13Z",
+      "side": 1,
+      "message": "Isn\u0027t this redundant, since we already do validation in ValidateParsedDeviceDescription()?",
+      "revId": "015ee0811cb4290725712aafd6bd12e478664582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eda8289_4360e22d",
+        "filename": "chrome/utility/media_router/dial_device_description_parser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-25T01:01:13Z",
+      "side": 1,
+      "message": "Nit: you can omit the braces if the body of the if-statement is just one line.",
+      "range": {
+        "startLine": 21,
+        "startChar": 37,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "015ee0811cb4290725712aafd6bd12e478664582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86382fb_7a4f3c39",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25133,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-25T01:01:13Z",
+      "side": 1,
+      "message": "Nit: s/xml/XML",
+      "range": {
+        "startLine": 25133,
+        "startChar": 32,
+        "endLine": 25133,
+        "endChar": 35
+      },
+      "revId": "015ee0811cb4290725712aafd6bd12e478664582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf427a1_32979e59",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25134,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-25T01:01:13Z",
+      "side": 1,
+      "message": "Nit: Failed ?",
+      "range": {
+        "startLine": 25134,
+        "startChar": 24,
+        "endLine": 25134,
+        "endChar": 28
+      },
+      "revId": "015ee0811cb4290725712aafd6bd12e478664582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
