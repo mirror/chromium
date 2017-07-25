@@ -23649,6 +23649,7 @@ from previous Chrome versions.
   <int value="1386300777"
       label="OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains:disabled"/>
   <int value="1389729816" label="data-reduction-proxy-lo-fi"/>
+  <int value="1394633723" label="PWAPersistentNotification:disabled"/>
   <int value="1397069250" label="NetworkService:disabled"/>
   <int value="1405459667" label="enable-fast-text-autosizing"/>
   <int value="1406354320" label="MacViewsWebUIDialogs:enabled"/>
@@ -23793,6 +23794,7 @@ from previous Chrome versions.
   <int value="1872185826" label="LocationHardReload:enabled"/>
   <int value="1874604540" label="UseSuggestionsEvenIfFew:disabled"/>
   <int value="1878331098" label="GuestViewCrossProcessFrames:enabled"/>
+  <int value="1878450302" label="PWAPersistentNotification:enabled"/>
   <int value="1881036528" label="disable-multilingual-spellchecker"/>
   <int value="1881174782" label="disable-brotli"/>
   <int value="1889076955" label="disable-app-link"/>
