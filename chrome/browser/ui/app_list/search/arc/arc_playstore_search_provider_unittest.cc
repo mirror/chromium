@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/ui/app_list/app_list_test_util.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_test.h"
 #include "chrome/browser/ui/app_list/test/test_app_list_controller_delegate.h"
@@ -49,7 +50,13 @@ class ArcPlayStoreSearchProviderTest : public AppListTestBase {
   DISALLOW_COPY_AND_ASSIGN(ArcPlayStoreSearchProviderTest);
 };
 
-TEST_F(ArcPlayStoreSearchProviderTest, Basic) {
+// Crashes on ChromeOS only.  http://crbug.com/748542
+#if defined(OS_CHROMEOS)
+#define MAYBE_Basic DISABLED_Basic
+#else
+#define MAYBE_Basic Basic
+#endif
+TEST_F(ArcPlayStoreSearchProviderTest, MAYBE_Basic) {
   constexpr size_t kMaxResults = 6;
   constexpr char kQuery[] = "Play App";
 
