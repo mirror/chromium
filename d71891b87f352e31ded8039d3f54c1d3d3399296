@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "475e8590_6f3c4844",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-25T12:11:23Z",
+      "side": 1,
+      "message": "As far as I know, yes, it will in subresource_filter. However, the notion of third-party-ness is abstracted away from UrlPatternIndex, which only takes bool as a parameter in FindMatch. Thus, you are free to give it your own semantics.\n\nStill, \"same domain\" sounds slightly ambiguous to me (is it same string, or same suffix? are a.b.com and c.d.com considered same domain because of .com?). Could we use a term \"eTLD+1\" here instead of \"domain\"? You could also add a note that this informally means \"the same site\".",
+      "parentUuid": "377aeac3_021de913",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "597a9c9d_374c7259",
         "filename": "extensions/common/api/declarative_net_request.idl",
         "patchSetId": 3
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Will keep this as is for now. Not calling it urlPattern also makes it slightly easier to understand and document. E.g. urlFilter \u003d \"Left anchor + pattern + Right anchor\".",
       "parentUuid": "66d0c7e9_02a5e598",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08881582_377562ca",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-25T12:11:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89f7714f_94d5b969",
       "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
