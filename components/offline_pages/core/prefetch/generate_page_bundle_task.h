@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_GENERATE_PAGE_BUNDLE_TASK_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_GENERATE_PAGE_BUNDLE_TASK_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -16,14 +17,25 @@
 namespace offline_pages {
 class PrefetchGCMHandler;
 class PrefetchNetworkRequestFactory;
+class PrefetchStore;
 
 // Task that attempts to start archiving the URLs the prefetch service has
 // determined are viable to prefetch.
 class GeneratePageBundleTask : public Task {
  public:
-  // TODO(dewittj): remove the list of prefetch URLs when the DB operation can
-  // supply the current set of URLs.
-  GeneratePageBundleTask(const std::vector<PrefetchURL>& prefetch_urls,
+  // Used as temp storage to pass around url metadata fetched from DB.
+  struct FetchedUrl {
+    FetchedUrl();
+    FetchedUrl(int64_t offline_id,
+               std::string requested_url,
+               int request_archive_attempt_count);
+
+    int64_t offline_id_;
+    std::string requested_url_;
+    int request_archive_attempt_count_;
+  };
+
+  GeneratePageBundleTask(PrefetchStore* prefetch_store,
                          PrefetchGCMHandler* gcm_handler,
                          PrefetchNetworkRequestFactory* request_factory,
                          const PrefetchRequestFinishedCallback& callback);
@@ -33,17 +45,19 @@ class GeneratePageBundleTask : public Task {
   void Run() override;
 
  private:
-  void StartGeneratePageBundle(int updated_entry_count);
+  void StartGeneratePageBundle(std::unique_ptr<std::vector<FetchedUrl>> urls);
   void GotRegistrationId(const std::string& id,
                          instance_id::InstanceID::Result result);
 
-  std::vector<PrefetchURL> prefetch_urls_;
+  PrefetchStore* prefetch_store_;
   PrefetchGCMHandler* gcm_handler_;
   PrefetchNetworkRequestFactory* request_factory_;
   PrefetchRequestFinishedCallback callback_;
 
-  base::WeakPtrFactory<GeneratePageBundleTask> weak_factory_;
+  // Temporary storage for urls to request bundle generation for.
+  std::vector<std::string> urls_;
 
+  base::WeakPtrFactory<GeneratePageBundleTask> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(GeneratePageBundleTask);
 };
 
