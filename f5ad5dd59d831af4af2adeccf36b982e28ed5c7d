@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91fea54c_1efcfd09",
+        "filename": "chrome/android/java/res/layout/find_in_page.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-25T20:46:28Z",
+      "side": 1,
+      "message": "I suspect this should use BlackTitle1, but let\u0027s ask Hannah.",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb9986f_86a16fe8",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-25T20:46:28Z",
+      "side": 1,
+      "message": "This is used in bookmark_add_edit_folder_activity.xml. If you remove this tools:ignore does lint throw an error? Same question for BlackTitle2 and other styles used in this CL.",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d8e809_40db28f5",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-25T20:46:28Z",
+      "side": 1,
+      "message": "Let\u0027s add a \u003c!-- TODO(huayinz): remove tools:ignore once these text styles are used --\u003e at the top of this text style section so that we remember to do the clean up later.",
+      "range": {
+        "startLine": 53,
+        "startChar": 74,
+        "endLine": 53,
+        "endChar": 89
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f708ad_11c4b5e2",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-25T20:46:28Z",
+      "side": 1,
+      "message": "This could just be @android:color/white instead of defining a new white_alpha_100",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e222989_3d32fbcd",
+        "filename": "ui/android/java/res/values/colors.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-25T20:46:28Z",
+      "side": 1,
+      "message": "nit: \u003c!-- Common colors --\u003e",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
