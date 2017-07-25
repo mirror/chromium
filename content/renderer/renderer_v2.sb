@@ -88,13 +88,13 @@
   (subpath "/usr/share/locale")
   (subpath "/usr/share/zoneinfo"))
 
-(allow file-read* (path "/usr/share/icu/icudt57l.dat"))
+(allow file-read* (subpath "/usr/share/icu"))
 
 ; Reads from /Library.
 (allow file-read-data (subpath "/Library/Fonts"))
 
 ; Reads from /System.
-(allow file-read-data 
+(allow file-read-data
   (path "/System/Library/CoreServices/CoreTypes.bundle/Contents/Library/AppExceptions.bundle/Exceptions.plist")
   (path "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Exceptions.plist")
   (path "/System/Library/CoreServices/SystemVersion.plist")
