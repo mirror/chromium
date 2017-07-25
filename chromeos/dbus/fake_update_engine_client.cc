@@ -70,6 +70,11 @@ void FakeUpdateEngineClient::NotifyObserversThatStatusChanged(
     observer.UpdateStatusChanged(status);
 }
 
+void FakeUpdateEngineClient::NotifyUpdateOverCellularTargetSet(bool success) {
+  for (auto& observer : observers_)
+    observer.OnUpdateOverCellularTargetSet(success);
+}
+
 void FakeUpdateEngineClient::SetChannel(const std::string& target_channel,
                                         bool is_powerwash_allowed) {
 }
