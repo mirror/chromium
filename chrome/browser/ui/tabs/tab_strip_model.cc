@@ -430,18 +430,16 @@ void TabStripModel::MoveWebContentsAt(int index,
                                       int to_position,
                                       bool select_after_move) {
   DCHECK(ContainsIndex(index));
-  if (index == to_position)
-    return;
 
+  // Ensure pinned and non-pinned tabs do not mix.
   int first_non_pinned_tab = IndexOfFirstNonPinnedTab();
-  if ((index < first_non_pinned_tab && to_position >= first_non_pinned_tab) ||
-      (to_position < first_non_pinned_tab && index >= first_non_pinned_tab)) {
-    // This would result in pinned tabs mixed with non-pinned tabs. We don't
-    // allow that.
-    return;
-  }
+  to_position =
+      IsTabPinned(index) ? std::min(first_non_pinned_tab - 1, to_position);
+    : std::max(first_non_pinned_tab, to_position);
+    if (index == to_position)
+      return;
 
-  MoveWebContentsAtImpl(index, to_position, select_after_move);
+    MoveWebContentsAtImpl(index, to_position, select_after_move);
 }
 
 void TabStripModel::MoveSelectedTabsTo(int index) {
