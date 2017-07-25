@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a527e54_195ed38a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T19:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa8e756_29f6906a",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b7c9eea_b564941c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024bbb6c_e0e67237",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T19:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b7c9eea_b564941c",
+      "range": {
+        "startLine": 135,
+        "startChar": 9,
+        "endLine": 135,
+        "endChar": 28
+      },
+      "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "217f7272_bbe5f321",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T19:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25f82631_96711f78",
+      "range": {
+        "startLine": 138,
+        "startChar": 33,
+        "endLine": 138,
+        "endChar": 38
+      },
+      "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12359ddd_3f548204",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "02dd2131_56244d4c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T19:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12359ddd_3f548204",
+      "range": {
+        "startLine": 139,
+        "startChar": 31,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b5ef0ff_bcd49a1b",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-05T14:27:04Z",
       "side": 1,
       "message": "We generally avoid default arguments... is there a pressing need for this?",
+      "range": {
+        "startLine": 142,
+        "startChar": 39,
+        "endLine": 142,
+        "endChar": 40
+      },
+      "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671fb34a_4cac41c7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T19:49:20Z",
+      "side": 1,
+      "message": "4/5 calls to this method don\u0027t have a sorted list of windows to provide, so I believe that the readability gained by this default arguments outweighs the downsides https://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "parentUuid": "3b5ef0ff_bcd49a1b",
       "range": {
         "startLine": 142,
         "startChar": 39,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a477e5c2_ef7f4f80",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T19:49:20Z",
+      "side": 1,
+      "message": "\"might be\" is intended. Is there a better term that I could use? I added \"(true when window visibility is unknown)\" to clarify.",
+      "parentUuid": "ac325acf_626d6c82",
+      "range": {
+        "startLine": 256,
+        "startChar": 67,
+        "endLine": 256,
+        "endChar": 72
+      },
+      "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e13a64_fc2adb21",
         "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65c39ac_33c0a56e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T19:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e13a64_fc2adb21",
+      "range": {
+        "startLine": 692,
+        "startChar": 51,
+        "endLine": 692,
+        "endChar": 58
+      },
+      "revId": "07c03b4a2d2068562de2bab458c5f15b5c3d19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
