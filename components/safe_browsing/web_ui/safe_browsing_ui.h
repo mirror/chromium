@@ -6,6 +6,7 @@
 #define COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
 
 #include "base/macros.h"
+#include "components/safe_browsing/web_ui/webui.pb.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -20,8 +21,17 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
  public:
   SafeBrowsingUIHandler(content::BrowserContext*);
   ~SafeBrowsingUIHandler() override;
+
   void GetExperiments(const base::ListValue* args);
   void GetPrefs(const base::ListValue* args);
+  void GetDatabaseManagerInfo(const base::ListValue* args);
+
+  void AddUpdateInfo(base::ListValue* list_value,
+                     DatabaseManagerInfo::UpdateInfo* update_info);
+  void AddDatabaseInfo(base::ListValue* list_value,
+                       DatabaseManagerInfo::DatabaseInfo* database_info);
+  void AddStoreInfo(base::ListValue* list_value,
+                    DatabaseManagerInfo::DatabaseInfo::StoreInfo* store_info);
   void RegisterMessages() override;
 
  private:
