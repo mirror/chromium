@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13dff32a_6e8c2f2b",
+        "filename": "cc/input/scroller_size_metrics.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-25T23:03:46Z",
+      "side": 1,
+      "message": "If these limits are meant to be just for tilings, then perhaps they should have tiling in the name...?",
+      "revId": "598ec9690fb3a728f066095c0f0961cab6a299a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925a9aa6_5e2107d4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 8605,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-25T23:03:46Z",
+      "side": 1,
+      "message": "Please be a bit clearer.  Is this memory newly allocated for tiling on a layer or all GPU memory for used for tiling?  (i.e., do caches / reuse of previously computed data come into play?)\n\nRecorded on each time a layer is composed?\n\nRecorded regardless of whether there are \"tiling\" in the layer or not?\n(Is this what the !active_tree()-\u003epicture_layers().empty() test does, or is that something else?)\n\nBTW, what is a \"tiling\"?  Is this a well-known term?",
+      "range": {
+        "startLine": 8605,
+        "startChar": 21,
+        "endLine": 8605,
+        "endChar": 0
+      },
+      "revId": "598ec9690fb3a728f066095c0f0961cab6a299a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
