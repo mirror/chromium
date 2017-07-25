@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "72746b3f_5dc4fcb0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-25T22:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85c2653_51e1e2c2",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc9c1924_9c8df34b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c72c13d_1fa361da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-25T22:01:42Z",
+      "side": 1,
+      "message": "As discussed offline, I put a note to investigate when everything gets integrated to see what actually happens/makes sense! Hopefully it\u0027s not this tricky :/",
+      "parentUuid": "dc9c1924_9c8df34b",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "0a4ca3d289747aefd35b85de02ca2523e04e7dea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
