@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18f4d823_fe87daac",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-25T18:15:12Z",
+      "side": 1,
+      "message": "This is debugging code? It should be replaced with a TODO(gklassen) perhaps pending the updating of SubmitCompositorFrame?\n\nAlso: will ClientLayerTreeFrameSink ever exist after the window* in HitTestDataProvider is destroyed?",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa21b1b7_6e26b452",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-25T18:15:12Z",
+      "side": 1,
+      "message": "AFAIK: aura may depend on viz/client but viz client may not depend on aura.",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283c369c_220cf3ca",
+        "filename": "services/viz/hit_test/public/interfaces/hit_test_region_list.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-25T18:15:12Z",
+      "side": 1,
+      "message": "This could be optional? How do we validate this when deserializing? What are the consequences of it presence? What happens if a renderer guesses this? One of the points of only shipping surface ids is that they are unguessable. This is conceivably guessable.",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b61fed9_81180306",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-25T18:15:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t some windows correspond to the client region? In which case, they must have kHitTestChildSurface and the child surface id set so that events go to the renderer?",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
