@@ -52,6 +52,24 @@
       "revId": "cf3c144248cc8d904159f4c543b372e3e36b5eff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cdf1b6_89e30e52",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-25T21:24:24Z",
+      "side": 1,
+      "message": "This needs to go into the internal verison. Told Rob offline...",
+      "parentUuid": "caec89f5_61f51322",
+      "revId": "cf3c144248cc8d904159f4c543b372e3e36b5eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
