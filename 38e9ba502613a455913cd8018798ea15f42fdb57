@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f5f2f46_db8b93a2",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-25T22:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f0c035_973b2a99",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 55
+      },
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfaef682_435e1f95",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 7
@@ -83,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5a6aa2e5_e58d3a5d",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-25T22:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "385018d1_0f6b49cd",
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd720d3a_1db222fa",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl_unittest.cc",
         "patchSetId": 7
@@ -103,6 +145,30 @@
       "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e675dd_6b153065",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-25T22:27:12Z",
+      "side": 1,
+      "message": "Done\n\nIt\u0027s not necessary",
+      "parentUuid": "bd720d3a_1db222fa",
+      "range": {
+        "startLine": 25,
+        "startChar": 48,
+        "endLine": 25,
+        "endChar": 55
+      },
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6bb34a1_c4409297",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-25T22:27:12Z",
+      "side": 1,
+      "message": "Better name recommendation?",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 63
+      },
+      "revId": "5a00643f9b5a64b101876ecf9e7b2aad2ee923c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
