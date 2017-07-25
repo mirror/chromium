@@ -34,6 +34,24 @@
       "revId": "5e6d7b60f2c035f02b971d3abde39c4e47859548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd730289_b3b70c01",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/LoadSemanticPageExample.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-25T10:27:42Z",
+      "side": 1,
+      "message": "Ok to leave as-is",
+      "parentUuid": "569abbdb_e9ae37fa",
+      "revId": "5e6d7b60f2c035f02b971d3abde39c4e47859548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
