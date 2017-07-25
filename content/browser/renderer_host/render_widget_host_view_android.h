@@ -318,6 +318,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void GotFocus();
   void LostFocus();
 
+  void NotifyOnNextCompositorFrameAck(base::OnceCallback<void()> callback);
+
  private:
   void RunAckCallbacks();
 
@@ -467,6 +469,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   base::ObserverList<DestructionObserver> destruction_observers_;
 
   MouseWheelPhaseHandler mouse_wheel_phase_handler_;
+
+  std::queue<base::OnceCallback<void()>> compositor_frame_ack_callbacks_;
 
   base::WeakPtrFactory<RenderWidgetHostViewAndroid> weak_ptr_factory_;
 
