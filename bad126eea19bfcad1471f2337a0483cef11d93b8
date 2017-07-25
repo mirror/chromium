@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ca1ddc_f3419412",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-25T22:12:18Z",
+      "side": 1,
+      "message": "Nit: Remove the Now. Extracts text specifier from variations [...]",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "bad126eea19bfcad1471f2337a0483cef11d93b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de54f9a_529f80dc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-25T22:12:18Z",
+      "side": 1,
+      "message": "Nit: Multiline if statement conditions make the braces here more necessary.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "bad126eea19bfcad1471f2337a0483cef11d93b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec1ea33_6d812a99",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-25T22:12:18Z",
+      "side": 1,
+      "message": "Remove this part of the path. out/Default/ is specific to a local machine\u0027s configuration.",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 15
+      },
+      "revId": "bad126eea19bfcad1471f2337a0483cef11d93b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
