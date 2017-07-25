@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc34ecc_1d9082a0",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-07-25T02:10:28Z",
+      "side": 1,
+      "message": "There is a *theoretical* dependency here in that this should finish running before a user-initiated Save. (Same goes for the Save call, they should happen in the order they\u0027re issued)\n\nDoes that mean I should move to a SequencedTaskRunner?",
+      "range": {
+        "startLine": 451,
+        "startChar": 24,
+        "endLine": 451,
+        "endChar": 36
+      },
+      "revId": "89119a41029383a39c461d2a01df4766d097944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876ab5f5_099dfc45",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-07-25T02:10:28Z",
+      "side": 1,
+      "message": "Theoretically, we\u0027d like Save() to be executed even if Shutdown is invoked. However, the cost of not doing so means simply losing one or two words added to/removed from the dictionary.\n\nHow careful should we be with BLOCK_SHUTDOWN?",
+      "range": {
+        "startLine": 461,
+        "startChar": 56,
+        "endLine": 461,
+        "endChar": 64
+      },
+      "revId": "89119a41029383a39c461d2a01df4766d097944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
