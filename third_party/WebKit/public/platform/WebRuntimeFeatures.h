@@ -80,7 +80,6 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableColorCorrectRendering(bool);
   BLINK_PLATFORM_EXPORT static void EnableDatabase(bool);
   BLINK_PLATFORM_EXPORT static void EnableDecodeToYUV(bool);
-  BLINK_PLATFORM_EXPORT static void EnableDocumentWriteEvaluator(bool);
   BLINK_PLATFORM_EXPORT static void EnableExperimentalCanvasFeatures(bool);
   BLINK_PLATFORM_EXPORT static void EnableFastMobileScrolling(bool);
   BLINK_PLATFORM_EXPORT static void EnableFeaturePolicy(bool);
