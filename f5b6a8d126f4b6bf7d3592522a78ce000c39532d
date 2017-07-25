@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c847eb89_4476cfb9",
+        "filename": "components/cast_certificate/cast_crl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-25T20:51:13Z",
+      "side": 1,
+      "message": "nit: might be clearer to move this to the path building section below signature verification.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 61
+      },
+      "revId": "f5b6a8d126f4b6bf7d3592522a78ce000c39532d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25fab74_3650a4a9",
+        "filename": "components/cast_certificate/cast_crl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-25T20:51:13Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 32
+      },
+      "revId": "f5b6a8d126f4b6bf7d3592522a78ce000c39532d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
