@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32936b30_6d79ff20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T00:39:09Z",
+      "side": 1,
+      "message": "Consider renaming this to mIsPaymentRequestTriggered or something like that",
+      "range": {
+        "startLine": 99,
+        "startChar": 65,
+        "endLine": 99,
+        "endChar": 79
+      },
+      "revId": "aa7b39b2888e810070bf9d976e4fa5098b37adad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a323544_1116bc87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T00:39:09Z",
+      "side": 1,
+      "message": "consider renaming to not triggered",
+      "revId": "aa7b39b2888e810070bf9d976e4fa5098b37adad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b638085_8fb2a54c",
+        "filename": "components/payments/core/journey_logger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T00:39:09Z",
+      "side": 1,
+      "message": "comment contradicts this?\n\nverify all comments",
+      "revId": "aa7b39b2888e810070bf9d976e4fa5098b37adad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
