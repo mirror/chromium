@@ -22,6 +22,30 @@
       "revId": "36e805e5131a89323be13d05e26efd35fb401381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf1eb3c_8188fe8e",
+        "filename": "chrome/browser/android/signin/signin_manager_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T14:40:03Z",
+      "side": 1,
+      "message": "Sigh... sorry. Done.",
+      "parentUuid": "5e0f9f5b_954dd6b4",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "36e805e5131a89323be13d05e26efd35fb401381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b668ba4b_7e3f4bd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T14:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "200164cc_5bda76a4",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15373129_d87418dd",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5b016a_31480e35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T14:40:03Z",
+      "side": 1,
+      "message": "Done. I\u0027m still keeping the remark about the thread though, since we\u0027re doing this before the PostTask.",
+      "parentUuid": "15373129_d87418dd",
+      "range": {
+        "startLine": 17,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b3987488_ecbeed59",
+        "filename": "chrome/browser/android/signin/signin_manager_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T14:40:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85df98ce_8e11b1c2",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 18
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8134ccb5_89484f1c",
         "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27ecd64_fcac886c",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T14:40:03Z",
+      "side": 1,
+      "message": "Done. Yes, that\u0027s the other method of writing repeated tests :)\n\nI assume that the commented part in your sketch meant that this does not have to be extracted into a separate function, but I did that as well. The logic is not too complicated, but at least we don\u0027t have to repeat the TODO twice and befriend two tests.",
+      "parentUuid": "8134ccb5_89484f1c",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 69
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
