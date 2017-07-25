@@ -277,6 +277,7 @@ NSString* const kOverscrollActionsDidEnd = @"OverscrollActionsDidStop";
 }
 
 - (void)dealloc {
+  NSLog(@"dealloc :%p", self);
   self.overscrollActionView.delegate = nil;
   [self invalidate];
 }

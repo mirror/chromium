@@ -5,7 +5,7 @@
 #ifndef IOS_CLEAN_CHROME_APP_STEPS_ROOT_COORDINATOR_APPLICATION_STEP_H_
 #define IOS_CLEAN_CHROME_APP_STEPS_ROOT_COORDINATOR_APPLICATION_STEP_H_
 
-#import "ios/clean/chrome/app/application_step.h"
+#import "ios/clean/chrome/app/steps/application_step.h"
 #import "ios/clean/chrome/browser/ui/root/root_coordinator.h"
 
 // Category on RootCoordinator to allow it to act as an application
