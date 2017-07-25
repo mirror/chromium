@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533b546c_d4fc421f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-25T23:25:17Z",
+      "side": 1,
+      "message": "Should Reconcilers simply call SchedulePipeline Processing?",
+      "range": {
+        "startLine": 40,
+        "startChar": 40,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63c367a_8a0e76c8",
+        "filename": "components/offline_pages/core/task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-25T23:25:17Z",
+      "side": 1,
+      "message": "Do we want to PostTask here?",
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e944f8a8_a3fb119a",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-25T23:25:17Z",
+      "side": 1,
+      "message": "This feels more like an observer than a Delegate.  Any reason you chose this particular terminology?",
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
