@@ -166,6 +166,15 @@ public abstract class ViewAndroidDelegate {
         return mTemporaryContainerLocation[1];
     }
 
+    @CalledByNative
+    private boolean requestFocus() {
+        View containerView = getContainerView();
+        if (containerView.isFocusable() && containerView.isFocusableInTouchMode()) {
+            return containerView.isFocused() ? true : containerView.requestFocus();
+        }
+        return false;
+    }
+
     /**
      * Create and return a basic implementation of {@link ViewAndroidDelegate} where
      * the container view is not allowed to be changed after initialization.

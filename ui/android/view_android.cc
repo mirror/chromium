@@ -254,6 +254,14 @@ cc::Layer* ViewAndroid::GetLayer() const {
   return layer_.get();
 }
 
+bool ViewAndroid::Focus() {
+  ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
+  if (delegate.is_null())
+    return false;
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_ViewAndroidDelegate_requestFocus(env, delegate);
+}
+
 void ViewAndroid::SetLayer(scoped_refptr<cc::Layer> layer) {
   layer_ = layer;
 }

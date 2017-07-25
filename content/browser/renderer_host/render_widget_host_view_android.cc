@@ -615,9 +615,8 @@ void RenderWidgetHostViewAndroid::LostFocus() {
 }
 
 void RenderWidgetHostViewAndroid::Focus() {
-  // TODO(boliu): Make sure rwhva/rwh focus state stays in sync with CVC, and
-  // ideally properly implements "request focus". See crbug.com/746099.
-  host_->Focus();
+  if (view_.Focus())
+    host_->Focus();
   OnFocusInternal();
 }
 
