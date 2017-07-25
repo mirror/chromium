@@ -94,6 +94,30 @@
       "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052fb7cd_1ace1ceb",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-25T17:47:37Z",
+      "side": 0,
+      "message": "Still put the cropping out of the \"if (!frame-\u003esize().equals(output_size))\", since cropped-without-scaling frame needs to go into \"if (IsFrameUnpackedOrInverted(frame.get()))\".\nPutting the cropping inside will make the following logic pretty complicated. I tried several methods for this purpose, still this patch is the simplest and clearest. Hope it\u0027s OK.",
+      "parentUuid": "d6a0013c_5dc01ab7",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
