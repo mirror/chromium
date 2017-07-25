@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "bbc688f6_dc039269",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T19:59:20Z",
+      "side": 1,
+      "message": "Nit: \u003d default;",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "a7b022302a6fe939c8019a187fe84b37d5b7aefb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca44f68c_c7b638dd",
+        "filename": "components/safe_browsing/common/safe_browsing.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T19:59:20Z",
+      "side": 1,
+      "message": "As someone who\u0027s not familiar with safe browsing, it\u0027s not super clear to me who will ultimately consume this interface / where the safe browsing checker itself lives. Maybe a comment could help?",
+      "revId": "a7b022302a6fe939c8019a187fe84b37d5b7aefb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e785bdf0_995d03d6",
+        "filename": "components/safe_browsing/common/safe_browsing.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T19:59:20Z",
+      "side": 1,
+      "message": "Nit: shown",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "a7b022302a6fe939c8019a187fe84b37d5b7aefb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae7ae857_0f638809",
         "filename": "components/safe_browsing/common/safe_browsing.mojom",
         "patchSetId": 2
@@ -13,6 +76,24 @@
       "writtenOn": "2017-07-24T21:50:33Z",
       "side": 1,
       "message": "One thing for discussion:\nI decided to use a string here because that is what content::ResourceRequest does (which is used in IPC messages such as content::mojom::URLLoaderFactory). That makes me think that it is acceptable to pass a string.\n\nBesides, this field is not always used at the service side (at the moment, Chrome never uses it; only Android WebView uses it). So we avoid the extra cost of parsing it when it is not used.\n\nWDYT?",
+      "revId": "a7b022302a6fe939c8019a187fe84b37d5b7aefb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe610b6_339cbbf5",
+        "filename": "components/safe_browsing/common/safe_browsing.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T19:59:20Z",
+      "side": 1,
+      "message": "That seems reasonable to me.",
+      "parentUuid": "ae7ae857_0f638809",
       "revId": "a7b022302a6fe939c8019a187fe84b37d5b7aefb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
