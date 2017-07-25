@@ -5,6 +5,7 @@
 #include "content/browser/zygote_host/zygote_host_impl_linux.h"
 
 #include <sys/socket.h>
+#include <sys/types.h>
 
 #include "base/allocator/allocator_extension.h"
 #include "base/files/file_enumerator.h"
@@ -72,6 +73,19 @@ ZygoteHostImpl* ZygoteHostImpl::GetInstance() {
 void ZygoteHostImpl::Init(const base::CommandLine& command_line) {
   if (command_line.HasSwitch(switches::kNoSandbox)) {
     return;
+  }
+
+  // Exit early if running as root without --no-sandbox. See crbug.com/638180.
+  // When running as root with the sandbox enabled, the browser process
+  // is crashing on zygote initialization. Running as root without the sandbox
+  // is not supported, and if it were able to display UI Chrome would be showing
+  // an error message. With the zygote crashing, it doesn't even get to that.
+  // Moreover, these crashes are polluting our statistics.
+  uid_t uid;
+  gid_t gid;
+  if (!sandbox::Credentials::GetRESIds(&uid, &gid) || uid == 0) {
+    LOG(ERROR) << "Can't run as root without --" << switches::kNoSandbox << ".";
+    exit(1);
   }
 
   {

@@ -38,22 +38,6 @@ namespace {
 
 bool IsRunningOnValgrind() { return RUNNING_ON_VALGRIND; }
 
-// Checks that the set of RES-uids and the set of RES-gids have
-// one element each and return that element in |resuid| and |resgid|
-// respectively. It's ok to pass NULL as one or both of the ids.
-bool GetRESIds(uid_t* resuid, gid_t* resgid) {
-  uid_t ruid, euid, suid;
-  gid_t rgid, egid, sgid;
-  PCHECK(sys_getresuid(&ruid, &euid, &suid) == 0);
-  PCHECK(sys_getresgid(&rgid, &egid, &sgid) == 0);
-  const bool uids_are_equal = (ruid == euid) && (ruid == suid);
-  const bool gids_are_equal = (rgid == egid) && (rgid == sgid);
-  if (!uids_are_equal || !gids_are_equal) return false;
-  if (resuid) *resuid = euid;
-  if (resgid) *resgid = egid;
-  return true;
-}
-
 const int kExitSuccess = 0;
 
 #if defined(__clang__)
@@ -157,16 +141,30 @@ bool SetGidAndUidMaps(gid_t gid, uid_t uid) {
   if (NamespaceUtils::KernelSupportsDenySetgroups()) {
     PCHECK(NamespaceUtils::DenySetgroups());
   }
-  DCHECK(GetRESIds(NULL, NULL));
+  DCHECK(Credentials::GetRESIds(NULL, NULL));
   if (!NamespaceUtils::WriteToIdMapFile(kGidMapFile, gid) ||
       !NamespaceUtils::WriteToIdMapFile(kUidMapFile, uid)) {
     return false;
   }
-  DCHECK(GetRESIds(NULL, NULL));
+  DCHECK(Credentials::GetRESIds(NULL, NULL));
   return true;
 }
 
 }  // namespace.
+
+// static
+bool Credentials::GetRESIds(uid_t* resuid, gid_t* resgid) {
+  uid_t ruid, euid, suid;
+  gid_t rgid, egid, sgid;
+  PCHECK(sys_getresuid(&ruid, &euid, &suid) == 0);
+  PCHECK(sys_getresgid(&rgid, &egid, &sgid) == 0);
+  const bool uids_are_equal = (ruid == euid) && (ruid == suid);
+  const bool gids_are_equal = (rgid == egid) && (rgid == sgid);
+  if (!uids_are_equal || !gids_are_equal) return false;
+  if (resuid) *resuid = euid;
+  if (resgid) *resgid = egid;
+  return true;
+}
 
 // static
 bool Credentials::DropAllCapabilities(int proc_fd) {
