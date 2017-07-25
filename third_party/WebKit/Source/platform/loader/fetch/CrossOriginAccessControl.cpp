@@ -542,6 +542,8 @@ void CrossOriginAccessControl::RedirectErrorString(
 
 bool CrossOriginAccessControl::HandleRedirect(
     RefPtr<SecurityOrigin> current_security_origin,
+    const KURL& new_url,
+    WebURLRequest::RequestContext request_context,
     ResourceRequest& new_request,
     const ResourceResponse& redirect_response,
     WebURLRequest::FetchCredentialsMode credentials_mode,
@@ -549,7 +551,6 @@ bool CrossOriginAccessControl::HandleRedirect(
     String& error_message) {
   // http://www.w3.org/TR/cors/#redirect-steps terminology:
   const KURL& last_url = redirect_response.Url();
-  const KURL& new_url = new_request.Url();
 
   RefPtr<SecurityOrigin> new_security_origin = current_security_origin;
 
@@ -581,7 +582,7 @@ bool CrossOriginAccessControl::HandleRedirect(
       builder.Append("' has been blocked by CORS policy: ");
       CrossOriginAccessControl::AccessControlErrorString(
           builder, cors_status, redirect_response,
-          current_security_origin.Get(), new_request.GetRequestContext());
+          current_security_origin.Get(), request_context);
       error_message = builder.ToString();
       return false;
     }
