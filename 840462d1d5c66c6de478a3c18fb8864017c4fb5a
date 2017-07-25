@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3c28796_381bc407",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-25T08:59:12Z",
+      "side": 1,
+      "message": "nit: I am puzzled about the past tense in the context of \"appendSuggestions\". I know that the fact whether we\u0027ll extend has been decided elsewhere in the past but it still does not intuitively fit together. What about extendSectionSize?",
+      "range": {
+        "startLine": 406,
+        "startChar": 76,
+        "endLine": 406,
+        "endChar": 95
+      },
+      "revId": "840462d1d5c66c6de478a3c18fb8864017c4fb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
