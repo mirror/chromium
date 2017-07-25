@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bc14bc3_07d36ca2",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-07-25T00:02:55Z",
+      "side": 1,
+      "message": "Do we need to remove dependencies on files like this tools_menu_constants.h?",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e47bb0b_58dee302",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-07-25T00:02:55Z",
+      "side": 1,
+      "message": "The comment for TapViewWithAccessibilityId() says \"grey_sufficientlyVisible() is necessary because reloading a cell in a collection view might duplicate it\".  Here the collection view doesn\u0027t seem to be reloaded, so I didn\u0027t add the visibility check.",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
