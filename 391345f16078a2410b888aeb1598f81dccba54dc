@@ -16,6 +16,29 @@
       "revId": "391345f16078a2410b888aeb1598f81dccba54dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d8dc0a_ef435237",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-25T03:48:15Z",
+      "side": 1,
+      "message": "optional: 327776 was marked fixed two years ago, nuke this code and then remove the member widget_initialized_.",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 22
+      },
+      "revId": "391345f16078a2410b888aeb1598f81dccba54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
