@@ -16,6 +16,24 @@
       "revId": "57fc53b6e72d22dbc04bacafc117e5a58dcef19d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d09bd8a_9a5726bf",
+        "filename": "content/child/request_extra_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-25T07:52:20Z",
+      "side": 0,
+      "message": "Aren\u0027t we referring it here?\n\nhttps://cs.chromium.org/chromium/src/content/browser/loader/resource_dispatcher_host_impl.cc?type\u003dcs\u0026q\u003doriginated_from_service_worker\u0026l\u003d1324",
+      "parentUuid": "3b5a8a9f_3ff6c102",
+      "revId": "57fc53b6e72d22dbc04bacafc117e5a58dcef19d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
