@@ -452,10 +452,13 @@ UI.ToolbarItem = class extends Common.Object {
 UI.ToolbarText = class extends UI.ToolbarItem {
   /**
    * @param {string=} text
+   * @param {boolean=} clickable
    */
-  constructor(text) {
+  constructor(text, clickable) {
     super(createElementWithClass('div', 'toolbar-text'));
     this.element.classList.add('toolbar-text');
+    if (clickable)
+      this.element.classList.add('toolbar-link-text');
     this.setText(text || '');
   }
 
