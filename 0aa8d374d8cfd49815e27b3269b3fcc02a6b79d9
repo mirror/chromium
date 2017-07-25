@@ -22,6 +22,29 @@
       "revId": "0aa8d374d8cfd49815e27b3269b3fcc02a6b79d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4544320_2216e6b4",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T02:00:43Z",
+      "side": 1,
+      "message": "Time or TimeTicks? base::Time can go backwards.",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "0aa8d374d8cfd49815e27b3269b3fcc02a6b79d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
