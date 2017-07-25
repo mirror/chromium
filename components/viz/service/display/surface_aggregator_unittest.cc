@@ -2026,9 +2026,10 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
     EXPECT_EQ(0u, aggregated_pass_list[3]->quad_list.size());
   }
 
-  // Root surface has smaller damage rect. Background filter on render pass
-  // means Surface
-  // quad under it should be aggregated.
+  // TODO(wutao): Partial swap does not work with pixel moving background
+  // filter. See https://crbug.com/737255.
+  // Has background filter on render pass will make the whole output rect as
+  // damaged.
   {
     int root_pass_ids[] = {1, 2};
     Quad root_quads1[] = {
@@ -2063,17 +2064,17 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
 
     ASSERT_EQ(3u, aggregated_pass_list.size());
 
-    // Pass 0 is solid color quad from root, but outside damage rect.
-    EXPECT_EQ(gfx::Rect(10, 10, 2, 2), aggregated_pass_list[0]->damage_rect);
-    EXPECT_EQ(0u, aggregated_pass_list[0]->quad_list.size());
+    // Pass 0 has background blur filter, so should be drawn.
+    EXPECT_EQ(gfx::Rect(SurfaceSize()), aggregated_pass_list[0]->damage_rect);
+    EXPECT_EQ(1u, aggregated_pass_list[0]->quad_list.size());
     EXPECT_EQ(gfx::Rect(SurfaceSize()), aggregated_pass_list[1]->damage_rect);
     EXPECT_EQ(1u, aggregated_pass_list[1]->quad_list.size());
 
-    // First render pass draw quad is outside damage rect, so shouldn't be
-    // drawn. SurfaceDrawQuad is after background filter, so corresponding
-    // cc::RenderPassDrawQuad should be drawn.
-    EXPECT_EQ(gfx::Rect(10, 10, 2, 2), aggregated_pass_list[2]->damage_rect);
-    EXPECT_EQ(1u, aggregated_pass_list[2]->quad_list.size());
+    // First render pass draw quad is outside damage rect but has background
+    // filter, so should be drawn. SurfaceDrawQuad is after background filter,
+    // so corresponding cc::RenderPassDrawQuad should be drawn.
+    EXPECT_EQ(gfx::Rect(SurfaceSize()), aggregated_pass_list[2]->damage_rect);
+    EXPECT_EQ(2u, aggregated_pass_list[2]->quad_list.size());
   }
 }
 
