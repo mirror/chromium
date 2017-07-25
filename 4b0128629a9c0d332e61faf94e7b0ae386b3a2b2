@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "ea9a2fab_4703e8d9",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "move \"actually\" to be between \"are running\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4064652a_e7f5447a",
         "filename": "components/offline_pages/core/prefetch/store/README.md",
         "patchSetId": 2
@@ -48,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "143dbf6c_e8a018e9",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "In the lines of Pete\u0027s comment above, I think a better name for this callback would be AcceptResultCallback (even though I don\u0027t have a good name suggestion for RunCallback).",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "416665f4_986a29bc",
         "filename": "components/offline_pages/core/prefetch/store/README.md",
         "patchSetId": 2
@@ -59,6 +105,185 @@
       "writtenOn": "2017-07-25T03:41:52Z",
       "side": 1,
       "message": "Lets add a comment that first ctor creates store in RAM...",
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8e47f2_1ae0b1aa",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "Mind that these code comment changes should also be reflected on the actual C++ file, if applicable. This specific one is.",
+      "parentUuid": "416665f4_986a29bc",
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a1a66d_e8c72b6e",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "This statement is not true anymore and the comment needs to be updated.\n\nAnd this already has consequences in tests -- gotta pump-loop right after the 1st DB operation -- and I think it might impact runtime code too at some point. I hope we\u0027ll be able to remove this limitation later.",
+      "range": {
+        "startLine": 41,
+        "startChar": 56,
+        "endLine": 41,
+        "endChar": 68
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f9d7f9_c666b486",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "nit: remove trailing spaces here and everywhere else.",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b42664_07f478a1",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "ExampleRunCallback or ExampleRunSync?",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 17
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40dbc4e9_7fd716b4",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "Add a newline after this.",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d95d0c_31cd78e1",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "appropriate",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 22
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a71c3d0_ff754281",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "ExampleResultCallback or ExampleAcceptResultCallback? :)",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 20
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72cbd2e_07a58e20",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T20:50:02Z",
+      "side": 1,
+      "message": "nit: remove \"a\".",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 9
+      },
       "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
