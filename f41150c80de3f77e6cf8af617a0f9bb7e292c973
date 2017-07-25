@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e1a659c_44a6a493",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "enum class",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8df9a6b_0e97c9bb",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "kApps, kGuest, etc",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 6
+      },
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e436d5bc_969e405f",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "Just use an unordered_map for buttons_. Slightly slower but a more expected usage.",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b6fb79_7c2fac88",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "Why is this separate from the constructor?",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2834a5_90468cfb",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "Add common code to a local lambda:\n\n  auto add_button \u003d [\u0026buttons_](ButtonType button_type, int resource_id) {\n    buttons_[button_type] \u003d new views::LabelButton(...);\n  };\n  add_button(ButtonType::kRestart, IDS_RESTART_BUTTON);\n  add_button(ButtonType::kApps, IDS_LAUNCH_APP_BUTTON);\n  // ...",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1673f35d_e3906cae",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "You probably need to layout the entire view again, ie, Layout();",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89ce6f9_380d78de",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "nit: UpdateUi();",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3929327d_6a560500",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "/*delete_children*/",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd8b9f4_f21bc619",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "Try calling GetContentsView()-\u003eLayout() here.",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c5eb52_200e9c82",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:13:51Z",
+      "side": 1,
+      "message": "Try calling GetContentesView()-\u003eLayout() here as well.",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
