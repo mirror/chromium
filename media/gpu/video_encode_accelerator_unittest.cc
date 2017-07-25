@@ -442,11 +442,13 @@ class VideoEncodeAcceleratorTestEnvironment : public ::testing::Environment {
   VideoEncodeAcceleratorTestEnvironment(
       std::unique_ptr<base::FilePath::StringType> data,
       const base::FilePath& log_path,
+      const base::FilePath& frame_stats_path,
       bool run_at_fps,
       bool needs_encode_latency,
       bool verify_all_output)
       : test_stream_data_(std::move(data)),
         log_path_(log_path),
+        frame_stats_path_(frame_stats_path),
         run_at_fps_(run_at_fps),
         needs_encode_latency_(needs_encode_latency),
         verify_all_output_(verify_all_output) {}
@@ -489,11 +491,14 @@ class VideoEncodeAcceleratorTestEnvironment : public ::testing::Environment {
   // switch "--verify_all_output".
   bool verify_all_output() const { return verify_all_output_; }
 
+  const base::FilePath& frame_stats_path() const { return frame_stats_path_; }
+
   std::vector<std::unique_ptr<TestStream>> test_streams_;
 
  private:
   std::unique_ptr<base::FilePath::StringType> test_stream_data_;
   base::FilePath log_path_;
+  base::FilePath frame_stats_path_;
   std::unique_ptr<base::File> log_file_;
   bool run_at_fps_;
   bool needs_encode_latency_;
@@ -656,6 +661,7 @@ class VideoFrameQualityValidator
     : public base::SupportsWeakPtr<VideoFrameQualityValidator> {
  public:
   VideoFrameQualityValidator(const VideoCodecProfile profile,
+                             bool verify_quality,
                              const base::Closure& flush_complete_cb,
                              const base::Closure& decode_error_cb);
   void Initialize(const gfx::Size& coded_size, const gfx::Rect& visible_size);
@@ -671,11 +677,26 @@ class VideoFrameQualityValidator
   void FlushDone(DecodeStatus status);
   void VerifyOutputFrame(const scoped_refptr<VideoFrame>& output_frame);
   void Decode();
+  void WriteFrameStats();
 
   enum State { UNINITIALIZED, INITIALIZED, DECODING, DECODER_ERROR };
+  struct FrameStats {
+    int width;
+    int height;
+    double ssim_y;
+    double ssim_u;
+    double ssim_v;
+    uint64_t mse_y;
+    uint64_t mse_u;
+    uint64_t mse_v;
 
+  };
+
+  static FrameStats CompareFrames(const VideoFrame& original_frame,
+                                  const VideoFrame& output_frame);
   MediaLog media_log_;
   const VideoCodecProfile profile_;
+  const bool verify_quality_;
   std::unique_ptr<FFmpegVideoDecoder> decoder_;
   VideoDecoder::DecodeCB decode_cb_;
   // Decode callback of an EOS buffer.
@@ -686,14 +707,17 @@ class VideoFrameQualityValidator
   State decoder_state_;
   std::queue<scoped_refptr<VideoFrame>> original_frames_;
   std::queue<scoped_refptr<DecoderBuffer>> decode_buffers_;
+  std::vector<FrameStats> frame_stats_;
   base::ThreadChecker thread_checker_;
 };
 
 VideoFrameQualityValidator::VideoFrameQualityValidator(
     const VideoCodecProfile profile,
+    const bool verify_quality,
     const base::Closure& flush_complete_cb,
     const base::Closure& decode_error_cb)
     : profile_(profile),
+      verify_quality_(verify_quality),
       decoder_(new FFmpegVideoDecoder(&media_log_)),
       decode_cb_(
           base::Bind(&VideoFrameQualityValidator::DecodeDone, AsWeakPtr())),
@@ -771,6 +795,7 @@ void VideoFrameQualityValidator::DecodeDone(DecodeStatus status) {
 void VideoFrameQualityValidator::FlushDone(DecodeStatus status) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  WriteFrameStats();
   flush_complete_cb_.Run();
 }
 
@@ -780,6 +805,31 @@ void VideoFrameQualityValidator::Flush() {
   if (decoder_state_ != DECODER_ERROR) {
     decode_buffers_.push(DecoderBuffer::CreateEOSBuffer());
     Decode();
+  }
+}
+
+void VideoFrameQualityValidator::WriteFrameStats() {
+  if (g_env->frame_stats_path().empty())
+    return;
+
+  base::File frame_stats_file(
+      g_env->frame_stats_path(),
+      base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  LOG_ASSERT(frame_stats_file.IsValid());
+
+  // TODO(pbos): Consider adding encoded bytes per frame + key/delta frame.
+  std::string csv =
+      "frame,width,height,ssim-y,ssim-u,ssim-v,mse-y,mse-u,mse-v\n";
+  frame_stats_file.WriteAtCurrentPos(csv.data(), static_cast<int>(csv.size()));
+  for (size_t frame_idx = 0; frame_idx < frame_stats_.size(); ++frame_idx) {
+    const FrameStats& frame_stats = frame_stats_[frame_idx];
+    csv = base::StringPrintf(
+        "%d,%d,%d,%f,%f,%f,%" PRIu64 ",%" PRIu64 ",%" PRIu64 "\n",
+        static_cast<int>(frame_idx), frame_stats.width, frame_stats.height,
+        frame_stats.ssim_y, frame_stats.ssim_u, frame_stats.ssim_v,
+        frame_stats.mse_y, frame_stats.mse_u, frame_stats.mse_v);
+    frame_stats_file.WriteAtCurrentPos(csv.data(),
+                                       static_cast<int>(csv.size()));
   }
 }
 
@@ -807,6 +857,156 @@ void VideoFrameQualityValidator::Decode() {
   }
 }
 
+namespace {
+void GetSsimParams8x8(const uint8_t* s,
+                      size_t sp,
+                      const uint8_t* r,
+                      size_t rp,
+                      uint32_t* sum_s,
+                      uint32_t* sum_r,
+                      uint32_t* sum_sq_s,
+                      uint32_t* sum_sq_r,
+                      uint32_t* sum_sxr) {
+  for (size_t i = 0; i < 8; i++, s += sp, r += rp) {
+    for (size_t j = 0; j < 8; j++) {
+      *sum_s += s[j];
+      *sum_r += r[j];
+      *sum_sq_s += s[j] * s[j];
+      *sum_sq_r += r[j] * r[j];
+      *sum_sxr += s[j] * r[j];
+    }
+  }
+}
+
+static double GenerateSimilarity(uint32_t sum_s,
+                                 uint32_t sum_r,
+                                 uint32_t sum_sq_s,
+                                 uint32_t sum_sq_r,
+                                 uint32_t sum_sxr,
+                                 int count) {
+  static const int64_t kC1 = 26634;   // (64^2*(.01*255)^2
+  static const int64_t kC2 = 239708;  // (64^2*(.03*255)^2
+
+  // scale the constants by number of pixels
+  int64_t c1 = (kC1 * count * count) >> 12;
+  int64_t c2 = (kC2 * count * count) >> 12;
+
+  int64_t ssim_n = (2 * sum_s * sum_r + c1) * ((int64_t)2 * count * sum_sxr -
+                                               (int64_t)2 * sum_s * sum_r + c2);
+
+  int64_t ssim_d = (sum_s * sum_s + sum_r * sum_r + c1) *
+                   ((int64_t)count * sum_sq_s - (int64_t)sum_s * sum_s +
+                    (int64_t)count * sum_sq_r - (int64_t)sum_r * sum_r + c2);
+
+  return ssim_n * 1.0 / ssim_d;
+}
+
+static double GenerateSsim8x8(const uint8_t* s,
+                              int sp,
+                              const uint8_t* r,
+                              int rp) {
+  uint32_t sum_s = 0;
+  uint32_t sum_r = 0;
+  uint32_t sum_sq_s = 0;
+  uint32_t sum_sq_r = 0;
+  uint32_t sum_sxr = 0;
+  GetSsimParams8x8(s, sp, r, rp, &sum_s, &sum_r, &sum_sq_s, &sum_sq_r,
+                   &sum_sxr);
+  return GenerateSimilarity(sum_s, sum_r, sum_sq_s, sum_sq_r, sum_sxr, 64);
+}
+
+// We are using a 8x8 moving window with starting location of each 8x8 window
+// on the 4x4 pixel grid. Such arrangement allows the windows to overlap
+// block boundaries to penalize blocking artifacts.
+double GenerateSsim(const uint8_t* img1,
+                    size_t stride_img1,
+                    const uint8_t* img2,
+                    size_t stride_img2,
+                    int width,
+                    int height) {
+  int num_samples = 0;
+  double ssim_total = 0;
+
+  // sample point start with each 4x4 location
+  for (int i = 0; i <= height - 8;
+       i += 4, img1 += stride_img1 * 4, img2 += stride_img2 * 4) {
+    for (int j = 0; j <= width - 8; j += 4) {
+      double v = GenerateSsim8x8(img1 + j, stride_img1, img2 + j, stride_img2);
+      ssim_total += v;
+      ++num_samples;
+    }
+  }
+  return ssim_total / num_samples;
+}
+
+static uint64_t GenerateMse(const uint8_t* orig,
+                            int orig_stride,
+                            const uint8_t* recon,
+                            int recon_stride,
+                            int cols,
+                            int rows) {
+  uint64_t total_sse = 0;
+  for (int row = 0; row < rows; ++row) {
+    for (int col = 0; col < cols; ++col) {
+      int diff = orig[col] - recon[col];
+      total_sse += diff * diff;
+    }
+
+    orig += orig_stride;
+    recon += recon_stride;
+  }
+
+  return total_sse;
+}
+
+void GenerateMseAndSsim(double* ssim,
+                        uint64_t* mse,
+                        const uint8_t* buf0,
+                        size_t stride0,
+                        const uint8_t* buf1,
+                        size_t stride1,
+                        int w,
+                        int h) {
+  *ssim = GenerateSsim(buf0, stride0, buf1, stride1, w, h);
+  *mse = GenerateMse(buf0, stride0, buf1, stride1, w, h);
+}
+}  // namespace
+
+VideoFrameQualityValidator::FrameStats
+VideoFrameQualityValidator::CompareFrames(const VideoFrame& original_frame,
+                                          const VideoFrame& output_frame) {
+  // This code assumes I420/NV12 (e.g. 12bpp YUV planar) and needs to be updated
+  // to support anything else.
+  CHECK(original_frame.format() == PIXEL_FORMAT_I420 ||
+        original_frame.format() == PIXEL_FORMAT_YV12);
+  CHECK(output_frame.format() == PIXEL_FORMAT_I420 ||
+        output_frame.format() == PIXEL_FORMAT_YV12);
+
+  FrameStats frame_stats;
+  gfx::Size visible_size = original_frame.visible_rect().size();
+  frame_stats.width = visible_size.width();
+  frame_stats.height = visible_size.height();
+  GenerateMseAndSsim(&frame_stats.ssim_y, &frame_stats.mse_y,
+                     original_frame.data(VideoFrame::kYPlane),
+                     original_frame.stride(VideoFrame::kYPlane),
+                     output_frame.data(VideoFrame::kYPlane),
+                     output_frame.stride(VideoFrame::kYPlane),
+                     frame_stats.width, frame_stats.height);
+  GenerateMseAndSsim(&frame_stats.ssim_u, &frame_stats.mse_u,
+                     original_frame.data(VideoFrame::kUPlane),
+                     original_frame.stride(VideoFrame::kUPlane),
+                     output_frame.data(VideoFrame::kUPlane),
+                     output_frame.stride(VideoFrame::kUPlane),
+                     frame_stats.width / 2, frame_stats.height / 2);
+  GenerateMseAndSsim(&frame_stats.ssim_v, &frame_stats.mse_v,
+                     original_frame.data(VideoFrame::kVPlane),
+                     original_frame.stride(VideoFrame::kVPlane),
+                     output_frame.data(VideoFrame::kVPlane),
+                     output_frame.stride(VideoFrame::kVPlane),
+                     frame_stats.width / 2, frame_stats.height / 2);
+  return frame_stats;
+}
+
 void VideoFrameQualityValidator::VerifyOutputFrame(
     const scoped_refptr<VideoFrame>& output_frame) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -815,30 +1015,39 @@ void VideoFrameQualityValidator::VerifyOutputFrame(
   original_frames_.pop();
   gfx::Size visible_size = original_frame->visible_rect().size();
 
-  int planes[] = {VideoFrame::kYPlane, VideoFrame::kUPlane,
-                  VideoFrame::kVPlane};
-  double difference = 0;
-  for (int plane : planes) {
-    uint8_t* original_plane = original_frame->data(plane);
-    uint8_t* output_plane = output_frame->data(plane);
+  if (!g_env->frame_stats_path().empty())
+    frame_stats_.push_back(CompareFrames(*original_frame, *output_frame));
 
-    size_t rows = VideoFrame::Rows(plane, kInputFormat, visible_size.height());
-    size_t columns =
-        VideoFrame::Columns(plane, kInputFormat, visible_size.width());
-    size_t stride = original_frame->stride(plane);
+  // TODO(pbos): Consider rewriting similiarity thresholds to use standard
+  // SSIM/PSNR metrics for thresholds instead of abs(difference) / size which
+  // correspond less to perceptive distortion.
+  if (verify_quality_) {
+    int planes[] = {VideoFrame::kYPlane, VideoFrame::kUPlane,
+                    VideoFrame::kVPlane};
+    double difference = 0;
+    for (int plane : planes) {
+      uint8_t* original_plane = original_frame->data(plane);
+      uint8_t* output_plane = output_frame->data(plane);
 
-    for (size_t i = 0; i < rows; i++) {
-      for (size_t j = 0; j < columns; j++) {
-        difference += std::abs(original_plane[stride * i + j] -
-                               output_plane[stride * i + j]);
+      size_t rows =
+          VideoFrame::Rows(plane, kInputFormat, visible_size.height());
+      size_t columns =
+          VideoFrame::Columns(plane, kInputFormat, visible_size.width());
+      size_t stride = original_frame->stride(plane);
+
+      for (size_t i = 0; i < rows; i++) {
+        for (size_t j = 0; j < columns; j++) {
+          difference += std::abs(original_plane[stride * i + j] -
+                                 output_plane[stride * i + j]);
+        }
       }
     }
-  }
 
-  // Divide the difference by the size of frame.
-  difference /= VideoFrame::AllocationSize(kInputFormat, visible_size);
-  EXPECT_TRUE(difference <= kDecodeSimilarityThreshold)
-      << "difference = " << difference << "  > decode similarity threshold";
+    // Divide the difference by the size of frame.
+    difference /= VideoFrame::AllocationSize(kInputFormat, visible_size);
+    EXPECT_TRUE(difference <= kDecodeSimilarityThreshold)
+        << "difference = " << difference << "  > decode similarity threshold";
+  }
 }
 
 // Base class for all VEA Clients in this file
@@ -1146,11 +1355,14 @@ VEAClient::VEAClient(TestStream* test_stream,
         test_stream_->requested_profile,
         base::Bind(&VEAClient::HandleEncodedFrame, base::Unretained(this)));
     CHECK(stream_validator_);
-    if (verify_output_)
+    // VideoFrameQualityValidator is required to generate frame stats as well as
+    // validating encoder quality.
+    if (verify_output_ || !g_env->frame_stats_path().empty()) {
       quality_validator_.reset(new VideoFrameQualityValidator(
-          test_stream_->requested_profile,
+          test_stream_->requested_profile, verify_output_,
           base::Bind(&VEAClient::DecodeCompleted, base::Unretained(this)),
           base::Bind(&VEAClient::DecodeFailed, base::Unretained(this))));
+    }
   }
 
   if (save_to_file_) {
@@ -1222,7 +1434,6 @@ void VEAClient::CreateEncoder() {
 
 void VEAClient::DecodeCompleted() {
   DCHECK(thread_checker_.CalledOnValidThread());
-
   SetState(CS_VALIDATED);
 }
 
@@ -2274,6 +2485,7 @@ int main(int argc, char** argv) {
   bool needs_encode_latency = false;
   bool verify_all_output = false;
   base::FilePath log_path;
+  base::FilePath frame_stats_path;
 
   base::CommandLine::SwitchMap switches = cmd_line->GetSwitches();
   for (base::CommandLine::SwitchMap::const_iterator it = switches.begin();
@@ -2313,6 +2525,13 @@ int main(int argc, char** argv) {
       continue;
     if (it->first == "ozone-platform" || it->first == "ozone-use-surfaceless")
       continue;
+
+    // Output per-frame metrics to a csv file.
+    if (it->first == "frame_stats") {
+      frame_stats_path = base::FilePath(
+          base::FilePath::StringType(it->second.begin(), it->second.end()));
+      continue;
+    }
     LOG(FATAL) << "Unexpected switch: " << it->first << ":" << it->second;
   }
 
@@ -2333,8 +2552,8 @@ int main(int argc, char** argv) {
       reinterpret_cast<media::VideoEncodeAcceleratorTestEnvironment*>(
           testing::AddGlobalTestEnvironment(
               new media::VideoEncodeAcceleratorTestEnvironment(
-                  std::move(test_stream_data), log_path, run_at_fps,
-                  needs_encode_latency, verify_all_output)));
+                  std::move(test_stream_data), log_path, frame_stats_path,
+                  run_at_fps, needs_encode_latency, verify_all_output)));
 
   return RUN_ALL_TESTS();
 }
