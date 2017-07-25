@@ -35,6 +35,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/editing/iterators/CharacterIterator.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/serializers/Serialization.h"
@@ -431,16 +432,21 @@ bool TextControlElement::SetSelectionRange(
   }
 #endif  // DCHECK_IS_ON()
   frame->Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .Collapse(direction == kSelectionHasBackwardDirection
-                        ? end_position
-                        : start_position)
-          .Extend(direction == kSelectionHasBackwardDirection ? start_position
-                                                              : end_position)
-          .SetIsDirectional(direction != kSelectionHasNoDirection)
-          .Build(),
-      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle |
-          FrameSelection::kDoNotSetFocus);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder()
+                  .Collapse(direction == kSelectionHasBackwardDirection
+                                ? end_position
+                                : start_position)
+                  .Extend(direction == kSelectionHasBackwardDirection
+                              ? start_position
+                              : end_position)
+                  .SetIsDirectional(direction != kSelectionHasNoDirection)
+                  .Build())
+          .SetShouldCloseTyping(true)
+          .SetShouldClearTypingStyle(true)
+          .SetDoNotSetFocus(true)
+          .Build());
   return did_change;
 }
 
