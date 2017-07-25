@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "beb0d46d_ee9be83c",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-25T22:24:40Z",
+      "side": 1,
+      "message": "The example\u0027s out of date. Fixed.",
+      "parentUuid": "eaa06f83_c95fbcce",
+      "revId": "7ed50dfd917f032a3007c7c9cc50a31708b628f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dc90d9c_1085414c",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "7ed50dfd917f032a3007c7c9cc50a31708b628f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6058adbf_761a98da",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-25T22:24:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc90d9c_1085414c",
+      "revId": "7ed50dfd917f032a3007c7c9cc50a31708b628f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
