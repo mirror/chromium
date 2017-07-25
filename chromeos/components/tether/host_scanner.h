@@ -44,6 +44,7 @@ class HostScanner : public HostScannerOperation::Observer {
 
   HostScanner(TetherHostFetcher* tether_host_fetcher,
               BleConnectionManager* connection_manager,
+              NetworkStateHandler* network_state_handler,
               HostScanDevicePrioritizer* host_scan_device_prioritizer,
               TetherHostResponseRecorder* tether_host_response_recorder,
               NotificationPresenter* notification_presenter,
@@ -91,6 +92,7 @@ class HostScanner : public HostScannerOperation::Observer {
 
   TetherHostFetcher* tether_host_fetcher_;
   BleConnectionManager* connection_manager_;
+  NetworkStateHandler* network_state_handler_;
   HostScanDevicePrioritizer* host_scan_device_prioritizer_;
   TetherHostResponseRecorder* tether_host_response_recorder_;
   NotificationPresenter* notification_presenter_;
