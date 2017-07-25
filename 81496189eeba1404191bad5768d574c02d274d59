@@ -237,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "8dee272d_24809f13",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "We still need this, because init call should not be allowed.",
+      "parentUuid": "032a4931_be25932f",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04306ff7_6ffcb194",
         "filename": "ios/web/navigation/navigation_manager_impl.h",
         "patchSetId": 4
@@ -695,6 +713,30 @@
     },
     {
       "key": {
+        "uuid": "7512667e_795d927f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "FWIW: In current JS-based implementation AddPendingItem is not called for back forward navigations.",
+      "parentUuid": "ec1096ab_145e12d6",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed4c115_6a1b5657",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 4
@@ -871,6 +913,30 @@
       "side": 1,
       "message": "Yes the cast is necessary because otherwise compiler complains about ambiguous goBack signature (it finds one in UIWebView and another in WKWebView). The alternative is to store mock_web_view_ as a WKWebView* instead of id, but then we\u0027d need to cast for mock_web_view_ to OCMClassMock for calling -verify and -expect, which is more verbose.\n\nC++ cast doesn\u0027t seem to work because the from type is id...",
       "parentUuid": "d408636f_7ebdd3ef",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 30
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "868893c0_8a4f5da6",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "Maybe reinterpret_cast works?",
+      "parentUuid": "7bbafa5c_1fe72830",
       "range": {
         "startLine": 174,
         "startChar": 16,

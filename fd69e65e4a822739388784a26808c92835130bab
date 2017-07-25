@@ -1,0 +1,406 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2a59b2_65ef7dc6",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "nit: Would predeclaration work?",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53c335a_05b48f76",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "nit: s/associated/associate",
+      "range": {
+        "startLine": 15,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e96f00_91b43151",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "item is documented as nonnull. Should this be a DCHECK instead?",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971c8bdc_c5e88d68",
+        "filename": "ios/web/navigation/crw_navigation_item_holder_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "nit: typedef PlatformTest CRWNavigationItemHolderTest;",
+      "range": {
+        "startLine": 18,
+        "startChar": 33,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca0aac2_a7697385",
+        "filename": "ios/web/navigation/crw_navigation_item_holder_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "s/URL/url \n\nBecause this is a C++ method. https://chromium.googlesource.com/chromium/src/+/master/styleguide/objective-c/objective-c.md#Objective_C_style-matches-the-language\n\nSame comment for other tests in this file.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91b9aba_bdb4270f",
+        "filename": "ios/web/navigation/crw_navigation_item_holder_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(holder.navigationItem); otherwise the next line of code may crash.",
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b0fdb0_9d75a9df",
+        "filename": "ios/web/navigation/crw_navigation_item_holder_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 69,
+        "startChar": 18,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0487d822_53d68610",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "nit: we trying to get rid of in-page term usage in Chrome code because it is confusing (see crbug.com/695189). How about s/in-page/fragment change?",
+      "range": {
+        "startLine": 146,
+        "startChar": 45,
+        "endLine": 146,
+        "endChar": 49
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6dda2c_4eee9d43",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "Not related to you CL, but this logic does not look correct. google.com#foo -\u003e google.com navigation is a fragment change navigation, but method will return false.",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59b1640_4a359fff",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "Optional nit: s/a new navigation/a new navigation or there is no pending navigation",
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5310bb5_3bc2cdf1",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "Optional nit: Would it make sense to make this a class method of CRWNavigationItemHolder? Just to make code more testable?",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263f7a1b_4f14478a",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "nit: s/nil/nullptr",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567ff8e5_a6684222",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "nit: No need for this DHECK, because the next line of code will crash anyway.",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 22
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4fe416_3650728c",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "s/AddPendingItme/AddPendingItem",
+      "range": {
+        "startLine": 133,
+        "startChar": 5,
+        "endLine": 133,
+        "endChar": 19
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad307b36_fbe8070b",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "nit: Would it make sense to move the logic inside if into a separate method (e.g. IsPendingBackForwardNavigation)?",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 22
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a42e819_c5a3db54",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "Do we need to discard |transient_item_| when going forward? We may have transient and forward entries in the following case:\n\n1.) Load google.com\n2.) Turn on Airplane mode\n3.) load expired.badssl.com\n4.) Turn on Airplane mode\n5.) Load google.com\n6.) Go to first entry\n7.) Go forward\n8.) Go forward",
+      "range": {
+        "startLine": 308,
+        "startChar": 14,
+        "endLine": 308,
+        "endChar": 39
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6e83bc_c068f3ed",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "This const cast breaks constness API contract. Can we make CreateNavigationItem const instead?",
+      "range": {
+        "startLine": 348,
+        "startChar": 17,
+        "endLine": 348,
+        "endChar": 45
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d62a07_ebad2b4f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T23:38:02Z",
+      "side": 1,
+      "message": "Optional nit: Do you want to use initialization list?",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "fd69e65e4a822739388784a26808c92835130bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
