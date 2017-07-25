@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e936ed7_185ab10c",
+        "filename": "ui/gfx/vector_icon_util_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-25T16:44:16Z",
+      "side": 1,
+      "message": "Doh! Done",
+      "parentUuid": "8f9e3f1a_ea8e1cf6",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 33,
+        "endChar": 76
+      },
+      "revId": "553f5109dd6b5e24fe74475e4e95182be776d350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "debd9764_13f92ccb",
         "filename": "ui/gfx/vector_icon_util_mac_unittest.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "553f5109dd6b5e24fe74475e4e95182be776d350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691d922e_eebd1f6f",
+        "filename": "ui/gfx/vector_icon_util_mac_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-25T16:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "debd9764_13f92ccb",
+      "range": {
+        "startLine": 89,
+        "startChar": 55,
+        "endLine": 89,
+        "endChar": 65
+      },
+      "revId": "553f5109dd6b5e24fe74475e4e95182be776d350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
