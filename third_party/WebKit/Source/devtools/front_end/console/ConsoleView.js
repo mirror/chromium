@@ -57,8 +57,10 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._consoleContextSelector = new Console.ConsoleContextSelector();
 
-    this._filterStatusText = new UI.ToolbarText();
+    this._filterStatusText = new UI.ToolbarText('', true /* clickable */);
+    this._filterStatusText.element.addEventListener('click', () => this._filter.reset());
     this._filterStatusText.element.classList.add('dimmed');
+    this._filterStatusText.element.title = Common.UIString('Click to reset filters to defaults');
     this._showSettingsPaneSetting = Common.settings.createSetting('consoleShowSettingsToolbar', false);
     this._showSettingsPaneButton = new UI.ToolbarSettingToggle(
         this._showSettingsPaneSetting, 'largeicon-settings-gear', Common.UIString('Console settings'));
