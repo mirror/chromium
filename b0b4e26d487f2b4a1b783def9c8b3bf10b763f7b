@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "749446d8_70de4f2a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ServiceTabLauncher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-25T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43180618_895e0020",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 14
+      },
+      "revId": "b0b4e26d487f2b4a1b783def9c8b3bf10b763f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f37073e_6ea406f8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ServiceTabLauncher.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T05:16:00Z",
       "side": 1,
       "message": "crrev.com/c/577407 makes this never return null.",
+      "range": {
+        "startLine": 102,
+        "startChar": 44,
+        "endLine": 102,
+        "endChar": 91
+      },
+      "revId": "b0b4e26d487f2b4a1b783def9c8b3bf10b763f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8caeb9f_a4934101",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ServiceTabLauncher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-25T15:54:36Z",
+      "side": 1,
+      "message": "Thanks! Rebased on tot:)",
+      "parentUuid": "8f37073e_6ea406f8",
       "range": {
         "startLine": 102,
         "startChar": 44,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c01ef49f_211bc6d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/ChromeWebApkHost.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-25T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c0f643f_b02bcda6",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "b0b4e26d487f2b4a1b783def9c8b3bf10b763f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "981e2e84_af3b29ab",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-25T05:16:00Z",
       "side": 1,
       "message": "This object is tied to the global browser process and lives as long as that does (accessible via g_browser_process-\u003enotification_platform_bridge()). I don\u0027t think you need to add weak pointers to it because it should outline everything. But I\u0027ll defer to notifications owners.",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "b0b4e26d487f2b4a1b783def9c8b3bf10b763f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ca255b_aa2a6a6a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-25T15:54:36Z",
+      "side": 1,
+      "message": "Good catch! Yes, it think base::Unretained(this) would be enough.",
+      "parentUuid": "981e2e84_af3b29ab",
       "range": {
         "startLine": 121,
         "startChar": 8,
