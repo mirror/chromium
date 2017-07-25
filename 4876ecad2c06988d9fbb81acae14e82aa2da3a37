@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9486f75e_7357ff3a",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-25T20:54:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9db8a76b_877279d6",
+      "revId": "4876ecad2c06988d9fbb81acae14e82aa2da3a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae54ef55_204ba9d8",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T15:12:45Z",
       "side": 1,
       "message": "browser_test_utils.h has a FrameWatcher class that does the same as this. Can you use that (you may need to expose a frame count, but I think that should be fine)?",
+      "revId": "4876ecad2c06988d9fbb81acae14e82aa2da3a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf652ea6_2341b414",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7098,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-25T20:54:55Z",
+      "side": 1,
+      "message": "Uh good to know! Good helper class but unfortunately I am not sure if it can help me with this test. FrameWatcher is a WebContentsObserver which is called when RWHD::DidReceiveCompositorFrame() is called here:\n\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_impl.cc?rcl\u003d3be0176e531fec9924261c55a014302a0fcbaad7\u0026l\u003d2654\n\nBut that does not tell the observer nor the WebContentsImpl itself which RWHI called it.\n\nIn other words, if I wait for 20 frames it will include frames from all local roots which is not the purpose of the test.",
+      "parentUuid": "ae54ef55_204ba9d8",
       "revId": "4876ecad2c06988d9fbb81acae14e82aa2da3a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
