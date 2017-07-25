@@ -55,11 +55,10 @@ public class WebappLauncherActivity extends Activity {
         ChromeWebApkHost.init();
         boolean validWebApk = isValidWebApk(intent);
 
-        WebappInfo webappInfo;
-        if (validWebApk) {
-            webappInfo = WebApkInfo.create(intent);
-        } else {
-            webappInfo = WebappInfo.create(intent);
+        WebappInfo webappInfo =
+                WebappActivity.retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+        if (webappInfo == null) {
+            webappInfo = (validWebApk ? WebApkInfo.create(intent) : WebappInfo.create(intent));
         }
 
         // {@link WebApkInfo#create()} and {@link WebappInfo#create()} return null if the intent
@@ -88,6 +87,7 @@ public class WebappLauncherActivity extends Activity {
             if (validWebApk && (webappSource == ShortcutSource.UNKNOWN)) {
                 source = getWebApkSource(webappInfo);
             }
+            WebappActivity.addWebappInfoToCache(WebappInfo.getIdFromIntent(intent), webappInfo);
             LaunchMetrics.recordHomeScreenLaunchIntoStandaloneActivity(webappUrl, source);
             Intent launchIntent = createWebappLaunchIntent(webappInfo, webappSource, validWebApk);
             startActivity(launchIntent);

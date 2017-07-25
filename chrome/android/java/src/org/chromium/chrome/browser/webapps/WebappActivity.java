@@ -49,6 +49,7 @@ import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -87,6 +88,9 @@ public class WebappActivity extends SingleTabActivity {
 
     private Runnable mSetImmersiveRunnable;
 
+    private static final HashMap<String, WebappInfo> sWebInfoMap =
+            new HashMap<String, WebappInfo>();
+
     /**
      * Construct all the variables that shouldn't change.  We do it here both to clarify when the
      * objects are created and to ensure that they exist throughout the parallelized initialization
@@ -107,7 +111,9 @@ public class WebappActivity extends SingleTabActivity {
         if (intent == null) return;
         super.onNewIntent(intent);
 
-        WebappInfo newWebappInfo = createWebappInfo(intent);
+        WebappInfo newWebappInfo = retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+        if (newWebappInfo == null) newWebappInfo = createWebappInfo(intent);
+
         if (newWebappInfo == null) {
             Log.e(TAG, "Failed to parse new Intent: " + intent);
             ApiCompatibilityUtils.finishAndRemoveTask(this);
@@ -143,7 +149,9 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     public void preInflationStartup() {
-        WebappInfo info = createWebappInfo(getIntent());
+        Intent intent = getIntent();
+        WebappInfo info = retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+        if (info == null) info = createWebappInfo(intent);
 
         String id = "";
         if (info != null) {
@@ -361,6 +369,17 @@ public class WebappActivity extends SingleTabActivity {
      */
     public String getWebappScope() {
         return mWebappInfo.scopeUri().toString();
+    }
+
+    public static void addWebappInfoToCache(String id, WebappInfo info) {
+        sWebInfoMap.put(id, info);
+    }
+
+    public static WebappInfo retrieveWebappInfoFromCache(String id) {
+        WebappInfo webappInfo = sWebInfoMap.get(id);
+        if (webappInfo == null) return null;
+        sWebInfoMap.remove(id);
+        return webappInfo;
     }
 
     private void initializeWebappData() {
