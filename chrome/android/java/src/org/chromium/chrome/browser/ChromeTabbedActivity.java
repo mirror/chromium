@@ -99,6 +99,8 @@ import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.datareduction.DataReductionPromoScreen;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.SigninPromoUtil;
+import org.chromium.chrome.browser.snackbar.Snackbar;
+import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import org.chromium.chrome.browser.snackbar.undo.UndoBarController;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporterBridge;
 import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
@@ -505,6 +507,26 @@ public class ChromeTabbedActivity
             }
 
             super.finishNativeInitialization();
+
+            SnackbarController mSnackbarController = new SnackbarController() {
+                @Override
+                public void onDismissNoAction(Object actionData) { }
+
+                @Override
+                public void onAction(Object actionData) {
+                }
+            };
+
+            final Snackbar snackbar = Snackbar.make("OH HAI", mSnackbarController, Snackbar.TYPE_NOTIFICATION,
+                    Snackbar.UMA_SPECIAL_LOCALE);
+            snackbar.setDuration(2000);
+            ThreadUtils.postOnUiThreadDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getSnackbarManager().showSnackbar(snackbar);
+                    ThreadUtils.postOnUiThreadDelayed(this, 4000);
+                }
+            }, 1000);
         } finally {
             TraceEvent.end("ChromeTabbedActivity.finishNativeInitialization");
         }
