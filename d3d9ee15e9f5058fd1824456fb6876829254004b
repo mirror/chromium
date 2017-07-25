@@ -22,6 +22,30 @@
       "revId": "d3d9ee15e9f5058fd1824456fb6876829254004b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425b5205_caa732f7",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:13:35Z",
+      "side": 1,
+      "message": "I will remove the TODO when all the users of the old mode are removed. Right now we are still generating both.",
+      "parentUuid": "2dec9cf7_62cb63d7",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "d3d9ee15e9f5058fd1824456fb6876829254004b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
