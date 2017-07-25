@@ -279,6 +279,8 @@ void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
   if (!view_)
     return;
 
+  view_->SetCSSVisibility(visible);
+
   // If there is an inner WebContents, it should be notified of the change in
   // the visibility. The Show/Hide methods will not be called if an inner
   // WebContents exists since the corresponding WebContents will itself call
