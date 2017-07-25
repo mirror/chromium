@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5eeaa92c_f20bfb89",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-25T19:18:42Z",
+      "side": 1,
+      "message": "A member function of NGInlineNode can\u0027t return Optional\u003cNGInlineNode\u003e, because Optional\u003c\u003e requires complete class definition.\n\nI don\u0027t want to return a ptr either because NGInlineNode should be stack-allocated.\n\nHaven\u0027t got a better idea yet...",
+      "parentUuid": "165bd994_1f3713f7",
+      "revId": "995b9db71c6c3882cdd4d236e8f8f234ea58a1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f2ddbd8_14f8d522",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c90ae59a_0d610f66",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-25T19:18:42Z",
+      "side": 1,
+      "message": "Seems that the code fits better in NGOffsetMappingResult...\n\nGuess I have to change them from struct to class.",
+      "parentUuid": "5f2ddbd8_14f8d522",
+      "revId": "995b9db71c6c3882cdd4d236e8f8f234ea58a1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bdf7a26_b8f4ebd2",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "995b9db71c6c3882cdd4d236e8f8f234ea58a1a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958924e6_5513266d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-25T19:18:42Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "9bdf7a26_b8f4ebd2",
+      "revId": "995b9db71c6c3882cdd4d236e8f8f234ea58a1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
