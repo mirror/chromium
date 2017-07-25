@@ -1,0 +1,1879 @@
+{
+  "android": {
+    "Android Nexus7v2 Perf": {
+      "blink_perf.bindings": {
+        "append-child.html": 15.147,
+        "create-element.html": 16.71,
+        "document-implementation.html": 17.379,
+        "dom-attribute-on-prototoype.html": 17.311,
+        "first-child.html": 19.142,
+        "get-attribute-rare.html": 15.902,
+        "get-attribute.html": 15.302,
+        "get-element-by-id.html": 16.393,
+        "get-elements-by-tag-name.html": 16.678,
+        "id-getter.html": 17.202,
+        "id-setter.html": 15.449,
+        "indexed-getter.html": 21.88,
+        "insert-before.html": 15.602,
+        "node-list-access.html": 155.504,
+        "node-type.html": 18.691,
+        "post-message.html": 10.255,
+        "sequence-conversion-array.html": 17.224,
+        "sequence-conversion-custom-iterator.html": 13.965,
+        "serialize-array.html": 10.662,
+        "serialize-long-string.html": 9.109,
+        "serialize-map.html": 24.738,
+        "serialize-nested-array.html": 9.015,
+        "set-attribute-rare.html": 16.344,
+        "set-attribute.html": 17.078,
+        "structured-clone-json-deserialize.html": 58.859,
+        "structured-clone-json-serialize.html": 59.662,
+        "structured-clone-long-string-deserialize.html": 0.0,
+        "structured-clone-long-string-serialize.html": 0.0,
+        "typed-array-construct-from-array.html": 17.578,
+        "typed-array-construct-from-same-type.html": 18.181,
+        "typed-array-construct-from-typed.html": 16.257,
+        "typed-array-set-from-typed.html": 17.634,
+        "undefined-first-child.html": 19.145,
+        "undefined-get-element-by-id.html": 16.82,
+        "undefined-id-getter.html": 18.424
+      },
+      "blink_perf.canvas": {
+        "createImageBitmapFromImageData.html": 17.374,
+        "draw-dynamic-canvas-2d-to-hw-accelerated-canvas-2d.html": 20.505,
+        "draw-dynamic-webgl-to-hw-accelerated-canvas-2d.html": 29.506,
+        "draw-hw-accelerated-canvas-2d-to-sw-canvas-2d.html": 9.335,
+        "draw-static-canvas-2d-to-hw-accelerated-canvas-2d.html": 12.193,
+        "draw-static-webgl-to-hw-accelerated-canvas-2d.html": 11.816,
+        "draw-video-to-hw-accelerated-canvas-2d.html": 12.846,
+        "drawimage-not-pixelaligned.html": 18.712,
+        "getImageData.html": 25.765,
+        "putImageData.html": 181.515,
+        "toBlob_duration.html": 36.29,
+        "toBlob_duration_jpeg.html": 31.694,
+        "transferFromImageBitmap.html": 10.182,
+        "upload-canvas-2d-to-texture.html": 20.298,
+        "upload-video-to-sub-texture.html": 18.065,
+        "upload-video-to-texture.html": 23.425,
+        "upload-webgl-to-texture.html": 18.373
+      },
+      "blink_perf.css": {
+        "AttributeDescendantSelector.html": 25.09,
+        "CSSPropertySetterGetter.html": 21.818,
+        "CSSPropertySetterGetterMethods.html": 18.339,
+        "CSSPropertyUpdateValue.html": 23.249,
+        "ChangeStyleChildElementSelectors.html": 42.803,
+        "ChangeStyleDeepTree.html": 97.984,
+        "ChangeStyleElementSelector.html": 43.531,
+        "ChangeStyleGrandChildElementSelector.html": 43.204,
+        "ChangeStyleNestedPseudoSelector.html": 15.745,
+        "ChangeStylePairOfNthChildSelector.html": 39.413,
+        "ChangeStylePartialAttributeMatchingSelector.html": 53.2,
+        "ChangeStyleShallowTree.html": 19.077,
+        "ChangeStyleSingleNthChildSelector.html": 47.536,
+        "ChangeStyleSinglePseudoSelector.html": 15.584,
+        "ChangeStyleUniversalSelector.html": 42.904,
+        "ClassDescendantSelector.html": 31.977,
+        "ClassInvalidation.html": 24.718,
+        "FocusUpdate.html": 22.298,
+        "PseudoClassSelectors.html": 25.611,
+        "SelectorCountScaling.html": 18.508,
+        "StyleSheetInsert-bootstrap.html": 25.977,
+        "StyleSheetInsert.html": 26.59
+      },
+      "blink_perf.dom": {
+        "addRange.html": 50.439,
+        "delete-in-password-field.html": 11.216,
+        "div-editable.html": 25.988,
+        "inner_html_with_selection.html": 9.852,
+        "long-sibling-list.html": 27.612,
+        "modify-element-classname.html": 24.084,
+        "modify-element-id.html": 15.616,
+        "modify-element-title.html": 16.925,
+        "move-down-with-hidden-elements.html": 10.504,
+        "move-up-with-hidden-elements.html": 10.4,
+        "remove_child_with_selection.html": 9.535,
+        "select-long-word.html": 21.169,
+        "select-multiple-add.html": 16.11,
+        "select-single-add.html": 17.912,
+        "select-single-remove.html": 21.125,
+        "textarea-dom.html": 16.201,
+        "textarea-edit.html": 32.419
+      },
+      "blink_perf.events": {
+        "EventsDispatching.html": 18.961,
+        "EventsDispatchingInDeeplyNestedShadowTrees.html": 22.518,
+        "EventsDispatchingInShadowTrees.html": 74.408,
+        "hit-test-lots-of-layers.html": 98.523
+      },
+      "blink_perf.layout": {
+        "ArabicLineLayout.html": 18.142,
+        "Shapes/MultipleShapes.html": 9.748,
+        "SimpleTextPathLineLayout.html": 21.867,
+        "add-remove-inline-floats.html": 16.171,
+        "attach-inlines-2.html": 20.097,
+        "attach-inlines.html": 15.96,
+        "auto-grid-lots-of-data.html": 18.254,
+        "chapter-reflow-once-random.html": 16.15,
+        "chapter-reflow-once.html": 17.042,
+        "chapter-reflow-thrice.html": 15.836,
+        "chapter-reflow-twice.html": 15.932,
+        "chapter-reflow.html": 15.451,
+        "character_fallback.html": 12.584,
+        "character_fallback_aat.html": 9.889,
+        "fixed-grid-lots-of-data.html": 18.8,
+        "fixed-grid-lots-of-stretched-data.html": 19.057,
+        "flexbox-column-nowrap.html": 17.97,
+        "flexbox-column-wrap.html": 17.464,
+        "flexbox-lots-of-data.html": 19.573,
+        "flexbox-row-nowrap.html": 16.925,
+        "flexbox-row-wrap.html": 16.869,
+        "flexbox-with-stretch-layout.html": 17.155,
+        "floats_100_100.html": 69.558,
+        "floats_100_100_nested.html": 71.063,
+        "floats_10_1000.html": 41.472,
+        "floats_20_100.html": 26.374,
+        "floats_20_100_nested.html": 33.486,
+        "floats_2_100.html": 17.948,
+        "floats_2_100_nested.html": 21.042,
+        "floats_50_100.html": 32.458,
+        "floats_50_100_nested.html": 34.613,
+        "hindi-line-layout.html": 19.436,
+        "large-table-with-collapsed-borders-and-colspans-wider-than-table.html": 56.012,
+        "large-table-with-collapsed-borders-and-colspans.html": 56.384,
+        "large-table-with-collapsed-borders-and-no-colspans.html": 55.264,
+        "latin-complex-text.html": 9.464,
+        "layers_overlap_2d.html": 17.847,
+        "layers_overlap_3d.html": 18.339,
+        "line-layout-line-height.html": 76.366,
+        "line-layout.html": 17.26,
+        "long-line-nowrap-collapse.html": 10.593,
+        "long-line-nowrap-spans-collapse.html": 10.58,
+        "long-line-nowrap.html": 26.011,
+        "multicol/deeply-nested-tables.html": 19.162,
+        "multicol/fixed-height-with-spanner-and-nested-tables.html": 17.331,
+        "multicol/lots-of-text-autofill.html": 17.955,
+        "multicol/lots-of-text-balanced-orphans-widows.html": 17.68,
+        "multicol/lots-of-text-balanced.html": 17.638,
+        "multicol/tall-content-short-columns-realistic.html": 20.977,
+        "multicol/tall-content-short-columns.html": 21.3,
+        "nested-blocks-with-percent-height-and-max-height.html": 20.274,
+        "nested-grid.html": 16.671,
+        "nested-percent-height-tables.html": 16.384,
+        "vertical-japanese-kokoro-insert.html": 20.342,
+        "word-break-break-all.html": 22.414,
+        "word-break-break-word.html": 22.539,
+        "word-wrap-break-word.html": 22.369
+      },
+      "blink_perf.paint": {
+        "appending-text.html": 79.105,
+        "color-changes.html": 65.825,
+        "complex-content-slow-scroll.html": 52.15,
+        "containment-resize.html": 70.118,
+        "fixed-and-many-layers-scroll.html": 59.302,
+        "large-table-background-change-with-invisible-collapsed-borders.html": 66.141,
+        "large-table-background-change-with-visible-collapsed-borders.html": 38.413,
+        "large-table-background-change-with-zero-width-collapsed-borders.html": 66.0,
+        "large-table-collapsed-border-change-with-backgrounds.html": 49.91,
+        "large-table-collapsed-border-change-with-text.html": 63.005,
+        "large-table-collapsed-border-change.html": 34.445,
+        "large-table-repaint.html": 59.247,
+        "paint-offset-changes.html": 54.719,
+        "transform-changes.html": 81.946
+      },
+      "blink_perf.parser": {
+        "css-parser-yui.html": 16.255,
+        "html-parser-threaded.html": 53.542,
+        "html-parser.html": 53.577,
+        "html5-full-render.html": 283.64,
+        "iframe-append-remove.html": 16.49,
+        "innerHTML-setter-siblings.html": 19.047,
+        "innerHTML-setter.html": 16.411,
+        "query-selector-all-attribute-complex.html": 15.99,
+        "query-selector-all-attribute.html": 15.728,
+        "query-selector-all-class-deep.html": 18.239,
+        "query-selector-all-class-first.html": 21.616,
+        "query-selector-all-class-last.html": 19.103,
+        "query-selector-all-class.html": 17.269,
+        "query-selector-all-deep.html": 17.249,
+        "query-selector-all-first.html": 16.767,
+        "query-selector-all-id-deep.html": 29.733,
+        "query-selector-all-id-first.html": 21.258,
+        "query-selector-all-id-last.html": 30.723,
+        "query-selector-all-last.html": 17.226,
+        "query-selector-deep.html": 22.508,
+        "query-selector-first.html": 19.813,
+        "query-selector-id-deep.html": 24.117,
+        "query-selector-id-last.html": 21.608,
+        "query-selector-last.html": 18.153,
+        "simple-url.html": 34.114,
+        "textarea-parsing.html": 20.257,
+        "tiny-innerHTML.html": 54.463,
+        "url-parser.html": 23.441,
+        "xml-parser.html": 16.221
+      },
+      "blink_perf.shadow_dom": {
+        "shadow-style-share-attr-selectors.html": 16.076,
+        "shadow-style-share-media-query.html": 14.086,
+        "shadow-style-share-with-distribution.html": 13.437,
+        "shadow-style-share.html": 9.427,
+        "style-sheet-insert.html": 10.836,
+        "v0-changing-classname-with-shadow-dom.html": 12.437,
+        "v0-changing-classname-without-shadow-dom.html": 23.574,
+        "v0-changing-select-with-shadow-dom.html": 45.842,
+        "v0-changing-select-without-shadow-dom.html": 52.033,
+        "v0-content-reprojection.html": 10.813,
+        "v0-distribution-with-multiple-shadow-roots.html": 9.285,
+        "v0-large-distribution-without-layout.html": 9.605,
+        "v0-multiple-insertion-points.html": 9.237,
+        "v0-shadow-reprojection.html": 11.499,
+        "v0-small-distribution-with-layout.html": 10.69,
+        "v1-distribution-disconnected-and-reconnected.html": 91.3,
+        "v1-distribution.html": 8.723,
+        "v1-host-child-append.html": 9.244,
+        "v1-large-deep-distribution.html": 91.267,
+        "v1-large-deep-layout.html": 266.19,
+        "v1-large-shallow-distribution.html": 8.707,
+        "v1-large-shallow-layout.html": 9.291,
+        "v1-slot-append.html": 8.685,
+        "v1-small-deep-distribution.html": 18.686,
+        "v1-small-deep-layout.html": 18.721,
+        "v1-small-shallow-distribution.html": 8.875,
+        "v1-small-shallow-layout.html": 8.744
+      },
+      "blink_perf.svg": {
+        "AzLizardBenjiPark.html": 9.987,
+        "Bamboo.html": 24.603,
+        "Cactus.html": 13.665,
+        "Cowboy.html": 13.12,
+        "Cowboy_transform.html": 15.148,
+        "CrawFishGanson.html": 10.285,
+        "Debian.html": 11.577,
+        "DropsOnABlade.html": 9.86,
+        "FlowerFromMyGarden.html": 10.118,
+        "FoodLeifLodahl.html": 10.29,
+        "HarveyRayner.html": 10.636,
+        "SvgCubics.html": 13.179,
+        "SvgHitTesting.html": 13.767,
+        "SvgNestedUse.html": 18.57,
+        "UnderTheSee.html": 10.68,
+        "WorldIso.html": 12.368,
+        "Worldcup.html": 24.781
+      },
+      "cc_perftests": {
+        "AnimationHostPerfTest.Push1000PlayersPropertiesTo": 3.11,
+        "AnimationHostPerfTest.Push1000TimelinesPropertiesTo": 3.018,
+        "AnimationHostPerfTest.Push10TimelinesPropertiesTo": 3.015,
+        "BrowserCompositorInvalidateLayerTreePerfTest.DenseBrowserUIThreaded": 2.243,
+        "BspTreePerfTest.BspTreeCubes": 2.216,
+        "BspTreePerfTest.BspTreeCubes_2": 2.249,
+        "BspTreePerfTest.BspTreeCubes_4": 2.344,
+        "BspTreePerfTest.BspTreeRubik": 2.046,
+        "BspTreePerfTest.LayerSorterCubes": 2.246,
+        "BspTreePerfTest.LayerSorterRubik": 2.041,
+        "CCSerializationPerfTest.DelegatedFrame_Complex": 8.016,
+        "CCSerializationPerfTest.DelegatedFrame_ManyQuads_1_4000": 16.854,
+        "CCSerializationPerfTest.DelegatedFrame_ManyRenderPasses_10_500": 17.129,
+        "CCSerializationPerfTest.DelegatedFrame_ManyRenderPasses_5_100": 16.063,
+        "CalcDrawPropsTest.HeavyPage": 2.015,
+        "CalcDrawPropsTest.TenTen": 2.048,
+        "CalcDrawPropsTest.TouchRegionHeavy": 2.019,
+        "CalcDrawPropsTest.TouchRegionLight": 2.015,
+        "DrawQuadPerfTest.IterateResources": 6.025,
+        "LayerPerfTest.ImplPushPropertiesTo": 6.008,
+        "LayerPerfTest.PushPropertiesTo": 6.024,
+        "LayerTreeHostPerfTestJsonReader.TenTenSingleThread_FullDamageEachFrame": 2.053,
+        "LayerTreeHostPerfTestJsonReader.TenTenThreaded_FullDamageEachFrame": 2.053,
+        "LayerTreeHostPerfTestLeafInvalidates.TenTenSingleThread": 2.054,
+        "PictureLayerImplPerfTest.TilingSetEvictionQueueConstruct": 6.206,
+        "PictureLayerImplPerfTest.TilingSetEvictionQueueConstructAndIterate": 8.18,
+        "PictureLayerImplPerfTest.TilingSetRasterQueueConstruct": 6.012,
+        "PictureLayerImplPerfTest.TilingSetRasterQueueConstructAndIterate": 8.02,
+        "RTreePerfTest.Construct": 8.246,
+        "RTreePerfTest.Search": 8.074,
+        "RasterBufferProviderCommonPerfTest.BuildTileTaskGraph": 12.053,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAlternateTasks/0": 12.059,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAlternateTasks/1": 12.036,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAlternateTasks/2": 12.064,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAlternateTasks/3": 12.09,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAndExecuteTasks/0": 12.055,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAndExecuteTasks/1": 12.041,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAndExecuteTasks/2": 12.038,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleAndExecuteTasks/3": 12.056,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleTasks/0": 12.046,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleTasks/1": 12.053,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleTasks/2": 12.057,
+        "RasterBufferProviderPerfTests/RasterBufferProviderPerfTest.ScheduleTasks/3": 12.067,
+        "SoftwareImageDecodeCachePerfTest.FromDrawImage": 2.006,
+        "TaskGraphRunnerPerfTest.BuildTaskGraph": 12.018,
+        "TaskGraphRunnerPerfTest.ScheduleAlternateTasks": 12.025,
+        "TaskGraphRunnerPerfTest.ScheduleAndExecuteTasks": 12.022,
+        "TaskGraphRunnerPerfTest.ScheduleTasks": 12.038,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256BlackAndWhiteGradientImage/0": 2.151,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256BlackAndWhiteGradientImage/1": 2.156,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256BlackAndWhiteGradientImage/2": 2.155,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256RandomColorImage/0": 2.21,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256RandomColorImage/1": 2.204,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256RandomColorImage/2": 2.204,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256SolidBlackImage/0": 2.016,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256SolidBlackImage/1": 2.017,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256SolidBlackImage/2": 2.019,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256SolidColorImage/0": 2.048,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256SolidColorImage/1": 2.049,
+        "TextureCompressorPerfTests/TextureCompressorPerfTest.Compress256x256SolidColorImage/2": 2.049,
+        "TileManagerPerfTest.EvictionTileQueueConstruct": 6.06,
+        "TileManagerPerfTest.EvictionTileQueueConstructAndIterate": 24.452,
+        "TileManagerPerfTest.PrepareTiles": 19.525,
+        "TileManagerPerfTest.RasterTileQueueConstruct": 6.024,
+        "TileManagerPerfTest.RasterTileQueueConstructAndIterate": 24.316
+      },
+      "dromaeo.domcoreattr": {
+        "http://dromaeo.com?dom-attr": 49.283
+      },
+      "dromaeo.domcoremodify": {
+        "http://dromaeo.com?dom-modify": 61.011
+      },
+      "dromaeo.domcorequery": {
+        "http://dromaeo.com?dom-query": 64.178
+      },
+      "dromaeo.domcoretraverse": {
+        "http://dromaeo.com?dom-traverse": 45.059
+      },
+      "dummy_benchmark.noisy_benchmark_1": {
+        "dummy_page.html": 7.314
+      },
+      "dummy_benchmark.stable_benchmark_1": {
+        "dummy_page.html": 7.115
+      },
+      "gpu_perftests": {
+        "TextureUploadPerfTest.renaming": 0.525,
+        "TextureUploadPerfTest.upload": 40.986
+      },
+      "jetstream": {
+        "http://browserbench.org/JetStream/": 547.611
+      },
+      "kraken": {
+        "http://krakenbenchmark.mozilla.org/kraken-1.1/driver.html": 153.168
+      },
+      "loading.mobile": {
+        "163": [
+          0.0,
+          0.0
+        ],
+        "163@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "2048": [
+          18.911,
+          18.515
+        ],
+        "2048@{'traffic_setting': 'Regular-3G'}": [
+          39.31,
+          35.245
+        ],
+        "58Pic": [
+          20.346,
+          20.357
+        ],
+        "58Pic@{'traffic_setting': 'Regular-3G'}": [
+          48.136,
+          46.585
+        ],
+        "Amazon": [
+          24.292,
+          24.217
+        ],
+        "Amazon@{'traffic_setting': 'Regular-3G'}": [
+          74.022,
+          69.329
+        ],
+        "BOLNoticias": [
+          28.693,
+          27.908
+        ],
+        "BOLNoticias@{'traffic_setting': 'Regular-3G'}": [
+          82.573,
+          71.844
+        ],
+        "Baidu": [
+          21.159,
+          22.804
+        ],
+        "Baidu@{'traffic_setting': 'Regular-3G'}": [
+          52.387,
+          49.096
+        ],
+        "Bradesco": [
+          24.89,
+          25.09
+        ],
+        "Bradesco@{'traffic_setting': 'Regular-3G'}": [
+          60.325,
+          62.953
+        ],
+        "Dailymotion": [
+          34.259,
+          35.675
+        ],
+        "Dailymotion@{'traffic_setting': 'Regular-3G'}": [
+          84.813,
+          85.101
+        ],
+        "Dawn": [
+          35.751,
+          36.066
+        ],
+        "Dawn@{'traffic_setting': 'Regular-3G'}": [
+          59.211,
+          62.72
+        ],
+        "DevOpera": [
+          18.727,
+          18.44
+        ],
+        "DevOpera@{'traffic_setting': 'Regular-3G'}": [
+          54.305,
+          44.439
+        ],
+        "Dramaq": [
+          29.001,
+          28.875
+        ],
+        "Dramaq@{'traffic_setting': 'Regular-3G'}": [
+          38.175,
+          60.41
+        ],
+        "EBS": [
+          0.0,
+          0.0
+        ],
+        "EBS@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "EnquiryIndianRail": [
+          18.596,
+          18.972
+        ],
+        "EnquiryIndianRail@{'traffic_setting': 'Regular-3G'}": [
+          40.954,
+          38.793
+        ],
+        "Facebook": [
+          26.108,
+          25.673
+        ],
+        "Facebook@{'traffic_setting': 'Regular-3G'}": [
+          58.767,
+          53.374
+        ],
+        "FlipBoard": [
+          21.131,
+          21.208
+        ],
+        "FlipBoard@{'traffic_setting': 'Regular-3G'}": [
+          59.251,
+          57.346
+        ],
+        "FlipKart": [
+          22.111,
+          22.003
+        ],
+        "FlipKart@{'traffic_setting': 'Regular-3G'}": [
+          62.567,
+          51.87
+        ],
+        "FranceTVInfo": [
+          21.915,
+          21.647
+        ],
+        "FranceTVInfo@{'traffic_setting': 'Regular-3G'}": [
+          53.691,
+          53.127
+        ],
+        "FuturaSciences": [
+          0.0,
+          0.0
+        ],
+        "FuturaSciences@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "G1": [
+          0.0,
+          0.0
+        ],
+        "G1@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "GFK": [
+          0.0,
+          0.0
+        ],
+        "GFK@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "GSShop": [
+          34.397,
+          34.508
+        ],
+        "GSShop@{'traffic_setting': 'Regular-3G'}": [
+          25.167,
+          24.591
+        ],
+        "GoogleBrazil": [
+          19.515,
+          19.755
+        ],
+        "GoogleBrazil@{'traffic_setting': 'Regular-3G'}": [
+          51.742,
+          47.958
+        ],
+        "GoogleIndia": [
+          20.856,
+          20.521
+        ],
+        "GoogleIndia@{'traffic_setting': 'Regular-3G'}": [
+          60.977,
+          52.955
+        ],
+        "GoogleIndonesia": [
+          19.622,
+          18.905
+        ],
+        "GoogleIndonesia@{'traffic_setting': 'Regular-3G'}": [
+          49.517,
+          41.692
+        ],
+        "GoogleRedirectToGoogleJapan": [
+          20.127,
+          20.051
+        ],
+        "GoogleRedirectToGoogleJapan@{'traffic_setting': 'Regular-3G'}": [
+          63.778,
+          62.605
+        ],
+        "GuitarTuner": [
+          21.219,
+          20.946
+        ],
+        "GuitarTuner@{'traffic_setting': 'Regular-3G'}": [
+          46.41,
+          39.077
+        ],
+        "HashOcean": [
+          0.0,
+          0.0
+        ],
+        "HashOcean@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "Hongkiat": [
+          25.17,
+          24.79
+        ],
+        "Hongkiat@{'traffic_setting': 'Regular-3G'}": [
+          71.344,
+          72.293
+        ],
+        "IBI": [
+          0.0,
+          0.0
+        ],
+        "IBI@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "InboxAttack": [
+          18.399,
+          17.951
+        ],
+        "InboxAttack@{'traffic_setting': 'Regular-3G'}": [
+          43.605,
+          37.338
+        ],
+        "KapanLagi": [
+          25.342,
+          25.632
+        ],
+        "KapanLagi@{'traffic_setting': 'Regular-3G'}": [
+          75.429,
+          80.56
+        ],
+        "Kaskus": [
+          34.085,
+          32.069
+        ],
+        "Kaskus@{'traffic_setting': 'Regular-3G'}": [
+          97.68,
+          86.555
+        ],
+        "LocalMoxie": [
+          20.321,
+          20.477
+        ],
+        "LocalMoxie@{'traffic_setting': 'Regular-3G'}": [
+          54.856,
+          49.173
+        ],
+        "Locanto": [
+          24.418,
+          24.562
+        ],
+        "Locanto@{'traffic_setting': 'Regular-3G'}": [
+          56.648,
+          57.181
+        ],
+        "MLSMatrix": [
+          0.0,
+          0.0
+        ],
+        "MLSMatrix@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "OLX": [
+          24.007,
+          23.976
+        ],
+        "OLX@{'traffic_setting': 'Regular-3G'}": [
+          69.638,
+          67.897
+        ],
+        "Pokedex": [
+          26.959,
+          26.263
+        ],
+        "Pokedex@{'traffic_setting': 'Regular-3G'}": [
+          74.667,
+          65.454
+        ],
+        "QQNews": [
+          20.173,
+          20.081
+        ],
+        "QQNews@{'traffic_setting': 'Regular-3G'}": [
+          48.455,
+          45.793
+        ],
+        "SBS": [
+          0.0,
+          0.0
+        ],
+        "SBS@{'traffic_setting': 'Regular-3G'}": [
+          0.0,
+          0.0
+        ],
+        "SlideShare": [
+          24.207,
+          24.042
+        ],
+        "SlideShare@{'traffic_setting': 'Regular-3G'}": [
+          72.27,
+          74.58
+        ],
+        "Suumo": [
+          25.652,
+          25.43
+        ],
+        "Suumo@{'traffic_setting': 'Regular-3G'}": [
+          67.751,
+          61.282
+        ],
+        "Thairath": [
+          24.271,
+          24.121
+        ],
+        "Thairath@{'traffic_setting': 'Regular-3G'}": [
+          67.39,
+          68.36
+        ],
+        "TheStar": [
+          38.196,
+          38.211
+        ],
+        "TheStar@{'traffic_setting': 'Regular-3G'}": [
+          78.305,
+          85.358
+        ],
+        "TownWork": [
+          21.031,
+          21.377
+        ],
+        "TownWork@{'traffic_setting': 'Regular-3G'}": [
+          85.506,
+          70.737
+        ],
+        "TrainedToThrill": [
+          18.644,
+          18.643
+        ],
+        "TrainedToThrill@{'traffic_setting': 'Regular-3G'}": [
+          40.898,
+          42.92
+        ],
+        "TribunNews": [
+          34.285,
+          32.084
+        ],
+        "TribunNews@{'traffic_setting': 'Regular-3G'}": [
+          76.236,
+          68.659
+        ],
+        "Twitter": [
+          17.877,
+          17.928
+        ],
+        "Twitter@{'traffic_setting': 'Regular-3G'}": [
+          49.12,
+          48.076
+        ],
+        "VoiceMemos": [
+          20.175,
+          19.932
+        ],
+        "VoiceMemos@{'traffic_setting': 'Regular-3G'}": [
+          63.515,
+          41.249
+        ],
+        "Wikipedia": [
+          19.735,
+          19.815
+        ],
+        "Wikipedia@{'traffic_setting': 'Regular-3G'}": [
+          51.292,
+          51.095
+        ],
+        "YahooNews": [
+          34.457,
+          34.163
+        ],
+        "YahooNews@{'traffic_setting': 'Regular-3G'}": [
+          87.685,
+          75.739
+        ],
+        "Youtube": [
+          19.792,
+          20.353
+        ],
+        "Youtube@{'traffic_setting': 'Regular-3G'}": [
+          61.254,
+          60.444
+        ]
+      },
+      "media.android.tough_video_cases": {
+        "video.html?src=crowd.ogg&type=audio": 36.542,
+        "video.html?src=crowd1080_vp9.webm": 34.709,
+        "video.html?src=crowd1080_vp9.webm&seek": 12.067,
+        "video.html?src=crowd720_vp9.webm": 34.52,
+        "video.html?src=tulip2.m4a&type=audio": 41.291,
+        "video.html?src=tulip2.mp3&type=audio": 40.841,
+        "video.html?src=tulip2.mp3&type=audio&seek": 8.557,
+        "video.html?src=tulip2.mp4": 41.418,
+        "video.html?src=tulip2.mp4&seek": 10.143,
+        "video.html?src=tulip2.ogg&type=audio": 40.871,
+        "video.html?src=tulip2.ogg&type=audio&seek": 8.665,
+        "video.html?src=tulip2.vp9.webm": 42.056,
+        "video.html?src=tulip2.vp9.webm&background": 19.298,
+        "video.html?src=tulip2.vp9.webm&seek": 17.89,
+        "video.html?src=tulip2.wav&type=audio": 41.128,
+        "video.html?src=tulip2.wav&type=audio&seek": 8.326
+      },
+      "media.android.tough_video_cases_tbmv2": {
+        "video.html?src=crowd.ogg&type=audio": 29.693,
+        "video.html?src=crowd1080_vp9.webm": 32.079,
+        "video.html?src=crowd1080_vp9.webm&seek": 22.819,
+        "video.html?src=crowd720_vp9.webm": 31.801,
+        "video.html?src=tulip2.m4a&type=audio": 36.262,
+        "video.html?src=tulip2.mp3&type=audio": 35.857,
+        "video.html?src=tulip2.mp3&type=audio&seek": 17.52,
+        "video.html?src=tulip2.mp4": 43.857,
+        "video.html?src=tulip2.mp4&seek": 21.623,
+        "video.html?src=tulip2.ogg&type=audio": 35.924,
+        "video.html?src=tulip2.ogg&type=audio&seek": 17.742,
+        "video.html?src=tulip2.vp9.webm": 45.248,
+        "video.html?src=tulip2.vp9.webm&background": 29.907,
+        "video.html?src=tulip2.vp9.webm&seek": 30.384,
+        "video.html?src=tulip2.wav&type=audio": 36.822,
+        "video.html?src=tulip2.wav&type=audio&seek": 18.099
+      },
+      "media.mse_cases": {
+        "startup_test.html?testType=A": 7.648,
+        "startup_test.html?testType=A&doNotWaitForBodyOnLoad=true": 7.724,
+        "startup_test.html?testType=A&useAppendStream=true": 6.687,
+        "startup_test.html?testType=A&useAppendStream=true&doNotWaitForBodyOnLoad=true": 6.746,
+        "startup_test.html?testType=AV": 8.64,
+        "startup_test.html?testType=AV&doNotWaitForBodyOnLoad=true": 8.04,
+        "startup_test.html?testType=AV&useAppendStream=true": 6.815,
+        "startup_test.html?testType=AV&useAppendStream=true&doNotWaitForBodyOnLoad=true": 6.842,
+        "startup_test.html?testType=V": 7.182,
+        "startup_test.html?testType=V&doNotWaitForBodyOnLoad=true": 7.223,
+        "startup_test.html?testType=V&useAppendStream=true": 6.725,
+        "startup_test.html?testType=V&useAppendStream=true&doNotWaitForBodyOnLoad=true": 6.704
+      },
+      "memory.blink_memory_mobile": {
+        "Blogger": 26.654,
+        "Facebook": 30.174,
+        "Gmail": 27.423,
+        "GooglePlus": 29.665,
+        "Pinterest": 27.02,
+        "Reddit": 29.713,
+        "TheVerge": 42.012,
+        "Wikipedia (1 tab) - delayed scroll start": 37.928,
+        "Wordpress": 32.864,
+        "Worldjournal": 30.68
+      },
+      "memory.long_running_idle_gmail_background_tbmv2": {
+        "https://mail.google.com/mail/": 281.407
+      },
+      "memory.long_running_idle_gmail_tbmv2": {
+        "https://mail.google.com/mail/": 279.276
+      },
+      "memory.top_10_mobile": {
+        "after_http_en_m_wikipedia_org_wiki_Science@{'phase': 'background'}": [
+          18.678,
+          18.388,
+          18.887,
+          18.952,
+          19.457
+        ],
+        "after_http_m_intl_taobao_com_group_purchase_html@{'phase': 'background'}": [
+          17.986,
+          17.769,
+          18.091,
+          18.472,
+          18.706
+        ],
+        "after_http_m_youtube_com_results_q_science@{'phase': 'background'}": [
+          18.283,
+          18.102,
+          18.267,
+          18.689,
+          18.767
+        ],
+        "after_http_search_yahoo_com_search__ylt_p_google@{'phase': 'background'}": [
+          18.141,
+          18.275,
+          18.148,
+          18.706,
+          18.599
+        ],
+        "after_http_www_amazon_com_gp_aw_s_k_nexus@{'phase': 'background'}": [
+          18.476,
+          18.426,
+          18.526,
+          18.923,
+          19.525
+        ],
+        "after_http_www_baidu_com_s_word_google@{'phase': 'background'}": [
+          18.012,
+          17.995,
+          18.244,
+          18.476,
+          18.464
+        ],
+        "after_http_yandex_ru_touchsearch_text_science@{'phase': 'background'}": [
+          18.451,
+          18.409,
+          18.487,
+          19.319,
+          18.992
+        ],
+        "after_https_m_facebook_com_rihanna@{'phase': 'background'}": [
+          18.39,
+          18.402,
+          18.431,
+          19.026,
+          18.957
+        ],
+        "after_https_mobile_twitter_com_justinbieber_skip_interstitial_true@{'phase': 'background'}": [
+          18.163,
+          18.215,
+          18.161,
+          18.39,
+          18.974
+        ],
+        "after_https_www_google_co_uk_hl_en_q_science@{'phase': 'background'}": [
+          19.235,
+          19.102,
+          19.23,
+          19.121,
+          19.537
+        ],
+        "http_en_m_wikipedia_org_wiki_Science@{'phase': 'foreground'}": [
+          19.58,
+          19.585,
+          19.742,
+          19.868,
+          20.203
+        ],
+        "http_m_intl_taobao_com_group_purchase_html@{'phase': 'foreground'}": [
+          16.678,
+          16.518,
+          16.888,
+          17.35,
+          17.811
+        ],
+        "http_m_youtube_com_results_q_science@{'phase': 'foreground'}": [
+          18.326,
+          18.79,
+          18.661,
+          19.14,
+          19.269
+        ],
+        "http_search_yahoo_com_search__ylt_p_google@{'phase': 'foreground'}": [
+          17.025,
+          17.296,
+          17.052,
+          17.325,
+          17.736
+        ],
+        "http_www_amazon_com_gp_aw_s_k_nexus@{'phase': 'foreground'}": [
+          18.061,
+          17.81,
+          18.19,
+          18.312,
+          18.958
+        ],
+        "http_www_baidu_com_s_word_google@{'phase': 'foreground'}": [
+          18.05,
+          18.275,
+          18.255,
+          18.617,
+          18.952
+        ],
+        "http_yandex_ru_touchsearch_text_science@{'phase': 'foreground'}": [
+          18.53,
+          18.233,
+          18.566,
+          18.995,
+          19.688
+        ],
+        "https_m_facebook_com_rihanna@{'phase': 'foreground'}": [
+          18.302,
+          18.393,
+          18.442,
+          18.656,
+          19.445
+        ],
+        "https_mobile_twitter_com_justinbieber_skip_interstitial_true@{'phase': 'foreground'}": [
+          17.286,
+          17.226,
+          17.572,
+          17.638,
+          18.261
+        ],
+        "https_www_google_co_uk_hl_en_q_science@{'phase': 'foreground'}": [
+          26.472,
+          24.252,
+          24.423,
+          25.084,
+          25.406
+        ]
+      },
+      "octane": {
+        "http://chromium.github.io/octane/index.html?auto=1": 120.875
+      },
+      "oortonline_tbmv2": {
+        "http://oortonline.gl/#run": 11.897
+      },
+      "power.typical_10_mobile": {
+        "http://de.m.wikipedia.org/wiki/K%C3%B6lner_Dom": 64.61,
+        "http://m.chiebukuro.yahoo.co.jp/detail/q10136829180": 63.812,
+        "http://m.ebay.com/itm/351157205404": 57.977,
+        "http://m.facebook.com/barackobama": 60.681,
+        "http://m.huffpost.com/us/entry/6004486": 64.251,
+        "http://m.ynet.co.il": 63.225,
+        "http://siriuslymeg.tumblr.com/": 65.529,
+        "http://wapbaike.baidu.com/": 58.227,
+        "http://www.cnn.com/2014/03/31/showbiz/tv/himym-finale/index.html": 59.37,
+        "http://www.rg.ru/2014/10/21/cska-site.html": 64.501
+      },
+      "scheduler.tough_scheduling_cases": {
+        "raf.html": 22.853,
+        "raf_animation.html": 22.86,
+        "raf_canvas.html": 22.175,
+        "raf_touch_animation.html": 22.92,
+        "second_batch_js.html?heavy": 16.1635,
+        "second_batch_js.html?light": 15.177,
+        "second_batch_js.html?medium": 15.634,
+        "simple_text_page.html": 22.278,
+        "simple_touch_drag.html": 17.329,
+        "sync_scroll_offset.html": 21.307,
+        "touch_handler_scrolling.html": 22.023
+      },
+      "service_worker.service_worker": {
+        "first_load": 20.699,
+        "second_load": 20.563,
+        "svgomg_first_load": 22.566,
+        "svgomg_second_load": 22.453,
+        "third_load": 20.634
+      },
+      "service_worker.service_worker_micro_benchmark": {
+        "http://localhost:8091/index.html": 14.638
+      },
+      "smoothness.gpu_rasterization.polymer": {
+        "http://www.polymer-project.org/components/core-scroll-header-panel/demo.html": 18.154,
+        "http://www.polymer-project.org/components/paper-button/demo.html": 23.29,
+        "http://www.polymer-project.org/components/paper-checkbox/demo.html": 28.413,
+        "http://www.polymer-project.org/components/paper-fab/demo.html": 23.477,
+        "http://www.polymer-project.org/components/paper-icon-button/demo.html": 50.709,
+        "http://www.polymer-project.org/components/paper-shadow/demo.html": 23.998,
+        "http://www.polymer-project.org/components/paper-tabs/demo.html": 48.004,
+        "http://www.polymer-project.org/components/paper-toggle-button/demo.html": 18.522
+      },
+      "smoothness.gpu_rasterization.top_25_smooth": {
+        "Blogger": 24.754,
+        "Docs  (1 open document tab)": 33.966,
+        "ESPN": 18.57,
+        "Facebook": 24.34,
+        "LinkedIn": 18.219,
+        "Pinterest": 15.411,
+        "Twitter": 20.12,
+        "Weather.com": 23.161,
+        "Wikipedia (1 tab)": 31.432,
+        "Wordpress": 25.034,
+        "http://answers.yahoo.com": 19.064,
+        "http://booking.com": 19.485,
+        "http://games.yahoo.com": 32.359,
+        "http://news.yahoo.com": 22.676,
+        "http://sports.yahoo.com/": 22.907,
+        "http://techcrunch.com": 25.24,
+        "http://www.amazon.com": 0.0,
+        "http://www.cnn.com": 0.0,
+        "http://www.ebay.com": 16.805,
+        "http://www.youtube.com": 21.943,
+        "https://mail.google.com/mail/": 41.919,
+        "https://plus.google.com/110031535020051778989/posts": 26.63,
+        "https://www.google.com/#hl=en&q=barack+obama": 17.5,
+        "https://www.google.com/calendar/": 22.99,
+        "https://www.google.com/search?q=cats&tbm=isch": 26.662
+      },
+      "smoothness.gpu_rasterization.tough_filters_cases": {
+        "Analog Clock SVG": 26.055,
+        "Filter Terrain SVG": 27.256,
+        "IE PirateMark": 28.126,
+        "MotionMark Focus": 29.064
+      },
+      "smoothness.gpu_rasterization.tough_path_rendering_cases": {
+        "GUIMark Vector Chart Test": 25.559,
+        "IE Chalkboard": 35.214,
+        "MotionMark Canvas Fill Shapes": 24.926,
+        "MotionMark Canvas Stroke Shapes": 26.062
+      },
+      "smoothness.key_mobile_sites_smooth": {
+        "Blogger": 16.05,
+        "LinkedIn": 22.258,
+        "Pinterest": 14.196,
+        "Wikipedia (1 tab)": 34.59,
+        "Wikipedia (1 tab) - delayed scroll start": 34.567,
+        "Wordpress": 26.581,
+        "http://answers.yahoo.com/question/index?qid=20110117024343AAopj8f": 20.1,
+        "http://cuteoverload.com": 29.706,
+        "http://digg.com": 22.959,
+        "http://ftw.usatoday.com/2014/05/spelling-bee-rules-shenanigans": 29.731,
+        "http://gsp.ro": 19.115,
+        "http://iphone.capitolvolkswagen.com/index.htm#new-inventory_p_2Fsb-new_p_2Ehtm_p_3Freset_p_3DInventoryListing": 21.526,
+        "http://m.youtube.com/watch?v=9hBpF_Zj4OA": 15.479,
+        "http://mlb.com/": 15.037,
+        "http://mobile-news.sandbox.google.com/news/pt0": 21.069,
+        "http://mobile-news.sandbox.google.com/news/pt1": 25.125,
+        "http://news.yahoo.com": 18.875,
+        "http://nytimes.com/": 19.783,
+        "http://online.wsj.com/home-page": 17.731,
+        "http://shop.mobileweb.ebay.com/searchresults?kw=viking+helmet": 20.951,
+        "http://slashdot.org/": 22.609,
+        "http://techcrunch.com": 17.199,
+        "http://theverge.com": 19.255,
+        "http://worldjournal.com/": 31.702,
+        "http://www.androidpolice.com/2012/10/03/rumor-evidence-mounts-that-an-lg-optimus-g-nexus-is-coming-along-with-a-nexus-phone-certification-program/": 22.365,
+        "http://www.baidu.com/s?wd=barack+obama&rsv_bp=0&rsv_spt=3&rsv_sug3=9&rsv_sug=0&rsv_sug4=3824&rsv_sug1=3&inputT=4920": 16.34,
+        "http://www.bing.com/search?q=sloths": 15.168,
+        "http://www.boingboing.net": 27.915,
+        "http://www.booking.com/searchresults.html?src=searchresults&latitude=65.0500&longitude=25.4667": 21.91,
+        "http://www.cnn.com": 18.938,
+        "http://www.cnn.com/2012/10/03/politics/michelle-obama-debate/index.html": 33.317,
+        "http://www.deviantart.com/": 22.837,
+        "http://www.reddit.com/r/programming/comments/1g96ve": 23.573,
+        "http://www.sfgate.com/": 19.191,
+        "http://www.theverge.com/2012/10/28/3568746/amazon-7-inch-fire-hd-ipad-mini-ad-ballsy": 34.538,
+        "http://www.wowwiki.com/World_of_Warcraft:_Mists_of_Pandaria": 33.568,
+        "https://facebook.com/barackobama": 20.433,
+        "https://plus.google.com/app/basic/110031535020051778989/posts?source=apppromo": 23.488,
+        "https://www.google.co.uk/search?hl=en&q=barack+obama&cad=h": 16.455
+      },
+      "smoothness.key_silk_cases": {
+        "font_wipe.html": 19.12,
+        "http://groupcloned.com/test/plain/list-recycle-transform.html": 23.221,
+        "http://groupcloned.com/test/plain/sticky-using-webkit-backface-visibility.html": 17.14,
+        "http://jsbin.com/UVIgUTa/38/quiet": 16.111,
+        "http://jsfiddle.net/3yDKh/15/show/": 17.527,
+        "http://jsfiddle.net/3yDKh/16/show/": 17.561,
+        "http://jsfiddle.net/R8DX9/4/show/": 17.621,
+        "http://jsfiddle.net/TLXLu/3/show/": 18.759,
+        "http://jsfiddle.net/bNp2h/3/show/": 18.99,
+        "http://jsfiddle.net/cKB9D/7/show/": 18.596,
+        "http://jsfiddle.net/jx5De/14/show/": 18.864,
+        "http://jsfiddle.net/rF9Gh/7/show/": 17.654,
+        "http://jsfiddle.net/ugkd4/10/show/": 19.637,
+        "http://jsfiddle.net/vBQHH/11/show/": 19.498,
+        "http://jsfiddle.net/xLuvC/1/show/": 18.265,
+        "http://mobile-news.sandbox.google.com/news/pt0?scroll": 20.635,
+        "http://mobile-news.sandbox.google.com/news/pt0?swipe": 18.359,
+        "http://plus.google.com/app/basic/stream": 0.0,
+        "http://wiltzius.github.io/shape-shifter/": 26.675,
+        "http://www.google.com/#q=google": 19.656,
+        "https://polymer-topeka.appspot.com/": 0.0,
+        "https://www.google.com/search?hl=en&q=define%3Aboogie": 20.078,
+        "inbox_app.html?slide_drawer": 0.0,
+        "inbox_app.html?stress_hidey_bars": 23.969,
+        "inbox_app.html?swipe_to_dismiss": 15.015,
+        "inbox_app.html?toggle_drawer": 22.314,
+        "infinite_scrolling.html": 22.851,
+        "list_animation_simple.html": 16.613,
+        "masonry.html": 22.682,
+        "pushState.html": 20.014,
+        "silk_finance.html": 25.136
+      },
+      "smoothness.maps": {
+        "http://localhost:8000/performance.html": 53.056
+      },
+      "smoothness.simple_mobile_sites": {
+        "http://m.nytimes.com/": 27.38,
+        "http://www.ebay.co.uk/": 27.508,
+        "http://www.nyc.gov": 28.301,
+        "https://www.flickr.com/": 24.954
+      },
+      "smoothness.sync_scroll.key_mobile_sites_smooth": {
+        "Blogger": 15.913,
+        "LinkedIn": 22.276,
+        "Pinterest": 14.341,
+        "Wikipedia (1 tab)": 34.569,
+        "Wikipedia (1 tab) - delayed scroll start": 34.647,
+        "Wordpress": 26.446,
+        "http://answers.yahoo.com/question/index?qid=20110117024343AAopj8f": 20.034,
+        "http://cuteoverload.com": 29.784,
+        "http://digg.com": 22.911,
+        "http://ftw.usatoday.com/2014/05/spelling-bee-rules-shenanigans": 30.42,
+        "http://gsp.ro": 19.235,
+        "http://iphone.capitolvolkswagen.com/index.htm#new-inventory_p_2Fsb-new_p_2Ehtm_p_3Freset_p_3DInventoryListing": 21.697,
+        "http://m.youtube.com/watch?v=9hBpF_Zj4OA": 15.823,
+        "http://mlb.com/": 14.883,
+        "http://mobile-news.sandbox.google.com/news/pt0": 21.035,
+        "http://mobile-news.sandbox.google.com/news/pt1": 24.556,
+        "http://news.yahoo.com": 19.147,
+        "http://nytimes.com/": 19.771,
+        "http://online.wsj.com/home-page": 17.81,
+        "http://shop.mobileweb.ebay.com/searchresults?kw=viking+helmet": 20.945,
+        "http://slashdot.org/": 22.602,
+        "http://techcrunch.com": 17.256,
+        "http://theverge.com": 19.209,
+        "http://worldjournal.com/": 31.986,
+        "http://www.androidpolice.com/2012/10/03/rumor-evidence-mounts-that-an-lg-optimus-g-nexus-is-coming-along-with-a-nexus-phone-certification-program/": 22.926,
+        "http://www.baidu.com/s?wd=barack+obama&rsv_bp=0&rsv_spt=3&rsv_sug3=9&rsv_sug=0&rsv_sug4=3824&rsv_sug1=3&inputT=4920": 16.474,
+        "http://www.bing.com/search?q=sloths": 14.923,
+        "http://www.boingboing.net": 28.062,
+        "http://www.booking.com/searchresults.html?src=searchresults&latitude=65.0500&longitude=25.4667": 21.524,
+        "http://www.cnn.com": 19.36,
+        "http://www.cnn.com/2012/10/03/politics/michelle-obama-debate/index.html": 32.961,
+        "http://www.deviantart.com/": 22.935,
+        "http://www.reddit.com/r/programming/comments/1g96ve": 23.026,
+        "http://www.sfgate.com/": 19.424,
+        "http://www.theverge.com/2012/10/28/3568746/amazon-7-inch-fire-hd-ipad-mini-ad-ballsy": 34.84,
+        "http://www.wowwiki.com/World_of_Warcraft:_Mists_of_Pandaria": 33.045,
+        "https://facebook.com/barackobama": 20.74,
+        "https://plus.google.com/app/basic/110031535020051778989/posts?source=apppromo": 23.646,
+        "https://www.google.co.uk/search?hl=en&q=barack+obama&cad=h": 16.393
+      },
+      "smoothness.top_25_smooth": {
+        "Blogger": 24.417,
+        "Docs  (1 open document tab)": 34.534,
+        "ESPN": 19.96,
+        "Facebook": 23.82,
+        "LinkedIn": 17.824,
+        "Pinterest": 15.37,
+        "Twitter": 19.447,
+        "Weather.com": 22.936,
+        "Wikipedia (1 tab)": 32.186,
+        "Wordpress": 24.335,
+        "http://answers.yahoo.com": 20.615,
+        "http://booking.com": 19.414,
+        "http://games.yahoo.com": 31.251,
+        "http://news.yahoo.com": 22.902,
+        "http://sports.yahoo.com/": 22.133,
+        "http://techcrunch.com": 25.105,
+        "http://www.amazon.com": 0.0,
+        "http://www.cnn.com": 0.0,
+        "http://www.ebay.com": 16.879,
+        "http://www.youtube.com": 21.82,
+        "https://mail.google.com/mail/": 41.323,
+        "https://plus.google.com/110031535020051778989/posts": 26.225,
+        "https://www.google.com/#hl=en&q=barack+obama": 17.633,
+        "https://www.google.com/calendar/": 23.001,
+        "https://www.google.com/search?q=cats&tbm=isch": 26.518
+      },
+      "smoothness.tough_ad_cases": {
+        "http://localhost:8000/CICAgICQ15a9NxDIARjIASgBMghBC1XuTk8ezw.swiffy72.html": 28.097,
+        "http://localhost:8000/CICAgIDQ2Pb-MxCsAhj6ASgBMgi5DLoSO0gPbQ.swiffy72.html": 27.323999999999998,
+        "http://localhost:8000/CICAgKCN39CopQEQoAEY2AQoATIID59gK5hjjIg.swiffy72.html": 27.2705,
+        "http://localhost:8000/CICAgKCNj4HgyAEQeBjYBCgBMgjQpPkOjyWNdw.1.swiffy72.html": 27.225,
+        "http://localhost:8000/CICAgMDOrcnRGRB4GNgEKAEyCP_ZBSfwUFsj.swiffy72.html": 27.0505,
+        "http://localhost:8000/CNP2xe_LmqPEKBCsAhj6ASgBMggnyMqth81h8Q.swiffy72.html": 28.446,
+        "http://localhost:8000/clip-paths-CICAgMDO7Ye9-gEQ2AUYWigBMgjZxDii6aoK9w.swiffy72.html": 27.2485,
+        "http://localhost:8000/clip-paths-CILZhLqO_-27bxB4GNgEKAEyCC46kMLBXnMT.swiffy72.html": 27.52,
+        "http://localhost:8000/filters-CNLa0t2T47qJ_wEQoAEY2AQoATIIFaIdc7VMBr4.swiffy72.html": 30.047,
+        "http://localhost:8000/shapes-CICAgMDO7cfIzwEQ1AMYPCgBMghqY8tqyRCArQ.swiffy72.html": 27.349,
+        "http://localhost:8000/shapes-CK7ptO3F8bi2KxDQAhiYAigBMgij6QBQtD2gyA.swiffy72.html": 27.694
+      },
+      "smoothness.tough_filters_cases": {
+        "Analog Clock SVG": 29.113,
+        "Filter Terrain SVG": 26.354,
+        "IE PirateMark": 28.213,
+        "MotionMark Focus": 26.998
+      },
+      "smoothness.tough_path_rendering_cases": {
+        "GUIMark Vector Chart Test": 25.631,
+        "IE Chalkboard": 35.349,
+        "MotionMark Canvas Fill Shapes": 25.354,
+        "MotionMark Canvas Stroke Shapes": 25.286
+      },
+      "smoothness.tough_scrolling_cases": {
+        "canvas_05000_pixels_per_second": 19.993,
+        "canvas_10000_pixels_per_second": 19.869,
+        "canvas_15000_pixels_per_second": 19.7,
+        "canvas_20000_pixels_per_second": 20.057,
+        "canvas_30000_pixels_per_second": 18.718,
+        "canvas_40000_pixels_per_second": 17.803,
+        "canvas_50000_pixels_per_second": 17.327,
+        "canvas_60000_pixels_per_second": 16.619,
+        "canvas_75000_pixels_per_second": 16.292,
+        "canvas_90000_pixels_per_second": 16.175,
+        "text_05000_pixels_per_second": 20.167,
+        "text_10000_pixels_per_second": 19.573,
+        "text_15000_pixels_per_second": 19.593,
+        "text_20000_pixels_per_second": 19.981,
+        "text_30000_pixels_per_second": 19.012,
+        "text_40000_pixels_per_second": 17.601,
+        "text_50000_pixels_per_second": 16.732,
+        "text_60000_pixels_per_second": 16.499,
+        "text_75000_pixels_per_second": 15.95,
+        "text_90000_pixels_per_second": 15.783,
+        "text_constant_full_page_raster_05000_pixels_per_second": 22.91,
+        "text_constant_full_page_raster_10000_pixels_per_second": 22.327,
+        "text_constant_full_page_raster_15000_pixels_per_second": 22.613,
+        "text_constant_full_page_raster_20000_pixels_per_second": 22.834,
+        "text_constant_full_page_raster_30000_pixels_per_second": 22.152,
+        "text_constant_full_page_raster_40000_pixels_per_second": 21.008,
+        "text_constant_full_page_raster_50000_pixels_per_second": 20.062,
+        "text_constant_full_page_raster_60000_pixels_per_second": 19.63,
+        "text_constant_full_page_raster_75000_pixels_per_second": 19.413,
+        "text_constant_full_page_raster_90000_pixels_per_second": 18.521,
+        "text_hover_05000_pixels_per_second": 20.631,
+        "text_hover_10000_pixels_per_second": 20.075,
+        "text_hover_15000_pixels_per_second": 20.139,
+        "text_hover_20000_pixels_per_second": 20.044,
+        "text_hover_30000_pixels_per_second": 19.143,
+        "text_hover_40000_pixels_per_second": 17.875,
+        "text_hover_50000_pixels_per_second": 17.232,
+        "text_hover_60000_pixels_per_second": 16.624,
+        "text_hover_75000_pixels_per_second": 16.208,
+        "text_hover_90000_pixels_per_second": 15.806
+      },
+      "smoothness.tough_texture_upload_cases": {
+        "background_color_animation.html": 26.222,
+        "background_color_animation_with_gradient.html": 25.294,
+        "extra_large_texture_uploads.html": 54.826499999999996,
+        "large_texture_uploads.html": 30.802,
+        "medium_texture_uploads.html": 25.2665,
+        "small_texture_uploads.html": 24.613
+      },
+      "smoothness.tough_webgl_ad_cases": {
+        "http://localhost:8000/CICAgICQ15a9NxDIARjIASgBMghBC1XuTk8ezw.swf.webglbeta.html": 27.514,
+        "http://localhost:8000/CICAgIDQ2Pb-MxCsAhj6ASgBMgi5DLoSO0gPbQ.swf.webglbeta.html": 26.744,
+        "http://localhost:8000/CICAgKCN39CopQEQoAEY2AQoATIID59gK5hjjIg.swf.webglbeta.html": 26.885,
+        "http://localhost:8000/CICAgKCNj4HgyAEQeBjYBCgBMgjQpPkOjyWNdw.1.swf.webglbeta.html": 26.88,
+        "http://localhost:8000/CICAgMDOrcnRGRB4GNgEKAEyCP_ZBSfwUFsj.swf.webglbeta.html": 26.309,
+        "http://localhost:8000/CNP2xe_LmqPEKBCsAhj6ASgBMggnyMqth81h8Q.swf.webglbeta.html": 27.478,
+        "http://localhost:8000/clip-paths-CICAgMDO7Ye9-gEQ2AUYWigBMgjZxDii6aoK9w.swf.webglbeta.html": 28.126,
+        "http://localhost:8000/clip-paths-CILZhLqO_-27bxB4GNgEKAEyCC46kMLBXnMT.swf.webglbeta.html": 26.712,
+        "http://localhost:8000/filters-CNLa0t2T47qJ_wEQoAEY2AQoATIIFaIdc7VMBr4.swf.webglbeta.html": 27.023,
+        "http://localhost:8000/shapes-CICAgMDO7cfIzwEQ1AMYPCgBMghqY8tqyRCArQ.swf.webglbeta.html": 26.908,
+        "http://localhost:8000/shapes-CK7ptO3F8bi2KxDQAhiYAigBMgij6QBQtD2gyA.swf.webglbeta.html": 27.177
+      },
+      "speedometer": {
+        "http://browserbench.org/Speedometer/": 154.081
+      },
+      "speedometer2": {
+        "Speedometer2": 278.595
+      },
+      "start_with_url.cold.startup_pages": {
+        "about:blank": [
+          35.355,
+          34.138,
+          34.148,
+          34.026,
+          34.014
+        ],
+        "http://bbc.co.uk": [
+          37.184,
+          37.159,
+          36.812,
+          37.346,
+          37.046
+        ],
+        "http://kapook.com": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "start_with_url.warm.startup_pages": {
+        "about:blank": [
+          33.546,
+          32.629,
+          32.792,
+          32.681,
+          32.64,
+          32.675,
+          32.69,
+          32.716,
+          32.741,
+          32.742,
+          32.619
+        ],
+        "http://bbc.co.uk": [
+          35.483,
+          35.518,
+          35.616,
+          35.603,
+          35.383,
+          35.364,
+          35.457,
+          35.479,
+          35.396,
+          35.472,
+          35.265
+        ],
+        "http://kapook.com": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "storage.indexeddb_endure": {
+        "indexeddb-endure-testCreateAndDeleteDatabase": 24.8,
+        "indexeddb-endure-testCreateAndDeleteDatabases": 35.541,
+        "indexeddb-endure-testCreateAndDeleteIndex": 26.029,
+        "indexeddb-endure-testCreateKeysInStores": 24.666,
+        "indexeddb-endure-testCursorSeeksWithIndex": 22.002,
+        "indexeddb-endure-testCursorSeeksWithoutIndex": 21.221,
+        "indexeddb-endure-testRandomReadsAndWritesWithIndex": 33.609,
+        "indexeddb-endure-testRandomReadsAndWritesWithoutIndex": 34.528,
+        "indexeddb-endure-testReadCacheWithIndex": 34.789,
+        "indexeddb-endure-testReadCacheWithoutIndex": 32.416,
+        "indexeddb-endure-testWalkingMultipleCursors": 34.345
+      },
+      "storage.indexeddb_endure_tracing": {
+        "indexeddb-endure-testCreateAndDeleteDatabase": 21.413,
+        "indexeddb-endure-testCreateAndDeleteDatabases": 41.144,
+        "indexeddb-endure-testCreateAndDeleteIndex": 34.496,
+        "indexeddb-endure-testCreateKeysInStores": 21.119,
+        "indexeddb-endure-testCursorSeeksWithIndex": 17.875,
+        "indexeddb-endure-testCursorSeeksWithoutIndex": 16.832,
+        "indexeddb-endure-testRandomReadsAndWritesWithIndex": 62.595,
+        "indexeddb-endure-testRandomReadsAndWritesWithoutIndex": 59.77,
+        "indexeddb-endure-testReadCacheWithIndex": 67.648,
+        "indexeddb-endure-testReadCacheWithoutIndex": 58.402,
+        "indexeddb-endure-testWalkingMultipleCursors": 62.953
+      },
+      "system_health.common_mobile": {
+        "background:media:imgur@{'case': 'background', 'group': 'media'}": 28.034,
+        "background:news:nytimes@{'case': 'background', 'group': 'news'}": 62.229,
+        "background:search:google@{'case': 'background', 'group': 'search'}": 28.399,
+        "background:social:facebook@{'case': 'background', 'group': 'social'}": 29.644,
+        "background:tools:gmail@{'case': 'background', 'group': 'tools'}": 0.0,
+        "browse:chrome:newtab@{'case': 'browse', 'group': 'chrome'}": 133.407,
+        "browse:chrome:omnibox@{'case': 'browse', 'group': 'chrome'}": 42.502,
+        "browse:media:facebook_photos@{'case': 'browse', 'group': 'media'}": 112.413,
+        "browse:media:flickr_infinite_scroll@{'case': 'browse', 'group': 'media'}": 65.465,
+        "browse:media:imgur@{'case': 'browse', 'group': 'media'}": 100.813,
+        "browse:media:youtube@{'case': 'browse', 'group': 'media'}": 116.364,
+        "browse:news:cnn@{'case': 'browse', 'group': 'news'}": 191.825,
+        "browse:news:cricbuzz@{'case': 'browse', 'group': 'news'}": 100.456,
+        "browse:news:globo@{'case': 'browse', 'group': 'news'}": 0.0,
+        "browse:news:qq@{'case': 'browse', 'group': 'news'}": 81.794,
+        "browse:news:reddit@{'case': 'browse', 'group': 'news'}": 88.708,
+        "browse:news:toi@{'case': 'browse', 'group': 'news'}": 0.0,
+        "browse:news:washingtonpost@{'case': 'browse', 'group': 'news'}": 77.908,
+        "browse:shopping:amazon@{'case': 'browse', 'group': 'shopping'}": 124.698,
+        "browse:shopping:avito@{'case': 'browse', 'group': 'shopping'}": 126.327,
+        "browse:shopping:flipkart@{'case': 'browse', 'group': 'shopping'}": 0.0,
+        "browse:shopping:lazada@{'case': 'browse', 'group': 'shopping'}": 56.315,
+        "browse:social:facebook@{'case': 'browse', 'group': 'social'}": 108.126,
+        "browse:social:facebook_infinite_scroll@{'case': 'browse', 'group': 'social'}": 157.642,
+        "browse:social:instagram@{'case': 'browse', 'group': 'social'}": 147.842,
+        "browse:social:pinterest_infinite_scroll@{'case': 'browse', 'group': 'social'}": 164.38,
+        "browse:social:tumblr_infinite_scroll@{'case': 'browse', 'group': 'social'}": 135.0,
+        "browse:social:twitter@{'case': 'browse', 'group': 'social'}": 77.119,
+        "browse:tech:discourse_infinite_scroll@{'case': 'browse', 'group': 'tech'}": 91.823,
+        "browse:tools:maps@{'case': 'browse', 'group': 'tools'}": 62.706,
+        "load:chrome:blank@{'case': 'load', 'group': 'chrome'}": 23.698,
+        "load:games:bubbles@{'case': 'load', 'group': 'games'}": 32.786,
+        "load:games:lazors@{'case': 'load', 'group': 'games'}": 24.503,
+        "load:games:spychase@{'case': 'load', 'group': 'games'}": 45.781,
+        "load:media:dailymotion@{'case': 'load', 'group': 'media'}": 33.943,
+        "load:media:facebook_photos@{'case': 'load', 'group': 'media'}": 28.3,
+        "load:media:google_images@{'case': 'load', 'group': 'media'}": 29.393,
+        "load:media:imgur@{'case': 'load', 'group': 'media'}": 28.747,
+        "load:media:soundcloud@{'case': 'load', 'group': 'media'}": 27.636,
+        "load:media:youtube@{'case': 'load', 'group': 'media'}": 28.383,
+        "load:news:cnn@{'case': 'load', 'group': 'news'}": 50.63,
+        "load:news:irctc@{'case': 'load', 'group': 'news'}": 41.567,
+        "load:news:nytimes@{'case': 'load', 'group': 'news'}": 38.698,
+        "load:news:qq@{'case': 'load', 'group': 'news'}": 27.483,
+        "load:news:reddit@{'case': 'load', 'group': 'news'}": 30.785,
+        "load:news:washingtonpost@{'case': 'load', 'group': 'news'}": 32.435,
+        "load:news:wikipedia@{'case': 'load', 'group': 'news'}": 30.171,
+        "load:search:baidu@{'case': 'load', 'group': 'search'}": 27.444,
+        "load:search:ebay@{'case': 'load', 'group': 'search'}": 28.54,
+        "load:search:google@{'case': 'load', 'group': 'search'}": 26.387,
+        "load:search:taobao@{'case': 'load', 'group': 'search'}": 28.772,
+        "load:search:yahoo@{'case': 'load', 'group': 'search'}": 26.469,
+        "load:search:yandex@{'case': 'load', 'group': 'search'}": 27.592,
+        "load:social:twitter@{'case': 'load', 'group': 'social'}": 26.898,
+        "load:tools:docs@{'case': 'load', 'group': 'tools'}": 26.103,
+        "load:tools:drive@{'case': 'load', 'group': 'tools'}": 38.402,
+        "load:tools:dropbox@{'case': 'load', 'group': 'tools'}": 32.868,
+        "load:tools:gmail@{'case': 'load', 'group': 'tools'}": 0.0,
+        "load:tools:stackoverflow@{'case': 'load', 'group': 'tools'}": 29.171,
+        "load:tools:weather@{'case': 'load', 'group': 'tools'}": 43.176,
+        "long_running:tools:gmail-background@{'case': 'long_running', 'group': 'tools'}": 0.0,
+        "long_running:tools:gmail-foreground@{'case': 'long_running', 'group': 'tools'}": 0.0
+      },
+      "system_health.memory_mobile": {
+        "background:media:imgur@{'case': 'background', 'group': 'media'}": [
+          22.866,
+          23.629
+        ],
+        "background:news:nytimes@{'case': 'background', 'group': 'news'}": [
+          45.765,
+          46.397
+        ],
+        "background:search:google@{'case': 'background', 'group': 'search'}": [
+          23.808,
+          24.158
+        ],
+        "background:social:facebook@{'case': 'background', 'group': 'social'}": [
+          26.351,
+          24.901
+        ],
+        "background:tools:gmail@{'case': 'background', 'group': 'tools'}": [
+          0.0,
+          0.0
+        ],
+        "browse:chrome:newtab@{'case': 'browse', 'group': 'chrome'}": 106.129,
+        "browse:chrome:omnibox@{'case': 'browse', 'group': 'chrome'}": 36.05,
+        "browse:media:facebook_photos@{'case': 'browse', 'group': 'media'}": [
+          83.29,
+          83.075
+        ],
+        "browse:media:flickr_infinite_scroll@{'case': 'browse', 'group': 'media'}": [
+          44.72,
+          45.78
+        ],
+        "browse:media:imgur@{'case': 'browse', 'group': 'media'}": [
+          73.566,
+          74.833
+        ],
+        "browse:media:youtube@{'case': 'browse', 'group': 'media'}": 83.265,
+        "browse:news:cnn@{'case': 'browse', 'group': 'news'}": [
+          124.638,
+          128.604
+        ],
+        "browse:news:cricbuzz@{'case': 'browse', 'group': 'news'}": [
+          61.7,
+          63.161
+        ],
+        "browse:news:globo@{'case': 'browse', 'group': 'news'}": [
+          0.0,
+          0.0
+        ],
+        "browse:news:qq@{'case': 'browse', 'group': 'news'}": 55.702,
+        "browse:news:reddit@{'case': 'browse', 'group': 'news'}": 65.606,
+        "browse:news:toi@{'case': 'browse', 'group': 'news'}": [
+          0.0,
+          0.0
+        ],
+        "browse:news:washingtonpost@{'case': 'browse', 'group': 'news'}": 52.096,
+        "browse:shopping:amazon@{'case': 'browse', 'group': 'shopping'}": [
+          76.36,
+          77.838
+        ],
+        "browse:shopping:avito@{'case': 'browse', 'group': 'shopping'}": [
+          83.53,
+          84.741
+        ],
+        "browse:shopping:flipkart@{'case': 'browse', 'group': 'shopping'}": [
+          0.0,
+          0.0
+        ],
+        "browse:shopping:lazada@{'case': 'browse', 'group': 'shopping'}": [
+          40.194,
+          41.065
+        ],
+        "browse:social:facebook@{'case': 'browse', 'group': 'social'}": [
+          74.425,
+          74.909
+        ],
+        "browse:social:facebook_infinite_scroll@{'case': 'browse', 'group': 'social'}": [
+          79.966,
+          82.972
+        ],
+        "browse:social:instagram@{'case': 'browse', 'group': 'social'}": [
+          94.173,
+          95.272
+        ],
+        "browse:social:pinterest_infinite_scroll@{'case': 'browse', 'group': 'social'}": 93.78,
+        "browse:social:tumblr_infinite_scroll@{'case': 'browse', 'group': 'social'}": 80.714,
+        "browse:social:twitter@{'case': 'browse', 'group': 'social'}": 55.702,
+        "browse:tech:discourse_infinite_scroll@{'case': 'browse', 'group': 'tech'}": [
+          59.631,
+          60.292
+        ],
+        "browse:tools:maps@{'case': 'browse', 'group': 'tools'}": [
+          47.567,
+          48.397
+        ],
+        "load:chrome:blank@{'case': 'load', 'group': 'chrome'}": [
+          20.897,
+          20.67
+        ],
+        "load:games:bubbles@{'case': 'load', 'group': 'games'}": [
+          21.403,
+          22.195
+        ],
+        "load:games:lazors@{'case': 'load', 'group': 'games'}": [
+          20.815,
+          21.695
+        ],
+        "load:games:spychase@{'case': 'load', 'group': 'games'}": 28.796,
+        "load:media:dailymotion@{'case': 'load', 'group': 'media'}": [
+          27.877,
+          28.722
+        ],
+        "load:media:facebook_photos@{'case': 'load', 'group': 'media'}": [
+          22.72,
+          23.631
+        ],
+        "load:media:google_images@{'case': 'load', 'group': 'media'}": [
+          24.075,
+          24.758
+        ],
+        "load:media:imgur@{'case': 'load', 'group': 'media'}": [
+          23.177,
+          23.601
+        ],
+        "load:media:soundcloud@{'case': 'load', 'group': 'media'}": 22.544,
+        "load:media:youtube@{'case': 'load', 'group': 'media'}": 23.463,
+        "load:news:cnn@{'case': 'load', 'group': 'news'}": [
+          38.668,
+          39.406
+        ],
+        "load:news:irctc@{'case': 'load', 'group': 'news'}": [
+          26.014,
+          27.125
+        ],
+        "load:news:nytimes@{'case': 'load', 'group': 'news'}": [
+          30.843,
+          31.898
+        ],
+        "load:news:qq@{'case': 'load', 'group': 'news'}": [
+          22.148,
+          23.153
+        ],
+        "load:news:reddit@{'case': 'load', 'group': 'news'}": 26.025,
+        "load:news:washingtonpost@{'case': 'load', 'group': 'news'}": 25.11,
+        "load:news:wikipedia@{'case': 'load', 'group': 'news'}": 24.874,
+        "load:search:baidu@{'case': 'load', 'group': 'search'}": [
+          22.609,
+          23.189
+        ],
+        "load:search:ebay@{'case': 'load', 'group': 'search'}": [
+          22.176,
+          22.901
+        ],
+        "load:search:google@{'case': 'load', 'group': 'search'}": [
+          21.949,
+          22.763
+        ],
+        "load:search:taobao@{'case': 'load', 'group': 'search'}": 22.457,
+        "load:search:yahoo@{'case': 'load', 'group': 'search'}": 22.449,
+        "load:search:yandex@{'case': 'load', 'group': 'search'}": 22.746,
+        "load:social:twitter@{'case': 'load', 'group': 'social'}": 22.511,
+        "load:tools:docs@{'case': 'load', 'group': 'tools'}": [
+          21.746,
+          22.608
+        ],
+        "load:tools:drive@{'case': 'load', 'group': 'tools'}": [
+          28.371,
+          28.762
+        ],
+        "load:tools:dropbox@{'case': 'load', 'group': 'tools'}": [
+          26.373,
+          27.592
+        ],
+        "load:tools:gmail@{'case': 'load', 'group': 'tools'}": [
+          0.0,
+          0.0
+        ],
+        "load:tools:stackoverflow@{'case': 'load', 'group': 'tools'}": 23.823,
+        "load:tools:weather@{'case': 'load', 'group': 'tools'}": 32.714,
+        "long_running:tools:gmail-background@{'case': 'long_running', 'group': 'tools'}": 0.0,
+        "long_running:tools:gmail-foreground@{'case': 'long_running', 'group': 'tools'}": 0.0
+      },
+      "thread_times.key_hit_test_cases": {
+        "file://key_hit_test_cases/paper-calculator-no-rendering.html": 43.881
+      },
+      "thread_times.key_idle_power_cases": {
+        "animated-gif.html": 40.68,
+        "blank.html": 34.986,
+        "css-animation.html": 42.009,
+        "request-animation-frame.html": 42.465,
+        "set-timeout.html": 42.515,
+        "set-timeout.html (Long Idle)": 112.45
+      },
+      "thread_times.key_mobile_sites_smooth": {
+        "http://cuteoverload.com": 32.808,
+        "http://nytimes.com/": 20.005,
+        "http://slashdot.org/": 22.787,
+        "http://www.boingboing.net": 32.756,
+        "http://www.reddit.com/r/programming/comments/1g96ve": 23.424
+      },
+      "thread_times.key_noop_cases": {
+        "no_op_raf.html": 33.575,
+        "no_op_scroll.html": 21.645,
+        "no_op_settimeout.html": 19.454,
+        "no_op_touch_handler.html": 20.04
+      },
+      "thread_times.key_silk_cases": {
+        "font_wipe.html": 21.482,
+        "http://groupcloned.com/test/plain/list-recycle-transform.html": 32.128,
+        "http://groupcloned.com/test/plain/sticky-using-webkit-backface-visibility.html": 19.565,
+        "http://jsbin.com/UVIgUTa/38/quiet": 18.147,
+        "http://jsfiddle.net/3yDKh/15/show/": 22.806,
+        "http://jsfiddle.net/3yDKh/16/show/": 21.738,
+        "http://jsfiddle.net/R8DX9/4/show/": 22.807,
+        "http://jsfiddle.net/TLXLu/3/show/": 23.464,
+        "http://jsfiddle.net/bNp2h/3/show/": 24.122,
+        "http://jsfiddle.net/cKB9D/7/show/": 24.839,
+        "http://jsfiddle.net/jx5De/14/show/": 24.861,
+        "http://jsfiddle.net/rF9Gh/7/show/": 23.124,
+        "http://jsfiddle.net/ugkd4/10/show/": 22.555,
+        "http://jsfiddle.net/vBQHH/11/show/": 25.728,
+        "http://jsfiddle.net/xLuvC/1/show/": 21.652,
+        "http://mobile-news.sandbox.google.com/news/pt0?scroll": 24.576,
+        "http://mobile-news.sandbox.google.com/news/pt0?swipe": 20.594,
+        "http://plus.google.com/app/basic/stream": 0.0,
+        "http://s.codepen.io/befamous/fullpage/pFsqb?scroll": 28.198,
+        "http://wiltzius.github.io/shape-shifter/": 32.922,
+        "http://www.google.com/#q=google": 21.514,
+        "https://polymer-topeka.appspot.com/": 0.0,
+        "https://www.google.com/search?hl=en&q=define%3Aboogie": 21.467,
+        "inbox_app.html?slide_drawer": 0.0,
+        "inbox_app.html?stress_hidey_bars": 31.141,
+        "inbox_app.html?swipe_to_dismiss": 16.447,
+        "inbox_app.html?toggle_drawer": 25.734,
+        "infinite_scrolling.html": 31.469,
+        "list_animation_simple.html": 19.148,
+        "masonry.html": 28.344,
+        "pushState.html": 24.406,
+        "silk_finance.html": 36.257
+      },
+      "thread_times.polymer": {
+        "http://www.polymer-project.org/components/core-scroll-header-panel/demo.html": 18.9595,
+        "http://www.polymer-project.org/components/paper-button/demo.html": 24.506999999999998,
+        "http://www.polymer-project.org/components/paper-checkbox/demo.html": 29.869,
+        "http://www.polymer-project.org/components/paper-fab/demo.html": 24.3915,
+        "http://www.polymer-project.org/components/paper-icon-button/demo.html": 60.001000000000005,
+        "http://www.polymer-project.org/components/paper-shadow/demo.html": 24.426499999999997,
+        "http://www.polymer-project.org/components/paper-tabs/demo.html": 50.632000000000005,
+        "http://www.polymer-project.org/components/paper-toggle-button/demo.html": 18.371
+      },
+      "thread_times.simple_mobile_sites": {
+        "http://m.nytimes.com/": 34.994,
+        "http://www.ebay.co.uk/": 36.392,
+        "http://www.nyc.gov": 37.584,
+        "https://www.flickr.com/": 33.984
+      },
+      "thread_times.tough_compositor_cases": {
+        "http://jsbin.com/beqojupo/1/quiet?JS_FULL_SCREEN_INVALIDATION": 45.323,
+        "http://jsbin.com/covoqi/1/quiet?NEW_TILINGS": 40.367,
+        "http://jsbin.com/falefice/1/quiet?CC_POSTER_CIRCLE": 32.75,
+        "http://jsbin.com/giqafofe/1/quiet?JS_POSTER_CIRCLE": 35.965,
+        "http://jsbin.com/jevibahi/4/quiet?JS_SCROLL_200_LAYER_GRID": 26.05,
+        "http://jsbin.com/pixavefe/1/quiet?CC_SCROLL_TEXT_ONLY": 25.895,
+        "http://jsbin.com/wixadinu/2/quiet?JS_SCROLL_TEXT_ONLY": 25.753,
+        "http://jsbin.com/yakagevo/1/quiet?CC_SCROLL_200_LAYER_GRID": 25.706
+      },
+      "thread_times.tough_scrolling_cases": {
+        "canvas_05000_pixels_per_second": 24.121,
+        "canvas_10000_pixels_per_second": 24.451,
+        "canvas_15000_pixels_per_second": 24.487,
+        "canvas_20000_pixels_per_second": 25.108,
+        "canvas_30000_pixels_per_second": 23.319,
+        "canvas_40000_pixels_per_second": 21.089,
+        "canvas_50000_pixels_per_second": 19.622,
+        "canvas_60000_pixels_per_second": 18.399,
+        "canvas_75000_pixels_per_second": 17.726,
+        "canvas_90000_pixels_per_second": 16.837,
+        "text_05000_pixels_per_second": 22.375,
+        "text_10000_pixels_per_second": 22.679,
+        "text_15000_pixels_per_second": 23.045,
+        "text_20000_pixels_per_second": 23.6,
+        "text_30000_pixels_per_second": 22.158,
+        "text_40000_pixels_per_second": 20.286,
+        "text_50000_pixels_per_second": 18.62,
+        "text_60000_pixels_per_second": 17.899,
+        "text_75000_pixels_per_second": 16.941,
+        "text_90000_pixels_per_second": 15.958,
+        "text_constant_full_page_raster_05000_pixels_per_second": 25.672,
+        "text_constant_full_page_raster_10000_pixels_per_second": 25.865,
+        "text_constant_full_page_raster_15000_pixels_per_second": 25.11,
+        "text_constant_full_page_raster_20000_pixels_per_second": 25.017,
+        "text_constant_full_page_raster_30000_pixels_per_second": 24.459,
+        "text_constant_full_page_raster_40000_pixels_per_second": 22.267,
+        "text_constant_full_page_raster_50000_pixels_per_second": 21.383,
+        "text_constant_full_page_raster_60000_pixels_per_second": 20.618,
+        "text_constant_full_page_raster_75000_pixels_per_second": 20.387,
+        "text_constant_full_page_raster_90000_pixels_per_second": 19.668,
+        "text_hover_05000_pixels_per_second": 22.854,
+        "text_hover_10000_pixels_per_second": 22.637,
+        "text_hover_15000_pixels_per_second": 22.749,
+        "text_hover_20000_pixels_per_second": 22.86,
+        "text_hover_30000_pixels_per_second": 21.426,
+        "text_hover_40000_pixels_per_second": 19.351,
+        "text_hover_50000_pixels_per_second": 18.498,
+        "text_hover_60000_pixels_per_second": 17.385,
+        "text_hover_75000_pixels_per_second": 16.811,
+        "text_hover_90000_pixels_per_second": 16.163
+      },
+      "tracing.tracing_with_background_memory_infra": {
+        "Facebook": 21.642,
+        "Wikipedia": 13.207,
+        "http://www.amazon.com": 13.821,
+        "http://www.ask.com/": 14.541,
+        "http://www.bing.com/": 14.305,
+        "http://www.yahoo.com/": 14.688,
+        "http://www.youtube.com": 18.177,
+        "https://www.google.com/#hl=en&q=barack+obama": 19.261,
+        "https://www.google.com/calendar/": 18.791
+      },
+      "tracing.tracing_with_debug_overhead": {
+        "Facebook": 38.837,
+        "Wikipedia": 15.685,
+        "http://www.amazon.com": 15.632,
+        "http://www.ask.com/": 21.886,
+        "http://www.bing.com/": 19.439,
+        "http://www.yahoo.com/": 22.827,
+        "http://www.youtube.com": 34.827,
+        "https://www.google.com/#hl=en&q=barack+obama": 22.746,
+        "https://www.google.com/calendar/": 32.38
+      },
+      "tracing_perftests": {
+        "HeapProfilerPerfTest.AppendStackFramesAsTraceFormat": 15.41,
+        "HeapProfilerPerfTest.DeduplicateStackFrames": 5.333,
+        "TraceEventPerfTest.Create_10000_TracedValue": 0.089,
+        "TraceEventPerfTest.Long_TRACE_EVENT0": 1.147,
+        "TraceEventPerfTest.Submit_10000_TRACE_EVENT0": 1.148,
+        "TraceEventPerfTest.Submit_10000_TRACE_EVENT0_in_traceable_tasks": 8.031,
+        "TraceEventPerfTest.Submit_10000_TRACE_EVENT0_multithreaded": 0.396,
+        "TraceEventPerfTest.Submit_10000_TRACE_EVENT0_with_tracing_disabled": 0.0,
+        "TraceEventPerfTest.Submit_10000_TRACE_EVENT_with_TracedValue": 5.199
+      },
+      "v8.browsing_mobile": {
+        "browse:chrome:newtab@{'case': 'browse', 'group': 'chrome'}": 141.784,
+        "browse:chrome:omnibox@{'case': 'browse', 'group': 'chrome'}": 44.983,
+        "browse:media:facebook_photos@{'case': 'browse', 'group': 'media'}": 124.465,
+        "browse:media:flickr_infinite_scroll@{'case': 'browse', 'group': 'media'}": 69.754,
+        "browse:media:imgur@{'case': 'browse', 'group': 'media'}": 113.199,
+        "browse:media:youtube@{'case': 'browse', 'group': 'media'}": 131.758,
+        "browse:news:cnn@{'case': 'browse', 'group': 'news'}": 236.417,
+        "browse:news:cricbuzz@{'case': 'browse', 'group': 'news'}": 106.452,
+        "browse:news:globo@{'case': 'browse', 'group': 'news'}": 0.0,
+        "browse:news:qq@{'case': 'browse', 'group': 'news'}": 85.408,
+        "browse:news:reddit@{'case': 'browse', 'group': 'news'}": 91.267,
+        "browse:news:toi@{'case': 'browse', 'group': 'news'}": 0.0,
+        "browse:news:washingtonpost@{'case': 'browse', 'group': 'news'}": 83.04,
+        "browse:shopping:amazon@{'case': 'browse', 'group': 'shopping'}": 145.297,
+        "browse:shopping:avito@{'case': 'browse', 'group': 'shopping'}": 140.344,
+        "browse:shopping:flipkart@{'case': 'browse', 'group': 'shopping'}": 0.0,
+        "browse:shopping:lazada@{'case': 'browse', 'group': 'shopping'}": 61.691,
+        "browse:social:facebook@{'case': 'browse', 'group': 'social'}": 116.618,
+        "browse:social:facebook_infinite_scroll@{'case': 'browse', 'group': 'social'}": 165.933,
+        "browse:social:instagram@{'case': 'browse', 'group': 'social'}": 163.23,
+        "browse:social:pinterest_infinite_scroll@{'case': 'browse', 'group': 'social'}": 159.764,
+        "browse:social:tumblr_infinite_scroll@{'case': 'browse', 'group': 'social'}": 140.895,
+        "browse:social:twitter@{'case': 'browse', 'group': 'social'}": 80.235,
+        "browse:tech:discourse_infinite_scroll@{'case': 'browse', 'group': 'tech'}": 97.015,
+        "browse:tools:maps@{'case': 'browse', 'group': 'tools'}": 71.941
+      },
+      "v8.detached_context_age_in_gc": {
+        "Docs  (1 open document tab)": 43.448,
+        "https://www.google.com/#hl=en&q=barack+obama": 25.446
+      },
+      "v8.runtimestats.browsing_mobile": {
+        "browse:chrome:newtab@{'case': 'browse', 'group': 'chrome'}": 157.489,
+        "browse:chrome:omnibox@{'case': 'browse', 'group': 'chrome'}": 51.026,
+        "browse:media:facebook_photos@{'case': 'browse', 'group': 'media'}": 142.792,
+        "browse:media:flickr_infinite_scroll@{'case': 'browse', 'group': 'media'}": 87.451,
+        "browse:media:imgur@{'case': 'browse', 'group': 'media'}": 131.127,
+        "browse:media:youtube@{'case': 'browse', 'group': 'media'}": 153.849,
+        "browse:news:cnn@{'case': 'browse', 'group': 'news'}": 312.654,
+        "browse:news:cricbuzz@{'case': 'browse', 'group': 'news'}": 130.744,
+        "browse:news:globo@{'case': 'browse', 'group': 'news'}": 0.0,
+        "browse:news:qq@{'case': 'browse', 'group': 'news'}": 103.863,
+        "browse:news:reddit@{'case': 'browse', 'group': 'news'}": 110.623,
+        "browse:news:toi@{'case': 'browse', 'group': 'news'}": 0.0,
+        "browse:news:washingtonpost@{'case': 'browse', 'group': 'news'}": 100.682,
+        "browse:shopping:amazon@{'case': 'browse', 'group': 'shopping'}": 174.704,
+        "browse:shopping:avito@{'case': 'browse', 'group': 'shopping'}": 188.366,
+        "browse:shopping:flipkart@{'case': 'browse', 'group': 'shopping'}": 0.0,
+        "browse:shopping:lazada@{'case': 'browse', 'group': 'shopping'}": 77.007,
+        "browse:social:facebook@{'case': 'browse', 'group': 'social'}": 146.823,
+        "browse:social:facebook_infinite_scroll@{'case': 'browse', 'group': 'social'}": 201.559,
+        "browse:social:instagram@{'case': 'browse', 'group': 'social'}": 194.07,
+        "browse:social:pinterest_infinite_scroll@{'case': 'browse', 'group': 'social'}": 220.514,
+        "browse:social:tumblr_infinite_scroll@{'case': 'browse', 'group': 'social'}": 175.939,
+        "browse:social:twitter@{'case': 'browse', 'group': 'social'}": 94.601,
+        "browse:tech:discourse_infinite_scroll@{'case': 'browse', 'group': 'tech'}": 118.97,
+        "browse:tools:maps@{'case': 'browse', 'group': 'tools'}": 85.002
+      },
+      "webrtc": {
+        "10s_datachannel_transfer": 22.46,
+        "720p_call_45s": 81.762,
+        "audio_call_g772_10s": 0.0,
+        "audio_call_isac/1600_10s": 0.0,
+        "audio_call_opus_10s": 0.0,
+        "audio_call_pcmu_10s": 0.0,
+        "canvas_capture_peer_connection": 29.038,
+        "hd_local_stream_10s": 25.866,
+        "multiple_peerconnections": 43.487,
+        "pause_play_peerconnections": 53.956
+      }
+    }
+  }
+}
