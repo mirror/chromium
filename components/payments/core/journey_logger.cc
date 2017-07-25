@@ -105,12 +105,11 @@ void JourneyLogger::SetCanMakePaymentValue(bool value) {
   could_make_payment_ |= value;
 }
 
-void JourneyLogger::SetShowCalled() {
-  was_show_called_ = true;
-}
-
 void JourneyLogger::SetEventOccurred(Event event) {
   events_ |= event;
+
+  if (event == EVENT_SHOWN || event == EVENT_SKIPPED_SHOW)
+    was_show_called_ = true;
 }
 
 void JourneyLogger::SetSelectedPaymentMethod(
