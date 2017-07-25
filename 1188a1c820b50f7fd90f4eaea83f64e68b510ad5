@@ -16,6 +16,142 @@
       "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60fd9f0_b6596f5d",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "For consistency, use \"10.0f\".",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a633188a_6edd2754",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "#pragma mark - Public properties",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221f7ce2_e32684dc",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "DCHECK(text.length);",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db38641_43b771f9",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "This line is not necessary.",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454e87e7_b363821e",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "Split this test into two tests. \n1) Test simple creation of a textBadge.\n2) Test changing the text.",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f340d963_82df372b",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "Use EXPECT_NSEQ since this is an Obj-C object.",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef565e37_f388d247",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "It\u0027s actually clearer to in-line the raw text into this expectation as well as the initializer line.",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09ca098_103fc7f8",
+        "filename": "ios/showcase/text_badge_view/sc_text_badge_view_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-25T23:43:50Z",
+      "side": 1,
+      "message": "Add the actual test here that finds the textBadgeView.",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
