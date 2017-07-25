@@ -56,6 +56,15 @@ const base::Feature kCaptivePortalCertificateList{
     "CaptivePortalCertificateList", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+const base::Feature kContentFilterInterstitial(
+    "ContentFilterInterstitial",
+    base::FEATURE_ENABLED_BY_DEFAULT);
+
+const base::Feature kContentFilterStringList("ContentFilterStringList",
+                                             base::FEATURE_ENABLED_BY_DEFAULT);
+#endif
+
 const base::Feature kSSLCommonNameMismatchHandling{
     "SSLCommonNameMismatchHandling", base::FEATURE_ENABLED_BY_DEFAULT};
 
@@ -166,11 +175,8 @@ void RecordUMA(SSLErrorHandler::UMAEvent event) {
                             SSLErrorHandler::SSL_ERROR_HANDLER_EVENT_COUNT);
 }
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
-bool IsCaptivePortalInterstitialEnabled() {
-  return base::FeatureList::IsEnabled(kCaptivePortalInterstitial);
-}
-
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
 // Reads the SSL error assistant configuration from the resource bundle.
 std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
 ReadErrorAssistantProtoFromResourceBundle() {
@@ -195,6 +201,18 @@ std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
 }
 #endif
 
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+bool IsCaptivePortalInterstitialEnabled() {
+  return base::FeatureList::IsEnabled(kCaptivePortalInterstitial);
+}
+#endif
+
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+bool IsContentFilterInterstitialEnabled() {
+  return base::FeatureList::IsEnabled(kContentFilterInterstitial);
+}
+#endif
+
 bool IsSSLCommonNameMismatchHandlingEnabled() {
   return base::FeatureList::IsEnabled(kSSLCommonNameMismatchHandling);
 }
@@ -216,6 +234,10 @@ class ConfigSingleton {
   bool IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info);
 #endif
 
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  bool IsContentFilterCert(const net::SSLInfo& ssl_info);
+#endif
+
   // Testing methods:
   void ResetForTesting();
   void SetInterstitialDelayForTesting(const base::TimeDelta& delay);
@@ -225,7 +247,8 @@ class ConfigSingleton {
   void SetNetworkTimeTrackerForTesting(
       network_time::NetworkTimeTracker* tracker);
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
   void SetErrorAssistantProto(
       std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
           error_assistant_proto);
@@ -244,15 +267,22 @@ class ConfigSingleton {
 
   network_time::NetworkTimeTracker* network_time_tracker_ = nullptr;
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
   // Error assistant configuration.
   std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
       error_assistant_proto_;
+#endif
 
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   // SPKI hashes belonging to certs treated as captive portals. Null until the
   // first time IsKnownCaptivePortalCert() or SetErrorAssistantProto()
   // is called.
   std::unique_ptr<std::unordered_set<std::string>> captive_portal_spki_hashes_;
+#endif
+
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  std::unique_ptr<std::unordered_set<std::string>> content_filter_regexes_;
 #endif
 };
 
@@ -286,9 +316,15 @@ void ConfigSingleton::ResetForTesting() {
   timer_started_callback_ = nullptr;
   network_time_tracker_ = nullptr;
   testing_clock_ = nullptr;
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
   error_assistant_proto_.reset();
+#endif
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   captive_portal_spki_hashes_.reset();
+#endif
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  content_filter_regexes_.reset();
 #endif
 }
 
@@ -342,6 +378,30 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
     }
     if (captive_portal_spki_hashes_->find(hash_value.ToString()) !=
         captive_portal_spki_hashes_->end()) {
+      return true;
+    }
+  }
+  return false;
+}
+#endif
+
+#ifdef BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+bool ConfigSingleton::CertContainsContentFilterString(
+    const net::SSLInfo& ssl_info) {
+  if (!content_filter_regexes_) {
+    error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
+    CHECK(error_assistant_proto_);
+    content_filter_regexes_ = LoadContentFilterRegexes(*error_assistant_proto_);
+  }
+
+  const CertPrincipal& cert_issuer = ssl_info.cert.issuer();
+  const CertPrincipal& cert_subject = ssl_info.cert.subject();
+
+  // Return true if one of our content filter strings matches the common name
+  // of the issuer and subject of this certificate.
+  for (const string& regex : content_filter_regexes_) {
+    if (cert_issuer.common_name.compare(regex) &&
+        cert_subject.common_name.compare(regex)) {
       return true;
     }
   }
@@ -603,6 +663,17 @@ void SSLErrorHandler::StartHandlingError() {
     RecordUMA(CAPTIVE_PORTAL_CERT_FOUND);
     ShowCaptivePortalInterstitial(
         GURL(captive_portal::CaptivePortalDetector::kDefaultURL));
+    return;
+  }
+#endif
+
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  if (base::FeatureList::IsEnabled(kContentFilterList) &&
+      only_error_is_name_mismatch &&
+      g_config.Pointer()->CertContainsContentFilterString(ssl_info_)) {
+    // RecordUMA(CONTENT_FILTER_CERT_FOUND);
+    ShowContentFilterInterstitial(
+        GURL(content_filter::ContentFilterDetector::kDefaultURL));
     return;
   }
 #endif
