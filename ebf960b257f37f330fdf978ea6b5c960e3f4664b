@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31630daf_4a0a556c",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T20:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38fec4fa_c45f56a7",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c382ccd_3daee87f",
         "filename": "chrome/installer/zucchini/patch_utils.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4cac0e59_5c2abecd",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T20:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c382ccd_3daee87f",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f52914f_9cdbc384",
         "filename": "chrome/installer/zucchini/patch_utils.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d3e8ea_00e10acc",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T20:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f52914f_9cdbc384",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d6a2c6bf_91278a56",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T20:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddaa5bf3_1427907d",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 21
+      },
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9a2174c_fb5bbcbe",
         "filename": "chrome/installer/zucchini/patch_utils.h",
         "patchSetId": 6
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-24T10:38:57Z",
       "side": 1,
       "message": "who would read these log messages? would it help for them to include more info about the failure, such as the offset into the data or something?",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9268b1_0f87aec0",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T20:32:13Z",
+      "side": 1,
+      "message": "Either the patch has malformed data, and when the client reads it this fails, in which case these LOG messages are not really relevant; we just want to propagate the error and avoid crashing.\nOr else, this is a sanity check, and if it fails, we would be interested in debugging to figure out what went wrong. What would be relevant for diagnostics is to know which part of the patch  was malformed. I suppose we can discover this from stack trace.",
+      "parentUuid": "d9a2174c_fb5bbcbe",
       "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
