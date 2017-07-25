@@ -481,8 +481,10 @@ IN_PROC_BROWSER_TEST_F(ChromeRenderProcessHostTest,
       content::NOTIFICATION_WEB_CONTENTS_DESTROYED,
       content::Source<WebContents>(devtools));
 
+  LOG(ERROR) << "ping";
   chrome::ToggleDevToolsWindow(browser(), DevToolsToggleAction::Toggle());
   close_observer.Wait();
+  LOG(ERROR) << "ping";
 }
 
 // Ensure that DevTools opened to debug DevTools is launched in a separate
