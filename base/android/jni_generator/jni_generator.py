@@ -11,7 +11,6 @@ import errno
 import optparse
 import os
 import re
-import string
 from string import Template
 import subprocess
 import sys
@@ -415,6 +414,12 @@ def IsMainDexJavaClass(contents):
 def GetBinaryClassName(fully_qualified_class):
   """Returns a string concatenating the Java package and class."""
   return fully_qualified_class.replace('_', '_1').replace('/', '_')
+
+
+def GetBinaryPackageName(fully_qualified_class):
+  """Returns a string of Java package separated by underscores."""
+  return GetBinaryClassName(
+      fully_qualified_class[:fully_qualified_class.rindex('/')])
 
 
 def GetRegistrationFunctionName(fully_qualified_class):
@@ -839,6 +844,7 @@ $REGISTER_NATIVES
     """Substitutes NAMESPACE, JAVA_CLASS and KMETHODS in the provided
     template."""
     ret = []
+    package = GetBinaryPackageName(self.fully_qualified_class)
     all_classes = self.GetUniqueClasses(self.natives)
     all_classes[self.class_name] = self.fully_qualified_class
     for clazz in all_classes:
@@ -848,7 +854,7 @@ $REGISTER_NATIVES
         namespace_str = self.namespace + '::'
       if kmethods:
         values = {'NAMESPACE': namespace_str,
-                  'JAVA_CLASS': clazz,
+                  'JAVA_CLASS': '%s_%s' % (package, clazz),
                   'KMETHODS': kmethods}
         ret += [template.substitute(values)]
     if not ret: return ''
@@ -859,7 +865,7 @@ $REGISTER_NATIVES
     if not self.options.native_exports_optional:
       return ''
     template = Template("""\
-static const JNINativeMethod kMethods${JAVA_CLASS}[] = {
+static const JNINativeMethod kMethods_${JAVA_CLASS}[] = {
 ${KMETHODS}
 };
 """)
@@ -869,8 +875,7 @@ ${KMETHODS}
   # https://crbug.com/683256.
   def GetOriginalRegisterNativesString(self):
     """Return the code for original RegisterNatives"""
-    natives = self.GetRegisterNativesImplString()
-    if not natives:
+    if len(self.natives) == 0:
       return ''
 
     return """
@@ -905,12 +910,12 @@ ${NATIVES}
       return ''
 
     template = Template("""\
-  const int kMethods${JAVA_CLASS}Size =
-      arraysize(${NAMESPACE}kMethods${JAVA_CLASS});
+  const int kMethods_${JAVA_CLASS}Size =
+      arraysize(${NAMESPACE}kMethods_${JAVA_CLASS});
 
   if (env->RegisterNatives(${JAVA_CLASS}_clazz(env),
-                           ${NAMESPACE}kMethods${JAVA_CLASS},
-                           kMethods${JAVA_CLASS}Size) < 0) {
+                           ${NAMESPACE}kMethods_${JAVA_CLASS},
+                           kMethods_${JAVA_CLASS}Size) < 0) {
     jni_generator::HandleRegistrationError(
         env, ${JAVA_CLASS}_clazz(env), __FILE__);
     return false;
@@ -1092,7 +1097,9 @@ JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
 
   def GetCalledByNativeValues(self, called_by_native):
     """Fills in necessary values for the CalledByNative methods."""
-    java_class = called_by_native.java_class_name or self.class_name
+    package = GetBinaryPackageName(self.fully_qualified_class)
+    java_class_only = called_by_native.java_class_name or self.class_name
+    java_class = '%s_%s' % (package, java_class_only)
     if called_by_native.static or called_by_native.is_constructor:
       first_param_in_declaration = ''
       first_param_in_call = ('%s_clazz(env)' % java_class)
@@ -1133,6 +1140,7 @@ JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
     if self.options.enable_profiling:
       profiling_leaving_native = 'JNI_SAVE_FRAME_POINTER;'
     return {
+        'JAVA_CLASS_ONLY': java_class_only,
         'JAVA_CLASS': java_class,
         'RETURN_TYPE': return_type,
         'OPTIONAL_ERROR_RETURN': optional_error_return,
@@ -1155,7 +1163,7 @@ JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
   def GetLazyCalledByNativeMethodStub(self, called_by_native):
     """Returns a string."""
     function_signature_template = Template("""\
-static ${RETURN_TYPE} Java_${JAVA_CLASS}_${METHOD_ID_VAR_NAME}(\
+static ${RETURN_TYPE} Java_${JAVA_CLASS_ONLY}_${METHOD_ID_VAR_NAME}(\
 JNIEnv* env${FIRST_PARAM_IN_DECLARATION}${PARAMS_IN_DECLARATION})""")
     function_header_template = Template("""\
 ${FUNCTION_SIGNATURE} {""")
@@ -1211,15 +1219,16 @@ ${FUNCTION_HEADER}
   def GetClassPathDefinitions(self):
     """Returns the ClassPath constants."""
     ret = []
+    package = GetBinaryPackageName(self.fully_qualified_class)
     template = Template("""\
-const char k${JAVA_CLASS}ClassPath[] = "${JNI_CLASS_PATH}";""")
+const char kClassPath_${JAVA_CLASS}[] = "${JNI_CLASS_PATH}";""")
     all_classes = self.GetUniqueClasses(self.called_by_natives)
     if self.options.native_exports_optional:
       all_classes.update(self.GetUniqueClasses(self.natives))
 
     for clazz in all_classes:
       values = {
-          'JAVA_CLASS': clazz,
+          'JAVA_CLASS': '%s_%s' % (package, clazz),
           'JNI_CLASS_PATH': all_classes[clazz],
       }
       ret += [template.substitute(values)]
@@ -1228,13 +1237,15 @@ const char k${JAVA_CLASS}ClassPath[] = "${JNI_CLASS_PATH}";""")
     template = Template("""\
 // Leaking this jclass as we cannot use LazyInstance from some threads.
 base::subtle::AtomicWord g_${JAVA_CLASS}_clazz __attribute__((unused)) = 0;
-#define ${JAVA_CLASS}_clazz(env) \
-base::android::LazyGetClass(env, k${JAVA_CLASS}ClassPath, \
-&g_${JAVA_CLASS}_clazz)""")
+
+inline jclass ${JAVA_CLASS}_clazz(JNIEnv* env) {
+  return base::android::LazyGetClass(env, kClassPath_${JAVA_CLASS}, \
+&g_${JAVA_CLASS}_clazz);
+}""")
 
     for clazz in all_classes:
       values = {
-          'JAVA_CLASS': clazz,
+          'JAVA_CLASS': '%s_%s' % (package, clazz),
       }
       ret += [template.substitute(values)]
 
@@ -1242,6 +1253,7 @@ base::android::LazyGetClass(env, k${JAVA_CLASS}ClassPath, \
 
   def GetMethodIDImpl(self, called_by_native):
     """Returns the implementation of GetMethodID."""
+    package = GetBinaryPackageName(self.fully_qualified_class)
     template = Template("""\
   base::android::MethodID::LazyGet<
       base::android::MethodID::TYPE_${STATIC}>(
@@ -1261,7 +1273,8 @@ base::android::LazyGetClass(env, k${JAVA_CLASS}ClassPath, \
       signature = self.jni_params.Signature(called_by_native.params,
                                             jni_return_type, True)
     values = {
-        'JAVA_CLASS': called_by_native.java_class_name or self.class_name,
+        'JAVA_CLASS': '%s_%s' % (
+            package, called_by_native.java_class_name or self.class_name),
         'JNI_NAME': jni_name,
         'METHOD_ID_VAR_NAME': called_by_native.method_id_var_name,
         'STATIC': 'STATIC' if called_by_native.static else 'INSTANCE',
