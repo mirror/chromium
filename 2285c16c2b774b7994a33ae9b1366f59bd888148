@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "3007b34a_ddc1d271",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-25T17:48:51Z",
+      "side": 1,
+      "message": "It is one of the returned values of EnumerateDevices() which are crafted on browser side:\nhttps://cs.chromium.org/chromium/src/ppapi/c/dev/ppb_video_capture_dev.h?rcl\u003dcd6b1e5b91405e8294feb246d79e1498447fc0bc\u0026l\u003d123",
+      "parentUuid": "60901ec1_517f3cbc",
+      "range": {
+        "startLine": 31,
+        "startChar": 54,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20fbeece_d909685d",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 5
