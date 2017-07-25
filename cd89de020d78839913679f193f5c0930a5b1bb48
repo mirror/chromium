@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af3bca21_07b8c4ac",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-25T18:50:13Z",
+      "side": 1,
+      "message": "No, we typically do not mix 2 naming schemes: ResourceCoordinator and CoordinationUnit. ResourceCoodinator refers to  classes outside of GRC graph and CoordinationUnit refers to nodes in the GRC graph.",
+      "parentUuid": "f4be51bc_1c9d5e1f",
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c47d3ed2_c81bcfc9",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabc4963_d0919d19",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-25T18:50:13Z",
+      "side": 1,
+      "message": "Ack. I changed it to a plain-old object.",
+      "parentUuid": "c47d3ed2_c81bcfc9",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f7a63239_ad1ce3d4",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-25T18:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8976a127_00acb8ab",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e90c118_efafbe7f",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
         "patchSetId": 9
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-25T11:18:32Z",
       "side": 1,
       "message": "Why do we need two versions?\n\nservice_manager::InterfaceProvider should be available for all Blink, right?",
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c55b6c_18d2a078",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-25T18:50:13Z",
+      "side": 1,
+      "message": "RendererResourceCoordinator needs to connect to the Process CU so I use Platform::Current()-\u003eGetInterfaceProvider() which returns blink::InterfaceProvider.",
+      "parentUuid": "9e90c118_efafbe7f",
       "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "be7bcd57_9d804ab1",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-25T18:50:13Z",
+      "side": 1,
+      "message": "In the new patch set, I added an Initialize() method to initialize this class in blink::Platform, so I still keep this global variable.",
+      "parentUuid": "ff31692b_67d329cc",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "632697bc_570e6f86",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 9
@@ -116,6 +224,24 @@
       "writtenOn": "2017-07-25T11:18:32Z",
       "side": 1,
       "message": "How frequently is this called? Is the overhead acceptable?",
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61615694_e5427db0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-25T18:50:13Z",
+      "side": 1,
+      "message": "Currently, the frequency is 1Hz, which is limited by kQueueingTimeWindowDuration at\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc?l\u003d2238",
+      "parentUuid": "632697bc_570e6f86",
       "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
