@@ -24742,6 +24742,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistenciesBrowser" enum="Inconsistencies">
+  <obsolete>
+    Deprecated 7/2017.
+  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
@@ -24755,6 +24758,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistenciesBrowserUnique" enum="Inconsistencies">
+  <obsolete>
+    Deprecated 7/2017.
+  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
@@ -24768,6 +24774,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistenciesChildProcess" enum="Inconsistencies">
+  <obsolete>
+    Deprecated 7/2017.
+  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
@@ -24782,6 +24791,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Histogram.InconsistenciesChildProcessUnique"
     enum="Inconsistencies">
+  <obsolete>
+    Deprecated 7/2017.
+  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
