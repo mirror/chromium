@@ -163,6 +163,87 @@ TEST_F(ScrollMetricsTest, ScrollerSizeOnPageLoadHistogramRecordingTest) {
   histogram_tester.ExpectTotalCount("Event.Scroll.ScrollerSize.OnLoad", 2);
 }
 
+TEST_F(ScrollMetricsTest, SmallScrollerPercentageHistogramTest) {
+  HistogramTester histogram_tester;
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .smallBox { overflow: scroll; width: 100px; height: 100px; }"
+      " .mediumBox { overflow: scroll; width: 200px; height: 200px; }"
+      " .largeBox { overflow: auto; width: 500px; height: 500px; }"
+      " .spacer { height: 1000px; }"
+      " .composited { will-change: transform; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div class='composited smallBox'><div class='spacer'></div></div>"
+      "<div class='composited mediumBox'><div class='spacer'></div></div>"
+      "<div class='composited largeBox'><div class='spacer'></div></div>");
+  testing::RunPendingTasks();
+  // Both small and medium box are considered as small scroller therefore the
+  // percentage = (100 * 100 + 200 * 200) / (100 * 100 + 200 * 200 + 500 * 500 +
+  // 800 * 600) = 6.4%.
+  histogram_tester.ExpectBucketCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 6, 1);
+}
+
+TEST_F(ScrollMetricsTest,
+       SmallScrollerPercentageHistogramTestCompositedScrollerOnly) {
+  HistogramTester histogram_tester;
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .smallBox { overflow: scroll; width: 100px; height: 100px; }"
+      " .mediumBox { overflow: scroll; width: 200px; height: 200px; }"
+      " .largeBox { overflow: auto; width: 500px; height: 500px; }"
+      " .spacer { height: 1000px; }"
+      " .composited { will-change: transform; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div class='composited smallBox'><div class='spacer'></div></div>"
+      "<div class='composited mediumBox'><div class='spacer'></div></div>"
+      "<div class='largeBox'><div class='spacer'></div></div>");
+  testing::RunPendingTasks();
+  // Both small and medium box are considered as small scroller therefore the
+  // percentage = (100 * 100 + 200 * 200) / (100 * 100 + 200 * 200 + 800 * 600)
+  // = 9.4%.
+  histogram_tester.ExpectBucketCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 9, 1);
+}
+
+TEST_F(ScrollMetricsTest, SmallScrollerPercentageHistogramTestNoSmallScroller) {
+  HistogramTester histogram_tester;
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .largeBox { overflow: auto; width: 500px; height: 500px; }"
+      " .spacer { height: 1000px; }"
+      " .composited { will-change: transform; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div class='composited largeBox'><div class='spacer'></div></div>");
+  testing::RunPendingTasks();
+
+  histogram_tester.ExpectBucketCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 0, 1);
+}
+
+TEST_F(ScrollMetricsTest,
+       SmallScrollerPercentageHistogramTestNonCompositedSmallScroller) {
+  HistogramTester histogram_tester;
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .smallBox { overflow: scroll; width: 100px; height: 100px; }"
+      " .spacer { height: 1000px; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div class='smallBox'><div class='spacer'></div></div>");
+  testing::RunPendingTasks();
+
+  histogram_tester.ExpectBucketCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 0, 1);
+}
+
 TEST_F(ScrollMetricsTest,
        ScrollerSizeOfMainThreadScrollingHistogramRecordingTest) {
   HistogramTester histogram_tester;
