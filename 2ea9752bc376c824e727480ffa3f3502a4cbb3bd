@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a5721bf5_8eaaa354",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-25T10:58:39Z",
+      "side": 1,
+      "message": "I see. I\u0027ll combine these two :)",
+      "parentUuid": "f4afc0c3_0a7b0398",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0300cbe9_824e6091",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 5
@@ -105,6 +123,24 @@
       "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0244da6c_1c53fae6",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-25T10:58:39Z",
+      "side": 1,
+      "message": "Ack. Seems great!",
+      "parentUuid": "f1b56c34_2f5a3787",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +299,24 @@
       "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5fb023_83a2027e",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-25T10:58:39Z",
+      "side": 1,
+      "message": "I got it. Thank you for letting me know 35097 :)",
+      "parentUuid": "2349bc66_5be6a961",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
