@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a62f5545_8c0b0730",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-25T22:02:30Z",
+      "side": 1,
+      "message": "Oh yeah, I see what you mean. While writing this I was primarily looking at GetPrintingPresetOptions (line 1920), which doesn\u0027t wrap the function\u0027s return value as a PP_Bool, but it\u0027s also being used differently. So I can change this to match line 1526.",
+      "parentUuid": "3051cd11_b269f352",
+      "range": {
+        "startLine": 1505,
+        "startChar": 8,
+        "endLine": 1505,
+        "endChar": 54
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0744d3e0_10d55aa3",
         "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7279747_642b6e87",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-25T22:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0744d3e0_10d55aa3",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 29
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eeddb4a8_dbc0cb3d",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-25T22:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d847fac5_b6d72890",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 18
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e640f9_3420deb1",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4c48ce48_c47e2787",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-25T22:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0e640f9_3420deb1",
+      "range": {
+        "startLine": 630,
+        "startChar": 6,
+        "endLine": 630,
+        "endChar": 36
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e374198_84d9ad6d",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93c6fe8_5b33cf64",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-25T22:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e374198_84d9ad6d",
+      "range": {
+        "startLine": 634,
+        "startChar": 46,
+        "endLine": 634,
+        "endChar": 79
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -149,6 +269,24 @@
       "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347bee4a_41263eca",
+        "filename": "ppapi/proxy/ppp_pdf_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-25T22:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2afca9f_b792afb7",
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
