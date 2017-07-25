@@ -87,13 +87,16 @@ void HostScanner::OnTetherAvailabilityResponse(
     NormalizeDeviceStatus(scanned_device_list_so_far.at(0).device_status,
                           nullptr /* carrier */,
                           nullptr /* battery_percentage */, &signal_strength);
-    notification_presenter_->NotifyPotentialHotspotNearby(remote_device,
-                                                          signal_strength);
+    if (!NetworkHandler::Get()->network_state_handler()->DefaultNetwork()) {
+      notification_presenter_->NotifyPotentialHotspotNearby(remote_device,
+                                                            signal_strength);
+    }
   } else if (scanned_device_list_so_far.size() > 1u) {
     // Note: If a single-device notification was previously displayed, calling
     // NotifyMultiplePotentialHotspotsNearby() will reuse the existing
     // notification.
-    notification_presenter_->NotifyMultiplePotentialHotspotsNearby();
+    if (!NetworkHandler::Get()->network_state_handler()->DefaultNetwork())
+      notification_presenter_->NotifyMultiplePotentialHotspotsNearby();
   }
 
   if (is_final_scan_result) {
