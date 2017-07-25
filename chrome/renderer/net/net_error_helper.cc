@@ -57,6 +57,7 @@ using error_page::DnsProbeStatus;
 using error_page::DnsProbeStatusToString;
 using error_page::ErrorPageParams;
 using error_page::LocalizedError;
+using error_page::NetErrorHelperCore;
 
 namespace {
 
@@ -107,7 +108,8 @@ NetErrorHelper::~NetErrorHelper() {
   RenderThread::Get()->RemoveObserver(this);
 }
 
-void NetErrorHelper::ButtonPressed(NetErrorHelperCore::Button button) {
+void NetErrorHelper::ButtonPressed(
+    error_page::NetErrorHelperCore::Button button) {
   core_->ExecuteButtonPress(button);
 }
 
