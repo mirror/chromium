@@ -106,6 +106,24 @@
       "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1fabcc_2c602e99",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-25T15:32:35Z",
+      "side": 1,
+      "message": "I mean, sure, that (the first thing) sounds fine. I wasn\u0027t imagining that the binder got overridden though, but rather that the binder would an RFHI method that internally could delegate to a global override if set. It\u0027s the same thing as what you suggest, it just doesn\u0027t require an intermediate object.",
+      "parentUuid": "dd59dd66_1e003e1e",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
