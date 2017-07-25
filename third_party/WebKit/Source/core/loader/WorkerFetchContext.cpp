@@ -150,7 +150,9 @@ void WorkerFetchContext::CountDeprecation(WebFeature feature) const {
 }
 
 bool WorkerFetchContext::ShouldBlockFetchByMixedContentCheck(
-    const ResourceRequest& resource_request,
+    WebURLRequest::RequestContext request_context,
+    WebURLRequest::FrameType frame_type,
+    ResourceRequest::RedirectStatus redirect_status,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) const {
   // TODO(horo): We need more detailed check which is implemented in
@@ -160,11 +162,10 @@ bool WorkerFetchContext::ShouldBlockFetchByMixedContentCheck(
 }
 
 bool WorkerFetchContext::ShouldBlockFetchAsCredentialedSubresource(
-    const ResourceRequest& resource_request,
+    WebURLRequest::RequestContext request_context,
     const KURL& url) const {
   if ((!url.User().IsEmpty() || !url.Pass().IsEmpty()) &&
-      resource_request.GetRequestContext() !=
-          WebURLRequest::kRequestContextXMLHttpRequest) {
+      request_context != WebURLRequest::kRequestContextXMLHttpRequest) {
     if (Url().User() != url.User() || Url().Pass() != url.Pass()) {
       CountDeprecation(
           WebFeature::kRequestedSubresourceWithEmbeddedCredentials);
