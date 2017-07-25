@@ -1438,7 +1438,9 @@ void ScrollTree::PushScrollUpdatesFromMainThread(
     SyncedScrollOffset* synced_scroll_offset =
         GetOrCreateSyncedScrollOffset(id);
 
-    bool changed = synced_scroll_offset->PushFromMainThread(map_entry.second);
+    bool changed = synced_scroll_offset->Current(false) != map_entry.second;
+    changed |= synced_scroll_offset->PushFromMainThread(map_entry.second);
+
     // If we are committing directly to the active tree, push pending to active
     // here.
     if (property_trees()->is_active)
