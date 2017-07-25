@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc84ecf_536cfb16",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-25T14:15:36Z",
+      "side": 1,
+      "message": "update comments",
+      "range": {
+        "startLine": 118,
+        "startChar": 17,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "7b66bfda244e95ca54a749f3eebd4f9e017b1538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

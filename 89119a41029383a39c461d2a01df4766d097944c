@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6fbfdaa_84606a07",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-25T14:15:36Z",
+      "side": 1,
+      "message": "Yes. If the dependency is only theoretical than it won\u0027t matter (a parallel task is already posted to a sequence of one task internally) and if it does happen than it will prevent the occasional race.",
+      "parentUuid": "0dc34ecc_1d9082a0",
+      "range": {
+        "startLine": 451,
+        "startChar": 24,
+        "endLine": 451,
+        "endChar": 36
+      },
+      "revId": "89119a41029383a39c461d2a01df4766d097944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "876ab5f5_099dfc45",
         "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T02:10:28Z",
       "side": 1,
       "message": "Theoretically, we\u0027d like Save() to be executed even if Shutdown is invoked. However, the cost of not doing so means simply losing one or two words added to/removed from the dictionary.\n\nHow careful should we be with BLOCK_SHUTDOWN?",
+      "range": {
+        "startLine": 461,
+        "startChar": 56,
+        "endLine": 461,
+        "endChar": 64
+      },
+      "revId": "89119a41029383a39c461d2a01df4766d097944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37693bf3_f98d6123",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-25T14:15:36Z",
+      "side": 1,
+      "message": "Everything on BrowserThreads was previously blocking shutdown, while this wasn\u0027t great if there aren\u0027t existing shutdown hangs in this call it\u0027s probably fine. BLOCK_SHUTDOWN is intended specifically for this purpose too (saving user visible things).",
+      "parentUuid": "876ab5f5_099dfc45",
       "range": {
         "startLine": 461,
         "startChar": 56,
