@@ -38,83 +38,63 @@ class SensorReadingField {
   Storage storage_;
 };
 
-// This structure represents sensor reading data: timestamp and 4 values.
-struct SensorReading {
-  SensorReading();
-  ~SensorReading();
-  SensorReading(const SensorReading& other);
+struct SensorReadingBase {
+  SensorReadingBase();
+  ~SensorReadingBase();
   SensorReadingField<double> timestamp;
-  constexpr static int kValuesCount = 4;
-  // AMBIENT_LIGHT:
-  // values[0]: ambient light level in SI lux units.
-  //
-  // PROXIMITY:
-  // values[0]: proximity sensor distance measured in centimeters.
-  //
-  // ACCELEROMETER:
-  // values[0]: acceleration minus Gx on the x-axis.
-  // values[1]: acceleration minus Gy on the y-axis.
-  // values[2]: acceleration minus Gz on the z-axis.
-  //
-  // LINEAR_ACCELERATION:
-  // values[0]: acceleration on the x-axis.
-  // values[1]: acceleration on the y-axis.
-  // values[2]: acceleration on the z-axis.
-  //
-  // GYROSCOPE:
-  // values[0]: angular speed around the x-axis.
-  // values[1]: angular speed around the y-axis.
-  // values[2]: angular speed around the z-axis.
-  //
-  // MAGNETOMETER:
-  // values[0]: ambient magnetic field in the x-axis in micro-Tesla (uT).
-  // values[1]: ambient magnetic field in the y-axis in micro-Tesla (uT).
-  // values[2]: ambient magnetic field in the z-axis in micro-Tesla (uT).
-  //
-  // PRESSURE:
-  // values[0]: atmospheric pressure in hPa (millibar).
-  //
-  // ABSOLUTE_ORIENTATION_EULER_ANGLES:
-  // values[0]: x-axis angle in degrees representing the orientation of the
-  // device in 3D space.
-  // values[1]: y-axis angle in degrees representing the orientation of the
-  // device in 3D space.
-  // values[2]: z-axis angle in degrees representing the orientation of the
-  // device in 3D space.
-  //
-  // ABSOLUTE_ORIENTATION_QUATERNION:
-  // values[0]: x value of a quaternion representing the orientation of the
-  // device in 3D space.
-  // values[1]: y value of a quaternion representing the orientation of the
-  // device in 3D space.
-  // values[2]: z value of a quaternion representing the orientation of the
-  // device in 3D space.
-  // values[3]: w value of a quaternion representing the orientation of the
-  // device in 3D space.
-  //
-  // RELATIVE_ORIENTATION_EULER_ANGLES:
-  // (Identical to ABSOLUTE_ORIENTATION_EULER_ANGLES except that it doesn't use
-  // the geomagnetic field.)
-  // values[0]: x-axis angle in degrees representing the orientation of the
-  // device in 3D space.
-  // values[1]: y-axis angle in degrees representing the orientation of the
-  // device in 3D space.
-  // values[2]: z-axis angle in degrees representing the orientation of the
-  // device in 3D space.
-  //
-  // RELATIVE_ORIENTATION_QUATERNION:
-  // (Identical to ABSOLUTE_ORIENTATION_QUATERNION except that it doesn't use
-  // the geomagnetic field.)
-  // values[0]: x value of a quaternion representing the orientation of the
-  // device in 3D space.
-  // values[1]: y value of a quaternion representing the orientation of the
-  // device in 3D space.
-  // values[2]: z value of a quaternion representing the orientation of the
-  // device in 3D space.
-  // values[3]: w value of a quaternion representing the orientation of the
-  // device in 3D space.
+};
+
+// Represents raw sensor reading data: timestamp and 4 values.
+struct SensorReadingRaw : public SensorReadingBase {
+  SensorReadingRaw();
+  ~SensorReadingRaw();
+
+  constexpr static size_t kValuesCount = 4;
   SensorReadingField<double> values[kValuesCount];
 };
+
+// Represents a single data value.
+struct SensorReadingSingle : public SensorReadingBase {
+  SensorReadingSingle();
+  ~SensorReadingSingle();
+  SensorReadingField<double> value;
+};
+
+// Represents a vector in 3d coordinate system.
+struct SensorReadingXYZ : public SensorReadingBase {
+  SensorReadingXYZ();
+  ~SensorReadingXYZ();
+  SensorReadingField<double> x;
+  SensorReadingField<double> y;
+  SensorReadingField<double> z;
+};
+
+// Represents quaternion.
+struct SensorReadingQuat : public SensorReadingXYZ {
+  SensorReadingQuat();
+  ~SensorReadingQuat();
+  SensorReadingField<double> w;
+};
+
+union SensorReading {
+  SensorReadingRaw raw;
+  SensorReadingSingle als;             // AMBIENT_LIGHT
+  SensorReadingXYZ accel;              // ACCELEROMETER, LINEAR_ACCELERATION
+  SensorReadingXYZ gyro;               // GYROSCOPE
+  SensorReadingXYZ magn;               // MAGNETOMETER
+  SensorReadingQuat orientation_quat;  // ABSOLUTE_ORIENTATION_QUATERNION,
+                                       // RELATIVE_ORIENTATION_QUATERNION
+  SensorReadingXYZ orientation_euler;  // ABSOLUTE_ORIENTATION_EULER_ANGLES,
+                                       // RELATIVE_ORIENTATION_EULER_ANGLES
+
+  double timestamp() const { return raw.timestamp; }
+
+  SensorReading();
+  ~SensorReading();
+};
+
+static_assert(sizeof(SensorReading) == sizeof(SensorReadingRaw),
+              "Check SensorReading size.");
 
 // This structure represents sensor reading buffer: sensor reading and seqlock
 // for synchronization.
@@ -122,6 +102,7 @@ struct SensorReadingSharedBuffer {
   SensorReadingSharedBuffer();
   ~SensorReadingSharedBuffer();
   SensorReadingField<OneWriterSeqLock> seqlock;
+
   SensorReading reading;
 
   // Gets the shared reading buffer offset for the given sensor type.

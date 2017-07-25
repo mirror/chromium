@@ -49,7 +49,7 @@ class FakePlatformSensor : public PlatformSensor {
     // Only mocking the shared memory update for AMBIENT_LIGHT type is enough.
     if (GetType() == mojom::SensorType::AMBIENT_LIGHT) {
       // Set the shared buffer value as frequency for testing purpose.
-      reading.values[0] = configuration.frequency();
+      reading.als.value = configuration.frequency();
       UpdateSensorReading(reading, true);
     }
     return true;
@@ -162,7 +162,7 @@ class TestSensorClient : public mojom::SensorClient {
   }
 
  private:
-  double GetReadingValue() { return reading_data_.values[0]; }
+  double GetReadingValue() { return reading_data_.raw.values[0]; }
 
   void UpdateReadingData() {
     memset(&reading_data_, 0, sizeof(SensorReading));
