@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2484f6fc_4d5486bf",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-25T22:39:56Z",
+      "side": 1,
+      "message": "Enclose this in EXPECT_TRUE().",
+      "range": {
+        "startLine": 281,
+        "startChar": 4,
+        "endLine": 281,
+        "endChar": 8
+      },
+      "revId": "5c152c307ff56949aa85a8b0427246bc4e2660ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e07cb9_5cf450c4",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-25T22:39:56Z",
+      "side": 1,
+      "message": "Add:\nEXPECT_TRUE(field_trial);",
+      "range": {
+        "startLine": 282,
+        "startChar": 22,
+        "endLine": 282,
+        "endChar": 33
+      },
+      "revId": "5c152c307ff56949aa85a8b0427246bc4e2660ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
