@@ -1121,6 +1121,17 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
     UMA_HISTOGRAM_CUSTOM_COUNTS(
         base::StringPrintf("Compositing.%s.NumActiveLayers", client_name),
         base::saturated_cast<int>(active_tree_->NumLayers()), 1, 400, 20);
+
+    unsigned num_layers_that_draw_content = 0;
+    for (auto it = active_tree_->begin(); it != active_tree_->end(); ++it) {
+      if ((*it)->DrawsContent())
+        ++num_layers_that_draw_content;
+    }
+
+    UMA_HISTOGRAM_CUSTOM_COUNTS(
+        base::StringPrintf("Compositing.%s.NumActiveLayersThatDrawContent",
+                           client_name),
+        base::saturated_cast<int>(num_layers_that_draw_content), 1, 400, 20);
   }
 
   bool ok = active_tree_->UpdateDrawProperties();
