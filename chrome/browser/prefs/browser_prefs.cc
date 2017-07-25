@@ -263,9 +263,9 @@
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#include "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.h"
 #include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
 #endif
-
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
 #include "chrome/browser/ui/startup/default_browser_prompt.h"
 #endif
@@ -588,6 +588,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
   feature_engagement_tracker::NewTabTracker::RegisterProfilePrefs(registry);
+  feature_engagement_tracker::BookmarkTracker::RegisterProfilePrefs(registry);
 #endif
 
 #if defined(OS_CHROMEOS)
