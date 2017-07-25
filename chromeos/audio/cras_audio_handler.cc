@@ -306,15 +306,6 @@ bool CrasAudioHandler::GetPrimaryActiveOutputDevice(AudioDevice* device) const {
   return true;
 }
 
-const AudioDevice* CrasAudioHandler::GetDeviceByType(AudioDeviceType type) {
-  for (const auto& item : audio_devices_) {
-    const AudioDevice& device = item.second;
-    if (device.type == type)
-      return &device;
-  }
-  return nullptr;
-}
-
 void CrasAudioHandler::SetKeyboardMicActive(bool active) {
   const AudioDevice* keyboard_mic = GetKeyboardMic();
   if (!keyboard_mic)
@@ -1536,6 +1527,15 @@ const AudioDevice* CrasAudioHandler::GetMicForCamera(
       return GetDeviceByType(AUDIO_TYPE_REAR_MIC);
     default:
       NOTREACHED();
+  }
+  return nullptr;
+}
+
+const AudioDevice* CrasAudioHandler::GetDeviceByType(AudioDeviceType type) {
+  for (const auto& item : audio_devices_) {
+    const AudioDevice& device = item.second;
+    if (device.type == type)
+      return &device;
   }
   return nullptr;
 }
