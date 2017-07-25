@@ -38,7 +38,6 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
 
   bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) override;
   IntSize Size() const override;
-  sk_sp<SkImage> ImageForCurrentFrame() override;
   bool IsTextureBacked() const override { return true; }
 
   void Draw(PaintCanvas*,
@@ -65,6 +64,9 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
     return texture_holder_->GetSyncToken();
   }
   void UpdateSyncToken(gpu::SyncToken) final;
+
+ protected:
+  void PopulateImageForCurrentFrame(PaintImageBuilder&) override;
 
  private:
   AcceleratedStaticBitmapImage(sk_sp<SkImage>);
