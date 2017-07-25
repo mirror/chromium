@@ -242,6 +242,7 @@ class CacheStorageManagerTest : public testing::Test {
     callback_all_origins_usage_.clear();
 
     cache_manager_ = nullptr;
+    base::RunLoop().RunUntilIdle();  // Give the cache time to close.
   }
 
   bool Open(const GURL& origin, const std::string& cache_name) {
@@ -583,7 +584,7 @@ TEST_P(CacheStorageManagerTestP, DeleteCacheReducesOriginSize) {
 
   // Drop the cache handle so that the cache can be erased from disk.
   callback_cache_handle_ = nullptr;
-  base::RunLoop().RunUntilIdle();
+  base::RunLoop().RunUntilIdle();  // Give the cache time to close.
 
   EXPECT_EQ(-1 * quota_manager_proxy_->last_notified_delta(), put_delta);
 }
@@ -826,6 +827,7 @@ TEST_F(CacheStorageManagerTest, DropReference) {
                           GURL("http://example.com/foo")));
 
   callback_cache_handle_ = nullptr;
+  base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(cache);
 }
 
@@ -924,6 +926,7 @@ TEST_F(CacheStorageManagerMemoryOnlyTest, MemoryLosesReferenceOnlyAfterDelete) {
   base::WeakPtr<CacheStorageCache> cache =
       callback_cache_handle_->value()->AsWeakPtr();
   callback_cache_handle_ = nullptr;
+  base::RunLoop().RunUntilIdle();  // Give the cache time to close.
   EXPECT_TRUE(cache);
   EXPECT_TRUE(Delete(origin1_, "foo"));
   base::RunLoop().RunUntilIdle();

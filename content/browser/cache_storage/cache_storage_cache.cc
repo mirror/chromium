@@ -357,7 +357,8 @@ std::unique_ptr<CacheStorageCache> CacheStorageCache::CreatePersistentCache(
       origin, cache_name, path, cache_storage,
       std::move(request_context_getter), std::move(quota_manager_proxy),
       blob_context, cache_size);
-  cache->SetObserver(cache_storage), cache->InitBackend();
+  cache->SetObserver(cache_storage);
+  cache->InitBackend();
   return base::WrapUnique(cache);
 }
 
@@ -550,8 +551,13 @@ void CacheStorageCache::Keys(std::unique_ptr<ServiceWorkerFetchRequest> request,
 }
 
 void CacheStorageCache::Close(base::OnceClosure callback) {
-  DCHECK_NE(BACKEND_CLOSED, backend_state_)
-      << "Was CacheStorageCache::Close() called twice?";
+  if (backend_state_ == BACKEND_CLOSED) {
+    // The backend might have already been closed (say when deleting an origin)
+    // in which case run the callback immediately.
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  std::move(callback));
+    return;
+  }
 
   scheduler_->ScheduleOperation(base::BindOnce(
       &CacheStorageCache::CloseImpl, weak_ptr_factory_.GetWeakPtr(),

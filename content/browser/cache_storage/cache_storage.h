@@ -130,7 +130,21 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
   class SimpleCacheLoader;
   struct CacheMatchResponse;
 
-  typedef std::map<std::string, std::unique_ptr<CacheStorageCache>> CacheMap;
+  using CacheCallback =
+      base::OnceCallback<void(std::unique_ptr<CacheStorageCacheHandle>)>;
+  using CacheHandles =
+      std::unique_ptr<std::vector<std::unique_ptr<CacheStorageCacheHandle>>>;
+  using CacheHandlesCallback = base::OnceCallback<void(CacheHandles)>;
+
+  struct CacheAndCallback {
+    explicit CacheAndCallback(std::unique_ptr<CacheStorageCache> cache);
+    ~CacheAndCallback();
+    std::unique_ptr<CacheStorageCache> cache;
+    base::OnceClosure callback;
+  };
+
+  using CacheMap = std::map<std::string, std::unique_ptr<CacheStorageCache>>;
+  using CacheAndCallbackMap = std::map<std::string, CacheAndCallback>;
 
   // Functions for exposing handles to CacheStorageCache to clients.
   std::unique_ptr<CacheStorageCacheHandle> CreateCacheHandle(
@@ -138,10 +152,25 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
   void AddCacheHandleRef(CacheStorageCache* cache);
   void DropCacheHandleRef(CacheStorageCache* cache);
 
-  // Returns a CacheStorageCacheHandle for the given name if the name is known.
-  // If the CacheStorageCache has been deleted, creates a new one.
-  std::unique_ptr<CacheStorageCacheHandle> GetLoadedCache(
-      const std::string& cache_name);
+  // Once a cache is closed, call any waiting callbacks.
+  void CacheClosed(const std::string& cache_name);
+
+  // Runs |callback| with a CacheStorageCacheHandle for the given name if the
+  // name is known. If the CacheStorageCache has been deleted, creates a new
+  // one.
+  void GetLoadedCache(const std::string& cache_name, CacheCallback callback);
+  void GetLoadedCacheCreateCache(const std::string& cache_name,
+                                 CacheCallback callback);
+
+  // Asynchronously loads the cache handles for the caches given in
+  // |cache_names| and runs |callback| with the vector of cache handles. Order
+  // is preserved.
+  void GetLoadedCaches(std::vector<std::string> cache_names,
+                       CacheHandlesCallback callback);
+
+  // Special case of GetLoadedCaches which calls GetLoadedCaches with all of the
+  // cache names, in order of cache age.
+  void GetAllLoadedCaches(CacheHandlesCallback callback);
 
   // Initializer and its callback are below.
   void LazyInit();
@@ -151,6 +180,10 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
   // The Open and CreateCache callbacks are below.
   void OpenCacheImpl(const std::string& cache_name,
                      CacheAndErrorCallback callback);
+  void OpenCacheDidGetLoadedCache(
+      const std::string& cache_name,
+      CacheAndErrorCallback callback,
+      std::unique_ptr<CacheStorageCacheHandle> cache_handle);
   void CreateCacheDidCreateCache(const std::string& cache_name,
                                  CacheAndErrorCallback callback,
                                  std::unique_ptr<CacheStorageCache> cache);
@@ -166,6 +199,10 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
   // The DeleteCache callbacks are below.
   void DeleteCacheImpl(const std::string& cache_name,
                        BoolAndErrorCallback callback);
+  void DeleteCacheDidGetLoadedCache(
+      const std::string& cache_name,
+      BoolAndErrorCallback callback,
+      std::unique_ptr<CacheStorageCacheHandle> cache_handle);
   void DeleteCacheDidWriteIndex(
       std::unique_ptr<CacheStorageCacheHandle> cache_handle,
       BoolAndErrorCallback callback,
@@ -183,6 +220,12 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
                       std::unique_ptr<ServiceWorkerFetchRequest> request,
                       const CacheStorageCacheQueryParams& match_params,
                       CacheStorageCache::ResponseCallback callback);
+  void MatchCacheDidGetLoadedCache(
+      const std::string& cache_name,
+      std::unique_ptr<ServiceWorkerFetchRequest> request,
+      const CacheStorageCacheQueryParams& match_params,
+      CacheStorageCache::ResponseCallback callback,
+      std::unique_ptr<CacheStorageCacheHandle> cache_handle);
   void MatchCacheDidMatch(std::unique_ptr<CacheStorageCacheHandle> cache_handle,
                           CacheStorageCache::ResponseCallback callback,
                           CacheStorageError error,
@@ -193,6 +236,11 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
   void MatchAllCachesImpl(std::unique_ptr<ServiceWorkerFetchRequest> request,
                           const CacheStorageCacheQueryParams& match_params,
                           CacheStorageCache::ResponseCallback callback);
+  void MatchAllCachesDidLoadCaches(
+      std::unique_ptr<ServiceWorkerFetchRequest> request,
+      const CacheStorageCacheQueryParams& match_params,
+      CacheStorageCache::ResponseCallback callback,
+      CacheHandles cache_handles);
   void MatchAllCachesDidMatch(
       std::unique_ptr<CacheStorageCacheHandle> cache_handle,
       CacheMatchResponse* out_match_response,
@@ -205,8 +253,13 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
       CacheStorageCache::ResponseCallback callback);
 
   void GetSizeThenCloseAllCachesImpl(SizeCallback callback);
+  void GetSizeThenCloseAllCachesDidLoadCaches(SizeCallback callback,
+                                              CacheHandles cache_handles);
 
   void SizeImpl(SizeCallback callback);
+  void SizeImplDidLoadUnknownCaches(base::RepeatingClosure barrier_closure,
+                                    int64_t* accumulator,
+                                    CacheHandles cache_handles);
   void SizeRetrievedFromCache(
       std::unique_ptr<CacheStorageCacheHandle> cache_handle,
       base::OnceClosure closure,
@@ -234,6 +287,12 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
 
   // The map of cache names to CacheStorageCache objects.
   CacheMap cache_map_;
+
+  // Dropping the last handle to a CacheStorageCache object causes it to Close,
+  // which is an asynchronous operation and runs outside of the CacheStorage's
+  // scheduler. Any future operation for the same cache name must wait for
+  // the Close to finish. We keep track of closing caches here.
+  CacheAndCallbackMap closing_derefed_caches_;
 
   // Caches that have been deleted but must still be held onto until all handles
   // have been released.
