@@ -489,6 +489,10 @@ bool CompositorImpl::IsForSubframe() {
   return false;
 }
 
+bool CompositorImpl::IsForGuest() {
+  return false;
+}
+
 ui::UIResourceProvider& CompositorImpl::GetUIResourceProvider() {
   return *this;
 }
