@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b3478e3_e69fa17a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/command-line-api.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-25T01:36:54Z",
+      "side": 1,
+      "message": "Inline below with iife.",
+      "revId": "1066958248e785007ba8baa77f938c2ffd639f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9c6080_4e2fbcb4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-big-array.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-25T01:36:54Z",
+      "side": 1,
+      "message": "Let\u0027s dedent this by 2 chars.",
+      "revId": "1066958248e785007ba8baa77f938c2ffd639f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
