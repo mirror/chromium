@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "182b9df3_214e5d54",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-25T16:45:26Z",
+      "side": 1,
+      "message": "Made the name generic so we could expand it to other timeouts if needed. Currently Android-only.",
+      "range": {
+        "startLine": 275,
+        "startChar": 33,
+        "endLine": 275,
+        "endChar": 61
+      },
+      "revId": "026f7c3923a831314c1c2367df352ddc259d8ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
