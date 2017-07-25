@@ -475,6 +475,30 @@
     },
     {
       "key": {
+        "uuid": "2d23c519_71fceb84",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-25T17:24:13Z",
+      "side": 1,
+      "message": "I\u0027m fine with that assumption.",
+      "parentUuid": "1e020a81_2978711e",
+      "range": {
+        "startLine": 188,
+        "startChar": 3,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edc23c53_1c52626e",
         "filename": "ui/aura/mus/drag_drop_controller_mus.h",
         "patchSetId": 9
