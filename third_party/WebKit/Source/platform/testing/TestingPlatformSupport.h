@@ -217,6 +217,7 @@ class ScopedTestingPlatformSupport final {
 
   const T* operator->() const { return testing_platform_support_.get(); }
   T* operator->() { return testing_platform_support_.get(); }
+  T* get() { return testing_platform_support_.get(); }
 
  private:
   std::unique_ptr<T> testing_platform_support_;
