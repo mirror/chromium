@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620b8dd5_28182cc6",
+        "filename": "net/data/ssl/scripts/fetch-live-certs.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-25T22:55:54Z",
+      "side": 1,
+      "message": "Proposed in https://chromium-review.googlesource.com/c/585570/",
+      "revId": "435593fec1c1e9b0458510e098a5eb81b4456f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
