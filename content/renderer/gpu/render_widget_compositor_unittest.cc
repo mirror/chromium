@@ -248,11 +248,12 @@ class RenderWidgetLayerTreeFrameSinkTest : public testing::Test {
 
     ScreenInfo dummy_screen_info;
     const float initial_device_scale_factor = 1.f;
+    const bool wait_for_all_pipeline_stages = false;
 
     auto layer_tree_host = RenderWidgetCompositor::CreateLayerTreeHost(
         &render_widget_compositor_, &render_widget_compositor_,
         animation_host.get(), &compositor_deps_, initial_device_scale_factor,
-        dummy_screen_info);
+        dummy_screen_info, wait_for_all_pipeline_stages);
     render_widget_compositor_.Initialize(std::move(layer_tree_host),
                                          std::move(animation_host));
   }

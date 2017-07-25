@@ -102,6 +102,7 @@ using WebWidgetTestProxyType =
                                     const ScreenInfo&,
                                     bool,
                                     bool,
+                                    bool,
                                     bool>;
 using WebFrameTestProxyType =
     test_runner::WebFrameTestProxy<RenderFrameImpl,
@@ -123,10 +124,11 @@ RenderWidget* CreateWebWidgetTestProxy(int32_t routing_id,
                                        const ScreenInfo& screen_info,
                                        bool swapped_out,
                                        bool hidden,
-                                       bool never_visible) {
+                                       bool never_visible,
+                                       bool wait_for_all_pipeline_stages) {
   WebWidgetTestProxyType* render_widget_proxy = new WebWidgetTestProxyType(
       routing_id, compositor_deps, popup_type, screen_info, swapped_out, hidden,
-      never_visible);
+      never_visible, wait_for_all_pipeline_stages);
   return render_widget_proxy;
 }
 

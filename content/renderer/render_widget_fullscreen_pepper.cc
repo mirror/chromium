@@ -254,13 +254,14 @@ RenderWidgetFullscreenPepper* RenderWidgetFullscreenPepper::Create(
     PepperPluginInstanceImpl* plugin,
     const GURL& active_url,
     const ScreenInfo& screen_info,
+    bool wait_for_all_pipeline_stages_before_draw,
     mojom::WidgetRequest widget_request) {
   DCHECK_NE(MSG_ROUTING_NONE, routing_id);
   DCHECK(!show_callback.is_null());
   scoped_refptr<RenderWidgetFullscreenPepper> widget(
-      new RenderWidgetFullscreenPepper(routing_id, compositor_deps, plugin,
-                                       active_url, screen_info,
-                                       std::move(widget_request)));
+      new RenderWidgetFullscreenPepper(
+          routing_id, compositor_deps, plugin, active_url, screen_info,
+          wait_for_all_pipeline_stages_before_draw, std::move(widget_request)));
   widget->Init(show_callback, new PepperWidget(widget.get()));
   widget->AddRef();
   return widget.get();
@@ -272,6 +273,7 @@ RenderWidgetFullscreenPepper::RenderWidgetFullscreenPepper(
     PepperPluginInstanceImpl* plugin,
     const GURL& active_url,
     const ScreenInfo& screen_info,
+    bool wait_for_all_pipeline_stages_before_draw,
     mojom::WidgetRequest widget_request)
     : RenderWidget(routing_id,
                    compositor_deps,
@@ -280,6 +282,7 @@ RenderWidgetFullscreenPepper::RenderWidgetFullscreenPepper(
                    false,
                    false,
                    false,
+                   wait_for_all_pipeline_stages_before_draw,
                    std::move(widget_request)),
       active_url_(active_url),
       plugin_(plugin),

@@ -188,6 +188,7 @@ class CONTENT_EXPORT RenderFrameImpl
       bool hidden,
       const ScreenInfo& screen_info,
       CompositorDependencies* compositor_deps,
+      bool wait_for_all_pipeline_stages_before_draw,
       blink::WebFrame* opener,
       const FrameReplicationState& replicated_state);
 

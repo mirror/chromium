@@ -69,4 +69,8 @@ bool RenderViewHostDelegate::HasPersistentVideo() const {
   return false;
 }
 
+bool RenderViewHostDelegate::ShouldWaitForAllPipelineStagesBeforeDraw() {
+  return false;
+}
+
 }  // namespace content

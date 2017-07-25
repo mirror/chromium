@@ -119,4 +119,8 @@ bool RenderFrameHostDelegate::IsBeingDestroyed() const {
   return false;
 }
 
+bool RenderFrameHostDelegate::ShouldWaitForAllPipelineStagesBeforeDraw() {
+  return false;
+}
+
 }  // namespace content

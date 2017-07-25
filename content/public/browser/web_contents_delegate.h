@@ -565,6 +565,13 @@ class CONTENT_EXPORT WebContentsDelegate {
                                                  const url::Origin& origin,
                                                  const GURL& resource_url);
 
+  // Whether the RenderWidgetCompositor for the WebContents should wait for all
+  // compositing pipeline stages (main thread, commit, tiles, activation) before
+  // triggering a BeginFrame deadline and producing a CompositorFrame. False by
+  // default.
+  virtual bool ShouldWaitForAllPipelineStagesBeforeDraw(
+      WebContents* web_contents);
+
   // Give WebContentsDelegates the opportunity to adjust the previews state.
   virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state) {
   }

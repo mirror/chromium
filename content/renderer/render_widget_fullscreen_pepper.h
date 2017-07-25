@@ -37,6 +37,7 @@ class RenderWidgetFullscreenPepper : public RenderWidget,
       PepperPluginInstanceImpl* plugin,
       const GURL& active_url,
       const ScreenInfo& screen_info,
+      bool wait_for_all_pipeline_stages_before_draw,
       mojom::WidgetRequest widget_request);
 
   // pepper::FullscreenContainer API.
@@ -63,6 +64,7 @@ class RenderWidgetFullscreenPepper : public RenderWidget,
                                PepperPluginInstanceImpl* plugin,
                                const GURL& active_url,
                                const ScreenInfo& screen_info,
+                               bool wait_for_all_pipeline_stages_before_draw,
                                mojom::WidgetRequest widget_request);
   ~RenderWidgetFullscreenPepper() override;
 

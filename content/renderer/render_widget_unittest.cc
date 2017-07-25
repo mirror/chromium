@@ -73,6 +73,7 @@ class InteractiveRenderWidget : public RenderWidget {
                      ScreenInfo(),
                      false,
                      false,
+                     false,
                      false),
         always_overscroll_(false) {
     Init(RenderWidget::ShowCallback(), mock_webwidget());
@@ -418,6 +419,7 @@ class PopupRenderWidget : public RenderWidget {
                      compositor_deps,
                      blink::kWebPopupTypePage,
                      ScreenInfo(),
+                     false,
                      false,
                      false,
                      false) {
