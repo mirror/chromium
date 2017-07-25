@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d514818a_c2f70e49",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-25T18:35:40Z",
+      "side": 1,
+      "message": "This early exit needs brackets, since the if conditional is multi-line.",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d49ea37_dd74a18a",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-25T18:35:40Z",
+      "side": 1,
+      "message": "It would be good to explain in a comment above that this class exists because plugin_observer is ENABLE_PLUGINS only, and this one should run on Android as well (where ENABLE_PLUGINS is false)",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23b6ea4_a25d1217",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-25T18:35:40Z",
+      "side": 1,
+      "message": "Add comment above // content::WebContentsObserver:",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce7e073_f334efba",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-25T18:35:40Z",
+      "side": 1,
+      "message": "\\n above this",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538297ce_57b190aa",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-25T18:35:40Z",
+      "side": 1,
+      "message": "Probably another \\n above this would be good as well. It would also be good to comment this as // Message handlers:",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
