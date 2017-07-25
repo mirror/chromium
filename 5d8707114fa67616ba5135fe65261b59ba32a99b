@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "3eca78c3_8ed5726d",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-25T03:32:49Z",
+      "side": 1,
+      "message": "This TODO seems already done? Or do you want to move even the Cancel/Ensure methods from this one? If so, then lets keep the TODO.",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ca777e9_c8cff375",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
         "patchSetId": 7
@@ -81,6 +98,23 @@
       "writtenOn": "2017-07-24T22:32:55Z",
       "side": 1,
       "message": "nit: empty line after this",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31686360_d7e10548",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-25T03:32:49Z",
+      "side": 1,
+      "message": "This one needs additional #if defined(OS_ANDROID) around it, since this looks like very android-specific.\n\nHowever, registration of kOfflinePrefetchBackoff pref may be pulled into platform-independent class like PrefetchBackgroundTaskHandlerImpl, (especially since it is used only there anyways), then no need to add OS_ANDROID conditional.",
       "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
