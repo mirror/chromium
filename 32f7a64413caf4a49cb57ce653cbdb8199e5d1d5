@@ -92,6 +92,30 @@
       "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff69483_8121d4dd",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-25T20:21:36Z",
+      "side": 1,
+      "message": "Ohh.. if the backend could keep track of this and just delay creation (in a sane way) that would be *awesome*. \n\nI\u0027ve written the CacheStorage patch which calls Close for every backend and waits for it to complete, it\u0027s pretty large and certainly adds some complexity. I think I\u0027d prefer the backend solution since that solves the problem for all consumers automatically.\n\nWIP CL here: https://chromium-review.googlesource.com/585599",
+      "parentUuid": "ac577442_9ba02901",
+      "range": {
+        "startLine": 1402,
+        "startChar": 4,
+        "endLine": 1402,
+        "endChar": 30
+      },
+      "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
