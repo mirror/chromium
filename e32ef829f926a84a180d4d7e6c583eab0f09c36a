@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01b2a4b8_8716b967",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-25T22:48:34Z",
+      "side": 1,
+      "message": "Should we also say this for RunLoop\u0027s new QuitCurrents?",
+      "revId": "e32ef829f926a84a180d4d7e6c583eab0f09c36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5b6980_6729f8a3",
+        "filename": "base/run_loop.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-25T22:48:34Z",
+      "side": 1,
+      "message": "RunLoop instance",
+      "revId": "e32ef829f926a84a180d4d7e6c583eab0f09c36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
