@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8452b4c_d539a142",
+        "filename": "third_party/WebKit/Source/platform/loader/testing/CryptoTestingPlatformSupport.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-25T20:25:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c19b0cb_4a39de8f",
+      "revId": "2c32c48c1554a1779528311754ff47ed1c6adfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bc1ef55_89ded118",
         "filename": "third_party/WebKit/Source/platform/testing/MockWebCrypto.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-23T12:43:03Z",
       "side": 1,
       "message": "On the other hand, I found MockWebCryptoDigestor hard to read.\nWould you either:\n- document the magics involved? (What is MemEq trying to do?, SetArgReferees?)\n- replace MockWebCryptoDigestor w/ a dumb C++ class?",
+      "revId": "2c32c48c1554a1779528311754ff47ed1c6adfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb852026_4cec2253",
+        "filename": "third_party/WebKit/Source/platform/testing/MockWebCrypto.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-25T20:25:55Z",
+      "side": 1,
+      "message": "\u003e document the magics involved? (What is MemEq trying to do?, SetArgReferees?)\n\nDone.",
+      "parentUuid": "4bc1ef55_89ded118",
       "revId": "2c32c48c1554a1779528311754ff47ed1c6adfb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "2c32c48c1554a1779528311754ff47ed1c6adfb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc67b2d_4e24431d",
+        "filename": "third_party/WebKit/Source/platform/testing/MockWebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-25T20:25:55Z",
+      "side": 1,
+      "message": "Basically I prefer general gmocks because of their high and precise test coverage, rather than creating dumb mocks (and then merging multiple similar dumb mocks into one). I just realized gmock is not so prefered due to its low readability though.\nAs kouhei@ is also supportive in this case, I\u0027ll keep this as gmock in this CL.",
+      "parentUuid": "4e9b42fc_44110f32",
+      "revId": "2c32c48c1554a1779528311754ff47ed1c6adfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
