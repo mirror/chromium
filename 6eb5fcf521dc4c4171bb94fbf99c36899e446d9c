@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6bead14_4b8dcb0c",
+        "filename": "third_party/WebKit/Source/core/layout/FlexibleBoxAlgorithm.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T21:12:53Z",
+      "side": 1,
+      "message": "Did this differently",
+      "parentUuid": "5badbf54_c7f1b90a",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0481a7b3_7ad35abf",
         "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T07:42:07Z",
       "side": 1,
       "message": "Or just MinMaxSize sizes{LayoutUnit(), LayoutUnit::Max()};",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc889ba_2fd4f920",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T21:12:53Z",
+      "side": 1,
+      "message": "Thanks, done. Not used to this new syntax yet!",
+      "parentUuid": "0481a7b3_7ad35abf",
       "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17c72007_c1b71fd3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T21:12:53Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s the same -- ShrinkToFit does min(max_size, max(min_size, size)). But the clamping to min/max does max(min_size, min(max_size, size)).\n\nHowever, I agree that I should add a function to MinMaxSize to apply the clamping, so I did that.",
+      "parentUuid": "fa207c97_e34e846f",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddb52488_7edfd82c",
         "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3828650f_5922d7ee",
+        "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T21:12:53Z",
+      "side": 1,
+      "message": "Whoops, forgot about the file extension when I renamed this file to Blink-style :/",
+      "parentUuid": "ddb52488_7edfd82c",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a01d965e_cf3acc23",
         "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-25T07:42:07Z",
       "side": 1,
       "message": "This would surely benefit from being inlined.",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fa86df_0213b173",
+        "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T21:12:53Z",
+      "side": 1,
+      "message": "Good point, done. (this was just moved from the other file in the old location)",
+      "parentUuid": "a01d965e_cf3acc23",
       "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
