@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d266eb7_d6cfa514",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T00:58:23Z",
+      "side": 0,
+      "message": "FWIW, this type annotation (and similar annotations of anonymous functions) is invalid, but unfortunately ignored silently by the compiler, filed crbug.com/748263 explaining the problem.\n\nFWIW, with these changes, we don\u0027t lose any type coverage, the compiler knows the type of |destinationInfo| becasue there is no call to bind() anymore.",
+      "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
