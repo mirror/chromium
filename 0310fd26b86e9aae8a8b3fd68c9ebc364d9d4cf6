@@ -34,6 +34,24 @@
       "revId": "0310fd26b86e9aae8a8b3fd68c9ebc364d9d4cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2438f4d5_4e05745c",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-25T21:08:23Z",
+      "side": 1,
+      "message": "This means I have to have a bitmap to make sure each feature is only measured once right?\n\nThanks",
+      "parentUuid": "7735fc40_d08fe062",
+      "revId": "0310fd26b86e9aae8a8b3fd68c9ebc364d9d4cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
