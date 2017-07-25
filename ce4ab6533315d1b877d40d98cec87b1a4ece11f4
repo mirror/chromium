@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "667b76f1_0793e7cb",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-25T14:35:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6015dba_53988247",
+      "revId": "ce4ab6533315d1b877d40d98cec87b1a4ece11f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2657729d_d40e4d9e",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "ce4ab6533315d1b877d40d98cec87b1a4ece11f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3020fc_c2f5790d",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-25T14:35:34Z",
+      "side": 1,
+      "message": "Sounds good, passing the flag down via CreateView/FrameParams again. That\u0027s an added param to RenderView/Frame/Widget constructors, is that what you had in mind?",
+      "parentUuid": "2657729d_d40e4d9e",
+      "revId": "ce4ab6533315d1b877d40d98cec87b1a4ece11f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
