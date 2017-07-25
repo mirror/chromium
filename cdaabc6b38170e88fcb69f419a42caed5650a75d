@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d57cdd26_697c7f59",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "Yeah I\u0027m not worried about cpu cycles - just feels like an odd fit, Makes me think more about whether the pixels/compositing will be what we want, and any possible ways it could break. But if there isn\u0027t an existing alternative, using this seems fine.",
+      "parentUuid": "6b0e3722_c10ca422",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb31b981_da98419a",
         "filename": "ui/views/controls/native/native_view_host.h",
         "patchSetId": 5
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "hmm, I figured it was OK because NativeViewHostWrapper is already VIEWS_EXPORT. The alternative of adding a pass-through SetMask to  the NativeViewHost API seems like just extra verbosity. Not sure why the members ought to move, is Mac going to want them as well?",
       "parentUuid": "fb31b981_da98419a",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f8621f_dcf588fc",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "Mac will want access to a corner_radius -- there\u0027s an easy way to turn that into an efficient layer mask.",
+      "parentUuid": "b3791bdc_d6df3005",
       "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +175,24 @@
       "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2ac800_ceaf5f2e",
+        "filename": "ui/views/controls/native/native_view_host_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "Ah - yeah I see InstallClip() won\u0027t work. (A call in ShowWidget() might be an alternative - I think that\u0027s called unconditionally via WebView::OnBoundsChanged - but what you have seems fine)",
+      "parentUuid": "fc12fce8_ddf893a9",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

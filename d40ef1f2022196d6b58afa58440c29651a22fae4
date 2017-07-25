@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "c24c2da6_b393fea1",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "does this need a SizeToContents() call now that views::FillLayout can cater for the new View::GetInsets?",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ad2c2e_a2e0ecd7",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "Move the TrayBubbleContentMask comment down here?",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5fe447e_fefbbc9e",
         "filename": "ui/views/controls/native/native_view_host.h",
         "patchSetId": 9
@@ -65,6 +99,57 @@
         "endLine": 265,
         "endChar": 21
       },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1e03c3_4b4ebf69",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "maybe just layer_owner.h",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4781ae64_17331c3c",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82434bc_e9ad0787",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T00:25:11Z",
+      "side": 1,
+      "message": "nit: LayerDelegate:",
       "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
