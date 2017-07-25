@@ -16,6 +16,23 @@
       "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578be00c_e22d5a50",
+        "filename": "third_party/WebKit/Source/core/timing/WorkerPerformance.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-25T10:15:27Z",
+      "side": 1,
+      "message": "As I wrote somewhere else please note that we might make a follow-up change to slightly adjust when we record the time origin for workers.  Otherwise this change itself lgtm",
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
