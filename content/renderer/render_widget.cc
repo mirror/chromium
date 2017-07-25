@@ -342,6 +342,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
                            bool swapped_out,
                            bool hidden,
                            bool never_visible,
+                           bool wait_for_all_pipeline_stages_before_draw,
                            mojom::WidgetRequest widget_request)
     : routing_id_(widget_routing_id),
       compositor_deps_(compositor_deps),
@@ -353,6 +354,8 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       did_show_(false),
       is_hidden_(hidden),
       compositor_never_visible_(never_visible),
+      wait_for_all_pipeline_stages_before_draw_(
+          wait_for_all_pipeline_stages_before_draw),
       is_fullscreen_granted_(false),
       display_mode_(blink::kWebDisplayModeUndefined),
       ime_event_guard_(nullptr),
@@ -433,7 +436,8 @@ RenderWidget* RenderWidget::CreateForPopup(
     RenderViewImpl* opener,
     CompositorDependencies* compositor_deps,
     blink::WebPopupType popup_type,
-    const ScreenInfo& screen_info) {
+    const ScreenInfo& screen_info,
+    bool wait_for_all_pipeline_stages_before_draw) {
   mojom::WidgetPtr widget_channel;
   mojom::WidgetRequest widget_channel_request =
       mojo::MakeRequest(&widget_channel);
@@ -446,9 +450,10 @@ RenderWidget* RenderWidget::CreateForPopup(
     return nullptr;
   }
 
-  scoped_refptr<RenderWidget> widget(
-      new RenderWidget(routing_id, compositor_deps, popup_type, screen_info,
-                       false, false, false, std::move(widget_channel_request)));
+  scoped_refptr<RenderWidget> widget(new RenderWidget(
+      routing_id, compositor_deps, popup_type, screen_info, false, false, false,
+      wait_for_all_pipeline_stages_before_draw,
+      std::move(widget_channel_request)));
   ShowCallback opener_callback =
       base::Bind(&RenderViewImpl::ShowCreatedPopupWidget, opener->GetWeakPtr());
   widget->Init(opener_callback, RenderWidget::CreateWebWidget(widget.get()));
@@ -462,6 +467,7 @@ RenderWidget* RenderWidget::CreateForFrame(
     bool hidden,
     const ScreenInfo& screen_info,
     CompositorDependencies* compositor_deps,
+    bool wait_for_all_pipeline_stages_before_draw,
     blink::WebLocalFrame* frame) {
   CHECK_NE(widget_routing_id, MSG_ROUTING_NONE);
   // TODO(avi): Before RenderViewImpl has-a RenderWidget, the browser passes the
@@ -477,10 +483,12 @@ RenderWidget* RenderWidget::CreateForFrame(
       g_create_render_widget
           ? g_create_render_widget(widget_routing_id, compositor_deps,
                                    blink::kWebPopupTypeNone, screen_info, false,
-                                   hidden, false)
+                                   hidden, false,
+                                   wait_for_all_pipeline_stages_before_draw)
           : new RenderWidget(widget_routing_id, compositor_deps,
                              blink::kWebPopupTypeNone, screen_info, false,
-                             hidden, false));
+                             hidden, false,
+                             wait_for_all_pipeline_stages_before_draw));
   widget->for_oopif_ = true;
   // Init increments the reference count on |widget|, keeping it alive after
   // this function returns.
@@ -1331,7 +1339,8 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
   compositor_->SetIsForOopif(for_oopif_);
   auto layer_tree_host = RenderWidgetCompositor::CreateLayerTreeHost(
       compositor_.get(), compositor_.get(), animation_host.get(),
-      compositor_deps_, device_scale_factor_, screen_info_);
+      compositor_deps_, device_scale_factor_, screen_info_,
+      wait_for_all_pipeline_stages_before_draw());
   compositor_->Initialize(std::move(layer_tree_host),
                           std::move(animation_host));
 
