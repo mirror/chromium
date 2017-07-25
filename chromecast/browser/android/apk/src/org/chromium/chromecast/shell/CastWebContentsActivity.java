@@ -49,7 +49,9 @@ public class CastWebContentsActivity extends Activity {
     private Handler mHandler;
     private String mInstanceId;
     private BroadcastReceiver mWindowDestroyedBroadcastReceiver;
+    private BroadcastReceiver mScreenOffBroadcastReceiver;
     private IntentFilter mWindowDestroyedIntentFilter;
+    private IntentFilter mScreenOffIntentFilter;
     private FrameLayout mCastWebContentsLayout;
     private AudioManager mAudioManager;
     private ContentViewRenderView mContentViewRenderView;
@@ -62,6 +64,8 @@ public class CastWebContentsActivity extends Activity {
 
     public static final String ACTION_STOP_ACTIVITY =
             "com.google.android.apps.castshell.intent.action.STOP_ACTIVITY";
+    public static final String ACTION_SCREEN_OFF =
+            "com.google.android.apps.castshell.intent.action.ACTION_SCREEN_OFF";
 
     /*
      * Intended to be called from "onStop" to determine if this is a "legitimate" stop or not.
@@ -145,6 +149,22 @@ public class CastWebContentsActivity extends Activity {
         mWindowDestroyedIntentFilter.addAction(ACTION_STOP_ACTIVITY);
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mWindowDestroyedBroadcastReceiver, mWindowDestroyedIntentFilter);
+
+        if (mScreenOffBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mScreenOffBroadcastReceiver);
+        }
+
+        mScreenOffBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                detachWebContentsIfAny();
+                maybeFinishLater();
+            }
+        };
+        mScreenOffIntentFilter = new IntentFilter();
+        mScreenOffIntentFilter.addAction(ACTION_SCREEN_OFF);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mScreenOffBroadcastReceiver, mScreenOffIntentFilter);
 
         WebContents webContents = (WebContents) intent.getParcelableExtra(
                 CastWebContentsComponent.ACTION_EXTRA_WEB_CONTENTS);
