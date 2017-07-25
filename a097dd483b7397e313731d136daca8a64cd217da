@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "043ceb06_37a1a5d1",
+        "filename": "extensions/browser/api/messaging/message_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-25T18:59:39Z",
+      "side": 1,
+      "message": "3 spaces?  Why?",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "769fa777_43fe9b4f",
         "filename": "extensions/browser/extension_message_filter.cc",
         "patchSetId": 2
@@ -70,6 +87,23 @@
       "writtenOn": "2017-07-25T17:36:48Z",
       "side": 1,
       "message": "nit:\nif (!browser_context_)\n  return;\n\nOpenChannelToNativeApp()\n\n(to be consistent with other methods here)",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f5d425_cfd4b3fa",
+        "filename": "extensions/browser/extension_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-25T18:59:39Z",
+      "side": 1,
+      "message": "no need for extensions:: prefix",
       "revId": "a097dd483b7397e313731d136daca8a64cd217da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
