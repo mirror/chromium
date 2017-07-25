@@ -52,6 +52,23 @@
       "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb80920_7a88e6b9",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-25T17:14:19Z",
+      "side": 1,
+      "message": "Is there a test which exercises a non-pixel-moving background filter, to ensure that partial swap still invalidates only the damage rect? If not, could you add one?",
+      "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
