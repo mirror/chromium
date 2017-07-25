@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "23281ce1_ab2f2155",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T19:15:23Z",
+      "side": 1,
+      "message": "What I mean is:\n\n  auto bytes_read \u003d DecodeVarInt(source-\u003ebegin(), source-\u003eend(), value);\n  if (bytes_read \u003d\u003d 0)  // Encountered error, so nothing got read.\n    return false;\n  source-\u003eSkip(bytes_read);\n  return true;\n\n0 bytes IS an impossible value, since even the value 0 still consumes one byte. Since a clear impossible value is available, using Optional is an overkill. \n\nAlso, ParseVarUInt() and ParseVarInt() still look dissimilar: One uses remove_prefix(), whereas the other uses Skip() (and has comment, too).",
+      "parentUuid": "aebd399e_08f57388",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54244a8f_fdcd4ce6",
         "filename": "chrome/installer/zucchini/patch_reader.h",
         "patchSetId": 17

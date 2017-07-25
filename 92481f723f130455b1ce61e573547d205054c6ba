@@ -139,6 +139,98 @@
     },
     {
       "key": {
+        "uuid": "da78548f_fa3c0032",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T19:15:23Z",
+      "side": 1,
+      "message": "Probably clearer to use point form for these 3 points.",
+      "range": {
+        "startLine": 59,
+        "startChar": 65,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554706bf_04274b40",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T19:15:23Z",
+      "side": 1,
+      "message": "This mixture of comment and function look very weird... And as grt@ observed, does not quite work for ExtraDataSource. So I\u0027d say, just keep high-level comments, and that these classes share \"core features\" that can have different interfaces, and don\u0027t appeal to StreamableSource weirdness.  To get you started:\n\n// Each of *Source classes below has an associated \"main type\", and performs the following:\n// - Consumes portions of a BufferSource (assumed to remain valid for the lifetime of the object).\n// - Decodes consumed data, which represent a list of items with \"main type\".\n// - Dispenses \"main type\" elements (hence \"Source\" in the name).\n//\n// Common \"core functions\" implemented by *Source classes are:\n// - bool Initialize(BufferSource* source): Consumes data from BufferSource and initialize internal states. Returns true if successful, and false otherwise.\n// - base::Optional\u003cSOME_TYPE\u003e GetNext(OPT_PARAMS): Decodes consume data and returns the next item as base::Optional (returns base::nullopt on failure).\n// - bool Done(): Returns true if no more items remain; otherwise false.\n//\n// Usage of *Source instances don\u0027t mix, and GetNext() have dissimilar interfaces. Therefore we do not use inheritance to relate *Source  classes, and simply implement \"core functions\" with matching names.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f90e156_2afdbe6b",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T19:15:23Z",
+      "side": 1,
+      "message": "Equivalences",
+      "range": {
+        "startLine": 81,
+        "startChar": 14,
+        "endLine": 81,
+        "endChar": 26
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae62aa9_f68cd23b",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T19:15:23Z",
+      "side": 1,
+      "message": "// Core functions:",
+      "range": {
+        "startLine": 88,
+        "startChar": 5,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3baba163_cc21a29f",
         "filename": "chrome/installer/zucchini/patch_reader.h",
         "patchSetId": 18
