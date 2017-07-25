@@ -33,6 +33,24 @@
       "revId": "d35c8a65b8ed82a7bb70818667d97fe8cba46402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3deb9fc0_1d32d9e3",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-25T21:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6304057c_b35fa9e9",
+      "revId": "d35c8a65b8ed82a7bb70818667d97fe8cba46402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
