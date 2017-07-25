@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2e27102_17ec4668",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-07-25T22:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0094178a_1a61a3ae",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "456e7248_34e991fc",
         "filename": "chrome/browser/ui/tabs/tab_utils.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bfb2bb78_3ec7373e",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-07-25T22:16:11Z",
+      "side": 1,
+      "message": "Done. Though no const since ++i",
+      "parentUuid": "456e7248_34e991fc",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ade83f_3afaae36",
         "filename": "chrome/browser/ui/tabs/tab_utils.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-25T17:38:08Z",
       "side": 1,
       "message": "Why doing this?",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5227ecda_29f49521",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-07-25T22:16:11Z",
+      "side": 1,
+      "message": "Let\u0027s say I didn\u0027t have this. Then I\u0027m on youtube.com and I click \"Mute site\" and then click \"Unmite site\". Now youtube.com is explicitly allowed instead of just back to default. This prevents that. Also, if I just set it to default on line 394, then if the default was changed to block, this would break. So I\u0027m left with this logic. Not sure if there\u0027s a cleaner way",
+      "parentUuid": "b8ade83f_3afaae36",
       "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9f1ee6bd_d5f46965",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-07-25T22:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6f79e57_c0fbfd43",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "242b2d9a_3dde52a1",
         "filename": "chrome/browser/ui/tabs/tab_utils.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ce421c_3d335db8",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-07-25T22:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "242b2d9a_3dde52a1",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
