@@ -5,6 +5,7 @@
 #include "chrome/renderer/page_load_metrics/metrics_render_frame_observer.h"
 
 #include <string>
+#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
@@ -39,10 +40,12 @@ class MojoPageTimingSender : public PageTimingSender {
         &page_load_metrics_);
   }
   ~MojoPageTimingSender() override {}
-  void SendTiming(const mojom::PageLoadTimingPtr& timing,
+  void SendTiming(mojom::PageLoadFeaturesPtr new_features,
+                  const mojom::PageLoadTimingPtr& timing,
                   const mojom::PageLoadMetadataPtr& metadata) override {
     DCHECK(page_load_metrics_);
-    page_load_metrics_->UpdateTiming(timing->Clone(), metadata->Clone());
+    page_load_metrics_->UpdateTiming(timing->Clone(), metadata->Clone(),
+                                     std::move(new_features));
   }
 
  private:
@@ -69,6 +72,12 @@ void MetricsRenderFrameObserver::DidObserveLoadingBehavior(
     page_timing_metrics_sender_->DidObserveLoadingBehavior(behavior);
 }
 
+void MetricsRenderFrameObserver::DidObserveNewFeatureUsage(
+    blink::mojom::WebFeature feature) {
+  if (page_timing_metrics_sender_)
+    page_timing_metrics_sender_->DidObserveNewFeatureUsage(feature);
+}
+
 void MetricsRenderFrameObserver::FrameDetached() {
   page_timing_metrics_sender_.reset();
 }
@@ -92,8 +101,9 @@ void MetricsRenderFrameObserver::DidCommitProvisionalLoad(
   // non-null, we will send metrics for the current page at some later time, as
   // those metrics become available.
   if (ShouldSendMetrics()) {
+    mojom::PageLoadTimingPtr timing = GetTiming();
     page_timing_metrics_sender_ = base::MakeUnique<PageTimingMetricsSender>(
-        CreatePageTimingSender(), CreateTimer(), GetTiming());
+        CreatePageTimingSender(), CreateTimer(), std::move(timing));
   }
 }
 
