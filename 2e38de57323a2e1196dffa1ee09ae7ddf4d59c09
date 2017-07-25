@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88877fe0_c6578602",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4478,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T01:36:26Z",
+      "side": 1,
+      "message": "You can use the scoped feature list (see line 3645) to enable/disable the experiment for a test.",
+      "revId": "2e38de57323a2e1196dffa1ee09ae7ddf4d59c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
