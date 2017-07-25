@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f7578dd_53cd878f",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "nit: add one line comment that explains what this is used for",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac90577d_5a28ae95",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "nit: this DCHECK is overkill and surface-\u003e below will cause a easy to understand crash in that case anyhow",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0d324c_fd2b1f70",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56d5874_6585f677",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "nit: use |are_keyboard_key_acks_needed_| directly to be consistent with code below",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421a7d60_24dc9f32",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "See RecordSentKey comments below. How about simply \"pending_key_acks_.insert({serial, *event});\" here and at line 225 and then call ScheduleProcessExpiredPendingKeyAcks below the switch statement if needed. This way we can remove the RecordSentKey function. If you want to keep the RecordSentKey function then it should be renamed to AddPendingKeyAck or something like that as \"Sent\" is not a good term to use here as we\u0027re not sending anything here, just passing it to the delegate",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54932606_f9fc700b",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "Use \"const ui::KeyEvent\u0026 event\" if you keep this function.",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb67f081_f54099e2",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "This doesn\u0027t match what you do in ProcessExpiredPendingKeyAcks. Here you expect event time to be the same as current time. Please make the logic consistent. Maybe we shouldn\u0027t rely on event times at all in case the driver is buggy?",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bad165_4ebfb5ac",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "style-nit: reverse the if-statement above and move the break statement up there to avoid an else clause with just a break statement",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ddb058_7feb42ce",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "style-nit: use two early outs instead of this if-statement. ie.\n\nif (pending_key_acks_.empty())\n  return;\n\nif (process_expired_pending_key_acks_pending_)\n  return;",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79762c3d_1a044ae7",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "I thin this will be wrong as weak ptr is still held as a result of this callback. Using a separate boolean for pending state will solve it or at least make the code easier to understand if I\u0027m reading this wrong and it actually works already.",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe47b49_d58874d1",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "nit: add a \"const base::TimeDelta expiration_delay_for_pending_key_acks_\" member that is initialized in ctor instead of FromMilliseconds in multiple places.",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c009c586_7a8538f4",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "AddPendingKeyAcks if you keep this function. s/serail/serial/. also update the comment above to be correct and not use term \"sent\".",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08054f25_6d3690d3",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "nit: add blank line between these functions and short comments",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b732d8e1_0a5c9cd7",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "nit: short comment above this for consistency",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3933d6_93c59c78",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "Should we use a flat_map as this is expected to always be relatively small?",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4797a25_4e11e1af",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T20:17:26Z",
+      "side": 1,
+      "message": "Sorry if I wasn\u0027t clear. Let\u0027s not use the weak ptr factory as \"pending\" state. Please make this explicit by changing to:\n\n// Indicate that a ProcessExpiredPendingKeyAcks call is pending.\nbool process_expired_pending_key_acks_pending_ \u003d false;\n\nbase::WeakPtrFactory\u003cKeyboard\u003e weak_ptr_factory_;",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
