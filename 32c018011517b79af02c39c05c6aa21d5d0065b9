@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccb7c4c8_e661a8c6",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "can you use MakeUnique instead? Chromium code tries not to write \"new\".",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0523a9_c8a3e10c",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "style guide: else() needs {} braces if the if()  has them\nstyle guide: use ++it not it++. this might require changing the code a little.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda73198_83017a0d",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "Might say something like\n\n// Calls JobQueue::Push() and returns the return value.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110a37bc_6d54a39f",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "Feel like it\u0027d be easier to read if OnJobTimeoutTimer() is called MaybeTimeoutJobs(); or something.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf38f06_95418f6f",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "can all these functions be private instead?",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59adf1f2_e9176169",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "\"Gets\" -\u003e \"Returns\" is a bit more conventional.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d158fc5f_c6d32434",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "i think this value is reversed with line 116? I thought we wanted the timer to go every 5 minutes and timeout jobs older than 30 min.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf6c62f_1bed9955",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "Doesn\u0027t really run in job registration... more like it\u0027s running whenever there is a non-empty job queue.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbe8558_6e651e26",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "Consider adding functions to ServiceWorkerJobTest that can do this, so you can remove the FRIEND_TEST_ALL_PREFIXES macro and just friend ServiceWorkerJobTest",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7dd362_52e6750b",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:53:14Z",
+      "side": 1,
+      "message": "preferred: can the test class just set start_time_ directly?\n\notherwise call this set_start_time_for_test",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
