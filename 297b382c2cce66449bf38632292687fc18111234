@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0822364_eae787bb",
+        "filename": "content/shell/browser/layout_test/layout_test_permission_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-25T11:30:26Z",
+      "side": 1,
+      "message": "Origins! \\o/",
+      "revId": "297b382c2cce66449bf38632292687fc18111234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
