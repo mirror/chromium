@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a633cd7f_8ce90eb5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-25T21:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a30b089c_0fd1e0bb",
+      "range": {
+        "startLine": 228,
+        "startChar": 28,
+        "endLine": 228,
+        "endChar": 29
+      },
+      "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f725e52_9e41e0d5",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T21:37:29Z",
       "side": 1,
       "message": "- Do we block back/forward for frame busting?\n- How about window.open()? It seems like maybe that one should plumb in the URL as well.\n\nIn general, it seems like there are some rather (random) looking bits of code that call CanNavigate (such as document.close), and I haven\u0027t managed to convince myself that it makes sense to invoke the IPC in those cases.",
+      "range": {
+        "startLine": 231,
+        "startChar": 63,
+        "endLine": 231,
+        "endChar": 69
+      },
+      "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359204b5_49b1aebc",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-25T21:49:06Z",
+      "side": 1,
+      "message": "We do block b/f navs for framebusting (History::go calls LocalFrame::CanNavigate), though it\u0027s a bit weird, because there we only know the offset in the b/f list at the time of the security check, and only the browser process knows what url corresponds to that index in the b/f list. It\u0027s also weird because history.back() and top.history.back() are identical in practice, assuming both are permitted.\n\nIf I\u0027m reading LocalDOMWindow::open() correctly. window.open(\"foo.com\", \"_top\") is blocked when called in a cross-origin iframe, whether or not framebusting defenses are enabled. With framebusting defenses enabled, CanNavigate() will return false, but with framebusting defenses enabled, the later IsInsecureScriptAccess() will block it. I\"m disinclined to plumb the destination_url (and therefore show the framebust in the UI once we\u0027ve wired everything up) when it\u0027s already blocked by other means. *BUT* it gets weirder, because for any given target besides \"_top\" or \"_parent\", we\u0027ll IsInsecureScriptAccess() and eventually route through FindFrameForNavigation() in CreateWindow.cpp.\n\nSpeaking of FindFrameForNavigation(), I think we do want it to provide a url and show UI, partly for the window.open() case described above, and partly for the form submission case that goes through it. There\u0027s also a few other FindFrameForNavigation() cases (links that specify a target attr, frame navigations that come from a plugin are the main ones I see) where framebusting definitely applies.\n\nwindow.close() is just weird. I don\u0027t think it makes sense here.",
+      "parentUuid": "2f725e52_9e41e0d5",
       "range": {
         "startLine": 231,
         "startChar": 63,
@@ -68,6 +116,30 @@
       "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c1fb4f_26d9ca0a",
+        "filename": "third_party/WebKit/Source/core/frame/Location.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-25T21:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72eeef51_f3ad2f20",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 11
+      },
+      "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
