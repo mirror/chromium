@@ -16,6 +16,24 @@
       "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa5d91b_9f77d229",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-25T15:48:11Z",
+      "side": 1,
+      "message": "To make damage \u003d full_damage will work and much easier.\nIt will be the simplest to set to full_damage \"if (aggregate_only_damaged_ \u0026\u0026 bg_filters.HasFilterThatMovesPixels()) damage_rect \u003d full_damage;\".\n\nHowever I found out that we only need to mark the blurring-layer (or pixel-moving-bg-filter layer) as damaged.\n\nThe line has similar code below (l. 738 now) is to handle foreground filter in surface quads. We may not in the code path: 1) needs a surface quads, 2) it is foreground pixel-moving filters.\n\nI could add some limitation to the new code only do this when aggregate_only_damaged_ \u003d\u003d true (partial-swap);\n\njbauman@, WDYT?",
+      "parentUuid": "1f1857af_bcea698f",
+      "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
