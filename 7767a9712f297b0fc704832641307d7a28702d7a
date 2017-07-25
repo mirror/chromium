@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c182df04_361ddbcd",
+        "filename": "chrome/browser/ui/android/infobars/translate_compact_infobar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-25T09:42:03Z",
+      "side": 1,
+      "message": "Done.  thx.",
+      "parentUuid": "98af229a_3615fc3e",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "7767a9712f297b0fc704832641307d7a28702d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e216b3e9_9990af2e",
         "filename": "chrome/browser/ui/android/infobars/translate_compact_infobar.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7767a9712f297b0fc704832641307d7a28702d7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063d76e8_8d570756",
+        "filename": "chrome/browser/ui/android/infobars/translate_compact_infobar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-25T09:42:03Z",
+      "side": 1,
+      "message": "This value is the cap and will not be reset to 0.\nInstead, kPrefTranslateAcceptedCount and kPrefTranslateDeniedCount will be reset by ResetTranslationAcceptedCount(), ResetTranslationDeniedCount() when their \"consecutiveness\" is broken.",
+      "parentUuid": "e216b3e9_9990af2e",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "7767a9712f297b0fc704832641307d7a28702d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
