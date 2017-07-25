@@ -262,7 +262,7 @@ void CoordinationUnitImpl::UnregisterCoordinationPolicyCallback() {
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
-    CoordinationUnitType type) {
+    CoordinationUnitType type) const {
   std::set<CoordinationUnitImpl*> coordination_units;
 
   for (auto* child : children()) {
@@ -281,7 +281,7 @@ CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
-    CoordinationUnitType type) {
+    CoordinationUnitType type) const {
   std::set<CoordinationUnitImpl*> coordination_units;
 
   for (auto* parent : parents()) {
@@ -300,7 +300,7 @@ CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
-    CoordinationUnitType type) {
+    CoordinationUnitType type) const {
   NOTREACHED();
   return std::set<CoordinationUnitImpl*>();
 }

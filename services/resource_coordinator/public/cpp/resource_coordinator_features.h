@@ -20,12 +20,21 @@ extern const SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT base::Feature
 extern const SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT base::Feature
     kGRCRenderProcessCPUProfiling;
 
+extern const SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT char*
+    kGRCRenderProcessCPUProfilingIntervalMs;
+
 }  // namespace features
 
 namespace resource_coordinator {
 
 bool SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
 IsResourceCoordinatorEnabled();
+
+int64_t SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
+GetGRCRenderProcessCPUProfilingDurationMs();
+
+int64_t SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
+GetGRCRenderProcessCPUProfilingIntervalMs();
 
 }  // namespace resource_coordinator
 
