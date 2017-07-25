@@ -175,15 +175,6 @@ IPC_MESSAGE_ROUTED0(ChromeViewMsg_SetAsInterstitial)
 IPC_MESSAGE_ROUTED1(ChromeViewMsg_NetErrorInfo,
                     int /* DNS probe status */)
 
-// Provides the information needed by the renderer process to contact a
-// navigation correction service.  Handled by the NetErrorHelper.
-IPC_MESSAGE_ROUTED5(ChromeViewMsg_SetNavigationCorrectionInfo,
-                    GURL /* Navigation correction service base URL */,
-                    std::string /* language */,
-                    std::string /* origin_country */,
-                    std::string /* API key to use */,
-                    GURL /* Google Search URL to use */)
-
 #if defined(OS_ANDROID)
 // Message sent from the renderer to the browser to schedule to download the
 // page at a later time.
