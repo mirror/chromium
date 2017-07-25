@@ -16,6 +16,24 @@
       "revId": "3145d9ddc7f2c0fafff9784d63f349018441823f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4871fc_eec7f811",
+        "filename": "ash/laser/laser_pointer_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-25T04:07:49Z",
+      "side": 1,
+      "message": "Not quite, more of a bug fix. previous_point used to be initialized from laser_points.GetOldest(), but under some circumstances laser_points could be empty (when the trail has almost completely faded out), and this would cause an exception. In order to avoid code duplication I have moved all point handling inside the loop, but the first iteration does not have \"previous\" values yet, hence the condition.",
+      "parentUuid": "3a68659e_9ee66108",
+      "revId": "3145d9ddc7f2c0fafff9784d63f349018441823f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
