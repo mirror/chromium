@@ -51,6 +51,7 @@
 #include "net/test/url_request/url_request_failed_job.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "third_party/WebKit/public/platform/web_feature.mojom.h"
 
 namespace {
 
@@ -256,6 +257,10 @@ class PageLoadMetricsWaiter
 };
 
 using TimingField = PageLoadMetricsWaiter::TimingField;
+
+const char kFeaturesHistogramName[] =
+    "Blink.UseCounter.Features_TestBrowserProcessLogging";
+using WebFeature = blink::mojom::WebFeature;
 
 }  // namespace
 
@@ -1076,6 +1081,73 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest,
   NavigateToUntrackedUrl();
 
   histogram_tester_.ExpectUniqueSample(internal::kHistogramTotalBytes, 0, 1);
+}
+
+// Test UseCounter Features observed in the main frame are recorded, exactly
+// once per feature.
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest,
+                       UseCounterFeaturesInMainFrame) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  auto waiter = CreatePageLoadMetricsWaiter();
+  waiter->AddPageExpectation(TimingField::LOAD_EVENT);
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL("/use_counter_features.html"));
+  waiter->Wait();
+  NavigateToUntrackedUrl();
+
+  histogram_tester_.ExpectTotalCount(kFeaturesHistogramName, 2);
+  histogram_tester_.ExpectBucketCount(
+      kFeaturesHistogramName, static_cast<int32_t>(WebFeature::kTextWholeText),
+      1);
+  histogram_tester_.ExpectBucketCount(
+      kFeaturesHistogramName,
+      static_cast<int32_t>(WebFeature::kV8Element_Animate_Method), 1);
+}
+
+// Test UseCounter Features observed in a child frame are recorded, exactly
+// once per feature.
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, UseCounterFeaturesInIframe) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  auto waiter = CreatePageLoadMetricsWaiter();
+  waiter->AddPageExpectation(TimingField::LOAD_EVENT);
+  ui_test_utils::NavigateToURL(
+      browser(),
+      embedded_test_server()->GetURL("/use_counter_features_in_iframe.html"));
+  waiter->Wait();
+  NavigateToUntrackedUrl();
+
+  histogram_tester_.ExpectTotalCount(kFeaturesHistogramName, 2);
+  histogram_tester_.ExpectBucketCount(
+      kFeaturesHistogramName, static_cast<int32_t>(WebFeature::kTextWholeText),
+      1);
+  histogram_tester_.ExpectBucketCount(
+      kFeaturesHistogramName,
+      static_cast<int32_t>(WebFeature::kV8Element_Animate_Method), 1);
+}
+
+// Test UseCounter Features observed in multiple child frames are recorded,
+// exactly once per feature.
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest,
+                       UseCounterFeaturesInIframes) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  auto waiter = CreatePageLoadMetricsWaiter();
+  waiter->AddPageExpectation(TimingField::LOAD_EVENT);
+  ui_test_utils::NavigateToURL(
+      browser(),
+      embedded_test_server()->GetURL("/use_counter_features_in_iframes.html"));
+  waiter->Wait();
+  NavigateToUntrackedUrl();
+
+  histogram_tester_.ExpectTotalCount(kFeaturesHistogramName, 2);
+  histogram_tester_.ExpectBucketCount(
+      kFeaturesHistogramName, static_cast<int32_t>(WebFeature::kTextWholeText),
+      1);
+  histogram_tester_.ExpectBucketCount(
+      kFeaturesHistogramName,
+      static_cast<int32_t>(WebFeature::kV8Element_Animate_Method), 1);
 }
 
 class SessionRestorePageLoadMetricsBrowserTest
