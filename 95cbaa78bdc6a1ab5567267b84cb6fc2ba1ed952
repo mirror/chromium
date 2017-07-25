@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb12b963_cc6d9170",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/sensor-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-25T23:34:36Z",
+      "side": 1,
+      "message": "This is not the same as the previous code which deals with failure with \"reject(error)\", right?\nDoes it matter?",
+      "revId": "95cbaa78bdc6a1ab5567267b84cb6fc2ba1ed952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
