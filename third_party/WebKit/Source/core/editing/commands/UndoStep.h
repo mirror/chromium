@@ -31,7 +31,7 @@
 #ifndef UndoStep_h
 #define UndoStep_h
 
-#include "core/editing/VisibleSelection.h"
+#include "core/editing/commands/SelectionInUndoStep.h"
 #include "core/events/InputEvent.h"
 #include "platform/heap/Handle.h"
 
@@ -42,8 +42,8 @@ class SimpleEditCommand;
 class UndoStep : public GarbageCollectedFinalized<UndoStep> {
  public:
   static UndoStep* Create(Document*,
-                          const VisibleSelection&,
-                          const VisibleSelection&,
+                          const SelectionInUndoStep&,
+                          const SelectionInUndoStep&,
                           InputEvent::InputType);
 
   void Unapply();
@@ -52,12 +52,14 @@ class UndoStep : public GarbageCollectedFinalized<UndoStep> {
   void Append(SimpleEditCommand*);
   void Append(UndoStep*);
 
-  const VisibleSelection& StartingSelection() const {
+  const SelectionInUndoStep& StartingSelection() const {
     return starting_selection_;
   }
-  const VisibleSelection& EndingSelection() const { return ending_selection_; }
-  void SetStartingSelection(const VisibleSelection&);
-  void SetEndingSelection(const VisibleSelection&);
+  const SelectionInUndoStep& EndingSelection() const {
+    return ending_selection_;
+  }
+  void SetStartingSelection(const SelectionInUndoStep&);
+  void SetEndingSelection(const SelectionInUndoStep&);
   Element* StartingRootEditableElement() const {
     return starting_root_editable_element_.Get();
   }
@@ -71,13 +73,13 @@ class UndoStep : public GarbageCollectedFinalized<UndoStep> {
 
  private:
   UndoStep(Document*,
-           const VisibleSelection& starting_selection,
-           const VisibleSelection& ending_selection,
+           const SelectionInUndoStep& starting_selection,
+           const SelectionInUndoStep& ending_selection,
            InputEvent::InputType);
 
   Member<Document> document_;
-  VisibleSelection starting_selection_;
-  VisibleSelection ending_selection_;
+  SelectionInUndoStep starting_selection_;
+  SelectionInUndoStep ending_selection_;
   HeapVector<Member<SimpleEditCommand>> commands_;
   Member<Element> starting_root_editable_element_;
   Member<Element> ending_root_editable_element_;

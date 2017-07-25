@@ -173,8 +173,8 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
   const HTMLQualifiedName& list_tag = (type_ == kOrderedList) ? olTag : ulTag;
   if (EndingSelection().IsRange()) {
     bool force_list_creation = false;
-    VisibleSelection selection =
-        SelectionForParagraphIteration(EndingSelection());
+    VisibleSelection selection = SelectionForParagraphIteration(
+        CreateVisibleSelection(EndingSelection()));
     DCHECK(selection.IsRange());
 
     VisiblePosition visible_start_of_selection = selection.VisibleStart();
@@ -187,8 +187,8 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
         StartOfParagraph(visible_end_of_selection, kCanSkipOverEditingBoundary)
             .DeepEquivalent();
 
-    Range* current_selection =
-        CreateRange(FirstEphemeralRangeOf(EndingSelection()));
+    Range* current_selection = CreateRange(
+        FirstEphemeralRangeOf(CreateVisibleSelection(EndingSelection())));
     ContainerNode* scope_for_start_of_selection = nullptr;
     ContainerNode* scope_for_end_of_selection = nullptr;
     // FIXME: This is an inefficient way to keep selection alive because
@@ -304,7 +304,8 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
     return;
   }
 
-  Range* const range = CreateRange(FirstEphemeralRangeOf(EndingSelection()));
+  Range* const range = CreateRange(
+      FirstEphemeralRangeOf(CreateVisibleSelection(EndingSelection())));
   DCHECK(range);
   DoApplyForSingleParagraph(false, list_tag, *range, editing_state);
 }
