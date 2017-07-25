@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "68d8b2ef_8a650b20",
+        "filename": "cc/input/scroller_size_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-25T22:57:17Z",
+      "side": 1,
+      "message": "The stats regarding scroller size doesn\u0027t include any root scroller. Neither on page load nor on scroll.",
+      "parentUuid": "c8185c4a_a0098723",
+      "revId": "fe052e5c12f17f140b0ef1a89de34d265c79d8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c24e07_762ec750",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
