@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd218848_77bdbe1d",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T17:15:05Z",
+      "side": 0,
+      "message": "The CL description has no mention of these APIs.\nIs this removal intentional? If yes, can you please describe it in the CL. Thanks.",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 46
+      },
+      "revId": "b87972c4b825cd655ede08778171b75a956ac515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
