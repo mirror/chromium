@@ -22,6 +22,30 @@
       "revId": "f394f8dce32de9d70136a663f86e7ec52a4bde35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf6715b_2e939c51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabStateBrowserControlsVisibilityDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-25T22:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d27c4ad_2f3a6ce6",
+      "range": {
+        "startLine": 159,
+        "startChar": 28,
+        "endLine": 159,
+        "endChar": 32
+      },
+      "revId": "f394f8dce32de9d70136a663f86e7ec52a4bde35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
