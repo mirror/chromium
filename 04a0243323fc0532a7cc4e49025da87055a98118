@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2030825a_e54f9562",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-25T17:13:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47ac3b1d_461949c1",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8644ff1_5e64dedc",
         "filename": "chromeos/dbus/services/console_service_provider.h",
         "patchSetId": 1
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "c1a8f913_bd1c51f2",
+        "filename": "chromeos/dbus/services/console_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-25T17:13:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8644ff1_5e64dedc",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42668124_fc624fd1",
         "filename": "chromeos/dbus/services/console_service_provider.h",
         "patchSetId": 1
@@ -74,6 +116,24 @@
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7d25e9_dd6dd70b",
+        "filename": "chromeos/dbus/services/console_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-25T17:13:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42668124_fc624fd1",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -97,6 +157,30 @@
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20876fcf_8d209597",
+        "filename": "chromeos/dbus/services/display_power_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-25T17:13:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42685668_783be012",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +213,24 @@
       "side": 1,
       "message": "Frecon does run as root. I\u0027m about to make the powerd change now and will update this if necessary.",
       "parentUuid": "7dde7422_4889280a",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c287834c_d16fa670",
+        "filename": "chromeos/dbus/services/org.chromium.DisplayService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-25T17:13:51Z",
+      "side": 1,
+      "message": "I just verified that powerd (patched to use DisplayService) works with this config. Is that surprising?",
+      "parentUuid": "b0a2200c_bfdc8690",
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
