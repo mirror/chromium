@@ -11,6 +11,9 @@ namespace content {
 uint32_t AXStateFromBlink(const blink::WebAXObject& o) {
   uint32_t state = 0;
 
+  if (o.IsBusy())
+    state |= (1 << ui::AX_STATE_BUSY);
+
   blink::WebAXExpanded expanded = o.IsExpanded();
   if (expanded) {
     if (expanded == blink::kWebAXExpandedCollapsed)

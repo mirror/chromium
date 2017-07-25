@@ -1382,6 +1382,11 @@ bool AXNodeObject::IsModal() const {
   return false;
 }
 
+bool AXNodeObject::IsBusy() const {
+  bool busy = false;
+  return HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kBusy, busy) && busy;
+}
+
 bool AXNodeObject::IsRequired() const {
   Node* n = this->GetNode();
   if (n && (n->IsElementNode() && ToElement(n)->IsFormControlElement()) &&

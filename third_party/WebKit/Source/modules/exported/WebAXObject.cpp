@@ -276,6 +276,13 @@ WebAXAriaCurrentState WebAXObject::AriaCurrentState() const {
   return static_cast<WebAXAriaCurrentState>(private_->GetAriaCurrentState());
 }
 
+bool WebAXObject::IsBusy() const {
+  if (IsDetached())
+    return false;
+
+  return private_->IsBusy();
+}
+
 WebAXCheckedState WebAXObject::CheckedState() const {
   if (IsDetached())
     return kWebAXCheckedUndefined;

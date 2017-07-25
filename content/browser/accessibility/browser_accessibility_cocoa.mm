@@ -2705,8 +2705,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
           ui::AX_ATTR_LIVE_ATOMIC)) {
     [ret addObjectsFromArray:@[ NSAccessibilityARIAAtomicAttribute ]];
   }
-  if (browserAccessibility_->HasBoolAttribute(
-          ui::AX_ATTR_LIVE_BUSY)) {
+  if (ariaBusy()) {
     [ret addObjectsFromArray:@[ NSAccessibilityARIABusyAttribute ]];
   }
 

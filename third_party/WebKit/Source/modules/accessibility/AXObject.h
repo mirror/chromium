@@ -444,6 +444,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   bool IsWebArea() const { return RoleValue() == kWebAreaRole; }
 
   // Check object state.
+  virtual bool IsBusy() const { return false; }
   virtual bool IsClickable() const;
   virtual bool IsCollapsed() const { return false; }
   virtual AccessibilityExpanded IsExpanded() const {
