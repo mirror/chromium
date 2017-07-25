@@ -270,6 +270,24 @@
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8950b3f2_d9edd857",
+        "filename": "chromeos/dbus/services/org.chromium.DisplayService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-25T17:38:36Z",
+      "side": 1,
+      "message": "if you\u0027re using the simple chrome workflow to deploy your chrome changes, the file should be in /opt/google/chrome/dbus, which is included by /etc/dbus-1/system.d/chrome.conf.\n\ni thought the permissions default to closed. /usr/share/dbus-1/system.conf contains this:\n\n    \u003c!-- Holes must be punched in service configuration files for\n         name ownership and sending method calls --\u003e\n    \u003cdeny own\u003d\"*\"/\u003e\n    \u003cdeny send_type\u003d\"method_call\"/\u003e\n\ni don\u0027t know that i have any other theories here. :-/ what happens if you try to call the method as the chronos user via dbus-send?",
+      "parentUuid": "63abe6f9_30b6ed6f",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
