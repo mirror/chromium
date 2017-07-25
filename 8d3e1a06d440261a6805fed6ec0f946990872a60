@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05401f62_2bf48c11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-25T23:04:20Z",
+      "side": 1,
+      "message": "nit: \"the default network is null\" \u003d\u003d\u003e \"the device is not connected to the Internet\"\n\nCL descriptions should be high level, and \"default network is null\" is an implementation detail describing when the device is not online.",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b54abbf_184be1bd",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-25T23:04:20Z",
+      "side": 1,
+      "message": "Since we don\u0027t actually do anything in either of these cases if there is a default network, let\u0027s wrap this around the whole if/else block. This (1) eliminates duplicated code in both blocks of the if/else and (2) eliminates unnecessary work from being done in the if case (i.e., eliminates the NormalizeDeviceStatus() call if it doesn\u0027t need to be used).\n\nWe can also combine this check with the empty check, like this:\n\nif (network_state_handler_-\u003eDefaultNetwork()\n    \u0026\u0026 !scanned_device_list_so_far.empty()) {\n  if (scanned_device_list_so_far.size() \u003d\u003d 1u) {\n    // Display single device notification.\n  } else {\n    // Display multiple device notification.\n  }\n}",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be78ef2_6ede428f",
+        "filename": "chromeos/components/tether/host_scanner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-25T23:04:20Z",
+      "side": 1,
+      "message": "nit: We\u0027ve been placing network classes before tether classes in class constructors - can you do the same here? Thanks!",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 57
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e509a77_4fbf2eb6",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-25T23:04:20Z",
+      "side": 1,
+      "message": "You don\u0027t actually ever test that the notification is not shown when the device is connected to the Internet (all of your tests assume that we are not connected). Please write a test where you are connected to a network, perform a scan, and verify that no notification is shown.\n\nPlease modify ReceiveScanResultAndVerifySuccess() to take an extra parameter (bool is_connected_to_internet). If this value is true, perform the notification checks like we already do, and if the value is false, verify that no notification is shown.",
+      "range": {
+        "startLine": 183,
+        "startChar": 6,
+        "endLine": 183,
+        "endChar": 21
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb65bf7_a7c72648",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-25T23:04:20Z",
+      "side": 1,
+      "message": "You\u0027ll want to remove this when you implement the changes I described above.",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 60
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
