@@ -22,6 +22,7 @@ const base::Feature* kAllFeatures[] = {
     &kIPHDownloadPageScreenshotFeature,
 #endif  // defined(OS_ANDROID)
 #if defined(OS_WIN) || defined(OS_LINUX)
+    &kIPHBookmarkFeature,
     &kIPHIncognitoWindowFeature,
     &kIPHNewTabFeature,
 #endif  // defined(OS_WIN) || defined(OS_LINUX)

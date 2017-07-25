@@ -52,6 +52,7 @@ extern const char kLastProfileResetTimestamp[];
 extern const char kChromeCleanerResetPending[];
 #endif
 extern const char kNewTabInProductHelp[];
+extern const char kBookmarkInProductHelp[];
 extern const char kNewTabPageLocationOverride[];
 extern const char kProfileIconVersion[];
 extern const char kRestoreOnStartup[];
