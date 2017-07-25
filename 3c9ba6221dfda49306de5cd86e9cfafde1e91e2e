@@ -16,6 +16,24 @@
       "revId": "3c9ba6221dfda49306de5cd86e9cfafde1e91e2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5fb75d_28a23d17",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-25T05:43:07Z",
+      "side": 1,
+      "message": "Yes, we need it because I\u0027ve changed only ContentSecurityPolicyResponseHeaders. CSPHeaderAndType still needs manual IsolatedCopy.",
+      "parentUuid": "698e6d6e_932bb663",
+      "revId": "3c9ba6221dfda49306de5cd86e9cfafde1e91e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
