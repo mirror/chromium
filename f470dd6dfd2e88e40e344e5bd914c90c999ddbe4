@@ -16,6 +16,24 @@
       "revId": "f470dd6dfd2e88e40e344e5bd914c90c999ddbe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a36001a_4d800b57",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-25T22:07:18Z",
+      "side": 1,
+      "message": "I targeted it because I noticed that they were accelerated, and didn\u0027t see a good\njustification for it. Also, layer explosion happens on all platforms,\nso figured let\u0027s just turn it off. Do you think select elements have more of a\njustification?",
+      "parentUuid": "ab3f9d1b_f2867a16",
+      "revId": "f470dd6dfd2e88e40e344e5bd914c90c999ddbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
