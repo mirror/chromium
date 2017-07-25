@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "81cb6aba_b8a121ec",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-25T01:58:57Z",
+      "side": 1,
+      "message": "This feature is already implemented on Mac (chrome://flags/#enable-fullscreen-toolbar-reveal), so adding this additional method to BrowserWindowCocoa will be confusing.\n\n(Note that flag is disabled by default -- probably because the animation is super janky.)\n\nLike CrOS, it also animates in when adding a new tab with Cmd+t, so that you can type into the omnibox. That\u0027s not disabled on Mac by default.\n\nMac hooks in via an overload of BrowserWindow::OnActiveTabChanged() -- would it make sense for BrowserView to hook in the same way?",
+      "parentUuid": "a725a356_eec5c07e",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6517d64f_6b28df50",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 3
