@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b703afd4_7791102e",
+        "filename": "chrome/browser/ui/signin_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T13:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b84e68bf_91fd2d19",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb0dcc76_9c028187",
         "filename": "chrome/browser/ui/signin_view_controller_delegate.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T07:14:02Z",
       "side": 1,
       "message": "Ugh, this is sort of a mess.\n\nAFAICT, only subclasses need this active tab.  And they really only need it to get at the top-level native window (to parent dialogs to) or the top-level dialog manager.  Mac in particular has a lot of APIs that pass around WebContents when really the endpoint classes don\u0027t really rely on a WebContents, but on e.g. a dialog manager; bad for dependency injection.\n\nIt seems like rather than supplying a Browser here it would be nice to supply the single top-level object to host dialogs in.  That would more accurately state what this class depends on and make things more testable.  However, it would take some refactoring to do this sort of thing.",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49368188_9f297df6",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T13:24:09Z",
+      "side": 1,
+      "message": "ACK.\n\nYou are right - the active tab is only used by subsclasses. I think the DCHECK makes sense here to avoid code duplicating this code in both subclasses.\n\nI will take a look to see if I can simplify the code of the subclasses and avoid passing around the browser (that would depend on the API to create and present the dialogs).",
+      "parentUuid": "fb0dcc76_9c028187",
       "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c670118d_56aaaea9",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T13:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be4f50e_1ab74c52",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd1482cd_9f2c9531",
         "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-21T07:14:02Z",
       "side": 1,
       "message": "Nit: Might be nice to place virtual and non-virtual functions grouped together.  The order here feels pretty random, I\u0027m not sure that would help much, but it\u0027d be something.",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d2af95_8eac70e0",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T13:24:09Z",
+      "side": 1,
+      "message": "It looks like they were ordered alphabetically, so I moved my function up.",
+      "parentUuid": "fd1482cd_9f2c9531",
       "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "08c965be_c2d8c819",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T13:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "140b3b2e_0ad67388",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91145e1_b94773c2",
         "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803777c2_3a69cd08",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T13:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91145e1_b94773c2",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
