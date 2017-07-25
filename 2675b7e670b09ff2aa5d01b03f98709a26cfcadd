@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f918be46_f613b53a",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-25T14:51:40Z",
+      "side": 1,
+      "message": "nit: As this callback is designed to let delegate_ delete itself, probably it\u0027s better to call at the end.",
+      "revId": "2675b7e670b09ff2aa5d01b03f98709a26cfcadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369cbf72_b4b5b8a9",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-25T14:51:40Z",
+      "side": 1,
+      "message": "nit: can the decl order of members be aligned with ctor\u0027s args?",
+      "revId": "2675b7e670b09ff2aa5d01b03f98709a26cfcadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5894fcef_9c03a2b6",
+        "filename": "components/exo/display.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-25T14:51:40Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique can be used?",
+      "revId": "2675b7e670b09ff2aa5d01b03f98709a26cfcadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
