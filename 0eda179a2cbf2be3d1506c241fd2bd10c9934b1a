@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2331d511_c6d83796",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "This enabled-check is also done in TestTraceEvent#begin(String) and TestTraceEvent#end(String), etc. Any reason why you also check it here?",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e854711d_e12a3ab0",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Wrapping in Java is at 100 characters.",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f435c18c_69b05fc0",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Could you add an explanation why you are unable to not adhere to this findbugs rule in this class?",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6771e74_2181bc20",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Maybe mention that calling this again clears all previously stored data?",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b219ca07_1c5ccab9",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Could you have a private static lock object to synchronize on instead? As it is now, you lose control over what you lock on, since this is technically the same as synchronized(TestTraceEvent.class), which anyone can do at any time.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a385d04_28887870",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "You set three variables here, why is sOutputFile special so it needs a separate method? It\u0027s a private method, so no-one else can call it anyway, and it\u0027s in fact only called from here.",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60554095_4417f4c8",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Could all these enabled-checks just be:\n\n  if (!sEnabled) return;\n\n?\nThat way you wouldn\u0027t have to indent all the code, and as a reader I wouldn\u0027t have to scroll down to see if there\u0027s an else-statement.",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80ceabc_3b968834",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Mention that you can record such an event by calling {@link #end(String)}?",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1225e6f_94adb622",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Link to {@link #begin(String)}?",
+      "range": {
+        "startLine": 105,
+        "startChar": 47,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b0fbd8_8aaa6622",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Could this use SystemClock? (https://developer.android.com/reference/android/os/SystemClock.html)\nMaybe elapsedRealtimeNanos()?\nOr is it important that it\u0027s based on the local timezone and date?",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 123,
+        "endChar": 59
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c865c1e0_291f3e00",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Is this supposed to be\n\n  if (stream !\u003d null) stream.close();\n\n?",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc640d3_79276865",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-25T18:18:42Z",
+      "side": 1,
+      "message": "Could this catch the individual exceptions instead? And if you really want to catch RuntimeException, then make that very explicit by catching it instead of just catching Exception.",
+      "range": {
+        "startLine": 163,
+        "startChar": 29,
+        "endLine": 163,
+        "endChar": 38
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
