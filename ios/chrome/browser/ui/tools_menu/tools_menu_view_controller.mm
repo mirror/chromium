@@ -10,6 +10,8 @@
 #include "base/logging.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
+#include "components/feature_engagement_tracker/public/feature_constants.h"
+#include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/ui/animation_util.h"
@@ -113,6 +115,15 @@ NS_INLINE void AnimateInViews(NSArray* views,
   // for the reading list badge.
   __weak ReadingListMenuNotifier* _readingListMenuNotifier;
 }
+
+// Determines if the reading list should display a new feature badge. Defaults
+// to |NO|.
+@property(nonatomic, assign) BOOL showReadingListNewBadge;
+// Tracks events for the purpose of in-product help. Does not take ownership of
+// tracker. Tracker must not be destroyed during lifetime of
+// ToolsMenuViewController. Defaults to |NULL|.
+@property(nonatomic, assign)
+    feature_engagement_tracker::FeatureEngagementTracker* engagementTracker;
 @property(nonatomic, strong) ToolsMenuCollectionView* menuView;
 @property(nonatomic, strong) MDCInkView* touchFeedbackView;
 @property(nonatomic, assign) ToolbarType toolbarType;
@@ -127,6 +138,8 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
 @implementation ToolsMenuViewController
 
+@synthesize showReadingListNewBadge = _showReadingListNewBadge;
+@synthesize engagementTracker = _engagementTracker;
 @synthesize menuView = _menuView;
 @synthesize isCurrentPageBookmarked = _isCurrentPageBookmarked;
 @synthesize touchFeedbackView = _touchFeedbackView;
@@ -217,6 +230,8 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
 - (void)initializeMenuWithConfiguration:(ToolsMenuConfiguration*)configuration {
   self.requestStartTime = configuration.requestStartTime;
+  self.showReadingListNewBadge = configuration.showReadingListNewBadge;
+  self.engagementTracker = configuration.engagementTracker;
 
   if (configuration.readingListMenuNotifier) {
     _readingListMenuNotifier = configuration.readingListMenuNotifier;
@@ -382,6 +397,14 @@ NS_INLINE void AnimateInViews(NSArray* views,
   }
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  if (_showReadingListNewBadge && _engagementTracker) {
+    _engagementTracker->Dismissed(
+        feature_engagement_tracker::kIPHBadgedReadingListFeature);
+  }
+}
+
 - (void)updateViewConstraints {
   [super updateViewConstraints];
 
@@ -444,6 +467,12 @@ NS_INLINE void AnimateInViews(NSArray* views,
   AnimateInViews(visibleCells, 0, -10);
   [CATransaction commit];
 
+  // The number badge should be prioritized over the new feature badge, so only
+  // show the new feature badge if number badge will not be shown.
+  if (_readingListMenuNotifier.readingListUnreadCount == 0) {
+    [[self readingListCell] updateShowTextBadge:_showReadingListNewBadge
+                                       animated:YES];
+  }
   [[self readingListCell]
       updateBadgeCount:_readingListMenuNotifier.readingListUnreadCount
               animated:YES];
