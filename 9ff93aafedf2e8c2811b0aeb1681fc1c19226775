@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a765f7e4_a7632a49",
+        "filename": "chrome/browser/renderer_host/chrome_extension_message_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T17:36:48Z",
+      "side": 0,
+      "message": "this can now be removed from the comment, right?",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "9ff93aafedf2e8c2811b0aeb1681fc1c19226775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

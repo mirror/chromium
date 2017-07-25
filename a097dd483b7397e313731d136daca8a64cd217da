@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "629fca99_9cdec256",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T17:36:48Z",
+      "side": 1,
+      "message": "Given that the delegate implementations do not keep any state, we can probably have a shared instance owned by the ChromeExtensionsApiClient (as it\u0027s done by e.g. FileSystemDelegate).",
+      "range": {
+        "startLine": 191,
+        "startChar": 27,
+        "endLine": 191,
+        "endChar": 50
+      },
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66c062ff_4bb10136",
         "filename": "extensions/browser/api/messaging/extension_message_port.cc",
         "patchSetId": 2
@@ -30,6 +53,23 @@
       "writtenOn": "2017-07-24T17:02:09Z",
       "side": 1,
       "message": "these functions were moved from chrome_extension_message_filter.cc",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c57226_a7c78a53",
+        "filename": "extensions/browser/extension_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T17:36:48Z",
+      "side": 1,
+      "message": "nit:\nif (!browser_context_)\n  return;\n\nOpenChannelToNativeApp()\n\n(to be consistent with other methods here)",
       "revId": "a097dd483b7397e313731d136daca8a64cd217da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
