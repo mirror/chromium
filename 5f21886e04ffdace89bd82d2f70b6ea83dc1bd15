@@ -22,6 +22,30 @@
       "revId": "5f21886e04ffdace89bd82d2f70b6ea83dc1bd15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa624ef8_3b68e271",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-25T17:14:53Z",
+      "side": 1,
+      "message": "Sure, I could do that instead if you think that would be clearer. Do you mean defining the constant in this anonymous namespace at the top of the file so I can use it below? Just want to be sure I understand.",
+      "parentUuid": "3dac6e84_c3d5eed7",
+      "range": {
+        "startLine": 115,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "5f21886e04ffdace89bd82d2f70b6ea83dc1bd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
