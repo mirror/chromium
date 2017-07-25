@@ -133,7 +133,7 @@ bool IsWindowAboveContainer(aura::Window* window,
 
     aura::Window* common_parent = target->parent();
     DCHECK_EQ(common_parent, blocking->parent());
-    aura::Window::Windows windows = common_parent->children();
+    const aura::Window::Windows& windows = common_parent->children();
     auto blocking_iter = std::find(windows.begin(), windows.end(), blocking);
     // If the target window is above blocking window, the window can handle
     // events.
@@ -254,7 +254,9 @@ aura::Window* CreateContainer(int window_id,
   window->Init(ui::LAYER_NOT_DRAWN);
   if (Shell::GetAshConfig() != Config::CLASSIC) {
     window->SetEventTargetingPolicy(
-        ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
+        IsActivatableShellWindowId(window_id)
+            ? ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY
+            : ui::mojom::EventTargetingPolicy::NONE);
   }
   window->set_id(window_id);
   window->SetName(name);
@@ -401,11 +403,6 @@ SystemTray* RootWindowController::GetSystemTray() {
 bool RootWindowController::CanWindowReceiveEvents(aura::Window* window) {
   if (GetRootWindow() != window->GetRootWindow())
     return false;
-
-  // Always allow events to fall through to the virtual keyboard even if
-  // displaying a system modal dialog.
-  if (IsVirtualKeyboardWindow(window))
-    return true;
 
   aura::Window* blocking_container = nullptr;
 
@@ -926,14 +923,11 @@ void RootWindowController::CreateContainers() {
   modal_container->SetProperty(kUsesScreenCoordinatesKey, true);
   wm::SetChildrenUseExtendedHitRegionForWindow(modal_container);
 
-  // TODO(beng): Figure out if we can make this use
-  // SystemModalContainerEventFilter instead of stops_event_propagation.
   aura::Window* lock_container =
       CreateContainer(kShellWindowId_LockScreenContainer, "LockScreenContainer",
                       lock_screen_containers);
   wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_container);
   lock_container->SetProperty(kUsesScreenCoordinatesKey, true);
-  // TODO(beng): stopsevents
 
   aura::Window* lock_action_handler_container =
       CreateContainer(kShellWindowId_LockActionHandlerContainer,
