@@ -96,10 +96,9 @@ class MetricsLog {
   // dynamically by code in Chrome. For example, a pref may be mapped to a
   // synthetic trial such that the group is determined by the pref value. The
   // current environment is returned serialized as a string.
-  std::string RecordEnvironment(
-      const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers,
-      int64_t install_date,
-      int64_t metrics_reporting_enabled_date);
+  std::string RecordEnvironment(MetricsProvider* metrics_providers,
+                                int64_t install_date,
+                                int64_t metrics_reporting_enabled_date);
 
   // Loads a saved system profile and the associated metrics into the log.
   // Returns true on success. Keep calling it with fresh logs until it returns
@@ -113,14 +112,12 @@ class MetricsLog {
   bool LoadSavedEnvironmentFromPrefs(std::string* app_version);
 
   // Record data from providers about the previous session into the log.
-  void RecordPreviousSessionData(
-      const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers);
+  void RecordPreviousSessionData(MetricsProvider* metrics_providers);
 
   // Record data from providers about the current session into the log.
-  void RecordCurrentSessionData(
-      const std::vector<std::unique_ptr<MetricsProvider>>& metrics_providers,
-      base::TimeDelta incremental_uptime,
-      base::TimeDelta uptime);
+  void RecordCurrentSessionData(MetricsProvider* metrics_providers,
+                                base::TimeDelta incremental_uptime,
+                                base::TimeDelta uptime);
 
   // Stop writing to this record and generate the encoded representation.
   // None of the Record* methods can be called after this is called.

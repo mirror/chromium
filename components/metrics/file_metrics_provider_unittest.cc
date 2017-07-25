@@ -115,9 +115,7 @@ class FileMetricsProviderTest : public testing::TestWithParam<bool> {
     provider()->OnDidCreateMetricsLog();
   }
 
-  bool HasInitialStabilityMetrics() {
-    return provider()->HasInitialStabilityMetrics();
-  }
+  bool HasPreviousSessionData() { return provider()->HasPreviousSessionData(); }
 
   void MergeHistogramDeltas() {
     provider()->MergeHistogramDeltas();
@@ -434,7 +432,7 @@ TEST_P(FileMetricsProviderTest, AccessInitialMetrics) {
                              kMetricsName);
 
   // Record embedded snapshots via snapshot-manager.
-  ASSERT_TRUE(HasInitialStabilityMetrics());
+  ASSERT_TRUE(HasPreviousSessionData());
   RunTasks();
   {
     HistogramFlattenerDeltaRecorder flattener;
@@ -538,7 +536,7 @@ TEST_P(FileMetricsProviderTest, AccessEmbeddedFallbackMetricsWithoutProfile) {
       kMetricsName);
 
   // Record embedded snapshots via snapshot-manager.
-  ASSERT_TRUE(HasInitialStabilityMetrics());
+  ASSERT_TRUE(HasPreviousSessionData());
   RunTasks();
   {
     HistogramFlattenerDeltaRecorder flattener;
@@ -579,7 +577,7 @@ TEST_P(FileMetricsProviderTest, AccessEmbeddedFallbackMetricsWithProfile) {
       kMetricsName);
 
   // Record embedded snapshots via snapshot-manager.
-  EXPECT_FALSE(HasInitialStabilityMetrics());
+  EXPECT_FALSE(HasPreviousSessionData());
   RunTasks();
   {
     HistogramFlattenerDeltaRecorder flattener;
