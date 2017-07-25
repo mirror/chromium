@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/at_exit.h"
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/message_loop/message_loop.h"
@@ -15,6 +16,8 @@
 #include "base/process/process.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_task_environment.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/process_proxy/process_proxy_registry.h"
@@ -33,6 +36,7 @@ const int kTestLineNum = 100;
 
 class TestRunner {
  public:
+  TestRunner() : task_runner_(base::SequencedTaskRunnerHandle::Get()) {}
   virtual ~TestRunner() {}
   virtual void SetupExpectations(int terminal_id) = 0;
   virtual void OnSomeRead(int terminal_id,
@@ -42,6 +46,8 @@ class TestRunner {
 
  protected:
   int terminal_id_;
+  // Sequence where |this| is created.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 };
 
 class RegistryTestRunner : public TestRunner {
@@ -82,8 +88,8 @@ class RegistryTestRunner : public TestRunner {
     }
 
     if (!valid || TestSucceeded()) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
+      task_runner_->PostTask(FROM_HERE,
+                             base::MessageLoop::QuitWhenIdleClosure());
     }
   }
 
@@ -145,8 +151,7 @@ class RegistryNotifiedOnProcessExitTestRunner : public TestRunner {
       return;
     }
     EXPECT_EQ("exit", type);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
+    task_runner_->PostTask(FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
   void StartRegistryTest(ProcessProxyRegistry* registry) override {
@@ -184,7 +189,7 @@ class ProcessProxyTest : public testing::Test {
     registry_->AckOutput(terminal_id);
   }
 
-  void EndRegistryTest() {
+  void EndRegistryTest(scoped_refptr<base::SequencedTaskRunner> quit_runner) {
     registry_->CloseProcess(terminal_id_);
 
     base::TerminationStatus status =
@@ -198,12 +203,11 @@ class ProcessProxyTest : public testing::Test {
 
     registry_->ShutDown();
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
+    quit_runner->PostTask(FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
 
   void RunTest() {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    ProcessProxyRegistry::GetTaskRunner()->PostTask(
         FROM_HERE, base::Bind(&ProcessProxyTest::InitRegistryTest,
                               base::Unretained(this)));
 
@@ -211,9 +215,10 @@ class ProcessProxyTest : public testing::Test {
     // fired on watcher thread).
     base::RunLoop().Run();
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    ProcessProxyRegistry::GetTaskRunner()->PostTask(
         FROM_HERE,
-        base::Bind(&ProcessProxyTest::EndRegistryTest, base::Unretained(this)));
+        base::Bind(&ProcessProxyTest::EndRegistryTest, base::Unretained(this),
+                   base::SequencedTaskRunnerHandle::Get()));
 
     // Wait until we clean up the process proxy.
     base::RunLoop().Run();
@@ -222,10 +227,13 @@ class ProcessProxyTest : public testing::Test {
   std::unique_ptr<TestRunner> test_runner_;
 
  private:
+  // Destroys ProcessProxyRegistry LazyInstance after each test.
+  base::ShadowingAtExitManager shadowing_at_exit_manager_;
+
   ProcessProxyRegistry* registry_;
   int terminal_id_;
 
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 // Test will open new process that will run cat command, and verify data we

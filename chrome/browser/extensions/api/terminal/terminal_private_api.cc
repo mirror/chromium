@@ -11,6 +11,7 @@
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/api/terminal/terminal_extension_helper.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -140,11 +141,11 @@ TerminalPrivateOpenTerminalProcessFunction::Run() {
   if (tab_id < 0)
     return RespondNow(Error("Not called from a tab or app window"));
 
-  // Registry lives on FILE thread.
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
+  // Registry lives on its own task runner.
+  chromeos::ProcessProxyRegistry::GetTaskRunner()->PostTask(
+      FROM_HERE,
       base::BindOnce(
-          &TerminalPrivateOpenTerminalProcessFunction::OpenOnFileThread, this,
+          &TerminalPrivateOpenTerminalProcessFunction::OpenOnTaskRunner, this,
           base::Bind(&NotifyProcessOutput, browser_context(), extension_id(),
                      tab_id),
           base::Bind(
@@ -153,7 +154,7 @@ TerminalPrivateOpenTerminalProcessFunction::Run() {
   return RespondLater();
 }
 
-void TerminalPrivateOpenTerminalProcessFunction::OpenOnFileThread(
+void TerminalPrivateOpenTerminalProcessFunction::OpenOnTaskRunner(
     const ProcessOutputCallback& output_callback,
     const OpenProcessCallback& callback) {
   DCHECK(!command_.empty());
@@ -182,15 +183,15 @@ ExtensionFunction::ResponseAction TerminalPrivateSendInputFunction::Run() {
   std::unique_ptr<SendInput::Params> params(SendInput::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
 
-  // Registry lives on the FILE thread.
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&TerminalPrivateSendInputFunction::SendInputOnFileThread,
+  // Registry lives on its own task runner.
+  chromeos::ProcessProxyRegistry::GetTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&TerminalPrivateSendInputFunction::SendInputOnTaskRunner,
                      this, params->pid, params->input));
   return RespondLater();
 }
 
-void TerminalPrivateSendInputFunction::SendInputOnFileThread(
+void TerminalPrivateSendInputFunction::SendInputOnTaskRunner(
     int terminal_id,
     const std::string& text) {
   bool success =
@@ -215,17 +216,17 @@ TerminalPrivateCloseTerminalProcessFunction::Run() {
       CloseTerminalProcess::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
 
-  // Registry lives on the FILE thread.
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
+  // Registry lives on its own task runner.
+  chromeos::ProcessProxyRegistry::GetTaskRunner()->PostTask(
+      FROM_HERE,
       base::BindOnce(
-          &TerminalPrivateCloseTerminalProcessFunction::CloseOnFileThread, this,
+          &TerminalPrivateCloseTerminalProcessFunction::CloseOnTaskRunner, this,
           params->pid));
 
   return RespondLater();
 }
 
-void TerminalPrivateCloseTerminalProcessFunction::CloseOnFileThread(
+void TerminalPrivateCloseTerminalProcessFunction::CloseOnTaskRunner(
     int terminal_id) {
   bool success =
       chromeos::ProcessProxyRegistry::Get()->CloseProcess(terminal_id);
@@ -251,17 +252,17 @@ TerminalPrivateOnTerminalResizeFunction::Run() {
       OnTerminalResize::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
 
-  // Registry lives on the FILE thread.
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
+  // Registry lives on its own task runner.
+  chromeos::ProcessProxyRegistry::GetTaskRunner()->PostTask(
+      FROM_HERE,
       base::BindOnce(
-          &TerminalPrivateOnTerminalResizeFunction::OnResizeOnFileThread, this,
+          &TerminalPrivateOnTerminalResizeFunction::OnResizeOnTaskRunner, this,
           params->pid, params->width, params->height));
 
   return RespondLater();
 }
 
-void TerminalPrivateOnTerminalResizeFunction::OnResizeOnFileThread(
+void TerminalPrivateOnTerminalResizeFunction::OnResizeOnTaskRunner(
     int terminal_id,
     int width,
     int height) {
@@ -296,16 +297,16 @@ ExtensionFunction::ResponseAction TerminalPrivateAckOutputFunction::Run() {
   if (tab_id != params->tab_id)
     return RespondNow(NoArguments());
 
-  // Registry lives on the FILE thread.
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&TerminalPrivateAckOutputFunction::AckOutputOnFileThread,
+  // Registry lives on its own task runner.
+  chromeos::ProcessProxyRegistry::GetTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&TerminalPrivateAckOutputFunction::AckOutputOnTaskRunner,
                      this, params->pid));
 
   return RespondNow(NoArguments());
 }
 
-void TerminalPrivateAckOutputFunction::AckOutputOnFileThread(int terminal_id) {
+void TerminalPrivateAckOutputFunction::AckOutputOnTaskRunner(int terminal_id) {
   chromeos::ProcessProxyRegistry::Get()->AckOutput(terminal_id);
 }
 
