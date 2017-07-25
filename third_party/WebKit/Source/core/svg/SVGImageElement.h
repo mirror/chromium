@@ -58,6 +58,8 @@ class CORE_EXPORT SVGImageElement final
     return GetImageLoader().HasPendingActivity();
   }
 
+  ScriptPromise decode(ScriptState*, ExceptionState&);
+
   // Exposed for testing.
   ImageResourceContent* CachedImage() const {
     return GetImageLoader().GetImage();
@@ -97,6 +99,12 @@ class CORE_EXPORT SVGImageElement final
   Member<SVGAnimatedPreserveAspectRatio> preserve_aspect_ratio_;
 
   Member<SVGImageLoader> image_loader_;
+  // TODO(vmpstr): This is only here for us to keep track whether the href
+  // actually changed when we get notified in SvgAttributeChanged(). If we
+  // actually plumb the AttributeModificationParams instead of just
+  // QualifiedName, then we can figure this out without any state variables.
+  // Note that this is only set if the decode() call was made.
+  String last_decode_href_;
 };
 
 }  // namespace blink

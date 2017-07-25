@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<meta name="timeout" content="long">
+<title>img.decode()</title>
+<link rel="author" title="Vladimir Levin" href="mailto:vmpstr@chromium.org">
+<link rel=help href="">
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<div id="log"></div>
+
+<script>
+"use strict";
+
+// src tests
+// -------------------
+promise_test(function(t) {
+  var img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/images/green.png");
+  var promise = img.decode();
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/images/green.svg");
+  return promise_rejects(t, "EncodingError", promise);
+}, "(svg) Path changes fail decode.");
+
+promise_test(function(t) {
+  var img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/images/green.png");
+  var first_promise = img.decode();
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/images/green.svg");
+  var second_promise = img.decode();
+  assert_true(first_promise !== second_promise);
+  return Promise.all([
+    promise_rejects(t, "EncodingError", first_promise),
+    second_promise
+  ]);
+}, "(svg) Path changes fail decode; following good decode succeeds.");
+
+promise_test(function(t) {
+  var img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/images/green.png");
+  var first_promise = img.decode();
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/non/existent/path.png");
+  var second_promise = img.decode();
+  assert_true(first_promise !== second_promise);
+  return Promise.all([
+    promise_rejects(t, "EncodingError", first_promise),
+    promise_rejects(t, "EncodingError", second_promise)
+  ]);
+}, "(svg) Path changes fail decode; following bad decode fails.");
+
+promise_test(function() {
+  var img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/images/green.png");
+  var first_promise = img.decode();
+  img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/images/green.png");
+  var second_promise = img.decode();
+  assert_true(first_promise !== second_promise);
+  return Promise.all([
+    first_promise,
+    second_promise
+  ]);
+}, "(svg) Path changes to the same path succeed.");
+
+</script>

@@ -85,6 +85,12 @@ bool SVGImageElement::CurrentFrameHasSingleSecurityOrigin() const {
   return true;
 }
 
+ScriptPromise SVGImageElement::decode(ScriptState* script_state,
+                                      ExceptionState& exception_state) {
+  last_decode_href_ = HrefString();
+  return GetImageLoader().Decode(script_state, exception_state);
+}
+
 void SVGImageElement::CollectStyleForPresentationAttribute(
     const QualifiedName& name,
     const AtomicString& value,
@@ -139,6 +145,8 @@ void SVGImageElement::SvgAttributeChanged(const QualifiedName& attr_name) {
   if (SVGURIReference::IsKnownAttribute(attr_name)) {
     SVGElement::InvalidationGuard invalidation_guard(this);
     GetImageLoader().UpdateFromElement(ImageLoader::kUpdateIgnorePreviousError);
+    if (HrefString() != last_decode_href_)
+      GetImageLoader().InvalidatePendingDecodeRequests();
     return;
   }
 
