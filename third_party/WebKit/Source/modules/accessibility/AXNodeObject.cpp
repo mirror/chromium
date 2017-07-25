@@ -1285,7 +1285,6 @@ bool AXNodeObject::IsClickable() const {
 
   return AXObject::IsClickable();
 }
-
 bool AXNodeObject::CanSupportAriaReadOnly() const {
   switch (RoleValue()) {
     case kCellRole:
