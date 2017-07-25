@@ -241,19 +241,21 @@ HistoryAddPageArgs::HistoryAddPageArgs()
                          ui::PAGE_TRANSITION_LINK,
                          SOURCE_BROWSED,
                          false,
-                         true) {
-}
+                         base::nullopt,
+                         true) {}
 
-HistoryAddPageArgs::HistoryAddPageArgs(const GURL& url,
-                                       base::Time time,
-                                       ContextID context_id,
-                                       int nav_entry_id,
-                                       const GURL& referrer,
-                                       const RedirectList& redirects,
-                                       ui::PageTransition transition,
-                                       VisitSource source,
-                                       bool did_replace_entry,
-                                       bool consider_for_ntp_most_visited)
+HistoryAddPageArgs::HistoryAddPageArgs(
+    const GURL& url,
+    base::Time time,
+    ContextID context_id,
+    int nav_entry_id,
+    const GURL& referrer,
+    const RedirectList& redirects,
+    ui::PageTransition transition,
+    VisitSource source,
+    bool did_replace_entry,
+    const base::Optional<GURL>& same_document_as,
+    bool consider_for_ntp_most_visited)
     : url(url),
       time(time),
       context_id(context_id),
@@ -263,8 +265,8 @@ HistoryAddPageArgs::HistoryAddPageArgs(const GURL& url,
       transition(transition),
       visit_source(source),
       did_replace_entry(did_replace_entry),
-      consider_for_ntp_most_visited(consider_for_ntp_most_visited) {
-}
+      is_same_document_as(same_document_as),
+      consider_for_ntp_most_visited(consider_for_ntp_most_visited) {}
 
 HistoryAddPageArgs::HistoryAddPageArgs(const HistoryAddPageArgs& other) =
     default;

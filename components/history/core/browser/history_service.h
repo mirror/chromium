@@ -201,6 +201,7 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // 'did_replace_entry' is true when the navigation entry for this page has
   // replaced the existing entry. A non-user initiated redirect causes such
   // replacement.
+  // TODO(mastiz): Update documentation above.
   //
   // All "Add Page" functions will update the visited link database.
   void AddPage(const GURL& url,
@@ -211,7 +212,8 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
                const RedirectList& redirects,
                ui::PageTransition transition,
                VisitSource visit_source,
-               bool did_replace_entry);
+               bool did_replace_entry,
+               const base::Optional<GURL>& is_same_document_as);
 
   // For adding pages to history where no tracking information can be done.
   void AddPage(const GURL& url, base::Time time, VisitSource visit_source);
