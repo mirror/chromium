@@ -16,6 +16,24 @@
       "revId": "08b90b79808b8a223d6e9fb76c0c05c7a3b0c077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a31bc09_87785330",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-25T09:36:38Z",
+      "side": 0,
+      "message": "I think all the CQ/CI bots are in the same orientation - we can add it back in later if we get coverage in different orientations.",
+      "parentUuid": "4cf72680_de830b87",
+      "revId": "08b90b79808b8a223d6e9fb76c0c05c7a3b0c077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
