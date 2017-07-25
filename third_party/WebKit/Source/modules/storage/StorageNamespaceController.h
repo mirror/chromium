@@ -23,7 +23,7 @@ class MODULES_EXPORT StorageNamespaceController final
 
  public:
   StorageNamespace* SessionStorage(bool optional_create = true);
-  StorageClient* GetStorageClient() { return client_; }
+  StorageClient* GetStorageClient() { return client_.get(); }
   ~StorageNamespaceController();
 
   static void ProvideStorageNamespaceTo(Page&, StorageClient*);
@@ -43,7 +43,7 @@ class MODULES_EXPORT StorageNamespaceController final
   explicit StorageNamespaceController(StorageClient*);
   static const char* SupplementName();
   std::unique_ptr<StorageNamespace> session_storage_;
-  StorageClient* client_;
+  std::unique_ptr<StorageClient> client_;
   Member<InspectorDOMStorageAgent> inspector_agent_;
 };
 
