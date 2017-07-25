@@ -85,6 +85,7 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollerSizeMetrics.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
@@ -1980,7 +1981,10 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
 void PaintLayerScrollableArea::UpdateNeedsCompositedScrolling(
     LCDTextMode mode) {
   const bool needs_composited_scrolling =
-      ComputeNeedsCompositedScrolling(mode, Layer());
+      ComputeNeedsCompositedScrolling(mode, Layer()) &&
+      (!RuntimeEnabledFeatures::SkipCompositingSmallScrollersEnabled() ||
+       VisibleContentRect().Width() * VisibleContentRect().Height() >=
+           kSmallScrollerThreshold);
 
   if (static_cast<bool>(needs_composited_scrolling_) !=
       needs_composited_scrolling) {
