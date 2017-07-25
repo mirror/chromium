@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e762913_d6acb1b7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin_date.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T18:21:08Z",
+      "side": 1,
+      "message": "Er, I was thinking we\u0027d have 3 tests, in the same file.\n\nThat is, multiple calls to async_test in the same file.\n\nThis is fine, but a little more verbose.",
+      "range": {
+        "startLine": 17,
+        "startChar": 88,
+        "endLine": 17,
+        "endChar": 89
+      },
+      "revId": "ed1de4b4e513513aac28b35f37c18279251251cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b35347b_a61826bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin_with_timeout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T18:21:08Z",
+      "side": 1,
+      "message": "Here, and in the filename, the fact that we use a timeout isn\u0027t important, what\u0027s important is that this happens after a delay.\n\nI\u0027d s/timeout/delay here and in the filename.",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 22,
+        "endChar": 83
+      },
+      "revId": "ed1de4b4e513513aac28b35f37c18279251251cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4d3a53_445e431e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T18:21:08Z",
+      "side": 1,
+      "message": "Thinking a bit more about this, is this line needed? We could just initialize it lazily, couldn\u0027t we?",
+      "range": {
+        "startLine": 93,
+        "startChar": 75,
+        "endLine": 93,
+        "endChar": 76
+      },
+      "revId": "ed1de4b4e513513aac28b35f37c18279251251cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
