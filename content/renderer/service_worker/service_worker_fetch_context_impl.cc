@@ -39,11 +39,12 @@ ServiceWorkerFetchContextImpl::CreateURLLoader(
 
 void ServiceWorkerFetchContextImpl::WillSendRequest(
     blink::WebURLRequest& request) {
-  RequestExtraData* extra_data = new RequestExtraData();
+  DCHECK(!request.GetExtraData());
+  std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
   extra_data->set_service_worker_provider_id(service_worker_provider_id_);
   extra_data->set_originated_from_service_worker(true);
   extra_data->set_initiated_in_secure_context(true);
-  request.SetExtraData(extra_data);
+  request.SetExtraData(extra_data.release());
 }
 
 bool ServiceWorkerFetchContextImpl::IsControlledByServiceWorker() const {

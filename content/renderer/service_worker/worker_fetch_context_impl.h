@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 #define CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 
+#include <memory>
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/service_worker_modes.h"
