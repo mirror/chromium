@@ -451,6 +451,30 @@
     },
     {
       "key": {
+        "uuid": "1e020a81_2978711e",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-25T04:12:14Z",
+      "side": 1,
+      "message": "Good question and thanks for noticing. I tend to think the autoreset is a bit risky here as well and should be avoided. I think it\u0027s fine to assume OnPerformDropCompleted is called. I\u0027m adding erg though to make sure he agrees.",
+      "parentUuid": "70e9663a_c8e4af7f",
+      "range": {
+        "startLine": 188,
+        "startChar": 3,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc23c53_1c52626e",
         "filename": "ui/aura/mus/drag_drop_controller_mus.h",
         "patchSetId": 9
