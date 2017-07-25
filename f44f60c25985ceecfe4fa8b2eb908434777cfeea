@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e8afbcb_ffcf96c1",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T18:04:50Z",
+      "side": 1,
+      "message": "Why are lines 1580-1584 needed?\n - Per the JSDoc of this method, the array itself should never be null/undefined.\n - If we have to send an Array always, can we send an empty array instead of an array with an undefined item in it?",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e6d931_b57d66d4",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T18:04:50Z",
+      "side": 1,
+      "message": "This introduces a dependency  from native_layer.js to destination_store.js, but destination_store.js already depends on native_layer.js.\n\nCan we move the print_preview.PrinterType enum in this file instead? Also, even if both privet and extension printers are implemented as a single JS to C++ message, can we hide this from clients?\n\n\ngetPrivetPrinters: function() {\n  return cr.sendWithPromise(\n      \u0027getExtensionOrPrivetPrinters\u0027, print_preview.PrinterType.PRIVET_PRINTER);\n},\n\ngetExtensionPrinters: function() {\n  return cr.sendWithPromise(\n      \u0027getExtensionOrPrivetPrinters\u0027, print_preview.PrinterType.EXTENSION_PRINTER);\n},",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
