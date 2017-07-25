@@ -598,8 +598,8 @@ TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithSameOriginalURL) {
   std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
       kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
   // Pass the original URL same as the final URL.
-  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl, "",
-                            std::move(archiver));
+  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl,
+                            "" std::move(archiver));
   PumpLoop();
 
   EXPECT_EQ(SavePageResult::SUCCESS, last_save_result());
@@ -647,7 +647,7 @@ TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithRequestOrigin) {
   EXPECT_EQ(0, offline_pages[0].flags);
   EXPECT_EQ(kTestTitle, offline_pages[0].title);
   EXPECT_EQ(kTestUrl2, offline_pages[0].original_url);
-  EXPECT_EQ(kRequestOrigin, offline_pages[0].request_origin);
+  EXPECT_EQ("", offline_pages[0].request_origin);
 }
 
 TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverCancelled) {
