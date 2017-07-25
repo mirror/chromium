@@ -7,6 +7,11 @@
 
 #import <UIKit/UIKit.h>
 
+// The fixed distance from the leading edge of the bubble to the anchor point if
+// leading aligned, and from the trailing edge of the bubble to the anchor point
+// if trailing aligned.
+extern CGFloat kBubbleAlignmentOffset;
+
 // Direction for the bubble to point.
 typedef NS_ENUM(NSInteger, BubbleArrowDirection) {
   // Bubble is below the target UI element and the arrow is pointing up.
@@ -28,7 +33,7 @@ typedef NS_ENUM(NSInteger, BubbleAlignment) {
 // Initializes with the given text, direction that the bubble should point, and
 // alignment of the bubble.
 - (instancetype)initWithText:(NSString*)text
-                   direction:(BubbleArrowDirection)arrowDirection
+              arrowDirection:(BubbleArrowDirection)direction
                    alignment:(BubbleAlignment)alignment
     NS_DESIGNATED_INITIALIZER;
 
