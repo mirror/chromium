@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629b1413_124f9b5d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 2535,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-25T05:01:06Z",
+      "side": 0,
+      "message": "This doesn\u0027t seem right - you\u0027re changing the enum type this is using. Is it a coincidence that EPosition::kStatic and LayoutObjectBitfields::kIsStaticallyPositioned are both 0, which is why this works?\n\n\nI\u0027d get eae@ or another layout person to double check this.",
+      "revId": "16d92118b7a8bf2b8907258273d8e81c04fbec17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
