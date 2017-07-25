@@ -118,7 +118,8 @@ class RendererController final : public SharedSession::Client,
   // Cancel the start of remoting.
   void CancelDelayedStart();
   // Called when |delayed_start_stability_timer_| is fired.
-  void OnDelayedStartTimerFired(StartTrigger start_trigger);
+  void OnDelayedStartTimerFired(StartTrigger start_trigger,
+                                size_t decoded_bytes);
 
   // Helper to request the media pipeline switch to the remoting renderer.
   void StartRemoting(StartTrigger start_trigger);
