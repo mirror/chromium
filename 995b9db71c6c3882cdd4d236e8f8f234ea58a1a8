@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "165bd994_1f3713f7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-25T05:56:07Z",
+      "side": 1,
+      "message": "Mild preference to a static function of NGInlineNode, but not strong. Up to your preference.",
+      "revId": "995b9db71c6c3882cdd4d236e8f8f234ea58a1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2ddbd8_14f8d522",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-25T05:56:07Z",
+      "side": 1,
+      "message": "How about moving code below to a function in NGOffsetMappingResult?",
+      "revId": "995b9db71c6c3882cdd4d236e8f8f234ea58a1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdf7a26_b8f4ebd2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-25T05:56:07Z",
+      "side": 1,
+      "message": "and this looks like to belong to NGOffsetMappingUnit, or NGOffsetMappingResult, as this deals with details of the struct?",
+      "revId": "995b9db71c6c3882cdd4d236e8f8f234ea58a1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
