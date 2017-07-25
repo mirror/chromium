@@ -102,9 +102,17 @@ void ProfilingProcessHost::AddSwitchesToChildCmdLine(
     return;
   pph->EnsureControlChannelExists();
 
+  /* TODO(brettw) this currently doesn't work. Fix it.
+
+  // Create the socketpair for the low level memlog pipe.
+  mojo::edk::PlatformChannelPair data_channel;
+  pipe_id_ = data_channel.PrepareToPassClientHandleToChildProcessAsString(
+      &handle_passing_info);
+
   // TODO(brettw) this isn't correct for Posix. Redo when we can shave over
   // Mojo
   child_cmd_line->AppendSwitchASCII(switches::kMemlogPipe, pph->pipe_id_);
+  */
 }
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
