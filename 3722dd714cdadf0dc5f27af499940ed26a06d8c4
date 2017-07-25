@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf4cc4a0_59adb08f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetchRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-25T08:45:33Z",
+      "side": 1,
+      "message": "to be changed to enum before landing.",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b008272_03567e0b",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-25T08:45:33Z",
+      "side": 1,
+      "message": "Or we can make MTRUS DISALLOW_NEW(() and hold reached_url_set_ by value",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534f3c68_c128ce48",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-25T08:45:33Z",
+      "side": 1,
+      "message": "// Note: Ignored intentionally.",
+      "range": {
+        "startLine": 233,
+        "startChar": 25,
+        "endLine": 233,
+        "endChar": 0
+      },
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef0792e_a1e97aa8",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-25T08:45:33Z",
+      "side": 1,
+      "message": "I think we need to make the errors reported deterministically, and EXACT_ERROR_REPORTING is the way to go.",
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc5b30a_abe24845",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-25T08:45:33Z",
+      "side": 1,
+      "message": "I don\u0027t understand this completely.\nWhat is PropagateError trying to achieve? I assumed we can rely on V8 to propagate all the errors when we InstantiateModule?",
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
