@@ -41,6 +41,7 @@
 #include "net/quic/core/quic_packets.h"
 #include "net/socket/next_proto.h"
 #include "net/ssl/ssl_config_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/url_request_job_factory.h"
 
 namespace base {
@@ -354,6 +355,10 @@ class NET_EXPORT URLRequestContextBuilder {
   void SetHttpServerProperties(
       std::unique_ptr<HttpServerProperties> http_server_properties);
 
+  void SetNetworkErrorLoggingDelegate(
+      std::unique_ptr<NetworkErrorLoggingDelegate>
+          netwrok_error_logigng_delegate);
+
   // Creates a mostly self-contained URLRequestContext. May only be called once
   // per URLRequestContextBuilder. After this is called, the Builder can be
   // safely destroyed.
@@ -426,6 +431,7 @@ class NET_EXPORT URLRequestContextBuilder {
   std::unique_ptr<HttpServerProperties> http_server_properties_;
   std::map<std::string, std::unique_ptr<URLRequestJobFactory::ProtocolHandler>>
       protocol_handlers_;
+  std::unique_ptr<NetworkErrorLoggingDelegate> network_error_logging_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(URLRequestContextBuilder);
 };
