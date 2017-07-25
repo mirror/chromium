@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa8043b9_3707b443",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_accounts_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:47:47Z",
+      "side": 1,
+      "message": "for (auto\u0026 account : accounts) ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25aa036b_23ae953e",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:47:47Z",
+      "side": 1,
+      "message": "const string\u0026 id : accounts_with_refresh_token",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 52
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c74087_35e7fc13",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:47:47Z",
+      "side": 1,
+      "message": "I guess we don\u0027t warn in tests, but non-POD globals are generally banned (so these should be const char kFoo[]).",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8981a7_eb312e17",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:47:47Z",
+      "side": 1,
+      "message": "With the new strict, it kind of feels like this should just return Account.",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 65
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9852e65_e631fc74",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:47:47Z",
+      "side": 1,
+      "message": "Almost feels like we should just have a separate field for the primary account, since it\u0027s special anyway?\n\nstruct AccountsList {\n  Account primary_account;\n  array\u003cAccount\u003e secondary_accounts;\n};\n\nor something.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
