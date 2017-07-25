@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6141339_b54bf0fd",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "addbf1e4_49fc7671",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11f328b5_2b98cbdc",
         "filename": "ios/web/navigation/crw_navigation_item_holder.h",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18418835_3c8f5b20",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f328b5_2b98cbdc",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "55b57fd6_578371e0",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24475364_ddb13a11",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb9c7755_bcdec808",
         "filename": "ios/web/navigation/crw_navigation_item_holder.h",
         "patchSetId": 4
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "57afa123_c543e6b3",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb9c7755_bcdec808",
+      "range": {
+        "startLine": 19,
+        "startChar": 46,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "996d3b8b_ee85a980",
         "filename": "ios/web/navigation/crw_navigation_item_holder.h",
         "patchSetId": 4
@@ -126,6 +216,24 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032a4931_be25932f",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Now that we don\u0027t have an init override, we don\u0027t need this anymore, right?",
+      "parentUuid": "996d3b8b_ee85a980",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "4fa9253d_72dc3d90",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04306ff7_6ffcb194",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22b0d744_aa6b8b4a",
         "filename": "ios/web/navigation/navigation_manager_impl.mm",
         "patchSetId": 4
@@ -160,6 +286,24 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64fdec7_ff8ac06a",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b0d744_aa6b8b4a",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "16ea9ef1_eb55ae96",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "I would agree normally, but in this case, I think the most important bit to understand about how to use this class is its implementation. For example, this is the reason why GetPendingItem() only returns main frame pending item.",
+      "parentUuid": "ab43e2af_eeab3a30",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 41
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83e2511b_ded7916e",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
         "patchSetId": 4
@@ -206,6 +374,30 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a65f0dd_66564799",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83e2511b_ded7916e",
+      "range": {
+        "startLine": 125,
+        "startChar": 17,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1c9c6759_20908a96",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1010115_b4b169bc",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 7
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4303d728_570e5dea",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
         "patchSetId": 4
@@ -279,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "2c39bddd_0191f1a8",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4303d728_570e5dea",
+      "range": {
+        "startLine": 129,
+        "startChar": 45,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c8209a_c3a21d86",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 4
@@ -293,6 +533,24 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9bf0fe_3810f6f8",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done. This is also moved to crw_navigation_item_holder.mm.",
+      "parentUuid": "50c8209a_c3a21d86",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -319,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "f59ecdb9_0f714408",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Turns out NSURL doesn\u0027t implement isEqual. I opted for converting to GURL for comparison. It resulted in only one extra GURL conversion anyways, so I hope this will be OK.",
+      "parentUuid": "40e0888f_e1d56daf",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 139,
+        "endChar": 25
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7502338_731a655f",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 4
@@ -339,6 +621,30 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60fcc3f_12c2007c",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7502338_731a655f",
+      "range": {
+        "startLine": 141,
+        "startChar": 35,
+        "endLine": 141,
+        "endChar": 50
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -365,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "ec1096ab_145e12d6",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "My original thought is that the user of navigation manager knows when it\u0027s telling the nav manager to do a back-forward navigation vs. new navigation, so it can take care of not calling AddPendingItem and CommitPendingItem in such cases (and manipulate pending item index directly). \n\nBut on second thought, that can be confusing... Perhaps it\u0027s better for AddPendingItem to not create a new pendingItem if it\u0027s a back-forward navigation and the current WK item already has an associated NavigationItem. This way we can also make use of the information passed to AddPendingItem in case it needs to create a new NavigationItem (in the case of WK back-forward navigation to an entry that was not previously synced).\n\nUpdated AddPendingItem and GetPendingItem.",
+      "parentUuid": "dbd4b7a7_57040709",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed4c115_6a1b5657",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 4
@@ -385,6 +715,30 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8baa485_6ffc0f5f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Kurt pointed out that WKBackForwardListItem is immutable anyways. Removed const throughout.",
+      "parentUuid": "7ed4c115_6a1b5657",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 29
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -411,6 +765,30 @@
     },
     {
       "key": {
+        "uuid": "f28b760c_00311c9b",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "We call Sync here because there could have been multiple WK navigations since we last synced. So this will catch the navigation manager up to WKBackForwardList. In a given call to Sync, although there\u0027re N checks for navigation item existence, there should only be a constant number of NavigationItemImpl creations (typical case should be \u003c\u003d 1, regardless of user\u0027s history lenghth). I was counting on that the checks are fast.\n\nThat said, I guess it doesn\u0027t matter that the NavigationManager\u0027s states are not fully in sync with WKBackForwardList for indices where GetItemAtIndex() has not been called. So your suggestion makes sense. Changed.",
+      "parentUuid": "ffa8b388_fee9b201",
+      "range": {
+        "startLine": 258,
+        "startChar": 8,
+        "endLine": 258,
+        "endChar": 46
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c9c3bcf_8792d822",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 4
@@ -434,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "27eda565_179e0852",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c9c3bcf_8792d822",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 365,
+        "endChar": 30
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d408636f_7ebdd3ef",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
         "patchSetId": 4
@@ -454,6 +856,30 @@
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbafa5c_1fe72830",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-25T22:28:19Z",
+      "side": 1,
+      "message": "Yes the cast is necessary because otherwise compiler complains about ambiguous goBack signature (it finds one in UIWebView and another in WKWebView). The alternative is to store mock_web_view_ as a WKWebView* instead of id, but then we\u0027d need to cast for mock_web_view_ to OCMClassMock for calling -verify and -expect, which is more verbose.\n\nC++ cast doesn\u0027t seem to work because the from type is id...",
+      "parentUuid": "d408636f_7ebdd3ef",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 30
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
