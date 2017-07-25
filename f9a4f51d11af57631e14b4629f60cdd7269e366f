@@ -56,6 +56,93 @@
       "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f969a0_93093fe3",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-25T23:30:06Z",
+      "side": 1,
+      "message": "+1 for Observer",
+      "parentUuid": "e944f8a8_a3fb119a",
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063bc665_2826f5aa",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-25T23:30:06Z",
+      "side": 1,
+      "message": "add virtual dtor",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693bbf39_af39e7f1",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-25T23:30:06Z",
+      "side": 1,
+      "message": "isIdle()\nor\nisEmpty()",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b15715_c186edf6",
+        "filename": "components/offline_pages/core/task_queue_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-25T23:30:06Z",
+      "side": 1,
+      "message": "will need virtual dtor",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
