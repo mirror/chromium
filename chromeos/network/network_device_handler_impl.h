@@ -132,12 +132,17 @@ class CHROMEOS_EXPORT NetworkDeviceHandlerImpl
   // cellular devices of Shill.
   void ApplyCellularAllowRoamingToShill();
 
-  // Apply the current value of |mac_addr_randomization_| to wifi devices.
+  // Apply the current value of |mac_addr_randomization_enabled_| to wifi
+  // devices.
   void ApplyMACAddressRandomizationToShill();
 
-  void SetMACAddressRandomizationErrorCallback(
-      const std::string& error_name,
-      std::unique_ptr<base::DictionaryValue> error_data);
+  // Sets the value of |mac_addr_randomization_supported_| based on
+  // whether shill thinks it is supported on the wifi device.
+  void MACAddressRandomizationSupportCallback(
+      const base::Closure& callback,
+      const network_handler::ErrorCallback& error_callback,
+      const std::string& device_path,
+      const base::DictionaryValue& properties);
 
   // Get the DeviceState for the wifi device, if any.
   const DeviceState* GetWifiDeviceState(
