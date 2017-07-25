@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5cd536_b8568e21",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-25T13:55:58Z",
+      "side": 1,
+      "message": "Is there any point to having the TaskQueue kept alive after this?\nIs it so that pending tasks will have a chance to execute?",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3932bfc4_0b525e4e",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-25T13:55:58Z",
+      "side": 1,
+      "message": "nit: { ... } around command spanning multiple lines.",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ac4cd2_1221e103",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-25T13:55:58Z",
+      "side": 1,
+      "message": "Comment that Start makes worker_queue_ be used until StopEchoCancellationDump.",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a01f97_389470f4",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-25T13:55:58Z",
+      "side": 1,
+      "message": "Note that \"When a TaskQueue is deleted, pending tasks will not be executed\". Just checking that this is OK?",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce717c43_f801dfee",
+        "filename": "content/renderer/media/media_stream_audio_processor_options.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-25T13:55:58Z",
+      "side": 1,
+      "message": "This gives a raw pointer of worker_queue to something attached to the audio_processing. Please add a comment here that worker_queue must be kept alive until StopEchoCancellationDump is called.",
+      "revId": "eadeb31f787877fc39bd390f2bb311255188194f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
