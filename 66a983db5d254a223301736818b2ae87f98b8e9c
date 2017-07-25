@@ -46,6 +46,30 @@
       "revId": "66a983db5d254a223301736818b2ae87f98b8e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65253d6_a585cc1e",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-25T11:50:21Z",
+      "side": 1,
+      "message": "The previous version afair is correct, but I stylistically prefer handling errno right after the call without relying on the complex loop condition with side effects.\n\nThe code I suggested is different from the old code that was reverted in how it avoids looking at errno on successful returns that are not the end of iteration. I think old bionic does not spuriously set errno to EINTR on the end of iteration, but can do so on other successful returns.\n\nI prefer this version that does not explicitly check for EINTR because doing so is too specific to bionic, some other libc/environment could set EAGAIN in addition to EINTR on successful returns and by doing so it would not violate the spec IIUC.",
+      "parentUuid": "92bce6f1_66640e7f",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "66a983db5d254a223301736818b2ae87f98b8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

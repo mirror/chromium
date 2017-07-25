@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71fd60d4_1645b0c9",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-25T11:50:21Z",
+      "side": 1,
+      "message": "OK, I you convinced me that this note would not hurt. The check seems unnecessary because it can make a difference only at the end of the iteration, where I thought EINTR is not set. Though better be safe than sorry, I guess...",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 53
+      },
+      "revId": "6927ccd179601e78f5854fadd32f368aaad6ffa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
