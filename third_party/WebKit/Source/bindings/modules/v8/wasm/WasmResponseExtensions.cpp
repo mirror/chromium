@@ -27,7 +27,8 @@ class FetchDataLoaderAsWasmModule final : public FetchDataLoader,
   FetchDataLoaderAsWasmModule(ScriptPromiseResolver* resolver,
                               ScriptState* script_state)
       : resolver_(resolver),
-        builder_(script_state->GetIsolate()),
+        builder_(script_state->GetIsolate(),
+                 v8::Local<v8::Promise>::Cast(resolver->Promise().V8Value())),
         script_state_(script_state) {}
 
   void Start(BytesConsumer* consumer,
@@ -65,25 +66,8 @@ class FetchDataLoaderAsWasmModule final : public FetchDataLoader,
           break;
         }
         case BytesConsumer::Result::kDone: {
-          v8::Isolate* isolate = script_state_->GetIsolate();
           ScriptState::Scope scope(script_state_.Get());
-
-          {
-            // The TryCatch destructor will clear the exception. We
-            // scope the block here to ensure tight control over the
-            // lifetime of the exception.
-            v8::TryCatch trycatch(isolate);
-            v8::Local<v8::WasmCompiledModule> module;
-            if (builder_.Finish().ToLocal(&module)) {
-              DCHECK(!trycatch.HasCaught());
-              ScriptValue script_value(script_state_.Get(), module);
-              resolver_->Resolve(script_value);
-            } else {
-              DCHECK(trycatch.HasCaught());
-              resolver_->Reject(trycatch.Exception());
-            }
-          }
-
+          builder_.Finish();
           client_->DidFetchDataLoadedCustomFormat();
           return;
         }
@@ -119,7 +103,7 @@ class FetchDataLoaderAsWasmModule final : public FetchDataLoader,
   Member<BytesConsumer> consumer_;
   Member<ScriptPromiseResolver> resolver_;
   Member<FetchDataLoader::Client> client_;
-  v8::WasmModuleObjectBuilder builder_;
+  v8::WasmModuleObjectBuilderStreaming builder_;
   const RefPtr<ScriptState> script_state_;
 };
 
