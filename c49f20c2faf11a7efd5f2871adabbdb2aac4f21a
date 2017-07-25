@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac2ab87_fdc16cc5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-25T15:25:47Z",
+      "side": 1,
+      "message": "This is essentially \"is category known\", right?\nWhy is that guaranteed here?",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a24949_baab5249",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-25T15:25:47Z",
+      "side": 1,
+      "message": "This doesn\u0027t read very easily IMO, with the reverse and all. Would something like\nv1.insert(v1.begin(), make_move_iterator(v2.begin()), make_move_iterator(v2.end()));\nwork?",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a7b234_2ccd593d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-25T15:25:47Z",
+      "side": 1,
+      "message": "When is this supposed to be called, and by whom? Does it need to be public?",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
