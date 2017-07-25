@@ -210,9 +210,8 @@ function test()
     })
   ];
 
-  var logView = UI.panels.network._networkLogView;
   for (var request of requests)
-    logView._appendRequest(request);
+    NetworkLog.networkLog.dispatchEventToListeners(NetworkLog.NetworkLog.Events.RequestAdded, request);
 
   /**
    * @this {CanvasRenderingContext2D}
