@@ -76,12 +76,7 @@ void ExpandArrowView::PaintButtonContents(gfx::Canvas* canvas) {
 
 void ExpandArrowView::ButtonPressed(views::Button* sender,
                                     const ui::Event& event) {
-  UMA_HISTOGRAM_ENUMERATION(kPageOpenedHistogram, AppListModel::STATE_APPS,
-                            AppListModel::STATE_LAST);
-
-  contents_view_->SetActiveState(AppListModel::STATE_APPS);
-  app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
-  GetInkDrop()->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
+  TransitionToFullscreenAllAppsState();
 }
 
 gfx::Size ExpandArrowView::CalculatePreferredSize() const {
@@ -95,6 +90,13 @@ void ExpandArrowView::Layout() {
                center.y() - kExpandArrowIconSize / 2, kExpandArrowIconSize,
                kExpandArrowIconSize);
   icon_->SetBoundsRect(rect);
+}
+
+bool ExpandArrowView::OnKeyPressed(const ui::KeyEvent& event) {
+  if (event.key_code() != ui::VKEY_RETURN)
+    return false;
+  TransitionToFullscreenAllAppsState();
+  return true;
 }
 
 std::unique_ptr<views::InkDrop> ExpandArrowView::CreateInkDrop() {
@@ -128,6 +130,15 @@ ExpandArrowView::CreateInkDropHighlight() const {
       gfx::PointF(GetLocalBounds().CenterPoint()),
       base::MakeUnique<views::CircleLayerDelegate>(kInkDropHighlightColor,
                                                    kInkDropRadius));
+}
+
+void ExpandArrowView::TransitionToFullscreenAllAppsState() {
+  UMA_HISTOGRAM_ENUMERATION(kPageOpenedHistogram, AppListModel::STATE_APPS,
+                            AppListModel::STATE_LAST);
+
+  contents_view_->SetActiveState(AppListModel::STATE_APPS);
+  app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+  GetInkDrop()->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
 }
 
 }  // namespace app_list
