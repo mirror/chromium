@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dc747f71_725c378b",
+        "filename": "ash/drag_drop/drag_drop_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-25T01:11:11Z",
+      "side": 1,
+      "message": "No we still have set_should_block_during_drag_drop in drag_drop_controller.h, though I stopped adding the similar function to drag_drop_controller_mus.h\n\nset_should_block_during_drag_drop in drag_drop_controller.h is existing stuff and the CL does not change it.",
+      "parentUuid": "63c9c319_78e1c8e2",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448674e9_d0ce9db2",
         "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
         "patchSetId": 9
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "a1a53c22_dda20e40",
+        "filename": "ui/aura/client/drag_drop_client_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-25T01:11:11Z",
+      "side": 1,
+      "message": "Removed the argument and add a comment to DragDropClient about it.",
+      "parentUuid": "9ffd03c6_de2fb684",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "335fec50_1f05a519",
         "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
         "patchSetId": 9
@@ -367,6 +415,30 @@
       "side": 1,
       "message": "It may happen someone calls OnPerformDragDropCompleted and delete the instance immediately. I moved the line to OnPerformDragDropCompleted.\n\nbase::AutoReset at #161 may have the same problem. Is it OK to clear current_drag_state_ in OnPerformDragDropCompleted instead of base::AutoReset, because we have DCHECK at #152?",
       "parentUuid": "01d5367f_5aaa5113",
+      "range": {
+        "startLine": 188,
+        "startChar": 3,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e9663a_c8e4af7f",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-25T01:11:11Z",
+      "side": 1,
+      "message": "Friendly ping. I\u0027m happy to fix base::AutoReset if needed.",
+      "parentUuid": "fd7b41f0_b7cda0bb",
       "range": {
         "startLine": 188,
         "startChar": 3,
