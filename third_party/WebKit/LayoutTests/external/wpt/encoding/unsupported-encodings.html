@@ -8,7 +8,7 @@
 // Attempting to decode '<' as UTF-7 (+AD4) ends up as '+AD4'.
 ['UTF-7', 'utf-7'].forEach(label => {
   decode_test(label, '+AD4', 'U+002B/U+0041/U+0044/U+0034',
-              `${label} should not be supported`);
+              `${label} should be not be supported`);
 });
 
 // UTF-32 will be detected as UTF-16LE if leading BOM, or windows-1252 otherwise.
