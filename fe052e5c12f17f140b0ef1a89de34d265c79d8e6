@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e08530c_e0568767",
+        "filename": "cc/input/scroller_size_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-25T21:27:02Z",
+      "side": 1,
+      "message": "For memory constrained devices we may want to be even less conservative and target any scroller that isn\u0027t likely to be a major UI component - maybe as large as 160000? Ideally though I imagine this would be a percentage of the viewport size - e.g. composite overflow scrollers that fill at least 50-60% of the viewport, but not smaller ones.",
+      "revId": "fe052e5c12f17f140b0ef1a89de34d265c79d8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c24e07_762ec750",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-25T21:27:02Z",
+      "side": 1,
+      "message": "This should probably be part of ComputeNeedsCompositedScrolling.",
+      "revId": "fe052e5c12f17f140b0ef1a89de34d265c79d8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
