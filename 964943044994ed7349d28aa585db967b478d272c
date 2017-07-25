@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d546b45_197c5088",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-25T15:04:33Z",
+      "side": 1,
+      "message": "Implemented as a browser_test because TestingProfile::GetSSLHostStateDelegate returns null.\nA unit_test would work as well if I create a custom TestingProfile class and start some services manually. Should I do this, so this is executed on android as well?",
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2788d9eb_57b27645",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-25T15:04:33Z",
+      "side": 1,
+      "message": "What do you think about these? I think CONTENT_SETTINGS_TYPE_IMPORTANT_SITE_INFO should be deleted with CBD (but needs to be filtered, so we still know which sites are important). CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION should probably also be deleted with CBD?",
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
