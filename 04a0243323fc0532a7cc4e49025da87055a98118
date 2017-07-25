@@ -234,6 +234,24 @@
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da669e01_bdfdca44",
+        "filename": "chromeos/dbus/services/org.chromium.DisplayService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-25T17:24:01Z",
+      "side": 1,
+      "message": "a bit. how did you verify it? you mean that you can see that powerd is successfully making SetPower calls to org.chromium.DisplayService? you used cros_workon-\u003cboard\u003e to tell emerge to build the 9999 version of the power_manager package (i.e. your local source), right?",
+      "parentUuid": "c287834c_d16fa670",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
