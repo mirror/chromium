@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66e99aae_d1c8fc28",
+        "filename": "chrome/common/navigation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-25T23:53:38Z",
+      "side": 1,
+      "message": "I did consider that, and I\u0027m happy to make that change.\n\nThis is only my 2nd mojo conversion, so I\u0027m not sure about the style of mojom files whether it is better to have a proliferation of many very specifically named files which each contain only 1 interface, or if it is better to have a more generically named mojom file which can have multiple somewhat related interfaces.  I\u0027ll talk to noel and sammc locally.",
+      "parentUuid": "5c319338_8eaf6379",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "504c444e6571129c045039ac6ef581016f87540c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "899a8085_b3159dda",
         "filename": "chrome/common/navigation.mojom",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "504c444e6571129c045039ac6ef581016f87540c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60be232a_ca80ebfb",
+        "filename": "chrome/common/navigation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-25T23:53:38Z",
+      "side": 1,
+      "message": "This is the result of the auto-format.  I also noticed it to be different than what happens for c++.  I\u0027ll check again to run \u0027git cl format\u0027 to make sure this is the expected formatting.",
+      "parentUuid": "899a8085_b3159dda",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "504c444e6571129c045039ac6ef581016f87540c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
