@@ -219,6 +219,11 @@ class CONTENT_EXPORT WebContentsAndroid
   void SetMediaSession(
       const base::android::ScopedJavaLocalRef<jobject>& j_media_session);
 
+  void NotifyOnNextCompositorFrameAck(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jcallback);
+
  private:
   RenderWidgetHostViewAndroid* GetRenderWidgetHostViewAndroid();
 
@@ -234,6 +239,10 @@ class CONTENT_EXPORT WebContentsAndroid
                              const GURL& url,
                              const std::vector<SkBitmap>& bitmaps,
                              const std::vector<gfx::Size>& sizes);
+
+  void OnNextCompositorFrameAck(
+      const base::android::JavaRef<jobject>& obj,
+      const base::android::JavaRef<jobject>& jcallback);
 
   WebContentsImpl* web_contents_;
   NavigationControllerAndroid navigation_controller_;

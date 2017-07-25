@@ -622,6 +622,16 @@ import java.util.UUID;
         sizes.add(new Rect(0, 0, width, height));
     }
 
+    @Override
+    public void notifyOnNextCompositorFrameAck(Runnable callback) {
+        nativeNotifyOnNextCompositorFrameAck(mNativeWebContentsAndroid, callback);
+    }
+
+    @CalledByNative
+    private void onNextCompositorFrameAck(Runnable callback) {
+        callback.run();
+    }
+
     // This is static to avoid exposing a public destroy method on the native side of this class.
     private static native void nativeDestroyWebContents(long webContentsAndroidPtr);
 
@@ -680,6 +690,8 @@ import java.util.UUID;
             long nativeWebContentsAndroid, OverscrollRefreshHandler nativeOverscrollRefreshHandler);
     private native void nativeGetContentBitmap(
             long nativeWebContentsAndroid, int width, int height, ContentBitmapCallback callback);
+    private native void nativeNotifyOnNextCompositorFrameAck(
+            long nativeWebContentsAndroid, Runnable callback);
     private native void nativeReloadLoFiImages(long nativeWebContentsAndroid);
     private native int nativeDownloadImage(long nativeWebContentsAndroid,
             String url, boolean isFavicon, int maxBitmapSize,
