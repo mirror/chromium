@@ -126,19 +126,23 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Changes |app_list_state_| from |PEEKING| to |FULLSCREEN_ALL_APPS|.
   bool HandleScroll(const ui::Event* event);
 
+  // Gets the PaginationModel owned by this view's apps grid.
+  PaginationModel* GetAppsPaginationModel();
+
+  views::Widget* get_fullscreen_widget_for_test() const {
+    return fullscreen_widget_;
+  }
+  AppListState app_list_state() const { return app_list_state_; }
+  views::Widget* search_box_widget() const { return search_box_widget_; }
+  SearchBoxView* search_box_view() { return search_box_view_; }
+  AppListMainView* app_list_main_view() { return app_list_main_view_; }
+
   bool is_fullscreen() const {
     return app_list_state_ == FULLSCREEN_ALL_APPS ||
            app_list_state_ == FULLSCREEN_SEARCH;
   }
-  AppListState app_list_state() const { return app_list_state_; }
-  // Gets the PaginationModel owned by this view's apps grid.
-  PaginationModel* GetAppsPaginationModel();
-  AppListMainView* app_list_main_view() const { return app_list_main_view_; }
-  views::Widget* search_box_widget() const { return search_box_widget_; }
-  SearchBoxView* search_box_view() const { return search_box_view_; }
-  views::Widget* get_fullscreen_widget_for_test() const {
-    return fullscreen_widget_;
-  }
+
+  bool is_tablet_mode() const { return is_tablet_mode_; }
 
  private:
   friend class test::AppListViewTestApi;
