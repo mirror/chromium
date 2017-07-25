@@ -5,8 +5,8 @@
 #ifndef CSSPropertyMetadata_h
 #define CSSPropertyMetadata_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
 

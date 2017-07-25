@@ -32,8 +32,8 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
-#include "core/CSSPropertyNames.h"
 #include "core/InputTypeNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/events/MouseEvent.h"

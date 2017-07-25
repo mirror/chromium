@@ -25,11 +25,11 @@
 
 #include "core/editing/commands/ApplyStyleCommand.h"
 
-#include "core/CSSPropertyNames.h"
-#include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
 #include "core/css/CSSPrimitiveValue.h"
+#include "core/css/CSSPropertyNames.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/Document.h"
 #include "core/dom/NodeList.h"

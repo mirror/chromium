@@ -27,9 +27,9 @@
 #define ComputedStyle_h
 
 #include <memory>
-#include "core/CSSPropertyNames.h"
 #include "core/ComputedStyleBase.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/StyleAutoColor.h"
 #include "core/css/StyleColor.h"
 #include "core/style/BorderValue.h"

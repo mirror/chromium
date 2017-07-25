@@ -22,7 +22,7 @@
 
 #include <math.h>
 #include <algorithm>
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/Document.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/api/LineLayoutAPIShim.h"

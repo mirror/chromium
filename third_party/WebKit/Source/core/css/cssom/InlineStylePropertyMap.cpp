@@ -5,11 +5,11 @@
 #include "core/css/cssom/InlineStylePropertyMap.h"
 
 #include "bindings/core/v8/Iterable.h"
-#include "core/CSSPropertyNames.h"
 #include "core/css/CSSCustomIdentValue.h"
 #include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSPropertyMetadata.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/StylePropertySet.h"
 #include "core/css/cssom/CSSOMTypes.h"

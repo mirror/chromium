@@ -24,9 +24,9 @@
 #include "core/html/HTMLImageElement.h"
 
 #include "bindings/core/v8/ScriptEventListener.h"
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
 #include "core/MediaTypeNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/MediaQueryMatcher.h"
 #include "core/css/MediaValuesDynamic.h"
 #include "core/css/parser/SizesAttributeParser.h"

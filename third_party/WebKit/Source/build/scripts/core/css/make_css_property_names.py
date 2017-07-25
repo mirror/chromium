@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-import subprocess
+import os
 import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
+import subprocess
 import css_properties
 import json5_generator
 import template_expander
-import license
+from license import license_for_generated_cpp
 
 
 GPERF_TEMPLATE = """
@@ -130,8 +132,7 @@ class CSSPropertyNamesWriter(css_properties.CSSProperties):
     def __init__(self, json5_file_path):
         super(CSSPropertyNamesWriter, self).__init__(json5_file_path)
         self._outputs = {(self.class_name + ".h"): self.generate_header,
-                         (self.class_name + ".cpp"): self.generate_implementation,
-                        }
+                         (self.class_name + ".cpp"): self.generate_implementation}
 
     def _enum_declaration(self, property_):
         return "    %(property_id)s = %(enum_value)s," % property_
@@ -139,7 +140,7 @@ class CSSPropertyNamesWriter(css_properties.CSSProperties):
     def _array_item(self, property_):
         return "    static_cast<CSSPropertyID>(%(enum_value)s), // %(property_id)s" % property_
 
-    @template_expander.use_jinja('templates/CSSPropertyNames.h.tmpl')
+    @template_expander.use_jinja('core/css/templates/CSSPropertyNames.h.tmpl')
     def generate_header(self):
         return {
             'alias_offset': self._alias_offset,
@@ -154,7 +155,7 @@ class CSSPropertyNamesWriter(css_properties.CSSProperties):
         }
 
     def generate_implementation(self):
-        enum_value_to_name = {property['enum_value']: property['name'] for property in self._properties_including_aliases}
+        enum_value_to_name = {property_['enum_value']: property_['name'] for property_ in self._properties_including_aliases}
         property_offsets = []
         property_names = []
         current_offset = 0
@@ -165,14 +166,16 @@ class CSSPropertyNamesWriter(css_properties.CSSProperties):
                 property_names.append(name)
                 current_offset += len(name) + 1
 
-        css_name_and_enum_pairs = [(property['name'], property['property_id']) for property in self._properties_including_aliases]
+        css_name_and_enum_pairs = [
+            (property_['name'], property_['property_id']) for property_ in self._properties_including_aliases
+        ]
 
         gperf_input = GPERF_TEMPLATE % {
-            'license': license.license_for_generated_cpp(),
+            'license': license_for_generated_cpp(),
             'class_name': self.class_name,
             'property_name_strings': '\n'.join('    "%s\\0"' % name for name in property_names),
             'property_name_offsets': '\n'.join('    %d,' % offset for offset in property_offsets),
-            'property_to_enum_map': '\n'.join('%s, %s' % property for property in css_name_and_enum_pairs),
+            'property_to_enum_map': '\n'.join('%s, %s' % property_ for property_ in css_name_and_enum_pairs),
         }
         # FIXME: If we could depend on Python 2.7, we would use subprocess.check_output
         gperf_args = [self.gperf_path, '--key-positions=*', '-P', '-n']

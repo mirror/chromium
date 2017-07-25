@@ -5,7 +5,7 @@
 #ifndef ComputedStyleCSSValueMapping_h
 #define ComputedStyleCSSValueMapping_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"

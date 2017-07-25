@@ -32,7 +32,6 @@
 
 #include <algorithm>
 #include <bitset>
-#include "core/StylePropertyShorthand.h"
 #include "core/animation/Animation.h"
 #include "core/animation/CSSInterpolationTypesMap.h"
 #include "core/animation/CompositorAnimations.h"
@@ -51,6 +50,7 @@
 #include "core/css/CSSPropertyMetadata.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/PropertyRegistry.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/resolver/CSSToStyleMap.h"
 #include "core/css/resolver/StyleResolver.h"

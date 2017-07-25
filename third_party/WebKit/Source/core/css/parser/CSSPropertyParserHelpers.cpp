@@ -4,7 +4,6 @@
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-#include "core/StylePropertyShorthand.h"
 #include "core/css/CSSCalculationValue.h"
 #include "core/css/CSSColorValue.h"
 #include "core/css/CSSCrossfadeValue.h"
@@ -18,6 +17,7 @@
 #include "core/css/CSSValuePair.h"
 #include "core/css/CSSVariableData.h"
 #include "core/css/StyleColor.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSParserFastPaths.h"
 #include "core/css/parser/CSSParserLocalContext.h"

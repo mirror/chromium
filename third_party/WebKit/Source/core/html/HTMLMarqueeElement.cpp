@@ -25,7 +25,6 @@
 #include <cstdlib>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8HTMLMarqueeElement.h"
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
 #include "core/animation/DocumentTimeline.h"
 #include "core/animation/KeyframeEffect.h"
@@ -33,6 +32,7 @@
 #include "core/animation/KeyframeEffectOptions.h"
 #include "core/animation/StringKeyframe.h"
 #include "core/animation/TimingInput.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSStyleDeclaration.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/Document.h"

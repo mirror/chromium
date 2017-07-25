@@ -25,7 +25,6 @@
 
 #include "core/css/ComputedStyleCSSValueMapping.h"
 
-#include "core/StylePropertyShorthand.h"
 #include "core/animation/css/CSSAnimationData.h"
 #include "core/animation/css/CSSTransitionData.h"
 #include "core/css/BasicShapeFunctions.h"
@@ -57,6 +56,7 @@
 #include "core/css/CSSValueList.h"
 #include "core/css/CSSValuePair.h"
 #include "core/css/PropertyRegistry.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/zoomAdjustedPixelValue.h"
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutBox.h"

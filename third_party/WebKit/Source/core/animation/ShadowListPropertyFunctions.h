@@ -5,7 +5,7 @@
 #ifndef ShadowListPropertyFunctions_h
 #define ShadowListPropertyFunctions_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {

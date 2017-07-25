@@ -32,7 +32,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/StringOrArrayBufferOrArrayBufferView.h"
-#include "core/CSSValueKeywords.h"
 #include "core/css/BinaryDataFontFaceSource.h"
 #include "core/css/CSSFontFace.h"
 #include "core/css/CSSFontFaceSrcValue.h"
@@ -40,6 +39,7 @@
 #include "core/css/CSSFontSelector.h"
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSUnicodeRangeValue.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/FontFaceDescriptors.h"
 #include "core/css/LocalFontFaceSource.h"

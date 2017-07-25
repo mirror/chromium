@@ -5,7 +5,7 @@
 #ifndef CSSPaintDefinition_h
 #define CSSPaintDefinition_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSSyntaxDescriptor.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "platform/bindings/ScriptWrappable.h"

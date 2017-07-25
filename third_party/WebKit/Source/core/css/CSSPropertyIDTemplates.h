@@ -5,7 +5,7 @@
 #ifndef CSSPropertyIDTemplates_h
 #define CSSPropertyIDTemplates_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/HashTraits.h"
 

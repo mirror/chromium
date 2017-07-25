@@ -28,7 +28,7 @@
 
 #include "modules/canvas2d/CanvasStyle.h"
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/StylePropertySet.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/html/HTMLCanvasElement.h"
