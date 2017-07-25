@@ -30,6 +30,7 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "content/browser/bad_message.h"
+#include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -321,6 +322,7 @@ bool RenderViewHostImpl::CreateRenderView(
   params->min_size = GetWidget()->min_size_for_auto_resize();
   params->max_size = GetWidget()->max_size_for_auto_resize();
   params->page_zoom_level = delegate_->GetPendingPageZoomLevel();
+  params->for_guest = BrowserPluginGuest::IsGuest(this);
 
   bool force_srgb_image_decode_color_space = false;
   // Pretend that HDR displays are sRGB so that we do not have inconsistent

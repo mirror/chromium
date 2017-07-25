@@ -731,6 +731,9 @@ class CONTENT_EXPORT RenderWidget
   // Whether this RenderWidget is for an out-of-process iframe or not.
   bool for_oopif_;
 
+  // Whether this RenderWidget is for a guest view or not.
+  bool for_guest_;
+
   // Stores information about the current text input.
   blink::WebTextInputInfo text_input_info_;
 

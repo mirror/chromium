@@ -24,6 +24,8 @@ Viewport::Viewport(LayerTreeHostImpl* host_impl)
     : host_impl_(host_impl)
     , pinch_zoom_active_(false) {
   DCHECK(host_impl_);
+  is_top_level_viewport_ = !host_impl_->settings().is_layer_tree_for_guest &&
+                           !host_impl_->settings().is_layer_tree_for_subframe;
 }
 
 void Viewport::Pan(const gfx::Vector2dF& delta) {
@@ -69,6 +71,25 @@ Viewport::ScrollResult Viewport::ScrollBy(const gfx::Vector2dF& delta,
   result.consumed_delta = delta - AdjustOverscroll(pending_content_delta);
 
   result.content_scrolled_delta = content_delta - pending_content_delta;
+  return result;
+}
+
+bool Viewport::CanConsumeDelta(const ScrollState& scroll_state) {
+  if (!OuterScrollLayer())
+    return false;
+
+  bool result = false;
+  ScrollTree& scroll_tree =
+      host_impl_->active_tree()->property_trees()->scroll_tree;
+  ScrollNode* inner_node =
+      scroll_tree.Node(InnerScrollLayer()->scroll_tree_index());
+  if (inner_node)
+    result |= host_impl_->CanConsumeDelta(inner_node, scroll_state);
+  ScrollNode* outer_node =
+      scroll_tree.Node(OuterScrollLayer()->scroll_tree_index());
+  if (outer_node)
+    result |= host_impl_->CanConsumeDelta(outer_node, scroll_state);
+
   return result;
 }
 

@@ -107,6 +107,7 @@ class CONTENT_EXPORT CompositorImpl
   void DidReceiveCompositorFrameAck() override;
   void DidCompletePageScaleAnimation() override {}
   bool IsForSubframe() override;
+  bool IsForGuest() override;
 
   // LayerTreeHostSingleThreadClient implementation.
   void DidSubmitCompositorFrame() override;

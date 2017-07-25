@@ -70,6 +70,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
       CompositorDependencies* compositor_deps,
       float device_scale_factor,
       bool is_for_subframe,
+      bool is_for_guest,
       const ScreenInfo& screen_info);
   static std::unique_ptr<cc::LayerTreeHost> CreateLayerTreeHost(
       cc::LayerTreeHostClient* client,
@@ -116,6 +117,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
   void SetPaintedDeviceScaleFactor(float device_scale);
   void SetRasterColorSpace(const gfx::ColorSpace& color_space);
   void SetIsForOopif(bool is_for_oopif);
+  void SetIsForGuest(bool is_for_guest);
   void SetContentSourceId(uint32_t source_id);
   void SetLocalSurfaceId(const viz::LocalSurfaceId& local_surface_id);
 
@@ -204,6 +206,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
   void DidReceiveCompositorFrameAck() override;
   void DidCompletePageScaleAnimation() override;
   bool IsForSubframe() override;
+  bool IsForGuest() override;
 
   // cc::LayerTreeHostSingleThreadClient implementation.
   void RequestScheduleAnimation() override;
@@ -235,6 +238,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
   std::unique_ptr<cc::LayerTreeHost> layer_tree_host_;
   bool never_visible_;
   bool is_for_oopif_;
+  bool is_for_guest_;
 
   blink::WebLayoutAndPaintAsyncCallback* layout_and_paint_async_callback_;
 
