@@ -66,6 +66,7 @@ gfx::SwapResult GLSurfaceCast::SwapBuffersWithBounds(
 
 bool GLSurfaceCast::Resize(const gfx::Size& size,
                            float scale_factor,
+                           ColorSpace color_space,
                            bool has_alpha) {
   return parent_->ResizeDisplay(size) &&
          NativeViewGLSurfaceEGL::Resize(size, scale_factor, has_alpha);
