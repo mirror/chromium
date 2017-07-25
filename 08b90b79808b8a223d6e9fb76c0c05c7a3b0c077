@@ -22,6 +22,30 @@
       "revId": "08b90b79808b8a223d6e9fb76c0c05c7a3b0c077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e756b154_fa8746e4",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-07-25T00:14:51Z",
+      "side": 0,
+      "message": "It fixes functionality related to the bug.  This line was actually the problem, combined with that Sashi\u0027s change made it so |imported_credit_card| actually had a value for masked cards.  Since the flag was always false, this would always fall into the else block below and offer upload save.",
+      "parentUuid": "b760439b_3c9ff302",
+      "range": {
+        "startLine": 1255,
+        "startChar": 7,
+        "endLine": 1255,
+        "endChar": 75
+      },
+      "revId": "08b90b79808b8a223d6e9fb76c0c05c7a3b0c077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
