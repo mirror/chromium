@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26db8227_83bdc11a",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-25T02:39:46Z",
+      "side": 1,
+      "message": "Is there coverage on the normal trybots for this? Or is there an optional trybot I should be adding to test? The last set of tryjobs passed, so maybe we\u0027re in luck?",
+      "parentUuid": "06830e33_748dae21",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91f65ba4_66b5f0b4",
         "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7078f467_e8fec055",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-25T02:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91f65ba4_66b5f0b4",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "852b1deb_62fbb664",
+        "filename": "components/sync/engine_impl/cycle/nudge_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-25T02:39:46Z",
+      "side": 1,
+      "message": "Ah, I had misread an explanation of constexpr. Removed redundant const.",
+      "parentUuid": "17150cd2_a00cfab8",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64eee07b_b4770ac9",
         "filename": "components/update_client/request_sender.cc",
         "patchSetId": 9
@@ -84,6 +138,24 @@
       "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcaeb5b_e3159acc",
+        "filename": "components/update_client/request_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-25T02:39:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64eee07b_b4770ac9",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
