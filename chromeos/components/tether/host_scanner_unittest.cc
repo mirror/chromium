@@ -12,6 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
@@ -25,6 +26,7 @@
 #include "chromeos/components/tether/mock_tether_host_response_recorder.h"
 #include "chromeos/components/tether/proto_test_util.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/network/network_state_test.h"
 #include "components/cryptauth/remote_device_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -178,7 +180,7 @@ CreateFakeScannedDeviceInfos(
 
 }  // namespace
 
-class HostScannerTest : public testing::Test {
+class HostScannerTest : public NetworkStateTest {
  protected:
   HostScannerTest()
       : test_devices_(cryptauth::GenerateTestRemoteDevices(4)),
@@ -186,6 +188,10 @@ class HostScannerTest : public testing::Test {
   }
 
   void SetUp() override {
+    DBusThreadManager::Initialize();
+    NetworkHandler::Initialize();
+    NetworkStateTest::SetUp();
+
     scanned_device_infos_from_current_scan_.clear();
 
     fake_tether_host_fetcher_ = base::MakeUnique<FakeTetherHostFetcher>(
@@ -210,7 +216,7 @@ class HostScannerTest : public testing::Test {
 
     host_scanner_ = base::WrapUnique(new HostScanner(
         fake_tether_host_fetcher_.get(), fake_ble_connection_manager_.get(),
-        fake_host_scan_device_prioritizer_.get(),
+        network_state_handler(), fake_host_scan_device_prioritizer_.get(),
         mock_tether_host_response_recorder_.get(),
         fake_notification_presenter_.get(),
         device_id_tether_network_guid_map_.get(), fake_host_scan_cache_.get(),
@@ -223,6 +229,10 @@ class HostScannerTest : public testing::Test {
   void TearDown() override {
     host_scanner_->RemoveObserver(test_observer_.get());
     HostScannerOperation::Factory::SetInstanceForTesting(nullptr);
+
+    NetworkStateTest::TearDown();
+    NetworkHandler::Shutdown();
+    DBusThreadManager::Shutdown();
   }
 
   // Causes |fake_operation| to receive the scan result in
@@ -252,6 +262,8 @@ class HostScannerTest : public testing::Test {
     VerifyScanResultsMatchCache();
     EXPECT_EQ(previous_scan_finished_count + (is_final_scan_result ? 1 : 0),
               test_observer_->scan_finished_count());
+
+    ASSERT_FALSE(network_state_handler()->DefaultNetwork());
 
     if (scanned_device_infos_from_current_scan_.size() == 1) {
       EXPECT_EQ(FakeNotificationPresenter::PotentialHotspotNotificationState::
@@ -343,6 +355,8 @@ class HostScannerTest : public testing::Test {
         scanned_device_infos_from_current_scan_;
     scanned_device_infos_from_current_scan_.clear();
   }
+
+  const base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   const std::vector<cryptauth::RemoteDevice> test_devices_;
   const std::vector<HostScannerOperation::ScannedDeviceInfo>

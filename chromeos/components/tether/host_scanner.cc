@@ -23,6 +23,7 @@ namespace tether {
 HostScanner::HostScanner(
     TetherHostFetcher* tether_host_fetcher,
     BleConnectionManager* connection_manager,
+    NetworkStateHandler* network_state_handler,
     HostScanDevicePrioritizer* host_scan_device_prioritizer,
     TetherHostResponseRecorder* tether_host_response_recorder,
     NotificationPresenter* notification_presenter,
@@ -31,6 +32,7 @@ HostScanner::HostScanner(
     base::Clock* clock)
     : tether_host_fetcher_(tether_host_fetcher),
       connection_manager_(connection_manager),
+      network_state_handler_(network_state_handler),
       host_scan_device_prioritizer_(host_scan_device_prioritizer),
       tether_host_response_recorder_(tether_host_response_recorder),
       notification_presenter_(notification_presenter),
@@ -87,13 +89,17 @@ void HostScanner::OnTetherAvailabilityResponse(
     NormalizeDeviceStatus(scanned_device_list_so_far.at(0).device_status,
                           nullptr /* carrier */,
                           nullptr /* battery_percentage */, &signal_strength);
-    notification_presenter_->NotifyPotentialHotspotNearby(remote_device,
-                                                          signal_strength);
+    if (!network_state_handler_->DefaultNetwork()) {
+      notification_presenter_->NotifyPotentialHotspotNearby(remote_device,
+                                                            signal_strength);
+    }
   } else if (scanned_device_list_so_far.size() > 1u) {
     // Note: If a single-device notification was previously displayed, calling
     // NotifyMultiplePotentialHotspotsNearby() will reuse the existing
     // notification.
-    notification_presenter_->NotifyMultiplePotentialHotspotsNearby();
+    if (!network_state_handler_->DefaultNetwork()) {
+      notification_presenter_->NotifyMultiplePotentialHotspotsNearby();
+    }
   }
 
   if (is_final_scan_result) {
