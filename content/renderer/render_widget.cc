@@ -361,6 +361,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       text_input_type_(ui::TEXT_INPUT_TYPE_NONE),
       text_input_mode_(ui::TEXT_INPUT_MODE_DEFAULT),
       text_input_flags_(0),
+      next_previous_flags_(0),
       can_compose_inline_(true),
       composition_range_(gfx::Range::InvalidRange()),
       popup_type_(popup_type),
@@ -1085,6 +1086,7 @@ void RenderWidget::ClearTextInputState() {
   text_input_mode_ = ui::TextInputMode::TEXT_INPUT_MODE_DEFAULT;
   can_compose_inline_ = false;
   text_input_flags_ = 0;
+  next_previous_flags_ = 0;
 }
 
 void RenderWidget::UpdateTextInputState() {
@@ -1110,8 +1112,15 @@ void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
     return;  // Not considered as a text input field in WebKit/Chromium.
 
   blink::WebTextInputInfo new_info;
-  if (auto* controller = GetInputMethodController())
+  if (auto* controller = GetInputMethodController()) {
     new_info = controller->TextInputInfo();
+    if (text_input_flags_ == 0) {
+      // Due to a focus change, values will be resetted by the frame.
+      // That case only we need fresh NEXT/PREVIOUS information
+      next_previous_flags_ = controller->NextPreviousFlags();
+    }
+    new_info.flags |= next_previous_flags_;
+  }
   const ui::TextInputMode new_mode =
       ConvertWebTextInputMode(new_info.input_mode);
 
