@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4cddf42_6cb75a88",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-07-25T00:33:30Z",
+      "side": 1,
+      "message": "The `IS_...` pattern is unique to Cast (https://cs.chromium.org/search/?q\u003dBUILDFLAG%5C(IS_\u0026sq\u003dpackage:chromium\u0026type\u003dcs). This should probably be changed in a separate CL.",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e910ea6_49338680",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-07-25T00:33:30Z",
+      "side": 1,
+      "message": "Currently, Widevine will be added last for IS_CAST_USING_CMA_BACKEND and first for OS_ANDROID. To avoid future confusion, I suggest making Widevine first in all cases.",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8edf35_adb0f62b",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-07-25T00:33:30Z",
+      "side": 1,
+      "message": "This is intended for specific WebView use cases to allow unknown-to-Chromium Key Systems to be exposed with an \"x-\u003cname\u003e\" Key System name. Since Cast does know about PlayReady (and the IS_CAST_USING_CMA_BACKEND path explicitly registers it), this doesn\u0027t seem like the right solution. Maybe the underlying code needs to be refactored to allow you to reuse the IPC.",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
