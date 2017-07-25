@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "489bb01a_25224640",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-25T15:40:22Z",
+      "side": 1,
+      "message": "nit: no need in this temporary",
+      "range": {
+        "startLine": 1558,
+        "startChar": 13,
+        "endLine": 1558,
+        "endChar": 25
+      },
+      "revId": "8cb867267d0ec3a50a6c780e8cdd3348766fe344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3074b5ef_eab62470",
+        "filename": "net/disk_cache/simple/simple_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-25T15:40:22Z",
+      "side": 1,
+      "message": "nit: s/iv/previous/ since we prefer full words when naming things",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 37
+      },
+      "revId": "8cb867267d0ec3a50a6c780e8cdd3348766fe344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
