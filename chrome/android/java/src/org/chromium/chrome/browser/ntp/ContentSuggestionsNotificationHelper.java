@@ -26,8 +26,10 @@ import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
+import org.chromium.chrome.browser.notifications.NotificationManagerProxyImpl;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
+import org.chromium.chrome.browser.notifications.channels.ChannelsInitializer;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationAction;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationOptOut;
 import org.chromium.content.browser.BrowserStartupController;
@@ -168,8 +170,8 @@ public class ContentSuggestionsNotificationHelper {
                 0);
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_BROWSER)
+                        .createChromeNotificationBuilder(true /* preferCompat */,
+                                ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS)
                         .setContentIntent(contentIntent)
                         .setDeleteIntent(deleteIntent)
                         .setContentTitle(title)
@@ -183,7 +185,8 @@ public class ContentSuggestionsNotificationHelper {
         }
         manager.notify(NOTIFICATION_TAG, nextId, builder.build());
         NotificationUmaTracker.getInstance().onNotificationShown(
-                NotificationUmaTracker.CONTENT_SUGGESTION, ChannelDefinitions.CHANNEL_ID_BROWSER);
+                NotificationUmaTracker.CONTENT_SUGGESTION,
+                ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS);
         addActiveNotification(new ActiveNotification(nextId, category, idWithinCategory, uri));
 
         // Set timeout.
@@ -431,6 +434,13 @@ public class ContentSuggestionsNotificationHelper {
      */
     @CalledByNative
     private static void flushCachedMetrics() {
+        new ChannelsInitializer(
+                new NotificationManagerProxyImpl(
+                        (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
+                                Context.NOTIFICATION_SERVICE)),
+                ContextUtils.getApplicationContext().getResources())
+                .ensureInitialized(ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS);
+
         BrowserStartupController browserStartup =
                 BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER);
         if (!browserStartup.isStartupSuccessfullyCompleted()) {
