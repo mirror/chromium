@@ -32,17 +32,12 @@ class CONTENT_EXPORT RequestExtraData
   RequestExtraData();
   ~RequestExtraData() override;
 
-  blink::WebPageVisibilityState visibility_state() const {
-    return visibility_state_;
-  }
   void set_visibility_state(blink::WebPageVisibilityState visibility_state) {
     visibility_state_ = visibility_state;
   }
-  int render_frame_id() const { return render_frame_id_; }
   void set_render_frame_id(int render_frame_id) {
     render_frame_id_ = render_frame_id;
   }
-  bool is_main_frame() const { return is_main_frame_; }
   void set_is_main_frame(bool is_main_frame) {
     is_main_frame_ = is_main_frame;
   }
@@ -50,15 +45,12 @@ class CONTENT_EXPORT RequestExtraData
   void set_frame_origin(const url::Origin& frame_origin) {
     frame_origin_ = frame_origin;
   }
-  bool parent_is_main_frame() const { return parent_is_main_frame_; }
   void set_parent_is_main_frame(bool parent_is_main_frame) {
     parent_is_main_frame_ = parent_is_main_frame;
   }
-  int parent_render_frame_id() const { return parent_render_frame_id_; }
   void set_parent_render_frame_id(int parent_render_frame_id) {
     parent_render_frame_id_ = parent_render_frame_id;
   }
-  bool allow_download() const { return allow_download_; }
   void set_allow_download(bool allow_download) {
     allow_download_ = allow_download;
   }
@@ -66,22 +58,13 @@ class CONTENT_EXPORT RequestExtraData
   void set_transition_type(ui::PageTransition transition_type) {
     transition_type_ = transition_type;
   }
-  bool should_replace_current_entry() const {
-    return should_replace_current_entry_;
-  }
   void set_should_replace_current_entry(
       bool should_replace_current_entry) {
     should_replace_current_entry_ = should_replace_current_entry;
   }
-  int transferred_request_child_id() const {
-    return transferred_request_child_id_;
-  }
   void set_transferred_request_child_id(
       int transferred_request_child_id) {
     transferred_request_child_id_ = transferred_request_child_id;
-  }
-  int transferred_request_request_id() const {
-    return transferred_request_request_id_;
   }
   void set_transferred_request_request_id(
       int transferred_request_request_id) {

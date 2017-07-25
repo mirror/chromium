@@ -4331,50 +4331,25 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   // present.
   request.AddHTTPOriginIfNeeded(WebSecurityOrigin::CreateUnique());
 
-  // Attach |should_replace_current_entry| state to requests so that, should
-  // this navigation later require a request transfer, all state is preserved
-  // when it is re-created in the new process.
-  bool should_replace_current_entry = data_source->ReplacesCurrentHistoryItem();
-
-  WebFrame* parent = frame_->Parent();
-  int parent_routing_id =
-      parent ? RenderFrame::GetRoutingIdForWebFrame(parent) : -1;
-
   WebDocument frame_document = frame_->GetDocument();
   RequestExtraData* extra_data =
       static_cast<RequestExtraData*>(request.GetExtraData());
   if (!extra_data)
     extra_data = new RequestExtraData();
-  extra_data->set_visibility_state(VisibilityState());
   extra_data->set_custom_user_agent(custom_user_agent);
   extra_data->set_requested_with(requested_with);
-  extra_data->set_render_frame_id(routing_id_);
-  extra_data->set_is_main_frame(!parent);
   extra_data->set_frame_origin(url::Origin(frame_document.GetSecurityOrigin()));
-  extra_data->set_parent_is_main_frame(parent && !parent->Parent());
-  extra_data->set_parent_render_frame_id(parent_routing_id);
-  extra_data->set_allow_download(
-      navigation_state->common_params().allow_download);
   extra_data->set_transition_type(transition_type);
-  extra_data->set_should_replace_current_entry(should_replace_current_entry);
   extra_data->set_stream_override(std::move(stream_override));
   bool is_prefetch =
       GetContentClient()->renderer()->IsPrefetchOnly(this, request);
   extra_data->set_is_prefetch(is_prefetch);
-  extra_data->set_download_to_network_cache_only(
-      is_prefetch &&
-      WebURLRequestToResourceType(request) != RESOURCE_TYPE_MAIN_FRAME);
   extra_data->set_initiated_in_secure_context(frame_document.IsSecureContext());
 
   // Renderer process transfers apply only to navigational requests.
   bool is_navigational_request =
       request.GetFrameType() != WebURLRequest::kFrameTypeNone;
   if (is_navigational_request) {
-    extra_data->set_transferred_request_child_id(
-        navigation_state->start_params().transferred_request_child_id);
-    extra_data->set_transferred_request_request_id(
-        navigation_state->start_params().transferred_request_request_id);
-
     // For navigation requests, we should copy the flag which indicates if this
     // was a navigation initiated by the renderer to the new RequestExtraData
     // instance.
