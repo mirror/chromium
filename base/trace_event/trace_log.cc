@@ -458,10 +458,10 @@ void TraceLog::UpdateCategoryState(TraceCategory* category) {
   }
 
 #if defined(OS_WIN)
-  if (base::trace_event::TraceEventETWExport::IsCategoryGroupEnabled(
-          category->name())) {
-    state_flags |= TraceCategory::ENABLED_FOR_ETW_EXPORT;
-  }
+  //if (base::trace_event::TraceEventETWExport::IsCategoryGroupEnabled(
+          //category->name())) {
+    //state_flags |= TraceCategory::ENABLED_FOR_ETW_EXPORT;
+  //}
 #endif
 
   uint32_t enabled_filters_bitmap = 0;
@@ -1222,10 +1222,10 @@ TraceEventHandle TraceLog::AddTraceEventWithThreadIdAndTimestamp(
 #if defined(OS_WIN)
   // This is done sooner rather than later, to avoid creating the event and
   // acquiring the lock, which is not needed for ETW as it's already threadsafe.
-  if (*category_group_enabled & TraceCategory::ENABLED_FOR_ETW_EXPORT)
-    TraceEventETWExport::AddEvent(phase, category_group_enabled, name, id,
-                                  num_args, arg_names, arg_types, arg_values,
-                                  convertable_values);
+  //if (*category_group_enabled & TraceCategory::ENABLED_FOR_ETW_EXPORT)
+    //TraceEventETWExport::AddEvent(phase, category_group_enabled, name, id,
+                                  //num_args, arg_names, arg_types, arg_values,
+                                  //convertable_values);
 #endif  // OS_WIN
 
   std::string console_message;
@@ -1407,8 +1407,8 @@ void TraceLog::UpdateTraceEventDurationExplicit(
 
 #if defined(OS_WIN)
   // Generate an ETW event that marks the end of a complete event.
-  if (category_group_enabled_local & TraceCategory::ENABLED_FOR_ETW_EXPORT)
-    TraceEventETWExport::AddCompleteEndEvent(name);
+  //if (category_group_enabled_local & TraceCategory::ENABLED_FOR_ETW_EXPORT)
+    //TraceEventETWExport::AddCompleteEndEvent(name);
 #endif  // OS_WIN
 
   std::string console_message;
@@ -1641,7 +1641,7 @@ TraceBuffer* TraceLog::CreateTraceBuffer() {
       kTraceEventVectorBufferChunks);
 }
 
-#if defined(OS_WIN)
+#if 0 && defined(OS_WIN)
 void TraceLog::UpdateETWCategoryGroupEnabledFlags() {
   // Go through each category and set/clear the ETW bit depending on whether the
   // category is enabled.
