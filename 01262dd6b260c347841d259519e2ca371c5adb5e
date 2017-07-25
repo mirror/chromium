@@ -16,6 +16,24 @@
       "revId": "01262dd6b260c347841d259519e2ca371c5adb5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a41fd1_531c7c8b",
+        "filename": "tools/resources/generate_resource_whitelist.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-25T14:03:13Z",
+      "side": 1,
+      "message": "Tried without it at first, but turns out that since this is in a .gni file, it resolves to the includer\u0027s directory.",
+      "parentUuid": "d5c38b1d_99185242",
+      "revId": "01262dd6b260c347841d259519e2ca371c5adb5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
