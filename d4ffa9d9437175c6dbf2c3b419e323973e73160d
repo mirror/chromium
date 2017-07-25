@@ -45,6 +45,23 @@
       "revId": "d4ffa9d9437175c6dbf2c3b419e323973e73160d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2193f458_8a59b446",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-25T09:35:17Z",
+      "side": 1,
+      "message": "Have you considered splitting all favicon-related API to a separate interface or simply removing them from the HistoryService interface? Many (if not all) of these functions are used by FaviconServiceImpl only, so if a test wanted to have a test double for this API, it would almost certainly mock/fake FaviconService instead.\n\nBesides, friendship with FaviconServiceImpl would be now restricted to either HistoryServiceImpl or the new dedicated interface.",
+      "revId": "d4ffa9d9437175c6dbf2c3b419e323973e73160d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
