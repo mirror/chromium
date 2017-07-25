@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "840b772b_78b4e715",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-25T21:32:54Z",
+      "side": 1,
+      "message": "Would you mind updating this comment? It does not look in sync with the code (ENABLE_DISABLE_VALUE_TYPE and FEATURE_VALUE_TYPE are not mentioned).",
+      "revId": "f00f94608627af04d49b7f16d82698dcd5b3c22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
