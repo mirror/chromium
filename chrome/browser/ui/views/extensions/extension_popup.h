@@ -71,8 +71,7 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
 
   // views::View overrides.
   gfx::Size CalculatePreferredSize() const override;
-  void ViewHierarchyChanged(
-      const ViewHierarchyChangedDetails& details) override;
+  void AddedToWidget() override;
 
   // views::WidgetObserver overrides.
   void OnWidgetActivationChanged(views::Widget* widget, bool active) override;
@@ -122,7 +121,7 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
 
   content::NotificationRegistrar registrar_;
 
-  bool widget_initialized_;
+  bool widget_initialized_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionPopup);
 };
