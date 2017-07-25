@@ -54,6 +54,12 @@ using bookmarks::BookmarkModel;
 
 namespace {
 
+// Clears the information about the last signed-in user from |profile|.
+void ClearLastSignedInUserForProfile(Profile* profile) {
+  profile->GetPrefs()->ClearPref(prefs::kGoogleServicesLastAccountId);
+  profile->GetPrefs()->ClearPref(prefs::kGoogleServicesLastUsername);
+}
+
 // A BrowsingDataRemover::Observer that clears Profile data and then invokes
 // a callback and deletes itself. It can be configured to delete all data
 // (for enterprise users) or only Google's service workers (for all users).
@@ -62,12 +68,20 @@ class ProfileDataRemover : public content::BrowsingDataRemover::Observer {
   ProfileDataRemover(Profile* profile,
                      bool all_data,
                      const base::Closure& callback)
-      : callback_(callback),
+      : profile_(profile),
+        all_data_(all_data),
+        callback_(callback),
         origin_runner_(base::ThreadTaskRunnerHandle::Get()),
         remover_(content::BrowserContext::GetBrowsingDataRemover(profile)) {
     remover_->AddObserver(this);
 
     if (all_data) {
+      // TODO(msramek): It should be possible to delete bookmarks
+      // from BrowsingDataRemover.
+      BookmarkModel* model =
+          BookmarkModelFactory::GetForBrowserContext(profile);
+      model->RemoveAllUserBookmarks();
+
       remover_->RemoveAndReply(
           base::Time(), base::Time::Max(),
           ChromeBrowsingDataRemoverDelegate::ALL_DATA_TYPES,
@@ -96,11 +110,25 @@ class ProfileDataRemover : public content::BrowsingDataRemover::Observer {
 
   void OnBrowsingDataRemoverDone() override {
     remover_->RemoveObserver(this);
+
+    if (all_data_) {
+      BookmarkModel* model =
+          BookmarkModelFactory::GetForBrowserContext(profile_);
+      model->RemoveAllUserBookmarks();
+
+      // All the Profile data has been wiped. Clear the last signed in username
+      // as well, so that the next signin doesn't trigger the account
+      // change dialog.
+      ClearLastSignedInUserForProfile(profile_);
+    }
+
     origin_runner_->PostTask(FROM_HERE, callback_);
     origin_runner_->DeleteSoon(FROM_HERE, this);
   }
 
  private:
+  Profile* profile_;
+  bool all_data_;
   base::Closure callback_;
   scoped_refptr<base::SingleThreadTaskRunner> origin_runner_;
   content::BrowsingDataRemover* remover_;
@@ -225,7 +253,8 @@ void SigninManagerAndroid::WipeProfileData(
 
   WipeData(profile_, true /* all data */,
            base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
-                      weak_factory_.GetWeakPtr(), java_callback));
+                      weak_factory_.GetWeakPtr(), true /* all data */,
+                      java_callback));
 }
 
 void SigninManagerAndroid::WipeGoogleServiceWorkerCaches(
@@ -235,9 +264,11 @@ void SigninManagerAndroid::WipeGoogleServiceWorkerCaches(
   base::android::ScopedJavaGlobalRef<jobject> java_callback;
   java_callback.Reset(env, callback);
 
-  WipeData(profile_, false /* only Google service worker caches */,
-           base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
-                      weak_factory_.GetWeakPtr(), java_callback));
+  WipeData(
+      profile_, false /* only Google service worker caches */,
+      base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
+                 weak_factory_.GetWeakPtr(),
+                 false /* only Google service worker caches */, java_callback));
 }
 
 void SigninManagerAndroid::OnPolicyRegisterDone(
@@ -267,14 +298,8 @@ void SigninManagerAndroid::OnPolicyFetchDone(bool success) {
 }
 
 void SigninManagerAndroid::OnBrowsingDataRemoverDone(
+    bool all_data,
     const base::android::ScopedJavaGlobalRef<jobject>& callback) {
-  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile_);
-  model->RemoveAllUserBookmarks();
-
-  // All the Profile data has been wiped. Clear the last signed in username as
-  // well, so that the next signin doesn't trigger the acount change dialog.
-  ClearLastSignedInUser();
-
   Java_SigninManager_onProfileDataWiped(base::android::AttachCurrentThread(),
                                         java_signin_manager_, callback);
 }
@@ -282,12 +307,7 @@ void SigninManagerAndroid::OnBrowsingDataRemoverDone(
 void SigninManagerAndroid::ClearLastSignedInUser(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
-  ClearLastSignedInUser();
-}
-
-void SigninManagerAndroid::ClearLastSignedInUser() {
-  profile_->GetPrefs()->ClearPref(prefs::kGoogleServicesLastAccountId);
-  profile_->GetPrefs()->ClearPref(prefs::kGoogleServicesLastUsername);
+  ClearLastSignedInUserForProfile(profile_);
 }
 
 void SigninManagerAndroid::LogInSignedInUser(JNIEnv* env,
