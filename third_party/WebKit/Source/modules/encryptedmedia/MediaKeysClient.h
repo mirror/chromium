@@ -5,7 +5,6 @@
 #ifndef MediaKeysClient_h
 #define MediaKeysClient_h
 
-#include "modules/ModulesExport.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
@@ -13,9 +12,7 @@ namespace blink {
 class ExecutionContext;
 class WebEncryptedMediaClient;
 
-class MODULES_EXPORT MediaKeysClient {
-  DISALLOW_NEW();
-
+class MediaKeysClient {
  public:
   MediaKeysClient();
   ~MediaKeysClient() {}
