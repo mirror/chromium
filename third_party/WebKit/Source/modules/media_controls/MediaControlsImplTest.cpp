@@ -658,7 +658,7 @@ TEST_F(MediaControlsImplTest, TimelineMetricsDragFromCurrentPosition) {
   MouseUpAt(track_two_thirds);
 
   EXPECT_LE(0.66 * duration, MediaControls().MediaElement().currentTime());
-  EXPECT_GE(0.68 * duration, MediaControls().MediaElement().currentTime());
+  EXPECT_GE(0.70 * duration, MediaControls().MediaElement().currentTime());
 
   GetHistogramTester().ExpectUniqueSample(
       "Media.Timeline.SeekType." TIMELINE_W,
@@ -695,7 +695,7 @@ TEST_F(MediaControlsImplTest, TimelineMetricsDragFromElsewhere) {
   MouseUpAt(trackTwoThirds);
 
   EXPECT_LE(0.66 * duration, MediaControls().MediaElement().currentTime());
-  EXPECT_GE(0.68 * duration, MediaControls().MediaElement().currentTime());
+  EXPECT_GE(0.70 * duration, MediaControls().MediaElement().currentTime());
 
   GetHistogramTester().ExpectUniqueSample("Media.Timeline.SeekType." TIMELINE_W,
                                           2 /* SeekType::kDragFromElsewhere */,
@@ -703,7 +703,7 @@ TEST_F(MediaControlsImplTest, TimelineMetricsDragFromElsewhere) {
   GetHistogramTester().ExpectTotalCount(
       "Media.Timeline.DragGestureDuration." TIMELINE_W, 1);
   GetHistogramTester().ExpectUniqueSample(
-      "Media.Timeline.DragPercent." TIMELINE_W, 42 /* [30.0%, 35.0%) */, 1);
+      "Media.Timeline.DragPercent." TIMELINE_W, 43 /* [30.0%, 35.0%) */, 1);
   GetHistogramTester().ExpectUniqueSample(
       "Media.Timeline.DragSumAbsTimeDelta." TIMELINE_W, 15 /* [2m, 4m) */, 1);
   GetHistogramTester().ExpectUniqueSample(
@@ -733,7 +733,7 @@ TEST_F(MediaControlsImplTest, TimelineMetricsDragBackAndForth) {
   MouseMoveTo(trackOneThird);
   MouseUpAt(trackOneThird);
 
-  EXPECT_LE(0.32 * duration, MediaControls().MediaElement().currentTime());
+  EXPECT_LE(0.30 * duration, MediaControls().MediaElement().currentTime());
   EXPECT_GE(0.34 * duration, MediaControls().MediaElement().currentTime());
 
   GetHistogramTester().ExpectUniqueSample("Media.Timeline.SeekType." TIMELINE_W,
@@ -742,7 +742,7 @@ TEST_F(MediaControlsImplTest, TimelineMetricsDragBackAndForth) {
   GetHistogramTester().ExpectTotalCount(
       "Media.Timeline.DragGestureDuration." TIMELINE_W, 1);
   GetHistogramTester().ExpectUniqueSample(
-      "Media.Timeline.DragPercent." TIMELINE_W, 8 /* (-35.0%, -30.0%] */, 1);
+      "Media.Timeline.DragPercent." TIMELINE_W, 7 /* (-35.0%, -30.0%] */, 1);
   GetHistogramTester().ExpectUniqueSample(
       "Media.Timeline.DragSumAbsTimeDelta." TIMELINE_W, 17 /* [8m, 15m) */, 1);
   GetHistogramTester().ExpectUniqueSample(
