@@ -44,6 +44,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.DisableHistogramsRule;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.UpdateLayoutParamsCallback;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
+import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
@@ -430,6 +431,55 @@ public class SuggestionsSectionTest {
         section.setStatus(CategoryStatus.AVAILABLE);
         section.appendSuggestions(createDummySuggestions(suggestionCount, TEST_CATEGORY_ID), true);
         assertFalse(section.getProgressItemForTesting().isVisible());
+    }
+
+    /**
+     * Tests that the More button appends new suggestions after dismissing all items. The tricky
+     * condition is that if a section is empty, we issue a fetch instead of a fetch-more. This means
+     * we are using the 'updateSuggestions()' flow to append to the list the user is looking at.
+     */
+    @Test
+    @Feature({"Ntp"})
+    public void testFetchMoreAfterDismissAll() {
+        final int suggestionCount = 10;
+        SuggestionsCategoryInfo info =
+                spy(new CategoryInfoBuilder(KnownCategories.ARTICLES)
+                                .withAction(ContentSuggestionsAdditionalAction.FETCH)
+                                .showIfEmpty()
+                                .build());
+        SuggestionsSection section = createSection(info);
+        section.setStatus(CategoryStatus.AVAILABLE);
+        section.appendSuggestions(
+                createDummySuggestions(suggestionCount, KnownCategories.ARTICLES), false);
+        assertFalse(section.getProgressItemForTesting().isVisible());
+        assertEquals(10, section.getSuggestionsCount());
+        assertTrue(section.getCategoryInfo().isRemote());
+
+        // Dismiss all suggestions.
+        for (int i = 0; i < suggestionCount; i++) {
+            // Bind the first suggestion - indicate that it is being viewed.
+            // Indices in section are off-by-one (index 0 is the header).
+            bindViewHolders(section, 1, 2);
+            @SuppressWarnings("unchecked")
+            Callback<String> callback = mock(Callback.class);
+            section.dismissItem(1, callback);
+        }
+        assertEquals(0, section.getSuggestionsCount());
+
+        // Tap the button -- we handle this case explicitly here to avoid complexity in
+        // verifyAction().
+        section.getActionItemForTesting().performAction(mUiDelegate);
+        verify(mUiDelegate.getSuggestionsSource(), times(1)).fetchRemoteSuggestions();
+
+        // Simulate the arrival of new data.
+        // In production, fetchRemoteSuggestions() triggers a fetch through the bridge. We simulate
+        // the functionality triggered by new data at the bridge.
+        mSuggestionsSource.setStatusForCategory(KnownCategories.ARTICLES, CategoryStatus.AVAILABLE);
+        mSuggestionsSource.createAndSetSuggestions(10, KnownCategories.ARTICLES);
+        section.setStatus(CategoryStatus.AVAILABLE);
+        section.updateSuggestions();
+
+        assertEquals(10, section.getSuggestionsCount());
     }
 
     /**

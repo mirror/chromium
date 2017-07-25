@@ -116,7 +116,7 @@ public class SectionList
 
         // Set the new suggestions.
         section.setStatus(categoryStatus);
-        section.appendSuggestions(suggestions, /* userRequested = */ false);
+        section.appendSuggestions(suggestions, /*sectionSizeExtended=*/false);
         return suggestions.size();
     }
 
