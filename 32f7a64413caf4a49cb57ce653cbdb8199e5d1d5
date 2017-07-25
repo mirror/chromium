@@ -45,6 +45,29 @@
       "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d072a9f_720e320a",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-25T17:44:52Z",
+      "side": 1,
+      "message": "This is unfortunately too simple a solution. We don\u0027t reuse CacheStorageCache objects. Once it\u0027s closed it can\u0027t reopen the cache, hence waiting_for_backend_close_ won\u0027t work. Instead, the CacheStorage, which owns the CacheStorageCache\u0027s, will need to keep track of which CacheStorageCache\u0027s are in the midst of closing and delay the creation of new ones. Since that\u0027s blocking you here I\u0027ll work on that asap.",
+      "range": {
+        "startLine": 1402,
+        "startChar": 4,
+        "endLine": 1402,
+        "endChar": 30
+      },
+      "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
