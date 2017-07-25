@@ -134,6 +134,24 @@
       "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4086028_d3292f5c",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-25T04:36:59Z",
+      "side": 1,
+      "message": "Oops, I missed this before but it\u0027s back to the kPrefixStyle now.",
+      "parentUuid": "22f371f7_057a0731",
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
