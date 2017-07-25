@@ -22,6 +22,30 @@
       "revId": "d6b73b95f995e7f085069775b2d751a93294ded4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ca30bc_65346902",
+        "filename": "net/cookies/cookie_monster_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-07-25T23:02:27Z",
+      "side": 1,
+      "message": "I can use that mock - I forgot about EXPECT_CALL in gmock.",
+      "parentUuid": "ee1f8fcd_d66e7c3d",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "d6b73b95f995e7f085069775b2d751a93294ded4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
