@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a4fc26_ebd28085",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-25T21:24:06Z",
+      "side": 1,
+      "message": "nit: can you replace auto with the type for each of these, as we\u0027re using methods on it, it\u0027s nice to know what it is.",
+      "revId": "3d69f3dc4a0854267d76591c0baa1ba856019a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8661de_39cae476",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-25T21:24:06Z",
+      "side": 1,
+      "message": "why is this one cursor(), the one below is size() and the one above is deleted?",
+      "revId": "3d69f3dc4a0854267d76591c0baa1ba856019a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
