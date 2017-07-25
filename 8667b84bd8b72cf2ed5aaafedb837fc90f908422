@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66bc48c_dd06327f",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-25T17:22:15Z",
+      "side": 1,
+      "message": "GetData().HasState()",
+      "revId": "8667b84bd8b72cf2ed5aaafedb837fc90f908422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a573bfe_60759977",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-25T17:22:15Z",
+      "side": 1,
+      "message": "Using i for column in some methods and row in others makes\nreadability harder. How about using r,c or row,col?\n\nThat also makes it easier to check that GetTableCell is\nalways checking in the right order",
+      "revId": "8667b84bd8b72cf2ed5aaafedb837fc90f908422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8646755a_bc081d53",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-25T17:22:15Z",
+      "side": 1,
+      "message": "I\u0027d either move this to the bottom of the file next to\nother helper functions, or make it a static function that\u0027s\nnot a class member at all.\n\nAs it is now it\u0027s too easy to mistake it for a public API.",
+      "revId": "8667b84bd8b72cf2ed5aaafedb837fc90f908422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
