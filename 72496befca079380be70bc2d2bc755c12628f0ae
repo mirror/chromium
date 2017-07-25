@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f96b407_778417e8",
+        "filename": "base/task_scheduler/blocking_observer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:21:24Z",
+      "side": 1,
+      "message": "If you define ScopedMayBlock and BlockingObserver in the same file, you don\u0027t have to expose GetBlockingObserverForCurrentThread(). I think it would be appropriate to put the 2 classes in the same file since they work together (\n\nE.g.\n\n\u003d\u003d scoped_may_block.h  \u003d\u003d\n\nclass ScopedMayBlock {\n  ...\n};\n\nclass BlockingObserver {\n  ...\n};\n\nvoid SetBlockingObserverForCurrentThread(...);\n\n\u003d\u003d scoped_may_block.cc \u003d\u003d\n\nnamespace {\n\nLazyInstance\u003cThreadLocalPointer\u003cBlockingObserver\u003e\u003e::Leaky\n    tls_blocking_observer \u003d LAZY_INSTANCE_INITIALIZER;\n\n}  // namespace\n\nScopedMayBlock::ScopedMayBlock() {\n  // Accesses the blocking observer directly.\n  if (tls_blocking_observer.Get())\n     tls_blocking_observer.Get()-\u003eTaskBlocked();\n}\n\nScopedMayBlock::~ScopedMayBlock() {\n  if (tls_blocking_observer.Get())\n     tls_blocking_observer.Get()-\u003eTaskUnblocked();\n}\n\nvoid SetBlockingObserverForCurrentThread(...) { ... }",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f237922f_56de28d9",
         "filename": "base/task_scheduler/blocking_observer.cc",
         "patchSetId": 15
