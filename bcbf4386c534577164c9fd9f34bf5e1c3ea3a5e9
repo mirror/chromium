@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "f0ad884b_65a5956f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Can we split this into three separate async_tests? They seem pretty independent, and it would be nice to be able to see which one failed if there is a failure.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a480463_fec7b3ea",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Unless there\u0027s a good reason not to, use single quotes for JS strings.",
+      "range": {
+        "startLine": 12,
+        "startChar": 50,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d108a9_f0055f51",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Missing .",
+      "range": {
+        "startLine": 12,
+        "startChar": 114,
+        "endLine": 12,
+        "endChar": 115
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c7b4da_1140def0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Missing .",
+      "range": {
+        "startLine": 26,
+        "startChar": 155,
+        "endLine": 26,
+        "endChar": 156
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45d5773_09b6b60f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Do you think we could use a shorter delay here? Ideally we don\u0027t have too many tests taking a full second to run.\n\nIt\u0027s tricky though, because the shorter this is, the more likely the test is to flake.\n\nMy intuition is that we should be able to get away with 200ms here though, does that seem likely to you?",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918253c9_d57cd2ce",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Window/resources/window-property-collector.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Trailing .",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4086747a_d206d3c0",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 1
@@ -13,6 +151,75 @@
       "writtenOn": "2017-07-25T09:51:15Z",
       "side": 1,
       "message": "Can we add a comment about what this method is doing?",
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9149d50d_bbf946de",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Might be worth adding a comment that this is to initialize unix_at_zero_monotonic.",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 24
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb94fbd_e81abe6a",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Missing trailing .",
+      "range": {
+        "startLine": 89,
+        "startChar": 34,
+        "endLine": 89,
+        "endChar": 44
+      },
+      "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1855fe_4a0a5263",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-25T12:30:00Z",
+      "side": 1,
+      "message": "Missing trailing.",
+      "range": {
+        "startLine": 93,
+        "startChar": 48,
+        "endLine": 93,
+        "endChar": 53
+      },
       "revId": "bcbf4386c534577164c9fd9f34bf5e1c3ea3a5e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
