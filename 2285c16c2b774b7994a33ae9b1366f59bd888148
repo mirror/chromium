@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4271f3de_7bb8e397",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-25T00:18:54Z",
+      "side": 1,
+      "message": "I am not very familiar with this code path, adding chfremer@ as well. This seems to be only used by pepper and we seem to handle it in the actual implementation[0]. I will look at this further to see if there is any security concern.\n\n[0] https://cs.chromium.org/chromium/src/chrome/browser/media/webrtc/media_capture_devices_dispatcher.cc?rcl\u003d820fe6d53a96fc3f24a0dcbea8d369bf91b1e109\u0026l\u003d61",
+      "parentUuid": "3c38eee9_4b388cb6",
+      "range": {
+        "startLine": 31,
+        "startChar": 54,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20fbeece_d909685d",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 5
