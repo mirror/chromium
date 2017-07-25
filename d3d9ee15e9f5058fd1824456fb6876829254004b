@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dec9cf7_62cb63d7",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-25T15:10:08Z",
+      "side": 1,
+      "message": "Is this TODO done now?",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "d3d9ee15e9f5058fd1824456fb6876829254004b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
