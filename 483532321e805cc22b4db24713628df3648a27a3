@@ -134,6 +134,30 @@
     },
     {
       "key": {
+        "uuid": "e3487db0_2fcdd657",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:21:37Z",
+      "side": 1,
+      "message": "(oh, and if keeping them in, please address in the change description)",
+      "parentUuid": "0298448b_b857d99f",
+      "range": {
+        "startLine": 556,
+        "startChar": 21,
+        "endLine": 556,
+        "endChar": 34
+      },
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1fdfd28_b860628d",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
         "patchSetId": 2
