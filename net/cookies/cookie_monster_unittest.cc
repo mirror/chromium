@@ -61,6 +61,7 @@ class NewMockPersistentCookieStore
   MOCK_METHOD1(AddCookie, void(const CanonicalCookie& cc));
   MOCK_METHOD1(UpdateCookieAccessTime, void(const CanonicalCookie& cc));
   MOCK_METHOD1(DeleteCookie, void(const CanonicalCookie& cc));
+  MOCK_METHOD1(SetBeforeFlushCallback, void(base::RepeatingClosure));
   virtual void Flush(base::OnceClosure callback) {
     if (!callback.is_null())
       base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
@@ -2480,6 +2481,7 @@ class FlushablePersistentStore : public CookieMonster::PersistentCookieStore {
   void UpdateCookieAccessTime(const CanonicalCookie&) override {}
   void DeleteCookie(const CanonicalCookie&) override {}
   void SetForceKeepSessionState() override {}
+  void SetBeforeFlushCallback(base::RepeatingClosure callback) override {}
 
   void Flush(base::OnceClosure callback) override {
     ++flush_count_;
@@ -2509,19 +2511,6 @@ class CallbackCounter : public base::RefCountedThreadSafe<CallbackCounter> {
   ~CallbackCounter() {}
 
   volatile int callback_count_;
-};
-
-class FlushCountingChannelIDStore : public DefaultChannelIDStore {
- public:
-  FlushCountingChannelIDStore()
-      : DefaultChannelIDStore(nullptr), flush_count_(0) {}
-
-  void Flush() override { flush_count_++; }
-
-  int flush_count() { return flush_count_; }
-
- private:
-  int flush_count_;
 };
 
 }  // namespace
@@ -2578,39 +2567,48 @@ TEST_F(CookieMonsterTest, FlushStore) {
   ASSERT_EQ(3, counter->callback_count());
 }
 
-TEST_F(CookieMonsterTest, FlushChannelIDs) {
-  // |channel_id_service| owns |channel_id_store|.
-  FlushCountingChannelIDStore* channel_id_store =
-      new FlushCountingChannelIDStore();
-  std::unique_ptr<ChannelIDService> channel_id_service(
-      new ChannelIDService(channel_id_store));
+namespace {
 
-  scoped_refptr<FlushablePersistentStore> store(new FlushablePersistentStore());
+class SetBeforeFlushCallbackCountingMockPersistentCookieStore
+    : public CookieMonster::PersistentCookieStore {
+ public:
+  MOCK_METHOD1(Load, void(const LoadedCallback& loaded_callback));
+  MOCK_METHOD2(LoadCookiesForKey,
+               void(const std::string& key,
+                    const LoadedCallback& loaded_callback));
+  MOCK_METHOD1(AddCookie, void(const CanonicalCookie& cc));
+  MOCK_METHOD1(UpdateCookieAccessTime, void(const CanonicalCookie& cc));
+  MOCK_METHOD1(DeleteCookie, void(const CanonicalCookie& cc));
+  void SetBeforeFlushCallback(base::RepeatingClosure callback) {
+    before_flush_callback_was_set_ = true;
+  }
+  // Workaround for move-only args in GMock.
+  MOCK_METHOD1(MockFlush, void(base::OnceClosure*));
+  void Flush(base::OnceClosure callback) override { MockFlush(&callback); }
+  MOCK_METHOD0(SetForceKeepSessionState, void());
+
+  bool BeforeFlushCallbackWasSet() { return before_flush_callback_was_set_; }
+
+ protected:
+  virtual ~SetBeforeFlushCallbackCountingMockPersistentCookieStore() {}
+
+ private:
+  bool before_flush_callback_was_set_ = false;
+};
+
+}  // namespace
+
+TEST_F(CookieMonsterTest, BeforeFlushCallbackIsRun) {
+  std::unique_ptr<ChannelIDService> channel_id_service(
+      new ChannelIDService(nullptr));
+
+  scoped_refptr<SetBeforeFlushCallbackCountingMockPersistentCookieStore> store(
+      new testing::StrictMock<
+          SetBeforeFlushCallbackCountingMockPersistentCookieStore>());
   std::unique_ptr<CookieMonster> cm(
       new CookieMonster(store.get(), nullptr, channel_id_service.get()));
-  EXPECT_EQ(0, channel_id_store->flush_count());
 
-  // Before initialization, FlushStore() doesn't propagate to the
-  // ChannelIDStore.
-  cm->FlushStore(base::Closure());
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(0, channel_id_store->flush_count());
-
-  // After initialization, FlushStore() propagates to the ChannelIDStore.
-  GetAllCookies(cm.get());  // Force init.
-  cm->FlushStore(base::Closure());
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(1, channel_id_store->flush_count());
-
-  // If there is no persistent store, then a ChannelIDStore won't be notified.
-  cm.reset(new CookieMonster(nullptr, nullptr, channel_id_service.get()));
-  GetAllCookies(cm.get());  // Force init.
-  cm->FlushStore(base::Closure());
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(1, channel_id_store->flush_count());
+  EXPECT_TRUE(store->BeforeFlushCallbackWasSet());
 }
 
 TEST_F(CookieMonsterTest, SetAllCookies) {
