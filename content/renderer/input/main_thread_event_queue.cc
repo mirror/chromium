@@ -212,6 +212,18 @@ class QueuedWebInputEvent : public ScopedWebInputEventWithLatencyInfo,
   HandledEventCallback callback_;
 };
 
+namespace {
+
+bool IsKeyboardEvent(const std::unique_ptr<MainThreadEventQueueTask>& item) {
+  if (!item->IsWebInputEvent())
+    return false;
+  const QueuedWebInputEvent* event =
+      static_cast<const QueuedWebInputEvent*>(item.get());
+  return blink::WebInputEvent::IsKeyboardEventType(event->event().GetType());
+}
+
+}  // namespace
+
 MainThreadEventQueue::SharedState::SharedState()
     : sent_main_frame_request_(false), sent_post_task_(false) {}
 
@@ -489,6 +501,7 @@ void MainThreadEventQueue::PostTaskToMainThread() {
 void MainThreadEventQueue::QueueEvent(
     std::unique_ptr<MainThreadEventQueueTask> event) {
   bool is_raf_aligned = IsRafAlignedEvent(event);
+  bool is_keyboard_event = IsKeyboardEvent(event);
   bool needs_main_frame = false;
   bool needs_post_task = false;
   {
@@ -501,7 +514,11 @@ void MainThreadEventQueue::QueueEvent(
       if (!is_raf_aligned) {
         needs_post_task = !shared_state_.sent_post_task_;
         shared_state_.sent_post_task_ = true;
-      } else {
+      }
+
+      // Request main frames speculatively for keyboard events
+      // to reduce latency.
+      if (is_raf_aligned || is_keyboard_event) {
         needs_main_frame = !shared_state_.sent_main_frame_request_;
         shared_state_.sent_main_frame_request_ = true;
       }
