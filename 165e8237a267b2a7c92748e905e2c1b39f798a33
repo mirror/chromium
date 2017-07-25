@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b685163f_74f1836c",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-25T17:32:10Z",
+      "side": 1,
+      "message": "Instead of plumbing the whole Image object, plumb is_animating only instead?",
+      "revId": "165e8237a267b2a7c92748e905e2c1b39f798a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
