@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa06f83_c95fbcce",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-25T16:04:03Z",
+      "side": 1,
+      "message": "This example doesn\u0027t include offsets, but if we have a binary name then we\u0027ll always have an offset - so I don\u0027t think we\u0027ll ever see output that looks like this, in practice?  It\u0027ll always be stuff like:\n\n#01 0x0000000001587b5c app:/system/base_unittests+0x864\n#02 0x0000000000779ece\n#03 0x000000000151cb9e app:/system/base_unittests+0x400\n...\n\nwon\u0027t it?",
+      "revId": "7ed50dfd917f032a3007c7c9cc50a31708b628f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc90d9c_1085414c",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-25T16:04:03Z",
+      "side": 1,
+      "message": "Rather than all this indentation, how about making these consecutive processing blocks with continue in the case of them matching, i.e:\n\nif bt_end_re.match(line.strip()):\n  ...\n  continue\n\nm \u003d ....\nif m:\n  ...\n  continue\n\nYou could keep the if...elif...elif... sequence if you want, but you\u0027d need to run all three matchers on every line, which seems overkill.",
+      "revId": "7ed50dfd917f032a3007c7c9cc50a31708b628f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
