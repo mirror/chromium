@@ -1,0 +1,316 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c82aa88_62cca842",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Get the Context from ContextUtils.getApplicationContext() whenever you need it, rather than passing it. (Chrome used to pass Contexts around everywhere, and it was kind of silly, because it was needed in so many places, and there was so much code just for passing Contexts. So we switched to relying on ContextUtils.)\n\nThe package name, also, you can get from AwBrowserProcess.getWebViewPackageName(). (It\u0027s set further up in this function.)",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3baec719_ed0cd702",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Please explain the concurrency design here. AwVariationsSeedFetchService has sLock; this class has sIsSchedulingJob and sScheduleLock; there are various Messengers. How do all these parts fit together?",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26237692_9a9ea96d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Please include time units in the names.",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244affc0_226f42f2",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "This comment seems a bit superfluous.",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89279ea6_fa8a9f3f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "It looks like this indicates whether a job is running. Scheduling the job happens quickly. Maybe a better name would be \"sIsJobRunning\".",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8dba3f_dcce5a65",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Did you mean \"Until\"?",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18ab317_e57a6f04",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Is this supposed to be here?",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c93d9c_8960eda0",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "This is a bit vague. How about \"Interrupted while waiting for variations seed\"?",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12518906_dfddf008",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Group fields together at the top of the class.",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2ac70b_b5be88fb",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Add a comment labeling the job ID argument, or use a named constant (like \"final int JOB_ID \u003d 0\"), so readers know what it\u0027s for.",
+      "range": {
+        "startLine": 173,
+        "startChar": 54,
+        "endLine": 173,
+        "endChar": 55
+      },
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8038e446_dd8ce134",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "The style with builders is generally to put it all in one statement, like so:\n\nFoo foo \u003d new Foo.Builder(howdy)\n\t.setStyle(stylish)\n\t.setReadiness(bornReady)\n\t.build()",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79119714_18c1bbf4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Comment why the date has this format (because it comes from the HTTP header).",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47c0e9f_388f6878",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Do you think this would lose anything by being shortened to \"getOrCreateVariationsDir\"?",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3801a8d6_48933d2b",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "seedDataFileDescriptor.getFileDescriptor() will have already crashed if seedDataFileDescriptor \u003d\u003d null.",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86565684_3416fa24",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Maybe we should check that the file has the right number of lines?\n\nAnd when we convert the list to a SeedPreference, we should make sure the strings parse correctly, though I guess that\u0027s not part of this change.",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324c2f86_acb60611",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "These 2 comments are redundant.",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cf6468_67492fef",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "I\u0027d think we should fail the test if parcelFileDescriptor \u003d\u003d null, of if there\u0027s an IOException.",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f857628f_3fa3ec51",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:39:52Z",
+      "side": 1,
+      "message": "Loop?",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
