@@ -208,7 +208,7 @@ void SurfaceLayerImpl::AppendRainbowDebugBorder(RenderPass* render_pass) {
                           colors[kNumColors - 1 - (i % kNumColors)],
                           force_anti_aliasing_off);
 
-      if (contents_opaque()) {
+      if (IsContentsOpaque()) {
         // Draws a stripe filling the layer vertically with the same color and
         // width as the horizontal stipes along the layer's top border.
         SolidColorDrawQuad* solid_quad =
