@@ -15,10 +15,18 @@ WorkerSettings::WorkerSettings(Settings* settings) {
 
 void WorkerSettings::CopyFlagValuesFromSettings(Settings* settings) {
   disable_reading_from_canvas_ = settings->GetDisableReadingFromCanvas();
+  strict_mixed_content_checking_ = settings->GetStrictMixedContentChecking();
+  allow_running_of_insecure_content_ =
+      settings->GetAllowRunningOfInsecureContent();
+  strictly_block_blockable_mixed_content_ =
+      settings->GetStrictlyBlockBlockableMixedContent();
 }
 
 void WorkerSettings::SetDefaultValues() {
   disable_reading_from_canvas_ = false;
+  strict_mixed_content_checking_ = false;
+  allow_running_of_insecure_content_ = false;
+  strictly_block_blockable_mixed_content_ = false;
 }
 
 }  // namespace blink
