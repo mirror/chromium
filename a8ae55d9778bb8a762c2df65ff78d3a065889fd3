@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d586be7_d2705506",
+        "filename": "chromeos/process_proxy/process_proxy_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T03:46:00Z",
+      "side": 1,
+      "message": "WDYT about introducing something like\nvoid RunOnTaskRunner(const base::Closure\u0026 closure,\n                     const scoped_refptr\u003cSequencedTaskRunner\u003e\u0026 task_runner) {\n  task_runner-\u003ePostTask(FROM_HERE, closure);\n}\n\npass that to Init/EndRegistryTest with a RunLoop::QuitClosure:\n\nbase::RunLoop test_result_waiter;\nProcessProxyRegistry::GetTaskRunner()-\u003ePostTask(\n    FROM_HERE,\n    base::Unretained(this),\n    base::BindOnce(\u0026RunOnTaskRunner,\n                   test_result_waiter.QuitClosure(),\n                   base::SequencesTaskRnnerHandle::Get()));\ntest_result_waiter.Run();\n\nand run those instead of MessageLoop::QuitWhenIdleClosure.",
+      "revId": "a8ae55d9778bb8a762c2df65ff78d3a065889fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
