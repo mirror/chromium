@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1668ca5e_396f1606",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done. Previous iteration had it as an optional",
+      "parentUuid": "84cdb114_e283c950",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e00333f_eaecb7ee",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-21T23:36:48Z",
       "side": 1,
       "message": "nit: /* animate */\nsame for the rest",
+      "range": {
+        "startLine": 203,
+        "startChar": 49,
+        "endLine": 203,
+        "endChar": 54
+      },
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ad2df6_341321f3",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Google style guide uses /*foo*/ in examples, but doesn\u0027t explicitly call it out. ash/login already uses /*foo*/ style. If we explicitly prefer /* foo */ I can change them, but I\u0027m prefer to keep as-is for local consistency.\n\nie, in the style guide,\n\n  void Circle::Rotate(double /*radians*/) {}\n\nor\n\n  const DecimalNumber product \u003d\n      CalculateProduct(values, options, /*completion_callback\u003d*/nullptr);",
+      "parentUuid": "4e00333f_eaecb7ee",
       "range": {
         "startLine": 203,
         "startChar": 49,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "f6b50af5_8e608b9c",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "450a1582_dfe6d24f",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e45008_ef10f90d",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 4
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-21T23:36:48Z",
       "side": 1,
       "message": "optoinal: a comment on argument is used for bool. You may keep it if you prefer though.",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9f2d77_7b6e4dc4",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m a bit confused. Can you rephrase?",
+      "parentUuid": "44e45008_ef10f90d",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "a42b25a9_6755e406",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47c1e64e_33bfc513",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fc5c807_3858dae9",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8476bf_6dca26e9",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fc5c807_3858dae9",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "d307948a_1e099ac0",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eceb10e_b035c931",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 22
+      },
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d733d792_547d4920",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 4
@@ -144,6 +282,24 @@
       "writtenOn": "2017-07-21T23:36:48Z",
       "side": 1,
       "message": "optional: Alternatively, if the view is backed by layer, you can simply set the opacity of the layer to 0 without affecting layout manager.",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144ddace_016a0180",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "iirc, the view is still focusable when you do that.",
+      "parentUuid": "d733d792_547d4920",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "f3701371_9ab78c77",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Initial iteration used BoundsAnimator so I never tried layer animation. I\u0027ve changed the approach to use layer animation.",
+      "parentUuid": "8d9c81ce_bab76473",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bd98ca1_80cce99a",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 4
@@ -181,6 +355,24 @@
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28530695_c0378cf3",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd98ca1_80cce99a",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "a04ec6fb_21c8b90d",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54c07a07_8d26e945",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebeda744_752f0f6b",
         "filename": "ash/login/ui/login_auth_user_view_unittest.cc",
         "patchSetId": 4
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "80f483df_aca724e0",
+        "filename": "ash/login/ui/login_auth_user_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebeda744_752f0f6b",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a92e296_278fbe2c",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 4
@@ -229,6 +457,24 @@
       "writtenOn": "2017-07-21T23:36:48Z",
       "side": 1,
       "message": "Have you considered using PreemptionStrategy instead of stopping?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebb8e84_10e2ddbc",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:27:22Z",
+      "side": 1,
+      "message": "Yep, it doesn\u0027t work as well (animations end up queuing up even with IMMEDIATELY_ANIMATE_TO_NEW_TARGET or REPLACE_QUEUED_ANIMATIONS).",
+      "parentUuid": "3a92e296_278fbe2c",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
