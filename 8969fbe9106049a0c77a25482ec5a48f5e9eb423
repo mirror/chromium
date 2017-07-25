@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f574cc_8ce7dd8e",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-25T05:31:35Z",
+      "side": 1,
+      "message": "swanky",
+      "range": {
+        "startLine": 366,
+        "startChar": 28,
+        "endLine": 366,
+        "endChar": 30
+      },
+      "revId": "8969fbe9106049a0c77a25482ec5a48f5e9eb423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089b9a06_87ba15b6",
+        "filename": "chrome/browser/resources/md_bookmarks/command_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-25T05:31:35Z",
+      "side": 1,
+      "message": "Disappointing.",
+      "range": {
+        "startLine": 367,
+        "startChar": 22,
+        "endLine": 367,
+        "endChar": 45
+      },
+      "revId": "8969fbe9106049a0c77a25482ec5a48f5e9eb423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05ce0d6_d70bf372",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2867,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-25T05:31:35Z",
+      "side": 1,
+      "message": "Also used for enter.",
+      "revId": "8969fbe9106049a0c77a25482ec5a48f5e9eb423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
