@@ -346,8 +346,8 @@ void AutocompleteController::Start(const AutocompleteInput& input) {
   // If the input looks like a query, send a signal predicting that the user is
   // going to issue a search (either to the default search engine or to a
   // keyword search engine, as indicated by the destination_url). This allows
-  // any associated service worker to start up early and reduce the latency of a
-  // resulting search. However, to avoid a potentially expensive operation, we
+  // any associated service worker to start up early and reduce the latency of
+  // a resulting search. However, to avoid a potentially expensive operation, we
   // only do this once per session. Additionally, a default match is expected to
   // be available at this point but we check anyway to guard against an invalid
   // dereference.
