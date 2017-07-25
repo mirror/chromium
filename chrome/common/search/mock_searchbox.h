@@ -5,7 +5,7 @@
 #ifndef CHROME_COMMON_SEARCH_MOCK_SEARCHBOX_H_
 #define CHROME_COMMON_SEARCH_MOCK_SEARCHBOX_H_
 
-#include "chrome/common/instant.mojom.h"
+#include "chrome/common/search.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 class MockSearchBox : public chrome::mojom::SearchBox {
