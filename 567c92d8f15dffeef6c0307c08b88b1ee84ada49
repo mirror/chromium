@@ -16,6 +16,24 @@
       "revId": "567c92d8f15dffeef6c0307c08b88b1ee84ada49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34f3c56_c7938764",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextEncodingRegistry.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-25T21:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d40db33f_783fa706",
+      "revId": "567c92d8f15dffeef6c0307c08b88b1ee84ada49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
