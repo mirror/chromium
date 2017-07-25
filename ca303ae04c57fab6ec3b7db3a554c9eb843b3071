@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "020e7258_d3d089a4",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-25T20:47:25Z",
+      "side": 1,
+      "message": "Personally I indent the \" to aovid having all that extra whitespace in the binary.",
+      "range": {
+        "startLine": 429,
+        "startChar": 44,
+        "endLine": 429,
+        "endChar": 45
+      },
+      "revId": "ca303ae04c57fab6ec3b7db3a554c9eb843b3071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
