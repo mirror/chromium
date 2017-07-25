@@ -96,13 +96,15 @@ bool ChildWindowSurfaceWin::InitializeNativeWindow() {
 
 bool ChildWindowSurfaceWin::Resize(const gfx::Size& size,
                                    float scale_factor,
+                                   ColorSpace color_space,
                                    bool has_alpha) {
   if (!SupportsPostSubBuffer()) {
     if (!MoveWindow(window_, 0, 0, size.width(), size.height(), FALSE)) {
       return false;
     }
     alpha_ = has_alpha;
-    return gl::NativeViewGLSurfaceEGL::Resize(size, scale_factor, has_alpha);
+    return gl::NativeViewGLSurfaceEGL::Resize(size, scale_factor, color_space,
+                                              has_alpha);
   } else {
     if (size == GetSize() && has_alpha == alpha_)
       return true;
