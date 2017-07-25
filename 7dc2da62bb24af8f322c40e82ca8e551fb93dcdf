@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a717759f_9d3609c0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:22:47Z",
+      "side": 1,
+      "message": "Revert changes to this file",
+      "revId": "7dc2da62bb24af8f322c40e82ca8e551fb93dcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33e935b_1a74c07d",
+        "filename": "base/task_scheduler/scoped_may_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:22:47Z",
+      "side": 1,
+      "message": "add DISALLOW_COPY_AND_ASSIGN",
+      "revId": "7dc2da62bb24af8f322c40e82ca8e551fb93dcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
