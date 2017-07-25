@@ -269,6 +269,8 @@ class CORE_EXPORT LocalFrameView final
 
   void HandleLoadCompleted();
 
+  void RecordScrollerSizeRelatedMetrics();
+
   void UpdateDocumentAnnotatedRegions() const;
 
   void DidAttachDocument();
@@ -1220,6 +1222,8 @@ class CORE_EXPORT LocalFrameView final
   Member<PrintContext> print_context_;
 
   FRIEND_TEST_ALL_PREFIXES(WebViewTest, DeviceEmulationResetScrollbars);
+
+  bool scroller_size_metrics_recorded_;
 };
 
 inline void LocalFrameView::IncrementVisuallyNonEmptyCharacterCount(

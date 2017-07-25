@@ -2033,6 +2033,7 @@ void WebViewImpl::UpdateAllLifecyclePhases() {
       should_dispatch_first_layout_after_finished_loading_ = false;
       client->DidMeaningfulLayout(WebMeaningfulLayout::kFinishedLoading);
     }
+    view->RecordScrollerSizeRelatedMetrics();
   }
 }
 

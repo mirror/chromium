@@ -215,7 +215,8 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       allows_layout_invalidation_after_layout_clean_(true),
       forcing_layout_parent_view_(false),
       needs_intersection_observation_(false),
-      main_thread_scrolling_reasons_(0) {
+      main_thread_scrolling_reasons_(0),
+      scroller_size_metrics_recorded_(false) {
   Init();
 }
 
@@ -2193,25 +2194,62 @@ void LocalFrameView::HandleLoadCompleted() {
   if (!NeedsLayout())
     ClearFragmentAnchor();
 
-  if (!scrollable_areas_)
+  scroller_size_metrics_recorded_ = false;
+}
+
+void LocalFrameView::RecordScrollerSizeRelatedMetrics() {
+  if (scroller_size_metrics_recorded_)
     return;
+  scroller_size_metrics_recorded_ = true;
+  int total_size = 0;
+  int small_scroller_size = 0;
+  // If root scroller is the only scroller on page, record 0 as small scroller
+  // percentage if necessary.
+  if (!scrollable_areas_) {
+    if (GetScrollableArea() &&
+        GetScrollableArea()->IsPaintLayerScrollableArea() &&
+        ToPaintLayerScrollableArea(GetScrollableArea())->ScrollsOverflow()) {
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 0, 1, 100, 101);
+    }
+    return;
+  }
   for (const auto& scrollable_area : *scrollable_areas_) {
     if (!scrollable_area->IsPaintLayerScrollableArea())
       continue;
     PaintLayerScrollableArea* paint_layer_scrollable_area =
         ToPaintLayerScrollableArea(scrollable_area);
     if (paint_layer_scrollable_area->ScrollsOverflow() &&
-        !paint_layer_scrollable_area->Layer()->IsRootLayer() &&
         paint_layer_scrollable_area->VisibleContentRect().Size().Area() > 0) {
       CheckedNumeric<int> size =
           paint_layer_scrollable_area->VisibleContentRect().Width();
       size *= paint_layer_scrollable_area->VisibleContentRect().Height();
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          "Event.Scroll.ScrollerSize.OnLoad",
-          size.ValueOrDefault(std::numeric_limits<int>::max()), 1,
-          kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+      int scroller_size = size.ValueOrDefault(std::numeric_limits<int>::max());
+
+      if (!paint_layer_scrollable_area->Layer()->IsRootLayer()) {
+        UMA_HISTOGRAM_CUSTOM_COUNTS(
+            "Event.Scroll.ScrollerSize.OnLoad", scroller_size, 1,
+            kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+      }
+
+      // We only want to count scrollers that are about to be composited.
+      if (paint_layer_scrollable_area->NeedsCompositedScrolling()) {
+        if (scroller_size < kSmallScrollerThreshold)
+          small_scroller_size += scroller_size;
+        total_size += scroller_size;
+      }
     }
   }
+  CheckedNumeric<int> checked_root_size =
+      GetLayoutView()->GetLayoutSize().Width();
+  checked_root_size *= GetLayoutView()->GetLayoutSize().Height();
+  int root_size =
+      checked_root_size.ValueOrDefault(std::numeric_limits<int>::max());
+  total_size += root_size;
+
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage",
+      100.f * small_scroller_size / total_size, 1, 100, 101);
 }
 
 void LocalFrameView::ClearLayoutSubtreeRoot(const LayoutObject& root) {

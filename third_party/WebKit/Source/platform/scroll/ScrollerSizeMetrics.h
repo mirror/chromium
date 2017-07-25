@@ -10,6 +10,7 @@
 namespace blink {
 using cc::kScrollerSizeLargestBucket;
 using cc::kScrollerSizeBucketCount;
+using cc::kSmallScrollerThreshold;
 }
 
 #endif  // ScrollerSizeMetrics_h
