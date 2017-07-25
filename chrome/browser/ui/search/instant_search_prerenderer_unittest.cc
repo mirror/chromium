@@ -22,6 +22,7 @@
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/prerender/prerender_origin.h"
 #include "chrome/browser/prerender/prerender_tab_helper.h"
+#include "chrome/browser/prerender/prerender_test_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/instant_service.h"
 #include "chrome/browser/search/instant_unittest_base.h"
@@ -184,6 +185,7 @@ class InstantSearchPrerendererTest : public InstantUnitTestBase {
   void SetUp() override {
     ASSERT_TRUE(base::FieldTrialList::CreateFieldTrial("EmbeddedSearch",
                                                        "Group1 strk:20"));
+    PrerenderManager::SetInstantMode(PrerenderManager::PRERENDER_MODE_ENABLED);
     InstantUnitTestBase::SetUp();
   }
 
@@ -242,6 +244,7 @@ class InstantSearchPrerendererTest : public InstantUnitTestBase {
 
  private:
   MockSearchBox mock_search_box_;
+  prerender::test_utils::RestorePrerenderMode restore_prerender_mode_;
 };
 
 TEST_F(InstantSearchPrerendererTest, GetSearchTermsFromPrerenderedPage) {
