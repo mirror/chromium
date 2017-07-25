@@ -54,12 +54,15 @@
 
       /* Persistent underline */
       .md-select-underline {
+        /* Use a fake height to avoid the element getting too small when zooming
+         * out, which can cause the underline to not display. */
+        --fake-height: 2px;
         -webkit-margin-end: 0;
         -webkit-margin-start: var(--md-select-side-padding);
         border-top: 1px solid var(--paper-grey-300);
         display: block;
-        height: 0;
-        margin-bottom: 0;
+        height: var(--fake-height);
+        margin-bottom: -var(--fake-height);
         margin-top: 0;
       }
 
