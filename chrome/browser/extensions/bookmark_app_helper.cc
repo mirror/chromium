@@ -31,6 +31,7 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/browser/webshare/share_target_pref_helper.h"
+#include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "chrome/common/origin_trials/chrome_origin_trial_policy.h"
@@ -343,6 +344,26 @@ class BookmarkAppInstaller : public base::RefCounted<BookmarkAppInstaller>,
 namespace extensions {
 
 // static
+GURL BookmarkAppHelper::GetScopeFromExtension(const Extension* extension) {
+  const std::vector<UrlHandlerInfo>* url_handlers =
+      UrlHandlers::GetUrlHandlers(extension);
+  if (!url_handlers || url_handlers->size() == 0)
+    return GURL();
+
+  // A Bookmark app created by us should only have one url_handler with a
+  // single pattern which corresponds to the web manifest's scope.
+  DCHECK(url_handlers->size() == 1);
+  const auto& patterns = (*url_handlers)[0].patterns;
+  DCHECK(patterns.size() == 1);
+  const auto& pattern_iter = patterns.begin();
+  // Remove the '*' character at the end of the domain + path
+  // (which was added when creating the URL handlers).
+  const std::string& pattern_str = pattern_iter->GetAsString();
+  DCHECK_EQ(pattern_str.back(), '*');
+  return GURL(pattern_str.substr(0, pattern_str.size() - 1));
+}
+
+// static
 void BookmarkAppHelper::UpdateWebAppInfoFromManifest(
     const content::Manifest& manifest,
     WebApplicationInfo* web_app_info) {
@@ -356,6 +377,9 @@ void BookmarkAppHelper::UpdateWebAppInfoFromManifest(
   // Set the url based on the manifest value, if any.
   if (manifest.start_url.is_valid())
     web_app_info->app_url = manifest.start_url;
+
+  if (!manifest.scope.is_empty())
+    web_app_info->scope = manifest.scope;
 
   // If any icons are specified in the manifest, they take precedence over any
   // we picked up from the web_app stuff.
@@ -805,6 +829,7 @@ void GetWebApplicationInfoFromApp(
   web_app_info.app_url = AppLaunchInfo::GetLaunchWebURL(extension);
   web_app_info.title = base::UTF8ToUTF16(extension->non_localized_name());
   web_app_info.description = base::UTF8ToUTF16(extension->description());
+  web_app_info.scope = BookmarkAppHelper::GetScopeFromExtension(extension);
 
   const ExtensionIconSet& icon_set = extensions::IconsInfo::GetIcons(extension);
   std::vector<extensions::ImageLoader::ImageRepresentation> info_list;
