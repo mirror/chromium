@@ -103,8 +103,12 @@ const HTTPHeaderMap& WebServiceWorkerRequest::Headers() const {
   return private_->headers_;
 }
 
-void WebServiceWorkerRequest::SetBlob(const WebString& uuid, long long size) {
-  private_->blob_data_handle = BlobDataHandle::Create(uuid, String(), size);
+void WebServiceWorkerRequest::SetBlob(
+    const WebString& uuid,
+    long long size,
+    storage::mojom::blink::BlobPtrInfo blob_info) {
+  private_->blob_data_handle =
+      BlobDataHandle::Create(uuid, String(), size, std::move(blob_info));
 }
 
 PassRefPtr<BlobDataHandle> WebServiceWorkerRequest::GetBlobDataHandle() const {
