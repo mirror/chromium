@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8ddf75_c190550e",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-25T07:54:52Z",
+      "side": 1,
+      "message": "Is this line also relevant to the bug?",
+      "revId": "810248ffe6c2da0c5b1b762550166430d541d174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
