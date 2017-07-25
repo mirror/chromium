@@ -5383,7 +5383,8 @@ void WebGLRenderingContextBase::TexImageHelperImageBitmap(
     }
     return;
   }
-  sk_sp<SkImage> sk_image = bitmap->BitmapImage()->ImageForCurrentFrame();
+  sk_sp<SkImage> sk_image =
+      bitmap->BitmapImage()->PaintImageForCurrentFrame().GetSkImage();
   SkPixmap pixmap;
   uint8_t* pixel_data_ptr = nullptr;
   RefPtr<Uint8Array> pixel_data;
