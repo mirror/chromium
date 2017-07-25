@@ -1307,13 +1307,6 @@ void ProfileIOData::SetUpJobFactoryDefaultsForBuilder(
     net::HostResolver* host_resolver) const {
   // NOTE(willchan): Keep these protocol handlers in sync with
   // ProfileIOData::IsHandledProtocol().
-  builder->SetProtocolHandler(
-      url::kFileScheme,
-      base::MakeUnique<net::FileProtocolHandler>(
-          base::CreateTaskRunnerWithTraits(
-              {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-               base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})));
-
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   DCHECK(extension_info_map_.get());
   // Check only for incognito (and not Chrome OS guest mode GUEST_PROFILE).
@@ -1322,8 +1315,6 @@ void ProfileIOData::SetUpJobFactoryDefaultsForBuilder(
                               extensions::CreateExtensionProtocolHandler(
                                   is_incognito, extension_info_map_.get()));
 #endif
-  builder->SetProtocolHandler(url::kDataScheme,
-                              base::MakeUnique<net::DataProtocolHandler>());
 #if defined(OS_CHROMEOS)
   if (profile_params_) {
     builder->SetProtocolHandler(
@@ -1343,11 +1334,6 @@ void ProfileIOData::SetUpJobFactoryDefaultsForBuilder(
   builder->SetProtocolHandler(
       url::kAboutScheme,
       base::MakeUnique<about_handler::AboutProtocolHandler>());
-
-#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
-  builder->SetProtocolHandler(url::kFtpScheme,
-                              net::FtpProtocolHandler::Create(host_resolver));
-#endif  // !BUILDFLAG(DISABLE_FTP_SUPPORT)
 
 #if BUILDFLAG(DEBUG_DEVTOOLS)
   request_interceptors.push_back(base::MakeUnique<DebugDevToolsInterceptor>());
