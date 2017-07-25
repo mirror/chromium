@@ -968,7 +968,6 @@ content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
     // Check that data saver is enabled, the user isn't opted out of LoFi for
     // the session, and the user is eligible for previews.
     if (data_reduction_proxy_io_data->IsEnabled() &&
-        !data_reduction_proxy_io_data->config()->lofi_off() &&
         previews::params::IsClientLoFiEnabled() &&
         previews_io_data->ShouldAllowPreviewAtECT(
             url_request, previews::PreviewsType::LOFI,
