@@ -362,6 +362,7 @@ class CONTENT_EXPORT CacheStorageCache {
   void InitGotCacheSize(base::OnceClosure callback,
                         CacheStorageError cache_create_error,
                         int cache_size);
+  void DeleteBackendCompletedIO();
 
   std::unique_ptr<storage::BlobDataHandle> PopulateResponseBody(
       disk_cache::ScopedEntryPtr entry,
@@ -372,6 +373,9 @@ class CONTENT_EXPORT CacheStorageCache {
 
   // Be sure to check |backend_state_| before use.
   std::unique_ptr<disk_cache::Backend> backend_;
+
+  // Active while we are waiting for the backend to finish its closing up.
+  base::OnceClosure waiting_for_backend_close_;
 
   GURL origin_;
   const std::string cache_name_;
