@@ -6692,7 +6692,7 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
   registry_.AddInterface(base::Bind(&FrameInputHandlerImpl::CreateMojoService,
                                     weak_factory_.GetWeakPtr()));
 
-  GetInterfaceRegistry()->AddInterface(
+  registry_.AddInterface(
       base::Bind(&RenderFrameImpl::BindWidget, weak_factory_.GetWeakPtr()));
 
   if (!frame_->Parent()) {
