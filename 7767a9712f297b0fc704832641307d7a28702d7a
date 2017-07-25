@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98af229a_3615fc3e",
+        "filename": "chrome/browser/ui/android/infobars/translate_compact_infobar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179312
+      },
+      "writtenOn": "2017-07-25T09:08:57Z",
+      "side": 1,
+      "message": "\"If the number of times a user consecutively denies the translate infobar is equal to this number\" ?",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "7767a9712f297b0fc704832641307d7a28702d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e216b3e9_9990af2e",
+        "filename": "chrome/browser/ui/android/infobars/translate_compact_infobar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179312
+      },
+      "writtenOn": "2017-07-25T09:08:57Z",
+      "side": 1,
+      "message": "Is this value is reset to 0, once a user accepts an auto-translation? If yes, can you also add information here? and below?",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "7767a9712f297b0fc704832641307d7a28702d7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
