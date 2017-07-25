@@ -43,9 +43,10 @@ class GpuArcVideoDecodeAccelerator
   void OnOutputFormatChanged(const VideoFormat& format) override;
 
   // ::arc::mojom::VideoDecodeAccelerator implementation.
-  void Initialize(::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
-                  ::arc::mojom::VideoDecodeClientPtr client,
-                  const InitializeCallback& callback) override;
+  void InitializeDeprecated(
+      ::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
+      ::arc::mojom::VideoDecodeClientPtr client,
+      const InitializeDeprecatedCallback& callback) override;
   void BindSharedMemory(::arc::mojom::PortType port,
                         uint32_t index,
                         mojo::ScopedHandle ashmem_handle,
@@ -61,6 +62,18 @@ class GpuArcVideoDecodeAccelerator
   void SetNumberOfOutputBuffers(uint32_t number) override;
   void Flush() override;
   void Reset() override;
+
+  // TODO: implement these new IPC functions
+  void Initialize(media::VideoCodecProfile profile,
+                  ::arc::mojom::VideoDecodeClientPtr client,
+                  const InitializeCallback& callback) override {}
+  void Decode(::arc::mojom::BitstreamBufferInfoPtr info) override {}
+  void AssignPictureBuffers(uint32_t number) override {}
+  void ImportBufferForPicture(
+      uint32_t index,
+      mojo::ScopedHandle dmabuf_fd,
+      std::vector<::arc::VideoFramePlane> planes) override {}
+  void ReusePictureBuffer(uint32_t index) override {}
 
   base::ScopedFD UnwrapFdFromMojoHandle(mojo::ScopedHandle handle);
 
