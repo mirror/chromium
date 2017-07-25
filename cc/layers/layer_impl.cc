@@ -148,8 +148,9 @@ void LayerImpl::SetScrollTreeIndex(int index) {
 void LayerImpl::PopulateSharedQuadState(SharedQuadState* state) const {
   state->SetAll(draw_properties_.target_space_transform, gfx::Rect(bounds()),
                 draw_properties_.visible_layer_rect, draw_properties_.clip_rect,
-                draw_properties_.is_clipped, draw_properties_.opacity,
-                SkBlendMode::kSrcOver, GetSortingContextId());
+                draw_properties_.is_clipped, draw_properties_.is_opaque,
+                draw_properties_.opacity, SkBlendMode::kSrcOver,
+                GetSortingContextId());
 }
 
 void LayerImpl::PopulateScaledSharedQuadState(
@@ -168,8 +169,9 @@ void LayerImpl::PopulateScaledSharedQuadState(
 
   state->SetAll(scaled_draw_transform, gfx::Rect(scaled_bounds),
                 scaled_visible_layer_rect, draw_properties().clip_rect,
-                draw_properties().is_clipped, draw_properties().opacity,
-                SkBlendMode::kSrcOver, GetSortingContextId());
+                draw_properties().is_clipped, draw_properties_.is_opaque,
+                draw_properties().opacity, SkBlendMode::kSrcOver,
+                GetSortingContextId());
 }
 
 bool LayerImpl::WillDraw(DrawMode draw_mode,
@@ -237,7 +239,7 @@ void LayerImpl::AppendDebugBorderQuad(RenderPass* render_pass,
       render_pass->CreateAndAppendDrawQuad<DebugBorderDrawQuad>();
   debug_border_quad->SetNew(
       shared_quad_state, quad_rect, visible_quad_rect, color, width);
-  if (contents_opaque()) {
+  if (IsContentsOpaque()) {
     // When opaque, draw a second inner border that is thicker than the outer
     // border, but more transparent.
     static const float kFillOpacity = 0.3f;
@@ -596,7 +598,7 @@ void LayerImpl::SetSafeOpaqueBackgroundColor(SkColor background_color) {
 }
 
 SkColor LayerImpl::SafeOpaqueBackgroundColor() const {
-  if (contents_opaque())
+  if (IsContentsOpaque())
     return safe_opaque_background_color_;
   SkColor color = background_color();
   if (SkColorGetA(color) == 255)
@@ -615,6 +617,10 @@ void LayerImpl::SetMasksToBounds(bool masks_to_bounds) {
 
 void LayerImpl::SetContentsOpaque(bool opaque) {
   contents_opaque_ = opaque;
+}
+
+bool LayerImpl::IsContentsOpaque() const {
+  return contents_opaque_;
 }
 
 float LayerImpl::Opacity() const {
@@ -710,7 +716,7 @@ gfx::ScrollOffset LayerImpl::CurrentScrollOffset() const {
 }
 
 SimpleEnclosedRegion LayerImpl::VisibleOpaqueRegion() const {
-  if (contents_opaque())
+  if (IsContentsOpaque())
     return SimpleEnclosedRegion(visible_layer_rect());
   return SimpleEnclosedRegion();
 }
@@ -802,7 +808,7 @@ void LayerImpl::AsValueInto(base::trace_event::TracedValue* state) const {
   }
 
   state->SetBoolean("can_use_lcd_text", CanUseLCDText());
-  state->SetBoolean("contents_opaque", contents_opaque());
+  state->SetBoolean("is_contents_opaque", IsContentsOpaque());
 
   state->SetBoolean("has_animation_bounds", HasAnimationThatInflatesBounds());
 
@@ -864,7 +870,7 @@ bool LayerImpl::CanUseLCDText() const {
     return true;
   if (!layer_tree_impl()->settings().can_use_lcd_text)
     return false;
-  if (!contents_opaque())
+  if (!IsContentsOpaque())
     return false;
 
   if (GetEffectTree().Node(effect_tree_index())->screen_space_opacity != 1.f)
