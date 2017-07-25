@@ -22,6 +22,30 @@
       "revId": "7b9a86c4ddad3cd820b53fb426fc0ce76f526baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10e2e1e_de3386bc",
+        "filename": "ios/web/public/web_state/web_state_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-07-25T16:06:23Z",
+      "side": 1,
+      "message": "It\u0027s included from a non-ARC file, but it will be converted to ARC and this will become __weak.",
+      "parentUuid": "f63089ec_05ff0d76",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "7b9a86c4ddad3cd820b53fb426fc0ce76f526baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
