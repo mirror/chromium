@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d27c4ad_2f3a6ce6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabStateBrowserControlsVisibilityDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-25T22:12:56Z",
+      "side": 1,
+      "message": "this file is really supposed to be about tab state and this is activity state, so I \"think\" this is better handled through BrowserStateBrowserControlsVisibilityDelegate.\n\nSomething like this:\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java?q\u003dLayoutManager.java\u0026sq\u003dpackage:chromium\u0026l\u003d416\n\nIn onSheetOpened, call showControlsPersistentAndClearOldToken and in onSheetClosed call hideControlsPersistent.",
+      "range": {
+        "startLine": 159,
+        "startChar": 28,
+        "endLine": 159,
+        "endChar": 32
+      },
+      "revId": "f394f8dce32de9d70136a663f86e7ec52a4bde35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
