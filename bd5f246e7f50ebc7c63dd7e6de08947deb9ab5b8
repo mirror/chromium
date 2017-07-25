@@ -22,6 +22,30 @@
       "revId": "bd5f246e7f50ebc7c63dd7e6de08947deb9ab5b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c3dba4_3628cd0c",
+        "filename": "ui/app_list/views/expand_arrow_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-25T01:54:52Z",
+      "side": 1,
+      "message": "Sure, that\u0027s better.\n\nYes, the ButtonPressed is triggered by mouse click, which requires ink drop effect and we should clear it by animating to triggered state. But KeyPressed does not have ink drop effect, so we do not need to clear it.",
+      "parentUuid": "9fabb5e0_5df3db87",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 32
+      },
+      "revId": "bd5f246e7f50ebc7c63dd7e6de08947deb9ab5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
