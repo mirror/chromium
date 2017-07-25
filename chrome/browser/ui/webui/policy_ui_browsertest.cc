@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/json/json_reader.h"
+#include "base/json/json_writer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -38,6 +39,8 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/shell_dialogs/select_file_dialog.h"
+#include "ui/shell_dialogs/select_file_dialog_factory.h"
 #include "url/gurl.h"
 
 using testing::Return;
@@ -93,12 +96,29 @@ std::vector<std::string> PopulateExpectedPolicy(
   return expected_policy;
 }
 
+void SetExpectedPolicy(base::DictionaryValue& expected,
+                       const std::string& name,
+                       const std::string& level,
+                       const std::string& scope,
+                       const std::string& source,
+                       const base::Value& value) {
+  std::string prefix = "chromePolicies." + name + ".";
+  expected.SetString(prefix + "level", level);
+  expected.SetString(prefix + "scope", scope);
+  expected.SetString(prefix + "source", source);
+  expected.Set(prefix + "value", base::MakeUnique<base::Value>(value));
+}
+
 }  // namespace
 
 class PolicyUITest : public InProcessBrowserTest {
  public:
   PolicyUITest();
   ~PolicyUITest() override;
+
+  static const base::FilePath& GetTestPathForPolicies() {
+    return test_file_path_;
+  }
 
  protected:
   // InProcessBrowserTest implementation.
@@ -108,12 +128,61 @@ class PolicyUITest : public InProcessBrowserTest {
 
   void VerifyPolicies(const std::vector<std::vector<std::string> >& expected);
 
+  void VerifySavePolicies(const base::DictionaryValue& expected);
+
  protected:
   policy::MockConfigurationPolicyProvider provider_;
 
  private:
+  // The temporary directory and file paths for policy saving.
+  static base::ScopedTempDir test_dir_;
+  static base::FilePath test_file_path_;
+
   DISALLOW_COPY_AND_ASSIGN(PolicyUITest);
 };
+
+// An artificial SelectFileDialog that immediately returns the location of test
+// file instead of showing the UI file picker.
+class TestSelectFileDialog : public ui::SelectFileDialog {
+ public:
+  TestSelectFileDialog(ui::SelectFileDialog::Listener* listener,
+                       ui::SelectFilePolicy* policy)
+      : ui::SelectFileDialog(listener, policy) {}
+
+  void SelectFileImpl(Type type,
+                      const base::string16& title,
+                      const base::FilePath& default_path,
+                      const FileTypeInfo* file_types,
+                      int file_type_index,
+                      const base::FilePath::StringType& default_extension,
+                      gfx::NativeWindow owning_window,
+                      void* params) override {
+    listener_->FileSelected(PolicyUITest::GetTestPathForPolicies(), 0, nullptr);
+  }
+
+  bool IsRunning(gfx::NativeWindow owning_window) const override {
+    return false;
+  }
+
+  void ListenerDestroyed() override {}
+
+  bool HasMultipleFileTypeChoicesImpl() override { return false; }
+
+ private:
+  ~TestSelectFileDialog() override {}
+};
+
+// A factory associated with the artificial file picker.
+class TestSelectFileDialogFactory : public ui::SelectFileDialogFactory {
+ private:
+  ui::SelectFileDialog* Create(ui::SelectFileDialog::Listener* listener,
+                               ui::SelectFilePolicy* policy) override {
+    return new TestSelectFileDialog(listener, policy);
+  }
+};
+
+base::ScopedTempDir PolicyUITest::test_dir_;
+base::FilePath PolicyUITest::test_file_path_;
 
 PolicyUITest::PolicyUITest() {
 }
@@ -125,6 +194,14 @@ void PolicyUITest::SetUpInProcessBrowserTestFixture() {
   EXPECT_CALL(provider_, IsInitializationComplete(_))
       .WillRepeatedly(Return(true));
   policy::BrowserPolicyConnector::SetPolicyProviderForTesting(&provider_);
+
+  // Set SelectFileDialog to use our factory.
+  ui::SelectFileDialog::SetFactory(new TestSelectFileDialogFactory());
+
+  // Create a directory for testing exporting policies.
+  ASSERT_TRUE(test_dir_.CreateUniqueTempDir());
+  const std::string filename = "policy.json";
+  test_file_path_ = test_dir_.GetPath().AppendASCII(filename);
 }
 
 void PolicyUITest::UpdateProviderPolicy(const policy::PolicyMap& policy) {
@@ -181,6 +258,124 @@ void PolicyUITest::VerifyPolicies(
       EXPECT_EQ(expected_policy[j], value);
     }
   }
+}
+
+void PolicyUITest::VerifySavePolicies(const base::DictionaryValue& expected) {
+  // Navigate to the about:policy page.
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy"));
+
+  // Click on 'save policies' button.
+  const std::string javascript =
+      "document.getElementById(\"save-policies-json\").click()";
+
+  content::WebContents* contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ASSERT_TRUE(content::ExecuteScript(contents, javascript));
+
+  // Open the created file.
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::File input_file(PolicyUITest::GetTestPathForPolicies(),
+                        base::File::FLAG_READ | base::File::FLAG_OPEN);
+
+  // Check if the file was opened successfully.
+  ASSERT_TRUE(input_file.error_details() == 0);
+
+  // Read the contents of the file.
+  std::string file_contents;
+  char buffer;
+  while (input_file.ReadAtCurrentPos(&buffer, 1)) {
+    file_contents += buffer;
+  }
+
+  std::unique_ptr<base::Value> value_ptr =
+      base::JSONReader::Read(file_contents);
+
+  // Check that the file contains a valid dictionary.
+  ASSERT_TRUE(value_ptr.get());
+  base::DictionaryValue* actual_policies = nullptr;
+  ASSERT_TRUE(value_ptr->GetAsDictionary(&actual_policies));
+
+  // Check that this dictionary is the same as expected.
+  ASSERT_EQ(*actual_policies, expected);
+}
+
+IN_PROC_BROWSER_TEST_F(PolicyUITest, WritePoliciesToJSONFile) {
+  // Set policy values and generate expected dictionary.
+  policy::PolicyMap values;
+  base::DictionaryValue expected_values;
+
+  base::ListValue popups_blocked_for_urls;
+  popups_blocked_for_urls.AppendString("aaa");
+  popups_blocked_for_urls.AppendString("bbb");
+  popups_blocked_for_urls.AppendString("ccc");
+  values.Set(policy::key::kPopupsBlockedForUrls, policy::POLICY_LEVEL_MANDATORY,
+             policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_PLATFORM,
+             base::MakeUnique<base::Value>(popups_blocked_for_urls), nullptr);
+  SetExpectedPolicy(expected_values, policy::key::kPopupsBlockedForUrls,
+                    "mandatory", "machine", "sourcePlatform",
+                    popups_blocked_for_urls);
+
+  values.Set(policy::key::kDefaultImagesSetting, policy::POLICY_LEVEL_MANDATORY,
+             policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_CLOUD,
+             base::MakeUnique<base::Value>(2), nullptr);
+  SetExpectedPolicy(expected_values, policy::key::kDefaultImagesSetting,
+                    "mandatory", "machine", "sourceCloud", base::Value(2));
+
+  // This also checks that we save complex policies correctly.
+  base::DictionaryValue unknown_policy;
+  base::DictionaryValue body;
+  body.SetInteger("first", 0);
+  body.SetBoolean("second", true);
+  unknown_policy.SetInteger("head", 12);
+  unknown_policy.SetDictionary("body",
+                               base::MakeUnique<base::DictionaryValue>(body));
+  const std::string kUnknownPolicy = "NoSuchThing";
+  values.Set(kUnknownPolicy, policy::POLICY_LEVEL_RECOMMENDED,
+             policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
+             base::MakeUnique<base::Value>(unknown_policy), nullptr);
+  SetExpectedPolicy(expected_values, kUnknownPolicy, "recommended", "user",
+                    "sourceCloud", unknown_policy);
+
+  // Set the extension policies to an empty dictionary as we haven't added any
+  // such policies.
+  expected_values.SetDictionary("extensionPolicies",
+                                base::MakeUnique<base::DictionaryValue>());
+
+  UpdateProviderPolicy(values);
+
+  // Check writing those policies to a newly created file.
+  VerifySavePolicies(expected_values);
+
+  // Change policy values.
+  values.Erase(policy::key::kDefaultImagesSetting);
+  expected_values.RemovePath(
+      std::string("chromePolicies.") +
+          std::string(policy::key::kDefaultImagesSetting),
+      nullptr);
+
+  // This also checks that we bypass the policy that blocks file selection
+  // dialogs.
+  values.Set(policy::key::kAllowFileSelectionDialogs,
+             policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_MACHINE,
+             policy::POLICY_SOURCE_PLATFORM,
+             base::MakeUnique<base::Value>(false), nullptr);
+  SetExpectedPolicy(expected_values, policy::key::kAllowFileSelectionDialogs,
+                    "mandatory", "machine", "sourcePlatform",
+                    base::Value(false));
+
+  popups_blocked_for_urls.AppendString("ddd");
+  values.Set(policy::key::kPopupsBlockedForUrls, policy::POLICY_LEVEL_MANDATORY,
+             policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_PLATFORM,
+             base::MakeUnique<base::Value>(popups_blocked_for_urls), nullptr);
+  SetExpectedPolicy(expected_values, policy::key::kPopupsBlockedForUrls,
+                    "mandatory", "machine", "sourcePlatform",
+                    popups_blocked_for_urls);
+
+  UpdateProviderPolicy(values);
+
+  // Check writing changed policies to the same file (should overwrite the
+  // contents).
+  VerifySavePolicies(expected_values);
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyUITest, SendPolicyNames) {

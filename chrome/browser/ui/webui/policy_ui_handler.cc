@@ -18,10 +18,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
 #include "chrome/browser/policy/schema_registry_service.h"
@@ -180,16 +183,18 @@ std::unique_ptr<base::Value> DictionaryToJSONString(
   return base::MakeUnique<base::Value>(json_string);
 }
 
-// Returns a copy of |value| with some values converted to a representation that
-// i18n_template.js will display in a nicer way.
-std::unique_ptr<base::Value> CopyAndConvert(const base::Value* value) {
+// Returns a copy of |value|. If necessary (which is specified by
+// |need_converting|), converts some values to a representation that
+// i18n_template.js will display.
+std::unique_ptr<base::Value> CopyAndConvert(const base::Value* value,
+                                            bool need_converting) {
   const base::DictionaryValue* dict = NULL;
-  if (value->GetAsDictionary(&dict))
+  if (value->GetAsDictionary(&dict) && need_converting)
     return DictionaryToJSONString(*dict);
 
   std::unique_ptr<base::Value> copy = value->CreateDeepCopy();
   base::ListValue* list = NULL;
-  if (copy->GetAsList(&list)) {
+  if (copy->GetAsList(&list) && need_converting) {
     for (size_t i = 0; i < list->GetSize(); ++i) {
       if (list->GetDictionary(i, &dict))
         list->Set(i, DictionaryToJSONString(*dict));
@@ -594,6 +599,9 @@ void PolicyUIHandler::RegisterMessages() {
       "reloadPolicies",
       base::Bind(&PolicyUIHandler::HandleReloadPolicies,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "savePoliciesJSON", base::Bind(&PolicyUIHandler::HandleSavePoliciesJSON,
+                                     base::Unretained(this)));
 }
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -684,12 +692,13 @@ void PolicyUIHandler::SendPolicyNames() const {
   web_ui()->CallJavascriptFunctionUnsafe("policy.Page.setPolicyNames", names);
 }
 
-void PolicyUIHandler::SendPolicyValues() const {
+std::unique_ptr<base::DictionaryValue> PolicyUIHandler::GetAllPolicyValues(
+    bool need_converting) const {
   base::DictionaryValue all_policies;
 
   // Add Chrome policy values.
   auto chrome_policies = base::MakeUnique<base::DictionaryValue>();
-  GetChromePolicyValues(chrome_policies.get());
+  GetChromePolicyValues(chrome_policies.get(), need_converting);
   all_policies.Set("chromePolicies", std::move(chrome_policies));
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -709,21 +718,30 @@ void PolicyUIHandler::SendPolicyValues() const {
         policy::POLICY_DOMAIN_EXTENSIONS, extension->id());
     policy::PolicyErrorMap empty_error_map;
     GetPolicyValues(GetPolicyService()->GetPolicies(policy_namespace),
-                    &empty_error_map, extension_policies.get());
+                    &empty_error_map, extension_policies.get(),
+                    need_converting);
     extension_values->Set(extension->id(), std::move(extension_policies));
   }
   all_policies.Set("extensionPolicies", std::move(extension_values));
 #endif
+  return base::MakeUnique<base::DictionaryValue>(all_policies);
+}
+
+void PolicyUIHandler::SendPolicyValues() const {
+  std::unique_ptr<base::DictionaryValue> all_policies =
+      GetAllPolicyValues(true);
   web_ui()->CallJavascriptFunctionUnsafe("policy.Page.setPolicyValues",
-                                         all_policies);
+                                         *all_policies);
 }
 
 void PolicyUIHandler::GetPolicyValues(const policy::PolicyMap& map,
                                       policy::PolicyErrorMap* errors,
-                                      base::DictionaryValue* values) const {
+                                      base::DictionaryValue* values,
+                                      bool need_converting) const {
   for (const auto& entry : map) {
     std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue);
-    value->Set("value", CopyAndConvert(entry.second.value.get()));
+    value->Set("value",
+               CopyAndConvert(entry.second.value.get(), need_converting));
     if (entry.second.scope == policy::POLICY_SCOPE_USER)
       value->SetString("scope", "user");
     else
@@ -740,8 +758,8 @@ void PolicyUIHandler::GetPolicyValues(const policy::PolicyMap& map,
   }
 }
 
-void PolicyUIHandler::GetChromePolicyValues(
-    base::DictionaryValue* values) const {
+void PolicyUIHandler::GetChromePolicyValues(base::DictionaryValue* values,
+                                            bool need_converting) const {
   policy::PolicyService* policy_service = GetPolicyService();
   policy::PolicyMap map;
 
@@ -759,7 +777,7 @@ void PolicyUIHandler::GetChromePolicyValues(
   // Convert dictionary values to strings for display.
   handler_list->PrepareForDisplaying(&map);
 
-  GetPolicyValues(map, &errors, values);
+  GetPolicyValues(map, &errors, values, need_converting);
 }
 
 void PolicyUIHandler::SendStatus() const {
@@ -810,6 +828,69 @@ void PolicyUIHandler::HandleReloadPolicies(const base::ListValue* args) {
 #endif
   GetPolicyService()->RefreshPolicies(base::Bind(
       &PolicyUIHandler::OnRefreshPoliciesDone, weak_factory_.GetWeakPtr()));
+}
+
+// Callback that writes data to disk.
+void WriteToFileCallback(const base::FilePath& path, const std::string& data) {
+  base::File out(path, base::File::FLAG_WRITE | base::File::FLAG_CREATE_ALWAYS);
+  out.WriteAtCurrentPos(data.c_str(), data.size());
+}
+
+void PolicyUIHandler::WritePoliciesToJSONFile(
+    const base::FilePath& path) const {
+  std::unique_ptr<base::DictionaryValue> all_policies =
+      GetAllPolicyValues(false);
+  std::string json_policies =
+      DictionaryToJSONString(*all_policies)->GetString();
+
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      base::BindOnce(&WriteToFileCallback, path, json_policies));
+}
+
+void PolicyUIHandler::FileSelected(const base::FilePath& path,
+                                   int index,
+                                   void* params) {
+  DCHECK(save_policies_select_file_dialog_);
+
+  WritePoliciesToJSONFile(path);
+
+  save_policies_select_file_dialog_ = nullptr;
+}
+
+void PolicyUIHandler::FileSelectionCanceled(void* params) {
+  DCHECK(save_policies_select_file_dialog_);
+  save_policies_select_file_dialog_ = nullptr;
+}
+
+void PolicyUIHandler::HandleSavePoliciesJSON(const base::ListValue* args) {
+  content::WebContents* webcontents = web_ui()->GetWebContents();
+
+  // Building initial path based on download preferences.
+  base::FilePath initial_dir =
+      DownloadPrefs::FromBrowserContext(webcontents->GetBrowserContext())
+          ->DownloadPath();
+  base::FilePath initial_path =
+      initial_dir.Append(FILE_PATH_LITERAL("policies.json"));
+
+  // If the "select file" dialog window is already opened, we don't want to open
+  // it again.
+  if (save_policies_select_file_dialog_)
+    return;
+
+  // Here we overwrite the actual value of SelectFileDialog policy by passing a
+  // nullptr to ui::SelectFileDialog::Create instead of the actual policy value.
+  // This is done for the following reason: the admin might want to set this
+  // policy for the user to forbid the select file dialogs, but this shouldn't
+  // block the possibility to export the policies.
+  save_policies_select_file_dialog_ =
+      ui::SelectFileDialog::Create(this, nullptr);
+  ui::SelectFileDialog::FileTypeInfo file_type_info;
+  file_type_info.extensions = {{FILE_PATH_LITERAL("json")}};
+  gfx::NativeWindow owning_window = webcontents->GetTopLevelNativeWindow();
+  save_policies_select_file_dialog_->SelectFile(
+      ui::SelectFileDialog::SELECT_SAVEAS_FILE, base::string16(), initial_path,
+      &file_type_info, 0, base::FilePath::StringType(), owning_window, nullptr);
 }
 
 void PolicyUIHandler::OnRefreshPoliciesDone() const {

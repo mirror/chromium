@@ -447,6 +447,10 @@ cr.define('policy', function() {
         chrome.send('reloadPolicies');
       };
 
+      $('save-policies-json').onclick = function(event) {
+        chrome.send('savePoliciesJSON');
+      };
+
       $('show-unset').onchange = function() {
         for (policyTable in self.policyTables) {
           self.policyTables[policyTable].filter();

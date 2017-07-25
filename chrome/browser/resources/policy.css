@@ -73,6 +73,10 @@ div.reload-policies-button {
   float: left;
 }
 
+div.save-policies-json {
+  float: left;
+}
+
 html[dir='rtl'] div.reload-policies-button {
   float: right;
 }
