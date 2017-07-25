@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e248aa7_32a3b5ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-25T00:10:30Z",
+      "side": 1,
+      "message": "HashMap allows null keys. I don\u0027t think that we need to check for |id| \u003d\u003d null. |sWebInfoMap| should not have an entry with a null key.",
+      "range": {
+        "startLine": 377,
+        "startChar": 36,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "8d846b0faa95b4dc39df55804fce2e705bf9ab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf241b9_480d64a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-25T00:10:30Z",
+      "side": 1,
+      "message": "Actually, we need to keep the call to WebappInfo#setWebappIntentExtras()\n\nIn the following scenario:\n1) User taps on home screen icon\n2) WebappLauncherActivity receives intent\n3) WebappLauncherActivity caches WebappInfo in WebappActivity map\n4) WebappLauncherActivity launches WebappActivity\n5) WebappActivity is created correctly\n6) User moves WebappActivity to the background and does some CPU intensive work\n7) Android OS kills Chrome. WebappActivity is still visible in \"Android recents\"\n8) User taps WebappActivity in \"Android recents\"\n9) Android OS sends to WebappActivity the intent with which it was launched in (4).\n\nIn order for things to work right in step (9), it must be possible to create WebappInfo with the intent used to launch the WebappActivity in step (4).\n\nI am very sorry for the previous misleading code review comments.",
+      "revId": "8d846b0faa95b4dc39df55804fce2e705bf9ab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859fae7e_658d177b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-25T00:10:30Z",
+      "side": 1,
+      "message": "The implementation of WebApkInfo#setWebappIntentExtras() must set the id. Otherwise WebappInfo#getIdFromIntent() in WebappActivity#onNewIntent() will be in trouble. Note that Webappnfo#getIdFromIntent() is a static function.",
+      "range": {
+        "startLine": 198,
+        "startChar": 89,
+        "endLine": 198,
+        "endChar": 0
+      },
+      "revId": "8d846b0faa95b4dc39df55804fce2e705bf9ab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
