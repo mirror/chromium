@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7eab007_9a0e3919",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-25T20:08:03Z",
+      "side": 1,
+      "message": "Could you augment the CL description a little?\n\n\"ProfileOAuth2TokenService::OnRefreshTokensLoaded() is not fired on ChromeOS in kiosk mode, so this CL was causing calls to chrome.identity.getAuthToken() to hang forever in that context (as the implementation of that function connects to the Identity Service).\"",
+      "revId": "5f47a6e4a7282b7120288300f26b8574ae194d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
