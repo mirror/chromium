@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a9c1d9a_fd098e89",
+        "filename": "chrome/browser/signin/mutable_profile_oauth2_token_service_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "We only need to load the tokens when full DICE is enabled if there is no authenticated account id.",
+      "range": {
+        "startLine": 286,
+        "startChar": 37,
+        "endLine": 286,
+        "endChar": 50
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5dcdf1_abfc541a",
+        "filename": "chrome/browser/signin/mutable_profile_oauth2_token_service_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "Remove this method.",
+      "range": {
+        "startLine": 590,
+        "startChar": 47,
+        "endLine": 590,
+        "endChar": 60
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3947f9df_6a855eff",
+        "filename": "chrome/browser/signin/mutable_profile_oauth2_token_service_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "Remove this function.",
+      "range": {
+        "startLine": 148,
+        "startChar": 7,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db672e0_d58c93dd",
+        "filename": "components/signin/core/browser/profile_management_switches_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "Could we add a test for IsAccountConsistencyDice and IsAccountConsistencyMirror enabled?",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb719b2c_c70639b1",
+        "filename": "components/signin/core/browser/profile_management_switches_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "s/dice/Dice",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ea11a9_51fc2e82",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "Let\u0027s be explicit that this returns false for when account consistency is set to KDiceFixAuthErrors.",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855920c1_1495d6ec",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "Maybe: s/[anything else]/disabled",
+      "range": {
+        "startLine": 50,
+        "startChar": 49,
+        "endLine": 50,
+        "endChar": 64
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb3d70b_92d82351",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T12:45:28Z",
+      "side": 1,
+      "message": "Maybe rename this to IsDiceLevelGE or IsDiceCelevelGreaterOrEqual? Or even IsDiceFixAuthErrorsEnabled that returns true if auth error is kDiceFixAuthErrors or kDice?",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "8e92f4cbc048e28c64e4caadb61ba52d194d28f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
