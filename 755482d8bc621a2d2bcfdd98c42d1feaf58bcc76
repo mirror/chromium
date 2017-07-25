@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b880f4_41f0c73b",
+        "filename": "third_party/WebKit/Source/core/page/DragControllerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T01:40:15Z",
+      "side": 1,
+      "message": "static_cast\u003cDragOperation\u003e",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 31
+      },
+      "revId": "755482d8bc621a2d2bcfdd98c42d1feaf58bcc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3184b52c_a750ab49",
+        "filename": "third_party/WebKit/Source/core/page/DragControllerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T01:40:15Z",
+      "side": 1,
+      "message": "FWIW, I found this a bit confusing: it kind of looks like it checks it checks if any autoscroll is in progress, not that it\u0027s checking an autoscroll is in progress for a LayoutBox (and even in that case, it\u0027s not completely clear what nullptr means without reading the code).",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 20
+      },
+      "revId": "755482d8bc621a2d2bcfdd98c42d1feaf58bcc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfa07b9_a68854f8",
+        "filename": "third_party/WebKit/Source/core/page/DragControllerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T01:40:15Z",
+      "side": 1,
+      "message": "Nit: newline after for symmetry",
+      "revId": "755482d8bc621a2d2bcfdd98c42d1feaf58bcc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
