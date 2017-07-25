@@ -59,6 +59,9 @@ class MODULES_EXPORT MediaControlInputElement : public HTMLInputElement,
   // Returns whether this element is used for the overflow menu.
   bool IsOverflowElement() const;
 
+  // Adds/removes a CSS class from this element based on |toggle|.
+  void ToggleClass(bool toggle, const AtomicString& class_name);
+
  private:
   friend class MediaControlInputElementTest;
 
