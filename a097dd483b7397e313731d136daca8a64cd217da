@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96a617ef_2667a13f",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629fca99_9cdec256",
+      "range": {
+        "startLine": 191,
+        "startChar": 27,
+        "endLine": 191,
+        "endChar": 50
+      },
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66c062ff_4bb10136",
         "filename": "extensions/browser/api/messaging/extension_message_port.cc",
         "patchSetId": 2
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "09ba1ae8_c72df45c",
+        "filename": "extensions/browser/api/messaging/message_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:11:26Z",
+      "side": 1,
+      "message": "Reverted. (git cl format aligns these comments, so this is \"correct\", but I didn\u0027t actually want to change it. I wanted git cl format to NOT run on these moved files, because that makes the diff much easier, but mis-merged this line.)",
+      "parentUuid": "043ceb06_37a1a5d1",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "769fa777_43fe9b4f",
         "filename": "extensions/browser/extension_message_filter.cc",
         "patchSetId": 2
@@ -73,6 +115,24 @@
       "revId": "a097dd483b7397e313731d136daca8a64cd217da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547dca67_06c90c8b",
+        "filename": "extensions/browser/extension_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:11:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "769fa777_43fe9b4f",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "021bc22e_6aa35a23",
+        "filename": "extensions/browser/extension_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60c57226_a7c78a53",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f5d425_cfd4b3fa",
         "filename": "extensions/browser/extension_message_filter.cc",
         "patchSetId": 2
@@ -107,6 +185,24 @@
       "revId": "a097dd483b7397e313731d136daca8a64cd217da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274b001c_d53210b2",
+        "filename": "extensions/browser/extension_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f5d425_cfd4b3fa",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
