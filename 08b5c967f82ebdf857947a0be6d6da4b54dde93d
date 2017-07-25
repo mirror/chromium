@@ -22,6 +22,30 @@
       "revId": "08b5c967f82ebdf857947a0be6d6da4b54dde93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad09bc06_eb3f14b3",
+        "filename": "chrome/android/java/res/drawable/bottom_toolbar_background.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-25T19:04:26Z",
+      "side": 1,
+      "message": "Sure, thanks!",
+      "parentUuid": "90311f3f_bf9daafe",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "08b5c967f82ebdf857947a0be6d6da4b54dde93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
