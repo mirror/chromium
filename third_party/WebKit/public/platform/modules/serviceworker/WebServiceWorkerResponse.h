@@ -13,6 +13,7 @@
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
+#include "storage/public/interfaces/blobs.mojom-blink.h"
 
 #if INSIDE_BLINK
 #include "platform/wtf/Forward.h"
@@ -67,9 +68,13 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerResponse {
   WebString GetHeader(const WebString& key) const;
   void VisitHTTPHeaderFields(WebHTTPHeaderVisitor*) const;
 
-  void SetBlob(const WebString& uuid, uint64_t size);
+  void SetBlob(const WebString& uuid,
+               uint64_t size,
+               storage::mojom::blink::BlobPtrInfo);
   WebString BlobUUID() const;
   uint64_t BlobSize() const;
+
+  storage::mojom::blink::BlobPtr CloneBlobPtr() const;
 
   // Provides a more detailed error when status() is zero.
   void SetError(WebServiceWorkerResponseError);
