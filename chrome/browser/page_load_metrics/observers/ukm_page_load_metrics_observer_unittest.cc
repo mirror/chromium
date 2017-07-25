@@ -10,6 +10,7 @@
 #include "base/time/time.h"
 #include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h"
 #include "components/ukm/ukm_source.h"
+#include "content/public/test/navigation_simulator.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/nqe/network_quality_provider.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -125,11 +126,10 @@ TEST_F(UkmPageLoadMetricsObserverTest, FailedProvisionalLoad) {
       .WillRepeatedly(Return(net::EFFECTIVE_CONNECTION_TYPE_2G));
 
   GURL url(kTestUrl1);
-  content::RenderFrameHostTester* rfh_tester =
-      content::RenderFrameHostTester::For(main_rfh());
-  rfh_tester->SimulateNavigationStart(url);
-  rfh_tester->SimulateNavigationError(url, net::ERR_TIMED_OUT);
-  rfh_tester->SimulateNavigationStop();
+  auto navigation =
+      content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());
+  navigation->Fail(net::ERR_TIMED_OUT);
+  content::RenderFrameHostTester::For(main_rfh())->SimulateNavigationStop();
 
   // Simulate closing the tab.
   DeleteContents();
