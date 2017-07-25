@@ -148,7 +148,7 @@ class ScheduledURLNavigation : public ScheduledNavigation {
     frame->Loader().Load(request);
   }
 
-  KURL Url() const { return url_; }
+  KURL Url() const override { return url_; }
 
  private:
   KURL url_;
@@ -239,7 +239,9 @@ class ScheduledFrameNavigation final : public ScheduledURLNavigation {
 
 class ScheduledReload final : public ScheduledNavigation {
  public:
-  static ScheduledReload* Create() { return new ScheduledReload; }
+  static ScheduledReload* Create(Document* origin_document) {
+    return new ScheduledReload(origin_document);
+  }
 
   void Fire(LocalFrame* frame) override {
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
@@ -255,9 +257,12 @@ class ScheduledReload final : public ScheduledNavigation {
     frame->Loader().Load(request, kFrameLoadTypeReload);
   }
 
+  KURL Url() const override { return OriginDocument()->Url(); }
+
  private:
-  ScheduledReload()
-      : ScheduledNavigation(Reason::kReload, 0.0, nullptr, true, true) {}
+  explicit ScheduledReload(Document* origin_document)
+      : ScheduledNavigation(Reason::kReload, 0.0, origin_document, true, true) {
+  }
 };
 
 class ScheduledPageBlock final : public ScheduledNavigation {
@@ -269,6 +274,8 @@ class ScheduledPageBlock final : public ScheduledNavigation {
   void Fire(LocalFrame* frame) override {
     frame->Client()->LoadErrorPage(reason_);
   }
+
+  KURL Url() const override { return KURL(); }
 
  private:
   ScheduledPageBlock(Document* origin_document, int reason)
@@ -301,6 +308,8 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
         ScheduledNavigationType::kScheduledFormSubmission, frame);
     frame->Loader().Load(frame_request);
   }
+
+  KURL Url() const override { return submission_->RequestURL(); }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(submission_);
@@ -460,7 +469,7 @@ void NavigationScheduler::ScheduleReload() {
     return;
   if (frame_->GetDocument()->Url().IsEmpty())
     return;
-  Schedule(ScheduledReload::Create());
+  Schedule(ScheduledReload::Create(frame_->GetDocument()));
 }
 
 void NavigationScheduler::NavigateTask() {
