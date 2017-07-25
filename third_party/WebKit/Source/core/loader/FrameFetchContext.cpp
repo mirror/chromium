@@ -1085,6 +1085,9 @@ bool FrameFetchContext::ShouldSendClientHint(
 
 void FrameFetchContext::ParseAndPersistClientHints(
     const ResourceResponse& response) {
+  if (!AllowScriptFromSource(response.Url()))
+    return;
+
   ClientHintsPreferences hints_preferences;
   WebEnabledClientHints enabled_client_hints;
   TimeDelta persist_duration;
