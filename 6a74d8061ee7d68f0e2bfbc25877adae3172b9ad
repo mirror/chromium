@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59998ed8_f5ffa88e",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/BarcodeDetectionProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:27:18Z",
+      "side": 1,
+      "message": "This condition seems backwards.",
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd18d69c_ff6218a2",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:27:18Z",
+      "side": 1,
+      "message": "Is it necessary to specify the type here?",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97339b12_f1add88a",
+        "filename": "services/shape_detection/barcode_detection_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:27:18Z",
+      "side": 1,
+      "message": "Or here?",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa8c491_35825ef1",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T15:27:18Z",
+      "side": 1,
+      "message": "This field is unused.",
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
