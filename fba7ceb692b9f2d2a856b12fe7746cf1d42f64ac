@@ -16,6 +16,24 @@
       "revId": "fba7ceb692b9f2d2a856b12fe7746cf1d42f64ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d47780a_12712825",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-25T20:57:27Z",
+      "side": 0,
+      "message": "Okay, will make a separate CL.",
+      "parentUuid": "653af09c_a35b36d3",
+      "revId": "fba7ceb692b9f2d2a856b12fe7746cf1d42f64ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
