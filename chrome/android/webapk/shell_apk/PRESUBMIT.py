@@ -31,6 +31,11 @@ def _DoChangedContentsContain(changed_contents, key):
       return True
   return False
 
+def _IsOverrideShellApkVersionCheck(input_api):
+  keyword = 'OVERRIDE_SHELL_APK_VERSION_CHECK=1'
+  if keyword in input_api.change.DescriptionText():
+    return True;
+  return False;
 
 def _CheckChromeUpdateTriggerRule(input_api, output_api):
   for f in input_api.AffectedFiles():
@@ -57,6 +62,7 @@ def _CheckWamMintTriggerRule(input_api, output_api):
 
   wam_mint_trigger_update_needed = False
   wam_mint_trigger_is_updated = False
+  override_shellapk_version_check = _IsOverrideShellApkVersionCheck(input_api);
   for f in input_api.AffectedFiles():
     local_path = input_api.os_path.relpath(f.AbsoluteLocalPath(),
                                            input_api.PresubmitLocalPath())
@@ -71,7 +77,8 @@ def _CheckWamMintTriggerRule(input_api, output_api):
                                  WAM_MINT_TRIGGER_VARIABLE):
         wam_mint_trigger_is_updated = True
 
-  if wam_mint_trigger_update_needed and not wam_mint_trigger_is_updated:
+  if (wam_mint_trigger_update_needed and not wam_mint_trigger_is_updated
+      and not override_shellapk_version_check):
     return [output_api.PresubmitError(
         '{} in {} needs to updated due to changes in:'.format(
             WAM_MINT_TRIGGER_VARIABLE, SHELL_APK_VERSION_LOCAL_PATH),
