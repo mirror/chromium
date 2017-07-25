@@ -61,6 +61,13 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
       const base::android::JavaParamRef<jstring>& java_tag,
       jboolean by_user);
 
+  // Called after querying the webapk package is done on Java side.
+  void OnQueryWebApkPackage(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& java_object,
+      const base::android::JavaParamRef<jstring>& java_webapk_package,
+      const jlong jcallback_pointer);
+
   // NotificationPlatformBridge implementation.
   void Display(NotificationCommon::Type notification_type,
                const std::string& notification_id,
@@ -93,6 +100,13 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
     std::string tag;
     std::string webapk_package;
   };
+
+  // Display a notification.
+  void DisplayInternal(const std::string& notification_id,
+                       const std::string& profile_id,
+                       bool incognito,
+                       const Notification& notification,
+                       const std::string& webapk_package);
 
   // Mapping of notification id to renegerated notification info.
   // TODO(peter): Remove this map once notification delegate ids for Web
