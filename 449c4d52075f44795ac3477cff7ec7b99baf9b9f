@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc85a66a_72d54f72",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fcdad2e_69abc8ff",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "098f9bbc_aae4a914",
         "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3775ae6_7e102595",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "098f9bbc_aae4a914",
+      "range": {
+        "startLine": 23,
+        "startChar": 52,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd1bb6f0_0a920c41",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49ddd592_9102664d",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "049ab06a_1a241edc",
         "filename": "chrome/installer/zucchini/patch_reader.h",
         "patchSetId": 17
@@ -85,6 +157,24 @@
       "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21590c90_8e24c47b",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "049ab06a_1a241edc",
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "74d3e429_199011ee",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d18c8c_6c01f395",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 63
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba383f5f_d5e48580",
         "filename": "chrome/installer/zucchini/patch_reader.h",
         "patchSetId": 17
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "aebd399e_08f57388",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Few concerns about that:\n- DecodeVarInt would return std::iterator_traits\u003cIt\u003e::difference_type. We then assume that 0 is convertible to difference_type (that is probably reasonable).\n- We assume that 0 is an impossible value, which relies on the format of VarInt. This seems a bit hacky. \nI don\u0027t feel so strongly about it, but I don\u0027t think it simplifies a big deal.\nLet me know if you want me to change it.",
+      "parentUuid": "ba383f5f_d5e48580",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54244a8f_fdcd4ce6",
         "filename": "chrome/installer/zucchini/patch_reader.h",
         "patchSetId": 17
@@ -145,6 +283,24 @@
       "writtenOn": "2017-07-24T23:07:31Z",
       "side": 1,
       "message": "Maybe have a templated super class for this, with nice high-level comment?\n\n// The super class for stateful parsers that extracts embedded BufferSource chunks from the owner\u0027s BufferSource (expected to remain valid for the lifetime of the parser), parses the obtained chunks, and provides an iterator to extract data units.\ntemplate \u003cclass UNIT\u003e\nclass StreamableSource {\n public:\n  StreamableSource() \u003d default;\n  virtual ~StreamableSource() \u003d default;\n  StreamableSource(const StreamableSource\u0026) \u003d default;\n\n  // Blah.\n  virtual bool Initialize(BufferSource* source) \u003d 0;\n\n  // Bleh.\n  base::Optional\u003cT\u003e GetNext() \u003d 0;\n\n  // Blih.\n  bool Done() const  \u003d 0;\n\n  // Copyable.\n};\n\n\nThen \n\nclass EquivalencedSource : public StreamableSource\u003cEquivalence\u003e {\n public:\n  ...\n  // StreamableSource:\n  bool Initialize(BufferSource* source) override;\n  base::Optional\u003cEquivalence\u003e GetNext() override;\n  bool Done() const() override;\n\n private:\n  ...\n};\n\n\netc.?",
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a610661_a4fa9ac7",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "I agree that there is redundancy between different sources + they have similar interface. It would be nice to group common code and interface in super class.\nHowever, I don\u0027t think inheritance is appropriate because:\n- We still need to define everything (methods, copy constructor, member data) in derived classes\n- We don\u0027t need dynamic dispatching, so virtual would cause unnecessary performance hit\n- In the end, we\u0027re adding extra code and complexity, with the objective making the interface explicit. What we would really need is to define a concept (but c++ doesn\u0027t have that yet...)\n\nWhat I would do is define the interface as a comment and explain why we are not using inheritance.",
+      "parentUuid": "54244a8f_fdcd4ce6",
       "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -197,6 +353,54 @@
     },
     {
       "key": {
+        "uuid": "66345a9d_0f1f545b",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef678c5f_29c88765",
+      "range": {
+        "startLine": 263,
+        "startChar": 14,
+        "endLine": 263,
+        "endChar": 15
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "953471f3_6249aae0",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b0eb4c_618d0b35",
+      "range": {
+        "startLine": 263,
+        "startChar": 76,
+        "endLine": 263,
+        "endChar": 79
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c42bf167_6bb35159",
         "filename": "chrome/installer/zucchini/patch_utils.h",
         "patchSetId": 17
@@ -217,6 +421,30 @@
       "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2725e9_944c5517",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c42bf167_6bb35159",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "f4608ad5_d6629f65",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "966e46a0_66926625",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 70
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ec8aab7_fb369b74",
         "filename": "chrome/installer/zucchini/patch_writer.cc",
         "patchSetId": 17
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "33d4acfd_9157c640",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ec8aab7_fb369b74",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43727eda_a9ae2d0c",
         "filename": "chrome/installer/zucchini/patch_writer.h",
         "patchSetId": 17
@@ -286,6 +562,30 @@
       "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18996b57_166e0880",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T01:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43727eda_a9ae2d0c",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 16
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
