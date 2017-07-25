@@ -306,6 +306,24 @@
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94110e61_cdafb29b",
+        "filename": "chromeos/dbus/services/org.chromium.DisplayService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-25T17:49:52Z",
+      "side": 1,
+      "message": "uh, that definitely doesn\u0027t seem good.\n\ni\u0027m out sick and can\u0027t test this at the moment, but are you able to call other methods that you wouldn\u0027t expect to be able to per the permissions that we\u0027re using?\n\nfor example, if you comment out the \u003cpolicy context\u003d\"default\"\u003e section in org.chromium.PowerManager.conf and reboot the system, are you still able to run this as the chronos user?\n\n  dbus-send --system --dest\u003dorg.chromium.PowerManager \\\n    --print-reply --type\u003dmethod_call \\\n    /org/chromium/PowerManager \\\n    org.chromium.PowerManager.GetSwitchStates",
+      "parentUuid": "7c03d6ce_d563af6d",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
