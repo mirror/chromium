@@ -133,6 +133,7 @@ class WebSpeechSynthesizerClient;
 class WebStorageNamespace;
 class WebSyncProvider;
 struct WebFloatPoint;
+class WebTaskRunner;
 class WebThemeEngine;
 class WebThread;
 class WebTrialTokenValidator;
@@ -460,6 +461,9 @@ class BLINK_PLATFORM_EXPORT Platform {
   // renderer was created with threaded rendering desabled.
   virtual WebThread* CompositorThread() const { return 0; }
 
+  // Returns an interface to the file task runner.
+  WebTaskRunner* FileTaskRunner() const;
+
   // Testing -------------------------------------------------------------
 
   // Gets a pointer to URLLoaderMockFactory for testing. Will not be available
@@ -721,9 +725,10 @@ class BLINK_PLATFORM_EXPORT Platform {
 
  protected:
   Platform();
-  virtual ~Platform() {}
+  virtual ~Platform();
 
   WebThread* main_thread_;
+  std::unique_ptr<WebThread> file_thread_;
 };
 
 }  // namespace blink
