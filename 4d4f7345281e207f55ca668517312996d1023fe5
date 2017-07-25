@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "827e8ad3_a7469cb7",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-25T12:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06534dff_6d2c9508",
+      "range": {
+        "startLine": 67,
+        "startChar": 37,
+        "endLine": 67,
+        "endChar": 64
+      },
+      "revId": "4d4f7345281e207f55ca668517312996d1023fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7a77759_3495f9bc",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4d4f7345281e207f55ca668517312996d1023fe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8b0375_60463fd4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-25T12:58:41Z",
+      "side": 1,
+      "message": "This is actually for an issue not necessarily visible in the bug: the layout is here to stick the fake omnibox to the top of the collection. This is need for all iPhone.",
+      "parentUuid": "e7a77759_3495f9bc",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "4d4f7345281e207f55ca668517312996d1023fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
