@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3fd0ce6_b189d245",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-25T22:08:05Z",
+      "side": 1,
+      "message": "piman: can you take another look? This was in ApplyGpuDriverBugWorkarounds(), which I removed. It\u0027s not necessary except for a test.  I think these tests will be obsolete once we move everything to GPU side, so at this point, I\u0027d rather not waste efforts rewriting them. So adding this back temporarily is necessary to make the failing test pass.",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 15
+      },
+      "revId": "f48bddf0bcad25cbcb508575048b8a687b199696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
