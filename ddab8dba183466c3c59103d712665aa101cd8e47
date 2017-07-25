@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35ef2194_bf4c9aac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/unsupported-encodings.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-25T22:55:48Z",
+      "side": 1,
+      "message": "It\u0027s a rebase glitch; I updated the patch set this depends on but didn\u0027t rebase this one before upload. I\u0027ll re-upload.",
+      "parentUuid": "02683e86_e8518953",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "984afb1c_2e7f99cc",
         "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a7f8ac_04334455",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-25T22:55:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "984afb1c_2e7f99cc",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b7e7de52_38c48da4",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-25T22:55:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2bb5a89_3ae125cf",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade162ed_a6690aa8",
         "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435cd0b4_c3602d8e",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-25T22:55:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ade162ed_a6690aa8",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1c934c96_cb8a9a50",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-25T22:55:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b0a3782_5ac8214b",
+      "range": {
+        "startLine": 141,
+        "startChar": 22,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02469d1f_41aac8c1",
         "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225be129_1a9b9d04",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-25T22:55:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02469d1f_41aac8c1",
+      "range": {
+        "startLine": 186,
+        "startChar": 22,
+        "endLine": 186,
+        "endChar": 38
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
