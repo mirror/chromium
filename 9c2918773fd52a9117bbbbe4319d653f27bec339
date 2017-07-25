@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385d2930_a5dc029d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T03:10:46Z",
+      "side": 1,
+      "message": "Nit: The comments and code here tend to describe things at a pretty low level.  I would choose to group in larger blocks and give a broader comment of overarching purpose, like this:\n\n  // Display one of several different strings in the promo, depending on which\n  // variant Finch instructs us to use.\n  ... all code below goes here without separate comments on each bit\n\nI would also move this into the middle of the function, since the point of this block is ultimately to compute |text_specifier|, and thus I\u0027d place it where that\u0027s used:\n\n  ...\n  SetLayoutManager(box_layout.release());\n\n  ... your code goes here\n\n  views::Widget* new_tab_promo_widget \u003d ...",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11daae69_1abcf8b3",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T03:10:46Z",
+      "side": 1,
+      "message": "Nit: Mark this \"static\" as well; see https://groups.google.com/a/chromium.org/d/msg/chromium-dev/pF7nAmUQ2uw/-2PSZUvDBwAJ .",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941db47b_77cf1804",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T03:10:46Z",
+      "side": 1,
+      "message": "Using unsigned int here is banned by the style guide (you want size_t instead).  See next comment.",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f319a762_cd27472c",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T03:10:46Z",
+      "side": 1,
+      "message": "Nit: Use base::StringToSizeT() instead of std::stoi().\n\nThis allows you to do something like this:\n\n  size_t text_specifier;\n  if (!base::StringToSizeT(str, \u0026text_specifier) || text_specifier \u003e\u003d arraysize(kTextIds))\n    text_specifier \u003d 0;\n\nNow you don\u0027t have to check things like the string length, or worry about whether an imperfect conversion gave you a sane value.",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aad4200_7f46eaf1",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T03:10:46Z",
+      "side": 1,
+      "message": "Nit: No need for this DCHECK now, as your explicit checking code makes this immediately obvious.",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cacf140_bccfa0fb",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-25T03:10:46Z",
+      "side": 1,
+      "message": "You could probably still invoke the dialog with its various strings by forcing Finch params from this test code.  Another way would be to expose a test-only constructor that explicitly takes the specifier to use (as an int); then in the main constructor, delegate to the with-arg constructor, and use a local-to-the-file helper function to compute the necessary value in order to be able to do so:\n\nNewTabPromo::NewTabPromo(const gfx::Rect\u0026 anchor_rect)\n    : NewTabPromo(anchor_rect, GetTextSpecifier()) {}\n\nThis would also supersede my organizational comments in the main .cc file.\n\nI can\u0027t tell you whether it\u0027s worth being able to test these separately.",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
