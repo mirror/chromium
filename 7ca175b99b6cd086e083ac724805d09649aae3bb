@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e8222aff_252529f0",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T23:59:03Z",
+      "side": 1,
+      "message": "Well, there\u0027s a tradeoff here: if the linker isn\u0027t clever enough to optimize it, a function indirection for a simple member access is (usually) more expensive than just a simple member access. Hopefully the linker does the right thing.",
+      "parentUuid": "b8d6d864_7d5ca435",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 1
+      },
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb2948d6_b7cc86ab",
         "filename": "ui/events/mojo/event_struct_traits.cc",
         "patchSetId": 4
