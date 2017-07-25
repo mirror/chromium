@@ -70,13 +70,14 @@ void ImageBufferSurface::Draw(GraphicsContext& context,
                               const FloatRect& dest_rect,
                               const FloatRect& src_rect,
                               SkBlendMode op) {
-  sk_sp<SkImage> snapshot =
+  RefPtr<StaticBitmapImage> snapshot =
       NewImageSnapshot(kPreferNoAcceleration, kSnapshotReasonPaint);
   if (!snapshot)
     return;
 
-  RefPtr<Image> image = StaticBitmapImage::Create(std::move(snapshot));
-  context.DrawImage(image.Get(), dest_rect, &src_rect, op);
+  DCHECK(!snapshot->IsTextureBacked());  // GraphicsContext cannot handle
+                                         // gpu resource serialization.
+  context.DrawImage(snapshot.Get(), dest_rect, &src_rect, op);
 }
 
 void ImageBufferSurface::Flush(FlushReason) {
