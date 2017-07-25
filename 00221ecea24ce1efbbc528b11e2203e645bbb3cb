@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1dd2c317_4115aac6",
+        "filename": "components/ntp_snippets/category_rankers/constant_category_ranker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done.\n1) I added a comment to GetKnownCategoriesDefaultOrder why CONTEXTUAL is not listed.\n2) Contextual suggestions are not managed by ContentSuggestionsService/Provider, and use a separate RemoteSuggestionsDatabase, so I\u0027d say yes.",
+      "parentUuid": "7dcc444d_9ba864ce",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 66
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eec056eb_00cd6872",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
         "patchSetId": 5
@@ -69,6 +93,30 @@
       "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951f5667_eeb6ca94",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "eec056eb_00cd6872",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8c624d86_957ff341",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Right, I removed it.",
+      "parentUuid": "8a03c21b_334ed0f3",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 36
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24a33f0e_0f0650fe",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
         "patchSetId": 5
@@ -115,6 +187,30 @@
       "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1026f7b2_d0877e79",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24a33f0e_0f0650fe",
+      "range": {
+        "startLine": 127,
+        "startChar": 32,
+        "endLine": 127,
+        "endChar": 73
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d8b45f49_71f09a0f",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "48a9cba9_a3bb9982",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 64
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8338114e_4d3f5f0c",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
         "patchSetId": 5
@@ -161,6 +281,30 @@
       "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f09066_5645e246",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8338114e_4d3f5f0c",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 1
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "6171990e_869cbd15",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Right, I removed this and adapted AddSnippetsFromListValue it no longer needs a category.",
+      "parentUuid": "38ee7130_a912098e",
+      "range": {
+        "startLine": 343,
+        "startChar": 6,
+        "endLine": 344,
+        "endChar": 73
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b865388_2d8bd034",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 5
@@ -198,6 +366,30 @@
       "writtenOn": "2017-07-24T14:52:51Z",
       "side": 1,
       "message": "Do we need to have a vector of categories? Don\u0027t we have, by definition, only one category to fetch?",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310ab268_c5b0cffc",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "In theory, the server gathers two categories of contextual suggestions, but the fetcher moves them into one category, and the current UI does not distinguish.\nI\u0027d keep the categories for now.\n@markusheintz what do you think?",
+      "parentUuid": "0b865388_2d8bd034",
       "range": {
         "startLine": 45,
         "startChar": 8,
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "9a1791ff_48d451dc",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Actually, all of these are used in the unit tests of this class, so I would keep them.",
+      "parentUuid": "3b6d9e4a_97e042af",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e43716f_7060bf96",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 5
@@ -253,6 +469,30 @@
       "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b979219_dc093fc4",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done. Thanks for finding this.",
+      "parentUuid": "3e43716f_7060bf96",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 29
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "d28f1a49_8e20a44c",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "I removed it.",
+      "parentUuid": "24a6e383_838598cd",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fdef9e1_75bb6077",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 5
@@ -299,6 +563,30 @@
       "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55443b10_a0a3fd0b",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fdef9e1_75bb6077",
+      "range": {
+        "startLine": 293,
+        "startChar": 14,
+        "endLine": 293,
+        "endChar": 24
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -345,6 +633,54 @@
       "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8838262b_8c075786",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "453d68d8_d0bffad8",
+      "range": {
+        "startLine": 298,
+        "startChar": 38,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1fa4e7f_694d5014",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-25T16:01:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa1977b_7a796e02",
+      "range": {
+        "startLine": 298,
+        "startChar": 50,
+        "endLine": 298,
+        "endChar": 67
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
