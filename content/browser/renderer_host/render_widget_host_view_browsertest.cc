@@ -34,6 +34,7 @@
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/test/did_commit_provisional_load_interceptor.h"
 #include "media/base/video_frame.h"
 #include "media/renderers/skcanvas_video_renderer.h"
 #include "net/base/filename_util.h"
@@ -208,25 +209,19 @@ class RenderWidgetHostViewBrowserTest : public ContentBrowserTest {
 
 // Helps to ensure that a navigation is committed after a compositor frame was
 // submitted by the renderer, but before corresponding ACK is sent back.
-class CommitBeforeSwapAckSentHelper : public WebContentsObserver {
+class CommitBeforeSwapAckSentHelper : public DidCommitProvisionalLoadInterceptor {
  public:
   explicit CommitBeforeSwapAckSentHelper(WebContents* web_contents)
-      : WebContentsObserver(web_contents) {}
+      : DidCommitProvisionalLoadInterceptor(web_contents,
+                                            web_contents->GetMainFrame()) {}
 
  private:
-  void WaitForSwapCompositorFrame() {
+  void DidCommitProvisionalLoad(
+      const ::FrameHostMsg_DidCommitProvisionalLoad_Params& params) override {
     base::MessageLoop::ScopedNestableTaskAllower allow(
         base::MessageLoop::current());
     FrameWatcher(web_contents()).WaitFrames(1);
-  }
-
-  bool OnMessageReceived(const IPC::Message& message,
-                         RenderFrameHost* rfh) override {
-    IPC_BEGIN_MESSAGE_MAP(CommitBeforeSwapAckSentHelper, message)
-      IPC_MESSAGE_HANDLER_GENERIC(FrameHostMsg_DidCommitProvisionalLoad,
-                                  WaitForSwapCompositorFrame())
-    IPC_END_MESSAGE_MAP()
-    return false;
+    DidCommitProvisionalLoadInterceptor::DidCommitProvisionalLoad(params);
   }
 
   DISALLOW_COPY_AND_ASSIGN(CommitBeforeSwapAckSentHelper);
@@ -260,9 +255,11 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewBrowserTestBase,
       NavigationController::LoadURLParams(GURL(url::kAboutBlankURL)));
   EXPECT_TRUE(WaitForLoadStop(new_web_contents.get()));
 
+  LOG(ERROR) << " 1 ";
   // Start a cross-process navigation.
   shell()->LoadURL(embedded_test_server()->GetURL("foo.com", "/title1.html"));
 
+  LOG(ERROR) << " 2 ";
   // When the navigation is about to commit, wait for the next frame to be
   // submitted by the renderer before proceeding with page load.
   {
@@ -272,8 +269,11 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewBrowserTestBase,
               new_web_contents->GetRenderProcessHost());
   }
 
+  LOG(ERROR) << " 3 ";
+
   // Go back and verify that the renderer continues to draw new frames.
   shell()->GoBackOrForward(-1);
+  LOG(ERROR) << " 4 ";
   EXPECT_TRUE(WaitForLoadStop(web_contents));
   EXPECT_EQ(web_contents->GetRenderProcessHost(),
             new_web_contents->GetRenderProcessHost());

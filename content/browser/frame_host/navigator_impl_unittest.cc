@@ -901,7 +901,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   EXPECT_EQ(site_instance_id, speculative_rfh->GetSiteInstance()->GetId());
   EXPECT_FALSE(node->render_manager()->pending_frame_host());
 
-  // Invoke OnDidCommitProvisionalLoad.
+  // Invoke DidCommitProvisionalLoad.
   speculative_rfh->SendNavigate(entry_id, true, kUrl);
   EXPECT_EQ(site_instance_id, main_test_rfh()->GetSiteInstance()->GetId());
   EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
@@ -972,7 +972,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   EXPECT_NE(init_site_instance_id, redirect_site_instance_id);
   EXPECT_NE(site_instance_id, redirect_site_instance_id);
 
-  // Invoke OnDidCommitProvisionalLoad.
+  // Invoke DidCommitProvisionalLoad.
   speculative_rfh->SendNavigate(entry_id, true, kUrlRedirect);
 
   // Check that the speculative RenderFrameHost was swapped in.

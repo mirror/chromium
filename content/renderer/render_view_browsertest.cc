@@ -617,20 +617,16 @@ TEST_F(RenderViewImplTest, OnNavigationHttpPost) {
   frame()->Navigate(common_params, start_params, request_params);
   base::RunLoop().RunUntilIdle();
 
-  const IPC::Message* frame_navigate_msg =
-      render_thread_->sink().GetUniqueMessageMatching(
-          FrameHostMsg_DidCommitProvisionalLoad::ID);
-  EXPECT_TRUE(frame_navigate_msg);
+  ASSERT_TRUE(frame()->last_commit_params().has_value());
 
-  FrameHostMsg_DidCommitProvisionalLoad::Param host_nav_params;
-  FrameHostMsg_DidCommitProvisionalLoad::Read(frame_navigate_msg,
-                                              &host_nav_params);
-  EXPECT_EQ("POST", std::get<0>(host_nav_params).method);
+  FrameHostMsg_DidCommitProvisionalLoad_Params host_nav_params =
+      frame()->last_commit_params().value();
+  EXPECT_EQ("POST", host_nav_params.method);
 
   // Check post data sent to browser matches
-  EXPECT_TRUE(std::get<0>(host_nav_params).page_state.IsValid());
+  EXPECT_TRUE(host_nav_params.page_state.IsValid());
   std::unique_ptr<HistoryEntry> entry =
-      PageStateToHistoryEntry(std::get<0>(host_nav_params).page_state);
+      PageStateToHistoryEntry(host_nav_params.page_state);
   blink::WebHTTPBody body = entry->root().HttpBody();
   blink::WebHTTPBody::Element element;
   bool successful = body.ElementAt(0, element);
