@@ -1,0 +1,25 @@
+rootWebArea focusable
+++genericContainer name='Atomic illegal'
+++textField name='Autocomplete illegal' role='textbox'
+++genericContainer name='Busy illegal'
+++treeItem selectable name='Checked illegal' role='treeitem' checkedState=true
+++genericContainer name='Current illegal' ariaCurrentState=true
+++genericContainer name='Disabled illegal' restriction=disabled
+++genericContainer name='Dropeffect illegal'
+++treeItem expanded selectable name='Expanded illegal' role='treeitem'
+++genericContainer name='Grabbed illegal'
+++popUpButton haspopup name='Haspopup illegal' role='button'
+++genericContainer ariaInvalidValue='X-ILLEGAL' name='Invalid illegal' invalidState=other
+++genericContainer name='Live illegal'
+++dialog name='Modal illegal' role='dialog' modal=true
+++textField multiline name='Multiline illegal' role='textbox'
+++grid multiselectable name='Multiselectable illegal' role='grid'
+++++tableHeaderContainer
+++vertical name='Orientation illegal' role='scrollbar'
+++toggleButton name='Pressed illegal' role='button' checkedState=true
+++textField name='Readonly illegal' role='textbox' restriction=readOnly
+++genericContainer name='Relevant illegal'
+++textField required name='Required illegal' role='textbox'
+++tree multiselectable vertical role='tree'
+++++treeItem selectable selected name='Selected illegal' role='treeitem'
+++columnHeader selectable name='Sort illegal' role='columnheader'
