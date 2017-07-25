@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c6bc26f_8f81b802",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/http/tests/inspector/extensions/extensions-panel-expected.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-07-25T19:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ba3b3e5_8daba4bd",
+      "revId": "127215c05b18b9082f9a215b5ce4c9d278004c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb0cefa9_9599551b",
         "filename": "third_party/WebKit/LayoutTests/platform/win/http/tests/inspector/extensions/extensions-panel-expected.txt",
         "patchSetId": 31
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9df3723f_d398784b",
+        "filename": "third_party/WebKit/LayoutTests/platform/win/http/tests/inspector/extensions/extensions-panel-expected.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-07-25T19:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb0cefa9_9599551b",
+      "revId": "127215c05b18b9082f9a215b5ce4c9d278004c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e48d2c0_2b48a37a",
         "filename": "third_party/WebKit/LayoutTests/platform/win7/http/tests/inspector/extensions/extensions-panel-expected.txt",
         "patchSetId": 31
@@ -50,6 +86,24 @@
       "revId": "127215c05b18b9082f9a215b5ce4c9d278004c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7687f847_c508b5c8",
+        "filename": "third_party/WebKit/LayoutTests/platform/win7/http/tests/inspector/extensions/extensions-panel-expected.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-07-25T19:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e48d2c0_2b48a37a",
+      "revId": "127215c05b18b9082f9a215b5ce4c9d278004c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
