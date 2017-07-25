@@ -11,6 +11,7 @@ import android.support.customtabs.CustomTabsIntent;
 import android.text.TextUtils;
 
 import org.chromium.base.CommandLine;
+import org.chromium.base.SysUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -413,6 +414,10 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
                 "DomDistiller.Time.ViewingReaderModePage", timeMs, TimeUnit.MILLISECONDS);
     }
 
+    public boolean shouldUseCCT() {
+        return DomDistillerTabUtils.isCctMode() && !SysUtils.isLowEndDevice();
+    }
+
     /**
      * Try showing the reader mode infobar.
      */
@@ -430,8 +435,11 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
 
         if (!mTabStatusMap.containsKey(currentTabId) || usingRequestDesktopSite
                 || mTabStatusMap.get(currentTabId).getStatus() != POSSIBLE
-                || mTabStatusMap.get(currentTabId).isDismissed()
-                || AccessibilityUtil.isAccessibilityEnabled()) {
+                || mTabStatusMap.get(currentTabId).isDismissed()) {
+            return;
+        }
+
+        if (AccessibilityUtil.isAccessibilityEnabled() && !shouldUseCCT()) {
             return;
         }
 

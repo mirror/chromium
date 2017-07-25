@@ -13,13 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
-import org.chromium.base.SysUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
-import org.chromium.chrome.browser.dom_distiller.DomDistillerTabUtils;
 import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
 import org.chromium.chrome.browser.tab.Tab;
 
@@ -37,7 +35,7 @@ public class ReaderModeInfoBar extends InfoBar {
             RecordHistogram.recordBooleanHistogram("DomDistiller.InfoBarUsage", true);
 
             if (getReaderModeManager() == null) return;
-            if (DomDistillerTabUtils.isCctMode() && !SysUtils.isLowEndDevice()) {
+            if (getReaderModeManager().shouldUseCCT()) {
                 getReaderModeManager().distillInCustomTab();
             } else {
                 getReaderModeManager().navigateToReaderMode();
