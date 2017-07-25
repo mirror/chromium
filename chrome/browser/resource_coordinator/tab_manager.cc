@@ -173,6 +173,8 @@ TabManager::~TabManager() {
 }
 
 void TabManager::Start() {
+  background_tab_loading_mode_ = BackgroundTabLoadingMode::kStaggered;
+
 #if defined(OS_WIN) || defined(OS_MACOSX)
   // Note that discarding is now enabled by default. This check is kept as a
   // kill switch.
@@ -835,10 +837,20 @@ void TabManager::OnMemoryPressure(
   if (g_browser_process->IsShuttingDown())
     return;
 
-  // Under critical pressure try to discard a tab.
-  if (memory_pressure_level ==
-      base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL) {
-    LogMemoryAndDiscardTab(kUrgentShutdown);
+  switch (memory_pressure_level) {
+    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE:
+      background_tab_loading_mode_ = BackgroundTabLoadingMode::kStaggered;
+      LoadNextBackgroundTabIfNeeded();
+      break;
+    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
+      background_tab_loading_mode_ = BackgroundTabLoadingMode::kPaused;
+      break;
+    case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
+      background_tab_loading_mode_ = BackgroundTabLoadingMode::kPaused;
+      LogMemoryAndDiscardTab(kUrgentShutdown);
+      break;
+    default:
+      NOTREACHED();
   }
   // TODO(skuhne): If more memory pressure levels are introduced, consider
   // calling PurgeBrowserMemory() before CRITICAL is reached.
@@ -1099,6 +1111,9 @@ void TabManager::StartForceLoadTimer() {
 }
 
 void TabManager::LoadNextBackgroundTabIfNeeded() {
+  if (background_tab_loading_mode_ != BackgroundTabLoadingMode::kStaggered)
+    return;
+
   // Do not load more background tabs until all currently loading tabs have
   // finished. Ignore this constraint if the timer fires to force loading the
   // next background tab.
