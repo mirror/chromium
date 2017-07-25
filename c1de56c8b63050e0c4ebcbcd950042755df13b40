@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3f51917_9adbb243",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-25T20:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "118e1e38_cb539a1d",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "c1de56c8b63050e0c4ebcbcd950042755df13b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98e537bb_5e5d8770",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c1de56c8b63050e0c4ebcbcd950042755df13b40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9f5781_d2d7385a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-25T20:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98e537bb_5e5d8770",
+      "range": {
+        "startLine": 238,
+        "startChar": 16,
+        "endLine": 238,
+        "endChar": 25
+      },
+      "revId": "c1de56c8b63050e0c4ebcbcd950042755df13b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
