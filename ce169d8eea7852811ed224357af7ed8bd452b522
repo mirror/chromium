@@ -16,6 +16,24 @@
       "revId": "ce169d8eea7852811ed224357af7ed8bd452b522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f574d906_71cb252a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 73227,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-25T03:28:57Z",
+      "side": 1,
+      "message": "The unit is \"engagement\", which is a number from 0 to 100 and it doesn\u0027t really correspond to anything other than usage by a user. Does it make sense to add a unit?",
+      "parentUuid": "cd5b6b4a_9b5a713a",
+      "revId": "ce169d8eea7852811ed224357af7ed8bd452b522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
