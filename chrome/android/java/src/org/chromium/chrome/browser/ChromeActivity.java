@@ -212,6 +212,12 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     private static final String TAG = "ChromeActivity";
     private static final Rect EMPTY_RECT = new Rect();
 
+    /**
+     * Time in ms from when we last backgrounded Chrome until we show the bottom sheet at half.
+     * Time is 3 hours.
+     */
+    private static final long TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS = 10800000L;
+
     private static AppMenuHandlerFactory sAppMenuHandlerFactory = new AppMenuHandlerFactory() {
         @Override
         public AppMenuHandler get(
@@ -219,6 +225,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             return new AppMenuHandler(activity, delegate, menuResourceId);
         }
     };
+
+    protected static final String LAST_BACKGROUNDED_TIME_MS_PREF =
+            "ChromeActivity.BackgroundTimeMs";
 
     private TabModelSelector mTabModelSelector;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
@@ -407,8 +416,16 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                     ((ControlContainer) findViewById(R.id.control_container)).getView().getHeight();
             mBottomSheetContentController.init(
                     mBottomSheet, controlContainerHeight, mTabModelSelector, this);
+            maybeSetBottomSheetStateToHalfOnStartup();
         }
         ((BottomContainer) findViewById(R.id.bottom_container)).initialize(mFullscreenManager);
+    }
+
+    private void maybeSetBottomSheetStateToHalfOnStartup() {
+        if (getTimeSinceLastBackgroundedMs()
+                >= TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS) {
+            mBottomSheet.setSheetStateHalfOnStartup();
+        }
     }
 
     @Override
@@ -2273,5 +2290,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     public DiscardableReferencePool getReferencePool() {
         return mReferencePool;
+    }
+
+    /**
+     * Returns the number of milliseconds since Chrome was last backgrounded.
+     */
+    public long getTimeSinceLastBackgroundedMs() {
+        long lastBackgroundedTimeMs =
+                ContextUtils.getAppSharedPreferences().getLong(LAST_BACKGROUNDED_TIME_MS_PREF, -1);
+        return System.currentTimeMillis() - lastBackgroundedTimeMs;
     }
 }

@@ -209,8 +209,6 @@ public class ChromeTabbedActivity
     private static final String ACTION_CLOSE_TABS =
             "com.google.android.apps.chrome.ACTION_CLOSE_TABS";
 
-    private static final String LAST_BACKGROUNDED_TIME_MS_PREF =
-            "ChromeTabbedActivity.BackgroundTimeMs";
     private static final String NTP_LAUNCH_DELAY_IN_MINS_PARAM = "delay_in_mins";
 
     /** The task id of the activity that tabs were merged into. */
