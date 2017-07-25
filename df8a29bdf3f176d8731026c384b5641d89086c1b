@@ -105,6 +105,30 @@
       "revId": "df8a29bdf3f176d8731026c384b5641d89086c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51393ca2_9ffe2e2c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-25T16:48:59Z",
+      "side": 1,
+      "message": "I only want to use AWObjectProxy to post a task from the main thread to the worklet thread. I would like to try the third option, because I can leave the object proxy class alone. Perhaps I don\u0027t need AWOP at all.\n\nThe reason I picked ThreadedWorkletObjectProxy is I saw this is the way of sending instruction to the global scope from the messaging proxy:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/workers/ThreadedWorkletObjectProxy.cpp?sq\u003dpackage:chromium\u0026l\u003d27",
+      "parentUuid": "967ad509_8d1f5758",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "df8a29bdf3f176d8731026c384b5641d89086c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
