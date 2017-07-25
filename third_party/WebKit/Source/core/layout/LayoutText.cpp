@@ -1445,33 +1445,33 @@ float LayoutText::FirstRunY() const {
 
 void LayoutText::SetSelectionState(SelectionState state) {
   LayoutObject::SetSelectionState(state);
+  /*
+    if (CanUpdateSelectionOnRootLineBoxes()) {
+      if (state == SelectionState::kStart || state == SelectionState::kEnd ||
+          state == SelectionState::kStartAndEnd) {
+        int start_pos, end_pos;
+        std::tie(start_pos, end_pos) = SelectionStartEnd();
+        if (GetSelectionState() == SelectionState::kStart) {
+          end_pos = TextLength();
 
-  if (CanUpdateSelectionOnRootLineBoxes()) {
-    if (state == SelectionState::kStart || state == SelectionState::kEnd ||
-        state == SelectionState::kStartAndEnd) {
-      int start_pos, end_pos;
-      std::tie(start_pos, end_pos) = SelectionStartEnd();
-      if (GetSelectionState() == SelectionState::kStart) {
-        end_pos = TextLength();
+          // to handle selection from end of text to end of line
+          if (start_pos && start_pos == end_pos)
+            start_pos = end_pos - 1;
+        } else if (GetSelectionState() == SelectionState::kEnd) {
+          start_pos = 0;
+        }
 
-        // to handle selection from end of text to end of line
-        if (start_pos && start_pos == end_pos)
-          start_pos = end_pos - 1;
-      } else if (GetSelectionState() == SelectionState::kEnd) {
-        start_pos = 0;
-      }
-
-      for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
-        if (box->IsSelected(start_pos, end_pos)) {
-          box->Root().SetHasSelectedChildren(true);
+        for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
+          if (box->IsSelected(start_pos, end_pos)) {
+            box->Root().SetHasSelectedChildren(true);
+          }
+        }
+      } else {
+        for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
+          box->Root().SetHasSelectedChildren(state == SelectionState::kInside);
         }
       }
-    } else {
-      for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
-        box->Root().SetHasSelectedChildren(state == SelectionState::kInside);
-      }
-    }
-  }
+    }*/
 
   // The containing block can be null in case of an orphaned tree.
   LayoutBlock* containing_block = this->ContainingBlock();
