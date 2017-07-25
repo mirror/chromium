@@ -16,6 +16,24 @@
       "revId": "5f47a6e4a7282b7120288300f26b8574ae194d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4662b49_f8f52e44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T20:22:02Z",
+      "side": 1,
+      "message": "Ugh, I somehow created 2 CLs. I moved my description into this one and added your paragraph too.",
+      "parentUuid": "b7eab007_9a0e3919",
+      "revId": "5f47a6e4a7282b7120288300f26b8574ae194d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
