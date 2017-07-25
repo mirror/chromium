@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "883915f0_5801f63d",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-25T05:46:32Z",
+      "side": 1,
+      "message": "full screen \u003d\u003e pip (or vice-versa) can call EnableOverlay twice without DisableOverlay.  that can restart the decoder.\n\nmight want to check for |!overlay_enabled_| too, and skip the call if it is.\n\nthat would also make the |!force_video_overlays_| check redundant, but it\u0027s probably good to keep it for clarity.",
+      "revId": "bfb5ab63cc1f6887223db07786b7891f1b94a247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38501fcc_1cddfd85",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-25T05:46:32Z",
+      "side": 1,
+      "message": "i think this is harmless, but it\u0027s not clear that we want to call this if we transition from fs \u003d\u003e pip, since nothing actually changed in |overlay_info_|.  i think it\u0027s fine, but might be worth a comment.",
+      "revId": "bfb5ab63cc1f6887223db07786b7891f1b94a247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
