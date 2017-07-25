@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c8185c4a_a0098723",
+        "filename": "cc/input/scroller_size_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-25T22:30:35Z",
+      "side": 1,
+      "message": "Yes. The alternative in this experiment is all non-frame scrollers. Does the collected stats include frame scrolling or just overflow scrollers?",
+      "parentUuid": "48363e8f_34db6749",
+      "revId": "fe052e5c12f17f140b0ef1a89de34d265c79d8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c24e07_762ec750",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
