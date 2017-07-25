@@ -116,8 +116,9 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(
         local_surface_id_provider_->GetLocalSurfaceIdForFrame(frame);
   }
 
-  compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
-                                                std::move(frame));
+  auto hit_test_region_list = mojom::HitTestRegionList::New();
+  compositor_frame_sink_->SubmitCompositorFrame(
+      local_surface_id_, std::move(frame), std::move(hit_test_region_list));
 }
 
 void ClientLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {

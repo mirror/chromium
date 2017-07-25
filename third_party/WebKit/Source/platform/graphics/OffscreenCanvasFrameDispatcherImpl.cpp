@@ -437,7 +437,9 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   }
 
   pending_compositor_frames_++;
-  sink_->SubmitCompositorFrame(current_local_surface_id_, std::move(frame));
+  auto hit_test_region_list = viz::mojom::blink::HitTestRegionList::New();
+  sink_->SubmitCompositorFrame(current_local_surface_id_, std::move(frame),
+                               std::move(hit_test_region_list));
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DidReceiveCompositorFrameAck(

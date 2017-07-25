@@ -107,8 +107,9 @@ void FrameGenerator::OnBeginFrame(const viz::BeginFrameArgs& begin_frame_args) {
     last_submitted_frame_size_ = frame_size;
     local_surface_id_ = id_allocator_.GenerateId();
   }
-  compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
-                                                std::move(frame));
+  auto hit_test_region_list = viz::mojom::HitTestRegionList::New();
+  compositor_frame_sink_->SubmitCompositorFrame(
+      local_surface_id_, std::move(frame), std::move(hit_test_region_list));
   SetNeedsBeginFrame(false);
 }
 

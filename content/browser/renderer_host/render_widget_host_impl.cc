@@ -2578,7 +2578,8 @@ void RenderWidgetHostImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
 
 void RenderWidgetHostImpl::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
-    cc::CompositorFrame frame) {
+    cc::CompositorFrame frame,
+    viz::mojom::HitTestRegionListPtr hit_test_region_list) {
   auto new_surface_properties =
       RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
 
@@ -2713,8 +2714,10 @@ device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
 void RenderWidgetHostImpl::DidAllocateSharedBitmap(uint32_t sequence_number) {
   if (saved_frame_.local_surface_id.is_valid() &&
       sequence_number >= saved_frame_.max_shared_bitmap_sequence_number) {
+    auto hit_test_region_list = viz::mojom::HitTestRegionList::New();
     SubmitCompositorFrame(saved_frame_.local_surface_id,
-                          std::move(saved_frame_.frame));
+                          std::move(saved_frame_.frame),
+                          std::move(hit_test_region_list));
     saved_frame_.local_surface_id = viz::LocalSurfaceId();
     compositor_frame_sink_binding_.ResumeIncomingMethodCallProcessing();
     TRACE_EVENT_ASYNC_END0("renderer_host", "PauseCompositorFrameSink", this);
