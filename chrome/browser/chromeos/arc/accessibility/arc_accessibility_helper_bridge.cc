@@ -142,7 +142,8 @@ ArcAccessibilityHelperBridge::ArcAccessibilityHelperBridge(
     : profile_(Profile::FromBrowserContext(browser_context)),
       arc_bridge_service_(arc_bridge_service),
       binding_(this),
-      current_task_id_(kNoTaskId) {
+      current_task_id_(kNoTaskId),
+      fallback_tree_(new AXTreeSourceArc(this)) {
   arc_bridge_service_->accessibility_helper()->AddObserver(this);
 
   // Null on testing.
@@ -223,25 +224,33 @@ void ArcAccessibilityHelperBridge::OnAccessibilityEvent(
       return;
 
     auto task_ids_it = package_name_to_task_ids_.find(package_it->second);
-    if (task_ids_it == package_name_to_task_ids_.end())
-      return;
-
-    const auto& task_ids = task_ids_it->second;
-
-    // Reject updates to non-current task ids. We can do this currently
-    // because all events include the entire tree.
-    if (task_ids.count(current_task_id_) == 0)
-      return;
-
-    auto tree_it = package_name_to_tree_.find(package_it->second);
     AXTreeSourceArc* tree_source;
-    if (tree_it == package_name_to_tree_.end()) {
-      package_name_to_tree_[package_it->second].reset(
-          new AXTreeSourceArc(this));
-      tree_source = package_name_to_tree_[package_it->second].get();
+    if (task_ids_it == package_name_to_task_ids_.end()) {
+      // It's possible for there to have never been a package mapping for this
+      // task id due to underlying bugs. See crbug.com/745978.
+      for (auto entry : package_name_to_task_ids_) {
+        if (entry.second.count(current_task_id_) > 0)
+          return;
+      }
+      tree_source = fallback_tree_.get();
     } else {
-      tree_source = tree_it->second.get();
+      const auto& task_ids = task_ids_it->second;
+
+      // Reject updates to non-current task ids. We can do this currently
+      // because all events include the entire tree.
+      if (task_ids.count(current_task_id_) == 0)
+        return;
+
+      auto tree_it = package_name_to_tree_.find(package_it->second);
+      if (tree_it == package_name_to_tree_.end()) {
+        package_name_to_tree_[package_it->second].reset(
+            new AXTreeSourceArc(this));
+        tree_source = package_name_to_tree_[package_it->second].get();
+      } else {
+        tree_source = tree_it->second.get();
+      }
     }
+
     tree_source->NotifyAccessibilityEvent(event_data.get());
     return;
   }
@@ -298,8 +307,10 @@ void ArcAccessibilityHelperBridge::OnWindowActivated(
     }
   }
 
-  if (!found_entry)
+  if (!found_entry) {
+    fallback_tree_->Focus(gained_active);
     return;
+  }
 
   auto it = package_name_to_tree_.find(found_entry->first);
   if (it != package_name_to_tree_.end())
