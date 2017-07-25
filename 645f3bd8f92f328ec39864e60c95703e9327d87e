@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c8ee0c_c2b70520",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T06:38:50Z",
+      "side": 1,
+      "message": "maybe \"...are mutually exclusive. |content_security_policy_parsed_headers| is an empty vector when |content_security_policy_raw_headers| is set.\"",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6394d57f_a6e9b863",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T06:38:50Z",
+      "side": 1,
+      "message": "SetContentSecurityPolicyAndReferrerPolicy()",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3222f6_ca34b063",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T06:38:50Z",
+      "side": 1,
+      "message": "Did you lose the change to TaskType::kNetworking? Is it guaranteed that all kNetworking tasks run before loading tasks.",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141c42e0_2c74ae69",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T06:38:50Z",
+      "side": 1,
+      "message": "This patch isn\u0027t doing that yet?",
+      "revId": "645f3bd8f92f328ec39864e60c95703e9327d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
