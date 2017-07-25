@@ -830,10 +830,10 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     egl_window_attributes.push_back(EGL_TRUE);
   }
 
-  switch (format_.GetColorSpace()) {
-    case GLSurfaceFormat::COLOR_SPACE_UNSPECIFIED:
+  switch (color_space_) {
+    case GLSurfaceFormat::ColorSpace::UNSPECIFIED:
       break;
-    case GLSurfaceFormat::COLOR_SPACE_SRGB:
+    case GLSurfaceFormat::ColorSpace::SRGB:
       // Note that COLORSPACE_LINEAR refers to the sRGB color space, but
       // without opting into sRGB blending. It is equivalent to
       // COLORSPACE_SRGB with Disable(FRAMEBUFFER_SRGB).
@@ -842,7 +842,7 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
         egl_window_attributes.push_back(EGL_GL_COLORSPACE_LINEAR_KHR);
       }
       break;
-    case GLSurfaceFormat::COLOR_SPACE_DISPLAY_P3:
+    case GLSurfaceFormat::ColorSpace::DISPLAY_P3:
       // As above, COLORSPACE_DISPLAY_P3_LINEAR is equivalent to
       // COLORSPACE_DISPLAY_P3 with Disable(FRAMEBUFFER_SRGB).
       if (g_egl_khr_colorspace && g_egl_ext_colorspace_display_p3_linear) {
@@ -936,11 +936,13 @@ gfx::Size NativeViewGLSurfaceEGL::GetSize() {
 
 bool NativeViewGLSurfaceEGL::Resize(const gfx::Size& size,
                                     float scale_factor,
+                                    ColorSpace color_space,
                                     bool has_alpha) {
-  if (size == GetSize())
+  if (size == GetSize() && color_space == color_space_)
     return true;
 
   size_ = size;
+  color_space_ = color_space;
 
   std::unique_ptr<ui::ScopedMakeCurrent> scoped_make_current;
   GLContext* current_context = GLContext::GetCurrent();
@@ -985,6 +987,11 @@ bool NativeViewGLSurfaceEGL::FlipsVertically() const {
 
 bool NativeViewGLSurfaceEGL::BuffersFlipped() const {
   return g_use_direct_composition;
+}
+
+void NativeViewGLSurfaceEGL::SetInitialColorSpace(
+    GLSurface::ColorSpace color_space) {
+  color_space_ = color_space;
 }
 
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffersWithDamage(
@@ -1172,6 +1179,7 @@ gfx::Size PbufferGLSurfaceEGL::GetSize() {
 
 bool PbufferGLSurfaceEGL::Resize(const gfx::Size& size,
                                  float scale_factor,
+                                 ColorSpace color_space,
                                  bool has_alpha) {
   if (size == size_)
     return true;
@@ -1255,6 +1263,7 @@ gfx::Size SurfacelessEGL::GetSize() {
 
 bool SurfacelessEGL::Resize(const gfx::Size& size,
                             float scale_factor,
+                            ColorSpace color_space,
                             bool has_alpha) {
   size_ = size;
   return true;
