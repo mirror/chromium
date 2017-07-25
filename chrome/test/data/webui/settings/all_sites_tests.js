@@ -67,6 +67,7 @@ var prefsMixedOriginAndPattern = {
     midiDevices: [],
     protectedContent: [],
     popups: [],
+    sound: [],
     unsandboxed_plugins: [],
   }
 };
@@ -129,6 +130,7 @@ var prefsVarious = {
     plugins: [],
     protectedContent: [],
     popups: [],
+    sound: [],
     unsandboxed_plugins: [],
   }
 };

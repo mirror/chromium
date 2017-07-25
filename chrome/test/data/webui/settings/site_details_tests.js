@@ -95,6 +95,14 @@ suite('SiteDetails', function() {
           source: 'preference',
         },
       ],
+      sound: [
+        {
+          embeddingOrigin: 'https://foo-allow.com:443',
+          origin: 'https://foo-allow.com:443',
+          setting: 'allow',
+          source: 'preference',
+        },
+      ],
       unsandboxed_plugins: [
         {
           embeddingOrigin: 'https://foo-allow.com:443',

@@ -11,6 +11,7 @@
  *   cookies: !Array<!RawSiteException>},
  *   geolocation: !Array<!RawSiteException>},
  *   javascript: !Array<!RawSiteException>},
+ *   sound: !Array<!RawSiteException>},
  *   mic: !Array<!RawSiteException>},
  *   midiDevices: !Array<!RawSiteException>},
  *   notifications: !Array<!RawSiteException>},
@@ -43,6 +44,7 @@ var prefsEmpty = {
     cookies: '',
     geolocation: '',
     javascript: '',
+    sound: '',
     mic: '',
     midiDevices: '',
     notifications: '',
@@ -59,6 +61,7 @@ var prefsEmpty = {
     cookies: [],
     geolocation: [],
     javascript: [],
+    sound: [],
     mic: [],
     midiDevices: [],
     notifications: [],
@@ -229,6 +232,8 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
       pref = this.prefs_.defaults.popups;
     } else if (contentType == settings.ContentSettingsTypes.PLUGINS) {
       pref = this.prefs_.defaults.plugins;
+    } else if (contentType == settings.ContentSettingsTypes.SOUND) {
+      pref = this.prefs_.defaults.sound;
     } else if (
         contentType == settings.ContentSettingsTypes.UNSANDBOXED_PLUGINS) {
       pref = this.prefs_.defaults.unsandboxed_plugins;
@@ -275,6 +280,8 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
       pref = this.prefs_.exceptions.protectedContent;
     else if (contentType == settings.ContentSettingsTypes.POPUPS)
       pref = this.prefs_.exceptions.popups;
+    else if (contentType == settings.ContentSettingsTypes.SOUND)
+      pref = this.prefs_.exceptions.sound;
     else if (contentType == settings.ContentSettingsTypes.UNSANDBOXED_PLUGINS)
       pref = this.prefs_.exceptions.unsandboxed_plugins;
     else
