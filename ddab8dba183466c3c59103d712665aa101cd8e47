@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02683e86_e8518953",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/unsupported-encodings.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:43:18Z",
+      "side": 1,
+      "message": "I\u0027m confused by this change. Inserting \u0027be\u0027 before \u0027not be\u0027?",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984afb1c_2e7f99cc",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:43:18Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this alias used to be in the WHATWG encoding spec. Anyway, I can drop it. It\u0027d not have much impact.",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bb5a89_3ae125cf",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:43:18Z",
+      "side": 1,
+      "message": "I\u0027ll drop this in ICU.",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade162ed_a6690aa8",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:43:18Z",
+      "side": 1,
+      "message": "Hmm... it appears that the WHATWG encoding spec has dropped a few aliases for GBK and GB 18030 since the last time I updated the ICU\u0027s html5 converter alias table.",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0a3782_5ac8214b",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:43:18Z",
+      "side": 1,
+      "message": "I\u0027ll drop this in ICU.",
+      "range": {
+        "startLine": 141,
+        "startChar": 22,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02469d1f_41aac8c1",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/supported-encodings-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:43:18Z",
+      "side": 1,
+      "message": "For now, this one has to be special-cased (removed) in Blink along with *-html.",
+      "range": {
+        "startLine": 186,
+        "startChar": 22,
+        "endLine": 186,
+        "endChar": 38
+      },
+      "revId": "ddab8dba183466c3c59103d712665aa101cd8e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
