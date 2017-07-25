@@ -21,6 +21,8 @@ source_set("web") {
     "navigation_manager_util.mm",
     "network_activity_indicator_tab_helper.h",
     "network_activity_indicator_tab_helper.mm",
+    "placeholder_overlay_tab_helper.h",
+    "placeholder_overlay_tab_helper.mm",
     "repost_form_tab_helper.h",
     "repost_form_tab_helper.mm",
     "sad_tab_tab_helper.h",
@@ -29,6 +31,7 @@ source_set("web") {
     "tab_id_tab_helper.mm",
   ]
   deps = [
+    ":placeholder_overlay_tab_helper_delegate",
     ":sad_tab_tab_helper_delegate",
     "//base",
     "//components/strings",
@@ -43,6 +46,13 @@ source_set("web") {
     "//ios/web:web_arc",
     "//ui/base",
     "//url",
+  ]
+}
+
+source_set("placeholder_overlay_tab_helper_delegate") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "placeholder_overlay_tab_helper_delegate.h",
   ]
 }
 

@@ -42,6 +42,7 @@
 #import "ios/chrome/browser/tabs/tab_model_synced_window_delegate.h"
 #import "ios/chrome/browser/tabs/tab_model_web_state_list_delegate.h"
 #import "ios/chrome/browser/tabs/tab_parenting_observer.h"
+#import "ios/chrome/browser/web/placeholder_overlay_tab_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_fast_enumeration_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_metrics_observer.h"
@@ -747,15 +748,15 @@ std::unique_ptr<web::WebState> CreateWebState(
 
   for (int index = oldCount; index < _webStateList->count(); ++index) {
     web::WebState* webState = _webStateList->GetWebStateAt(index);
-    Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
 
     webState->SetWebUsageEnabled(_webUsageEnabled ? true : false);
-    tab.webController.usePlaceholderOverlay = YES;
+    PlaceholderOverlayTabHelper::FromWebState(webState)
+        ->AddPlaceholderOverlayForNextNavigation();
 
     // Restore the CertificatePolicyCache (note that webState is invalid after
     // passing it via move semantic to -initWithWebState:model:).
-    UpdateCertificatePolicyCacheFromWebState(policyCache, [tab webState]);
-    [restoredTabs addObject:tab];
+    UpdateCertificatePolicyCacheFromWebState(policyCache, webState);
+    [restoredTabs addObject:LegacyTabHelper::GetTabForWebState(webState)];
   }
 
   // If there was only one tab and it was the new tab page, clobber it.
