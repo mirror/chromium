@@ -76,7 +76,7 @@ require_administrator_manifest = "//build/win/require_administrator.manifest"
 #     ...
 #   }
 
-if (is_win) {
+if (is_win && host_os == "win") { # XXX
   # This is the environment file that tool_wrapper.py will use for the current
   # toolchain. It is placed in root_build_dir by the toolchain setup. This
   # variable is the path relative to the root_build_dir which is what
@@ -160,7 +160,7 @@ if (is_win) {
       # updated every time the manifest is updated. Otherwise, updating the
       # manifest will not cause a recompilation of the .rc file.
       deps = [
-        ":$manifest_action_name",
+        #":$manifest_action_name",
       ]
     }
 
@@ -171,8 +171,8 @@ if (is_win) {
         rcfile,
       ]
       deps = [
-        ":$manifest_action_name",
-        ":$rc_action_name",
+        #":$manifest_action_name",
+        #":$rc_action_name",
       ]
     }
   }
