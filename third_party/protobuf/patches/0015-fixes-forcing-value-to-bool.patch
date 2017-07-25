@@ -1,0 +1,18 @@
+diff -ru protobuf2/src/google/protobuf/io/coded_stream.h protobuf/src/google/protobuf/io/coded_stream.h
+--- protobuf2/src/google/protobuf/io/coded_stream.h	2017-07-24 16:23:39.588836259 -0700
++++ protobuf/src/google/protobuf/io/coded_stream.h	2017-07-24 16:31:42.145674255 -0700
+@@ -861,11 +861,12 @@
+   bool IsSerializationDeterministic() const {
+     return serialization_deterministic_is_overridden_ ?
+         serialization_deterministic_override_ :
+-        default_serialization_deterministic_;
++        static_cast<bool>(default_serialization_deterministic_);
+   }
+ 
+   static bool IsDefaultSerializationDeterministic() {
+-    return google::protobuf::internal::Acquire_Load(&default_serialization_deterministic_);
++    return static_cast<bool>(google::protobuf::internal::Acquire_Load(
++        &default_serialization_deterministic_));
+   }
+ 
+  private:
