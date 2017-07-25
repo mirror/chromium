@@ -64,7 +64,7 @@ class WebrtcVideoEncoderGpu : public WebrtcVideoEncoder,
 
   // Shared memory buffers for input/output with the VEA.
   std::vector<std::unique_ptr<base::SharedMemory>> input_buffers_;
-  std::vector<std::unique_ptr<base::SharedMemory>> output_buffers_;
+  std::vector<uint8_t*> output_buffers_;
 
   unsigned int required_input_frame_count_;
   gfx::Size input_coded_size_;
