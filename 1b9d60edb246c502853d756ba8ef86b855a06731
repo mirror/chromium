@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc634909_1890fbbe",
+        "filename": "chrome/browser/android/shortcut_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-25T18:03:39Z",
+      "side": 1,
+      "message": "Nit: move the function InstallWebApkWithSkBitmap() below the function AddShortcutWithSkBitmap().",
+      "revId": "1b9d60edb246c502853d756ba8ef86b855a06731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6491fe_641c3eb1",
+        "filename": "chrome/browser/android/shortcut_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-25T18:03:39Z",
+      "side": 1,
+      "message": "Nit: This function can be removed:)",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "1b9d60edb246c502853d756ba8ef86b855a06731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
