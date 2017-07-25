@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <list>
+
 #include "base/files/file_util.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -14,8 +16,14 @@
 #include "content/public/test/test_url_loader_client.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/cpp/system/wait.h"
+#include "net/base/io_buffer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "net/url_request/url_request.h"
+#include "net/url_request/url_request_filter.h"
+#include "net/url_request/url_request_interceptor.h"
+#include "net/url_request/url_request_job.h"
+#include "net/url_request/url_request_status.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -62,6 +70,56 @@ std::string ReadData(MojoHandle consumer, size_t size) {
 
   return std::string(buffer.data(), buffer.size());
 }
+
+class URLRequestSlowWriterJob : public net::URLRequestJob {
+ public:
+  URLRequestSlowWriterJob(net::URLRequest* request,
+                          net::NetworkDelegate* network_delegate,
+                          std::list<std::string> packets)
+      : URLRequestJob(request, network_delegate),
+        packets_(std::move(packets)) {}
+
+  // net::URLRequestJob implementation:
+  void Start() override { NotifyHeadersComplete(); }
+  int ReadRawData(net::IOBuffer* buf, int buf_size) override {
+    if (packets_.empty())
+      return 0;
+
+    std::string packet = packets_.front();
+    packets_.pop_front();
+    CHECK_GE(buf_size, static_cast<int>(packet.length()));
+    memcpy(buf->data(), packet.c_str(), packet.length());
+    return packet.length();
+  }
+
+ private:
+  ~URLRequestSlowWriterJob() override {}
+
+  std::list<std::string> packets_;
+
+  DISALLOW_COPY_AND_ASSIGN(URLRequestSlowWriterJob);
+};
+
+class SlowWriterInterceptor : public net::URLRequestInterceptor {
+ public:
+  explicit SlowWriterInterceptor(std::list<std::string> packets)
+      : packets_(std::move(packets)) {}
+  ~SlowWriterInterceptor() override {}
+
+  static GURL GetURL() { return GURL("http://foo"); }
+
+  // URLRequestInterceptor implementation:
+  net::URLRequestJob* MaybeInterceptRequest(
+      net::URLRequest* request,
+      net::NetworkDelegate* network_delegate) const override {
+    return new URLRequestSlowWriterJob(request, network_delegate,
+                                       std::move(packets_));
+  }
+
+ private:
+  std::list<std::string> packets_;
+  DISALLOW_COPY_AND_ASSIGN(SlowWriterInterceptor);
+};
 
 }  // namespace
 
@@ -114,13 +172,24 @@ class URLLoaderImplTest : public testing::Test {
     CHECK_EQ(data, file_contents);
   }
 
-  std::string LoadAndReturnMimeType(bool sniff, const std::string& path) {
+  std::string LoadAndReturnMimeType(bool sniff, const GURL& url) {
     TestURLLoaderClient client;
-    GURL url = test_server()->GetURL(path);
     int32_t options =
         sniff ? mojom::kURLLoadOptionSniffMimeType : mojom::kURLLoadOptionNone;
     Load(url, &client, options);
     return client.response_head().mime_type;
+  }
+
+  std::string LoadAndReturnMimeType(bool sniff, const std::string& path) {
+    return LoadAndReturnMimeType(sniff, test_server()->GetURL(path));
+  }
+
+  std::string LoadPacketsAndReturnMimeType(std::list<std::string> packets) {
+    net::URLRequestFilter::GetInstance()->AddUrlInterceptor(
+        SlowWriterInterceptor::GetURL(),
+        std::unique_ptr<net::URLRequestInterceptor>(
+            new SlowWriterInterceptor(std::move(packets))));
+    return LoadAndReturnMimeType(true, SlowWriterInterceptor::GetURL());
   }
 
   net::EmbeddedTestServer* test_server() { return &test_server_; }
@@ -234,6 +303,15 @@ TEST_F(URLLoaderImplTest, CantSniffEmptyHtml) {
   std::string mime_type =
       LoadAndReturnMimeType(true, "/content-sniffer-test4.html");
   ASSERT_TRUE(mime_type.empty());
+}
+
+TEST_F(URLLoaderImplTest, FirstReadNotEnoughToSniff) {
+  std::list<std::string> packets;
+  packets.push_back(std::string(500, 'a'));
+  packets.push_back(std::string(100, 'b'));
+  packets.back()[10] = '\x1b';
+  std::string mime_type = LoadPacketsAndReturnMimeType(std::move(packets));
+  ASSERT_EQ(std::string("application/octet-stream"), mime_type);
 }
 
 }  // namespace content
