@@ -345,10 +345,7 @@ bool SelectionController::HandleSingleClick(
   bool is_handle_visible = false;
   if (HasEditableStyle(*inner_node)) {
     const bool is_text_box_empty =
-        CreateVisibleSelection(SelectionInFlatTree::Builder()
-                                   .SelectAllChildren(*inner_node)
-                                   .Build())
-            .IsCaret();
+        !RootEditableElement(*inner_node)->HasChildren();
     const bool not_left_click =
         event.Event().button != WebPointerProperties::Button::kLeft;
     if (!is_text_box_empty || not_left_click)
