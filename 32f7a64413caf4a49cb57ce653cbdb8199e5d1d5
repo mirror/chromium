@@ -68,6 +68,30 @@
       "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac577442_9ba02901",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-25T17:57:18Z",
+      "side": 1,
+      "message": "So it\u0027s not the only thing that\u0027s going on. See also \nhttps://chromium-review.googlesource.com/c/565465/33/net/disk_cache/disk_cache.cc#193\nI am not entirely comfortable with that, though; it\u0027s semantically messy with user callbacks also existing.\n\nHaving things care about the callback from CacheStorageCache::CloseImpl returning is probably better.\n\nThis isn\u0027t an immediate blocking concern, though, since this CL has a lot of pieces which have to go in separately before this. Like the whole CleanupContext thing in disk_cache. \n\n(And a lot of more mundane stuff covering simpler usages)",
+      "parentUuid": "3d072a9f_720e320a",
+      "range": {
+        "startLine": 1402,
+        "startChar": 4,
+        "endLine": 1402,
+        "endChar": 30
+      },
+      "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
