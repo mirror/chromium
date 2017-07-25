@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b80b5060_1bf7d20e",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:08:19Z",
+      "side": 1,
+      "message": "I think you may still need to wrap these several lines in \"if (!frame-\u003esize().equals(output_size))\" condition: if the output_size \u003d\u003d frame-\u003esize(), you won\u0027t need to crop or scale.",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 54
+      },
+      "revId": "115f582601de0005176a40afdc1857c0428c0077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
