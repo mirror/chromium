@@ -97,6 +97,14 @@ var SettingsSectionElement = Polymer({
   },
 
   /**
+   * Calling this method fires the 'settings-section-expanded event'.
+   */
+  setExpanded_: function() {
+    this.classList.add('expanded');
+    this.fire('settings-section-expanded');
+  },
+
+  /**
    * @return {boolean} True if the section is currently rendered and not
    *     already expanded or transitioning.
    */
@@ -113,7 +121,7 @@ var SettingsSectionElement = Polymer({
     this.$.card.top = containerTop + 'px';
     this.$.card.height = 'calc(100% - ' + containerTop + 'px)';
 
-    this.classList.add('expanded');
+    this.setExpanded_();
   },
 
   /**
@@ -149,7 +157,7 @@ var SettingsSectionElement = Polymer({
     animation.finished
         .then(
             () => {
-              this.classList.add('expanded');
+              this.setExpanded_();
             },
             function() {})
         .then(() => {
