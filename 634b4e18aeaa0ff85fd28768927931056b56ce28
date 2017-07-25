@@ -16,6 +16,24 @@
       "revId": "634b4e18aeaa0ff85fd28768927931056b56ce28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ca89ea_b873dd62",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-25T07:58:53Z",
+      "side": 1,
+      "message": "loadabort sounds good if it work reliably.\nAnother idea is to blacklist .tif and .tiff extension at certain point.\ne.g. add a few lines to isUnsupported_.",
+      "parentUuid": "efc1ea47_78f50cb0",
+      "revId": "634b4e18aeaa0ff85fd28768927931056b56ce28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
