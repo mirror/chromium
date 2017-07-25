@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ec625f1_6ad06d06",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T01:28:20Z",
+      "side": 1,
+      "message": "Does the new line work as expected? Can you verify that the paper-toogle-style is correctly applied (both with use_vulcanize true and false)?",
+      "revId": "8aaf3ca2de73bb8297e36eaa68f7619a952a3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f933975_20ad20c3",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T01:28:20Z",
+      "side": 1,
+      "message": "Nit: Maybe change the rule to be more specific?\ncr-toolbar paper-toggle-button {...}",
+      "revId": "8aaf3ca2de73bb8297e36eaa68f7619a952a3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
