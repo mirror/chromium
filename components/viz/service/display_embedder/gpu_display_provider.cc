@@ -11,6 +11,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/base/switches.h"
 #include "cc/output/texture_mailbox_deleter.h"
+#include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/gpu/in_process_context_provider.h"
 #include "components/viz/service/display/display.h"
@@ -54,6 +55,7 @@ GpuDisplayProvider::~GpuDisplayProvider() = default;
 std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
+    const RendererSettings& renderer_settings,
     std::unique_ptr<BeginFrameSource>* begin_frame_source) {
   auto synthetic_begin_frame_source =
       base::MakeUnique<DelayBasedBeginFrameSource>(
@@ -91,7 +93,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
       synthetic_begin_frame_source.get(), task_runner_.get(),
       max_frames_pending);
 
-  RendererSettings settings;
+  RendererSettings settings = renderer_settings;
   settings.show_overdraw_feedback =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           cc::switches::kShowOverdrawFeedback);
