@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec90ceaf_45f95756",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-25T17:00:10Z",
+      "side": 1,
+      "message": "you can make this if statement into a single line",
+      "revId": "1c0ad4280e1875e06cf0cce1d4f68b57edc09f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484e2cf5_6b7e5423",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-25T17:00:10Z",
+      "side": 1,
+      "message": "javadoc param",
+      "revId": "1c0ad4280e1875e06cf0cce1d4f68b57edc09f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc71b8a4_b9a564a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-25T17:00:10Z",
+      "side": 1,
+      "message": "BroadcastReceiver normally cannot wait, so it is unclear to me what is the condition that triggers this call. Is this has to be called when Chrome is alive?",
+      "revId": "1c0ad4280e1875e06cf0cce1d4f68b57edc09f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
