@@ -17,6 +17,8 @@
 #include "third_party/skia/include/effects/SkLayerDrawLooper.h"
 #include "third_party/skia/include/effects/SkOffsetImageFilter.h"
 
+#include "ui/gfx/skia_util.h"
+
 using testing::_;
 using testing::Property;
 using testing::Mock;
@@ -666,7 +668,7 @@ class PaintOpBufferOffsetsTest : public ::testing::Test {
   }
 
   void Playback(SkCanvas* canvas, const std::vector<size_t>& offsets) {
-    buffer_.Playback(canvas, nullptr, &offsets);
+    buffer_.Playback(canvas, nullptr, nullptr, &offsets);
   }
 
  private:
@@ -2182,6 +2184,178 @@ TEST(PaintOpBufferTest, PaintOpDeserialize) {
   serialized->type = static_cast<uint8_t>(PaintOpType::LastPaintOpType) + 1;
   EXPECT_FALSE(
       PaintOp::Deserialize(input_.get(), bytes_written, output_.get(), kSize));
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawArcOp) {
+  PaintOpBuffer buffer;
+  PushDrawArcOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawArcOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->oval.makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawCircleOp) {
+  PaintOpBuffer buffer;
+  PaintFlags flags;
+  buffer.push<DrawCircleOp>(0.f, 0.f, 5.f, flags);
+  buffer.push<DrawCircleOp>(-1.f, 4.f, 44.f, flags);
+  buffer.push<DrawCircleOp>(-99.f, -32.f, 100.f, flags);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawCircleOp*>(base_op);
+
+    SkScalar dimension = 2 * op->radius;
+    SkScalar x = op->cx - op->radius;
+    SkScalar y = op->cy - op->radius;
+    SkRect circle_rect = SkRect::MakeXYWH(x, y, dimension, dimension);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, circle_rect.makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawImageOp) {
+  PaintOpBuffer buffer;
+  PushDrawImageOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawImageOp*>(base_op);
+
+    SkRect image_rect =
+        SkRect::MakeXYWH(op->left, op->top, op->image.sk_image()->width(),
+                         op->image.sk_image()->height());
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, image_rect.makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawImageRectOp) {
+  PaintOpBuffer buffer;
+  PushDrawImageRectOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawImageRectOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->dst.makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawIRectOp) {
+  PaintOpBuffer buffer;
+  PushDrawIRectOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawIRectOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, SkRect::Make(op->rect).makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawOvalOp) {
+  PaintOpBuffer buffer;
+  PushDrawOvalOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawOvalOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->oval.makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawPathOp) {
+  PaintOpBuffer buffer;
+  PushDrawPathOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawPathOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->path.getBounds().makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawRectOp) {
+  PaintOpBuffer buffer;
+  PushDrawRectOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawRectOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->rect.makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawRRectOp) {
+  PaintOpBuffer buffer;
+  PushDrawRRectOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawRRectOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->rrect.rect().makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawLineOp) {
+  PaintOpBuffer buffer;
+  PushDrawLineOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawLineOp*>(base_op);
+
+    SkRect line_rect;
+    line_rect.fLeft = op->x0;
+    line_rect.fTop = op->y0;
+    line_rect.fRight = op->x1;
+    line_rect.fBottom = op->y1;
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, line_rect.makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawDRRectOp) {
+  PaintOpBuffer buffer;
+  PushDrawDRRectOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawDRRectOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->outer.getBounds().makeSorted());
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawTextBlobOp) {
+  PaintOpBuffer buffer;
+  PushDrawTextBlobOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawTextBlobOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->blob->bounds().makeOffset(op->x, op->y).makeSorted());
+  }
 }
 
 }  // namespace cc
