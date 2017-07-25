@@ -34,6 +34,24 @@
       "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54e90e3_91c9428a",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T16:33:11Z",
+      "side": 1,
+      "message": "Thanks for explaining. Current patch makes sense to me then.",
+      "parentUuid": "9fa5d91b_9f77d229",
+      "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
