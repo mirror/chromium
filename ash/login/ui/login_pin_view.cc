@@ -9,6 +9,7 @@
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/timer/timer.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
@@ -38,6 +39,12 @@ const char* kLoginPinViewClassName = "LoginPinView";
 
 // View ids. Useful for the test api.
 const int kBackspaceButtonId = -1;
+
+// How long does the user have to long-press the backspace button before it
+// auto-submits?
+const int kInitialBackspaceDelayMs = 500;
+// After the first auto-submit, how long until the next backspace event fires?
+const int kRepeatingBackspaceDelayMs = 150;
 
 // An alpha value for button's sub label.
 // In specs this is listed as 34% = 0x57 / 0xFF.
@@ -133,9 +140,10 @@ class BasePinButton : public views::CustomButton, public views::ButtonListener {
             kInkDropHighlightColor, LoginPinView::kButtonSizeDp / 2));
   }
 
- private:
+ protected:
   base::Closure on_press_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(BasePinButton);
 };
 
@@ -174,7 +182,8 @@ class DigitPinButton : public BasePinButton {
 // A pin button that displays backspace icon.
 class BackspacePinButton : public BasePinButton {
  public:
-  BackspacePinButton(const base::Closure& on_press) : BasePinButton(on_press) {
+  BackspacePinButton(const base::Closure& on_press)
+      : BasePinButton(on_press), weak_ptr_factory_(this) {
     views::ImageView* image = new views::ImageView();
     // TODO: Change icon color when enabled/disabled.
     image->SetImage(
@@ -184,7 +193,53 @@ class BackspacePinButton : public BasePinButton {
 
   ~BackspacePinButton() override = default;
 
+  // BasePinButton:
+  bool OnMousePressed(const ui::MouseEvent& event) override {
+    did_autosubmit_backspace_ = false;
+
+    if (IsTriggerableEvent(event) && enabled() &&
+        HitTestPoint(event.location())) {
+      backspace_delay_timer_.Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(kInitialBackspaceDelayMs),
+          base::Bind(&BackspacePinButton::DispatchRepeatablePressEvent,
+                     weak_ptr_factory_.GetWeakPtr()));
+    }
+
+    return BasePinButton::OnMousePressed(event);
+  }
+  void OnMouseReleased(const ui::MouseEvent& event) override {
+    backspace_delay_timer_.Stop();
+    backspace_repeat_timer_.Stop();
+    BasePinButton::OnMouseReleased(event);
+  }
+  void ButtonPressed(Button* sender, const ui::Event& event) override {
+    if (did_autosubmit_backspace_)
+      return;
+    BasePinButton::ButtonPressed(sender, event);
+  }
+
  private:
+  void DispatchRepeatablePressEvent() {
+    // Start repeat timer if this was fired by the initial delay timer.
+    if (!backspace_repeat_timer_.IsRunning()) {
+      backspace_repeat_timer_.Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(kRepeatingBackspaceDelayMs),
+          base::Bind(&BackspacePinButton::DispatchRepeatablePressEvent,
+                     weak_ptr_factory_.GetWeakPtr()));
+    }
+
+    did_autosubmit_backspace_ = true;
+    on_press_.Run();
+  }
+
+  bool did_autosubmit_backspace_ = false;
+  base::OneShotTimer backspace_delay_timer_;
+  base::RepeatingTimer backspace_repeat_timer_;
+
+  base::WeakPtrFactory<BackspacePinButton> weak_ptr_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(BackspacePinButton);
 };
 
