@@ -50,7 +50,7 @@ class AudioProcessor;
 
 class PLATFORM_EXPORT AudioDSPKernelProcessor : public AudioProcessor {
  public:
-  // numberOfChannels may be later changed if object is not yet in an
+  // number_of_channels may be later changed if object is not yet in an
   // "initialized" state
   AudioDSPKernelProcessor(float sample_rate, unsigned number_of_channels);
 

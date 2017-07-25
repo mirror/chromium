@@ -42,15 +42,15 @@ PLATFORM_EXPORT float DecibelsToLinear(float);
 
 // timeConstant is the time it takes a first-order linear time-invariant system
 // to reach the value 1 - 1/e (around 63.2%) given a step input response.
-// discreteTimeConstantForSampleRate() will return the discrete time-constant
-// for the specific sampleRate.
+// DiscreteTimeConstantForSampleRate() will return the discrete time-constant
+// for the specific sample_rate.
 PLATFORM_EXPORT double DiscreteTimeConstantForSampleRate(double time_constant,
                                                          double sample_rate);
 
 // Convert the time to a sample frame at the given sample rate.
 PLATFORM_EXPORT size_t TimeToSampleFrame(double time, double sample_rate);
 
-// Check that |sampleRate| is a valid rate for AudioBuffers.
+// Check that |sample_rate| is a valid rate for AudioBuffers.
 PLATFORM_EXPORT bool IsValidAudioBufferSampleRate(float sample_rate);
 
 // Return max/min sample rate supported by AudioBuffers.

@@ -64,7 +64,7 @@ class PLATFORM_EXPORT HRTFPanner final : public Panner {
 
  private:
   // Given an azimuth angle in the range -180 -> +180, returns the corresponding
-  // azimuth index for the database, and azimuthBlend which is an interpolation
+  // azimuth index for the database, and azimuth_blend which is an interpolation
   // value from 0 -> 1.
   int CalculateDesiredAzimuthIndexAndBlend(double azimuth,
                                            double& azimuth_blend);
@@ -76,29 +76,29 @@ class PLATFORM_EXPORT HRTFPanner final : public Panner {
   // We maintain two sets of convolvers for smooth cross-faded interpolations
   // when then azimuth and elevation are dynamically changing.  When the
   // azimuth and elevation are not changing, we simply process with one
-  // of the two sets.  Initially we use CrossfadeSelection1 corresponding to
-  // m_convolverL1 and m_convolverR1.  Whenever the azimuth or elevation
+  // of the two sets.  Initially we use kCrossfadeSelection1 corresponding to
+  // convolver_l1_ and convolver_r1_.  Whenever the azimuth or elevation
   // changes, a crossfade is initiated to transition to the new position. So if
-  // we're currently processing with CrossfadeSelection1, then we transition to
-  // CrossfadeSelection2 (and vice versa).  If we're in the middle of a
+  // we're currently processing with kCrossfadeSelection1, then we transition to
+  // kCrossfadeSelection2 (and vice versa).  If we're in the middle of a
   // transition, then we wait until it is complete before initiating a new
   // transition.
 
-  // Selects either the convolver set (m_convolverL1, m_convolverR1) or
-  // (m_convolverL2, m_convolverR2).
+  // Selects either the convolver set (convolver_l1_, convolver_r1_) or
+  // (convolver_l2_, convolver_r2_).
   enum CrossfadeSelection { kCrossfadeSelection1, kCrossfadeSelection2 };
 
   CrossfadeSelection crossfade_selection_;
 
-  // azimuth/elevation for CrossfadeSelection1.
+  // azimuth/elevation for kCrossfadeSelection1.
   int azimuth_index1_;
   double elevation1_;
 
-  // azimuth/elevation for CrossfadeSelection2.
+  // azimuth/elevation for kCrossfadeSelection2.
   int azimuth_index2_;
   double elevation2_;
 
-  // A crossfade value 0 <= m_crossfadeX <= 1.
+  // A crossfade value 0 <= crossfade_x_ <= 1.
   float crossfade_x_;
 
   // Per-sample-frame crossfade value increment.

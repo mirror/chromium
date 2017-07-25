@@ -26,7 +26,7 @@ IIRProcessor::IIRProcessor(float sample_rate,
   feedback_.CopyToRange(feedback_coef.data(), 0, feedback_length);
 
   // Need to scale the feedback and feedforward coefficients appropriately.
-  // (It's up to the caller to ensure feedbackCoef[0] is not 0.)
+  // (It's up to the caller to ensure feedback_coef[0] is not 0.)
   DCHECK_NE(feedback_coef[0], 0);
 
   if (feedback_coef[0] != 1) {

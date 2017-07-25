@@ -49,8 +49,8 @@ class PLATFORM_EXPORT AudioResampler {
   AudioResampler(unsigned number_of_channels);
   ~AudioResampler() {}
 
-  // Given an AudioSourceProvider, process() resamples the source stream into
-  // destinationBus.
+  // Given an AudioSourceProvider, Process() resamples the source stream into
+  // destination_bus.
   void Process(AudioSourceProvider*,
                AudioBus* destination_bus,
                size_t frames_to_process);
@@ -60,7 +60,7 @@ class PLATFORM_EXPORT AudioResampler {
 
   void ConfigureChannels(unsigned number_of_channels);
 
-  // 0 < rate <= MaxRate
+  // 0 < rate <= kMaxRate
   void SetRate(double rate);
   double Rate() const { return rate_; }
 

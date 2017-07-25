@@ -77,7 +77,7 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
 
   // Resolve a suspend scheduled at the specified frame. With this specified
   // frame as a unique key, the associated promise resolver can be retrieved
-  // from the map (m_scheduledSuspends) and resolved.
+  // from the map (scheduled_suspends_) and resolved.
   void ResolveSuspendOnMainThread(size_t);
 
   // The HashMap with 'zero' key is needed because |currentSampleFrame| can be
@@ -121,7 +121,7 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
   Member<ScriptPromiseResolver> complete_resolver_;
 
   // This flag is necessary to indicate the rendering has actually started.
-  // Note that initial state of context is 'Suspended', which is the same
+  // Note that initial state of context is 'kSuspended', which is the same
   // state when the context is suspended.
   bool is_rendering_started_;
 

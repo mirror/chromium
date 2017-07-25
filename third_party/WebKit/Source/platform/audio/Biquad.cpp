@@ -72,8 +72,8 @@ Biquad::~Biquad() {}
 void Biquad::Process(const float* source_p,
                      float* dest_p,
                      size_t frames_to_process) {
-  // WARNING: sourceP and destP may be pointing to the same area of memory!
-  // Be sure to read from sourceP before writing to destP!
+  // WARNING: source_p and dest_p may be pointing to the same area of memory!
+  // Be sure to read from source_p before writing to dest_p!
   if (HasSampleAccurateValues()) {
     int n = frames_to_process;
 
@@ -137,9 +137,9 @@ void Biquad::Process(const float* source_p,
     // Copy the last inputs and outputs to the filter memory variables.
     // This is needed because the next rendering quantum might be an
     // automation which needs the history to continue correctly.  Because
-    // sourceP and destP can be the same block of memory, we can't read from
-    // sourceP to get the last inputs.  Fortunately, processFast has put the
-    // last inputs in input[0] and input[1].
+    // source_p and dest_p can be the same block of memory, we can't read from
+    // source_p to get the last inputs.  Fortunately, ProcessFast has put the
+    // last inputs in input_p[0] and input_p[1].
     x1_ = input_p[1];
     x2_ = input_p[0];
     y1_ = dest_p[frames_to_process - 1];
@@ -232,10 +232,10 @@ void Biquad::ProcessSliceFast(double* source_p,
   // Use double-precision for filter stability
   vDSP_deq22D(source_p, 1, coefficients_p, dest_p, 1, frames_to_process);
 
-  // Save history.  Note that sourceP and destP reference m_inputBuffer and
-  // m_outputBuffer respectively.  These buffers are allocated (in the
+  // Save history.  Note that source_p and dest_p reference input_buffer_ and
+  // output_buffer_ respectively.  These buffers are allocated (in the
   // constructor) with space for two extra samples so it's OK to access array
-  // values two beyond framesToProcess.
+  // values two beyond frames_to_process.
   source_p[0] = source_p[frames_to_process - 2 + 2];
   source_p[1] = source_p[frames_to_process - 1 + 2];
   dest_p[0] = dest_p[frames_to_process - 2 + 2];

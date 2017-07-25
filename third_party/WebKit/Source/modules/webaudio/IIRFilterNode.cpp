@@ -71,8 +71,8 @@ IIRFilterNode::IIRFilterNode(BaseAudioContext& context,
                                        feedforward_coef, feedback_coef))));
 
   // Histogram of the IIRFilter order.  createIIRFilter ensures that the length
-  // of |feedbackCoef| is in the range [1, IIRFilter::kMaxOrder + 1].  The order
-  // is one less than the length of this vector.
+  // of |feedback_coef| is in the range [1, IIRFilter::kMaxOrder + 1].  The
+  // order is one less than the length of this vector.
   DEFINE_STATIC_LOCAL(SparseHistogram, filter_order_histogram,
                       ("WebAudio.IIRFilterNode.Order"));
 

@@ -91,11 +91,11 @@ float DynamicsCompressor::ParameterValue(unsigned parameter_id) {
 void DynamicsCompressor::Process(const AudioBus* source_bus,
                                  AudioBus* destination_bus,
                                  unsigned frames_to_process) {
-  // Though numberOfChannels is retrived from destinationBus, we still name it
-  // numberOfChannels instead of numberOfDestinationChannels.  It's because we
-  // internally match sourceChannels's size to destinationBus by channel
-  // up/down mix. Thus we need numberOfChannels
-  // to do the loop work for both m_sourceChannels and m_destinationChannels.
+  // Though number_of_channels is retrived from destination_bus, we still name
+  // it number_of_channels instead of number_of_destination_channels.
+  // It's because we internally match source_channels_'s size to destination_bus
+  // by channel up/down mix. Thus we need number_of_channels
+  // to do the loop work for both source_channels_ and destination_channels_.
 
   unsigned number_of_channels = destination_bus->NumberOfChannels();
   unsigned number_of_source_channels = source_bus->NumberOfChannels();

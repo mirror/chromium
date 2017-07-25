@@ -48,7 +48,7 @@ const double kMaxRate = 1024;
 // Number of extra frames to use when determining if a source node can be
 // stopped.  This should be at least one rendering quantum, but we add one more
 // quantum for good measure.  This doesn't need to be extra precise, just more
-// than one rendering quantum.  See |handleStoppableSourceNode()|.
+// than one rendering quantum.  See |HandleStoppableSourceNode()|.
 // FIXME: Expose the rendering quantum somehow instead of hardwiring a value
 // here.
 const int kExtraStopFrames = 256;
@@ -73,7 +73,7 @@ AudioBufferSourceHandler::AudioBufferSourceHandler(
       grain_offset_(0.0),
       grain_duration_(kDefaultGrainDuration),
       min_playback_rate_(1.0) {
-  // Default to mono. A call to setBuffer() will set the number of output
+  // Default to mono. A call to SetBuffer() will set the number of output
   // channels to that of the buffer.
   AddOutput(1);
 
@@ -101,7 +101,7 @@ void AudioBufferSourceHandler::Process(size_t frames_to_process) {
     return;
   }
 
-  // The audio thread can't block on this lock, so we call tryLock() instead.
+  // The audio thread can't block on this lock, so we call TryLock() instead.
   MutexTryLocker try_locker(process_lock_);
   if (try_locker.Locked()) {
     if (!Buffer()) {
@@ -109,9 +109,9 @@ void AudioBufferSourceHandler::Process(size_t frames_to_process) {
       return;
     }
 
-    // After calling setBuffer() with a buffer having a different number of
+    // After calling SetBuffer() with a buffer having a different number of
     // channels, there can in rare cases be a slight delay before the output bus
-    // is updated to the new number of channels because of use of tryLocks() in
+    // is updated to the new number of channels because of use of TryLocks() in
     // the context's updating system.  In this case, if the the buffer has just
     // been changed and we're not quite ready yet, then just output silence.
     if (NumberOfChannels() != Buffer()->numberOfChannels()) {
@@ -143,7 +143,7 @@ void AudioBufferSourceHandler::Process(size_t frames_to_process) {
 
     output_bus->ClearSilentFlag();
   } else {
-    // Too bad - the tryLock() failed.  We must be in the middle of changing
+    // Too bad - the TryLock() failed.  We must be in the middle of changing
     // buffers and were already outputting silence anyway.
     output_bus->Zero();
   }
@@ -193,7 +193,7 @@ bool AudioBufferSourceHandler::RenderFromBuffer(
   if (!channel_count_good)
     return false;
 
-  // Sanity check destinationFrameOffset, numberOfFrames.
+  // Sanity check destination_frame_offset, number_of_frames.
   size_t destination_length = bus->length();
 
   bool is_length_good =
@@ -241,9 +241,9 @@ bool AudioBufferSourceHandler::RenderFromBuffer(
     end_frame = buffer_length;
 
   // If the .loop attribute is true, then values of
-  // m_loopStart == 0 && m_loopEnd == 0 implies that we should use the entire
-  // buffer as the loop, otherwise use the loop values in m_loopStart and
-  // m_loopEnd.
+  // loop_start_ == 0 && loop_end_ == 0 implies that we should use the entire
+  // buffer as the loop, otherwise use the loop values in loop_start_ and
+  // loop_end_.
   double virtual_end_frame = end_frame;
   double virtual_delta_frames = end_frame;
 
@@ -257,8 +257,8 @@ bool AudioBufferSourceHandler::RenderFromBuffer(
     virtual_delta_frames = virtual_end_frame - loop_start_frame;
   }
 
-  // If we're looping and the offset (virtualReadIndex) is past the end of the
-  // loop, wrap back to the beginning of the loop. For other cases, nothing
+  // If we're looping and the offset (virtual_read_index_) is past the end of
+  // the loop, wrap back to the beginning of the loop. For other cases, nothing
   // needs to be done.
   if (Loop() && virtual_read_index_ >= virtual_end_frame) {
     virtual_read_index_ =
@@ -288,7 +288,7 @@ bool AudioBufferSourceHandler::RenderFromBuffer(
   DCHECK_GE(virtual_end_frame, 0);
 
   // Optimize for the very common case of playing back with
-  // computedPlaybackRate == 1.  We can avoid the linear interpolation.
+  // computed_playback_rate == 1.  We can avoid the linear interpolation.
   if (computed_playback_rate == 1 &&
       virtual_read_index == floor(virtual_read_index) &&
       virtual_delta_frames == floor(virtual_delta_frames) &&
@@ -313,9 +313,9 @@ bool AudioBufferSourceHandler::RenderFromBuffer(
       read_index += frames_this_time;
       frames_to_process -= frames_this_time;
 
-      // It can happen that framesThisTime is 0. DCHECK that we will actually
-      // exit the loop in this case.  framesThisTime is 0 only if
-      // readIndex >= endFrame;
+      // It can happen that frames_this_time is 0. DCHECK that we will actually
+      // exit the loop in this case.  frames_this_time is 0 only if
+      // read_index >= end_frame;
       DCHECK(frames_this_time ? true : read_index >= end_frame);
 
       // Wrap-around.
@@ -366,7 +366,7 @@ bool AudioBufferSourceHandler::RenderFromBuffer(
 
       virtual_read_index += computed_playback_rate;
 
-      // Wrap-around, retaining sub-sample position since virtualReadIndex is
+      // Wrap-around, retaining sub-sample position since virtual_read_index is
       // floating-point.
       if (virtual_read_index >= virtual_end_frame) {
         virtual_read_index -= virtual_delta_frames;
@@ -399,7 +399,7 @@ void AudioBufferSourceHandler::SetBuffer(AudioBuffer* buffer,
   // number of channels that are output.
   BaseAudioContext::AutoLocker context_locker(Context());
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
 
   if (buffer) {
@@ -459,9 +459,10 @@ void AudioBufferSourceHandler::ClampGrainParameters(const AudioBuffer* buffer) {
 
   if (is_duration_given_ && Loop()) {
     // We're looping a grain with a grain duration specified. Schedule the loop
-    // to stop after grainDuration seconds after starting, possibly running the
-    // loop multiple times if grainDuration is larger than the buffer duration.
-    // The net effect is as if the user called stop(when + grainDuration).
+    // to stop after grain_duration_ seconds after starting, possibly running
+    // the loop multiple times if grain_duration_ is larger than the buffer
+    // duration. The net effect is as if the user called
+    // stop(when + grain_duration_).
     grain_duration_ =
         clampTo(grain_duration_, 0.0, std::numeric_limits<double>::infinity());
     end_time_ = start_time_ + grain_duration_;
@@ -470,10 +471,10 @@ void AudioBufferSourceHandler::ClampGrainParameters(const AudioBuffer* buffer) {
         clampTo(grain_duration_, 0.0, buffer_duration - grain_offset_);
   }
 
-  // We call timeToSampleFrame here since at playbackRate == 1 we don't want to
+  // We call TimeToSampleFrame here since at playback_rate == 1 we don't want to
   // go through linear interpolation at a sub-sample position since it will
   // degrade the quality. When aligned to the sample-frame the playback will be
-  // identical to the PCM data stored in the buffer. Since playbackRate == 1 is
+  // identical to the PCM data stored in the buffer. Since playback_rate == 1 is
   // very common, it's worth considering quality.
   virtual_read_index_ =
       AudioUtilities::TimeToSampleFrame(grain_offset_, buffer->sampleRate());
@@ -537,7 +538,7 @@ void AudioBufferSourceHandler::StartSource(double when,
   // playing.
   Context()->NotifySourceNodeStartedProcessing(GetNode());
 
-  // This synchronizes with process(). updateSchedulingInfo will read some of
+  // This synchronizes with Process(). UpdateSchedulingInfo will read some of
   // the variables being set here.
   MutexLocker process_locker(process_lock_);
 
@@ -547,7 +548,8 @@ void AudioBufferSourceHandler::StartSource(double when,
   grain_duration_ = grain_duration;
 
   // If |when| < currentTime, the source must start now according to the spec.
-  // So just set startTime to currentTime in this case to start the source now.
+  // So just set start_time_ to currentTime in this case to start the source
+  // now.
   start_time_ = std::max(when, Context()->currentTime());
 
   if (Buffer())
@@ -567,8 +569,8 @@ double AudioBufferSourceHandler::ComputePlaybackRate() {
         Buffer()->sampleRate() / static_cast<double>(Context()->sampleRate());
   }
 
-  // Use finalValue() to incorporate changes of AudioParamTimeline and
-  // AudioSummingJunction from m_playbackRate AudioParam.
+  // Use FinalValue() to incorporate changes of AudioParamTimeline and
+  // AudioSummingJunction from playback_rate_ AudioParam.
   double base_playback_rate = playback_rate_->FinalValue();
 
   double final_playback_rate = sample_rate_factor * base_playback_rate;
@@ -614,7 +616,7 @@ void AudioBufferSourceHandler::HandleStoppableSourceNode() {
   // can be collected.  Otherwise, the node will never get collected, leaking
   // memory.
   //
-  // If looping was ever done (m_didSetLooping = true), give up.  We can't
+  // If looping was ever done (did_set_looping_ = true), give up.  We can't
   // easily determine how long we looped so we don't know the actual duration
   // thus far, so don't try to do anything fancy.
   double min_playback_rate = GetMinPlaybackRate();

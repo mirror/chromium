@@ -46,9 +46,9 @@ class AudioDestinationHandler : public AudioHandler, public AudioIOCallback {
   void Process(size_t) final {
   }  // we're pulled by hardware so this is never called
 
-  // The audio hardware calls render() to get the next render quantum of audio
-  // into destinationBus.  It will optionally give us local/live audio input in
-  // sourceBus (if it's not 0).
+  // The audio hardware calls Render() to get the next render quantum of audio
+  // into destination_bus.  It will optionally give us local/live audio input in
+  // source_bus (if it's not 0).
   void Render(AudioBus* source_bus,
               AudioBus* destination_bus,
               size_t number_of_frames,
@@ -75,7 +75,7 @@ class AudioDestinationHandler : public AudioHandler, public AudioIOCallback {
 
  protected:
   // LocalAudioInputProvider allows us to expose an AudioSourceProvider for
-  // local/live audio input.  If there is local/live audio input, we call set()
+  // local/live audio input.  If there is local/live audio input, we call Set()
   // with the audio input data every render quantum.
   class LocalAudioInputProvider final : public AudioSourceProvider {
    public:

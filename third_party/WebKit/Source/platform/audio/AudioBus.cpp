@@ -514,10 +514,10 @@ void AudioBus::CopyWithGainFrom(const AudioBus& source_bus,
   // the next, so we "de-zipper" by slowly changing the gain each sample-frame
   // until we've achieved the target gain.
 
-  // Take master bus gain into account as well as the targetGain.
+  // Take master bus gain into account as well as the target_gain.
   float total_desired_gain = static_cast<float>(bus_gain_ * target_gain);
 
-  // First time, snap directly to totalDesiredGain.
+  // First time, snap directly to total_desired_gain.
   float gain =
       static_cast<float>(is_first_time_ ? total_desired_gain : *last_mix_gain);
   is_first_time_ = false;
@@ -525,14 +525,15 @@ void AudioBus::CopyWithGainFrom(const AudioBus& source_bus,
   const float kDezipperRate = 0.005f;
   unsigned frames_to_process = length();
 
-  // If the gain is within epsilon of totalDesiredGain, we can skip dezippering.
+  // If the gain is within epsilon of total_desired_gain, we can skip
+  // dezippering.
   // FIXME: this value may need tweaking.
   const float kEpsilon = 0.001f;
   float gain_diff = fabs(total_desired_gain - gain);
 
   // Number of frames to de-zipper before we are close enough to the target
   // gain.
-  // FIXME: framesToDezipper could be smaller when target gain is close enough
+  // FIXME: frames_to_dezipper could be smaller when target gain is close enough
   // within this process loop.
   unsigned frames_to_dezipper = (gain_diff < kEpsilon) ? 0 : frames_to_process;
 
@@ -546,9 +547,9 @@ void AudioBus::CopyWithGainFrom(const AudioBus& source_bus,
     for (unsigned i = 0; i < frames_to_dezipper; ++i) {
       gain += (total_desired_gain - gain) * kDezipperRate;
 
-      // FIXME: If we are clever enough in calculating the framesToDezipper
+      // FIXME: If we are clever enough in calculating the frames_to_dezipper
       // value, we can probably get rid of this
-      // DenormalDisabler::flushDenormalFloatToZero() call.
+      // DenormalDisabler::FlushDenormalFloatToZero() call.
       gain = DenormalDisabler::FlushDenormalFloatToZero(gain);
       *gain_values++ = gain;
     }

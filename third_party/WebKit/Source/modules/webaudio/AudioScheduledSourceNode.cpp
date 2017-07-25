@@ -65,10 +65,10 @@ void AudioScheduledSourceHandler::UpdateSchedulingInfo(
 
   double sample_rate = Context()->sampleRate();
 
-  // quantumStartFrame     : Start frame of the current time quantum.
-  // quantumEndFrame       : End frame of the current time quantum.
-  // startFrame            : Start frame for this source.
-  // endFrame              : End frame for this source.
+  // quantum_start_frame    : Start frame of the current time quantum.
+  // quantum_end_frame      : End frame of the current time quantum.
+  // start_frame            : Start frame for this source.
+  // end_frame              : End frame for this source.
   size_t quantum_start_frame = Context()->CurrentSampleFrame();
   size_t quantum_end_frame = quantum_start_frame + quantum_frame_size;
   size_t start_frame =
@@ -178,12 +178,13 @@ void AudioScheduledSourceHandler::Start(double when,
   // node. The reference will get dropped when the source has finished playing.
   Context()->NotifySourceNodeStartedProcessing(GetNode());
 
-  // This synchronizes with process(). updateSchedulingInfo will read some of
+  // This synchronizes with Process(). updateSchedulingInfo will read some of
   // the variables being set here.
   MutexLocker process_locker(process_lock_);
 
   // If |when| < currentTime, the source must start now according to the spec.
-  // So just set startTime to currentTime in this case to start the source now.
+  // So just set start_time_ to currentTime in this case to start the source
+  // now.
   start_time_ = std::max(when, Context()->currentTime());
 
   SetPlaybackState(SCHEDULED_STATE);
@@ -205,7 +206,7 @@ void AudioScheduledSourceHandler::Stop(double when,
     return;
   }
 
-  // This synchronizes with process()
+  // This synchronizes with Process()
   MutexLocker process_locker(process_lock_);
 
   // stop() can be called more than once, with the last call to stop taking

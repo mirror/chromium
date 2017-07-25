@@ -34,8 +34,8 @@
 
 namespace blink {
 
-// Normal constructor: allocates for a given fftSize.
-FFTFrame::FFTFrame(unsigned /*fftSize*/) : fft_size_(0), log2fft_size_(0) {
+// Normal constructor: allocates for a given fft_size.
+FFTFrame::FFTFrame(unsigned /*fft_size*/) : fft_size_(0), log2fft_size_(0) {
   NOTREACHED();
 }
 

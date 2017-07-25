@@ -116,11 +116,12 @@ void ScriptProcessorHandler::Initialize() {
 void ScriptProcessorHandler::Process(size_t frames_to_process) {
   // Discussion about inputs and outputs:
   // As in other AudioNodes, ScriptProcessorNode uses an AudioBus for its input
-  // and output (see inputBus and outputBus below).  Additionally, there is a
+  // and output (see input_bus and output_bus below).  Additionally, there is a
   // double-buffering for input and output which is exposed directly to
-  // JavaScript (see inputBuffer and outputBuffer below).  This node is the
-  // producer for inputBuffer and the consumer for outputBuffer.  The JavaScript
-  // code is the consumer of inputBuffer and the producer for outputBuffer.
+  // JavaScript (see input_buffer and output_buffer below).  This node is the
+  // producer for input_buffer and the consumer for output_buffer.
+  // The JavaScript code is the consumer of input_buffer and the producer
+  // for output_buffer.
 
   // Get input and output busses.
   AudioBus* input_bus = Input(0).Bus();
@@ -145,7 +146,7 @@ void ScriptProcessorHandler::Process(size_t frames_to_process) {
       output_buffer && BufferSize() == output_buffer->length() &&
       buffer_read_write_index_ + frames_to_process <= BufferSize();
 
-  // If the number of input channels is zero, it's ok to have inputBuffer = 0.
+  // If the number of input channels is zero, it's ok to have input_buffer = 0.
   if (internal_input_bus_->NumberOfChannels())
     buffers_are_good = buffers_are_good && input_buffer &&
                        BufferSize() == input_buffer->length();
@@ -154,8 +155,8 @@ void ScriptProcessorHandler::Process(size_t frames_to_process) {
   if (!buffers_are_good)
     return;
 
-  // We assume that bufferSize() is evenly divisible by framesToProcess - should
-  // always be true, but we should still check.
+  // We assume that BufferSize() is evenly divisible by frames_to_process
+  // - should always be true, but we should still check.
   bool is_frames_to_process_good = frames_to_process &&
                                    BufferSize() >= frames_to_process &&
                                    !(BufferSize() % frames_to_process);
@@ -194,7 +195,7 @@ void ScriptProcessorHandler::Process(size_t frames_to_process) {
   buffer_read_write_index_ =
       (buffer_read_write_index_ + frames_to_process) % BufferSize();
 
-  // m_bufferReadWriteIndex will wrap back around to 0 when the current input
+  // buffer_read_write_index_ will wrap back around to 0 when the current input
   // and output buffers are full.
   // When this happens, fire an event and swap buffers.
   if (!buffer_read_write_index_) {
@@ -202,7 +203,7 @@ void ScriptProcessorHandler::Process(size_t frames_to_process) {
     // they're not being handled.  This could be a problem if the main thread is
     // very busy doing other things and is being held up handling previous
     // requests.  The audio thread can't block on this lock, so we call
-    // tryLock() instead.
+    // TryLock() instead.
     MutexTryLocker try_locker(process_event_lock_);
     if (!try_locker.Locked()) {
       // We're late in handling the previous request. The main thread must be
@@ -263,9 +264,9 @@ void ScriptProcessorHandler::FireProcessEvent(unsigned double_buffer_index) {
     // This synchronizes with process().
     MutexLocker process_locker(process_event_lock_);
 
-    // Calculate a playbackTime with the buffersize which needs to be processed
-    // each time onaudioprocess is called.  The outputBuffer being passed to JS
-    // will be played after exhuasting previous outputBuffer by
+    // Calculate a playback_time with the buffersize which needs to be processed
+    // each time onaudioprocess is called.  The output_buffer being passed to JS
+    // will be played after exhuasting previous output_buffer by
     // double-buffering.
     double playback_time = (Context()->CurrentSampleFrame() + buffer_size_) /
                            static_cast<double>(Context()->sampleRate());

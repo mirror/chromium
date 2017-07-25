@@ -48,10 +48,10 @@ void ConstantSourceHandler::Process(size_t frames_to_process) {
     return;
   }
 
-  // The audio thread can't block on this lock, so we call tryLock() instead.
+  // The audio thread can't block on this lock, so we call TryLock() instead.
   MutexTryLocker try_locker(process_lock_);
   if (!try_locker.Locked()) {
-    // Too bad - the tryLock() failed.
+    // Too bad - the TryLock() failed.
     output_bus->Zero();
     return;
   }

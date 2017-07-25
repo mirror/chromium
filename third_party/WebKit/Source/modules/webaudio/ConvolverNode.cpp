@@ -86,7 +86,7 @@ void ConvolverHandler::Process(size_t frames_to_process) {
       reverb_->Process(Input(0).Bus(), output_bus, frames_to_process);
     }
   } else {
-    // Too bad - the tryLock() failed.  We must be in the middle of setting a
+    // Too bad - the TryLock() failed.  We must be in the middle of setting a
     // new impulse response.
     output_bus->Zero();
   }
@@ -200,7 +200,7 @@ void ConvolverHandler::SetChannelCount(unsigned long channel_count,
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channelCount must be 2.
+  // channel_count must be 2.
   if (channel_count != 2) {
     exception_state.ThrowDOMException(
         kNotSupportedError,

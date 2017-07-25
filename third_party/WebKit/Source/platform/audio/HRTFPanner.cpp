@@ -354,13 +354,13 @@ double HRTFPanner::TailTime() const {
   // Because HRTFPanner is implemented with a DelayKernel and a FFTConvolver,
   // the tailTime of the HRTFPanner is the sum of the tailTime of the
   // DelayKernel and the tailTime of the FFTConvolver, which is
-  // MaxDelayTimeSeconds and fftSize() / 2, respectively.
+  // MaxDelayTimeSeconds and FftSize() / 2, respectively.
   return kMaxDelayTimeSeconds +
          (FftSize() / 2) / static_cast<double>(SampleRate());
 }
 
 double HRTFPanner::LatencyTime() const {
-  // The latency of a FFTConvolver is also fftSize() / 2, and is in addition to
+  // The latency of a FFTConvolver is also FftSize() / 2, and is in addition to
   // its tailTime of the same value.
   return (FftSize() / 2) / static_cast<double>(SampleRate());
 }

@@ -55,7 +55,7 @@ double DistanceEffect::Gain(double distance) {
 }
 
 double DistanceEffect::LinearGain(double distance) {
-  // Clamp refDistance and distance according to the spec.
+  // Clamp ref_distance_ and distance according to the spec.
   double dref = std::min(ref_distance_, max_distance_);
   double dmax = std::max(ref_distance_, max_distance_);
   distance = clampTo(distance, dref, dmax);
@@ -63,8 +63,8 @@ double DistanceEffect::LinearGain(double distance) {
   if (dref == dmax)
     return 1 - rolloff_factor_;
 
-  // We want a gain that decreases linearly from m_refDistance to
-  // m_maxDistance. The gain is 1 at m_refDistance.
+  // We want a gain that decreases linearly from ref_distance_ to
+  // max_distance_. The gain is 1 at ref_distance_.
   return (1.0 - clampTo(rolloff_factor_, 0.0, 1.0) * (distance - dref) /
                     (dmax - dref));
 }

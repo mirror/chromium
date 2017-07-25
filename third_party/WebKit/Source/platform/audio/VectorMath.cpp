@@ -182,7 +182,7 @@ void Vsma(const float* source_p,
   if ((source_stride == 1) && (dest_stride == 1)) {
     float k = *scale;
 
-    // If the sourceP address is not 16-byte aligned, the first several frames
+    // If the source_p address is not 16-byte aligned, the first several frames
     // (at most three) should be processed separately.
     while ((reinterpret_cast<uintptr_t>(source_p) & 0x0F) && n) {
       *dest_p += k * *source_p;
@@ -191,7 +191,7 @@ void Vsma(const float* source_p,
       n--;
     }
 
-    // Now the sourceP is aligned, use SSE.
+    // Now the source_p is aligned, use SSE.
     int tail_frames = n % 4;
     const float* end_p = dest_p + n - tail_frames;
 
@@ -280,7 +280,7 @@ void Vsmul(const float* source_p,
   if ((source_stride == 1) && (dest_stride == 1)) {
     float k = *scale;
 
-    // If the sourceP address is not 16-byte aligned, the first several frames
+    // If the source_p address is not 16-byte aligned, the first several frames
     // (at most three) should be processed separately.
     while ((reinterpret_cast<size_t>(source_p) & 0x0F) && n) {
       *dest_p = k * *source_p;
@@ -289,7 +289,7 @@ void Vsmul(const float* source_p,
       n--;
     }
 
-    // Now the sourceP address is aligned and start to apply SSE.
+    // Now the source_p address is aligned and start to apply SSE.
     int group = n / 4;
     __m128 m_scale = _mm_set_ps1(k);
     __m128* p_source;
@@ -381,7 +381,7 @@ void Vadd(const float* source1p,
 
 #if defined(ARCH_CPU_X86_FAMILY)
   if ((source_stride1 == 1) && (source_stride2 == 1) && (dest_stride == 1)) {
-    // If the sourceP address is not 16-byte aligned, the first several frames
+    // If the source_p address is not 16-byte aligned, the first several frames
     // (at most three) should be processed separately.
     while ((reinterpret_cast<size_t>(source1p) & 0x0F) && n) {
       *dest_p = *source1p + *source2p;
@@ -391,7 +391,7 @@ void Vadd(const float* source1p,
       n--;
     }
 
-    // Now the source1P address is aligned and start to apply SSE.
+    // Now the source1p address is aligned and start to apply SSE.
     int group = n / 4;
     __m128* p_source1;
     __m128* p_source2;
@@ -522,7 +522,7 @@ void Vmul(const float* source1p,
 
 #if defined(ARCH_CPU_X86_FAMILY)
   if ((source_stride1 == 1) && (source_stride2 == 1) && (dest_stride == 1)) {
-    // If the source1P address is not 16-byte aligned, the first several frames
+    // If the source1p address is not 16-byte aligned, the first several frames
     // (at most three) should be processed separately.
     while ((reinterpret_cast<uintptr_t>(source1p) & 0x0F) && n) {
       *dest_p = *source1p * *source2p;
@@ -532,7 +532,7 @@ void Vmul(const float* source1p,
       n--;
     }
 
-    // Now the source1P address aligned and start to apply SSE.
+    // Now the source1p address aligned and start to apply SSE.
     int tail_frames = n % 4;
     const float* end_p = dest_p + n - tail_frames;
     __m128 p_source1;
@@ -681,7 +681,7 @@ void Vsvesq(const float* source_p,
 
 #if defined(ARCH_CPU_X86_FAMILY)
   if (source_stride == 1) {
-    // If the sourceP address is not 16-byte aligned, the first several frames
+    // If the source_p address is not 16-byte aligned, the first several frames
     // (at most three) should be processed separately.
     while ((reinterpret_cast<uintptr_t>(source_p) & 0x0F) && n) {
       float sample = *source_p;
@@ -690,7 +690,7 @@ void Vsvesq(const float* source_p,
       n--;
     }
 
-    // Now the sourceP is aligned, use SSE.
+    // Now the source_p is aligned, use SSE.
     int tail_frames = n % 4;
     const float* end_p = source_p + n - tail_frames;
     __m128 source;
@@ -750,7 +750,7 @@ void Vmaxmgv(const float* source_p,
 
 #if defined(ARCH_CPU_X86_FAMILY)
   if (source_stride == 1) {
-    // If the sourceP address is not 16-byte aligned, the first several frames
+    // If the source_p address is not 16-byte aligned, the first several frames
     // (at most three) should be processed separately.
     while ((reinterpret_cast<uintptr_t>(source_p) & 0x0F) && n) {
       max = std::max(max, fabsf(*source_p));
@@ -758,7 +758,7 @@ void Vmaxmgv(const float* source_p,
       n--;
     }
 
-    // Now the sourceP is aligned, use SSE.
+    // Now the source_p is aligned, use SSE.
     int tail_frames = n % 4;
     const float* end_p = source_p + n - tail_frames;
     __m128 source;

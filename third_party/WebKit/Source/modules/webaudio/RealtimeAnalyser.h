@@ -79,7 +79,7 @@ class RealtimeAnalyser final {
   AudioFloatArray input_buffer_;
   unsigned write_index_;
 
-  // Input audio is downmixed to this bus before copying to m_inputBuffer.
+  // Input audio is downmixed to this bus before copying to input_buffer_.
   RefPtr<AudioBus> down_mix_bus_;
 
   size_t fft_size_;
@@ -93,15 +93,15 @@ class RealtimeAnalyser final {
   // Convert magnidue buffer to dB, saving the result in |destination|
   void ConvertFloatToDb(DOMFloat32Array* destination);
 
-  // doFFTAnalysis() stores the floating-point magnitude analysis data here.
+  // DoFFTAnalysis() stores the floating-point magnitude analysis data here.
   AudioFloatArray magnitude_buffer_;
   AudioFloatArray& MagnitudeBuffer() { return magnitude_buffer_; }
 
   // A value between 0 and 1 which averages the previous version of
-  // m_magnitudeBuffer with the current analysis magnitude data.
+  // magnitude_buffer_ with the current analysis magnitude data.
   double smoothing_time_constant_;
 
-  // The range used when converting when using getByteFrequencyData().
+  // The range used when converting when using GetByteFrequencyData().
   double min_decibels_;
   double max_decibels_;
 

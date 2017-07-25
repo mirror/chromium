@@ -84,18 +84,18 @@ class AudioScheduledSourceHandler : public AudioHandler {
  protected:
   // Get frame information for the current time quantum.
   // We handle the transition into PLAYING_STATE and FINISHED_STATE here,
-  // zeroing out portions of the outputBus which are outside the range of
-  // startFrame and endFrame.
+  // zeroing out portions of the output_bus which are outside the range of
+  // start_frame and end_frame.
   //
-  // Each frame time is relative to the context's currentSampleFrame().
-  // quantumFrameOffset    : Offset frame in this time quantum to start
-  //                         rendering.
-  // nonSilentFramesToProcess : Number of frames rendering non-silence (will be
-  //                            <= quantumFrameSize).
-  // startFrameOffset : The fractional frame offset from quantumFrameOffset
-  //                    and the actual starting time of the source. This is
-  //                    non-zero only when transitioning from the
-  //                    SCHEDULED_STATE to the PLAYING_STATE.
+  // Each frame time is relative to the context's CurrentSampleFrame().
+  // quantum_frame_offset    : Offset frame in this time quantum to start
+  //                           rendering.
+  // non_silent_frames_to_process : Number of frames rendering non-silence (will
+  //                                be <= quantum_frame_size).
+  // start_frame_offset : The fractional frame offset from quantum_frame_offset
+  //                      and the actual starting time of the source. This is
+  //                      non-zero only when transitioning from the
+  //                      SCHEDULED_STATE to the PLAYING_STATE.
   void UpdateSchedulingInfo(size_t quantum_frame_size,
                             AudioBus* output_bus,
                             size_t& quantum_frame_offset,
@@ -106,20 +106,20 @@ class AudioScheduledSourceHandler : public AudioHandler {
   // reached. No onEnded event is called.
   virtual void FinishWithoutOnEnded();
 
-  // Like finishWithoutOnEnded(), but an onEnded (if specified) is called.
+  // Like FinishWithoutOnEnded(), but an onEnded (if specified) is called.
   virtual void Finish();
 
   void NotifyEnded();
 
-  // This synchronizes with process() and any other method that needs to be
+  // This synchronizes with Process() and any other method that needs to be
   // synchronized like setBuffer for AudioBufferSource.
   mutable Mutex process_lock_;
 
-  // m_startTime is the time to start playing based on the context's timeline (0
+  // start_time_ is the time to start playing based on the context's timeline (0
   // or a time less than the context's current time means "now").
   double start_time_;  // in seconds
 
-  // m_endTime is the time to stop playing based on the context's timeline (0 or
+  // end_time_ is the time to stop playing based on the context's timeline (0 or
   // a time less than the context's current time means "now").  If it hasn't
   // been set explicitly, then the sound will not stop playing (if looping) or
   // will stop when the end of the AudioBuffer has been reached.

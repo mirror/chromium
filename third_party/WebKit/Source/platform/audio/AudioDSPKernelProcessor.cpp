@@ -33,7 +33,7 @@
 
 namespace blink {
 
-// setNumberOfChannels() may later be called if the object is not yet in an
+// SetNumberOfChannels() may later be called if the object is not yet in an
 // "initialized" state.
 AudioDSPKernelProcessor::AudioDSPKernelProcessor(float sample_rate,
                                                  unsigned number_of_channels)
@@ -92,7 +92,7 @@ void AudioDSPKernelProcessor::Process(const AudioBus* source,
                            frames_to_process);
   } else {
     // Unfortunately, the kernel is being processed by another thread.
-    // See also ConvolverNode::process().
+    // See also ConvolverNode::Process().
     destination->Zero();
   }
 }
@@ -152,7 +152,7 @@ double AudioDSPKernelProcessor::LatencyTime() const {
   DCHECK(!IsMainThread());
   MutexTryLocker try_locker(process_lock_);
   if (try_locker.Locked()) {
-    // It is expected that all the kernels have the same latencyTime.
+    // It is expected that all the kernels have the same LatencyTime.
     return !kernels_.IsEmpty() ? kernels_.front()->LatencyTime() : 0;
   }
   // Since we don't want to block the Audio Device thread, we return a large

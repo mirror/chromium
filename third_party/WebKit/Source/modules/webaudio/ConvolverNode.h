@@ -78,7 +78,7 @@ class MODULES_EXPORT ConvolverHandler final : public AudioHandler {
   CrossThreadPersistent<AudioBuffer> buffer_;
 
   // This synchronizes dynamic changes to the convolution impulse response with
-  // process().
+  // Process().
   mutable Mutex process_lock_;
 
   // Normalize the impulse response or not. Must default to true.

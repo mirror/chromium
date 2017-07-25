@@ -37,8 +37,8 @@ namespace blink {
 class AudioBus;
 
 // For both create functions:
-// Pass in 0.0 for sampleRate to use the file's sample-rate, otherwise a
-// sample-rate conversion to the requested sampleRate will be made (if it
+// Pass in 0.0 for sample_rate to use the file's sample-rate, otherwise a
+// sample-rate conversion to the requested sample_rate will be made (if it
 // doesn't already match the file's sample-rate).  The created buffer will have
 // its sample-rate set correctly to the result.
 
@@ -53,8 +53,8 @@ PLATFORM_EXPORT PassRefPtr<AudioBus> CreateBusFromAudioFile(
     bool mix_to_mono,
     float sample_rate);
 
-// May pass in 0.0 for sampleRate in which case it will use the AudioBus's
-// sampleRate
+// May pass in 0.0 for sample_rate in which case it will use the AudioBus's
+// sample_rate
 PLATFORM_EXPORT void WriteBusToAudioFile(AudioBus* bus,
                                          const char* file_path,
                                          double file_sample_rate);

@@ -92,8 +92,8 @@ ReverbConvolver::ReverbConvolver(AudioChannel* impulse_response,
   while (stage_offset < total_response_length) {
     size_t stage_size = fft_size / 2;
 
-    // For the last stage, it's possible that stageOffset is such that we're
-    // straddling the end of the impulse response buffer (if we use stageSize),
+    // For the last stage, it's possible that stage_offset is such that we're
+    // straddling the end of the impulse response buffer (if we use stage_size),
     // so reduce the last stage's length...
     if (stage_size + stage_offset > total_response_length)
       stage_size = total_response_length - stage_offset;

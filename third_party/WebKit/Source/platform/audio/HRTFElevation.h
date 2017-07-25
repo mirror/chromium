@@ -78,7 +78,7 @@ class PLATFORM_EXPORT HRTFElevation {
 
   // Returns the left and right kernels for the given azimuth index.
   // The interpolated delays based on azimuthBlend: 0 -> 1 are returned in
-  // frameDelayL and frameDelayR.
+  // frame_delay_l and frame_delay_r.
   void GetKernelsFromAzimuth(double azimuth_blend,
                              unsigned azimuth_index,
                              HRTFKernel*& kernel_l,

@@ -40,15 +40,15 @@
 //
 // |----------------|-----------------------------------------|----------------|
 //
-//                                     blockSize + kernelSize / 2
+//                                   block_size_ + kernel_size / 2
 //                   <--------------------------------------------------------->
 //                                                r0
 //
-//   kernelSize / 2   kernelSize / 2          kernelSize / 2     kernelSize / 2
+//  kernel_size / 2   kernel_size / 2         kernel_size / 2   kernel_size / 2
 // <---------------> <--------------->       <---------------> <--------------->
 //         r1                r2                      r3               r4
 //
-//                                                     blockSize
+//                                                    block_size_
 //                                    <---------------------------------------->
 //                                                         r5
 
@@ -63,7 +63,7 @@
 // 5) Goto (2) until all of input is consumed.
 //
 // note: we're glossing over how the sub-sample handling works with
-// m_virtualSourceIndex, etc.
+// virtual_source_index_, etc.
 
 namespace blink {
 
@@ -101,7 +101,7 @@ void SincResampler::InitializeKernel() {
   // So we should adjust the lowpass filter cutoff slightly downward to avoid
   // some aliasing at the very high-end.
   // FIXME: this value is empirical and to be more exact should vary depending
-  // on m_kernelSize.
+  // on kernel_size_.
   sinc_scale_factor *= 0.9;
 
   int n = kernel_size_;
@@ -238,7 +238,7 @@ void SincResampler::Process(AudioSourceProvider* source_provider,
 
   while (number_of_destination_frames) {
     while (virtual_source_index_ < block_size_) {
-      // m_virtualSourceIndex lies in between two kernel offsets so figure out
+      // virtual_source_index_ lies in between two kernel offsets so figure out
       // what they are.
       int source_index_i = static_cast<int>(virtual_source_index_);
       double subsample_remainder = virtual_source_index_ - source_index_i;
@@ -250,11 +250,11 @@ void SincResampler::Process(AudioSourceProvider* source_provider,
       float* k1 = kernel_storage_.Data() + offset_index * kernel_size_;
       float* k2 = k1 + kernel_size_;
 
-      // Initialize input pointer based on quantized m_virtualSourceIndex.
+      // Initialize input pointer based on quantized virtual_source_index_.
       float* input_p = r1 + source_index_i;
 
       // We'll compute "convolutions" for the two kernels which straddle
-      // m_virtualSourceIndex
+      // virtual_source_index_
       float sum1 = 0;
       float sum2 = 0;
 
@@ -284,7 +284,7 @@ void SincResampler::Process(AudioSourceProvider* source_provider,
           n--;
         }
 
-        // Now the inputP is aligned and start to apply SSE.
+        // Now the input_p is aligned and start to apply SSE.
         float* end_p = input_p + n - n % 4;
         __m128 m_input;
         __m128 m_k1;

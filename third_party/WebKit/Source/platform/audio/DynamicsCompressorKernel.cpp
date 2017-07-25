@@ -97,8 +97,8 @@ void DynamicsCompressorKernel::SetPreDelayTime(float pre_delay_time) {
 }
 
 // Exponential curve for the knee.
-// It is 1st derivative matched at m_linearThreshold and asymptotically
-// approaches the value m_linearThreshold + 1 / k.
+// It is 1st derivative matched at linear_threshold_ and asymptotically
+// approaches the value linear_threshold_ + 1 / k.
 float DynamicsCompressorKernel::KneeCurve(float x, float k) {
   // Linear up to threshold.
   if (x < linear_threshold_)
@@ -297,27 +297,27 @@ void DynamicsCompressorKernel::Process(
 
     float desired_gain = detector_average_;
 
-    // Pre-warp so we get desiredGain after sin() warp below.
+    // Pre-warp so we get desired_gain after sin() warp below.
     float scaled_desired_gain = asinf(desired_gain) / (piOverTwoFloat);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Deal with envelopes
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // envelopeRate is the rate we slew from current compressor level to the
+    // envelope_rate is the rate we slew from current compressor level to the
     // desired level.  The exact rate depends on if we're attacking or
     // releasing and by how much.
     float envelope_rate;
 
     bool is_releasing = scaled_desired_gain > compressor_gain_;
 
-    // compressionDiffDb is the difference between current compression level and
-    // the desired level.
+    // compression_diff_db is the difference between current compression level
+    // and the desired level.
     float compression_diff_db =
         LinearToDecibels(compressor_gain_ / scaled_desired_gain);
 
     if (is_releasing) {
-      // Release mode - compressionDiffDb should be negative dB
+      // Release mode - compression_diff_db should be negative dB
       max_attack_compression_diff_db_ = -1;
 
       // Fix gremlins.
@@ -326,7 +326,7 @@ void DynamicsCompressorKernel::Process(
       if (std::isinf(compression_diff_db))
         compression_diff_db = -1;
 
-      // Adaptive release - higher compression (lower compressionDiffDb)
+      // Adaptive release - higher compression (lower compression_diff_db)
       // releases faster.
 
       // Contain within range: -12 -> 0 then scale to go from 0 -> 3
@@ -347,7 +347,7 @@ void DynamicsCompressorKernel::Process(
 
       envelope_rate = DecibelsToLinear(db_per_frame);
     } else {
-      // Attack mode - compressionDiffDb should be positive dB
+      // Attack mode - compression_diff_db should be positive dB
 
       // Fix gremlins.
       if (std::isnan(compression_diff_db))
@@ -356,7 +356,7 @@ void DynamicsCompressorKernel::Process(
         compression_diff_db = 1;
 
       // As long as we're still in attack mode, use a rate based off
-      // the largest compressionDiffDb we've encountered so far.
+      // the largest compression_diff_db we've encountered so far.
       if (max_attack_compression_diff_db_ == -1 ||
           max_attack_compression_diff_db_ < compression_diff_db)
         max_attack_compression_diff_db_ = compression_diff_db;

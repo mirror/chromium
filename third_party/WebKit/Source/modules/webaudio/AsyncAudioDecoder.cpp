@@ -74,7 +74,7 @@ void AsyncAudioDecoder::DecodeOnBackgroundThread(
 
   // Decoding is finished, but we need to do the callbacks on the main thread.
   // A reference to |*bus| is retained by WTF::Function and will be removed
-  // after notifyComplete() is done.
+  // after NotifyComplete() is done.
   //
   // We also want to avoid notifying the main thread if AudioContext does not
   // exist any more.

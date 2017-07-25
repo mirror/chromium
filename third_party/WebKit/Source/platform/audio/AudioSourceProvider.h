@@ -46,7 +46,7 @@ class PLATFORM_EXPORT AudioSourceProvider {
  public:
   AudioSourceProvider() {}
 
-  // provideInput() gets called repeatedly to render time-slices of a continuous
+  // ProvideInput() gets called repeatedly to render time-slices of a continuous
   // audio stream.
   virtual void ProvideInput(AudioBus* bus, size_t frames_to_process) = 0;
 

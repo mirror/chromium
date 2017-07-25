@@ -194,7 +194,7 @@ std::unique_ptr<AudioParamTimeline::ParamEvent>
 AudioParamTimeline::ParamEvent::CreateSetTargetEvent(float value,
                                                      double time,
                                                      double time_constant) {
-  // The time line code does not expect a timeConstant of 0. (IT
+  // The time line code does not expect a time_constant of 0. (IT
   // returns NaN or Infinity due to division by zero.  The caller
   // should have converted this to a SetValueEvent.
   DCHECK_NE(time_constant, 0);
@@ -220,7 +220,7 @@ AudioParamTimeline::ParamEvent::CreateCancelValuesEvent(
     double time,
     std::unique_ptr<ParamEvent> saved_event) {
   if (saved_event) {
-    // The savedEvent can only have certain event types.  Verify that.
+    // The saved_event can only have certain event types.  Verify that.
     ParamEvent::Type saved_type = saved_event->GetType();
 
     DCHECK_NE(saved_type, ParamEvent::kLastType);
@@ -472,7 +472,7 @@ void AudioParamTimeline::SetTargetAtTime(float target,
 
   MutexLocker locker(events_lock_);
 
-  // If timeConstant = 0, we instantly jump to the target value, so
+  // If time_constant = 0, we instantly jump to the target value, so
   // insert a SetValueEvent instead of SetTargetEvent.
   if (time_constant == 0) {
     InsertEvent(ParamEvent::CreateSetValueEvent(target, time), exception_state);
@@ -588,16 +588,16 @@ bool AudioParamTimeline::HasValues() const {
 
   // Can't get the lock so that means the main thread is trying to insert an
   // event.  Just return true then.  If the main thread releases the lock before
-  // valueForContextTime or valuesForFrameRange runs, then the there will be an
+  // ValueForContextTime or ValuesForFrameRange runs, then the there will be an
   // event on the timeline, so everything is fine.  If the lock is held so that
-  // neither valueForContextTime nor valuesForFrameRange can run, this is ok
-  // too, because they have tryLocks to produce a default value.  The event will
+  // neither ValueForContextTime nor ValuesForFrameRange can run, this is ok
+  // too, because they have TryLocks to produce a default value.  The event will
   // then get processed in the next rendering quantum.
   //
   // Don't want to return false here because that would confuse the processing
   // of the timeline if previously we returned true and now suddenly return
   // false, only to return true on the next rendering quantum.  Currently, once
-  // a timeline has been introduced it is always true forever because m_events
+  // a timeline has been introduced it is always true forever because events_
   // never shrinks.
   return true;
 }
@@ -609,7 +609,7 @@ void AudioParamTimeline::CancelScheduledValues(
 
   MutexLocker locker(events_lock_);
 
-  // Remove all events starting at startTime.
+  // Remove all events starting at start_time.
   for (unsigned i = 0; i < events_.size(); ++i) {
     if (events_[i]->Time() >= start_time) {
       events_.erase(i, events_.size() - i);
@@ -628,7 +628,7 @@ void AudioParamTimeline::CancelAndHoldAtTime(double cancel_time,
   MutexLocker locker(events_lock_);
 
   unsigned i;
-  // Find the first event at or just past cancelTime.
+  // Find the first event at or just past cancel_time.
   for (i = 0; i < events_.size(); ++i) {
     if (events_[i]->Time() > cancel_time) {
       break;
@@ -636,16 +636,16 @@ void AudioParamTimeline::CancelAndHoldAtTime(double cancel_time,
   }
 
   // The event that is being cancelled.  This is the event just past
-  // cancelTime, if any.
+  // cancel_time, if any.
   unsigned cancelled_event_index = i;
 
-  // If the event just before cancelTime is a SetTarget or SetValueCurve
+  // If the event just before cancel_time is a SetTarget or SetValueCurve
   // event, we need to handle that event specially instead of the event after.
   if (i > 0 && ((events_[i - 1]->GetType() == ParamEvent::kSetTarget) ||
                 (events_[i - 1]->GetType() == ParamEvent::kSetValueCurve))) {
     cancelled_event_index = i - 1;
   } else if (i >= events_.size()) {
-    // If there were no events occurring after |cancelTime| (and the
+    // If there were no events occurring after |cancel_time| (and the
     // previous event is not SetTarget or SetValueCurve, we're done.
     return;
   }
@@ -829,8 +829,8 @@ float AudioParamTimeline::ValuesForFrameRangeImpl(size_t start_frame,
   size_t current_frame = start_frame;
   unsigned write_index = 0;
 
-  // If first event is after startFrame then fill initial part of values buffer
-  // with defaultValue until we reach the first event time.
+  // If first event is after start_frame then fill initial part of values buffer
+  // with default_value until we reach the first event time.
   std::tie(current_frame, write_index) =
       HandleFirstEvent(values, default_value, number_of_values, start_frame,
                        end_frame, sample_rate, current_frame, write_index);
@@ -849,13 +849,14 @@ float AudioParamTimeline::ValuesForFrameRangeImpl(size_t start_frame,
     if (!IsEventCurrent(event, next_event, current_frame, sample_rate)) {
       // This is not the special SetValue event case, and nextEvent is
       // in the past. We can skip processing of this event since it's
-      // in past. We keep track of this event in lastSkippedEventIndex
+      // in past. We keep track of this event in last_skipped_event_index
       // to note what events we've skipped.
       last_skipped_event_index = i;
       continue;
     }
 
-    // If there's no next event, set nextEventType to LastType to indicate that.
+    // If there's no next event, set next_event_type to kLastType to indicate
+    // that.
     ParamEvent::Type next_event_type =
         next_event ? static_cast<ParamEvent::Type>(next_event->GetType())
                    : ParamEvent::kLastType;
@@ -876,13 +877,13 @@ float AudioParamTimeline::ValuesForFrameRangeImpl(size_t start_frame,
 
     DCHECK_GE(time2, time1);
 
-    // |fillToEndFrame| is the exclusive upper bound of the last frame to be
-    // computed for this event.  It's either the last desired frame (|endFrame|)
+    // |fill_to_end_frame| is the exclusive upper bound of the last frame to be
+    // computed for this event.  It's either the last desired frame (end_frame)
     // or derived from the end time of the next event (time2). We compute
-    // ceil(time2*sampleRate) because fillToEndFrame is the exclusive upper
-    // bound.  Consider the case where |startFrame| = 128 and time2 = 128.1
-    // (assuming sampleRate = 1).  Since time2 is greater than 128, we want to
-    // output a value for frame 128.  This requires that fillToEndFrame be at
+    // ceil(time2*sample_rate) because fill_to_end_frame is the exclusive upper
+    // bound.  Consider the case where |start_frame| = 128 and time2 = 128.1
+    // (assuming sample_rate = 1).  Since time2 is greater than 128, we want to
+    // output a value for frame 128.  This requires that fill_to_end_frame be at
     // least 129.  This is achieved by ceil(time2).
     //
     // However, time2 can be very large, so compute this carefully in the case
@@ -981,8 +982,7 @@ float AudioParamTimeline::ValuesForFrameRangeImpl(size_t start_frame,
 
   // If we skipped over any events (because they are in the past), we can
   // remove them so we don't have to check them ever again.  (This MUST be
-  // running with the m_events lock so we can safely modify the m_events
-  // array.)
+  // running with the events_ lock so we can safely modify the events_ array.)
   if (last_skipped_event_index > 0)
     events_.erase(0, last_skipped_event_index - 1);
 
@@ -1006,8 +1006,8 @@ std::tuple<size_t, unsigned> AudioParamTimeline::HandleFirstEvent(
     unsigned write_index) {
   double first_event_time = events_[0]->Time();
   if (first_event_time > start_frame / sample_rate) {
-    // |fillToFrame| is an exclusive upper bound, so use ceil() to compute the
-    // bound from the firstEventTime.
+    // |fill_to_frame| is an exclusive upper bound, so use ceil() to compute the
+    // bound from the first_event_frame.
     size_t fill_to_frame = end_frame;
     double first_event_frame = ceil(first_event_time * sample_rate);
     if (end_frame > first_event_frame)
@@ -1030,34 +1030,34 @@ bool AudioParamTimeline::IsEventCurrent(const ParamEvent* event,
                                         const ParamEvent* next_event,
                                         size_t current_frame,
                                         double sample_rate) {
-  // WARNING: due to round-off it might happen that nextEvent->time() is
-  // just larger than currentFrame/sampleRate.  This means that we will end
+  // WARNING: due to round-off it might happen that next_event->time() is
+  // just larger than current_frame/sample_rate.  This means that we will end
   // up running the |event| again.  The code below had better be prepared
-  // for this case!  What should happen is the fillToFrame should be 0 so
+  // for this case!  What should happen is the fill_to_frame should be 0 so
   // that while the event is actually run again, nothing actually gets
   // computed, and we move on to the next event.
   //
   // An example of this case is setValueCurveAtTime.  The time at which
   // setValueCurveAtTime ends (and the setValueAtTime begins) might be
-  // just past currentTime/sampleRate.  Then setValueCurveAtTime will be
+  // just past currentTime/sample_rate.  Then setValueCurveAtTime will be
   // processed again before advancing to setValueAtTime.  The number of
   // frames to be processed should be zero in this case.
   if (next_event && next_event->Time() < current_frame / sample_rate) {
     // But if the current event is a SetValue event and the event time is
-    // between currentFrame - 1 and curentFrame (in time). we don't want to
+    // between current_frame - 1 and current_frame (in time). we don't want to
     // skip it.  If we do skip it, the SetValue event is completely skipped
     // and not applied, which is wrong.  Other events don't have this problem.
-    // (Because currentFrame is unsigned, we do the time check in this funny,
+    // (Because current_frame is unsigned, we do the time check in this funny,
     // but equivalent way.)
     double event_frame = event->Time() * sample_rate;
 
-    // Condition is currentFrame - 1 < eventFrame <= currentFrame, but
-    // currentFrame is unsigned and could be 0, so use
-    // currentFrame < eventFrame + 1 instead.
+    // Condition is current_frame - 1 < event_frame <= current_frame, but
+    // current_frame is unsigned and could be 0, so use
+    // current_frame < event_frame + 1 instead.
     if (!((event->GetType() == ParamEvent::kSetValue &&
            (event_frame <= current_frame) &&
            (current_frame < event_frame + 1)))) {
-      // This is not the special SetValue event case, and nextEvent is
+      // This is not the special SetValue event case, and next_event is
       // in the past. We can skip processing of this event since it's
       // in past.
       return false;
@@ -1124,7 +1124,7 @@ bool AudioParamTimeline::HandleAllEventsInThePast(double current_time,
       last_event_type != ParamEvent::kSetTarget) {
     // The event has finished, so just copy the default value out.
     // Since all events are now also in the past, we can just remove all
-    // timeline events too because |defaultValue| has the expected
+    // timeline events too because |default_value| has the expected
     // value.
     FillWithDefault(values, default_value, number_of_values, 0);
     smoothed_value_ = default_value;
@@ -1154,15 +1154,15 @@ void AudioParamTimeline::ProcessSetTargetFollowedByRamp(
     // value for the ramp using the current frame.  We need to update |value|
     // appropriately depending on whether the ramp has started or not.
     //
-    // If SetTarget starts somewhere between currentFrame - 1 and
-    // currentFrame, we directly compute the value it would have at
-    // currentFrame.  If not, we update the value from the value from
-    // currentFrame - 1.
+    // If SetTarget starts somewhere between current_frame - 1 and
+    // current_frame, we directly compute the value it would have at
+    // current_frame.  If not, we update the value from the value from
+    // current_frame - 1.
     //
-    // Can't use the condition currentFrame - 1 <= t0 * sampleRate <=
-    // currentFrame because currentFrame is unsigned and could be 0.  Instead,
+    // Can't use the condition current_frame - 1 <= t0 * sample_rate <=
+    // current_frame because current_frame is unsigned and could be 0.  Instead,
     // compute the condition this way,
-    // where f = currentFrame and Fs = sampleRate:
+    // where f = current_frame and Fs = sample_rate:
     //
     //    f - 1 <= t0 * Fs <= f
     //    2 * f - 2 <= 2 * Fs * t0 <= 2 * f
@@ -1170,9 +1170,9 @@ void AudioParamTimeline::ProcessSetTargetFollowedByRamp(
     //    -1 <= 2 * Fs * t0 - 2 * f + 1 <= 1
     //     abs(2 * Fs * t0 - 2 * f + 1) <= 1
     if (fabs(2 * sample_rate * event->Time() - 2 * current_frame + 1) <= 1) {
-      // SetTarget is starting somewhere between currentFrame - 1 and
-      // currentFrame. Compute the value the SetTarget would have at the
-      // currentFrame.
+      // SetTarget is starting somewhere between current_frame - 1 and
+      // current_frame. Compute the value the SetTarget would have at the
+      // current_frame.
       value = event->Value() +
               (value - event->Value()) *
                   exp(-(current_frame / sample_rate - event->Time()) /
@@ -1252,7 +1252,7 @@ AudioParamTimeline::HandleCancelValues(const ParamEvent* current_event,
               // These cannot be possible types for the saved event
               // because they can't be created.
               // createCancelValuesEvent doesn't allow them (SetValue,
-              // SetTarget, CancelValues) or cancelScheduledValues()
+              // SetTarget, CancelValues) or CancelScheduledValues()
               // doesn't create such an event (SetValueCurve).
               NOTREACHED();
               break;
@@ -1308,13 +1308,13 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessLinearRamp(
     // Minimize in-loop operations. Calculate starting value and increment.
     // Next step: value += inc.
     //  value = value1 +
-    //      (currentFrame/sampleRate - time1) * k * (value2 - value1);
-    //  inc = 4 / sampleRate * k * (value2 - value1);
+    //      (current_frame/sample_rate - time1) * k * (value2 - value1);
+    //  inc = 4 / sample_rate * k * (value2 - value1);
     // Resolve recursion by expanding constants to achieve a 4-step loop
     // unrolling.
     //  value = value1 +
-    //    ((currentFrame/sampleRate - time1) + i * sampleFrameTimeIncr) * k
-    //    * (value2 -value1), i in 0..3
+    //    ((current_frame/sample_rate - time1) + i/sample_rate) * k
+    //    * (value2 - value1), i in 0..3
     __m128 v_value =
         _mm_mul_ps(_mm_set_ps1(1 / sample_rate), _mm_set_ps(3, 2, 1, 0));
     v_value =
@@ -1379,11 +1379,11 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessExponentialRamp(
     double delta_time = time2 - time1;
     double num_sample_frames = delta_time * sample_rate;
     // The value goes exponentially from value1 to value2 in a duration of
-    // deltaTime seconds according to
+    // delta_time seconds according to
     //
     //  v(t) = v1*(v2/v1)^((t-t1)/(t2-t1))
     //
-    // Let c be currentFrame and F be the sampleRate.  Then we want to
+    // Let c be current_frame and F be the sample_rate.  Then we want to
     // sample v(t) at times t = (c + k)/F for k = 0, 1, ...:
     //
     //   v((c+k)/F) = v1*(v2/v1)^(((c/F+k/F)-t1)/(t2-t1))
@@ -1459,8 +1459,8 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessSetTarget(
   // where we left off from the previous rendering quantum.
   {
     double ramp_start_frame = time1 * sample_rate;
-    // Condition is c - 1 < r <= c where c = currentFrame and r =
-    // rampStartFrame.  Compute it this way because currentFrame is
+    // Condition is c - 1 < r <= c where c = current_frame and r =
+    // ramp_start_frame.  Compute it this way because current_frame is
     // unsigned and could be 0.
     if (ramp_start_frame <= current_frame &&
         current_frame < ramp_start_frame + 1) {
@@ -1574,10 +1574,10 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessSetValueCurve(
   // duration instead of the next event time.
   size_t next_event_fill_to_frame = fill_to_frame;
 
-  // fillToEndFrame = min(endFrame,
-  //                      ceil(sampleRate * (time1 + duration))),
-  // but compute this carefully in case sampleRate*(time1 + duration) is
-  // huge.  fillToEndFrame is an exclusive upper bound of the last frame
+  // fill_to_end_frame = min(end_frame,
+  //                      ceil(sample_rate * (time1 + duration))),
+  // but compute this carefully in case sample_rate*(time1 + duration) is
+  // huge.  fill_to_end_frame is an exclusive upper bound of the last frame
   // to be computed, so ceil is used.
   {
     double curve_end_frame = ceil(sample_rate * (time1 + duration));
@@ -1587,10 +1587,10 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessSetValueCurve(
       fill_to_end_frame = end_frame;
   }
 
-  // |fillToFrame| can be less than |startFrame| when the end of the
+  // |fill_to_frame| can be less than |start_frame| when the end of the
   // setValueCurve automation has been reached, but the next automation
-  // has not yet started. In this case, |fillToFrame| is clipped to
-  // |time1|+|duration| above, but |startFrame| will keep increasing
+  // has not yet started. In this case, |fill_to_frame| is clipped to
+  // |time1|+|duration| above, but |start_frame| will keep increasing
   // (because the current time is increasing).
   fill_to_frame =
       (fill_to_end_frame < start_frame) ? 0 : fill_to_end_frame - start_frame;
@@ -1603,13 +1603,13 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessSetValueCurve(
   double curve_virtual_index = 0;
   if (time1 < current_frame / sample_rate) {
     // Index somewhere in the middle of the curve data.
-    // Don't use timeToSampleFrame() since we want the exact
+    // Don't use TimeToSampleFrame() since we want the exact
     // floating-point frame.
     double frame_offset = current_frame - time1 * sample_rate;
     curve_virtual_index = curve_points_per_frame * frame_offset;
   }
 
-  // Set the default value in case fillToFrame is 0.
+  // Set the default value in case fill_to_frame is 0.
   value = curve_end_value;
 
   // Render the stretched curve data using linear interpolation.
@@ -1649,8 +1649,8 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessSetValueCurve(
                                       v_number_of_curve_points_m1));
 
       // Linearly interpolate between the two nearest curve points.
-      // |delta| is clamped to 1 because currentVirtualIndex can exceed
-      // curveIndex0 by more than one.  This can happen when we reached
+      // |delta| is clamped to 1 because v_current_virtual_index can exceed
+      // a_curve_index0 by more than one.  This can happen when we reached
       // the end of the curve but still need values to fill out the
       // current rendering quantum.
       _mm_storeu_si128((__m128i*)a_curve_index0, v_curve_index0);
@@ -1694,8 +1694,8 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessSetValueCurve(
         std::min(curve_index0 + 1, number_of_curve_points - 1);
 
     // Linearly interpolate between the two nearest curve points.
-    // |delta| is clamped to 1 because currentVirtualIndex can exceed
-    // curveIndex0 by more than one.  This can happen when we reached
+    // |delta| is clamped to 1 because current_virtual_index can exceed
+    // curve_index0 by more than one.  This can happen when we reached
     // the end of the curve but still need values to fill out the
     // current rendering quantum.
     DCHECK_LT(curve_index0, number_of_curve_points);

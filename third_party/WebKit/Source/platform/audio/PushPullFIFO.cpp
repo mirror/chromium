@@ -175,7 +175,7 @@ size_t PushPullFIFO::Pull(AudioBus* output_bus, size_t frames_requested) {
   // Update the read index; wrap it around if necessary.
   index_read_ = (index_read_ + frames_to_fill) % fifo_length_;
 
-  // In case of underflow, move the |indexWrite| to the updated |indexRead|.
+  // In case of underflow, move the |index_write_| to the updated |index_read_|.
   if (frames_requested > frames_to_fill) {
     index_write_ = index_read_;
     if (underflow_count_++ < kMaxMessagesToLog) {

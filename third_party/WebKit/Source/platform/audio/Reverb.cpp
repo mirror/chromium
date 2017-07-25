@@ -142,7 +142,7 @@ void Reverb::Initialize(AudioBus* impulse_response_buffer,
   }
 
   // For "True" stereo processing we allocate a temporary buffer to avoid
-  // repeatedly allocating it in the process() method.  It can be bad to
+  // repeatedly allocating it in the Process() method.  It can be bad to
   // allocate memory in a real-time thread.
   if (number_of_response_channels_ == 4)
     temp_buffer_ = AudioBus::Create(2, kMaxFrameSize);
@@ -187,13 +187,13 @@ void Reverb::Process(const AudioBus* source_bus,
   // These are the possible combinations of number inputs, response
   // channels and outputs channels that need to be supported:
   //
-  //   numInputChannels:         1 or 2
-  //   numberOfResponseChannels: 1, 2, or 4
-  //   numOutputChannels:        1 or 2
+  //   num_input_channels:          1 or 2
+  //   number_of_response_channels: 1, 2, or 4
+  //   num_output_channels:         1 or 2
   //
-  // Not all possible combinations are valid.  numOutputChannels is
-  // one only if both numInputChannels and numberOfResponseChannels are 1.
-  // Otherwise numOutputChannels MUST be 2.
+  // Not all possible combinations are valid.  num_output_channels is
+  // one only if both num_input_channels and number_of_response_channels are 1.
+  // Otherwise num_output_channels MUST be 2.
   //
   // The valid combinations are
   //

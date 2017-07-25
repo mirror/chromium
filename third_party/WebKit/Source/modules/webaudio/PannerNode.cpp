@@ -114,7 +114,7 @@ void PannerHandler::Process(size_t frames_to_process) {
     return;
   }
 
-  // The audio thread can't block on this lock, so we call tryLock() instead.
+  // The audio thread can't block on this lock, so we call TryLock() instead.
   MutexTryLocker try_locker(process_lock_);
   MutexTryLocker try_listener_locker(Listener()->ListenerLock());
 
@@ -129,7 +129,7 @@ void PannerHandler::Process(size_t frames_to_process) {
 
     if (HasSampleAccurateValues() || Listener()->HasSampleAccurateValues()) {
       // It's tempting to skip sample-accurate processing if
-      // isAzimuthElevationDirty() and isDistanceConeGain() both return false.
+      // IsAzimuthElevationDirty() and IsDistanceConeGain() both return false.
       // But in general we can't because something may scheduled to start in the
       // middle of the rendering quantum.  On the other hand, the audible effect
       // may be small enough that we can afford to do this optimization.
@@ -157,7 +157,7 @@ void PannerHandler::Process(size_t frames_to_process) {
       destination->CopyWithGainFrom(*destination, &last_gain_, total_gain);
     }
   } else {
-    // Too bad - The tryLock() failed.  We must be in the middle of changing the
+    // Too bad - The TryLock() failed.  We must be in the middle of changing the
     // properties of the panner or the listener.
     destination->Zero();
   }
@@ -305,7 +305,7 @@ void PannerHandler::SetPanningModel(const String& model) {
     NOTREACHED();
 }
 
-// This method should only be called from setPanningModel(const String&)!
+// This method should only be called from SetPanningModel(const String&)!
 bool PannerHandler::SetPanningModel(unsigned model) {
   DEFINE_STATIC_LOCAL(EnumerationHistogram, panning_model_histogram,
                       ("WebAudio.PannerNode.PanningModel", 2));
@@ -320,7 +320,7 @@ bool PannerHandler::SetPanningModel(unsigned model) {
   }
 
   if (!panner_.get() || model != panning_model_) {
-    // This synchronizes with process().
+    // This synchronizes with Process().
     MutexLocker process_locker(process_lock_);
     panner_ = Panner::Create(model, Context()->sampleRate(),
                              Listener()->HrtfDatabaseLoader());
@@ -358,7 +358,7 @@ bool PannerHandler::SetDistanceModel(unsigned model) {
     case DistanceEffect::kModelInverse:
     case DistanceEffect::kModelExponential:
       if (model != distance_model_) {
-        // This synchronizes with process().
+        // This synchronizes with Process().
         MutexLocker process_locker(process_lock_);
         distance_effect_.SetModel(
             static_cast<DistanceEffect::ModelType>(model));
@@ -377,7 +377,7 @@ void PannerHandler::SetRefDistance(double distance) {
   if (RefDistance() == distance)
     return;
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
   distance_effect_.SetRefDistance(distance);
   MarkPannerAsDirty(PannerHandler::kDistanceConeGainDirty);
@@ -387,7 +387,7 @@ void PannerHandler::SetMaxDistance(double distance) {
   if (MaxDistance() == distance)
     return;
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
   distance_effect_.SetMaxDistance(distance);
   MarkPannerAsDirty(PannerHandler::kDistanceConeGainDirty);
@@ -397,7 +397,7 @@ void PannerHandler::SetRolloffFactor(double factor) {
   if (RolloffFactor() == factor)
     return;
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
   distance_effect_.SetRolloffFactor(factor);
   MarkPannerAsDirty(PannerHandler::kDistanceConeGainDirty);
@@ -407,7 +407,7 @@ void PannerHandler::SetConeInnerAngle(double angle) {
   if (ConeInnerAngle() == angle)
     return;
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
   cone_effect_.SetInnerAngle(angle);
   MarkPannerAsDirty(PannerHandler::kDistanceConeGainDirty);
@@ -417,7 +417,7 @@ void PannerHandler::SetConeOuterAngle(double angle) {
   if (ConeOuterAngle() == angle)
     return;
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
   cone_effect_.SetOuterAngle(angle);
   MarkPannerAsDirty(PannerHandler::kDistanceConeGainDirty);
@@ -427,14 +427,14 @@ void PannerHandler::SetConeOuterGain(double angle) {
   if (ConeOuterGain() == angle)
     return;
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
   cone_effect_.SetOuterGain(angle);
   MarkPannerAsDirty(PannerHandler::kDistanceConeGainDirty);
 }
 
 void PannerHandler::SetPosition(float x, float y, float z) {
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
 
   position_x_->SetValue(x);
@@ -446,7 +446,7 @@ void PannerHandler::SetPosition(float x, float y, float z) {
 }
 
 void PannerHandler::SetOrientation(float x, float y, float z) {
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
 
   orientation_x_->SetValue(x);
@@ -473,7 +473,7 @@ void PannerHandler::CalculateAzimuthElevation(
     return;
   }
 
-  // normalize() does nothing if the length of |sourceListener| is zero.
+  // Normalize() does nothing if the length of |source_listener| is zero.
   source_listener.Normalize();
 
   // Align axes
@@ -492,7 +492,7 @@ void PannerHandler::CalculateAzimuthElevation(
   double azimuth = rad2deg(projected_source.AngleBetween(listener_right));
   FixNANs(azimuth);  // avoid illegal values
 
-  // Source  in front or behind the listener
+  // Source in front or behind the listener
   double front_back = projected_source.Dot(listener_forward_norm);
   if (front_back < 0.0)
     azimuth = 360.0 - azimuth;

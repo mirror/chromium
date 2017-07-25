@@ -161,9 +161,10 @@ void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
 
   for (size_t pushed_frames = 0; pushed_frames < frames_to_render;
        pushed_frames += AudioUtilities::kRenderQuantumFrames) {
-    // If platform buffer is more than two times longer than |framesToProcess|
-    // we do not want output position to get stuck so we promote it
-    // using the elapsed time from the moment it was initially obtained.
+    // If platform buffer is more than two times longer than
+    // |kRenderQuantumFrames|, we do not want output position to get stuck
+    // so we promote it using the elapsed time from the moment
+    // it was initially obtained.
     if (callback_buffer_size_ > AudioUtilities::kRenderQuantumFrames * 2) {
       double delta = (base::TimeTicks::Now() - received_timestamp).InSecondsF();
       output_position.position += delta;
@@ -171,7 +172,7 @@ void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
     }
 
     // Some implementations give only rough estimation of |delay| so
-    // we might have negative estimation |outputPosition| value.
+    // we might have negative estimation |output_position| value.
     if (output_position.position < 0.0)
       output_position.position = 0.0;
 
@@ -239,12 +240,12 @@ unsigned long AudioDestination::MaxChannelCount() {
 }
 
 bool AudioDestination::CheckBufferSize() {
-  // Histogram for audioHardwareBufferSize
+  // Histogram for AudioHardwareBufferSize
   DEFINE_STATIC_LOCAL(SparseHistogram, hardware_buffer_size_histogram,
                       ("WebAudio.AudioDestination.HardwareBufferSize"));
 
   // Histogram for the actual callback size used.  Typically, this is the same
-  // as audioHardwareBufferSize, but can be adjusted depending on some
+  // as AudioHardwareBufferSize, but can be adjusted depending on some
   // heuristics below.
   DEFINE_STATIC_LOCAL(SparseHistogram, callback_buffer_size_histogram,
                       ("WebAudio.AudioDestination.CallbackBufferSize"));

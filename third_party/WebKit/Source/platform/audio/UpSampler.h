@@ -47,7 +47,7 @@ class PLATFORM_EXPORT UpSampler {
  public:
   UpSampler(size_t input_block_size);
 
-  // The destination buffer |destP| is of size sourceFramesToProcess * 2.
+  // The destination buffer |dest_p| is of size sourceFramesToProcess * 2.
   void Process(const float* source_p,
                float* dest_p,
                size_t source_frames_to_process);

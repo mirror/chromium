@@ -39,7 +39,7 @@ namespace blink {
 
 using LoaderMap = HashMap<double, HRTFDatabaseLoader*>;
 
-// getLoaderMap() returns the static hash map that contains the mapping between
+// GetLoaderMap() returns the static hash map that contains the mapping between
 // the sample rate and the corresponding HRTF database.
 static LoaderMap& GetLoaderMap() {
   DEFINE_STATIC_LOCAL(LoaderMap*, map, (new LoaderMap));
@@ -77,7 +77,7 @@ void HRTFDatabaseLoader::LoadTask() {
   DCHECK(!IsMainThread());
   DCHECK(!hrtf_database_);
 
-  // Protect access to m_hrtfDatabase, which can be accessed from the audio
+  // Protect access to hrtf_database_, which can be accessed from the audio
   // thread.
   MutexLocker locker(lock_);
   // Load the default HRTF database.
@@ -87,9 +87,9 @@ void HRTFDatabaseLoader::LoadTask() {
 void HRTFDatabaseLoader::LoadAsynchronously() {
   DCHECK(IsMainThread());
 
-  // m_hrtfDatabase and m_thread should both be unset because this should be a
+  // hrtf_database_ and thread_ should both be unset because this should be a
   // new HRTFDatabaseLoader object that was just created by
-  // createAndLoadAsynchronouslyIfNecessary and because we haven't started
+  // CreateAndLoadAsynchronouslyIfNecessary and because we haven't started
   // loadTask yet for this object.
   DCHECK(!hrtf_database_);
   DCHECK(!thread_);
@@ -116,7 +116,7 @@ HRTFDatabase* HRTFDatabaseLoader::Database() {
 }
 
 // This cleanup task is needed just to make sure that the loader thread finishes
-// the load task and thus the loader thread doesn't touch m_thread any more.
+// the load task and thus the loader thread doesn't touch thread_ any more.
 void HRTFDatabaseLoader::CleanupTask(WaitableEvent* sync) {
   sync->Signal();
 }

@@ -145,7 +145,7 @@ bool OscillatorHandler::SetType(unsigned type) {
     case CUSTOM:
     default:
       // Return false for invalid types, including CUSTOM since
-      // setPeriodicWave() method must be called explicitly.
+      // SetPeriodicWave() method must be called explicitly.
       NOTREACHED();
       return false;
   }
@@ -241,16 +241,16 @@ void OscillatorHandler::Process(size_t frames_to_process) {
   if (frames_to_process > phase_increments_.size())
     return;
 
-  // The audio thread can't block on this lock, so we call tryLock() instead.
+  // The audio thread can't block on this lock, so we call TryLock() instead.
   MutexTryLocker try_locker(process_lock_);
   if (!try_locker.Locked()) {
-    // Too bad - the tryLock() failed. We must be in the middle of changing
+    // Too bad - the TryLock() failed. We must be in the middle of changing
     // wave-tables.
     output_bus->Zero();
     return;
   }
 
-  // We must access m_periodicWave only inside the lock.
+  // We must access periodic_wave_ only inside the lock.
   if (!periodic_wave_.Get()) {
     output_bus->Zero();
     return;
@@ -275,7 +275,8 @@ void OscillatorHandler::Process(size_t frames_to_process) {
 
   DCHECK_LE(quantum_frame_offset, frames_to_process);
 
-  // We keep virtualReadIndex double-precision since we're accumulating values.
+  // We keep virtual_read_index double-precision since we're accumulating
+  // values.
   double virtual_read_index = virtual_read_index_;
 
   float rate_scale = periodic_wave_->RateScale();
@@ -307,10 +308,10 @@ void OscillatorHandler::Process(size_t frames_to_process) {
   dest_p += quantum_frame_offset;
   int n = non_silent_frames_to_process;
 
-  // If startFrameOffset is not 0, that means the oscillator doesn't actually
-  // start at quantumFrameOffset, but just past that time.  Adjust destP and n
-  // to reflect that, and adjust virtualReadIndex to start the value at
-  // startFrameOffset.
+  // If start_frame_offset is not 0, that means the oscillator doesn't actually
+  // start at quantum_frame_offset, but just past that time.  Adjust dest_p and
+  // n to reflect that, and adjust virtual_read_index to start the value at
+  // start_frame_offset.
   if (start_frame_offset > 0) {
     ++dest_p;
     --n;
@@ -356,8 +357,8 @@ void OscillatorHandler::Process(size_t frames_to_process) {
 
     *dest_p++ = sample;
 
-    // Increment virtual read index and wrap virtualReadIndex into the range
-    // 0 -> periodicWaveSize.
+    // Increment virtual read index and wrap virtual_read_index into the range
+    // 0 -> periodic_wave_size.
     virtual_read_index += incr;
     virtual_read_index -=
         floor(virtual_read_index * inv_periodic_wave_size) * periodic_wave_size;
@@ -372,7 +373,7 @@ void OscillatorHandler::SetPeriodicWave(PeriodicWave* periodic_wave) {
   DCHECK(IsMainThread());
   DCHECK(periodic_wave);
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
   periodic_wave_ = periodic_wave;
   type_ = CUSTOM;

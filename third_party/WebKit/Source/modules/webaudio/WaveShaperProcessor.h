@@ -60,7 +60,7 @@ class WaveShaperProcessor final : public AudioDSPKernelProcessor {
   OverSampleType Oversample() const { return oversample_; }
 
  private:
-  // m_curve represents the non-linear shaping curve.
+  // curve_ represents the non-linear shaping curve.
   std::unique_ptr<Vector<float>> curve_;
 
   OverSampleType oversample_;

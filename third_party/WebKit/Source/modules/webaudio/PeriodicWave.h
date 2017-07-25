@@ -117,7 +117,7 @@ class PeriodicWave final : public GarbageCollectedFinalized<PeriodicWave>,
 
   void AdjustV8ExternalMemory(int delta);
 
-  // Creates tables based on numberOfComponents Fourier coefficients.
+  // Creates tables based on number_of_components Fourier coefficients.
   void CreateBandLimitedTables(const float* real,
                                const float* imag,
                                unsigned number_of_components,

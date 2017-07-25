@@ -109,7 +109,7 @@ void FFTFrame::DoFFT(const float* data) {
   float* imag = imag_data_.Data();
   for (int i = 0; i < len; ++i) {
     int base_complex_index = 2 * i;
-    // m_realData[0] is the DC component and m_imagData[0] is the nyquist
+    // real_data_[0] is the DC component and imag_data_[0] is the nyquist
     // component since the interleaved complex data is packed.
     real[i] = p[base_complex_index];
     imag[i] = p[base_complex_index + 1];

@@ -41,7 +41,7 @@ const double RealtimeAnalyser::kDefaultMaxDecibels = -30;
 
 const unsigned RealtimeAnalyser::kDefaultFFTSize = 2048;
 // All FFT implementations are expected to handle power-of-two sizes
-// MinFFTSize <= size <= MaxFFTSize.
+// kMinFFTSize <= size <= kMaxFFTSize.
 const unsigned RealtimeAnalyser::kMinFFTSize = 32;
 const unsigned RealtimeAnalyser::kMaxFFTSize = 32768;
 const unsigned RealtimeAnalyser::kInputBufferSize =
@@ -70,8 +70,8 @@ bool RealtimeAnalyser::SetFftSize(size_t size) {
 
   if (fft_size_ != size) {
     analysis_frame_ = WTF::MakeUnique<FFTFrame>(size);
-    // m_magnitudeBuffer has size = fftSize / 2 because it contains floats
-    // reduced from complex values in m_analysisFrame.
+    // magnitude_buffer_ has size = fftSize / 2 because it contains floats
+    // reduced from complex values in analysis_frame_.
     magnitude_buffer_.Allocate(size / 2);
     fft_size_ = size;
   }
@@ -98,7 +98,7 @@ void RealtimeAnalyser::WriteInput(AudioBus* bus, size_t frames_to_process) {
   float* dest = input_buffer_.Data() + write_index_;
 
   // Clear the bus and downmix the input according to the down mixing rules.
-  // Then save the result in the m_inputBuffer at the appropriate place.
+  // Then save the result in the input_buffer_ at the appropriate place.
   down_mix_bus_->Zero();
   down_mix_bus_->SumFrom(*bus);
   memcpy(dest, down_mix_bus_->Channel(0)->Data(),
@@ -141,7 +141,7 @@ void RealtimeAnalyser::DoFFTAnalysis() {
   float* input_buffer = input_buffer_.Data();
   float* temp_p = temporary_buffer.Data();
 
-  // Take the previous fftSize values from the input buffer and copy into the
+  // Take the previous fft_size values from the input buffer and copy into the
   // temporary buffer.
   unsigned write_index = write_index_;
   if (write_index < fft_size) {
@@ -237,7 +237,7 @@ void RealtimeAnalyser::ConvertToByteData(DOMUint8Array* destination_array) {
       float linear_value = source[i];
       double db_mag = AudioUtilities::LinearToDecibels(linear_value);
 
-      // The range m_minDecibels to m_maxDecibels will be scaled to byte values
+      // The range min_decibels_ to max_decibels_ will be scaled to byte values
       // from 0 to UCHAR_MAX.
       double scaled_value =
           UCHAR_MAX * (db_mag - min_decibels) * range_scale_factor;

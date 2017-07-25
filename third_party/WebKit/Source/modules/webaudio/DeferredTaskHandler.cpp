@@ -43,8 +43,8 @@ bool DeferredTaskHandler::TryLock() {
   // - it should use regular lock.
   DCHECK(IsAudioThread());
   if (!IsAudioThread()) {
-    // In release build treat tryLock() as lock() (since above
-    // DCHECK(isAudioThread) never fires) - this is the best we can do.
+    // In release build treat TryLock() as lock() (since above
+    // DCHECK(IsAudioThread) never fires) - this is the best we can do.
     lock();
     return true;
   }

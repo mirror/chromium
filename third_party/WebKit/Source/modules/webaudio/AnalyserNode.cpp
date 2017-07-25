@@ -69,9 +69,9 @@ void AnalyserHandler::Process(size_t frames_to_process) {
     return;
   }
 
-  // For in-place processing, our override of pullInputs() will just pass the
+  // For in-place processing, our override of PullInputs() will just pass the
   // audio data through unchanged if the channel count matches from input to
-  // output (resulting in inputBus == outputBus). Otherwise, do an up-mix to
+  // output (resulting in input_bus == output_bus). Otherwise, do an up-mix to
   // stereo.
   if (input_bus != output_bus)
     output_bus->CopyFrom(*input_bus);

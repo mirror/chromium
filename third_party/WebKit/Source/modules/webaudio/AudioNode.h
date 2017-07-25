@@ -100,19 +100,19 @@ class MODULES_EXPORT AudioHandler : public ThreadSafeRefCounted<AudioHandler> {
 
   AudioHandler(NodeType, AudioNode&, float sample_rate);
   virtual ~AudioHandler();
-  // dispose() is called when the owner AudioNode is about to be
+  // Dispose() is called when the owner AudioNode is about to be
   // destructed. This must be called in the main thread, and while the graph
   // lock is held.
-  // Do not release resources used by an audio rendering thread in dispose().
+  // Do not release resources used by an audio rendering thread in Dispose().
   virtual void Dispose();
 
-  // GetNode() returns a valid object until dispose() is called.  This returns
-  // nullptr after dispose().  We must not call GetNode() in an audio rendering
+  // GetNode() returns a valid object until Dispose() is called.  This returns
+  // nullptr after Dispose().  We must not call GetNode() in an audio rendering
   // thread.
   AudioNode* GetNode() const;
-  // context() returns a valid object until the BaseAudioContext dies, and
+  // Context() returns a valid object until the BaseAudioContext dies, and
   // returns nullptr otherwise.  This always returns a valid object in an audio
-  // rendering thread, and inside dispose().  We must not call context() in the
+  // rendering thread, and inside Dispose().  We must not call Context() in the
   // destructor.
   virtual BaseAudioContext* Context() const;
   void ClearContext() { context_ = nullptr; }
@@ -136,17 +136,17 @@ class MODULES_EXPORT AudioHandler : public ThreadSafeRefCounted<AudioHandler> {
   void BreakConnectionWithLock();
 
   // The AudioNodeInput(s) (if any) will already have their input data available
-  // when process() is called.  Subclasses will take this input data and put the
+  // when Process() is called.  Subclasses will take this input data and put the
   // results in the AudioBus(s) of its AudioNodeOutput(s) (if any).
   // Called from context's audio thread.
   virtual void Process(size_t frames_to_process) = 0;
 
-  // Like process(), but only causes the automations to process; the
+  // Like Process(), but only causes the automations to process; the
   // normal processing of the node is bypassed.  By default, we assume
   // no AudioParams need to be updated.
   virtual void ProcessOnlyAudioParams(size_t frames_to_process){};
 
-  // No significant resources should be allocated until initialize() is called.
+  // No significant resources should be allocated until Initialize() is called.
   // Processing may not occur until a node is initialized.
   virtual void Initialize();
   virtual void Uninitialize();
@@ -167,12 +167,12 @@ class MODULES_EXPORT AudioHandler : public ThreadSafeRefCounted<AudioHandler> {
   // Number of output channels.  This only matters for ScriptProcessorNodes.
   virtual unsigned NumberOfOutputChannels() const;
 
-  // The argument must be less than numberOfInputs().
+  // The argument must be less than NumberOfInputs().
   AudioNodeInput& Input(unsigned);
-  // The argument must be less than numberOfOutputs().
+  // The argument must be less than NumberOfOutputs().
   AudioNodeOutput& Output(unsigned);
 
-  // processIfNecessary() is called by our output(s) when the rendering graph
+  // ProcessIfNecessary() is called by our output(s) when the rendering graph
   // needs this AudioNode to process.  This method ensures that the AudioNode
   // will only process once per rendering time quantum even if it's called
   // repeatedly.  This handles the case of "fanout" where an output is connected
@@ -243,7 +243,7 @@ class MODULES_EXPORT AudioHandler : public ThreadSafeRefCounted<AudioHandler> {
   void AddInput();
   void AddOutput(unsigned number_of_channels);
 
-  // Called by processIfNecessary() to cause all parts of the rendering graph
+  // Called by ProcessIfNecessary() to cause all parts of the rendering graph
   // connected to us to process.  Each rendering quantum, the audio data for
   // each of the AudioNode's inputs will be available after this method is
   // called.  Called from context's audio thread.
@@ -258,15 +258,15 @@ class MODULES_EXPORT AudioHandler : public ThreadSafeRefCounted<AudioHandler> {
   volatile bool is_initialized_;
   NodeType node_type_;
 
-  // The owner AudioNode.  This untraced member is safe because dispose() is
+  // The owner AudioNode.  This untraced member is safe because Dispose() is
   // called before the AudioNode death, and it clears |node_|.  Do not access
   // |node_| directly, use GetNode() instead.
   // See http://crbug.com/404527 for the detail.
   UntracedMember<AudioNode> node_;
 
   // This untraced member is safe because this is cleared for all of live
-  // AudioHandlers when the BaseAudioContext dies.  Do not access m_context
-  // directly, use context() instead.
+  // AudioHandlers when the BaseAudioContext dies.  Do not access context_
+  // directly, use Context() instead.
   // See http://crbug.com/404527 for the detail.
   UntracedMember<BaseAudioContext> context_;
 
@@ -345,7 +345,7 @@ class MODULES_EXPORT AudioNode : public EventTargetWithInlineData {
 
   // Called inside AudioHandler constructors.
   void DidAddOutput(unsigned number_of_outputs);
-  // Like disconnect, but no exception is thrown if the outputIndex is invalid.
+  // Like Disconnect, but no exception is thrown if the output_index is invalid.
   // Just do nothing in that case.
   void DisconnectWithoutException(unsigned output_index);
 

@@ -183,14 +183,14 @@ void BiquadDSPKernel::GetFrequencyResponse(int n_frequencies,
 
   {
     // Get a copy of the current biquad filter coefficients so we can update the
-    // biquad with these values. We need to synchronize with process() to
-    // prevent process() from updating the filter coefficients while we're
+    // biquad with these values. We need to synchronize with Process() to
+    // prevent Process() from updating the filter coefficients while we're
     // trying to access them. The process will update it next time around.
     //
     // The BiquadDSPKernel object here (along with it's Biquad object) is for
     // querying the frequency response and is NOT the same as the one in
-    // process() which is used for performing the actual filtering. This one is
-    // is created in BiquadProcessor::getFrequencyResponse for this purpose.
+    // Process() which is used for performing the actual filtering. This one is
+    // is created in BiquadProcessor::GetFrequencyResponse for this purpose.
     // Both, however, point to the same BiquadProcessor object.
     //
     // FIXME: Simplify this: crbug.com/390266

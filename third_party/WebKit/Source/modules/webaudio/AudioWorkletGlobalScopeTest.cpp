@@ -198,7 +198,7 @@ class AudioWorkletGlobalScopeTest : public ::testing::Test {
     wait_event->Signal();
   }
 
-  // Test if the invocation of process() method in AudioWorkletProcessor and
+  // Test if the invocation of Process() method in AudioWorkletProcessor and
   // AudioWorkletGlobalScope is performed correctly.
   void RunSimpleProcessTestOnWorkletThread(WorkerThread* thread,
                                            WaitableEvent* wait_event) {
@@ -245,11 +245,11 @@ class AudioWorkletGlobalScopeTest : public ::testing::Test {
     float* output_array_data = output_channel_data->Data();
     EXPECT_TRUE(output_array_data);
 
-    // Fill |inputBuffer| with 1 and zero out |outputBuffer|.
+    // Fill |input_buffer| with 1 and zero out |output_buffer|.
     std::fill(input_array_data, input_array_data + input_buffer->length(), 1);
     output_buffer->Zero();
 
-    // Then invoke the process() method to perform JS buffer manipulation. The
+    // Then invoke the Process() method to perform JS buffer manipulation. The
     // output buffer should contain a constant value of 2.
     processor->Process(input_buffer, output_buffer);
     for (unsigned i = 0; i < output_buffer->length(); ++i) {

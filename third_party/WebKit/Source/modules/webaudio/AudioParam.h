@@ -126,7 +126,7 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   void SetValue(float);
 
   // Final value for k-rate parameters, otherwise use
-  // calculateSampleAccurateValues() for a-rate.
+  // CalculateSampleAccurateValues() for a-rate.
   // Must be called in the audio thread.
   float FinalValue();
 
@@ -136,7 +136,7 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
 
   // Value smoothing:
 
-  // When a new value is set with setValue(), in our internal use of the
+  // When a new value is set with SetValue(), in our internal use of the
   // parameter we don't immediately jump to it.  Instead we smoothly approach
   // this value to avoid glitching.
   float SmoothedValue();
@@ -151,7 +151,7 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
     return timeline_.HasValues() || NumberOfRenderingConnections();
   }
 
-  // Calculates numberOfValues parameter values starting at the context's
+  // Calculates number_of_values parameter values starting at the context's
   // current time.
   // Must be called in the context's render thread.
   void CalculateSampleAccurateValues(float* values, unsigned number_of_values);
@@ -174,7 +174,7 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
 
   void WarnIfOutsideRange(float value, float min_value, float max_value);
 
-  // sampleAccurate corresponds to a-rate (audio rate) vs. k-rate in the Web
+  // SampleAccurate corresponds to a-rate (audio rate) vs. k-rate in the Web
   // Audio specification.
   void CalculateFinalValues(float* values,
                             unsigned number_of_values,
@@ -221,9 +221,9 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
                             float max_value);
 
   DECLARE_TRACE();
-  // |handler| always returns a valid object.
+  // |Handler| always returns a valid object.
   AudioParamHandler& Handler() const { return *handler_; }
-  // |context| always returns a valid object.
+  // |Context| always returns a valid object.
   BaseAudioContext* Context() const { return context_; }
 
   AudioParamType GetParamType() const { return Handler().GetParamType(); }

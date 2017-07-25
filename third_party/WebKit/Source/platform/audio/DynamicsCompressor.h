@@ -91,7 +91,7 @@ class PLATFORM_EXPORT DynamicsCompressor {
  protected:
   unsigned number_of_channels_;
 
-  // m_parameters holds the tweakable compressor parameters.
+  // parameters_ holds the tweakable compressor parameters.
   float parameters_[kParamLast];
   void InitializeParameters();
 

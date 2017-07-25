@@ -46,7 +46,7 @@ TEST(AudioBasicProcessorHandlerTest, ProcessorFinalization) {
   EXPECT_TRUE(handler.Processor()->IsInitialized());
   BaseAudioContext::AutoLocker locker(context);
   handler.Dispose();
-  // The AudioProcessor should live after dispose() and should not be
+  // The AudioProcessor should live after Dispose() and should not be
   // finalized because an audio thread is using it.
   EXPECT_TRUE(handler.Processor());
   EXPECT_TRUE(handler.Processor()->IsInitialized());

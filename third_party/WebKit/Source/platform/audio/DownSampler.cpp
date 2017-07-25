@@ -56,8 +56,8 @@ void DownSampler::InitializeKernel() {
   double sinc_scale_factor = 0.5;
 
   // Compute only the odd terms because the even ones are zero, except right in
-  // the middle at halfSize, which is 0.5 and we'll handle specially during
-  // processing after doing the main convolution using m_reducedKernel.
+  // the middle at half_size, which is 0.5 and we'll handle specially during
+  // processing after doing the main convolution using reduced_kernel_.
   for (int i = 1; i < n; i += 2) {
     // Compute the sinc() with offset.
     double s = sinc_scale_factor * piDouble * (i - half_size);
@@ -111,21 +111,21 @@ void DownSampler::Process(const float* source_p,
   float* input_p = input_buffer_.Data() + source_frames_to_process;
   memcpy(input_p, source_p, sizeof(float) * source_frames_to_process);
 
-  // Copy the odd sample-frames from sourceP, delayed by one sample-frame
+  // Copy the odd sample-frames from source_p, delayed by one sample-frame
   // (destination sample-rate) to match shifting forward in time in
-  // m_reducedKernel.
+  // reduced_kernel_.
   float* odd_samples_p = temp_buffer_.Data();
   for (unsigned i = 0; i < dest_frames_to_process; ++i)
     odd_samples_p[i] = *((input_p - 1) + i * 2);
 
-  // Actually process oddSamplesP with m_reducedKernel for efficiency.
+  // Actually process odd_samples_p with reduced_kernel_ for efficiency.
   // The theoretical kernel is double this size with 0 values for even terms
   // (except center).
   convolver_.Process(&reduced_kernel_, odd_samples_p, dest_p,
                      dest_frames_to_process);
 
   // Now, account for the 0.5 term right in the middle of the kernel.
-  // This amounts to a delay-line of length halfSize (at the source
+  // This amounts to a delay-line of length half_size (at the source
   // sample-rate), scaled by 0.5.
 
   // Sum into the destination.

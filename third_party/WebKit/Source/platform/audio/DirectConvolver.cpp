@@ -54,7 +54,7 @@ void DirectConvolver::Process(AudioFloatArray* convolution_kernel,
   if (frames_to_process != input_block_size_)
     return;
 
-  // Only support kernelSize <= m_inputBlockSize
+  // Only support kernel_size <= input_block_size_
   size_t kernel_size = convolution_kernel->size();
   DCHECK_LE(kernel_size, input_block_size_);
   if (kernel_size > input_block_size_)
@@ -84,9 +84,9 @@ void DirectConvolver::Process(AudioFloatArray* convolution_kernel,
 #else
   size_t i = 0;
 #if defined(ARCH_CPU_X86_FAMILY)
-  // Convolution using SSE2. Currently only do this if both |kernelSize| and
-  // |framesToProcess| are multiples of 4. If not, use the straightforward loop
-  // below.
+  // Convolution using SSE2. Currently only do this if both |kernel_size| and
+  // |frames_to_process| are multiples of 4. If not, use the straightforward
+  // loop below.
 
   if ((kernel_size % 4 == 0) && (frames_to_process % 4 == 0)) {
     // AudioFloatArray's are always aligned on at least a 16-byte boundary.
@@ -106,7 +106,7 @@ void DirectConvolver::Process(AudioFloatArray* convolution_kernel,
 
       convolution_sum = _mm_setzero_ps();
 
-      // |kernelSize| is a multiple of 4 so we can unroll the loop by 4,
+      // |kernel_size| is a multiple of 4 so we can unroll the loop by 4,
       // manually.
       for (size_t k = 0; k < kernel_size; k += 4) {
         size_t data_offset = i + k;

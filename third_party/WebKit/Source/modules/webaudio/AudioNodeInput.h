@@ -59,27 +59,27 @@ class AudioNodeInput final : public AudioSummingJunction {
   void Connect(AudioNodeOutput&);
   void Disconnect(AudioNodeOutput&);
 
-  // disable() will take the output out of the active connections list and set
+  // Disable() will take the output out of the active connections list and set
   // aside in a disabled list.
-  // enable() will put the output back into the active connections list.
+  // Enable() will put the output back into the active connections list.
   // Must be called with the context's graph lock.
   void Enable(AudioNodeOutput&);
   void Disable(AudioNodeOutput&);
 
-  // pull() processes all of the AudioNodes connected to us.
+  // Pull() processes all of the AudioNodes connected to us.
   // In the case of multiple connections it sums the result into an internal
   // summing bus.  In the single connection case, it allows in-place processing
-  // where possible using inPlaceBus.  It returns the bus which it rendered
-  // into, returning inPlaceBus if in-place processing was performed.
+  // where possible using in_place_bus.  It returns the bus which it rendered
+  // into, returning in_place_bus if in-place processing was performed.
   // Called from context's audio thread.
   AudioBus* Pull(AudioBus* in_place_bus, size_t frames_to_process);
 
-  // bus() contains the rendered audio after pull() has been called for each
+  // Bus() contains the rendered audio after Pull() has been called for each
   // time quantum.
   // Called from context's audio thread.
   AudioBus* Bus();
 
-  // updateInternalBus() updates m_internalSummingBus appropriately for the
+  // UpdateInternalBus() updates internal_summing_bus_ appropriately for the
   // number of channels.  This must be called when we own the context's graph
   // lock in the audio thread at the very start or end of the render quantum.
   void UpdateInternalBus();
@@ -95,13 +95,13 @@ class AudioNodeInput final : public AudioSummingJunction {
   // object.
   AudioHandler& handler_;
 
-  // m_disabledOutputs contains the AudioNodeOutputs which are disabled (will
+  // disabled_outputs_ contains the AudioNodeOutputs which are disabled (will
   // not be processed) by the audio graph rendering.  But, from JavaScript's
   // perspective, these outputs are still connected to us.
   // Generally, these represent disabled connections from "notes" which have
   // finished playing but are not yet garbage collected.
   // These raw pointers are safe. Owner AudioNodes of these AudioNodeOutputs
-  // manage their lifetime, and AudioNode::dispose() disconnects all of
+  // manage their lifetime, and AudioNode::Dispose() disconnects all of
   // connections.
   HashSet<AudioNodeOutput*> disabled_outputs_;
 

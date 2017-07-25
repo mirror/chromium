@@ -99,7 +99,7 @@ void ChannelMergerHandler::SetChannelCount(unsigned long channel_count,
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channelCount must be 1.
+  // channel_count must be 1.
   if (channel_count != 1) {
     exception_state.ThrowDOMException(
         kInvalidStateError,

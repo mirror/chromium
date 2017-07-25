@@ -20,7 +20,7 @@ class AudioWorkletProcessorDefinition;
 
 // AudioWorkletProcessor class represents the active instance created from
 // AudioWorkletProcessorDefinition. |AudioWorkletNodeHandler| invokes
-// process() method in this object upon graph rendering.
+// Process() method in this object upon graph rendering.
 //
 // This is constructed and destroyed on a worker thread, and all methods also
 // must be called on the worker thread.

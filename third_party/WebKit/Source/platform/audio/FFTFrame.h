@@ -60,7 +60,7 @@ class PLATFORM_EXPORT FFTFrame {
   // have platform-dependent implementations.
 
   FFTFrame(unsigned fft_size);
-  // creates a blank/empty frame for later use with createInterpolatedFrame()
+  // creates a blank/empty frame for later use with CreateInterpolatedFrame()
   FFTFrame();
   FFTFrame(const FFTFrame& frame);
   ~FFTFrame();

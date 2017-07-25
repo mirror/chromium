@@ -86,18 +86,18 @@ void MediaElementAudioSourceHandler::SetFormat(size_t number_of_channels,
     if (!number_of_channels ||
         number_of_channels > BaseAudioContext::MaxNumberOfChannels() ||
         !AudioUtilities::IsValidAudioBufferSampleRate(source_sample_rate)) {
-      // process() will generate silence for these uninitialized values.
-      DLOG(ERROR) << "setFormat(" << number_of_channels << ", "
+      // Process() will generate silence for these uninitialized values.
+      DLOG(ERROR) << "SetFormat(" << number_of_channels << ", "
                   << source_sample_rate << ") - unhandled format change";
-      // Synchronize with process().
+      // Synchronize with Process().
       Locker<MediaElementAudioSourceHandler> locker(*this);
       source_number_of_channels_ = 0;
       source_sample_rate_ = 0;
       return;
     }
 
-    // Synchronize with process() to protect m_sourceNumberOfChannels,
-    // m_sourceSampleRate, and m_multiChannelResampler.
+    // Synchronize with Process() to protect source_number_of_channels_,
+    // source_sample_rate_, and multi_channel_resampler_.
     Locker<MediaElementAudioSourceHandler> locker(*this);
 
     source_number_of_channels_ = number_of_channels;
@@ -134,15 +134,15 @@ void MediaElementAudioSourceHandler::OnCurrentSrcChanged(
     const KURL& current_src) {
   DCHECK(IsMainThread());
 
-  // Synchronize with process().
+  // Synchronize with Process().
   Locker<MediaElementAudioSourceHandler> locker(*this);
 
   passes_current_src_cors_access_check_ =
       PassesCurrentSrcCORSAccessCheck(current_src);
 
-  // Make a note if we need to print a console message and save the |curentSrc|
-  // for use in the message.  Need to wait until later to print the message in
-  // case HTMLMediaElement allows access.
+  // Make a note if we need to print a console message and save the
+  // |current_src| for use in the message.  Need to wait until later to print
+  // the message in case HTMLMediaElement allows access.
   maybe_print_cors_message_ = !passes_current_src_cors_access_check_;
   current_src_string_ = current_src.GetString();
 }
@@ -167,7 +167,7 @@ void MediaElementAudioSourceHandler::PrintCORSMessage(const String& message) {
 void MediaElementAudioSourceHandler::Process(size_t number_of_frames) {
   AudioBus* output_bus = Output(0).Bus();
 
-  // Use a tryLock() to avoid contention in the real-time audio thread.
+  // Use a TryLock() to avoid contention in the real-time audio thread.
   // If we fail to acquire the lock then the HTMLMediaElement must be in the
   // middle of reconfiguring its playback engine, so we output silence in this
   // case.

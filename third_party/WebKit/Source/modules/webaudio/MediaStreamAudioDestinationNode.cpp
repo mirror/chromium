@@ -103,7 +103,7 @@ void MediaStreamAudioDestinationHandler::Process(size_t number_of_frames) {
 
   mix_bus_->CopyFrom(*Input(0).Bus());
 
-  // consumeAudio has an internal lock (also used by setAudioFormat).
+  // ConsumeAudio has an internal lock (also used by SetAudioFormat).
   // This can cause audio to glitch.  This is outside of our control.
   source_->ConsumeAudio(mix_bus_.Get(), number_of_frames);
 }
@@ -114,7 +114,7 @@ void MediaStreamAudioDestinationHandler::SetChannelCount(
   DCHECK(IsMainThread());
 
   // Currently the maximum channel count supported for this node is 8,
-  // which is constrained by m_source (WebAudioCapturereSource). Although
+  // which is constrained by source_ (WebAudioCapturereSource). Although
   // it has its own safety check for the excessive channels, throwing an
   // exception here is useful to developers.
   if (channel_count < 1 || channel_count > MaxChannelCount()) {
@@ -127,8 +127,8 @@ void MediaStreamAudioDestinationHandler::SetChannelCount(
     return;
   }
 
-  // Synchronize changes in the channel count with process() which
-  // needs to update m_mixBus.
+  // Synchronize changes in the channel count with Process() which
+  // needs to update mix_bus_.
   MutexLocker locker(process_lock_);
 
   AudioHandler::SetChannelCount(channel_count, exception_state);

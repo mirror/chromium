@@ -53,8 +53,8 @@ class AudioSummingJunction;
 // following conditions match:
 // - An audio rendering thread is running,
 // - It is requested to stop,
-// - The audio rendering thread calls requestToDeleteHandlersOnMainThread(),
-// - It posts a task of deleteHandlersOnMainThread(), and
+// - The audio rendering thread calls RequestToDeleteHandlersOnMainThread(),
+// - It posts a task of DeleteHandlersOnMainThread(), and
 // - GC happens and it collects the BaseAudioContext before the task execution.
 //
 class MODULES_EXPORT DeferredTaskHandler final
@@ -72,7 +72,7 @@ class MODULES_EXPORT DeferredTaskHandler final
   // automatic pull lists.
   void AddAutomaticPullNode(AudioHandler*);
   void RemoveAutomaticPullNode(AudioHandler*);
-  // Called right before handlePostRenderTasks() to handle nodes which need to
+  // Called right before HandlePostRenderTasks() to handle nodes which need to
   // be pulled even when they are not connected to anything.
   void ProcessAutomaticPullNodes(size_t frames_to_process);
 
@@ -95,7 +95,7 @@ class MODULES_EXPORT DeferredTaskHandler final
   void MarkAudioNodeOutputDirty(AudioNodeOutput*);
   void RemoveMarkedAudioNodeOutput(AudioNodeOutput*);
 
-  // In AudioNode::breakConnection() and deref(), a tryLock() is used for
+  // In AudioNode::BreakConnections() and Deref(), a TryLock() is used for
   // calling actual processing, but if it fails keep track here.
   void AddDeferredBreakConnection(AudioHandler&);
   void BreakConnections();
@@ -113,8 +113,8 @@ class MODULES_EXPORT DeferredTaskHandler final
   // TODO(hongchan): Use no-barrier load here. (crbug.com/247328)
   //
   // It is okay to use a relaxed (no-barrier) load here. Because the data
-  // referenced by m_audioThread is not actually being used, thus we do not
-  // need a barrier between the load of m_audioThread and of that data.
+  // referenced by audio_thread_ is not actually being used, thus we do not
+  // need a barrier between the load of audio_thread_ and of that data.
   bool IsAudioThread() const {
     return CurrentThread() == AcquireLoad(&audio_thread_);
   }
@@ -147,7 +147,7 @@ class MODULES_EXPORT DeferredTaskHandler final
 
   // This is for locking offline render thread (which is considered as the
   // audio thread) with unlocking on self-destruction at the end of the scope.
-  // Also note that it uses lock() rather than tryLock() because the timing
+  // Also note that it uses lock() rather than TryLock() because the timing
   // MUST be accurate on offline rendering.
   class MODULES_EXPORT OfflineGraphAutoLocker {
     STACK_ALLOCATED();
@@ -171,12 +171,12 @@ class MODULES_EXPORT DeferredTaskHandler final
   void DeleteHandlersOnMainThread();
 
   // For the sake of thread safety, we maintain a seperate Vector of automatic
-  // pull nodes for rendering in m_renderingAutomaticPullNodes.  It will be
-  // copied from m_automaticPullNodes by updateAutomaticPullNodes() at the
+  // pull nodes for rendering in rendering_automatic_pull_nodes_.  It will be
+  // copied from automatic_pull_nodes_ by UpdateAutomaticPullNodes() at the
   // very start or end of the rendering quantum.
   HashSet<AudioHandler*> automatic_pull_nodes_;
   Vector<AudioHandler*> rendering_automatic_pull_nodes_;
-  // m_automaticPullNodesNeedUpdating keeps track if m_automaticPullNodes is
+  // automatic_pull_nodes_need_updating_ keeps track if automatic_pull_nodes_ is
   // modified.
   bool automatic_pull_nodes_need_updating_;
 

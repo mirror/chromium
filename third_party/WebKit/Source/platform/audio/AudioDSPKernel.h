@@ -52,7 +52,7 @@ class PLATFORM_EXPORT AudioDSPKernel {
 
   virtual ~AudioDSPKernel();
 
-  // Subclasses must override process() to do the processing and reset() to
+  // Subclasses must override Process() to do the processing and Reset() to
   // reset DSP state.
   virtual void Process(const float* source,
                        float* destination,

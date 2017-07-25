@@ -246,8 +246,8 @@ AudioBuffer* BaseAudioContext::createBuffer(unsigned number_of_channels,
                         ("WebAudio.AudioBuffer.Length", 1, 1000000, 50));
     // The limits are the min and max AudioBuffer sample rates currently
     // supported.  We use explicit values here instead of
-    // AudioUtilities::minAudioBufferSampleRate() and
-    // AudioUtilities::maxAudioBufferSampleRate().  The number of buckets is
+    // AudioUtilities::MinAudioBufferSampleRate() and
+    // AudioUtilities::MaxAudioBufferSampleRate().  The number of buckets is
     // fairly arbitrary.
     DEFINE_STATIC_LOCAL(
         CustomCountHistogram, audio_buffer_sample_rate_histogram,
@@ -335,7 +335,7 @@ ScriptPromise BaseAudioContext::decodeAudioData(
     audio_decoder_.DecodeAsync(audio, rate, success_callback, error_callback,
                                resolver, this);
   } else {
-    // If audioData is already detached (neutered) we need to reject the
+    // If audio_data is already detached (neutered) we need to reject the
     // promise with an error.
     DOMException* error = DOMException::Create(
         kDataCloneError, "Cannot decode detached ArrayBuffer");
@@ -665,8 +665,8 @@ String BaseAudioContext::state() const {
 void BaseAudioContext::SetContextState(AudioContextState new_state) {
   DCHECK(IsMainThread());
 
-  // Validate the transitions.  The valid transitions are Suspended->Running,
-  // Running->Suspended, and anything->Closed.
+  // Validate the transitions.  The valid transitions are kSuspended->kRunning,
+  // kRunning->kSuspended, and anything->kClosed.
   switch (new_state) {
     case kSuspended:
       DCHECK_EQ(context_state_, kRunning);
@@ -759,7 +759,7 @@ void BaseAudioContext::HandlePreRenderTasks(
   DCHECK(IsAudioThread());
 
   // At the beginning of every render quantum, try to update the internal
-  // rendering graph state (from main thread changes).  It's OK if the tryLock()
+  // rendering graph state (from main thread changes).  It's OK if the TryLock()
   // fails, we'll just take slightly longer to pick up the changes.
   if (TryLock()) {
     GetDeferredTaskHandler().HandleDeferredTasks();
@@ -783,13 +783,13 @@ void BaseAudioContext::HandlePreRenderTasks(
 void BaseAudioContext::HandlePostRenderTasks() {
   DCHECK(IsAudioThread());
 
-  // Must use a tryLock() here too.  Don't worry, the lock will very rarely be
+  // Must use a TryLock() here too.  Don't worry, the lock will very rarely be
   // contended and this method is called frequently.  The worst that can happen
   // is that there will be some nodes which will take slightly longer than usual
   // to be deleted or removed from the render graph (in which case they'll
   // render silence).
   if (TryLock()) {
-    // Take care of AudioNode tasks where the tryLock() failed previously.
+    // Take care of AudioNode tasks where the TryLock() failed previously.
     GetDeferredTaskHandler().BreakConnections();
 
     GetDeferredTaskHandler().HandleDeferredTasks();

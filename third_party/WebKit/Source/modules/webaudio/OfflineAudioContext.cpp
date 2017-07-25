@@ -114,8 +114,8 @@ OfflineAudioContext* OfflineAudioContext::Create(
                       ("WebAudio.OfflineAudioContext.Length", 1, 1000000, 50));
   // The limits are the min and max AudioBuffer sample rates currently
   // supported.  We use explicit values here instead of
-  // AudioUtilities::minAudioBufferSampleRate() and
-  // AudioUtilities::maxAudioBufferSampleRate().  The number of buckets is
+  // AudioUtilities::MinAudioBufferSampleRate() and
+  // AudioUtilities::MaxAudioBufferSampleRate().  The number of buckets is
   // fairly arbitrary.
   DEFINE_STATIC_LOCAL(
       CustomCountHistogram, offline_context_sample_rate_histogram,
@@ -329,7 +329,7 @@ ScriptPromise OfflineAudioContext::resumeContext(ScriptState* script_state) {
   DCHECK_EQ(ContextState(), AudioContextState::kSuspended);
 
   // If the context is suspended, resume rendering by setting the state to
-  // "Running". and calling startRendering(). Note that resuming is possible
+  // "kRunning". and calling StartRendering(). Note that resuming is possible
   // only after the rendering started.
   SetContextState(kRunning);
   DestinationHandler().StartRendering();
@@ -370,7 +370,7 @@ bool OfflineAudioContext::HandlePreOfflineRenderTasks() {
   DCHECK(IsAudioThread());
 
   // OfflineGraphAutoLocker here locks the audio graph for this scope. Note
-  // that this locker does not use tryLock() inside because the timing of
+  // that this locker does not use TryLock() inside because the timing of
   // suspension MUST NOT be delayed.
   OfflineGraphAutoLocker locker(this);
 
@@ -387,7 +387,7 @@ void OfflineAudioContext::HandlePostOfflineRenderTasks() {
   DCHECK(IsAudioThread());
 
   // OfflineGraphAutoLocker here locks the audio graph for the same reason
-  // above in |handlePreOfflineRenderTasks|.
+  // above in |HandlePreOfflineRenderTasks|.
   {
     OfflineGraphAutoLocker locker(this);
 
@@ -411,7 +411,7 @@ void OfflineAudioContext::ResolveSuspendOnMainThread(size_t frame) {
   // Wait until the suspend map is available for the removal.
   AutoLocker locker(this);
 
-  // If the context is going away, m_scheduledSuspends could have had all its
+  // If the context is going away, scheduled_suspends_ could have had all its
   // entries removed.  Check for that here.
   if (scheduled_suspends_.size()) {
     // |frame| must exist in the map.

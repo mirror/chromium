@@ -46,8 +46,8 @@ struct AudioIOPosition {
 // Abstract base-class for isochronous audio I/O client.
 class AudioIOCallback {
  public:
-  // render() is called periodically to get the next render quantum of audio
-  // into destinationBus.  Optional audio input is given in sourceBus (if it's
+  // Render() is called periodically to get the next render quantum of audio
+  // into destination_bus.  Optional audio input is given in source_bus (if it's
   // not 0).
   virtual void Render(AudioBus* source_bus,
                       AudioBus* destination_bus,

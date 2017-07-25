@@ -68,7 +68,7 @@ AudioHandler::AudioHandler(NodeType node_type,
 
 AudioHandler::~AudioHandler() {
   DCHECK(IsMainThread());
-  // dispose() should be called.
+  // Dispose() should be called.
   DCHECK(!GetNode());
   InstanceCounters::DecrementCounter(InstanceCounters::kAudioHandlerCounter);
 #if DEBUG_AUDIONODE_REFERENCES
@@ -404,7 +404,7 @@ void AudioHandler::EnableOutputsIfNecessary() {
 void AudioHandler::DisableOutputsIfNecessary() {
   // Disable outputs if appropriate. We do this if the number of connections is
   // 0 or 1. The case of 0 is from deref() where there are no connections left.
-  // The case of 1 is from AudioNodeInput::disable() where we want to disable
+  // The case of 1 is from AudioNodeInput::Disable() where we want to disable
   // outputs when there's only one connection left because we're ready to go
   // away, but can't quite yet.
   if (connection_ref_count_ <= 1 && !is_disabled_) {
@@ -415,8 +415,8 @@ void AudioHandler::DisableOutputsIfNecessary() {
 
     // As far as JavaScript is concerned, our outputs must still appear to be
     // connected.  But internally our outputs should be disabled from the inputs
-    // they're connected to.  disable() can recursively deref connections (and
-    // call disable()) down a whole chain of connected nodes.
+    // they're connected to.  Disable() can recursively deref connections (and
+    // call Disable()) down a whole chain of connected nodes.
 
     // TODO(rtoy,hongchan): we need special cases the convolver, delay, biquad,
     // and IIR since they have a significant tail-time and shouldn't be
@@ -449,7 +449,7 @@ void AudioHandler::MakeConnection() {
           Context(), this, GetNodeType(), connection_ref_count_,
           node_count_[GetNodeType()]);
 #endif
-  // See the disabling code in disableOutputsIfNecessary(). This handles
+  // See the disabling code in DisableOutputsIfNecessary(). This handles
   // the case where a node is being re-connected after being used at least
   // once and disconnected. In this case, we need to re-enable.
   EnableOutputsIfNecessary();
@@ -457,7 +457,7 @@ void AudioHandler::MakeConnection() {
 
 void AudioHandler::BreakConnection() {
   // The actual work for deref happens completely within the audio context's
-  // graph lock. In the case of the audio thread, we must use a tryLock to
+  // graph lock. In the case of the audio thread, we must use a TryLock to
   // avoid glitches.
   bool has_lock = false;
   if (Context()->IsAudioThread()) {
@@ -865,7 +865,7 @@ void AudioNode::disconnect(AudioParam* destination_param,
   unsigned number_of_disconnections = 0;
 
   // Check if the node output is connected the destination AudioParam.
-  // Disconnect if connected and increase |numberOfDisconnectios| by 1.
+  // Disconnect if connected and increase |number_of_disconnections| by 1.
   for (unsigned output_index = 0; output_index < Handler().NumberOfOutputs();
        ++output_index) {
     if (DisconnectFromOutputIfConnected(output_index, *destination_param))

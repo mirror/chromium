@@ -89,7 +89,7 @@ class PLATFORM_EXPORT DynamicsCompressorKernel {
   enum { kMaxPreDelayFramesMask = kMaxPreDelayFrames - 1 };
   enum {
     kDefaultPreDelayFrames = 256
-  };  // setPreDelayTime() will override this initial value
+  };  // SetPreDelayTime() will override this initial value
   unsigned last_pre_delay_frames_;
   void SetPreDelayTime(float);
 
@@ -110,7 +110,7 @@ class PLATFORM_EXPORT DynamicsCompressorKernel {
                                     float ratio);
 
   // Amount of input change in dB required for 1 dB of output change.
-  // This applies to the portion of the curve above m_kneeThresholdDb (see
+  // This applies to the portion of the curve above knee_threshold_db_ (see
   // below).
   float ratio_;
   float slope_;  // Inverse ratio.
@@ -119,10 +119,10 @@ class PLATFORM_EXPORT DynamicsCompressorKernel {
   float linear_threshold_;
   float db_threshold_;
 
-  // m_dbKnee is the number of dB above the threshold before we enter the
+  // db_knee_ is the number of dB above the threshold before we enter the
   // "ratio" portion of the curve.
-  // m_kneeThresholdDb = m_dbThreshold + m_dbKnee
-  // The portion between m_dbThreshold and m_kneeThresholdDb is the "soft knee"
+  // knee_threshold_db_ = db_threshold_ + db_knee_
+  // The portion between db_threshold_ and knee_threshold_db_ is the "soft knee"
   // portion of the curve which transitions smoothly from the linear portion to
   // the ratio portion.
   float db_knee_;

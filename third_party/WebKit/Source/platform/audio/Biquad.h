@@ -59,7 +59,7 @@ class PLATFORM_EXPORT Biquad final {
     has_sample_accurate_values_ = is_sample_accurate;
   }
 
-  // frequency is 0 - 1 normalized, resonance and dbGain are in decibels.
+  // frequency is 0 - 1 normalized, resonance and db_gain are in decibels.
   // Q is a unitless quality factor.
   void SetLowpassParams(int, double frequency, double resonance);
   void SetHighpassParams(int, double frequency, double resonance);
@@ -81,7 +81,7 @@ class PLATFORM_EXPORT Biquad final {
   double TailFrame(int coef_index, double max_frame);
 
   // Filter response at a set of n frequencies. The magnitude and
-  // phase response are returned in magResponse and phaseResponse.
+  // phase response are returned in mag_response and phase_response.
   // The phase response is in radians.
   void GetFrequencyResponse(int n_frequencies,
                             const float* frequency,

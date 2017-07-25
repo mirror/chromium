@@ -96,7 +96,7 @@ class PLATFORM_EXPORT AudioDestination : public WebAudioDevice::RenderCallback {
   // hardware.
   int FramesPerBuffer() const;
 
-  // The information from the actual audio hardware. (via Platform::current)
+  // The information from the actual audio hardware. (via Platform::Current)
   static float HardwareSampleRate();
   static unsigned long MaxChannelCount();
 

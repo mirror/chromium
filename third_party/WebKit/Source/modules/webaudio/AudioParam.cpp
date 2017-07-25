@@ -279,7 +279,7 @@ void AudioParamHandler::CalculateFinalValues(float* values,
 void AudioParamHandler::CalculateTimelineValues(float* values,
                                                 unsigned number_of_values) {
   // Calculate values for this render quantum.  Normally
-  // |numberOfValues| will equal to
+  // |number_of_values| will equal to
   // AudioUtilities::kRenderQuantumFrames (the render quantum size).
   double sample_rate = DestinationHandler().SampleRate();
   size_t start_frame = DestinationHandler().CurrentSampleFrame();
@@ -497,7 +497,7 @@ AudioParam* AudioParam::setValueCurveAtTime(const Vector<float>& curve,
 
   // We could update the histogram with every value in the curve, due to
   // interpolation, we'll probably be missing many values.  So we don't update
-  // the histogram.  setValueCurveAtTime is probably a fairly rare method
+  // the histogram.  SetValueCurveAtTime is probably a fairly rare method
   // anyway.
   return this;
 }

@@ -69,11 +69,11 @@ ReverbConvolverStage::ReverbConvolverStage(
   }
   temporary_buffer_.Allocate(render_slice_size);
 
-  // The convolution stage at offset stageOffset needs to have a corresponding
+  // The convolution stage at offset stage_offset needs to have a corresponding
   // delay to cancel out the offset.
   size_t total_delay = stage_offset + reverb_total_latency;
 
-  // But, the FFT convolution itself incurs fftSize / 2 latency, so subtract
+  // But, the FFT convolution itself incurs fft_size / 2 latency, so subtract
   // this out...
   size_t half_size = fft_size / 2;
   if (!direct_mode_) {
@@ -123,7 +123,7 @@ void ReverbConvolverStage::Process(const float* source,
   float* temporary_buffer;
   bool is_temporary_buffer_safe = false;
   if (pre_delay_length_ > 0) {
-    // Handles both the read case (call to process() ) and the write case
+    // Handles both the read case (call to Process() ) and the write case
     // (memcpy() )
     bool is_pre_delay_safe =
         pre_read_write_index_ + frames_to_process <= pre_delay_buffer_.size();
@@ -150,14 +150,14 @@ void ReverbConvolverStage::Process(const float* source,
     return;
 
   if (frames_processed_ < pre_delay_length_) {
-    // For the first m_preDelayLength frames don't process the convolver,
+    // For the first pre_delay_length_ frames don't process the convolver,
     // instead simply buffer in the pre-delay.  But while buffering the
     // pre-delay, we still need to update our index.
     accumulation_buffer_->UpdateReadIndex(&accumulation_read_index_,
                                           frames_to_process);
   } else {
     // Now, run the convolution (into the delay buffer).
-    // An expensive FFT will happen every fftSize / 2 frames.
+    // An expensive FFT will happen every fft_size / 2 frames.
     // We process in-place here...
     if (!direct_mode_)
       fft_convolver_->Process(fft_kernel_.get(), pre_delayed_source,

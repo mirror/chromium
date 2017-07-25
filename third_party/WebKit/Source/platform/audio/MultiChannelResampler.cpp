@@ -46,7 +46,7 @@ class ChannelProvider final : public AudioSourceProvider {
         current_channel_(0),
         frames_to_process_(0) {}
 
-  // provideInput() will be called once for each channel, starting with the
+  // ProvideInput() will be called once for each channel, starting with the
   // first channel.  Each time it's called, it will provide the next channel of
   // data.
   void ProvideInput(AudioBus* bus, size_t frames_to_process) override {
@@ -57,7 +57,7 @@ class ChannelProvider final : public AudioSourceProvider {
 
     // Get the data from the multi-channel provider when the first channel asks
     // for it.  For subsequent channels, we can just dish out the channel data
-    // from that (stored in m_multiChannelBus).
+    // from that (stored in multi_channel_bus_).
     if (!current_channel_) {
       frames_to_process_ = frames_to_process;
       multi_channel_bus_ =
@@ -74,7 +74,7 @@ class ChannelProvider final : public AudioSourceProvider {
     if (!is_good)
       return;
 
-    // Copy the channel data from what we received from m_multiChannelProvider.
+    // Copy the channel data from what we received from multi_channel_provider_.
     DCHECK_LE(current_channel_, number_of_channels_);
     if (current_channel_ < number_of_channels_) {
       memcpy(bus->Channel(0)->MutableData(),
@@ -109,16 +109,16 @@ void MultiChannelResampler::Process(AudioSourceProvider* provider,
                                     size_t frames_to_process) {
   // The provider can provide us with multi-channel audio data. But each of our
   // single-channel resamplers (kernels) below requires a provider which
-  // provides a single unique channel of data.  channelProvider wraps the
+  // provides a single unique channel of data.  channel_provider wraps the
   // original multi-channel provider and dishes out one channel at a time.
   ChannelProvider channel_provider(provider, number_of_channels_);
 
   for (unsigned channel_index = 0; channel_index < number_of_channels_;
        ++channel_index) {
     // Depending on the sample-rate scale factor, and the internal buffering
-    // used in a SincResampler kernel, this call to process() will only
-    // sometimes call provideInput() on the channelProvider.  However, if it
-    // calls provideInput() for the first channel, then it will call it for the
+    // used in a SincResampler kernel, this call to Process() will only
+    // sometimes call ProvideInput() on the channel_provider.  However, if it
+    // calls ProvideInput() for the first channel, then it will call it for the
     // remaining channels, since they all buffer in the same way and are
     // processing the same number of frames.
     kernels_[channel_index]->Process(

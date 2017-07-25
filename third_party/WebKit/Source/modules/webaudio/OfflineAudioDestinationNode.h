@@ -83,7 +83,7 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
   OfflineAudioDestinationHandler(AudioNode&, AudioBuffer* render_target);
 
   // Set up the rendering and start. After setting the context up, it will
-  // eventually call |doOfflineRendering|.
+  // eventually call |DoOfflineRendering|.
   void StartOfflineRendering();
 
   // Suspend the rendering loop and notify the main thread to resolve the

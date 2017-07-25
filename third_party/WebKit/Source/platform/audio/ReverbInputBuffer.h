@@ -48,8 +48,8 @@ class PLATFORM_EXPORT ReverbInputBuffer {
 
   // The realtime audio thread keeps writing samples here.
   // The assumption is that the buffer's length is evenly divisible by
-  // numberOfFrames (for nearly all cases this will be fine).
-  // FIXME: remove numberOfFrames restriction...
+  // number_of_frames (for nearly all cases this will be fine).
+  // FIXME: remove number_of_frames restriction...
   void Write(const float* source_p, size_t number_of_frames);
 
   // Background threads can call this to check if there's anything to read...
@@ -62,8 +62,8 @@ class PLATFORM_EXPORT ReverbInputBuffer {
   // with the buffer writing).
   // readIndex is updated with the next readIndex to read from...
   // The assumption is that the buffer's length is evenly divisible by
-  // numberOfFrames.
-  // FIXME: remove numberOfFrames restriction...
+  // number_of_frames.
+  // FIXME: remove number_of_frames restriction...
   float* DirectReadFrom(int* read_index, size_t number_of_frames);
 
   void Reset();

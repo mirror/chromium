@@ -46,9 +46,9 @@ class AudioChannel;
 // angle there will be one HRTFKernel for the left ear transfer function, and
 // one for the right ear.  The leading delay (average group delay) for each
 // impulse response is extracted:
-//      m_fftFrame is the frequency-domain representation of the impulse
+//      fft_frame_ is the frequency-domain representation of the impulse
 //      response with the delay removed
-//      m_frameDelay is the leading delay of the original impulse response.
+//      frame_delay_ is the leading delay of the original impulse response.
 class PLATFORM_EXPORT HRTFKernel {
   USING_FAST_MALLOC(HRTFKernel);
   WTF_MAKE_NONCOPYABLE(HRTFKernel);

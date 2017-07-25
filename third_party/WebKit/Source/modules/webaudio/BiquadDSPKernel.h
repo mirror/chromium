@@ -80,7 +80,7 @@ class BiquadDSPKernel final : public AudioDSPKernel {
   // index |coef_index|.
   void UpdateTailTime(int coef_index);
 
-  // Synchronize process() with getting and setting the filter coefficients.
+  // Synchronize Process() with getting and setting the filter coefficients.
   mutable Mutex process_lock_;
 
   // The current tail time for biquad filter.

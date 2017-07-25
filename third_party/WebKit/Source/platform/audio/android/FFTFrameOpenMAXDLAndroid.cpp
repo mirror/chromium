@@ -37,7 +37,7 @@ namespace blink {
 
 const unsigned kMaxFFTPow2Size = 15;
 
-// Normal constructor: allocates for a given fftSize.
+// Normal constructor: allocates for a given fft_size.
 FFTFrame::FFTFrame(unsigned fft_size)
     : fft_size_(fft_size),
       log2fft_size_(static_cast<unsigned>(log2(fft_size))),

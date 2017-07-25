@@ -78,7 +78,7 @@ class AudioParamTimeline {
 
   // Given the time range in frames, calculates parameter values into the values
   // buffer and returns the last parameter value calculated for "values" or the
-  // defaultValue if none were calculated.  controlRate is the rate (number per
+  // defaultValue if none were calculated.  control_rate is the rate (number per
   // second) at which parameter values will be calculated.  It should equal
   // sampleRate for sample-accurate parameter changes, and otherwise will
   // usually match the render quantum size such that the parameter value changes
@@ -247,7 +247,7 @@ class AudioParamTimeline {
     // the curve index step when running the automation.
     double curve_points_per_second_;
     // The default value to use at the end of the curve.  Normally
-    // it's the last entry in m_curve, but cancelling a SetValueCurve
+    // it's the last entry in curve_, but cancelling a SetValueCurve
     // will set this to a new value.
     float curve_end_value_;
 
@@ -331,8 +331,8 @@ class AudioParamTimeline {
                          unsigned curve_length);
 
   // Handles the special case where the first event in the timeline
-  // starts after |startFrame|.  These initial values are filled using
-  // |defaultValue|.  The updated |currentFrame| and |writeIndex| is
+  // starts after |start_frame|.  These initial values are filled using
+  // |default_value|.  The updated |current_frame| and |write_index| is
   // returned.
   std::tuple<size_t, unsigned> HandleFirstEvent(float* values,
                                                 float default_value,
@@ -343,8 +343,8 @@ class AudioParamTimeline {
                                                 size_t current_frame,
                                                 unsigned write_index);
 
-  // Return true if |currentEvent| starts after |currentFrame|, but
-  // also takes into account the |nextEvent| if any.
+  // Return true if |current_event| starts after |current_frame|, but
+  // also takes into account the |next_event| if any.
   bool IsEventCurrent(const ParamEvent* current_event,
                       const ParamEvent* next_event,
                       size_t current_frame,
@@ -357,7 +357,7 @@ class AudioParamTimeline {
 
   // Handle the case where the last event in the timeline is in the
   // past.  Returns false if any event is not in the past. Otherwise,
-  // return true and also fill in |values| with |defaultValue|.
+  // return true and also fill in |values| with |default_value|.
   bool HandleAllEventsInThePast(double current_time,
                                 double sample_rate,
                                 float default_value,
@@ -365,7 +365,7 @@ class AudioParamTimeline {
                                 float* values);
 
   // Handle processing of CancelValue event. If cancellation happens, value2,
-  // time2, and nextEventType will be updated with the new value due to
+  // time2, and next_event_type will be updated with the new value due to
   // cancellation.  The
   std::tuple<float, double, ParamEvent::Type> HandleCancelValues(
       const ParamEvent* current_event,
@@ -387,8 +387,8 @@ class AudioParamTimeline {
                                       float& value);
 
   // Handle processing of linearRampEvent, writing the appropriate
-  // values to |values|.  Returns the updated |currentFrame|, last
-  // computed |value|, and the updated |writeIndex|.
+  // values to |values|.  Returns the updated |current_frame|, last
+  // computed |value|, and the updated |write_index|.
   std::tuple<size_t, float, unsigned> ProcessLinearRamp(
       const AutomationState& current_state,
       float* values,
@@ -397,8 +397,8 @@ class AudioParamTimeline {
       unsigned write_index);
 
   // Handle processing of exponentialRampEvent, writing the appropriate
-  // values to |values|.  Returns the updated |currentFrame|, last
-  // computed |value|, and the updated |writeIndex|.
+  // values to |values|.  Returns the updated |current_frame|, last
+  // computed |value|, and the updated |write_index|.
   std::tuple<size_t, float, unsigned> ProcessExponentialRamp(
       const AutomationState& current_state,
       float* values,
@@ -407,8 +407,8 @@ class AudioParamTimeline {
       unsigned write_index);
 
   // Handle processing of SetTargetEvent, writing the appropriate
-  // values to |values|.  Returns the updated |currentFrame|, last
-  // computed |value|, and the updated |writeIndex|.
+  // values to |values|.  Returns the updated |current_frame|, last
+  // computed |value|, and the updated |write_index|.
   std::tuple<size_t, float, unsigned> ProcessSetTarget(
       const AutomationState& current_state,
       float* values,
@@ -417,8 +417,8 @@ class AudioParamTimeline {
       unsigned write_index);
 
   // Handle processing of SetValueCurveEvent, writing the appropriate
-  // values to |values|.  Returns the updated |currentFrame|, last
-  // computed |value|, and the updated |writeIndex|.
+  // values to |values|.  Returns the updated |current_frame|, last
+  // computed |value|, and the updated |write_index|.
   std::tuple<size_t, float, unsigned> ProcessSetValueCurve(
       const AutomationState& current_state,
       float* values,
@@ -427,8 +427,8 @@ class AudioParamTimeline {
       unsigned write_index);
 
   // Handle processing of CancelValuesEvent, writing the appropriate
-  // values to |values|.  Returns the updated |currentFrame|, last
-  // computed |value|, and the updated |writeIndex|.
+  // values to |values|.  Returns the updated |current_frame|, last
+  // computed |value|, and the updated |write_index|.
   std::tuple<size_t, float, unsigned> ProcessCancelValues(
       const AutomationState& current_state,
       float* values,
@@ -436,16 +436,16 @@ class AudioParamTimeline {
       float value,
       unsigned write_index);
 
-  // Fill the output vector |values| with the value |defaultValue|,
-  // starting at |writeIndex| and continuing up to |endFrame|
-  // (exclusive).  |writeIndex| is updated with the new index.
+  // Fill the output vector |values| with the value |default_value|,
+  // starting at |write_index| and continuing up to |end_frame|
+  // (exclusive).  |write_index| is updated with the new index.
   unsigned FillWithDefault(float* values,
                            float default_value,
                            size_t end_frame,
                            unsigned write_index);
 
   // Vector of all automation events for the AudioParam.  Access must
-  // be locked via m_eventsLock.
+  // be locked via events_lock_.
   Vector<std::unique_ptr<ParamEvent>> events_;
 
   mutable Mutex events_lock_;

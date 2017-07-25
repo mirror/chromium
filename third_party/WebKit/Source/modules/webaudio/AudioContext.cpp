@@ -76,11 +76,11 @@ AudioContext* AudioContext::Create(Document& document,
     return audio_context;
   }
   // This starts the audio thread. The destination node's
-  // provideInput() method will now be called repeatedly to render
-  // audio.  Each time provideInput() is called, a portion of the
+  // ProvideInput() method will now be called repeatedly to render
+  // audio.  Each time ProvideInput() is called, a portion of the
   // audio stream is rendered. Let's call this time period a "render
   // quantum". NOTE: for now AudioContext does not need an explicit
-  // startRendering() call from JavaScript.  We may want to consider
+  // StartRendering() call from JavaScript.  We may want to consider
   // requiring it for symmetry with OfflineAudioContext.
   audio_context->MaybeUnlockUserGesture();
   if (audio_context->IsAllowedToStart()) {
@@ -232,7 +232,7 @@ ScriptPromise AudioContext::closeContext(ScriptState* script_state) {
   // Stop the audio context. This will stop the destination node from pulling
   // audio anymore. And since we have disconnected the destination from the
   // audio graph, and thus has no references, the destination node can GCed if
-  // JS has no references. uninitialize() will also resolve the Promise created
+  // JS has no references. Uninitialize() will also resolve the Promise created
   // here.
   Uninitialize();
 

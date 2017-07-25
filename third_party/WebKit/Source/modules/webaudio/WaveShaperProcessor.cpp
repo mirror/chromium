@@ -48,7 +48,7 @@ void WaveShaperProcessor::SetCurve(const float* curve_data,
                                    unsigned curve_length) {
   DCHECK(IsMainThread());
 
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
 
   if (curve_length == 0 || !curve_data) {
@@ -62,7 +62,7 @@ void WaveShaperProcessor::SetCurve(const float* curve_data,
 }
 
 void WaveShaperProcessor::SetOversample(OverSampleType oversample) {
-  // This synchronizes with process().
+  // This synchronizes with Process().
   MutexLocker process_locker(process_lock_);
 
   oversample_ = oversample;
@@ -91,7 +91,7 @@ void WaveShaperProcessor::Process(const AudioBus* source,
   if (!channel_count_matches)
     return;
 
-  // The audio thread can't block on this lock, so we call tryLock() instead.
+  // The audio thread can't block on this lock, so we call TryLock() instead.
   MutexTryLocker try_locker(process_lock_);
   if (try_locker.Locked()) {
     // For each channel of our input, process using the corresponding
@@ -101,7 +101,7 @@ void WaveShaperProcessor::Process(const AudioBus* source,
                            destination->Channel(i)->MutableData(),
                            frames_to_process);
   } else {
-    // Too bad - the tryLock() failed. We must be in the middle of a setCurve()
+    // Too bad - the TryLock() failed. We must be in the middle of a SetCurve()
     // call.
     destination->Zero();
   }

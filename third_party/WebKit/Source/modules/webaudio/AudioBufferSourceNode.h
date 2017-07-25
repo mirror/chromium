@@ -58,12 +58,12 @@ class AudioBufferSourceHandler final : public AudioScheduledSourceHandler {
   // AudioHandler
   void Process(size_t frames_to_process) override;
 
-  // setBuffer() is called on the main thread. This is the buffer we use for
+  // SetBuffer() is called on the main thread. This is the buffer we use for
   // playback.
   void SetBuffer(AudioBuffer*, ExceptionState&);
   AudioBuffer* Buffer() { return buffer_.Get(); }
 
-  // numberOfChannels() returns the number of output channels.  This value
+  // NumberOfChannels() returns the number of output channels.  This value
   // equals the number of channels from the buffer.  If a new buffer is set with
   // a different number of channels, then this value will dynamically change.
   unsigned NumberOfChannels();
@@ -121,7 +121,7 @@ class AudioBufferSourceHandler final : public AudioScheduledSourceHandler {
   // Clamps grain parameters to the duration of the given AudioBuffer.
   void ClampGrainParameters(const AudioBuffer*);
 
-  // m_buffer holds the sample data which this node outputs.
+  // buffer_ holds the sample data which this node outputs.
   // This Persistent doesn't make a reference cycle including
   // AudioBufferSourceNode.
   // It is cross-thread, as it will be accessed by the audio and main threads.
@@ -140,7 +140,7 @@ class AudioBufferSourceHandler final : public AudioScheduledSourceHandler {
     ReleaseStore(&did_set_looping_, new_looping);
   }
 
-  // If m_isLooping is false, then this node will be done playing and become
+  // If is_looping_ is false, then this node will be done playing and become
   // inactive after it reaches the end of the sample data in the buffer.  If
   // true, it will wrap around to the start of the buffer each time it reaches
   // the end.
@@ -152,25 +152,25 @@ class AudioBufferSourceHandler final : public AudioScheduledSourceHandler {
   double loop_start_;
   double loop_end_;
 
-  // m_virtualReadIndex is a sample-frame index into our buffer representing the
-  // current playback position.  Since it's floating-point, it has sub-sample
-  // accuracy.
+  // virtual_read_index_ is a sample-frame index into our buffer representing
+  // the current playback position.  Since it's floating-point, it has
+  // sub-sample accuracy.
   double virtual_read_index_;
 
   // Granular playback
   bool is_grain_;
   double grain_offset_;    // in seconds
   double grain_duration_;  // in seconds
-  // True if grainDuration is given explicitly (via 3 arg start method).
+  // True if grain_duration is given explicitly (via 3 arg start method).
   bool is_duration_given_;
 
   // Compute playback rate (k-rate) by incorporating the sample rate
-  // conversion factor, and the value of playbackRate and detune AudioParams.
+  // conversion factor, and the value of playback rate and detune AudioParams.
   double ComputePlaybackRate();
 
   double GetMinPlaybackRate();
 
-  // The minimum playbackRate value ever used for this source.
+  // The minimum playback_rate value ever used for this source.
   double min_playback_rate_;
 
   // |min_playback_rate_| may be updated by the audio thread

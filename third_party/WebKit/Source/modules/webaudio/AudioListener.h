@@ -182,12 +182,12 @@ class AudioListener : public GarbageCollectedFinalized<AudioListener>,
   AudioFloatArray up_y_values_;
   AudioFloatArray up_z_values_;
 
-  // Synchronize a panner's process() with setting of the state of the listener.
+  // Synchronize a panner's Process() with setting of the state of the listener.
   mutable Mutex listener_lock_;
   // List for pannerNodes in context. This is updated only in the main thread,
   // and can be referred in audio thread.
-  // These raw pointers are safe because PannerHandler::uninitialize()
-  // unregisters it from m_panners.
+  // These raw pointers are safe because PannerHandler::Uninitialize()
+  // unregisters it from panners_.
   HashSet<PannerHandler*> panners_;
   // HRTF DB loader for panner node.
   RefPtr<HRTFDatabaseLoader> hrtf_database_loader_;

@@ -334,7 +334,7 @@ void PeriodicWave::GenerateBasicWaveform(int shape) {
 
     // Calculate Fourier coefficients depending on the shape. Note that the
     // overall scaling (magnitude) of the waveforms is normalized in
-    // createBandLimitedTables().
+    // CreateBandLimitedTables().
     switch (shape) {
       case OscillatorHandler::SINE:
         // Standard sine wave function.

@@ -26,7 +26,7 @@ class MODULES_EXPORT AudioWorkletThread final : public WorkerThread {
 
   WorkerBackingThread& GetWorkerBackingThread() override;
 
-  // The backing thread is cleared by clearSharedBackingThread().
+  // The backing thread is cleared by ClearSharedBackingThread().
   void ClearWorkerBackingThread() override {}
 
   // This may block the main thread.

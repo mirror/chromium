@@ -44,19 +44,19 @@ class PLATFORM_EXPORT AudioResamplerKernel {
  public:
   AudioResamplerKernel(AudioResampler*);
 
-  // getSourcePointer() should be called each time before process() is called.
-  // Given a number of frames to process (for subsequent call to process()), it
-  // returns a pointer and numberOfSourceFramesNeeded where sample data should
-  // be copied. This sample data provides the input to the resampler when
-  // process() is called.  framesToProcess must be less than or equal to
-  // MaxFramesToProcess.
+  // GetSourcePointer() should be called each time before Process() is called.
+  // Given a number of frames to process (for subsequent call to Process()), it
+  // returns a pointer and number_of_source_frames_needed where sample data
+  // should be copied.  This sample data provides the input to the resampler
+  // when Process() is called.  frames_to_process must be less than or equal to
+  // kMaxFramesToProcess.
   float* GetSourcePointer(size_t frames_to_process,
                           size_t* number_of_source_frames_needed);
 
-  // process() resamples framesToProcess frames from the source into
-  // destination.  Each call to process() must be preceded by a call to
-  // getSourcePointer() so that source input may be supplied.  framesToProcess
-  // must be less than or equal to MaxFramesToProcess.
+  // Process() resamples frames_to_process frames from the source into
+  // destination.  Each call to Process() must be preceded by a call to
+  // GetSourcePointer() so that source input may be supplied.  frames_to_process
+  // must be less than or equal to kMaxFramesToProcess.
   void Process(float* destination, size_t frames_to_process);
 
   // Resets the processing state.
@@ -73,10 +73,10 @@ class PLATFORM_EXPORT AudioResamplerKernel {
   // This is a (floating point) read index on the input stream.
   double virtual_read_index_;
 
-  // We need to have continuity from one call of process() to the next.
-  // m_lastValues stores the last two sample values from the last call to
-  // process().  m_fillIndex represents how many buffered samples we have which
-  // can be as many as 2.  For the first call to process() (or after reset())
+  // We need to have continuity from one call of Process() to the next.
+  // last_values_ stores the last two sample values from the last call to
+  // process().  fill_index_ represents how many buffered samples we have which
+  // can be as many as 2.  For the first call to Process() (or after r=Reset())
   // there will be no buffered samples.
   float last_values_[2];
   unsigned fill_index_;
