@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c0dc65b_a1ee1b33",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-25T21:26:08Z",
+      "side": 1,
+      "message": "This header has imports in it, so it should be imported instead of included.",
+      "revId": "1188a1c820b50f7fd90f4eaea83f64e68b510ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
