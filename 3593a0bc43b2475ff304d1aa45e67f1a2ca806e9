@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5e08580e_5544ca3b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T05:43:26Z",
+      "side": 1,
+      "message": "The reason I asked that was: If we almost always need it, maybe we should calculate it in the algorithm and just have it as a simple getter here, so that we don\u0027t have computations both in the fragment implementation and in the algorithm. What do you think?",
+      "parentUuid": "94d5ba62_b929a2b1",
+      "revId": "3593a0bc43b2475ff304d1aa45e67f1a2ca806e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb9396ab_eb746344",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.h",
         "patchSetId": 2
