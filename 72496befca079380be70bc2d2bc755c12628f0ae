@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f237922f_56de28d9",
+        "filename": "base/task_scheduler/blocking_observer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "DCHECK(!tls_blocking_observer.Get());\n\nSince it would be unexpected to set a BlockingObserver on a thread that already has one.",
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03794f4_8cf52d08",
+        "filename": "base/task_scheduler/blocking_observer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "Add empty line.",
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5fadfb_0457260f",
+        "filename": "base/task_scheduler/blocking_observer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "robliao@, gab@: Where will ScopedMayBlock go? It think BlockingObserver should be next to it.\n\nIn base/task_scheduler/ -\u003e Not sure, because it could be used outside of TaskScheduler.\nIn base/threading/ -\u003e Feels appropriate to put this next to thread_restrictions.h.",
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb04570b_549fddc8",
+        "filename": "base/task_scheduler/blocking_observer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "s/TaskBlocked/ThreadBlocked/\n\nSince this could be used outside of a task.",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afcdf55_3e4f16d1",
+        "filename": "base/task_scheduler/blocking_observer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "GetBlockingObserverForCurrentThread",
+      "range": {
+        "startLine": 20,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 49
+      },
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0159c3_ead0dbbf",
+        "filename": "base/task_scheduler/blocking_observer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "SetBlockingObserverForCurrentThread",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1aa33fe_3dd4a981",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "Not needed in this file.",
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5406452_8ed2327b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "It would be more efficient to have a method that checks if |worker| is in the |workers_overcapacity| first elements from the bottom of the stack (O(workers_overcapacity) rather than O(idle_workers_stack_.size()).",
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3398364d_12ee6407",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "If there are 10 active workers and the capacity is 5, we want to suspend workers even if they aren\u0027t on the idle stack. Therefore, this should be return workers_overcapacity \u003e 0;",
+      "range": {
+        "startLine": 658,
+        "startChar": 2,
+        "endLine": 658,
+        "endChar": 77
+      },
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0024096c_06d11ba9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "I would prefer to avoid this temporary change.\n\nWould this work?\n\n- CL 1 (new CL) Add BlockingObserver and ScopedMayBlock.\n- CL 2 (this CL and part of https://chromium-review.googlesource.com/c/582188) Add SchedulerWorkerPoolImpl::TaskBlocked, TaskUnblocked and AdjustWorkerCapacity.\nNo polling in this CL. In tests, you post a bunch of tasks that instantiate a ScopedMayBlock. Then, you manually call AdjustWorkerCapacity() from the service thread and you verify that the new capacity is correct.\n- CL 3 (the rest of https://chromium-review.googlesource.com/c/582188) Periodically poll to increase SchedulerWorkerPoolImpl::worker_capacity_.",
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea8873f_ace0c53d",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 1,
+      "message": "This rename could be done in a separate predecessor CL. Doing a trivial rename in a standalone CL helps bug triage (if a bug is found in v8_platform.cc, it is easier for a bug triage person to verify that your CL isn\u0027t responsible for it if it only renames a method than if it also adds new functionality to TaskScheduler).",
+      "range": {
+        "startLine": 213,
+        "startChar": 14,
+        "endLine": 213,
+        "endChar": 65
+      },
+      "revId": "72496befca079380be70bc2d2bc755c12628f0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

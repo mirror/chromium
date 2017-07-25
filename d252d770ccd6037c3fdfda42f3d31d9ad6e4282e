@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e549d3_8779e541",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:18:58Z",
+      "side": 0,
+      "message": "Keep this empty line.",
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
