@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "9ba3136e_043ececf",
+        "filename": "base/i18n/file_util_icu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:59:23Z",
+      "side": 1,
+      "message": "CHROME_OS can be added here.",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 126,
+        "endChar": 22
+      },
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678517f5_413d567f",
+        "filename": "base/i18n/file_util_icu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:59:23Z",
+      "side": 1,
+      "message": "Mac, CrOS and POSIX with is_utf8\u003dtrue, you may as well add a DCHECK to see if file_name-\u003edata() is indeed UTF-8.",
+      "range": {
+        "startLine": 128,
+        "startChar": 3,
+        "endLine": 128,
+        "endChar": 11
+      },
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59a27396_c6f0ed7a",
         "filename": "base/i18n/file_util_icu.h",
         "patchSetId": 2
@@ -47,6 +93,24 @@
       "writtenOn": "2017-07-21T19:52:30Z",
       "side": 1,
       "message": "This parameter is only used on Posix and the only value that has any effect is kCodepageUTF8. Should we just turn this into a |is_unicode| flag?\n\nIf not a bool, then turn this into a base::StringPiece value. That way we can eliminate one string copy. There won\u0027t be a heap allocation because kCodepageUTF8 is within range for short-string-optimization. But the string copy is unnecessary.",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4a5bd1_d0a84d80",
+        "filename": "base/i18n/file_util_icu.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-25T22:59:23Z",
+      "side": 1,
+      "message": "I agree with |is_utf8| instead of |is_unicode|.",
+      "parentUuid": "92880138_11324104",
       "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
