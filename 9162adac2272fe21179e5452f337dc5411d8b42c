@@ -22,6 +22,30 @@
       "revId": "9162adac2272fe21179e5452f337dc5411d8b42c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32c3a28_eefc9950",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-25T01:32:47Z",
+      "side": 1,
+      "message": "Oops, didn\u0027t pull. Odd, I thought that used to be okay..",
+      "parentUuid": "e5f01784_25b15e08",
+      "range": {
+        "startLine": 307,
+        "startChar": 31,
+        "endLine": 307,
+        "endChar": 32
+      },
+      "revId": "9162adac2272fe21179e5452f337dc5411d8b42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
