@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb6b13d7_6768f874",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-25T18:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec90ceaf_45f95756",
+      "revId": "1c0ad4280e1875e06cf0cce1d4f68b57edc09f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "484e2cf5_6b7e5423",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a6fced90_cc21bc8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-25T18:50:19Z",
+      "side": 1,
+      "message": "I believe this is already the javadoc for the only param, @param waitTimeMs.",
+      "parentUuid": "484e2cf5_6b7e5423",
+      "revId": "1c0ad4280e1875e06cf0cce1d4f68b57edc09f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc71b8a4_b9a564a5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "1c0ad4280e1875e06cf0cce1d4f68b57edc09f6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5976f4ec_a79f800a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-25T18:50:19Z",
+      "side": 1,
+      "message": "This is not going to be a BroadcastReceiver, rather, is going to be a service (as explained in a previous comment and now in the description of the CL). The service will start when an interaction happens and will stop after some calculated time after all calls have been handled. Right now, this is not doing anything!",
+      "parentUuid": "fc71b8a4_b9a564a5",
+      "revId": "1c0ad4280e1875e06cf0cce1d4f68b57edc09f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
