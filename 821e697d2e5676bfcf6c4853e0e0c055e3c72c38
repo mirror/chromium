@@ -56,6 +56,24 @@
       "revId": "821e697d2e5676bfcf6c4853e0e0c055e3c72c38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f1aeb9_5e05b868",
+        "filename": "content/shell/browser/shell_url_request_context_getter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T13:23:25Z",
+      "side": 1,
+      "message": "The ShellURLRequestContextGetter does...After the call.  Anyhow, reworded.",
+      "parentUuid": "053f6dba_35567fc6",
+      "revId": "821e697d2e5676bfcf6c4853e0e0c055e3c72c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
