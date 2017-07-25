@@ -114,7 +114,6 @@ DEFINE_TRACE_WRAPPERS(ModuleMap) {
 }
 
 void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
-                                        ModuleGraphLevel level,
                                         SingleModuleClient* client) {
   // https://html.spec.whatwg.org/#fetch-a-single-module-script
 
@@ -132,7 +131,7 @@ void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
 
     // Steps 4-9 loads a new single module script.
     // Delegates to ModuleScriptLoader via Modulator.
-    modulator_->FetchNewSingleModule(request, level, entry);
+    modulator_->FetchNewSingleModule(request, entry);
   }
   DCHECK(entry);
 

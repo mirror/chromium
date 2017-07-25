@@ -6,7 +6,6 @@
 #define ModuleTreeReachedUrlSet_h
 
 #include "core/CoreExport.h"
-#include "core/dom/AncestorList.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/KURLHash.h"
@@ -31,14 +30,6 @@ namespace blink {
 class CORE_EXPORT ModuleTreeReachedUrlSet
     : public GarbageCollectedFinalized<ModuleTreeReachedUrlSet> {
  public:
-  static ModuleTreeReachedUrlSet* CreateFromTopLevelAncestorList(
-      const AncestorList& list) {
-    ModuleTreeReachedUrlSet* set = new ModuleTreeReachedUrlSet;
-    CHECK_LE(list.size(), 1u);
-    set->set_ = list;
-    return set;
-  }
-
   void ObserveModuleTreeLink(const KURL& url) {
     auto result = set_.insert(url);
     CHECK(result.is_new_entry);
