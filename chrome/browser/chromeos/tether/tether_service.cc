@@ -110,18 +110,20 @@ TetherService::TetherService(
 TetherService::~TetherService() {}
 
 void TetherService::StartTetherIfEnabled() {
-  if (GetTetherTechnologyState() !=
-      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED) {
-    return;
-  }
+  notification_presenter_->NotifyMultiplePotentialHotspotsNearby();
 
-  initializer_delegate_->InitializeTether(
-      cryptauth_service_, notification_presenter_.get(), profile_->GetPrefs(),
-      ProfileOAuth2TokenServiceFactory::GetForProfile(profile_),
-      network_state_handler_,
-      chromeos::NetworkHandler::Get()->managed_network_configuration_handler(),
-      chromeos::NetworkConnect::Get(),
-      chromeos::NetworkHandler::Get()->network_connection_handler());
+  // if (GetTetherTechnologyState() !=
+  //     chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED) {
+  //   return;
+  // }
+
+  // initializer_delegate_->InitializeTether(
+  //     cryptauth_service_, notification_presenter_.get(), profile_->GetPrefs(),
+  //     ProfileOAuth2TokenServiceFactory::GetForProfile(profile_),
+  //     network_state_handler_,
+  //     chromeos::NetworkHandler::Get()->managed_network_configuration_handler(),
+  //     chromeos::NetworkConnect::Get(),
+  //     chromeos::NetworkHandler::Get()->network_connection_handler());
 }
 
 void TetherService::StopTether() {
