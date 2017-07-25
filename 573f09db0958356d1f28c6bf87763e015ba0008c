@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b2541d_4c00c9e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-25T17:18:30Z",
+      "side": 1,
+      "message": "There may not be a Formatter for base 64, but there is android.util.Base64#encodeToString",
+      "revId": "573f09db0958356d1f28c6bf87763e015ba0008c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714fe3b0_05ec3b7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageDownloadBridge.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-25T17:18:30Z",
+      "side": 1,
+      "message": "Can we combine the two |startDownload| calls into one startDownload(Tab tab), since the Origin knows how to make itself from a Tab?",
+      "revId": "573f09db0958356d1f28c6bf87763e015ba0008c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
