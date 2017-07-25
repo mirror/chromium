@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221972e3_39e33a23",
+        "filename": "ui/app_list/views/search_box_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-25T21:40:23Z",
+      "side": 1,
+      "message": "Do you really need this. Would SetSearchResultSelection(false) do the same?",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "b37aa0b246e4d0c982f26336c962050c8e60a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
