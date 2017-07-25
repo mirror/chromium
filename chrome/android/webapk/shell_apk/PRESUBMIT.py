@@ -9,7 +9,9 @@ for more details about the presubmit API built into depot_tools.
 
 This presubmit checks for two rules:
 1. If anything in shell_apk/ directory has changed (excluding test files),
-$WAM_MINT_TRIGGER_VARIABLE should be updated.
+$WAM_MINT_TRIGGER_VARIABLE should be updated unless specify
+'OVERRIDE_SHELL_APK_VERSION_CHECK=1' in commit message
+
 2. If $CHROME_UPDATE_TIRGGER_VARIABLE is changed in
 $SHELL_APK_VERSION_LOCAL_PATH, $SHELL_APK_VERSION_LOCAL_PATH should be the
 only changed file and changing $CHROME_UPDATE_TIRGGER_VARIABLE should be
@@ -23,6 +25,7 @@ ANDROID_MANIFEST_LOCAL_PATH = r'AndroidManifest.xml'
 RES_LOCAL_PATH = r'res/'
 SHELL_APK_VERSION_LOCAL_PATH = r'shell_apk_version.gni'
 SRC_LOCAL_PATH = r'src/org/chromium/webapk/shell_apk/'
+DISABLE_SHELL_APK_VERSION_CHECK_FLAG = r'OVERRIDE_SHELL_APK_VERSION_CHECK=1'
 
 
 def _DoChangedContentsContain(changed_contents, key):
@@ -31,6 +34,10 @@ def _DoChangedContentsContain(changed_contents, key):
       return True
   return False
 
+def _IsOverrideShellApkVersionCheck(input_api):
+  if DISABLE_SHELL_APK_VERSION_CHECK_FLAG in input_api.change.DescriptionText():
+    return True;
+  return False;
 
 def _CheckChromeUpdateTriggerRule(input_api, output_api):
   for f in input_api.AffectedFiles():
@@ -57,6 +64,7 @@ def _CheckWamMintTriggerRule(input_api, output_api):
 
   wam_mint_trigger_update_needed = False
   wam_mint_trigger_is_updated = False
+  override_shellapk_version_check = _IsOverrideShellApkVersionCheck(input_api);
   for f in input_api.AffectedFiles():
     local_path = input_api.os_path.relpath(f.AbsoluteLocalPath(),
                                            input_api.PresubmitLocalPath())
@@ -71,7 +79,8 @@ def _CheckWamMintTriggerRule(input_api, output_api):
                                  WAM_MINT_TRIGGER_VARIABLE):
         wam_mint_trigger_is_updated = True
 
-  if wam_mint_trigger_update_needed and not wam_mint_trigger_is_updated:
+  if (wam_mint_trigger_update_needed and not wam_mint_trigger_is_updated
+      and not override_shellapk_version_check):
     return [output_api.PresubmitError(
         '{} in {} needs to updated due to changes in:'.format(
             WAM_MINT_TRIGGER_VARIABLE, SHELL_APK_VERSION_LOCAL_PATH),
