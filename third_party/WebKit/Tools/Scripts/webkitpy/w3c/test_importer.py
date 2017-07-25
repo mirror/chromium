@@ -123,6 +123,7 @@ class TestImporter(object):
 
         self._upload_cl()
         _log.info('Issue: %s', self.git_cl.run(['issue']).strip())
+        return 0
 
         if not self.update_expectations_for_cl():
             return 1
