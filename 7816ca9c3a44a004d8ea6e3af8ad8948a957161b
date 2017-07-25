@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c63be344_11f8f08e",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T09:58:36Z",
+      "side": 1,
+      "message": "This should probably be EXTENSION_FUNCTION_VALIDATE like the checks above.",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 10
+      },
+      "revId": "7816ca9c3a44a004d8ea6e3af8ad8948a957161b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
