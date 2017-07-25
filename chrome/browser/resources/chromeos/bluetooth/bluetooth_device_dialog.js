@@ -2,15 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-cr.exportPath('settings');
+/**
+ * @fileoverview
+ * Dialog used for pairing a provided |pairing-device|. Set |show-error| to
+ * show the error results from a pairing event instead of the pairing UI.
+ */
 
 var PairingEventType = chrome.bluetoothPrivate.PairingEventType;
 
-// NOTE(dbeam): even though this behavior is only used privately, it must
-// be globally accessible for Closure's --polymer_pass to compile happily.
+Polymer({
+  is: 'bluetooth-device-dialog',
 
-/** @polymerBehavior */
-settings.BluetoothPairDeviceBehavior = {
+  behaviors: [I18nBehavior],
+
   properties: {
     /**
      * Current Pairing device.
@@ -18,22 +22,12 @@ settings.BluetoothPairDeviceBehavior = {
      */
     pairingDevice: Object,
 
-    /**
-     * Current Pairing event.
-     * @type {?chrome.bluetoothPrivate.PairingEvent}
-     */
-    pairingEvent_: {
-      type: Object,
-      value: null,
-    },
-
-    /** Pincode or passkey value, used to trigger connect enabled changes. */
-    pinOrPass: String,
+    /** Set to true to show a pairing error result. */
+    showError: Boolean,
 
     /**
-     * Interface for bluetoothPrivate calls. Set in bluetooth-page.
+     * Interface for bluetoothPrivate calls.
      * @type {BluetoothPrivate}
-     * @private
      */
     bluetoothPrivate: {
       type: Object,
@@ -41,10 +35,25 @@ settings.BluetoothPairDeviceBehavior = {
     },
 
     /**
-     * @const
-     * @type {!Array<number>}
+     * Current Pairing event.
+     * @private {?chrome.bluetoothPrivate.PairingEvent}
      */
-    digits: {
+    pairingEvent_: {
+      type: Object,
+      value: null,
+    },
+
+    /**
+     * Pincode or passkey value, used to trigger connect enabled changes.
+     * @private
+     */
+    pinOrPass_: String,
+
+    /**
+     * @const {!Array<number>}
+     * @private
+     */
+    digits_: {
       type: Array,
       readOnly: true,
       value: [0, 1, 2, 3, 4, 5],
@@ -52,15 +61,66 @@ settings.BluetoothPairDeviceBehavior = {
   },
 
   observers: [
+    'dialogUpdated_(showError, pairingEvent_)',
     'pairingChanged_(pairingDevice, pairingEvent_)',
   ],
 
   /**
    * Listener for chrome.bluetoothPrivate.onPairing events.
-   * @type {?function(!chrome.bluetoothPrivate.PairingEvent)}
-   * @private
+   * @private {?function(!chrome.bluetoothPrivate.PairingEvent)}
    */
   bluetoothPrivateOnPairingListener_: null,
+
+  open: function() {
+    this.startPairing();
+    this.pinOrPass_ = '';
+    this.getDialog_().showModal();
+    this.itemWasFocused_ = false;
+  },
+
+  close: function() {
+    this.endPairing();
+    var dialog = this.getDialog_();
+    if (dialog.open)
+      dialog.close();
+  },
+
+  /** @private */
+  dialogUpdated_: function() {
+    if (this.showEnterPincode_())
+      this.$$('#pincode').focus();
+    else if (this.showEnterPasskey_())
+      this.$$('#passkey').focus();
+  },
+
+  /**
+   * @return {!CrDialogElement}
+   * @private
+   */
+  getDialog_: function() {
+    return /** @type {!CrDialogElement} */ (this.$.dialog);
+  },
+
+  /**
+   * @param {string} desiredDialogType
+   * @return {boolean}
+   * @private
+   */
+  isDialogType_: function(desiredDialogType, currentDialogType) {
+    return currentDialogType == desiredDialogType;
+  },
+
+  /** @private */
+  onCancelTap_: function() {
+    this.getDialog_().cancel();
+  },
+
+  /** @private */
+  onDialogCanceled_: function() {
+    if (!this.showError)
+      this.sendResponse_(chrome.bluetoothPrivate.PairingResponse.CANCEL);
+    this.endPairing();
+  },
 
   /** Called when the dialog is opened. Starts listening for pairing events. */
   startPairing: function() {
@@ -109,7 +169,7 @@ settings.BluetoothPairDeviceBehavior = {
       this.close();
       return;
     }
-    this.pinOrPass = '';
+    this.pinOrPass_ = '';
   },
 
   /**
@@ -315,81 +375,12 @@ settings.BluetoothPairDeviceBehavior = {
         this.pairingEvent_.pairing == PairingEventType.KEYS_ENTERED &&
         this.pairingEvent_.enteredKey) {
       var enteredKey = this.pairingEvent_.enteredKey;  // 1-7
-      var lastKey = this.digits.length;                // 6
+      var lastKey = this.digits_.length;               // 6
       if ((index == -1 && enteredKey > lastKey) || (index + 1 == enteredKey))
         cssClass += ' next';
       else if (index > enteredKey)
         cssClass += ' untyped';
     }
     return cssClass;
-  },
-};
-
-Polymer({
-  is: 'bluetooth-device-dialog',
-
-  behaviors: [I18nBehavior, settings.BluetoothPairDeviceBehavior],
-
-  properties: {
-    /**
-     * The version of this dialog to show: 'pairDevice', or 'connectError'.
-     * Must be set before the dialog is opened.
-     */
-    dialogId: String,
-  },
-
-  observers: [
-    'dialogUpdated_(dialogId, pairingEvent_)',
-  ],
-
-  open: function() {
-    this.startPairing();
-    this.pinOrPass = '';
-    this.getDialog_().showModal();
-    this.itemWasFocused_ = false;
-  },
-
-  close: function() {
-    this.endPairing();
-    var dialog = this.getDialog_();
-    if (dialog.open)
-      dialog.close();
-  },
-
-  /** @private */
-  dialogUpdated_: function() {
-    if (this.showEnterPincode_())
-      this.$$('#pincode').focus();
-    else if (this.showEnterPasskey_())
-      this.$$('#passkey').focus();
-  },
-
-  /**
-   * @return {!CrDialogElement}
-   * @private
-   */
-  getDialog_: function() {
-    return /** @type {!CrDialogElement} */ (this.$.dialog);
-  },
-
-  /**
-   * @param {string} desiredDialogType
-   * @return {boolean}
-   * @private
-   */
-  isDialogType_: function(desiredDialogType, currentDialogType) {
-    return currentDialogType == desiredDialogType;
-  },
-
-  /** @private */
-  onCancelTap_: function() {
-    this.getDialog_().cancel();
-  },
-
-  /** @private */
-  onDialogCanceled_: function() {
-    if (this.dialogId == 'pairDevice')
-      this.sendResponse_(chrome.bluetoothPrivate.PairingResponse.CANCEL);
-    this.endPairing();
   },
 });

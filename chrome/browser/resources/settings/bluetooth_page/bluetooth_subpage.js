@@ -40,7 +40,7 @@ Polymer({
     showSpinner_: {
       type: Boolean,
       notify: true,
-      computed: 'computeShowSpinner_(adapterState.*, dialogId_)',
+      computed: 'computeShowSpinner_(adapterState.*, dialogShown_)',
     },
 
     /**
@@ -97,15 +97,21 @@ Polymer({
     },
 
     /**
-     * Set to the name of the dialog to show. This page uses a single
-     * dialog to host one of two dialog elements: 'pairDevice' or
-     * 'connectError'. This allows a seamless transition between dialogs.
-     * Note: This property should be set before opening the dialog and setting
-     * the property will not itself cause the dialog to open.
+     * Whether or not the dialog is shown.
      * @private
      */
-    dialogId_: {
-      type: String,
+    dialogShown_: {
+      type: Boolean,
+      value: '',
+    },
+
+    /**
+     * Whether or not to show pairing errors in the dialog instead of the
+     * pairing UI. May be set after showing the dialog.
+     * @private
+     */
+    showError_: {
+      type: Boolean,
       value: '',
     },
 
@@ -200,7 +206,7 @@ Polymer({
 
   /** @private */
   computeShowSpinner_: function() {
-    return !this.dialogId_ && this.get('adapterState.discovering');
+    return !this.dialogShown_ && this.get('adapterState.discovering');
   },
 
   /** @private */
@@ -268,7 +274,7 @@ Polymer({
    */
   onBluetoothDeviceUpdated_: function(device) {
     var address = device.address;
-    if (this.dialogId_ && this.pairingDevice_ &&
+    if (this.dialogShown_ && this.pairingDevice_ &&
         this.pairingDevice_.address == address) {
       this.pairingDevice_ = device;
     }
@@ -382,7 +388,7 @@ Polymer({
     // If the device is not paired, show the pairing dialog before connecting.
     if (!device.paired) {
       this.pairingDevice_ = device;
-      this.openDialog_('pairDevice');
+      this.openDialog_(false);
     }
 
     this.bluetoothPrivate.connect(device.address, result => {
@@ -415,7 +421,7 @@ Polymer({
         this.errorMessage_ = error;
         console.error('Unexpected error connecting to: ' + name + ': ' + error);
       }
-      this.openDialog_('connectError');
+      this.openDialog_(true);
     });
   },
 
@@ -449,24 +455,22 @@ Polymer({
   },
 
   /**
-   * @param {string} dialogId
+   * @param {boolean} showError
    * @private
    */
-  openDialog_: function(dialogId) {
-    if (this.dialogId_) {
-      // Dialog already opened, just update the contents.
-      this.dialogId_ = dialogId;
+  openDialog_: function(showError) {
+    this.showError_ = showError;
+    if (this.dialogShown_)
       return;
-    }
-    this.dialogId_ = dialogId;
     // Call flush so that the dialog gets sized correctly before it is opened.
     Polymer.dom.flush();
     this.$.deviceDialog.open();
+    this.dialogShown_ = true;
   },
 
   /** @private */
   onDialogClose_: function() {
-    this.dialogId_ = '';
+    this.dialogShown_ = false;
     this.pairingDevice_ = undefined;
     // The list is dynamic so focus the first item.
     var device = this.$$('#unpairedContainer bluetooth-device-list-item');
