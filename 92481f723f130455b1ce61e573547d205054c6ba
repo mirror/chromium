@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c8f229_e83bb730",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "please don\u0027t abbreviate. maybe call this ByteVector?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3305b547_f40d86a9",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "please document what this function does (below as well).",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267d6a96_513805bb",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "why Vec in some places and std::vector\u003cuint8_t\u003e in others?",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5544ad71_96cb0bac",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "elements_.reserve(element_count);",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f63ab7_2a846e89",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "\"it\" doesn\u0027t say much about what this is. from reading the DecodeVarUInt doc, i understand that it\u0027s an iterator just past the value that was read. so maybe \"next\" or \"next_position\" are better names.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f0c505_e234622a",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "nit: please use the same doc comment as below here",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2644e66_a93da88b",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "it took me a little time to understand what was being documented here. iiuc, this is documenting the requirements of a class that satisfies the contract of a StreamableSource. is this just a convention for the sake of making them all look alike, or is there a hard requirement that they all implement these methods?",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3baba163_cc21a29f",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "this has a different signature than the other GetNext methods. doesn\u0027t this mean that this type can\u0027t be used in a generic fashion like the others can? is that a non-goal?",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c8b01e_1ef809d8",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "is it possible to pre-reserve the space needed?",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b953c25_462606ab",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "same comment about reserve?",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06820950_ce7984c1",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "buffer -\u003e sink here and below so that the defns match the decls",
+      "range": {
+        "startLine": 79,
+        "startChar": 48,
+        "endLine": 79,
+        "endChar": 54
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9225b8f9_80dfbe94",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "extra_data_.insert(extra_data_.end(), region.begin(), region.end());\nwill be more efficient since it can properly size the vector then blit the data in.",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f50fb17_4ab97be6",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "does the user of this api know ahead of time how many elements there will be? if so, consider adding a way for the user to reserve the right amount of space before adding so that push_back never results in a resize.",
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2287c5c3_2e35301f",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T07:25:57Z",
+      "side": 1,
+      "message": "buffer -\u003e sink",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "92481f723f130455b1ce61e573547d205054c6ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
