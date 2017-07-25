@@ -25,6 +25,9 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
   // The error code.
   int error_code = 0;
 
+  // Optionally contains an error description, e.g. for failed CORS checks.
+  std::string error_description;
+
   // Was ignored by the request handler.
   bool was_ignored_by_handler = false;
 
