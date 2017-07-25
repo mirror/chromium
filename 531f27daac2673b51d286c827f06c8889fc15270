@@ -34,6 +34,24 @@
       "revId": "531f27daac2673b51d286c827f06c8889fc15270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed53ac31_fa9f7b89",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-25T20:53:10Z",
+      "side": 1,
+      "message": "After more exploration, I dont see any observer notifications to work off of so I\u0027d like to keep this as is",
+      "parentUuid": "f78c4830_c6e0420c",
+      "revId": "531f27daac2673b51d286c827f06c8889fc15270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
