@@ -12,6 +12,8 @@ import subprocess
 import sys
 
 def main():
+  return  # XXX
+
   # Read the environment block from the file. This is stored in the format used
   # by CreateProcess. Drop last 2 NULs, one for list terminator, one for
   # trailing vs. separator.
