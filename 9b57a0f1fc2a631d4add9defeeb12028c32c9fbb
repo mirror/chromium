@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42564cd1_1458b8b2",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-25T16:20:19Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "b60927fb_b3096faf",
+      "revId": "9b57a0f1fc2a631d4add9defeeb12028c32c9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbeeabc1_b6859ee2",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "9b57a0f1fc2a631d4add9defeeb12028c32c9fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43c854c_634ca2cd",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-25T16:20:19Z",
+      "side": 1,
+      "message": "Thanks, working out bugs in my formatting tool.",
+      "parentUuid": "cbeeabc1_b6859ee2",
+      "revId": "9b57a0f1fc2a631d4add9defeeb12028c32c9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b76f35c6_d41b1285",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-25T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7a03a70_b4c67cd7",
+      "revId": "9b57a0f1fc2a631d4add9defeeb12028c32c9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5205c0b5_6bbc3ae7",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 16
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-25T16:02:03Z",
       "side": 1,
       "message": "You don\u0027t need to check for null for |back_button_|, do you? (same for speech_button_ and close_button_ below)",
+      "revId": "9b57a0f1fc2a631d4add9defeeb12028c32c9fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c651c27_2e991593",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-25T16:20:19Z",
+      "side": 1,
+      "message": "This is from a rebase actually, but from what I understand the back button can be null in certain cases because the older versions of the launcher use buttons that the new version does not use.\n\nThis will be cleaned up when the new launcher becomes default.",
+      "parentUuid": "5205c0b5_6bbc3ae7",
       "revId": "9b57a0f1fc2a631d4add9defeeb12028c32c9fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
