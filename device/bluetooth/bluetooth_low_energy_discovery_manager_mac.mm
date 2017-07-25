@@ -46,10 +46,10 @@ void BluetoothLowEnergyDiscoveryManagerMac::TryStartDiscovery() {
     return;
   }
 
-  if ([central_manager_ state] != CBManagerStatePoweredOn) {
-    VLOG(1) << "TryStartDiscovery != CBManagerStatePoweredOn";
-    return;
-  }
+//  if ([central_manager_ state] != CBManagerStatePoweredOn) {
+//    VLOG(1) << "TryStartDiscovery != CBManagerStatePoweredOn";
+//    return;
+//  }
 
   // Converts the services UUIDs to a CoreBluetooth data structure.
   NSMutableArray* services = nil;

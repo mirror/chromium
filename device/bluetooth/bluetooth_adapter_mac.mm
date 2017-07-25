@@ -157,19 +157,19 @@ bool BluetoothAdapterMac::IsInitialized() const {
 
 bool BluetoothAdapterMac::IsPresent() const {
   bool is_present = !address_.empty();
-  if (IsLowEnergyAvailable()) {
-    is_present = is_present || ([low_energy_central_manager_ state] !=
-                                CBManagerStateUnsupported);
-  }
+//  if (IsLowEnergyAvailable()) {
+//    is_present = is_present || ([low_energy_central_manager_ state] !=
+//                                CBManagerStateUnsupported);
+//  }
   return is_present;
 }
 
 bool BluetoothAdapterMac::IsPowered() const {
   bool is_powered = classic_powered_;
-  if (IsLowEnergyAvailable()) {
-    is_powered = is_powered || ([low_energy_central_manager_ state] ==
-                                CBManagerStatePoweredOn);
-  }
+//  if (IsLowEnergyAvailable()) {
+//    is_powered = is_powered || ([low_energy_central_manager_ state] ==
+//                                CBManagerStatePoweredOn);
+//  }
   return is_powered;
 }
 
@@ -602,7 +602,8 @@ void BluetoothAdapterMac::LowEnergyCentralManagerUpdatedState() {
   // states since macOS doesn't call it.
   // See
   // https://developer.apple.com/reference/corebluetooth/cbcentralmanagerdelegate/1518888-centralmanagerdidupdatestate?language=objc
-  if ([low_energy_central_manager_ state] < CBManagerStatePoweredOn) {
+//  if ([low_energy_central_manager_ state] < CBManagerStatePoweredOn) {
+  if (false) {
     VLOG(1)
         << "Central no longer powered on. Notifying of device disconnection.";
     for (BluetoothDevice* device : GetDevices()) {
