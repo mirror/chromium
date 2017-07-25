@@ -34,6 +34,24 @@
       "revId": "825182ffe2cb8923d89009caf8c2c30cab94cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f1c1a3_fe935353",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-07-25T08:05:20Z",
+      "side": 1,
+      "message": "Done - we still want this layer to indicate what the error is, so we\u0027re creating the exception object here and passing it to v8, which can then do whatever other prep work may need before rejecting with that error.",
+      "parentUuid": "6739451f_3ccb4cca",
+      "revId": "825182ffe2cb8923d89009caf8c2c30cab94cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
