@@ -9,6 +9,7 @@ module arc.mojom;
 
 import "video_common.mojom";
 
+//TODO: deprecate this after new API landed
 [Extensible]
 enum HalPixelFormatExtension {
   HAL_PIXEL_FORMAT_YCbCr_420_888 = 0x23,
@@ -16,16 +17,19 @@ enum HalPixelFormatExtension {
   HAL_PIXEL_FORMAT_VP8 = 0x00385056,
 };
 
+//TODO: deprecate this after new API landed
 enum PortType {
   PORT_INPUT = 0,
   PORT_OUTPUT = 1,
 };
 
+//TODO: deprecate this after new API landed
 struct BufferMetadata {
   int64 timestamp;  // in microseconds
   uint32 bytes_used;
 };
 
+//TODO: deprecate this after new API landed
 struct VideoFormat {
   uint32 pixel_format;
   uint32 buffer_size;
@@ -40,6 +44,7 @@ struct VideoFormat {
   uint32 crop_height;
 };
 
+//TODO: deprecate this after new API landed
 struct VideoDecodeAcceleratorConfig {
   // Deprecated. This config struct is used for decoder only.
   enum DeviceTypeDeprecated {
@@ -53,9 +58,37 @@ struct VideoDecodeAcceleratorConfig {
   uint32 input_pixel_format;
 };
 
-// Next MinVersion: 4
+// Information of the shared memory bitstream buffer.
+struct BitstreamBufferInfo {
+  uint32 bitstream_id;
+  handle ashmem_fd;
+  uint32 offset;
+  uint32 length;
+  uint32 bytes_used;
+};
+
+// Format specification of the picture buffer request.
+struct PictureBufferFormat {
+  uint32 pixel_format;
+  uint32 buffer_size;
+
+  // minimal number of buffers required to process the video.
+  uint32 min_num_buffers;
+  uint32 coded_width;
+  uint32 coded_height;
+};
+
+// Crop information of picture rendering.
+struct CropWindow {
+  uint32 crop_left;
+  uint32 crop_width;
+  uint32 crop_top;
+  uint32 crop_height;
+};
+
+// Next MinVersion: 5
 // Deprecated method IDs: 2, 7
-// Next method ID: 10
+// Next method ID: 15
 interface VideoDecodeAccelerator {
   enum Result {
     SUCCESS = 0,
@@ -66,36 +99,82 @@ interface VideoDecodeAccelerator {
     INSUFFICIENT_RESOURCES = 5,
   };
 
+  //TODO: deprecate this after new API landed
   [MinVersion=2]
-  Initialize@8(VideoDecodeAcceleratorConfig config,
-               VideoDecodeClient client) => (Result result);
+  InitializeDeprecated@8(VideoDecodeAcceleratorConfig config,
+                         VideoDecodeClient client) => (Result result);
 
+  //TODO: deprecate this after new API landed
   BindSharedMemory@1(PortType port, uint32 index, handle ashmem_fd,
                      uint32 offset, uint32 length);
 
+  //TODO: deprecate this after new API landed
   [MinVersion=3]
   BindDmabuf@9(PortType port, uint32 index, handle dmabuf_fd,
                array<VideoFramePlane> planes);
 
+  //TODO: deprecate this after new API landed
   UseBuffer@3(PortType port, uint32 index, BufferMetadata metadata);
 
+  //TODO: deprecate this after new API landed
   SetNumberOfOutputBuffers@4(uint32 number);
 
   Reset@5();
 
   Flush@6();
+
+  [MinVersion=4]
+  Initialize@10(VideoCodecProfile profile,
+                VideoDecodeClient client) => (Result result);
+
+  [MinVersion=4]
+  Decode@11(BitstreamBufferInfo info);
+
+  [MinVersion=4]
+  AssignPictureBuffers@12(uint32 number);
+
+  [MinVersion=4]
+  ImportBufferForPicture@13(uint32 index, handle dmabuf_fd,
+                           array<VideoFramePlane> planes);
+
+  [MinVersion=4]
+  ReusePictureBuffer@14(uint32 index);
 };
 
+// Next MinVersion: 2
 // Deprecated method IDs: 0
-// Next method ID: 6
+// Next method ID: 12
 interface VideoDecodeClient {
+  //TODO: deprecate this after new API landed
   OnError@1(VideoDecodeAccelerator.Result error);
 
+  //TODO: deprecate this after new API landed
   OnBufferDone@2(PortType port, uint32 index, BufferMetadata metadata);
 
+  //TODO: deprecate this after new API landed
   OnResetDone@3();
 
+  //TODO: deprecate this after new API landed
   OnOutputFormatChanged@4(VideoFormat format);
 
+  //TODO: deprecate this after new API landed
   OnFlushDone@5();
+
+  [MinVersion=1]
+  ProvidePictureBuffers@6(PictureBufferFormat format);
+
+  [MinVersion=1]
+  PictureReady@7(uint32 index, uint32 bitstream_id, CropWindow crop_window);
+
+  [MinVersion=1]
+  NotifyEndOfBitstreamBuffer@8(uint32 bitstream_id);
+
+  [MinVersion=1]
+  NotifyResetDone@9();
+
+  [MinVersion=1]
+  NotifyFlushDone@10();
+
+  [MinVersion=1]
+  NotifyError@11(VideoDecodeAccelerator.Result error);
 };
