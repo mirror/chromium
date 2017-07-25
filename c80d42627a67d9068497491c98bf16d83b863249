@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7adf77c9_dc5a1780",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16115,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-25T21:10:22Z",
+      "side": 1,
+      "message": "Nit: upload -\u003e uploading (same for Enabled below)",
+      "range": {
+        "startLine": 16115,
+        "startChar": 11,
+        "endLine": 16115,
+        "endChar": 0
+      },
+      "revId": "c80d42627a67d9068497491c98bf16d83b863249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
