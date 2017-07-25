@@ -64,11 +64,6 @@ namespace edk {
 class ScopedIPCSupport;
 }
 }
-namespace ui {
-class CommandBufferClientImpl;
-class CommandBufferLocal;
-class GpuState;
-}
 namespace net {
 class NetworkChangeNotifierMac;
 namespace internal {
@@ -216,9 +211,6 @@ class BASE_EXPORT ThreadRestrictions {
   friend class android::JavaHandlerThread;
   friend class mojo::SyncCallRestrictions;
   friend class mojo::edk::ScopedIPCSupport;
-  friend class ui::CommandBufferClientImpl;
-  friend class ui::CommandBufferLocal;
-  friend class ui::GpuState;
 
   // END ALLOWED USAGE.
   // BEGIN USAGE THAT NEEDS TO BE FIXED.
