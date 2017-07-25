@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "core/css/properties/CSSShorthandPropertyAPITextDecoration.h"
-#include "core/StylePropertyShorthand.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "platform/RuntimeEnabledFeatures.h"
 

@@ -5,8 +5,8 @@
 #ifndef Deprecation_h
 #define Deprecation_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/frame/UseCounter.h"
 #include "platform/wtf/BitVector.h"
 #include "platform/wtf/Noncopyable.h"

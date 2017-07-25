@@ -24,8 +24,8 @@
 
 #include "core/html/HTMLTableCaptionElement.h"
 
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSPropertyNames.h"
 
 namespace blink {
 

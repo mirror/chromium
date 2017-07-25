@@ -6,8 +6,8 @@
 
 #include <string>
 
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/StyleEngine.h"
 #include "core/frame/FrameTestHelpers.h"

@@ -22,8 +22,8 @@
 
 #include "core/html/HTMLUListElement.h"
 
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSPropertyNames.h"
 
 namespace blink {
 

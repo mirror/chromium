@@ -26,8 +26,8 @@
 #ifndef Serialization_h
 #define Serialization_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/ParserContentPolicy.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"

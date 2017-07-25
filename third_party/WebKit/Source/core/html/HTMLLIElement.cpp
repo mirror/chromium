@@ -22,9 +22,9 @@
 
 #include "core/html/HTMLLIElement.h"
 
-#include "core/CSSPropertyNames.h"
-#include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSPropertyNames.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/dom/LayoutTreeBuilderTraversal.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutListItem.h"

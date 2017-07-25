@@ -5,8 +5,8 @@
 #ifndef PropertyHandle_h
 #define PropertyHandle_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/QualifiedName.h"
 #include "platform/wtf/Allocator.h"
 

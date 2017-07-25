@@ -7,7 +7,7 @@
 #include "bindings/core/v8/IDLTypes.h"
 #include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSSyntaxDescriptor.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/inspector/MainThreadDebugger.h"

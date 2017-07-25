@@ -5,8 +5,8 @@
 #ifndef LengthPropertyFunctions_h
 #define LengthPropertyFunctions_h
 
-#include "core/CSSPropertyNames.h"
-#include "core/CSSValueKeywords.h"
+#include "core/css/CSSPropertyNames.h"
+#include "core/css/CSSValueKeywords.h"
 #include "platform/Length.h"
 #include "platform/wtf/Allocator.h"
 

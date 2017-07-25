@@ -5,7 +5,7 @@
 #ifndef LengthListPropertyFunctions_h
 #define LengthListPropertyFunctions_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "platform/Length.h"
 #include "platform/wtf/Vector.h"
 

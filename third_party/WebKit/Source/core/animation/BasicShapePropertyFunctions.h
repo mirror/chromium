@@ -5,7 +5,7 @@
 #ifndef BasicShapePropertyFunctions_h
 #define BasicShapePropertyFunctions_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/style/BasicShapes.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/wtf/Allocator.h"

@@ -26,8 +26,6 @@
 #ifndef CSSValuePool_h
 #define CSSValuePool_h
 
-#include "core/CSSPropertyNames.h"
-#include "core/CSSValueKeywords.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSColorValue.h"
 #include "core/css/CSSCustomIdentValue.h"
@@ -36,7 +34,9 @@
 #include "core/css/CSSInheritedValue.h"
 #include "core/css/CSSInitialValue.h"
 #include "core/css/CSSPrimitiveValue.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSUnsetValue.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/css/CSSValueList.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/RefPtr.h"

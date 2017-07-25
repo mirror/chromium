@@ -31,8 +31,8 @@
 #ifndef CSSAnimatableValueFactory_h
 #define CSSAnimatableValueFactory_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/animation/animatable/AnimatableValue.h"
+#include "core/css/CSSPropertyNames.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/PassRefPtr.h"
 

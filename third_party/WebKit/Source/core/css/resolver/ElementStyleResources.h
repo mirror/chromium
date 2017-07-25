@@ -24,8 +24,8 @@
 #ifndef ElementStyleResources_h
 #define ElementStyleResources_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/css/CSSPropertyIDTemplates.h"
+#include "core/css/CSSPropertyNames.h"
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/graphics/Color.h"
 #include "platform/heap/Handle.h"

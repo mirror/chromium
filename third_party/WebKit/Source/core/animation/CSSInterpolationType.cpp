@@ -5,7 +5,6 @@
 #include "core/animation/CSSInterpolationType.h"
 
 #include <memory>
-#include "core/StylePropertyShorthand.h"
 #include "core/animation/CSSInterpolationEnvironment.h"
 #include "core/animation/StringKeyframe.h"
 #include "core/css/CSSCustomPropertyDeclaration.h"
@@ -13,6 +12,7 @@
 #include "core/css/CSSVariableReferenceValue.h"
 #include "core/css/ComputedStyleCSSValueMapping.h"
 #include "core/css/PropertyRegistration.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/parser/CSSTokenizer.h"
 #include "core/css/resolver/CSSVariableResolver.h"
 #include "core/css/resolver/StyleBuilder.h"

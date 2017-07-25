@@ -5,7 +5,7 @@
 #ifndef CSSCustomIdentValue_h
 #define CSSCustomIdentValue_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
 #include "platform/wtf/text/AtomicString.h"
 

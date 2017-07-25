@@ -29,8 +29,8 @@
 #include "modules/accessibility/AXLayoutObject.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/CSSPropertyNames.h"
 #include "core/InputTypeNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/AccessibleNode.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/Range.h"

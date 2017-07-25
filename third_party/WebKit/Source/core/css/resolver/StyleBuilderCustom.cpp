@@ -39,10 +39,7 @@
  */
 
 #include <memory>
-#include "core/CSSPropertyNames.h"
-#include "core/CSSValueKeywords.h"
 #include "core/StyleBuilderFunctions.h"
-#include "core/StylePropertyShorthand.h"
 #include "core/animation/css/CSSAnimations.h"
 #include "core/css/CSSCounterValue.h"
 #include "core/css/CSSCursorImageValue.h"
@@ -54,11 +51,14 @@
 #include "core/css/CSSPendingSubstitutionValue.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/CSSPropertyMetadata.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSValueIDMappings.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/css/CSSVariableReferenceValue.h"
 #include "core/css/PropertyRegistration.h"
 #include "core/css/PropertyRegistry.h"
 #include "core/css/StylePropertySet.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/StyleRule.h"
 #include "core/css/resolver/CSSVariableResolver.h"
 #include "core/css/resolver/ElementStyleResources.h"

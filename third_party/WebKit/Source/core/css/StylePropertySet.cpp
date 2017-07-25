@@ -23,11 +23,11 @@
 
 #include "core/css/StylePropertySet.h"
 
-#include "core/StylePropertyShorthand.h"
 #include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPropertyMetadata.h"
 #include "core/css/StylePropertySerializer.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/css/parser/CSSParserContext.h"

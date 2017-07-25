@@ -32,9 +32,9 @@
 #ifndef EditingStyle_h
 #define EditingStyle_h
 
-#include "core/CSSPropertyNames.h"
-#include "core/CSSValueKeywords.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/editing/Position.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/WritingDirection.h"

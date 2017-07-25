@@ -5,11 +5,11 @@
 #ifndef LegacyStyleInterpolation_h
 #define LegacyStyleInterpolation_h
 
-#include "core/CSSPropertyNames.h"
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/animation/Interpolation.h"
 #include "core/animation/PropertyHandle.h"
-#include <memory>
+#include "core/css/CSSPropertyNames.h"
 
 namespace blink {
 
