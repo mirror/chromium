@@ -281,29 +281,33 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
 }
 
 void URLLoaderImpl::ReadMore() {
-  DCHECK(!pending_write_.get());
-
-  uint32_t num_bytes;
-  // TODO: we should use the abstractions in MojoAsyncResourceHandler.
-  MojoResult result = NetToMojoPendingBuffer::BeginWrite(
-      &response_body_stream_, &pending_write_, &num_bytes);
-  if (result == MOJO_RESULT_SHOULD_WAIT) {
-    // The pipe is full. We need to wait for it to have more space.
-    writable_handle_watcher_.ArmOrNotify();
-    return;
-  } else if (result != MOJO_RESULT_OK) {
-    // The response body stream is in a bad state. Bail.
-    // TODO: How should this be communicated to our client?
-    writable_handle_watcher_.Cancel();
-    response_body_stream_.reset();
-    DeleteIfNeeded();
-    return;
+  if (!pending_write_.get()) {
+    // TODO: we should use the abstractions in MojoAsyncResourceHandler.
+    MojoResult result = NetToMojoPendingBuffer::BeginWrite(
+        &response_body_stream_, &pending_write_, &pending_buffer_size_);
+    CHECK_GT(static_cast<uint32_t>(std::numeric_limits<int>::max()),
+             pending_buffer_size_);
+    pending_buffer_read_ = 0;
+    if (result == MOJO_RESULT_SHOULD_WAIT) {
+      // The pipe is full. We need to wait for it to have more space.
+      writable_handle_watcher_.ArmOrNotify();
+      return;
+    } else if (result != MOJO_RESULT_OK) {
+      // The response body stream is in a bad state. Bail.
+      // TODO: How should this be communicated to our client?
+      writable_handle_watcher_.Cancel();
+      response_body_stream_.reset();
+      DeleteIfNeeded();
+      return;
+    }
   }
 
-  CHECK_GT(static_cast<uint32_t>(std::numeric_limits<int>::max()), num_bytes);
-  scoped_refptr<net::IOBuffer> buf(new NetToMojoIOBuffer(pending_write_.get()));
+  scoped_refptr<net::IOBuffer> buf(
+      new NetToMojoIOBuffer(pending_write_.get(), pending_buffer_read_));
   int bytes_read;
-  url_request_->Read(buf.get(), static_cast<int>(num_bytes), &bytes_read);
+  url_request_->Read(
+      buf.get(), static_cast<int>(pending_buffer_size_ - pending_buffer_read_),
+      &bytes_read);
   if (url_request_->status().is_io_pending()) {
     // Wait for OnReadCompleted.
   } else if (url_request_->status().is_success() && bytes_read > 0) {
@@ -319,27 +323,31 @@ void URLLoaderImpl::ReadMore() {
 }
 
 void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
+  pending_buffer_read_ += num_bytes;
   DCHECK(url_request_->status().is_success());
+  bool complete_read = true;
   if (consumer_handle_.is_valid()) {
     const std::string& type_hint = response_->head.mime_type;
     std::string new_type;
     bool made_final_decision =
-        net::SniffMimeType(pending_write_->buffer(), num_bytes,
+        net::SniffMimeType(pending_write_->buffer(), pending_buffer_read_,
                            url_request_->url(), type_hint, &new_type);
     // SniffMimeType() returns false if there is not enough data to determine
     // the mime type. However, even if it returns false, it returns a new type
     // that is probably better than the current one.
     response_->head.mime_type.assign(new_type);
 
-    if (!made_final_decision) {
-      // TODO: handle case where the initial read didn't have enough bytes.
-      // http://crbug.com/746144
-      LOG(ERROR) << "URLLoaderImpl couldn't make final sniffing decision.";
+    if (made_final_decision) {
+      SendResponseToClient();
+    } else {
+      complete_read = false;
     }
-    SendResponseToClient();
   }
-  response_body_stream_ = pending_write_->Complete(num_bytes);
-  pending_write_ = nullptr;
+
+  if (complete_read) {
+    response_body_stream_ = pending_write_->Complete(pending_buffer_read_);
+    pending_write_ = nullptr;
+  }
   if (completed_synchronously) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
