@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c38b1d_99185242",
+        "filename": "tools/resources/generate_resource_whitelist.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-07-25T12:23:12Z",
+      "side": 1,
+      "message": "nit: redundant \u0027//tools/resources/\u0027",
+      "revId": "01262dd6b260c347841d259519e2ca371c5adb5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
