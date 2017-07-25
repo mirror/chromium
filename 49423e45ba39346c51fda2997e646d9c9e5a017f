@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76fa7785_07bd0b83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-25T19:56:10Z",
+      "side": 1,
+      "message": "Done\n\nThis part is no longer needed.",
+      "parentUuid": "0ab67f1d_c3597f2e",
+      "range": {
+        "startLine": 667,
+        "startChar": 12,
+        "endLine": 667,
+        "endChar": 30
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e29dec6_cb2cee1d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T21:59:46Z",
       "side": 1,
       "message": "This can have unintended consequences. For example, if we don\u0027t set isCustomTabIntent, we will treat the new tab differently for instant apps handling in terms of dispatching. What should happen if the URL matches an instant app? Did you look through other uses of these variables?",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb73faa9_2c26f484",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-25T19:56:10Z",
+      "side": 1,
+      "message": "If it\u0027s isReaderModeCreatedIntent, the URL should be chrome-distiller://, and this shouldn\u0027t have conflict with other use cases.",
+      "parentUuid": "0e29dec6_cb2cee1d",
       "range": {
         "startLine": 151,
         "startChar": 36,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4a470017_59a682c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/DomDistillerTabUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-25T19:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "645f1e69_d2c4d275",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04876abc_89e58856",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-21T17:15:29Z",
       "side": 1,
       "message": "See the way we create the custom tabs intents for all other UI_TYPEs in CustomTabIntentDataProvider.\n\n\nI think it would be great if we can follow a similar pattern instead of using an explicit intent to CUstomTabActivity here. (Then you wont really need things like isCustomTab etc as well(Because ChromeActivity has isCustomTab())). Maybe that will need us to combine with your other CL that adds the UI_TYPE?\n \n- For creating the intent you use a CustomTabsIntent.Builder and then rather than adding new extras, you can just rely on the UI_Type inside the CustomTabIntentDataProvider. instead of isReaderModeCreatedIntent, we can have a isReaderModeUI that goes nicely with isInfoPage, isMediaViewer in the same class.",
+      "range": {
+        "startLine": 484,
+        "startChar": 15,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30a23ab_334b86d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-25T19:56:10Z",
+      "side": 1,
+      "message": "Moved to the builder style, but I\u0027ll leave EXTRA_READER_MODE_PARENT as an extra.\n\nisReaderModeCreatedIntent is the other way around. It\u0027s for the intent FROM reader mode CCT to the regular chrome.",
+      "parentUuid": "04876abc_89e58856",
       "range": {
         "startLine": 484,
         "startChar": 15,
