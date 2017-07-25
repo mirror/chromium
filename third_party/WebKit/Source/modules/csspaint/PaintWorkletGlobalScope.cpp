@@ -19,8 +19,6 @@
 
 namespace blink {
 
-static DocumentPaintDefinition* kInvalidDocumentDefinition = nullptr;
-
 // static
 PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
     LocalFrame* frame,
@@ -215,11 +213,11 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
   if (document_definition_map.Contains(name)) {
     DocumentPaintDefinition* existing_document_definition =
         document_definition_map.at(name);
-    if (existing_document_definition == kInvalidDocumentDefinition)
+    if (!existing_document_definition)
       return;
     if (!existing_document_definition->RegisterAdditionalPaintDefinition(
             *definition)) {
-      document_definition_map.Set(name, kInvalidDocumentDefinition);
+      document_definition_map.Set(name, nullptr);
       exception_state.ThrowDOMException(
           kNotSupportedError,
           "A class with name:'" + name +

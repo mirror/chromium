@@ -13,8 +13,6 @@
 
 namespace blink {
 
-static const DocumentPaintDefinition* kInvalidDocumentDefinition = nullptr;
-
 // static
 PaintWorklet* PaintWorklet::Create(LocalFrame* frame) {
   return new PaintWorklet(frame);
@@ -40,9 +38,7 @@ RefPtr<Image> PaintWorklet::Paint(const String& name,
     return nullptr;
 
   // Check if the existing document definition is valid or not.
-  DocumentPaintDefinition* document_definition =
-      document_definition_map_.at(name);
-  if (document_definition == kInvalidDocumentDefinition)
+  if (!document_definition_map_.at(name))
     return nullptr;
 
   PaintWorkletGlobalScopeProxy* proxy =
