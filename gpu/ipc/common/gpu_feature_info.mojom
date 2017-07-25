@@ -20,4 +20,8 @@ struct GpuFeatureInfo {
   // array should be gpu::NUMBER_OF_GPU_FEATURE_TYPES. This is enforced during
   // deserialization.
   array<GpuFeatureStatus> status_values;
+
+  array<uint32> enabled_gpu_driver_bug_workarounds;
+
+  string disabled_extensions;
 };
