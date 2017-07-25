@@ -114,6 +114,30 @@
       "revId": "a07405c99dd1bececb41054ed149481f5101b241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a737c195_97950deb",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T15:31:09Z",
+      "side": 1,
+      "message": "+1. Maybe we could have a return type of (Account primary_account, array\u003cAccount\u003e secondary_accounts)",
+      "parentUuid": "a9852e65_e631fc74",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
