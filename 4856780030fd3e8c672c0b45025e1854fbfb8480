@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17406710_48b141ad",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-25T08:23:23Z",
+      "side": 1,
+      "message": "could you add a comment of this method and mention that this method is same interface with Labal::SizeToFit?",
+      "revId": "4856780030fd3e8c672c0b45025e1854fbfb8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
