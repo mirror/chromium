@@ -16,6 +16,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
+#include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/config/gpu_blacklist.h"
 #include "gpu/config/gpu_crash_keys.h"
 #include "gpu/config/gpu_driver_bug_list.h"
@@ -201,6 +202,37 @@ GpuFeatureInfo GetGpuFeatureInfo(const GPUInfo& gpu_info,
   // Currently only used for GPU rasterization.
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] =
       GetGpuRasterizationFeatureStatus(blacklisted_features, command_line);
+
+  std::vector<base::StringPiece> command_line_disabled_extensions =
+      base::SplitStringPiece(
+          command_line.GetSwitchValueASCII(switches::kDisableGLExtensions),
+          ", ;", base::KEEP_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+  std::set<base::StringPiece> all_disabled_extensions;
+  all_disabled_extensions.insert(command_line_disabled_extensions.begin(),
+                                 command_line_disabled_extensions.end());
+
+  std::set<int> enabled_driver_bug_workarounds;
+  if (!command_line.HasSwitch(switches::kDisableGpuDriverBugWorkarounds)) {
+    std::unique_ptr<gpu::GpuDriverBugList> list(GpuDriverBugList::Create());
+    enabled_driver_bug_workarounds =
+        list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
+    gpu::GpuDriverBugList::AppendWorkaroundsFromCommandLine(
+        &enabled_driver_bug_workarounds, command_line);
+
+    std::vector<std::string> driver_bug_disabled_extensions =
+        list->GetDisabledExtensions();
+    all_disabled_extensions.insert(driver_bug_disabled_extensions.begin(),
+                                   driver_bug_disabled_extensions.end());
+  }
+
+  gpu_feature_info.enabled_gpu_driver_bug_workarounds.insert(
+      gpu_feature_info.enabled_gpu_driver_bug_workarounds.begin(),
+      enabled_driver_bug_workarounds.begin(),
+      enabled_driver_bug_workarounds.end());
+  gpu_feature_info.disabled_extensions = base::JoinString(
+      std::vector<base::StringPiece>(all_disabled_extensions.begin(),
+                                     all_disabled_extensions.end()),
+      " ");
 
   return gpu_feature_info;
 }

@@ -245,22 +245,10 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line) {
   CollectGraphicsInfo(gpu_info_);
   if (gpu_info_.context_info_state == gpu::kCollectInfoFatalFailure)
     return false;
-
-  // Recompute gpu driver bug workarounds.
-  // This is necessary on systems where vendor_id/device_id aren't available
-  // (Chrome OS, Android) or where workarounds may be dependent on GL_VENDOR
-  // and GL_RENDERER strings which are lazily computed (Linux).
-  if (!command_line.HasSwitch(switches::kDisableGpuDriverBugWorkarounds)) {
-    // TODO: this can not affect disabled extensions, since they're already
-    // initialized in the bindings. This should be moved before bindings
-    // initialization. However, populating GPUInfo fully works only on Android.
-    // Other platforms would need the bindings to query GL strings.
-    gpu::ApplyGpuDriverBugWorkarounds(
-        gpu_info_, const_cast<base::CommandLine*>(&command_line));
   }
 #endif  // !defined(OS_MACOSX)
-
   gpu_feature_info_ = gpu::GetGpuFeatureInfo(gpu_info_, command_line);
+  // TODO(zmo): Apply disabled extensions to GL bindings.
 
   base::TimeDelta collect_context_time =
       base::TimeTicks::Now() - before_collect_context_graphics_info;
