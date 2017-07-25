@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
@@ -45,6 +46,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/message_center_style.h"
+#include "ui/message_center/message_center_switches.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/note_taking_helper.h"
@@ -192,9 +194,10 @@ DownloadItemNotification::DownloadItemNotification(
       gfx::Image(),      // icon
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kDownloadNotificationNotifierId),
-      base::string16(),                    // display_source
-      GURL(kDownloadNotificationOrigin),   // origin_url
-      base::UintToString(item_->GetId()),  // tag
+      l10n_util::GetStringUTF16(
+          IDS_DOWNLOAD_NOTIFICATION_DISPLAY_SOURCE),  // display_source
+      GURL(kDownloadNotificationOrigin),              // origin_url
+      base::UintToString(item_->GetId()),             // tag
       rich_notification_data, watcher()));
 
   notification_->set_progress(0);
@@ -367,8 +370,22 @@ void DownloadItemNotification::UpdateNotificationData(
   DownloadItemModel model(item_);
   DownloadCommands command(item_);
 
+  bool new_style_notification_enabled = false;
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableMessageCenterNewStyleNotification)) {
+    new_style_notification_enabled = true;
+  } else if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+                 switches::kDisableMessageCenterNewStyleNotification)) {
+    new_style_notification_enabled = false;
+  }
+
   notification_->set_title(GetTitle());
-  notification_->set_message(GetStatusString());
+  if (new_style_notification_enabled) {
+    notification_->set_message(GetSubStatusString());
+    notification_->set_status(GetStatusString(/* short_form = */ true));
+  } else {
+    notification_->set_message(GetStatusString(/* short_form = */ false));
+  }
 
   if (item_->IsDangerous()) {
     notification_->set_type(message_center::NOTIFICATION_TYPE_BASE_FORMAT);
@@ -832,7 +849,55 @@ base::string16 DownloadItemNotification::GetInProgressSubStatusString() const {
   return l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_STARTING);
 }
 
-base::string16 DownloadItemNotification::GetStatusString() const {
+base::string16 DownloadItemNotification::GetSubStatusString() const {
+  if (item_->IsDangerous())
+    return base::string16();
+
+  DownloadItemModel model(item_);
+  switch (item_->GetState()) {
+    case content::DownloadItem::IN_PROGRESS:
+      // The download is a CRX (app, extension, theme, ...) and it is being
+      // unpacked and validated.
+      if (item_->AllDataSaved() &&
+          download_crx_util::IsExtensionDownload(*item_)) {
+        return l10n_util::GetStringUTF16(
+            IDS_DOWNLOAD_STATUS_CRX_INSTALL_RUNNING);
+      } else {
+        return GetInProgressSubStatusString();
+      }
+      break;
+    case content::DownloadItem::COMPLETE:
+      // If the file has been removed: Removed
+      if (item_->GetFileExternallyRemoved())
+        return l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_REMOVED);
+      break;
+    case content::DownloadItem::CANCELLED:
+      // "Cancelled"
+      return l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_CANCELLED);
+      break;
+    case content::DownloadItem::INTERRUPTED: {
+      content::DownloadInterruptReason reason = item_->GetLastReason();
+      if (reason != content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED) {
+        // "Failed - <REASON>"
+        base::string16 interrupt_reason = model.GetInterruptReasonText();
+        DCHECK(!interrupt_reason.empty());
+        return l10n_util::GetStringFUTF16(IDS_DOWNLOAD_STATUS_INTERRUPTED,
+                                          interrupt_reason);
+      } else {
+        // Same as DownloadItem::CANCELLED.
+        return l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_CANCELLED);
+      }
+      break;
+    }
+    default:
+      NOTREACHED();
+  }
+
+  return base::string16();
+}
+
+base::string16 DownloadItemNotification::GetStatusString(
+    bool short_form) const {
   if (item_->IsDangerous())
     return GetWarningStatusString();
 
@@ -840,8 +905,6 @@ base::string16 DownloadItemNotification::GetStatusString() const {
   base::string16 host_name = url_formatter::FormatUrlForSecurityDisplay(
       item_->GetURL(), url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS);
 
-  DownloadItemModel model(item_);
-  base::string16 sub_status_text;
   bool show_size_ratio = true;
   switch (item_->GetState()) {
     case content::DownloadItem::IN_PROGRESS:
@@ -850,18 +913,12 @@ base::string16 DownloadItemNotification::GetStatusString() const {
       if (item_->AllDataSaved() &&
           download_crx_util::IsExtensionDownload(*item_)) {
         show_size_ratio = false;
-        sub_status_text =
-            l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_CRX_INSTALL_RUNNING);
-      } else {
-        sub_status_text = GetInProgressSubStatusString();
       }
       break;
     case content::DownloadItem::COMPLETE:
       // If the file has been removed: Removed
       if (item_->GetFileExternallyRemoved()) {
         show_size_ratio = false;
-        sub_status_text =
-            l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_REMOVED);
       } else {
         // Otherwise, the download should be completed.
         // "3.4 MB from example.com"
@@ -870,29 +927,11 @@ base::string16 DownloadItemNotification::GetStatusString() const {
             IDS_DOWNLOAD_NOTIFICATION_STATUS_COMPLETED, size, host_name);
       }
       break;
-    case content::DownloadItem::CANCELLED:
-      // "Cancelled"
-      sub_status_text =
-          l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_CANCELLED);
-      break;
-    case content::DownloadItem::INTERRUPTED: {
-      content::DownloadInterruptReason reason = item_->GetLastReason();
-      if (reason != content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED) {
-        // "Failed - <REASON>"
-        base::string16 interrupt_reason = model.GetInterruptReasonText();
-        DCHECK(!interrupt_reason.empty());
-        sub_status_text = l10n_util::GetStringFUTF16(
-            IDS_DOWNLOAD_STATUS_INTERRUPTED, interrupt_reason);
-      } else {
-        // Same as DownloadItem::CANCELLED.
-        sub_status_text =
-            l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_CANCELLED);
-      }
-      break;
-    }
     default:
-      NOTREACHED();
+      break;
   }
+
+  DownloadItemModel model(item_);
 
   // Indication of progress (E.g.:"100/200 MB" or "100 MB"), or just the
   // received bytes if the |show_size_ratio| flag is false.
@@ -900,9 +939,16 @@ base::string16 DownloadItemNotification::GetStatusString() const {
       show_size_ratio ? model.GetProgressSizesString() :
                         ui::FormatBytes(item_->GetReceivedBytes());
 
-  // Download is not completed yet: "3.4/5.6 MB, <SUB STATUS>\nFrom example.com"
-  return l10n_util::GetStringFUTF16(
-      IDS_DOWNLOAD_NOTIFICATION_STATUS, size, sub_status_text, host_name);
+  if (short_form) {
+    return l10n_util::GetStringFUTF16(IDS_DOWNLOAD_NOTIFICATION_STATUS_SHORT,
+                                      size, host_name);
+  } else {
+    base::string16 sub_status_text = GetSubStatusString();
+    // Download is not completed yet: "3.4/5.6 MB, <SUB STATUS>\nFrom
+    // example.com"
+    return l10n_util::GetStringFUTF16(IDS_DOWNLOAD_NOTIFICATION_STATUS, size,
+                                      sub_status_text, host_name);
+  }
 }
 
 Browser* DownloadItemNotification::GetBrowser() const {
