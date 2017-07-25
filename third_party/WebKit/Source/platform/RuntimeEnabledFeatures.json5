@@ -384,9 +384,6 @@
       name: "DocumentWrite",
     },
     {
-      name: "DocumentWriteEvaluator",
-    },
-    {
       name: "DOMConvenienceAPI",
       status: "stable",
     },
