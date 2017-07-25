@@ -444,6 +444,30 @@
     },
     {
       "key": {
+        "uuid": "d3410a18_ef95df8e",
+        "filename": "components/safe_browsing_db/v4_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-25T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dff970f4_1d8847c5",
+      "range": {
+        "startLine": 420,
+        "startChar": 20,
+        "endLine": 420,
+        "endChar": 40
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44a78fa6_6b4c9b5c",
         "filename": "components/safe_browsing_db/v4_update_protocol_manager.cc",
         "patchSetId": 8
