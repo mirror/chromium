@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f1857af_bcea698f",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T13:44:04Z",
+      "side": 1,
+      "message": "don\u0027t we need full root render pass damage for these filters to work correctly? ie. no need for a union or transform just: damage_rect \u003d full_damage;\n\nthere seem to be some code below to handle this at l.746. how is the related and why doesn\u0027t that do what we need?",
+      "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
