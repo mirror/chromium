@@ -87,7 +87,6 @@ class AutofillPopupLayoutModelTest : public ChromeRenderViewHostTestHarness {
 
 }  // namespace
 
-#if !defined(OS_ANDROID)
 TEST_F(AutofillPopupLayoutModelTest, RowWidthWithoutText) {
   int base_size =
       AutofillPopupLayoutModel::kEndPadding * 2 + kPopupBorderThickness * 2;
@@ -114,6 +113,5 @@ TEST_F(AutofillPopupLayoutModelTest, RowWidthWithoutText) {
                 layout_model()->GetIconImage(4).width(),
             layout_model()->RowWidthWithoutText(4, /* with_label= */ true));
 }
-#endif
 
 }  // namespace autofill
