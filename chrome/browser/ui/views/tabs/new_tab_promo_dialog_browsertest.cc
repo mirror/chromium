@@ -6,6 +6,8 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
+#include "chrome/grit/generated_resources.h"
+#include "ui/base/l10n/l10n_util.h"
 
 class NewTabPromoDialogTest : public DialogBrowserTest {
  public:
@@ -23,8 +25,8 @@ class NewTabPromoDialogTest : public DialogBrowserTest {
 };
 
 // Test that calls ShowDialog("default"). Interactive when run via
-// browser_tests --gtest_filter=BrowserDialogTest.Invoke --interactive
-// --dialog=NewTabPromoDialogTest.InvokeDialog_NewTabPromo
+// out/Default/browser_tests --gtest_filter=BrowserDialogTest.Invoke
+// --interactive --dialog=NewTabPromoDialogTest.InvokeDialog_NewTabPromo
 IN_PROC_BROWSER_TEST_F(NewTabPromoDialogTest, InvokeDialog_NewTabPromo) {
   RunDialog();
 }
