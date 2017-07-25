@@ -5,7 +5,7 @@
 #ifndef CSSVariableResolver_h
 #define CSSVariableResolver_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/parser/CSSParserToken.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/text/AtomicString.h"

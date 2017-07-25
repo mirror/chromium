@@ -5,7 +5,6 @@
 #include "core/css/parser/CSSPropertyParser.h"
 
 #include <memory>
-#include "core/StylePropertyShorthand.h"
 #include "core/css/CSSBasicShapeValues.h"
 #include "core/css/CSSContentDistributionValue.h"
 #include "core/css/CSSCursorImageValue.h"
@@ -29,6 +28,7 @@
 #include "core/css/CSSValuePair.h"
 #include "core/css/CSSVariableReferenceValue.h"
 #include "core/css/HashTools.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/parser/CSSParserFastPaths.h"
 #include "core/css/parser/CSSParserIdioms.h"
 #include "core/css/parser/CSSParserLocalContext.h"

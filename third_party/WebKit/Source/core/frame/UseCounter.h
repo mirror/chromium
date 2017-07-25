@@ -26,8 +26,8 @@
 #ifndef UseCounter_h
 #define UseCounter_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/parser/CSSParserMode.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/HeapAllocator.h"

@@ -31,8 +31,8 @@
 #ifndef StyleBuilder_h
 #define StyleBuilder_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {

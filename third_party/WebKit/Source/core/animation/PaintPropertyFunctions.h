@@ -5,7 +5,7 @@
 #ifndef PaintPropertyFunctions_h
 #define PaintPropertyFunctions_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 
 namespace blink {
 

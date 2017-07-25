@@ -4,7 +4,7 @@
 
 #include "core/css/properties/CSSShorthandPropertyAPIPadding.h"
 
-#include "core/StylePropertyShorthand.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
 namespace blink {

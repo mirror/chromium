@@ -23,8 +23,8 @@
 #include "core/html/HTMLPlugInElement.h"
 
 #include "bindings/core/v8/ScriptController.h"
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
 #include "core/dom/ShadowRoot.h"

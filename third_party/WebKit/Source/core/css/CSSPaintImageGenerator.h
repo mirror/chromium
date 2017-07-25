@@ -5,8 +5,8 @@
 #ifndef CSSPaintImageGenerator_h
 #define CSSPaintImageGenerator_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/heap/Handle.h"

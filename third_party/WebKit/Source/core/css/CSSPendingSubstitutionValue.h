@@ -5,7 +5,7 @@
 #ifndef CSSPendingSubstitutionValue_h
 #define CSSPendingSubstitutionValue_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
 #include "core/css/CSSVariableReferenceValue.h"
 

@@ -25,8 +25,8 @@
 
 #include "core/html/forms/DateTimeNumericFieldElement.h"
 
-#include "core/CSSPropertyNames.h"
-#include "core/CSSValueKeywords.h"
+#include "core/css/CSSPropertyNames.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/events/KeyboardEvent.h"
 #include "platform/fonts/Font.h"
 #include "platform/text/PlatformLocale.h"

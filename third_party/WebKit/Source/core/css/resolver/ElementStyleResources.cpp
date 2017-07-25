@@ -23,9 +23,9 @@
 
 #include "core/css/resolver/ElementStyleResources.h"
 
-#include "core/CSSPropertyNames.h"
 #include "core/css/CSSGradientValue.h"
 #include "core/css/CSSImageValue.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSURIValue.h"
 #include "core/dom/Document.h"
 #include "core/style/ComputedStyle.h"

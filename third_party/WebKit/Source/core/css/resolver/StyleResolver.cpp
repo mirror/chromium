@@ -30,10 +30,8 @@
 
 #include "core/css/resolver/StyleResolver.h"
 
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
 #include "core/MediaTypeNames.h"
-#include "core/StylePropertyShorthand.h"
 #include "core/animation/CSSInterpolationEnvironment.h"
 #include "core/animation/CSSInterpolationTypesMap.h"
 #include "core/animation/ElementAnimations.h"
@@ -51,6 +49,7 @@
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSKeyframeRule.h"
 #include "core/css/CSSKeyframesRule.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSReflectValue.h"
 #include "core/css/CSSRuleList.h"
 #include "core/css/CSSSelector.h"
@@ -61,6 +60,7 @@
 #include "core/css/MediaQueryEvaluator.h"
 #include "core/css/PageRuleCollector.h"
 #include "core/css/StylePropertySet.h"
+#include "core/css/StylePropertyShorthand.h"
 #include "core/css/StyleRuleImport.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/css/resolver/AnimatedStyleBuilder.h"

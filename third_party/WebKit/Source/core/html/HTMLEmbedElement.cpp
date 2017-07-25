@@ -24,8 +24,8 @@
 
 #include "core/html/HTMLEmbedElement.h"
 
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ShadowRoot.h"

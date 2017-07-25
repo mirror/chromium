@@ -23,10 +23,11 @@
 #ifndef StyleResolverState_h
 #define StyleResolverState_h
 
-#include "core/CSSPropertyNames.h"
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/animation/css/CSSAnimationUpdate.h"
 #include "core/css/CSSPendingSubstitutionValue.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSToLengthConversionData.h"
 #include "core/css/resolver/CSSToStyleMap.h"
 #include "core/css/resolver/ElementResolveContext.h"
@@ -36,7 +37,6 @@
 #include "core/dom/Element.h"
 #include "core/style/CachedUAStyle.h"
 #include "core/style/ComputedStyle.h"
-#include <memory>
 
 namespace blink {
 

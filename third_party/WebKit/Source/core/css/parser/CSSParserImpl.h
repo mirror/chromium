@@ -6,8 +6,8 @@
 #define CSSParserImpl_h
 
 #include <memory>
-#include "core/CSSPropertyNames.h"
 #include "core/css/CSSProperty.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSPropertySourceData.h"
 #include "core/css/StylePropertySet.h"
 #include "core/css/parser/CSSParserTokenRange.h"

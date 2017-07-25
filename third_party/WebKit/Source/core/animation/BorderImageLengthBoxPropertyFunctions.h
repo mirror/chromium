@@ -5,7 +5,7 @@
 #ifndef BorderImageLengthBoxPropertyFunctions_h
 #define BorderImageLengthBoxPropertyFunctions_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {

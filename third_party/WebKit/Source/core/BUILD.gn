@@ -640,36 +640,35 @@ code_generator("make_core_generated_css_property_apis") {
   ]
 }
 
-css_properties("make_core_generated_css_property_names") {
-  script = "../build/scripts/make_css_property_names.py"
-  other_inputs = [ "../build/scripts/templates/CSSPropertyNames.h.tmpl" ]
+code_generator("make_core_generated_css_property_names") {
+  script = "../build/scripts/core/css/make_css_property_names.py"
+  json_inputs = [ "css/CSSProperties.json5" ]
+  templates = [ "../build/scripts/core/css/templates/CSSPropertyNames.h.tmpl" ]
   outputs = [
-    "$blink_core_output_dir/CSSPropertyNames.cpp",
-    "$blink_core_output_dir/CSSPropertyNames.h",
+    "$blink_core_output_dir/css/CSSPropertyNames.cpp",
+    "$blink_core_output_dir/css/CSSPropertyNames.h",
   ]
 }
 
-process_in_files("make_core_generated_media_features") {
-  script = "../build/scripts/make_media_features.py"
-  in_files = [ "css/MediaFeatureNames.json5" ]
-  other_inputs = [
-    "../build/scripts/make_media_features.py",
-    "../build/scripts/templates/MediaFeatures.h.tmpl",
-  ]
+code_generator("make_core_generated_media_features") {
+  script = "../build/scripts/core/css/make_media_features.py"
+  json_inputs = [ "css/MediaFeatureNames.json5" ]
+  templates = [ "../build/scripts/core/css/templates/MediaFeatures.h.tmpl" ]
   outputs = [
-    "$blink_core_output_dir/MediaFeatures.h",
+    "$blink_core_output_dir/css/MediaFeatures.h",
   ]
 }
 
-css_properties("make_core_generated_style_property_shorthand") {
-  script = "../build/scripts/make_style_shorthands.py"
-  other_inputs = [
-    "../build/scripts/templates/StylePropertyShorthand.cpp.tmpl",
-    "../build/scripts/templates/StylePropertyShorthand.h.tmpl",
+code_generator("make_core_generated_style_property_shorthand") {
+  script = "../build/scripts/core/css/make_style_shorthands.py"
+  json_inputs = [ "css/CSSProperties.json5" ]
+  templates = [
+    "../build/scripts/core/css/templates/StylePropertyShorthand.cpp.tmpl",
+    "../build/scripts/core/css/templates/StylePropertyShorthand.h.tmpl",
   ]
   outputs = [
-    "$blink_core_output_dir/StylePropertyShorthand.cpp",
-    "$blink_core_output_dir/StylePropertyShorthand.h",
+    "$blink_core_output_dir/css/StylePropertyShorthand.cpp",
+    "$blink_core_output_dir/css/StylePropertyShorthand.h",
   ]
 }
 
@@ -700,24 +699,26 @@ code_generator("make_core_generated_cssom_types") {
   ]
 }
 
-css_properties("make_core_generated_css_property_metadata") {
-  script = "../build/scripts/make_css_property_metadata.py"
-  other_inputs = [ "../build/scripts/templates/CSSPropertyMetadata.cpp.tmpl" ]
+code_generator("make_core_generated_css_property_metadata") {
+  script = "../build/scripts/core/css/make_css_property_metadata.py"
+  json_inputs = [ "css/CSSProperties.json5" ]
+  templates =
+      [ "../build/scripts/core/css/templates/CSSPropertyMetadata.cpp.tmpl" ]
   outputs = [
-    "$blink_core_output_dir/CSSPropertyMetadata.cpp",
+    "$blink_core_output_dir/css/CSSPropertyMetadata.cpp",
   ]
 }
 
-process_in_files("make_core_generated_css_value_keywords") {
-  script = "../build/scripts/make_css_value_keywords.py"
-
-  in_files = [
+code_generator("make_core_generated_css_value_keywords") {
+  script = "../build/scripts/core/css/make_css_value_keywords.py"
+  json_inputs = [
     "css/CSSValueKeywords.json5",
     "css/SVGCSSValueKeywords.json5",
   ]
+  templates = []
   outputs = [
-    "$blink_core_output_dir/CSSValueKeywords.cpp",
-    "$blink_core_output_dir/CSSValueKeywords.h",
+    "$blink_core_output_dir/css/CSSValueKeywords.cpp",
+    "$blink_core_output_dir/css/CSSValueKeywords.h",
   ]
   other_args = [
     "--gperf",
@@ -794,12 +795,12 @@ make_event_factory("make_core_generated_event_factory") {
 # make_names -------------------------------------------------------------------
 
 process_in_files("make_core_generated_media_feature_names") {
-  script = "../build/scripts/make_media_feature_names.py"
+  script = "../build/scripts/core/css/make_media_feature_names.py"
   in_files = [ "css/MediaFeatureNames.json5" ]
   other_inputs = make_names_files
   outputs = [
-    "$blink_core_output_dir/MediaFeatureNames.cpp",
-    "$blink_core_output_dir/MediaFeatureNames.h",
+    "$blink_core_output_dir/css/MediaFeatureNames.cpp",
+    "$blink_core_output_dir/css/MediaFeatureNames.h",
   ]
 }
 

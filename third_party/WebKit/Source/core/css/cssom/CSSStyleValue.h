@@ -5,8 +5,8 @@
 #ifndef CSSStyleValue_h
 #define CSSStyleValue_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/text/WTFString.h"

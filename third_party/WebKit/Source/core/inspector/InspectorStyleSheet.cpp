@@ -28,11 +28,11 @@
 #include <algorithm>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptRegexp.h"
-#include "core/CSSPropertyNames.h"
 #include "core/css/CSSImportRule.h"
 #include "core/css/CSSKeyframeRule.h"
 #include "core/css/CSSKeyframesRule.h"
 #include "core/css/CSSMediaRule.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/CSSRuleList.h"
 #include "core/css/CSSStyleRule.h"
 #include "core/css/CSSStyleSheet.h"

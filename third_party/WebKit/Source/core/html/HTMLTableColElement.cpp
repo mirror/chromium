@@ -25,8 +25,8 @@
 #include "core/html/HTMLTableColElement.h"
 
 #include <algorithm>
-#include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/html/HTMLTableCellElement.h"
 #include "core/html/HTMLTableElement.h"
 #include "core/html/TableConstants.h"

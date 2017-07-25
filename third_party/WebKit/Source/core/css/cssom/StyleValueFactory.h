@@ -5,7 +5,7 @@
 #ifndef StyleValueFactory_h
 #define StyleValueFactory_h
 
-#include "core/CSSPropertyNames.h"
+#include "core/css/CSSPropertyNames.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "platform/wtf/Allocator.h"
 
