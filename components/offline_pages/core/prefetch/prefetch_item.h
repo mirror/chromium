@@ -27,6 +27,7 @@ struct PrefetchItem {
 
   bool operator==(const PrefetchItem& other) const;
   bool operator!=(const PrefetchItem& other) const;
+  bool operator<(const PrefetchItem& other) const;
 
   // Primary key that stays consistent between prefetch item, request and
   // offline page.
@@ -53,7 +54,14 @@ struct PrefetchItem {
   GURL final_archived_url;
 
   // Number of times an attempt was made to generate an archive for this item.
-  int request_archive_attempt_count = 0;
+  int generate_bundle_attempts = 0;
+
+  // Number of times an attempt was made to get information about archive
+  // generation operation for this item.
+  int get_operation_attempts = 0;
+
+  // Number of times an attempt was made to download the archive for this item.
+  int download_operation_attempts = 0;
 
   // Name used to identify the archiving operation being executed by the
   // prefetching service for processing this item's URL. It is used as the
