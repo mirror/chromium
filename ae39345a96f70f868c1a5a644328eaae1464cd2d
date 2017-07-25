@@ -55,6 +55,41 @@
     },
     {
       "key": {
+        "uuid": "2754a2d1_5c28a3cd",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-25T18:00:22Z",
+      "side": 1,
+      "message": "I think aggregate_only_damaged_ will be false on Chrome OS, because overlay processors are incompatible with that flag.\n\nI think this should work. In the future we\u0027ll also want to consider that if the damage rect is empty we shouldn\u0027t need to redraw the pass at all, but that\u0027s more complicated because we\u0027d need to handle it in the second pass walking over the tree, not just in the first pass.",
+      "parentUuid": "a54e90e3_91c9428a",
+      "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7fd269_3f1b8c6d",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-25T18:00:22Z",
+      "side": 1,
+      "message": "Move this to l.733 (before the loop \"for (const auto\u0026 surface_info : child_surfaces) {\").",
+      "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adb80920_7a88e6b9",
         "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
         "patchSetId": 1
