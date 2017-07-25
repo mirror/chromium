@@ -1263,6 +1263,15 @@ const base::string16& WebContentsImpl::GetTitle() const {
         !controller_.GetVisibleEntry()->GetTitle().empty()) ||
        controller_.GetPendingEntryIndex() != -1)) {
     entry = controller_.GetVisibleEntry();
+  } else if (IsWaitingForResponse() &&
+             (!entry ||
+              (entry->GetTitle().empty() && !entry->IsViewSourceMode()))) {
+    // If the new load has committed but there's no explicit title, and we
+    // haven't gotten a response yet, stick to the old page's title. The
+    // exception is view source mode --- don't mess with that title.
+    auto* last_entry = controller_.GetEntryAtOffset(-1);
+    if (last_entry)
+      entry = last_entry;
   }
 
   if (entry) {
@@ -4359,6 +4368,7 @@ void WebContentsImpl::LoadingStateChanged(bool to_different_document,
 
   GetRenderManager()->SetIsLoading(is_loading);
 
+  const bool was_waiting_for_response = waiting_for_response_;
   waiting_for_response_ = is_loading;
   is_load_to_different_document_ = to_different_document;
 
@@ -4384,9 +4394,17 @@ void WebContentsImpl::LoadingStateChanged(bool to_different_document,
   int type = is_loading ? NOTIFICATION_LOAD_START : NOTIFICATION_LOAD_STOP;
   NotificationDetails det = NotificationService::NoDetails();
   if (details)
-      det = Details<LoadNotificationDetails>(details);
+    det = Details<LoadNotificationDetails>(details);
   NotificationService::current()->Notify(
       type, Source<NavigationController>(&controller_), det);
+
+  // The effective title changes when the contents is no longer waiting for a
+  // response (see GetTitle()).
+  if (was_waiting_for_response && !waiting_for_response_) {
+    NavigationEntry* entry = controller_.GetLastCommittedEntry();
+    for (auto& observer : observers_)
+      observer.TitleWasSet(entry, false);
+  }
 }
 
 void WebContentsImpl::NotifyViewSwapped(RenderViewHost* old_host,
