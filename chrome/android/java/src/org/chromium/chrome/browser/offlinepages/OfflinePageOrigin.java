@@ -11,6 +11,7 @@ import android.content.pm.Signature;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.tab.Tab;
@@ -38,6 +39,31 @@ public class OfflinePageOrigin {
         mSignatures = getAppSignaturesFor(context, mAppName);
     }
 
+    /** Creates origin based on a qualified string. Assumes Chrome if invalid. */
+    public OfflinePageOrigin(String jsonString) {
+        String name = "";
+        String[] signatures = null;
+        try {
+            JSONArray info = new JSONArray(jsonString);
+            if (info.length() == 2) {
+                // Temporaries for JSON parsing.
+                String appName = info.getString(0);
+                JSONArray signatureInfo = info.getJSONArray(1);
+                String[] signaturesArray = new String[signatureInfo.length()];
+                for (int i = 0; i < signaturesArray.length; i++) {
+                    signaturesArray[i] = signatureInfo.getString(i);
+                }
+                // Only record package and signature when all JSON parsing completes.
+                name = appName;
+                signatures = signaturesArray;
+            }
+        } catch (JSONException e) {
+        } finally {
+            mAppName = name;
+            mSignatures = signatures;
+        }
+    }
+
     /** Creates a Chrome origin. */
     public OfflinePageOrigin() {
         mAppName = "";
@@ -63,6 +89,27 @@ public class OfflinePageOrigin {
         JSONArray signatureArray = new JSONArray();
         for (String s : mSignatures) signatureArray.put(s);
         return new JSONArray().put(mAppName).put(signatureArray).toString();
+    }
+
+    /**
+     * Returns whether the signature recorded in this origin matches the signature
+     * in the context.
+     *
+     * Returns true if this origin is chrome.
+     */
+    public boolean doesSignatureMatch(Context context) {
+        String[] currentSignatures = getAppSignaturesFor(context, mAppName);
+        return Arrays.equals(mSignatures, currentSignatures);
+    }
+
+    /** Returns whether this origin is chrome. */
+    public boolean isChrome() {
+        return TextUtils.isEmpty(mAppName) || mSignatures == null;
+    }
+
+    /** Returns the application package name of this origin. */
+    public String getAppName() {
+        return mAppName;
     }
 
     /** @return a sorted list of strings representing the signatures of an app.
