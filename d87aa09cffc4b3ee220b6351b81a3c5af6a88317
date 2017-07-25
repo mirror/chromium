@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae9e423_efa50fe9",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-25T19:06:58Z",
+      "side": 1,
+      "message": "I actually mean you need a const after coordination_unit_manager(), so it is a const member function.\n\nReturning a const ref works for me anyway.",
+      "range": {
+        "startLine": 82,
+        "startChar": 60,
+        "endLine": 82,
+        "endChar": 61
+      },
+      "revId": "d87aa09cffc4b3ee220b6351b81a3c5af6a88317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2a122d_d03fa189",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-25T19:06:58Z",
+      "side": 1,
+      "message": "I originally mean this should be generic. That is, its APIs should also be generic (no CollectCPUUsage, etc).\n\nBut now I think more, it is probably better to just leave it as is and then refactor when there are more use cases later.\n\nIn that case, this can be specific to CPU usage. So you can change it back to TabCPUUsageCollector. Sorry for the back and forth...",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "d87aa09cffc4b3ee220b6351b81a3c5af6a88317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
