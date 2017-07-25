@@ -16,6 +16,7 @@
 #include "ui/gfx/skbitmap_operations.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/native_theme/native_theme_dark_aura.h"
+#include "ui/views/linux_ui/linux_ui.h"
 
 namespace libgtkui {
 
@@ -575,14 +576,26 @@ void NativeThemeGtk3::PaintMenuSeparator(
   }
 
   auto separator_offset = [&](int separator_thickness) {
+    int offset;
     switch (menu_separator.type) {
       case ui::LOWER_SEPARATOR:
-        return rect.height() - separator_thickness;
+        offset = rect.height() - separator_thickness;
+        break;
       case ui::UPPER_SEPARATOR:
-        return 0;
+        offset = 0;
+        break;
       default:
-        return (rect.height() - separator_thickness) / 2;
+        offset = (rect.height() - separator_thickness) / 2;
     }
+    // Hack to get the separator to display correctly when we have
+    // fractional scales. We move the separator 1 pixel down to ensure
+    // that it falls within the clipping rect which is scaled up.
+    float device_scale = views::LinuxUI::instance()->GetDeviceScaleFactor();
+    bool is_fractional_scale =
+        (device_scale - static_cast<int>(device_scale) != 0);
+    if (is_fractional_scale && offset == 0)
+      offset = 1;
+    return offset;
   };
   if (GtkVersionCheck(3, 20)) {
     auto context = GetStyleContextFromCss(
