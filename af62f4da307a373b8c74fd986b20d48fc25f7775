@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "248f744c_1bf1de5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-25T00:00:16Z",
+      "side": 0,
+      "message": "While we no longer use currentTab below, this \"might\" cause issues if we do.  I believe we needed to to this because loadUrlInNewTab can end up creating a new tab in the bottom sheet world.  As written, this method doesn\u0027t assume currentTab can change and could give headache later.\n\nI\u0027ll let twellington@ confirm though as I might be completely wrong.",
+      "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
