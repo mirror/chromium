@@ -83,7 +83,6 @@
             "title": "Selected context only",
             "settingName": "selectedContextFilterEnabled",
             "settingType": "boolean",
-            "storageType": "session",
             "defaultValue": false,
             "options": [
                 {
@@ -102,7 +101,6 @@
             "title": "User messages only",
             "settingName": "consoleAPIFilterEnabled",
             "settingType": "boolean",
-            "storageType": "session",
             "defaultValue": false,
             "options": [
                 {
