@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9dac8afa_94d69d23",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-07-25T19:15:28Z",
+      "side": 1,
+      "message": "Updated the comment to be more accurate.",
+      "parentUuid": "35d86aa7_caa71e57",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 68
+      },
+      "revId": "743f9ce38c12e0815a1d6600e7e52e30d6e803aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c3c21e3_5040210e",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager_unittest.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1a4384c3_9e4bcb71",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-07-25T19:15:28Z",
+      "side": 1,
+      "message": "Correct, its the same behavior but we need two methods to override both because the MediaPerceptionAPIManager calls one or the other depending on the type of setState request.\n\nI created a common method called by both.",
+      "parentUuid": "5c3c21e3_5040210e",
+      "revId": "743f9ce38c12e0815a1d6600e7e52e30d6e803aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f87f1d0f_e27fab88",
         "filename": "extensions/test/data/media_perception_private/state/runtest.js",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "743f9ce38c12e0815a1d6600e7e52e30d6e803aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a28279_f934113a",
+        "filename": "extensions/test/data/media_perception_private/state/runtest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-07-25T19:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f87f1d0f_e27fab88",
+      "revId": "743f9ce38c12e0815a1d6600e7e52e30d6e803aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
