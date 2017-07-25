@@ -45,6 +45,30 @@
       "revId": "eab579e8d9e2ccc01531aadab04770d9b63dcbdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432fd21a_0e46509f",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-25T23:36:39Z",
+      "side": 1,
+      "message": "The issue is that the value is not really changing in PushFromMainThread.\n\nIn the test, the main thread value equals the current pending base (and current active base), but there\u0027s a delta. The DidUpdateScrollOffset call below uses the current scroll offset value to update the transform node\u0027s scroll offset, and the current scroll offset value includes the base plus delta. The main value equals the pending and only differs from the current value (pending + delta).\n\nI wonder if we should change this logic entirely to do something more like:\nif (map_entry.second !\u003d synced_scroll_offset-\u003eCurrent(property_trees()-\u003eis_active))\n  sync_tree-\u003eDidUpdateScrollOffset(id);",
+      "parentUuid": "61ca9e72_f70ef33b",
+      "range": {
+        "startLine": 1442,
+        "startChar": 37,
+        "endLine": 1442,
+        "endChar": 55
+      },
+      "revId": "eab579e8d9e2ccc01531aadab04770d9b63dcbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
