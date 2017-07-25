@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a6b2b0_36f4d5ce",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-25T16:47:20Z",
+      "side": 0,
+      "message": "This can never happen: return statement would have been encountered on line 1520 above.",
+      "range": {
+        "startLine": 1553,
+        "startChar": 6,
+        "endLine": 1553,
+        "endChar": 31
+      },
+      "revId": "7b6076c0973e7eb24cc3cea3bb8d00112eddda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "399e0534_d63e7972",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-25T16:47:20Z",
+      "side": 0,
+      "message": "This I implemented earlier in line 1650 below.",
+      "range": {
+        "startLine": 1566,
+        "startChar": 0,
+        "endLine": 1566,
+        "endChar": 53
+      },
+      "revId": "7b6076c0973e7eb24cc3cea3bb8d00112eddda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
