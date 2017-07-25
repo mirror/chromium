@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ae7cea8_2cec17b4",
+        "filename": "gpu/config/gpu_feature_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-25T18:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0237b222_f9447532",
+      "revId": "2edd6833cf3e8f0aaa28f55d5087f71771e53d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b71941_d6b25ecd",
         "filename": "gpu/config/gpu_util.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T17:38:10Z",
       "side": 1,
       "message": "note: on some Chrome OS platforms (namely ARM Mali, see https://cs.chromium.org/chromium/src/gpu/ipc/service/gpu_init.cc?q\u003dgpu/ipc/service/gpu_init.cc\u0026sq\u003dpackage:chromium\u0026l\u003d205), we start the sandbox early, and I believe this means we won\u0027t be able to detect the OS version. I\u0027m not sure if we have workarounds that depend on that today. It may be worth making a note / filing a bug. We could grab the OS version before turning on the sandbox, and feeding it into here.",
+      "revId": "2edd6833cf3e8f0aaa28f55d5087f71771e53d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b38dfc9_95d39ae9",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-25T18:37:50Z",
+      "side": 1,
+      "message": "Added a TODO. OS version doesn\u0027t matter for ChromeOS, but still, it\u0027s better to clear this (easy task) in case in the future situation changes.",
+      "parentUuid": "55b71941_d6b25ecd",
       "revId": "2edd6833cf3e8f0aaa28f55d5087f71771e53d9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
