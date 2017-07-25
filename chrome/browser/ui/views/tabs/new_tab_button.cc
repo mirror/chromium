@@ -4,8 +4,11 @@
 
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
 
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
 #include "chrome/browser/ui/views/tabs/new_tab_promo.h"
 #include "third_party/skia/include/core/SkColorFilter.h"
 #include "third_party/skia/include/effects/SkBlurMaskFilter.h"
@@ -177,6 +180,14 @@ bool NewTabButton::GetHitTestMask(gfx::Path* mask) const {
 }
 
 void NewTabButton::OnWidgetDestroying(views::Widget* widget) {
+  // Informs the new tab feature engagement tracker that the NewTabPromo has
+  // been dismissed.
+  feature_engagement_tracker::NewTabTrackerFactory::GetInstance()
+      ->GetForProfile(
+          static_cast<BrowserTabStripController*>(tab_strip_->controller())
+              ->browser()
+              ->profile())
+      ->DismissNewTabTracker();
   new_tab_promo_observer_.Remove(widget);
   // When the promo widget is destroyed, the NewTabButton needs to be
   // recolored.
