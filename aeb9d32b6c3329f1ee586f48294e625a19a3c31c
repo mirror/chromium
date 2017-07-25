@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60e52edc_d9348db0",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-25T19:35:14Z",
+      "side": 0,
+      "message": "I\u0027m having trouble understanding why one of these tests belongs in the StartServiceWorker call and others do not.  Is there a clear distinction?\n\nIf not, one possible answer is to have both the incognito tests inside the call and keep the one here.",
+      "range": {
+        "startLine": 356,
+        "startChar": 44,
+        "endLine": 356,
+        "endChar": 0
+      },
+      "revId": "aeb9d32b6c3329f1ee586f48294e625a19a3c31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
