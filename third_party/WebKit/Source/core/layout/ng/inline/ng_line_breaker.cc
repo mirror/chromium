@@ -308,9 +308,19 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
                              item.TextShapeResult(), &break_iterator_,
                              &spacing_);
   available_width = std::max(LayoutUnit(0), available_width);
-  item_result->shape_result = breaker.ShapeLine(
-      item_result->start_offset, available_width, &item_result->end_offset);
-  item_result->inline_size = item_result->shape_result->SnappedWidth();
+  bool has_hanging_spaces = false;
+  item_result->shape_result =
+      breaker.ShapeLine(item_result->start_offset, available_width,
+                        &item_result->end_offset, &has_hanging_spaces);
+  if (has_hanging_spaces) {
+    // Render hanging spaces only up to available width, and the rests are
+    // clipped.
+    // TODO(kojii): Investigate which cases require different behavior by
+    // hanging spaces and propagate this info to later phases if needed.
+    item_result->inline_size = available_width;
+  } else {
+    item_result->inline_size = item_result->shape_result->SnappedWidth();
+  }
 #endif
   DCHECK_GT(item_result->end_offset, item_result->start_offset);
   // * If width <= available_width:
