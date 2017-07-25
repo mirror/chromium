@@ -34,6 +34,24 @@
       "revId": "8b9f07e7146e8edb8b6d6ff645a2fa8953ea87db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4907e2_7c977eb0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-25T23:47:31Z",
+      "side": 1,
+      "message": "I considered naming the mojo file as embedded_search, but I thought the generic search is better since the mojom file already contains a few interfaces besides just EmbeddedSearch, and I am wanting to add a SetSearchURL.",
+      "parentUuid": "ff936710_42be42c9",
+      "revId": "8b9f07e7146e8edb8b6d6ff645a2fa8953ea87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
