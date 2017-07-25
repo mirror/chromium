@@ -30,7 +30,7 @@
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/FontVariantNumeric.h"
 #include "platform/heap/Handle.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -61,8 +61,8 @@ class CORE_EXPORT FontBuilder {
   void SetSizeAdjust(const float aspect_value);
   void SetStretch(FontStretch);
   void SetFamilyDescription(const FontDescription::FamilyDescription&);
-  void SetFeatureSettings(PassRefPtr<FontFeatureSettings>);
-  void SetLocale(PassRefPtr<const LayoutLocale>);
+  void SetFeatureSettings(RefPtr<FontFeatureSettings>);
+  void SetLocale(RefPtr<const LayoutLocale>);
   void SetStyle(FontStyle);
   void SetVariantCaps(FontDescription::FontVariantCaps);
   void SetVariantLigatures(const FontDescription::VariantLigatures&);
@@ -70,7 +70,7 @@ class CORE_EXPORT FontBuilder {
   void SetTextRendering(TextRenderingMode);
   void SetKerning(FontDescription::Kerning);
   void SetFontSmoothing(FontSmoothingMode);
-  void SetVariationSettings(PassRefPtr<FontVariationSettings>);
+  void SetVariationSettings(RefPtr<FontVariationSettings>);
 
   // FIXME: These need to just vend a Font object eventually.
   void UpdateFontDescription(FontDescription&,

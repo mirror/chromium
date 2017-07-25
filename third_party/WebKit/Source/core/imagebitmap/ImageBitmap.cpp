@@ -180,8 +180,8 @@ static SkImageInfo GetSkImageSkImageInfo(SkImage* image) {
                            image->refColorSpace());
 }
 
-static PassRefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input,
-                                              SkImageInfo info) {
+static RefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input,
+                                          SkImageInfo info) {
   unsigned width = static_cast<unsigned>(input->width());
   RefPtr<ArrayBuffer> dst_buffer =
       ArrayBuffer::CreateOrNull(width * input->height(), info.bytesPerPixel());
@@ -195,13 +195,12 @@ static PassRefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input,
   return dst_pixels;
 }
 
-static PassRefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input) {
+static RefPtr<Uint8Array> CopySkImageData(sk_sp<SkImage> input) {
   return CopySkImageData(input, GetSkImageSkImageInfo(input.get()));
 }
 
-static sk_sp<SkImage> NewSkImageFromRaster(
-    const SkImageInfo& info,
-    PassRefPtr<Uint8Array> image_pixels) {
+static sk_sp<SkImage> NewSkImageFromRaster(const SkImageInfo& info,
+                                           RefPtr<Uint8Array> image_pixels) {
   unsigned image_row_bytes = info.width() * info.bytesPerPixel();
   SkPixmap pixmap(info, image_pixels->Data(), image_row_bytes);
   auto raster_release_proc = [](const void*, void* pixels) {
@@ -385,7 +384,7 @@ bool ImageBitmap::IsSourceSizeValid(int source_width,
   return true;
 }
 
-static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
+static RefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
     RefPtr<Image> image,
     ImageBitmap::ParsedOptions& parsed_options,
     ColorBehavior color_behavior = ColorBehavior::TransformToGlobalTarget()) {
@@ -695,11 +694,11 @@ ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
   image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
-ImageBitmap::ImageBitmap(PassRefPtr<StaticBitmapImage> image) {
+ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image) {
   image_ = std::move(image);
 }
 
-PassRefPtr<StaticBitmapImage> ImageBitmap::Transfer() {
+RefPtr<StaticBitmapImage> ImageBitmap::Transfer() {
   DCHECK(!IsNeutered());
   is_neutered_ = true;
   image_->Transfer();
@@ -746,13 +745,13 @@ ImageBitmap* ImageBitmap::Create(ImageBitmap* bitmap,
   return new ImageBitmap(bitmap, crop_rect, options);
 }
 
-ImageBitmap* ImageBitmap::Create(PassRefPtr<StaticBitmapImage> image,
+ImageBitmap* ImageBitmap::Create(RefPtr<StaticBitmapImage> image,
                                  Optional<IntRect> crop_rect,
                                  const ImageBitmapOptions& options) {
   return new ImageBitmap(std::move(image), crop_rect, options);
 }
 
-ImageBitmap* ImageBitmap::Create(PassRefPtr<StaticBitmapImage> image) {
+ImageBitmap* ImageBitmap::Create(RefPtr<StaticBitmapImage> image) {
   return new ImageBitmap(std::move(image));
 }
 
@@ -903,8 +902,8 @@ CanvasColorParams ImageBitmap::GetCanvasColorParams() {
       GetSkImageSkImageInfo(image_->ImageForCurrentFrame().get()));
 }
 
-PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData(AlphaDisposition alpha_op,
-                                                   DataColorFormat format) {
+RefPtr<Uint8Array> ImageBitmap::CopyBitmapData(AlphaDisposition alpha_op,
+                                               DataColorFormat format) {
   sk_sp<SkImage> sk_image = image_->ImageForCurrentFrame();
   SkColorType color_type = GetSkImageSkColorType(sk_image.get());
   if (color_type == kN32_SkColorType && format == kRGBAColorType)
@@ -917,7 +916,7 @@ PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData(AlphaDisposition alpha_op,
   return CopySkImageData(sk_image, info);
 }
 
-PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData() {
+RefPtr<Uint8Array> ImageBitmap::CopyBitmapData() {
   return CopySkImageData(image_->ImageForCurrentFrame());
 }
 
@@ -962,11 +961,10 @@ ScriptPromise ImageBitmap::CreateImageBitmap(ScriptState* script_state,
       script_state, Create(this, crop_rect, options));
 }
 
-PassRefPtr<Image> ImageBitmap::GetSourceImageForCanvas(
-    SourceImageStatus* status,
-    AccelerationHint,
-    SnapshotReason,
-    const FloatSize&) {
+RefPtr<Image> ImageBitmap::GetSourceImageForCanvas(SourceImageStatus* status,
+                                                   AccelerationHint,
+                                                   SnapshotReason,
+                                                   const FloatSize&) {
   *status = kNormalSourceImageStatus;
   if (!image_)
     return nullptr;
