@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+async_test(function(t) {
+  t.step(() => {
+    const startTime = Date.now();
+    const windowOrigin = performance.timeOrigin;
+    assert_greater_than_equal(startTime, windowOrigin, 'Date.now() obtained after creating window should be at least as large as the timeOrigin.');
+    assert_less_than(startTime - windowOrigin, 500, 'Date.now() obtained at start should be very close to timeOrigin of window.')
+  });
+  t.done();
+}, 'Window timeOrigin is close to Date.now() when there is no system clock adjustment.');
+</script>
+</body>
+</html>
