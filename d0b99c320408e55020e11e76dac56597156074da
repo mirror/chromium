@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101af019_7ef5434e",
+        "filename": "tools/chrome_proxy/common/chrome_proxy_measurements.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-25T16:16:29Z",
+      "side": 0,
+      "message": "Furthermore, I couldn\u0027t find any clients using this feature:\nhttps://cs.chromium.org/search/?q\u003d%5Cbrestart_after%5Cb\u0026ssfr\u003d1\u0026type\u003dcs",
+      "revId": "d0b99c320408e55020e11e76dac56597156074da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
