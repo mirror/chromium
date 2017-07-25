@@ -34,6 +34,24 @@
       "revId": "cf3c144248cc8d904159f4c543b372e3e36b5eff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caec89f5_61f51322",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-25T21:21:38Z",
+      "side": 1,
+      "message": "Please add to histograms.xml. :)",
+      "parentUuid": "70dc5e3e_d3bf9a72",
+      "revId": "cf3c144248cc8d904159f4c543b372e3e36b5eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
