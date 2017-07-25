@@ -469,7 +469,13 @@ void SystemTrayClient::HandleUpdateAvailable() {
 }
 
 void SystemTrayClient::HandleUpdateOverCellularAvailable() {
-  system_tray_->ShowUpdateOverCellularAvailableIcon();
+  system_tray_->ShowUpdateOverCellularAvailableIcon(true);
+}
+
+void SystemTrayClient::HandleUpdateOverCellularTargetSet(bool success) {
+  if (!success)
+    return;
+  system_tray_->ShowUpdateOverCellularAvailableIcon(false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -484,6 +490,10 @@ void SystemTrayClient::OnSystemClockChanged(
 // UpgradeDetector::UpgradeObserver:
 void SystemTrayClient::OnUpdateOverCellularAvailable() {
   HandleUpdateOverCellularAvailable();
+}
+
+void SystemTrayClient::OnUpdateOverCellularTargetSet(bool success) {
+  HandleUpdateOverCellularTargetSet(success);
 }
 
 void SystemTrayClient::OnUpgradeRecommended() {
