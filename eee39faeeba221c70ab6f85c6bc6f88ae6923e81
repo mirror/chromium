@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acddccae_55ea2a82",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-25T22:45:00Z",
+      "side": 1,
+      "message": "Do the same if ... continue thing here as well?",
+      "revId": "eee39faeeba221c70ab6f85c6bc6f88ae6923e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
