@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78629405_9e9e6cf3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T07:02:48Z",
+      "side": 1,
+      "message": "Should this go to Resource::CanReuse?",
+      "revId": "be07dba856c2733a7146829453f65c5f74747c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
