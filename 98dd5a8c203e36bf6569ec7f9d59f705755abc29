@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "81bada3d_577be311",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-25T01:32:02Z",
+      "side": 1,
+      "message": "My main concern is to have clear logic in SearchResult.\n\n\u003e\u003e Other parts don\u0027t do deduplication, hence are free to interpret the raw data.\nI don\u0027t think you plan to add this functionality in the future.\n\nI still recommend to move this code to SearchResult.\n\nHowever if you strictly insist on this version then leave it.",
+      "parentUuid": "f56b63d2_9718191e",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "055af1fc_88da7ab0",
         "filename": "ui/app_list/search_result.h",
         "patchSetId": 3

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6741572_b2995dfe",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-25T01:32:02Z",
+      "side": 1,
+      "message": "nit: I think we might need check\n\nDCHECK(!stripped_result_url.empty());",
+      "range": {
+        "startLine": 24,
+        "startChar": 20,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "9c44014605b0f7c6955bc0f772f568a0cf5ca199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
