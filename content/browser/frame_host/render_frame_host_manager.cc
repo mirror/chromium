@@ -1670,9 +1670,14 @@ RenderFrameHostManager::CreateRenderFrameHost(
   // Create a RVH for main frames, or find the existing one for subframes.
   FrameTree* frame_tree = frame_tree_node_->frame_tree();
   RenderViewHostImpl* render_view_host = nullptr;
+
+  mojom::WidgetPtr widget;
+  mojom::WidgetRequest widget_channel_request = mojo::MakeRequest(&widget);
+
   if (frame_tree_node_->IsMainFrame()) {
     render_view_host = frame_tree->CreateRenderViewHost(
-        site_instance, view_routing_id, frame_routing_id, false, hidden);
+        site_instance, view_routing_id, frame_routing_id, std::move(widget),
+        false, hidden);
     // TODO(avi): It's a bit bizarre that this logic lives here instead of in
     // CreateRenderFrame(). It turns out that FrameTree::CreateRenderViewHost
     // doesn't /always/ create a new RenderViewHost. It first tries to find an
@@ -1690,12 +1695,14 @@ RenderFrameHostManager::CreateRenderFrameHost(
   } else {
     render_view_host = frame_tree->GetRenderViewHost(site_instance);
     CHECK(render_view_host);
+    render_view_host->GetWidget()->SetWidget(std::move(widget));
   }
 
   return RenderFrameHostFactory::Create(
       site_instance, render_view_host, render_frame_delegate_,
       render_widget_delegate_, frame_tree, frame_tree_node_, frame_routing_id,
-      widget_routing_id, hidden, renderer_initiated_creation);
+      widget_routing_id, std::move(widget_channel_request), hidden,
+      renderer_initiated_creation);
 }
 
 // PlzNavigate
@@ -1811,10 +1818,16 @@ int RenderFrameHostManager::CreateRenderFrameProxy(SiteInstance* instance) {
   // level structure in Blink.
   render_view_host =
       frame_tree_node_->frame_tree()->GetRenderViewHost(instance);
+
   if (!render_view_host) {
-    CHECK(frame_tree_node_->IsMainFrame());
+    // We need to pass a widget ptr here but can't send the channel request
+    // because there is no associated RenderFrameHost to send to the
+    // render process.
+    mojom::WidgetPtr widget;
+    mojom::WidgetRequest widget_channel_request = mojo::MakeRequest(&widget);
     render_view_host = frame_tree_node_->frame_tree()->CreateRenderViewHost(
-        instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, true, true);
+        instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, std::move(widget), true,
+        true);
   }
 
   RenderFrameProxyHost* proxy = GetRenderFrameProxyHost(instance);

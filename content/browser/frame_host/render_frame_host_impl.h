@@ -42,6 +42,7 @@
 #include "content/common/image_downloader/image_downloader.mojom.h"
 #include "content/common/input/input_handler.mojom.h"
 #include "content/common/navigation_params.h"
+#include "content/common/widget.mojom.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
@@ -671,6 +672,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                       FrameTreeNode* frame_tree_node,
                       int32_t routing_id,
                       int32_t widget_routing_id,
+                      mojom::WidgetRequest widget_request,
                       bool hidden,
                       bool renderer_initiated_creation);
 
