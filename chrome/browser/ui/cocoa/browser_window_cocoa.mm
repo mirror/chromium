@@ -324,6 +324,10 @@ void BrowserWindowCocoa::ZoomChangedForActiveTab(bool can_show_bubble) {
   [controller_ zoomChangedForActiveTab:can_show_bubble ? YES : NO];
 }
 
+void BrowserWindowCocoa::RevealTabStripIfNeeded() {
+  // Does nothing.
+}
+
 gfx::Rect BrowserWindowCocoa::GetRestoredBounds() const {
   // Flip coordinates based on the primary screen.
   NSScreen* screen = [[NSScreen screens] firstObject];

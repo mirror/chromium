@@ -640,33 +640,39 @@ TabStripModelDelegate::RestoreTabType GetRestoreTabType(
 
 void SelectNextTab(Browser* browser) {
   base::RecordAction(UserMetricsAction("SelectNextTab"));
+  browser->window()->RevealTabStripIfNeeded();
   browser->tab_strip_model()->SelectNextTab();
 }
 
 void SelectPreviousTab(Browser* browser) {
   base::RecordAction(UserMetricsAction("SelectPrevTab"));
+  browser->window()->RevealTabStripIfNeeded();
   browser->tab_strip_model()->SelectPreviousTab();
 }
 
 void MoveTabNext(Browser* browser) {
   base::RecordAction(UserMetricsAction("MoveTabNext"));
+  browser->window()->RevealTabStripIfNeeded();
   browser->tab_strip_model()->MoveTabNext();
 }
 
 void MoveTabPrevious(Browser* browser) {
   base::RecordAction(UserMetricsAction("MoveTabPrevious"));
+  browser->window()->RevealTabStripIfNeeded();
   browser->tab_strip_model()->MoveTabPrevious();
 }
 
 void SelectNumberedTab(Browser* browser, int index) {
   if (index < browser->tab_strip_model()->count()) {
     base::RecordAction(UserMetricsAction("SelectNumberedTab"));
+    browser->window()->RevealTabStripIfNeeded();
     browser->tab_strip_model()->ActivateTabAt(index, true);
   }
 }
 
 void SelectLastTab(Browser* browser) {
   base::RecordAction(UserMetricsAction("SelectLastTab"));
+  browser->window()->RevealTabStripIfNeeded();
   browser->tab_strip_model()->SelectLastTab();
 }
 

@@ -126,6 +126,10 @@ class BrowserView : public BrowserWindow,
                                      const gfx::Rect& bounds,
                                      bool at_bottom);
 
+  // For tests, use |disable| set to true to turn off the delay used to unreveal
+  // the tabstrip after it has been revealed by RevealTabStripIfNeeded().
+  static void SetDisableRevealerDelayForTesting(bool disable);
+
   // Returns a Browser instance of this view.
   Browser* browser() { return browser_.get(); }
   const Browser* browser() const { return browser_.get(); }
@@ -271,6 +275,7 @@ class BrowserView : public BrowserWindow,
                           int index,
                           int reason) override;
   void ZoomChangedForActiveTab(bool can_show_bubble) override;
+  void RevealTabStripIfNeeded() override;
   gfx::Rect GetRestoredBounds() const override;
   ui::WindowShowState GetRestoredState() const override;
   gfx::Rect GetBounds() const override;
