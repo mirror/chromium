@@ -1293,7 +1293,8 @@ HeapSnapshotWorker.HeapSnapshot = class {
       nodesToVisit[nodesToVisitLength++] = node.nodeIndex;
     }
 
-    this.forEachRoot(enqueueNode.bind(null, 1), true);
+    // Ulan: do not skip GC roots.
+    this.forEachRoot(enqueueNode.bind(null, 1), false);
     this._bfs(nodesToVisit, nodesToVisitLength, distances, filter);
 
     // bfs for the rest of objects
