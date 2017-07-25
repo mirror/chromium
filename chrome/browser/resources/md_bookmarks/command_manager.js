@@ -450,7 +450,7 @@ cr.define('bookmarks', function() {
 
       this.confirmOpenCallback_ = openUrlsCallback;
       var dialog = this.$.openDialog.get();
-      dialog.querySelector('.body').textContent =
+      dialog.querySelector('[slot=body]').textContent =
           loadTimeData.getStringF('openDialogBody', urls.length);
 
       bookmarks.DialogFocusManager.getInstance().showDialog(
