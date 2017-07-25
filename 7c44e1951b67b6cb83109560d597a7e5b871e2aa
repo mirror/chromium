@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d36f36a4_12957929",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-25T04:21:40Z",
+      "side": 1,
+      "message": "Nit: perhaps assert or if check that tab \u003d\u003d mTab?\n\nActually, clarification: can you just use the tab from here rather than in onFinishedNativeInit?",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 25
+      },
+      "revId": "7c44e1951b67b6cb83109560d597a7e5b871e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
