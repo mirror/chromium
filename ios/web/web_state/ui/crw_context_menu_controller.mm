@@ -7,6 +7,7 @@
 #import <objc/runtime.h>
 #include <stddef.h>
 
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -54,6 +55,11 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 // Returns the x, y offset the content has been scrolled.
 @property(nonatomic, readonly) CGPoint scrollPosition;
 
+// Set the specified recognizer to take priority over any recognizers in the
+// view that have a description containing the specified text fragment.
++ (void)requireGestureRecognizerToFail:(UIGestureRecognizer*)recognizer
+                                inView:(UIView*)view
+                 containingDescription:(NSString*)fragment;
 // Called when the window has determined there was a long-press and context menu
 // must be shown.
 - (void)showContextMenu:(UIGestureRecognizer*)gestureRecognizer;
@@ -107,8 +113,50 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     [_contextMenuRecognizer setAllowableMovement:kLongPressMoveDeltaPixels];
     [_contextMenuRecognizer setDelegate:self];
     [_webView addGestureRecognizer:_contextMenuRecognizer];
+
+    if (base::ios::IsRunningOnIOS11OrLater()) {
+      // A number of solutions have been investigated. The lowest-risk solution
+      // appears to be to recurse through the web controller's recognizers,
+      // looking for fingerprints of the recognizers known to cause problems,
+      // which are then de-prioritized (below our own long click handler).
+      // Hunting for description fragments of system recognizers is undeniably
+      // brittle for future versions of iOS. If it does break the context menu
+      // events may leak (regressing b/5310177), but the app will otherwise
+      // work. This worked in the past on very old iOS versions, but was removed
+      // as it is no longer needed for iOS 9 and 10. iOS 11 adds additional
+      // complexity to WKWebView's own gesture recognition requiring the use of
+      // this hackery.
+      for (UIView* aView in [[_webView scrollView] subviews]) {
+        [CRWContextMenuController
+            requireGestureRecognizerToFail:_contextMenuRecognizer
+                                    inView:aView
+                     containingDescription:@"action=_longPressRecognized:"];
+      }
+    }
   }
   return self;
+}
+
++ (void)requireGestureRecognizerToFail:(UIGestureRecognizer*)recognizer
+                                inView:(UIView*)view
+                 containingDescription:(NSString*)fragment {
+  for (UIGestureRecognizer* iRecognizer in [view gestureRecognizers]) {
+    if (iRecognizer != recognizer) {
+      NSString* description = [iRecognizer description];
+      if ([description rangeOfString:fragment].length) {
+        [iRecognizer requireGestureRecognizerToFail:recognizer];
+        // requireGestureRecognizerToFail: doesn't retain the recognizer, so it
+        // is possible for |iRecognizer| to outlive |recognizer| and end up with
+        // a dangling pointer. Add a retaining associative reference to ensure
+        // that the lifetimes work out.
+        // Note that normally using the value as the key wouldn't make any
+        // sense, but here it's fine since nothing needs to look up the value.
+        void* associated_object_key = (__bridge void*)recognizer;
+        objc_setAssociatedObject(view, associated_object_key, recognizer,
+                                 OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+      }
+    }
+  }
 }
 
 - (UIScrollView*)webScrollView {
