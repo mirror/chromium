@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "bb90c7d9_0c586d82",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-25T18:33:09Z",
+      "side": 1,
+      "message": "Will switch to natural_size. You\u0027re currently correct, but that\u0027s intention since I\u0027m avoiding any functional changes in this CL. I\u0027ll address that in followup CLs that prepare us better for UKM reporting.",
+      "parentUuid": "7771ced8_32f934d0",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f3e8613_7c5fac1d",
         "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
         "patchSetId": 16
@@ -139,6 +157,24 @@
       "writtenOn": "2017-07-25T05:51:59Z",
       "side": 1,
       "message": "I don\u0027t see anything wrong with a SetPlaybackProperties() type method, which is pretty much like an Initialize() method, which is fairly common given that there\u0027s no \"constructor\" that can pass initial parameters when using mojo.\n\nBut from the code, it seems the biggest benefit is that all MediaPlayers in the same RenderFrame can use this provider interface to create it\u0027s own recorder. \n\nAn alternative solution would be to pass MediaFactory::remote_interfaces_ to WMPI, which can be used to connect to the WatchTimeRecorder interface directly. After immediately after the connection, call Initialize() to pass the |properties|. (In the future, if WMPI needs other mojo services, it can reuse |remote_interfaces_|.)\n\nPersonally I feel this would be cleaner. But I don\u0027t have a strong opinion on this.",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69213283_c80dd191",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-25T18:33:09Z",
+      "side": 1,
+      "message": "Per many previous discussions the mojo team actively dislikes interfaces that have one-time setters. See discussion on both the mojo audio APIs as well as the single sample metric API. I.e., we should have no new mojo APIs that have an Initialize() or type method (barring those that are used far from where they\u0027re created).\n\nI agree with them, it\u0027s better to have a separate provider interface for one time properties given current mojom constructs. That said... I\u0027d love it if mojom allowed the expression of a constructor type so we didn\u0027t need to define multiple interfaces like this.",
+      "parentUuid": "c60f5cdf_675b7120",
       "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
