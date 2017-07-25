@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51c3dbce_2eac2d64",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-25T14:36:48Z",
+      "side": 1,
+      "message": ":P I\u0027m getting rid of this in a few CLs, promise!",
+      "parentUuid": "871a63c6_5af0c964",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "e9c095b47cff167f61a00a67bb0b7e3689e20935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "565e82d7_777a82d5",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T04:52:38Z",
       "side": 1,
       "message": "Why unique ptr? Vector is movable.",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 57
+      },
+      "revId": "e9c095b47cff167f61a00a67bb0b7e3689e20935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbfde3a_887a3447",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-25T14:36:48Z",
+      "side": 1,
+      "message": "I was using nullptr to represent failure... but maybe not the best strategy, I have changed it to use a vector directly.",
+      "parentUuid": "565e82d7_777a82d5",
       "range": {
         "startLine": 25,
         "startChar": 9,
