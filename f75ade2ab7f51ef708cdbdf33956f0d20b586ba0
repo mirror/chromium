@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4359042_fe8c2c75",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-07-25T20:11:14Z",
+      "side": 1,
+      "message": "Just use GetBinaryClassName if you want a C++-compatible name for a fully qualified class, don\u0027t invent a new convention",
+      "revId": "f75ade2ab7f51ef708cdbdf33956f0d20b586ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
