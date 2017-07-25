@@ -61,7 +61,7 @@ class CSSSegmentedFontFace final
   void RemoveFontFace(FontFace*);
   bool IsEmpty() const { return font_faces_.IsEmpty(); }
 
-  PassRefPtr<FontData> GetFontData(const FontDescription&);
+  RefPtr<FontData> GetFontData(const FontDescription&);
 
   bool CheckFont(const String&) const;
   void Match(const String&, HeapVector<Member<FontFace>>&) const;
