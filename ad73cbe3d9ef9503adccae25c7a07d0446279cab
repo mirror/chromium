@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "398f6047_ad770300",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-25T11:38:42Z",
+      "side": 1,
+      "message": "Done (though this is my first bug, so if I am supposed to now do something with it (e.g. closing or so), please advice.)",
+      "parentUuid": "355d7a3b_f94f889f",
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29d350b4_7d765966",
         "filename": "content/child/resource_dispatcher.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4dfe465_a9012ee1",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-25T11:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d350b4_7d765966",
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18eb41fa_e1e970b6",
+        "filename": "content/child/resource_dispatcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-25T11:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5518f3e5_6ce2b256",
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4548777_d69a6d4d",
         "filename": "content/child/resource_dispatcher_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8166ec2_6c18cca3",
+        "filename": "content/child/resource_dispatcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-25T11:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4548777_d69a6d4d",
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd1c67c_5a9149bd",
+        "filename": "content/child/resource_dispatcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-25T11:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cde8750_eb291481",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 13
+      },
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
