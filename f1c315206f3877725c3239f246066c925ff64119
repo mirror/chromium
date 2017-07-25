@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f881d80e_22015b6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/OriginVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-25T16:09:21Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a switch statement?\n\nString relationName \u003d null;\nswitch (mRelation) {\ncase ...\ndefault:\n  return false;\n}",
+      "range": {
+        "startLine": 188,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 14
+      },
+      "revId": "f1c315206f3877725c3239f246066c925ff64119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d059203_54d375f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/PostMessageHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-25T16:09:21Z",
+      "side": 1,
+      "message": "It\u0027s already in the place where we pull the support lib from, but probably isn\u0027t final.",
+      "revId": "f1c315206f3877725c3239f246066c925ff64119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
