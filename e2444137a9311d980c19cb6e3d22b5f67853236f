@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7879c3af_cf4644b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T16:27:52Z",
+      "side": 1,
+      "message": "Great. Is this documented somewhere? If not, we should probably add it for the record.",
+      "parentUuid": "d499771b_36006d4d",
+      "revId": "e2444137a9311d980c19cb6e3d22b5f67853236f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bf7992d_60455c8d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
