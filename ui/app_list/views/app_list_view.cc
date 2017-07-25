@@ -354,13 +354,6 @@ bool AppListView::ShouldDescendIntoChildForEventHandling(
       ShouldDescendIntoChildForEventHandling(child, location);
 }
 
-PaginationModel* AppListView::GetAppsPaginationModel() {
-  return app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view()
-      ->pagination_model();
-}
-
 void AppListView::InitContents(gfx::NativeView parent, int initial_apps_page) {
   // TODO(vadimt): Remove ScopedTracker below once crbug.com/440224 and
   // crbug.com/441028 are fixed.
@@ -501,21 +494,15 @@ void AppListView::InitializeBubble(gfx::NativeView parent,
 }
 
 void AppListView::HandleClickOrTap() {
-  switch (app_list_state_) {
-    case HALF:
-    case FULLSCREEN_SEARCH:
-      search_box_view_->ClearSearch();
-      break;
-    case PEEKING:
-    case FULLSCREEN_ALL_APPS:
-      if (search_box_view_->is_search_box_active())
-        search_box_view_->ClearSearch();
-      else
-        SetState(CLOSED);
-      break;
-    case CLOSED:
-      break;
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  if (!search_box_view_->is_search_box_active()) {
+    SetState(CLOSED);
+    return;
   }
+
+  search_box_view_->ClearSearch();
 }
 
 void AppListView::StartDrag(const gfx::Point& location) {
@@ -683,38 +670,11 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
   }
 }
 
-void AppListView::OnTabletModeChanged(bool started) {
-  is_tablet_mode_ = started;
-  if (is_tablet_mode_ && !is_fullscreen()) {
-    // Set |app_list_state_| to a tablet mode friendly state.
-    SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS
-                                        : FULLSCREEN_SEARCH);
-  }
-}
-
-bool AppListView::HandleScroll(const ui::Event* event) {
-  if (app_list_state_ != PEEKING)
-    return false;
-
-  switch (event->type()) {
-    case ui::ET_MOUSEWHEEL:
-      SetState(event->AsMouseWheelEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
-                                                          : CLOSED);
-      return true;
-    case ui::ET_SCROLL:
-    case ui::ET_SCROLL_FLING_START: {
-      if (fabs(event->AsScrollEvent()->y_offset()) >
-          kAppListMinScrollToSwitchStates) {
-        SetState(event->AsScrollEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
-                                                        : CLOSED);
-        return true;
-      }
-      break;
-    }
-    default:
-      break;
-  }
-  return false;
+PaginationModel* AppListView::GetAppsPaginationModel() {
+  return app_list_main_view_->contents_view()
+      ->apps_container_view()
+      ->apps_grid_view()
+      ->pagination_model();
 }
 
 void AppListView::OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
@@ -876,6 +836,41 @@ void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
   BubbleDialogDelegateView::SchedulePaintInRect(rect);
   if (GetBubbleFrameView())
     GetBubbleFrameView()->SchedulePaint();
+}
+
+void AppListView::OnTabletModeChanged(bool started) {
+  is_tablet_mode_ = started;
+  search_box_view_->OnTabletModeChanged(started);
+  if (is_tablet_mode_ && !is_fullscreen()) {
+    // Set |app_list_state_| to a tablet mode friendly state.
+    SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS
+                                        : FULLSCREEN_SEARCH);
+  }
+}
+
+bool AppListView::HandleScroll(const ui::Event* event) {
+  if (app_list_state_ != PEEKING)
+    return false;
+
+  switch (event->type()) {
+    case ui::ET_MOUSEWHEEL:
+      SetState(event->AsMouseWheelEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
+                                                          : CLOSED);
+      return true;
+    case ui::ET_SCROLL:
+    case ui::ET_SCROLL_FLING_START: {
+      if (fabs(event->AsScrollEvent()->y_offset()) >
+          kAppListMinScrollToSwitchStates) {
+        SetState(event->AsScrollEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
+                                                        : CLOSED);
+        return true;
+      }
+      break;
+    }
+    default:
+      break;
+  }
+  return false;
 }
 
 void AppListView::SetState(AppListState new_state) {
