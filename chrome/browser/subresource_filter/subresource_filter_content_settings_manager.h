@@ -59,7 +59,7 @@ class SubresourceFilterContentSettingsManager
     should_use_smart_ui_ = should_use_smart_ui;
   }
 
-  void ClearSiteMetadata(const GURL& url);
+  void SetSiteHasActivation(const GURL& url, bool activation);
 
   void set_clock_for_testing(std::unique_ptr<base::Clock> tick_clock) {
     clock_ = std::move(tick_clock);

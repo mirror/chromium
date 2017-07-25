@@ -110,9 +110,19 @@ bool SubresourceFilterContentSettingsManager::ShouldShowUIForSite(
   return true;
 }
 
-void SubresourceFilterContentSettingsManager::ClearSiteMetadata(
-    const GURL& url) {
-  SetSiteMetadata(url, nullptr);
+void SubresourceFilterContentSettingsManager::SetSiteHasActivation(
+    const GURL& url,
+    bool activation) {
+  // If the site is no longer activated, clear the metadata. This is to maintain
+  // the invariant that metadata implies activated.
+  //
+  // If the site is activated, ensure that there is metadata. Don't log a
+  // timestamp since the timestamp implies that the UI has been shown.
+  if (!activation) {
+    SetSiteMetadata(url, nullptr);
+  } else if (!GetSiteMetadata(url)) {
+    SetSiteMetadata(url, base::MakeUnique<base::DictionaryValue>());
+  }
 }
 
 std::unique_ptr<base::DictionaryValue>
