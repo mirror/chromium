@@ -33,8 +33,6 @@ public class QuicTest extends CronetTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        // Load library first, since we need the Quic test server's URL.
-        System.loadLibrary("cronet_tests");
         QuicTestServer.startQuicTestServer(getContext());
 
         mBuilder = new ExperimentalCronetEngine.Builder(getContext());

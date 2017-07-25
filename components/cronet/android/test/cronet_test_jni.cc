@@ -9,6 +9,7 @@
 #include "base/android/jni_registrar.h"
 #include "base/android/library_loader/library_loader_hooks.h"
 #include "base/macros.h"
+#include "components/cronet/android/cronet_library_loader.h"
 #include "cronet_test_util.h"
 #include "cronet_url_request_context_config_test.h"
 #include "experimental_options_test.h"
@@ -42,9 +43,13 @@ const base::android::RegistrationMethod kCronetTestsRegisteredMethods[] = {
 extern "C" jint JNI_OnLoad(JavaVM* vm, void* reserved) {
   base::android::InitVM(vm);
   JNIEnv* env = base::android::AttachCurrentThread();
+#if defined(SINGLE_LIBRARY_TESTING)
+  cronet::CronetOnLoad(vm, reserved);
+#else
   if (!base::android::OnJNIOnLoadInit()) {
     return -1;
   }
+#endif
 
   if (!base::android::RegisterNativeMethods(
           env,

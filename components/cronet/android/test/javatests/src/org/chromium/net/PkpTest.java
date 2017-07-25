@@ -45,7 +45,6 @@ public class PkpTest extends CronetTestBase {
     protected void setUp() throws Exception {
         super.setUp();
         // Start QUIC Test Server
-        System.loadLibrary("cronet_tests");
         QuicTestServer.startQuicTestServer(getContext());
         mServerUrl = QuicTestServer.getServerURL();
         mServerHost = QuicTestServer.getServerHost();
