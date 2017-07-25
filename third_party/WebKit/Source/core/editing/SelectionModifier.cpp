@@ -418,7 +418,7 @@ VisiblePosition SelectionModifier::ModifyExtendingLeft(
   return AdjustForwardPositionForUserSelectAll(pos);
 }
 
-VisiblePosition SelectionModifier::ModifyExtendingBackward(
+VisiblePosition SelectionModifier::ModifyExtendingBackwardInternal(
     TextGranularity granularity) {
   VisiblePosition pos =
       CreateVisiblePosition(selection_.Extent(), selection_.Affinity());
@@ -429,41 +429,43 @@ VisiblePosition SelectionModifier::ModifyExtendingBackward(
   // VPs to iterate over everything.
   switch (granularity) {
     case TextGranularity::kCharacter:
-      pos = PreviousPositionOf(pos, kCanSkipOverEditingBoundary);
-      break;
+      return PreviousPositionOf(
+          CreateVisiblePosition(selection_.Extent(), selection_.Affinity()),
+          kCanSkipOverEditingBoundary);
     case TextGranularity::kWord:
-      pos = PreviousWordPosition(pos);
-      break;
+      return PreviousWordPosition(
+          CreateVisiblePosition(selection_.Extent(), selection_.Affinity()));
     case TextGranularity::kSentence:
-      pos = PreviousSentencePosition(pos);
-      break;
+      return PreviousSentencePosition(
+          CreateVisiblePosition(selection_.Extent(), selection_.Affinity()));
     case TextGranularity::kLine:
-      pos = PreviousLinePosition(
-          pos,
+      return PreviousLinePosition(
+          CreateVisiblePosition(selection_.Extent(), selection_.Affinity()),
           LineDirectionPointForBlockDirectionNavigation(selection_.Extent()));
-      break;
     case TextGranularity::kParagraph:
-      pos = PreviousParagraphPosition(
-          pos,
+      return PreviousParagraphPosition(
+          CreateVisiblePosition(selection_.Extent(), selection_.Affinity()),
           LineDirectionPointForBlockDirectionNavigation(selection_.Extent()));
-      break;
     case TextGranularity::kSentenceBoundary:
-      pos = StartOfSentence(StartForPlatform());
-      break;
+      return StartOfSentence(StartForPlatform());
     case TextGranularity::kLineBoundary:
-      pos = LogicalStartOfLine(StartForPlatform());
-      break;
+      return LogicalStartOfLine(StartForPlatform());
     case TextGranularity::kParagraphBoundary:
-      pos = StartOfParagraph(StartForPlatform());
-      break;
-    case TextGranularity::kDocumentBoundary:
-      pos = StartForPlatform();
+      return StartOfParagraph(StartForPlatform());
+    case TextGranularity::kDocumentBoundary: {
+      const VisiblePosition pos = StartForPlatform();
       if (IsEditablePosition(pos.DeepEquivalent()))
-        pos = StartOfEditableContent(pos);
-      else
-        pos = StartOfDocument(pos);
-      break;
+        return StartOfEditableContent(pos);
+      return StartOfDocument(pos);
+    }
   }
+  NOTREACHED() << static_cast<int>(granularity);
+  return VisiblePosition();
+}
+
+VisiblePosition SelectionModifier::ModifyExtendingBackward(
+    TextGranularity granularity) {
+  const VisiblePosition pos = ModifyExtendingBackwardInternal(granularity);
   if (DirectionOfEnclosingBlock() == TextDirection::kLtr)
     return AdjustBackwardPositionForUserSelectAll(pos);
   return AdjustForwardPositionForUserSelectAll(pos);
