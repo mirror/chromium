@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df40c0c1_580f47bc",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-25T00:47:53Z",
+      "side": 1,
+      "message": "I\u0027ll split the patch for Cast specific logic.",
+      "parentUuid": "d4cddf42_6cb75a88",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e910ea6_49338680",
         "filename": "chromecast/renderer/media/key_systems_cast.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b6f4bade_7bb646cd",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-25T00:47:53Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "9e910ea6_49338680",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f8edf35_adb0f62b",
         "filename": "chromecast/renderer/media/key_systems_cast.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-25T00:33:30Z",
       "side": 1,
       "message": "This is intended for specific WebView use cases to allow unknown-to-Chromium Key Systems to be exposed with an \"x-\u003cname\u003e\" Key System name. Since Cast does know about PlayReady (and the IS_CAST_USING_CMA_BACKEND path explicitly registers it), this doesn\u0027t seem like the right solution. Maybe the underlying code needs to be refactored to allow you to reuse the IPC.",
+      "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb236e2_6ebec39b",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-25T00:47:53Z",
+      "side": 1,
+      "message": "Seems like which key systems should be added is controlled by MediaDrmBridgeClient. CastMediaDrmBridgeClient registered PlayReady for Cast. Is AW using auto-discovery solution for this?\n\nSince PlayReady is explicitly added, can we re-use this function?",
+      "parentUuid": "4f8edf35_adb0f62b",
       "revId": "bea1730c41fe4f79132c637f3e3391a502bbd554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
