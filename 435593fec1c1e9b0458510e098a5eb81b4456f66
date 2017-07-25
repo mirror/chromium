@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4df91c1_401500d0",
+        "filename": "net/cert/cert_verify_proc_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-25T23:39:58Z",
+      "side": 1,
+      "message": "Done (yeah I was thinking similarly).\n\nPerhaps we should replace all of the \"live\" certs with synthetic ones whose dates can be controlled then.\n\nFor instance https://cs.chromium.org/chromium/src/net/data/ssl/certificates/tripadvisor-verisign-chain.pem is another ticking time bomb.\n\nThe attributes defined in https://cs.chromium.org/chromium/src/net/data/ssl/certificates/README?q\u003dtripadvisor-verisign-chain.pem\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d63 no longer apply as the current one is issued by digicert.",
+      "parentUuid": "1a6b94d3_029eb675",
+      "range": {
+        "startLine": 306,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 33
+      },
+      "revId": "435593fec1c1e9b0458510e098a5eb81b4456f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "620b8dd5_28182cc6",
         "filename": "net/data/ssl/scripts/fetch-live-certs.sh",
         "patchSetId": 1
