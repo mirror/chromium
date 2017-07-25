@@ -44,6 +44,7 @@
 #include "chrome/installer/util/util_constants.h"
 #include "content/public/app/sandbox_helper_win.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/sandbox_type.h"
 #include "sandbox/win/src/sandbox.h"
 
 namespace {
@@ -181,7 +182,8 @@ int MainDllLoader::Launch(HINSTANCE instance,
   // Initialize the sandbox services.
   sandbox::SandboxInterfaceInfo sandbox_info = {0};
   const bool is_browser = process_type_.empty();
-  const bool is_sandboxed = !cmd_line.HasSwitch(switches::kNoSandbox);
+  const bool is_sandboxed =
+      content::SandboxTypeFromCommandLine() != SANDBOX_TYPE_NONE;
   if (is_browser || is_sandboxed) {
     // For child processes that are running as --no-sandbox, don't initialize
     // the sandbox info, otherwise they'll be treated as brokers (as if they
