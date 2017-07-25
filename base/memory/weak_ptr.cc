@@ -65,6 +65,12 @@ WeakReference::WeakReference(WeakReference&& other)
 
 WeakReference::WeakReference(const WeakReference& other) = default;
 
+WeakReference& WeakReference::operator=(WeakReference&& other) {
+  flag_ = std::move(other.flag_);
+  other.flag_ = Flag::NullFlag();
+  return *this;
+}
+
 WeakReferenceOwner::WeakReferenceOwner()
     : flag_(WeakReference::Flag::NullFlag()) {}
 
