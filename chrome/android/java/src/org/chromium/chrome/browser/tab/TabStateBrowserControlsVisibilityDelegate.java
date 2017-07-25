@@ -11,6 +11,7 @@ import android.os.Message;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content.browser.ContentViewCore;
@@ -154,6 +155,9 @@ public class TabStateBrowserControlsVisibilityDelegate
         enableHidingBrowserControls &= (mTab.getFullscreenManager() != null);
         enableHidingBrowserControls &= DeviceClassManager.enableFullscreen();
         enableHidingBrowserControls &= !mIsFullscreenWaitingForLoad;
+
+        BottomSheet sheet = mTab.getActivity() != null ? mTab.getActivity().getBottomSheet() : null;
+        enableHidingBrowserControls &= sheet != null ? !sheet.isSheetOpen() : true;
 
         return enableHidingBrowserControls;
     }

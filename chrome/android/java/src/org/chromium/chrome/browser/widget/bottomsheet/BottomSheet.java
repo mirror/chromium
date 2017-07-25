@@ -1047,13 +1047,14 @@ public class BottomSheet
     private void onSheetOpened() {
         if (mIsSheetOpen) return;
 
+        mIsSheetOpen = true;
+
         // Make sure the toolbar is visible before expanding the sheet.
         Tab tab = getActiveTab();
         if (isToolbarAndroidViewHidden() && tab != null) {
             tab.updateBrowserControlsState(BrowserControlsState.SHOWN, false);
         }
 
-        mIsSheetOpen = true;
         dismissSelectedText();
         for (BottomSheetObserver o : mObservers) o.onSheetOpened();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_opened));
@@ -1074,6 +1075,11 @@ public class BottomSheet
 
         mBackButtonDismissesChrome = false;
         mIsSheetOpen = false;
+
+        // Update the browser controls since they are permanently shown while the sheet is open.
+        Tab tab = getActiveTab();
+        if (tab != null) tab.updateBrowserControlsState(BrowserControlsState.SHOWN, false);
+
         for (BottomSheetObserver o : mObservers) o.onSheetClosed();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_closed));
         clearFocus();
