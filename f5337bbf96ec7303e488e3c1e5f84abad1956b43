@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f80c874_f23d51f7",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-25T22:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65c6e50c_f57f9968",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41a7d4cf_1942643d",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd849b62_39efa33c",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-25T22:16:45Z",
+      "side": 1,
+      "message": "done by removing",
+      "parentUuid": "41a7d4cf_1942643d",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e441d3dd_a529b334",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-25T22:16:45Z",
+      "side": 1,
+      "message": "The new patch takes another way, with initial full transparent.",
+      "parentUuid": "b7964655_2dbc65b0",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a4ef6a6_ae8f0396",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-25T19:36:47Z",
       "side": 1,
       "message": "Please draw to rects with gradient fill instead. And avoid blending and instead overwrite what\u0027s in the buffer for optimal performance.",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b5ca6c_cbfe0b5a",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-25T22:16:45Z",
+      "side": 1,
+      "message": "I am not sure if I understand correctly. \"draw to rects\" -\u003e does it mean preferring rects instead of lines? The new patch has the update.\n\nWhat about avoid blending?",
+      "parentUuid": "9a4ef6a6_ae8f0396",
       "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
