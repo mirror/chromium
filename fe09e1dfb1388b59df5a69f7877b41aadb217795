@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ddc8c2b_9a5b8b0d",
+        "filename": "components/sync/user_events/user_event_sync_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-07-25T20:16:35Z",
+      "side": 1,
+      "message": "[nit] Do we usually add |\u0027s around function names?",
+      "range": {
+        "startLine": 272,
+        "startChar": 3,
+        "endLine": 272,
+        "endChar": 4
+      },
+      "revId": "fe09e1dfb1388b59df5a69f7877b41aadb217795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
