@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "293c872d_a6666616",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-25T18:17:19Z",
+      "side": 1,
+      "message": "It would make this class more clear if this static function was moved to the end of the file. It makes it look like Initialize is also static. Like this is the static section.",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 9
+      },
+      "revId": "5da2e4e52103364e26b8a2959cb80bfe5bd33174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16338b1e_432d2ab4",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 7
