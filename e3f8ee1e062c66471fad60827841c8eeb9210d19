@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5ffa412_6f180f8f",
+        "filename": "components/test/data/cast_certificate/certificates/generate_rsa_device_certs.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-25T01:21:00Z",
+      "side": 1,
+      "message": "2048 -\u003e should be leaf_key_size?",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "e3f8ee1e062c66471fad60827841c8eeb9210d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7211726e_2ac5c8f4",
+        "filename": "net/cert/internal/path_builder_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1331,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-25T01:21:00Z",
+      "side": 1,
+      "message": "Is there any reason not to define a new error ID for the test?",
+      "revId": "e3f8ee1e062c66471fad60827841c8eeb9210d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa6ce48_265a80ab",
+        "filename": "net/cert/internal/verify_signed_data_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-25T01:21:00Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 65,
+        "startChar": 13,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "e3f8ee1e062c66471fad60827841c8eeb9210d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

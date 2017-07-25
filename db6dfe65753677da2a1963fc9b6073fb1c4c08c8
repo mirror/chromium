@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6830493_7a19b0a4",
+        "filename": "net/data/verify_certificate_chain_unittest/target-has-512bit-rsa-key/generate-chains.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-25T01:21:00Z",
+      "side": 1,
+      "message": "-is",
+      "range": {
+        "startLine": 6,
+        "startChar": 49,
+        "endLine": 6,
+        "endChar": 50
+      },
+      "revId": "db6dfe65753677da2a1963fc9b6073fb1c4c08c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
