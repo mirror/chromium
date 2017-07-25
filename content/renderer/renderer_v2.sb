@@ -88,7 +88,7 @@
   (subpath "/usr/share/locale")
   (subpath "/usr/share/zoneinfo"))
 
-(allow file-read* (path "/usr/share/icu/icudt57l.dat"))
+(allow file-read* (subpath "/usr/share/icu"))
 
 ; Reads from /Library.
 (allow file-read-data (subpath "/Library/Fonts"))
