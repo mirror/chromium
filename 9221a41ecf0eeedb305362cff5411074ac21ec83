@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e85bbac9_5a139713",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T09:19:42Z",
+      "side": 1,
+      "message": "I think someone that knows EarlGrey should also review this CL as I do not really know how EarlGrey works and thus I do not understand this change.",
+      "range": {
+        "startLine": 545,
+        "startChar": 17,
+        "endLine": 545,
+        "endChar": 27
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86697837_8712fc5d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T09:19:42Z",
+      "side": 1,
+      "message": "Same here - due to my lack of knowledge of EarlGrey I cannot asses if this is a necessary change or not.",
+      "range": {
+        "startLine": 1131,
+        "startChar": 6,
+        "endLine": 1131,
+        "endChar": 41
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85090b71_570ebc7c",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T09:19:42Z",
+      "side": 1,
+      "message": "s/_settingsHasBeenDismissed/_settingsWereDismissed or _settingsHaveBeenDismissed",
+      "range": {
+        "startLine": 234,
+        "startChar": 7,
+        "endLine": 234,
+        "endChar": 32
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66eaa3d3_33bad205",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T09:19:42Z",
+      "side": 1,
+      "message": "I think this removed the call to |[self stopBrowserStateServiceObservers];|. Is this needed to enabled the earl grey tests?",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 15
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22518145_1f4f5b10",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T09:19:42Z",
+      "side": 1,
+      "message": "Why this change in this CL? Is this needed to enable the earl grey tests? If not, then consider moving this to another CL.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 7,
+        "endLine": 1014,
+        "endChar": 32
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a3af07_50cd4acb",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T09:19:42Z",
+      "side": 1,
+      "message": "I think the name of the function is self-explanatory, so I suggest to remove the comment as it just says the same thing.",
+      "range": {
+        "startLine": 168,
+        "startChar": 20,
+        "endLine": 168,
+        "endChar": 22
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
