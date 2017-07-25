@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a0c8a8_f3552572",
+        "filename": "components/viz/common/switches.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-25T18:20:18Z",
+      "side": 1,
+      "message": "namespace viz {\nnamespace switches {",
+      "revId": "b433af404e8ac6fb9588e96bea0e8e2e67ba43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
