@@ -69,6 +69,24 @@
       "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e86fae_a6dba900",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-25T17:16:33Z",
+      "side": 1,
+      "message": "Good catch. I will add one test for that now.",
+      "parentUuid": "adb80920_7a88e6b9",
+      "revId": "ae39345a96f70f868c1a5a644328eaae1464cd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
