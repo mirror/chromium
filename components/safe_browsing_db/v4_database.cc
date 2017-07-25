@@ -11,6 +11,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/task_runner_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/safe_browsing/web_ui/webui.pb.h"
 #include "components/safe_browsing_db/v4_database.h"
 #include "content/public/browser/browser_thread.h"
 
@@ -187,8 +188,11 @@ void V4Database::ApplyUpdate(
   }
 
   if (!pending_store_updates_) {
+    database_update_successful_ = true;
     current_task_runner->PostTask(FROM_HERE, db_updated_callback_);
     db_updated_callback_.Reset();
+  } else {
+    database_update_successful_ = false;
   }
 }
 
@@ -305,6 +309,24 @@ void V4Database::RecordFileSizeHistograms() {
   }
   const int64_t db_size_kilobytes = static_cast<int64_t>(db_size / 1024);
   UMA_HISTOGRAM_COUNTS(kV4DatabaseSizeMetric, db_size_kilobytes);
+}
+
+void V4Database::SetDatabaseFields(
+    DatabaseManagerInfo::DatabaseInfo* database_info) {
+  // Records the database size in bytes.
+  int64_t db_size = 0;
+
+  // Populates the StoreInfo message with the data for each store.
+  for (const auto& store_map_iter : *store_map_) {
+    DatabaseManagerInfo::DatabaseInfo::StoreInfo* new_store_added =
+        database_info->add_store_info();
+    store_map_iter.second->SetStoreFields(new_store_added,
+                                          kV4DatabaseSizeMetric);
+    db_size += new_store_added->file_size_bytes();
+  }
+
+  database_info->set_database_size_bytes(db_size);
+  database_info->set_update_successful(database_update_successful_);
 }
 
 ListInfo::ListInfo(const bool fetch_updates,

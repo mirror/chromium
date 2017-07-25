@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "components/safe_browsing_db/v4_store.h"
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/files/file_util.h"
@@ -10,8 +11,8 @@
 #include "base/metrics/sparse_histogram.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
+#include "components/safe_browsing/web_ui/webui.pb.h"
 #include "components/safe_browsing_db/v4_rice.h"
-#include "components/safe_browsing_db/v4_store.h"
 #include "components/safe_browsing_db/v4_store.pb.h"
 #include "crypto/secure_hash.h"
 #include "crypto/sha2.h"
@@ -378,7 +379,8 @@ void V4Store::ApplyUpdate(
     DLOG(WARNING) << "Failure: ApplyUpdate: reason: " << apply_update_result
                   << "; store: " << *this;
   }
-
+  // Record the state of the update to be shown in the Safe Browsing page.
+  apply_update_status_ = apply_update_result;
   RecordApplyUpdateResult(metric, apply_update_result, store_path_);
 
   // Posting the task should be the last thing to do in this function.
@@ -703,6 +705,7 @@ StoreReadResult V4Store::ReadFromDisk() {
   ApplyUpdateResult apply_update_result = ProcessFullUpdate(
       kReadFromDisk, response, true /* delay_checksum check */);
   RecordApplyUpdateResult(kReadFromDisk, apply_update_result, store_path_);
+  apply_update_status_ = apply_update_result;
   if (apply_update_result != APPLY_UPDATE_SUCCESS) {
     hash_prefix_map_.clear();
     return HASH_PREFIX_MAP_GENERATION_FAILURE;
@@ -860,6 +863,17 @@ int64_t V4Store::RecordAndReturnFileSize(const std::string& base_metric) {
     histogram->Add(file_size_kilobytes);
   }
   return file_size_;
+}
+
+void V4Store::SetStoreFields(
+    DatabaseManagerInfo::DatabaseInfo::StoreInfo* store_info,
+    const std::string& base_metric) {
+  store_info->set_file_name(base_metric + GetUmaSuffixForStore(store_path_));
+  store_info->set_file_size_bytes(file_size_);
+
+  // Check if store has been read correctly.
+  if (has_valid_data_)
+    store_info->set_update_status(static_cast<int>(apply_update_status_));
 }
 
 }  // namespace safe_browsing

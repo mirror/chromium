@@ -22,6 +22,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/web_ui/webui.pb.h"
 #include "components/safe_browsing_db/safebrowsing.pb.h"
 #include "components/safe_browsing_db/util.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
@@ -70,6 +71,10 @@ class V4UpdateProtocolManager : public net::URLFetcherDelegate {
   // Schedule the next update without backoff.
   void ScheduleNextUpdate(std::unique_ptr<StoreStateMap> store_state_map);
 
+  // Populates the UpdateInfo message.
+  void SetUpdateProtocolManagerFields(
+      DatabaseManagerInfo::UpdateInfo* database_info);
+
  protected:
   // Constructs a V4UpdateProtocolManager that issues network requests using
   // |request_context_getter|. It schedules updates to get the hash prefixes for
@@ -101,6 +106,9 @@ class V4UpdateProtocolManager : public net::URLFetcherDelegate {
   // Fills a FetchThreatListUpdatesRequest protocol buffer for a request.
   // Returns the serialized and base64 URL encoded request as a string.
   std::string GetBase64SerializedUpdateRequestProto();
+
+  // Records the network response code of the last update
+  int response_code_ = 0;
 
   // The method to populate |gurl| with the URL to be sent to the server.
   // |request_base64| is the base64 encoded form of an instance of the protobuf
@@ -183,11 +191,11 @@ class V4UpdateProtocolManager : public net::URLFetcherDelegate {
   // Timer to setup the next update request.
   base::OneShotTimer update_timer_;
 
-  base::Time last_response_time_;
-
   // Used to interrupt and re-schedule update requests that take too long to
   // complete.
   base::OneShotTimer timeout_timer_;
+
+  base::Time last_response_time_;
 
   ExtendedReportingLevelCallback extended_reporting_level_callback_;
 
