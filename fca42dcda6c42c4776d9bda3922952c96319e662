@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dcac9f0_18692a80",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-25T15:12:29Z",
+      "side": 1,
+      "message": "Grid/treegrid/gridcell/columnheader/rowheader are going to need special treatment. I\u0027m working on that in a follow-up patch.",
+      "range": {
+        "startLine": 1290,
+        "startChar": 2,
+        "endLine": 1290,
+        "endChar": 8
+      },
+      "revId": "fca42dcda6c42c4776d9bda3922952c96319e662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
