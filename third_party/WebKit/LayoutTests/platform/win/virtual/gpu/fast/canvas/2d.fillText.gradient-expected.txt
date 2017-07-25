@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test that color gradient is applied properly for fillText() in 2d canvas. assert_equals: red expected 0 but got 255
+Harness: the test ran to completion.
+
