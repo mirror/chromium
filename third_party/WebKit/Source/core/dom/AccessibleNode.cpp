@@ -437,7 +437,7 @@ bool AccessibleNode::GetPropertyOrARIAAttribute(Element* element,
   QualifiedName attribute = GetCorrespondingARIAAttribute(property);
   AtomicString attr_value = element->FastGetAttribute(attribute);
   is_null = attr_value.IsNull();
-  return EqualIgnoringASCIICase(attr_value, "true");
+  return !EqualIgnoringASCIICase(attr_value, "false");
 }
 
 // static
