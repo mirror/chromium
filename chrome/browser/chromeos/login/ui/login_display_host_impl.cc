@@ -1165,6 +1165,7 @@ void LoginDisplayHostImpl::InitLoginWindowAndView() {
   params.delegate = login_window_delegate_ =
       new LoginWidgetDelegate(login_window_, this);
   login_window_->Init(params);
+  login_window_->GetLayer()->SetBackgroundBlur(20);
 
   login_view_ = new WebUILoginView(WebUILoginView::WebViewSettings());
   login_view_->Init();
