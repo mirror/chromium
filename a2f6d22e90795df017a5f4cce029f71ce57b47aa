@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "329d121a_9109226d",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-25T19:18:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "afdaa48f_9f453545",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1b57b75_6a7af270",
         "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
         "patchSetId": 9
@@ -83,6 +107,30 @@
       "writtenOn": "2017-07-25T18:48:33Z",
       "side": 1,
       "message": "Could you put a comment to explain why we also want to report the maximum number of associated tabs that this tab has ever had?",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e141af54_c6f26372",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-25T19:18:38Z",
+      "side": 1,
+      "message": "Done. Please let me know if the comment is clear enough.",
+      "parentUuid": "b1b57b75_6a7af270",
       "range": {
         "startLine": 50,
         "startChar": 2,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9789b9ce_cfa9239a",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-25T19:18:38Z",
+      "side": 1,
+      "message": "Yes. IsCollectingCPUUSage() is called before this function, which only returns true if the ukm_entry_builder_ is initialized.",
+      "parentUuid": "025ea07b_039aa0a5",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3424564d_4fb32334",
         "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
         "patchSetId": 9
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ecfe6051_2c864d8d",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-25T19:18:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3424564d_4fb32334",
+      "range": {
+        "startLine": 100,
+        "startChar": 25,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2e91afe_a0537463",
         "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
         "patchSetId": 9
@@ -152,6 +248,30 @@
       "writtenOn": "2017-07-25T18:48:33Z",
       "side": 1,
       "message": "inline it",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 62
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18872b79_1bad604e",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-25T19:18:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c2e91afe_a0537463",
       "range": {
         "startLine": 113,
         "startChar": 2,
@@ -222,6 +342,30 @@
       "writtenOn": "2017-07-25T18:48:33Z",
       "side": 1,
       "message": "Add a line between them.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb1bc20_3dfcd56d",
+        "filename": "services/resource_coordinator/resource_coordinator_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-25T19:18:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "05aec601_1ed4f031",
       "range": {
         "startLine": 45,
         "startChar": 2,
