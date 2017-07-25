@@ -476,53 +476,76 @@ generate_jni("cronet_tests_jni_headers") {
   jni_package = "cronet_tests"
 }
 
-shared_library("cronet_tests") {
-  testonly = true
-  sources = [
-    # While "cronet_tests" cannot depend on "cronet_static", and hence cannot
-    # call any Cronet functions, it can access fields of Cronet objects, so add
-    # Cronet header files to facilitate accessing these fields.
-    "//components/cronet/android/cronet_url_request_adapter.h",
-    "//components/cronet/android/cronet_url_request_context_adapter.h",
-    "//components/cronet/url_request_context_config.h",
-    "test/cronet_test_jni.cc",
-    "test/cronet_test_util.cc",
-    "test/cronet_test_util.h",
-    "test/cronet_url_request_context_config_test.cc",
-    "test/cronet_url_request_context_config_test.h",
-    "test/experimental_options_test.cc",
-    "test/experimental_options_test.h",
-    "test/mock_cert_verifier.cc",
-    "test/mock_cert_verifier.h",
-    "test/mock_url_request_job_factory.cc",
-    "test/mock_url_request_job_factory.h",
-    "test/native_test_server.cc",
-    "test/native_test_server.h",
-    "test/quic_test_server.cc",
-    "test/quic_test_server.h",
-    "test/sdch_test_util.cc",
-    "test/sdch_test_util.h",
-    "test/test_upload_data_stream_handler.cc",
-    "test/test_upload_data_stream_handler.h",
-  ]
+template("cronet_tests_tmpl") {
+  shared_library(target_name) {
+    testonly = true
+    sources = [
+      # While "cronet_tests" cannot depend on "cronet_static", and hence cannot
+      # call any Cronet functions, it can access fields of Cronet objects, so add
+      # Cronet header files to facilitate accessing these fields.
+      "//components/cronet/android/cronet_url_request_adapter.h",
+      "//components/cronet/android/cronet_url_request_context_adapter.h",
+      "//components/cronet/url_request_context_config.h",
+      "test/cronet_test_jni.cc",
+      "test/cronet_test_util.cc",
+      "test/cronet_test_util.h",
+      "test/cronet_url_request_context_config_test.cc",
+      "test/cronet_url_request_context_config_test.h",
+      "test/experimental_options_test.cc",
+      "test/experimental_options_test.h",
+      "test/mock_cert_verifier.cc",
+      "test/mock_cert_verifier.h",
+      "test/mock_url_request_job_factory.cc",
+      "test/mock_url_request_job_factory.h",
+      "test/native_test_server.cc",
+      "test/native_test_server.h",
+      "test/quic_test_server.cc",
+      "test/quic_test_server.h",
+      "test/sdch_test_util.cc",
+      "test/sdch_test_util.h",
+      "test/test_upload_data_stream_handler.cc",
+      "test/test_upload_data_stream_handler.h",
+    ]
 
+    deps = [
+      ":cronet_tests_jni_headers",
+      ":cronet_version_header",
+      "//base",
+      "//base:i18n",
+      "//base/test:test_support",
+      "//components/prefs",
+      "//net",
+      "//net:simple_quic_tools",
+      "//net:test_support",
+      "//third_party/icu",
+    ]
+
+    include_dirs = [ _cronet_version_header_include_dir ]
+
+    defines = []
+    if (defined(invoker.defines)) {
+      defines += invoker.defines
+    }
+
+    if (defined(invoker.deps)) {
+      deps += invoker.deps
+    }
+
+    configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+    configs += [ "//build/config/android:hide_all_but_jni" ]
+  }
+}
+
+cronet_tests_tmpl("cronet_with_tests") {
   deps = [
-    ":cronet_tests_jni_headers",
-    ":cronet_version_header",
-    "//base",
-    "//base:i18n",
-    "//base/test:test_support",
-    "//components/prefs",
-    "//net",
-    "//net:simple_quic_tools",
-    "//net:test_support",
-    "//third_party/icu",
+    ":cronet_static",
   ]
+  defines = [ "SINGLE_LIBRARY_TESTING" ]
+}
 
-  include_dirs = [ _cronet_version_header_include_dir ]
-
-  configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
-  configs += [ "//build/config/android:hide_all_but_jni" ]
+cronet_tests_tmpl("cronet_tests") {
+  deps = []
+  defines = []
 }
 
 android_resources("cronet_test_apk_resources") {
@@ -634,10 +657,7 @@ android_apk("cronet_test_apk") {
   testonly = true
   apk_name = "CronetTest"
   android_manifest = "test/AndroidManifest.xml"
-  shared_libraries = [
-    ":cronet",
-    ":cronet_tests",
-  ]
+  shared_libraries = [ ":cronet_with_tests" ]
   loadable_modules = [ "$root_out_dir/libnetty-tcnative.so" ]
 
   deps = [

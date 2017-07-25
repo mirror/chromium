@@ -28,8 +28,6 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
     }
 
     private void setUp(QuicBidirectionalStreams enabled) throws Exception {
-        // Load library first to create MockCertVerifier.
-        System.loadLibrary("cronet_tests");
         ExperimentalCronetEngine.Builder builder =
                 new ExperimentalCronetEngine.Builder(getContext());
 
