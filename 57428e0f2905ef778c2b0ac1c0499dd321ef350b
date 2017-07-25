@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f2ab55aa_e02af92d",
+        "filename": "components/sync/engine_impl/cycle/nudge_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-25T15:17:11Z",
+      "side": 1,
+      "message": "Tried it out and confirmed that using enums compiles fine and has 0 impact on binary size. Thanks for the tip!",
+      "parentUuid": "cbef52e9_7aa3d917",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64eee07b_b4770ac9",
         "filename": "components/update_client/request_sender.cc",
         "patchSetId": 9
