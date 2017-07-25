@@ -9,6 +9,9 @@
 #import "ios/clean/chrome/browser/ui/commands/context_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_context_impl.h"
 #import "ios/clean/chrome/browser/ui/context_menu/web_context_menu_coordinator.h"
+#import "ios/clean/chrome/browser/ui/overlays/browser_coordinator+overlay_support.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_mediator.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_view_controller.h"
 #import "ios/shared/chrome/browser/ui/browser_list/browser.h"
@@ -27,6 +30,7 @@
 }
 @property(nonatomic, strong) WebContentsViewController* viewController;
 @property(nonatomic, strong) WebContentsMediator* mediator;
+
 @end
 
 @implementation WebCoordinator
@@ -51,13 +55,23 @@
 }
 
 - (void)start {
+  // Create the view controller and start it.
   self.viewController = [[WebContentsViewController alloc] init];
   self.mediator.consumer = self.viewController;
   self.mediator.webState = self.webState;
   [super start];
+  // Notify the OverlayService that this coordinator is displaying |webState|.
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->SetWebStateParentCoordinator(self, self.webState);
 }
 
 - (void)stop {
+  // Notify the OverlayService that this coordinator is no longer displaying
+  // |webState|.
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->SetWebStateParentCoordinator(nil, self.webState);
   [super stop];
 }
 
