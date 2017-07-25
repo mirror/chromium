@@ -16,6 +16,24 @@
       "revId": "b9ab2a8c931184004aa524d0cfb2fab3f407e84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bfc3de_ccc41086",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-25T00:41:19Z",
+      "side": 1,
+      "message": "I don\u0027t think so :( If I understand correctly, I think the problem is that constexpr keyword implies the inline keyword, so doing that would probably mean moving the kSiteSettingSourceStringMapping array to the header file, which I don\u0027t think we want.",
+      "parentUuid": "080fea94_cbde13e7",
+      "revId": "b9ab2a8c931184004aa524d0cfb2fab3f407e84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
