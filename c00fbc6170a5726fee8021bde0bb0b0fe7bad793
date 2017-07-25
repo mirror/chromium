@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc46de0_6fb2ce0f",
+        "filename": "chrome/browser/devtools/device/android_device_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-25T00:24:03Z",
+      "side": 0,
+      "message": "Let\u0027s keep this check. All the classes here are not thread safe.",
+      "revId": "c00fbc6170a5726fee8021bde0bb0b0fe7bad793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
