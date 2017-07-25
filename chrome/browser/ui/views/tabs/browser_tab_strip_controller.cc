@@ -421,6 +421,10 @@ base::string16 BrowserTabStripController::GetAccessibleTabName(
       false /* include_app_name */, tabstrip_->GetModelIndexOfTab(tab));
 }
 
+Profile* BrowserTabStripController::profile() const {
+  return model_->profile();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserTabStripController, TabStripModelObserver implementation:
 
