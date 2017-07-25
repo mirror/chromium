@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "10ce8c70_d10a1b50",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-25T23:28:24Z",
+      "side": 1,
+      "message": "Yeah, cause the underlying types are checked, this will only be valid if there was no overflow on them or the math done on them.\n\nThe PERCENTAGE macro needs int as its type -- the cast from CheckedNumeric\u003csize_t\u003e to CheckedNumeric\u003cint\u003e will check for an overflow there.\n\n(I checked these manually)",
+      "parentUuid": "0be83f7f_5d1d9bbc",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58ad1455_2c91b065",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 5
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "b72685f1_3538f33f",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-25T23:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ad1455_2c91b065",
+      "range": {
+        "startLine": 262,
+        "startChar": 37,
+        "endLine": 262,
+        "endChar": 38
+      },
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f913077_84c6213c",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 5
@@ -73,6 +115,24 @@
       "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0db0065_f2d6c548",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-25T23:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f913077_84c6213c",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "367658f5_8c25ff32",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-25T23:28:24Z",
+      "side": 1,
+      "message": "Changed to size_t.",
+      "parentUuid": "ddf0ffe0_09d0f262",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "865bba78_cf23f5ae",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -107,6 +185,24 @@
       "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658cc203_6a20bebe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 62437,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-25T23:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "865bba78_cf23f5ae",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
