@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c2791b07_829797ae",
+        "filename": "net/cert/cert_verify_proc_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-25T23:43:30Z",
+      "side": 1,
+      "message": "Yeah, the Tripadvisor one is going to be trickier to replace (because it\u0027s effectively testing OS behaviour that is harder to synthesize). But maybe that\u0027s a sign it\u0027s not a good test / we should move to our own validator :D",
+      "parentUuid": "c4df91c1_401500d0",
+      "range": {
+        "startLine": 306,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 33
+      },
+      "revId": "435593fec1c1e9b0458510e098a5eb81b4456f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "620b8dd5_28182cc6",
         "filename": "net/data/ssl/scripts/fetch-live-certs.sh",
         "patchSetId": 1
