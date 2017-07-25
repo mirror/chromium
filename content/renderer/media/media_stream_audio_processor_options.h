@@ -18,6 +18,7 @@
 #include "third_party/webrtc/api/mediastreaminterface.h"
 #include "third_party/webrtc/media/base/mediachannel.h"
 #include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
+#include "third_party/webrtc_overrides/webrtc/rtc_base/task_queue.h"
 
 namespace webrtc {
 
@@ -190,7 +191,8 @@ void EnableTypingDetection(AudioProcessing* audio_processing,
 
 // Starts the echo cancellation dump in |audio_processing|.
 void StartEchoCancellationDump(AudioProcessing* audio_processing,
-                               base::File aec_dump_file);
+                               base::File aec_dump_file,
+                               rtc::TaskQueue* worker_queue);
 
 // Stops the echo cancellation dump in |audio_processing|.
 // This method has no impact if echo cancellation dump has not been started on
