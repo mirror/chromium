@@ -199,7 +199,7 @@ def SymbolizeEntry(entry):
   # that to align it properly after the frame index.
   addr2line_filtered = addr2line_output.strip().replace(
       '(inlined', ' ' * len(prefix) + '(inlined')
-  return '#%s: %s' % (prefix, addr2line_filtered)
+  return '%s%s' % (prefix, addr2line_filtered)
 
 
 def ParallelSymbolizeBacktrace(backtrace):
@@ -302,9 +302,14 @@ def main():
     print 'Run:', qemu_command
   else:
     prefix = r'^.*> '
-    bt_with_offset_re = re.compile(prefix +
-        'bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) \((\S+),(0x[0-9a-f]+)\)$')
-    bt_end_re = re.compile(prefix + 'bt#(\d+): end')
+    bt_end_re = re.compile(prefix + '(bt)?#(\d+):? end')
+
+    bt_with_offset_re = re.compile(
+        prefix + 'bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) ' +
+                 '\((\S+),(0x[0-9a-f]+)\)$')
+
+    in_process_re = re.compile(prefix +
+                               '#(\d+) 0x[0-9a-f]+ \S+\+(0x[0-9a-f]+)$')
 
     # We pass a separate stdin stream to qemu. Sharing stdin across processes
     # leads to flakiness due to the OS prematurely killing the stream and the
@@ -322,13 +327,13 @@ def main():
 
     success = False
     while True:
-      line = qemu_popen.stdout.readline()
+      line = qemu_popen.stdout.readline().strip()
       if not line:
         break
-      print line,
+      print line
       if 'SUCCESS: all tests passed.' in line:
         success = True
-      if bt_end_re.match(line.strip()):
+      if bt_end_re.match(line):
         if bt_entries:
           print '----- start symbolized stack'
           for processed in ParallelSymbolizeBacktrace(bt_entries):
@@ -336,9 +341,18 @@ def main():
           print '----- end symbolized stack'
         bt_entries = []
       else:
-        m = bt_with_offset_re.match(line.strip())
+        # Try to parse this as a Fuchsia system backtrace.
+        m = bt_with_offset_re.match(line)
         if m:
           bt_entries.append((m.group(1), args.test_name, m.group(4)))
+          continue
+
+        # Try to parse the line as an in-process backtrace entry.
+        m = in_process_re.match(line)
+        if m:
+          bt_entries.append((m.group(1), args.test_name, m.group(2)))
+          continue
+
     qemu_popen.wait()
 
     return 0 if success else 1
