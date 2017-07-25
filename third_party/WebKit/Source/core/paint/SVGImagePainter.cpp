@@ -74,7 +74,7 @@ void SVGImagePainter::PaintForeground(const PaintInfo& paint_info) {
   image_element->preserveAspectRatio()->CurrentValue()->TransformRect(dest_rect,
                                                                       src_rect);
   InterpolationQuality interpolation_quality =
-      layout_svg_image_.StyleRef().GetInterpolationQuality();
+      layout_svg_image_.StyleRef().GetInterpolationQuality(image.Get());
   InterpolationQuality previous_interpolation_quality =
       paint_info.context.ImageInterpolationQuality();
   paint_info.context.SetImageInterpolationQuality(interpolation_quality);

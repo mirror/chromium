@@ -62,11 +62,12 @@ namespace {
 
 class InterpolationQualityContext {
  public:
-  InterpolationQualityContext(const ComputedStyle& style,
+  InterpolationQualityContext(Image* image,
+                              const ComputedStyle& style,
                               GraphicsContext& context)
       : context_(context),
         previous_interpolation_quality_(context.ImageInterpolationQuality()) {
-    interpolation_quality_ = style.GetInterpolationQuality();
+    interpolation_quality_ = style.GetInterpolationQuality(image);
     if (interpolation_quality_ != previous_interpolation_quality_)
       context.SetImageInterpolationQuality(interpolation_quality_);
   }
@@ -320,7 +321,8 @@ void BoxModelObjectPainter::PaintFillLayer(
     image = info.image->GetImage(
         geometry.ImageClient(), geometry.ImageDocument(), geometry.ImageStyle(),
         FlooredIntSize(geometry.TileSize()));
-    interpolation_quality_context.emplace(geometry.ImageStyle(), context);
+    interpolation_quality_context.emplace(image.Get(), geometry.ImageStyle(),
+                                          context);
 
     if (bg_layer.MaskSourceType() == kMaskLuminance)
       context.SetColorFilter(kColorFilterLuminanceToAlpha);

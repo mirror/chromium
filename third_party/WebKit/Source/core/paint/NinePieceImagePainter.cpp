@@ -92,7 +92,8 @@ bool NinePieceImagePainter::Paint(GraphicsContext& graphics_context,
   RefPtr<Image> image =
       style_image->GetImage(observer, document, style, image_size);
 
-  InterpolationQuality interpolation_quality = style.GetInterpolationQuality();
+  InterpolationQuality interpolation_quality =
+      style.GetInterpolationQuality(image.Get());
   InterpolationQuality previous_interpolation_quality =
       graphics_context.ImageInterpolationQuality();
   graphics_context.SetImageInterpolationQuality(interpolation_quality);
