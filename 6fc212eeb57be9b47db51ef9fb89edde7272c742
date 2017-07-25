@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bbdf9c0_8ebb88e5",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-25T23:24:51Z",
+      "side": 1,
+      "message": "The main idea behind having a separate source set to be included in content/renderer was that media_remoting_tests still use the full \u0027remoting\u0027 source set on Android as those don\u0027t care about the binary size and would be good to keep running on the Android bots.",
+      "parentUuid": "ae75c905_21a3aa22",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d8ee64e_bcf104bd",
         "filename": "media/remoting/BUILD.gn",
         "patchSetId": 3
@@ -174,6 +198,30 @@
       "writtenOn": "2017-07-25T21:22:07Z",
       "side": 1,
       "message": "Remove this forward decl, and insert (above L17):\n\n  #if defined(MEDIA_REMOTING_ENABLE_RPC)\n  #include \"media/remoting/rpc_broker.h\"\n  #endif",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7b802d_188e6947",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-25T23:24:51Z",
+      "side": 1,
+      "message": "I tried conditional includes in the previous patchset and gn gen --check still complained about those :( Hence I tried to avoid those in the last patchset.",
+      "parentUuid": "72af4aee_be531d0c",
       "range": {
         "startLine": 20,
         "startChar": 0,
