@@ -11,6 +11,7 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
+#include "storage/public/interfaces/blobs.mojom-blink.h"
 
 #if INSIDE_BLINK
 #include <utility>
@@ -56,7 +57,9 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerRequest {
 
   void VisitHTTPHeaderFields(WebHTTPHeaderVisitor*) const;
 
-  void SetBlob(const WebString& uuid, long long size);
+  void SetBlob(const WebString& uuid,
+               long long size,
+               storage::mojom::blink::BlobPtrInfo);
 
   void SetReferrer(const WebString&, WebReferrerPolicy);
   WebURL ReferrerUrl() const;

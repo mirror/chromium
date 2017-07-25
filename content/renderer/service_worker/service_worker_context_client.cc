@@ -57,6 +57,7 @@
 #include "ipc/ipc_message_macros.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_headers.h"
+#include "storage/common/blob_storage/blob_handle.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
@@ -214,8 +215,16 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
                            blink::WebString::FromUTF8(pair.second));
   }
   if (!request.blob_uuid.empty()) {
+    DCHECK_EQ(request.blob != nullptr,
+              base::FeatureList::IsEnabled(features::kMojoBlobs));
+    storage::mojom::blink::BlobPtrInfo web_blob_info;
+    if (request.blob) {
+      auto blob_info = request.blob->Clone().PassInterface();
+      web_blob_info = storage::mojom::blink::BlobPtrInfo(blob_info.PassHandle(),
+                                                         blob_info.version());
+    }
     web_request->SetBlob(blink::WebString::FromASCII(request.blob_uuid),
-                         request.blob_size);
+                         request.blob_size, std::move(web_blob_info));
   }
   web_request->SetReferrer(
       blink::WebString::FromUTF8(request.referrer.url.spec()),
@@ -253,8 +262,16 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
                             blink::WebString::FromUTF8(pair.second));
   }
   if (!response.blob_uuid.empty()) {
+    DCHECK_EQ(response.blob != nullptr,
+              base::FeatureList::IsEnabled(features::kMojoBlobs));
+    storage::mojom::blink::BlobPtrInfo web_blob_info;
+    if (response.blob) {
+      auto blob_info = response.blob->Clone().PassInterface();
+      web_blob_info = storage::mojom::blink::BlobPtrInfo(blob_info.PassHandle(),
+                                                         blob_info.version());
+    }
     web_response->SetBlob(blink::WebString::FromASCII(response.blob_uuid),
-                          response.blob_size);
+                          response.blob_size, std::move(web_blob_info));
   }
   web_response->SetError(response.error);
   web_response->SetResponseTime(response.response_time);
