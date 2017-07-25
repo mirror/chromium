@@ -9,8 +9,6 @@ function testSetAdapterState() {
     chrome.test.assertNoLastError();
     chrome.test.assertFalse(state.powered);
     chrome.test.assertTrue(state.name != newAdapterName);
-    // TODO(tengs): Check if adapter is discoverable when the attribute is
-    // exposed to the chrome.bluetooth API.
     setAdapterState();
   });
 }
@@ -19,7 +17,8 @@ function setAdapterState() {
   var newState = {
     name: newAdapterName,
     powered: true,
-    discoverable: true
+    discoverable: true,
+    is_user_pref: true
   };
 
   chrome.bluetoothPrivate.setAdapterState(newState, function() {
@@ -36,11 +35,8 @@ function checkFinalAdapterState() {
     chrome.test.assertNoLastError();
     chrome.test.assertTrue(state.powered);
     chrome.test.assertTrue(state.name == newAdapterName);
-    // TODO(tengs): Check if adapter is discoverable when the attribute is
-    // exposed to the chrome.bluetooth API.
     if (!adapterStateSet) {
       adapterStateSet = true;
-      // Check indempotence of bluetoothPrivate.setAdapterState.
       setAdapterState();
     } else {
       chrome.test.sendMessage('done', chrome.test.succeed);

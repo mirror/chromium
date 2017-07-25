@@ -203,7 +203,7 @@ Polymer({
     }
     this.bluetoothToggleDisabled_ = true;
     this.bluetoothPrivate.setAdapterState(
-        {powered: this.bluetoothToggleState_}, function() {
+        {powered: this.bluetoothToggleState_, is_user_pref: true}, function() {
           if (chrome.runtime.lastError) {
             console.error(
                 'Error enabling bluetooth: ' +
