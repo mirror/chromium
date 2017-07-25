@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "594d0c6a_0aab4e32",
+        "filename": "third_party/WebKit/LayoutTests/css3/flexbox/radiobutton-min-size.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T02:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7857ad8_d9d178b2",
+      "revId": "9062bb314014ddc60e4c78a6ce79d8092f0cbcce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb0961e_eb3c8473",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T09:00:05Z",
       "side": 1,
       "message": "Why the different checks here? Intrinsic or auto for min-width/width, but only auto for min-height/height?",
+      "revId": "9062bb314014ddc60e4c78a6ce79d8092f0cbcce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c87c71_60e8650e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-25T02:22:20Z",
+      "side": 1,
+      "message": "I copied it from the SetSizeIfAuto function. I don\u0027t know why the check is different, perhaps because we didn\u0027t use to support intrinsic sizing for heights?",
+      "parentUuid": "1fb0961e_eb3c8473",
       "revId": "9062bb314014ddc60e4c78a6ce79d8092f0cbcce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
