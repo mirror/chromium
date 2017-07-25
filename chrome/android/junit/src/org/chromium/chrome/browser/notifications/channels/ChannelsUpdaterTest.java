@@ -103,7 +103,9 @@ public class ChannelsUpdaterTest {
                 containsInAnyOrder(ChannelDefinitions.CHANNEL_ID_BROWSER,
                         ChannelDefinitions.CHANNEL_ID_DOWNLOADS,
                         ChannelDefinitions.CHANNEL_ID_INCOGNITO,
-                        ChannelDefinitions.CHANNEL_ID_SITES, ChannelDefinitions.CHANNEL_ID_MEDIA));
+                        ChannelDefinitions.CHANNEL_ID_MEDIA,
+                        ChannelDefinitions.CHANNEL_ID_SCREENCAPTURE,
+                        ChannelDefinitions.CHANNEL_ID_SITES));
         assertThat(mMockSharedPreferences.getInt(ChannelsUpdater.CHANNELS_VERSION_KEY, -1), is(21));
     }
 
@@ -124,7 +126,9 @@ public class ChannelsUpdaterTest {
                 containsInAnyOrder(ChannelDefinitions.CHANNEL_ID_BROWSER,
                         ChannelDefinitions.CHANNEL_ID_DOWNLOADS,
                         ChannelDefinitions.CHANNEL_ID_INCOGNITO,
-                        ChannelDefinitions.CHANNEL_ID_SITES, ChannelDefinitions.CHANNEL_ID_MEDIA));
+                        ChannelDefinitions.CHANNEL_ID_MEDIA,
+                        ChannelDefinitions.CHANNEL_ID_SCREENCAPTURE,
+                        ChannelDefinitions.CHANNEL_ID_SITES));
     }
 
     private static List<String> getChannelIds(List<Channel> channels) {
