@@ -144,6 +144,9 @@ class MutableProfileOAuth2TokenServiceDelegate
   // Cancels any outstanding fetch for tokens from the web database.
   void CancelWebTokenFetch();
 
+  // Returns true if the Dice flow is enabled for this delegate.
+  bool IsDiceEnabled();
+
   std::string GetRefreshToken(const std::string& account_id) const;
 
   // Maps the |account_id| of accounts known to ProfileOAuth2TokenService

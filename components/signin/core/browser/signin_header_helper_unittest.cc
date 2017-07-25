@@ -60,7 +60,8 @@ class SigninHeaderHelperTest : public testing::Test {
                                            TRAFFIC_ANNOTATION_FOR_TESTS);
     AppendOrRemoveAccountConsistentyRequestHeader(
         url_request.get(), GURL(), account_id, sync_enabled,
-        cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+        false /* sync_has_auth_error */, cookie_settings_.get(),
+        PROFILE_MODE_DEFAULT);
     return url_request;
   }
 
@@ -331,7 +332,8 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderEligibleRedirectURL) {
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
   AppendOrRemoveAccountConsistentyRequestHeader(
       url_request.get(), redirect_url, account_id, false /* sync_enabled */,
-      cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+      false /* sync_has_auth_error */, cookie_settings_.get(),
+      PROFILE_MODE_DEFAULT);
   EXPECT_TRUE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
 }
@@ -348,7 +350,8 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderNonEligibleRedirectURL) {
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
   AppendOrRemoveAccountConsistentyRequestHeader(
       url_request.get(), redirect_url, account_id, false /* sync_enabled */,
-      cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+      false /* sync_has_auth_error */, cookie_settings_.get(),
+      PROFILE_MODE_DEFAULT);
   EXPECT_FALSE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
 }
@@ -368,7 +371,8 @@ TEST_F(SigninHeaderHelperTest, TestIgnoreMirrorHeaderNonEligibleURLs) {
                                            false);
   AppendOrRemoveAccountConsistentyRequestHeader(
       url_request.get(), redirect_url, account_id, false /* sync_enabled */,
-      cookie_settings_.get(), PROFILE_MODE_DEFAULT);
+      false /* sync_has_auth_error */, cookie_settings_.get(),
+      PROFILE_MODE_DEFAULT);
   std::string header;
   EXPECT_TRUE(url_request->extra_request_headers().GetHeader(
       kChromeConnectedHeader, &header));
