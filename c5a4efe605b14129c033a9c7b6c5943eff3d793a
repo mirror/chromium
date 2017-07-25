@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "6bcc42ec_c6823e30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-25T01:17:28Z",
+      "side": 1,
+      "message": "Why does this happen.\nIsn\u0027t the bluetooth state suppose to stay the same after suspend / resume?",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e63666_3c403aa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-25T01:17:28Z",
+      "side": 1,
+      "message": "I think it is better and less confusing to disable bluetooth state toggling (gray out in UI or something similar) why we waiting for Android to change the state.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d4a1d8_8531deac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-25T01:17:28Z",
+      "side": 1,
+      "message": "Why do we want this?",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 64
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2fcd2ac_6b2a6060",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 1
