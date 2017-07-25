@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "e9ab7dae_164af1e0",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-25T23:16:23Z",
+      "side": 1,
+      "message": "Ugh, the parameter is expecting it to be an origin, but typed as GURL?! This is strange and should be fixed. dcheng@ tells me this has been discussed in the past. So let\u0027s continue on this CL with GetLastCommittedOrigin().GetURL(), but follow up on changing these APIs to use url::Origin as the type.",
+      "parentUuid": "e1262a91_598a3623",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 47
+      },
+      "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12a11632_d47a94bc",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 16
