@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fc5c7a5d_1cff8690",
+        "filename": "chrome/installer/zucchini/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-25T21:26:30Z",
+      "side": 1,
+      "message": "I agree, zucchini.h will contain core functions and is not concerned with file IO, command line arguments. It makes sense to have status::Code in zucchini.h.",
+      "parentUuid": "bdc846b1_6b500aa8",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa5e851_62867c2c",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 3
