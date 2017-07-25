@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "822cef4d_69ead4ce",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-25T12:52:28Z",
+      "side": 1,
+      "message": "I think we can consider passing this from Blink on initiation of the request than asking the inspector here. The inspector would lose the ability to change the cache-disabled checkbox and reflect it to an ongoing resource loading, but I guess it\u0027s acceptable. If not, we need to have a path back to Blink to get this.\n\nFor the initial commit, I also think you can skip this anyway.",
+      "revId": "9940a9057723d7f5ef918f9b3a85cad618c18194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a7cae5_ad915986",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-25T12:52:28Z",
+      "side": 1,
+      "message": "You can do the same like what you\u0027re going to do for preflights. But ideally we want to send only the diff to the browser process.\n\nThe IPC to instruct the browser process to follow redirect is currently insufficient. ResourceLoader cannot update credentials mode, Origin header, etc. while DTL can. I\u0027m working on fixing that. So, I suggest you wait for my work and do similar to ResourceLoader than DocumentThreadableLoader for this new CORS module.",
+      "revId": "9940a9057723d7f5ef918f9b3a85cad618c18194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
