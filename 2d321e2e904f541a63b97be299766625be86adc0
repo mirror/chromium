@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35cf6054_53d91c26",
+        "filename": "ui/android/java/res/drawable/dropdown_label_color.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-25T18:46:34Z",
+      "side": 1,
+      "message": "Yes I think it should be.",
+      "parentUuid": "497585e8_149ea42a",
+      "range": {
+        "startLine": 10,
+        "startChar": 56,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "2d321e2e904f541a63b97be299766625be86adc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c8dfc63_93870dd1",
         "filename": "ui/android/java/res/values/colors.xml",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2d321e2e904f541a63b97be299766625be86adc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d100cf0_53535796",
+        "filename": "ui/android/java/res/values/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-25T18:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c8dfc63_93870dd1",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "2d321e2e904f541a63b97be299766625be86adc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
