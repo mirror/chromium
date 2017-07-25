@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d12f790_cc92d51c",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-25T08:42:31Z",
+      "side": 1,
+      "message": "Is this needed? We can easily see that |show_keyboard| must be true here from the above block.",
+      "range": {
+        "startLine": 652,
+        "startChar": 2,
+        "endLine": 652,
+        "endChar": 22
+      },
+      "revId": "e647c2f129d0aff7aa0671167fc3b15544af6953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb67d321_a4d047f3",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-25T08:42:31Z",
+      "side": 1,
+      "message": "Could you change this section like:\n```\n// If the controller is in the process of hiding the keyboard, just \n// canceling the hiding process\nif (WillHideKeyboard()) {\n  weak_factory_will_hide_.InvalidateWeakPtrs();\n  ...\n  return;\n}\n\nkeyboard::LogKeyboardControlEvent(...);\n```",
+      "range": {
+        "startLine": 654,
+        "startChar": 0,
+        "endLine": 665,
+        "endChar": 3
+      },
+      "revId": "e647c2f129d0aff7aa0671167fc3b15544af6953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ea3748_066dfe26",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-25T08:42:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 764,
+        "startChar": 0,
+        "endLine": 764,
+        "endChar": 3
+      },
+      "revId": "e647c2f129d0aff7aa0671167fc3b15544af6953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
