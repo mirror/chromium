@@ -46,6 +46,30 @@
       "revId": "eef95ae0864633d0a57a166e8eac81d5249ab680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f616baee_e1e5de50",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-flexbox.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-25T21:33:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the specific intention here is, I could imagine that we want to be sure sticky is aware of the flow-flow direction - possibly to ensure that sticky can position itself when contents which come after it in DOM order affect its position? I\u0027d be inclined to match the original test.",
+      "parentUuid": "2a514fe5_773a21ec",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "eef95ae0864633d0a57a166e8eac81d5249ab680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
