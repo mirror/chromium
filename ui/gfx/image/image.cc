@@ -31,12 +31,80 @@
 #include "ui/gfx/image/image_skia_util_mac.h"
 #endif
 
+#include "base/atomicops.h"
+
 namespace gfx {
 
 namespace {
 
-using RepresentationMap =
-    std::map<Image::RepresentationType, std::unique_ptr<internal::ImageRep>>;
+// Like std::unique_ptr<T> but a) can only be set from null to some value a
+// single time, then after that cannot be modified, and b) setting is
+// thread-safe. Note that while setting is thread-safe, deleting is not.
+template <typename T>
+class AtomicUniquePtr {
+ public:
+  AtomicUniquePtr()
+      : ptr_(reinterpret_cast<base::subtle::AtomicWord>(nullptr)) {}
+  // Takes ownship of |ptr|.
+  AtomicUniquePtr(T* ptr)
+      : ptr_(reinterpret_cast<base::subtle::AtomicWord>(ptr)) {}
+  AtomicUniquePtr(std::unique_ptr<T> ptr)
+      : ptr_(reinterpret_cast<base::subtle::AtomicWord>(ptr.release())) {}
+  // Moves the value from one AtomicUniquePtr to another. The |other| must be
+  // accessible from only one thread.
+  AtomicUniquePtr(AtomicUniquePtr&& other) : ptr_(other.ptr_) {
+    other.ptr_ = reinterpret_cast<base::subtle::AtomicWord>(nullptr);
+  }
+  // Deletes an AtomicUniquePtr. Must be accessible from only one thread.
+  ~AtomicUniquePtr() { delete get(); }
+
+  const T* get() const {
+    return reinterpret_cast<T*>(base::subtle::NoBarrier_Load(&ptr_));
+  }
+  const T& operator*() const { return *get(); }
+  const T* operator->() const { return get(); }
+  operator bool() const { return ptr_; }
+
+  // Sets this pointer's value, if it's currently null. If it's non-null, does
+  // nothing. If called by multiple threads at the same time, one thread will
+  // "win" and the others will just get their |value| deleted. Clients MUST NOT
+  // assume that value.get() is valid after this call; instead call get() to
+  // retrieve the actual value that was stored.
+  //
+  // If |value| is non-null, get() is guaranteed to return non-null.
+  void SetIfNull(std::unique_ptr<T> value) {
+    const base::subtle::AtomicWord kNull =
+        reinterpret_cast<base::subtle::AtomicWord>(nullptr);
+    T* ptr = value.release();
+    if (!ptr)
+      return;
+
+    base::subtle::AtomicWord existing_value =
+        base::subtle::NoBarrier_CompareAndSwap(
+            &ptr_, kNull, reinterpret_cast<base::subtle::AtomicWord>(ptr));
+    if (existing_value != kNull) {
+      // It wouldn't have updated the value, so delete it manually.
+      delete ptr;
+    }
+  }
+
+ private:
+  // Actually a T*, but always accessed using atomic operations.
+  base::subtle::AtomicWord ptr_;
+
+  AtomicUniquePtr& operator=(AtomicUniquePtr&& other) = delete;
+  DISALLOW_COPY_AND_ASSIGN(AtomicUniquePtr);
+};
+
+// Contains zero or more image representations of different types. All
+// representations should represent the same pixel data; any field can be
+// optional.
+struct RepresentationMap {
+  AtomicUniquePtr<internal::ImageRep> image_rep_cocoa;
+  AtomicUniquePtr<internal::ImageRep> image_rep_cocoa_touch;
+  AtomicUniquePtr<internal::ImageRep> image_rep_skia;
+  AtomicUniquePtr<internal::ImageRep> image_rep_png;
+};
 
 }  // namespace
 
@@ -386,36 +454,69 @@ class ImageStorage : public base::RefCounted<ImageStorage> {
   }
 
   bool HasRepresentation(Image::RepresentationType type) const {
-    DCHECK(thread_checking_disabled() || IsOnValidSequence());
-    return representations_.count(type) != 0;
+    return GetRepresentation(type, false);
   }
 
   size_t RepresentationCount() const {
     DCHECK(thread_checking_disabled() || IsOnValidSequence());
-    return representations_.size();
+    size_t count = 0;
+    count += static_cast<bool>(representations_.image_rep_cocoa);
+    count += static_cast<bool>(representations_.image_rep_cocoa_touch);
+    count += static_cast<bool>(representations_.image_rep_skia);
+    count += static_cast<bool>(representations_.image_rep_png);
+    return count;
   }
 
   const ImageRep* GetRepresentation(Image::RepresentationType rep_type,
                                     bool must_exist) const {
     DCHECK(thread_checking_disabled() || IsOnValidSequence());
-    RepresentationMap::const_iterator it = representations_.find(rep_type);
-    if (it == representations_.end()) {
-      CHECK(!must_exist);
-      return NULL;
+    const ImageRep* rep;
+    switch (rep_type) {
+      case Image::kImageRepCocoa:
+        rep = representations_.image_rep_cocoa.get();
+        break;
+      case Image::kImageRepCocoaTouch:
+        rep = representations_.image_rep_cocoa_touch.get();
+        break;
+      case Image::kImageRepSkia:
+        rep = representations_.image_rep_skia.get();
+        break;
+      case Image::kImageRepPNG:
+        rep = representations_.image_rep_png.get();
+        break;
     }
-    return it->second.get();
+
+    CHECK(!must_exist || rep);
+
+    return rep;
   }
 
   const ImageRep* AddRepresentation(std::unique_ptr<ImageRep> rep) const {
     DCHECK(thread_checking_disabled() || IsOnValidSequence());
-    Image::RepresentationType type = rep->type();
-    auto result = representations_.insert(std::make_pair(type, std::move(rep)));
+    AtomicUniquePtr<ImageRep>* rep_storage;
+    switch (rep->type()) {
+      case Image::kImageRepCocoa:
+        rep_storage = &representations_.image_rep_cocoa;
+        break;
+      case Image::kImageRepCocoaTouch:
+        rep_storage = &representations_.image_rep_cocoa_touch;
+        break;
+      case Image::kImageRepSkia:
+        rep_storage = &representations_.image_rep_skia;
+        break;
+      case Image::kImageRepPNG:
+        rep_storage = &representations_.image_rep_png;
+        break;
+    }
 
-    // insert should not fail (implies that there was already a representation
-    // of that type in the map).
-    CHECK(result.second) << "type was already in map.";
+    // Note: If called simultaneously on two threads, this may silently delete
+    // |rep| instead of inserting it. This is fine because the other thread
+    // would've inserted the same image...
+    rep_storage->SetIfNull(std::move(rep));
 
-    return result.first->second.get();
+    // ... so just return whatever is in |rep_storage| (it'll either be the
+    // rep we just stored, or one that was stored on a different thread).
+    return rep_storage->get();
   }
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
