@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f8a122_83b1f693",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T22:40:23Z",
+      "side": 1,
+      "message": "Since you will crop the frame later, you may want to loose the restriction here into\nif (frame-\u003esize().width() \u003c\u003d 1 || frame-\u003esize().height() \u003c\u003d 1)\nOtherwise you will receive an empty frame after line 300.\n\nTechnically speaking, it will return a different frame. But a 100x1 frame should almost be the same as a 2x2 black one.",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 56
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae764b6_32dee9ce",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T22:40:23Z",
+      "side": 1,
+      "message": "Sorry, I have not noticed, you have made a typo here.",
+      "range": {
+        "startLine": 296,
+        "startChar": 15,
+        "endLine": 296,
+        "endChar": 25
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b8182f_9a3cc33c",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T22:40:23Z",
+      "side": 1,
+      "message": "I think, this condition should be placed in CreateCroppedDesktopFrame() function. i.e. creating a non-cropped CroppedDesktopFrame is unreasonable.\nI would suggest you to add a TODO here to remove this check.\n\nI will prepare a change to move the logic into cropped_desktop_frame.cc.",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 46
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587efe62_48dd7199",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T22:40:23Z",
+      "side": 1,
+      "message": "With the change I suggested in line 280, you can also add\nDCHECK(frame);\nDCHECK(!frame-\u003esize().is_empty());\nhere.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 5
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
