@@ -1332,6 +1332,7 @@ class Port(object):
     def expectations_files(self):
         paths = [
             self.path_to_generic_test_expectations_file(),
+            self._filesystem.join(self.layout_tests_dir(), 'LeakExpectations'),
             self._filesystem.join(self.layout_tests_dir(), 'NeverFixTests'),
             self._filesystem.join(self.layout_tests_dir(), 'StaleTestExpectations'),
             self._filesystem.join(self.layout_tests_dir(), 'SlowTests'),
