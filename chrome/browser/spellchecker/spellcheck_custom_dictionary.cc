@@ -15,6 +15,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/spellcheck/browser/spellcheck_host_metrics.h"
 #include "components/spellcheck/common/spellcheck_common.h"
@@ -59,7 +60,6 @@ enum ChangeSanitationResult {
 // invalid checksum, then returns ChecksumStatus::INVALID and clears |words|.
 ChecksumStatus LoadFile(const base::FilePath& file_path,
                         std::set<std::string>* words) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(words);
   words->clear();
   std::string contents;
@@ -118,7 +118,6 @@ int SanitizeWordsToAdd(const std::set<std::string>& existing,
 // called on the file thread.
 std::unique_ptr<SpellcheckCustomDictionary::LoadFileResult>
 LoadDictionaryFileReliably(const base::FilePath& path) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   // Load the contents and verify the checksum.
   std::unique_ptr<SpellcheckCustomDictionary::LoadFileResult> result(
       new SpellcheckCustomDictionary::LoadFileResult);
@@ -140,7 +139,6 @@ LoadDictionaryFileReliably(const base::FilePath& path) {
 // the custom spellcheck dictionary at |path|.
 void SaveDictionaryFileReliably(const base::FilePath& path,
                                 const std::set<std::string>& custom_words) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   std::stringstream content;
   for (const std::string& word : custom_words)
     content << word << '\n';
@@ -155,7 +153,6 @@ void SavePassedWordsToDictionaryFileReliably(
     const base::FilePath& path,
     std::unique_ptr<SpellcheckCustomDictionary::LoadFileResult>
         load_file_result) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(load_file_result);
   SaveDictionaryFileReliably(path, load_file_result->words);
 }
@@ -275,9 +272,8 @@ bool SpellcheckCustomDictionary::IsSyncing() {
 
 void SpellcheckCustomDictionary::Load() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
       base::Bind(&SpellcheckCustomDictionary::LoadDictionaryFile,
                  custom_dictionary_path_),
       base::Bind(&SpellcheckCustomDictionary::OnLoaded,
@@ -451,8 +447,8 @@ void SpellcheckCustomDictionary::Apply(const Change& dictionary_change) {
 void SpellcheckCustomDictionary::FixInvalidFile(
     std::unique_ptr<LoadFileResult> load_file_result) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
       base::BindOnce(&SavePassedWordsToDictionaryFileReliably,
                      custom_dictionary_path_, base::Passed(&load_file_result)));
 }
@@ -461,8 +457,8 @@ void SpellcheckCustomDictionary::Save(
     std::unique_ptr<Change> dictionary_change) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   fix_invalid_file_.Cancel();
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
       base::BindOnce(&SpellcheckCustomDictionary::UpdateDictionaryFile,
                      base::Passed(&dictionary_change),
                      custom_dictionary_path_));
