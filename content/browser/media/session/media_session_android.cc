@@ -139,6 +139,22 @@ void MediaSessionAndroid::Stop(
   media_session()->Stop(MediaSession::SuspendType::UI);
 }
 
+void MediaSessionAndroid::SeekForward(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& j_obj,
+    const jlong millis) {
+  DCHECK(media_session());
+  media_session()->SeekForward(base::TimeDelta::FromMilliseconds(millis));
+}
+
+void MediaSessionAndroid::SeekBackward(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& j_obj,
+    const jlong millis) {
+  DCHECK(media_session());
+  media_session()->SeekBackward(base::TimeDelta::FromMilliseconds(millis));
+}
+
 void MediaSessionAndroid::DidReceiveAction(JNIEnv* env,
                                            const JavaParamRef<jobject>& obj,
                                            int action) {
