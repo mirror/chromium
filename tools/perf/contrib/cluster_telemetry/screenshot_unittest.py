@@ -39,3 +39,12 @@ class ScreenshotUnitTest(page_test_test_case.PageTestTestCase):
     screenshot_pixels = image_util.Pixels(image)
     special_colored_pixel = bytearray([217, 115, 43])
     self.assertTrue(special_colored_pixel in screenshot_pixels)
+
+  def testDetectDynamicPixels(self):
+    pixels = bytearray([0, 0, 0, 128, 128, 128])
+    next_pixels = bytearray([255, 255, 255, 128, 128, 128])
+
+    num_dynamic_pixels = screenshot.DetectDynamicPixels(pixels, next_pixels)
+    cyan_pixel = bytearray([0, 255, 255])
+    self.assertTrue(cyan_pixel in pixels)
+    self.assertEqual(1, num_dynamic_pixels)
