@@ -22,9 +22,7 @@ class MockPasswordStore : public PasswordStore {
   MockPasswordStore();
 
   bool Init(const syncer::SyncableService::StartSyncFlare& flare,
-            PrefService* prefs) override {
-    return true;
-  };
+            PrefService* prefs) override;
   MOCK_METHOD1(RemoveLogin, void(const autofill::PasswordForm&));
   MOCK_METHOD2(GetLogins,
                void(const PasswordStore::FormDigest&, PasswordStoreConsumer*));
@@ -91,7 +89,7 @@ class MockPasswordStore : public PasswordStore {
   PasswordStoreSync* GetSyncInterface() { return this; }
 
  protected:
-  virtual ~MockPasswordStore();
+  ~MockPasswordStore() override;
 };
 
 }  // namespace password_manager

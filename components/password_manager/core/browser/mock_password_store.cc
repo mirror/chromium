@@ -9,11 +9,16 @@
 
 namespace password_manager {
 
-MockPasswordStore::MockPasswordStore()
-    : PasswordStore(base::SequencedTaskRunnerHandle::Get(),
-                    base::SequencedTaskRunnerHandle::Get()) {}
+MockPasswordStore::MockPasswordStore() = default;
 
-MockPasswordStore::~MockPasswordStore() {
-}
+bool MockPasswordStore::Init(
+    const syncer::SyncableService::StartSyncFlare& flare,
+    PrefService* prefs) {
+  main_thread_runner_ = base::SequencedTaskRunnerHandle::Get();
+  background_task_runner_ = main_thread_runner_;
+  return true;
+};
+
+MockPasswordStore::~MockPasswordStore() = default;
 
 }  // namespace password_manager
