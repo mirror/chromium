@@ -17,6 +17,8 @@
 #include "base/mac/scoped_cftyperef.h"
 #include "base/sha1.h"
 #include "base/strings/string_piece.h"
+#include "base/strings/stringprintf.h"
+#include "base/strings/sys_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "crypto/mac_security_services_lock.h"
 #include "crypto/sha2.h"
@@ -48,6 +50,15 @@ using base::ScopedCFTypeRef;
 namespace net {
 
 namespace {
+
+std::string SecErrorStr(CSSM_RETURN err) {
+  if (!err)
+    return std::string("0");
+  base::ScopedCFTypeRef<CFStringRef> cfstr(
+      SecCopyErrorMessageString(err, NULL));
+  return base::StringPrintf("%d (%s)", err,
+                            base::SysCFStringRefToUTF8(cfstr).c_str());
+}
 
 typedef OSStatus (*SecTrustCopyExtendedResultFuncPtr)(SecTrustRef,
                                                       CFDictionaryRef*);
@@ -853,7 +864,10 @@ int VerifyWithGivenFlags(X509Certificate* cert,
   OSStatus cssm_result;
   switch (trust_result) {
     case kSecTrustResultUnspecified:
+      LOG(WARNING) << "trust_result=kSecTrustResultUnspecified";
+      break;
     case kSecTrustResultProceed:
+      LOG(WARNING) << "trust_result=kSecTrustResultProceed";
       // Certificate chain is valid and trusted ("unspecified" indicates that
       // the user has not explicitly set a trust setting)
       break;
@@ -861,13 +875,16 @@ int VerifyWithGivenFlags(X509Certificate* cert,
     // According to SecTrust.h, kSecTrustResultConfirm isn't returned on 10.5+,
     // and it is marked deprecated in the 10.9 SDK.
     case kSecTrustResultDeny:
+      LOG(WARNING) << "trust_result=kSecTrustResultDeny";
       // Certificate chain is explicitly untrusted.
       verify_result->cert_status |= CERT_STATUS_AUTHORITY_INVALID;
       break;
 
     case kSecTrustResultRecoverableTrustFailure:
+      LOG(WARNING) << "trust_result=kSecTrustResultRecoverableTrustFailure";
       // Certificate chain has a failure that can be overridden by the user.
       status = SecTrustGetCssmResultCode(trust_ref, &cssm_result);
+      LOG(WARNING) << "SecTrustGetCssmResultCode=" << SecErrorStr(status);
       if (status)
         return NetErrorFromOSStatus(status);
       if (cssm_result == CSSMERR_TP_VERIFY_ACTION_FAILED) {
@@ -879,18 +896,26 @@ int VerifyWithGivenFlags(X509Certificate* cert,
       // structure which can catch multiple errors from each certificate.
       for (CFIndex index = 0, chain_count = CFArrayGetCount(completed_chain);
            index < chain_count; ++index) {
+        LOG(WARNING) << "chain_info[" << index << "].NumStatusCodes is "
+                     << chain_info[index].NumStatusCodes << ", chain_info["
+                     << index << "].StatusBits is "
+                     << chain_info[index].StatusBits;
         if (chain_info[index].StatusBits & CSSM_CERT_STATUS_EXPIRED ||
             chain_info[index].StatusBits & CSSM_CERT_STATUS_NOT_VALID_YET)
           verify_result->cert_status |= CERT_STATUS_DATE_INVALID;
-        if (!IsCertStatusError(verify_result->cert_status) &&
+        /*if (!IsCertStatusError(verify_result->cert_status) &&
             chain_info[index].NumStatusCodes == 0) {
           LOG(WARNING) << "chain_info[" << index << "].NumStatusCodes is 0"
-                          ", chain_info[" << index << "].StatusBits is "
-                       << chain_info[index].StatusBits;
-        }
+            ", chain_info[" << index << "].StatusBits is "
+            << chain_info[index].StatusBits;
+        }*/
         for (uint32_t status_code_index = 0;
              status_code_index < chain_info[index].NumStatusCodes;
              ++status_code_index) {
+          LOG(WARNING) << "chain_info[" << index << "].StatusCodes["
+                       << status_code_index << "] is "
+                       << SecErrorStr(
+                              chain_info[index].StatusCodes[status_code_index]);
           // As of OS X 10.9, attempting to verify a certificate chain that
           // contains a weak signature algorithm (MD2, MD5) in an intermediate
           // or leaf cert will be treated as a (recoverable) policy validation
@@ -943,7 +968,9 @@ int VerifyWithGivenFlags(X509Certificate* cert,
       break;
 
     default:
+      LOG(WARNING) << "trust_result=" << trust_result;
       status = SecTrustGetCssmResultCode(trust_ref, &cssm_result);
+      LOG(WARNING) << "SecTrustGetCssmResultCode=" << SecErrorStr(status);
       if (status)
         return NetErrorFromOSStatus(status);
       verify_result->cert_status |= CertStatusFromOSStatus(cssm_result);
