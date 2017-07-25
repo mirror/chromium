@@ -22,6 +22,40 @@
       "revId": "821e697d2e5676bfcf6c4853e0e0c055e3c72c38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37625f1_a75b9d48",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-25T11:29:25Z",
+      "side": 1,
+      "message": "This looks a lot simpler than the existing code. I like it!",
+      "revId": "821e697d2e5676bfcf6c4853e0e0c055e3c72c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053f6dba_35567fc6",
+        "filename": "content/shell/browser/shell_url_request_context_getter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-25T11:29:25Z",
+      "side": 1,
+      "message": "\"lets\" seems odd. What\u0027s doing the letting? When?",
+      "revId": "821e697d2e5676bfcf6c4853e0e0c055e3c72c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
