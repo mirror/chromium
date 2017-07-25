@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16338b1e_432d2ab4",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-25T18:12:35Z",
+      "side": 1,
+      "message": "It is good practice to wrap this in a { }. It is too easy to mis-read this or cause a bug by adding a statement between the if and return.",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 17
+      },
+      "revId": "5da2e4e52103364e26b8a2959cb80bfe5bd33174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995a38b7_b280bb70",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-25T18:12:35Z",
+      "side": 1,
+      "message": "Guards should match the file path and name, maybe you renamed the file?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "5da2e4e52103364e26b8a2959cb80bfe5bd33174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105a3dde_d29bf4c5",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-25T18:12:35Z",
+      "side": 1,
+      "message": "What is the test in this test? It seems like this is just spinning up 100 runloop objects without any validation of their output.",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "5da2e4e52103364e26b8a2959cb80bfe5bd33174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
