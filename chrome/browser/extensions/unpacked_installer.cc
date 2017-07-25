@@ -11,6 +11,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
@@ -328,13 +329,18 @@ void UnpackedInstaller::CheckExtensionFileAccess() {
     return;
   }
 
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
+  constexpr base::TaskTraits kTraits = {
+    base::MayBlock(),  // Needs file access.
+    base::TaskPriority::USER_VISIBLE,  // Install can be triggered by UI.
+    base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN
+  };
+  base::PostTaskWithTraits(
+      FROM_HERE, kTraits,
       base::BindOnce(&UnpackedInstaller::LoadWithFileAccess, this, GetFlags()));
 }
 
 void UnpackedInstaller::LoadWithFileAccess(int flags) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 
   std::string error;
   extension_ = file_util::LoadExtension(extension_path_, Manifest::UNPACKED,
