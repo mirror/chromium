@@ -18761,6 +18761,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Event.Scroll.ScrollerSize.SmallScrollerPercentage" units="%">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    Record the ratio of area of small scrollers to that of all scrollers per
+    page load. This is intended to help us to estimate how much memory we could
+    save when not compositing small scrollers.
+
+    Team: input-dev@chromium.org, threaded-rendering-dev@chromium.org.
+  </summary>
+</histogram>
+
 <histogram name="Event.SingleTapType" enum="TapDelayType">
   <owner>tdresser@chromium.org</owner>
   <summary>
