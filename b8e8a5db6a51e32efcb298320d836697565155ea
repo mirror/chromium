@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0df2ced3_c05454e4",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-25T02:10:57Z",
+      "side": 1,
+      "message": "nit: __func__",
+      "range": {
+        "startLine": 80,
+        "startChar": 14,
+        "endLine": 80,
+        "endChar": 54
+      },
+      "revId": "b8e8a5db6a51e32efcb298320d836697565155ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78990c60_4928b980",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-25T02:10:57Z",
+      "side": 1,
+      "message": "IIUC all messages are migrated, so we can remove \nthis method, right? Or are you planning to do it \non a follow up CL? (Plz say it in the description\nif so).",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 57
+      },
+      "revId": "b8e8a5db6a51e32efcb298320d836697565155ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84433c95_9c100c72",
+        "filename": "content/renderer/media/media_stream_dispatcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-25T02:10:57Z",
+      "side": 1,
+      "message": "These verbose statements can be shortened nowadays to\n\nauto dispatcher \u003d base::MakeUnique\u003cMediaStreamDispatcher\u003e(nullptr);\n\n\"auto\" here is fine because of the MakeUnique.",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 42
+      },
+      "revId": "b8e8a5db6a51e32efcb298320d836697565155ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
