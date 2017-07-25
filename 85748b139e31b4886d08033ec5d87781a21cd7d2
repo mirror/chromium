@@ -16,6 +16,24 @@
       "revId": "85748b139e31b4886d08033ec5d87781a21cd7d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74292d51_725e8e7d",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-25T03:11:37Z",
+      "side": 1,
+      "message": "Agreed",
+      "parentUuid": "421624aa_7b1e30df",
+      "revId": "85748b139e31b4886d08033ec5d87781a21cd7d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
