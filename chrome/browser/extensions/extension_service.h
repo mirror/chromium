@@ -596,6 +596,9 @@ class ExtensionService
   // necessary.
   void MaybeSpinUpLazyBackgroundPage(const extensions::Extension* extension_id);
 
+  // Uninstall extensions that have been migrated to component extensions.
+  void UninstallMigratedExtensions();
+
   const base::CommandLine* command_line_ = nullptr;
 
   // The normal profile associated with this ExtensionService.
