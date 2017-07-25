@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a68659e_9ee66108",
+        "filename": "ash/laser/laser_pointer_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-25T00:58:12Z",
+      "side": 1,
+      "message": "is this optimization?",
+      "revId": "3145d9ddc7f2c0fafff9784d63f349018441823f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
