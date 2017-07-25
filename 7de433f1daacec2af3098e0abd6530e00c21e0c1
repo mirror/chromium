@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "831a3a7c_9a2cda1c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-25T20:05:34Z",
+      "side": 1,
+      "message": "one question, why not make TabManagerStatsCollector a sub class of SwapMetricsDriver::Delegate?",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 47
+      },
+      "revId": "7de433f1daacec2af3098e0abd6530e00c21e0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
