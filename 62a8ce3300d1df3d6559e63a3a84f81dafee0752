@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3c048fcf_15f0cdf2",
+        "filename": "remoting/ios/app/session_reconnect_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-25T18:48:33Z",
+      "side": 1,
+      "message": "Say this?\n\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm?l\u003d102\u0026rcl\u003d2aa9702d28364ee7fcf762cdcb9f2f26fd8687dd\n\nI just saw the recommendation here:\nhttps://developer.apple.com/documentation/uikit/uiview/1622523-addconstraint?language\u003dobjc\n\n\"When developing for iOS 8.0 or later, set the constraint’s active property to YES instead of calling the addConstraint: method directly.\"\n\nAnyway... I\u0027m fine if you still want to use addConstraints",
+      "parentUuid": "49f72b2b_39279e8b",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "62a8ce3300d1df3d6559e63a3a84f81dafee0752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ffa80df_1f89dae9",
         "filename": "remoting/resources/remoting_strings.grd",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I am just a simple engineer hand editing xml like a chump...",
       "parentUuid": "6ffa80df_1f89dae9",
+      "range": {
+        "startLine": 863,
+        "startChar": 114,
+        "endLine": 863,
+        "endChar": 144
+      },
+      "revId": "62a8ce3300d1df3d6559e63a3a84f81dafee0752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "050fa407_be924a7f",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-25T18:48:33Z",
+      "side": 1,
+      "message": "Not your fault... This is one of the most confusing files I\u0027ve worked with...",
+      "parentUuid": "ce6a542c_5b50a02e",
       "range": {
         "startLine": 863,
         "startChar": 114,
