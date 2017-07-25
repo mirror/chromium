@@ -58,6 +58,10 @@ class WebInputMethodController {
   // the lighter-weight textInputType() when appropriate.
   virtual WebTextInputInfo TextInputInfo() { return WebTextInputInfo(); }
 
+  // Returns the Next and Previous state of currently focused element.
+  // This is splitted from TextInputInfo() due to expensive operations.
+  virtual int NextPreviousFlags() { return 0; }
+
   // Returns the type of current text input of this controller.
   virtual WebTextInputType TextInputType() { return kWebTextInputTypeNone; }
 
