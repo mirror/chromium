@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e972eece_8573a922",
+        "filename": "docs/cr-respect.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-07-25T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e07bf48_2d51d078",
+      "revId": "d356521454d37fc3a5063cfbc04d71232901c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "345ca20c_c1943493",
         "filename": "docs/cr-respect.md",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ff6ba631_66ef5f81",
+        "filename": "docs/cr-respect.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-07-25T23:05:05Z",
+      "side": 1,
+      "message": "We probably should. Funny thing, nobody noticed it in the original document. (We now have three versions of cr-respect. I declare this one the canonical one, because I _really_ don\u0027t want to keep them in sync :)\n\nDone.",
+      "parentUuid": "345ca20c_c1943493",
+      "revId": "d356521454d37fc3a5063cfbc04d71232901c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceb0feed_f4992a04",
         "filename": "docs/cr-respect.md",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "d356521454d37fc3a5063cfbc04d71232901c4a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacf2129_a6dd5bbf",
+        "filename": "docs/cr-respect.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-07-25T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceb0feed_f4992a04",
+      "revId": "d356521454d37fc3a5063cfbc04d71232901c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
