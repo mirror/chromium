@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12bc0c43_2243d847",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-25T23:00:59Z",
+      "side": 1,
+      "message": "may differ between platforms?",
+      "range": {
+        "startLine": 118,
+        "startChar": 52,
+        "endLine": 118,
+        "endChar": 57
+      },
+      "revId": "1f89c1dc2086e64705b5e22ead4334b3d85ac3b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
