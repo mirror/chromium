@@ -879,16 +879,11 @@ bool Node::IsInert() const {
     return true;
   }
 
-  if (RuntimeEnabledFeatures::InertAttributeEnabled()) {
-    const Element* element = this->IsElementNode()
-                                 ? ToElement(this)
-                                 : FlatTreeTraversal::ParentElement(*this);
-    while (element) {
-      if (element->hasAttribute(HTMLNames::inertAttr))
-        return true;
-      element = FlatTreeTraversal::ParentElement(*element);
-    }
-  }
+  LayoutObject* layout_object = GetLayoutObject();
+  if (!layout_object)
+    return true;
+  if (layout_object->Style())
+    return false;
   return GetDocument().GetFrame() && GetDocument().GetFrame()->IsInert();
 }
 

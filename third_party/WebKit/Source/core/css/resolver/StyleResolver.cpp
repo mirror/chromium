@@ -709,6 +709,10 @@ PassRefPtr<ComputedStyle> StyleResolver::StyleForElement(
     state.Style()->SetInsideLink(link_state);
   }
 
+  if (element->IsInertRoot()) {
+    state.Style()->SetInert(true);
+  }
+
   if (!base_computed_style) {
     GetDocument().GetStyleEngine().EnsureUAStyleForElement(*element);
 

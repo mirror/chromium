@@ -466,7 +466,9 @@ void HTMLElement::ParseAttribute(const AttributeModificationParams& params) {
     PseudoStateChanged(CSSSelector::kPseudoLang);
   } else if (params.name == inertAttr) {
     UseCounter::Count(GetDocument(), WebFeature::kInertAttribute);
-    UpdateDistribution();
+    SetNeedsStyleRecalc(kLocalStyleChange,
+			StyleChangeReasonForTracing::Create(StyleChangeReason::kAttribute));
+
     if (GetDocument().GetFrame()) {
       GetDocument().GetFrame()->SetIsInert(
           GetDocument().LocalOwner() && GetDocument().LocalOwner()->IsInert());
