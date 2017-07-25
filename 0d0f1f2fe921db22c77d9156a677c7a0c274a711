@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7acd043c_01d11570",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-25T16:54:17Z",
+      "side": 1,
+      "message": "Much more readable, tx!",
+      "range": {
+        "startLine": 436,
+        "startChar": 8,
+        "endLine": 436,
+        "endChar": 14
+      },
+      "revId": "0d0f1f2fe921db22c77d9156a677c7a0c274a711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
