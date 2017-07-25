@@ -186,6 +186,7 @@ SyncerError ModelTypeWorker::ProcessGetUpdatesResponse(
       has_encrypted_updates_ = true;
     }
   }
+  model_type_processor_->ProcessGetUpdatesResponse(progress_marker);
 
   debug_info_emitter_->EmitUpdateCountersUpdate();
   return SYNCER_OK;

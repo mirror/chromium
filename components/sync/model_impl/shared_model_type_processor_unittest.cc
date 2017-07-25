@@ -21,6 +21,7 @@
 #include "components/sync/engine/commit_queue.h"
 #include "components/sync/model/fake_model_type_sync_bridge.h"
 #include "components/sync/test/engine/mock_model_type_worker.h"
+#include "components/sync/test/engine/single_type_mock_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using sync_pb::EntitySpecifics;
@@ -223,6 +224,16 @@ class SharedModelTypeProcessorTest : public ::testing::Test {
     worker()->AckOnePendingCommit();
     EXPECT_EQ(0U, worker()->GetNumPendingCommits());
     return specifics;
+  }
+
+  void WriteItemAndAck(const std::string& key,
+                       std::unique_ptr<EntityData> entity_data) {
+    bridge()->WriteItem(key, std::move(entity_data));
+    worker()->VerifyPendingCommits(
+        {FakeModelTypeSyncBridge::TagHashFromKey(key)});
+    worker()->AckOnePendingCommit();
+    EXPECT_EQ(0U, worker()->GetNumPendingCommits());
+    return;
   }
 
   void ResetState(bool keep_db, bool commit_only = false) {
@@ -1521,6 +1532,73 @@ TEST_F(SharedModelTypeProcessorTest, UntrackEntity) {
   EXPECT_FALSE(db().HasMetadata(kHash1));
   EXPECT_EQ(0U, db().metadata_count());
   EXPECT_EQ(0, bridge()->get_storage_key_call_count());
+}
+
+// Tests that SharedModelTypeProcessor can do garbage collection by version.
+// Create 2 entries, one is version 1, another is version 3. Check if sync
+// will delete version 1 entry when server set expired version is 2.
+TEST_F(SharedModelTypeProcessorTest, GarbageCollectionByVersion) {
+  InitializeToReadyState();
+
+  // Create 2 entries, one is version 3, another is version 1.
+  WriteItemAndAck(kKey1, kValue1);
+  worker()->UpdateFromServer(kHash1, GenerateSpecifics(kKey1, kValue2));
+  worker()->UpdateFromServer(kHash1, GenerateSpecifics(kKey1, kValue3));
+  WriteItemAndAck(kKey2, kValue2);
+
+  // Verify entries are created correctly.
+  EXPECT_EQ(3, db().GetMetadata(kKey1).server_version());
+  EXPECT_EQ(1, db().GetMetadata(kKey2).server_version());
+  EXPECT_EQ(2U, ProcessorEntityCount());
+  EXPECT_EQ(2U, db().metadata_count());
+  EXPECT_EQ(2U, db().data_count());
+  EXPECT_EQ(0U, worker()->GetNumPendingCommits());
+
+  // Expired the entries which are older than version 2.
+  SingleTypeMockServer mock_server(PREFERENCES);
+  sync_pb::DataTypeProgressMarker progress = mock_server.GetProgress();
+  progress.mutable_gc_directive()->set_version_watermark(2);
+  type_processor()->ProcessGetUpdatesResponse(progress);
+
+  EXPECT_EQ(1U, ProcessorEntityCount());
+  EXPECT_EQ(1U, db().metadata_count());
+  EXPECT_EQ(2U, db().data_count());
+  EXPECT_EQ(0U, worker()->GetNumPendingCommits());
+}
+
+// Tests that SharedModelTypeProcessor can do garbage collection by age.
+// Create 2 entries, one is 15-days-old, another is 5-days-old. Check if sync
+// will delete 15-days-old entry when server set expired age is 10 days.
+TEST_F(SharedModelTypeProcessorTest, GarbageCollectionByAge) {
+  InitializeToReadyState();
+
+  // Create 2 entries, one is 15-days-old, another is 5-days-old.
+  std::unique_ptr<EntityData> entity_data =
+      bridge()->GenerateEntityData(kKey1, kValue1);
+  entity_data->modification_time =
+      base::Time::Now() - base::TimeDelta::FromDays(15);
+  WriteItemAndAck(kKey1, std::move(entity_data));
+  entity_data = bridge()->GenerateEntityData(kKey2, kValue2);
+  entity_data->modification_time =
+      base::Time::Now() - base::TimeDelta::FromDays(5);
+  WriteItemAndAck(kKey2, std::move(entity_data));
+
+  // Verify entries are created correctly.
+  EXPECT_EQ(2U, ProcessorEntityCount());
+  EXPECT_EQ(2U, db().metadata_count());
+  EXPECT_EQ(2U, db().data_count());
+  EXPECT_EQ(0U, worker()->GetNumPendingCommits());
+
+  // Expired the entries which are older than 10 days.
+  SingleTypeMockServer mock_server(PREFERENCES);
+  sync_pb::DataTypeProgressMarker progress = mock_server.GetProgress();
+  progress.mutable_gc_directive()->set_age_watermark_in_days(10);
+  type_processor()->ProcessGetUpdatesResponse(progress);
+
+  EXPECT_EQ(1U, ProcessorEntityCount());
+  EXPECT_EQ(1U, db().metadata_count());
+  EXPECT_EQ(2U, db().data_count());
+  EXPECT_EQ(0U, worker()->GetNumPendingCommits());
 }
 
 }  // namespace syncer
