@@ -222,12 +222,12 @@
       {
         "id": "MicrophoneContentSetting",
         "type": "string",
-        "enum": ["allow", "block", "ask"]
+        "enum": ["block", "ask"]
       },
       {
         "id": "CameraContentSetting",
         "type": "string",
-        "enum": ["allow", "block", "ask"]
+        "enum": ["block", "ask"]
       },
       {
         "id": "PpapiBrokerContentSetting",

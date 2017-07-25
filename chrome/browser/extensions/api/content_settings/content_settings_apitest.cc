@@ -279,10 +279,4 @@ IN_PROC_BROWSER_TEST_F(ExtensionContentSettingsApiTest,
       << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionContentSettingsApiTest,
-                       UnsupportedDefaultSettings) {
-  const char kExtensionPath[] = "content_settings/unsupporteddefaultsettings";
-  EXPECT_TRUE(RunExtensionSubtest(kExtensionPath, "test.html")) << message_;
-}
-
 }  // namespace extensions
