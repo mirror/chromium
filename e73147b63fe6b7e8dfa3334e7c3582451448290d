@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd02983c_2dfb7ac1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-25T17:52:32Z",
+      "side": 1,
+      "message": "nit: this(\"\", null);",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3380bbea_a091cee4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-25T17:52:32Z",
+      "side": 1,
+      "message": "javadoc use @return",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b39edcc_0e463f3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-25T17:52:32Z",
+      "side": 1,
+      "message": "Javadoc missing @param",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4b22a97_2c031144",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 20
