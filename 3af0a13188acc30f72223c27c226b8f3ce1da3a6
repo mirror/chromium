@@ -116,6 +116,24 @@
       "revId": "3af0a13188acc30f72223c27c226b8f3ce1da3a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94030060_0bd77894",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T18:39:26Z",
+      "side": 1,
+      "message": "Gio\u0027s concern is warranted. There should be 2 connects. The initial one, and then again on this line after the disconnect. That this test passes shows us something isn\u0027t failing correctly and may let us write other malformed tests --- please check and ensure the FakeCentral doesn\u0027t succeed the 2nd connect without calling setNextGATTConnectionResponse.  The FakePeripheral::DispatchConnectionResponse method should have consumed the first one.",
+      "parentUuid": "9663f25d_b2301a6d",
+      "revId": "3af0a13188acc30f72223c27c226b8f3ce1da3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
