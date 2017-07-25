@@ -215,6 +215,8 @@ source_set("external_url_eg_tests") {
   deps = [
     ":metrics_internal",
     ":test_support",
+    "//base",
+    "//ios/chrome/browser/ui",
     "//ios/chrome/test/app:test_support",
     "//ios/chrome/test/earl_grey:test_support",
     "//ios/web/public/test/http_server",
