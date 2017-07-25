@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5af2ebf0_f2b15799",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-25T09:24:06Z",
+      "side": 1,
+      "message": "Handle the case when file_system is nullptr.",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ce3a14_3f7f63de",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-25T09:24:06Z",
+      "side": 1,
+      "message": "BindOnce is preferred.",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa646cf9_79549ae2",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-25T09:24:06Z",
+      "side": 1,
+      "message": "optional nit:\nThough I\u0027m not sure the usual way to allocate png data, if we use string to read file,\n\nstd::string png_data;\nbase::ReadFileToString(..., \u0026png_data);\ngfx::Image::CreateFrom1xPNGBytes(\n\tbase::RefCountedString::TakeString(\u0026png_data));\n\nlooks simpler to me.",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76768369_8f67e592",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-25T09:24:06Z",
+      "side": 1,
+      "message": "nit: It might get easier to maintain this function by merging two PostTask calls.\n\nbool result \u003d base::ReadFileToString(...)\nif (!result)\n  LOG(ERROR) \u003c\u003c ...\n\ncontent::BrowserThread::PostTask(\n  ....\n  base::BindOnce(\n      ...\n      result ? gfx::Image::CreateFrom1xPNGBytes(...) : gfx::Image()));",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea433b85_2b2daed9",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-25T09:24:06Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we show the notification even when generating preview fails?",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
