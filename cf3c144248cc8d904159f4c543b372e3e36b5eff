@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70dc5e3e_d3bf9a72",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-25T21:20:06Z",
+      "side": 1,
+      "message": "did you forget this?",
+      "revId": "cf3c144248cc8d904159f4c543b372e3e36b5eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
