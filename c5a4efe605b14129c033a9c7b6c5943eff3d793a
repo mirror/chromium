@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2fcd2ac_6b2a6060",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003129
+      },
+      "writtenOn": "2017-07-25T00:42:22Z",
+      "side": 1,
+      "message": "Remove newline.",
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf5c154_c2d1451d",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1003129
+      },
+      "writtenOn": "2017-07-25T00:42:22Z",
+      "side": 1,
+      "message": "This line makes me question whether you should enqueue a different type, like an enum. It took me a couple takes to realize what it was doing.\n\nComparing bools like this is generally not the best looking code, but !local_power_changes_.front() seems like you\u0027d be checking if there were no front element (the queue is empty). I think an enum might make it more readable, so you get \n\nlocal_power_changes_.front() !\u003d AdapterState::ENABLE\n\nor something like that.",
+      "range": {
+        "startLine": 692,
+        "startChar": 38,
+        "endLine": 692,
+        "endChar": 74
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ef8e77_688d0b46",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1003129
+      },
+      "writtenOn": "2017-07-25T00:42:22Z",
+      "side": 1,
+      "message": "I think this would be easier to understand by inverting the logic and returning early.\n\nif (local_power_changes_.empty() || powered !\u003d local_power_changes_.front())\n  return;",
+      "range": {
+        "startLine": 1965,
+        "startChar": 2,
+        "endLine": 1966,
+        "endChar": 48
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b5d64c_9f7812b3",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1003129
+      },
+      "writtenOn": "2017-07-25T00:42:22Z",
+      "side": 1,
+      "message": "What\u0027s the value of adding this if it\u0027s just going to get pop()\u0027d on line 1980?",
+      "range": {
+        "startLine": 1975,
+        "startChar": 0,
+        "endLine": 1975,
+        "endChar": 49
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5568312f_74533206",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1981,
+      "author": {
+        "id": 1003129
+      },
+      "writtenOn": "2017-07-25T00:42:22Z",
+      "side": 1,
+      "message": "This could cause undefined behavior by calling front() on an empty queue.\n\nIf last_change \u003d\u003d current_change then the queue only has one element when you pop() it on the line above. It\u0027s now empty, so it\u0027s not safe to call front().",
+      "range": {
+        "startLine": 1981,
+        "startChar": 0,
+        "endLine": 1981,
+        "endChar": 47
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
