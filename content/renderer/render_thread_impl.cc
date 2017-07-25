@@ -334,10 +334,8 @@ class FrameFactoryImpl : public mojom::FrameFactory {
 
  private:
   // mojom::FrameFactory:
-  void CreateFrame(
-      int32_t frame_routing_id,
-      mojom::FrameRequest frame_request,
-      mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) override {
+  void CreateFrame(int32_t frame_routing_id,
+                   mojom::FrameRequest frame_request) override {
     // TODO(morrita): This is for investigating http://crbug.com/415059 and
     // should be removed once it is fixed.
     CHECK_LT(routing_id_highmark_, frame_routing_id);
@@ -350,13 +348,11 @@ class FrameFactoryImpl : public mojom::FrameFactory {
     // we want.
     if (!frame) {
       RenderThreadImpl::current()->RegisterPendingFrameCreate(
-          source_info_, frame_routing_id, std::move(frame_request),
-          std::move(frame_host_interface_broker));
+          source_info_, frame_routing_id, std::move(frame_request));
       return;
     }
 
-    frame->BindFrame(source_info_, std::move(frame_request),
-                     std::move(frame_host_interface_broker));
+    frame->BindFrame(source_info_, std::move(frame_request));
   }
 
  private:
@@ -1048,8 +1044,7 @@ void RenderThreadImpl::AddRoute(int32_t routing_id, IPC::Listener* listener) {
     return;
 
   scoped_refptr<PendingFrameCreate> create(it->second);
-  frame->BindFrame(it->second->browser_info(), it->second->TakeFrameRequest(),
-                   it->second->TakeInterfaceBroker());
+  frame->BindFrame(it->second->browser_info(), it->second->TakeFrameRequest());
   pending_frame_creates_.erase(it);
 }
 
@@ -1077,13 +1072,11 @@ void RenderThreadImpl::RemoveEmbeddedWorkerRoute(int32_t routing_id) {
 void RenderThreadImpl::RegisterPendingFrameCreate(
     const service_manager::BindSourceInfo& browser_info,
     int routing_id,
-    mojom::FrameRequest frame_request,
-    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
+    mojom::FrameRequest frame_request) {
   std::pair<PendingFrameCreateMap::iterator, bool> result =
       pending_frame_creates_.insert(std::make_pair(
           routing_id, make_scoped_refptr(new PendingFrameCreate(
-                          browser_info, routing_id, std::move(frame_request),
-                          std::move(frame_host_interface_broker)))));
+                          browser_info, std::move(frame_request)))));
   CHECK(result.second) << "Inserting a duplicate item.";
 }
 
@@ -2471,28 +2464,10 @@ void RenderThreadImpl::ReleaseFreeMemory() {
 
 RenderThreadImpl::PendingFrameCreate::PendingFrameCreate(
     const service_manager::BindSourceInfo& browser_info,
-    int routing_id,
-    mojom::FrameRequest frame_request,
-    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker)
-    : browser_info_(browser_info),
-      routing_id_(routing_id),
-      frame_request_(std::move(frame_request)),
-      frame_host_interface_broker_(std::move(frame_host_interface_broker)) {
-  // The RenderFrame may be deleted before the CreateFrame message is received.
-  // In that case, the RenderFrameHost should cancel the create, which is
-  // detected by setting an error handler on |frame_host_interface_broker_|.
-  frame_host_interface_broker_.set_connection_error_handler(
-      base::Bind(&RenderThreadImpl::PendingFrameCreate::OnConnectionError,
-                 base::Unretained(this)));
-}
+    mojom::FrameRequest frame_request)
+    : browser_info_(browser_info), frame_request_(std::move(frame_request)) {}
 
 RenderThreadImpl::PendingFrameCreate::~PendingFrameCreate() {
-}
-
-void RenderThreadImpl::PendingFrameCreate::OnConnectionError() {
-  size_t erased =
-      RenderThreadImpl::current()->pending_frame_creates_.erase(routing_id_);
-  DCHECK_EQ(1u, erased);
 }
 
 void RenderThreadImpl::OnSyncMemoryPressure(
