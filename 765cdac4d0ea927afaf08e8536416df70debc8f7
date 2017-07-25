@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8da40723_3a07e591",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-25T16:27:01Z",
+      "side": 1,
+      "message": "I have https://chromium-review.googlesource.com/c/583096/ next which allows to simulate browser-initiated navigations.",
+      "parentUuid": "f78a4946_b9addb12",
+      "range": {
+        "startLine": 39,
+        "startChar": 26,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "765cdac4d0ea927afaf08e8536416df70debc8f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b599e3ae_269959b7",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 4
