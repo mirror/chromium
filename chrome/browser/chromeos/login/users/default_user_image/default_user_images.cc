@@ -88,6 +88,14 @@ const int kDefaultImageResourceIDs[] = {
     IDR_LOGIN_DEFAULT_USER_61,
     IDR_LOGIN_DEFAULT_USER_62,
     IDR_LOGIN_DEFAULT_USER_63,
+    IDR_LOGIN_DEFAULT_USER_64,
+    IDR_LOGIN_DEFAULT_USER_65,
+    IDR_LOGIN_DEFAULT_USER_66,
+    IDR_LOGIN_DEFAULT_USER_67,
+    IDR_LOGIN_DEFAULT_USER_68,
+    IDR_LOGIN_DEFAULT_USER_69,
+    IDR_LOGIN_DEFAULT_USER_70,
+    IDR_LOGIN_DEFAULT_USER_71,
 };
 
 const int kDefaultImageAuthorIDs[] = {
@@ -155,6 +163,14 @@ const int kDefaultImageAuthorIDs[] = {
     0,  // No author for user image 61.
     0,  // No author for user image 62.
     0,  // No author for user image 63.
+    0,  // No author for user image 64.
+    0,  // No author for user image 65.
+    0,  // No author for user image 66.
+    0,  // No author for user image 67.
+    0,  // No author for user image 68.
+    0,  // No author for user image 69.
+    0,  // No author for user image 70.
+    0,  // No author for user image 71.
 };
 
 const int kDefaultImageWebsiteIDs[] = {
@@ -222,6 +238,14 @@ const int kDefaultImageWebsiteIDs[] = {
     0,  // No website for user image 61.
     0,  // No website for user image 62.
     0,  // No website for user image 63.
+    0,  // No website for user image 64.
+    0,  // No website for user image 65.
+    0,  // No website for user image 66.
+    0,  // No website for user image 67.
+    0,  // No website for user image 68.
+    0,  // No website for user image 69.
+    0,  // No website for user image 70.
+    0,  // No website for user image 71.
 };
 
 const int kDefaultImagesCount = arraysize(kDefaultImageResourceIDs);
@@ -309,6 +333,14 @@ const int kDefaultImageDescriptions[] = {
     IDS_LOGIN_DEFAULT_USER_DESC_61,
     IDS_LOGIN_DEFAULT_USER_DESC_62,
     IDS_LOGIN_DEFAULT_USER_DESC_63,
+    IDS_LOGIN_DEFAULT_USER_DESC_64,
+    IDS_LOGIN_DEFAULT_USER_DESC_65,
+    IDS_LOGIN_DEFAULT_USER_DESC_66,
+    IDS_LOGIN_DEFAULT_USER_DESC_67,
+    IDS_LOGIN_DEFAULT_USER_DESC_68,
+    IDS_LOGIN_DEFAULT_USER_DESC_69,
+    IDS_LOGIN_DEFAULT_USER_DESC_70,
+    IDS_LOGIN_DEFAULT_USER_DESC_71,
 };
 
 // Returns a string consisting of the prefix specified and the index of the
