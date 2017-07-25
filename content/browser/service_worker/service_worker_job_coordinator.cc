@@ -14,17 +14,7 @@
 
 namespace content {
 
-namespace {
-
-bool IsRegisterJob(const ServiceWorkerRegisterJobBase& job) {
-  return job.GetType() == ServiceWorkerRegisterJobBase::REGISTRATION_JOB;
-}
-
-}
-
 ServiceWorkerJobCoordinator::JobQueue::JobQueue() = default;
-
-ServiceWorkerJobCoordinator::JobQueue::JobQueue(JobQueue&&) = default;
 
 ServiceWorkerJobCoordinator::JobQueue::~JobQueue() {
   DCHECK(jobs_.empty()) << "Destroying JobQueue with " << jobs_.size()
@@ -38,7 +28,6 @@ ServiceWorkerRegisterJobBase* ServiceWorkerJobCoordinator::JobQueue::Push(
     StartOneJob();
   } else if (!job->Equals(jobs_.back().get())) {
     jobs_.push_back(std::move(job));
-    DoomInstallingWorkerIfNeeded();
   }
   // Note we are releasing 'job' here in case neither of the two if() statements
   // above were true.
@@ -55,25 +44,15 @@ void ServiceWorkerJobCoordinator::JobQueue::Pop(
     StartOneJob();
 }
 
-void ServiceWorkerJobCoordinator::JobQueue::DoomInstallingWorkerIfNeeded() {
+ServiceWorkerRegisterJobBase*
+ServiceWorkerJobCoordinator::JobQueue::GetFrontJob() {
   DCHECK(!jobs_.empty());
-  if (!IsRegisterJob(*jobs_.front().get()))
-    return;
-  ServiceWorkerRegisterJob* job =
-      static_cast<ServiceWorkerRegisterJob*>(jobs_.front().get());
-  auto it = jobs_.begin();
-  for (++it; it != jobs_.end(); ++it) {
-    if (IsRegisterJob(**it)) {
-      job->DoomInstallingWorker();
-      return;
-    }
-  }
+  return jobs_.front().get();
 }
 
 void ServiceWorkerJobCoordinator::JobQueue::StartOneJob() {
   DCHECK(!jobs_.empty());
   jobs_.front()->Start();
-  DoomInstallingWorkerIfNeeded();
 }
 
 void ServiceWorkerJobCoordinator::JobQueue::AbortAll() {
@@ -110,6 +89,7 @@ void ServiceWorkerJobCoordinator::Register(
       new ServiceWorkerRegisterJob(context_, script_url, options));
   ServiceWorkerRegisterJob* queued_job = static_cast<ServiceWorkerRegisterJob*>(
       job_queues_[options.scope].Push(std::move(job)));
+  StartJobTimeoutTimer();
   queued_job->AddCallback(callback, provider_host);
 }
 
@@ -151,10 +131,43 @@ void ServiceWorkerJobCoordinator::Update(
   queued_job->AddCallback(callback, provider_host);
 }
 
+constexpr base::TimeDelta ServiceWorkerJobCoordinator::kJobTimeoutAndTimerDelay;
+
+void ServiceWorkerJobCoordinator::StartJobTimeoutTimer() {
+  if (job_timeout_timer_.IsRunning())
+    return;
+  job_timeout_timer_.Start(FROM_HERE, kJobTimeoutAndTimerDelay, this,
+                           &ServiceWorkerJobCoordinator::OnJobTimeoutTimer);
+}
+
+void ServiceWorkerJobCoordinator::OnJobTimeoutTimer() {
+  if (job_queues_.empty())
+    return;
+  ServiceWorkerRegisterJob* job;
+  for (auto it = job_queues_.begin(); it != job_queues_.end();) {
+    job = static_cast<ServiceWorkerRegisterJob*>(it->second.GetFrontJob());
+    if (GetTickDuration(job->job_start_time()) >= kJobTimeoutAndTimerDelay) {
+      job->Abort();
+      it->second.Pop(job);
+      if (it->second.empty())
+        job_queues_.erase(it++);
+    } else
+      it++;
+  }
+}
+
+base::TimeDelta ServiceWorkerJobCoordinator::GetTickDuration(
+    base::TimeTicks start_time) const {
+  if (start_time.is_null())
+    return base::TimeDelta();
+  return base::TimeTicks::Now() - start_time;
+}
+
 void ServiceWorkerJobCoordinator::AbortAll() {
   for (auto& job_pair : job_queues_)
     job_pair.second.AbortAll();
   job_queues_.clear();
+  job_timeout_timer_.Stop();
 }
 
 void ServiceWorkerJobCoordinator::FinishJob(const GURL& pattern,
@@ -164,6 +177,8 @@ void ServiceWorkerJobCoordinator::FinishJob(const GURL& pattern,
   pending_jobs->second.Pop(job);
   if (pending_jobs->second.empty())
     job_queues_.erase(pending_jobs);
+  if (job_queues_.empty())
+    job_timeout_timer_.Stop();
 }
 
 }  // namespace content
