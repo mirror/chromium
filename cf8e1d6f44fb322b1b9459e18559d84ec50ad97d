@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed4ef8fd_6402225b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2211,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-25T20:40:02Z",
+      "side": 1,
+      "message": "Please update the IDS_ strings to reflect their strings (e.g. this one says \"clear\" but that part was removed from the text, so maybe change clear to reset? Please check each of the IDS_ for changes (that are being changed in this CL)).",
+      "revId": "cf8e1d6f44fb322b1b9459e18559d84ec50ad97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
