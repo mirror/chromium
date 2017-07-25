@@ -130,9 +130,6 @@ class CONTENT_EXPORT RequestExtraData
     stream_override_ = std::move(stream_override);
   }
 
-  bool initiated_in_secure_context() const {
-    return initiated_in_secure_context_;
-  }
   void set_initiated_in_secure_context(bool secure) {
     initiated_in_secure_context_ = secure;
   }
