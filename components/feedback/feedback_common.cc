@@ -30,8 +30,8 @@ constexpr char kMultilineEndString[] = "---------- END ----------\n\n";
 // The below thresholds were chosen arbitrarily to conveniently show small data
 // as part of the report itself without having to look into the system_logs.zip
 // file.
-constexpr size_t kFeedbackMaxLength = 1024;
-constexpr size_t kFeedbackMaxLineCount = 10;
+constexpr size_t kFeedbackMaxLength = 4 * 1024;
+constexpr size_t kFeedbackMaxLineCount = 40;
 
 constexpr base::FilePath::CharType kLogsFilename[] =
     FILE_PATH_LITERAL("system_logs.txt");
