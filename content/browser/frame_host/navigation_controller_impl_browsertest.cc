@@ -48,6 +48,7 @@
 #include "content/shell/browser/shell.h"
 #include "content/shell/common/shell_switches.h"
 #include "content/test/content_browser_test_utils_internal.h"
+#include "content/test/did_commit_provisional_load_interceptor.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
@@ -6102,56 +6103,36 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(start_url.GetOrigin().spec(), origin + "/");
 }
 
-// A BrowserMessageFilter that delays FrameHostMsg_DidCommitProvisionalLoad IPC
-// message for a specified URL, navigates the WebContents back and then
-// processes the commit message.
-class GoBackAndCommitFilter : public BrowserMessageFilter {
+// Helper to trigger a history-back navigation in the WebContents after the
+// renderer has committed a same-process and cross-origin navigation to the
+// given |url|, but before the browser side had a chance to process the
+// DidCommitProvisionalLoad message.
+class HistoryNavigationBeforeCommitInjector
+    : public DidCommitProvisionalLoadInterceptor {
  public:
-  GoBackAndCommitFilter(const GURL& url, WebContentsImpl* web_contents)
-      : BrowserMessageFilter(FrameMsgStart),
+  HistoryNavigationBeforeCommitInjector(const GURL& url,
+                                        WebContentsImpl* web_contents)
+      : DidCommitProvisionalLoadInterceptor(web_contents,
+                                            web_contents->GetMainFrame()),
         url_(url),
         web_contents_(web_contents) {}
-
- protected:
-  ~GoBackAndCommitFilter() override {}
+  ~HistoryNavigationBeforeCommitInjector() override {}
 
  private:
-  static void NavigateBackAndCommit(const IPC::Message& message,
-                                    WebContentsImpl* web_contents) {
-    web_contents->GetController().GoBack();
-
-    RenderFrameHostImpl* rfh = web_contents->GetMainFrame();
-    DCHECK_EQ(rfh->routing_id(), message.routing_id());
-    rfh->OnMessageReceived(message);
-  }
-
-  // BrowserMessageFilter:
-  bool OnMessageReceived(const IPC::Message& message) override {
-    if (message.type() != FrameHostMsg_DidCommitProvisionalLoad::ID)
-      return false;
-
-    // Parse the IPC message so the URL can be checked against the expected one.
-    base::PickleIterator iter(message);
-    FrameHostMsg_DidCommitProvisionalLoad_Params validated_params;
-    if (!IPC::ParamTraits<FrameHostMsg_DidCommitProvisionalLoad_Params>::Read(
-            &message, &iter, &validated_params)) {
-      return false;
-    }
-
-    // Only handle the message if the URLs are matching.
-    if (validated_params.url != url_)
-      return false;
-
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(&NavigateBackAndCommit, message, web_contents_));
-    return true;
+  // DidCommitProvisionalLoadInterceptor:
+  void DidCommitProvisionalLoad(
+      const ::FrameHostMsg_DidCommitProvisionalLoad_Params& params) override {
+    if (params.url == url_)
+      web_contents_->GetController().GoBack();
+    DidCommitProvisionalLoadInterceptor::DidCommitProvisionalLoad(params);
   }
 
   GURL url_;
   WebContentsImpl* web_contents_;
+  base::Optional<::FrameHostMsg_DidCommitProvisionalLoad_Params>
+      pending_dcpl_params_;
 
-  DISALLOW_COPY_AND_ASSIGN(GoBackAndCommitFilter);
+  DISALLOW_COPY_AND_ASSIGN(HistoryNavigationBeforeCommitInjector);
 };
 
 // Test which simulates a race condition between a cross-origin, same-process
@@ -6178,13 +6159,11 @@ IN_PROC_BROWSER_TEST_F(
   EXPECT_TRUE(NavigateToURL(shell(), same_document_url));
   EXPECT_EQ(2, web_contents->GetController().GetEntryCount());
 
-  // Create a GoBackAndCommitFilter, which will delay the commit IPC for a
-  // cross-origin, same process navigation and will perform a GoBack.
+  // Create a HistoryNavigationBeforeCommitInjector, which will delay the commit
+  // for a cross-origin, same process navigation and will perform a GoBack.
   GURL cross_origin_url(
       embedded_test_server()->GetURL("suborigin.a.com", "/title2.html"));
-  scoped_refptr<GoBackAndCommitFilter> filter =
-      new GoBackAndCommitFilter(cross_origin_url, web_contents);
-  web_contents->GetMainFrame()->GetProcess()->AddFilter(filter.get());
+  HistoryNavigationBeforeCommitInjector trigger(cross_origin_url, web_contents);
 
   // Navigate cross-origin, waiting for the commit to occur.
   UrlCommitObserver cross_origin_commit_observer(root, cross_origin_url);
