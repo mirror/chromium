@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2b7d7fa3_c14c89fc",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T19:12:48Z",
+      "side": 1,
+      "message": "Do you think we can come up with a better name? Since there are no plugins on Android, what is this class really observing?",
+      "parentUuid": "9d49ea37_dd74a18a",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d23b6ea4_a25d1217",
         "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
         "patchSetId": 2
