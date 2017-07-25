@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8921fc57_a3a70196",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T03:04:03Z",
+      "side": 1,
+      "message": "Had the URLRequestContextBuilder take care of doing this just to avoid the NetLog dependency (|this| still owns it, but this allows us to switch over to using the Builder\u0027s/Service\u0027s NetLog with less effort.  Not sure it really matters, either way).",
+      "range": {
+        "startLine": 109,
+        "startChar": 17,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "821e697d2e5676bfcf6c4853e0e0c055e3c72c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
