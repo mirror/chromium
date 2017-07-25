@@ -29,14 +29,13 @@ ACTION_P(InvokeClosure, closure) {
 }
 
 // A stub CompositorFrameSinkClient that does nothing.
-class StubCompositorFrameSinkClient
-    : public cc::mojom::CompositorFrameSinkClient {
+class StubCompositorFrameSinkClient : public mojom::CompositorFrameSinkClient {
  public:
   StubCompositorFrameSinkClient() : binding_(this) {}
   ~StubCompositorFrameSinkClient() override = default;
 
-  cc::mojom::CompositorFrameSinkClientPtr GetInterfacePtr() {
-    cc::mojom::CompositorFrameSinkClientPtr client;
+  mojom::CompositorFrameSinkClientPtr GetInterfacePtr() {
+    mojom::CompositorFrameSinkClientPtr client;
     binding_.Bind(mojo::MakeRequest(&client));
     return client;
   }
@@ -48,7 +47,7 @@ class StubCompositorFrameSinkClient
   }
 
  private:
-  // cc::mojom::CompositorFrameSinkClient:
+  // mojom::CompositorFrameSinkClient:
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override {}
   void OnBeginFrame(const BeginFrameArgs& begin_frame_args) override {}
@@ -56,7 +55,7 @@ class StubCompositorFrameSinkClient
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override {}
 
-  mojo::Binding<cc::mojom::CompositorFrameSinkClient> binding_;
+  mojo::Binding<mojom::CompositorFrameSinkClient> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(StubCompositorFrameSinkClient);
 };
@@ -116,7 +115,7 @@ class HostFrameSinkManagerTest : public testing::Test {
 TEST_F(HostFrameSinkManagerTest, CreateMojomCompositorFrameSink) {
   base::RunLoop run_loop;
 
-  cc::mojom::CompositorFrameSinkPtr frame_sink;
+  mojom::CompositorFrameSinkPtr frame_sink;
   StubCompositorFrameSinkClient frame_sink_client;
   host_manager().CreateCompositorFrameSink(kClientFrameSinkId,
                                            mojo::MakeRequest(&frame_sink),

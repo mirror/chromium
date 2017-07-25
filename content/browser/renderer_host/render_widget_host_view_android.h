@@ -149,7 +149,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   bool LockMouse() override;
   void UnlockMouse() override;
   void DidCreateNewRendererCompositorFrameSink(
-      cc::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
+      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
       override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
@@ -461,7 +461,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   gfx::Point prev_mousedown_point_;
   int left_click_count_ = 0;
 
-  cc::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink_ =
+  viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;
 
   base::ObserverList<DestructionObserver> destruction_observers_;

@@ -13,10 +13,10 @@ namespace viz {
 GpuCompositorFrameSink::GpuCompositorFrameSink(
     FrameSinkManagerImpl* frame_sink_manager,
     const FrameSinkId& frame_sink_id,
-    cc::mojom::CompositorFrameSinkRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest
+    mojom::CompositorFrameSinkRequest request,
+    mojom::CompositorFrameSinkPrivateRequest
         compositor_frame_sink_private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client)
+    mojom::CompositorFrameSinkClientPtr client)
     : support_(CompositorFrameSinkSupport::Create(
           this,
           frame_sink_manager,

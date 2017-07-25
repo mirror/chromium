@@ -50,8 +50,8 @@ void HostFrameSinkManager::RemoveObserver(FrameSinkObserver* observer) {
 
 void HostFrameSinkManager::CreateCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
-    cc::mojom::CompositorFrameSinkRequest request,
-    cc::mojom::CompositorFrameSinkClientPtr client) {
+    mojom::CompositorFrameSinkRequest request,
+    mojom::CompositorFrameSinkClientPtr client) {
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
   DCHECK(!data.HasCompositorFrameSinkData());
 

@@ -10,7 +10,7 @@ mojom("interfaces") {
   ]
 
   public_deps = [
-    "//services/viz/public/interfaces/compositing:interfaces",
+    "//services/viz/public/interfaces/compositing",
     "//ui/gfx/mojo",
   ]
 }
