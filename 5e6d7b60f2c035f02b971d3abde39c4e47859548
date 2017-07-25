@@ -16,6 +16,24 @@
       "revId": "5e6d7b60f2c035f02b971d3abde39c4e47859548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569abbdb_e9ae37fa",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/LoadSemanticPageExample.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-25T07:38:44Z",
+      "side": 1,
+      "message": "shend@ had the same comment on an earlier patch - I think its crossing the line of too much obfuscation. Are you ok with me leaving it as is?",
+      "parentUuid": "d5f22edb_eec69824",
+      "revId": "5e6d7b60f2c035f02b971d3abde39c4e47859548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
