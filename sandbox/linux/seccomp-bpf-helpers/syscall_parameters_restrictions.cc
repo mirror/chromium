@@ -153,7 +153,7 @@ ResultExpr RestrictPrctl() {
   return Switch(option)
       .CASES((PR_GET_NAME, PR_SET_NAME, PR_GET_DUMPABLE, PR_SET_DUMPABLE
 #if defined(OS_ANDROID)
-              , PR_SET_VMA, PR_SET_PTRACER
+              , PR_SET_VMA, PR_SET_PTRACER, PR_SET_TIMERSLACK
 
 // Enable PR_SET_TIMERSLACK_PID, an Android custom prctl which is used in:
 // https://android.googlesource.com/platform/system/core/+/lollipop-release/libcutils/sched_policy.c.
