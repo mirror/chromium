@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "48c0ad73_222cfda7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-25T15:14:18Z",
+      "side": 1,
+      "message": "Thanks for explaining.\n\nSo if this feature flag is associated with an experiment, does that mean it can be turned on/off remotely by the experimental framework, without a user updating? \n\nIf so, the existing channels upgrade code can\u0027t really be used for creating/deleting the channel - which currently assumes startup channels can only change if/when the app updates.\n\nSo then the channel will need to be created/deleted from content suggestions code like you\u0027ve done in the latest patch. However, I\u0027m a bit confused why this is done from flushCachedMetrics -  Is flushCachedMetrics guaranteed to run at the right time for initializing the channel? What about initializing the channel from ContentSuggestionsNotifierService::SetEnabled(true) (and maybe deleting it from ContentSuggestionsNotifierService::SetEnabled(false) ?). That would make more sense to me, but perhaps I\u0027m missing something..",
+      "parentUuid": "f31fd4fa_c44b0a66",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 96
+      },
+      "revId": "7c134544f480e36b9006531d1caea2b8678ad594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a999d645_7cb68a9d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
         "patchSetId": 2

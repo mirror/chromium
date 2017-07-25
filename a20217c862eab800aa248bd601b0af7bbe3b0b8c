@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6827ef9_8bb18be6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-25T15:14:18Z",
+      "side": 1,
+      "message": "nit: s/contentsuggestions/content_suggestions (unless this would make it inconsistent with other content suggestions code, I would prefer a precedent of using underscores for multi-word ids for clarity).",
+      "revId": "a20217c862eab800aa248bd601b0af7bbe3b0b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf32b577_5b77bf02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-25T15:14:18Z",
+      "side": 1,
+      "message": "This comment could do with updating to explain the difference between PredefinedChannels.MAP and PredefinedChannels.STARTUP (namely that MAP contains all the predefined channel properties whereas STARTUP contains only the subset of these channels that should be initialized on startup).",
+      "revId": "a20217c862eab800aa248bd601b0af7bbe3b0b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78511fe6_9ce0117f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-25T15:14:18Z",
+      "side": 1,
+      "message": "tiny nit: to me it would be a slightly more natural ordering to put the channel in the map first and then into STARTUP if necessary, since putting it in MAP defines it, whereas putting it in STARTUP is an optional extra step.",
+      "revId": "a20217c862eab800aa248bd601b0af7bbe3b0b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f8cc4c_26aaa2cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-25T15:14:18Z",
+      "side": 1,
+      "message": "Given all the other channel ids are added to startup, I think it merits a comment to say why this one isn\u0027t so it doesn\u0027t look like an omission.",
+      "revId": "a20217c862eab800aa248bd601b0af7bbe3b0b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
