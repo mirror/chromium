@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c95320a_2cfe15be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-25T10:57:30Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty already does the null check.",
+      "range": {
+        "startLine": 76,
+        "startChar": 28,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "a77adf5b9d11f6f1a0f0b1368ccf75d9e3762f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d386a8d6_1de7e46d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-25T10:57:30Z",
+      "side": 1,
+      "message": "Is the filepath still used for much? ContentId seems to replace it. Would it make sense to let the native side get the path from the ID and not have to bother with that at all in Java?",
+      "range": {
+        "startLine": 347,
+        "startChar": 22,
+        "endLine": 347,
+        "endChar": 33
+      },
+      "revId": "a77adf5b9d11f6f1a0f0b1368ccf75d9e3762f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
