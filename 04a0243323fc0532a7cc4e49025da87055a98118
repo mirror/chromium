@@ -252,6 +252,24 @@
       "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63abe6f9_30b6ed6f",
+        "filename": "chromeos/dbus/services/org.chromium.DisplayService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-25T17:29:10Z",
+      "side": 1,
+      "message": "I have cros_workon-pyro power_manager \u0026 system_api, deployed updated power_manager and chrome, verified that the power button toggles the backlight (also checked powerd logs, which confirm the new code is deployed).\n\nLooking just now I see that this file is *not* in /etc/dbus-1/system.d; would the permissions default to very open?",
+      "parentUuid": "da669e01_bdfdca44",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
