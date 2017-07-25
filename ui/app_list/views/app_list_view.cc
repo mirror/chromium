@@ -501,22 +501,18 @@ void AppListView::InitializeBubble(gfx::NativeView parent,
 }
 
 void AppListView::HandleClickOrTap() {
-  switch (app_list_state_) {
-    case HALF:
-    case FULLSCREEN_SEARCH:
-      search_box_view_->ClearSearch();
-      SetState(app_list_state_ == HALF ? PEEKING : FULLSCREEN_ALL_APPS);
-      break;
-    case PEEKING:
-    case FULLSCREEN_ALL_APPS:
-      if (search_box_view_->is_search_box_active())
-        search_box_view_->ClearSearch();
-      else
-        SetState(CLOSED);
-      break;
-    case CLOSED:
-      break;
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  if (!search_box_view_->is_search_box_active()) {
+    SetState(CLOSED);
+    return;
   }
+
+  search_box_view_->ClearSearch();
+  // If the search box is active the only possible states are HALF or
+  // FULLSCREEN_SEARCH. Swap to the non-search equivalent state.
+  SetState(app_list_state_ == HALF ? PEEKING : FULLSCREEN_ALL_APPS);
 }
 
 void AppListView::StartDrag(const gfx::Point& location) {
@@ -686,6 +682,7 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
 
 void AppListView::OnTabletModeChanged(bool started) {
   is_tablet_mode_ = started;
+  search_box_view_->OnTabletModeChanged(started);
   if (is_tablet_mode_ && !is_fullscreen()) {
     // Set |app_list_state_| to a tablet mode friendly state.
     SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS
