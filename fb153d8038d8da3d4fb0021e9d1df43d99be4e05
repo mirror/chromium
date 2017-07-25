@@ -16,6 +16,24 @@
       "revId": "fb153d8038d8da3d4fb0021e9d1df43d99be4e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5ecca7_d8a277a7",
+        "filename": "chrome/browser/resources/options/sync_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-25T18:54:12Z",
+      "side": 1,
+      "message": "I suppose, I was just trying to remove obvious references to settings-frame here. We can\u0027t remove all of options yet, that will follow, but we need to re-factor several pieces of Chrome OS UI first. Anyway, restored this.",
+      "parentUuid": "1b9bae7c_2e65ef7f",
+      "revId": "fb153d8038d8da3d4fb0021e9d1df43d99be4e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
