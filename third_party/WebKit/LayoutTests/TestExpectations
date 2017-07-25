@@ -2566,6 +2566,7 @@ crbug.com/684874 virtual/threaded/fast/scroll-behavior/smooth-scroll/scroll-duri
 
 # ====== Tests from enabling .any.js/.worker.js tests begin here ======
 crbug.com/709227 external/wpt/FileAPI/idlharness.worker.html [ Failure ]
+crbug.com/709227 virtual/mojo-blobs/external/wpt/FileAPI/idlharness.worker.html [ Failure ]
 crbug.com/709227 external/wpt/IndexedDB/interfaces.worker.html [ Failure ]
 crbug.com/709227 external/wpt/WebCryptoAPI/derive_bits_keys/ecdh_bits.worker.html [ Failure ]
 crbug.com/709227 external/wpt/WebCryptoAPI/derive_bits_keys/ecdh_keys.worker.html [ Failure ]

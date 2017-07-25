@@ -109,6 +109,8 @@ Platform::Platform() : main_thread_(0) {
   WTF::Partitions::Initialize(MaxObservedSizeFunction);
 }
 
+Platform::~Platform() {}
+
 void Platform::Initialize(Platform* platform) {
   DCHECK(!g_platform);
   DCHECK(platform);
@@ -149,6 +151,8 @@ void Platform::Initialize(Platform* platform) {
         InstanceCountersMemoryDumpProvider::Instance(), "BlinkObjectCounters",
         base::ThreadTaskRunnerHandle::Get());
   }
+
+  g_platform->file_thread_ = g_platform->CreateThread("File");
 }
 
 void Platform::SetCurrentPlatformForTesting(Platform* platform) {
@@ -163,6 +167,10 @@ Platform* Platform::Current() {
 
 WebThread* Platform::MainThread() const {
   return main_thread_;
+}
+
+WebTaskRunner* Platform::FileTaskRunner() const {
+  return file_thread_ ? file_thread_->GetWebTaskRunner() : nullptr;
 }
 
 service_manager::Connector* Platform::GetConnector() {
