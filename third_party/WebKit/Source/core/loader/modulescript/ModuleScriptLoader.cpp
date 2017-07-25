@@ -74,8 +74,7 @@ void ModuleScriptLoader::AdvanceState(ModuleScriptLoader::State new_state) {
 }
 
 void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
-                               ResourceFetcher* fetcher,
-                               ModuleGraphLevel level) {
+                               ResourceFetcher* fetcher) {
   // https://html.spec.whatwg.org/#fetch-a-single-module-script
 
   // Step 4. Set moduleMap[url] to "fetching".
@@ -100,7 +99,7 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // https://fetch.spec.whatwg.org/#concept-request-initiator
   options.initiator_info.name = g_empty_atom;
 
-  if (level == ModuleGraphLevel::kDependentModuleFetch) {
+  if (module_request.ShouldOverrideInitiatorInfo()) {
     options.initiator_info.imported_module_referrer =
         module_request.GetReferrer();
     options.initiator_info.position = module_request.GetReferrerPosition();
