@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bdc846b1_6b500aa8",
+        "filename": "chrome/installer/zucchini/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Yeah main_utils.* was intended to be in target \"zucchini\" (indeed, that\u0027s the case in Trunk); it was a goof on my part.\n\nzucchini.h is the main include file for accessing features in zucchini_lib (which in my mind, works on buffers and don\u0027t know about command line or file I/O -- but etiennep@ might think differently?).  zucchini::status::Code is intended for general use -- but yeah right now it has main-specific stuff and that\u0027s ugly.\n\nSo I\u0027m going to weaken the current codes and use\n\nkStatusInvalidParam \u003d 1\n\nas generic error code? Then this alos makes sense for zucchini_lib.",
+      "parentUuid": "f71b05b2_33abaf41",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa5e851_62867c2c",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 3
@@ -63,6 +87,24 @@
       "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c58241_c76aa0b8",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Added\nZucchini.PeakPagefileUsageChange\nZucchini.PeakWorkingSetSizeChange",
+      "parentUuid": "4aa5e851_62867c2c",
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "63092dbb_7f6ca34f",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c62eee_cb00ba43",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3182455a_c331f494",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 3
@@ -109,6 +175,30 @@
       "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf441e15_0dad0c4e",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "The enum gets used again in the function (Gen() here), but I\u0027m okay with duplicating something this simple.",
+      "parentUuid": "3182455a_c331f494",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "23fddda8_f58d9815",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Done. A slight disadvantage is that there is a bit more overhead to do things this way (about 70 to 90 microsecond)",
+      "parentUuid": "b1b766cd_580e2486",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed01f68f_cf3bff5f",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 3
@@ -155,6 +269,30 @@
       "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f6898e_61006861",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Thanks for digging this up! Removed the namespace \"command\".  Also renamed Gen() and Apply() to MainGen() and MainApply().",
+      "parentUuid": "ed01f68f_cf3bff5f",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "efaaacf0_083c6445",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77bb51b7_937b2afd",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91958023_60aaf352",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 3
@@ -204,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "441d5e7d_44e2314d",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Done. Changed CommandFunction to a pointer.",
+      "parentUuid": "91958023_60aaf352",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83f2cc11_0383e5fd",
         "filename": "chrome/installer/zucchini/zucchini_commands.h",
         "patchSetId": 3
@@ -218,6 +404,24 @@
       "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c314656_37de0fa3",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "83f2cc11_0383e5fd",
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

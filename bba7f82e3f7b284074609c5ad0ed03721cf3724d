@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "73420fd4_96822050",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-25T18:17:25Z",
+      "side": 1,
+      "message": "Ah, thanks for investigating. Got it to work!\n\nI defined destructor inline with \u003d default, and it seems to work, so I\u0027m doing that.",
+      "parentUuid": "85590bb1_a94771fd",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8f843b_e488d415",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
