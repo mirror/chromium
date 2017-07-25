@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06534dff_6d2c9508",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-25T12:41:52Z",
+      "side": 1,
+      "message": "Should it be avoided to alloc this on iPhones?",
+      "range": {
+        "startLine": 67,
+        "startChar": 37,
+        "endLine": 67,
+        "endChar": 64
+      },
+      "revId": "4d4f7345281e207f55ca668517312996d1023fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a77759_3495f9bc",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-25T12:41:52Z",
+      "side": 1,
+      "message": "does it fix the issue on iPhone 6+?",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "4d4f7345281e207f55ca668517312996d1023fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
