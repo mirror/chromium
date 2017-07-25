@@ -812,12 +812,14 @@ Browser::DownloadClosePreventionType Browser::OkToCloseWithInProgressDownloads(
     total_window_count++;
   }
 
+#if !defined(OS_CHROMEOS)
   // If there aren't any other windows, we're at browser shutdown,
   // which would cancel all current downloads.
   if (total_window_count == 0) {
     *num_downloads_blocking = total_download_count;
     return DOWNLOAD_CLOSE_BROWSER_SHUTDOWN;
   }
+#endif
 
   // If there aren't any other windows on our profile, and we're an incognito
   // profile, and there are downloads associated with that profile,
