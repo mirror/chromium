@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a141764b_dfcb7d6b",
+        "filename": "net/nqe/socket_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-25T20:08:28Z",
+      "side": 1,
+      "message": "nit: match the name of this variable to the header.",
+      "revId": "434dfaf68a437ea257a41652551dc2b2306631f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c134c06_80f9b724",
+        "filename": "net/nqe/socket_watcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-25T20:08:28Z",
+      "side": 1,
+      "message": "This isn\u0027t exactly true, would it be possible to pass in a bool for whether it is a private address, alternatively, update the description to be more accurate to how the address list is used.",
+      "revId": "434dfaf68a437ea257a41652551dc2b2306631f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
