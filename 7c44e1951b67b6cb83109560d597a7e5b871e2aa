@@ -22,6 +22,29 @@
       "revId": "7c44e1951b67b6cb83109560d597a7e5b871e2aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e9c929_c89d8112",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-25T04:28:44Z",
+      "side": 1,
+      "message": "I think you need to consider the case where no swap ack is pending, and dispatch the callback immediately in those cases.\n\nAlso, is this sufficient? Or do you also need to listen to a swapBuffers from CompositorImpl after this?",
+      "range": {
+        "startLine": 1191,
+        "startChar": 34,
+        "endLine": 1191,
+        "endChar": 64
+      },
+      "revId": "7c44e1951b67b6cb83109560d597a7e5b871e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
