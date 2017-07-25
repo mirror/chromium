@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ada2967_4eb118f3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/WarmupManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-25T12:04:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "011b9960_5f05e34c",
+      "revId": "64cdfb89de97b407d0b2dda145f02a1a884ccc10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0ce8ef0_6f3ae24e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/WarmupManagerTest.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T04:25:20Z",
       "side": 1,
       "message": "I think the DCHECK failures you\u0027re seeing on LARNG are because of this. Beyond the handler addition after start one, calling EmbeddedTestServer::Start() twice should be a DCHECK failure here: https://codesearch.chromium.org/chromium/src/net/test/embedded_test_server/embedded_test_server.cc?rcl\u003dcfd37409392f1cc986ff3423696deedc80fbfedb\u0026l\u003d94\n\nI think the flow here should be:\n\n  ETS server \u003d new ETS();\n  try {\n    server.initializeNative();\n    server.addDefaultHandlers(\"\");\n    server.setConnectionListener(...);\n    server.start();\n    ...\n  } finally {\n    server.stopAndDestroyServer();\n  }",
+      "revId": "64cdfb89de97b407d0b2dda145f02a1a884ccc10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebd9af7_f2d0e83c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/WarmupManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-25T12:04:31Z",
+      "side": 1,
+      "message": "Thanks!\n\nDone.",
+      "parentUuid": "b0ce8ef0_6f3ae24e",
       "revId": "64cdfb89de97b407d0b2dda145f02a1a884ccc10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
