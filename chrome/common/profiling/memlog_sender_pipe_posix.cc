@@ -14,11 +14,8 @@
 
 namespace profiling {
 
-MemlogSenderPipe::MemlogSenderPipe(const std::string& pipe_id) {
-  int fd;
-  CHECK(base::StringToInt(pipe_id, &fd));
-  handle_.reset(mojo::edk::PlatformHandle(fd));
-}
+MemlogSenderPipe::MemlogSenderPipe(int pipe_fd)
+    : handle_(mojo::edk::PlatformHandle(pipe_fd)) {}
 
 MemlogSenderPipe::~MemlogSenderPipe() {
 }

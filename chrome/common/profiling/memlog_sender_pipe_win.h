@@ -16,16 +16,12 @@ namespace profiling {
 
 class MemlogSenderPipe {
  public:
-  explicit MemlogSenderPipe(const std::string& pipe_id);
+  explicit MemlogSenderPipe(HANDLE handle);
   ~MemlogSenderPipe();
-
-  bool Connect();
 
   bool Send(const void* data, size_t sz);
 
  private:
-  base::string16 pipe_id_;
-
   HANDLE handle_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogSenderPipe);
