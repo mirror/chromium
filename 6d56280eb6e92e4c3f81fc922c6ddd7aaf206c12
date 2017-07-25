@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45489e0f_a6005843",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T08:14:55Z",
+      "side": 1,
+      "message": "We shouldn\u0027t put the implementation in the header file like this. It\u0027s an override of a virtual method anyway, so it won\u0027t end up as truly inline in the end.",
+      "revId": "6d56280eb6e92e4c3f81fc922c6ddd7aaf206c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

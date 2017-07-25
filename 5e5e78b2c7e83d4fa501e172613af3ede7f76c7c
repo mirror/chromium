@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc0eacac_43b14d41",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T08:14:55Z",
+      "side": 0,
+      "message": "Should back out these blank line changes, to minimize the diff and reduce the risk of merge conflicts.",
+      "revId": "5e5e78b2c7e83d4fa501e172613af3ede7f76c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
