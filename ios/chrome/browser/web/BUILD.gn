@@ -122,6 +122,9 @@ source_set("web_internal") {
     "external_app_launcher.h",
     "external_app_launcher.mm",
     "passkit_dialog_provider.h",
+    "placeholder_overlay_tab_helper.h",
+    "placeholder_overlay_tab_helper.mm",
+    "placeholder_overlay_tab_helper_delegate.h",
     "print_observer.h",
     "print_observer.mm",
   ]
