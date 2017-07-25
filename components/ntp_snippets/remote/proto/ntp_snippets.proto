@@ -33,6 +33,8 @@ message SnippetProto {
     VIDEO = 1;
   }
   optional ContentType content_type = 12 [default = UNKNOWN];
+
+  optional bool pushed = 13 [default = false];
 }
 
 message SnippetImageProto {

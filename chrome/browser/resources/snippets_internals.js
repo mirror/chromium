@@ -38,6 +38,18 @@ cr.define('chrome.SnippetsInternals', function() {
       event.preventDefault();
     });
 
+    $('push-random-suggestion-button')
+        .addEventListener('click', function(event) {
+          chrome.send('pushRandomSuggestion');
+          event.preventDefault();
+        });
+
+    $('push-random-suggestion-10-seconds-button')
+        .addEventListener('click', function(event) {
+          chrome.send('pushRandomSuggestionIn10Seconds');
+          event.preventDefault();
+        });
+
     window.addEventListener('focus', refreshContent);
     window.setInterval(refreshContent, 1000);
 

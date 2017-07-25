@@ -33,8 +33,10 @@
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/pref_names.h"
+#include "components/ntp_snippets/remote/proto/ntp_snippets.pb.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
+#include "components/ntp_snippets/remote/remote_suggestions_provider_impl.h"
 #include "components/ntp_snippets/switches.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/prefs/pref_service.h"
@@ -149,6 +151,11 @@ std::set<variations::VariationID> SnippetsExperiments() {
   return result;
 }
 
+int64_t SerializeTime(const base::Time& time) {
+  base::TimeDelta delta = time - base::Time();
+  return delta.InMicroseconds();
+}
+
 }  // namespace
 
 SnippetsInternalsMessageHandler::SnippetsInternalsMessageHandler(
@@ -191,6 +198,16 @@ void SnippetsInternalsMessageHandler::RegisterMessages() {
       base::Bind(&SnippetsInternalsMessageHandler::
                      FetchRemoteSuggestionsInTheBackground,
                  base::Unretained(this)));
+
+  web_ui()->RegisterMessageCallback(
+      "pushRandomSuggestion",
+      base::Bind(&SnippetsInternalsMessageHandler::PushRandomSuggestion,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "pushRandomSuggestionIn10Seconds",
+      base::Bind(
+          &SnippetsInternalsMessageHandler::PushRandomSuggestionIn10Seconds,
+          base::Unretained(this)));
 
   web_ui()->RegisterMessageCallback(
       "refreshContent",
@@ -346,6 +363,65 @@ void SnippetsInternalsMessageHandler::FetchRemoteSuggestionsInTheBackground(
   DCHECK_EQ(0u, args->GetSize());
   remote_suggestions_provider_->RefetchInTheBackground(
       RemoteSuggestionsProvider::FetchStatusCallback());
+}
+
+void SnippetsInternalsMessageHandler::PushRandomSuggestion(
+    const base::ListValue* args) {
+  DCHECK_EQ(0u, args->GetSize());
+
+  PushRandomSuggestionInternal();
+}
+
+void SnippetsInternalsMessageHandler::PushRandomSuggestionInternal() {
+  ntp_snippets::FetchedCategory result(
+      Category::FromRemoteCategory(1),
+      CategoryInfo(base::UTF8ToUTF16("Category title"),
+                   ntp_snippets::ContentSuggestionsCardLayout::FULL_CARD,
+
+                   ntp_snippets::ContentSuggestionsAdditionalAction::FETCH,
+                   false, base::UTF8ToUTF16("No suggestions message")));
+
+  ntp_snippets::SnippetProto proto;
+
+  int id = (base::Time::Now() - base::Time()).InSeconds() % 86400;
+
+  proto.set_title("Pushed Title " + base::IntToString(id));
+  proto.set_snippet("Pushed Snippet");
+  proto.set_salient_image_url("https://www.google.com/favicon.ico");
+  proto.set_publish_date(SerializeTime(base::Time::Now()));
+  proto.set_expiry_date(
+      SerializeTime(base::Time::Now() + base::TimeDelta::FromMinutes(60)));
+  proto.set_score(1);
+  proto.set_dismissed(false);
+  proto.set_remote_category_id(1);
+  auto* source = proto.add_sources();
+  source->set_url("http://url.com/" + base::IntToString(id));
+  source->set_publisher_name("Pushed Publisher");
+  source->set_amp_url("http://url.com/amp/");
+  proto.set_fetch_date(SerializeTime(base::Time::Now()));
+  for (const auto& id : std::vector<std::string>{source->url()}) {
+    proto.add_ids(id);
+  }
+
+  proto.set_pushed(true);
+
+  result.suggestions.push_back(
+      ntp_snippets::RemoteSuggestion::CreateFromProto(proto));
+
+  std::vector<ntp_snippets::FetchedCategory> categories;
+  categories.push_back(std::move(result));
+
+  static_cast<ntp_snippets::RemoteSuggestionsProviderImpl*>(
+      remote_suggestions_provider_)
+      ->OnSuggestionsPushed(std::move(categories));
+}
+
+void SnippetsInternalsMessageHandler::PushRandomSuggestionIn10Seconds(
+    const base::ListValue* args) {
+  suggestion_push_timer_.Start(
+      FROM_HERE, base::TimeDelta::FromSeconds(10),
+      base::Bind(&SnippetsInternalsMessageHandler::PushRandomSuggestionInternal,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void SnippetsInternalsMessageHandler::SendAllContent() {

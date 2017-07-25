@@ -346,6 +346,8 @@ std::unique_ptr<RemoteSuggestion> RemoteSuggestion::CreateFromProto(
     snippet->content_type_ = ContentType::VIDEO;
   }
 
+  snippet->is_pushed_ = proto.pushed();
+
   return snippet;
 }
 
@@ -389,6 +391,7 @@ SnippetProto RemoteSuggestion::ToProto() const {
   if (content_type_ == ContentType::VIDEO) {
     result.set_content_type(SnippetProto_ContentType_VIDEO);
   }
+  result.set_pushed(is_pushed_);
   return result;
 }
 
