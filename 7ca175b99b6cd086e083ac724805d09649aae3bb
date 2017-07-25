@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ec8093_c6691ba0",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-25T02:06:39Z",
+      "side": 1,
+      "message": "It might be nice to add that the Windows epoch is used to the constructor for Time in time.h:475. It\u0027s mentioned at the top of the file, but the comment at the constructor says \u0027Contains the NULL time\u0027 which makes little sense to add to.",
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67e8b23_4ac178ec",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-25T02:06:39Z",
+      "side": 1,
+      "message": "If this is the right way to serialize/deserialize, this should be documented in time.h. As is, the comment implies that since_origin is a testing/debugging convenience, but since To/FromInternalValue is deprecated, it would be good to update the new preferred methods with a note about using them for serialization.",
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
