@@ -9,6 +9,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
@@ -444,6 +445,12 @@ public class BottomToolbarPhone extends ToolbarPhone {
     }
 
     @Override
+    protected void initializeLocationBarBackground() {
+        mLocationBarBackground = ApiCompatibilityUtils.getDrawable(
+                getContext().getResources(), R.drawable.bottom_toolbar_background);
+    }
+
+    @Override
     public void initialize(ToolbarDataProvider toolbarDataProvider,
             ToolbarTabController tabController, AppMenuButtonHelper appMenuButtonHelper) {
         super.initialize(toolbarDataProvider, tabController, appMenuButtonHelper);
@@ -787,6 +794,13 @@ public class BottomToolbarPhone extends ToolbarPhone {
             updateButtonsContainerVisibilityAndTranslation();
         }
         updateMenuButtonClickableState();
+    }
+
+    @Override
+    protected int getToolbarColorForVisualState(final VisualState visualState) {
+        if (visualState == VisualState.NORMAL) return Color.WHITE;
+
+        return super.getToolbarColorForVisualState(visualState);
     }
 
     private void updateToolbarButtonVisibility() {

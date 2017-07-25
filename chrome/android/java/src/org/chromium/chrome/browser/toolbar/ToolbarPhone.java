@@ -197,7 +197,7 @@ public class ToolbarPhone extends ToolbarLayout
     protected ColorDrawable mToolbarBackground;
 
     /** The omnibox background (white with a shadow). */
-    private Drawable mLocationBarBackground;
+    protected Drawable mLocationBarBackground;
 
     private boolean mForceDrawLocationBarBackground;
     private TabSwitcherDrawable mTabSwitcherButtonDrawable;
@@ -228,7 +228,7 @@ public class ToolbarPhone extends ToolbarLayout
     protected final Point mNtpSearchBoxTranslation = new Point();
 
     protected final int mToolbarSidePadding;
-    private final int mLocationBarBackgroundCornerRadius;
+    protected int mLocationBarBackgroundCornerRadius;
     protected int mLocationBarVerticalMargin;
 
     private ValueAnimator mBrandColorTransitionAnimation;
@@ -311,8 +311,6 @@ public class ToolbarPhone extends ToolbarLayout
                 R.dimen.toolbar_edge_padding);
         mLocationBarVerticalMargin =
                 getResources().getDimensionPixelOffset(R.dimen.location_bar_vertical_margin);
-        mLocationBarBackgroundCornerRadius =
-                getResources().getDimensionPixelOffset(R.dimen.location_bar_corner_radius);
         mProgressBackBackgroundColorWhite = ApiCompatibilityUtils.getColor(getResources(),
                 R.color.progress_bar_background_white);
         mLightModeDefaultColor =
@@ -340,12 +338,7 @@ public class ToolbarPhone extends ToolbarLayout
         mTabSwitcherAnimationBgOverlay =
                 new ColorDrawable(getToolbarColorForVisualState(VisualState.NORMAL));
 
-        mLocationBarBackground =
-                ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.card_single);
-        mLocationBarBackground.getPadding(mLocationBarBackgroundPadding);
-        mLocationBar.setPadding(
-                mLocationBarBackgroundPadding.left, mLocationBarBackgroundPadding.top,
-                mLocationBarBackgroundPadding.right, mLocationBarBackgroundPadding.bottom);
+        initializeLocationBarBackground();
 
         setLayoutTransition(null);
 
@@ -353,6 +346,17 @@ public class ToolbarPhone extends ToolbarLayout
         inflateTabSwitchingResources();
 
         setWillNotDraw(false);
+    }
+
+    protected void initializeLocationBarBackground() {
+        mLocationBarBackgroundCornerRadius =
+                getResources().getDimensionPixelOffset(R.dimen.location_bar_corner_radius);
+        mLocationBarBackground =
+                ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.card_single);
+        mLocationBarBackground.getPadding(mLocationBarBackgroundPadding);
+        mLocationBar.setPadding(mLocationBarBackgroundPadding.left,
+                mLocationBarBackgroundPadding.top, mLocationBarBackgroundPadding.right,
+                mLocationBarBackgroundPadding.bottom);
     }
 
     private void inflateTabSwitchingResources() {
@@ -785,7 +789,9 @@ public class ToolbarPhone extends ToolbarLayout
         // - The right most visible location bar child view.
         // - The bottom of the viewport is aligned with the bottom of the location bar.
         // Additional padding can be applied for use during animations.
-        int verticalMargin = (int) MathUtils.interpolate(mLocationBarVerticalMargin, 0, expansion);
+        // TODO: move to BottomToolbarPhone
+        int verticalMargin = (int) MathUtils.interpolate(
+                mLocationBarVerticalMargin, mLocationBarVerticalMargin, expansion);
         out.set(leftViewPosition,
                 mLocationBar.getTop() + verticalMargin,
                 rightViewPosition,
@@ -800,7 +806,7 @@ public class ToolbarPhone extends ToolbarLayout
         float expansion = getExpansionPercentForVisualState(visualState);
         int leftViewPosition =
                 (int) MathUtils.interpolate(getViewBoundsLeftOfLocationBar(visualState),
-                        -mLocationBarBackgroundCornerRadius, expansion);
+                        getViewBoundsLeftOfLocationBar(visualState), expansion);
         return leftViewPosition;
     }
 
@@ -810,9 +816,10 @@ public class ToolbarPhone extends ToolbarLayout
      */
     protected int getRightPositionOfLocationBarBackground(VisualState visualState) {
         float expansion = getExpansionPercentForVisualState(visualState);
+        // TODO: move to BottomToolbarPhone.
         int rightViewPosition =
                 (int) MathUtils.interpolate(getViewBoundsRightOfLocationBar(visualState),
-                        getWidth() + mLocationBarBackgroundCornerRadius, expansion);
+                        getViewBoundsRightOfLocationBar(visualState), expansion);
 
         return rightViewPosition;
     }

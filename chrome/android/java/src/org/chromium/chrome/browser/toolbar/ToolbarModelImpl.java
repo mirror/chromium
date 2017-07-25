@@ -163,8 +163,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     @Override
     public int getPrimaryColor() {
         if (mBottomSheet != null) {
-            int colorId =
-                    isIncognito() ? R.color.incognito_primary_color : R.color.default_primary_color;
+            int colorId = isIncognito() ? R.color.incognito_primary_color : android.R.color.white;
             return ApiCompatibilityUtils.getColor(
                     ContextUtils.getApplicationContext().getResources(), colorId);
         }
