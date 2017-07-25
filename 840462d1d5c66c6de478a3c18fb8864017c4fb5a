@@ -22,6 +22,30 @@
       "revId": "840462d1d5c66c6de478a3c18fb8864017c4fb5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73894cb9_148011b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-25T09:06:54Z",
+      "side": 1,
+      "message": "my main problem is that the logic of whether or not the section gets extended is actually not in this method. To be honest, I think the method has a lot of smells and would be best split into two, maybe pulling the observer notification into a helper method.\nBut I also want to keep the patch small so that we have the option of merging.\n\nMy mental model is that whatever method calls this one is controlling the actual size of the list (e.g. in the case of update() we trim first). Looking from that perspective, the naming would make sense again. Would clarifying the parameter\u0027s comment help?",
+      "parentUuid": "b3c28796_381bc407",
+      "range": {
+        "startLine": 406,
+        "startChar": 76,
+        "endLine": 406,
+        "endChar": 95
+      },
+      "revId": "840462d1d5c66c6de478a3c18fb8864017c4fb5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
