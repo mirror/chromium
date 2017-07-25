@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "06542394_4686e123",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T23:47:20Z",
+      "side": 1,
+      "message": "I mean, for example, 100x1 DesktopFrame.\nResolutionChooser is controlled by its constructor parameter, i.e. it may not apply the size of DesktopFrame in line 263. So its capture_size() may be larger than 1x1. Line 272 won\u0027t be able to block a 100x1 DesktopFrame from reaching line 292.",
+      "parentUuid": "0121441b_92c35a03",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 56
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ae764b6_32dee9ce",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 7
