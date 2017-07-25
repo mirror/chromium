@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dffc695d_1e6a7d66",
+        "filename": "chrome/browser/android/signin/signin_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T11:48:42Z",
+      "side": 1,
+      "message": "Done.\n\nI was actually thinking about something similar yesterday, but I wasn\u0027t sure if I wasn\u0027t making too much of a mess :) But yes, now everything is contained in ProfileDataRemover.",
+      "parentUuid": "f136d7bb_b4783886",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "dd4083ad3a4d42f769272036d6ed999a5c51850f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d3d1f76_4b73fc42",
         "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "dd4083ad3a4d42f769272036d6ed999a5c51850f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674ad5ef_4ef5ada6",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-25T11:48:42Z",
+      "side": 1,
+      "message": "Done. crbug.com/748484",
+      "parentUuid": "0d3d1f76_4b73fc42",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 73
+      },
+      "revId": "dd4083ad3a4d42f769272036d6ed999a5c51850f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
