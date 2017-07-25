@@ -192,9 +192,9 @@ GpuVideoDecodeAccelerator::~GpuVideoDecodeAccelerator() {
 gpu::VideoDecodeAcceleratorCapabilities
 GpuVideoDecodeAccelerator::GetCapabilities(
     const gpu::GpuPreferences& gpu_preferences,
-    const gpu::GpuDriverBugWorkarounds& workarounds) {
+    bool disable_accelerated_vpx_decode) {
   return GpuVideoDecodeAcceleratorFactory::GetDecoderCapabilities(
-      gpu_preferences, workarounds);
+      gpu_preferences, disable_accelerated_vpx_decode);
 }
 
 bool GpuVideoDecodeAccelerator::OnMessageReceived(const IPC::Message& msg) {
@@ -371,8 +371,11 @@ bool GpuVideoDecodeAccelerator::Initialize(
     return false;
   }
 
-  const gpu::GpuDriverBugWorkarounds& gpu_workarounds =
-      stub_->channel()->gpu_channel_manager()->gpu_driver_bug_workarounds();
+  gpu::GpuDriverBugWorkarounds gpu_workarounds(
+      stub_->channel()
+          ->gpu_channel_manager()
+          ->gpu_feature_info()
+          .enabled_gpu_driver_bug_workarounds);
   const gpu::GpuPreferences& gpu_preferences =
       stub_->channel()->gpu_channel_manager()->gpu_preferences();
   video_decode_accelerator_ =

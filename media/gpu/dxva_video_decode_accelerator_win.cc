@@ -43,7 +43,6 @@
 #include "base/win/windows_version.h"
 #include "build/build_config.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
-#include "gpu/config/gpu_driver_bug_workarounds.h"
 #include "media/base/media_switches.h"
 #include "media/base/win/mf_helpers.h"
 #include "media/base/win/mf_initializer.h"
@@ -1216,7 +1215,7 @@ GLenum DXVAVideoDecodeAccelerator::GetSurfaceInternalFormat() const {
 VideoDecodeAccelerator::SupportedProfiles
 DXVAVideoDecodeAccelerator::GetSupportedProfiles(
     const gpu::GpuPreferences& preferences,
-    const gpu::GpuDriverBugWorkarounds& workarounds) {
+    bool disable_accelerated_vpx_decode) {
   TRACE_EVENT0("gpu,startup",
                "DXVAVideoDecodeAccelerator::GetSupportedProfiles");
 
@@ -1233,7 +1232,7 @@ DXVAVideoDecodeAccelerator::GetSupportedProfiles(
   }
   for (const auto& supported_profile : kSupportedProfiles) {
     if ((!preferences.enable_accelerated_vpx_decode ||
-         workarounds.disable_accelerated_vpx_decode) &&
+         disable_accelerated_vpx_decode) &&
         (supported_profile >= VP8PROFILE_MIN) &&
         (supported_profile <= VP9PROFILE_MAX)) {
       continue;
