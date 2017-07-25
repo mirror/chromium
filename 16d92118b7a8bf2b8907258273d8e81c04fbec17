@@ -16,6 +16,24 @@
       "revId": "16d92118b7a8bf2b8907258273d8e81c04fbec17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796069e9_551a7f90",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 2535,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-25T05:17:36Z",
+      "side": 0,
+      "message": "Yes, before when the enum was not resorted, kStatic and kIsStaticallyPositioned are both 0 because the author of this code declare kIsStaticallyPositioned\u003d0 and in CSSProperties.json5, position keyword have static as the first keyword in the list of keyword.\n\nWhen we re-sort the enum, static is not the first keyword anymore. \n\nYou can look at the above switch case conversion method to see the author of this code\u0027s mapping between his enum and EPosition. \n\nMoreover, in this line type(positioned_state_) \u003d PositionedState which is an enum and this function is used to reset the positioned_state_ variable so he should use his own declared type and enum. He should not be casting from EPosition and \"hope\" that it will be the same as kIsStaticallyPositioned.",
+      "parentUuid": "629b1413_124f9b5d",
+      "revId": "16d92118b7a8bf2b8907258273d8e81c04fbec17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
