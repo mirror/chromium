@@ -647,7 +647,7 @@ TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithRequestOrigin) {
   EXPECT_EQ(0, offline_pages[0].flags);
   EXPECT_EQ(kTestTitle, offline_pages[0].title);
   EXPECT_EQ(kTestUrl2, offline_pages[0].original_url);
-  EXPECT_EQ(kRequestOrigin, offline_pages[0].request_origin);
+  EXPECT_EQ("", offline_pages[0].request_origin);
 }
 
 TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverCancelled) {
