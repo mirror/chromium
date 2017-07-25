@@ -204,13 +204,15 @@ void PerformanceMonitor::Did(const probe::CallFunction& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  probe.CaptureStartTime();
 }
 
 void PerformanceMonitor::Did(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  double task_time = probe.Duration();
+  UMA_HISTOGRAM_CUSTOM_TIMES("V8ScriptRunner.CompileScriptTimeHistogram",
+                             TimeDelta::FromSecondsD(task_time),
+                             TimeDelta::FromMicroseconds(100),
+                             TimeDelta::FromMicroseconds(100000), 100);
 }
 
 void PerformanceMonitor::Will(const probe::UserCallback& probe) {
