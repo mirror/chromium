@@ -174,6 +174,29 @@
     },
     {
       "key": {
+        "uuid": "7b41f243_4916fcab",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-25T18:35:31Z",
+      "side": 1,
+      "message": "app_icon is also a URL, right? In that case it should be GURL type.",
+      "range": {
+        "startLine": 84,
+        "startChar": 47,
+        "endLine": 84,
+        "endChar": 58
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2450396_73a5b048",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
