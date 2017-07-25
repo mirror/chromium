@@ -69,6 +69,51 @@ InstanceData::FlushInfo::FlushInfo()
 InstanceData::FlushInfo::~FlushInfo() {
 }
 
+PluginDispatcher::Sender::Sender(
+    base::WeakPtr<PluginDispatcher> plugin_dispatcher,
+    scoped_refptr<IPC::SyncMessageFilter> sync_filter)
+    : plugin_dispatcher_(plugin_dispatcher), sync_filter_(sync_filter) {}
+
+PluginDispatcher::Sender::~Sender() {}
+
+bool PluginDispatcher::Sender::SendMessage(IPC::Message* msg) {
+  // Currently we need to choose between two different mechanisms for sending.
+  // On the main thread we use the regular dispatch Send() method, on another
+  // thread we use SyncMessageFilter.
+  if (PpapiGlobals::Get()
+          ->GetMainThreadMessageLoop()
+          ->BelongsToCurrentThread()) {
+    CHECK(plugin_dispatcher_);
+    return plugin_dispatcher_.get()->Dispatcher::Send(msg);
+  }
+  return sync_filter_->Send(msg);
+}
+
+bool PluginDispatcher::Sender::Send(IPC::Message* msg) {
+  TRACE_EVENT2("ppapi proxy", "PluginDispatcher::Send", "Class",
+               IPC_MESSAGE_ID_CLASS(msg->type()), "Line",
+               IPC_MESSAGE_ID_LINE(msg->type()));
+  // We always want plugin->renderer messages to arrive in-order. If some sync
+  // and some async messages are sent in response to a synchronous
+  // renderer->plugin call, the sync reply will be processed before the async
+  // reply, and everything will be confused.
+  //
+  // Allowing all async messages to unblock the renderer means more reentrancy
+  // there but gives correct ordering.
+  //
+  // We don't want reply messages to unblock however, as they will potentially
+  // end up on the wrong queue - see crbug.com/122443
+  if (!msg->is_reply())
+    msg->set_unblock(true);
+  if (msg->is_sync()) {
+    // Synchronous messages might be re-entrant, so we need to drop the lock.
+    ProxyAutoUnlock unlock;
+    SCOPED_UMA_HISTOGRAM_TIMER("Plugin.PpapiSyncIPCTime");
+    return SendMessage(msg);
+  }
+  return SendMessage(msg);
+}
+
 PluginDispatcher::PluginDispatcher(PP_GetInterface_Func get_interface,
                                    const PpapiPermissions& permissions,
                                    bool incognito)
@@ -169,7 +214,7 @@ bool PluginDispatcher::InitPluginWithChannel(
   plugin_delegate_ = delegate;
   plugin_dispatcher_id_ = plugin_delegate_->Register(this);
 
-  sync_filter_ = channel()->CreateSyncMessageFilter();
+  sender_ = new Sender(AsWeakPtr(), channel()->CreateSyncMessageFilter());
 
   // The message filter will intercept and process certain messages directly
   // on the I/O thread.
@@ -184,38 +229,8 @@ bool PluginDispatcher::IsPlugin() const {
   return true;
 }
 
-bool PluginDispatcher::SendMessage(IPC::Message* msg) {
-  // Currently we need to choose between two different mechanisms for sending.
-  // On the main thread we use the regular dispatch Send() method, on another
-  // thread we use SyncMessageFilter.
-  if (PpapiGlobals::Get()->GetMainThreadMessageLoop()->BelongsToCurrentThread())
-    return Dispatcher::Send(msg);
-  return sync_filter_->Send(msg);
-}
-
 bool PluginDispatcher::Send(IPC::Message* msg) {
-  TRACE_EVENT2("ppapi proxy", "PluginDispatcher::Send",
-               "Class", IPC_MESSAGE_ID_CLASS(msg->type()),
-               "Line", IPC_MESSAGE_ID_LINE(msg->type()));
-  // We always want plugin->renderer messages to arrive in-order. If some sync
-  // and some async messages are sent in response to a synchronous
-  // renderer->plugin call, the sync reply will be processed before the async
-  // reply, and everything will be confused.
-  //
-  // Allowing all async messages to unblock the renderer means more reentrancy
-  // there but gives correct ordering.
-  //
-  // We don't want reply messages to unblock however, as they will potentially
-  // end up on the wrong queue - see crbug.com/122443
-  if (!msg->is_reply())
-    msg->set_unblock(true);
-  if (msg->is_sync()) {
-    // Synchronous messages might be re-entrant, so we need to drop the lock.
-    ProxyAutoUnlock unlock;
-    SCOPED_UMA_HISTOGRAM_TIMER("Plugin.PpapiSyncIPCTime");
-    return SendMessage(msg);
-  }
-  return SendMessage(msg);
+  return sender_->Send(msg);
 }
 
 bool PluginDispatcher::SendAndStayLocked(IPC::Message* msg) {
@@ -224,7 +239,7 @@ bool PluginDispatcher::SendAndStayLocked(IPC::Message* msg) {
                "Line", IPC_MESSAGE_ID_LINE(msg->type()));
   if (!msg->is_reply())
     msg->set_unblock(true);
-  return SendMessage(msg);
+  return sender_->SendMessage(msg);
 }
 
 bool PluginDispatcher::OnMessageReceived(const IPC::Message& msg) {
