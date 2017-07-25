@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "371ff930_4eaaa18c",
+        "filename": "third_party/google_input_tools/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115990
+      },
+      "writtenOn": "2017-07-25T05:18:56Z",
+      "side": 1,
+      "message": "nit: \"anymore\"",
+      "revId": "2eb3572a3ff6e5c4483351985f037ec34cfd1f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
