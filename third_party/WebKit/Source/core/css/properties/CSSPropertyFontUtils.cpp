@@ -95,6 +95,16 @@ String CSSPropertyFontUtils::ConcatenateFamilyName(CSSParserTokenRange& range) {
   return builder.ToString();
 }
 
+// TODO(drott) crbug.com/739139: In stage 2, make these three methods understand
+// ranges.
+CSSValue* CSSPropertyFontUtils::ConsumeFontStyle(CSSParserTokenRange& range) {
+  const CSSParserToken& token = range.Peek();
+  if (token.Id() == CSSValueNormal || token.Id() == CSSValueItalic ||
+      token.Id() == CSSValueOblique)
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  return nullptr;
+}
+
 CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
   const CSSParserToken& token = range.Peek();
   if (token.Id() == CSSValueNormal || (token.Id() >= CSSValueUltraCondensed &&
