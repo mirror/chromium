@@ -16,6 +16,24 @@
       "revId": "be07dba856c2733a7146829453f65c5f74747c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327dfd4b_176dcf3b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-25T08:24:58Z",
+      "side": 1,
+      "message": "Will do by a follow up CL.",
+      "parentUuid": "78629405_9e9e6cf3",
+      "revId": "be07dba856c2733a7146829453f65c5f74747c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
