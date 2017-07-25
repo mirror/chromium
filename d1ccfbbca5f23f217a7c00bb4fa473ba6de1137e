@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "3051cd11_b269f352",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-25T18:20:25Z",
+      "side": 1,
+      "message": "This may have to be wrapped in PP_ToBool() as in line 1526.",
+      "range": {
+        "startLine": 1505,
+        "startChar": 8,
+        "endLine": 1505,
+        "endChar": 54
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0744d3e0_10d55aa3",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-25T18:20:25Z",
+      "side": 1,
+      "message": "nit: or just\n  return instance_ \u0026\u0026 instance_-\u003eCanCut();",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 29
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d847fac5_b6d72890",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-25T18:20:25Z",
+      "side": 1,
+      "message": "nit: maybe simpler with early returns, eg.\n\nif (!object)\n  return PP_FALSE:\n\nOutOfP.... \u003d ...",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 18
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e640f9_3420deb1",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-25T18:20:25Z",
+      "side": 1,
+      "message": "nit: people sometimes write \n  if ((flags \u0026 FPDF_FORMFLAG_READONLY) !\u003d 0)\nor even better\n  if (!!(flags \u0026 FPDF_FORMFLAG_READONLY))\nto make it clear that we really meant \u0026 and not \u0026\u0026.",
+      "range": {
+        "startLine": 630,
+        "startChar": 6,
+        "endLine": 630,
+        "endChar": 36
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e374198_84d9ad6d",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-25T18:20:25Z",
+      "side": 1,
+      "message": "parenthesize this sub-expression.",
+      "range": {
+        "startLine": 634,
+        "startChar": 46,
+        "endLine": 634,
+        "endChar": 79
+      },
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30bfc5c2_8a4dd062",
         "filename": "ppapi/proxy/ppp_pdf_proxy.cc",
         "patchSetId": 10
@@ -13,6 +128,24 @@
       "writtenOn": "2017-07-25T18:07:19Z",
       "side": 1,
       "message": "nit: else *result \u003d false;",
+      "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2afca9f_b792afb7",
+        "filename": "ppapi/proxy/ppp_pdf_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-25T18:20:25Z",
+      "side": 1,
+      "message": "nit: or\n  *result \u003d ppp_pdf_ \u0026\u0026 CallWhileUnlocked ...",
+      "parentUuid": "30bfc5c2_8a4dd062",
       "revId": "d1ccfbbca5f23f217a7c00bb4fa473ba6de1137e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
