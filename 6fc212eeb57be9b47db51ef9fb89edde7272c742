@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae75c905_21a3aa22",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1138617
+      },
+      "writtenOn": "2017-07-25T21:02:32Z",
+      "side": 1,
+      "message": "I feel like this will make it less readable since both source set have duplicated files included except for few because of different implementation.\n\nprobably the following will be ideal?\n\nsource_set(\"remoting\")  {\n  source \u003d [.....] // most of common files\n  deps \u003d [\n    \"//base\",\n    \"//media\",\n    \"//media/mojo/interfaces:remoting\",\n    \"//mojo/public/cpp/bindings\",\n    \"//ui/gfx\",\n  ]\n  \n  if (is_android) {\n    source +\u003d [\n       \"demuxer_stream_adapter_norpc.cc\",\n       \"shared_session_norpc.cc\"\n    ]\n  } else {\n    source +\u003d [\n       \"demuxer_stream_adapter.cc\",\n       \"shared_session.cc\"\n    ]\n    dep +\u003d [ :rpc ]\n  }\n}",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
