@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "826e9db4_236d9756",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "I have tried to achieve this goal. But the main() function of remoting_unittests is placed in remoting/base, which cannot depend on remoting/host. So we cannot execute evaluations in remoting/host in test environment.\nWe can implement a totally different EvaluateCapabilityLocally() function in remoting/base/run_all_unittests.cc. But it may end up with a larger logic gap between test and production.\n\nWe can discuss other possibilities later.",
+      "parentUuid": "8cf7c0c2_1b0919de",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6035161_cdc93fff",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39b2bd1_dd603cf1",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6035161_cdc93fff",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 80
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5b9ac68_45b29a73",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7772bd9f_3fd787aa",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "772f72a8_ca0289a2",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37682c8_7792bd11",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "772f72a8_ca0289a2",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 27
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fb04635c_e470030d",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9171c8a5_04803e69",
+      "range": {
+        "startLine": 134,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac0066ba_1c9f22d6",
         "filename": "remoting/host/evaluate_capability.h",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd89899_3e6ea2db",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac0066ba_1c9f22d6",
+      "range": {
+        "startLine": 20,
+        "startChar": 71,
+        "endLine": 20,
+        "endChar": 78
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3dba40b5_c9762bbc",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "865011b3_7ee18004",
+      "range": {
+        "startLine": 21,
+        "startChar": 47,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61869d2_814d2097",
         "filename": "remoting/host/evaluate_capability_unittest.cc",
         "patchSetId": 12
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "0356e6e4_c6302a05",
+        "filename": "remoting/host/evaluate_capability_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "Due to the issue I have mentioned in another comment, it may be a little bit hard to split the logic out of production code. We can discuss this later.",
+      "parentUuid": "b61869d2_814d2097",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53d9947e_b1636aa2",
         "filename": "remoting/host/host_main.cc",
         "patchSetId": 12
@@ -197,6 +389,30 @@
       "writtenOn": "2017-07-25T18:09:01Z",
       "side": 1,
       "message": "is this useful?  i.e. would we expect the calling binary to parse and display this?  I think a better approach would be to return a new exit code that the caller can look for.  They can then run the appropriate fallback logic for the \u0027unrecognized\u0027 exit code.",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 38
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9609de_c5e35c0d",
+        "filename": "remoting/host/host_main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-25T20:24:46Z",
+      "side": 1,
+      "message": "kEvaluateCapabilitySwitchName is always provided when using EvaluateCapability() function.\nSo here, the situation only happens when executing a manual typed command.",
+      "parentUuid": "53d9947e_b1636aa2",
       "range": {
         "startLine": 184,
         "startChar": 4,
