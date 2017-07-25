@@ -1105,22 +1105,34 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
     input_handler_client_->ReconcileElasticOverscrollAndRootScroll();
 
   if (const char* client_name = GetClientNameForMetrics()) {
-    size_t total_memory = 0;
-    for (const PictureLayerImpl* layer : active_tree()->picture_layers())
-      total_memory += layer->GetRasterSource()->GetMemoryUsage();
-    if (total_memory != 0) {
+    size_t total_memory_in_bytes = 0;
+    size_t total_gpu_memory_for_tilings_in_bytes = 0;
+    for (const PictureLayerImpl* layer : active_tree()->picture_layers()) {
+      total_memory_in_bytes += layer->GetRasterSource()->GetMemoryUsage();
+      total_gpu_memory_for_tilings_in_bytes += layer->GPUMemoryUsageInBytes();
+    }
+    if (total_memory_in_bytes != 0) {
       // GetClientNameForMetrics only returns one non-null value over the
       // lifetime of the process, so this histogram name is runtime constant.
       UMA_HISTOGRAM_COUNTS(
           base::StringPrintf("Compositing.%s.PictureMemoryUsageKb",
                              client_name),
-          base::saturated_cast<int>(total_memory / 1024));
+          base::saturated_cast<int>(total_memory_in_bytes / 1024));
     }
     // GetClientNameForMetrics only returns one non-null value over the lifetime
     // of the process, so this histogram name is runtime constant.
     UMA_HISTOGRAM_CUSTOM_COUNTS(
         base::StringPrintf("Compositing.%s.NumActiveLayers", client_name),
         base::saturated_cast<int>(active_tree_->NumLayers()), 1, 400, 20);
+
+    if (!active_tree()->picture_layers().empty()) {
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          base::StringPrintf("Compositing.%s.GPUMemoryForTilingsInKb",
+                             client_name),
+          base::saturated_cast<int>(total_gpu_memory_for_tilings_in_bytes /
+                                    1024),
+          1, kGPUMemoryLargestBucketKb, kGPUMemoryBucketCount);
+    }
   }
 
   bool ok = active_tree_->UpdateDrawProperties();
