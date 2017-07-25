@@ -22,6 +22,30 @@
       "revId": "9b997ff2012713c29ed9a5d60663158b6009594f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408cbe7c_fa2bf274",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-07-25T23:43:55Z",
+      "side": 1,
+      "message": "Somehow I thought we always did \"not defined\". It apparently does work, but I changed it to !defined.",
+      "parentUuid": "9ee38a37_283684aa",
+      "range": {
+        "startLine": 306,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 7
+      },
+      "revId": "9b997ff2012713c29ed9a5d60663158b6009594f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
