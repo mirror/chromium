@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dddd6615_6f202abe",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:37:53Z",
+      "side": 1,
+      "message": "what if editing the printer failed (success \u003d\u003d false)?",
+      "range": {
+        "startLine": 577,
+        "startChar": 6,
+        "endLine": 577,
+        "endChar": 12
+      },
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feefea3e_1f6899ea",
         "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.html",
         "patchSetId": 6
@@ -19,6 +42,40 @@
         "endLine": 82,
         "endChar": 37
       },
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50af14e_4fc0eb23",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:37:53Z",
+      "side": 1,
+      "message": "There\u0027s a lot of functionality here copied from cups_add_printer_dialog.js. Can we try grouping these functions into a shared Polymer behavior, so we don\u0027t have two implementations of getBaseName_, onBrowseFile_, modelListChanged_, etc.?",
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392f1c92_2722b155",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-25T21:37:53Z",
+      "side": 1,
+      "message": "please group event handlers together, then Changed_ functions, then normal functions (or in different orders, point is grouping like functions) if you can",
       "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
