@@ -1004,7 +1004,7 @@ bool RenderThreadImpl::Send(IPC::Message* msg) {
   }
 
   if (pumping_events) {
-    renderer_scheduler_->SuspendTimerQueue();
+    renderer_scheduler_->StopTimerQueue();
     WebView::WillEnterModalLoop();
   }
 
@@ -1266,10 +1266,10 @@ void RenderThreadImpl::InitializeWebKit(
     isolate->IsolateInBackgroundNotification();
   }
 
-  renderer_scheduler_->SetTimerQueueSuspensionWhenBackgroundedEnabled(
+  renderer_scheduler_->SetTimerQueueStoppingWhenBackgroundedEnabled(
       GetContentClient()
           ->renderer()
-          ->AllowTimerSuspensionWhenProcessBackgrounded());
+          ->AllowStoppingTimersWhenProcessBackgrounded());
 
   SkGraphics::SetResourceCacheSingleAllocationByteLimit(
       kImageCacheSingleAllocationByteLimit);
@@ -2213,7 +2213,7 @@ void RenderThreadImpl::OnNetworkQualityChanged(
 void RenderThreadImpl::SetWebKitSharedTimersSuspended(bool suspend) {
 #if defined(OS_ANDROID)
   if (suspend) {
-    renderer_scheduler_->SuspendTimerQueue();
+    renderer_scheduler_->StopTimerQueue();
   } else {
     renderer_scheduler_->ResumeTimerQueue();
   }
