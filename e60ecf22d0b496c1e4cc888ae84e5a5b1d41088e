@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd49e6d_2a5a0519",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-25T17:16:02Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "e60ecf22d0b496c1e4cc888ae84e5a5b1d41088e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de516ea_80053c10",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-25T17:16:02Z",
+      "side": 1,
+      "message": "Is this check still relevant, since you\u0027re changing the amount of physical memory when it\u0027s a low memory policy?",
+      "revId": "e60ecf22d0b496c1e4cc888ae84e5a5b1d41088e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
