@@ -40,6 +40,7 @@
 #include "media/base/text_renderer.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_frame.h"
+#include "media/blink/media_capabilities_reporter.h"
 #include "media/blink/texttrack_impl.h"
 #include "media/blink/watch_time_reporter.h"
 #include "media/blink/webaudiosourceprovider_impl.h"
@@ -262,7 +263,9 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       surface_layer_for_video_enabled_(
           base::FeatureList::IsEnabled(media::kUseSurfaceLayerForVideo)),
       request_routing_token_cb_(params->request_routing_token_cb()),
-      overlay_routing_token_(OverlayInfo::RoutingToken()) {
+      overlay_routing_token_(OverlayInfo::RoutingToken()),
+      create_capabilities_recorder_cb_(
+          params->create_capabilities_recorder_cb()) {
   DVLOG(1) << __func__;
   DCHECK(!adjust_allocated_memory_cb_.is_null());
   DCHECK(renderer_factory_selector_);
@@ -350,8 +353,9 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   // Only URL or MSE blob URL is supported.
   DCHECK(source.IsURL());
   blink::WebURL url = source.GetAsURL();
-  DVLOG(1) << __func__ << "(" << load_type << ", " << GURL(url) << ", "
-           << cors_mode << ")";
+  // DVLOG(1) << __func__ << "(" << load_type << ", " << url << ", " <<
+  // cors_mode
+  //          << ")";
   if (!defer_load_cb_.is_null()) {
     defer_load_cb_.Run(base::Bind(&WebMediaPlayerImpl::DoLoad, AsWeakPtr(),
                                   load_type, url, cors_mode));
@@ -555,6 +559,8 @@ void WebMediaPlayerImpl::Play() {
 
   DCHECK(watch_time_reporter_);
   watch_time_reporter_->OnPlaying();
+  DCHECK(media_capabilities_reporter_);
+  media_capabilities_reporter_->OnPlaying();
   media_log_->AddEvent(media_log_->CreateEvent(MediaLogEvent::PLAY));
   UpdatePlayState();
 }
@@ -596,6 +602,8 @@ void WebMediaPlayerImpl::Pause() {
 
   DCHECK(watch_time_reporter_);
   watch_time_reporter_->OnPaused();
+  DCHECK(media_capabilities_reporter_);
+  media_capabilities_reporter_->OnPaused();
   media_log_->AddEvent(media_log_->CreateEvent(MediaLogEvent::PAUSE));
 
   UpdatePlayState();
@@ -1381,7 +1389,16 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
     observer_->OnMetadataChanged(pipeline_metadata_);
 
   CreateWatchTimeReporter();
+  CreateMediaCapabilitiesReporter();
   UpdatePlayState();
+}
+
+void WebMediaPlayerImpl::CreateMediaCapabilitiesReporter() {
+  media_capabilities_reporter_.reset(new MediaCapabilitiesReporter(
+      create_capabilities_recorder_cb_.Run(),
+      base::Bind(&WebMediaPlayerImpl::GetPipelineStatistics,
+                 base::Unretained(this)),
+      pipeline_metadata_.video_decoder_config));
 }
 
 void WebMediaPlayerImpl::OnProgress() {
@@ -1548,6 +1565,9 @@ void WebMediaPlayerImpl::OnVideoNaturalSizeChange(const gfx::Size& size) {
   if (!watch_time_reporter_->IsSizeLargeEnoughToReportWatchTime())
     CreateWatchTimeReporter();
 
+  DCHECK(media_capabilities_reporter_);
+  media_capabilities_reporter_->OnNaturalSizeChanged(rotated_size);
+
   if (overlay_enabled_ && surface_manager_ &&
       overlay_mode_ == OverlayMode::kUseContentVideoView) {
     surface_manager_->NaturalSizeChanged(rotated_size);
@@ -1596,6 +1616,9 @@ void WebMediaPlayerImpl::OnVideoConfigChange(const VideoDecoderConfig& config) {
 
   if (observer_)
     observer_->OnMetadataChanged(pipeline_metadata_);
+
+  if (media_capabilities_reporter_)
+    media_capabilities_reporter_->OnVideoConfigChanged(config);
 }
 
 void WebMediaPlayerImpl::OnVideoAverageKeyframeDistanceUpdate() {
@@ -1614,6 +1637,9 @@ void WebMediaPlayerImpl::OnFrameHidden() {
 
   if (watch_time_reporter_)
     watch_time_reporter_->OnHidden();
+
+  if (media_capabilities_reporter_)
+    media_capabilities_reporter_->OnHidden();
 
   UpdateBackgroundVideoOptimizationState();
   UpdatePlayState();
@@ -1645,6 +1671,9 @@ void WebMediaPlayerImpl::OnFrameShown() {
 
   if (watch_time_reporter_)
     watch_time_reporter_->OnShown();
+
+  if (media_capabilities_reporter_)
+    media_capabilities_reporter_->OnShown();
 
   // Only track the time to the first frame if playing or about to play because
   // of being shown and only for videos we would optimize background playback

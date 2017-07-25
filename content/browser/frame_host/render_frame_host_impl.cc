@@ -112,6 +112,7 @@
 #include "media/media_features.h"
 #include "media/mojo/interfaces/media_service.mojom.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
+#include "media/mojo/services/media_capabilities_recorder.h"
 #include "media/mojo/services/media_interface_provider.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -2975,11 +2976,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
         base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
   }
 
-  if (base::FeatureList::IsEnabled(features::kGenericSensor)) {
-    GetInterfaceRegistry()->AddInterface(
-        base::Bind(&ForwardRequest<device::mojom::SensorProvider>,
-                   device::mojom::kServiceName));
-  }
+  GetInterfaceRegistry()->AddInterface(
+      base::Bind(&media::MediaCapabilitiesRecorder::Create));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
