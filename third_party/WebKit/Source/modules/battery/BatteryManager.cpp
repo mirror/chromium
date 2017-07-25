@@ -61,17 +61,22 @@ double BatteryManager::level() {
 void BatteryManager::DidUpdateData() {
   DCHECK(battery_property_);
 
+  Document* document = ToDocument(GetExecutionContext());
+  DCHECK(document);
+
+  if (document->IsContextDestroyed() || !document->GetFrame())
+    return;
+
   BatteryStatus old_status = battery_status_;
-  battery_status_ = *BatteryDispatcher::Instance().LatestData();
+  battery_status_ =
+      *BatteryDispatcher::From(*document->GetFrame())->LatestData();
 
   if (battery_property_->GetState() == ScriptPromisePropertyBase::kPending) {
     battery_property_->Resolve(this);
     return;
   }
 
-  Document* document = ToDocument(GetExecutionContext());
-  DCHECK(document);
-  if (document->IsContextSuspended() || document->IsContextDestroyed())
+  if (document->IsContextSuspended())
     return;
 
   if (battery_status_.Charging() != old_status.Charging())
@@ -85,15 +90,22 @@ void BatteryManager::DidUpdateData() {
 }
 
 void BatteryManager::RegisterWithDispatcher() {
-  BatteryDispatcher::Instance().AddController(this);
+  LocalFrame* frame = ToDocument(GetExecutionContext())->GetFrame();
+  if (frame)
+    BatteryDispatcher::From(*frame)->AddController(this);
 }
 
 void BatteryManager::UnregisterWithDispatcher() {
-  BatteryDispatcher::Instance().RemoveController(this);
+  LocalFrame* frame = ToDocument(GetExecutionContext())->GetFrame();
+  if (frame)
+    BatteryDispatcher::From(*frame)->RemoveController(this);
 }
 
 bool BatteryManager::HasLastData() {
-  return BatteryDispatcher::Instance().LatestData();
+  LocalFrame* frame = ToDocument(GetExecutionContext())->GetFrame();
+  if (frame)
+    return BatteryDispatcher::From(*frame)->LatestData();
+  return false;
 }
 
 void BatteryManager::Suspend() {

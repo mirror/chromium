@@ -117,6 +117,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "services/device/public/cpp/device_features.h"
+#include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "services/device/public/interfaces/vibration_manager.mojom.h"
@@ -2975,6 +2976,10 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
         base::Bind(&ForwardRequest<device::mojom::SensorProvider>,
                    device::mojom::kServiceName));
   }
+
+  registry_->AddInterface(
+      base::Bind(&ForwardRequest<device::mojom::BatteryMonitor>,
+                 device::mojom::kServiceName));
 
   registry_->AddInterface(
       base::Bind(&ForwardRequest<device::mojom::VibrationManager>,
