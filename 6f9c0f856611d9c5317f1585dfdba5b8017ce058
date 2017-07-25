@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8afb70da_826f7d31",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-25T07:46:15Z",
+      "side": 1,
+      "message": "Is |pos| used?",
+      "revId": "6f9c0f856611d9c5317f1585dfdba5b8017ce058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
