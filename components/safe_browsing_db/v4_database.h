@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "components/safe_browsing/web_ui/webui.pb.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "components/safe_browsing_db/v4_store.h"
 
@@ -163,6 +164,9 @@ class V4Database {
   // with the combined size of all the stores.
   void RecordFileSizeHistograms();
 
+  // Populates the DatabaseInfo message of the safe_browsing_page proto.
+  void SetDatabaseFields(DatabaseManagerInfo::DatabaseInfo* database_info);
+
  protected:
   V4Database(const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
              std::unique_ptr<StoreMap> store_map);
@@ -230,6 +234,9 @@ class V4Database {
   // that needed updating and is ready for the next update. It should only be
   // accessed on the IO thread.
   int pending_store_updates_;
+
+  // Are all the updates applied successfully to the database?
+  bool database_update_successful_ = false;
 
   // Only meant to be dereferenced and invalidated on the IO thread and hence
   // named. For details, see the comment at the top of weak_ptr.h
