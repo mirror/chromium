@@ -22,6 +22,30 @@
       "revId": "2c76e4e76c6bc882da110a650f754fa0df211b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63327e3_117106d8",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-25T01:46:31Z",
+      "side": 1,
+      "message": "Really good point, had forgotten about those other cases. What I really want to count is\nPictureLayers. However, I\u0027m not sure it is worth it to count how many PictureLayers are marked\nas solid color so, am not counting that.\n\nThe new implementation is also more efficient as a result.",
+      "parentUuid": "612b51e8_74b62646",
+      "range": {
+        "startLine": 1125,
+        "startChar": 13,
+        "endLine": 1125,
+        "endChar": 41
+      },
+      "revId": "2c76e4e76c6bc882da110a650f754fa0df211b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
