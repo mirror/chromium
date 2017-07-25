@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c6e50c_f57f9968",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T19:36:47Z",
+      "side": 1,
+      "message": "Using a mask is expensive. It would be nice to avoid the mask for the central area and only use it for top/bottom where needed. I understand that this might make the code more complicated but a TODO here to explain that this could be made more efficient would be nice.",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a7d4cf_1942643d",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T19:36:47Z",
+      "side": 1,
+      "message": "you shouldn\u0027t need this. if anything, set it to false?",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7964655_2dbc65b0",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T19:36:47Z",
+      "side": 1,
+      "message": "Can you clear the whole layer to alpha 255 instead? More efficient and guarantees that we don\u0027t have seems between the rects.",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4ef6a6_ae8f0396",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-25T19:36:47Z",
+      "side": 1,
+      "message": "Please draw to rects with gradient fill instead. And avoid blending and instead overwrite what\u0027s in the buffer for optimal performance.",
+      "revId": "f5337bbf96ec7303e488e3c1e5f84abad1956b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
