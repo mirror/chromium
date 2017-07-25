@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1631672f_f387aa14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T01:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af3585e_3f0269e4",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "0d53f2881dc18331255400ef7ececd80ac6ae015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de16ed04_67890d38",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 29
@@ -45,6 +69,30 @@
       "revId": "0d53f2881dc18331255400ef7ececd80ac6ae015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68154a6_5bc9334e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T01:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de16ed04_67890d38",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 68
+      },
+      "revId": "0d53f2881dc18331255400ef7ececd80ac6ae015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "773e41b9_bd3a96c7",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T01:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb211cdd_5548fd38",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 49
+      },
+      "revId": "0d53f2881dc18331255400ef7ececd80ac6ae015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "660e1594_de0655cf",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 29
@@ -91,6 +163,30 @@
       "revId": "0d53f2881dc18331255400ef7ececd80ac6ae015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ca4ef8_0577c7bc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T01:53:19Z",
+      "side": 1,
+      "message": "I reverted everything back to being IN_PROC_BROWSER_TEST_F. It seems to be unnecessary headache to maintain the temporary browsertests for the three string variants with the Finch parameter now being extracted in NewTabPromo\u0027s constructor. Along with this, in chromium there is only one of the variants with the rest being in the Finch database.",
+      "parentUuid": "660e1594_de0655cf",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 70
+      },
+      "revId": "0d53f2881dc18331255400ef7ececd80ac6ae015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
