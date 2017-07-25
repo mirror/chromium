@@ -33,6 +33,24 @@
       "revId": "3e6cb1d0f2c9a49b9a70fa05815359804c32c421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9341b991_af7c57f6",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-25T21:48:05Z",
+      "side": 1,
+      "message": "Removed. I think I added this when I uncommented TestBrowserThreadBundle (it was failing somewhere in TestProfile creation).",
+      "parentUuid": "905a1c56_20b5225e",
+      "revId": "3e6cb1d0f2c9a49b9a70fa05815359804c32c421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
