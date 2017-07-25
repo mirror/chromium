@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5017e2f_ab4eaf0a",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-25T21:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a4fc26_ebd28085",
+      "revId": "3d69f3dc4a0854267d76591c0baa1ba856019a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8661de_39cae476",
         "filename": "cc/ipc/cc_serialization_perftest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T21:24:06Z",
       "side": 1,
       "message": "why is this one cursor(), the one below is size() and the one above is deleted?",
+      "revId": "3d69f3dc4a0854267d76591c0baa1ba856019a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe224cfb_9ccf4b42",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-25T21:34:54Z",
+      "side": 1,
+      "message": "Good question. I think they\u0027re all not really great checks, so I\u0027ve just removed all of them.",
+      "parentUuid": "be8661de_39cae476",
       "revId": "3d69f3dc4a0854267d76591c0baa1ba856019a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
