@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fabb5e0_5df3db87",
+        "filename": "ui/app_list/views/expand_arrow_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-25T01:23:29Z",
+      "side": 1,
+      "message": "this looks as dup of lines 79-83. Could you please extract this to separate function and call it?\n\nCan you please confirm that you no need \nGetInkDrop()-\u003eAnimateToState(views::InkDropState::ACTION_TRIGGERED);?",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 32
+      },
+      "revId": "bd5f246e7f50ebc7c63dd7e6de08947deb9ab5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
