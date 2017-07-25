@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b164caa3_edb8bd86",
+        "filename": "build/fuchsia/update_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-25T01:21:56Z",
+      "side": 1,
+      "message": "Whoop!  There it is",
+      "revId": "8566ed55a6b577089caffa14eb1708d2a4efd33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
