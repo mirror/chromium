@@ -94,6 +94,7 @@ class SigninManagerAndroid : public SigninManagerBase::Observer {
  private:
   FRIEND_TEST_ALL_PREFIXES(SigninManagerAndroidTest,
                            DeleteGoogleServiceWorkerCaches);
+  FRIEND_TEST_ALL_PREFIXES(SigninManagerAndroidTest, Bookmarks);
 
   ~SigninManagerAndroid() override;
 
@@ -102,9 +103,8 @@ class SigninManagerAndroid : public SigninManagerBase::Observer {
   void OnPolicyFetchDone(bool success);
 
   void OnBrowsingDataRemoverDone(
+      bool all_data,
       const base::android::ScopedJavaGlobalRef<jobject>& callback);
-
-  void ClearLastSignedInUser();
 
   void OnSigninAllowedPrefChanged();
 
