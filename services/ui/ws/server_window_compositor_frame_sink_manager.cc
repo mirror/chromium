@@ -6,10 +6,12 @@
 
 #include <utility>
 
+#include "components/viz/common/display/renderer_settings.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/ui/ws/ids.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/server_window_delegate.h"
+#include "ui/compositor/compositor_util.h"
 
 namespace ui {
 namespace ws {
@@ -36,7 +38,9 @@ void ServerWindowCompositorFrameSinkManager::CreateRootCompositorFrameSink(
   // or Android. We should instead use GpuSurfaceTracker here on those
   // platforms.
   window_->delegate()->GetFrameSinkManager()->CreateRootCompositorFrameSink(
-      window_->frame_sink_id(), widget, std::move(sink_request),
+      window_->frame_sink_id(), widget,
+      ui::CreateRendererSettings(viz::BufferToTextureTargetMap()),
+      std::move(sink_request),
       std::move(pending_compositor_frame_sink_request_), std::move(client),
       std::move(display_request));
 }
