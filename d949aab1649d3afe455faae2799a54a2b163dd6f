@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "bc8ee50e_f82a08f7",
+        "filename": "ui/accelerated_widget_mac/display_link_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-25T17:53:50Z",
+      "side": 1,
+      "message": "I\u0027m not 100% certain about this one -- the documentation for hostTime says \"The system time measured by the timestamp.\"\n\nDoes \"system time\" mean \"mach absolute time\"?\n\nThat said, if it\u0027s tested, it lgtm (https://www.testufo.com/#test\u003dframerates is a good test to ensure vsync is right).",
+      "revId": "d949aab1649d3afe455faae2799a54a2b163dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6c1f3a1_e57f9843",
         "filename": "ui/android/window_android.cc",
         "patchSetId": 3
