@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22298966_4d5673d5",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "nit: we can put this all on one line:\n.then(this.setExpanded_.bind(this), function() {})",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 26
+      },
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8afa6c6_69e47a8d",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "If rules is an array, you\u0027ll need to update to:\nrules: Array\u003c{string: {enable: boolean}}\u003e",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc27ea5_27131fb7",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "nit: outdent 2 spaces",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 6
+      },
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94086e90_6a9b8632",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "options is already defined, no need to use var",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9d76c7_3acb32ab",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "\"Reset to a blank page.\"\nor maybe just remove the comment",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54293344_9b0c8c25",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "Nit: Remove \u0027to the DOM.\u0027",
+      "range": {
+        "startLine": 40,
+        "startChar": 67,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83490fc_c8a78f1d",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "Nit: remove empty line here",
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e33ef9_30fa1dc7",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "Nit: expected, actual",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "517966a5a807e324426ae530c43f0afd89d83d9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

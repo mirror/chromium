@@ -52,6 +52,24 @@
       "revId": "531f27daac2673b51d286c827f06c8889fc15270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468e5686_1b5d232e",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-25T21:15:18Z",
+      "side": 1,
+      "message": "SG, if we find a way of doing this later it can be a followup CL.",
+      "parentUuid": "ed53ac31_fa9f7b89",
+      "revId": "531f27daac2673b51d286c827f06c8889fc15270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
