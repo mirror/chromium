@@ -30,8 +30,6 @@ public class QuicUploadTest extends CronetTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        // Load library first to create MockCertVerifier.
-        System.loadLibrary("cronet_tests");
         ExperimentalCronetEngine.Builder builder =
                 new ExperimentalCronetEngine.Builder(getContext());
 

@@ -26,7 +26,6 @@ public class DiskStorageTest extends CronetTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        System.loadLibrary("cronet_tests");
         assertTrue(NativeTestServer.startNativeTestServer(getContext()));
     }
 

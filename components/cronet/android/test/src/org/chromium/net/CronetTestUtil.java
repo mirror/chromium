@@ -4,6 +4,8 @@
 
 package org.chromium.net;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +13,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.net.impl.CronetEngineBuilderImpl;
 import org.chromium.net.impl.CronetUrlRequest;
 import org.chromium.net.impl.CronetUrlRequestContext;
+import org.chromium.net.impl.ImplVersion;
 
 /**
  * Utilities for Cronet testing
@@ -56,6 +59,30 @@ public class CronetTestUtil {
         return new JSONObject().put("host_resolver_rules", rules);
     }
 
+    private static boolean twoLibraryTesting() {
+        try {
+            System.loadLibrary("cronet." + ImplVersion.getCronetVersion());
+            return true;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    public static void prepareTestLibraries(Context context) {
+        System.loadLibrary("cronet_with_tests");
+        if (!twoLibraryTesting()) {
+            new CronetEngine.Builder(context)
+                    .setLibraryLoader(new CronetEngine.Builder.LibraryLoader() {
+                        @Override
+                        public void loadLibrary(String libName) {
+                            // Do nothing as setUp() already loads libcronet_tests.so.
+                        }
+                    })
+                    .build()
+                    .shutdown();
+        }
+    }
+
     /**
      * Prepare {@code cronetEngine}'s network thread so libcronet_test code can run on it.
      */
@@ -64,11 +91,15 @@ public class CronetTestUtil {
 
         public NetworkThreadTestConnector(CronetEngine cronetEngine) {
             mRequestContext = (CronetUrlRequestContext) cronetEngine;
-            nativePrepareNetworkThread(mRequestContext.getUrlRequestContextAdapter());
+            if (twoLibraryTesting()) {
+                nativePrepareNetworkThread(mRequestContext.getUrlRequestContextAdapter());
+            }
         }
 
         public void shutdown() {
-            nativeCleanupNetworkThread(mRequestContext.getUrlRequestContextAdapter());
+            if (twoLibraryTesting()) {
+                nativeCleanupNetworkThread(mRequestContext.getUrlRequestContextAdapter());
+            }
         }
     }
 

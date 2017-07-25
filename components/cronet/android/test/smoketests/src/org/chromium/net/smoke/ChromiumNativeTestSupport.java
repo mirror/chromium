@@ -8,6 +8,7 @@ import android.content.Context;
 
 import org.json.JSONObject;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.net.CronetTestUtil;
 import org.chromium.net.ExperimentalCronetEngine;
@@ -60,7 +61,7 @@ class ChromiumNativeTestSupport extends ChromiumPlatformOnlyTestSupport {
 
     @Override
     public void loadTestNativeLibrary() {
-        System.loadLibrary("cronet_tests");
+        CronetTestUtil.prepareTestLibraries(ContextUtils.getApplicationContext());
     }
 
     private static class QuicTestServer implements TestServer {
