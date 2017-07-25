@@ -16,6 +16,24 @@
       "revId": "825182ffe2cb8923d89009caf8c2c30cab94cd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6739451f_3ccb4cca",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-07-25T06:56:26Z",
+      "side": 1,
+      "message": "Makes sense. I suppose we can add the explicit Abort() at this point then.",
+      "parentUuid": "64f4f9c0_5a543c7b",
+      "revId": "825182ffe2cb8923d89009caf8c2c30cab94cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
