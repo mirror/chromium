@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b9bae7c_2e65ef7f",
+        "filename": "chrome/browser/resources/options/sync_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T17:44:58Z",
+      "side": 1,
+      "message": "Is there still a way to run this code?\n\nIf this entire file is dead code, why bother removing quick_unlock_configure_overlay and updating this file. Can we simply leave this file unaffected (and leave quick_unlock_configure_overlay as-is) until the CL that removes both of them completely comes along?",
+      "revId": "fb153d8038d8da3d4fb0021e9d1df43d99be4e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
