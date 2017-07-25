@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1666fef_f208b167",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-25T09:58:15Z",
+      "side": 1,
+      "message": "This is another way a suggestion can be removed, when the component decides to invalidate it. The number of suggestions seen should be modified too.",
+      "range": {
+        "startLine": 326,
+        "startChar": 16,
+        "endLine": 326,
+        "endChar": 36
+      },
+      "revId": "171f6c8075cc2e0d8b58c45e0272c5d0909858fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb3a628_9b61dfd2",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-25T09:58:15Z",
+      "side": 1,
+      "message": "add a new `REMOTE_TEST_CATEGORY \u003d REMOTE_OFFSET + TEST_CATEGORY` and use that instead? We can be sure we don\u0027t have ARTICLES-specific behaviour added that way.",
+      "range": {
+        "startLine": 446,
+        "startChar": 44,
+        "endLine": 446,
+        "endChar": 59
+      },
+      "revId": "171f6c8075cc2e0d8b58c45e0272c5d0909858fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df23d9c6_e6557946",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-25T09:58:15Z",
+      "side": 1,
+      "message": "nit: annotate parameter",
+      "range": {
+        "startLine": 453,
+        "startChar": 83,
+        "endLine": 453,
+        "endChar": 88
+      },
+      "revId": "171f6c8075cc2e0d8b58c45e0272c5d0909858fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
