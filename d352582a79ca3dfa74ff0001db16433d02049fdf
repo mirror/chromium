@@ -457,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "8b6849ce_6f7862fe",
+        "filename": "content/renderer/net/cross_origin_access_control.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-25T13:21:15Z",
+      "side": 1,
+      "message": "Could you try HttpUtil::ParseContentType()?\n\nSee also https://bugs.chromium.org/p/chromium/issues/detail?id\u003d674329",
+      "parentUuid": "3b578a52_6fd08358",
+      "revId": "d352582a79ca3dfa74ff0001db16433d02049fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa1024aa_2fee694f",
         "filename": "content/renderer/net/cross_origin_access_control.h",
         "patchSetId": 17
