@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ff3a8d_f2722b69",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-25T02:24:51Z",
+      "side": 0,
+      "message": "Shouldn\u0027t we just move this TODO to the yet-to-do\ninterface MediaStreamDispatcher{} that handles the\nMediaStreamMsg_* browser-to-renderer messages?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 79
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "20d448c3_9dfb93ec",
+        "filename": "content/common/media/media_stream.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-25T02:24:51Z",
+      "side": 1,
+      "message": "nit: Keep these guys in alphabetical order.\n\n  \"content.mojom.StreamControls\u003dcontent::StreamControls\",\n  \"content.mojom.TrackControls\u003dcontent::TrackControls\",",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "b8e8a5db6a51e32efcb298320d836697565155ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f092f623_6994a439",
+        "filename": "content/common/media/media_stream_typemap_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-25T02:24:51Z",
+      "side": 1,
+      "message": "Ugh. Not your fault, but could we add some kind of\nDCHECK() asserting that either of these two fellas \nare only true if out-\u003eaudio.requested (IOW they make\nno sense if there\u0027s just video requested, since they\nare audio specific).",
+      "range": {
+        "startLine": 93,
+        "startChar": 1,
+        "endLine": 94,
+        "endChar": 55
+      },
+      "revId": "b8e8a5db6a51e32efcb298320d836697565155ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0df2ced3_c05454e4",
         "filename": "content/renderer/media/media_stream_dispatcher.cc",
         "patchSetId": 2
