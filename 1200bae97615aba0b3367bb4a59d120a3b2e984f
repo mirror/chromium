@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "894fce75_3c8b8b8e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-25T08:02:38Z",
+      "side": 1,
+      "message": "I always use Create for GC types for consistency, but looks like there is no mention of this in any style guide. If stack allocating GC type are disallowed by some other terms, I\u0027m ok w/ bare Ctor.",
+      "parentUuid": "0a9a2611_35bd9eca",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3a037a_5f4433ce",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.h",
         "patchSetId": 6
