@@ -246,6 +246,16 @@ class ResourceDispatcherTest : public testing::Test, public IPC::Sender {
   std::unique_ptr<ResourceDispatcher> dispatcher_;
 };
 
+// Tests the generation of unique request ids.
+TEST_F(ResourceDispatcherTest, MakeRequestID) {
+  int firstId = ResourceDispatcher::MakeRequestID();
+  int secondId = ResourceDispatcher::MakeRequestID();
+
+  // Child process ids are unique (per process) and counting from 0 upwards:
+  EXPECT_TRUE(secondId > firstId);
+  EXPECT_TRUE(firstId >= 0);
+}
+
 // Does a simple request and tests that the correct data is received.  Simulates
 // two reads.
 TEST_F(ResourceDispatcherTest, RoundTrip) {
