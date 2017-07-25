@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "27240e29_0573e1e3",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T00:57:29Z",
+      "side": 1,
+      "message": "Not sure about this one, probably a false positive, see [1]. This file was not modified by the original CL at https://chromium-review.googlesource.com/c/572159/, and it does not seem that it is using cr-dialog.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/login/oobe_welcome.html?l\u003d105",
+      "revId": "000e68c8d99cc2d49bf16dab3dd561ce8c9d8bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e414b42_257a0f89",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 2
