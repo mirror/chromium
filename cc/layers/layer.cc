@@ -413,7 +413,7 @@ void Layer::SetSafeOpaqueBackgroundColor(SkColor background_color) {
 }
 
 SkColor Layer::SafeOpaqueBackgroundColor() const {
-  if (contents_opaque())
+  if (IsContentsOpaque())
     return safe_opaque_background_color_;
   SkColor color = background_color();
   if (SkColorGetA(color) == 255)
