@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "694b1190_3cf31a21",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-25T17:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a3254f_414a19c8",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "7a6541df58cc1f1f87a9e881a0e10a9e2e411b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0aa4b56_50c3f2a2",
         "filename": "services/device/generic_sensor/relative_orientation_quaternion_fusion_algorithm_using_euler_angles.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2cd72312_fe29c556",
+        "filename": "services/device/generic_sensor/relative_orientation_quaternion_fusion_algorithm_using_euler_angles.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-25T17:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0aa4b56_50c3f2a2",
+      "revId": "7a6541df58cc1f1f87a9e881a0e10a9e2e411b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16920b9b_94dc4bac",
         "filename": "services/device/generic_sensor/relative_orientation_quaternion_fusion_algorithm_using_euler_angles.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "7a6541df58cc1f1f87a9e881a0e10a9e2e411b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608e25ac_670c86c6",
+        "filename": "services/device/generic_sensor/relative_orientation_quaternion_fusion_algorithm_using_euler_angles.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-25T17:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16920b9b_94dc4bac",
+      "revId": "7a6541df58cc1f1f87a9e881a0e10a9e2e411b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
