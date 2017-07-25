@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d16d491_4f6911ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-25T15:21:44Z",
+      "side": 1,
+      "message": "Use this link instead:\n\nhttps://cs.chromium.org/chromium/src/components/payments/content/utility/payment_manifest_parser.cc?rcl\u003d6a53ba2305e2d0196d8f46f8590e0ad1fa45d636\n\nYour link is to the latest code. When you will move that file, the link will break. The \"rcl\" parameter freezes the link to the current revision, so the link is less likely to break.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 107
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5b799cf_2171e115",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -16,6 +39,29 @@
       "range": {
         "startLine": 25,
         "startChar": 0,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e99065b_8a8f0e59",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-25T15:21:44Z",
+      "side": 1,
+      "message": "Your code appears to not support non-URL payment method names like \"basic-card\". Please remove this part of the comment.",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
         "endLine": 41,
         "endChar": 47
       },
