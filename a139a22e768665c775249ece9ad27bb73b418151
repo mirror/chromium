@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fda3d9ea_3e4e3b24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-25T08:48:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d48d422_2d0812d1",
+      "revId": "a139a22e768665c775249ece9ad27bb73b418151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a9e3252_35c9b703",
         "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
         "patchSetId": 21
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T08:00:56Z",
       "side": 1,
       "message": "Although I don\u0027t know the author\u0027s intent here, I\u0027d still say it\u0027s simpler to check what it ISN\u0027T:\n\nif (style.OverflowY() !\u003d EOverflow::kVisible \u0026\u0026 style.OverflowY() !\u003d EOverflow::kHidden)\n\n(In fact, if I were to guess the author\u0027s intent, I\u0027d say they really only want to bail and return false here if overflow is visible. \"BlockHeightConstrained\" and all... but that\u0027s for a different CL, if anything at all.)",
+      "revId": "a139a22e768665c775249ece9ad27bb73b418151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ca505c_bacc3927",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-25T08:48:00Z",
+      "side": 1,
+      "message": "Sure, I think I will change it to your suggestion. It is simple now but if it gets complicated then we may have to get a function and explain why we should escape.",
+      "parentUuid": "5a9e3252_35c9b703",
       "revId": "a139a22e768665c775249ece9ad27bb73b418151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
