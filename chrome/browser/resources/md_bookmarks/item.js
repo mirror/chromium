@@ -45,6 +45,7 @@ Polymer({
     'click': 'onClick_',
     'dblclick': 'onDblClick_',
     'contextmenu': 'onContextMenu_',
+    'keydown': 'onKeydown_',
   },
 
   /** @override */
@@ -143,6 +144,17 @@ Polymer({
     }
     e.stopPropagation();
     e.preventDefault();
+  },
+
+  /**
+   * @private
+   * @param {KeyboardEvent} e
+   */
+  onKeydown_: function(e) {
+    if (e.key == 'ArrowLeft')
+      this.focus();
+    else if (e.key == 'ArrowRight')
+      this.$.menuButton.focus();
   },
 
   /**
