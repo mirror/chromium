@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49f72b2b_39279e8b",
+        "filename": "remoting/ios/app/session_reconnect_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-25T17:44:39Z",
+      "side": 1,
+      "message": "This is the pattern I have seen around google. Do you have an example to counter it that is not in our code?",
+      "parentUuid": "00259540_f559b874",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "62a8ce3300d1df3d6559e63a3a84f81dafee0752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ffa80df_1f89dae9",
         "filename": "remoting/resources/remoting_strings.grd",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "62a8ce3300d1df3d6559e63a3a84f81dafee0752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6a542c_5b50a02e",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-07-25T17:44:39Z",
+      "side": 1,
+      "message": "I am just a simple engineer hand editing xml like a chump...",
+      "parentUuid": "6ffa80df_1f89dae9",
+      "range": {
+        "startLine": 863,
+        "startChar": 114,
+        "endLine": 863,
+        "endChar": 144
+      },
+      "revId": "62a8ce3300d1df3d6559e63a3a84f81dafee0752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
