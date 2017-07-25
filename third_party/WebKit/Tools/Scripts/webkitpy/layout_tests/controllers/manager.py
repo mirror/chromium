@@ -218,10 +218,8 @@ class Manager(object):
 
             self._upload_json_files()
 
-            results_path = self._filesystem.join(self._results_directory, 'results.html')
-            self._copy_results_html_file(results_path)
-            expectations_path = self._filesystem.join(self._results_directory, 'test-expectations.html')
-            self._copy_testexpectations_html_file(expectations_path)
+            self._copy_results_html_file(self._results_directory, 'results.html')
+            self._copy_results_html_file(self._results_directory, 'legacy_results.html')
             if initial_results.keyboard_interrupted:
                 exit_code = exit_codes.INTERRUPTED_EXIT_STATUS
             else:
@@ -229,7 +227,8 @@ class Manager(object):
                     exit_code = exit_codes.EARLY_EXIT_STATUS
                 if self._options.show_results and (
                         exit_code or (self._options.full_results_html and initial_results.total_failures)):
-                    self._port.show_results_html_file(results_path)
+                    self._port.show_results_html_file(
+                        self._filesystem.join(self._results_directory, 'results.html'))
                 self._printer.print_results(time.time() - start_time, initial_results)
 
         return test_run_results.RunDetails(
@@ -545,19 +544,16 @@ class Manager(object):
         except IOError as err:
             _log.error('Upload failed: %s', err)
 
-    def _copy_results_html_file(self, destination_path):
-        base_dir = self._path_finder.path_from_layout_tests('fast', 'harness')
-        results_file = self._filesystem.join(base_dir, 'results.html')
-        # Note that the results.html template file won't exist when we're using a MockFileSystem during unit tests,
-        # so make sure it exists before we try to copy it.
-        if self._filesystem.exists(results_file):
-            self._filesystem.copyfile(results_file, destination_path)
-
-    def _copy_testexpectations_html_file(self, destination_path):
-        base_dir = self._path_finder.path_from_layout_tests('fast', 'harness')
-        expectations_file = self._filesystem.join(base_dir, 'test-expectations.html')
-        if self._filesystem.exists(expectations_file):
-            self._filesystem.copyfile(expectations_file, destination_path)
+    def _copy_results_html_file(self, destination_dir, filename):
+        """Copies a file from the template directory to the results directory."""
+        template_dir = self._path_finder.path_from_layout_tests('fast', 'harness')
+        source_path = self._filesystem.join(template_dir, filename)
+        destination_path = self._filesystem.join(destination_dir, filename)
+        # Note that the results.html template file won't exist when
+        # we're using a MockFileSystem during unit tests, so make sure
+        # it exists before we try to copy it.
+        if self._filesystem.exists(source_path):
+            self._filesystem.copyfile(source_path, destination_path)
 
     def _stats_trie(self, initial_results):
         def _worker_number(worker_name):
