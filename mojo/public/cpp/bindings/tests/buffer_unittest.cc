@@ -28,26 +28,6 @@ TEST(FixedBufferTest, Alignment) {
   // Any more allocations would result in an assert, but we can't test that.
 }
 
-#if defined(NDEBUG) && !defined(DCHECK_ALWAYS_ON)
-TEST(FixedBufferTest, TooBig) {
-  internal::FixedBufferForTesting buf(24);
-
-  // A little bit too large.
-  EXPECT_EQ(reinterpret_cast<void*>(0), buf.Allocate(32));
-
-  // Move the cursor forward.
-  EXPECT_NE(reinterpret_cast<void*>(0), buf.Allocate(16));
-
-  // A lot too large.
-  EXPECT_EQ(reinterpret_cast<void*>(0),
-            buf.Allocate(std::numeric_limits<size_t>::max() - 1024u));
-
-  // A lot too large, leading to possible integer overflow.
-  EXPECT_EQ(reinterpret_cast<void*>(0),
-            buf.Allocate(std::numeric_limits<size_t>::max() - 8u));
-}
-#endif
-
 }  // namespace
 }  // namespace test
 }  // namespace mojo
