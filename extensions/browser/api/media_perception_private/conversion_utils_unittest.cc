@@ -202,6 +202,10 @@ TEST(MediaPerceptionConversionUtilsTest, StateProtoToIdl) {
   EXPECT_EQ(state_result.status, media_perception::STATUS_STARTED);
   ASSERT_TRUE(state_result.device_context);
   EXPECT_EQ(*state_result.device_context, kTestDeviceContext);
+
+  state.set_status(mri::State::RESTARTED);
+  state_result = media_perception::StateProtoToIdl(state);
+  EXPECT_EQ(state_result.status, media_perception::STATUS_RESTARTED);
 }
 
 TEST(MediaPerceptionConversionUtilsTest, StateIdlToProto) {
@@ -216,6 +220,10 @@ TEST(MediaPerceptionConversionUtilsTest, StateIdlToProto) {
   state_proto = StateIdlToProto(state);
   EXPECT_EQ(state_proto.status(), mri::State::SUSPENDED);
   EXPECT_EQ(state_proto.device_context(), kTestDeviceContext);
+
+  state.status = media_perception::STATUS_RESTARTED;
+  state_proto = StateIdlToProto(state);
+  EXPECT_EQ(state_proto.status(), mri::State::RESTARTED);
 }
 
 }  // namespace extensions

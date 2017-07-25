@@ -61,8 +61,10 @@ void FakeMediaAnalyticsClient::SetState(const mri::State& state,
   }
   DCHECK(state.has_status()) << "Trying to set state without status.";
   DCHECK(state.status() == mri::State::SUSPENDED ||
-         state.status() == mri::State::RUNNING)
-      << "Trying set state to something other than RUNNING or SUSPENDED.";
+         state.status() == mri::State::RUNNING ||
+         state.status() == mri::State::RESTARTED)
+      << "Trying set state to something other than RUNNING, SUSPENDED or "
+         "RESTARTED.";
   current_state_ = state;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&FakeMediaAnalyticsClient::OnState,
