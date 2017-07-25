@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9deafa7_a7872152",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T09:00:30Z",
+      "side": 1,
+      "message": "Maybe it\u0027s good to repeat the comment at L139-L140. Without it |input| looks leaked.",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74eb44e_9b7e4441",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T09:00:30Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 10
+      },
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988c7d0a_a6669ff0",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T09:00:30Z",
+      "side": 1,
+      "message": "Can we merge this block with L222-L225?",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f23c05_7c5a2662",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T09:00:30Z",
+      "side": 1,
+      "message": "Do you mean |destinations_ \u003d destingations|?",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ed9521_ed3ff6b2",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T09:00:30Z",
+      "side": 1,
+      "message": "Do you mean |sources_ \u003d sources|?",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a828ef5e_683b6b60",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T09:00:30Z",
+      "side": 1,
+      "message": "Is |index \u003d it - sources_.begin()| enough?",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
