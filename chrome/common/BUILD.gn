@@ -627,7 +627,7 @@ static_library("test_support") {
 
   deps = [
     ":common",
-    ":instant_mojom",
+    ":search_mojom",
     "//base",
     "//testing/gmock",
     "//testing/gtest",
@@ -710,9 +710,9 @@ mojom("mojo_bindings") {
   use_once_callback = false
 }
 
-mojom("instant_mojom") {
+mojom("search_mojom") {
   sources = [
-    "instant.mojom",
+    "search.mojom",
   ]
 
   public_deps = [

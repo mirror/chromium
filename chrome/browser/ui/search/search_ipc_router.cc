@@ -38,7 +38,7 @@ class SearchBoxClientFactoryImpl
   // |web_contents| and |binding| must outlive this object.
   SearchBoxClientFactoryImpl(
       content::WebContents* web_contents,
-      mojo::AssociatedBinding<chrome::mojom::Instant>* binding)
+      mojo::AssociatedBinding<chrome::mojom::EmbeddedSearch>* binding)
       : client_binding_(binding), factory_bindings_(web_contents, this) {
     DCHECK(web_contents);
     DCHECK(binding);
@@ -51,7 +51,7 @@ class SearchBoxClientFactoryImpl
   }
 
  private:
-  void Connect(chrome::mojom::InstantAssociatedRequest request,
+  void Connect(chrome::mojom::EmbeddedSearchAssociatedRequest request,
                chrome::mojom::SearchBoxAssociatedPtrInfo client) override;
 
   // An interface used to push updates to the frame that connected to us. Before
@@ -61,7 +61,7 @@ class SearchBoxClientFactoryImpl
 
   // Used to bind incoming interface requests to the implementation, which lives
   // in SearchIPCRouter.
-  mojo::AssociatedBinding<chrome::mojom::Instant>* client_binding_;
+  mojo::AssociatedBinding<chrome::mojom::EmbeddedSearch>* client_binding_;
 
   // Binding used to listen to connection requests.
   content::WebContentsFrameBindingSet<chrome::mojom::EmbeddedSearchConnector>
@@ -71,7 +71,7 @@ class SearchBoxClientFactoryImpl
 };
 
 void SearchBoxClientFactoryImpl::Connect(
-    chrome::mojom::InstantAssociatedRequest request,
+    chrome::mojom::EmbeddedSearchAssociatedRequest request,
     chrome::mojom::SearchBoxAssociatedPtrInfo client) {
   content::RenderFrameHost* frame = factory_bindings_.GetCurrentTargetFrame();
   const bool is_main_frame = frame->GetParent() == nullptr;
