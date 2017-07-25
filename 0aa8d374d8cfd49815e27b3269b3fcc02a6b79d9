@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdfc6724_ce18842a",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-25T01:49:56Z",
+      "side": 1,
+      "message": "Do we have right to add results in case state is not SUCCESS?\nI think you may do something like:\n\n\nif (state !\u003d arc::mojom::AppDiscoveryRequestState::SUCCESS) {\n  DCHECK(results.empty());\n  return;\n}\n...",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 70
+      },
+      "revId": "0aa8d374d8cfd49815e27b3269b3fcc02a6b79d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
