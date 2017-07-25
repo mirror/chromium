@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8cad68e3_f4e65f62",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T23:38:01Z",
+      "side": 1,
+      "message": "I think my only worry here is how do we make sure we\u0027re covering all the use cases that do need to report, and that we populate destination_url correctly in those cases.\n\nMaybe the right answer it to just add a separate helper for things that want to explicitly report a framebusting failure and not provide a default param, though I\u0027m not sure how complex that would be, given that the logic is embedded in the middle of CanNavigate() today.\n\nActually, can we disambiguate between location.href \u003d \u0027\u0027; and a call that simply doesn\u0027t want to report the framebusting attempt to the UI?",
+      "parentUuid": "359204b5_49b1aebc",
+      "range": {
+        "startLine": 231,
+        "startChar": 63,
+        "endLine": 231,
+        "endChar": 69
+      },
+      "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72eeef51_f3ad2f20",
         "filename": "third_party/WebKit/Source/core/frame/Location.cpp",
         "patchSetId": 9
