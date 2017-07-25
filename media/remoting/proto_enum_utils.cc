@@ -4,6 +4,8 @@
 
 #include "media/remoting/proto_enum_utils.h"
 
+#include "media/remoting/rpc.pb.h"
+
 namespace media {
 namespace remoting {
 

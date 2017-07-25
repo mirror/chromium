@@ -14,10 +14,13 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
-#include "media/remoting/rpc.pb.h"
 
 namespace media {
 namespace remoting {
+
+namespace pb {
+class RpcMessage;
+}  // namespace pb
 
 // Utility class to process incoming and outgoing RPC message to desired
 // components on both end points. On sender side, for outgoing message, sender

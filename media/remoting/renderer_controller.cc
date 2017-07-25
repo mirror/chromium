@@ -151,7 +151,7 @@ void RendererController::OnRemotePlaybackDisabled(bool disabled) {
 base::WeakPtr<RpcBroker> RendererController::GetRpcBroker() const {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  return session_->rpc_broker()->GetWeakPtr();
+  return session_->GetRpcBroker();
 }
 
 void RendererController::StartDataPipe(

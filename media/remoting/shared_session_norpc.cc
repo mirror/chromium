@@ -7,18 +7,16 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "media/remoting/proto_utils.h"
-#include "media/remoting/rpc.pb.h"
-#include "media/remoting/rpc_broker.h"
 
 namespace media {
 namespace remoting {
 
+// Needed for ~unique_ptr().
+class RpcBroker {};
+
 SharedSession::SharedSession(mojom::RemotingSourceRequest source_request,
                              mojom::RemoterPtr remoter)
-    : rpc_broker_(base::MakeUnique<RpcBroker>(
-          base::Bind(&SharedSession::SendMessageToSink,
-                     base::Unretained(this)))),
+    : rpc_broker_(nullptr),
       binding_(this, std::move(source_request)),
       remoter_(std::move(remoter)) {
   DCHECK(remoter_);
@@ -127,13 +125,7 @@ void SharedSession::OnStopped(mojom::RemotingStopReason reason) {
 void SharedSession::OnMessageFromSink(const std::vector<uint8_t>& message) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  std::unique_ptr<pb::RpcMessage> rpc(new pb::RpcMessage());
-  if (!rpc->ParseFromArray(message.data(), message.size())) {
-    VLOG(1) << "corrupted Rpc message";
-    Shutdown();
-    return;
-  }
-  rpc_broker_->ProcessMessageFromRemote(std::move(rpc));
+  NOTIMPLEMENTED();
 }
 
 void SharedSession::UpdateAndNotifyState(SessionState state) {
@@ -201,7 +193,7 @@ void SharedSession::RemoveClient(Client* client) {
 }
 
 base::WeakPtr<RpcBroker> SharedSession::GetRpcBroker() {
-  return rpc_broker_->GetWeakPtr();
+  return nullptr;
 }
 
 void SharedSession::Shutdown() {

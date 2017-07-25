@@ -21,7 +21,6 @@
 #include "media/base/renderer.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
 #include "media/remoting/metrics.h"
-#include "media/remoting/rpc_broker.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
 namespace media {
@@ -33,6 +32,11 @@ namespace remoting {
 
 class DemuxerStreamAdapter;
 class RendererController;
+class RpcBroker;
+
+namespace pb {
+class RpcMessage;
+}
 
 // A media::Renderer implementation that proxies all operations to a remote
 // renderer via RPCs. The CourierRenderer is instantiated by

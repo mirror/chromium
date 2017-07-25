@@ -21,12 +21,20 @@
 #include "media/base/eme_constants.h"
 #include "media/base/pipeline_status.h"
 #include "media/base/video_decoder_config.h"
-#include "media/remoting/rpc.pb.h"
 
 namespace media {
 namespace remoting {
 
 class CdmPromiseResult;
+
+namespace pb {
+class AudioDecoderConfig;
+class CdmClientOnSessionKeysChange;
+class CdmPromise;
+class PipelineStatistics;
+class RpcMessage;
+class VideoDecoderConfig;
+}  // namespace pb
 
 // Utility class to convert data between media::DecoderBuffer and byte array.
 // It is to serialize media::DecoderBuffer structure except for actual data

@@ -13,6 +13,7 @@
 #include "media/base/encryption_scheme.h"
 #include "media/base/timestamp_constants.h"
 #include "media/remoting/proto_enum_utils.h"
+#include "media/remoting/rpc.pb.h"
 
 namespace media {
 namespace remoting {

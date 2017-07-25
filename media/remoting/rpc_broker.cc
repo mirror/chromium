@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "media/base/bind_to_current_loop.h"
+#include "media/remoting/rpc.pb.h"
 
 namespace media {
 namespace remoting {

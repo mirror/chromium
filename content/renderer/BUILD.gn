@@ -562,7 +562,11 @@ target(link_target_type, "renderer") {
   }
 
   if (enable_media_remoting) {
-    deps += [ "//media/remoting" ]
+    if (is_android) {
+      deps += [ "//media/remoting:remoting_norpc" ]
+    } else {
+      deps += [ "//media/remoting:remoting" ]
+    }
   }
 
   if (enable_webrtc) {

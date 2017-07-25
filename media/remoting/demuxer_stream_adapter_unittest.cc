@@ -16,6 +16,8 @@
 #include "media/remoting/fake_media_resource.h"
 #include "media/remoting/fake_remoter.h"
 #include "media/remoting/proto_utils.h"
+#include "media/remoting/rpc.pb.h"
+#include "media/remoting/rpc_broker.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

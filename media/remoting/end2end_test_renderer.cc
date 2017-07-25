@@ -13,6 +13,7 @@
 #include "media/remoting/proto_utils.h"
 #include "media/remoting/receiver.h"
 #include "media/remoting/renderer_controller.h"
+#include "media/remoting/rpc.pb.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace media {

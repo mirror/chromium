@@ -18,7 +18,6 @@
 #include "media/base/demuxer_stream.h"
 #include "media/base/video_decoder_config.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
-#include "media/remoting/rpc_broker.h"
 #include "media/remoting/triggers.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
@@ -32,6 +31,12 @@ namespace media {
 class DemuxerStream;
 
 namespace remoting {
+
+class RpcBroker;
+
+namespace pb {
+class RpcMessage;
+}  // namespace pb
 
 // Class to fetch audio/video buffer from demuxer and send it to browser process
 // via mojo::Remoting interface. Note the class is created and run on media
@@ -103,13 +108,7 @@ class DemuxerStreamAdapter {
                    const scoped_refptr<DecoderBuffer>& input);
   void TryWriteData(MojoResult result);
   void ResetPendingFrame();
-  bool IsProcessingReadRequest() const {
-    // |read_until_callback_handle_| is set when RPC_DS_READUNTIL message is
-    // received, and will be reset to invalid value after
-    // RPC_DS_READUNTIL_CALLBACK is sent back to receiver. Therefore it can be
-    // used to determine if the class is in the reading state or not.
-    return read_until_callback_handle_ != RpcBroker::kInvalidHandle;
-  }
+  bool IsProcessingReadRequest() const;
 
   // Callback function when a fatal runtime error occurs.
   void OnFatalError(StopTrigger stop_trigger);

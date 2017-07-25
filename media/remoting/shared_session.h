@@ -5,17 +5,19 @@
 #ifndef MEDIA_REMOTING_SHARED_SESSION_H_
 #define MEDIA_REMOTING_SHARED_SESSION_H_
 
+#include <memory>
 #include <vector>
 
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
-#include "media/remoting/rpc_broker.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace media {
 namespace remoting {
+
+class RpcBroker;
 
 // A single shared remoting session for multiple clients. The session will
 // start remoting when receiving the first request. Once remoting is started,
@@ -124,7 +126,7 @@ class SharedSession final : public mojom::RemotingSource,
   void AddClient(Client* client);
   void RemoveClient(Client* client);
 
-  RpcBroker* rpc_broker() { return &rpc_broker_; }
+  base::WeakPtr<RpcBroker> GetRpcBroker();
 
  private:
   friend class base::RefCountedThreadSafe<SharedSession>;
@@ -138,7 +140,7 @@ class SharedSession final : public mojom::RemotingSource,
   void SendMessageToSink(std::unique_ptr<std::vector<uint8_t>> message);
 
   // Handles dispatching of incoming and outgoing RPC messages.
-  RpcBroker rpc_broker_;
+  std::unique_ptr<RpcBroker> rpc_broker_;
 
   const mojo::Binding<mojom::RemotingSource> binding_;
   const mojom::RemoterPtr remoter_;
