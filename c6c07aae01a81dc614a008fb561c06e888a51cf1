@@ -16,6 +16,24 @@
       "revId": "c6c07aae01a81dc614a008fb561c06e888a51cf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5eb9970_4f0818eb",
+        "filename": "media/blink/resource_multibuffer_data_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-25T22:01:10Z",
+      "side": 0,
+      "message": "Ultimately, it ends up calling WebURLLoaderImpl::Context::SetDefersLoading, which IIUC is no-op if deferred state is unchanged:\nhttps://cs.chromium.org/chromium/src/content/child/web_url_loader_impl.cc?type\u003dcs\u0026l\u003d499\n\nSo I am not sure if it is worth duplicating the state caching at ActiveLoader level.",
+      "parentUuid": "ff99872d_5bf7eb24",
+      "revId": "c6c07aae01a81dc614a008fb561c06e888a51cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
