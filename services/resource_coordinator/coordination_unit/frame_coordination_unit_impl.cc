@@ -63,4 +63,13 @@ bool FrameCoordinationUnitImpl::IsMainFrame() const {
   return true;
 }
 
+bool FrameCoordinationUnitImpl::IsVisible() const {
+  for (auto* parent : parents_) {
+    if (parent->id().type != CoordinationUnitType::kWebContents)
+      continue;
+    return parent->GetProperty(mojom::PropertyType::kVisible).GetBool();
+  }
+  return false;
+}
+
 }  // namespace resource_coordinator

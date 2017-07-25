@@ -25,6 +25,7 @@ class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
   void RecalculateProperty(const mojom::PropertyType property_type) override;
 
  private:
+  // CoordinationUnitImpl implementation.
   double CalculateCPUUsage();
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsCoordinationUnitImpl);
