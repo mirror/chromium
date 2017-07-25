@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f56b63d2_9718191e",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-25T00:24:49Z",
+      "side": 1,
+      "message": "Not sure I\u0027ll need to duplicate this code for a test. I set id, comparable id, and expect certain outcome (non-repeating result). In tests, we typically avoid calculating expected results, but rather hardcoding them, so I see no need for having this method for tests.",
+      "parentUuid": "06a266bf_e8f98ae7",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "055af1fc_88da7ab0",
         "filename": "ui/app_list/search_result.h",
         "patchSetId": 3
