@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bf9316bd_7dd72657",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "b72852ec_a5321222",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2027f0bf_30c1751d",
         "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
         "patchSetId": 3
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "I don\u0027t think we have an \"immersive fullscreen\" called by that name on Mac, but we have something that can reveal tabstrips via animation, I thought.",
       "parentUuid": "6386c3e4_b37b01f6",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a725a356_eec5c07e",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "I forgot to add tapted@.",
+      "parentUuid": "f2963930_e0fccc79",
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +176,24 @@
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed86f47_194909f8",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Oh, I like this! It makes the code much cleaner. Thanks!\n\nDone with the exception of testing that we got the expected index in OnImmersiveRevealEnded() instead, since we start the reveal first, then we execute the command.",
+      "parentUuid": "92019619_2707229b",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +314,24 @@
       "side": 1,
       "message": "I see.  In that case () might have been better in the end.  I don\u0027t care much, use whatever you think is better :)",
       "parentUuid": "4c0adec8_d7e656b7",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45e778b5_2176d66d",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Reverted back to ().",
+      "parentUuid": "61057f37_30036ce5",
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d94b419c_31634131",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90dac3bd_0642a938",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f57a09d8_0cd8b89e",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9996ace_dce7260c",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Following your earlier suggestion, these EXPECTs now live inside OnImmersiveRevealEnded();",
+      "parentUuid": "f57a09d8_0cd8b89e",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43231951_6df2a1d1",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Following your earlier suggestion, these EXPECTs now live inside OnImmersiveRevealStarted();",
+      "parentUuid": "a7cb2c36_c9be2b6b",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b6ede5_38aeee05",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52032be6_e326b5f4",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98b6ede5_38aeee05",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1af707b3_e4c8e584",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Unfortunately we can\u0027t do this since the TimeDelta() ctor is not marked as constexpr.",
+      "parentUuid": "f1843d18_963fa32e",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb3830ef_cdff31dc",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "83800a2f_349e200f",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb3830ef_cdff31dc",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d828c569_519675ee",
         "filename": "chrome/browser/ui/views/frame/browser_view.h",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abef15f_9ea83c1c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-25T01:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d828c569_519675ee",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
