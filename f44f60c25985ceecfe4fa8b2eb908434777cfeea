@@ -33,6 +33,325 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfe4757_f5c101db",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "I agree. The callers should just call getPrivetPrinters() like before. The PrinterType.PRIVET_PRINTER is an implementation detail.",
+      "parentUuid": "74e6d931_b57d66d4",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798ed70c_5c850267",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "I think you can make both of these constexpr?",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2ad770_f20376c6",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "sizeof(kPrintData)",
+      "range": {
+        "startLine": 193,
+        "startChar": 32,
+        "endLine": 193,
+        "endChar": 34
+      },
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b85bc0_3c0e9d68",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "Should this be a DCHECK? The |printer_type| comes from base::Bind() that the code above does. It shouldn\u0027t ever pass in the wrong type, right?",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1403caa_61578057",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "If the JS constants need to match these, then we need a comment here to cross-reference the JS code.",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54dd9cc0_4a620a8c",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "Do you need the forward declarations in the .cc file?",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed88f331_71b0034f",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "return std::move(base::MakeUnique\u003cPrivetPrinterHandler\u003e(profile));",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031b9c03_05ef6c47",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "Can you figure out which file has the BUILDFLAG you want and only include that one?",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bffa8e3_bbf6cf1e",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "Can Profile be forward declared instead?",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11db730_ee0d9afe",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "s/an/a/\n\nSame for line 50.",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db90459d_8c871bec",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "Can we add a ! in front, just like in StartPrint() below?",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13082a0c_6a3b8a6d",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "auto, if you want to save 1 line.",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e9cbb2_b387142d",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "DCHECK(print_callback_);\n\nSame for line 122.",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7877e536_52f47315",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "base::MakeUnique",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599f3c67_82ac3f14",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "What\u0027s the point of doing this first? If we fail the checks below, we won\u0027t use this.",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91d705b_2c9ac514",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "Pass by const-ref.",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5daf2d77_ff7d2633",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "Let\u0027s remove the blank line since the next block is related to the code above.",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392f2d5e_48a86af7",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T23:43:38Z",
+      "side": 1,
+      "message": "nullptr while we are at it?",
+      "range": {
+        "startLine": 269,
+        "startChar": 70,
+        "endLine": 269,
+        "endChar": 74
+      },
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
