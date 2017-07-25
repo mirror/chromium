@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b8857d9f_f06a4c3b",
+        "filename": "ui/views/examples/examples_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:36:15Z",
+      "side": 1,
+      "message": "If this isn\u0027t build on NACL, there is no need to add this ifdef.",
+      "parentUuid": "e6d1671e_5b46a64b",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 54
+      },
+      "revId": "941e8290c8c303809c1fd7229b1dd43b93f19df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e259c131_be460914",
         "filename": "ui/views/examples/examples_main.cc",
         "patchSetId": 1
@@ -117,6 +141,30 @@
       "revId": "941e8290c8c303809c1fd7229b1dd43b93f19df3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd71b30_2c254f43",
+        "filename": "ui/views/examples/examples_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-25T15:36:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2511efd_7041a2ec",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "941e8290c8c303809c1fd7229b1dd43b93f19df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
