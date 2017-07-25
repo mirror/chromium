@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26660e15_bd2d6c8f",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-25T04:00:18Z",
+      "side": 1,
+      "message": "I think this code would be slightly easier to read if you checked the pinned state rather than indirectly checking indices. For example,\nif (IsTabPinned(index) \u0026\u0026 to_position \u003e\u003d first_non_pinned_tab)\n\nAlthough maybe you should just use min/max:\n\nif (IsTabPinned(index))\n  to_position \u003d std::min(first_non_pinned_tab - 1, to_position);\nelse\n  to_position \u003d std::max(first_non_pinned_tab, to_position);",
+      "range": {
+        "startLine": 436,
+        "startChar": 6,
+        "endLine": 436,
+        "endChar": 12
+      },
+      "revId": "95406e5f7206bd323687a5e8a7ebaa3863831d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
