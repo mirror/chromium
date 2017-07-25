@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beaa0be1_3b4d21ee",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-25T14:40:02Z",
+      "side": 1,
+      "message": "No change, just moving to match the order in .h file.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 52
+      },
+      "revId": "6facd3e90f1491130a1ab238e93902068fcf110c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
