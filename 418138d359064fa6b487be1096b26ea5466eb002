@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "dd79e843_b5c86700",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-25T17:38:01Z",
+      "side": 1,
+      "message": "Yeah I can also remove the map as an observer just in the test instead of more generally here -  that seems to work.\n\nAside: Not sure this is 100% ideal though, since it makes the test highly coupled to the implementation. Similar to how the HCSM is highly coupled to the implementations of the observers that call RemoveAllObservers from their ShutDownOnUIThread, which the ObservableProvider abstract class does not guarantee.. this makes me worry that some new provider will come along which neglects to call RemoveAllObservers from its ShutDown. But I guess fixing that is beyond the scope of this change. And practically speaking new implementers are highly likely to copy other provider implementations, and notice that tests crash if they forget! So I\u0027m probably worrying over nothing.\n\nAnyway, done.",
+      "parentUuid": "f2dcf1e5_f60537e0",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48b95972_98504552",
         "filename": "components/content_settings/core/browser/host_content_settings_map.h",
         "patchSetId": 2
