@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3170754a_48b99cae",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-25T20:43:50Z",
+      "side": 1,
+      "message": "delete this instead?",
+      "revId": "51d3cc1d837ae702934bf0f669d95f7675d81222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af253cb6_cfce8451",
+        "filename": "services/ui/ws/server_window_compositor_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-25T20:43:50Z",
+      "side": 1,
+      "message": "Add the flag here cc::switches::kShowOverdrawFeedback instead?",
+      "revId": "51d3cc1d837ae702934bf0f669d95f7675d81222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
