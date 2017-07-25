@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
+#include <vector>
 
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
@@ -77,6 +78,8 @@ class SharedModelTypeProcessor : public ModelTypeProcessor,
                          const CommitResponseDataList& response_list) override;
   void OnUpdateReceived(const sync_pb::ModelTypeState& type_state,
                         const UpdateResponseDataList& updates) override;
+  void ProcessGetUpdatesResponse(
+      const sync_pb::DataTypeProgressMarker& progress_marker) override;
 
   // Returns the estimate of dynamically allocated memory in bytes.
   size_t EstimateMemoryUsage() const;
@@ -149,6 +152,25 @@ class SharedModelTypeProcessor : public ModelTypeProcessor,
 
   // Returns true if all processor entity trackers have non-empty storage keys.
   bool AllStorageKeysPopulated() const;
+
+  // Expires entries according to garbage collection directives.
+  void ExpireEntriesIfNeeded(
+      const sync_pb::DataTypeProgressMarker& progress_marker);
+
+  // Clear metadata for the entries in |storage_key_to_be_deleted|.
+  void ClearMetadataForEntries(
+      const std::vector<std::string>& storage_key_to_be_deleted,
+      MetadataChangeList* metadata_changes);
+
+  // Tombstones all entries of |type| whose versions are older than
+  // |version_watermark| unless they are unsynced.
+  void ExpireEntriesByVersion(int64_t version_watermark,
+                              MetadataChangeList* metadata_changes);
+
+  // Tombstones all entries of |type| whose ages are older than
+  // |age_watermark_in_days| unless they are unsynced.
+  void ExpireEntriesByAge(int32_t age_watermark_in_days,
+                          MetadataChangeList* metadata_changes);
 
   /////////////////////
   // Processor state //
@@ -225,6 +247,12 @@ class SharedModelTypeProcessor : public ModelTypeProcessor,
   // confirmation, we should delete local data, because the model side never
   // intends to read it. This includes both data and metadata.
   bool commit_only_;
+
+  // The version which processor already ran garbage collection against on.
+  int64_t cached_gc_directive_version_;
+
+  // The day which processor already ran garbage collection against on.
+  base::Time cached_gc_directive_aged_out_day_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
