@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eba83de9_7ebefed3",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-25T20:29:28Z",
+      "side": 1,
+      "message": "Maybe mention in a comment that this only matters when navigating to chrome://print directly?",
+      "revId": "bdd9194f33024297ed03e7bc9604eb50e6af79cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
