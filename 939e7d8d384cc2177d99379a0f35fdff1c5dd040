@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1380207_b754b21d",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-25T21:11:58Z",
+      "side": 1,
+      "message": "This is the value used on other platforms. It makes more sense now that I\u0027ve updated the CL to allow users to enable demo mode for individual features.",
+      "parentUuid": "23106ecb_288f5c5c",
+      "revId": "939e7d8d384cc2177d99379a0f35fdff1c5dd040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cea04f7_6f28d52a",
         "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
         "patchSetId": 1
