@@ -8,19 +8,25 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
+#include "testing/platform_test.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-// Tests the badge's intrinsic content size given short display text.
-TEST(TextBadgeViewTest, BadgeSizeShortLabel) {}
-
-// Tests the badge's intrinsic content size given long display text.
-TEST(TextBadgeViewTest, BadgeSizeLongLabel) {}
-
-// Tests that text and layout flip for RTL languages.
-TEST(TextBadgeViewTest, RTL) {}
+// Tests setting the |text| property.
+TEST(TextBadgeViewTest, SetText) {
+  NSString* text1 = @"text 1";
+  NSString* text2 = @"text 2";
+  TextBadgeView* badge = [[TextBadgeView alloc] initWithText:text1];
+  [badge setText:text2];
+  EXPECT_EQ(text2, badge.text);
+}
 
 // Tests that the accessibility label matches the display text.
-TEST(TextBadgeViewTest, Accessibility) {}
+TEST(TextBadgeViewTest, Accessibility) {
+  NSString* text = @"display";
+  TextBadgeView* badge = [[TextBadgeView alloc] initWithText:text];
+  NSString* a11yLabel = badge.accessibilityLabel;
+  EXPECT_EQ(text, a11yLabel);
+}
