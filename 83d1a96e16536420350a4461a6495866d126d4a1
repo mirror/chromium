@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ffe1f9eb_2ee606a7",
+        "filename": "content/renderer/media/media_stream_audio_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1188742
+      },
+      "writtenOn": "2017-07-25T12:36:00Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "d0d64d57_593f05c8",
+      "range": {
+        "startLine": 467,
+        "startChar": 45,
+        "endLine": 467,
+        "endChar": 68
+      },
+      "revId": "83d1a96e16536420350a4461a6495866d126d4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7811ce2e_4763cd2b",
         "filename": "content/renderer/media/media_stream_audio_processor_unittest.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T19:49:28Z",
       "side": 1,
       "message": "Not familiar with these file implementations, but would it be possible to check that the aecdump isn\u0027t empty?",
+      "range": {
+        "startLine": 504,
+        "startChar": 2,
+        "endLine": 504,
+        "endChar": 32
+      },
+      "revId": "83d1a96e16536420350a4461a6495866d126d4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c8d1de_ef0614f0",
+        "filename": "content/renderer/media/media_stream_audio_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1188742
+      },
+      "writtenOn": "2017-07-25T12:36:00Z",
+      "side": 1,
+      "message": "Good idea! I added a check for non-empty files. Although there are complications.\n\nI thought about the error handling when starting a recording. Currently we signal with LOG(ERROR) that recording could not be started. We could return a flag from MediaStreamProcessorOptions and MediaStreamProcessor telling whether logging started. That isn\u0027t done, and I think it\u0027s right, because there is no sensible error handling. Apart from crashing in debug mode or logging the error, which could be done in the bottom-most function StartDebugRecording.\n\nI\u0027d like do add DCHECK or LOG(DFATAL) checks in the recording starting chain. The problem is that we support compiling with protobuf support turned off (rtc_enable_protobuf\u003dfalse). Then recording doesn\u0027t work. This can be detected, because AecDumpFactory::Create() will in this case alway returns nullptr.\n\nI\u0027ve added a check for non-empty file. There seems to not be any Chrome bots running with \u0027rtc_enable_protobuf\u003dfalse\u0027. If any are set up, this test can be made optionally disabled.",
+      "parentUuid": "7811ce2e_4763cd2b",
       "range": {
         "startLine": 504,
         "startChar": 2,
