@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0094178a_1a61a3ae",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-25T17:38:08Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456e7248_34e991fc",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-25T17:38:08Z",
+      "side": 1,
+      "message": "maybe `for (const auto\u0026 i : indices) {`?",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ade83f_3afaae36",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-25T17:38:08Z",
+      "side": 1,
+      "message": "Why doing this?",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f79e57_c0fbfd43",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-25T17:38:08Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242b2d9a_3dde52a1",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-25T17:38:08Z",
+      "side": 1,
+      "message": "style: use { }",
+      "revId": "dddf60299b1f98f835598f03db0cdf54e3dc367d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
