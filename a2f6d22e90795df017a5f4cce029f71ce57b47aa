@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b4b5bc2_86d169f4",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-25T18:07:56Z",
+      "side": 1,
+      "message": "Should be const function.",
+      "range": {
+        "startLine": 82,
+        "startChar": 54,
+        "endLine": 82,
+        "endChar": 55
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b946d6_8770606c",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-25T18:07:56Z",
+      "side": 1,
+      "message": "This seems too specific to CPU usage. Is it possible to make it more general to UkmCollector?",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "a2f6d22e90795df017a5f4cce029f71ce57b47aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
