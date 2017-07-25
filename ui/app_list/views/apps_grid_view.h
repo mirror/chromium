@@ -188,6 +188,11 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // The grid view must be inside a folder view.
   void OnFolderItemRemoved();
 
+  // Update the opacity of all the items in the grid during dragging. The
+  // opacity of the item is based on how much the item's centroid is above
+  // |work_area_bottom|. If |is_end| is true, set all the items opacity to 1.0f.
+  void UpdateOpacity(float work_area_bottom, bool is_end);
+
   // Return the view model for test purposes.
   const views::ViewModelT<AppListItemView>* view_model_for_test() const {
     return &view_model_;
