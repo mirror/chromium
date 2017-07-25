@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "a27a41f6_df5cba1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-25T04:11:39Z",
+      "side": 1,
+      "message": "An oversight from the previous patch, thanks for noticing!",
+      "parentUuid": "6f74f283_54883e47",
+      "range": {
+        "startLine": 182,
+        "startChar": 64,
+        "endLine": 182,
+        "endChar": 65
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7264c68b_9d84beea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 1
@@ -91,6 +115,30 @@
       "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714b2578_1073851f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-25T04:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7264c68b_9d84beea",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "3eb5ecff_bafab500",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-25T04:11:39Z",
+      "side": 1,
+      "message": "Done, with the exception of keeping a queue instead of a vector - seems clearer with emptying the callback queue. Let me know if you think there is any issue with this. It seems legal to pop() the callback that has been nullified by std::move().Run().",
+      "parentUuid": "998ad068_61e4ac8d",
+      "range": {
+        "startLine": 1191,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 14
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e002de3a_1862d9e9",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 1
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "1eaae0c3_127907ee",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-25T04:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e002de3a_1862d9e9",
+      "range": {
+        "startLine": 1192,
+        "startChar": 2,
+        "endLine": 1192,
+        "endChar": 33
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc3e11cf_c869145a",
         "filename": "content/browser/web_contents/web_contents_android.cc",
         "patchSetId": 1
@@ -160,6 +256,30 @@
       "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f692ca_13c272f7",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-25T04:11:39Z",
+      "side": 1,
+      "message": "The method I used as an example did not, but good to be on the safer side I guess. Done.",
+      "parentUuid": "dc3e11cf_c869145a",
+      "range": {
+        "startLine": 617,
+        "startChar": 2,
+        "endLine": 617,
+        "endChar": 6
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
