@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "029e4956_12bc7c7c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-25T06:16:10Z",
+      "side": 1,
+      "message": "I see the point, and it\u0027s good point. It\u0027s great to have this discussion here, thank you!\n\nThis should be called from layout algorithm, but we also need to re-compute after layout. The re-compute needs to run when transform changes, and we probably don\u0027t want to run full-layout on transform changes, right? Some discussion here:\nhttps://docs.google.com/document/d/1riJnuNT4Sw1UOLeUBtkmbngQF-JHO4nZnUUL1LpcmG0/edit?disco\u003dAAAAA9xU24I\nand some info in:\nhttps://crbug.com/674279#c17\n\nIn order to re-compute overflow after layout, legacy copies some layout code to LayoutBlock::RecalcOverflowAfterStyleChange(). I\u0027m hoping to reduce copying code this time, and to do this, PhysicalFragment should have this function.\n\nDoes this look reasonable?",
+      "parentUuid": "5e08580e_5544ca3b",
+      "revId": "3593a0bc43b2475ff304d1aa45e67f1a2ca806e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb9396ab_eb746344",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.h",
         "patchSetId": 2
