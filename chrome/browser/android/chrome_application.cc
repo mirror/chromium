@@ -7,12 +7,10 @@
 #include <vector>
 
 #include "base/android/jni_android.h"
-#include "base/android/jni_string.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/common/chrome_content_client.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
@@ -21,9 +19,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
-using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
-using base::android::ScopedJavaLocalRef;
 
 namespace {
 
@@ -66,12 +62,6 @@ void RemoveSessionCookiesForProfile(Profile* profile) {
 }
 
 }  // namespace
-
-static ScopedJavaLocalRef<jstring> GetBrowserUserAgent(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
-  return ConvertUTF8ToJavaString(env, GetUserAgent());
-}
 
 static void FlushPersistentData(JNIEnv* env, const JavaParamRef<jclass>& obj) {
   // Commit the prending writes for all the loaded profiles.

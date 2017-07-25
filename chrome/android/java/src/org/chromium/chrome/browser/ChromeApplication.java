@@ -83,13 +83,6 @@ public class ChromeApplication extends ContentApplication {
     }
 
     /**
-     * @return The user agent string of Chrome.
-     */
-    public static String getBrowserUserAgent() {
-        return nativeGetBrowserUserAgent();
-    }
-
-    /**
      * The host activity should call this during its onPause() handler to ensure
      * all state is saved when the app is suspended.  Calling ChromiumApplication.onStop() does
      * this for you.
@@ -128,7 +121,6 @@ public class ChromeApplication extends ContentApplication {
     }
 
     private static native void nativeRemoveSessionCookies();
-    private static native String nativeGetBrowserUserAgent();
     private static native void nativeFlushPersistentData();
 
     /**
