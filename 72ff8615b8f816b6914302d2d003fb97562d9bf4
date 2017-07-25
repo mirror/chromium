@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065d16a1_16d1cde4",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-25T20:06:52Z",
+      "side": 1,
+      "message": "Not a huge fan of introducing a bidirectional dependency here. \n\nMaybe instead of it, we add a method to Item (something like PerformPostSelectionAction), that ends up calling GoBack in most (all?) the items we have now. Then, we change the list to call SetSelected(); PerformPostSelectionAction(); here https://cs.chromium.org/chromium/src/chrome/browser/ui/views/payments/payment_request_item_list.cc?rcl\u003db17fc441b2d272d7b1582e6d39a474c5003130d7\u0026l\u003d208 if the item is not already selected, PerformPostSelectionAction only if it is. We can then remove the GoBack() calls in the derived item classes\u0027 SetSelected().\n\nSince the derived item classes already know about the dialog (they can GoBack() already), we won\u0027t have to pass the parent sheet around this way.\n\nWDYT?",
+      "revId": "72ff8615b8f816b6914302d2d003fb97562d9bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
