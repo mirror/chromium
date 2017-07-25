@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "b4503b82_5a06b217",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-25T15:26:13Z",
+      "side": 1,
+      "message": "\u003e So if this feature flag is associated with an experiment, does that mean it can be turned on/off remotely by the experimental framework, without a user updating?\n\nYes, it might be enabled without the user upgrading (just restarting Chrome).\n\n\u003e However, I\u0027m a bit confused why this is done from flushCachedMetrics -  Is flushCachedMetrics guaranteed to run at the right time for initializing the channel?\n\nOh, that\u0027s not ready for review, sorry. Yes, it runs at the right time, but it\u0027s not really the right place for the call.\n\nSince registering the channel ourselves seems to be the right thing to do, I\u0027ll go ahead and make this version of the CL presentable.",
+      "parentUuid": "48c0ad73_222cfda7",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 96
+      },
+      "revId": "7c134544f480e36b9006531d1caea2b8678ad594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a999d645_7cb68a9d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
         "patchSetId": 2
