@@ -22,6 +22,30 @@
       "revId": "b37aa0b246e4d0c982f26336c962050c8e60a339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d458dea3_b137a1b1",
+        "filename": "ui/app_list/views/search_box_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-25T21:46:10Z",
+      "side": 1,
+      "message": "SetSearchResultSelection only set or clear selection in search result page. I need a function to clear selection in each page. I added a function ClearSelectedIndex in the parent class AppListPage which could be overridden by subclass. Should I combine SetSearchResultSelection and ClearSelectionInActivePage, and replace ClearSelectedIndex with some function like SetSelection(bool select) in AppListPage ?",
+      "parentUuid": "221972e3_39e33a23",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "b37aa0b246e4d0c982f26336c962050c8e60a339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
