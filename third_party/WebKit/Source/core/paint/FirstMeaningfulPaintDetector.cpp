@@ -11,6 +11,7 @@
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/wtf/Functional.h"
+#include "public/platform/WebLayerTreeView.h"
 
 namespace blink {
 
@@ -86,11 +87,16 @@ void FirstMeaningfulPaintDetector::MarkNextPaintAsMeaningfulIfNeeded(
 }
 
 void FirstMeaningfulPaintDetector::NotifyPaint() {
+  if (requeue_provisional_first_meaningful_paint_swap_) {
+    RegisterNotifySwapTime(PaintEvent::kProvisionalFirstMeaningfulPaint);
+    requeue_provisional_first_meaningful_paint_swap_ = false;
+  }
+
   if (!next_paint_is_meaningful_)
     return;
 
   // Skip document background-only paints.
-  if (paint_timing_->FirstPaint() == 0.0)
+  if (paint_timing_->FirstPaintRendered() == 0.0)
     return;
 
   provisional_first_meaningful_paint_ = MonotonicallyIncreasingTime();
@@ -120,7 +126,7 @@ void FirstMeaningfulPaintDetector::NotifyPaint() {
 // This is called only on FirstMeaningfulPaintDetector for main frame.
 void FirstMeaningfulPaintDetector::NotifyInputEvent() {
   // Ignore user inputs before first paint.
-  if (paint_timing_->FirstPaint() == 0.0)
+  if (paint_timing_->FirstPaintRendered() == 0.0)
     return;
   had_user_input_ = kHadUserInput;
 }
@@ -159,7 +165,7 @@ void FirstMeaningfulPaintDetector::SetNetworkQuietTimers(
 
 void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
   if (!GetDocument() || network0_quiet_reached_ || ActiveConnections() > 0 ||
-      !paint_timing_->FirstContentfulPaint())
+      !paint_timing_->FirstContentfulPaintRendered())
     return;
   network0_quiet_reached_ = true;
 
@@ -167,14 +173,14 @@ void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
     // Enforce FirstContentfulPaint <= FirstMeaningfulPaint.
     first_meaningful_paint0_quiet_ =
         std::max(provisional_first_meaningful_paint_,
-                 paint_timing_->FirstContentfulPaint());
+                 paint_timing_->FirstContentfulPaintRendered());
   }
   ReportHistograms();
 }
 
 void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
   if (!GetDocument() || network2_quiet_reached_ || ActiveConnections() > 2 ||
-      !paint_timing_->FirstContentfulPaint())
+      !paint_timing_->FirstContentfulPaintRendered())
     return;
   network2_quiet_reached_ = true;
 
@@ -186,10 +192,11 @@ void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
         provisional_first_meaningful_paint_);
     // Enforce FirstContentfulPaint <= FirstMeaningfulPaint.
     if (provisional_first_meaningful_paint_ <
-        paint_timing_->FirstContentfulPaint()) {
-      first_meaningful_paint2_quiet_ = paint_timing_->FirstContentfulPaint();
+        paint_timing_->FirstContentfulPaintRendered()) {
+      first_meaningful_paint2_quiet_ =
+          paint_timing_->FirstContentfulPaintRendered();
       first_meaningful_paint2_quiet_swap_ =
-          paint_timing_->FirstContentfulPaintSwap();
+          paint_timing_->FirstContentfulPaint();
     } else {
       first_meaningful_paint2_quiet_ = provisional_first_meaningful_paint_;
       first_meaningful_paint2_quiet_swap_ =
@@ -252,25 +259,44 @@ void FirstMeaningfulPaintDetector::RegisterNotifySwapTime(PaintEvent event) {
                        WrapCrossThreadWeakPersistent(this), event));
 }
 
-void FirstMeaningfulPaintDetector::ReportSwapTime(PaintEvent event,
-                                                  bool did_swap,
-                                                  double timestamp) {
-  // TODO(shaseley): Add UMAs here to see how often either of the following
-  // happen. In the first case, the FMP will be 0.0 if this is the provisional
-  // timestamp we end up using. In the second case, a swap timestamp of 0.0 is
-  // reported to PaintTiming because the |network2_quiet_timer_| already fired.
-  if (!did_swap)
+void FirstMeaningfulPaintDetector::ReportSwapTime(
+    PaintEvent event,
+    WebLayerTreeView::SwapResult result,
+    double timestamp) {
+  DCHECK(event == PaintEvent::kProvisionalFirstMeaningfulPaint);
+
+  paint_timing_->ReportSwapResultHistogram(result);
+  // |result| == WebLayerTreeView::SwapResult::kDidNotSwapSwapFails usually
+  // means the compositor decided not swap because there was no actual damage.
+  // This happens when what's being painted isn't visible, for example in an
+  // off-screen iframe or transparent elements in a CSS animation.  In this
+  // case, we still use the timestamp as it captures the time up to GPU swap.
+  // Otherwise, if |result| != WebLayerTreeView::SwapResult::kDidSwap, the
+  // SwapPromise was broken due to a commit or activation failure. In these
+  // cases, we requeue the SwapPromise the next time we're notified about a
+  // paint.
+  bool use_timestamp =
+      (result == WebLayerTreeView::SwapResult::kDidSwap ||
+       result == WebLayerTreeView::SwapResult::kDidNotSwapSwapFails);
+  if (!use_timestamp) {
+    requeue_provisional_first_meaningful_paint_swap_ = true;
     return;
+  }
+  // If |network2_quiet_reached_| is true, we did not have the swap timestamp
+  // before reporting the FMP to |paint_timing_| and 0.0 was reported.
+  ReportNetworkQuietBeforeSwapPromiseReported(network2_quiet_reached_);
   if (network2_quiet_reached_)
     return;
+  provisional_first_meaningful_paint_swap_ = timestamp;
+}
 
-  switch (event) {
-    case PaintEvent::kProvisionalFirstMeaningfulPaint:
-      provisional_first_meaningful_paint_swap_ = timestamp;
-      return;
-    default:
-      NOTREACHED();
-  }
+void FirstMeaningfulPaintDetector::ReportNetworkQuietBeforeSwapPromiseReported(
+    bool was_already_quiet) {
+  DEFINE_STATIC_LOCAL(
+      BooleanHistogram, network_quiet_before_swap_promise_histogram,
+      ("PageLoad.Internal.Renderer.FirstMeaningfulPaintDetector."
+       "NetworkQuietBeforeSwapPromiseReported"));
+  network_quiet_before_swap_promise_histogram.Count(was_already_quiet);
 }
 
 DEFINE_TRACE(FirstMeaningfulPaintDetector) {
