@@ -3685,6 +3685,7 @@
     {
       name: "background",
       longhands: ["background-image", "background-position-x", "background-position-y", "background-size", "background-repeat-x", "background-repeat-y", "background-attachment", "background-origin", "background-clip", "background-color"],
+      api_class: true,
     },
     {
       name: "background-position",
@@ -3695,10 +3696,12 @@
     {
       name: "background-repeat",
       longhands: ["background-repeat-x", "background-repeat-y"],
+      api_class: true,
     },
     {
       name: "border",
       longhands: ["border-top-color", "border-top-style", "border-top-width", "border-right-color", "border-right-style", "border-right-width", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-left-color", "border-left-style", "border-left-width", "border-image-source", "border-image-slice", "border-image-width", "border-image-outset", "border-image-repeat"],
+      api_class: true,
     },
     {
       name: "border-bottom",
@@ -3790,26 +3793,31 @@
     {
       name: "grid",
       longhands: ["grid-template-rows", "grid-template-columns", "grid-template-areas", "grid-auto-flow", "grid-auto-rows", "grid-auto-columns", "grid-column-gap", "grid-row-gap"],
+      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "place-content",
       longhands: ["align-content", "justify-content"],
+      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "place-items",
       longhands: ["align-items", "justify-items"],
+      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "place-self",
       longhands: ["align-self", "justify-self"],
+      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "grid-area",
       longhands: ["grid-row-start", "grid-column-start", "grid-row-end", "grid-column-end"],
+      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
@@ -3820,6 +3828,7 @@
     {
       name: "grid-gap",
       longhands: ["grid-row-gap", "grid-column-gap"],
+      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
@@ -3830,6 +3839,7 @@
     {
       name: "grid-template",
       longhands: ["grid-template-rows", "grid-template-columns", "grid-template-areas"],
+      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
@@ -3847,6 +3857,7 @@
     {
       name: "marker",
       longhands: ["marker-start", "marker-mid", "marker-end"],
+      api_class: true,
     },
     {
       name: "offset",
@@ -3880,14 +3891,17 @@
     {
       name: "page-break-after",
       longhands: ["break-after"],
+      api_class: true,
     },
     {
       name: "page-break-before",
       longhands: ["break-before"],
+      api_class: true,
     },
     {
       name: "page-break-inside",
       longhands: ["break-inside"],
+      api_class: true,
     },
     {
       name: "scroll-padding",
@@ -3969,14 +3983,17 @@
     {
       name: "-webkit-column-break-after",
       longhands: ["break-after"],
+      api_class: true,
     },
     {
       name: "-webkit-column-break-before",
       longhands: ["break-before"],
+      api_class: true,
     },
     {
       name: "-webkit-column-break-inside",
       longhands: ["break-inside"],
+      api_class: true,
     },
     {
       name: "column-rule",
@@ -3999,6 +4016,7 @@
     {
       name: "-webkit-mask",
       longhands: ["-webkit-mask-image", "-webkit-mask-position-x", "-webkit-mask-position-y", "-webkit-mask-size", "-webkit-mask-repeat-x", "-webkit-mask-repeat-y", "-webkit-mask-origin", "-webkit-mask-clip"],
+      api_class: true,
     },
     {
       name: "-webkit-mask-box-image",
@@ -4015,6 +4033,7 @@
     {
       name: "-webkit-mask-repeat",
       longhands: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
+      api_class: true,
     },
     {
       name: "-webkit-text-emphasis",
