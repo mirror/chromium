@@ -742,9 +742,8 @@ ScriptPromise WebGLRenderingContextBase::commit(
       script_state, exception_state);
 }
 
-PassRefPtr<Image> WebGLRenderingContextBase::GetImage(
-    AccelerationHint hint,
-    SnapshotReason reason) const {
+RefPtr<Image> WebGLRenderingContextBase::GetImage(AccelerationHint hint,
+                                                  SnapshotReason reason) const {
   if (!GetDrawingBuffer())
     return nullptr;
 

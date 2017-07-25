@@ -125,7 +125,7 @@ ImageBitmap* OffscreenCanvasRenderingContext2D::TransferToImageBitmap(
   return ImageBitmap::Create(std::move(image));
 }
 
-PassRefPtr<Image> OffscreenCanvasRenderingContext2D::GetImage(
+RefPtr<Image> OffscreenCanvasRenderingContext2D::GetImage(
     AccelerationHint hint,
     SnapshotReason reason) const {
   if (!GetImageBuffer())

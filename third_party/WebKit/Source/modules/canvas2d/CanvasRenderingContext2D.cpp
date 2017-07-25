@@ -615,7 +615,7 @@ ImageBuffer* CanvasRenderingContext2D::GetImageBuffer() const {
       ->GetOrCreateImageBuffer();
 }
 
-PassRefPtr<Image> blink::CanvasRenderingContext2D::GetImage(
+RefPtr<Image> blink::CanvasRenderingContext2D::GetImage(
     AccelerationHint hint,
     SnapshotReason reason) const {
   if (!HasImageBuffer())
