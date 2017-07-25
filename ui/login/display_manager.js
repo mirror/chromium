@@ -333,6 +333,15 @@ cr.define('cr.ui.login', function() {
     },
 
     /**
+     * Returns true if the login header bar should be hidden.
+     * @return {boolean}
+     */
+    get shouldHideHeader() {
+      return this.displayType == DISPLAY_TYPE.LOCK ||
+          this.displayType == DISPLAY_TYPE.USER_ADDING;
+    },
+
+    /**
      * Shows/hides version labels.
      * @param {boolean} show Whether labels should be visible by default. If
      *     false, visibility can be toggled by ACCELERATOR_VERSION.
@@ -407,7 +416,7 @@ cr.define('cr.ui.login', function() {
         if (currentStepId == SCREEN_GAIA_SIGNIN)
           chrome.send('toggleEasyBootstrap');
       } else if (name == ACCELERATOR_BOOTSTRAPPING_SLAVE) {
-          chrome.send('setOobeBootstrappingSlave');
+        chrome.send('setOobeBootstrappingSlave');
       }
     },
 

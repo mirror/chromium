@@ -820,6 +820,8 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   bool is_touch_hud_projection_enabled_;
 
+  base::Optional<bool> is_using_md_login_;
+
   // See comment for GetRootWindowForNewWindows().
   aura::Window* root_window_for_new_windows_ = nullptr;
   aura::Window* scoped_root_window_for_new_windows_ = nullptr;
