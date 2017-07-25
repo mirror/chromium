@@ -11,7 +11,6 @@
 #include "gpu/ipc/common/gpu_messages.h"
 #include "gpu/ipc/service/gpu_channel_manager.h"
 #include "gpu/ipc/service/gpu_channel_manager_delegate.h"
-#include "ui/display/display_switches.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_context.h"
@@ -36,10 +35,7 @@ ChildWindowSurfaceWin::ChildWindowSurfaceWin(
 EGLConfig ChildWindowSurfaceWin::GetConfig() {
   if (!config_) {
     int alpha_size = alpha_ ? 8 : EGL_DONT_CARE;
-    int bits_per_channel =
-        base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableHDR)
-            ? 16
-            : 8;
+    int bits_per_channel = color_space_ == ColorSpace::SCRGB_LINEAR ? 16 : 8;
 
     EGLint config_attribs[] = {EGL_ALPHA_SIZE,
                                alpha_size,
@@ -96,15 +92,17 @@ bool ChildWindowSurfaceWin::InitializeNativeWindow() {
 
 bool ChildWindowSurfaceWin::Resize(const gfx::Size& size,
                                    float scale_factor,
+                                   ColorSpace color_space,
                                    bool has_alpha) {
   if (!SupportsPostSubBuffer()) {
     if (!MoveWindow(window_, 0, 0, size.width(), size.height(), FALSE)) {
       return false;
     }
     alpha_ = has_alpha;
-    return gl::NativeViewGLSurfaceEGL::Resize(size, scale_factor, has_alpha);
+    return gl::NativeViewGLSurfaceEGL::Resize(size, scale_factor, color_space,
+                                              has_alpha);
   } else {
-    if (size == GetSize() && has_alpha == alpha_)
+    if (size == GetSize() && has_alpha == alpha_ && color_space == color_space_)
       return true;
 
     // Force a resize and redraw (but not a move, activate, etc.).
@@ -114,6 +112,7 @@ bool ChildWindowSurfaceWin::Resize(const gfx::Size& size,
       return false;
     }
     size_ = size;
+    color_space_ = color_space;
     if (has_alpha == alpha_) {
       // A 0-size PostSubBuffer doesn't swap but forces the swap chain to resize
       // to match the window.

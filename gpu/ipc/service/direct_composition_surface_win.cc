@@ -1128,8 +1128,10 @@ void* DirectCompositionSurfaceWin::GetHandle() {
 
 bool DirectCompositionSurfaceWin::Resize(const gfx::Size& size,
                                          float scale_factor,
+                                         ColorSpace color_space,
                                          bool has_alpha) {
-  if ((size == GetSize()) && (has_alpha == has_alpha_))
+  if (size == GetSize() && has_alpha == has_alpha_ &&
+      color_space == color_space_)
     return true;
 
   // Force a resize and redraw (but not a move, activate, etc.).
@@ -1139,6 +1141,7 @@ bool DirectCompositionSurfaceWin::Resize(const gfx::Size& size,
     return false;
   }
   size_ = size;
+  color_space_ = color_space;
   has_alpha_ = has_alpha;
   ui::ScopedReleaseCurrent release_current(this);
   return RecreateRootSurface();

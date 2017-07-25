@@ -11,7 +11,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/trace_event/trace_event.h"
-#include "ui/display/display_switches.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_angle_util_win.h"
@@ -84,10 +83,9 @@ void DirectCompositionChildSurfaceWin::InitializeSurface() {
                "enable_dc_layers_", enable_dc_layers_);
   DCHECK(!dcomp_surface_);
   DCHECK(!swap_chain_);
-  DXGI_FORMAT output_format =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableHDR)
-          ? DXGI_FORMAT_R16G16B16A16_FLOAT
-          : DXGI_FORMAT_B8G8R8A8_UNORM;
+  DXGI_FORMAT output_format = color_space_ == ColorSpace::SCRGB_LINEAR
+                                  ? DXGI_FORMAT_R16G16B16A16_FLOAT
+                                  : DXGI_FORMAT_B8G8R8A8_UNORM;
   if (enable_dc_layers_) {
     // Always treat as premultiplied, because an underlay could cause it to
     // become transparent.
