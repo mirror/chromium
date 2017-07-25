@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ac9acb_2f9d4e5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-25T23:37:54Z",
+      "side": 1,
+      "message": "nit: I\u0027d argue that logic related to how a page is distilled should be the responsibility of the ReaderModeManager so this infobar can remain a \u0027dumb\u0027 view. Something like \u0027activateReaderMode\u0027 could enclose this logic.",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 81
+      },
+      "revId": "166fdb0dc460dd6ac2dbeced7fcf92349f552152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
