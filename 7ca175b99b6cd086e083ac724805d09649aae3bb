@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5e1eb60_acf3e987",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-25T22:03:56Z",
+      "side": 1,
+      "message": "Good feedback. Right now, epoch and null are, in fact, the same thing in base::Time and that\u0027s a bit problematic. There is someone exploring what to do about the concept of \"null\" in the base::TimeXXX classes: Meaning, whether we want to reserve a special value for that, or remove the concept entirely and switch to using base::Optional\u003cTimeXXX\u003e instead.\n\nSo, the confusion in the header comments will be addressed soon in upcoming efforts. :)",
+      "parentUuid": "81ec8093_c6691ba0",
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c67e8b23_4ac178ec",
         "filename": "ui/app_list/search/history_data_store.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89be9295_2afc9b4e",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-25T22:03:56Z",
+      "side": 1,
+      "message": "The comment in time.h is correct, in that we\u0027d prefer since_origin() be used mainly as a convenience for testing/debugging. The reason I\u0027m using it here is exceptional, but IMHO reasonable because this code is already persisting Windows epoch time values. I didn\u0027t want to change the data model here and introduce incompatibilities. :)\n\nFWIW, on my earlier \"skimming\" of the code base, I found almost no use cases persisting ToInternalValue() values to storage directly. Most seemed to convert to other more-standard formats before persisting. However, as this fix-it continues, if it turns out to be more common than anticipated, we will certainly reconsider our strategy.",
+      "parentUuid": "c67e8b23_4ac178ec",
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b8d6d864_7d5ca435",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-25T22:03:56Z",
+      "side": 1,
+      "message": "I think the original author did this on-purpose. Reason seems to be IWYU: If we were to define these in-line, the event_struct_traits.h header would need to also #include \"ui/events/event.h\", which is a pretty beefy 1000+ LOC header file (and contains many other #includes).",
+      "parentUuid": "43770015_86e26c9a",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 1
+      },
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb2948d6_b7cc86ab",
         "filename": "ui/events/mojo/event_struct_traits.cc",
         "patchSetId": 4
@@ -79,6 +139,30 @@
       "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276910c5_6fa8d002",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-25T22:03:56Z",
+      "side": 1,
+      "message": "Doh! Done. :)",
+      "parentUuid": "bb2948d6_b7cc86ab",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 23
+      },
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

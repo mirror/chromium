@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b1ff6a0d_0a54f168",
+        "filename": "ui/accelerated_widget_mac/display_link_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-25T22:03:56Z",
+      "side": 1,
+      "message": "Yeah, Apple\u0027s documentation is pretty sparse here. However, I ran into the exact same question when working with someone on some Mac-specific audio code a year back. The CVTimestamp.hostTime field is, in fact, from the same clock as mach_absolute_time().\n\nI also ran a local build with some printf() logging to make absolutely sure the timebase_ values come out the same. FWIW, the old code was just dividing by 1000. If you look at what the base::TimeTicks::FromMachAbsoluteTime() does, it is also just dividing by 1000 (because the ratio adjustment is 1:1 on all non-iOS devices, IIRC).\n\nI also ran your test page, and all looks good on my local build. :)",
+      "parentUuid": "bc8ee50e_f82a08f7",
+      "revId": "d949aab1649d3afe455faae2799a54a2b163dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c1f3a1_e57f9843",
         "filename": "ui/android/window_android.cc",
         "patchSetId": 3
