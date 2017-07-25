@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff4120c_e9612afc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "The first line of the commit message shouldn\u0027t be wrapped — and maybe it could be shorter, too. Treat it a little bit like the subject line of an email. If you have more to say, put it after a blank line (many Git tools give the first line special treatment).",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ccde53_e45c9f3b",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2557,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "These changes should be removed, since they\u0027re also in crrev/c/549135.",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8bd07f_72c2a4d3",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "This class should have a more specific name. Maybe something like FullscreenPlaceholderView?",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb18f89_a8aca70a",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "I think it would make sense to give this class its own file. (If I wasn\u0027t suggesting that, I would instead suggest moving this @interface into the .mm file, because it isn\u0027t used outside of browser_window_controller.mm — it isn\u0027t part of BrowserWindowController\u0027s public interface.)",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7f9023_06cb1f62",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "This should be named -initWithFrame:image:.",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235810c9_fd1e9acb",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1953,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to call -setWantsLayer: unless you do things with self.layer.",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ce880e_df709192",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "Add [… autorelease] to balance the +alloc, or else screenshotView will never be deallocated. (Let me know if you have any questions about ObjC reference counting or autorelease, it\u0027s a little bit funky.)",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac58ed51_1322f265",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1960,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "It turns out that contentFilters is a bad idea :/. Using it can have a performance impact, because it moves compositing into Chrome (see \u003chttps://developer.apple.com/documentation/appkit/nsview/1483576-layerusescoreimagefilters\u003e). I would switch to a method like \u003chttps://stackoverflow.com/a/13498428/84745\u003e, or use NSVisualEffectView.",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73740aba_375c821f",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "autorelease",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61696c41_afee811c",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "autorelease",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c6d9c4_ae68a0d0",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "Interesting! I guess this makes sense. You should probably use +[NSScroller scrollerWidthForControlSize:scrollerStyle:] instead of a constant, though.",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711d1ea1_e0ee6e93",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "You should not need this — viewFrame should already have the right frame.",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a309926_7f0869a1",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "- autorelease\n- After you create screenshotImage, you should release viewScreenshot (or do something like \u003chttps://stackoverflow.com/a/7061168/84745\u003e on line 2062 to autorelease it).",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0919f2b2_60d3295d",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2070,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "autorelease",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b18fb2_2384417c",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this.",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5256992e_c4579ebb",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "FYI: It\u0027s okay to not autorelease here because by default NSWindow will release itself when closed (https://developer.apple.com/documentation/appkit/nswindow/1419062-releasedwhenclosed).",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f6e39a5_855a5ef5",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2079,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-25T16:20:02Z",
+      "side": 1,
+      "message": "false ➞ NO",
+      "revId": "ebc0057c926b1834eef084e9eca24c099dc530d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
