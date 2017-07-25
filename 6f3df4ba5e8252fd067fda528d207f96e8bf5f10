@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2575dd5f_981d3132",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3be36ab_9463f3a1",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43c67258_6e8c3a85",
         "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "982deae8_d4335c2a",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c67258_6e8c3a85",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff33685c_52bb7ed9",
         "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74439dd4_f2b802d1",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff33685c_52bb7ed9",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f19a559b_15d6e6e0",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2270f009_ff7328ce",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cfe6769_1ea0fcde",
         "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c5669e_24de3d6f",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cfe6769_1ea0fcde",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "ac4d7175_e0a57882",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6df3066c_b065402a",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8487ca91_aa84f738",
         "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b4eefd_5d81f517",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8487ca91_aa84f738",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +279,30 @@
       "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70eadeb8_5725fa8d",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-25T00:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2b0c1fe_fee01107",
+      "range": {
+        "startLine": 176,
+        "startChar": 18,
+        "endLine": 176,
+        "endChar": 22
+      },
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
