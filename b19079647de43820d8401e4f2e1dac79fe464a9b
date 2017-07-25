@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75dbf64b_09c7777e",
+        "filename": "base/values.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-25T12:18:52Z",
+      "side": 1,
+      "message": "Do we need this? Can we make it\n\n private:\n  ListValue CloneAsListValue() const;\n\nto prevent function overloading (same for list).",
+      "revId": "b19079647de43820d8401e4f2e1dac79fe464a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
