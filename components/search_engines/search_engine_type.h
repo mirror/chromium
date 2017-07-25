@@ -14,7 +14,7 @@
 enum SearchEngineType {
   // Prepopulated engines.
   SEARCH_ENGINE_UNKNOWN = -1,
-  SEARCH_ENGINE_OTHER = 0,   // At the top in case of future list changes.
+  SEARCH_ENGINE_OTHER = 0,  // At the top in case of future list changes.
   SEARCH_ENGINE_AOL,
   SEARCH_ENGINE_ASK,
   SEARCH_ENGINE_ATLAS,
@@ -48,6 +48,7 @@ enum SearchEngineType {
   SEARCH_ENGINE_SEARCHNU,
   SEARCH_ENGINE_SEARCH_RESULTS,
   SEARCH_ENGINE_SEZNAM,
+  SEARCH_ENGINE_SHENMA,
   SEARCH_ENGINE_SNAPDO,
   SEARCH_ENGINE_SOFTONIC,
   SEARCH_ENGINE_SOGOU,
@@ -63,7 +64,7 @@ enum SearchEngineType {
   SEARCH_ENGINE_YANDEX,
   SEARCH_ENGINE_ZOZNAM,
   SEARCH_ENGINE_360,
-  SEARCH_ENGINE_MAX          // Bounding value needed for UMA histogram macro.
+  SEARCH_ENGINE_MAX  // Bounding value needed for UMA histogram macro.
 };
 
 #endif  // COMPONENTS_SEARCH_ENGINES_SEARCH_ENGINE_TYPE_H_

@@ -11,7 +11,7 @@
 // The following unique IDs are available:
 //    7, 11, 12, 13, 14, 18, 19, 20, 22, 24, 26, 28, 29, 30, 32, 33, 34, 39, 37,
 //    38, 40, 41, 42, 46, 47, 48, 49, 51, 52, 58, 59, 69, 71, 72, 82, 84, 86,
-//    89, 91+
+//    91+
 //
 // IDs > 1000 are reserved for distribution custom engines.
 //
@@ -32,7 +32,7 @@
 
     // Increment this if you change the data in ways that mean users with
     // existing data should get a new version.
-    "kCurrentDataVersion": 98
+    "kCurrentDataVersion": 99
   },
 
   // The following engines are included in country lists and are added to the
@@ -189,6 +189,16 @@
       "suggest_url": "https://suggest.fulltext.seznam.cz/fulltext_ff?phrase={searchTerms}",
       "type": "SEARCH_ENGINE_SEZNAM",
       "id": 25
+    },
+
+    "shenma": {
+      "name": "\u795e\u9a6c",
+      "keyword": "sm.cn",
+      "favicon_url": "https://sm01.alicdn.com/L1/272/1990/favicon/favicon.ico",
+      "search_url": "https://yz.m.sm.cn/s?q={searchTerms}&from=wm852431",
+      "suggest_url": "https://sugs.m.sm.cn/api?wd={searchTerms}&vd=wm852431",
+      "type": "SEARCH_ENGINE_SHENMA",
+      "id": 89
     },
 
     "so_360": {

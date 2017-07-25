@@ -125,8 +125,21 @@ const PrepopulatedEngine* engines_CL[] =
     { &google, &bing, &yahoo_cl, };
 
 // China
-const PrepopulatedEngine* engines_CN[] =
-    { &google, &baidu, &sogou, &so_360};
+#if defined(OS_ANDROID)
+
+// Shenma is a mobile-only search engine
+
+const PrepopulatedEngine* engines_CN[] = {
+    &google, &baidu, &sogou, &so_360, &shenma,
+};
+
+#else
+
+const PrepopulatedEngine* engines_CN[] = {
+    &google, &baidu, &sogou, &so_360,
+};
+
+#endif
 
 // Colombia
 const PrepopulatedEngine* engines_CO[] =

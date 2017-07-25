@@ -27804,6 +27804,7 @@ from previous Chrome versions.
   <int value="46" label="Yandex"/>
   <int value="47" label="Zoznam"/>
   <int value="48" label="360"/>
+  <int value="49" label="Shenma"/>
 </enum>
 
 <enum name="OmniboxSuggestRequests">
