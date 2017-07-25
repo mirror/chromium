@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fd9b422b_2b6e8483",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-25T16:40:05Z",
+      "side": 1,
+      "message": "i made the comment explicit  in the surface chooser, since that\u0027s what ultimately picks the behavior.",
+      "parentUuid": "7879c3af_cf4644b1",
+      "revId": "e2444137a9311d980c19cb6e3d22b5f67853236f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bf7992d_60455c8d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
