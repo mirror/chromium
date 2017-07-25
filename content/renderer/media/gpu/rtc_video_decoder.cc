@@ -16,6 +16,7 @@
 #include "content/renderer/media/webrtc/webrtc_video_frame_adapter.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "media/base/bind_to_current_loop.h"
+#include "media/base/media_switches.h"
 #include "media/renderers/gpu_video_accelerator_factories.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/webrtc/api/video/video_frame.h"
@@ -109,6 +110,8 @@ std::unique_ptr<RTCVideoDecoder> RTCVideoDecoder::Create(
       profile = media::VP8PROFILE_ANY;
       break;
     case webrtc::kVideoCodecVP9:
+      if (!base::FeatureList::IsEnabled(media::kWebRTCVP9HWDecoding))
+        return decoder;
       profile = media::VP9PROFILE_MIN;
       break;
     case webrtc::kVideoCodecH264:

@@ -270,6 +270,10 @@ const base::Feature kLowDelayVideoRenderingOnLiveStream{
 const base::Feature kRecordMediaEngagementScores{
     "kRecordMediaEngagementScores", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables HW decode acceleration of VP9 codec for WebRTC use.
+const base::Feature kWebRTCVP9HWDecoding{"WebRTCVP9HWDecoding",
+                                         base::FEATURE_ENABLED_BY_DEFAULT};
+
 #if defined(OS_ANDROID)
 // Lock the screen orientation when a video goes fullscreen.
 const base::Feature kVideoFullscreenOrientationLock{
