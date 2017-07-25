@@ -45,6 +45,11 @@ bool IsAccountConsistencyMirrorEnabled();
 // Returns true when the account consistency method is kDice.
 bool IsAccountConsistencyDiceEnabled();
 
+// Returns true if the Dice level is greater or equal than |method|.
+// |method| must be one of the Dice related methods.
+// The ordering is: kDice > kDiceFixAuthErrors > [anything else].
+bool DiceLevelGE(AccountConsistencyMethod method);
+
 // Whether the chrome.identity API should be multi-account.
 bool IsExtensionsMultiAccount();
 

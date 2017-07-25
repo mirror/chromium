@@ -159,8 +159,7 @@ DiceResponseHandler::~DiceResponseHandler() {}
 
 void DiceResponseHandler::ProcessDiceHeader(
     const signin::DiceResponseParams& dice_params) {
-  DCHECK_EQ(signin::AccountConsistencyMethod::kDice,
-            signin::GetAccountConsistencyMethod());
+  DCHECK(DiceLevelGE(signin::AccountConsistencyMethod::kDiceFixAuthErrors));
 
   switch (dice_params.user_intention) {
     case signin::DiceAction::SIGNIN:
