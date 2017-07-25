@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc2f159_d122ac6f",
+        "filename": "components/gcm_driver/instance_id/instance_id_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-25T00:30:20Z",
+      "side": 1,
+      "message": "gcm_driver?",
+      "revId": "a757cf264533b9cf89794d0da17f91d3dd845114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac0897c_7b6ae36b",
+        "filename": "components/gcm_driver/instance_id/instance_id_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-25T00:30:20Z",
+      "side": 1,
+      "message": "I think it will be much simpler not to make this class as an interface. Instead, this method could have an implementation in .cc file to create an instance of InstanceID per ifdef. Thus you don\u0027t need those new files: instance_id_android_factory.* and instance_id_android_impl.h.\n\nThe test code could override this class to have its own creator. It can then call InstanceIDProfileServiceFactory::GetForProfile(...)-\u003edriver()-\u003eSetInstanceIDFactoryForTesting()",
+      "revId": "a757cf264533b9cf89794d0da17f91d3dd845114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
