@@ -376,6 +376,8 @@ void AppListView::InitContents(gfx::NativeView parent, int initial_apps_page) {
     app_list_background_shield_->layer()->SetColor(SK_ColorBLACK);
     app_list_background_shield_->layer()->SetOpacity(kAppListOpacity);
     AddChildView(app_list_background_shield_);
+    // Don't cache the page.
+    initial_apps_page = 0;
   }
   app_list_main_view_ = new AppListMainView(delegate_, this);
   AddChildView(app_list_main_view_);
