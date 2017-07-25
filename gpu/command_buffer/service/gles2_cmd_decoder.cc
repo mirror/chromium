@@ -2366,6 +2366,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   uint32_t backbuffer_needs_clear_bits_;
 
   uint64_t swaps_since_resize_;
+  uint32_t num_consecutively_failed_swaps_;
 
   // The current decoder error communicates the decoder error through command
   // processing functions that do not return the error value. Should be set only
@@ -3108,6 +3109,7 @@ GLES2DecoderImpl::GLES2DecoderImpl(
       surfaceless_(false),
       backbuffer_needs_clear_bits_(0),
       swaps_since_resize_(0),
+      num_consecutively_failed_swaps_(0),
       current_decoder_error_(error::kNoError),
       validators_(group_->feature_info()->validators()),
       feature_info_(group_->feature_info()),
@@ -15708,6 +15710,23 @@ void GLES2DecoderImpl::FinishAsyncSwapBuffers(gfx::SwapResult result) {
 
 void GLES2DecoderImpl::FinishSwapBuffers(gfx::SwapResult result) {
   if (result == gfx::SwapResult::SWAP_FAILED) {
+    ++num_consecutively_failed_swaps_;
+  } else {
+    num_consecutively_failed_swaps_ = 0;
+  }
+
+  bool lose_context = !!num_consecutively_failed_swaps_;
+#if defined(OS_ANDROID)
+  // There is an inherent race condition between sending the Chrome
+  // process to the background and ceasing rendering. During this
+  // time, eglSwapBuffers will fail, and it isn't guaranteed that the
+  // GPU process will report that it's been stopped during this time.
+  // For this reason, silently allow a small number of failed
+  // SwapBuffers calls.
+  lose_context = num_consecutively_failed_swaps_ > 10;
+#endif
+
+  if (lose_context) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
     if (!CheckResetStatus()) {
       MarkContextLost(error::kUnknown);
