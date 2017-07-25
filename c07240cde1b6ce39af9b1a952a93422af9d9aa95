@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0121441b_92c35a03",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-25T23:26:51Z",
+      "side": 1,
+      "message": "As to 1x1 frame case, it won\u0027t run to line300, which is in the else section.\nThis cl won\u0027t change current behavior of 1x1 frame case.\nI\u0027ll fix the 1x1 frame case in a separate cl soon.",
+      "parentUuid": "12f8a122_83b1f693",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 56
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ae764b6_32dee9ce",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45560846_b018fcc4",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-25T23:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae764b6_32dee9ce",
+      "range": {
+        "startLine": 296,
+        "startChar": 15,
+        "endLine": 296,
+        "endChar": 25
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "01835923_73198126",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-25T23:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b8182f_9a3cc33c",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 46
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "587efe62_48dd7199",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c1b4c5_44ae5f85",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-25T23:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "587efe62_48dd7199",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 5
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
