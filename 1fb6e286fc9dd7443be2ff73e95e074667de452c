@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "197c8e00_ed48b96e",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-25T22:18:54Z",
+      "side": 1,
+      "message": "Are you doing a full finch experiment, with a study group and a control group?\n\nIf that\u0027s the case, you don\u0027t need to add a new metric, we\u0027ll be able to compare with the existing metrics based on what group user were in.\n\nAlso, to be more precise, I think what you\u0027ll want to look at is what we call the bounce rate in the dashboard (dismissed / (dismissed + pay_clicked)). This will give you the specific impact of whether the new layout makes people more likely to click pay of drop out of the flow.\n\nLet me know what you think :)",
+      "range": {
+        "startLine": 260,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 56
+      },
+      "revId": "1fb6e286fc9dd7443be2ff73e95e074667de452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
