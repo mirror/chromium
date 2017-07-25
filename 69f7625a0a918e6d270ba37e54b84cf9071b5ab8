@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "199990ce_a2ad16fc",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-25T14:36:00Z",
+      "side": 1,
+      "message": "I think we can and should make this protected.",
+      "range": {
+        "startLine": 598,
+        "startChar": 7,
+        "endLine": 598,
+        "endChar": 35
+      },
+      "revId": "69f7625a0a918e6d270ba37e54b84cf9071b5ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
