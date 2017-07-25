@@ -100,6 +100,7 @@ class CONTENT_EXPORT BlinkPlatformImpl
       const blink::WebString& value2) override;
   void SuddenTerminationChanged(bool enabled) override {}
   blink::WebThread* CompositorThread() const override;
+  blink::WebThread* FileThread() const override;
   std::unique_ptr<blink::WebGestureCurve> CreateFlingAnimationCurve(
       blink::WebGestureDevice device_source,
       const blink::WebFloatPoint& velocity,
@@ -123,6 +124,8 @@ class CONTENT_EXPORT BlinkPlatformImpl
   // of the caller to ensure that the compositor thread is cleared before it is
   // destructed.
   void SetCompositorThread(blink::scheduler::WebThreadBase* compositor_thread);
+
+  void SetFileThread(blink::scheduler::WebThreadBase* file_thread);
 
   std::unique_ptr<blink::WebFeaturePolicy> CreateFeaturePolicy(
       const blink::WebFeaturePolicy* parentPolicy,
@@ -150,7 +153,8 @@ class CONTENT_EXPORT BlinkPlatformImpl
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   scoped_refptr<NotificationDispatcher> notification_dispatcher_;
 
-  blink::scheduler::WebThreadBase* compositor_thread_;
+  blink::scheduler::WebThreadBase* compositor_thread_ = nullptr;
+  blink::scheduler::WebThreadBase* file_thread_ = nullptr;
 };
 
 }  // namespace content
