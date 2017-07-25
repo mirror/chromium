@@ -41,6 +41,16 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
                                     public SpeechUIModelObserver,
                                     public display::DisplayObserver {
  public:
+  // The height/width of the shelf from the bottom/side of the screen.
+  static constexpr int kShelfSize = 48;
+
+  // Number of the size of shelf. Used to determine the opacity of items in the
+  // app list during dragging.
+  static constexpr float kNumOfShelfSize = 2.0;
+
+  // The opacity of the app list background.
+  static constexpr float kAppListOpacity = 0.8;
+
   enum AppListState {
     // Closes |app_list_main_view_| and dismisses the delegate.
     CLOSED = 0,
@@ -117,14 +127,19 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // whether the search box is empty.
   void SetStateFromSearchBoxView(bool search_box_is_empty);
 
-  // Sets y position of the app list bounds to |y_position_in_screen|.
-  void SetYPosition(int y_position_in_screen);
-
   // Called when tablet mode starts and ends.
   void OnTabletModeChanged(bool started);
 
   // Changes |app_list_state_| from |PEEKING| to |FULLSCREEN_ALL_APPS|.
   bool HandleScroll(const ui::Event* event);
+
+  // Update the y position of the app list bounds to |y_position_in_screen|.
+  // Update the background opacity of app list to |background_opacity|
+  // and update the opacity of all the items in app list. |is_gesture_end| means
+  // the dragging finished and should set all the items opacity back to 1.0f.
+  void UpdateYPositionAndOpacity(int y_position_in_screen,
+                                 float background_opacity,
+                                 bool is_gesture_end);
 
   bool is_fullscreen() const {
     return app_list_state_ == FULLSCREEN_ALL_APPS ||

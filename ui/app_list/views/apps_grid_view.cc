@@ -22,11 +22,13 @@
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
+#include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/indicator_chip_view.h"
 #include "ui/app_list/views/page_switcher_horizontal.h"
 #include "ui/app_list/views/page_switcher_vertical.h"
 #include "ui/app_list/views/pulsing_block_view.h"
+#include "ui/app_list/views/search_result_tile_item_view.h"
 #include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/app_list/views/tile_item_view.h"
 #include "ui/app_list/views/top_icon_animation_view.h"
@@ -1607,6 +1609,68 @@ void AppsGridView::OnFolderItemRemoved() {
   if (item_list_)
     item_list_->RemoveObserver(this);
   item_list_ = nullptr;
+}
+
+void AppsGridView::UpdateOpacity(float work_area_bottom, bool is_end) {
+  // Update the opacity of suggested indicator.
+  gfx::Rect suggested_indicator_bounds =
+      suggested_apps_indicator_->GetLabelBoundsInScreen();
+  float delta_y = std::max<float>(
+      work_area_bottom - suggested_indicator_bounds.CenterPoint().y(), 0.0f);
+  float opacity = std::min<float>(
+      delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize), 1.0f);
+  suggested_apps_indicator_->layer()->SetOpacity(is_end ? 1.0f : opacity);
+
+  // Update the opacity of suggested apps.
+  std::vector<SearchResultTileItemView*> suggested_apps =
+      suggestions_container_->tile_views();
+  for (auto* suggested_app : suggested_apps) {
+    gfx::Rect suggested_app_bounds = suggested_app->GetBoundsInScreen();
+    delta_y = std::max<float>(
+        work_area_bottom - suggested_app_bounds.CenterPoint().y(), 0.0f);
+    opacity = std::min<float>(
+        delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize),
+        1.0f);
+    suggested_app->layer()->SetOpacity(is_end ? 1.0f : opacity);
+  }
+
+  // Update the opacity of all apps indicator.
+  gfx::Rect all_apps_indicator_bounds =
+      all_apps_indicator_->GetLabelBoundsInScreen();
+  delta_y = std::max<float>(
+      work_area_bottom - all_apps_indicator_bounds.CenterPoint().y(), 0.0f);
+  opacity = std::min<float>(
+      delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize), 1.0f);
+  all_apps_indicator_->layer()->SetOpacity(is_end ? 1.0f : opacity);
+
+  // Update the opacity of the apps in the first page.
+  for (int i = 0; i < view_model_.view_size(); ++i) {
+    AppListItemView* item_view = GetItemViewAt(i);
+    if (item_view != drag_view_) {
+      Index index = GetIndexOfView(item_view);
+      if (index.page != 0)
+        break;
+      gfx::Rect view_bounds = view_model_.ideal_bounds(i);
+      views::View::ConvertRectToScreen(this, &view_bounds);
+      delta_y = std::max<float>(
+          work_area_bottom - view_bounds.CenterPoint().y(), 0.0f);
+      opacity = std::min<float>(
+          delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize),
+          1.0f);
+      item_view->layer()->SetOpacity(is_end ? 1.0f : opacity);
+    }
+  }
+
+  // Update the opacity of page switcher buttons.
+  if (page_switcher_view_) {
+    gfx::Rect switcher_bounds = page_switcher_view_->GetBoundsInScreen();
+    delta_y = std::max<float>(
+        work_area_bottom - switcher_bounds.CenterPoint().y(), 0.0f);
+    opacity = std::min<float>(
+        delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize),
+        1.0f);
+    page_switcher_view_->layer()->SetOpacity(is_end ? 1.0f : opacity);
+  }
 }
 
 void AppsGridView::StartDragAndDropHostDrag(const gfx::Point& grid_location) {

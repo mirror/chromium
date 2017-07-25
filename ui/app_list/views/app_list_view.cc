@@ -56,9 +56,6 @@ namespace {
 // The margin from the edge to the speech UI.
 constexpr int kSpeechUIMargin = 12;
 
-// The height/width of the shelf from the bottom/side of the screen.
-constexpr int kShelfSize = 48;
-
 // The height of the peeking app list from the bottom of the screen.
 constexpr int kPeekingAppListHeight = 320;
 
@@ -79,9 +76,6 @@ constexpr int kAppListMinScrollToSwitchStates = 20;
 // The DIP distance from the bezel that a drag event must end within to transfer
 // the |app_list_state_|.
 constexpr int kAppListBezelMargin = 50;
-
-// The opacity of the app list background.
-constexpr float kAppListOpacity = 0.8;
 
 // The vertical position for the appearing animation of the speech UI.
 constexpr float kSpeechUIAppearingPosition = 12;
@@ -526,17 +520,15 @@ void AppListView::UpdateDrag(const gfx::Point& location) {
   // Update the bounds of the widget while maintaining the
   // relative position of the top of the widget and the mouse/gesture.
   // Block drags north of 0 and recalculate the initial_drag_point_.
-  int new_y_position = location.y() - initial_drag_point_.y() +
-                       fullscreen_widget_->GetWindowBoundsInScreen().y();
-
-  if (new_y_position < 0)
-    initial_drag_point_ = location;
-  SetYPosition(new_y_position);
-}
-
-void AppListView::SetYPosition(int y_position_in_screen) {
+  int const new_y_position = location.y() - initial_drag_point_.y() +
+                             fullscreen_widget_->GetWindowBoundsInScreen().y();
   gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
-  new_widget_bounds.set_y(std::max(y_position_in_screen, 0));
+  if (new_y_position < 0) {
+    new_widget_bounds.set_y(0);
+    initial_drag_point_ = location;
+  } else {
+    new_widget_bounds.set_y(new_y_position);
+  }
   fullscreen_widget_->SetBounds(new_widget_bounds);
 }
 
@@ -715,6 +707,22 @@ bool AppListView::HandleScroll(const ui::Event* event) {
       break;
   }
   return false;
+}
+
+void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
+                                            float background_opacity,
+                                            bool is_gesture_end) {
+  gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+  new_widget_bounds.set_y(std::max(y_position_in_screen, 0));
+  fullscreen_widget_->SetBounds(new_widget_bounds);
+
+  app_list_background_shield_->layer()->SetOpacity(background_opacity);
+  gfx::Rect work_area_bounds = fullscreen_widget_->GetWorkAreaBoundsInScreen();
+  search_box_view_->UpdateOpacity(work_area_bounds.bottom(), is_gesture_end);
+  app_list_main_view_->contents_view()
+      ->apps_container_view()
+      ->apps_grid_view()
+      ->UpdateOpacity(work_area_bounds.bottom(), is_gesture_end);
 }
 
 void AppListView::OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,

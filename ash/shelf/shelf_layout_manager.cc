@@ -30,6 +30,7 @@
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
 #include "ui/app_list/app_list_features.h"
+#include "ui/app_list/views/app_list_view.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_observer.h"
@@ -1104,9 +1105,12 @@ void ShelfLayoutManager::StartGestureDrag(
     const ui::GestureEvent& gesture_in_screen) {
   if (CanStartFullscreenAppListDrag(
           gesture_in_screen.details().scroll_y_hint())) {
-    Shell::Get()->ShowAppList();
-    Shell::Get()->SetAppListYPosition(gesture_in_screen.location().y());
     gesture_drag_status_ = GESTURE_DRAG_APPLIST_IN_PROGRESS;
+    Shell::Get()->ShowAppList();
+    Shell::Get()->UpdateAppListYPositionAndOpacity(
+        gesture_in_screen.location().y(),
+        GetAppListBackgroundOpacityOnShelfOpacity(),
+        false /* is_gesture_end */);
   } else {
     gesture_drag_status_ = GESTURE_DRAG_IN_PROGRESS;
     gesture_drag_auto_hide_state_ = visibility_state() == SHELF_AUTO_HIDE
@@ -1130,7 +1134,10 @@ void ShelfLayoutManager::UpdateGestureDrag(
       gesture_drag_status_ = GESTURE_DRAG_NONE;
       return;
     }
-    Shell::Get()->SetAppListYPosition(gesture_in_screen.location().y());
+    Shell::Get()->UpdateAppListYPositionAndOpacity(
+        gesture_in_screen.location().y(),
+        GetAppListBackgroundOpacityOnShelfOpacity(),
+        false /* is_gesture_end */);
     gesture_drag_amount_ += gesture_in_screen.details().scroll_y();
   } else {
     gesture_drag_amount_ +=
@@ -1210,11 +1217,12 @@ void ShelfLayoutManager::CompleteAppListDrag(
   }
 
   if (should_show_app_list) {
-    Shell::Get()->SetAppListYPosition(
+    Shell::Get()->UpdateAppListYPositionAndOpacity(
         display::Screen::GetScreen()
             ->GetDisplayNearestWindow(shelf_widget_->GetNativeWindow())
             .work_area()
-            .y());
+            .y(),
+        GetAppListBackgroundOpacityOnShelfOpacity(), true /* is_gesture_end */);
   } else {
     Shell::Get()->DismissAppList();
   }
@@ -1261,6 +1269,16 @@ bool ShelfLayoutManager::CanStartFullscreenAppListDrag(
     return false;
 
   return true;
+}
+
+float ShelfLayoutManager::GetAppListBackgroundOpacityOnShelfOpacity() {
+  float shelf_opacity = HasVisibleWindow() ? 1.0f : 0.0f;
+  float coefficient = std::min<float>(
+      fabs(gesture_drag_amount_) /
+          ((app_list::AppListView::kNumOfShelfSize + 1) * kShelfSize),
+      1.0f);
+  return app_list::AppListView::kAppListOpacity * coefficient +
+         (1 - coefficient) * shelf_opacity;
 }
 
 bool ShelfLayoutManager::IsSwipingCorrectDirection() {

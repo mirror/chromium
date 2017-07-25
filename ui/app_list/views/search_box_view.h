@@ -130,6 +130,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
+  // Update the opacity of the searchbox.
+  void UpdateOpacity(float work_area_bottom, bool is_end);
+
  private:
   // Updates model text and selection model with current Textfield info.
   void UpdateModel();
