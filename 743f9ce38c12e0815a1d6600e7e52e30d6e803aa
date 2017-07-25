@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c3c21e3_5040210e",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-25T15:17:01Z",
+      "side": 1,
+      "message": "nit: This is exactly the same behavior as above, right?  Do we need two methods?  If so, can we make a common method called by both?",
+      "revId": "743f9ce38c12e0815a1d6600e7e52e30d6e803aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87f1d0f_e27fab88",
+        "filename": "extensions/test/data/media_perception_private/state/runtest.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-25T15:17:01Z",
+      "side": 1,
+      "message": "This is a bit unintuitive.  Can you add a comment explaining why this is the expected result?",
+      "revId": "743f9ce38c12e0815a1d6600e7e52e30d6e803aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
