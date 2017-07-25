@@ -124,6 +124,8 @@ split_static_library("ui") {
     "navigation_correction_tab_observer.h",
     "page_info/page_info.cc",
     "page_info/page_info.h",
+    "page_info/page_info_dialog.cc",
+    "page_info/page_info_dialog.h",
     "page_info/page_info_ui.cc",
     "page_info/page_info_ui.h",
     "passwords/account_avatar_fetcher.cc",
