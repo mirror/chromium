@@ -49,8 +49,7 @@ class MemlogReceiverPipe
   scoped_refptr<base::TaskRunner> receiver_task_runner_;
   scoped_refptr<MemlogStreamReceiver> receiver_;
 
-  // Make base::UnixDomainSocket::RecvMsg happy.
-  std::vector<base::ScopedFD>* dummy_for_receive_;
+  int num_msgs_received_{0};
 
   DISALLOW_COPY_AND_ASSIGN(MemlogReceiverPipe);
 };
