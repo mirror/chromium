@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e45bd30_d8629804",
+        "filename": "chrome/browser/browser_about_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T23:45:59Z",
+      "side": 1,
+      "message": "Given that md-settings was never a publicly advertised URL, I would be fine with dropping it completely.\n\nTechnically this URL was always linked to the enable-md-settings experimental flag, and nobody should be surprised that it is taken away.",
+      "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde82df9_3f2c7551",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T23:45:59Z",
+      "side": 1,
+      "message": "I\u0027ll clean this up.\nNote to self: Hard-code \"settings\" at \nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/BUILD.gn?l\u003d20\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings.html?l\u003d7",
+      "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33e7cbee_74bf40a0",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T23:45:59Z",
+      "side": 1,
+      "message": "Remove this TODO, since you are TODOing it here ;\u003e",
+      "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
