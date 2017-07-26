@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "63049fa5_229f82aa",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T16:47:01Z",
+      "side": 1,
+      "message": "\u003e I think we should rather keep this kind of functions in PrefetchStoreTestUtil since it\u0027ll be likely the only user of this. All other tasks will always take a partial set of fields.\n\u003e \n\u003e This also would help to remove the prefetch_store_util.* since ideally we would place this functionality to where it belongs rather than create yet another kitchen sink class with a lot of disjoint methods. In this case, a better place for this in PrefetchStoreTestUtil.\n\nThis is not about creating a kitchen sink class, but rather not repeating this code in every place we need to convert a cursor to a prefetch item. (Full read scenario).\n\nWhat I don\u0027t like about this code is the fact that query is someplace else, which makes the column numbering below fragile. If that is what you meant. I am all for moving some code from one place to another, but overall, I see a place for shared code in our project, and scoping it to PrefetchStore related stuff is not exactly the same as OPUtils.\n\n\u003e \n\u003e Also, I think we are on a sort of collision as Filip already mentioned. Lets sync tomorrow morning on how to continue, since I\u0027m morphing PrefetchStoreTestUtil into synchronous helper and you are expanding it as async. This will be hard to merge :)",
+      "parentUuid": "8aa073b0_8b63137f",
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c76cc09_28a99b79",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
         "patchSetId": 3
