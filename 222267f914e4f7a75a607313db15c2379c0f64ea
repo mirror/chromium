@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c8e79b_fc5691bb",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-26T06:05:47Z",
+      "side": 1,
+      "message": "For the methods that are used only in the WebViewImpl constructor, providing modules to a page, \nhow about consolidating in a ProvideModulesToPage() method?",
+      "range": {
+        "startLine": 115,
+        "startChar": 15,
+        "endLine": 115,
+        "endChar": 33
+      },
+      "revId": "222267f914e4f7a75a607313db15c2379c0f64ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
