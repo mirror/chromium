@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "99552c65_74a35c5a",
+        "filename": "third_party/WebKit/Source/core/loader/MixedContentChecker.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T05:29:35Z",
+      "side": 1,
+      "message": "nit: initialize this with false here?",
+      "revId": "961b6efc37f5621bb744cfc82ceeae89548d27c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e5509af_0149ffd9",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 26

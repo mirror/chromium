@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "463640a7_63cd474e",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T05:29:35Z",
+      "side": 1,
+      "message": "Given that we set this flag also for threaded worklet cases (per how the current code is written) should we just call this flag \u0027(Set)IsOnSubframe\u0027?  We\u0027re checking whether the context is worker or worklet in the Is...OnSubframe() callsite in MixedContentChecker.",
+      "revId": "a87447df9689b853872d536df3da94d9610642c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
