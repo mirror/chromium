@@ -141,6 +141,7 @@ def conditional_features_context(generator_name, feature_info):
         "core/dom/ExecutionContext.h",
         "core/frame/Frame.h",
         "core/origin_trials/OriginTrials.h",
+        "platform/RuntimeEnabledFeatures.h",
         "platform/bindings/ConditionalFeatures.h",
         "platform/bindings/ScriptState.h",
         # TODO(iclelland): Remove the need to explicitly include this; it is
@@ -163,6 +164,7 @@ def conditional_features_context(generator_name, feature_info):
     # functions to call, organized by interface.
     context['installers_by_feature'] = [
         {"name": feature_name,
+         "name_constant": "OriginTrials::k%sTrialName" % feature_name,
          "installers": get_install_functions(interfaces, [feature_name])}
         for feature_name, interfaces in types_for_feature.items()]
     context['installers_by_feature'].sort(key=lambda x: x['name'])

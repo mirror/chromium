@@ -18,6 +18,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/Frame.h"
 #include "core/origin_trials/OriginTrials.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/ConditionalFeatures.h"
 #include "platform/bindings/ScriptState.h"
 

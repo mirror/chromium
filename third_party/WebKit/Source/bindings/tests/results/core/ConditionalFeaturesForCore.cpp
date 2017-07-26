@@ -18,6 +18,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/Frame.h"
 #include "core/origin_trials/OriginTrials.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/ConditionalFeatures.h"
 #include "platform/bindings/ScriptState.h"
 
@@ -77,7 +78,7 @@ void InstallPendingConditionalFeatureForCore(const String& feature,
   v8::Isolate* isolate = script_state->GetIsolate();
   const DOMWrapperWorld& world = script_state->World();
   V8PerContextData* context_data = script_state->PerContextData();
-  if (feature == "FeatureName") {
+  if (feature == OriginTrials::kFeatureNameTrialName) {
     if (context_data->GetExistingConstructorAndPrototypeForType(
             &V8TestObject::wrapperTypeInfo, &prototype_object, &interface_object)) {
       V8TestObject::installFeatureName(
