@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51d29cff_591e3da1",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-26T19:53:12Z",
+      "side": 1,
+      "message": "hrmm. I\u0027m still not actually sure this is equivalent and perhaps this is why our stats have some discrepancy. In particular this is saying that Chrome has *a* foreground activity. The code in TabWebContentsObserver.java checks the visibility of the specific activity within which the tab is running which can be different in the case of switching back and forth between say WebappActivity and ChromeTabbedActivity",
+      "range": {
+        "startLine": 121,
+        "startChar": 28,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "fd759233e97ea9fee898a9af812ea5242ab117ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
