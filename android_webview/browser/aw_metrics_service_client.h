@@ -92,8 +92,6 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
   DISALLOW_COPY_AND_ASSIGN(AwMetricsServiceClient);
 };
 
-bool RegisterAwMetricsServiceClient(JNIEnv* env);
-
 }  // namespace android_webview
 
 #endif  // ANDROID_WEBVIEW_BROWSER_AW_METRICS_SERVICE_CLIENT_H_

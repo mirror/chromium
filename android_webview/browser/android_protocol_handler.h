@@ -29,8 +29,6 @@ CreateContentSchemeRequestInterceptor();
 //      WebSettings.html#setAllowFileAccess(boolean)
 std::unique_ptr<net::URLRequestInterceptor> CreateAssetFileRequestInterceptor();
 
-bool RegisterAndroidProtocolHandler(JNIEnv* env);
-
 }  // namespace android_webview
 
 #endif  // ANDROID_WEBVIEW_BROWSER_ANDROID_PROTOCOL_HANDLER_H_

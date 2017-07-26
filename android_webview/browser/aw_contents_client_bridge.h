@@ -151,8 +151,6 @@ class AwContentsClientBridge {
       pending_client_cert_request_delegates_;
 };
 
-bool RegisterAwContentsClientBridge(JNIEnv* env);
-
 }  // namespace android_webview
 
 #endif  // ANDROID_WEBVIEW_BROWSER_AW_CONTENTS_CLIENT_BRIDGE_H_

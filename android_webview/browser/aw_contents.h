@@ -424,8 +424,6 @@ class AwContents : public FindHelper::Listener,
   DISALLOW_COPY_AND_ASSIGN(AwContents);
 };
 
-bool RegisterAwContents(JNIEnv* env);
-
 }  // namespace android_webview
 
 #endif  // ANDROID_WEBVIEW_BROWSER_AW_CONTENTS_H_

@@ -50,8 +50,6 @@ class AwHttpAuthHandler {
   std::string realm_;
 };
 
-bool RegisterAwHttpAuthHandler(JNIEnv* env);
-
 }  // namespace android_webview
 
 #endif  // ANDROID_WEBVIEW_BROWSER_AW_HTTP_AUTH_HANDLER_H_

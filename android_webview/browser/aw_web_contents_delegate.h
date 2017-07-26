@@ -67,8 +67,6 @@ class AwWebContentsDelegate
   bool is_fullscreen_;
 };
 
-bool RegisterAwWebContentsDelegate(JNIEnv* env);
-
 }  // namespace android_webview
 
 #endif  // ANDROID_WEBVIEW_BROWSER_AW_WEB_CONTENTS_DELEGATE_H_

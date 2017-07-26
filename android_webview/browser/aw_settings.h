@@ -77,8 +77,6 @@ class AwSettings : public content::WebContentsObserver {
   JavaObjectWeakGlobalRef aw_settings_;
 };
 
-bool RegisterAwSettings(JNIEnv* env);
-
 }  // namespace android_webview
 
 #endif  // ANDROID_WEBVIEW_BROWSER_AW_SETTINGS_H_
