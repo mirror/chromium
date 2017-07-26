@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75372ca2_830f59cb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 8605,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-26T18:46:02Z",
+      "side": 1,
+      "message": "This still reads like you\u0027re emitting it once per layer (\"when compositing a layer\").\n\nPlease revise.  To speed this process along, I\u0027ll edit whole existing description:\n---\nThe GPU memory allocated for tilings (in a browser process), summed over all picture layers.  Emitted once per drawing.  Nothing is recorded if there are no picture layers.\n\nTilings are used for decomposition of the layer\u0027s entire contents at a picture screenspace resolution to do threaded rasterization.\n\nTeam: threaded-rendering-dev@chromium.org.\n---\n\nAlso, even if you accept this revision, please confirm that the description is accurate.\n\nIn particular, in your earlier description, you implied this is only recorded for \"composited scrollable areas\".  Is that meaningful restriction?  Are there composited non-scrollable areas, and do you emit or not emit this metric in those cases?\n\nAlso, are there non-compositing places where you do tilings, and do you emit or not emit this metric at those times?",
+      "range": {
+        "startLine": 8605,
+        "startChar": 21,
+        "endLine": 8605,
+        "endChar": 0
+      },
+      "revId": "723e333ec4b3fc6e4350fffa56845ee9e5ad4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
