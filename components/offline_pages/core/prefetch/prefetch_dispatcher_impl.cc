@@ -34,13 +34,18 @@ void DeleteBackgroundTaskHelper(
 }
 }  // namespace
 
-PrefetchDispatcherImpl::PrefetchDispatcherImpl() : weak_factory_(this) {}
+PrefetchDispatcherImpl::PrefetchDispatcherImpl()
+    : task_queue_(this), weak_factory_(this) {}
 
 PrefetchDispatcherImpl::~PrefetchDispatcherImpl() = default;
 
 void PrefetchDispatcherImpl::SetService(PrefetchService* service) {
   CHECK(service);
   service_ = service;
+}
+
+void PrefetchDispatcherImpl::SchedulePipelineProcessing() {
+  needs_pipeline_processing_ = true;
 }
 
 void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
@@ -81,6 +86,11 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
 
   background_task_ = std::move(background_task);
 
+  // TODO(dimich): add QueueReconcilers() here when at least one is implemented.
+  QueueActionTasks();
+}
+
+void PrefetchDispatcherImpl::QueueActionTasks() {
   // TODO(dewittj): Remove this when the task can get the suggestions from the
   // SQL store directly.
   std::vector<PrefetchURL> prefetch_urls;
@@ -108,6 +118,13 @@ void PrefetchDispatcherImpl::RequestFinishBackgroundTaskForTest() {
     return;
 
   DisposeTask();
+}
+
+void PrefetchDispatcherImpl::OnIdle() {
+  if (needs_pipeline_processing_) {
+    needs_pipeline_processing_ = false;
+    QueueActionTasks();
+  }
 }
 
 void PrefetchDispatcherImpl::DisposeTask() {
