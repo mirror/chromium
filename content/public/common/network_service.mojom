@@ -15,6 +15,15 @@ struct NetworkContextParams {
   mojo.common.mojom.FilePath? cookie_path;
   // Points to the cache directory. If null, an in-memory database is used.
   mojo.common.mojom.FilePath? cache_dir;
+
+  // True if data URLs should be supported (Includes requests for PAC scripts).
+  bool enable_data_url_support = false;
+  // True if file URLs should be supported (Includes requests for PAC scripts).
+  // Must be false if built without file support.
+  bool enable_file_url_support = false;
+  // True if file URLs should be supported (Includes requests for PAC scripts).
+  // Must be false if built without FTP support.
+  bool enable_ftp_url_support = false;
 };
 
 // Represents a distinct context for making network requests, with its own
