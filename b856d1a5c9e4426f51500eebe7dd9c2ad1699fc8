@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9632387_00486a63",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1699,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-26T15:07:59Z",
+      "side": 0,
+      "message": "StickyPositionOffset (called during UpdateLocalTransform) calls ScrollTree::container_bounds, which can use inner_viewport_container_bounds_delta_, depending on the ScrollNode id that\u0027s passed in. Do you know if it\u0027s possible for that to get called with the inner viewport\u0027s scroll node id? If so, we still need to set_needs_update on the TransformTree here (so that we update local transforms). If not, please add a DCHECK to StickyPositionOffset.",
+      "revId": "b856d1a5c9e4426f51500eebe7dd9c2ad1699fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
