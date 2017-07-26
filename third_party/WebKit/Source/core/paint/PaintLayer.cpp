@@ -857,7 +857,8 @@ void PaintLayer::UpdateLayerPosition() {
 bool PaintLayer::UpdateSize() {
   IntSize old_size = size_;
   if (IsRootLayer() && RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    size_ = GetLayoutObject().GetDocument().View()->Size();
+    size_ = GetLayoutObject().GetDocument().View()->GetLayoutSize(
+        kIncludeScrollbars);
   } else if (GetLayoutObject().IsInline() &&
              GetLayoutObject().IsLayoutInline()) {
     LayoutInline& inline_flow = ToLayoutInline(GetLayoutObject());
