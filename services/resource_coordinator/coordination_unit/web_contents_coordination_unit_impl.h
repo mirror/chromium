@@ -22,7 +22,9 @@ class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
   // CoordinationUnitImpl implementation.
   std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) override;
-  void RecalculateProperty(const mojom::PropertyType property_type) override;
+  void RecalculateProperty(
+      const mojom::PropertyType property_type,
+      base::Optional<base::Value> value = base::nullopt) override;
 
  private:
   double CalculateCPUUsage();
