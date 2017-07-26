@@ -22,6 +22,30 @@
       "revId": "bbed8f2bb3d780f4827ba5454debb6f0f60b2a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce9d8b7_bd0b29de",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-26T20:33:50Z",
+      "side": 1,
+      "message": "Even with full mojofication we\u0027ll need to do a clone like this everytime a blob is potentially passed to a different process, since the blink::BlobDataHandle will need to keep its message pipe so we\u0027ll need a cloned pipe to send across. But yeah, it should hopefully at least reduce the number of clones.",
+      "parentUuid": "62c1f667_24d55a1a",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 61
+      },
+      "revId": "bbed8f2bb3d780f4827ba5454debb6f0f60b2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
