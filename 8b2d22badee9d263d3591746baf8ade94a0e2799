@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25fb40ec_be05d283",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T14:05:12Z",
+      "side": 1,
+      "message": "Nit: this part of commit message looks a bit \"hanging\". There\u0027s probably not enough space to add more words, but I think you could try rephrasing the whole message as \"[Android] Signin promos: add metrics and fix \u0027Continue\u0027 button behavior\" - this message seems to fit 72-character limit.",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b5d62c_888030e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T14:05:12Z",
+      "side": 1,
+      "message": "Nit: s/sign in/signin/",
+      "range": {
+        "startLine": 9,
+        "startChar": 47,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601ff987_827e27ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T14:05:12Z",
+      "side": 1,
+      "message": "Nit: we record several metrics in this call, so it would be good to update this.",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d291b61b_c4e3b0e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T14:05:12Z",
+      "side": 1,
+      "message": "Nit: add colon here - common format for TODOs is \"TODO(username): whatever\".",
+      "range": {
+        "startLine": 147,
+        "startChar": 30,
+        "endLine": 147,
+        "endChar": 32
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7435612a_bf8861b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T14:05:12Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 166,
+        "startChar": 30,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
