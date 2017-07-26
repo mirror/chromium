@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abfd889a_7d92c9ab",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "What is this code doing? Is it trying to close the system tray bubble?",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916fb8c1_347b2fec",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "You\u0027re doing this twice -- do you have to?",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edf1a72_6ebefdaf",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "You\u0027re doing this twice -- do you have to?",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10250816_e3e161f7",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "Can you add a small test for this code in tray_update_unittest.cc? I know you have a test at the chrome level, but putting one in tray_update_unittest.cc will add it to ash_unittests, which runs faster and is more commonly used when Chrome OS UI engineers are working locally.",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89f05cc_d052d36d",
+        "filename": "ash/system/update/tray_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "Probably not needed since you removed FRIEND_TEST_ALL_PREFIXES",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c57da4_152d4b7d",
+        "filename": "chrome/browser/ui/ash/system_tray_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "optional: This doesn\u0027t need to be a separate method (it\u0027s pretty short). Consider putting the code in OnUpdateOverCellularTargetSet(). You could also eliminate HandleUpdateOverCellularAvailable().",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cf4d6c_3ddd1718",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "nit: add comment about what this is doing (the reader probably doesn\u0027t know that \"target set\" is the same as \"permission granted\")",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bef667_1bb88489",
+        "filename": "chrome/browser/upgrade_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "optional: A better name for this might be OnUpdateOverCellularPermission(bool granted) or similar. That would match the NEED_PERMISSION_TO_UPDATE error at the lower level. As a new reader of this code it seems like \"target\" is more of a low-level implementation detail.",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66a4e04_e0714849",
+        "filename": "chromeos/dbus/fake_update_engine_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "btw, I like how you have used the string \"UpdateOverCellular\" consistently through all this code. It makes it really easy to grep for code related to the feature.",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178fdede_24fd8f2b",
+        "filename": "chromeos/dbus/update_engine_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T17:42:16Z",
+      "side": 1,
+      "message": "super-nit: I would add comment saying something like \"User must give permission, e.g. for update over cellular\".",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
