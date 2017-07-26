@@ -39,6 +39,7 @@ template <typename HeaderType>
 void AllocateHeaderFromBuffer(internal::Buffer* buffer, HeaderType** header) {
   *header = buffer->AllocateAndGet<HeaderType>();
   (*header)->num_bytes = sizeof(HeaderType);
+  (*header)->padding = 0;
 }
 
 void WriteMessageHeader(uint32_t name,
