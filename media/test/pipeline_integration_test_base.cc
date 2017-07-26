@@ -347,17 +347,18 @@ void PipelineIntegrationTestBase::FailTest(PipelineStatus status) {
 }
 
 void PipelineIntegrationTestBase::QuitAfterCurrentTimeTask(
-    const base::TimeDelta& quit_time) {
+    base::TimeDelta quit_time,
+    base::OnceClosure quit_closure) {
   if (pipeline_->GetMediaTime() >= quit_time ||
       pipeline_status_ != PIPELINE_OK) {
-    message_loop_.QuitWhenIdle();
+    std::move(quit_closure).Run();
     return;
   }
 
   message_loop_.task_runner()->PostDelayedTask(
       FROM_HERE,
       base::Bind(&PipelineIntegrationTestBase::QuitAfterCurrentTimeTask,
-                 base::Unretained(this), quit_time),
+                 base::Unretained(this), quit_time, std::move(quit_closure)),
       base::TimeDelta::FromMilliseconds(10));
 }
 
@@ -367,12 +368,14 @@ bool PipelineIntegrationTestBase::WaitUntilCurrentTimeIsAfter(
   DCHECK_GT(pipeline_->GetPlaybackRate(), 0);
   DCHECK(wait_time <= pipeline_->GetMediaDuration());
 
+  base::RunLoop run_loop;
   message_loop_.task_runner()->PostDelayedTask(
       FROM_HERE,
       base::Bind(&PipelineIntegrationTestBase::QuitAfterCurrentTimeTask,
-                 base::Unretained(this), wait_time),
+                 base::Unretained(this), wait_time,
+                 run_loop.QuitWhenIdleClosure()),
       base::TimeDelta::FromMilliseconds(10));
-  base::RunLoop().Run();
+  run_loop.Run();
   return (pipeline_status_ == PIPELINE_OK);
 }
 
