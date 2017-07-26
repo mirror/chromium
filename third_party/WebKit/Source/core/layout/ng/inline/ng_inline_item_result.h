@@ -61,6 +61,10 @@ struct CORE_EXPORT NGInlineItemResult {
   // Used only during line breaking.
   bool prohibit_break_after = false;
 
+  // This item has spaces that hangs beyond the right margin.
+  // Set only for text items.
+  bool has_hanging_spaces = false;
+
   NGInlineItemResult();
   NGInlineItemResult(unsigned index, unsigned start, unsigned end);
 };

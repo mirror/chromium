@@ -283,10 +283,13 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
     item_result->no_break_opportunities_inside = is_overflow;
     if (item_result->end_offset < item.EndOffset()) {
       offset_ = item_result->end_offset;
+      // TODO(kojii): On overflow, it's waste to continue looking.
       return is_overflow ? LineBreakState::kIsBreakable
                          : LineBreakState::kBreakAfterTrailings;
     }
     MoveToNextOf(item);
+    if (item_result->has_hanging_spaces)
+      return LineBreakState::kBreakAfterTrailings;
     return item_result->prohibit_break_after ? LineBreakState::kNotBreakable
                                              : LineBreakState::kIsBreakable;
   }
@@ -325,8 +328,15 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
                              &spacing_);
   available_width = std::max(LayoutUnit(0), available_width);
   item_result->shape_result = breaker.ShapeLine(
-      item_result->start_offset, available_width, &item_result->end_offset);
-  item_result->inline_size = item_result->shape_result->SnappedWidth();
+      item_result->start_offset, available_width, &item_result->end_offset,
+      &item_result->has_hanging_spaces);
+  if (item_result->has_hanging_spaces) {
+    // Render hanging spaces only up to available width, and the rests are
+    // clipped.
+    item_result->inline_size = available_width;
+  } else {
+    item_result->inline_size = item_result->shape_result->SnappedWidth();
+  }
 #endif
   DCHECK_GT(item_result->end_offset, item_result->start_offset);
   // * If width <= available_width:
@@ -608,7 +618,9 @@ void NGLineBreaker::HandleOverflow(NGLineInfo* line_info) {
           std::min(-next_width_to_rewind, item_result->inline_size - 1);
       BreakText(item_result, item, item_available_width);
       if (item_result->inline_size <= item_available_width) {
-        DCHECK_LT(item_result->end_offset, item.EndOffset());
+        DCHECK(item_result->end_offset < item.EndOffset() ||
+               (item_result->end_offset == item.EndOffset() &&
+                item_result->has_hanging_spaces));
         DCHECK(!item_result->prohibit_break_after);
         return Rewind(line_info, i + 1);
       }
