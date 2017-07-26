@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cee3855_a8e859c4",
+        "filename": "ui/message_center/views/notification_control_buttons_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T07:05:19Z",
+      "side": 1,
+      "message": "Could you update the comment?",
+      "range": {
+        "startLine": 57,
+        "startChar": 3,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "c51ad065d502ec83303eb6fdb2464f7cae67ce2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
