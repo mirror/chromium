@@ -29,7 +29,7 @@ source_set("ntp") {
     "//ios/shared/chrome/browser/ui/browser_list",
     "//ios/shared/chrome/browser/ui/commands",
     "//ios/shared/chrome/browser/ui/coordinators",
-    "//ios/web:web_arc",
+    "//ios/web:web",
     "//ui/base:base",
     "//url:url",
   ]
