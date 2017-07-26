@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "68e27ccf_b4bdb5ab",
+        "filename": "cc/animation/transform_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-26T14:16:56Z",
+      "side": 1,
+      "message": "What about incorporating the tolerance here too?",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08656ef4_c4c14f0c",
         "filename": "cc/animation/transform_operations_unittest.cc",
         "patchSetId": 2
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "02720c8f_c235cef3",
+        "filename": "cc/base/math_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-26T14:16:56Z",
+      "side": 1,
+      "message": "DCHECK if tolerance is positive? Then it could be\nreturn std::abs(rhs - lhs) \u003c\u003d tolerance.",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fac1fa4f_75841bca",
         "filename": "chrome/browser/vr/animation_player.cc",
         "patchSetId": 2
@@ -47,6 +81,24 @@
       "writtenOn": "2017-07-26T14:13:04Z",
       "side": 1,
       "message": "Hey, what happens if the curve is an underdamped response that overshoots?  In other words, it hits its target value at an intermediate point mid-animation?",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb90e2a_60399a06",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-26T14:16:56Z",
+      "side": 1,
+      "message": "Good question!",
+      "parentUuid": "fac1fa4f_75841bca",
       "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
