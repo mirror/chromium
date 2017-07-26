@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d4cead0_61c1c596",
+        "filename": "cc/base/filter_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-26T21:05:23Z",
+      "side": 1,
+      "message": "Good catch, Ali. Yeah, I don\u0027t think this is the correct place for this.\n\nIf possible, I think it would be better to check that the rect is non-empty in the calling code.",
+      "parentUuid": "c6356c2e_b00e9712",
+      "range": {
+        "startLine": 348,
+        "startChar": 5,
+        "endLine": 348,
+        "endChar": 6
+      },
+      "revId": "a1134195f443c6236cc49ca004a8941d968c6538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e123d3c_50855f5e",
         "filename": "cc/base/filter_operations_unittest.cc",
         "patchSetId": 2
