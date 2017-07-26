@@ -38,9 +38,10 @@ class TexturedElement : public UiElement {
 
   void PrepareToDraw() final;
 
+  void OnSetMode() override;
+
  private:
   void Flush(SkSurface* surface);
-  void OnSetMode() override;
 
   gfx::Size texture_size_;
   GLuint texture_handle_;
