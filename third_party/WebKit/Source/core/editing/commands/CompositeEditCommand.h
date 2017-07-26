@@ -28,6 +28,7 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/editing/VisibleSelection.h"
 #include "core/editing/commands/EditCommand.h"
 #include "core/editing/commands/EditingState.h"
 #include "core/editing/commands/UndoStep.h"
@@ -49,12 +50,19 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
 
   ~CompositeEditCommand() override;
 
-  const VisibleSelection& StartingSelection() const {
+  const SelectionInUndoStep& StartingSelection() const {
     return starting_selection_;
   }
-  const VisibleSelection& EndingSelection() const { return ending_selection_; }
 
+  const SelectionInUndoStep& EndingSelection() const {
+    return ending_selection_;
+  }
+
+  VisibleSelection EndingVisibleSelection() const;
+
+  void SetStartingSelection(const SelectionInUndoStep&);
   void SetStartingSelection(const VisibleSelection&);
+  void SetEndingSelection(const SelectionInUndoStep&);
   void SetEndingSelection(const SelectionInDOMTree&);
   // TODO(yosin): |setEndingVisibleSelection()| will take |SelectionInUndoStep|
   // You should not use this function other than copying existing selection.
@@ -226,8 +234,8 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
  private:
   bool IsCompositeEditCommand() const final { return true; }
 
-  VisibleSelection starting_selection_;
-  VisibleSelection ending_selection_;
+  SelectionInUndoStep starting_selection_;
+  SelectionInUndoStep ending_selection_;
   Member<UndoStep> undo_step_;
 };
 
