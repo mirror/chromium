@@ -140,6 +140,30 @@
       "revId": "bad126eea19bfcad1471f2337a0483cef11d93b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7e4e950_bf8a82b7",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T01:01:20Z",
+      "side": 1,
+      "message": "No \"../\". Just use browser_tests.",
+      "parentUuid": "65f9d3fe_d5d0b3e6",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 15
+      },
+      "revId": "bad126eea19bfcad1471f2337a0483cef11d93b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
