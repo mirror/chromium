@@ -43,40 +43,37 @@
     <link rel="stylesheet" href="oobe_dialog_parameters.css">
     <link rel="stylesheet" href="oobe_flex_layout.css">
     <oobe-dialog id="eulaLoadingDialog" hidden="[[!eulaLoadingScreenShown]]"
-        role="dialog" i18n-values="aria-label:termsOfServiceLoading"
-        has-buttons>
+        role="dialog" aria-label="$i18n{termsOfServiceLoading}" has-buttons>
       <iron-icon icon="oobe-eula:googleg" class="oobe-icon"></iron-icon>
       <div class="header">
-        <h1 class="title" i18n-content="termsOfServiceLoading"></h1>
+        <h1 class="title">$i18n{termsOfServiceLoading}</h1>
       </div>
     </oobe-dialog>
     <oobe-dialog id="eulaDialog" hidden="[[eulaLoadingScreenShown]]"
-        role="dialog" i18n-values="aria-label:oobeEulaSectionTitle"
-        has-buttons>
+        role="dialog" aria-label="$i18n{oobeEulaSectionTitle}" has-buttons>
       <hd-iron-icon class="oobe-icon"
           icon1x="oobe-eula-32:googleg" icon2x="oobe-eula-64:googleg">
       </hd-iron-icon>
       <div class="header">
-        <h1 class="title" i18n-content="oobeEulaSectionTitle"></h1>
+        <h1 class="title">$i18n{oobeEulaSectionTitle}</h1>
       </div>
       <div class="footer flex layout vertical">
-        <iframe id="crosEulaFrame" src="chrome://terms"
-            role="document" class="flex focus-on-show"
-            i18n-values="aria-label:oobeEulaIframeLabel"
+        <iframe id="crosEulaFrame" src="chrome://terms" role="document"
+            class="flex focus-on-show" aria-label="$i18n{oobeEulaIframeLabel}"
             on-load="onFrameLoad_">
         </iframe>
         <a id="installationSettings" href="#"
-            on-tap="onInstallationSettingsClicked_"
-            i18n-content="eulaSystemInstallationSettings">
+            on-tap="onInstallationSettingsClicked_">
+          $i18n{eulaSystemInstallationSettings}
         </a>
         <div id="logging" class="layout horizontal">
           <paper-checkbox aria-labelledby="usage-stats-label" id="usageStats"
               checked="{{usageStatsChecked}}" on-change="onUsageChanged_">
           </paper-checkbox>
           <div id="usageStatsLabelContainer">
-            <label i18n-content="checkboxLogging"></label>
-            <a id="" href="#" i18n-content="learnMore"
-                on-tap="onUsageStatsHelpLinkClicked_">
+            <label>$i18n{checkboxLogging}</label>
+            <a id="" href="#" on-tap="onUsageStatsHelpLinkClicked_">
+              $i18n{learnMore}
             </a>
           </div>
         </div>
@@ -88,8 +85,8 @@
         </div>
         <oobe-text-button id="eula-accept-button" inverse on-tap="eulaAccepted_"
             disabled="[[acceptButtonDisabled]]">
-          <div i18n-content="oobeEulaAcceptAndContinueButtonText"
-              id="accept-button-text">
+          <div id="accept-button-text">
+            $i18n{oobeEulaAcceptAndContinueButtonText}
           </div>
         </oobe-text-button>
       </div>
