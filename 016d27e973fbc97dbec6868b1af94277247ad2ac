@@ -16,6 +16,24 @@
       "revId": "016d27e973fbc97dbec6868b1af94277247ad2ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee51c39_1997a84c",
+        "filename": "chrome/browser/engagement/important_sites_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-26T00:11:00Z",
+      "side": 1,
+      "message": "There is no important sites folder, and over time the storage team would prefer that the amount of logic in here steadily decreases as more of the work is handled directly by engagement (e.g. the notifications integration that\u0027s already happened). We discussed this a little while ago and I agreed that here was the most logical place for this to live. :)",
+      "parentUuid": "8cdc25c0_a4d66f5a",
+      "revId": "016d27e973fbc97dbec6868b1af94277247ad2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
