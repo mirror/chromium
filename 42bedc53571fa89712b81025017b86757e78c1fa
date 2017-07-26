@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "def4dac1_bf5832a0",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-26T22:03:55Z",
+      "side": 1,
+      "message": "Yeah, I think we can regenerate something very similar to icc_profile_sk_color_space_ in ColorSpace::ToSkColorSpace if needed, so it can be ignored here. The generated colorspace might be missing a few details, but I think it\u0027s close enough for the GPU process\u0027s purposes.\n\nAn advantage of pickling and unpickling this is that it provides a good place to validate that the enums are valid.",
+      "parentUuid": "cc4ab65f_a46ee823",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "909ca4c0_66526f5d",
         "filename": "ui/gfx/color_space.h",
         "patchSetId": 7
@@ -227,6 +245,24 @@
       "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eacb9680_a7a9b4f0",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-26T22:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da56f941_1e591aff",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
