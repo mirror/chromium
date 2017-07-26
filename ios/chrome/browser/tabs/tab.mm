@@ -887,13 +887,14 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     history::HistoryAddPageArgs args(
         url, item->GetTimestamp(), &_tabHistoryContext, item->GetUniqueID(),
         referrer.url, redirects, item->GetTransitionType(),
-        history::SOURCE_BROWSED, false, consider_for_ntp_most_visited);
+        history::SOURCE_BROWSED, false, base::nullopt,
+        consider_for_ntp_most_visited);
     _addPageVector.push_back(args);
   } else {
     historyService->AddPage(url, item->GetTimestamp(), &_tabHistoryContext,
                             item->GetUniqueID(), referrer.url, redirects,
                             item->GetTransitionType(), history::SOURCE_BROWSED,
-                            false);
+                            false, base::nullopt);
     [self saveTitleToHistoryDB];
   }
 }

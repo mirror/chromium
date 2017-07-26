@@ -510,6 +510,16 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
       // Update the referrer's duration.
       UpdateVisitDuration(from_visit_id, request.time);
     }
+
+    // If the navigation is considered to be within the same page (which
+    // includes history.replaceState()), let's treat it similarly as a redirect
+    // because the favicons and titles are shared.
+    if (request.is_same_document_as.has_value()) {
+      RedirectList redirects;
+      GetCachedRecentRedirects(*request.is_same_document_as, &redirects);
+      redirects.push_back(request.url);
+      recent_redirects_.Put(request.url, redirects);
+    }
   } else {
     // Redirect case. Add the redirect chain.
 

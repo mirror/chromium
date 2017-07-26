@@ -374,7 +374,7 @@ class ThreatDetailsTest : public ChromeRenderViewHostTestHarness {
     history_service()->AddPage(url, base::Time::Now(),
                                reinterpret_cast<history::ContextID>(1), 0,
                                GURL(), *redirects, ui::PAGE_TRANSITION_TYPED,
-                               history::SOURCE_BROWSED, false);
+                               history::SOURCE_BROWSED, false, base::nullopt);
   }
 
   scoped_refptr<MockSafeBrowsingUIManager> ui_manager_;

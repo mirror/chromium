@@ -62,9 +62,10 @@ void TemplateURLServiceClientImpl::SetKeywordSearchTermsForURL(
 
 void TemplateURLServiceClientImpl::AddKeywordGeneratedVisit(const GURL& url) {
   if (history_service_) {
-    history_service_->AddPage(
-        url, base::Time::Now(), nullptr, 0, GURL(), history::RedirectList(),
-        ui::PAGE_TRANSITION_KEYWORD_GENERATED, history::SOURCE_BROWSED, false);
+    history_service_->AddPage(url, base::Time::Now(), nullptr, 0, GURL(),
+                              history::RedirectList(),
+                              ui::PAGE_TRANSITION_KEYWORD_GENERATED,
+                              history::SOURCE_BROWSED, false, base::nullopt);
   }
 }
 
