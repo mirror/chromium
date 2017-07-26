@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "08182118_ce436c85",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-26T18:34:56Z",
+      "side": 1,
+      "message": "Why do we need to store the URL? Can\u0027t we just pass it through to the UkmRecorder and not store it in this object?",
+      "revId": "bacb8b3f77f4315260619a132bb38b281a655eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f7b82b_d6c73c8b",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-26T18:34:56Z",
+      "side": 1,
+      "message": "Technically, WebContents can be a lot more types than a Tab, so I\u0027d suggest not using the \"Tab\" naming. I bet in the future we will want to coordinate code running in extensions, which don\u0027t have tabs at all.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "bacb8b3f77f4315260619a132bb38b281a655eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be01c7e_ef554d0a",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-26T18:34:56Z",
+      "side": 1,
+      "message": "You need to do the conversion outside of a DCHECK, otherwise the conversion will not happen in release builds, as the whole line will be compiled out.",
+      "revId": "bacb8b3f77f4315260619a132bb38b281a655eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338ddb94_9e2b7f76",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-26T18:34:56Z",
+      "side": 1,
+      "message": "As noted in the cc file, I don\u0027t think we should be using \"Tab\" as a term, as we want to track all WebContents in the future and they aren\u0027t all tabs.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "bacb8b3f77f4315260619a132bb38b281a655eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a12ba95f_28fc4765",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 12
