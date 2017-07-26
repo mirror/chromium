@@ -40,11 +40,6 @@ void CoordinationUnitProviderImpl::CreateCoordinationUnit(
       mojo::MakeStrongBinding(std::move(coordination_unit), std::move(request));
 
   coordination_unit_manager_->OnCoordinationUnitCreated(coordination_unit_impl);
-
-  coordination_unit_binding->set_connection_error_handler(
-      base::Bind(&CoordinationUnitManager::OnBeforeCoordinationUnitDestroyed,
-                 base::Unretained(coordination_unit_manager_),
-                 base::Unretained(coordination_unit_impl)));
 }
 
 // static

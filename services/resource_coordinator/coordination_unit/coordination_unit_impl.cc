@@ -48,6 +48,8 @@ CoordinationUnitImpl::CoordinationUnitImpl(
 }
 
 CoordinationUnitImpl::~CoordinationUnitImpl() {
+  NOTIFY_OBSERVERS(observers_, OnBeforeCoordinationUnitDestroyed, this);
+
   g_cu_map().erase(id_);
 
   for (CoordinationUnitImpl* child : children_) {
@@ -325,10 +327,6 @@ void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
   PropagateProperty(property_type, property);
   NOTIFY_OBSERVERS(observers_, OnPropertyChanged, this, property_type,
                    property);
-}
-
-void CoordinationUnitImpl::BeforeDestroyed() {
-  NOTIFY_OBSERVERS(observers_, OnBeforeCoordinationUnitDestroyed, this);
 }
 
 void CoordinationUnitImpl::AddObserver(

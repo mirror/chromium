@@ -43,8 +43,6 @@ class CoordinationUnitManager {
   void RegisterObserver(
       std::unique_ptr<CoordinationUnitGraphObserver> observer);
   void OnCoordinationUnitCreated(CoordinationUnitImpl* coordination_unit);
-  void OnBeforeCoordinationUnitDestroyed(
-      CoordinationUnitImpl* coordination_unit);
 
   std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmEntryBuilder(
       const char* event_name);

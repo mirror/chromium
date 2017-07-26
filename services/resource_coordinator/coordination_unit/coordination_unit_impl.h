@@ -59,7 +59,6 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   base::Value GetProperty(const mojom::PropertyType property_type) const;
 
   // Methods utilized by the |CoordinationUnitGraphObserver| framework.
-  void BeforeDestroyed();
   void AddObserver(CoordinationUnitGraphObserver* observer);
   void RemoveObserver(CoordinationUnitGraphObserver* observer);
 

@@ -50,11 +50,6 @@ void CoordinationUnitManager::OnCoordinationUnitCreated(
   }
 }
 
-void CoordinationUnitManager::OnBeforeCoordinationUnitDestroyed(
-    CoordinationUnitImpl* coordination_unit) {
-  coordination_unit->BeforeDestroyed();
-}
-
 std::unique_ptr<ukm::UkmEntryBuilder>
 CoordinationUnitManager::CreateUkmEntryBuilder(const char* event_name) {
   DCHECK(ukm_recorder_ != nullptr);
