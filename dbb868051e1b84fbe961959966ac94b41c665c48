@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee35c8f8_2b1b91ee",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-26T17:58:32Z",
+      "side": 1,
+      "message": "Thought (not even a suggestion): Rejigger DevToolsNetworkTransactionFactory to take an HttpTransactionFactory and wrap it, and change the callback to pass in that factory, so the creation of the HttpNetworkLayer is kept inside of URLRequestContextBuilder.",
+      "range": {
+        "startLine": 251,
+        "startChar": 6,
+        "endLine": 251,
+        "endChar": 33
+      },
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e70883e4_c5fb1486",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 2
@@ -19,6 +42,81 @@
         "endLine": 1422,
         "endChar": 27
       },
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07593e7_076aa63f",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-26T17:58:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e70883e4_c5fb1486",
+      "range": {
+        "startLine": 1422,
+        "startChar": 23,
+        "endLine": 1422,
+        "endChar": 27
+      },
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "353cced2_65adb62d",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-26T17:58:32Z",
+      "side": 1,
+      "message": "Why is this block up here rather than colocated with the cache wrapping below?",
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588ab69c_ceb631fb",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-26T17:58:32Z",
+      "side": 1,
+      "message": "I have a very mild preference for doing this via a factory defined on the URLRequestContextBuilder which create_http_network_transaction_factory_ is defaulted to in the constructor which can be overridden.  This is partially because it\u0027s fewer lines of code and more \"elegant\", and partially because Ryan S has ranted against the use of is_null() on callbacks as a conditional in production code.  \n\nBut it\u0027s only a very mild preference--completely up to you.",
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5351fcb9_decb027d",
+        "filename": "net/url_request/url_request_context_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-26T17:58:32Z",
+      "side": 1,
+      "message": "Another thought, which you may disagree with: Bug link here.  This isn\u0027t because I think a bug will be more useful than a TODO to keep track of this issue, but because there\u0027s larger discussions about how to implement the devtools traffic shaping long term, which it would be good to have this TODO linked to in some fashion.  A bug that collects the discussion about how to implement devtools traffic shaping would be a way of doing that link.",
       "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
