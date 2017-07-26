@@ -68,7 +68,6 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/IntersectionGeometry.h"
 #include "core/layout/LayoutMedia.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/page/ChromeClient.h"
 #include "platform/Histogram.h"
@@ -500,7 +499,6 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
       tracks_are_ready_(true),
       processing_preference_change_(false),
       playing_remotely_(false),
-      in_overlay_fullscreen_video_(false),
       mostly_filling_viewport_(false),
       audio_tracks_(this, AudioTrackList::Create(*this)),
       video_tracks_(this, VideoTrackList::Create(*this)),
@@ -1263,8 +1261,7 @@ void HTMLMediaElement::StartPlayerLoad() {
 
   web_media_player_->Load(GetLoadType(), source, CorsMode());
 
-  if (IsFullscreen())
-    web_media_player_->EnteredFullscreen();
+  web_media_player_->OnDisplayTypeChanged(DisplayType());
 
   web_media_player_->BecameDominantVisibleContent(mostly_filling_viewport_);
 }
@@ -3475,38 +3472,6 @@ bool HTMLMediaElement::HasPendingActivity() const {
 
 bool HTMLMediaElement::IsFullscreen() const {
   return Fullscreen::IsFullscreenElement(*this);
-}
-
-void HTMLMediaElement::DidEnterFullscreen() {
-  UpdateControlsVisibility();
-
-  if (web_media_player_) {
-    // FIXME: There is no embedder-side handling in layout test mode.
-    if (!LayoutTestSupport::IsRunningLayoutTest())
-      web_media_player_->EnteredFullscreen();
-    web_media_player_->OnDisplayTypeChanged(DisplayType());
-  }
-
-  // Cache this in case the player is destroyed before leaving fullscreen.
-  in_overlay_fullscreen_video_ = UsesOverlayFullscreenVideo();
-  if (in_overlay_fullscreen_video_) {
-    GetDocument().GetLayoutViewItem().Compositor()->SetNeedsCompositingUpdate(
-        kCompositingUpdateRebuildTree);
-  }
-}
-
-void HTMLMediaElement::DidExitFullscreen() {
-  UpdateControlsVisibility();
-
-  if (GetWebMediaPlayer()) {
-    GetWebMediaPlayer()->ExitedFullscreen();
-    GetWebMediaPlayer()->OnDisplayTypeChanged(DisplayType());
-  }
-
-  if (in_overlay_fullscreen_video_)
-    GetDocument().GetLayoutViewItem().Compositor()->SetNeedsCompositingUpdate(
-        kCompositingUpdateRebuildTree);
-  in_overlay_fullscreen_video_ = false;
 }
 
 WebLayer* HTMLMediaElement::PlatformLayer() const {

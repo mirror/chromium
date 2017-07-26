@@ -190,8 +190,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       blink::WebContentDecryptionModuleResult result) override;
 
   bool SupportsOverlayFullscreenVideo() override;
-  void EnteredFullscreen() override;
-  void ExitedFullscreen() override;
   void BecameDominantVisibleContent(bool isDominant) override;
   void SetIsEffectivelyFullscreen(bool isEffectivelyFullscreen) override;
   void OnHasNativeControlsChanged(bool) override;
@@ -797,6 +795,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   OverlayInfo::RoutingToken overlay_routing_token_;
 
   OverlayInfo overlay_info_;
+
+  blink::WebMediaPlayer::DisplayType display_type_ =
+      blink::WebMediaPlayer::DisplayType::kInline;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };
