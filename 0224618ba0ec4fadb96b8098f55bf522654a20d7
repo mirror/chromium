@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a43465b1_0083cae3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:19:35Z",
+      "side": 1,
+      "message": "Can you walk me through the flow for this?  Thanks!",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 34
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2ef8e0_7d7bad0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:19:35Z",
+      "side": 1,
+      "message": "Probably cleaner to (eventually?) encode the relevant data in the notification.  We shouldn\u0027t need the whole DownloadItem to resume it :(.  Then we\u0027d just need the ContentId and isOffTheRecord.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 87
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c66b7e_28f0973b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:19:35Z",
+      "side": 1,
+      "message": "action \u003d\u003d ACTION_DOWNLOAD_MISSING_NOTIFICATION right?",
+      "range": {
+        "startLine": 131,
+        "startChar": 37,
+        "endLine": 131,
+        "endChar": 43
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cab8c9_025ec01d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:19:35Z",
+      "side": 1,
+      "message": "Might be cleaner to just go through the BrowserParts every time.  That way the code works the same (e.g. always posts a task and doesn\u0027t synchronously call in this case).  I think the handle***NativeStartup() will call the BrowserParts methods if native is already loaded.",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 9
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae291e05_a73343b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:19:35Z",
+      "side": 1,
+      "message": "Handler.postDelayed(runnable, waitTimeMs)?",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 19
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
