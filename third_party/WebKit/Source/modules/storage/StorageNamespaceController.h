@@ -5,16 +5,18 @@
 #ifndef StorageNamespaceController_h
 #define StorageNamespaceController_h
 
+#include <memory>
+
 #include "core/page/Page.h"
 #include "modules/ModulesExport.h"
+#include "modules/storage/StorageArea.h"
 #include "platform/Supplementable.h"
-#include <memory>
 
 namespace blink {
 
 class InspectorDOMStorageAgent;
-class StorageClient;
 class StorageNamespace;
+class WebViewBase;
 
 class MODULES_EXPORT StorageNamespaceController final
     : public GarbageCollectedFinalized<StorageNamespaceController>,
@@ -23,10 +25,11 @@ class MODULES_EXPORT StorageNamespaceController final
 
  public:
   StorageNamespace* SessionStorage(bool optional_create = true);
-  StorageClient* GetStorageClient() { return client_; }
   ~StorageNamespaceController();
 
-  static void ProvideStorageNamespaceTo(Page&, StorageClient*);
+  bool CanAccessStorage(LocalFrame*, StorageType) const;
+
+  static void ProvideStorageNamespaceTo(Page&, WebViewBase&);
   static StorageNamespaceController* From(Page* page) {
     return static_cast<StorageNamespaceController*>(
         Supplement<Page>::From(page, SupplementName()));
@@ -40,10 +43,13 @@ class MODULES_EXPORT StorageNamespaceController final
   }
 
  private:
-  explicit StorageNamespaceController(StorageClient*);
+  explicit StorageNamespaceController(WebViewBase&);
+
+  std::unique_ptr<StorageNamespace> CreateSessionStorageNamespace();
   static const char* SupplementName();
+
   std::unique_ptr<StorageNamespace> session_storage_;
-  StorageClient* client_;
+  WebViewBase* web_view_;
   Member<InspectorDOMStorageAgent> inspector_agent_;
 };
 
