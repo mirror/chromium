@@ -22,6 +22,30 @@
       "revId": "8702a9e4640a72d898fdd74362a90165e715e78f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0606a6_e9c705ec",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-26T15:00:32Z",
+      "side": 1,
+      "message": "Ya, lots of tests and a few browser things rely on it. We can work towards removing it or at least making things more consistent in future CLs.",
+      "parentUuid": "b8104f85_e6ccace7",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "8702a9e4640a72d898fdd74362a90165e715e78f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
