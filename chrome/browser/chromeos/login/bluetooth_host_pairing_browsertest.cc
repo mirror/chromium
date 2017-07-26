@@ -57,12 +57,6 @@ class TestDelegate
 // sufficient input, i.e., the first screen of OOBE is the HID detection screen.
 // The device will put itself in Bluetooth discoverable mode.
 class BluetoothHostPairingNoInputTest : public OobeBaseTest {
- public:
-  void OnConnectSuccess() { message_loop_.QuitWhenIdle(); }
-  void OnConnectFailed(device::BluetoothDevice::ConnectErrorCode error) {
-    message_loop_.QuitWhenIdle();
-  }
-
  protected:
   using InputDeviceInfo = device::InputServiceLinux::InputDeviceInfo;
 
@@ -212,12 +206,11 @@ IN_PROC_BROWSER_TEST_F(BluetoothHostPairingNoInputTest, ForgetDevice) {
   EXPECT_FALSE(device->IsPaired());
   EXPECT_EQ(3U, bluetooth_adapter()->GetDevices().size());
 
+  base::RunLoop run_loop;
   device->Connect(controller(),
-                  base::Bind(&BluetoothHostPairingNoInputTest::OnConnectSuccess,
-                             base::Unretained(this)),
-                  base::Bind(&BluetoothHostPairingNoInputTest::OnConnectFailed,
-                             base::Unretained(this)));
-  base::RunLoop().Run();
+                  run_loop.QuitWhenIdleClosure(),   // OnConnectSuccess()
+                  run_loop.QuitWhenIdleClosure());  // OnConnectFailed()
+  run_loop.Run();
   EXPECT_TRUE(device->IsPaired());
 
   ResetController();
