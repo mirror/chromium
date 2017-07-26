@@ -22,9 +22,11 @@ class MotophoThread(threading.Thread):
     self.BlockNextIteration()
 
   def run(self):
-    for _ in xrange(self._num_samples):
+    iteration_counter = 0
+    while iteration_counter < self._num_samples:
       self._WaitForIterationStart()
       self._ResetEndLock()
+      iteration_counter += 1
       motopho_output = ""
       try:
         motopho_output = subprocess.check_output(["./motophopro_nograph"],
@@ -36,17 +38,18 @@ class MotophoThread(threading.Thread):
       if "FAIL" in motopho_output:
         logging.error('Failed to get latency, logging raw output: %s',
                       motopho_output)
-        raise RuntimeError('Failed to get latency - correlation likely too low')
-
-      current_num_samples = len(self._latencies)
-      for line in motopho_output.split("\n"):
-        if 'Motion-to-photon latency:' in line:
-          self._latencies.append(float(line.split(" ")[-2]))
-        if 'Max correlation is' in line:
-          self._correlations.append(float(line.split(' ')[-1]))
-        if (len(self._latencies) > current_num_samples and
-            len(self._correlations) > current_num_samples):
-          break;
+        iteration_counter -= 1
+        self._failed_iteration = True
+      else:
+        current_num_samples = len(self._latencies)
+        for line in motopho_output.split("\n"):
+          if 'Motion-to-photon latency:' in line:
+            self._latencies.append(float(line.split(" ")[-2]))
+          if 'Max correlation is' in line:
+            self._correlations.append(float(line.split(' ')[-1]))
+          if (len(self._latencies) > current_num_samples and
+              len(self._correlations) > current_num_samples):
+            break;
       self._EndIteration()
 
   def _WaitForIterationStart(self):
@@ -65,6 +68,7 @@ class MotophoThread(threading.Thread):
 
   def _ResetEndLock(self):
     self._finish_lock.clear()
+    self._failed_iteration = False
 
   def WaitForIterationEnd(self, timeout):
     """Waits until the thread says it's finished or times out.
@@ -81,3 +85,7 @@ class MotophoThread(threading.Thread):
   @property
   def correlations(self):
     return self._correlations
+
+  @property
+  def failed_iteration(self):
+    return self._failed_iteration

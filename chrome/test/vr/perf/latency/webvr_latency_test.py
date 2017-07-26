@@ -17,6 +17,7 @@ import time
 
 
 MOTOPHO_THREAD_TIMEOUT = 15
+MOTOPHO_THREAD_RETRIES = 2
 DEFAULT_URLS = [
     # TODO(bsheedy): See about having versioned copies of the flicker app
     # instead of using personal github.
@@ -120,7 +121,10 @@ class WebVrLatencyTest(object):
     motopho_thread.start()
 
     # Run multiple times so we can get an average and standard deviation.
-    for _ in xrange(self._num_samples):
+    num_retries = 0
+    iteration_counter = 0
+    while iteration_counter < self._num_samples:
+      iteration_counter += 1
       self.robot_arm.ResetPosition()
       # Start the Motopho script.
       motopho_thread.StartIteration()
@@ -134,7 +138,17 @@ class WebVrLatencyTest(object):
         # data until unplugged and replugged into the machine after a reboot.
         logging.error('Motopho thread timeout, '
                       'Motopho may need to be replugged.')
+
       self.robot_arm.StopAllMovement()
+
+      if motopho_thread.failed_iteration:
+        num_retries += 1
+        iteration_counter -= 1
+        if num_retries > MOTOPHO_THREAD_RETRIES:
+          raise RuntimeError(
+              'Motopho thread failed more than %d times, aborting' % (
+                  MOTOPHO_THREAD_RETRIES))
+        logging.warning('Motopho thread failed, retrying iteration')
       time.sleep(1)
     self._StoreResults(motopho_thread.latencies, motopho_thread.correlations,
                        url)
