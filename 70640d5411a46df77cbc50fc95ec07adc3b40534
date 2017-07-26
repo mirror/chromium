@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7a626a_2defa5e1",
+        "filename": "content/browser/service_worker/service_worker_url_request_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T06:45:16Z",
+      "side": 1,
+      "message": "Why did you wrap this block with {}?",
+      "revId": "70640d5411a46df77cbc50fc95ec07adc3b40534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
