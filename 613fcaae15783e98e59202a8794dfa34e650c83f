@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "115a3b4a_9a690893",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-26T17:48:45Z",
+      "side": 1,
+      "message": "What is meant by \"used in CL\" here? Used in the CL description for the import CLs? I think this comment might be unnecessary.",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce699fa8_51383f88",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-26T17:48:45Z",
+      "side": 1,
+      "message": "The order of `list(owned_directories)` is not strictly defined (since owned_directories is a set). To make sure the unit tests are deterministic, you could return a sorted list by replacing `list(owned_directories)` with `sorted(owned_directories)`.",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a064d7_710fd921",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-26T17:48:45Z",
+      "side": 1,
+      "message": "We could also stop at LayoutTests/external/wpt (I don\u0027t think we\u0027re expecting to put an OWNERS file in external/wpt). But this is OK as well.",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbdc48f_7e583f50",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-26T17:48:45Z",
+      "side": 1,
+      "message": "Good docstring :-)",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259b97dd_316b8906",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-26T17:48:45Z",
+      "side": 1,
+      "message": "Optionally, if you think it looks more readable, this could also be layed out with more line breaks and/or temp variables for long paths, e.g.\n\n    rel_base \u003d \u0027third_party/WebKit/LayoutTests/external/wpt\u0027\n    abs_base \u003d \u0027/mock-checkout/third_party/WebKit/LayoutTests/external/wpt\u0027\n    self.filesystem.files \u003d {\n        rel_base + \u0027/foo/OWNERS\u0027: \u0027a@chromium.org\u0027\n    }\n    self.assertEqual(\n        self.extractor.find_and_extract_owners(rel_base + \u0027/foo\u0027),\n        (abs_base + \u0027/foo/OWNERS\u0027, [\u0027a@chromium.org\u0027]))\n\nI\u0027m a little ambivalent about the temp variables, but maybe it makes it easier to read.\n\nIt\u0027s fine as-is too though, as well.",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
