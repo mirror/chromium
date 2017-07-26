@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0942321a_051a6739",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-26T23:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ba35b0_9853b481",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b91b785f_1cc9f4ee",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba1c831_e142dfbe",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-26T23:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b91b785f_1cc9f4ee",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ae06de6f_e79b89a8",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-26T23:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b513ff40_87b9d825",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ca9d7d1_4db18283",
         "filename": "ui/app_list/views/apps_grid_view.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f36a77_d1947563",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-26T23:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca9d7d1_4db18283",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3ddade5a_845511a8",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-26T23:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e184df16_7a055556",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "151b9a53_b514a5b5",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-26T22:31:13Z",
       "side": 1,
       "message": "nit: Update -\u003e Updates. Does |is_end| mean is_end_gesture?",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34243ec5_f0abebbd",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-26T23:45:44Z",
+      "side": 1,
+      "message": "Yes. Sorry forgot to update the name here. Fixed.",
+      "parentUuid": "151b9a53_b514a5b5",
       "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
