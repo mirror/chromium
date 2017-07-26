@@ -398,12 +398,13 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
 
   is_search_box_active_ = active;
   UpdateSearchIcon();
+  UpdateBackgroundColor(active ? kSearchBoxBackgroundDefault
+                               : background_color_);
   search_box_->set_placeholder_text_draw_flags(
       active ? gfx::Canvas::TEXT_ALIGN_LEFT : gfx::Canvas::TEXT_ALIGN_CENTER);
   search_box_->set_placeholder_text_color(active ? kZeroQuerySearchboxColor
                                                  : search_box_color_);
   search_box_->SetCursorEnabled(active);
-  search_box_->SchedulePaint();
 
   if (speech_button_)
     speech_button_->SetVisible(!active);
@@ -411,6 +412,7 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   if (focused_view_ != FOCUS_CONTENTS_VIEW)
     ResetTabFocus(false);
   content_container_->Layout();
+  SchedulePaint();
 }
 
 void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
@@ -490,6 +492,12 @@ SkColor SearchBoxView::GetBackgroundColorForState(
   return background_color_;
 }
 
+void SearchBoxView::UpdateBackgroundColor(SkColor color) {
+  static_cast<SearchBoxBackground*>(content_container_->background())
+      ->set_color(color);
+  search_box_->SetBackgroundColor(color);
+}
+
 void SearchBoxView::UpdateBackground(double progress,
                                      AppListModel::State current_state,
                                      AppListModel::State target_state) {
@@ -501,8 +509,7 @@ void SearchBoxView::UpdateBackground(double progress,
   const SkColor color = gfx::Tween::ColorValueBetween(
       progress, GetBackgroundColorForState(current_state),
       GetBackgroundColorForState(target_state));
-  background->set_color(color);
-  search_box_->SetBackgroundColor(color);
+  UpdateBackgroundColor(color);
 }
 
 void SearchBoxView::ButtonPressed(views::Button* sender,
@@ -702,10 +709,7 @@ void SearchBoxView::WallpaperProminentColorsChanged() {
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize, search_box_color_));
   search_box_->set_placeholder_text_color(search_box_color_);
-  SearchBoxBackground* background =
-      static_cast<SearchBoxBackground*>(content_container_->background());
-  background->set_color(background_color_);
-  search_box_->SetBackgroundColor(background_color_);
+  UpdateBackgroundColor(background_color_);
   SchedulePaint();
 }
 

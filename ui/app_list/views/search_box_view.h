@@ -116,6 +116,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // Returns background color for the given state.
   SkColor GetBackgroundColorForState(AppListModel::State state) const;
 
+  // Updates the search box's background color.
+  void UpdateBackgroundColor(SkColor color);
+
   // Updates the search box's background corner radius and color.
   void UpdateBackground(double progress,
                         AppListModel::State current_state,
