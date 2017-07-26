@@ -314,9 +314,12 @@ class ScriptURLLoaderFactory : public mojom::URLLoaderFactory {
 
     // TODO: Make sure we don't handle the redirected request.
 
-    // For installed worker we fallback to the network for now.
-    if (ServiceWorkerVersion::IsInstalled(version->status())) {
-      DCHECK(!ServiceWorkerUtils::IsScriptStreamingEnabled());
+    // Once script streaming is enabled we fallback to the network
+    // for installed workers.
+    // (We still need to go through here for legacy code path in order to
+    // correctly set the script's HTTP Response Info to the version)
+    if (ServiceWorkerVersion::IsInstalled(version->status()) &&
+        ServiceWorkerUtils::IsScriptStreamingEnabled()) {
       return false;
     }
 
@@ -585,16 +588,6 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
       render_thread_id_, provider_id(), GetOrCreateServiceWorkerHandle(version),
       notify_controllerchange,
       version ? version->used_features() : std::set<uint32_t>()));
-}
-
-void ServiceWorkerProviderHost::CreateScriptURLLoaderFactory(
-    mojom::URLLoaderFactoryAssociatedRequest script_loader_factory_request) {
-  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
-  mojo::MakeStrongAssociatedBinding(
-      base::MakeUnique<ScriptURLLoaderFactory>(
-          context_, AsWeakPtr(), context_->blob_storage_context(),
-          context_->loader_factory_getter()),
-      std::move(script_loader_factory_request));
 }
 
 bool ServiceWorkerProviderHost::IsProviderForClient() const {
@@ -964,6 +957,18 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   provider_info->attributes = std::move(attrs);
   provider_info->registration = std::move(info);
   provider_info->client_request = mojo::MakeRequest(&provider_);
+
+  mojom::URLLoaderFactoryAssociatedPtrInfo script_loader_factory_ptr_info;
+  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+    mojo::MakeStrongAssociatedBinding(
+        base::MakeUnique<ScriptURLLoaderFactory>(
+            context_, AsWeakPtr(), context_->blob_storage_context(),
+            context_->loader_factory_getter()),
+        mojo::MakeRequest(&script_loader_factory_ptr_info));
+    provider_info->script_loader_factory_ptr_info =
+        std::move(script_loader_factory_ptr_info);
+  }
+
   binding_.Bind(mojo::MakeRequest(&provider_info->host_ptr_info));
   binding_.set_connection_error_handler(
       base::Bind(&RemoveProviderHost, context_, process_id, provider_id()));
