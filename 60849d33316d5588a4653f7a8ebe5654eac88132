@@ -46,6 +46,76 @@
       "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9499921_6cfde5b2",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T23:20:40Z",
+      "side": 1,
+      "message": "ack, it is good to add bug number instead of (vadimt)",
+      "parentUuid": "b8f863e7_b8ba60e2",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 269,
+        "endChar": 16
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfd4434_f1334c02",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T23:20:40Z",
+      "side": 1,
+      "message": "nit: else is not required:\n\nif (!head..) {\n  ...\n  return true; or false actually?\n}\n\n....",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 8
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6b0b56_a079051f",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T23:20:40Z",
+      "side": 1,
+      "message": "These lines look identical to L94-98. Would it be possible to extract to this to separate function?",
+      "range": {
+        "startLine": 277,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 76
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
