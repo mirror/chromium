@@ -16,6 +16,24 @@
       "revId": "e9b671f13d702174c06d90e0b52c8186f01d1fe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4821996_470eb6e9",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T21:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b03b63d4_171733bc",
+      "revId": "e9b671f13d702174c06d90e0b52c8186f01d1fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
