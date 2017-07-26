@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7494000c_b4951beb",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T13:37:24Z",
+      "side": 1,
+      "message": "Nit: already included by the header.",
+      "revId": "d38f61593ea0a7868686e41bafe482d65ca51f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65da34ac_8a2c933e",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T13:37:24Z",
+      "side": 1,
+      "message": "Micro-nit: delete this new line?",
+      "revId": "d38f61593ea0a7868686e41bafe482d65ca51f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
