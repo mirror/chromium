@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3bed82d_554af564",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-26T22:25:39Z",
+      "side": 1,
+      "message": "The gotcha is that this is only done once per cold start of chrome.  If chrome is never evicted from memory, this would never get called again.\n\nThe other thing is that this is called for all intent types and not just ACTION_MAIN.  To just walk in an create all type of noise, I think this actually needs to live in ChromeTabbedActivity at the same places maybeLaunchNtpFromMainIntent is called.\n\nIn that case, you wouldn\u0027t need the browserstartupcontroller as native is already initialized in both places and it will handle showing this in a more consistent way IMO.",
+      "range": {
+        "startLine": 422,
+        "startChar": 12,
+        "endLine": 422,
+        "endChar": 51
+      },
+      "revId": "5026d4166c4d1de78466bd4add7ceaa62d1b7701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
