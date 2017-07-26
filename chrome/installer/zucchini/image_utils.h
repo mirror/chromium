@@ -5,7 +5,7 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_IMAGE_UTILS_H_
 #define CHROME_INSTALLER_ZUCCHINI_IMAGE_UTILS_H_
 
-#include <cstdint>
+#include <stdint.h>
 
 #include "chrome/installer/zucchini/typed_value.h"
 
@@ -57,6 +57,19 @@ struct Reference {
 
 inline bool operator==(const Reference& a, const Reference& b) {
   return a.location == b.location && a.target == b.target;
+}
+
+// Helper functions to mark an offset_t, so we can distinguish file offsets from
+// Label indexes. Implementation: Marking is flagged by the most significant bit
+// (MSB).
+inline bool IsMarked(offset_t value) {
+  return value >> (sizeof(offset_t) * 8 - 1) != 0;
+}
+inline offset_t MarkIndex(offset_t value) {
+  return value | (offset_t(1) << (sizeof(offset_t) * 8 - 1));
+}
+inline offset_t UnmarkIndex(offset_t value) {
+  return value & ~(offset_t(1) << (sizeof(offset_t) * 8 - 1));
 }
 
 // An Equivalence is a block of length |length| that approximately match in
