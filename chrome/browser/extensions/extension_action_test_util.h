@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <string>
 
 #include "base/memory/ref_counted.h"
@@ -29,7 +30,7 @@ namespace extension_action_test_util {
 enum ActionType {
   NO_ACTION,
   PAGE_ACTION,
-  BROWSER_ACTION
+  BROWSER_ACTION,
 };
 
 // TODO(devlin): Should we also pull out methods to test browser actions?
@@ -53,7 +54,8 @@ scoped_refptr<const Extension> CreateActionExtension(const std::string& name,
 scoped_refptr<const Extension> CreateActionExtension(
     const std::string& name,
     ActionType action_type,
-    Manifest::Location location);
+    Manifest::Location location,
+    std::unique_ptr<base::DictionaryValue> extra_keys = nullptr);
 
 // Creates a new ToolbarActionsModel for the given |profile|, and associates
 // it with the profile as a keyed service.

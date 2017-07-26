@@ -113,7 +113,8 @@ scoped_refptr<const Extension> CreateActionExtension(const std::string& name,
 scoped_refptr<const Extension> CreateActionExtension(
     const std::string& name,
     ActionType action_type,
-    Manifest::Location location) {
+    Manifest::Location location,
+    std::unique_ptr<base::DictionaryValue> extra_keys) {
   DictionaryBuilder manifest;
   manifest.Set("name", name)
           .Set("description", "An extension")
@@ -135,11 +136,13 @@ scoped_refptr<const Extension> CreateActionExtension(
   if (action_key)
     manifest.Set(action_key, DictionaryBuilder().Build());
 
-  return ExtensionBuilder()
-      .SetManifest(manifest.Build())
+  ExtensionBuilder builder;
+  builder.SetManifest(manifest.Build())
       .SetID(crx_file::id_util::GenerateId(name))
-      .SetLocation(location)
-      .Build();
+      .SetLocation(location);
+  if (extra_keys)
+    builder.MergeManifest(std::move(extra_keys));
+  return builder.Build();
 }
 
 ToolbarActionsModel* CreateToolbarModelForProfile(Profile* profile) {
