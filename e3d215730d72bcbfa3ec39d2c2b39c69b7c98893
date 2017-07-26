@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "796094f3_7da8aed8",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-07-26T02:11:39Z",
+      "side": 1,
+      "message": "Don\u0027t want to open it in StartLoopback() instead? Right now you open it exactly once, when the instance is created, but it is deleted on the first call to StopLoopback() and never reopened after that.",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "e3d215730d72bcbfa3ec39d2c2b39c69b7c98893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
