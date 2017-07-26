@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b9dfe0a_a587d88c",
+        "filename": "ash/mus/wallpaper_delegate_mus.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Thanks for pointing it out. I guess somebody forgot removing wallpaper_layout.h earlier.",
+      "parentUuid": "027e60da_7615e2d4",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccc69ccb_bba69a91",
         "filename": "ash/public/cpp/wallpaper_struct_traits.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58ea8af_876ff61a",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccc69ccb_bba69a91",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "369398d4_293dacaa",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57619292_c75bd45c",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "500e364a_0013a214",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-26T20:07:16Z",
       "side": 1,
       "message": "do you really need to call RemoveObserver if you\u0027re about to delete the object?\n\nthis comment applies throughout the file: there are a lot of places where RemoveObserver is called just before the object is destroyed, but i\u0027m not sure whether that\u0027s necessary since this class also owns the object.",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc0c529_72adb418",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "I agree, but it\u0027s actually suggested by several reviewers. I think they just want it to be a standard practice to always remove Observer explicitly.",
+      "parentUuid": "500e364a_0013a214",
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f3946cd6_a4ddbd15",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Yes. (typedef uint32_t SkColor)",
+      "parentUuid": "6304f05e_ec6e08c9",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "112d428f_d20587d3",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 13
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0dfd67b2_48bdc4e0",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "That\u0027s actually suggested by a previous reviewer. I think they generally using base::Optional than an empty vector/string to denote the \u0027null\u0027 state.",
+      "parentUuid": "112d428f_d20587d3",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee3b1111_6818435b",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 13
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-26T20:07:16Z",
       "side": 1,
       "message": "instead of base::Optional, why not just make the member be a string and then do \"cache_id_ \u003d cache_id\" here? that seems equivalent, and then you don\u0027t need this method at all.",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809c3b3a_4cd07a22",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "That\u0027s also the suggestion from a reviewer. I think they generally do not want an empty string/vector or a null pointer to denote empty state, but rather use a non-existent Optional value to denote that.",
+      "parentUuid": "ee3b1111_6818435b",
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "8cfb3a6f_64601c4a",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d93333e6_92f36c55",
+      "range": {
+        "startLine": 483,
+        "startChar": 5,
+        "endLine": 483,
+        "endChar": 11
+      },
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f1d5a61_47fc19a3",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 13
@@ -155,6 +305,24 @@
       "writtenOn": "2017-07-26T20:07:16Z",
       "side": 1,
       "message": "would it be cleaner for the image itself to also be included in the WallpaperInfo struct, or is there a reason that\u0027s not possible?",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8239afca_d9f89232",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "That\u0027s not possible because WallpaperInfo must be stored in local state pref.",
+      "parentUuid": "2f1d5a61_47fc19a3",
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "4ae45e19_0102b63c",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59046f62_5cd7b9fe",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "242b42ea_1ed08eed",
         "filename": "components/wallpaper/wallpaper_info.h",
         "patchSetId": 13
@@ -206,6 +392,24 @@
       "writtenOn": "2017-07-26T20:07:16Z",
       "side": 1,
       "message": "use \u0027enum class\u0027 instead and give values names like \"CENTER\" and \"STRETCH\"",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ef0677_9376c263",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Can I prepare a separate CL to do this? That involves numerous files.",
+      "parentUuid": "242b42ea_1ed08eed",
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +430,24 @@
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6918607_923ca3ba",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "058d19eb_362ca47b",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +482,24 @@
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0c0766_a8254c85",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f872bd77_f8a5435e",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -351,6 +591,24 @@
       "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22605ace_c0b160e1",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4429dba6_2c26d59a",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
