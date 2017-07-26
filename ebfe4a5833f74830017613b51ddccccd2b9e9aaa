@@ -117,6 +117,30 @@
       "revId": "ebfe4a5833f74830017613b51ddccccd2b9e9aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d376cb_3eb873c7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-26T17:49:53Z",
+      "side": 1,
+      "message": "\u003e \u003e I think for overflow scroll scenario also this function gets called. If we dont add this check there are two tests which are crashing. I have pasted the callstack few days back, please check.\n\u003e Pasted callstack in the bug\n\nI see now that GetTickmarks is called at paint time by ScrollbarTheme, and every scrollbar will call it on the ScrollableArea that owns it.  So the IsRootLayer check makes sense.\n\nThe IsMainFrame check is still surprising because LocalFrameView::GetTickmarks doesn\u0027t have any similar check.  Does the crash happen when the main frame condition is removed?",
+      "parentUuid": "c322dfcb_7bc536ab",
+      "range": {
+        "startLine": 2045,
+        "startChar": 8,
+        "endLine": 2045,
+        "endChar": 32
+      },
+      "revId": "ebfe4a5833f74830017613b51ddccccd2b9e9aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
