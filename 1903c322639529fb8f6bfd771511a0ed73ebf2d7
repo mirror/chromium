@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1df9493_5c1e76a1",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-07-26T18:20:19Z",
+      "side": 1,
+      "message": "We never set the buttons for this hovering pen. Right? I suspect we probably should. WDYT?",
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
