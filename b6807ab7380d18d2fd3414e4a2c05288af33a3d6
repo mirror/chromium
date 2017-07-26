@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65c6ea87_2987aa32",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T04:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95117f99_da201889",
+      "revId": "b6807ab7380d18d2fd3414e4a2c05288af33a3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22d3ba30_0bec918b",
         "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b6807ab7380d18d2fd3414e4a2c05288af33a3d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0758108c_e9ffa369",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T04:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d3ba30_0bec918b",
+      "revId": "b6807ab7380d18d2fd3414e4a2c05288af33a3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
