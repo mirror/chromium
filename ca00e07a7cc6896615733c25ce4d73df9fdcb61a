@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0ada111_a759995b",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-26T15:53:29Z",
+      "side": 1,
+      "message": "You don\u0027t need this. It\u0027s better if you pass it into the Bind below:\n\n  app_instance-\u003eGetRecentAndSuggestedAppsFromPlayStore(\n      UTF16ToUTF8(query), max_results_,\n      base::Bind(\u0026ArcPlayStoreSearchProvider::OnResults,\n                 weak_ptr_factory_.GetWeakPtr(),\n                 base::TimeTicks::Now()));\n\nand receive it as a parameter in OnResults:\n\n    void ArcPlayStoreSearchProvider::OnResults(\n        base::TimeTicks query_start_time,\n        arc::mojom::AppDiscoveryRequestState state,\n        std::vector\u003carc::mojom::AppDiscoveryResultPtr\u003e results) {\n      ...\n    }",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c4cd66_40b7b002",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-26T15:53:29Z",
+      "side": 1,
+      "message": "It will never change within the same instance, but what happens if the caller decides to increment the value of |max_results_|? Wouldn\u0027t that invalidate all previous results?\n\nAs such, I\u0027m a bit afraid of this and I\u0027d rather have\n\n   constexpr int kHistogramBuckets \u003d 7;\n\nOr simply stop taking that as a parameter to have stronger guarantees about it never ever changing.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d624b1db_5003a52c",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-26T15:53:29Z",
+      "side": 1,
+      "message": "state@1 otherwise you\u0027ll break backwards compatibility.",
+      "range": {
+        "startLine": 267,
+        "startChar": 36,
+        "endLine": 267,
+        "endChar": 41
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143ec0b3_827c4241",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-26T15:53:29Z",
+      "side": 1,
+      "message": "results@0",
+      "range": {
+        "startLine": 267,
+        "startChar": 69,
+        "endLine": 267,
+        "endChar": 76
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
