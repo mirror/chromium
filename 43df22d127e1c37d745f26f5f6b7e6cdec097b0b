@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e815dcf8_7652f892",
+        "filename": "components/exo/compositor_rotation_lock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-26T20:01:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52e29a6_26b33ee7",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c540648c_26532938",
         "filename": "components/exo/compositor_rotation_lock.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T04:15:51Z",
       "side": 1,
       "message": "Should we use a serial instead for acks? What if the orientation changes multiple times without the client having a chance to ack it?",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad1e431_d9442e5d",
+        "filename": "components/exo/compositor_rotation_lock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-26T20:01:03Z",
+      "side": 1,
+      "message": "There is no request to changing rotation of the window from chrome. It is a side effect of rotating screen, and the actual change is asynchronous (it\u0027s a round trip all the way to from here to the activity manager/window manager then heree). I believe it will not help this case?",
+      "parentUuid": "c540648c_26532938",
       "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c8504a16_4c16dea3",
+        "filename": "components/exo/compositor_rotation_lock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-26T20:01:03Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "82ec1626_e4d1aacb",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ff481a9_cea871e1",
         "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4e3d4358_a136cb0f",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-26T20:01:03Z",
+      "side": 1,
+      "message": "Looks like there is discrepancy between Android and Chrome (I copied from Android side) I\u0027ll update Android side.",
+      "parentUuid": "8ff481a9_cea871e1",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37735140_32e2803f",
         "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-21T04:15:51Z",
       "side": 1,
       "message": "ditto",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9531c1_3096264c",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-26T20:01:03Z",
+      "side": 1,
+      "message": "same here",
+      "parentUuid": "37735140_32e2803f",
       "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
