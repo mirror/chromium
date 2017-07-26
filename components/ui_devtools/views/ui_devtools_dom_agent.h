@@ -20,6 +20,19 @@ class Window;
 
 namespace ui_devtools {
 
+enum RectPositionsType {
+  NO_DRAW,
+  R1_CONTAINS_R2,
+  R1_HORIZONTAL_LEFT_R2,
+  R1_TOP_FULL_LEFT_R2,
+  R1_BOTTOM_FULL_LEFT_R2,
+  R1_TOP_PARTIAL_LEFT_R2,
+  R1_BOTTOM_PARTIAL_LEFT_R2,
+  R1_INTERSECTS_R2
+};
+
+enum RectSide { TOP_SIDE, LEFT_SIDE, RIGHT_SIDE, BOTTOM_SIDE };
+
 class UIElement;
 
 class UIDevToolsDOMAgentObserver {
@@ -62,6 +75,11 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   ui_devtools::protocol::Response HighlightNode(int node_id,
                                                 bool show_size = false);
   void FindElementByEventHandler(const gfx::Point& p, int* element_id);
+  void ShowDistances(int pinned_id, int element_id);
+  void Draw_R1_CONTAINS_R2(const gfx::RectF& pinned_rectF,
+                           const gfx::RectF& hovered_rectF,
+                           const cc::PaintFlags& flags,
+                           gfx::Canvas* canvas_);
 
   // ui::LayerDelegate:
   void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
@@ -95,11 +113,16 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
 
   bool is_building_tree_;
   bool show_size_on_canvas_;
+  int show_distances_;
+  bool is_swap_;
   std::unique_ptr<UIElement> window_element_root_;
   std::unordered_map<int, UIElement*> node_id_to_ui_element_;
   std::unique_ptr<ui::Layer> layer_for_highlighting_;
+  std::unique_ptr<ui::Layer> layer_for_distances_;
+
   gfx::Rect screen_bounds;
-  gfx::Rect hovered_element_bounds;
+  gfx::Rect hovered_rect;
+  gfx::Rect pinned_rect;
   std::vector<aura::Window*> root_windows_;
   base::ObserverList<UIDevToolsDOMAgentObserver> observers_;
 
