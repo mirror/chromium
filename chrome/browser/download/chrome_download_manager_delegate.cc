@@ -33,6 +33,7 @@
 #include "chrome/browser/download/download_stats.h"
 #include "chrome/browser/download/download_target_determiner.h"
 #include "chrome/browser/download/save_package_file_picker.h"
+#include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
@@ -46,6 +47,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/history/core/browser/history_service.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
@@ -87,6 +89,11 @@ using safe_browsing::DownloadFileType;
 using safe_browsing::DownloadProtectionService;
 
 namespace {
+
+// The first id assigned to a download when download database failed to
+// initialize.
+const uint32_t kFirstDownloadIdNoPersist =
+    content::DownloadItem::kInvalidId + 1;
 
 #if defined(FULL_SAFE_BROWSING)
 
@@ -252,8 +259,11 @@ void ChromeDownloadManagerDelegate::SetNextId(uint32_t next_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!profile_->IsOffTheRecord());
   DCHECK_NE(content::DownloadItem::kInvalidId, next_id);
-  next_download_id_ = next_id;
 
+  // The next download id is decided, run all the |id_callbacks_| to start
+  // the downloads.
+  RecordDatabaseAvailability(database_available_);
+  next_download_id_ = next_id;
   IdCallbackVector callbacks;
   id_callbacks_.swap(callbacks);
   for (IdCallbackVector::const_iterator it = callbacks.begin();
@@ -270,10 +280,20 @@ void ChromeDownloadManagerDelegate::GetNextId(
         profile_->GetOriginalProfile())->GetDelegate()->GetNextId(callback);
     return;
   }
+
   if (next_download_id_ == content::DownloadItem::kInvalidId) {
     id_callbacks_.push_back(callback);
+    history::HistoryService* history = HistoryServiceFactory::GetForProfile(
+        profile_, ServiceAccessType::EXPLICIT_ACCESS);
+    if (history->backend_loaded()) {
+      database_available_ = false;
+      // 0 will be returned only when history database failed to initialize. In
+      // this case, All downloads in this browser session will not be persisted.
+      SetNextId(kFirstDownloadIdNoPersist);
+    }
     return;
   }
+
   ReturnNextId(callback);
 }
 
