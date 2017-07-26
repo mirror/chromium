@@ -1,0 +1,17 @@
+{
+  "name": "file_unittests",
+  "display_name": "File Service Tests",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "service_manager:service_factory": [
+          "service_manager::mojom::ServiceFactory"
+        ]
+      },
+      "requires": {
+        "file": [ "file:restricted_filesystem" ],
+        "service_manager": [ "service_manager:service_manager" ]
+      }
+    }
+  }
+}
