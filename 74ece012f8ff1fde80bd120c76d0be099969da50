@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d108ad84_71e1464a",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T23:57:22Z",
+      "side": 1,
+      "message": "Comments are a bit out of date.",
+      "range": {
+        "startLine": 1090,
+        "startChar": 32,
+        "endLine": 1090,
+        "endChar": 46
+      },
+      "revId": "74ece012f8ff1fde80bd120c76d0be099969da50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
