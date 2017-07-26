@@ -15,6 +15,7 @@ namespace switches {
 APP_LIST_EXPORT extern const char kCustomLauncherPage[];
 APP_LIST_EXPORT extern const char kDisableAppListDismissOnBlur[];
 APP_LIST_EXPORT extern const char kEnableAppList[];
+APP_LIST_EXPORT extern const char kEnableBackgroundBlur[];
 APP_LIST_EXPORT extern const char kEnableFullscreenAppList[];
 APP_LIST_EXPORT extern const char kEnableSyncAppList[];
 APP_LIST_EXPORT extern const char kDisableSyncAppList[];
