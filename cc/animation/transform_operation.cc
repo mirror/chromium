@@ -14,6 +14,7 @@
 #include "base/logging.h"
 #include "cc/animation/transform_operation.h"
 #include "cc/animation/transform_operations.h"
+#include "cc/base/math_util.h"
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/transform_util.h"
@@ -116,36 +117,44 @@ void TransformOperation::Bake() {
   }
 }
 
-bool TransformOperation::operator==(const TransformOperation& other) const {
+bool TransformOperation::ApproximatelyEqual(const TransformOperation& other,
+                                            SkMScalar tolerance) const {
   if (type != other.type)
     return false;
   switch (type) {
     case TransformOperation::TRANSFORM_OPERATION_TRANSLATE:
-      return translate.x == other.translate.x &&
-             translate.y == other.translate.y &&
-             translate.z == other.translate.z;
+      return MathUtil::ApproximatelyEqual(translate.x, other.translate.x,
+                                          tolerance) &&
+             MathUtil::ApproximatelyEqual(translate.y, other.translate.y,
+                                          tolerance) &&
+             MathUtil::ApproximatelyEqual(translate.z, other.translate.z,
+                                          tolerance);
     case TransformOperation::TRANSFORM_OPERATION_ROTATE:
-      return rotate.axis.x == other.rotate.axis.x &&
-             rotate.axis.y == other.rotate.axis.y &&
-             rotate.axis.z == other.rotate.axis.z &&
-             rotate.angle == other.rotate.angle;
+      return MathUtil::ApproximatelyEqual(rotate.axis.x, other.rotate.axis.x,
+                                          tolerance) &&
+             MathUtil::ApproximatelyEqual(rotate.axis.y, other.rotate.axis.y,
+                                          tolerance) &&
+             MathUtil::ApproximatelyEqual(rotate.axis.z, other.rotate.axis.z,
+                                          tolerance) &&
+             MathUtil::ApproximatelyEqual(rotate.angle, other.rotate.angle,
+                                          tolerance);
     case TransformOperation::TRANSFORM_OPERATION_SCALE:
-      return scale.x == other.scale.x && scale.y == other.scale.y &&
-             scale.z == other.scale.z;
+      return MathUtil::ApproximatelyEqual(scale.x, other.scale.x, tolerance) &&
+             MathUtil::ApproximatelyEqual(scale.y, other.scale.y, tolerance) &&
+             MathUtil::ApproximatelyEqual(scale.z, other.scale.z, tolerance);
     case TransformOperation::TRANSFORM_OPERATION_SKEW:
-      return skew.x == other.skew.x && skew.y == other.skew.y;
+      return MathUtil::ApproximatelyEqual(skew.x, other.skew.x, tolerance) &&
+             MathUtil::ApproximatelyEqual(skew.y, other.skew.y, tolerance);
     case TransformOperation::TRANSFORM_OPERATION_PERSPECTIVE:
-      return perspective_depth == other.perspective_depth;
+      return MathUtil::ApproximatelyEqual(perspective_depth,
+                                          other.perspective_depth, tolerance);
     case TransformOperation::TRANSFORM_OPERATION_MATRIX:
+      return matrix.ApproximatelyEqual(other.matrix);
     case TransformOperation::TRANSFORM_OPERATION_IDENTITY:
-      return matrix == other.matrix;
+      return other.matrix.IsIdentity();
   }
   NOTREACHED();
   return false;
-}
-
-bool TransformOperation::operator!=(const TransformOperation& other) const {
-  return !(*this == other);
 }
 
 bool TransformOperation::BlendTransformOperations(
