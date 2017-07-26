@@ -276,6 +276,7 @@ class VariationsServiceTest : public ::testing::Test {
     VariationsService::RegisterPrefs(prefs_.registry());
     metrics::CleanExitBeacon::RegisterPrefs(prefs_.registry());
     metrics::MetricsStateManager::RegisterPrefs(prefs_.registry());
+    VariationsService::EnableForTesting();
   }
 
   metrics::MetricsStateManager* GetMetricsStateManager() {
