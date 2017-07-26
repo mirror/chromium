@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76b5d7f_6d0d9fcc",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T00:50:02Z",
+      "side": 1,
+      "message": "Should ResolveJavascriptCallback be called even if the if() {..} a few lines above did not schedule anything?",
+      "revId": "115e9cb3a8ae33576551874bbb2d9e79f7a76547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222c1363_ffd9de58",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T00:50:02Z",
+      "side": 1,
+      "message": "Same question here.",
+      "revId": "115e9cb3a8ae33576551874bbb2d9e79f7a76547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
