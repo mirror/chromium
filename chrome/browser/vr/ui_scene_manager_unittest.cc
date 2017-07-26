@@ -130,7 +130,6 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
   MakeManager(kNotInCct, kNotInWebVr);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
-  manager_->SetFullscreen(true);
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
   task_runner_->FastForwardUntilNoTasksRemain();
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
@@ -142,6 +141,16 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
 
   manager_->SetWebVrMode(false, false);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
+}
+
+TEST_F(UiSceneManagerTest, GridLayout) {
+  base::ScopedMockTimeMessageLoopTaskRunner task_runner_;
+
+  MakeManager(kNotInCct, kNotInWebVr);
+  scene_->OnBeginFrame(base::TimeTicks());
+  manager_->OnAppButtonClicked();
+  scene_->OnBeginFrame(base::TimeTicks::FromInternalValue(16000));
+  scene_->OnBeginFrame(base::TimeTicks::FromInternalValue(216000));
 }
 
 TEST_F(UiSceneManagerTest, CloseButtonVisibleInCctFullscreen) {
