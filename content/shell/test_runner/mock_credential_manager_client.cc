@@ -21,6 +21,38 @@ void MockCredentialManagerClient::SetResponse(
   credential_.reset(credential);
 }
 
+void MockCredentialManagerClient::SetWebauthResponse(
+    const std::string& id,
+    const std::string& client_data_json,
+    const std::string& attestation_object,
+    const std::string& authenticator_data,
+    const std::string& signature) {
+  webauth::mojom::blink::PublicKeyCredentialInfoPtr credential =
+      webauth::mojom::blink::PublicKeyCredentialInfo::New();
+  base::Base64Encode(id, &credentialInfo->id);
+  credential->rawId = id;
+  credential->client_data =
+      std::vector<uint8_t>(client_data_json.begin(), client_data_json.end());
+  webauth::mojom::blink::AuthenticatorResponse response =
+      new webauth::mojom::blink::AuthenticatorResponse();
+  if (!attestation_object.empty()) {
+    response.attestation_object = attestation_object;
+  }
+  if (!authenticator_data.empty()) {
+    response.authenticator_data = authenticator_data;
+  }
+  if (!signature.empty()) {
+    response.signature = authenticator_data;
+  }
+  credential->response = response;
+  publicKeyCredential_.reset(credential);
+}
+
+void MockCredentialManagerClient::SetWebauthResponse(
+    webauth::mojom::blink::PublicKeyCredentialInfoPtr credential) {
+  publicKeyCredential_.reset(credential);
+}
+
 void MockCredentialManagerClient::SetError(const std::string& error) {
   if (error == "pending")
     error_ = blink::kWebCredentialManagerPendingRequestError;
@@ -56,5 +88,15 @@ void MockCredentialManagerClient::DispatchGet(
     callbacks->OnSuccess(std::move(credential_));
   delete callbacks;
 }
-
+/*
+void MockredentialManagerClient::DispatchMakeCredential(
+    blink::LocalFrame* frame,
+    blink::MakeCredentialOptions options,
+    blink::WebAuthenticationClient::PublicKeyCreateCallbacks* callbacks) {
+  if (error_ != blink::kWebCredentialManagerNoError)
+    callbacks->OnError(error_);
+  else
+    callbacks->OnSuccess(std::move(credential_));
+  delete callbacks;
+}*/
 }  // namespace test_runner
