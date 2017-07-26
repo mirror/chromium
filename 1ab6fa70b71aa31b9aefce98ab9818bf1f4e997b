@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afdd217c_d0bb5950",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-26T19:36:04Z",
+      "side": 1,
+      "message": "Can you add a comment?",
+      "range": {
+        "startLine": 197,
+        "startChar": 5,
+        "endLine": 197,
+        "endChar": 22
+      },
+      "revId": "1ab6fa70b71aa31b9aefce98ab9818bf1f4e997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
