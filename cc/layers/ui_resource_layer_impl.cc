@@ -117,7 +117,7 @@ void UIResourceLayerImpl::AppendQuads(
   DCHECK(!bounds().IsEmpty());
 
   bool opaque = layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_) ||
-                contents_opaque();
+                IsContentsOpaque();
 
   gfx::Rect quad_rect(bounds());
   gfx::Rect opaque_rect(opaque ? quad_rect : gfx::Rect());
