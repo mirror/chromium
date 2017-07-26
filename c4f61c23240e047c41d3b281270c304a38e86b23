@@ -16,6 +16,24 @@
       "revId": "c4f61c23240e047c41d3b281270c304a38e86b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30ef82f_f22804b4",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-26T14:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "168f344c_7392a276",
+      "revId": "c4f61c23240e047c41d3b281270c304a38e86b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
