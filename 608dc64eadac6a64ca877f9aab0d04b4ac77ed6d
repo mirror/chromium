@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1bb491e_0d3f3ae0",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-26T18:28:14Z",
+      "side": 1,
+      "message": "nit: viz.mojom is unnecessary.",
+      "revId": "608dc64eadac6a64ca877f9aab0d04b4ac77ed6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ddb843a_01d03a3a",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-26T18:28:14Z",
+      "side": 1,
+      "message": "nit: viz.mojom is unnecessary.",
+      "revId": "608dc64eadac6a64ca877f9aab0d04b4ac77ed6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41623cb7_896c0be5",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-26T18:28:14Z",
+      "side": 1,
+      "message": "nit: viz.mojom is unnecessary.",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "608dc64eadac6a64ca877f9aab0d04b4ac77ed6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f90b7e2_d3eb74d2",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-26T18:28:14Z",
+      "side": 1,
+      "message": "nit: viz.mojom is unnecessary.",
+      "revId": "608dc64eadac6a64ca877f9aab0d04b4ac77ed6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1ba672_36d91ad9",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-26T18:28:14Z",
+      "side": 1,
+      "message": "nit: viz.mojom is unnecessary.",
+      "revId": "608dc64eadac6a64ca877f9aab0d04b4ac77ed6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
