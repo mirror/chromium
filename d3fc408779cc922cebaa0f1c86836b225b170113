@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "8325098e_f9183552",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-26T20:24:00Z",
+      "side": 1,
+      "message": "I think all the navigate/reload stuff should work differently in the new test runner,",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49db6d19_9627eb57",
         "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
         "patchSetId": 6
