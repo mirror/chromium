@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/command_line.h"
+#include "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_nsautorelease_pool.h"
 #include "base/mac/sdk_forward_declarations.h"
@@ -1721,6 +1722,16 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
   // the tab has already been rendered, so re-layout the tabstrip. In all other
   // cases, the state is set before the tab is rendered so this isn't needed.
   [self layoutTabs];
+}
+
+- (void)tabNeedsAttentionAt:(NSInteger)modelIndex {
+  // Take closing tabs into account.
+  NSInteger index = [self indexFromModelIndex:modelIndex];
+
+  TabController* tabController =
+      base::mac::ObjCCastStrict<TabController>([tabArray_ objectAtIndex:index]);
+
+  [tabController setNeedsAttention];
 }
 
 - (void)setFrame:(NSRect)frame ofTabView:(NSView*)view {
