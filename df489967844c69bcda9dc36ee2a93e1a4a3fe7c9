@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4d13f4_0ed02acd",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T20:13:55Z",
+      "side": 1,
+      "message": "Does https://cs.chromium.org/chromium/src/chrome/browser/resources/offline_pages/offline_internals_browser_proxy.js?type\u003dcs\u0026l\u003d125 need to be updated too? Shouldn\u0027t it declare\n@return {!Proimse\u003cstring\u003e}",
+      "revId": "df489967844c69bcda9dc36ee2a93e1a4a3fe7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
