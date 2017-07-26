@@ -5,7 +5,7 @@
 #ifndef COMPONENTS_VIZ_HOST_FRAME_SINK_OBSERVER_H_
 #define COMPONENTS_VIZ_HOST_FRAME_SINK_OBSERVER_H_
 
-namespace cc {
+namespace viz {
 class SurfaceInfo;
 }
 
@@ -15,7 +15,7 @@ class FrameSinkObserver {
  public:
   // Runs when a CompositorFrame is received for the given SurfaceInfo for the
   // first time.
-  virtual void OnSurfaceCreated(const SurfaceInfo& surface_info) = 0;
+  virtual void OnSurfaceCreated(const viz::SurfaceInfo& surface_info) = 0;
 
  protected:
   ~FrameSinkObserver() {}
