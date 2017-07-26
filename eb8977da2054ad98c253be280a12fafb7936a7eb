@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "723938be_48dd7874",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:27:28Z",
+      "side": 1,
+      "message": "Can you omit this repeated allow rule and use multiple subpaths rules like above?",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d716e9b_a780e088",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:27:28Z",
+      "side": 1,
+      "message": "Out of curiosity, what framework is loaded from here?",
+      "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
