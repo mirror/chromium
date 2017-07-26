@@ -141,7 +141,9 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
         }
 
         Tab loadingTab = openUrl(windowOpenDisposition, loadUrlParams);
-        if (loadingTab != null) SuggestionsMetrics.recordVisit(loadingTab, article);
+        if (loadingTab != null && loadingTab.getWebContents() != null) {
+            SuggestionsMetrics.recordVisit(loadingTab, article);
+        }
     }
 
     @Override
