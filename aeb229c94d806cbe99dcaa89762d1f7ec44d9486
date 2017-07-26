@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d8f25aa_728cd8ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "890d82cf_5a6182be",
+      "range": {
+        "startLine": 8,
+        "startChar": 43,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "892c5567_3c987c13",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7aca79c8_72d9154a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "892c5567_3c987c13",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db7d283c_835cc991",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e083c2_8557260b",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db7d283c_835cc991",
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "b47bafed_5af7a706",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "307d1d79_4231a52d",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d628f928_5ee1bedd",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d195435_588baf96",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d628f928_5ee1bedd",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "7db52a13_966c6087",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d277ea3_e7fa34aa",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b7dae6b_88742240",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
         "patchSetId": 2
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "2491f0f4_4b77afbe",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Done, removed \u0027static. Non need.",
+      "parentUuid": "5b7dae6b_88742240",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 6
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73a992af_43ee3051",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
         "patchSetId": 2
@@ -168,6 +330,30 @@
       "writtenOn": "2017-07-26T05:10:09Z",
       "side": 1,
       "message": "This method is really readable.\nI am very happy with the time we spent coming up with this stuff.",
+      "range": {
+        "startLine": 85,
+        "startChar": 49,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f797824e_4417e50e",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Yep, me too!",
+      "parentUuid": "73a992af_43ee3051",
       "range": {
         "startLine": 85,
         "startChar": 49,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "0c89e7f7_cad755cf",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "I believe it is. It\u0027s equivalent to \"return std::unique_ptr\u003c...\u003e()\"",
+      "parentUuid": "262c6039_31d62041",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba0bb251_e8218cd6",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
         "patchSetId": 2
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "12ac6be6_d087581e",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "It can and we should have UMA here. But other than that, perhaps nothing for now, unless UMA shows there is an issue. Added TODO as we\u0027ll add UMA later.",
+      "parentUuid": "ba0bb251_e8218cd6",
+      "range": {
+        "startLine": 157,
+        "startChar": 36,
+        "endLine": 157,
+        "endChar": 42
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdfba616_efc95330",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
         "patchSetId": 2
@@ -237,6 +471,24 @@
       "writtenOn": "2017-07-26T05:10:09Z",
       "side": 1,
       "message": "Asking for completeness:\nstd::vector supports move semantics.\nIs there specific benefit to wrapping things in unique_ptr?",
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eaa59ce_bc73adcd",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "I think you are right and it can be just std::vector\u003c\u003e. \nI tried to change and then realized that I like to be able to \"return nullptr;\" as early return from the FooSync() function when things fail... Or I would have to return a pair which is a tad less obvious...",
+      "parentUuid": "fdfba616_efc95330",
       "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "7e10146a_65dc6fa5",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "While it\u0027s less important now to keep compat, I agree the better habit would be not to do that. Updated.",
+      "parentUuid": "8defb3d4_c4443a81",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 19
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "222a5348_20a4f7f2",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
         "patchSetId": 2
@@ -286,6 +562,30 @@
       "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd006e72_e8ccc863",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T22:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "222a5348_20a4f7f2",
+      "range": {
+        "startLine": 81,
+        "startChar": 30,
+        "endLine": 81,
+        "endChar": 51
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
