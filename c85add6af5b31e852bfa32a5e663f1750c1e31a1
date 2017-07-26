@@ -22,6 +22,30 @@
       "revId": "c85add6af5b31e852bfa32a5e663f1750c1e31a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f975189b_7c48a121",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-26T18:25:55Z",
+      "side": 1,
+      "message": "Yes, browser validates the security_origin. Please see https://chromium-review.googlesource.com/c/579318/7/content/browser/renderer_host/media/media_stream_dispatcher_host.cc#104",
+      "parentUuid": "04846620_8d7e5c20",
+      "range": {
+        "startLine": 39,
+        "startChar": 41,
+        "endLine": 39,
+        "endChar": 74
+      },
+      "revId": "c85add6af5b31e852bfa32a5e663f1750c1e31a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
