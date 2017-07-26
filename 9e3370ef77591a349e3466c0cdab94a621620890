@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5396fc8_a576667d",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:18:44Z",
+      "side": 1,
+      "message": "I think we don\u0027t need a new public property on files-quick-view to blacklist the filetype.\nMaking |contentUrl| empty and |browsable| false for blacklisted files should be sufficient.",
+      "revId": "9e3370ef77591a349e3466c0cdab94a621620890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30ddd43_57c56e57",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:18:44Z",
+      "side": 1,
+      "message": "We should be able to show preview of TIFF file if it is on Google Drive. (Preview is provided from the server)",
+      "revId": "9e3370ef77591a349e3466c0cdab94a621620890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f114a9e_6166c0b7",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:18:44Z",
+      "side": 1,
+      "message": "How about modifying params.contentUrl and params.browsable here for blacklisted files?",
+      "revId": "9e3370ef77591a349e3466c0cdab94a621620890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
