@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50066630_08c7eae1",
+        "filename": "chrome/renderer/page_load_metrics/fake_page_timing_sender.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T18:55:29Z",
+      "side": 1,
+      "message": "can we make this a const reference like the others? and can we make new_features the third arg, to match other similar method signatures?",
+      "revId": "df9a95ecb839c424d5914a939ead5016294a7b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3bb70a_4c3ef467",
+        "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T18:55:29Z",
+      "side": 1,
+      "message": "is this change needed?",
+      "revId": "df9a95ecb839c424d5914a939ead5016294a7b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76074008_00d7609c",
+        "filename": "chrome/renderer/page_load_metrics/page_timing_metrics_sender.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T18:55:29Z",
+      "side": 1,
+      "message": "i notice we use int32_t here and size_t in the browser-side code. any reason not to make them use the same type?",
+      "revId": "df9a95ecb839c424d5914a939ead5016294a7b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32997669_1643ef35",
+        "filename": "chrome/renderer/page_load_metrics/page_timing_sender.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T18:55:29Z",
+      "side": 1,
+      "message": "same - let\u0027s make features the last arg to this function, as it better matches other method ordering.",
+      "revId": "df9a95ecb839c424d5914a939ead5016294a7b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
