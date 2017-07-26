@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c7fadb6_791698e5",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T01:24:56Z",
+      "side": 1,
+      "message": "can we not replace all this by simply:\nif(n_d_t_c + i_f_d_c \u003e\u003d max_delayable_request_)",
+      "range": {
+        "startLine": 810,
+        "startChar": 8,
+        "endLine": 812,
+        "endChar": 66
+      },
+      "revId": "bf6633168a4e9d6d3338f6b2b4b21c1230e7f975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b92f2b3_4b4c5b68",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T01:24:56Z",
+      "side": 1,
+      "message": "use {...} since the if-conditional spans multiple lines.",
+      "range": {
+        "startLine": 1313,
+        "startChar": 33,
+        "endLine": 1313,
+        "endChar": 0
+      },
+      "revId": "bf6633168a4e9d6d3338f6b2b4b21c1230e7f975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794e02b4_11dafb66",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T01:24:56Z",
+      "side": 1,
+      "message": "use {...} since the if-conditional spans multiple lines.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 15,
+        "endLine": 1319,
+        "endChar": 48
+      },
+      "revId": "bf6633168a4e9d6d3338f6b2b4b21c1230e7f975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390d938a_81194a80",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T01:24:56Z",
+      "side": 1,
+      "message": "No need for else.",
+      "range": {
+        "startLine": 1321,
+        "startChar": 2,
+        "endLine": 1321,
+        "endChar": 6
+      },
+      "revId": "bf6633168a4e9d6d3338f6b2b4b21c1230e7f975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
