@@ -142,6 +142,41 @@
     },
     {
       "key": {
+        "uuid": "a582f3ed_14f10809",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3320,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-26T20:58:02Z",
+      "side": 1,
+      "message": "I see, thanks for the pointer.",
+      "parentUuid": "4ec2e845_ae895c4a",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4ab65f_a46ee823",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-26T20:58:02Z",
+      "side": 1,
+      "message": "I\u0027m forever confused about icc_profile_sk_color_space_.\n\nwei was looking at memcpying these types into shm to send in CompositorFrames but there\u0027s this sk_sp. This code is ignoring that also, and maybe the whole pickle thing is to work around that pointer, where we could just cast/copy into an aligned memory buffer instead?\n\nIs it okay to just ignore it here?",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "909ca4c0_66526f5d",
         "filename": "ui/gfx/color_space.h",
         "patchSetId": 7
@@ -171,6 +206,24 @@
       "side": 1,
       "message": "gpu/command_buffer doesn\u0027t and shouldn\u0027t depend on IPC, so we need to have this directly in gfx::ColorSpace.",
       "parentUuid": "909ca4c0_66526f5d",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da56f941_1e591aff",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-26T20:58:02Z",
+      "side": 1,
+      "message": "nit: WriteToPickle",
+      "parentUuid": "a09b3579_d20b762c",
       "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
