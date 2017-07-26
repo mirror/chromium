@@ -52,6 +52,24 @@
       "revId": "2d13e932756e29269800c356c33134e8540fe148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f77f77_eccbdc77",
+        "filename": "chrome/android/webapk/shell_apk/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-26T20:04:45Z",
+      "side": 1,
+      "message": "Sorry for the typo. I tested PresubmitNotifyResult and it\u0027s the one to display the text.\nMaybe change PresubmitError to PresubmitPromptWarning instead?",
+      "parentUuid": "d359c2fd_8101484b",
+      "revId": "2d13e932756e29269800c356c33134e8540fe148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
