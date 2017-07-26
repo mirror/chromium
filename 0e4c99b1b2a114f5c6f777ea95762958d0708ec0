@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4ba481_0ad7af82",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-26T06:03:24Z",
+      "side": 1,
+      "message": "Please make this cross origin as well.",
+      "revId": "0e4c99b1b2a114f5c6f777ea95762958d0708ec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
