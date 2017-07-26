@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5548aee3_14b52595",
+        "filename": "chrome/common/extensions/api/notifications/notification_style.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "Yes, NotificationViewMD.",
+      "parentUuid": "b955a1a8_b2302c05",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19359c3c_68ec390c",
         "filename": "ui/message_center/cocoa/notification_controller.mm",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T10:37:42Z",
       "side": 1,
       "message": "Does this mean that anyone using the Cocoa notifications (which can still be used through chrome://flags) will now crash? That\u0027s not great. Can we just leave the code as-is instead?",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b2b2d7_4e63058d",
+        "filename": "ui/message_center/cocoa/notification_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "I removed message_center::GetImageSizeForContainerSize (as well as some of the constants) that this depends on, so it\u0027s not as simple as leaving the code as-is.\n\nI\u0027ve changed this to completely remove the createImageBox function, and simply not show an image at all on macOS. So shouldn\u0027t crash at least.\n\nHow long till Cocoa notifications get removed from the codebase?",
+      "parentUuid": "19359c3c_68ec390c",
       "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2602362b_d349f1bf",
+        "filename": "ui/message_center/message_center_style.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "It might be because of the variable name, but to me `border.width()` very strongly implies a value that is applied equally to both the left and right, rather than being the sum of the left and right. So I find it much clearer to be explicit here.",
+      "parentUuid": "87380533_34980bcd",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55cebc9f_ef687af9",
         "filename": "ui/message_center/message_center_style.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fd5682_3a07a670",
+        "filename": "ui/message_center/message_center_style.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55cebc9f_ef687af9",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "51b52220_694f2950",
+        "filename": "ui/message_center/message_center_style.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d70f8162_70b056cb",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "779d383c_4f997421",
         "filename": "ui/message_center/views/proportional_image_view.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7acb68_3414d73f",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "The scale factor applied in scaled_size is already appropriate to the image, but it hasn\u0027t yet been cropped. I refactored this a little, and made CalculateCropRectAndDrawSize return a crop_rect and draw_size instead, so callers never encounter scaled_size. It seems clearer now.",
+      "parentUuid": "779d383c_4f997421",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1e157ed6_ea9e6487",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "Actually it looks equivalent, since both cropping and scaling seem to happen lazily via ImageSkiaSource objects. Removed the comment.",
+      "parentUuid": "636ab994_01447d3a",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2951bcfb_d4da5312",
         "filename": "ui/message_center/views/proportional_image_view.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2475b16_505c975c",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "I changed this to CalculateCropRectAndDrawSize so this method now calculates draw_size after cropping, which should be clearer.",
+      "parentUuid": "2951bcfb_d4da5312",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f2e294a4_914b9360",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "There is no IsEmpty method on gfx::ImageSkia?",
+      "parentUuid": "cd4f7983_cf0b76a0",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "938559e7_09f26d40",
         "filename": "ui/message_center/views/proportional_image_view.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d7238c_67c0b9b6",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "938559e7_09f26d40",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "435bacb8_b266e0d0",
+        "filename": "ui/message_center/views/proportional_image_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe3b0ce1_68eb9eed",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92a8e9bb_4a4099bc",
         "filename": "ui/message_center/views/proportional_image_view.h",
         "patchSetId": 2
@@ -203,6 +401,24 @@
       "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b994acd2_cb8b18c6",
+        "filename": "ui/message_center/views/proportional_image_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T17:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92a8e9bb_4a4099bc",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
