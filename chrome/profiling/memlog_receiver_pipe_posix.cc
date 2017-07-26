@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/threading/thread.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "chrome/profiling/memlog_stream_receiver.h"
 #include "mojo/edk/embedder/platform_channel_utils_posix.h"
 #include "mojo/edk/embedder/platform_handle.h"
@@ -59,6 +60,7 @@ void MemlogReceiverPipe::OnFileCanReadWithoutBlocking(int fd) {
           base::BindOnce(&MemlogStreamReceiver::OnStreamData, receiver_,
                          std::move(read_buffer_), bytes_read));
       read_buffer_.reset(new char[kReadBufferSize]);
+      num_msgs_received_++;
       return;
     } else if (bytes_read == 0) {
       // Other end closed the pipe.
