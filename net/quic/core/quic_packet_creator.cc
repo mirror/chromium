@@ -272,8 +272,8 @@ void QuicPacketCreator::Flush() {
     return;
   }
 
-  QUIC_CACHELINE_ALIGNED char seralized_packet_buffer[kMaxPacketSize];
-  SerializePacket(seralized_packet_buffer, kMaxPacketSize);
+  QUIC_CACHELINE_ALIGNED char serialized_packet_buffer[kMaxPacketSize];
+  SerializePacket(serialized_packet_buffer, kMaxPacketSize);
   OnSerializedPacket();
 }
 
