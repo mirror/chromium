@@ -19,6 +19,7 @@
 #include "components/exo/layer_tree_frame_sink_holder.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
 #include "ui/compositor/compositor_vsync_manager.h"
@@ -37,6 +38,7 @@ class Path;
 
 namespace exo {
 class Buffer;
+class DataEventDispatcher;
 class Pointer;
 class SurfaceDelegate;
 class SurfaceObserver;
@@ -56,11 +58,13 @@ class Surface : public ui::ContextFactoryObserver,
                 public aura::WindowObserver,
                 public ui::PropertyHandler,
                 public ui::CompositorVSyncManager::Observer,
-                public cc::BeginFrameObserverBase {
+                public cc::BeginFrameObserverBase,
+                public aura::client::DragDropDelegate {
  public:
   using PropertyDeallocator = void (*)(int64_t value);
 
   Surface();
+  Surface(DataEventDispatcher* data_event_dispatcher);
   ~Surface() override;
 
   // Type-checking downcast routine.
@@ -222,6 +226,12 @@ class Surface : public ui::ContextFactoryObserver,
   bool OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) override;
   void OnBeginFrameSourcePausedChanged(bool paused) override {}
 
+  // Overriden from aura::client::DragDropDelegate:
+  void OnDragEntered(const ui::DropTargetEvent& event) override;
+  int OnDragUpdated(const ui::DropTargetEvent& event) override;
+  void OnDragExited() override;
+  int OnPerformDrop(const ui::DropTargetEvent& event) override;
+
  private:
   struct State {
     State();
@@ -373,6 +383,9 @@ class Surface : public ui::ContextFactoryObserver,
   cc::BeginFrameSource* begin_frame_source_ = nullptr;
   bool needs_begin_frame_ = false;
   viz::BeginFrameAck current_begin_frame_ack_;
+
+  // Data device manager for drag and drop and clipboard.
+  DataEventDispatcher* data_event_dispatcher_;
 
   DISALLOW_COPY_AND_ASSIGN(Surface);
 };
