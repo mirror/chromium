@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b930f761_2add1fb0",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-26T01:17:23Z",
+      "side": 1,
+      "message": "The comment for DataDeviceDelegate and other delegates in exo (e.g. PointerDelegate) says OnXXXDestroying is invoked at the top of destructor. So let me keep this as it is for consistency.",
+      "parentUuid": "f918be46_f613b53a",
+      "revId": "2675b7e670b09ff2aa5d01b03f98709a26cfcadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "369cbf72_b4b5b8a9",
         "filename": "components/exo/data_device.h",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5030eb5e_f7c43ced",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-26T01:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369cbf72_b4b5b8a9",
+      "revId": "2675b7e670b09ff2aa5d01b03f98709a26cfcadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5894fcef_9c03a2b6",
         "filename": "components/exo/display.cc",
         "patchSetId": 14
@@ -50,6 +86,24 @@
       "revId": "2675b7e670b09ff2aa5d01b03f98709a26cfcadd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7737eace_b2adad6f",
+        "filename": "components/exo/display.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-26T01:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5894fcef_9c03a2b6",
+      "revId": "2675b7e670b09ff2aa5d01b03f98709a26cfcadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
