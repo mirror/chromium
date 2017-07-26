@@ -22,6 +22,132 @@
       "revId": "65f326507fd7066029bed920a4497315f859e54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77af8dae_d929c0b8",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 1,
+      "message": "Yes, we can\u0027t do this. Can\u0027t the functions start_time() and Abort() etc be virtual functions on the superclass?",
+      "parentUuid": "58f9ebe3_321e36a6",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69950a24_302c783e",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 1,
+      "message": "nit: PushOntoJobQueue() is more grammatical.",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de62f959_ee6c1832",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 1,
+      "message": "MaybeTimeoutJobs()",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34053cc8_b7f65f88",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 1,
+      "message": "\"is excessively pending to complete\" seems ungrammatical. Maybe:\n\"jobs that are taking an excessively long time to complete.\"",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3ac201_b34cb243",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 1,
+      "message": "Don\u0027t think you need \"timer\" or \"current\". Maybe \"The amount of time a running job is given to complete before it is timed out.\"",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5553eb8_ab1f6eb6",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure this member is worth it. Seems like the functions can just use \"job_coordinator()-\u003ejob_queues_\" directly instead, and make a temporary variable if it\u0027s too much typing.\n\nAlternatively, we could introduce a function like job_queues() that returns the pointer.",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c286c8_4ef90ab4",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 1,
+      "message": "This should be a virtual function on the base class for the reason you mentinoned about UnregisterJob.",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

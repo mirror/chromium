@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a8040f_279f4212",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:56:35Z",
+      "side": 0,
+      "message": "So happy this crazy code is being deleted!",
+      "revId": "d0b99c320408e55020e11e76dac56597156074da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
