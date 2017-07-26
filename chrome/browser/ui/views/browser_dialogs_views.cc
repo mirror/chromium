@@ -6,11 +6,13 @@
 
 #include <memory>
 
+#include "build/build_config.h"
 #include "chrome/browser/chooser_controller/chooser_controller.h"
 #include "chrome/browser/extensions/api/chrome_device_permissions_prompt.h"
 #include "chrome/browser/extensions/chrome_extension_chooser_dialog.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/ui/login/login_handler.h"
+#include "chrome/browser/ui/views/first_run_bubble.h"
 #include "chrome/browser/ui/views/task_manager_view.h"
 
 #if defined(OS_CHROMEOS)
@@ -62,6 +64,12 @@ task_manager::TaskManagerTableModel* ShowTaskManager(Browser* browser) {
 
 void HideTaskManager() {
   task_manager::TaskManagerView::Hide();
+}
+
+void ShowFirstRunBubble(Browser* browser) {
+#if !defined(OS_CHROMEOS)
+  first_run::ShowFirstRunBubbleViews(browser);
+#endif  // OS_CHROMEOS
 }
 
 }  // namespace chrome
