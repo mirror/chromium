@@ -621,6 +621,7 @@ cr.define('bookmarks', function() {
     startNativeDrag_: function() {
       var state = bookmarks.Store.getInstance().data;
       this.dndChip.hide();
+      this.internalDragElement_ = null;
 
       if (!this.dragInfo_.isDragValid())
         return false;
