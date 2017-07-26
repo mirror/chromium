@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "378831f4_f588aed0",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-26T16:39:41Z",
+      "side": 1,
+      "message": "Yes, but right now no one at this level needs to cancel the alert, as it automatically gets canceled when the tab gets switched to. If I needed to expose that back down at this level, that would make sense.",
+      "parentUuid": "90937d88_224d0156",
+      "range": {
+        "startLine": 108,
+        "startChar": 26,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "3ec93470ea4045bf6ab895950f809cf253705dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b15ec878_cf354dad",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9384b0d0_a453c8b6",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-26T16:39:41Z",
+      "side": 1,
+      "message": "Yes. This also needs to be done in several other places in the file, as this predates ObjCCastStrict.",
+      "parentUuid": "b15ec878_cf354dad",
+      "range": {
+        "startLine": 1731,
+        "startChar": 62,
+        "endLine": 1731,
+        "endChar": 0
+      },
+      "revId": "3ec93470ea4045bf6ab895950f809cf253705dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f50008dc_45e7107e",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "3ec93470ea4045bf6ab895950f809cf253705dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9202fa78_00b1e47a",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-26T16:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f50008dc_45e7107e",
+      "range": {
+        "startLine": 1221,
+        "startChar": 10,
+        "endLine": 1221,
+        "endChar": 29
+      },
+      "revId": "3ec93470ea4045bf6ab895950f809cf253705dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
