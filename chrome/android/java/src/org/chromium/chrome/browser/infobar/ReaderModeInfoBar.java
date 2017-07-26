@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
@@ -31,7 +32,10 @@ public class ReaderModeInfoBar extends InfoBar {
     private View.OnClickListener mNavigateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (getReaderModeManager() != null) getReaderModeManager().navigateToReaderMode();
+            RecordHistogram.recordBooleanHistogram("DomDistiller.InfoBarUsage", true);
+
+            if (getReaderModeManager() == null) return;
+            getReaderModeManager().activateReaderMode();
         }
     };
 
