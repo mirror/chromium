@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf7dbaa8_18df3a29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f80737a_53915cf5",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ee7a0ab_6a57a90d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T20:44:44Z",
       "side": 1,
       "message": "If you intended to fill this in I guess you could add it back when it actually references something useful?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 23
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6d2910_a90e9d13",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "I\u0027ve removed this one. I meant to add a link to the spec here. I\u0027ve done this for the \u003cimg\u003e tests, and I\u0027ll add it here once we have a link to reference.",
+      "parentUuid": "6ee7a0ab_6a57a90d",
       "range": {
         "startLine": 6,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "47b0d857_343e2991",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "6600dec1_bf1a78d3",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7ca08ba_300253d7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-25T20:44:44Z",
       "side": 1,
       "message": "You could make the document title slightly longer instead - maybe \"SVGImageElement.decode(), \u0027href\u0027 mutations\" or something like that - and then do document.title+\u0027, fail decode\u0027 et.c. Should make it obvious that this is testing stuff from the SVGImageElement interface (\u0027img\u0027 is kind of associated with HTML \u003cimg\u003e.)\n\nAlso (hidden above), using \"Path\" here seems unspecific - using \"URL\" or \u0027href\u0027 (like above) seems to better describe the test. (A URL may have a path, but in all these cases I would refer to them as \"(relative) URLs\".)",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570422e5_d719dc6e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Thanks, I really like this suggestion. I\u0027ve updated all of the related tests descriptions. Let me know if it looks better now.",
+      "parentUuid": "e7ca08ba_300253d7",
       "range": {
         "startLine": 22,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "58b60baa_9f9620d1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f66e012f_16d72864",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b328cab1_4d8eb629",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709cf02c_ebfd8eb6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b328cab1_4d8eb629",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f816de49_5328406f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8405ecac_eb84908a",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "742a9531_5a5d3227",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1675313_b3bda7bd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "742a9531_5a5d3227",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "a1985026_6cf6a418",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3c8e614_c28053b7",
+      "range": {
+        "startLine": 62,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb454ad1_377f6a3c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
         "patchSetId": 1
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "89a4f3d2_0a50fc76",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb454ad1_377f6a3c",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb8586d1_9d476e0a",
         "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
         "patchSetId": 1
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-25T20:44:44Z",
       "side": 1,
       "message": "This shouldn\u0027t be needed. (If there could be an exception signaled already, you would need to check for that, but that shouldn\u0027t be the case here. Yes, I realize this code was just moved, but this is an operation you\u0027d only need on rare occasions...)",
+      "range": {
+        "startLine": 664,
+        "startChar": 2,
+        "endLine": 664,
+        "endChar": 34
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83290068_9161f9a9",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added this during initial development because it seemed to resolve whatever problem I had. However, removing it now passes all of the tests, so I think the problem I was having was unrelated. Thanks!",
+      "parentUuid": "cb8586d1_9d476e0a",
       "range": {
         "startLine": 664,
         "startChar": 2,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "70d9d1db_27462f1d",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Changed to GetImage()-\u003eErrorOccurred(). I think that can be null if the image hasn\u0027t loaded yet, but then this function wouldn\u0027t be called.\n\nThe wpt tests cover the broken/corrupt image and image without a src set, so I think this is covered. If you have suggestions for other tests, I\u0027m happy to put those in as well.",
+      "parentUuid": "b9b5c13d_a7201d2b",
+      "range": {
+        "startLine": 701,
+        "startChar": 32,
+        "endLine": 701,
+        "endChar": 54
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89fed522_e93fe762",
         "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
         "patchSetId": 1
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "b04a2121_0e8b7281",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89fed522_e93fe762",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 56
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42e38ecf_1cd034ab",
         "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.h",
         "patchSetId": 1
@@ -312,6 +624,30 @@
       "writtenOn": "2017-07-25T20:44:44Z",
       "side": 1,
       "message": "That would require us to re-materialize the String in certain cases - which we don\u0027t want to do, so no this is not something we \"to do\" I think. See below though.",
+      "range": {
+        "startLine": 103,
+        "startChar": 69,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcebe436_f5d36ceb",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T00:19:14Z",
+      "side": 1,
+      "message": "Can you elaborate on this a bit? What do you mean by \"re-materialize the String\" here?\n\nFWIW, I think this was a premature optimization on my part. I\u0027ve changed both the SVG image case and the HTML image case to always invalidate pending requests when the source is updated. I\u0027ve removed the tests that verify that if it\u0027s the same string, then they still succeed. This simplifies the code and makes it easier to reason about... My reasoning here is that 1. it\u0027s likely to be an extremely rare case that the src would change to the same thing while the decode is still in flight 2. this can be checked by the calling script to avoid unnecessary source url mutations and 3. the spec doesn\u0027t mention anything about setting the value to the same thing and whether that should succeed or fail.",
+      "parentUuid": "42e38ecf_1cd034ab",
       "range": {
         "startLine": 103,
         "startChar": 69,
