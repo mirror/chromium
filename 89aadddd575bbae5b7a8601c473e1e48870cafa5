@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "42672fc6_52a5788f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2739,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-26T21:49:08Z",
+      "side": 1,
+      "message": "Hmm, RenderFrameHostImplBrowserTest.FrameDetached_WindowOpenIPCFails manages to exercise a scenario with message inversion here:\n\nNavigate to `window_open_and_close.html`\n\nRenderer:\n 1.) CALL to DidCommitProvisionalLoad\n 2.)  .. parsing window.open() ..\n 3.) CALL to CreateNewWindow\n\nBrowser:\n 1.) viz/ stuff on the stack\n 1.1.) CommandBufferProxyImpl::WaitForGetOffsetInRange\n 1.1.1.) SEND SYNC GpuCommandBufferMsg_WaitForGetOffsetInRange\n 1.1.2.) SyncChannel::WaitForReply \n 1.1.2.1) DISPATCH CreateNewWindow !!!\n 2.) DISPATCH DidCommitProvisionalLoad\n\nIs it expected that Sync Mojo messages would be dispatched with priority?",
+      "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "754445a1_72c378c7",
         "filename": "services/service_manager/public/cpp/interface_provider.h",
         "patchSetId": 20
@@ -13,6 +30,24 @@
       "writtenOn": "2017-07-26T21:32:36Z",
       "side": 1,
       "message": "Why this change? I don\u0027t think we want to do this.",
+      "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1642405e_ebaa4571",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-26T21:49:08Z",
+      "side": 1,
+      "message": "In media/, some clients use mojom::InterfaceProvider*, and hold on to the pointer across navigations.\n\nIn lieu of refactoring them to use service_manager::InterfaceProvider, this was the simplest way to allow swapping out our |interface_provider_| on commits without those media/ clients needing to care.\n\nI can introduce an adapter if you prefer.",
+      "parentUuid": "754445a1_72c378c7",
       "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
