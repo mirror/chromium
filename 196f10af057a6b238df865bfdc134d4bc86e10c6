@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "162a9983_249b29ad",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-26T14:18:48Z",
+      "side": 1,
+      "message": "On other platforms it works like this:\nChromePasswordManagerClient (implements the interface between chrome/ and components/password_manager/) is a tab helper. It owns CredentialManagerImpl.\n\nOn iOS we already have PasswordController which is a tab helper. It owns IOSChromePasswordManagerClient (the iOS brother of ChromePasswordManagerClient) and all the other important classes for password autofill. I think PasswordController should own CredentialManager. Thus, CredentialManager doesn\u0027t have to be a tab helper, it doesn\u0027t even need to implement CRWWebStateObserver protocol.",
+      "parentUuid": "95f05085_993d1f2f",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "196f10af057a6b238df865bfdc134d4bc86e10c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed0df161_11b5e213",
         "filename": "ios/chrome/browser/passwords/credential_manager.h",
         "patchSetId": 6
