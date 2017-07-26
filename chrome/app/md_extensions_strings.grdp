@@ -101,7 +101,16 @@
     No search results found
   </message>
   <message name="IDS_MD_EXTENSIONS_PACK_DIALOG_TITLE" desc="The title of the dialog to pack an extension.">
-    Pack extension
+    Pack Extension
+  </message>
+  <message name="IDS_MD_EXTENSIONS_PACK_DIALOG_WARNING_TITLE" desc="Warning title message for pack extension">
+    Pack Extension Warning
+  </message>
+  <message name="IDS_MD_EXTENSIONS_PACK_DIALOG_ERROR_TITLE" desc="Error title message for pack extension">
+    Pack Extension Error
+  </message>
+  <message name="IDS_MD_EXTENSIONS_PACK_DIALOG_PROCEED_ANYWAY" desc="Button to continue with operation in extension packing">
+    Proceed anyway
   </message>
   <message name="IDS_MD_EXTENSIONS_PACK_DIALOG_BROWSE_BUTTON" desc="The label of the button to browse the file system to select an extension directory or file.">
     Browse
