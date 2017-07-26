@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b5f333c_e6d966f9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-26T18:09:41Z",
+      "side": 1,
+      "message": "Could you elaborate on this change?",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 45
+      },
+      "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9e64ed_a1be7ee5",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-26T18:09:41Z",
+      "side": 1,
+      "message": "nit: s/VisiblePosition/VisiblePosition\u0026/",
+      "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
