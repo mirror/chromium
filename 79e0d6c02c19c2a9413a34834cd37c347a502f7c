@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f859dd7d_62af56c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalauth/UserRecoverableErrorHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec3cdf87_dff1cd2e",
+      "range": {
+        "startLine": 203,
+        "startChar": 23,
+        "endLine": 203,
+        "endChar": 34
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "048398a3_82cf793d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 1
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "dc7fadf7_2e49cc6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "Oops. Thanks!",
+      "parentUuid": "3abd238d_456e8be6",
+      "range": {
+        "startLine": 326,
+        "startChar": 38,
+        "endLine": 326,
+        "endChar": 39
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e3865f0_375b1a14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "Oops. Thanks!",
+      "parentUuid": "048398a3_82cf793d",
+      "range": {
+        "startLine": 326,
+        "startChar": 20,
+        "endLine": 326,
+        "endChar": 73
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "059bd74a_31dc515e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3befa53a_e707b9b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059bd74a_31dc515e",
+      "range": {
+        "startLine": 329,
+        "startChar": 20,
+        "endLine": 329,
+        "endChar": 41
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6124abbc_5a78a4fc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-25T14:23:47Z",
       "side": 1,
       "message": "I think this test is actually checking if there is an GmsError dialog presented. If so, then consider renaming to isShowingGmsErrorDialog?",
+      "range": {
+        "startLine": 380,
+        "startChar": 19,
+        "endLine": 380,
+        "endChar": 31
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49d8d72_61e8a6be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "To be precise, this method checks whether any error happened during last account list update. Unfortunately, we don\u0027t control error dialog that is displayed when GMS error happens, so there are cases when dialog isn\u0027t visible even though error wasn\u0027t resolved.",
+      "parentUuid": "6124abbc_5a78a4fc",
       "range": {
         "startLine": 380,
         "startChar": 19,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "44041e5d_4678cd31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "Please see previous comment.",
+      "parentUuid": "1598c1c2_4529a094",
+      "range": {
+        "startLine": 381,
+        "startChar": 15,
+        "endLine": 381,
+        "endChar": 52
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304c4031_a15f6e0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 1
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e74bbc31_dafe583c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304c4031_a15f6e0b",
+      "range": {
+        "startLine": 395,
+        "startChar": 12,
+        "endLine": 395,
+        "endChar": 40
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad695e79_6d5b5707",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c025e1b6_07f94c13",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "Overrides of this method were supposed to wrap exception as a cause into new instance of the same exception class to collect stacktrace info about all the thead hops this exception performs before being handled. However, I\u0027ve missed the simple fact that this exception chain will lack the most interesting part of this stacktrace - the one that led to getGoogleAccounts. Doing this the right way doesn\u0027t fit the scope of this CL, so I\u0027ve removed it.",
+      "parentUuid": "ad695e79_6d5b5707",
+      "range": {
+        "startLine": 20,
+        "startChar": 52,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "d6e9836c_1a2c235c",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure that having two subclasses here would be a more readable solution. Currently this class is more or less self-contained entity in one file, but in subclass-based approach this behavior will be spread between 3 files.\nThis being said, I can still make it your way if you have a strong opinion about it.",
+      "parentUuid": "e52f8421_5121729c",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d85be74_b7af63fe",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
         "patchSetId": 1
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "8f1eb26d_2c770aa8",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "I\u0027ve removed the wrapping.",
+      "parentUuid": "8d85be74_b7af63fe",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00eaea46_5c2711ef",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/GmsAvailabilityException.java",
         "patchSetId": 1
@@ -269,6 +509,24 @@
       "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aad41b7_5c49f9cf",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/GmsAvailabilityException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T16:46:50Z",
+      "side": 1,
+      "message": "I\u0027ve removed the wrapping, so this is no longer relevant.",
+      "parentUuid": "00eaea46_5c2711ef",
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
