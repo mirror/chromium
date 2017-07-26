@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6356c2e_b00e9712",
+        "filename": "cc/base/filter_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-26T17:50:46Z",
+      "side": 1,
+      "message": "I believe it might be possible for a filter to produce non-empty output on empty input (e.g. I think an SkPictureImageFilter can do that), but senorblanco@ would know for sure.\n\nIf that\u0027s true, you could restrict this change to just blur and drop-shadow below.",
+      "range": {
+        "startLine": 348,
+        "startChar": 5,
+        "endLine": 348,
+        "endChar": 6
+      },
+      "revId": "a1134195f443c6236cc49ca004a8941d968c6538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e123d3c_50855f5e",
+        "filename": "cc/base/filter_operations_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-26T17:50:46Z",
+      "side": 1,
+      "message": "Please test for the empty rect here too.",
+      "revId": "a1134195f443c6236cc49ca004a8941d968c6538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
