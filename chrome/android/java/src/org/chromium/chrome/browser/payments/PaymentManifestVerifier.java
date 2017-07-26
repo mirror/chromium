@@ -10,6 +10,7 @@ import android.content.pm.Signature;
 
 import org.chromium.base.Log;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.components.payments.PaymentManifestDownloader;
 import org.chromium.components.payments.PaymentManifestDownloader.ManifestDownloadCallback;
 import org.chromium.components.payments.PaymentManifestParser;
@@ -20,12 +21,15 @@ import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.annotation.Nullable;
 
 /**
  * Verifies that the discovered native Android payment apps have the sufficient privileges
@@ -59,6 +63,23 @@ public class PaymentManifestVerifier
          * @param resolveInfo Identifying information for the native Android payment app.
          */
         void onInvalidPaymentApp(URI methodName, ResolveInfo resolveInfo);
+
+        /**
+         * Enables native Android payment apps from one of the supported origins to use the given
+         * method name.
+         *
+         * @param methodName       The payment method name that can be used.
+         * @param supportedOrigins The origins of the payment apps that can use the method name.
+         */
+        void onSupportedOrigins(URI methodName, URI[] supportedOrigins);
+
+        /**
+         * Enables all native Android payment apps to use  the given <code>methodName</code> as
+         * their payment method name.
+         *
+         * @param methodName The payment method name that can be used by all payment apps.
+         */
+        void onAllOriginsSupported(URI methodName);
 
         /**
          * Disables invoking any native Android payment app for the given payment method. Called if
@@ -98,8 +119,11 @@ public class PaymentManifestVerifier
     private final PaymentManifestDownloader mDownloader;
     private final URI mMethodName;
 
-    /** A mapping from the package name to the application that matches the method name.  */
-    private final Map<String, AppInfo> mMatchingApps;
+    /** A mapping from the package name to the default application that matches the method name. */
+    private final Map<String, AppInfo> mDefaultMatchingApps;
+
+    /** A set of origins of the non-default payment apps for the method name. */
+    private final Set<URI> mNonDefaultAppOrigins;
 
     /** A list of package names of the apps that have been verified by using the cached manifest. */
     private final List<String> mVerifiedAppPackageNamesByCachedManifest;
@@ -127,32 +151,42 @@ public class PaymentManifestVerifier
      * @param methodName             The name of the payment method name that apps offer to handle.
      *                               Must be an absolute URI with HTTPS scheme, but HTTP localhost
      *                               is allowed in testing.
-     * @param matchingApps           The identifying information for the native Android payment apps
-     *                               that offer to handle this payment method.
+     * @param defaultMatchingApps    The identifying information for the native Android payment apps
+     *                               that offer to handle this payment method as a default app,
+     *                               i.e., as one of the "default_applications".
+     * @param nonDefaultAppOrigins   The origins of the apps that claim support of this payment
+     *                               method as their non-default, i.e., as one of the
+     *                               "supported_origins".
      * @param webDataService         The web data service to cache manifest.
      * @param downloader             The manifest downloader.
      * @param parser                 The manifest parser.
      * @param packageManagerDelegate The package information retriever.
      * @param callback               The callback to be notified of verification result.
      */
-    public PaymentManifestVerifier(URI methodName, List<ResolveInfo> matchingApps,
-            PaymentManifestWebDataService webDataService, PaymentManifestDownloader downloader,
-            PaymentManifestParser parser, PackageManagerDelegate packageManagerDelegate,
-            ManifestVerifyCallback callback) {
+    public PaymentManifestVerifier(URI methodName, List<ResolveInfo> defaultMatchingApps,
+            @Nullable  Set<URI> nonDefaultAppOrigins, PaymentManifestWebDataService webDataService,
+            PaymentManifestDownloader downloader, PaymentManifestParser parser,
+            PackageManagerDelegate packageManagerDelegate, ManifestVerifyCallback callback) {
         assert methodName.isAbsolute();
         assert UrlConstants.HTTPS_SCHEME.equals(methodName.getScheme())
                 || ("127.0.0.1".equals(methodName.getHost())
                            && UrlConstants.HTTP_SCHEME.equals(methodName.getScheme()));
-        assert !matchingApps.isEmpty();
 
         mMethodName = methodName;
-        mMatchingApps = new HashMap<>();
-        for (int i = 0; i < matchingApps.size(); i++) {
+        mDefaultMatchingApps = new HashMap<>();
+        for (int i = 0; i < defaultMatchingApps.size(); i++) {
             AppInfo appInfo = new AppInfo();
-            appInfo.resolveInfo = matchingApps.get(i);
-            mMatchingApps.put(appInfo.resolveInfo.activityInfo.packageName, appInfo);
+            appInfo.resolveInfo = defaultMatchingApps.get(i);
+            mDefaultMatchingApps.put(appInfo.resolveInfo.activityInfo.packageName, appInfo);
+            Log.e(TAG, "To verify: '%s' has default app '%s'.", methodName, appInfo.resolveInfo.activityInfo.packageName);
         }
 
+        mNonDefaultAppOrigins = Collections.unmodifiableSet(nonDefaultAppOrigins == null
+                ? new HashSet<URI>()
+                : new HashSet<URI>(nonDefaultAppOrigins));
+        for (URI uri : mNonDefaultAppOrigins) {
+            Log.e(TAG, "To verify: '%s' supports origin '%s'.", methodName, uri);
+        }
         mDownloader = downloader;
         mWebDataService = webDataService;
         mParser = parser;
@@ -178,6 +212,7 @@ public class PaymentManifestVerifier
      * privileges to handle this payment method.
      */
     public void verify() {
+        Log.e(TAG, "verify '%s'", mMethodName);
         if (mMessageDigest == null) {
             mCallback.onInvalidManifest(mMethodName);
             mCallback.onVerifyFinished(this);
@@ -185,7 +220,7 @@ public class PaymentManifestVerifier
         }
 
         List<String> invalidAppsToRemove = new ArrayList<>();
-        for (Map.Entry<String, AppInfo> entry : mMatchingApps.entrySet()) {
+        for (Map.Entry<String, AppInfo> entry : mDefaultMatchingApps.entrySet()) {
             String packageName = entry.getKey();
             AppInfo appInfo = entry.getValue();
 
@@ -209,13 +244,7 @@ public class PaymentManifestVerifier
         }
 
         for (int i = 0; i < invalidAppsToRemove.size(); i++) {
-            mMatchingApps.remove(invalidAppsToRemove.get(i));
-        }
-
-        if (mMatchingApps.isEmpty()) {
-            mCallback.onInvalidManifest(mMethodName);
-            mCallback.onVerifyFinished(this);
-            return;
+            mDefaultMatchingApps.remove(invalidAppsToRemove.get(i));
         }
 
         // Try to fetch manifest from the cache first.
@@ -247,30 +276,57 @@ public class PaymentManifestVerifier
 
     @Override
     public void onPaymentMethodManifestFetched(String[] appPackageNames) {
+        Log.e(TAG, "'%s' payment method manifest with %d package names or supported "
+                        + "origins fetched from cache.", mMethodName, appPackageNames.length);
         Set<String> fetchedApps = new HashSet<>();
+        Set<URI> fetchedSupportedOrigins = new HashSet<>();
+        boolean allOriginsSupported = false;
         for (int i = 0; i < appPackageNames.length; i++) {
-            fetchedApps.add(appPackageNames[i]);
-        }
-
-        if (fetchedApps.contains(ALL_ORIGINS_SUPPORTED_INDICATOR)) {
-            for (Map.Entry<String, AppInfo> app : mMatchingApps.entrySet()) {
-                mCallback.onValidPaymentApp(mMethodName, app.getValue().resolveInfo);
+            if (appPackageNames[i] == null) continue;
+            if (appPackageNames.equals(ALL_ORIGINS_SUPPORTED_INDICATOR)) {
+                Log.e(TAG, "'%s' cache supports all origins.", mMethodName);
+                allOriginsSupported = true;
+                continue;
             }
-            // Download and parse manifest to refresh cache.
-            mDownloader.downloadPaymentMethodManifest(mMethodName, this);
-            return;
+
+            if (AndroidPaymentAppFinder.isUriMethod(appPackageNames[i])) {
+                URI uriOrigin = AndroidPaymentAppFinder.parseAbsoluteUriMethodNameFromString(
+                        appPackageNames[i]);
+                if (uriOrigin != null) {
+                    Log.e(TAG, "'%s' cache supports origin '%s'.", mMethodName, appPackageNames[i]);
+                    fetchedSupportedOrigins.add(uriOrigin);
+                    continue;
+                }
+            }
+
+            Log.e(TAG, "'%s' cache default app package name '%s'.", mMethodName,
+                    appPackageNames[i]);
+            fetchedApps.add(appPackageNames[i]);
         }
 
         // The cache may be stale if it doesn't contain all matching apps, so switch to download the
         // manifest online immediately.
-        if (!fetchedApps.containsAll(mMatchingApps.keySet())) {
+        if (!fetchedApps.containsAll(mDefaultMatchingApps.keySet())
+                || (!fetchedSupportedOrigins.containsAll(mNonDefaultAppOrigins)
+                        && !allOriginsSupported)) {
             mIsManifestCacheStaleOrUnusable = true;
             mDownloader.downloadPaymentMethodManifest(mMethodName, this);
             return;
         }
 
-        mPendingWebAppManifestsCount = mMatchingApps.size();
-        for (String matchingAppPackageName : mMatchingApps.keySet()) {
+        if (allOriginsSupported) mCallback.onAllOriginsSupported(mMethodName);
+        if (!fetchedSupportedOrigins.isEmpty()) {
+            mCallback.onSupportedOrigins(mMethodName, fetchedSupportedOrigins.toArray(new URI[0]));
+        }
+
+        if (mDefaultMatchingApps.isEmpty()) {
+            // Refresh the cache.
+            mDownloader.downloadPaymentMethodManifest(mMethodName, this);
+            return;
+        }
+
+        mPendingWebAppManifestsCount = mDefaultMatchingApps.size();
+        for (String matchingAppPackageName : mDefaultMatchingApps.keySet()) {
             if (!mWebDataService.getPaymentWebAppManifest(matchingAppPackageName, this)) {
                 mIsManifestCacheStaleOrUnusable = true;
                 mPendingWebAppManifestsCount = 0;
@@ -283,6 +339,8 @@ public class PaymentManifestVerifier
     @Override
     public void onPaymentWebAppManifestFetched(WebAppManifestSection[] manifest) {
         if (mIsManifestCacheStaleOrUnusable) return;
+
+        Log.e(TAG, "'%s' web app manifest fetched from cache.", mMethodName);
 
         if (manifest == null || manifest.length == 0) {
             mIsManifestCacheStaleOrUnusable = true;
@@ -300,11 +358,11 @@ public class PaymentManifestVerifier
 
         for (int i = 0; i < mVerifiedAppPackageNamesByCachedManifest.size(); i++) {
             String appPackageName = mVerifiedAppPackageNamesByCachedManifest.get(i);
-            mCallback.onValidPaymentApp(mMethodName, mMatchingApps.get(appPackageName).resolveInfo);
-            mMatchingApps.remove(appPackageName);
+            mCallback.onValidPaymentApp(mMethodName, mDefaultMatchingApps.get(appPackageName).resolveInfo);
+            mDefaultMatchingApps.remove(appPackageName);
         }
 
-        for (Map.Entry<String, AppInfo> entry : mMatchingApps.entrySet()) {
+        for (Map.Entry<String, AppInfo> entry : mDefaultMatchingApps.entrySet()) {
             mCallback.onInvalidPaymentApp(mMethodName, entry.getValue().resolveInfo);
         }
 
@@ -314,29 +372,44 @@ public class PaymentManifestVerifier
 
     @Override
     public void onPaymentMethodManifestDownloadSuccess(String content) {
+        Log.e(TAG, "'%s' payment method manifest downloaded.", mMethodName);
         mParser.parsePaymentMethodManifest(content, this);
     }
 
     @Override
     public void onPaymentMethodManifestParseSuccess(
-            URI[] webAppManifestUris, URI[] unusedSupportedOrigins, boolean allOriginsSupported) {
+            URI[] webAppManifestUris, URI[] supportedOrigins, boolean allOriginsSupported) {
         assert webAppManifestUris != null;
-        assert unusedSupportedOrigins != null;
-        assert webAppManifestUris.length > 0 || unusedSupportedOrigins.length > 0
-                || allOriginsSupported;
+        assert supportedOrigins != null;
+        assert webAppManifestUris.length > 0 || supportedOrigins.length > 0 || allOriginsSupported;
         assert !mAtLeastOneManifestFailedToDownloadOrParse;
         assert mPendingWebAppManifestsCount == 0;
 
-        if (allOriginsSupported) {
-            // Verify payment apps only if they have not already been verified by the cached
-            // manifest.
-            if (mIsManifestCacheStaleOrUnusable) {
-                for (Map.Entry<String, AppInfo> app : mMatchingApps.entrySet()) {
-                    mCallback.onValidPaymentApp(mMethodName, app.getValue().resolveInfo);
+        Log.e(TAG, "'%s' payment method manifest parsed.", mMethodName);
+
+        if (mIsManifestCacheStaleOrUnusable) {
+            if (allOriginsSupported) {
+                Log.e(TAG, "'%s' downloaded supports all origins.", mMethodName);
+                // Verify payment apps only if they have not already been verified by the cached
+                // manifest.
+                mCallback.onAllOriginsSupported(mMethodName);
+                mSupportedAppPackageNames.add(ALL_ORIGINS_SUPPORTED_INDICATOR);
+            } else if (supportedOrigins.length > 0) {
+                Log.e(TAG, "'%s' downloaded supports %d origins.", mMethodName,
+                        supportedOrigins.length);
+                mCallback.onSupportedOrigins(mMethodName, supportedOrigins);
+                for (int i = 0; i < supportedOrigins.length; i++) {
+                    mSupportedAppPackageNames.add(supportedOrigins[i].toString());
                 }
             }
-            mWebDataService.addPaymentMethodManifest(
-                    mMethodName.toString(), new String[] {ALL_ORIGINS_SUPPORTED_INDICATOR});
+        }
+
+        if (webAppManifestUris.length == 0) {
+            Log.e(TAG, "No web app manifests to download for %s.", mMethodName);
+            // Cache supported origins.
+            mWebDataService.addPaymentMethodManifest(mMethodName.toString(),
+                    mSupportedAppPackageNames.toArray(
+                            new String[mSupportedAppPackageNames.size()]));
             mCallback.onVerifyFinished(this);
             return;
         }
@@ -352,6 +425,7 @@ public class PaymentManifestVerifier
     @Override
     public void onWebAppManifestDownloadSuccess(String content) {
         if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+        Log.e(TAG, "'%s' web app manifest downloaded.", mMethodName);
         mParser.parseWebAppManifest(content, this);
     }
 
@@ -361,6 +435,8 @@ public class PaymentManifestVerifier
         assert manifest.length > 0;
 
         if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+
+        Log.e(TAG, "'%s' downloaded web app manifest parsed.", mMethodName);
 
         for (int i = 0; i < manifest.length; i++) {
             mSupportedAppPackageNames.add(manifest[i].id);
@@ -372,8 +448,8 @@ public class PaymentManifestVerifier
             Set<String> verifiedAppPackageNames = verifyAppWithWebAppManifest(manifest);
             for (String packageName : verifiedAppPackageNames) {
                 mCallback.onValidPaymentApp(
-                        mMethodName, mMatchingApps.get(packageName).resolveInfo);
-                mMatchingApps.remove(packageName);
+                        mMethodName, mDefaultMatchingApps.get(packageName).resolveInfo);
+                mDefaultMatchingApps.remove(packageName);
             }
         }
 
@@ -383,12 +459,12 @@ public class PaymentManifestVerifier
         // Do not notify onInvalidPaymentApp if it has already be notified when checking by cached
         // manifest.
         if (mIsManifestCacheStaleOrUnusable) {
-            for (Map.Entry<String, AppInfo> entry : mMatchingApps.entrySet()) {
+            for (Map.Entry<String, AppInfo> entry : mDefaultMatchingApps.entrySet()) {
                 mCallback.onInvalidPaymentApp(mMethodName, entry.getValue().resolveInfo);
             }
         }
 
-        // Cache supported apps' package names.
+        // Cache supported apps' package names and origins.
         mWebDataService.addPaymentMethodManifest(mMethodName.toString(),
                 mSupportedAppPackageNames.toArray(new String[mSupportedAppPackageNames.size()]));
 
@@ -442,7 +518,7 @@ public class PaymentManifestVerifier
         Set<String> packageNames = new HashSet<>();
         for (int i = 0; i < manifest.length; i++) {
             WebAppManifestSection section = manifest[i];
-            AppInfo appInfo = mMatchingApps.get(section.id);
+            AppInfo appInfo = mDefaultMatchingApps.get(section.id);
             if (appInfo == null) continue;
 
             if (appInfo.version < section.minVersion) {
@@ -485,6 +561,8 @@ public class PaymentManifestVerifier
         if (mAtLeastOneManifestFailedToDownloadOrParse) return;
         mAtLeastOneManifestFailedToDownloadOrParse = true;
 
+        Log.e(TAG, "'%s' payment manifest download failure.", mMethodName);
+
         if (mIsManifestCacheStaleOrUnusable) mCallback.onInvalidManifest(mMethodName);
         mCallback.onVerifyFinished(this);
     }
@@ -493,6 +571,8 @@ public class PaymentManifestVerifier
     public void onManifestParseFailure() {
         if (mAtLeastOneManifestFailedToDownloadOrParse) return;
         mAtLeastOneManifestFailedToDownloadOrParse = true;
+
+        Log.e(TAG, "'%s' payment manifest parse failure.", mMethodName);
 
         if (mIsManifestCacheStaleOrUnusable) mCallback.onInvalidManifest(mMethodName);
         mCallback.onVerifyFinished(this);
