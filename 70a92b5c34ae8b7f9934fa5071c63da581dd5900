@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9da487f5_cc3758f6",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "Nit: opened (2 places)",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8c11e9_5d809b6e",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "This arm of the conditional doesn\u0027t set |web_contents|.\n\nThis looks to me like a symptom of this code being a bit fragile and repetitive.  It seems like the foreground/background tab cases are similar, and the popup/new window cases are similar.  I wonder if condensing into just two arms would work.",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc892030_e268b57d",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "Nit: Can use a default arg to avoid the need for two copies of the function.",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576d9f53_310da973",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "Nit: foreground",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e826fd_99e7a3ca",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "If we\u0027re passing DontCheckTitle, does it matter what title we pass?  Why do we need to be able to pass an empty value here?  (3 places)\n\nNit: Pass empty strings using std::string16(), not {} (since we don\u0027t use uniform variable init widely, the latter looks like an aggregate initializer)",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a0feec_1c170384",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "I just discovered there\u0027s an actual NEW_POPUP disposition.  Is that what everything comes in here with?  Or is the disposition sometimes something else, e.g. if the popup originally tried to open in response to a middle-click?\n\nI ask because depending on the answer, this variable name may be misleading, and the SetWindowFeatures call below might be incorrect sometimes.  Not sure.",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7abd767_18011564",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "This is a really heavy-handed way of dealing with this.  Can we just update the portion that shows the list of popups instead of blowing away the whole dialog and recreating it?  This might involve refactoring Init() a bit since I imagine this would share some common code with that.",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb597864_4c8b33ae",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T19:19:26Z",
+      "side": 1,
+      "message": "Nit: Functions should have descriptive comments unless their meaning is blindingly obvious.",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
