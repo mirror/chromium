@@ -38,7 +38,8 @@ PlatformNotificationContextImpl::PlatformNotificationContextImpl(
     : path_(path),
       browser_context_(browser_context),
       service_worker_context_(service_worker_context),
-      notification_id_generator_(browser_context) {
+      notification_id_generator_(browser_context),
+      weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
@@ -122,6 +123,8 @@ void PlatformNotificationContextImpl::ShutdownOnIO() {
   // |service_worker_context_| may be NULL in tests.
   if (service_worker_context_)
     service_worker_context_->RemoveObserver(this);
+
+  has_shutdown_ = true;
 }
 
 void PlatformNotificationContextImpl::CreateService(
@@ -161,8 +164,9 @@ void PlatformNotificationContextImpl::ReadNotificationData(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   LazyInitialize(
-      base::Bind(&PlatformNotificationContextImpl::DoReadNotificationData, this,
-                 notification_id, origin, callback),
+      base::Bind(&PlatformNotificationContextImpl::DoReadNotificationData,
+                 weak_ptr_factory_.GetWeakPtr(), notification_id, origin,
+                 callback),
       base::Bind(callback, false /* success */, NotificationDatabaseData()));
 }
 
@@ -224,7 +228,8 @@ void PlatformNotificationContextImpl::
   LazyInitialize(
       base::Bind(&PlatformNotificationContextImpl::
                      DoReadAllNotificationDataForServiceWorkerRegistration,
-                 this, origin, service_worker_registration_id, callback,
+                 weak_ptr_factory_.GetWeakPtr(), origin,
+                 service_worker_registration_id, callback,
                  base::Passed(&notification_ids), supports_synchronization),
       base::Bind(callback, false /* success */,
                  std::vector<NotificationDatabaseData>()));
@@ -324,7 +329,8 @@ void PlatformNotificationContextImpl::WriteNotificationData(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   LazyInitialize(
       base::Bind(&PlatformNotificationContextImpl::DoWriteNotificationData,
-                 this, origin, database_data, callback),
+                 weak_ptr_factory_.GetWeakPtr(), origin, database_data,
+                 callback),
       base::Bind(callback, false /* success */, "" /* notification_id */));
 }
 
@@ -398,7 +404,8 @@ void PlatformNotificationContextImpl::DeleteNotificationData(
 
   LazyInitialize(
       base::Bind(&PlatformNotificationContextImpl::DoDeleteNotificationData,
-                 this, notification_id, origin, callback),
+                 weak_ptr_factory_.GetWeakPtr(), notification_id, origin,
+                 callback),
       base::Bind(callback, false /* success */));
 }
 
@@ -435,7 +442,8 @@ void PlatformNotificationContextImpl::OnRegistrationDeleted(
   LazyInitialize(
       base::Bind(&PlatformNotificationContextImpl::
                      DoDeleteNotificationsForServiceWorkerRegistration,
-                 this, pattern.GetOrigin(), registration_id),
+                 weak_ptr_factory_.GetWeakPtr(), pattern.GetOrigin(),
+                 registration_id),
       base::Bind(&DoNothing));
 }
 
@@ -467,7 +475,7 @@ void PlatformNotificationContextImpl::OnStorageWiped() {
   LazyInitialize(
       base::Bind(
           base::IgnoreResult(&PlatformNotificationContextImpl::DestroyDatabase),
-          this),
+          weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&DoNothing));
 }
 
@@ -475,6 +483,11 @@ void PlatformNotificationContextImpl::LazyInitialize(
     const base::Closure& success_closure,
     const base::Closure& failure_closure) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (has_shutdown_) {
+    failure_closure.Run();
+    return;
+  }
 
   if (!task_runner_) {
     task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
