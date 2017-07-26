@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ba3fbb_9da5e9e4",
+        "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-26T19:05:13Z",
+      "side": 1,
+      "message": "I assume we also don\u0027t care about iOS? ie, this is desktop only?",
+      "range": {
+        "startLine": 565,
+        "startChar": 27,
+        "endLine": 565,
+        "endChar": 28
+      },
+      "revId": "2828c043b2fe1338f814ffae4192c64548688359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
