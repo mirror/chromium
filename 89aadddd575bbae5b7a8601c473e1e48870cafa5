@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6059b44c_64f6e6af",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2739,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T22:11:20Z",
+      "side": 1,
+      "message": "Err, that last part is not entirely accurate: we can of course dispatch async IPCs too as long as the thread listening for them isn\u0027t the one blocking on a sync IPC reply. In this case however, it is the same thread: UI thread blocking on WaitForGetOffsetInRange, UI thread dispatching incoming sync CreateNewWindow. Meanwhile DidCommitProvisionalLoad was in fact received first, but its dispatch work consists of a PostTask to the UI thread loop, which is not being pumped while we wait for the WaitForGetOffsetInRange reply. Hope this clarifies (rather than confuses) the issue. :)",
+      "parentUuid": "5e70545c_8b4a7f11",
+      "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "754445a1_72c378c7",
         "filename": "services/service_manager/public/cpp/interface_provider.h",
         "patchSetId": 20
