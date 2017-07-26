@@ -22,6 +22,114 @@
       "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc68b88_96099815",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T03:28:13Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887fad43_6eb22803",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T03:28:13Z",
+      "side": 1,
+      "message": "Is this |event_type| arg necessary?",
+      "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719abe0b_cd058065",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T03:28:13Z",
+      "side": 1,
+      "message": "How about directly binding |active_version| with |callback| to avoid adding RunAfterStartWorkerOnIO()?\n\n  base::AdaptCallbackForRepeating(\n    base::BindOnce(std::move(callback), make_scoped_refptr(active_version)))\n\nOnce RunAfterStartWorker()\u0027s argument is changed from base::Closure to base::OnceClosure, we can remove AdaptCallbackForRepeating().",
+      "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8f90b3_780dc547",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T03:28:13Z",
+      "side": 1,
+      "message": "base::BindOnce() doesn\u0027t need base::Passed().",
+      "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d24096f_58695443",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T03:28:13Z",
+      "side": 1,
+      "message": "base::BindOnce() doesn\u0027t need base::Passed().",
+      "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ded100_011d936b",
+        "filename": "content/browser/service_worker/service_worker_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T03:28:13Z",
+      "side": 1,
+      "message": "Can you update the enum definition \"ServiceWorkerMetrics.EventType\" in tools/metrics/histograms/enums.xml?",
+      "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
