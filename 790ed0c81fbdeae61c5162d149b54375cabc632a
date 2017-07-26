@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40b128e9_192e1a4e",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-26T20:27:34Z",
+      "side": 1,
+      "message": "In a future CL, especially if we add a new test binary, it would be good to add a custom handler. That way this file doesn\u0027t need to know about every capability that might be tested and we can easily add test specific scenarios in the test binary.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 30
+      },
+      "revId": "790ed0c81fbdeae61c5162d149b54375cabc632a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef01a569_6dd64f6f",
+        "filename": "remoting/host/switches.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-26T20:27:34Z",
+      "side": 1,
+      "message": "elevated",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "790ed0c81fbdeae61c5162d149b54375cabc632a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

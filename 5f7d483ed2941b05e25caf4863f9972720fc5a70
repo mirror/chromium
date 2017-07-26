@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "21e5e5e5_90a255a6",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-26T20:27:34Z",
+      "side": 1,
+      "message": "That\u0027s a good point.  The best option to remove this code is to create a small test binary used for this specific purpose (i.e. remoting_capbility_stub.exe).\n\nCan you add a TODO for that and then consider it in a follow-up?  That way this CL will be unblocked and you can look into this approach while the DX capability impl is being reviewed?",
+      "parentUuid": "826e9db4_236d9756",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6035161_cdc93fff",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 12
@@ -413,6 +437,30 @@
       "side": 1,
       "message": "kEvaluateCapabilitySwitchName is always provided when using EvaluateCapability() function.\nSo here, the situation only happens when executing a manual typed command.",
       "parentUuid": "53d9947e_b1636aa2",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 38
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7516644_a000f1cd",
+        "filename": "remoting/host/host_main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-26T20:27:34Z",
+      "side": 1,
+      "message": "Ah ok, that makes sense.  I had not considered running the binary manually (for testing / development).  Thanks!",
+      "parentUuid": "5d9609de_c5e35c0d",
       "range": {
         "startLine": 184,
         "startChar": 4,
