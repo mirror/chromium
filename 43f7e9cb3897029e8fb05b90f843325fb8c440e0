@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f322240_14f36783",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-07-26T18:54:21Z",
+      "side": 1,
+      "message": "It\u0027d be good to link to a bug describing why 16 GiB was not enough.",
+      "revId": "43f7e9cb3897029e8fb05b90f843325fb8c440e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
