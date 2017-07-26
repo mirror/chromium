@@ -34,6 +34,24 @@
       "revId": "a7203df5028d28d3bfd99050a9505e422e51e07b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd162e63_23ed6376",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T02:36:49Z",
+      "side": 1,
+      "message": "Yes the idea is just to fallback to network for now. My hope is that we wouldn\u0027t need SWReadFromCacheJob like code though given that the former case should result in error and ScriptStreaming code will be able to take care of the latter case (maybe we could force enabling ScriptStreaming if servicification is enabled), and only need something like WriteToCacheJob.",
+      "parentUuid": "0fc9cf28_49d55201",
+      "revId": "a7203df5028d28d3bfd99050a9505e422e51e07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
