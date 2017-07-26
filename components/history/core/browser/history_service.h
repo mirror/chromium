@@ -202,6 +202,11 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // replaced the existing entry. A non-user initiated redirect causes such
   // replacement.
   //
+  // |is_same_document_as| is non-nullopt if the navigation entry for this
+  // page is within the same document as the previous one (e.g. fragment
+  // navigations, pushState/replaceState cases), and contains the URL of
+  // the previous navigation entry.
+  //
   // All "Add Page" functions will update the visited link database.
   void AddPage(const GURL& url,
                base::Time time,
@@ -211,7 +216,8 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
                const RedirectList& redirects,
                ui::PageTransition transition,
                VisitSource visit_source,
-               bool did_replace_entry);
+               bool did_replace_entry,
+               const base::Optional<GURL>& is_same_document_as);
 
   // For adding pages to history where no tracking information can be done.
   void AddPage(const GURL& url, base::Time time, VisitSource visit_source);

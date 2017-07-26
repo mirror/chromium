@@ -1898,15 +1898,10 @@ TEST_F(DownloadProtectionServiceTest,
     redirects.push_back(tab_url);
     HistoryServiceFactory::GetForProfile(profile_.get(),
                                          ServiceAccessType::EXPLICIT_ACCESS)
-        ->AddPage(tab_url,
-                  base::Time::Now(),
-                  reinterpret_cast<history::ContextID>(1),
-                  0,
-                  GURL(),
-                  redirects,
-                  ui::PAGE_TRANSITION_TYPED,
-                  history::SOURCE_BROWSED,
-                  false);
+        ->AddPage(tab_url, base::Time::Now(),
+                  reinterpret_cast<history::ContextID>(1), 0, GURL(), redirects,
+                  ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED, false,
+                  base::nullopt);
 
     TestURLFetcherWatcher fetcher_watcher(&factory);
     RunLoop run_loop;
