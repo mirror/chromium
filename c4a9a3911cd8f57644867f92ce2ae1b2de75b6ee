@@ -22,6 +22,47 @@
       "revId": "c4a9a3911cd8f57644867f92ce2ae1b2de75b6ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd619696_d3f37249",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-26T19:54:22Z",
+      "side": 1,
+      "message": "The spec doesn\u0027t say that it\u0027s invalid. But I agree it\u0027s hard to believe it would happen. Either way, we fail gracefully (we just don\u0027t cache the \"empty\" resulting binary), and I\u0027m ok with that.",
+      "parentUuid": "cbc6e959_d71c9528",
+      "range": {
+        "startLine": 226,
+        "startChar": 14,
+        "endLine": 226,
+        "endChar": 26
+      },
+      "revId": "c4a9a3911cd8f57644867f92ce2ae1b2de75b6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7167bd6_eaa97abb",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-26T19:54:22Z",
+      "side": 1,
+      "message": "nit: if (binary.empty()) ?",
+      "revId": "c4a9a3911cd8f57644867f92ce2ae1b2de75b6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
