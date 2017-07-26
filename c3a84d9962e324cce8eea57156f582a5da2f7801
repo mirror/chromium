@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d99faa0_19c6756d",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T20:36:45Z",
+      "side": 1,
+      "message": "OK, I don\u0027t really know what I\u0027m talking about, but wouldn\u0027t it still fall through to here and use the non-MojoVideoEncodeAccelerator above in the case where the flag is off? (so VEA would still work)\n\nHappy to change it the other way to pull in the dependency if that\u0027s better though.",
+      "revId": "c3a84d9962e324cce8eea57156f582a5da2f7801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
