@@ -25,17 +25,16 @@
           hidden>
       </saml-interstitial>
       <offline-ad-login id="offline-ad-auth" class="fit gaia-dialog" hidden
-          i18n-values="ad-welcome-message:adAuthWelcomeMessage;
-                       user-name-label:adAuthLoginUsername">
+          ad-welcome-message="$i18n{adAuthWelcomeMessage}"
+          user-name-label="$i18n{adAuthLoginUsername}">
       </offline-ad-login>
     </div>
   </div>
   <div id="gaia-loading" class="step-loading gaia-dialog" hidden>
-    <throbber-notice i18n-values="text:gaiaLoading"></throbber-notice>
+    <throbber-notice text="$i18n{gaiaLoading}"></throbber-notice>
   </div>
   <notification-card id="gaia-whitelist-error" type="fail" class="gaia-dialog"
-      i18n-values="button-label:tryAgainButton;
-                   link-label:learnMoreButton">
+      button-label="$i18n{tryAgainButton}" link-label="$i18n{learnMoreButton}">
   </notification-card>
   <div id="saml-notice-container" hidden>
     <span id="saml-notice-recording-indicator" hidden>

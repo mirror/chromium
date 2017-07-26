@@ -1,50 +1,44 @@
 <div class="step faded hidden no-logo" id="reset" role="group"
-    i18n-values="aria-label:resetScreenAccessibleTitle" hidden>
+    aria-label="$i18n{resetScreenAccessibleTitle}" hidden>
   <oobe-reset-md id="oobe-reset-md" hidden></oobe-reset-md>
   <div id="oobe-reset">
     <div class="step-contents">
       <img id="reset-alert-icon"
-          srcset="images/reset_alert_1x.png 1x,
-                  images/reset_alert_2x.png 2x"
-          i18n-values="alt:resetScreenIconTitle">
-      <div id="reset-warning-msg" i18n-content="resetWarningTitle"
-          class="revert-promise-specific restart-required-specific
-                 powerwash-proposal-specific rollback-proposal-specific">
+          srcset="images/reset_alert_1x.png 1x, images/reset_alert_2x.png 2x"
+          alt="$i18n{resetScreenIconTitle}">
+      <div id="reset-warning-msg" class="revert-promise-specific restart-required-specific powerwash-proposal-specific rollback-proposal-specific">
+        $i18n{resetWarningTitle}
       </div>
       <div id="reset-info"
           class="reset-text powerwash-proposal-specific
                  rollback-proposal-specific restart-required-specific">
-        <div id="powerwash-warning-details"
-            i18n-content="resetPowerwashWarningDetails"
-            class="powerwash-proposal-specific">
+        <div id="powerwash-warning-details" class="powerwash-proposal-specific">
+          $i18n{resetPowerwashWarningDetails}
         </div>
-        <div id="rollback-warning-details"
-            i18n-content="resetPowerwashRollbackWarningDetails"
-            class="rollback-proposal-specific">
+        <div id="rollback-warning-details" class="rollback-proposal-specific">
+          $i18n{resetPowerwashRollbackWarningDetails}
         </div>
         <div id="reset-warning-data-details"
-            class="reset-text powerwash-proposal-specific
-                   rollback-proposal-specific"
-            i18n-content="resetWarningDataDetails">
+            class="reset-text powerwash-proposal-specific rollback-proposal-specific">
+          $i18n{resetWarningDataDetails}
         </div>
-        <div id="reset-warning-restart" i18n-content="resetRestartMessage"
+        <div id="reset-warning-restart"
             class="reset-text restart-required-specific">
+          $i18n{resetRestartMessage}
         </div>
-        <a id="powerwash-help-link" href="#" i18n-content="learnMore"></a>
+        <a id="powerwash-help-link" href="#">$i18n{learnMore}</a>
       </div>
       <div id="revert-promise" class="revert-promise-specific">
-        <div id="reset-revert-promise-msg" i18n-content="resetRevertPromise">
-        </div>
+        <div id="reset-revert-promise-msg">$i18n{resetRevertPromise}</div>
         <div id="reset-revert-spinner" class="throbber">
         </div>
-        <div id="reset-revert-spinner-message" class="reset-text"
-            i18n-content="resetRevertSpinnerMessage">
+        <div id="reset-revert-spinner-message" class="reset-text">
+          $i18n{resetRevertSpinnerMessage}
         </div>
       </div>
       <img id="reset-illustration"
-          srcset="images/reset_illustration_1x.png 1x,
-                  images/reset_illustration_2x.png 2x"
-          i18n-values="alt:resetScreenIllustrationTitle">
+          srcset="images/reset_illustration_1x.png 1x, images/reset_illustration_2x.png 2x"
+          alt="$i18n{resetScreenIllustrationTitle}">
     </div>
     <div id="reset-controls" class="step-controls">
     </div>
