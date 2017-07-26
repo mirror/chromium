@@ -586,7 +586,7 @@ const char kNoSupervisedUserAcknowledgmentCheck[]  =
     "no-managed-user-acknowledgment-check";
 
 // Launches URL in new browser window.
-const char kOpenInNewWindow[]               = "new-window";
+const char kOpenInNewIconWindow[] = "new-window";
 
 // The time that a new chrome process which is delegating to an already running
 // chrome process started. (See ProcessSingleton for more details.)

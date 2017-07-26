@@ -209,9 +209,9 @@ bool AwAutofillClient::ShouldShowSigninPromo() {
   return false;
 }
 
-void AwAutofillClient::StartSigninFlow() {}
-
-void AwAutofillClient::ShowHttpNotSecureExplanation() {}
+bool AwAutofillClient::ExecuteCommand(int id) {
+  return false;
+}
 
 bool AwAutofillClient::IsAutofillSupported() {
   return true;
