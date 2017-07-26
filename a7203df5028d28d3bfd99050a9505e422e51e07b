@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc9cf28_49d55201",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T02:24:13Z",
+      "side": 1,
+      "message": "Sorry.. didn\u0027t realize my reland reverting something...\n\nHowever, I\u0027m a bit confused now.\n\nFor script streaming, we only come here if the script wasn\u0027t in the renderer-side script streaming manager, right? That means they are loading a script that wasn\u0027t installed, or they are loading the same script twice (calling importScripts() twice for the same script or importScripts() on the main script).\n\nI think we want to basically do what ServiceWorkerContextRequestHandler does in this case: and read from the database if available, or else fall back to network (soon-to-be-deprecated spec violation).\n\nIs the idea just fallback to network for now, but later be able to do something like ServiceWorkerReadFromCacheJob?",
+      "revId": "a7203df5028d28d3bfd99050a9505e422e51e07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
