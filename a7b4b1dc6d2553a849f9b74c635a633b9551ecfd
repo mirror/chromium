@@ -22,6 +22,30 @@
       "revId": "a7b4b1dc6d2553a849f9b74c635a633b9551ecfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5e7808_343de942",
+        "filename": "build/android/java_assertion_enabler/java/org/chromium/javaassertionenabler/AssertionEnabler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-26T17:55:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fe8f02b_6a2c444e",
+      "range": {
+        "startLine": 79,
+        "startChar": 96,
+        "endLine": 79,
+        "endChar": 97
+      },
+      "revId": "a7b4b1dc6d2553a849f9b74c635a633b9551ecfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
