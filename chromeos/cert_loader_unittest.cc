@@ -11,9 +11,10 @@
 
 #include "base/bind.h"
 #include "base/files/file_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/test/scoped_task_scheduler.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "crypto/scoped_nss_types.h"
 #include "crypto/scoped_test_nss_db.h"
 #include "net/cert/nss_cert_database_chromeos.h"
@@ -83,7 +84,6 @@ class CertLoaderTest : public testing::Test,
  public:
   CertLoaderTest()
       : cert_loader_(nullptr),
-        scoped_task_scheduler_(&message_loop_),
         certificates_loaded_events_count_(0U) {}
 
   ~CertLoaderTest() override {}
@@ -144,7 +144,7 @@ class CertLoaderTest : public testing::Test,
     certdb->reset(new TestNSSCertDatabase(
         crypto::ScopedPK11Slot(PK11_ReferenceSlot(db->slot())),
         crypto::ScopedPK11Slot(PK11_ReferenceSlot(db->slot()))));
-    (*certdb)->SetSlowTaskRunnerForTest(message_loop_.task_runner());
+    (*certdb)->SetSlowTaskRunnerForTest(base::ThreadTaskRunnerHandle::Get());
   }
 
   void ImportCACert(const std::string& cert_file,
@@ -220,10 +220,8 @@ class CertLoaderTest : public testing::Test,
   // system_db_).
   std::unique_ptr<TestNSSCertDatabase> system_certdb_;
 
-  base::MessageLoop message_loop_;
-
  private:
-  base::test::ScopedTaskScheduler scoped_task_scheduler_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   size_t certificates_loaded_events_count_;
 };
 
