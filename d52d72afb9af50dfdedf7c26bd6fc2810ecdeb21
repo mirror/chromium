@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bf7f530_da8504b5",
+        "filename": "components/safe_json/json_sanitizer_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T14:59:02Z",
+      "side": 0,
+      "message": "Perhaps leave this change?",
+      "range": {
+        "startLine": 118,
+        "startChar": 30,
+        "endLine": 118,
+        "endChar": 38
+      },
+      "revId": "d52d72afb9af50dfdedf7c26bd6fc2810ecdeb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
