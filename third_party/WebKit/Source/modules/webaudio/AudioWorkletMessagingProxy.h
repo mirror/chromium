@@ -13,6 +13,8 @@ namespace blink {
 class ExecutionContext;
 class WorkerThread;
 
+// AudioWorkletMessagingProxy is a main thread interface for
+// AudioWorkletGlobalScope.
 class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
  public:
   AudioWorkletMessagingProxy(ExecutionContext*, WorkerClients*);
