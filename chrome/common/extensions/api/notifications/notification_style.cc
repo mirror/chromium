@@ -4,6 +4,7 @@
 
 #include "chrome/common/extensions/api/notifications/notification_style.h"
 
+#include "ui/gfx/geometry/insets.h"
 #include "ui/message_center/message_center_style.h"
 
 NotificationBitmapSizes::NotificationBitmapSizes() {
@@ -15,9 +16,9 @@ NotificationBitmapSizes::~NotificationBitmapSizes() {
 
 NotificationBitmapSizes GetNotificationBitmapSizes() {
   NotificationBitmapSizes sizes;
-  sizes.image_size =
-      gfx::Size(message_center::kNotificationPreferredImageWidth,
-                message_center::kNotificationPreferredImageHeight);
+  // TODO(peter): Use Material Design border size when that is enabled.
+  sizes.image_size = message_center::GetNotificationImageMaxSize(
+      gfx::Insets(message_center::kNotificationImageBorderSize));
   sizes.icon_size = gfx::Size(message_center::kNotificationIconSize,
                               message_center::kNotificationIconSize);
   sizes.button_icon_size =

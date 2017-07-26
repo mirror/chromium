@@ -516,15 +516,15 @@ void NotificationView::CreateOrUpdateListItemViews(
 
 void NotificationView::CreateOrUpdateIconView(
     const Notification& notification) {
-  gfx::Size image_view_size(kNotificationIconSize, kNotificationIconSize);
-
   if (!icon_view_) {
-    icon_view_ = new ProportionalImageView(image_view_size);
+    icon_view_ =
+        new ProportionalImageView(ProportionalImageView::Type::CONTAIN);
     AddChildView(icon_view_);
   }
 
   gfx::ImageSkia icon = notification.icon().AsImageSkia();
-  icon_view_->SetImage(icon, icon.size());
+  gfx::Size icon_view_size(kNotificationIconSize, kNotificationIconSize);
+  icon_view_->SetImage(icon, icon_view_size, icon.size());
 }
 
 void NotificationView::CreateOrUpdateSmallIconView(
@@ -535,18 +535,15 @@ void NotificationView::CreateOrUpdateSmallIconView(
 void NotificationView::CreateOrUpdateImageView(
     const Notification& notification) {
   // |image_view_| is the view representing the area covered by the
-  // notification's image, including background and border.  Its size can be
-  // specified in advance and images will be scaled to fit including a border if
-  // necessary.
+  // notification's image, including background and border. Its size is
+  // determined on a per-notification basis and images will be scaled to fit.
   if (notification.image().IsEmpty()) {
+    // Ok to delete unowned view, as destructor removes it from parent.
     delete image_container_;
-    image_container_ = NULL;
-    image_view_ = NULL;
+    image_container_ = nullptr;
+    image_view_ = nullptr;
     return;
   }
-
-  gfx::Size ideal_size(kNotificationPreferredImageWidth,
-                       kNotificationPreferredImageHeight);
 
   if (!image_container_) {
     DCHECK(!image_view_);
@@ -557,22 +554,20 @@ void NotificationView::CreateOrUpdateImageView(
     image_container_->SetLayoutManager(new views::FillLayout());
     image_container_->SetBackground(
         views::CreateSolidBackground(message_center::kImageBackgroundColor));
+    image_container_->SetBorder(
+        views::CreateEmptyBorder(gfx::Insets(kNotificationImageBorderSize)));
 
-    image_view_ = new message_center::ProportionalImageView(ideal_size);
+    image_view_ =
+        new ProportionalImageView(ProportionalImageView::Type::FIT_WIDTH);
     image_container_->AddChildView(image_view_);
     bottom_view_->AddChildViewAt(image_container_, 0);
   }
 
   DCHECK(image_view_);
-  image_view_->SetImage(notification.image().AsImageSkia(), ideal_size);
-
-  gfx::Size scaled_size = message_center::GetImageSizeForContainerSize(
-      ideal_size, notification.image().Size());
-  image_view_->SetBorder(ideal_size != scaled_size
-                             ? views::CreateSolidBorder(
-                                   message_center::kNotificationImageBorderSize,
-                                   SK_ColorTRANSPARENT)
-                             : NULL);
+  gfx::Size max_image_size(
+      GetNotificationImageMaxSize(gfx::Insets(kNotificationImageBorderSize)));
+  image_view_->SetImage(notification.image().AsImageSkia(), max_image_size,
+                        max_image_size);
 }
 
 void NotificationView::CreateOrUpdateActionButtonViews(
