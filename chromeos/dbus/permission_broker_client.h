@@ -29,15 +29,15 @@ class CHROMEOS_EXPORT PermissionBrokerClient : public DBusClient {
   // The ResultCallback is used for both the RequestPathAccess and
   // RequestUsbAccess methods. Its boolean parameter represents the result of
   // the operation that it was submitted alongside.
-  typedef base::Callback<void(bool)> ResultCallback;
+  typedef base::OnceCallback<void(bool)> ResultCallback;
 
   // An OpenPathCallback callback is run when an OpenPath request is completed.
-  typedef base::Callback<void(base::ScopedFD)> OpenPathCallback;
+  typedef base::OnceCallback<void(base::ScopedFD)> OpenPathCallback;
 
   // An ErrorCallback callback is run when an error is returned by the
   // permission broker.
-  typedef base::Callback<void(const std::string& error_name,
-                              const std::string& message)>
+  typedef base::OnceCallback<void(const std::string& error_name,
+                                  const std::string& message)>
       ErrorCallback;
 
   ~PermissionBrokerClient() override;
@@ -49,14 +49,14 @@ class CHROMEOS_EXPORT PermissionBrokerClient : public DBusClient {
   // the |interface_id| value passed to RequestPathAccess will be
   // UsbDevicePermissionsData::ANY_INTERFACE).
   virtual void CheckPathAccess(const std::string& path,
-                               const ResultCallback& callback) = 0;
+                               ResultCallback callback) = 0;
 
   // OpenPath requests that the permission broker open the device node
   // identified by |path| and return the resulting file descriptor. One of
   // |callback| or |error_callback| is called.
   virtual void OpenPath(const std::string& path,
-                        const OpenPathCallback& callback,
-                        const ErrorCallback& error_callback) = 0;
+                        OpenPathCallback callback,
+                        ErrorCallback error_callback) = 0;
 
   // Requests the |port| be opened on the firewall for incoming TCP/IP
   // connections received on |interface| (an empty string indicates all
@@ -67,7 +67,7 @@ class CHROMEOS_EXPORT PermissionBrokerClient : public DBusClient {
   virtual void RequestTcpPortAccess(uint16_t port,
                                     const std::string& interface,
                                     int lifeline_fd,
-                                    const ResultCallback& callback) = 0;
+                                    ResultCallback callback) = 0;
 
   // Requests the |port| be opened on the firewall for incoming UDP packets
   // received on |interface| (an empty string indicates all interfaces). One end
@@ -78,21 +78,21 @@ class CHROMEOS_EXPORT PermissionBrokerClient : public DBusClient {
   virtual void RequestUdpPortAccess(uint16_t port,
                                     const std::string& interface,
                                     int lifeline_fd,
-                                    const ResultCallback& callback) = 0;
+                                    ResultCallback callback) = 0;
 
   // Releases a request for an open firewall port for TCP/IP connections. The
   // |port| and |interface| parameters must be the same as a previous call to
   // RequestTcpPortAccess.
   virtual void ReleaseTcpPort(uint16_t port,
                               const std::string& interface,
-                              const ResultCallback& callback) = 0;
+                              ResultCallback callback) = 0;
 
   // Releases a request for an open firewall port for UDP packets. The |port|
   // and |interface| parameters must be the same as a previous call to
   // RequestUdpPortAccess.
   virtual void ReleaseUdpPort(uint16_t port,
                               const std::string& interface,
-                              const ResultCallback& callback) = 0;
+                              ResultCallback callback) = 0;
 
  protected:
   PermissionBrokerClient();

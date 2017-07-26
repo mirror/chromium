@@ -128,21 +128,21 @@ HidServiceMac::HidServiceMac() : weak_factory_(this) {
 HidServiceMac::~HidServiceMac() {}
 
 void HidServiceMac::Connect(const std::string& device_guid,
-                            const ConnectCallback& callback) {
+                            ConnectCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const auto& map_entry = devices().find(device_guid);
   if (map_entry == devices().end()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, nullptr));
+        FROM_HERE, base::BindOnce(std::move(callback), nullptr));
     return;
   }
 
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, kBlockingTaskTraits,
-      base::Bind(&HidServiceMac::OpenOnBlockingThread, map_entry->second),
-      base::Bind(&HidServiceMac::DeviceOpened, weak_factory_.GetWeakPtr(),
-                 map_entry->second, callback));
+      base::BindOnce(&HidServiceMac::OpenOnBlockingThread, map_entry->second),
+      base::BindOnce(&HidServiceMac::DeviceOpened, weak_factory_.GetWeakPtr(),
+                     map_entry->second, std::move(callback)));
 }
 
 // static
@@ -184,13 +184,13 @@ base::ScopedCFTypeRef<IOHIDDeviceRef> HidServiceMac::OpenOnBlockingThread(
 
 void HidServiceMac::DeviceOpened(
     scoped_refptr<HidDeviceInfo> device_info,
-    const ConnectCallback& callback,
+    ConnectCallback callback,
     base::ScopedCFTypeRef<IOHIDDeviceRef> hid_device) {
   if (hid_device) {
-    callback.Run(base::MakeRefCounted<HidConnectionMac>(
+    std::move(callback).Run(base::MakeRefCounted<HidConnectionMac>(
         std::move(hid_device), std::move(device_info)));
   } else {
-    callback.Run(nullptr);
+    std::move(callback).Run(nullptr);
   }
 }
 

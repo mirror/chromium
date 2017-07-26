@@ -23,9 +23,11 @@ class MockHidService : public HidService {
   void FirstEnumerationComplete();
   const std::map<std::string, scoped_refptr<HidDeviceInfo>>& devices() const;
 
-  MOCK_METHOD2(Connect,
-               void(const std::string& device_guid,
-                    const ConnectCallback& callback));
+  void Connect(const std::string& device_guid, ConnectCallback callback) {
+    ConnectInternal(device_guid, callback);
+  }
+  MOCK_METHOD2(ConnectInternal,
+               void(const std::string& device_guid, ConnectCallback& callback));
 };
 
 }  // namespace device

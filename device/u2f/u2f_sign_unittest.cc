@@ -67,7 +67,7 @@ TEST_F(U2fSignTest, TestSignSuccess) {
   std::unique_ptr<MockU2fDevice> device(new MockU2fDevice());
   EXPECT_CALL(*device.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorSign));
-  EXPECT_CALL(*device.get(), TryWink(testing::_))
+  EXPECT_CALL(*device.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestSignCallback cb;
   std::unique_ptr<U2fRequest> request =
@@ -92,7 +92,7 @@ TEST_F(U2fSignTest, TestDelayedSuccess) {
   EXPECT_CALL(*device.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::NotSatisfied))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorSign));
-  EXPECT_CALL(*device.get(), TryWink(testing::_))
+  EXPECT_CALL(*device.get(), TryWinkInternal(testing::_))
       .Times(2)
       .WillRepeatedly(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestSignCallback cb;
@@ -127,7 +127,7 @@ TEST_F(U2fSignTest, TestMultipleHandles) {
       .WillOnce(testing::Invoke(MockU2fDevice::WrongData))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorSign));
   // Only one wink expected per device
-  EXPECT_CALL(*device.get(), TryWink(testing::_))
+  EXPECT_CALL(*device.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestSignCallback cb;
@@ -156,11 +156,11 @@ TEST_F(U2fSignTest, TestMultipleDevices) {
       .WillOnce(testing::Invoke(MockU2fDevice::WrongData))
       .WillOnce(testing::Invoke(MockU2fDevice::NotSatisfied));
   // One wink per device
-  EXPECT_CALL(*device0.get(), TryWink(testing::_))
+  EXPECT_CALL(*device0.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
   EXPECT_CALL(*device1.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorSign));
-  EXPECT_CALL(*device1.get(), TryWink(testing::_))
+  EXPECT_CALL(*device1.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestSignCallback cb;
@@ -190,14 +190,14 @@ TEST_F(U2fSignTest, TestFakeEnroll) {
       .WillOnce(testing::Invoke(MockU2fDevice::WrongData))
       .WillOnce(testing::Invoke(MockU2fDevice::NotSatisfied));
   // One wink per device
-  EXPECT_CALL(*device0.get(), TryWink(testing::_))
+  EXPECT_CALL(*device0.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
   // Both keys will be tried, when both fail, register is tried on that device
   EXPECT_CALL(*device1.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WrongData))
       .WillOnce(testing::Invoke(MockU2fDevice::WrongData))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorRegister));
-  EXPECT_CALL(*device1.get(), TryWink(testing::_))
+  EXPECT_CALL(*device1.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestSignCallback cb;
