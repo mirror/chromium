@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b7a4cde_071a2870",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-26T18:04:37Z",
+      "side": 1,
+      "message": "can we swap the conditions so that we get an early return for situations where reader mode isn\u0027t enabled?",
+      "range": {
+        "startLine": 1890,
+        "startChar": 41,
+        "endLine": 1890,
+        "endChar": 50
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4519f22a_6ceab61b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-26T18:04:37Z",
+      "side": 1,
+      "message": "Note that if reader mode manager is enabled (which is a static) this will I think hide toolbar for all custom tabs. That is why I think the decisions related with UI should depend on mIntentDataProvider.isReaderModeUI or something else that depends on this particular custom tab.",
+      "range": {
+        "startLine": 369,
+        "startChar": 81,
+        "endLine": 369,
+        "endChar": 82
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcb0c73_d8964cb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-26T18:04:37Z",
+      "side": 1,
+      "message": "Do we need this? I am mostly asking because there are other Chrome initiated custom tabs that use this path. What happens if isHerbIntent is true here?\n\nif we do need this, we might just want to update isHerbIntent to check for the UI_Type extra and then return false if there is one that is not the default.",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8117fbaa_e9d8ec33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-26T18:04:37Z",
+      "side": 1,
+      "message": "More of a flow related question again. Why do we set the activity directly to CustomTabActivity here? What happens if we send it to LauncherActivity and that handles the routing?",
+      "range": {
+        "startLine": 486,
+        "startChar": 44,
+        "endLine": 486,
+        "endChar": 45
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de540a99_2642b632",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-26T18:04:37Z",
+      "side": 1,
+      "message": "Whether the intent was created....",
+      "range": {
+        "startLine": 567,
+        "startChar": 22,
+        "endLine": 567,
+        "endChar": 23
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34eeacd8_b1deea98",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-26T18:04:37Z",
+      "side": 1,
+      "message": "make this @NonNull to avoid the null check below. And I believe safeGet will handle the no extras case, so you won\u0027t need the early return below?",
+      "range": {
+        "startLine": 569,
+        "startChar": 52,
+        "endLine": 569,
+        "endChar": 58
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
