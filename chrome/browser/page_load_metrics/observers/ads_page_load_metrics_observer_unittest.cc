@@ -39,7 +39,7 @@ struct ExpectedFrameBytes {
   size_t uncached_kb;
 };
 
-enum class AdType { GOOGLE = 0, SUBRESOURCE_FILTER = 1, ALL = 2 };
+enum class AdType { ALL = 0, GOOGLE = 1, SUBRESOURCE_FILTER = 2, OTHER = 3 };
 enum class ResourceCached { NOT_CACHED, CACHED };
 enum class FrameType { AD = 0, NON_AD };
 
@@ -130,6 +130,8 @@ std::string AdTypeToString(AdType ad_type) {
       return "SubresourceFilter";
     case AdType::ALL:
       return "All";
+    case AdType::OTHER:
+      return "Other";
   }
   ADD_FAILURE();
   return "";
@@ -382,7 +384,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, ResourceBeforeAdFrameCommits) {
                  10 /*non_ad_uncached_kb*/, AdType::GOOGLE);
 }
 
-TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
+TEST_F(AdsPageLoadMetricsObserverTest, MultipleAdTypesInPage) {
   RenderFrameHost* main_frame = NavigateMainFrame(kNonAdUrl);
   RenderFrameHost* non_ad_frame =
       CreateAndNavigateSubFrame(kNonAdUrl, kNonAdName, main_frame);
@@ -434,6 +436,39 @@ TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
                  AdType::SUBRESOURCE_FILTER);
   TestHistograms(histogram_tester(), {{10, 0}, {0, 10}, {0, 10}, {10, 10}},
                  20 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
+                 AdType::ALL);
+  histogram_tester().ExpectBucketCount(
+      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
+  histogram_tester().ExpectTotalCount(
+      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound", 0);
+}
+
+TEST_F(AdsPageLoadMetricsObserverTest, OtherAdTypesInPage) {
+  RenderFrameHost* main_frame = NavigateMainFrame(kNonAdUrl);
+
+  RenderFrameHost* ym_frame = CreateAndNavigateSubFrame(
+      "http://ad.yieldmanager.com/", kNonAdName, main_frame);
+  RenderFrameHost* adex_frame = CreateAndNavigateSubFrame(
+      "http://cdn1.adexprt.com/", kNonAdName, main_frame);
+  RenderFrameHost* adex_frame2 = CreateAndNavigateSubFrame(
+      "http://cdn2.adexprt.com/", kNonAdName, main_frame);
+  RenderFrameHost* adex_frame3 = CreateAndNavigateSubFrame(
+      "http://cdn3.adexprt.com/", kNonAdName, main_frame);
+
+  LoadResource(main_frame, ResourceCached::NOT_CACHED, 10);
+  LoadResource(ym_frame, ResourceCached::CACHED, 10);
+  LoadResource(adex_frame, ResourceCached::CACHED, 10);
+  LoadResource(adex_frame2, ResourceCached::CACHED, 10);
+  LoadResource(adex_frame3, ResourceCached::CACHED, 10);
+
+  // Navigate again to trigger histograms.
+  NavigateFrame(kNonAdUrl, main_frame);
+
+  TestHistograms(histogram_tester(), {{10, 0}, {10, 0}, {10, 0}, {10, 0}},
+                 0 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
+                 AdType::OTHER);
+  TestHistograms(histogram_tester(), {{10, 0}, {10, 0}, {10, 0}, {10, 0}},
+                 0 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
                  AdType::ALL);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);

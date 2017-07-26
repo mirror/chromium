@@ -29,6 +29,9 @@ const base::Feature kAdsFeature{"AdsMetrics", base::FEATURE_ENABLED_BY_DEFAULT};
     case AdsPageLoadMetricsObserver::AD_TYPE_SUBRESOURCE_FILTER:           \
       hist_macro("PageLoad.Clients.Ads.SubresourceFilter." suffix, value); \
       break;                                                               \
+    case AdsPageLoadMetricsObserver::AD_TYPE_OTHER:                        \
+      hist_macro("PageLoad.Clients.Ads.Other." suffix, value);             \
+      break;                                                               \
     case AdsPageLoadMetricsObserver::AD_TYPE_ALL:                          \
       hist_macro("PageLoad.Clients.Ads.All." suffix, value);               \
       break;                                                               \
@@ -66,6 +69,14 @@ bool DetectGoogleAd(content::NavigationHandle* navigation_handle) {
   return url.host_piece() == "tpc.googlesyndication.com" &&
          base::StartsWith(url.path_piece(), "/safeframe",
                           base::CompareCase::SENSITIVE);
+}
+
+bool DetectOtherAd(content::NavigationHandle* navigation_handle) {
+  const GURL& url = navigation_handle->GetURL();
+  return url.host_piece() == "ad.yieldmanager.com" ||
+         url.host_piece() == "cdn1.adexprt.com" ||
+         url.host_piece() == "cdn2.adexprt.com" ||
+         url.host_piece() == "cdn3.adexprt.com";
 }
 
 void RecordParentExistsForSubFrame(
@@ -237,6 +248,9 @@ AdsPageLoadMetricsObserver::AdTypes AdsPageLoadMetricsObserver::DetectAds(
   if (DetectSubresourceFilterAd(navigation_handle->GetFrameTreeNodeId()))
     ad_types.set(AD_TYPE_SUBRESOURCE_FILTER);
 
+  if (DetectOtherAd(navigation_handle))
+    ad_types.set(AD_TYPE_OTHER);
+
   return ad_types;
 }
 
@@ -294,6 +308,7 @@ void AdsPageLoadMetricsObserver::ProcessLoadedResource(
 void AdsPageLoadMetricsObserver::RecordHistograms() {
   RecordHistogramsForType(AD_TYPE_GOOGLE);
   RecordHistogramsForType(AD_TYPE_SUBRESOURCE_FILTER);
+  RecordHistogramsForType(AD_TYPE_OTHER);
   RecordHistogramsForType(AD_TYPE_ALL);
 }
 

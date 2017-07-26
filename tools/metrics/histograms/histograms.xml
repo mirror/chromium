@@ -89591,6 +89591,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Clients.Ads.Google" label="Includes only Google ads."/>
   <suffix name="Clients.Ads.SubresourceFilter"
       label="Includes only ads discovered by the SubResourceFilter."/>
+  <suffix name="Clients.Ads.Other"
+      label="Includes ads from ad networks not reported elsewhere."/>
   <suffix name="Clients.Ads.All" label="Includes all discovered ads."/>
   <affected-histogram name="PageLoad.Bytes.AdFrames.Aggregate.Network"/>
   <affected-histogram name="PageLoad.Bytes.AdFrames.Aggregate.PercentNetwork"/>
