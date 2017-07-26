@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe7cffa5_a719db18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-26T20:17:08Z",
+      "side": 1,
+      "message": "I think it would be better to also make this part of the ThumbnailProvider interface.\n\nOOC, what happens if the downloaded file itself is removed from disk by someone else? Do we clean out the entry in downloads home as well or do we keep it?",
+      "range": {
+        "startLine": 361,
+        "startChar": 24,
+        "endLine": 361,
+        "endChar": 40
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bde7a9_69ea7efa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-26T20:17:08Z",
+      "side": 1,
+      "message": "Uh, this is a member, so it will be null for any new instance that you create :) And even if it was static you could still end up doing this more than once if multiple instances are created before the task runs on the background thread. You might have to set a flag when you schedule the task.",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 30
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d88150_874309c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-26T20:17:08Z",
+      "side": 1,
+      "message": "Hm, is \"the file doesn\u0027t exist\" a situation that can never happen under any circumstances (in the absence of bugs)? I have the feeling it isn\u0027t, because the file system can always be in a weird state, so you probably should handle it like the other exceptions below.",
+      "range": {
+        "startLine": 255,
+        "startChar": 12,
+        "endLine": 255,
+        "endChar": 26
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2c2a11_8599cb16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-26T20:17:08Z",
+      "side": 1,
+      "message": "Nit: {@code contentId}",
+      "range": {
+        "startLine": 282,
+        "startChar": 77,
+        "endLine": 282,
+        "endChar": 86
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e6d2bb_48b6e205",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-26T20:17:08Z",
+      "side": 1,
+      "message": "Nit: document parameter please :D",
+      "range": {
+        "startLine": 134,
+        "startChar": 14,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c8d6c5_0ee402de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-26T20:17:08Z",
+      "side": 1,
+      "message": "And document this one too :)",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 23
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
