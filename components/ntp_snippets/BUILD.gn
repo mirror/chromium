@@ -101,6 +101,8 @@ static_library("ntp_snippets") {
     "status.h",
     "switches.cc",
     "switches.h",
+    "time_utils.cc",
+    "time_utils.h",
     "user_classifier.cc",
     "user_classifier.h",
   ]
