@@ -94,7 +94,7 @@ CompositeEditCommand::~CompositeEditCommand() {
 
 bool CompositeEditCommand::Apply() {
   DCHECK(!IsCommandGroupWrapper());
-  if (!EndingSelection().IsContentRichlyEditable()) {
+  if (!EndingVisibleSelection().IsContentRichlyEditable()) {
     switch (GetInputType()) {
       case InputEvent::InputType::kInsertText:
       case InputEvent::InputType::kInsertLineBreak:
@@ -204,7 +204,7 @@ void CompositeEditCommand::ApplyCommandToComposite(
     const VisibleSelection& selection,
     EditingState* editing_state) {
   command->SetParent(this);
-  if (selection != command->EndingSelection()) {
+  if (selection != command->EndingVisibleSelection()) {
     command->SetStartingSelection(selection);
     command->SetEndingVisibleSelection(selection);
   }
@@ -774,7 +774,7 @@ void CompositeEditCommand::
 }
 
 void CompositeEditCommand::RebalanceWhitespace() {
-  VisibleSelection selection = EndingSelection();
+  VisibleSelection selection = EndingVisibleSelection();
   if (selection.IsNone())
     return;
 
@@ -1536,7 +1536,7 @@ void CompositeEditCommand::MoveParagraphs(
   GetDocument()
       .GetFrame()
       ->GetSpellChecker()
-      .MarkMisspellingsForMovingParagraphs(EndingSelection());
+      .MarkMisspellingsForMovingParagraphs(EndingVisibleSelection());
 
   // If the selection is in an empty paragraph, restore styles from the old
   // empty paragraph to the new empty paragraph.

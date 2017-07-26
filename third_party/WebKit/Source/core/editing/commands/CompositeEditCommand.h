@@ -54,6 +54,12 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
   }
   const VisibleSelection& EndingSelection() const { return ending_selection_; }
 
+  // TODO(editing-dev): This function will be rename to
+  // |ComputeEndingVisibleSeelction()| after we introduce |SelectionInUndoStep|.
+  const VisibleSelection& EndingVisibleSelection() const {
+    return ending_selection_;
+  }
+
   void SetStartingSelection(const VisibleSelection&);
   void SetEndingSelection(const SelectionInDOMTree&);
   // TODO(yosin): |setEndingVisibleSelection()| will take |SelectionInUndoStep|
