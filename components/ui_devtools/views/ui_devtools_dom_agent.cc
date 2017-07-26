@@ -153,6 +153,7 @@ int FindUIElementIdForWindow(UIElement* root, aura::Window* element) {
 }  // namespace
 
 UIDevToolsDOMAgent::UIDevToolsDOMAgent() : is_building_tree_(false) {
+  show_distances_ = RectPositionsType::NO_DRAW;
   show_size_on_canvas_ = false;
   aura::Env::GetInstance()->AddObserver(this);
 }
@@ -256,6 +257,8 @@ ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(
   if (!window_and_bounds.first)
     return ui_devtools::protocol::Response::Error("No node found with that id");
 
+  LOG(ERROR) << __PRETTY_FUNCTION__ << " show_size: " << show_size;
+  show_distances_ = RectPositionsType::NO_DRAW;
   show_size_on_canvas_ = show_size;
   UpdateHighlight(window_and_bounds);
 
@@ -299,18 +302,100 @@ void UIDevToolsDOMAgent::FindElementByEventHandler(const gfx::Point& p,
   }
 }
 
-void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
-  ui::PaintRecorder recorder(context, screen_bounds.size());
-  gfx::Canvas* canvas_ = recorder.canvas();
-  gfx::RectF rect(hovered_element_bounds);
+void UIDevToolsDOMAgent::ShowDistances(int pinned_id, int element_id) {
+  gfx::Rect r1, r2;
+  std::pair<aura::Window*, gfx::Rect> pair_r2 =
+      node_id_to_ui_element_[element_id]->GetNodeWindowAndBounds();
+  std::pair<aura::Window*, gfx::Rect> pair_r1 =
+      node_id_to_ui_element_[pinned_id]->GetNodeWindowAndBounds();
+  r2 = pair_r2.second;
+  r1 = pair_r1.second;
+  pinned_rect = r1;
 
-  cc::PaintFlags flags;
-  flags.setColor(SK_ColorBLUE);
-  SkScalar intervals[] = {1.f, 1.f};
-  flags.setStrokeWidth(1.f);
-  flags.setStyle(cc::PaintFlags::kStroke_Style);
-  flags.setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
+  is_swap_ = false;
+  if (r1.x() > r2.x()) {
+    is_swap_ = true;
+    gfx::Rect temp(r1);
+    r1 = r2;
+    r2 = temp;
+  }
+  if (r1.Contains(r2)) {
+    show_distances_ = RectPositionsType::R1_CONTAINS_R2;
+  } else if (r1.x() + r1.width() <= r2.x()) {
+    if (r1.y() <= r2.y() && r2.y() <= r1.y() + r1.height())
+      show_distances_ = RectPositionsType::R1_HORIZONTAL_FULL_LEFT_R2;
+    else if (r1.y() + r1.height() <= r2.y())
+      show_distances_ = RectPositionsType::R1_TOP_FULL_LEFT_R2;
+    else if (r1.y() >= r2.y() + r2.height())
+      show_distances_ = RectPositionsType::R1_BOTTOM_FULL_LEFT_R2;
+  } else if (r1.x() <= r2.x() && r2.x() <= r1.x() + r1.width()) {
+    if (r1.y() + r1.height() <= r2.y())
+      show_distances_ = RectPositionsType::R1_TOP_PARTIAL_LEFT_R2;
+    else if (r1.y() >= r2.y() + r2.height())
+      show_distances_ = RectPositionsType::R1_BOTTOM_PARTIAL_LEFT_R2;
+    else if ((r1.y() >= r2.y() && r1.y() <= r2.y() + r2.height()) ||
+             (r1.y() + r1.height() >= r2.y() &&
+              r1.y() + r1.height() <= r2.y() + r2.height()))
+      show_distances_ = RectPositionsType::R1_INTERSECTS_R2;
+  } else {
+    show_distances_ = RectPositionsType::NO_DRAW;
+  }
+}
 
+void DrawTextOnLine(const gfx::Rect& hovered_rect,
+                    gfx::Canvas* canvas_,
+                    RectSide drawing_side) {
+  if (hovered_rect.width() == 0 && hovered_rect.height() == 0)
+    return;
+  base::string16 utf16_text;
+  const std::string unit = "dp";
+  if (hovered_rect.width() == 0)
+    utf16_text =
+        base::UTF8ToUTF16(std::to_string(hovered_rect.height()) + " " + unit);
+  else if (hovered_rect.height() == 0)
+    utf16_text =
+        base::UTF8ToUTF16(std::to_string(hovered_rect.width()) + " " + unit);
+  else
+    utf16_text = base::UTF8ToUTF16(hovered_rect.size().ToString() + " " + unit);
+
+  const int kTextHeight = 12;
+  const int kCharacterPerPixel = 5;
+  const int kTextWidth =
+      kCharacterPerPixel * static_cast<int>(utf16_text.length());
+
+  ResourceBundle* rb = &ResourceBundle::GetSharedInstance();
+  gfx::FontList base_font = rb->GetFontList(ResourceBundle::BaseFont)
+                                .DeriveWithHeightUpperBound(kTextHeight);
+  gfx::Rect text_rect;
+  if (drawing_side == RectSide::LEFT_SIDE) {
+    gfx::Point text_left_side(
+        hovered_rect.x() + 1,
+        hovered_rect.height() / 2 - kTextHeight / 2 + hovered_rect.y());
+    text_rect = gfx::Rect(text_left_side, gfx::Size(kTextWidth, kTextHeight));
+  } else if (drawing_side == RectSide::RIGHT_SIDE) {
+    gfx::Point text_right_side(
+        hovered_rect.x() + hovered_rect.width() - 1 - kTextWidth,
+        hovered_rect.height() / 2 - kTextHeight / 2 + hovered_rect.y());
+    text_rect = gfx::Rect(text_right_side, gfx::Size(kTextWidth, kTextHeight));
+  } else if (drawing_side == RectSide::TOP_SIDE) {
+    gfx::Point text_top_side(
+        hovered_rect.x() + hovered_rect.width() / 2 - kTextWidth / 2,
+        hovered_rect.y() + 1);
+    text_rect = gfx::Rect(text_top_side, gfx::Size(kTextWidth, kTextHeight));
+  } else if (drawing_side == RectSide::BOTTOM_SIDE) {
+    gfx::Point text_top_side(
+        hovered_rect.x() + hovered_rect.width() / 2 - kTextWidth / 2,
+        hovered_rect.y() + hovered_rect.height() - 1 - kTextHeight);
+    text_rect = gfx::Rect(text_top_side, gfx::Size(kTextWidth, kTextHeight));
+  }
+  canvas_->FillRect(text_rect, SK_ColorWHITE, SkBlendMode::kColor);
+  canvas_->DrawStringRect(utf16_text, base_font, SK_ColorRED, text_rect);
+}
+
+void DrawRectGuideLinesOnCanvas(gfx::Canvas* canvas_,
+                                const gfx::Rect& screen_bounds,
+                                const gfx::RectF& rect,
+                                const cc::PaintFlags& flags) {
   // Top horizontal dotted line from left to right.
   canvas_->DrawLine(gfx::PointF(0.0f, rect.y()),
                     gfx::PointF(screen_bounds.right(), rect.y()), flags);
@@ -332,27 +417,140 @@ void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
 
   // Draw ui element bounds.
   canvas_->DrawRect(rect, SK_ColorBLUE);
+}
 
-  if (show_size_on_canvas_) {
-    const int kTextHeight = 12;
-    const int kCharacterPerPixel = 5;
-    const int kTextWidth =
-        kCharacterPerPixel * hovered_element_bounds.size().ToString().length();
+void UIDevToolsDOMAgent::DrawR1ContainsR2(const gfx::RectF& pinned_rectF,
+                                          const gfx::RectF& hovered_rectF,
+                                          const cc::PaintFlags& flags,
+                                          gfx::Canvas* canvas_) {
+  float x1, y1, x2, y2;
+  LOG(ERROR) << __PRETTY_FUNCTION__;
 
-    base::string16 utf16_text =
-        base::UTF8ToUTF16(hovered_element_bounds.size().ToString());
-    ResourceBundle* rb = &ResourceBundle::GetSharedInstance();
-    gfx::FontList base_font = rb->GetFontList(ResourceBundle::BaseFont)
-                                  .DeriveWithHeightUpperBound(kTextHeight);
-    gfx::Point text_top_left_point(hovered_element_bounds.x() + 1,
-                                   hovered_element_bounds.height() / 2 -
-                                       kTextHeight / 2 +
-                                       hovered_element_bounds.y());
-    canvas_->FillRect(
-        gfx::Rect(text_top_left_point, gfx::Size(kTextWidth, kTextHeight)),
-        SK_ColorWHITE, SkBlendMode::kColor);
-    canvas_->DrawStringRect(utf16_text, base_font, SK_ColorRED,
-                            hovered_element_bounds);
+  LOG(ERROR) << "Line point 1: " << pinned_rectF.x() << ", "
+             << pinned_rectF.y() + pinned_rectF.height() / 2 << " -- Point 2: "
+             << pinned_rectF.x() + hovered_rectF.x() - pinned_rectF.x() << ", "
+             << pinned_rectF.y() + pinned_rectF.height() / 2;
+  // Horizontal left dotted line.
+  x1 = pinned_rectF.x();
+  y1 = pinned_rectF.y() + pinned_rectF.height() / 2;
+  x2 = pinned_rectF.x() + hovered_rectF.x() - pinned_rectF.x();
+  y2 = pinned_rectF.y() + pinned_rectF.height() / 2;
+  canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+  if (is_swap_)
+    DrawTextOnLine(gfx::Rect(x2, y2, x1 - x2, y1 - y2), canvas_,
+                   RectSide::BOTTOM_SIDE);
+  else
+    DrawTextOnLine(gfx::Rect(x1, y1, x2 - x1, y2 - y1), canvas_,
+                   RectSide::BOTTOM_SIDE);
+
+  // Horizontal right dotted line.
+  x1 = hovered_rectF.x() + hovered_rectF.width();
+  y1 = pinned_rectF.y() + pinned_rectF.height() / 2;
+  x2 = pinned_rectF.x() + pinned_rectF.width();
+  y2 = pinned_rectF.y() + pinned_rectF.height() / 2;
+  canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+  if (is_swap_)
+    DrawTextOnLine(gfx::Rect(x2, y2, x1 - x2, y1 - y2), canvas_,
+                   RectSide::BOTTOM_SIDE);
+  else
+    DrawTextOnLine(gfx::Rect(x1, y1, x2 - x1, y2 - y1), canvas_,
+                   RectSide::BOTTOM_SIDE);
+
+  // Vertical top dotted line.
+  x1 = pinned_rectF.x() + pinned_rectF.width() / 2;
+  y1 = pinned_rectF.y();
+  x2 = pinned_rectF.x() + pinned_rectF.width() / 2;
+  y2 = hovered_rectF.y();
+  canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+  if (is_swap_)
+    DrawTextOnLine(gfx::Rect(x2, y2, x1 - x2, y1 - y2), canvas_,
+                   RectSide::RIGHT_SIDE);
+  else
+    DrawTextOnLine(gfx::Rect(x1, y1, x2 - x1, y2 - y1), canvas_,
+                   RectSide::RIGHT_SIDE);
+
+  // Vertical bottom dotted line.
+  x1 = pinned_rectF.x() + pinned_rectF.width() / 2;
+  y1 = hovered_rectF.y() + hovered_rectF.height();
+  x2 = pinned_rectF.x() + pinned_rectF.width() / 2;
+  y2 = pinned_rectF.y() + pinned_rectF.height();
+  canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+  if (is_swap_)
+    DrawTextOnLine(gfx::Rect(x2, y2, x1 - x2, y1 - y2), canvas_,
+                   RectSide::RIGHT_SIDE);
+  else
+    DrawTextOnLine(gfx::Rect(x1, y1, x2 - x1, y2 - y1), canvas_,
+                   RectSide::RIGHT_SIDE);
+}
+
+void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
+  LOG(ERROR) << __PRETTY_FUNCTION__
+             << " -- show_distances_: " << show_distances_;
+  LOG(ERROR) << __PRETTY_FUNCTION__
+             << " -- show_size_on_canvas_: " << show_size_on_canvas_;
+  ui::PaintRecorder recorder(context, screen_bounds.size());
+  gfx::Canvas* canvas_ = recorder.canvas();
+  gfx::RectF hovered_rectF(hovered_rect);
+
+  cc::PaintFlags flags;
+  flags.setColor(SK_ColorBLUE);
+  SkScalar intervals[] = {1.f, 1.f};
+  flags.setStrokeWidth(1.f);
+  flags.setStyle(cc::PaintFlags::kStroke_Style);
+  flags.setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
+
+  if (show_distances_ == RectPositionsType::NO_DRAW) {
+    LOG(ERROR) << __PRETTY_FUNCTION__ << " -- rect: (" << hovered_rectF.x()
+               << ", " << hovered_rectF.y() << "), ("
+               << (hovered_rectF.x() + hovered_rectF.width()) << ","
+               << (hovered_rectF.y() + hovered_rectF.height()) << ")";
+    DrawRectGuideLinesOnCanvas(canvas_, screen_bounds, hovered_rectF, flags);
+
+    if (show_size_on_canvas_)
+      DrawTextOnLine(hovered_rect, canvas_, RectSide::BOTTOM_SIDE);
+    return;
+  }
+  LOG(ERROR) << __PRETTY_FUNCTION__;
+
+  gfx::RectF pinned_rectF(pinned_rect);
+  DrawRectGuideLinesOnCanvas(canvas_, screen_bounds, pinned_rectF, flags);
+  DrawRectGuideLinesOnCanvas(canvas_, screen_bounds, hovered_rectF, flags);
+
+  LOG(ERROR) << "Pinned Point 1: " << pinned_rectF.x() << ", "
+             << pinned_rectF.y()
+             << " -- Point 2: " << pinned_rectF.x() + pinned_rectF.width()
+             << ", " << pinned_rectF.y() + pinned_rectF.height();
+
+  LOG(ERROR) << "hover 1: " << hovered_rect.x() << ", " << hovered_rect.y()
+             << " -- Point 2: " << hovered_rect.x() + hovered_rect.width()
+             << ", " << hovered_rect.y() + hovered_rect.height();
+
+  flags.setColor(SK_ColorRED);
+
+  switch (show_distances_) {
+    case RectPositionsType::R1_CONTAINS_R2:
+      DrawR1ContainsR2(pinned_rectF, hovered_rectF, flags, canvas_);
+      return;
+    case RectPositionsType::R1_HORIZONTAL_FULL_LEFT_R2:
+      NOTIMPLEMENTED();
+      return;
+    case RectPositionsType::R1_TOP_FULL_LEFT_R2:
+      NOTIMPLEMENTED();
+      return;
+    case RectPositionsType::R1_BOTTOM_FULL_LEFT_R2:
+      NOTIMPLEMENTED();
+      return;
+    case RectPositionsType::R1_TOP_PARTIAL_LEFT_R2:
+      NOTIMPLEMENTED();
+      return;
+    case RectPositionsType::R1_BOTTOM_PARTIAL_LEFT_R2:
+      NOTIMPLEMENTED();
+      return;
+    case RectPositionsType::R1_INTERSECTS_R2:
+      NOTIMPLEMENTED();
+      return;
+      NOTREACHED();
+      return;
   }
 }
 
@@ -506,10 +704,10 @@ void UIDevToolsDOMAgent::UpdateHighlight(
 
   aura::client::ScreenPositionClient* screen_position_client =
       aura::client::GetScreenPositionClient(root);
-  hovered_element_bounds = window_and_bounds.second;
-  gfx::Point origin = hovered_element_bounds.origin();
+  hovered_rect = window_and_bounds.second;
+  gfx::Point origin = hovered_rect.origin();
   screen_position_client->ConvertPointFromScreen(root, &origin);
-  hovered_element_bounds.set_origin(origin);
+  hovered_rect.set_origin(origin);
 }
 
 }  // namespace ui_devtools
