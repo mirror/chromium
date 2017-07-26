@@ -201,16 +201,20 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
   EXPECT_EQ(TransformationMatrix().Translate(0, -100),
             scroller_properties->ScrollTranslation()->Matrix());
   EXPECT_EQ(FrameScrollTranslation(),
+            scroller_properties->PaintOffsetTranslation()->Parent());
+  EXPECT_EQ(scroller_properties->PaintOffsetTranslation(),
             scroller_properties->ScrollTranslation()->Parent());
-  EXPECT_EQ(FrameScrollTranslation(),
+  EXPECT_EQ(scroller_properties->PaintOffsetTranslation(),
             scroller_properties->OverflowClip()->LocalTransformSpace());
+  EXPECT_EQ(TransformationMatrix().Translate(120, 340),
+            scroller_properties->PaintOffsetTranslation()->Matrix());
   const auto* scroll = scroller_properties->ScrollTranslation()->ScrollNode();
   EXPECT_EQ(FrameScroll(), scroll->Parent());
   EXPECT_EQ(FloatSize(413, 317), scroll->ContainerBounds());
   EXPECT_EQ(FloatSize(660, 10200), scroll->Bounds());
   EXPECT_FALSE(scroll->UserScrollableHorizontal());
   EXPECT_TRUE(scroll->UserScrollableVertical());
-  EXPECT_EQ(FloatRoundedRect(120, 340, 413, 317),
+  EXPECT_EQ(FloatRoundedRect(0, 0, 413, 317),
             scroller_properties->OverflowClip()->ClipRect());
   EXPECT_EQ(FrameContentClip(), scroller_properties->OverflowClip()->Parent());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(120, 340, 413, 317),
@@ -222,7 +226,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
   Element* rel_pos = GetDocument().getElementById("rel-pos");
   const ObjectPaintProperties* rel_pos_properties =
       rel_pos->GetLayoutObject()->PaintProperties();
-  EXPECT_EQ(TransformationMatrix().Translate(680, 1120),
+  EXPECT_EQ(TransformationMatrix().Translate(560, 780),
             rel_pos_properties->PaintOffsetTranslation()->Matrix());
   EXPECT_EQ(scroller_properties->ScrollTranslation(),
             rel_pos_properties->PaintOffsetTranslation()->Parent());
@@ -2532,12 +2536,17 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollContentsTreeState) {
   LayoutObject* child =
       GetDocument().getElementById("child")->GetLayoutObject();
 
-  EXPECT_EQ(FrameScrollTranslation(),
+  EXPECT_EQ(clip_properties->PaintOffsetTranslation(),
             clipper->LocalBorderBoxProperties()->Transform());
+  EXPECT_EQ(FrameScrollTranslation(),
+            clipper->LocalBorderBoxProperties()->Transform()->Parent());
   EXPECT_EQ(FrameContentClip(), clipper->LocalBorderBoxProperties()->Clip());
 
+  EXPECT_EQ(TransformationMatrix().Translate(30, 20),
+            clip_properties->PaintOffsetTranslation()->Matrix());
+  EXPECT_EQ(LayoutPoint(0, 0), clipper->PaintOffset());
+
   auto contents_properties = clipper->ContentsProperties();
-  EXPECT_EQ(LayoutPoint(30, 20), clipper->PaintOffset());
   EXPECT_EQ(clip_properties->ScrollTranslation(),
             contents_properties.Transform());
   EXPECT_EQ(clip_properties->OverflowClip(), contents_properties.Clip());
@@ -3341,7 +3350,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskEscapeClip) {
   // This test verifies an abs-pos element still escape the scroll of a
   // static-pos ancestor, but gets clipped due to the presence of a mask.
   SetBodyInnerHTML(
-      "<div style='width:300px; height:200px; overflow:scroll;'>"
+      "<div id='overflow' style='width:300px; height:200px; overflow:scroll;'>"
       "  <div id='target' style='width:200px; height:300px; "
       "-webkit-mask:linear-gradient(red,red); border:10px dashed black; "
       "overflow:hidden;'>"
@@ -3361,16 +3370,17 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskEscapeClip) {
       target->LocalBorderBoxProperties()->Transform();
 
   EXPECT_EQ(FrameContentClip(), overflow_clip1->Parent());
-  EXPECT_EQ(FloatRoundedRect(8, 8, 300, 200), overflow_clip1->ClipRect());
-  EXPECT_EQ(FramePreTranslation(), overflow_clip1->LocalTransformSpace());
+  EXPECT_EQ(FloatRoundedRect(0, 0, 300, 200), overflow_clip1->ClipRect());
+  EXPECT_EQ(PaintPropertiesForElement("overflow")->PaintOffsetTranslation(),
+            overflow_clip1->LocalTransformSpace());
 
   EXPECT_EQ(mask_clip, target->LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(overflow_clip1, mask_clip->Parent());
-  EXPECT_EQ(FloatRoundedRect(8, 8, 220, 320), mask_clip->ClipRect());
+  EXPECT_EQ(FloatRoundedRect(0, 0, 220, 320), mask_clip->ClipRect());
   EXPECT_EQ(scroll_translation, mask_clip->LocalTransformSpace());
 
   EXPECT_EQ(mask_clip, overflow_clip2->Parent());
-  EXPECT_EQ(FloatRoundedRect(18, 18, 200, 300), overflow_clip2->ClipRect());
+  EXPECT_EQ(FloatRoundedRect(10, 10, 200, 300), overflow_clip2->ClipRect());
   EXPECT_EQ(scroll_translation, overflow_clip2->LocalTransformSpace());
 
   EXPECT_EQ(properties->Effect(), target->LocalBorderBoxProperties()->Effect());
