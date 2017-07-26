@@ -88,6 +88,24 @@
       "revId": "d2b58d5f7991876d0942580c2b306378977f4d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f558221_70e17c9f",
+        "filename": "chrome/browser/browsing_data/browsing_data_file_system_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-26T02:16:05Z",
+      "side": 1,
+      "message": "\u003e \u003e I think this assumes Notify() will have been called once the current loop and the pool is idle? So it assumes idle means success. If a bug is introduced that prevents Notify() from being called, how would we know?\n\u003e \u003e \n\u003e \u003e Would it make sense to change Notify() to call Quit() and to change the BlockUntilNotified()\n\u003e \u003e   base::RunLoop().Run();  // won\u0027t stop until Notify() is called\n\u003e \u003e   content::RunAllBlockingPoolTasksUntilIdle();  // flushes everything else thru till idle\n\u003e \n\u003e Done except Notify calling RunLoop().Quit() doesn\u0027t appear to work for some reason, so kept QuitWhenIdle.\n\nOh wait. I think Notify needs to call Quit on the same RunLoop instance. I\u0027ll try that tomorrow..",
+      "parentUuid": "a2777892_5fc61a1e",
+      "revId": "d2b58d5f7991876d0942580c2b306378977f4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
