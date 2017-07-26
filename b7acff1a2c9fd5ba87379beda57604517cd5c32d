@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92da13ad_c05db9d0",
+        "filename": "content/shell/browser/layout_test/layout_test_browser_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-26T15:35:20Z",
+      "side": 1,
+      "message": "Nit: Would you mind moving this into an initialization method? I\u0027d prefer to keep it separate from the constructor...",
+      "revId": "b7acff1a2c9fd5ba87379beda57604517cd5c32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
