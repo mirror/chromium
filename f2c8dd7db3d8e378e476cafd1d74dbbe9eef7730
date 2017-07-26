@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e34f8c34_e22fa3ad",
+        "filename": "components/cryptauth/cryptauth_device_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "If you\u0027re going to rely on the CHANGED result here, then you should change the check from |unlock_keys_changed| to generally if any devices changed.",
+      "range": {
+        "startLine": 481,
+        "startChar": 42,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959000d8_ca8e73e4",
+        "filename": "components/cryptauth/cryptauth_device_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "while you\u0027re here, can you move this to the .cc file?",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 79
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599c4456_52b4e5a3",
+        "filename": "components/cryptauth/cryptauth_device_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "Please add a comment in the lines of \"Invokes OnSyncStarted() on all observers\".",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec053a27_93446d19",
+        "filename": "components/cryptauth/cryptauth_device_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "Add a comment here as well.",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 47
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ca9d80_8ba9b73d",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1703b72b_1dd7f1de",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee66cd90_491f9b38",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "You can make the function const.",
+      "range": {
+        "startLine": 48,
+        "startChar": 43,
+        "endLine": 48,
+        "endChar": 1
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88558d0_4c92b14e",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "Add a DISALLOW_COPY_AND_ASSIGN macro.",
+      "range": {
+        "startLine": 71,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 63
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a06e13_5aadbeae",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "add a new line",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 1
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0b8e41_65cbe1e8",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T18:32:06Z",
+      "side": 1,
+      "message": "Why not just use a real RemoteDeviceLoader? That way you don\u0027t need to do all this mocking.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
