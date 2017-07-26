@@ -19,7 +19,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/mock_callback.h"
-#include "base/test/scoped_task_scheduler.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/base/decrypt_config.h"
@@ -279,8 +279,7 @@ class FFmpegDemuxerTest : public testing::Test {
   }
 
   // Fixture members.
-
-  base::test::ScopedTaskScheduler task_scheduler_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   MediaLog media_log_;
   std::unique_ptr<FileDataSource> data_source_;
   std::unique_ptr<FFmpegDemuxer> demuxer_;
