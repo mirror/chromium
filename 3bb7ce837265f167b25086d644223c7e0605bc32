@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8c9d6b1_2d1a10c5",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-26T19:15:11Z",
+      "side": 1,
+      "message": "nit: activation \u003d\u003e is_activated",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236acf54_9de6f9d8",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-26T19:15:11Z",
+      "side": 1,
+      "message": "This comment seems more appropriate for the API documentation in header.",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e753b6_bca3e41a",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-26T19:15:11Z",
+      "side": 1,
+      "message": "How about ResetSiteMetadataBasedOnActivation(const GURL\u0026 url, bool is_activated) ?\nAPI needs documentation, the one in the function definition can be brought here.",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f99bf3_08f0fc45",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-26T19:15:11Z",
+      "side": 1,
+      "message": "Not sure what is meant by \"Note that there is still an exception in content settings\"",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
