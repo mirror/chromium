@@ -171,14 +171,14 @@ void VideoLayerImpl::AppendQuads(RenderPass* render_pass,
       render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(transform, gfx::Rect(rotated_size),
                             visible_layer_rect(), clip_rect(), is_clipped(),
-                            draw_opacity(), SkBlendMode::kSrcOver,
+                            is_opaque(), draw_opacity(), SkBlendMode::kSrcOver,
                             GetSortingContextId());
 
   AppendDebugBorderQuad(
       render_pass, rotated_size, shared_quad_state, append_quads_data);
 
   gfx::Rect quad_rect(rotated_size);
-  gfx::Rect opaque_rect(contents_opaque() ? quad_rect : gfx::Rect());
+  gfx::Rect opaque_rect(IsContentsOpaque() ? quad_rect : gfx::Rect());
   gfx::Rect visible_rect = frame_->visible_rect();
   gfx::Size coded_size = frame_->coded_size();
 
@@ -366,6 +366,13 @@ SimpleEnclosedRegion VideoLayerImpl::VisibleOpaqueRegion() const {
 void VideoLayerImpl::ReleaseResources() {
   updater_ = nullptr;
 }
+
+// bool VideoLayerImpl::IsContentsOpaque() const {
+//  if (provider_client_impl_->HasCurrentFrame() &&
+//  LayerImpl::IsContentsOpaque())
+//    return true;
+//  return false;
+//}
 
 void VideoLayerImpl::SetNeedsRedraw() {
   SetUpdateRect(gfx::UnionRects(update_rect(), gfx::Rect(bounds())));
