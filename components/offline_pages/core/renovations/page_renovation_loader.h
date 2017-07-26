@@ -53,8 +53,10 @@ class PageRenovationLoader {
   // Contains JavaScript source.
   base::string16 combined_source_;
 
-  // Friend class for unit tests.
+  // Friend classes for unit tests.
   friend class PageRenovationLoaderTest;
+  friend class PageRenovatorTest;
+  friend class PageRenovatorBrowserTest;
 
   DISALLOW_COPY_AND_ASSIGN(PageRenovationLoader);
 };
