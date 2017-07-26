@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b562af1e_f7d8bb75",
+        "filename": "chrome/browser/extensions/extension_action_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T08:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f6dc9f_d5371a79",
+      "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a612630c_e781f985",
         "filename": "chrome/browser/extensions/extension_action_test_util.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80574e5a_c8b633f2",
+        "filename": "chrome/browser/extensions/extension_action_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T08:56:35Z",
+      "side": 1,
+      "message": "Done (just using location now)",
+      "parentUuid": "a612630c_e781f985",
+      "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fd2a6f4f_01c97f88",
+        "filename": "chrome/browser/extensions/extension_action_test_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T08:56:35Z",
+      "side": 1,
+      "message": "Done (added an extra_keys arg).",
+      "parentUuid": "a9cef72d_e5c30015",
+      "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30ccca7b_fd872918",
         "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ea109c_d59fcbcd",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T08:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30ccca7b_fd872918",
+      "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4019ba1a_08f6aeb6",
+        "filename": "chrome/browser/ui/cocoa/extensions/extension_installed_bubble_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T08:56:35Z",
+      "side": 1,
+      "message": "Ah, whoops. Fixed. I usually apply camelCase for new declarations only between @foo/@end, so went with hacker_style (but there\u0027s no hard rule). The stuff I\u0027d copied out of calculateArrowPoint is camelCase and I didn\u0027t change it, and I think it\u0027s more consistent.",
+      "parentUuid": "fda3c692_2a17f0af",
+      "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c560b6dc_fdecfa25",
         "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e19761_7b289cfd",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T08:56:35Z",
+      "side": 1,
+      "message": "Done. Good catch :) (it was originally in one but then I had to move the `}  // namespace` up",
+      "parentUuid": "c560b6dc_fdecfa25",
+      "revId": "6d9f68ee35cca3245e1e6e9c89599614dc503128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
