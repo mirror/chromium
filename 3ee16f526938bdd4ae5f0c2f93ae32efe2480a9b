@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "9a181644_f9af20e6",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-26T07:07:09Z",
+      "side": 1,
+      "message": "Do you need to include base/feature_list.h ?",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "875512bb_ea8df89f",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 2
@@ -81,6 +98,93 @@
       "writtenOn": "2017-07-26T06:14:01Z",
       "side": 1,
       "message": "Do you really want to new method here? Can\u0027t you just keep the existing method and modify the behavior based on the feature flag?\n\nThe question here is will UpdateLanguageList() be completely replaced by  UpdateLanguageListNoExpansion() at some point? If so, then maybe it is better not to create a new method.",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c5e394_a49fd9f5",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-26T07:07:09Z",
+      "side": 1,
+      "message": "If you do use this approach, see https://cs.chromium.org/chromium/src/base/test/scoped_feature_list.h?l\u003d32\u0026rcl\u003d8ecb49e3c2be8e2abaed6f045735114f1911a515 to update your tests.",
+      "parentUuid": "e39eb01e_d223181d",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86df448e_291a824a",
+        "filename": "net/http/http_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-26T07:07:09Z",
+      "side": 1,
+      "message": "The old expansion logic (https://cs.chromium.org/chromium/src/components/translate/core/browser/translate_prefs.cc?l\u003d95\u0026rcl\u003d18e2ca23369139e604c5a5751ccc29eb510972cd) maps e.g. \"en-AU-suffix\" to \"en\", whereas this does not. Could this be an issue?",
+      "range": {
+        "startLine": 812,
+        "startChar": 29,
+        "endLine": 812,
+        "endChar": 0
+      },
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4dfd61_42a3cae2",
+        "filename": "net/http/http_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-26T07:07:09Z",
+      "side": 1,
+      "message": "const std::string\u0026\n?",
+      "range": {
+        "startLine": 813,
+        "startChar": 41,
+        "endLine": 813,
+        "endChar": 0
+      },
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a983f8c6_c3230fd9",
+        "filename": "net/http/http_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-26T07:07:09Z",
+      "side": 1,
+      "message": "What about e.g. \"en-AU,en-US\", where the base language is inserted into the final list, but isn\u0027t there initially?",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 1
+      },
       "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
