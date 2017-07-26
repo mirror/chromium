@@ -67,6 +67,8 @@ constexpr int kLightVibrantBlendAlpha = 0xB3;
 constexpr SkColor kZeroQuerySearchboxColor =
     SkColorSetARGBMacro(0x8A, 0x00, 0x00, 0x00);
 
+}  // namespace
+
 // A background that paints a solid white rounded rect with a thin grey border.
 class SearchBoxBackground : public views::Background {
  public:
@@ -97,8 +99,6 @@ class SearchBoxBackground : public views::Background {
 
   DISALLOW_COPY_AND_ASSIGN(SearchBoxBackground);
 };
-
-}  // namespace
 
 // To paint grey background on mic and back buttons
 class SearchBoxImageButton : public views::ImageButton {
@@ -398,12 +398,13 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
 
   is_search_box_active_ = active;
   UpdateSearchIcon();
+  UpdateBackgroundColor(active ? kSearchBoxBackgroundDefault
+                               : background_color_);
   search_box_->set_placeholder_text_draw_flags(
       active ? gfx::Canvas::TEXT_ALIGN_LEFT : gfx::Canvas::TEXT_ALIGN_CENTER);
   search_box_->set_placeholder_text_color(active ? kZeroQuerySearchboxColor
                                                  : search_box_color_);
   search_box_->SetCursorEnabled(active);
-  search_box_->SchedulePaint();
 
   if (speech_button_)
     speech_button_->SetVisible(!active);
@@ -411,6 +412,7 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   if (focused_view_ != FOCUS_CONTENTS_VIEW)
     ResetTabFocus(false);
   content_container_->Layout();
+  SchedulePaint();
 }
 
 void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
@@ -493,16 +495,13 @@ SkColor SearchBoxView::GetBackgroundColorForState(
 void SearchBoxView::UpdateBackground(double progress,
                                      AppListModel::State current_state,
                                      AppListModel::State target_state) {
-  SearchBoxBackground* background =
-      static_cast<SearchBoxBackground*>(content_container_->background());
-  background->set_corner_radius(gfx::Tween::LinearIntValueBetween(
+  GetSearchBoxBackground()->set_corner_radius(gfx::Tween::LinearIntValueBetween(
       progress, GetSearchBoxBorderCornerRadiusForState(current_state),
       GetSearchBoxBorderCornerRadiusForState(target_state)));
   const SkColor color = gfx::Tween::ColorValueBetween(
       progress, GetBackgroundColorForState(current_state),
       GetBackgroundColorForState(target_state));
-  background->set_color(color);
-  search_box_->SetBackgroundColor(color);
+  UpdateBackgroundColor(color);
 }
 
 void SearchBoxView::ButtonPressed(views::Button* sender,
@@ -702,10 +701,7 @@ void SearchBoxView::WallpaperProminentColorsChanged() {
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize, search_box_color_));
   search_box_->set_placeholder_text_color(search_box_color_);
-  SearchBoxBackground* background =
-      static_cast<SearchBoxBackground*>(content_container_->background());
-  background->set_color(background_color_);
-  search_box_->SetBackgroundColor(background_color_);
+  UpdateBackgroundColor(background_color_);
   SchedulePaint();
 }
 
@@ -740,6 +736,15 @@ void SearchBoxView::SetBackgroundColor(SkColor light_vibrant) {
 void SearchBoxView::SetSearchBoxColor(SkColor color) {
   search_box_color_ =
       SK_ColorTRANSPARENT == color ? kDefaultSearchboxColor : color;
+}
+
+void SearchBoxView::UpdateBackgroundColor(SkColor color) {
+  GetSearchBoxBackground()->set_color(color);
+  search_box_->SetBackgroundColor(color);
+}
+
+SearchBoxBackground* SearchBoxView::GetSearchBoxBackground() const {
+  return static_cast<SearchBoxBackground*>(content_container_->background());
 }
 
 }  // namespace app_list
