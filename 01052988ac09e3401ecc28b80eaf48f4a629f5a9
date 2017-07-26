@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9eeb1410_e1432830",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0f935c_77c5c470",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 67
+      },
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80cb597c_c23bc3e1",
         "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c0ec58_76a1a502",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80cb597c_c23bc3e1",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a6f50e38_f147eb68",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e452dea0_7b8c2601",
+      "range": {
+        "startLine": 666,
+        "startChar": 2,
+        "endLine": 667,
+        "endChar": 76
+      },
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed05bb5_86155c2e",
         "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330461a8_95dd61cc",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "Moving them into the anonymous namespace makes sense. Done.",
+      "parentUuid": "2ed05bb5_86155c2e",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "3cf1a99e_db7ea494",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027ll be too much work via the MockCredentialManagerClient route. I took a stab at it, but ran into compiler errors / dependency issues. It seems in particular that I can\u0027t use WebAuthenticationClient or MakeCredentialOptions from the mock? Could you take a look and see if I\u0027m heading in the right direction? test_runner.cc/.h and mock_credential_manager_client.cc/.h",
+      "parentUuid": "6d8e8617_cba1464b",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0012245c_23d2ff66",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webauthn/helpers.js",
         "patchSetId": 5
@@ -113,6 +215,24 @@
       "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f9236d_49fefc0c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webauthn/helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "FYI, I talked with Adam Powers, who initially created these WPTs, and he is going to fix them up and maintain them. He\u0027s aiming to have them updated within the week, so I\u0027ll be removing these WPT changes from the CL.",
+      "parentUuid": "0012245c_23d2ff66",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "0a12c2d8_5c473383",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webauthn/interfaces.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a71bd34c_9874b13d",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e8a26e2_9418cdf2",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 5
@@ -153,6 +297,24 @@
       "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0c3f51_019b0a35",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e8a26e2_9418cdf2",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "e0f72b75_bb14dccd",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "I\u0027ve been attempting to do this, but I keep getting \"Uncaught TypeError: Illegal constructor\" for both AuthenticatorAttestationResponse and PublicKeyCredential. Been trying to create them a number of different ways, no luck. How should I be creating them?",
+      "parentUuid": "ceed4bd8_05f90afb",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a7e93ad_4633ce37",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 5
@@ -187,6 +367,24 @@
       "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc493c96_75ad5b55",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-07-26T17:27:05Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "8a7e93ad_4633ce37",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
