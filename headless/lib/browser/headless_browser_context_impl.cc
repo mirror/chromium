@@ -168,6 +168,18 @@ int HeadlessBrowserContextImpl::GetFrameTreeNodeId(int render_process_id,
   return find_it->second;
 }
 
+int HeadlessBrowserContextImpl::GetFrameTreeNodeIdForDevToolsFrameId(
+    const std::string& devtools_id) const {
+  for (const auto& pair : frame_tree_node_map_) {
+    std::string frame_devtools_id = content::DevToolsAgentHost::
+        GetUntrustedDevToolsFrameIdForFrameTreeNodeId(pair.first.first,
+                                                      pair.second);
+    if (frame_devtools_id == devtools_id)
+      return pair.second;
+  }
+  return -1;
+}
+
 void HeadlessBrowserContextImpl::Close() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   browser_->DestroyBrowserContext(this);
