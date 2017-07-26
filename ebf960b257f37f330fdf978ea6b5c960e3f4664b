@@ -186,6 +186,24 @@
       "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e946f079_246614eb",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T05:55:45Z",
+      "side": 1,
+      "message": "in that case, do you want to include the stack trace in the log message? one is only included automatically for FATAL messages (https://cs.chromium.org/chromium/src/base/logging.cc?type\u003dcs\u0026q\u003dfile:%5Esrc/base/logging%5C.cc+stacktrace\u0026sq\u003dpackage:chromium\u0026l\u003d553).",
+      "parentUuid": "4e9268b1_0f87aec0",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
