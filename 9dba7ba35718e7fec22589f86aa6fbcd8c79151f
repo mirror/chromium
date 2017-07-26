@@ -801,6 +801,30 @@
       "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95e6bbb_11238604",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T22:23:42Z",
+      "side": 1,
+      "message": "\u003e \u003e Can you elaborate on this a bit? What do you mean by \"re-materialize the String\" here?\n\u003e \n\u003e We don\u0027t necessarily have a String representation of the value in question available when SvgAttributeChanged() is called, so then we\u0027d need to serialize the value just to provide the String - which would be a waste of cycles. (This notifier is called for instance by SMIL animations and when updating SVG DOM attributes, and not really a generic thing but has a strong affinity towards the SVG DOM implementation.)\n\u003e  \n\nOh I see what you mean. I was only looking at the spot that already had this string, I didn\u0027t realize there are other callers.\n\n\u003e It does say:\n\u003e \n\u003e   \"This img element\u0027s current request changes or is mutated\"\n\u003e \n\u003e which is pretty much saying that. The algorithm for \"updating the image data\" [1] is not the most approachable (much like it\u0027s implementation in ImageLoader... surprisingly), but I think the relevant step here is step 12 (rough correspondence implementation-wise would be ImageLoader::DoUpdateFromElement, probably checking if new_image !\u003d old_image or so.)\n\u003e As mentioned elsewhere did would also help address the node adoption case (didn\u0027t see a test for that):\n\u003e \n\nIn theory, I agree that this is the correct check. In practice, I have to figure out how to actually do this.\n\nThe problem is that DoUpdateFromElement can be run from a posted task, so the stack unwinds before running it. In practice, this means in a situation where you have:\nimg.src \u003d \"...\";\nimg.decode().then(...);\n\nOne order of operations that is possible is:\n1. ImageLoader::UpdateFromElement. This schedules a task to run.\n2. ImageLoader::Decode. This pushes a promise resolver onto the vector, but doesn\u0027t actually request a decode since ImageComplete is false (there is a pending task).\n3. ImageLoader::DoUpdateFromElement. This finds that new image !\u003d old image, and invalidates any pending decode requests. Specifically it invalidates the promise in 2. and the decode promise rejects.\n\nConceptually when the request comes in and there is a pending task, then the request is really for the new image whose source hasn\u0027t been updated yet, so it shouldn\u0027t be invalidated. \n\nTo make matters worse, we could have two source changes in a row, so\n0. Say an image already has some source, then\n1. UpdateFromElement would create a task\n2. Then we might get a Decode, then\n3. UpdateFromElement runs again which destroys the task and creates a new one\n4. Then we might get a Decode, then\n5. DoUpdateFromElement runs.\n\nIn any situation, decode from 4 should run because it was for the latest source. However, should decode in 2 run? Well, it depends. If this is coming from:\n\n// 0\nimg.src \u003d \"a\";\n// 1\nimg.src \u003d \"a\";\n// 2\nimg.decode().then(...);\n// 3\nimg.src \u003d \"a\";\n// 4\nimg.decode().then(...);\n\nThen yes, 2 should run. But if you have this:\n\n// 0\nimg.src \u003d \"a\";\n// 1\nimg.src \u003d \"definitely not a\";\n// 2\nimg.decode().then(...);\n// 3\nimg.src \u003d \"a\";\n// 4\nimg.decode().then(...);\n\nThen the decode should not run (it was enqueued for a different source). But due to the fact that the DoUpdateFromElement only runs at the end of all these steps, it will find that old_image \u003d\u003d new_image. The only knowledge that it ever _wasn\u0027t_ the same is lost when the task created in 1 is destroyed by 3.\n\nIn reading https://html.spec.whatwg.org/multipage/images.html#updating-the-image-data, I can\u0027t find a reference to src being changed to the same value and how that should be treated. Is it feasible to interpret src \u003d src as indeed mutating the the current request for the purposes of the decode? I\u0027m happy to move the invalidation step to be in UpdateFromElement (although relying on a specific UpdateFromElementBehavior to detect a src change seems iffy).\n\nAgain, to clarify, I\u0027m speaking from the point of view that the complexity this adds seems to outweigh what seems to be an optimization of \"do no work if last src \u003d\u003d new src\".\n\nIf you think this should still be implemented, then I\u0027ll have to think more on how to do this (ie how to handle both the cases outlined above) and without introducing other timing bugs. TBH, I\u0027m not too sure how to go about it without violating steps outlined in what should happen when src changes.\n\n\u003e I.e something like:\n\u003e \n\u003e \u003ciframe id\u003dfoo src\u003dsame-origin\u003e\u003c/iframe\u003e\n\u003e \u003cscript\u003e\n\u003e var img \u003d new Image();\n\u003e img.src \u003d ....;\n\u003e img.onload \u003d function() {\n\u003e   img.decode().then(...);\n\u003e   foo.contentDocument.appendChild(img);\n\u003e };\n\u003e \u003c/script\u003e\n\u003e \n\u003e (or variants thereof), which may end up mutating \u0027current request\u0027. (Called in \"relevant mutations\" of \u0027img\u0027 as \"The element\u0027s adopting steps are run.\" In Blink this would correspond to the DidMoveToNewDocument method on Node - as overridden by HTML/SVGImageElement.) \n\u003e \n\u003e [1] https://html.spec.whatwg.org/multipage/images.html#updating-the-image-data",
+      "parentUuid": "88fe1efc_3b10f434",
+      "range": {
+        "startLine": 103,
+        "startChar": 69,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
