@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "cb0f2729_0c6cc720",
+        "filename": "components/ntp_snippets/category_rankers/constant_category_ranker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-26T07:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9d2afe_64392e8c",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 66
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eec056eb_00cd6872",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
         "patchSetId": 5
@@ -450,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "f47e4c53_d2011d0c",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-26T07:55:34Z",
+      "side": 1,
+      "message": "Done, I removed the categories structure.",
+      "parentUuid": "36d2480d_f1a83b08",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6d9e4a_97e042af",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 5
@@ -509,6 +557,30 @@
       "side": 1,
       "message": "Then please s/ForDebugging/ForTesting/ to adhere to a common pattern in chromium.",
       "parentUuid": "9a1791ff_48d451dc",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f4f9bc_a243ccdf",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-26T07:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be9de8b8_37e5d002",
       "range": {
         "startLine": 67,
         "startChar": 0,

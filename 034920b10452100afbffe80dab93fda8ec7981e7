@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f9f660f_a3407bd7",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-26T07:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2674b35c_f1f7bbfa",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 3
+      },
+      "revId": "034920b10452100afbffe80dab93fda8ec7981e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc69568e_6339d066",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_unittest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "750c8ec9_d5661acb",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-26T07:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc69568e_6339d066",
+      "range": {
+        "startLine": 188,
+        "startChar": 41,
+        "endLine": 188,
+        "endChar": 54
+      },
+      "revId": "034920b10452100afbffe80dab93fda8ec7981e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "207aad7a_b37063f5",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "034920b10452100afbffe80dab93fda8ec7981e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700f7c6a_2fe5ba28",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-26T07:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207aad7a_b37063f5",
+      "range": {
+        "startLine": 298,
+        "startChar": 30,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "034920b10452100afbffe80dab93fda8ec7981e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
