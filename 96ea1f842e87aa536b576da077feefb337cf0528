@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1146f505_ea5c82ec",
+        "filename": "components/metrics/delegating_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-26T14:49:25Z",
+      "side": 1,
+      "message": "wouldn\u0027t refer to stability since the method is meant to in theory be more general",
+      "range": {
+        "startLine": 73,
+        "startChar": 52,
+        "endLine": 73,
+        "endChar": 61
+      },
+      "revId": "96ea1f842e87aa536b576da077feefb337cf0528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66357519_556c06aa",
+        "filename": "components/metrics/delegating_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-26T14:49:25Z",
+      "side": 1,
+      "message": "this is fine for now but this seems like a weak design if providers are doing work within a Has() call. Is this worth trying to fix?",
+      "revId": "96ea1f842e87aa536b576da077feefb337cf0528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1bc507_ffed0901",
+        "filename": "components/metrics/delegating_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-26T14:49:25Z",
+      "side": 1,
+      "message": "mention how this should be used",
+      "revId": "96ea1f842e87aa536b576da077feefb337cf0528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecf3f04_1f2c5320",
+        "filename": "components/metrics/metrics_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-26T14:49:25Z",
+      "side": 1,
+      "message": "nit - not sure if the name is a bit confusing now since it looks like a list of items with the plural form. Maybe delegate_provider_?",
+      "revId": "96ea1f842e87aa536b576da077feefb337cf0528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
