@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8634d62_b730cd83",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1213334
+      },
+      "writtenOn": "2017-07-26T21:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0671437_2b5b1363",
+      "revId": "62d760d5c8283e5f5c09278dd0372497e7a2d235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da5883f0_a4af6e64",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "62d760d5c8283e5f5c09278dd0372497e7a2d235",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb35e3a6_f1965d7a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1213334
+      },
+      "writtenOn": "2017-07-26T21:37:50Z",
+      "side": 1,
+      "message": "Done, thanks for the advice.",
+      "parentUuid": "da5883f0_a4af6e64",
+      "range": {
+        "startLine": 408,
+        "startChar": 18,
+        "endLine": 408,
+        "endChar": 19
+      },
+      "revId": "62d760d5c8283e5f5c09278dd0372497e7a2d235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
