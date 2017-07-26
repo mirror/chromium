@@ -96,9 +96,10 @@ void LinkStyle::SetCSSStyleSheet(
         size = cached_style_sheet->ResourceBuffer()->size();
       }
       SubresourceIntegrity::ReportInfo report_info;
+      DCHECK(KURL(base_url, href) == cached_style_sheet->Url());
       check_result = SubresourceIntegrity::CheckSubresourceIntegrity(
           cached_style_sheet->IntegrityMetadata(), data, size,
-          KURL(base_url, href), *cached_style_sheet, report_info);
+          cached_style_sheet->Url(), *cached_style_sheet, report_info);
       SubresourceIntegrityHelper::DoReport(GetDocument(), report_info);
       disposition = check_result ? ResourceIntegrityDisposition::kPassed
                                  : ResourceIntegrityDisposition::kFailed;
