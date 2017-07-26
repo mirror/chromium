@@ -24,12 +24,13 @@ FrameSinkManagerClientBinding::~FrameSinkManagerClientBinding() = default;
 void FrameSinkManagerClientBinding::CreateRootCompositorFrameSink(
     const viz::FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
+    const viz::RendererSettings& renderer_settings,
     cc::mojom::CompositorFrameSinkAssociatedRequest request,
     cc::mojom::CompositorFrameSinkPrivateRequest private_request,
     cc::mojom::CompositorFrameSinkClientPtr client,
     cc::mojom::DisplayPrivateAssociatedRequest display_private_request) {
   frame_sink_manager_->CreateRootCompositorFrameSink(
-      frame_sink_id, surface_handle, std::move(request),
+      frame_sink_id, surface_handle, renderer_settings, std::move(request),
       std::move(private_request), std::move(client),
       std::move(display_private_request));
 }
