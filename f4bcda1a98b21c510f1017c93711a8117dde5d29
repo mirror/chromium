@@ -16,6 +16,57 @@
       "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e4684b_cbff9e20",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T16:16:58Z",
+      "side": 1,
+      "message": "nit: since, we\u0027re here, may as well:\nif (!base::DirectoryExists() \u0026\u0026 !base::CreateDirectory()) {\n  return base::FilePath();\n}",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fd8a38_184e6431",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T16:16:58Z",
+      "side": 1,
+      "message": "same questions here",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33c6e69_86126bc1",
+        "filename": "chrome/browser/extensions/zipfile_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T16:16:58Z",
+      "side": 1,
+      "message": "This seems more like a time for base::Optional",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
