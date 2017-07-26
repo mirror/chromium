@@ -37,9 +37,6 @@ class TestBookmarkClient : public BookmarkClient {
     return unowned_extra_nodes_;
   }
 
-  // Returns true if |node| is one of the |extra_nodes_|.
-  bool IsExtraNodeRoot(const BookmarkNode* node);
-
   // Returns true if |node| belongs to the tree of one of the |extra_nodes_|.
   bool IsAnExtraNode(const BookmarkNode* node);
 

@@ -12,6 +12,7 @@
 #include "base/bind_helpers.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_node.h"
 #include "components/bookmarks/browser/bookmark_storage.h"
@@ -48,11 +49,6 @@ void TestBookmarkClient::SetExtraNodesToLoad(
     unowned_extra_nodes_.push_back(node.get());
 }
 
-bool TestBookmarkClient::IsExtraNodeRoot(const BookmarkNode* node) {
-  return std::find(unowned_extra_nodes_.begin(), unowned_extra_nodes_.end(),
-                   node) != unowned_extra_nodes_.end();
-}
-
 bool TestBookmarkClient::IsAnExtraNode(const BookmarkNode* node) {
   if (!node)
     return false;
@@ -68,8 +64,10 @@ bool TestBookmarkClient::IsPermanentNodeVisible(
   DCHECK(node->type() == BookmarkNode::BOOKMARK_BAR ||
          node->type() == BookmarkNode::OTHER_NODE ||
          node->type() == BookmarkNode::MOBILE ||
-         IsExtraNodeRoot(node));
-  return node->type() != BookmarkNode::MOBILE && !IsExtraNodeRoot(node);
+         base::ContainsValue(unowned_extra_nodes_, node));
+
+  return node->type() != BookmarkNode::MOBILE &&
+         !base::ContainsValue(unowned_extra_nodes_, node);
 }
 
 void TestBookmarkClient::RecordAction(const base::UserMetricsAction& action) {
@@ -82,7 +80,7 @@ LoadExtraCallback TestBookmarkClient::GetLoadExtraNodesCallback() {
 
 bool TestBookmarkClient::CanSetPermanentNodeTitle(
     const BookmarkNode* permanent_node) {
-  return IsExtraNodeRoot(permanent_node);
+  return base::ContainsValue(unowned_extra_nodes_, permanent_node);
 }
 
 bool TestBookmarkClient::CanSyncNode(const BookmarkNode* node) {

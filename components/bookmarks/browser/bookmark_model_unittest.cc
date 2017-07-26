@@ -16,6 +16,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -1301,11 +1302,6 @@ class BookmarkModelFaviconTest : public testing::Test,
                                      image_result);
   }
 
-  bool WasNodeUpdated(const BookmarkNode* node) {
-    return std::find(updated_nodes_.begin(), updated_nodes_.end(), node) !=
-           updated_nodes_.end();
-  }
-
   void ClearUpdatedNodes() {
       updated_nodes_.clear();
   }
@@ -1383,9 +1379,9 @@ TEST_F(BookmarkModelFaviconTest, FaviconsChangedObserver) {
     changed_page_urls.insert(kPageURL3);
     model_->OnFaviconsChanged(changed_page_urls, GURL());
     ASSERT_EQ(3u, updated_nodes_.size());
-    EXPECT_TRUE(WasNodeUpdated(node2));
-    EXPECT_TRUE(WasNodeUpdated(node3));
-    EXPECT_TRUE(WasNodeUpdated(node4));
+    EXPECT_TRUE(base::ContainsValue(updated_nodes_, node2));
+    EXPECT_TRUE(base::ContainsValue(updated_nodes_, node3));
+    EXPECT_TRUE(base::ContainsValue(updated_nodes_, node4));
   }
 
   {
@@ -1400,8 +1396,8 @@ TEST_F(BookmarkModelFaviconTest, FaviconsChangedObserver) {
     ClearUpdatedNodes();
     model_->OnFaviconsChanged(std::set<GURL>(), kFaviconURL12);
     ASSERT_EQ(2u, updated_nodes_.size());
-    EXPECT_TRUE(WasNodeUpdated(node1));
-    EXPECT_TRUE(WasNodeUpdated(node2));
+    EXPECT_TRUE(base::ContainsValue(updated_nodes_, node1));
+    EXPECT_TRUE(base::ContainsValue(updated_nodes_, node2));
   }
 
   {
@@ -1415,8 +1411,8 @@ TEST_F(BookmarkModelFaviconTest, FaviconsChangedObserver) {
     changed_page_urls.insert(kPageURL1);
     model_->OnFaviconsChanged(changed_page_urls, kFaviconURL12);
     ASSERT_EQ(2u, updated_nodes_.size());
-    EXPECT_TRUE(WasNodeUpdated(node1));
-    EXPECT_TRUE(WasNodeUpdated(node2));
+    EXPECT_TRUE(base::ContainsValue(updated_nodes_, node1));
+    EXPECT_TRUE(base::ContainsValue(updated_nodes_, node2));
   }
 }
 
