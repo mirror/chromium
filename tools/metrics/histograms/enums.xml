@@ -22743,6 +22743,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1691281364" label="enable-notification-action-icons"/>
   <int value="-1670137340"
       label="OptimizeLoadingIPCForSmallResources:disabled"/>
+  <int value="-1669523849" label="disable-mojo-video-encode-accelerator"/>
   <int value="-1669486359" label="ImportantSitesInCBD:enabled"/>
   <int value="-1663410466" label="top-document-isolation"/>
   <int value="-1663125441" label="OptInImeMenu:enabled"/>
