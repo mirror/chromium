@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec013e8_640bc342",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1524,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-26T22:30:53Z",
+      "side": 1,
+      "message": "Returning a void expression is kinda weird.  How about \n\naif (preview_callbacks_.empty()) {\n  BadMessageReceived();\n  return;\n}",
+      "range": {
+        "startLine": 1524,
+        "startChar": 1,
+        "endLine": 1524,
+        "endChar": 32
+      },
+      "revId": "ae6e06359a6f804b57eab9813d0f25e4d463abc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
