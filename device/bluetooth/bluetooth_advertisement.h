@@ -23,9 +23,11 @@ namespace device {
 
 // BluetoothAdvertisement represents an advertisement which advertises over the
 // LE channel during its lifetime.
-class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisement
-    : public base::RefCounted<BluetoothAdvertisement> {
+class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisement {
  public:
+  // The destructor will unregister this advertisement.
+  virtual ~BluetoothAdvertisement();
+
   // Possible types of error raised while registering or unregistering
   // advertisements.
   enum ErrorCode {
@@ -136,9 +138,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisement
   friend class base::RefCounted<BluetoothAdvertisement>;
 
   BluetoothAdvertisement();
-
-  // The destructor will unregister this advertisement.
-  virtual ~BluetoothAdvertisement();
 
   // List of observers interested in event notifications from us. Objects in
   // |observers_| are expected to outlive a BluetoothAdvertisement object.
