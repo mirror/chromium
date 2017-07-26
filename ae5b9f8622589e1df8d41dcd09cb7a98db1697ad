@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2eaf58e_f76ad726",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-26T10:51:42Z",
+      "side": 1,
+      "message": "So this is for getting the epoch time?\nthis seems hacky. Why not use base::Time::ToDouble() or base::Time::ToJavaTime()?",
+      "range": {
+        "startLine": 155,
+        "startChar": 46,
+        "endLine": 155,
+        "endChar": 0
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cdc070_933b929b",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-26T10:51:42Z",
+      "side": 1,
+      "message": "what is the id used for?\nTBH, this code has quite some smells... couldn\u0027t we simply use random card from the current list?",
+      "range": {
+        "startLine": 386,
+        "startChar": 66,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dd0f20_28f24c14",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-26T10:51:42Z",
+      "side": 1,
+      "message": "so the only reason we need to extend this is for serialization?\n\nI wonder if we can\u0027t just piggy back on the score.\nWe could instead persist introduce a persistent-rank or the like that simply enumerates the list as we see it and doesn\u0027t have any semantics. Seems simpler overall... (and is not relying on the semantics of the score).\n\nWould that be a lot of work to do?",
+      "range": {
+        "startLine": 157,
+        "startChar": 18,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae47d19d_2681e772",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-26T10:51:42Z",
+      "side": 1,
+      "message": "this is overly generic. We\u0027ll only push article suggestions.",
+      "range": {
+        "startLine": 776,
+        "startChar": 33,
+        "endLine": 776,
+        "endChar": 51
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
