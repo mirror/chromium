@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ef95897_24fe3508",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-26T11:43:21Z",
+      "side": 1,
+      "message": "When I created this patch, the other mojo call was using a single binding rather than a set.  I figured that matching the existing call was a good approach.  So with that same philosophy, I\u0027m now happy to change this binding to a set as well.",
+      "parentUuid": "75b167df_f38acb24",
+      "range": {
+        "startLine": 382,
+        "startChar": 2,
+        "endLine": 382,
+        "endChar": 57
+      },
+      "revId": "71e5448bff510ee7dfaff6ce54b9aa9de7f38541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a36a7d87_ab513ba8",
         "filename": "chrome/renderer/net/net_error_helper.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "71e5448bff510ee7dfaff6ce54b9aa9de7f38541",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0885b429_3d7e168b",
+        "filename": "chrome/renderer/net/net_error_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-26T11:43:21Z",
+      "side": 1,
+      "message": "yes, it looks like that.  thanks.",
+      "parentUuid": "a36a7d87_ab513ba8",
+      "revId": "71e5448bff510ee7dfaff6ce54b9aa9de7f38541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
