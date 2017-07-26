@@ -398,6 +398,13 @@ void RenderFrameProxy::OnDidUpdateOrigin(
   web_frame_->SetReplicatedOrigin(origin);
   web_frame_->SetReplicatedPotentiallyTrustworthyUniqueOrigin(
       is_potentially_trustworthy_unique_origin);
+
+  if (is_hidden_) {
+    // This is a cross process navigation which will destroy and create a new
+    // RenderWidgetHostViewChildFrame. We will need to transfer the frame owner
+    // visibility state.
+    Send(new FrameHostMsg_VisibilityChanged(routing_id_, false));
+  }
 }
 
 void RenderFrameProxy::OnSetPageFocus(bool is_focused) {
@@ -517,6 +524,7 @@ void RenderFrameProxy::UpdateRemoteViewportIntersection(
 }
 
 void RenderFrameProxy::VisibilityChanged(bool visible) {
+  is_hidden_ = !visible;
   Send(new FrameHostMsg_VisibilityChanged(routing_id_, visible));
 }
 
