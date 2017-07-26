@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "d6b938f6_880f2c84",
+        "filename": "ui/android/java/res/layout/dropdown_item.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-26T15:15:07Z",
+      "side": 1,
+      "message": "I had a thought on these TextView\u0027s where we use the DP dimension in Java code as well. It would be great if we could use the text styles you added to styles.xml (e.g. this one would be BlackHint2). We could define dimensions for the common font sizes, for example:\n\n@dimen/headline_size_large \u003d 23sp\n@dimen/headline_size_medium \u003d 20sp\n@dimen/text_size_large \u003d 16sp\n@dimen/text_size_medium \u003d 14sp\n@dimen/text_size_small \u003d 12sp\n\nThen we could reference those instead of feature-specific text size dimensions in Java.",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 69
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fb9986f_86a16fe8",
         "filename": "ui/android/java/res/values-v17/styles.xml",
         "patchSetId": 2
