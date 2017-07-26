@@ -34,6 +34,24 @@
       "revId": "72ff8615b8f816b6914302d2d003fb97562d9bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4a26bf_9a3af01d",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-26T20:46:47Z",
+      "side": 1,
+      "message": "Ugh, we might need a bigger refactor around this that I wouldn\u0027t ask for in this CL. Can we pass a PaymentRequestDialog* instead of the sheet pointer and revert to using plain value members for lists instead of unique_ptr? This would at least make the dependency a bit more indirect and really the dialog is what the lists need to go back rather then the sheets.",
+      "parentUuid": "0bcb4af5_294fddb9",
+      "revId": "72ff8615b8f816b6914302d2d003fb97562d9bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
