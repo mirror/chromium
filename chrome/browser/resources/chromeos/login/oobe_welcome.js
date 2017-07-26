@@ -134,6 +134,7 @@ Polymer({
       proxySettingsMenuName: loadTimeData.getString('proxySettingsMenuName'),
     };
 
+    this.$$('oobe-welcome-dialog').i18nUpdateLocale();
     this.i18nUpdateLocale();
   },
 
