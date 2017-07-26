@@ -16,6 +16,24 @@
       "revId": "4c71d0d9b00dc5d32bbd196614d4f2b9db390aaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e66f51_9284cebf",
+        "filename": "components/cryptauth/cryptauth_gcm_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-26T01:42:41Z",
+      "side": 1,
+      "message": "Thanks Tim, agreed. I\u0027ve implemented your recommended workaround at this CL: https://chromium-review.googlesource.com/c/585854/\n\nAdditionally, I\u0027m tracking the correct fix as a bug to make sure we eventually do it: crbug.com/748848",
+      "parentUuid": "7c3ce69a_e117d377",
+      "revId": "4c71d0d9b00dc5d32bbd196614d4f2b9db390aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
