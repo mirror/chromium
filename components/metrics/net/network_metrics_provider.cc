@@ -42,6 +42,8 @@ void GetAndSetNetworkQualityEstimator(
       network_quality_estimator_provider->GetNetworkQualityEstimator());
 }
 
+}  // namespace
+
 SystemProfileProto::Network::EffectiveConnectionType
 ConvertEffectiveConnectionType(
     net::EffectiveConnectionType effective_connection_type) {
@@ -64,8 +66,6 @@ ConvertEffectiveConnectionType(
   NOTREACHED();
   return SystemProfileProto::Network::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
 }
-
-}  // namespace
 
 // Listens to the changes in the effective conection type.
 class NetworkMetricsProvider::EffectiveConnectionTypeObserver
