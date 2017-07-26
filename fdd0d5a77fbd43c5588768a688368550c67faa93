@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd2dbf1_42c19c83",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-26T14:43:04Z",
+      "side": 1,
+      "message": "Combine this if with the one on 824?",
+      "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8cda7d_d8d88dcc",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-26T14:43:04Z",
+      "side": 1,
+      "message": "Did we decide if we wanted to update position on every scroll or just after a certain number?",
+      "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d075f7_99fa5ecd",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-26T14:43:04Z",
+      "side": 1,
+      "message": "if (request.type !\u003d \u0027onpopstate\u0027)\n  return;",
+      "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
