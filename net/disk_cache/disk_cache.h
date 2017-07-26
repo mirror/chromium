@@ -42,6 +42,8 @@ namespace disk_cache {
 class Entry;
 class Backend;
 
+using PostCleanupCallback = base::OnceCallback<void()>;
+
 // Returns an instance of a Backend of the given |type|. |path| points to a
 // folder where the cached data will be stored (if appropriate). This cache
 // instance must be the only object that will be reading or writing files to
@@ -80,6 +82,18 @@ NET_EXPORT int CreateCacheBackend(net::CacheType type,
                                   bool force,
                                   net::NetLog* net_log,
                                   std::unique_ptr<Backend>* backend,
+                                  const net::CompletionCallback& callback);
+
+// Variant of the above that calls |post_cleanup_callback| once all the I/O
+// that was in flight has completed post-destruction.
+NET_EXPORT int CreateCacheBackend(net::CacheType type,
+                                  net::BackendType backend_type,
+                                  const base::FilePath& path,
+                                  int max_bytes,
+                                  bool force,
+                                  net::NetLog* net_log,
+                                  std::unique_ptr<Backend>* backend,
+                                  PostCleanupCallback post_cleanup_callback,
                                   const net::CompletionCallback& callback);
 
 // This will flush any internal threads used by backends created w/o an

@@ -616,6 +616,7 @@ CacheStorageCache::CacheStorageCache(
       max_query_size_bytes_(kMaxQueryCacheResultBytes),
       cache_observer_(nullptr),
       memory_only_(path.empty()),
+      backend_delete_will_call_delete_backend_completed_io_(false),
       weak_ptr_factory_(this) {
   DCHECK(!origin_.is_empty());
   DCHECK(quota_manager_proxy_.get());
@@ -1397,9 +1398,19 @@ void CacheStorageCache::KeysDidQueryCache(
 void CacheStorageCache::CloseImpl(base::OnceClosure callback) {
   DCHECK_NE(BACKEND_CLOSED, backend_state_);
 
-  backend_state_ = BACKEND_CLOSED;
   backend_.reset();
-  std::move(callback).Run();
+  waiting_for_backend_close_ = std::move(callback);
+  if (!backend_delete_will_call_delete_backend_completed_io_)
+    DeleteBackendCompletedIO();
+}
+
+void CacheStorageCache::DeleteBackendCompletedIO() {
+  backend_delete_will_call_delete_backend_completed_io_ = false;
+  if (!waiting_for_backend_close_.is_null()) {
+    DCHECK_NE(BACKEND_CLOSED, backend_state_);
+    backend_state_ = BACKEND_CLOSED;
+    std::move(waiting_for_backend_close_).Run();
+  }
 }
 
 void CacheStorageCache::SizeImpl(SizeCallback callback) {
@@ -1432,13 +1443,14 @@ void CacheStorageCache::CreateBackend(ErrorCallback callback) {
                          weak_ptr_factory_.GetWeakPtr(), std::move(callback),
                          base::Passed(std::move(backend_ptr))));
 
-  // TODO(jkarlin): Use the cache task runner that ServiceWorkerCacheCore
-  // has for disk caches.
+  backend_delete_will_call_delete_backend_completed_io_ = !memory_only_;
   int rv = disk_cache::CreateCacheBackend(
       cache_type, net::CACHE_BACKEND_SIMPLE, path_, kMaxCacheBytes,
       false, /* force */
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::CACHE).get(), NULL,
-      backend, create_cache_callback);
+      NULL, backend,
+      base::BindOnce(&CacheStorageCache::DeleteBackendCompletedIO,
+                     weak_ptr_factory_.GetWeakPtr()),
+      create_cache_callback);
   if (rv != net::ERR_IO_PENDING)
     create_cache_callback.Run(rv);
 }
