@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c934bf5c_ae40176d",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T06:25:14Z",
+      "side": 1,
+      "message": "I think we won\u0027t need the download attempts count since we will make only one attempt and it\u0027s up to downloads system to be reasonably robust.",
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4211bd9f_c132c78e",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
         "patchSetId": 3
@@ -19,6 +36,40 @@
         "endLine": 29,
         "endChar": 21
       },
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa073b0_8b63137f",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T06:25:14Z",
+      "side": 1,
+      "message": "I think we should rather keep this kind of functions in PrefetchStoreTestUtil since it\u0027ll be likely the only user of this. All other tasks will always take a partial set of fields.\n\nThis also would help to remove the prefetch_store_util.* since ideally we would place this functionality to where it belongs rather than create yet another kitchen sink class with a lot of disjoint methods. In this case, a better place for this in PrefetchStoreTestUtil.\n\nAlso, I think we are on a sort of collision as Filip already mentioned. Lets sync tomorrow morning on how to continue, since I\u0027m morphing PrefetchStoreTestUtil into synchronous helper and you are expanding it as async. This will be hard to merge :)",
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c76cc09_28a99b79",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T06:25:14Z",
+      "side": 1,
+      "message": "It\u0027d be better to move the time serialization/deserialization methods into some place and use them. Otherwise it is hard make sure serialization always matches deserialization.",
       "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
