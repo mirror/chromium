@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab1dbc9_4dc84a49",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/inspector-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "So false, \"\", 0, NaN will all show up as null? This is rather confusing!",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c6a821_dbf57a3a",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/resources/get-layers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "s/smallBox/small-box/g to stay consistent with our style.",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b5fc04_46756831",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/resources/get-layers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "outer-sticky",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e807917_f169563c",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/resources/get-layers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "inner-sticky",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0adf8be_877443d3",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-sticky-position-constraint-get.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babf6476_c6ed8d0c",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-sticky-position-constraint-get.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66543fc_01fe3c51",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "nit: %d",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e4e351_02f913c9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "Use %d instead?",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984a8621_805ebf95",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbe8454_8111a9dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/LayerTreeBase.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "nit: those are redundant, considering you initialize them with known types (but feel free to keep if you think it helps readability)",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d911723_88996152",
+        "filename": "third_party/WebKit/Source/devtools/package-lock.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T01:36:42Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this file!",
+      "revId": "98724863dbc64238924465bbd78a748046aa635b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
