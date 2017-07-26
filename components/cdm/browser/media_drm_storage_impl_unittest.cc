@@ -8,6 +8,7 @@
 
 #include "base/run_loop.h"
 #include "base/test/test_message_loop.h"
+#include "base/unguessable_token.h"
 #include "components/prefs/testing_pref_service.h"
 #include "media/mojo/services/mojo_media_drm_storage.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -41,7 +42,10 @@ class MediaDrmStorageImplTest : public ::testing::Test {
                             pref_service_.get(), url::Origin(GURL(kTestOrigin)),
                             std::move(request));
 
-    media_drm_storage_->Initialize(url::Origin(GURL(kTestOrigin)));
+    media_drm_storage_->Initialize(base::BindOnce(
+        [](const base::UnguessableToken& origin_id) { DCHECK(origin_id); }));
+
+    base::RunLoop().RunUntilIdle();
   }
 
   void TearDown() override {
