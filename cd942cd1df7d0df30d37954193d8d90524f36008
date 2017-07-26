@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ec5ceb5_f24b4e0c",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-26T22:21:53Z",
+      "side": 1,
+      "message": "Removed, but I was expecting the compiler to complain about this.",
+      "parentUuid": "c5ac0988_f9aaa47b",
+      "revId": "cd942cd1df7d0df30d37954193d8d90524f36008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db1f6a53_6a5232da",
         "filename": "ash/login/ui/login_pin_view_unittest.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I don\u0027t know. Maybe a runloop is considered \"idle\" even if it has delay tasks pending? I\u0027m not really sure.\n\nWould it work to inject MockTimers into the class?\n\nhttps://cs.chromium.org/chromium/src/base/timer/mock_timer.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d12\n\nI think you would need to switch the type of the timers from OneShotTimer to Timer, which is a readability lose, but it might make the test code simpler.\n\nWDYT?",
       "parentUuid": "db1f6a53_6a5232da",
+      "revId": "cd942cd1df7d0df30d37954193d8d90524f36008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eef1673_1e825b28",
+        "filename": "ash/login/ui/login_pin_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-26T22:21:53Z",
+      "side": 1,
+      "message": "I was playing around with that earlier but was trying to keep the types separate. Unifying to just base::Timer keeps the code simple enough that it\u0027s an overall win compared to the TaskRunner approach.",
+      "parentUuid": "c02789e9_8a95a0ec",
       "revId": "cd942cd1df7d0df30d37954193d8d90524f36008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
