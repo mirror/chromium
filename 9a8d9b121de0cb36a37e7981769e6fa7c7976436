@@ -22,6 +22,30 @@
       "revId": "9a8d9b121de0cb36a37e7981769e6fa7c7976436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547ba5a9_8da5d772",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-26T15:24:27Z",
+      "side": 1,
+      "message": "Don\u0027t want to do that work every iteration (since it constructs a HistogramIterator object).",
+      "parentUuid": "7266e13e_d7759f67",
+      "range": {
+        "startLine": 347,
+        "startChar": 49,
+        "endLine": 347,
+        "endChar": 55
+      },
+      "revId": "9a8d9b121de0cb36a37e7981769e6fa7c7976436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
