@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "97bbada3_32272810",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-26T16:18:12Z",
+      "side": 1,
+      "message": "Sure, or something like that. I\u0027m find with leaving it as-is for now and fixing the naming once you\u0027ve figured out what\u0027s happening to that data.",
+      "parentUuid": "75d565c5_88e5ba80",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3aa56a0_22bb5b75",
         "filename": "net/url_request/network_error_logging_delegate.h",
         "patchSetId": 1
