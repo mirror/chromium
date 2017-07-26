@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "525d77ae_96cc6608",
+        "filename": "media/base/bitrate_estimator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "45a79822_93818e06",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ede6164_0484c3c6",
         "filename": "media/base/bitrate_estimator.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5a5b0a_56a16b1b",
+        "filename": "media/base/bitrate_estimator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "9ede6164_0484c3c6",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "14c2eead_ddedb89a",
+        "filename": "media/base/bitrate_estimator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Done in the calculation. Thanks for the suggestion.",
+      "parentUuid": "e7ef6f7a_ca049820",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a50d7fab_2b3bba4c",
         "filename": "media/base/bitrate_estimator.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36e75b0_ac7312cf",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "a50d7fab_2b3bba4c",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "14457f65_23ffb546",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "b501fa18_fc58e3ae",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42f3092b_004c6e04",
         "filename": "media/base/bitrate_estimator.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1db6b1c_2e378bc0",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "42f3092b_004c6e04",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "feed99e5_8b8e8149",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "b2cbadc2_893b602f",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dea9a5e_a25f8010",
         "filename": "media/base/bitrate_estimator.h",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856aa87e_d80b5cd8",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "0dea9a5e_a25f8010",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "92b4c178_874cab65",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "7697a1e6_5a8192d8",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b34fa532_9b759650",
         "filename": "media/base/bitrate_estimator.h",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23075f4_9a7a242a",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "b34fa532_9b759650",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "368de73b_d093ae9c",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "8707438b_302bf80a",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1df285_1d11a1e3",
         "filename": "media/base/bitrate_estimator.h",
         "patchSetId": 2
@@ -203,6 +401,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2e9e82_5388c529",
+        "filename": "media/base/bitrate_estimator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "3d1df285_1d11a1e3",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "cc379aa0_4ddb3fa1",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "d239470f_fac0f9f6",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e296728_4b55b3b9",
         "filename": "media/base/bitrate_estimator_unittest.cc",
         "patchSetId": 2
@@ -237,6 +471,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bb12d9_2808ffee",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "6e296728_4b55b3b9",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "66465bad_054f7151",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "e0af65b6_515229b6",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e8cbdf6_43806645",
         "filename": "media/base/bitrate_estimator_unittest.cc",
         "patchSetId": 2
@@ -271,6 +541,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f0c9d8_115cd206",
+        "filename": "media/base/bitrate_estimator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The file is deleted.",
+      "parentUuid": "4e8cbdf6_43806645",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -297,6 +585,30 @@
     },
     {
       "key": {
+        "uuid": "20abc5f5_f39c2e67",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "1bf8c9cf_c7cfcb98",
+      "range": {
+        "startLine": 156,
+        "startChar": 63,
+        "endLine": 156,
+        "endChar": 71
+      },
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b1c8041_bc72a0aa",
         "filename": "media/base/demuxer.h",
         "patchSetId": 2
@@ -311,6 +623,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3be141_2d3ffeba",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "1b1c8041_bc72a0aa",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +667,30 @@
     },
     {
       "key": {
+        "uuid": "17d7e202_044577b5",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "13e6c151_ea0a4149",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 159,
+        "endChar": 23
+      },
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5fa9a95_59ecd478",
         "filename": "media/base/demuxer.h",
         "patchSetId": 2
@@ -351,6 +705,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987e7119_d2e6ee0e",
+        "filename": "media/base/demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "c5fa9a95_59ecd478",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +743,24 @@
     },
     {
       "key": {
+        "uuid": "f18414a9_0e65f4e9",
+        "filename": "media/base/media_url_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "a770cab7_c760f707",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93eb44a6_d9c21411",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 2
@@ -385,6 +775,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4e7484_92036f50",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "93eb44a6_d9c21411",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -405,6 +813,24 @@
     },
     {
       "key": {
+        "uuid": "1a6451ed_2a5ca942",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "5fe67dbd_36595bed",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "359bd203_2cc7126c",
         "filename": "media/filters/chunk_demuxer.cc",
         "patchSetId": 2
@@ -419,6 +845,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f424c6c_3ae91fed",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "359bd203_2cc7126c",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +883,24 @@
     },
     {
       "key": {
+        "uuid": "5b0823dc_c0be85b1",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "445b1df8_d79f74db",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa596a6_be8e9f26",
         "filename": "media/filters/chunk_demuxer.cc",
         "patchSetId": 2
@@ -453,6 +915,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e0d7d2_59af1ea2",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "dfa596a6_be8e9f26",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -473,6 +953,24 @@
     },
     {
       "key": {
+        "uuid": "e3021b14_be33215f",
+        "filename": "media/filters/chunk_demuxer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "5053e5d3_7b0735ea",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34924ad7_3cb80392",
         "filename": "media/filters/ffmpeg_demuxer.cc",
         "patchSetId": 2
@@ -487,6 +985,24 @@
       "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c106001b_3d1e3636",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T00:29:28Z",
+      "side": 1,
+      "message": "Not applicable. The change is discarded.",
+      "parentUuid": "34924ad7_3cb80392",
+      "revId": "eacb296b8c8fc31b03db761e3eda4502ebf56104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
