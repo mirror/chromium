@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d1586bc_f9d3661f",
+        "filename": "chromeos/dbus/services/org.chromium.LibCrosService.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T01:53:44Z",
+      "side": 1,
+      "message": "does receive_sender suffer from a similar problem? i don\u0027t know if we actually need receive_sender anymore; i suspect it was just there for the old reply-to-proxy-request-by-emitting-a-signal code that i deleted recently. i also don\u0027t know that is expressly denied anywhere else -- tons of other services emit signals from their own names without needing to do this, as far as i\u0027m aware.",
+      "revId": "1530f3e04d5d8a0e8324c791e789929d0ed607a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
