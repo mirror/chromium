@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2b26737b_835c4cee",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-26T06:59:56Z",
+      "side": 1,
+      "message": "Ah ok - we should probably spec them in that case, just for completeness.",
+      "parentUuid": "49476193_08a9aa9c",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cbdb59b_89c337c7",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c01891cd_1066c10b",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-26T06:59:56Z",
+      "side": 1,
+      "message": "Ah that makes sense - I think I reviewed this on a day where I was really struggling with my cold!",
+      "parentUuid": "94dd5349_0dd96cf9",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0ba4d52_5c44f48c",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
         "patchSetId": 4
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Yeah, it bubbles up the accessibility tree, but since the\nevents can only be fired on DOM Elements currently, that\nisn\u0027t going to reveal any weird implementation details.\n\nI remember we had a discussion about this at the F2F, I\nthought there was general consensus that these events\nshould bubble.\n\nI think aria-owns should be respected in terms of the\nbubbling order.\n\nWe could consider not doing bubbling for now, but I sure\nthink it\u0027d be nice.",
       "parentUuid": "a0ba4d52_5c44f48c",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb0be1e_36182d63",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-26T06:59:56Z",
+      "side": 1,
+      "message": "We did discuss this at the f2f, but that was before we moved to the 4 phases model.\n\nI agree though, bubbling is nice.\n\nPerhaps it\u0027s time to start digging into what phase 4 is going to look like?",
+      "parentUuid": "01190fee_676baed6",
       "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -177,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "19bf9567_02b8edf2",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-26T06:59:56Z",
+      "side": 1,
+      "message": "What about aria-owns? Will that be inconsistent across browsers?",
+      "parentUuid": "b16216b4_02a4cb4d",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "303ee925_193da657",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 4
@@ -206,6 +278,24 @@
       "side": 1,
       "message": "Yes, that\u0027s right, but the user shouldn\u0027t be able to\ndetect the difference.\n\nBasically we generally don\u0027t want to create an AccessibleNode\nwhen the user isn\u0027t using the AOM. But once they start\nactively using the AOM and add event listeners, then there\u0027s\nno reason not to create AccessibleNodes as needed.\n\nI think the alternative would be worse - if |target| was\nnull if that particular element didn\u0027t have an AccessibleNode,\nbut it was an AccessibleNode otherwise, that\u0027d be really\nconfusing for developers. It\u0027d be better to just not set\n|target| at all.",
       "parentUuid": "303ee925_193da657",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f06adfa_0b81311e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-26T06:59:56Z",
+      "side": 1,
+      "message": "I see - we never actually expose the event path to the author. Sure, that seems fine.",
+      "parentUuid": "dca668f5_c36788ea",
       "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
