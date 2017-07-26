@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13695dfe_07583535",
+        "filename": "services/file/test/restricted_file_system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-26T22:31:50Z",
+      "side": 1,
+      "message": "Deadlocks here",
+      "revId": "513c3c9e95fba068ccf48181c08c350e9887e225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
