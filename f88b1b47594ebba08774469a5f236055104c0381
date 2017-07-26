@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8458d42_c28cef7b",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-26T18:18:12Z",
+      "side": 0,
+      "message": "Why all these removals? This doesn\u0027t seem right. I.e. things like gtest are definitely required.",
+      "revId": "f88b1b47594ebba08774469a5f236055104c0381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
