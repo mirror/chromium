@@ -1592,7 +1592,7 @@ LayoutUnit ComputedStyle::ComputedLineHeightAsFixed() const {
   if (lh.IsPercentOrCalc())
     return MinimumValueForLength(lh, ComputedFontSizeAsFixed());
 
-  return LayoutUnit::FromFloatRound(lh.Value());
+  return LayoutUnit(floorf(lh.Value()));
 }
 
 void ComputedStyle::SetWordSpacing(float word_spacing) {
