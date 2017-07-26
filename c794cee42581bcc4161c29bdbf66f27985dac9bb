@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a32ed9fa_dbf20830",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-26T21:33:34Z",
+      "side": 1,
+      "message": "Thanks. My Java is rusty.",
+      "parentUuid": "2faea66e_6271b462",
+      "revId": "c794cee42581bcc4161c29bdbf66f27985dac9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12ce843e_62f08734",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5da07d61_4477b324",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-26T21:33:34Z",
+      "side": 1,
+      "message": "Sure, added a few more assertions.",
+      "parentUuid": "12ce843e_62f08734",
+      "revId": "c794cee42581bcc4161c29bdbf66f27985dac9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e96d2f8_baac9b14",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-26T19:48:45Z",
       "side": 1,
       "message": "Is this imitating getVirtualDescendantId()? Because the math is different in that function.",
+      "revId": "c794cee42581bcc4161c29bdbf66f27985dac9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc9efa8_71221240",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-26T21:33:34Z",
+      "side": 1,
+      "message": "Good catch. Switched to calling getVirtualDescendantId\ndirectly via reflection, and made the test html more\ncomplicated so that it didn\u0027t succeed by accident.",
+      "parentUuid": "5e96d2f8_baac9b14",
       "revId": "c794cee42581bcc4161c29bdbf66f27985dac9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
