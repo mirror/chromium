@@ -77,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "601261ee_a96aecc9",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429738b9_fe65d703",
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00c78691_b594e5a1",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Removed during design change",
+      "parentUuid": "ea653e72_a23b38c0",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 15
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bda7008_58842657",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 2
@@ -124,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f285731a_e20e0cbc",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Removed during design change",
+      "parentUuid": "6216a1a7_c56372e9",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc81373e_dc27ba07",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 2
@@ -147,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0c1e6e29_b08bfdfe",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Removed during design change",
+      "parentUuid": "cc81373e_dc27ba07",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf4973d2_8bb93ee3",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 2
@@ -161,6 +251,24 @@
       "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6352610_be4a2309",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf4973d2_8bb93ee3",
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "0bc53a83_d4572c91",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3c81f81_c339966c",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a21383_6dbee39c",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -207,6 +339,30 @@
       "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa32973_6f81a21d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4707,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a21383_6dbee39c",
+      "range": {
+        "startLine": 4707,
+        "startChar": 32,
+        "endLine": 4707,
+        "endChar": 76
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +434,30 @@
       "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8bd1a8_acb2e671",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-26T23:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4d0a28_1fa710ce",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 59
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
