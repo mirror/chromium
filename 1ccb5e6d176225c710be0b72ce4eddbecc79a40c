@@ -16,6 +16,47 @@
       "revId": "1ccb5e6d176225c710be0b72ce4eddbecc79a40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee15a4bc_d7cb2e07",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:54:17Z",
+      "side": 1,
+      "message": "Yeah, let me flip this over:\nGiven the following association of targets between \"old\" and \"new\": \n- 0x1111 \u003c\u003d\u003e 0x6666,  0x3333 \u003c\u003d\u003e 0x4444.\nSuppose \"old\" Labels are:\n\"old\" Labels:\n- (0x1111, 0), (0x3333, 4), (0x5555, 1), (0x7777, 3)\nthen \"new\" Labels could be created as:\n- (0x2222, 4}, (0x4444, 8), (0x6666, 0), (0x8888, 2)",
+      "parentUuid": "60e39d90_b7f448bf",
+      "revId": "1ccb5e6d176225c710be0b72ce4eddbecc79a40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e52e67_92144e0a",
+        "filename": "chrome/installer/zucchini/label_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:54:17Z",
+      "side": 1,
+      "message": "ReferenceReader",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "1ccb5e6d176225c710be0b72ce4eddbecc79a40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

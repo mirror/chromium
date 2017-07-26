@@ -510,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "3800ea39_fc79930a",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:54:17Z",
+      "side": 1,
+      "message": "Yeah I know..\nIf it makes you feel better, I\u0027ll get rid of this with label manager as soon as possible!",
+      "parentUuid": "41ad076f_cd4fc2ff",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3dba597_3c4c1df9",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
