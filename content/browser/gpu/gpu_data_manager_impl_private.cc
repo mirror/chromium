@@ -982,6 +982,11 @@ GpuDataManagerImplPrivate::GetDriverBugWorkarounds() const {
   return workarounds;
 }
 
+const gpu::GpuFeatureInfo& GpuDataManagerImplPrivate::GetGpuFeatureInfo()
+    const {
+  return gpu_feature_info_;
+}
+
 void GpuDataManagerImplPrivate::AddLogMessage(
     int level, const std::string& header, const std::string& message) {
   log_messages_.push_back(LogMessage(level, header, message));
