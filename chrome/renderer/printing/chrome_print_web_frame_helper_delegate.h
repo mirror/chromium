@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_RENDERER_PRINTING_CHROME_PRINT_WEB_VIEW_HELPER_DELEGATE_H_
-#define CHROME_RENDERER_PRINTING_CHROME_PRINT_WEB_VIEW_HELPER_DELEGATE_H_
+#ifndef CHROME_RENDERER_PRINTING_CHROME_PRINT_WEB_FRAME_HELPER_DELEGATE_H_
+#define CHROME_RENDERER_PRINTING_CHROME_PRINT_WEB_FRAME_HELPER_DELEGATE_H_
 
 #include "components/printing/renderer/print_web_frame_helper.h"
 
-class ChromePrintWebViewHelperDelegate
-    : public printing::PrintWebViewHelper::Delegate {
+class ChromePrintWebFrameHelperDelegate
+    : public printing::PrintWebFrameHelper::Delegate {
  public:
-  ~ChromePrintWebViewHelperDelegate() override;
+  ~ChromePrintWebFrameHelperDelegate() override;
 
   bool CancelPrerender(content::RenderFrame* render_frame) override;
 
@@ -19,6 +19,6 @@ class ChromePrintWebViewHelperDelegate
   bool IsPrintPreviewEnabled() override;
 
   bool OverridePrint(blink::WebLocalFrame* frame) override;
-};  // class ChromePrintWebViewHelperDelegate
+};  // class ChromePrintWebFrameHelperDelegate
 
-#endif  // CHROME_RENDERER_PRINTING_CHROME_PRINT_WEB_VIEW_HELPER_DELEGATE_H_
+#endif  // CHROME_RENDERER_PRINTING_CHROME_PRINT_WEB_FRAME_HELPER_DELEGATE_H_
