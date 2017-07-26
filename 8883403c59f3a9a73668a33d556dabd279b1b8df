@@ -16,6 +16,58 @@
       "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab358d2a_ef9c1271",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:36:15Z",
+      "side": 1,
+      "message": "+1, also good to say this is called before WillEvaluateWorkerScript(), so it can be used to apply the CSP and referrer policies before script evaluation starts.",
+      "parentUuid": "3c6fba21_478542ed",
+      "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9456f7e_07ea1339",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:36:15Z",
+      "side": 1,
+      "message": "Something like:\n\n// Applies the specified CSP and referrer policy to the worker, so that fetches initiated by the worker (other than for the main worker script itself) are affected by these policies. The WaitableEvent is signaled when the policies are set. This enables the caller to ensure that policies are set before starting script execution on the worker thread.",
+      "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c95fa1b_8e218aa1",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T04:36:15Z",
+      "side": 1,
+      "message": "The docu about set_params_on_main_thread_event would probably be better on SetContentSecurityPolicyAndReferrerPolicy(). The name seems a bit long for this scope. Can just be |waitable_event| or something?\n\nI\u0027d structure this as:\n// Post a task to the main thread to set CSP and ReferrerPolicy on the shadow page.\nWaitableEvent waitable_event;\n  parent_frame_task_runners_-\u003eGet(TaskType::kUnthrottled)\n      -\u003ePostTask(\n          BLINK_FROM_HERE,\n          CrossThreadBind(\n              \u0026WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy,\n              CrossThreadUnretained(embedded_worker_),\n              csp_headers_on_worker_thread, referrer_policy_on_worker_thread,\n              CrossThreadUnretained(\u0026waitable_event)));\nClient().WorkerScriptLoaded();\n\n// Wait for the task to complete before returning. This ensures that worker script evaluation can\u0027t start and issue any fetches until CSP and ReferrerPolicy are set.\nset_params_on_main_thread_event.Wait();",
+      "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
