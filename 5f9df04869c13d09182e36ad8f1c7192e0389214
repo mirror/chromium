@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f717f2f_10158bed",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-26T07:36:22Z",
+      "side": 0,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 468,
+        "startChar": 20,
+        "endLine": 468,
+        "endChar": 26
+      },
+      "revId": "5f9df04869c13d09182e36ad8f1c7192e0389214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c472f062_4f345391",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-26T07:36:22Z",
+      "side": 0,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 547,
+        "startChar": 20,
+        "endLine": 547,
+        "endChar": 26
+      },
+      "revId": "5f9df04869c13d09182e36ad8f1c7192e0389214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
