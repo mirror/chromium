@@ -634,14 +634,15 @@ void NotificationViewMD::CreateOrUpdateIconView(
     return;
   }
 
-  gfx::Size image_view_size(30, 30);
   if (!icon_view_) {
-    icon_view_ = new ProportionalImageView(image_view_size);
+    icon_view_ =
+        new ProportionalImageView(ProportionalImageView::Type::CONTAIN);
     right_content_->AddChildView(icon_view_);
   }
 
   gfx::ImageSkia icon = notification.icon().AsImageSkia();
-  icon_view_->SetImage(icon, icon.size());
+  gfx::Size icon_view_size(30, 30);
+  icon_view_->SetImage(icon, icon_view_size, icon.size());
 }
 
 void NotificationViewMD::CreateOrUpdateSmallIconView(
@@ -672,9 +673,6 @@ void NotificationViewMD::CreateOrUpdateImageView(
     return;
   }
 
-  gfx::Size ideal_size(kNotificationPreferredImageWidth,
-                       kNotificationPreferredImageHeight);
-
   if (!image_container_) {
     image_container_ = new views::View();
     image_container_->SetLayoutManager(new views::FillLayout());
@@ -684,14 +682,17 @@ void NotificationViewMD::CreateOrUpdateImageView(
         views::CreateSolidBackground(message_center::kImageBackgroundColor));
 
     DCHECK(!image_view_);
-    image_view_ = new message_center::ProportionalImageView(ideal_size);
+    image_view_ =
+        new ProportionalImageView(ProportionalImageView::Type::FIT_WIDTH);
     image_container_->AddChildView(image_view_);
     // Insert the created image container just after the |content_row_|.
     AddChildViewAt(image_container_, GetIndexOf(content_row_) + 1);
   }
 
   DCHECK(image_view_);
-  image_view_->SetImage(notification.image().AsImageSkia(), ideal_size);
+  gfx::Size max_image_size(GetNotificationImageMaxSize(kImageContainerPadding));
+  image_view_->SetImage(notification.image().AsImageSkia(), max_image_size,
+                        max_image_size);
 }
 
 void NotificationViewMD::CreateOrUpdateActionButtonViews(
