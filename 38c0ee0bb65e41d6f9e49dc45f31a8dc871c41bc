@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c27d069_aef20c4e",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-26T17:46:10Z",
+      "side": 1,
+      "message": "can you comment on this - just since i\u0027m not 100% sure. So this idea is we\u0027re trying on this setting from the main pageload and this will get used by other metrics that we can easily tie to the navigation id, right? I\u0027d make that clear here (that this is the authoritative setting)",
+      "revId": "38c0ee0bb65e41d6f9e49dc45f31a8dc871c41bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc4ed4e_b4a8139b",
+        "filename": "services/metrics/public/cpp/ukm_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-26T17:46:10Z",
+      "side": 1,
+      "message": "would add a little bit more commenting here (what this is doing and how it is working)",
+      "revId": "38c0ee0bb65e41d6f9e49dc45f31a8dc871c41bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
