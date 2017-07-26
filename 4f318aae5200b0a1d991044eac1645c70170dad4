@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b84d0dbd_b9b38e89",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T18:52:03Z",
+      "side": 1,
+      "message": "nit: considered",
+      "range": {
+        "startLine": 43,
+        "startChar": 70,
+        "endLine": 43,
+        "endChar": 79
+      },
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae9f5ca_6b5aaf78",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T18:52:03Z",
+      "side": 1,
+      "message": "nit: maybe modify the comments to further emphasize the difference between current_ and nextStart_? (e.g. current_ is a complete movement which must contain start and end, while nextStart_ is just a start). Currently both are using \u0027last detected\u0027 so it may be confusing at first glance.",
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c851b6_a9469df5",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T18:52:03Z",
+      "side": 1,
+      "message": "nit: remove one empty line?",
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4697656c_080ac40d",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T18:52:03Z",
+      "side": 1,
+      "message": "Is it possible for this.started_() to be false when reaching here?",
+      "range": {
+        "startLine": 279,
+        "startChar": 28,
+        "endLine": 279,
+        "endChar": 44
+      },
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfd289f_da0ef1a3",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-26T18:52:03Z",
+      "side": 1,
+      "message": "optional nit: maybe move the codes below this line to addTouch_, or to a separate function which will be called by addTouch_? Because they depend on the update on this.current_ which is done by addTouch_ it may be more natural to start from there.",
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
