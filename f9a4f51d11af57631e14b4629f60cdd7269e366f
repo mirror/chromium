@@ -231,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "ccc2e388_ab8160f5",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T18:16:47Z",
+      "side": 1,
+      "message": "More options:\nOnNoMorePendingTasks()\nOnQueueIsIdle() \nOnTaskQueueIsIdle()  \u003c-- this one is pretty descriptive",
+      "parentUuid": "40473a78_e76618e4",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9b15715_c186edf6",
         "filename": "components/offline_pages/core/task_queue_unittest.cc",
         "patchSetId": 2
