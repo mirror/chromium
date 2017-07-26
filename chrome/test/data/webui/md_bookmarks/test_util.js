@@ -18,6 +18,7 @@ function replaceBody(element) {
  * Convert a list of top-level bookmark nodes into a normalized lookup table of
  * nodes.
  * @param {...BookmarkTreeNode} nodes
+ * @return {NodeMap}
  */
 function testTree(nodes) {
   return bookmarks.util.normalizeNodes(
@@ -88,6 +89,16 @@ function createItem(id, config) {
  */
 function normalizeSet(set) {
   return Array.from(set).sort();
+}
+
+/**
+ * @param {NodeState} nodes
+ * @return {FolderOpenState}
+ */
+function getAllFoldersOpenState(nodes) {
+  var folderOpenState = new Map();
+  Object.keys(nodes).forEach((n) => folderOpenState.set(n, true));
+  return folderOpenState;
 }
 
 /**

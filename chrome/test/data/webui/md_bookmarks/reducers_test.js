@@ -146,9 +146,9 @@ suite('selection state', function() {
   });
 });
 
-suite('closed folder state', function() {
+suite('folder open state', function() {
   var nodes;
-  var closedFolders;
+  var folderOpenState;
   var action;
 
   setup(function() {
@@ -160,48 +160,49 @@ suite('closed folder state', function() {
               createItem('3'),
             ]),
         createFolder('4', []));
-    closedFolders = new Set();
+    folderOpenState = new Map();
   });
 
-  test('toggle folder open state', function() {
+  test('close folder', function() {
     action = bookmarks.actions.changeFolderOpen('2', false);
-    closedFolders = bookmarks.ClosedFolderState.updateClosedFolders(
-        closedFolders, action, nodes);
-    assertFalse(closedFolders.has('1'));
-    assertTrue(closedFolders.has('2'));
+    folderOpenState = bookmarks.FolderOpenState.updateFolderOpenState(
+        folderOpenState, action, nodes);
+    assertFalse(folderOpenState.has('1'));
+    assertFalse(folderOpenState.get('2'));
   });
 
   test('select folder with closed parent', function() {
     // Close '1'
     action = bookmarks.actions.changeFolderOpen('1', false);
-    closedFolders = bookmarks.ClosedFolderState.updateClosedFolders(
-        closedFolders, action, nodes);
-    assertTrue(closedFolders.has('1'));
-    assertFalse(closedFolders.has('2'));
+    folderOpenState = bookmarks.FolderOpenState.updateFolderOpenState(
+        folderOpenState, action, nodes);
+    assertFalse(folderOpenState.get('1'));
+    assertFalse(folderOpenState.has('2'));
 
     // Should re-open when '2' is selected.
     action = bookmarks.actions.selectFolder('2');
-    closedFolders = bookmarks.ClosedFolderState.updateClosedFolders(
-        closedFolders, action, nodes);
-    assertFalse(closedFolders.has('1'));
+    folderOpenState = bookmarks.FolderOpenState.updateFolderOpenState(
+        folderOpenState, action, nodes);
+    assertTrue(folderOpenState.get('1'));
+    assertFalse(folderOpenState.has('2'));
   });
 
   test('move nodes in a closed folder', function() {
     // Moving bookmark items should not open folders.
-    closedFolders = new Set(['1']);
+    folderOpenState = new Map([['1', false]]);
     action = bookmarks.actions.moveBookmark('3', '1', 1, '1', 0);
-    closedFolders = bookmarks.ClosedFolderState.updateClosedFolders(
-        closedFolders, action, nodes);
+    folderOpenState = bookmarks.FolderOpenState.updateFolderOpenState(
+        folderOpenState, action, nodes);
 
-    assertTrue(closedFolders.has('1'));
+    assertFalse(folderOpenState.get('1'));
 
     // Moving folders should open their parents.
-    closedFolders = new Set(['1', '2']);
+    folderOpenState = new Map([['1', false], ['2', false]]);
     action = bookmarks.actions.moveBookmark('4', '2', 0, '0', 1);
-    closedFolders = bookmarks.ClosedFolderState.updateClosedFolders(
-        closedFolders, action, nodes);
-    assertFalse(closedFolders.has('1'));
-    assertFalse(closedFolders.has('2'));
+    folderOpenState = bookmarks.FolderOpenState.updateFolderOpenState(
+        folderOpenState, action, nodes);
+    assertTrue(folderOpenState.get('1'));
+    assertTrue(folderOpenState.get('2'));
   });
 });
 
