@@ -384,7 +384,7 @@ AutomationInternalPerformActionFunction::ConvertToAXActionData(
       break;
     }
     case api::automation_internal::ACTION_TYPE_SETACCESSIBILITYFOCUS: {
-      action->action = ui::AX_ACTION_SET_ACCESSIBILITY_FOCUS;
+      action->action = ui::AX_ACTION_LOAD_INLINE_TEXT_BOXES;
       break;
     }
     case api::automation_internal::
