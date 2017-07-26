@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8deabec5_76a3b6e0",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-26T00:55:42Z",
+      "side": 1,
+      "message": "What\u0027s the reason for merging this with coordination_unit.mojom? It\u0027s likely to grow quite large over time.",
+      "revId": "5c1815eb6d7bec28db0e8ac38e6f93424fefcaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
