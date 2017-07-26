@@ -171,8 +171,8 @@ void BrailleControllerImpl::StartConnecting() {
   // and because we don't retry to connect after errors that will
   // persist until there's a change to the socket directory (i.e.
   // ENOENT).
-  BrowserThread::PostTaskAndReply(
-      BrowserThread::FILE, FROM_HERE,
+  base::PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&BrailleControllerImpl::StartWatchingSocketDirOnFileThread,
                      base::Unretained(this)),
       base::BindOnce(&BrailleControllerImpl::TryToConnect,
@@ -181,7 +181,6 @@ void BrailleControllerImpl::StartConnecting() {
 }
 
 void BrailleControllerImpl::StartWatchingSocketDirOnFileThread() {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   base::FilePath brlapi_dir(BRLAPI_SOCKETPATH);
   if (!file_path_watcher_.Watch(
           brlapi_dir, false, base::Bind(
@@ -193,7 +192,6 @@ void BrailleControllerImpl::StartWatchingSocketDirOnFileThread() {
 
 void BrailleControllerImpl::OnSocketDirChangedOnFileThread(
     const base::FilePath& path, bool error) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   if (error) {
     LOG(ERROR) << "Error watching brlapi directory: " << path.value();
     return;
