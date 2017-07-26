@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d8dee63_3e314646",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-26T23:07:54Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like a great idea to me; I don\u0027t like having \nthings in one toolchain reading from things generated in another\ntoolchain\u0027s directories.\n\nCan we move the whitelists to root_build_dir instead (or a subdir\nof that?); that\u0027s really the only toolchain-independent location\nwe have ...\n\nFine to do that in a follow-up if you like, but if so, or if this\nneeds to stay as-is, please add a comment about what this is doing\nbecause it\u0027s weird, particularly since :foo presumably doesn\u0027t exist :).",
+      "revId": "b4345893e3cf57afe24057b1b0e928dc0e1af22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
