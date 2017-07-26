@@ -312,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "d3880765_334f4df9",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T23:36:52Z",
+      "side": 1,
+      "message": "Err, I was thinking of something else.",
+      "parentUuid": "1e3f8209_e940844e",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031b9c03_05ef6c47",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
         "patchSetId": 12
@@ -452,6 +470,24 @@
     },
     {
       "key": {
+        "uuid": "0cd8297f_0a1dd93a",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T23:36:52Z",
+      "side": 1,
+      "message": "You didn\u0027t move the callback.Run() when you inverted the logic in the if statement.",
+      "parentUuid": "95460a61_26ee3c43",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13082a0c_6a3b8a6d",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 12
@@ -551,6 +587,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "7877e536_52f47315",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44b24ee8_46d3067a",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T23:36:52Z",
+      "side": 1,
+      "message": "Just: privet_lister_timer_ \u003d base::MakeUnique\u003cbase::OneShotTimer\u003e();",
+      "parentUuid": "d1e1c0fe_75978f5e",
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
