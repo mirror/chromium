@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6e5429c_c1c7b319",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-26T09:59:47Z",
+      "side": 1,
+      "message": "I think it\u0027s a bit too level to exact this method separately for unittesting, given what it does (find dynamic contents, mutate the inputs to have those being cyan \u0026 return count). \n\nInstead I suggest exact the whole operation of compute num_dynamic_pixels from a list of images to a separate method \u0026 unittest it. i.e:\n\ndef IsPageRenderingStablized(page_snapshots, dynamic_content_threshold):\n   \"\"\" Return whether rendering of a page has been stabilized given a list of page snapshots.\n\n   These images are list snapshots of a web page ordered by the time each snapshot is taken. \n    ...more explanation of the algorithm...\n   \"\"\"",
+      "revId": "e9d53f937ef22270c3912e0fa43014d13f8fb2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
