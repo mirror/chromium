@@ -14,6 +14,7 @@
 #include "base/ios/weak_nsobject.h"
 #import "base/mac/scoped_nsobject.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/util/relaxed_bounds_constraints_hittest.h"
@@ -108,7 +109,8 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 // (forwarding to the delegate).
 // This is not intended to be used on its own, but to be subclassed by more
 // specific toolbars that provide more buttons in the empty space.
-@interface ToolbarController : NSObject<PopupMenuDelegate>
+@interface ToolbarController
+    : NSObject<PopupMenuDelegate, ToolbarElementFrameProvider>
 
 // The top-level toolbar view. It is a |UIImageView| even though it does not
 // hold any image for testability: unlike |UIView|, a |UIImageView| that is

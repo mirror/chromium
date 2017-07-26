@@ -13,6 +13,7 @@ source_set("toolbar") {
     "toolbar_controller.h",
     "toolbar_controller.mm",
     "toolbar_controller_private.h",
+    "toolbar_element_frame_provider.h",
     "toolbar_model_delegate_ios.h",
     "toolbar_model_delegate_ios.mm",
     "toolbar_model_impl_ios.h",

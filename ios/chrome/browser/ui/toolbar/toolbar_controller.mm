@@ -9,6 +9,7 @@
 #include "base/format_macros.h"
 #include "base/i18n/rtl.h"
 #include "base/ios/ios_util.h"
+#include "base/logging.h"
 #include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
@@ -202,7 +203,6 @@ const LayoutOffset kButtonFadeOutXOffset = 10;
 }
 
 @end
-
 @interface ToolbarController () {
   // The shadow view. Only used on iPhone.
   UIImageView* fullBleedShadowView_;
@@ -1049,6 +1049,21 @@ const LayoutOffset kButtonFadeOutXOffset = 10;
   if ([controller isKindOfClass:[ToolsPopupController class]] &&
       (ToolsPopupController*)controller == toolsPopupController_)
     [self dismissToolsMenuPopup];
+}
+
+#pragma mark -
+#pragma mark ToolbarElementFrameProvider methods.
+
+- (CGRect)frameForToolbarElement:(ToolbarElement)toolbarElement {
+  switch (toolbarElement) {
+    case ToolbarElementTabSwitcher:
+      return stackButton_.frame;
+    case ToolbarElementToolsMenuButton:
+      return toolsMenuButton_.frame;
+    default:
+      NOTREACHED() << "Invalid toolbar element " << toolbarElement;
+      return CGRectNull;
+  }
 }
 
 @end
