@@ -87,6 +87,24 @@
       "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c2649a1_94664bc2",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-26T19:05:11Z",
+      "side": 1,
+      "message": "I was expecting that this CL stops creating the FILE thread on the content/ side...?\n\nMy point is just that I don\u0027t want to increase # of threads with this CL.",
+      "parentUuid": "55d85a46_8415e824",
+      "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
