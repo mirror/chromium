@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b6f3a3f_d0e1025c",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-26T16:48:01Z",
+      "side": 1,
+      "message": "You have a use after free problem with \u0027info\u0027.  It is being allocated on the stack and it goes out of scope  at the end of this function",
+      "range": {
+        "startLine": 931,
+        "startChar": 14,
+        "endLine": 931,
+        "endChar": 18
+      },
+      "revId": "a727985c4f39c59672c003a36c3b7c54f2e3f655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6752a9_c88dc1fa",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-26T16:48:01Z",
+      "side": 1,
+      "message": "released_mailbox_info has already been popped off the stack when this is called.",
+      "range": {
+        "startLine": 946,
+        "startChar": 23,
+        "endLine": 946,
+        "endChar": 44
+      },
+      "revId": "a727985c4f39c59672c003a36c3b7c54f2e3f655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
