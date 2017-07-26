@@ -19,7 +19,6 @@
 #include "content/public/renderer/render_frame_observer_tracker.h"
 #include "content/public/renderer/render_thread_observer.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
-#include "third_party/WebKit/public/platform/WebURLError.h"
 
 class GURL;
 
@@ -32,6 +31,7 @@ class ResourceFetcher;
 }
 
 namespace error_page {
+class Error;
 struct ErrorPageParams;
 }
 
@@ -74,7 +74,7 @@ class NetErrorHelper
   // Initializes |error_html| with the HTML of an error page in response to
   // |error|.  Updates internals state with the assumption the page will be
   // loaded immediately.
-  void GetErrorHTML(const blink::WebURLError& error,
+  void GetErrorHTML(const error_page::Error& error,
                     bool is_failed_post,
                     bool is_ignoring_cache,
                     std::string* error_html);
@@ -83,16 +83,12 @@ class NetErrorHelper
   // attached to should have its error page suppressed.
   bool ShouldSuppressErrorPage(const GURL& url);
 
-  // Returns a string representation of |domain|. The returned value is usable
-  // for error_page::LocalizedError.
-  static std::string GetDomainString(blink::WebURLError::Domain domain);
-
  private:
   chrome::mojom::NetworkDiagnostics* GetRemoteNetworkDiagnostics();
 
   // NetErrorHelperCore::Delegate implementation:
   void GenerateLocalizedErrorPage(
-      const blink::WebURLError& error,
+      const error_page::Error& error,
       bool is_failed_post,
       bool can_use_local_diagnostics_service,
       std::unique_ptr<error_page::ErrorPageParams> params,
@@ -103,7 +99,7 @@ class NetErrorHelper
       std::string* html) const override;
   void LoadErrorPage(const std::string& html, const GURL& failed_url) override;
   void EnablePageHelperFunctions() override;
-  void UpdateErrorPage(const blink::WebURLError& error,
+  void UpdateErrorPage(const error_page::Error& error,
                        bool is_failed_post,
                        bool can_use_local_diagnostics_service) override;
   void FetchNavigationCorrections(
