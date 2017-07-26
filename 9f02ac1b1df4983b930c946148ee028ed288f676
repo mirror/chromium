@@ -22,6 +22,30 @@
       "revId": "9f02ac1b1df4983b930c946148ee028ed288f676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7872577_9c629d3f",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-26T23:48:55Z",
+      "side": 1,
+      "message": "It wasn\u0027t ticked on the launch bug, so I didn\u0027t put it here",
+      "parentUuid": "220a6dea_a207d83c",
+      "range": {
+        "startLine": 1567,
+        "startChar": 0,
+        "endLine": 1567,
+        "endChar": 21
+      },
+      "revId": "9f02ac1b1df4983b930c946148ee028ed288f676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
