@@ -190,6 +190,7 @@ class ServiceWorkerJobTest : public testing::Test {
 
   void SetUp() override {
     helper_.reset(new EmbeddedWorkerTestHelper(base::FilePath()));
+    queues_map_ = &(job_coordinator()->job_queues_);
   }
 
   void TearDown() override { helper_.reset(); }
@@ -214,9 +215,14 @@ class ServiceWorkerJobTest : public testing::Test {
       ServiceWorkerStatusCode expected_status = SERVICE_WORKER_OK);
   std::unique_ptr<ServiceWorkerProviderHost> CreateControllee();
 
+  // Presume the job is timeout, and actually do the same thing with
+  // ServiceWorkerJobCoordinator::MaybeTimeoutJobs.
+  void HandleTimeoutJob(ServiceWorkerRegisterJob* job);
+
   TestBrowserThreadBundle browser_thread_bundle_;
   std::unique_ptr<EmbeddedWorkerTestHelper> helper_;
   std::vector<ServiceWorkerRemoteProviderEndpoint> remote_endpoints_;
+  std::map<GURL, ServiceWorkerJobCoordinator::JobQueue>* queues_map_;
 };
 
 scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
@@ -228,9 +234,11 @@ scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
   job_coordinator()->Register(
       script_url, ServiceWorkerRegistrationOptions(pattern), nullptr,
       SaveRegistration(expected_status, &called, &registration));
+  EXPECT_TRUE(job_coordinator()->job_timeout_timer_.IsRunning());
   EXPECT_FALSE(called);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(called);
+  EXPECT_FALSE(job_coordinator()->job_timeout_timer_.IsRunning());
   return registration;
 }
 
@@ -269,6 +277,12 @@ ServiceWorkerJobTest::CreateControllee() {
       true /* is_parent_frame_secure */, helper_->context()->AsWeakPtr(),
       &remote_endpoints_.back());
   return host;
+}
+
+void ServiceWorkerJobTest::HandleTimeoutJob(ServiceWorkerRegisterJob* job) {
+  job->Abort();
+  queues_map_->begin()->second.Pop(job);
+  queues_map_->erase(queues_map_->begin());
 }
 
 TEST_F(ServiceWorkerJobTest, SameDocumentSameRegistration) {
@@ -394,6 +408,27 @@ TEST_F(ServiceWorkerJobTest, Register) {
   EXPECT_EQ(valid_scope_2, version_->foreign_fetch_scopes_[1]);
   EXPECT_EQ(1u, version_->foreign_fetch_origins_.size());
   EXPECT_EQ(valid_origin, version_->foreign_fetch_origins_[0]);
+}
+
+// Make sure registration timeout timer is working.
+TEST_F(ServiceWorkerJobTest, RegistrationTimeout) {
+  bool called;
+  scoped_refptr<ServiceWorkerRegistration> registration;
+  job_coordinator()->Register(
+      GURL("http://www.example.com/service_worker.js"),
+      ServiceWorkerRegistrationOptions(GURL("http://www.example.com/")),
+      nullptr,
+      SaveRegistration(SERVICE_WORKER_ERROR_ABORT, &called, &registration));
+
+  EXPECT_EQ(1u, queues_map_->size());
+  EXPECT_FALSE(called);
+
+  ServiceWorkerRegisterJob* job = static_cast<ServiceWorkerRegisterJob*>(
+      queues_map_->begin()->second.front());
+  HandleTimeoutJob(job);
+
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(queues_map_->empty());
 }
 
 // Make sure registrations are cleaned up when they are unregistered.

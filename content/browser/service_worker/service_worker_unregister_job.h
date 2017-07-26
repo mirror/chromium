@@ -36,6 +36,9 @@ class ServiceWorkerUnregisterJob : public ServiceWorkerRegisterJobBase {
                              const GURL& pattern);
   ~ServiceWorkerUnregisterJob() override;
 
+  // Returns the time the job started.
+  base::TimeTicks start_time() { return start_time_; };
+
   // Registers a callback to be called when the job completes (whether
   // successfully or not). Multiple callbacks may be registered.
   void AddCallback(const UnregistrationCallback& callback);
@@ -54,6 +57,9 @@ class ServiceWorkerUnregisterJob : public ServiceWorkerRegisterJobBase {
   void CompleteInternal(int64_t registration_id,
                         ServiceWorkerStatusCode status);
   void ResolvePromise(int64_t registration_id, ServiceWorkerStatusCode status);
+
+  // Holds the time the job started.
+  base::TimeTicks start_time_;
 
   base::WeakPtr<ServiceWorkerContextCore> context_;
   const GURL pattern_;

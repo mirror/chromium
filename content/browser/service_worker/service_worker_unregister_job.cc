@@ -33,6 +33,7 @@ void ServiceWorkerUnregisterJob::AddCallback(
 }
 
 void ServiceWorkerUnregisterJob::Start() {
+  start_time_ = base::TimeTicks::Now();
   context_->storage()->FindRegistrationForPattern(
       pattern_,
       base::Bind(&ServiceWorkerUnregisterJob::OnRegistrationFound,
