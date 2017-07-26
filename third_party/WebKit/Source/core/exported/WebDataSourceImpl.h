@@ -93,7 +93,6 @@ class CORE_EXPORT WebDataSourceImpl final : public DocumentLoader,
                     const SubstituteData&,
                     ClientRedirectPolicy);
   ~WebDataSourceImpl() override;
-  void DetachFromFrame() override;
   String DebugName() const override { return "WebDataSourceImpl"; }
 
   // Mutable because the const getters will magically sync these to the

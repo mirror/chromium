@@ -241,8 +241,18 @@ FrameFetchContext::~FrameFetchContext() {
 
 LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   DCHECK(document_);
+  DCHECK(!IsDetached());
   HTMLImportsController* imports_controller = document_->ImportsController();
   DCHECK(imports_controller);
+  // When Master() gets Shutdown()-ed,
+  // - Master()'s HTMLImportsController is disposed.
+  // - All the HTMLImportLoader instances of the HTMLImportsController are
+  //   disposed.
+  // - ClearImportsController() is called on the Document of the
+  //   HTMLImportLoader to detach this context
+  // Therefore, here Master() is guaranteed to be not Shutdown()-ed. So, unless
+  // the Master() was constructed with nullptr as the |frame| argument, this is
+  // not null.
   LocalFrame* frame = imports_controller->Master()->GetFrame();
   DCHECK(frame);
   return frame;
@@ -269,10 +279,11 @@ KURL FrameFetchContext::GetFirstPartyForCookies() const {
 }
 
 LocalFrame* FrameFetchContext::GetFrame() const {
+  DCHECK(!IsDetached());
+
   if (!document_loader_)
     return FrameOfImportsController();
 
-  DCHECK(!IsDetached());
   LocalFrame* frame = document_loader_->GetFrame();
   DCHECK(frame);
   return frame;
@@ -351,11 +362,13 @@ WebCachePolicy FrameFetchContext::ResourceRequestCachePolicy(
   return cache_policy;
 }
 
-// The |m_documentLoader| is null in the FrameFetchContext of an imported
+// The |document_loader_| is null in the FrameFetchContext of an imported
 // document.
 // FIXME(http://crbug.com/274173): This means Inspector, which uses
 // DocumentLoader as a grouping entity, cannot see imported documents.
 inline DocumentLoader* FrameFetchContext::MasterDocumentLoader() const {
+  DCHECK(!IsDetached());
+
   if (document_loader_)
     return document_loader_.Get();
 
@@ -383,6 +396,7 @@ void FrameFetchContext::PrepareRequest(ResourceRequest& request,
 
   if (IsDetached())
     return;
+
   GetLocalFrameClient()->DispatchWillSendRequest(request);
 
   // ServiceWorker hook ups.

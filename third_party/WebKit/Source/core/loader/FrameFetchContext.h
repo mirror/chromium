@@ -166,11 +166,14 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   FrameFetchContext(DocumentLoader*, Document*);
 
-  // m_documentLoader is null when loading resources from an HTML import
-  // and in such cases we use the document loader of the importing frame.
+  // |document_loader_| is null when loading resources from an HTML import
+  // and in such cases we use the DocumentLoader of the importing frame.
+  //
   // Convenient accessors below can be used to transparently access the
   // relevant document loader or frame in either cases without null-checks.
+  //
   // TODO(kinuko): Remove constness, these return non-const members.
+
   DocumentLoader* MasterDocumentLoader() const;
   LocalFrame* GetFrame() const;
   LocalFrameClient* GetLocalFrameClient() const;
