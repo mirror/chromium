@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ce0dc47_69324aa6",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-26T12:32:13Z",
+      "side": 1,
+      "message": "I thought about storing the same_site_cookie_mode we set in `AddCookieHeaderAndStart` as a member on URLRequestHttpJob, which would mean we could skip this call to `SameDomainOrHost`. It didn\u0027t seem worth the memory, but it\u0027s not really clear to me how expensive this call is. If it\u0027s expensive, then we should optimize it away.",
+      "revId": "32463062e93401581ebe61212bc270214a675074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
