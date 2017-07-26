@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99d93bdd_8c88c26d",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T16:41:12Z",
+      "side": 1,
+      "message": "nice :)",
+      "range": {
+        "startLine": 396,
+        "startChar": 28,
+        "endLine": 396,
+        "endChar": 42
+      },
+      "revId": "56f912b104535c084e5296bb9f674b00ef3d87e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e98757_2f13f25d",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T16:41:12Z",
+      "side": 1,
+      "message": "this \u0026 the below function seem like they kinda don\u0027t belong here",
+      "range": {
+        "startLine": 465,
+        "startChar": 11,
+        "endLine": 465,
+        "endChar": 24
+      },
+      "revId": "56f912b104535c084e5296bb9f674b00ef3d87e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
