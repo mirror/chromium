@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d74591_9e0118b5",
+        "filename": "chrome/browser/chromeos/login/bluetooth_host_pairing_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-26T23:49:18Z",
+      "side": 1,
+      "message": "Just curious: why do we need closures and std::move here?\nCould we just pass a raw pointer to RunLoop?",
+      "revId": "306cb1283080693050a1018736219b7642b12803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
