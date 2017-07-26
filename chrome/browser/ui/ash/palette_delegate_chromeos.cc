@@ -200,9 +200,10 @@ void PaletteDelegateChromeOS::ShowMetalayer(const base::Closure& closed) {
   if (!highlighter_selection_observer) {
     highlighter_selection_observer =
         base::MakeUnique<VoiceInteractionSelectionObserver>(profile_);
+    ash::Shell::Get()->highlighter_controller()->SetObserver(
+        highlighter_selection_observer.get());
   }
-  ash::Shell::Get()->highlighter_controller()->EnableHighlighter(
-      highlighter_selection_observer.get());
+  ash::Shell::Get()->highlighter_controller()->SetEnabled(true);
 }
 
 void PaletteDelegateChromeOS::HideMetalayer() {
@@ -212,7 +213,7 @@ void PaletteDelegateChromeOS::HideMetalayer() {
     return;
   service->HideMetalayer();
 
-  ash::Shell::Get()->highlighter_controller()->DisableHighlighter();
+  ash::Shell::Get()->highlighter_controller()->SetEnabled(false);
 }
 
 }  // namespace chromeos

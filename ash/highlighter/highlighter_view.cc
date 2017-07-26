@@ -6,7 +6,9 @@
 
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkTypes.h"
+#include "ui/aura/window.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/gfx/canvas.h"
 #include "ui/views/widget/widget.h"
 
@@ -31,24 +33,27 @@ gfx::RectF GetPenTipRect(const gfx::PointF& p) {
                     kPenTipWidth, kPenTipHeight);
 }
 
-gfx::Rect GetSegmentDamageRect(const gfx::RectF& r1, const gfx::RectF& r2) {
-  gfx::RectF rect = r1;
-  rect.Union(r2);
-  rect.Inset(-kOutsetForAntialiasing, -kOutsetForAntialiasing);
-  return gfx::ToEnclosingRect(rect);
+gfx::Rect InflateDamageRect(const gfx::Rect& r) {
+  gfx::Rect inflated = r;
+  inflated.Inset(-kOutsetForAntialiasing - (int)(kPenTipWidth / 2),
+                 -kOutsetForAntialiasing - (int)(kPenTipHeight / 2));
+  return inflated;
 }
 
 // A highlighter segment is best imagined as a result of a rectangle
 // being dragged along a straight line, while keeping its orientation.
 // r1 is the start position of the rectangle and r2 is the final position.
 void DrawSegment(gfx::Canvas& canvas,
-                 const gfx::RectF& r1,
-                 const gfx::RectF& r2,
+                 const gfx::PointF& p1,
+                 const gfx::PointF& p2,
                  const cc::PaintFlags& flags) {
-  if (r1.x() > r2.x()) {
-    DrawSegment(canvas, r2, r1, flags);
+  if (p1.x() > p2.x()) {
+    DrawSegment(canvas, p2, p1, flags);
     return;
   }
+
+  const gfx::RectF r1 = GetPenTipRect(p1);
+  const gfx::RectF r2 = GetPenTipRect(p2);
 
   SkPath path;
   path.moveTo(r1.x(), r1.y());
@@ -74,36 +79,72 @@ const SkColor HighlighterView::kPenColor =
 
 const gfx::SizeF HighlighterView::kPenTipSize(kPenTipWidth, kPenTipHeight);
 
-HighlighterView::HighlighterView(aura::Window* root_window)
-    : FastInkView(root_window) {}
+HighlighterView::HighlighterView(base::TimeDelta presentation_delay,
+                                 aura::Window* root_window)
+    : FastInkView(root_window),
+      points_(base::TimeDelta()),
+      predicted_points_(base::TimeDelta()),
+      presentation_delay_(presentation_delay) {}
 
 HighlighterView::~HighlighterView() {}
 
-void HighlighterView::AddNewPoint(const gfx::PointF& point) {
+void HighlighterView::AddNewPoint(const gfx::PointF& point,
+                                  const base::TimeTicks& time) {
   TRACE_EVENT1("ui", "HighlighterView::AddNewPoint", "point", point.ToString());
 
-  if (!points_.empty()) {
-    UpdateDamageRect(GetSegmentDamageRect(GetPenTipRect(points_.back()),
-                                          GetPenTipRect(point)));
+  // The new segment needs to be drawn.
+  if (!points_.IsEmpty()) {
+    UpdateDamageRect(InflateDamageRect(gfx::ToEnclosingRect(
+        gfx::BoundingRect(points_.GetNewest().location, point))));
   }
 
-  points_.push_back(point);
+  // Previous prediction needs to be erased.
+  if (!predicted_points_.IsEmpty())
+    UpdateDamageRect(InflateDamageRect(predicted_points_.GetBoundingBox()));
+
+  points_.AddPoint(point, time);
+
+  base::TimeTicks current_time = ui::EventTimeForNow();
+  predicted_points_.Predict(
+      points_, current_time, presentation_delay_,
+      GetWidget()->GetNativeView()->GetBoundsInScreen().size());
+
+  // New prediction needs to be drawn.
+  if (!predicted_points_.IsEmpty())
+    UpdateDamageRect(InflateDamageRect(predicted_points_.GetBoundingBox()));
 
   RequestRedraw();
 }
 
-void HighlighterView::Animate(const gfx::PointF& pivot,
-                              AnimationMode animation_mode) {
+gfx::Rect HighlighterView::GetBoundingBox() const {
+  gfx::Rect rect = points_.GetBoundingBox();
+  rect.Union(predicted_points_.GetBoundingBox());
+  return rect;
+}
+
+std::vector<gfx::PointF> HighlighterView::GetTrace() const {
+  std::vector<gfx::PointF> result;
+  for (auto p : points_.points())
+    result.push_back(p.location);
+  for (auto p : predicted_points_.points())
+    result.push_back(p.location);
+  return result;
+}
+
+void HighlighterView::Animate(const gfx::Point& pivot,
+                              AnimationMode animation_mode,
+                              const base::Closure& done) {
   animation_timer_.reset(new base::Timer(
       FROM_HERE, base::TimeDelta::FromMilliseconds(kStrokeFadeoutDelayMs),
       base::Bind(&HighlighterView::FadeOut, base::Unretained(this), pivot,
-                 animation_mode),
+                 animation_mode, done),
       false));
   animation_timer_->Reset();
 }
 
-void HighlighterView::FadeOut(const gfx::PointF& pivot,
-                              AnimationMode animation_mode) {
+void HighlighterView::FadeOut(const gfx::Point& pivot,
+                              AnimationMode animation_mode,
+                              const base::Closure& done) {
   ui::Layer* layer = GetWidget()->GetLayer();
 
   {
@@ -131,11 +172,18 @@ void HighlighterView::FadeOut(const gfx::PointF& pivot,
 
     layer->SetTransform(transform);
   }
+
+  animation_timer_.reset(new base::Timer(
+      FROM_HERE, base::TimeDelta::FromMilliseconds(kStrokeFadeoutDurationMs),
+      done, false));
+  animation_timer_->Reset();
 }
 
 void HighlighterView::OnRedraw(gfx::Canvas& canvas,
                                const gfx::Vector2d& offset) {
-  if (points_.size() < 2)
+  int num_points =
+      points_.GetNumberOfPoints() + predicted_points_.GetNumberOfPoints();
+  if (num_points < 2)
     return;
 
   gfx::Rect clip_rect;
@@ -148,12 +196,28 @@ void HighlighterView::OnRedraw(gfx::Canvas& canvas,
   flags.setColor(kPenColor);
   flags.setBlendMode(SkBlendMode::kSrc);
 
-  for (size_t i = 1; i < points_.size(); ++i) {
-    const gfx::RectF tip1 = GetPenTipRect(points_[i - 1]) - offset;
-    const gfx::RectF tip2 = GetPenTipRect(points_[i]) - offset;
-    // Only draw the segment if it is touching the clip rect.
-    if (clip_rect.Intersects(GetSegmentDamageRect(tip1, tip2)))
-      DrawSegment(canvas, tip1, tip2, flags);
+  gfx::PointF previous_point;
+
+  for (int i = 0; i < num_points; ++i) {
+    gfx::PointF current_point;
+    if (i < points_.GetNumberOfPoints()) {
+      current_point = points_.points()[i].location - offset;
+    } else {
+      current_point =
+          predicted_points_.points()[i - points_.GetNumberOfPoints()].location -
+          offset;
+    }
+
+    if (i != 0) {
+      gfx::Rect damage_rect = InflateDamageRect(gfx::ToEnclosingRect(
+          gfx::BoundingRect(previous_point, current_point)));
+      // Only draw the segment if it is touching the clip rect.
+      if (clip_rect.Intersects(damage_rect)) {
+        DrawSegment(canvas, previous_point, current_point, flags);
+      }
+    }
+
+    previous_point = current_point;
   }
 }
 

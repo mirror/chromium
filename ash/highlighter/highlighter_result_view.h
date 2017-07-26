@@ -36,14 +36,19 @@ class HighlighterResultView : public views::View {
 
   ~HighlighterResultView() override;
 
-  void AnimateInPlace(const gfx::Rect& bounds, SkColor color);
-  void AnimateDeflate(const gfx::Rect& bounds);
+  void AnimateInPlace(const gfx::Rect& bounds,
+                      SkColor color,
+                      const base::Closure& done);
+  void AnimateDeflate(const gfx::Rect& bounds, const base::Closure& done);
 
  private:
   void ScheduleFadeIn(const base::TimeDelta& delay,
-                      const base::TimeDelta& duration);
-  void FadeIn(const base::TimeDelta& duration);
-  void FadeOut();
+                      const base::TimeDelta& duration,
+                      const base::Closure& done);
+  void FadeIn(const base::TimeDelta& duration, const base::Closure& done);
+  void FadeOut(const base::Closure& done);
+
+  void Schedule(base::TimeDelta delay, const base::Closure& action);
 
   std::unique_ptr<views::Widget> widget_;
   std::unique_ptr<ui::Layer> result_layer_;

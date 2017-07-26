@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "ash/fast_ink/fast_ink_points.h"
 #include "ash/fast_ink/fast_ink_view.h"
 #include "base/time/time.h"
 
@@ -16,10 +17,6 @@ class Window;
 
 namespace base {
 class Timer;
-}
-
-namespace gfx {
-class PointF;
 }
 
 namespace ash {
@@ -38,21 +35,32 @@ class HighlighterView : public FastInkView {
   static const SkColor kPenColor;
   static const gfx::SizeF kPenTipSize;
 
-  explicit HighlighterView(aura::Window* root_window);
+  HighlighterView(base::TimeDelta presentation_delay,
+                  aura::Window* root_window);
   ~HighlighterView() override;
 
-  const std::vector<gfx::PointF>& points() const { return points_; }
+  gfx::Rect GetBoundingBox() const;
 
-  void AddNewPoint(const gfx::PointF& new_point);
+  std::vector<gfx::PointF> GetTrace() const;
 
-  void Animate(const gfx::PointF& pivot, AnimationMode animation_mode);
+  void AddNewPoint(const gfx::PointF& point, const base::TimeTicks& time);
+
+  void Animate(const gfx::Point& pivot,
+               AnimationMode animation_mode,
+               const base::Closure& done);
 
  private:
+  // FastInkView:
   void OnRedraw(gfx::Canvas& canvas, const gfx::Vector2d& offset) override;
 
-  void FadeOut(const gfx::PointF& pivot, AnimationMode animation_mode);
+  void FadeOut(const gfx::Point& pivot,
+               AnimationMode animation_mode,
+               const base::Closure& done);
 
-  std::vector<gfx::PointF> points_;
+  FastInkPoints points_;
+  FastInkPoints predicted_points_;
+  const base::TimeDelta presentation_delay_;
+
   std::unique_ptr<base::Timer> animation_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(HighlighterView);

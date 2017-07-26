@@ -12,18 +12,15 @@
 
 namespace ash {
 
-// Returns the bounding box of |points|
-gfx::RectF ASH_EXPORT GetBoundingBox(const std::vector<gfx::PointF>& points);
-
 // Returns true if |box| is sufficiently long horizontally and short vertically.
-bool ASH_EXPORT DetectHorizontalStroke(const gfx::RectF& box,
+bool ASH_EXPORT DetectHorizontalStroke(const gfx::Rect& box,
                                        const gfx::SizeF& pen_tip_size);
 
 // Returns true if |points| is forming a "closed shape" which is defined as a
 // sequence of points sweeping at least of 80% of a full circle around the
 // center of |box|, and going in one direction (clockwise or counterclockwise),
 // with a little noise tolerated).
-bool ASH_EXPORT DetectClosedShape(const gfx::RectF& box,
+bool ASH_EXPORT DetectClosedShape(const gfx::Rect& box,
                                   const std::vector<gfx::PointF>& points);
 
 }  // namespace ash
