@@ -484,6 +484,11 @@ const char kGTestOutputFlag[] = "gtest_output";
 
 TestLauncherDelegate::~TestLauncherDelegate() {}
 
+size_t TestLauncherDelegate::DetermineShardIndex(size_t shards_count,
+                                                 const std::string& test_name) {
+  return Hash(test_name) % shards_count;
+}
+
 TestLauncher::TestLauncher(TestLauncherDelegate* launcher_delegate,
                            size_t parallel_jobs)
     : launcher_delegate_(launcher_delegate),
@@ -1036,7 +1041,8 @@ void TestLauncher::RunTests() {
         continue;
     }
 
-    if (Hash(test_name) % total_shards_ != static_cast<uint32_t>(shard_index_))
+    if (launcher_delegate_->DetermineShardIndex(total_shards_, test_name) !=
+        static_cast<size_t>(shard_index_))
       continue;
 
     // Report test locations after applying all filters, so that we report test
