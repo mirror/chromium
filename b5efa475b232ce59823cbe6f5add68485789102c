@@ -45,6 +45,30 @@
       "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5ab19d_2322948b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinatorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-26T17:20:40Z",
+      "side": 1,
+      "message": "ScrollingCoordinatorTest has these lines:\n    settings-\u003eSetAcceleratedCompositingEnabled(true);\n    settings-\u003eSetPreferCompositingToLCDTextEnabled(true);\n\nWhen I run chrome with --enable-prefer-compositing-to-lcd-text the output is significantly different. Does that fix it for you?",
+      "parentUuid": "e8ce7b28_dd8200c1",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 31
+      },
+      "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
