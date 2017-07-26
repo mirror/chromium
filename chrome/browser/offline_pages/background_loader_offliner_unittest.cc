@@ -204,7 +204,10 @@ class BackgroundLoaderOfflinerTest : public testing::Test {
                                offliner_.get(),
                                0L /* DelayAfterDocumentAvailable */,
                                0L /* DelayAfterDocumentOnLoad */,
-                               false /* DocumentAvailableTriggersSnapshot */));
+                               0L /* DelayAfterRenovationsCompleted */,
+                               0L /* TimeoutAfterRenovationsStarted */,
+                               false /* DocumentAvailableTriggersSnapshot */,
+                               false /* RenovationsEnabled */));
     offliner_->SetSnapshotControllerForTest(std::move(snapshot_controller));
     // Call complete loading.
     offliner()->DocumentOnLoadCompletedInMainFrame();
