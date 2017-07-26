@@ -38,6 +38,7 @@
 #include "net/disk_cache/blockfile/histogram_macros.h"
 #include "net/disk_cache/blockfile/webfonts_histogram.h"
 #include "net/disk_cache/cache_util.h"
+#include "net/disk_cache/cleanup_context.h"
 
 // Provide a BackendImpl object to macros from histogram_macros.h.
 #define CACHE_UMA_BACKEND_IMPL_OBJ this
@@ -145,9 +146,11 @@ namespace disk_cache {
 
 BackendImpl::BackendImpl(
     const base::FilePath& path,
+    CleanupContext* cleanup_context,
     const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
     net::NetLog* net_log)
-    : background_queue_(this, FallbackToInternalIfNull(cache_thread)),
+    : cleanup_context_(cleanup_context),
+      background_queue_(this, FallbackToInternalIfNull(cache_thread)),
       path_(path),
       block_files_(path),
       mask_(0),
@@ -182,7 +185,7 @@ BackendImpl::BackendImpl(
       up_ticks_(0),
       cache_type_(net::DISK_CACHE),
       uma_report_(0),
-      user_flags_(kMask),
+      user_flags_(mask_ != 0 ? kMask : 0),
       init_(false),
       restarted_(false),
       unit_test_(false),
@@ -327,6 +330,7 @@ int BackendImpl::SyncInit() {
     // Create a recurrent timer of 30 secs.
     DCHECK(background_queue_.BackgroundIsCurrentSequence());
     int timer_delay = unit_test_ ? 1000 : 30000;
+    DCHECK(background_queue_.BackgroundIsCurrentSequence());
     timer_.reset(new base::RepeatingTimer());
     timer_->Start(FROM_HERE, TimeDelta::FromMilliseconds(timer_delay), this,
                   &BackendImpl::OnStatsTimer);
@@ -338,6 +342,7 @@ int BackendImpl::SyncInit() {
 void BackendImpl::CleanupCache() {
   DCHECK(background_queue_.BackgroundIsCurrentSequence());
   Trace("Backend Cleanup");
+  DCHECK(background_queue_.BackgroundIsCurrentSequence());
   eviction_.Stop();
   timer_.reset();
 

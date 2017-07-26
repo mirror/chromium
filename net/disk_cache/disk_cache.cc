@@ -13,6 +13,7 @@
 #include "net/base/net_errors.h"
 #include "net/disk_cache/blockfile/backend_impl.h"
 #include "net/disk_cache/cache_util.h"
+#include "net/disk_cache/cleanup_context.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/disk_cache/memory/mem_backend_impl.h"
 #include "net/disk_cache/simple/simple_backend_impl.h"
@@ -33,6 +34,7 @@ class CacheCreator {
                const scoped_refptr<base::SingleThreadTaskRunner>& thread,
                net::NetLog* net_log,
                std::unique_ptr<disk_cache::Backend>* backend,
+               disk_cache::PostCleanupCallback post_cleanup_callback,
                const net::CompletionCallback& callback);
 
   // Creates the backend.
@@ -56,6 +58,7 @@ class CacheCreator {
 #endif
   scoped_refptr<base::SingleThreadTaskRunner> thread_;
   std::unique_ptr<disk_cache::Backend>* backend_;
+  disk_cache::PostCleanupCallback post_cleanup_callback_;
   net::CompletionCallback callback_;
   std::unique_ptr<disk_cache::Backend> created_cache_;
   net::NetLog* net_log_;
@@ -73,6 +76,7 @@ CacheCreator::CacheCreator(
     const scoped_refptr<base::SingleThreadTaskRunner>& thread,
     net::NetLog* net_log,
     std::unique_ptr<disk_cache::Backend>* backend,
+    disk_cache::PostCleanupCallback post_cleanup_callback,
     const net::CompletionCallback& callback)
     : path_(path),
       force_(force),
@@ -85,6 +89,7 @@ CacheCreator::CacheCreator(
 #endif
       thread_(thread),
       backend_(backend),
+      post_cleanup_callback_(std::move(post_cleanup_callback)),
       callback_(callback),
       net_log_(net_log) {
 }
@@ -97,12 +102,18 @@ int CacheCreator::Run() {
 #else
   static const bool kSimpleBackendIsDefault = false;
 #endif
+  disk_cache::CleanupContext* cleanup_context =
+      disk_cache::CleanupContext::MakeOrGetContextForPath(path_);
+  // ### yikes, this doesn't work with retry..
+  if (!post_cleanup_callback_.is_null())
+    cleanup_context->SetPostCleanupCallback(std::move(post_cleanup_callback_));
+
   if (backend_type_ == net::CACHE_BACKEND_SIMPLE ||
       (backend_type_ == net::CACHE_BACKEND_DEFAULT &&
        kSimpleBackendIsDefault)) {
     disk_cache::SimpleBackendImpl* simple_cache =
-        new disk_cache::SimpleBackendImpl(path_, max_bytes_, type_, thread_,
-                                          net_log_);
+        new disk_cache::SimpleBackendImpl(path_, cleanup_context, max_bytes_,
+                                          type_, thread_, net_log_);
     created_cache_.reset(simple_cache);
     return simple_cache->Init(
         base::Bind(&CacheCreator::OnIOComplete, base::Unretained(this)));
@@ -113,7 +124,7 @@ int CacheCreator::Run() {
   return net::ERR_FAILED;
 #else
   disk_cache::BackendImpl* new_cache =
-      new disk_cache::BackendImpl(path_, thread_, net_log_);
+      new disk_cache::BackendImpl(path_, cleanup_context, thread_, net_log_);
   created_cache_.reset(new_cache);
   new_cache->SetMaxSize(max_bytes_);
   new_cache->SetType(type_);
@@ -160,6 +171,45 @@ void CacheCreator::OnIOComplete(int result) {
 
 namespace disk_cache {
 
+int CreateCacheBackendImpl(
+    net::CacheType type,
+    net::BackendType backend_type,
+    const base::FilePath& path,
+    int max_bytes,
+    bool force,
+    const scoped_refptr<base::SingleThreadTaskRunner>& thread,
+    net::NetLog* net_log,
+    std::unique_ptr<Backend>* backend,
+    PostCleanupCallback post_cleanup_callback,
+    const net::CompletionCallback& callback) {
+  DCHECK(!callback.is_null());
+  DCHECK(post_cleanup_callback.is_null() || !force)
+      << "CreateCacheBackend: can't use force = true "
+         "with non-null post_cleanup_callback.";
+
+  if (type == net::MEMORY_CACHE) {
+    *backend = disk_cache::MemBackendImpl::CreateBackend(max_bytes, net_log);
+    return *backend ? net::OK : net::ERR_FAILED;
+  }
+  CacheCreator* creator = new CacheCreator(
+      path, force, max_bytes, type, backend_type, kNone, thread, net_log,
+      backend, std::move(post_cleanup_callback), callback);
+  // See if we have one already pending cleanup... This also doesn't work with
+  // force = true.
+  CleanupContext* previously_active = CleanupContext::GetExistingForPath(path);
+  if (!force && previously_active) {
+    if (!post_cleanup_callback.is_null())
+      LOG(DFATAL) << "post_cleanup_callback specified while there is already "
+                     "cleanup pending on dir";
+
+    previously_active->SetPostCleanupCallback(base::BindOnce(
+        base::IgnoreResult(&CacheCreator::Run), base::Unretained(creator)));
+    return net::ERR_IO_PENDING;
+  }
+
+  return creator->Run();
+}
+
 int CreateCacheBackend(
     net::CacheType type,
     net::BackendType backend_type,
@@ -170,15 +220,9 @@ int CreateCacheBackend(
     net::NetLog* net_log,
     std::unique_ptr<Backend>* backend,
     const net::CompletionCallback& callback) {
-  DCHECK(!callback.is_null());
-  if (type == net::MEMORY_CACHE) {
-    *backend = disk_cache::MemBackendImpl::CreateBackend(max_bytes, net_log);
-    return *backend ? net::OK : net::ERR_FAILED;
-  }
-  CacheCreator* creator =
-      new CacheCreator(path, force, max_bytes, type, backend_type, kNone,
-                       thread, net_log, backend, callback);
-  return creator->Run();
+  return CreateCacheBackendImpl(type, backend_type, path, max_bytes, force,
+                                thread, net_log, backend, PostCleanupCallback(),
+                                callback);
 }
 
 int CreateCacheBackend(net::CacheType type,
@@ -189,10 +233,23 @@ int CreateCacheBackend(net::CacheType type,
                        net::NetLog* net_log,
                        std::unique_ptr<Backend>* backend,
                        const net::CompletionCallback& callback) {
-  return CreateCacheBackend(
-      type, backend_type, path, max_bytes, force,
-      scoped_refptr<base::SingleThreadTaskRunner>(nullptr), net_log, backend,
-      callback);
+  return CreateCacheBackendImpl(type, backend_type, path, max_bytes, force,
+                                nullptr, net_log, backend,
+                                PostCleanupCallback(), callback);
+}
+
+int CreateCacheBackend(net::CacheType type,
+                       net::BackendType backend_type,
+                       const base::FilePath& path,
+                       int max_bytes,
+                       bool force,
+                       net::NetLog* net_log,
+                       std::unique_ptr<Backend>* backend,
+                       PostCleanupCallback post_cleanup_callback,
+                       const net::CompletionCallback& callback) {
+  return CreateCacheBackendImpl(type, backend_type, path, max_bytes, force,
+                                nullptr, net_log, backend,
+                                std::move(post_cleanup_callback), callback);
 }
 
 void FlushCacheThreadForTesting() {
