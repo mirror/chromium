@@ -627,7 +627,7 @@ public class WebappActivity extends SingleTabActivity {
 
     @VisibleForTesting
     ViewGroup getSplashScreenForTests() {
-        return mSplashController.getSplashScreenForTests();
+        return mSplashController.getSplashScreen2ForTests();
     }
 
     @VisibleForTesting

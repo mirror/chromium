@@ -85,7 +85,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
     }
 
     @VisibleForTesting
-    ViewGroup getSplashScreenForTests() {
+    ViewGroup getSplashScreen2ForTests() {
         return mSplashScreen;
     }
 
