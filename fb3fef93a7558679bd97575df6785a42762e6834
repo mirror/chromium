@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "947252d5_4953f8e7",
+        "filename": "content/browser/frame_host/mojo_frame_host_forwarder.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T20:09:25Z",
+      "side": 1,
+      "message": "I still really don\u0027t understand why we need this intermediate class, especially when the net result is that we\u0027re only intercepting a single message? Seems unnecessary -- and more maintenance burden when FrameHost changes -- to stub out the entire FrameHost interface rather than simply adding a test interface to control DCPL handling behavior on RFHI.\n\nIn the simplest case where you just want to observe the messages, you could add a RFHI::SetDidCommitProvisionalLoadCallbackForTesting interface. To support the case where you want to defer (which doesn\u0027t appear to be supported yet by this CL), you could e.g. have the callback return a bool (defer or not) and the RFHI::DCPL implementation could itself maintain a queue of deferred events.\n\nI haven\u0027t understood what you mean by \"mocking the binder\" or what that would have to do with this suggestion?",
+      "revId": "fb3fef93a7558679bd97575df6785a42762e6834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
