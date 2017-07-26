@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "faa38753_4704bff0",
+        "filename": "ui/gfx/vector_icon_util_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-07-26T22:06:29Z",
+      "side": 1,
+      "message": "That\u0027s better, thank you.",
+      "parentUuid": "e7cab542_3840f81d",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 47
+      },
+      "revId": "c27129b92b896552df6f0c0b313425d1d559eb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2173bff_2727c847",
         "filename": "ui/gfx/vector_icon_util_mac.mm",
         "patchSetId": 3
@@ -140,6 +164,30 @@
       "revId": "c27129b92b896552df6f0c0b313425d1d559eb6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3515804d_8c1c53a1",
+        "filename": "ui/gfx/vector_icon_util_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-07-26T22:06:29Z",
+      "side": 1,
+      "message": "Whoa, that\u0027s funky/interesting. I think it\u0027s OK to rasterize in Skia, I just wasn\u0027t sure how the bits ultimately made it to CoreGraphics.",
+      "parentUuid": "ba52f68c_32219c13",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "c27129b92b896552df6f0c0b313425d1d559eb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
