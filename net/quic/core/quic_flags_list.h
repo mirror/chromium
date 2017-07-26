@@ -197,3 +197,6 @@ QUIC_FLAG(bool, FLAGS_quic_enable_version_41, false)
 
 // Small optimization for QuicSentPacketManager::HandleAckForSentPackets.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_acks, false)
+
+// When true, respect configured limits on header list size.
+QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_header_list_size, false)
