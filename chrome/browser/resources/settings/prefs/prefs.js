@@ -152,6 +152,7 @@ Polymer({
 
   /** @override */
   created: function() {
+    console.log("created");
     if (!CrSettingsPrefs.deferInitialization)
       this.initialize();
   },
@@ -177,6 +178,7 @@ Polymer({
     /** @private {function(!Array<!chrome.settingsPrivate.PrefObject>)} */
     this.boundPrefsChanged_ = this.onSettingsPrivatePrefsChanged_.bind(this);
     this.settingsApi_.onPrefsChanged.addListener(this.boundPrefsChanged_);
+    console.log("intiialize");
     this.settingsApi_.getAllPrefs(
         this.onSettingsPrivatePrefsFetched_.bind(this));
   },
@@ -224,6 +226,7 @@ Polymer({
    * @private
    */
   onSettingsPrivatePrefsFetched_: function(prefs) {
+    console.log("fetched");
     this.updatePrefs_(prefs);
     CrSettingsPrefs.setInitialized();
   },
