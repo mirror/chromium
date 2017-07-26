@@ -16,6 +16,24 @@
       "revId": "39c79ce104cbaaed89534770e909bcc1ad561e0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba2537e_fb4309aa",
+        "filename": "extensions/browser/api/messaging/message_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1234715
+      },
+      "writtenOn": "2017-07-26T23:50:25Z",
+      "side": 1,
+      "message": "Done. It would be interesting if we had a type for this sort of \"ought to be always-dereferenceable\" pointer, but IDK what it would do besides DCHECK the pointer.",
+      "parentUuid": "6ee7cd54_b70a3533",
+      "revId": "39c79ce104cbaaed89534770e909bcc1ad561e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
