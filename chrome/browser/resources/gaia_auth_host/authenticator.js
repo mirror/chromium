@@ -883,19 +883,19 @@ cr.define('cr.login', function() {
 
   /**
    * The current auth flow of the hosted auth page.
-   * @type {AuthFlow}
+   * type {AuthFlow}
    */
   cr.defineProperty(Authenticator, 'authFlow');
 
   /**
    * The domain name of the current auth page.
-   * @type {string}
+   * type {string}
    */
   cr.defineProperty(Authenticator, 'authDomain');
 
   /**
    * True if the page has requested media access.
-   * @type {boolean}
+   * type {boolean}
    */
   cr.defineProperty(Authenticator, 'videoEnabled');
 

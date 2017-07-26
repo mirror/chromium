@@ -251,7 +251,7 @@ cr.define('cr.ui.table', function() {
 
   /**
    * The table associated with the header.
-   * @type {Element}
+   * type {Element}
    */
   cr.defineProperty(TableHeader, 'table');
 
