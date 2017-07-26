@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd408b65_d2e222fd",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T01:38:20Z",
+      "side": 1,
+      "message": "note I don\u0027t think this condition is necessary. That is, I think we can call SetTextColor(STATE_DISABLED, ..) unconditionally: It has no immediate effect when is_disabled is false, and when is_prominent_ is true, the value set here will always be overridden by line 265.\n\n(Having the condition suggests to me that there\u0027s some use-case that is not catered for when it is omitted, but I don\u0027t think that\u0027s the case here. If it is, there should be a comment.)",
+      "range": {
+        "startLine": 254,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 40
+      },
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b48f1ae_ce74f3a0",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T01:38:20Z",
+      "side": 1,
+      "message": "a1a19c?",
+      "range": {
+        "startLine": 288,
+        "startChar": 57,
+        "endLine": 288,
+        "endChar": 63
+      },
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8ed685_7256fee5",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T01:38:20Z",
+      "side": 1,
+      "message": "There are 4 ternary if-else clauses in this single expression, which is 3 too many.\n\nI suggested something back at https://chromium-review.googlesource.com/c/571174/3/ui%252Fviews%252Fcontrols%252Fbutton%252Fmd_text_button.cc#291\n\nlike\n\nif (is_prominent) {\n  stroke_color \u003d SK_ColorTRANSPARENT;\n} else {\n  int stroke_alpha;\n  if (state() \u003d\u003d STATE_DISABLED) {\n    // \u003cComment how these values were determined.\u003e\n    stroke_alpha \u003d UseMaterialSecondaryButtons() ? 0x40 : ??;\n  } else {\n    stroke_alpha \u003d UseMaterialSecondaryButtons() ? 0x5f : 0x4e;\n  }\n  stroke_color \u003d SkColorSetA(text_color, stroke_alpha);\n}",
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da79117a_00e06f2a",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T01:38:20Z",
+      "side": 1,
+      "message": "I\u0027ve sadly lost track of why GetResultingPaintColor is necessary - can we comment why it\u0027s used here, and why it\u0027s only necessary for STATE_DISABLED? (i.e. The comment should say what use-case is not catered for with the existing code). If the goal is to always set \"disabled at 50% alpha\", then to be consistent, I think we should be setting the alpha to 100% for the non-disabled case.\n\nE.g. after doing\n\nstroke_color \u003d SkColorSetA(text_color, stroke_alpha);\n\nwe could immediately do\n\n// Remove the alpha component so that \u003cinsert use-case\u003e is satisfied.\nstroke_color \u003d color_utils::GetResultingPaintColor(stroke_color, bg_color);\nif (state() \u003d\u003d STATE_DISABLED \u0026\u0026 !is_prominent_) {\n  // Always use 50% alpha for disabled buttons.\n  Under harmony? (i.e. why not kDisabledControlAlpha?)\n  stroke_color \u003d SkColorSetA(..)\n}",
+      "range": {
+        "startLine": 311,
+        "startChar": 21,
+        "endLine": 311,
+        "endChar": 43
+      },
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
