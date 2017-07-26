@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0386ec8b_e3547848",
+        "filename": "components/guest_view/browser/guest_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-07-26T20:31:46Z",
+      "side": 1,
+      "message": "I put this in *in case* anything calls between this function and DidAttach(), because the latter gets invoked via a callback. I didn\u0027t want to mess with moving element_instance_id_, though we can try that. Lots\u0027o side-effects floating around here ...",
+      "parentUuid": "c47a1051_4935fc0d",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "524147d7_be5bd38f",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "95bcc2f2_d5a53dc1",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5056,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-07-26T20:31:46Z",
+      "side": 1,
+      "message": "This is what was here before, so I stayed with it ... if we change it, let\u0027s do it in a different CL just to isolate the change?",
+      "parentUuid": "524147d7_be5bd38f",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e2af442_e08b5e4c",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-26T19:40:12Z",
       "side": 1,
       "message": "This doesn\u0027t seem right.\n\nSo, it looks like your change removed the BrowserPluginEmbedder that was created in BrowserPluginGuest::Init, so we should never be checking GetBrowserPluginEmbedder() \u0026\u0026 IsCrossProcessFramesGuest().\n\nLooking at the comment above, I think what we could be doing is something like:\nif (source_web_contents-\u003eGetBrowserPluginGuest()-\u003eembedder_web_contents() \u003d\u003d this \u0026\u0026 IsCrossProcessFrameGuest(source_web_contents)) { ... }.",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8171222b_462be592",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5068,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-07-26T20:31:46Z",
+      "side": 1,
+      "message": "As per our offline discussion, we restored (for now at least) the BrowserPluginEmbedder.",
+      "parentUuid": "7e2af442_e08b5e4c",
       "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
