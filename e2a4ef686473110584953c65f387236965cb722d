@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa485c5f_8f39a71f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "The message could be more descriptive.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f6770e_ef9f4cb4",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "optional opinion: 2 * 24 * 60 * 60 might be more readable\nFeel free to discard.",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70197ef_e1121685",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "/* from_pending_only */\n\nsame below",
+      "range": {
+        "startLine": 217,
+        "startChar": 39,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f388267_ae8474ad",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "A comment explaining the purpose of this method would be super useful.",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef22cb7_2432d26c",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "could this be private?",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 26
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24b4cff_fed52255",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "this should be added to the .h file",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db21e91_e68440c5",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "These features should go under \"components/safe_browsing/features*\"",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c8e8bc_cc7bcf13",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "It might be better to have this is NOT_USED and not have a default.\nThat way, if someone adds a new value to the enum, they would have to handle it otherwise the compiler would throw an error.",
+      "range": {
+        "startLine": 152,
+        "startChar": 4,
+        "endLine": 152,
+        "endChar": 11
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93cf47e_bb67a6d9",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "Do we not want to UpdateSecState for MODAL_DIALOG?",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 23
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fe672d_90bcf9c2",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "Since these values are getting dereferenced a couple lines later, these DCHECKS will get enforced there so we can skip them here.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fa2a68_fb4c4068",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "nit: Comment could be dropped.",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075a809a_0fe3e380",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "I would slightly prefer enum class",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 7
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8105a018_7b0476c1",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "Comments would be useful",
+      "range": {
+        "startLine": 177,
+        "startChar": 15,
+        "endLine": 177,
+        "endChar": 26
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ce53e6_a9500bca",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T21:57:46Z",
+      "side": 1,
+      "message": "when would it be useful to have default values for this?",
+      "range": {
+        "startLine": 180,
+        "startChar": 58,
+        "endLine": 180,
+        "endChar": 65
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
