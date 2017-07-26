@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3fa80cd_4b716f9b",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T20:56:28Z",
+      "side": 1,
+      "message": "nit: Add an empty line above.",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddfeb3e_b2331075",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T20:56:28Z",
+      "side": 1,
+      "message": "how about\n: ThreatDetails(....),\n  request_context_getter_(request_context_getter) {}",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ccf06a_aed81b7e",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T20:56:28Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291dec00_6a8ac712",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T20:56:28Z",
+      "side": 1,
+      "message": "Do you still need this comment?",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e16fe5_2fbf8031",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T20:56:28Z",
+      "side": 1,
+      "message": "an empty line between functions?",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
