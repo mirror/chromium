@@ -69,7 +69,8 @@ class InputHandlerProxy
     DID_NOT_HANDLE,
     DID_NOT_HANDLE_NON_BLOCKING_DUE_TO_FLING,
     DID_HANDLE_NON_BLOCKING,
-    DROP_EVENT
+    DROP_EVENT,
+    DID_HANDLE_MUST_BUBBLE_IF_NEEDED
   };
   using EventDispositionCallback =
       base::OnceCallback<void(EventDisposition,
