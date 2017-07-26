@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "744986f8_8cd2f6e5",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:52:39Z",
+      "side": 1,
+      "message": "Agree, the background loader does not use this delay...",
+      "parentUuid": "c2a817bc_10cce664",
+      "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "875fb4ab_969bc2c2",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "If we limit the scope to not caring about the placeholder for expanded areas on wikipedia pages, there\u0027s no difference between these two methods. The RenovationsCompleted is only used to load wikipedia placeholders. Personally I prefer Collin\u0027s solution since:\n1. It will not affect normal background loading we have for now.\n2. For wikipedia case, this approach will more likely to have a better page.\nBut TBH i don\u0027t have strong opinion on this one.",
       "parentUuid": "6928ed4a_683326e8",
+      "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d081ebd_8422dd5b",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:52:39Z",
+      "side": 1,
+      "message": "So I would understand this:\nThis is old schema for background loading:\nOnLoad-\u003edelay-\u003eSnapshot\nIt looks we need to change it to:\nOnLoad-\u003edelay-\u003eRenovaitons-\u003edelay-\u003eSnapshot\nBoth delays seem to be necessary since the OnLoad often starts actual construction of the page, and for renovations to find all the elements on the page and run reliably it is likely that we need to wait a bit. Then wait a bit after renovations, to let additional resources load etc.\n\nWhat I dont\u0027 understand is what is currently in code:\nOnLoad-\u003eRenovations-\u003erace of 2 delays-\u003eSnapshot.\n\nHappy to chat offline if needed.",
+      "parentUuid": "a0910a2e_55b31815",
       "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
