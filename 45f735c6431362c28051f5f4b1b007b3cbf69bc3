@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149b488a_64a4616e",
+        "filename": "third_party/WebKit/Source/core/css/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T06:36:15Z",
+      "side": 1,
+      "message": "also need to add the generated header file to core/BUILD.gn to avoid compile errors under certain coditions",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21aedbe3_e5cc9581",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T06:36:15Z",
+      "side": 1,
+      "message": "this case should be removed, this code will not be hit (handled above through property api)",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c0abb7_769d0dc7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T06:36:15Z",
+      "side": 1,
+      "message": "why? calc values not supported?",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c03eb5_1c37a5cf",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T06:36:15Z",
+      "side": 1,
+      "message": "why not add a ConsumeFontStretchKeyword method to the util and call that here as well as from the property api? would remove a bit of code duplication and then i think that the ConsumeFontStretch method can be moved to a private method the property api",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
