@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64f176ba_412b2142",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:26:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5944fbe3_39f096c5",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b870c38c_5ee20c49",
         "filename": "chrome/installer/zucchini/README.md",
         "patchSetId": 21
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-26T00:15:34Z",
       "side": 1,
       "message": "Not defined. Maybe briefly mention COPY, INSERT, and FIX operations in patching\"",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 35
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba06639_a1cb52aa",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:26:44Z",
+      "side": 1,
+      "message": "I think it\u0027s simpler to have a self-contained definition.",
+      "parentUuid": "b870c38c_5ee20c49",
       "range": {
         "startLine": 92,
         "startChar": 32,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "992fb6c0_e00b230d",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:26:44Z",
+      "side": 1,
+      "message": "Yeah, fixed it",
+      "parentUuid": "e3510e78_9d99d8f8",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 27
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eef00b44_8820e5dd",
         "filename": "chrome/installer/zucchini/README.md",
         "patchSetId": 21
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aab205e9_7841df9a",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:26:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eef00b44_8820e5dd",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 11
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c097f04_98845107",
         "filename": "chrome/installer/zucchini/README.md",
         "patchSetId": 21
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-26T00:15:34Z",
       "side": 1,
       "message": "Fix wrapping?",
+      "range": {
+        "startLine": 174,
+        "startChar": 69,
+        "endLine": 174,
+        "endChar": 100
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480279ee_68e86bf3",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:26:44Z",
+      "side": 1,
+      "message": "Wrapping breaks table.\nhttps://github.com/google/styleguide/blob/gh-pages/docguide/style.md#character-line-limit\nSays we should try to match project character limit, but tables and urls are suspect to break the rule.",
+      "parentUuid": "1c097f04_98845107",
       "range": {
         "startLine": 174,
         "startChar": 69,
@@ -137,6 +257,30 @@
       "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35279298_4c287950",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:26:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1766e2df_492db6e5",
+      "range": {
+        "startLine": 179,
+        "startChar": 33,
+        "endLine": 179,
+        "endChar": 35
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
