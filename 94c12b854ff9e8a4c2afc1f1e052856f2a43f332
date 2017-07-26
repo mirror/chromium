@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6baba429_71d54760",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-26T15:00:22Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 47,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "94c12b854ff9e8a4c2afc1f1e052856f2a43f332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59364fb5_518256ad",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-26T15:00:22Z",
+      "side": 1,
+      "message": "Add comment about how changing |contentOffset| results in changes in the constraints of XXX",
+      "range": {
+        "startLine": 128,
+        "startChar": 10,
+        "endLine": 128,
+        "endChar": 43
+      },
+      "revId": "94c12b854ff9e8a4c2afc1f1e052856f2a43f332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
