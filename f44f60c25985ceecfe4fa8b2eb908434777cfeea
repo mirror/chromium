@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4259c855_3ac4bcc7",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done. Array should never be empty based on the C++ handler code that sends the message. Have removed the checks; we need line 1582 to retrieve the first (and only) element in the array.",
+      "parentUuid": "7e8afbcb_ffcf96c1",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74e6d931_b57d66d4",
         "filename": "chrome/browser/resources/print_preview/native_layer.js",
         "patchSetId": 12
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ed001ba1_0da6900b",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dfe4757_f5c101db",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "798ed70c_5c850267",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
         "patchSetId": 12
@@ -68,6 +104,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c4579f_f1403fed",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798ed70c_5c850267",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "7946b5ae_70932411",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e2ad770_f20376c6",
+      "range": {
+        "startLine": 193,
+        "startChar": 32,
+        "endLine": 193,
+        "endChar": 34
+      },
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2b85bc0_3c0e9d68",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 12
@@ -108,6 +186,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f7113f_568ef317",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b85bc0_3c0e9d68",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "cb1f14d7_2e8aafa7",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1403caa_61578057",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54dd9cc0_4a620a8c",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
         "patchSetId": 12
@@ -142,6 +256,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173fc696_80b80df9",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54dd9cc0_4a620a8c",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "1e3f8209_e940844e",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t work - compile error - unless you take out the std::move. Changed this one and the one above.",
+      "parentUuid": "ed88f331_71b0034f",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031b9c03_05ef6c47",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
         "patchSetId": 12
@@ -176,6 +326,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2a584b_ca5961d6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031b9c03_05ef6c47",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "95c7c9d0_898bd2d0",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bffa8e3_bbf6cf1e",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c11db730_ee0d9afe",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
         "patchSetId": 12
@@ -210,6 +396,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc322a95_8e1cf729",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c11db730_ee0d9afe",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "95460a61_26ee3c43",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db90459d_8c871bec",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13082a0c_6a3b8a6d",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 12
@@ -244,6 +466,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fa8c73_42d98579",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13082a0c_6a3b8a6d",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -264,6 +504,24 @@
     },
     {
       "key": {
+        "uuid": "cd10eabf_89d9a06e",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e9cbb2_b387142d",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7877e536_52f47315",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 12
@@ -278,6 +536,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e1c0fe_75978f5e",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7877e536_52f47315",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +574,24 @@
     },
     {
       "key": {
+        "uuid": "d13f6373_cabbcc99",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "599f3c67_82ac3f14",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91d705b_2c9ac514",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 12
@@ -315,6 +609,24 @@
     },
     {
       "key": {
+        "uuid": "0f11dd5c_4c3483e2",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91d705b_2c9ac514",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5daf2d77_ff7d2633",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 12
@@ -329,6 +641,24 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b97ca35_084a6e16",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5daf2d77_ff7d2633",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -352,6 +682,30 @@
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b177e6_7a78b0ff",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-26T18:35:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392f2d5e_48a86af7",
+      "range": {
+        "startLine": 269,
+        "startChar": 70,
+        "endLine": 269,
+        "endChar": 74
+      },
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
