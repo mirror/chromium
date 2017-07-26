@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab92457_ed595b2e",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-26T07:59:02Z",
+      "side": 1,
+      "message": "I agree that this patchset is nicer. To confirm, the thing you\u0027re worried about is that in theory handleChromeDragEnter_ could happen before the setTimeout?\n\nI would expect that calling an extension API and waiting for a listener would be at least a task, but I\u0027m not sure if there are guarantees. You could try asking someone who knows more about the extensions \u003c-\u003e v8 interactions?\n\nOtherwise, one option might be to only run setTimeout in clearDragData if it was a native drag. Something like\n\n    clearDragData_: function() {\n      var nativeDrag \u003d this.internalDragElement_ !\u003d null;\n\n      this.dndChip.hide();\n      ...\n\n      var finishClearCallback \u003d (function() {\n        this.dragInfo_.clearDragData();\n        ...\n      }.bind(this));\n\n      if (nativeDrag)\n        setTimeout(finishClearCallback)\n      else\n        finishClearCallback()\n    },",
+      "revId": "85e6de2b139a0b7737548048547d9fe5164301fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
