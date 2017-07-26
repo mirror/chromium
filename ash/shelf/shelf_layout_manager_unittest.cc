@@ -312,9 +312,57 @@ class ShelfLayoutManagerTest : public AshTestBase {
     return display::Screen::GetScreen()->GetPrimaryDisplay().id();
   }
 
+  void set_is_app_list_visible(ShelfLayoutManager* layout_manager) {
+    layout_manager->is_app_list_visible_ = true;
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ShelfLayoutManagerTest);
 };
+
+// Swiping on shelf when fullscreen app list is opened should has no effect.
+TEST_F(ShelfLayoutManagerTest, SwipingOnShelfIfFullscreenAppListOpened) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      app_list::features::kEnableFullscreenAppList);
+  Shelf* shelf = GetPrimaryShelf();
+  ShelfLayoutManager* layout_manager = GetShelfLayoutManager();
+  set_is_app_list_visible(layout_manager);
+  EXPECT_EQ(SHELF_ALIGNMENT_BOTTOM, shelf->alignment());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
+  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
+
+  // Note: A window must be visible in order to hide the shelf.
+  CreateTestWidget();
+
+  ui::test::EventGenerator& generator(GetEventGenerator());
+  constexpr base::TimeDelta kTimeDelta = base::TimeDelta::FromMilliseconds(100);
+  constexpr int kNumScrollSteps = 4;
+  gfx::Point start = GetShelfWidget()->GetWindowBoundsInScreen().CenterPoint();
+
+  // Swiping down on the bottom shelf when the fullscreen app list is opened
+  // should not hide the shelf.
+  gfx::Point end = start + gfx::Vector2d(0, 120);
+  generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
+  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
+
+  // Swiping down on left side shelf when the fullscreen app list is opened
+  // should not hide the shelf.
+  shelf->SetAlignment(SHELF_ALIGNMENT_LEFT);
+  end = start + gfx::Vector2d(-120, 0);
+  generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
+  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
+
+  // Swiping down on right side shelf when the fullscreen app list is opened
+  // should not hide the shelf.
+  shelf->SetAlignment(SHELF_ALIGNMENT_RIGHT);
+  end = start + gfx::Vector2d(120, 0);
+  generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
+  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
+}
 
 TEST_F(ShelfLayoutManagerTest, SwipingUpOnShelfForFullscreenAppList) {
   // TODO: investigate failure in mash, http://crbug.com/695686.
