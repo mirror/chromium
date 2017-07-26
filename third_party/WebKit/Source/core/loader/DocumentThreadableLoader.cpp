@@ -175,6 +175,7 @@ DocumentThreadableLoader::DocumentThreadableLoader(
       loading_context_(&loading_context),
       options_(options),
       resource_loader_options_(resource_loader_options),
+      out_of_blink_cors_(RuntimeEnabledFeatures::OutOfBlinkCORSEnabled()),
       cors_flag_(false),
       suborigin_force_credentials_(false),
       security_origin_(resource_loader_options_.security_origin),
@@ -198,6 +199,13 @@ DocumentThreadableLoader::DocumentThreadableLoader(
 void DocumentThreadableLoader::Start(const ResourceRequest& request) {
   // Setting an outgoing referer is only supported in the async code path.
   DCHECK(async_ || request.HttpReferrer().IsEmpty());
+
+  // Just load the request if CORS is handled out of blink.
+  if (RuntimeEnabledFeatures::OutOfBlinkCORSEnabled()) {
+    ResourceRequest new_request(request);
+    LoadRequest(new_request, resource_loader_options_);
+    return;
+  }
 
   bool cors_enabled = IsCORSEnabledRequestMode(request.GetFetchRequestMode());
 
@@ -342,6 +350,8 @@ void DocumentThreadableLoader::PrepareCrossOriginRequest(
 void DocumentThreadableLoader::LoadPreflightRequest(
     const ResourceRequest& actual_request,
     const ResourceLoaderOptions& actual_options) {
+  DCHECK(!out_of_blink_cors_);
+
   ResourceRequest preflight_request =
       CrossOriginAccessControl::CreateAccessControlPreflightRequest(
           actual_request);
@@ -588,6 +598,16 @@ bool DocumentThreadableLoader::RedirectReceived(
     return false;
   }
 
+  // Skip CORS handling in blink of handled out of blink.
+  if (RuntimeEnabledFeatures::OutOfBlinkCORSEnabled()) {
+    client_->DidReceiveRedirectTo(request.Url());
+    if (client_->IsDocumentThreadableLoaderClient()) {
+      return static_cast<DocumentThreadableLoaderClient*>(client_)
+          ->WillFollowRedirect(request, redirect_response);
+    }
+    return true;
+  }
+
   // Allow same origin requests to continue after allowing clients to audit the
   // redirect.
   if (IsAllowedRedirect(request.GetFetchRequestMode(), request.Url())) {
@@ -768,6 +788,8 @@ void DocumentThreadableLoader::ResponseReceived(
 
 void DocumentThreadableLoader::HandlePreflightResponse(
     const ResourceResponse& response) {
+  DCHECK(!out_of_blink_cors_);
+
   String access_control_error_description;
 
   CrossOriginAccessControl::AccessStatus cors_status =
@@ -877,7 +899,8 @@ void DocumentThreadableLoader::HandleResponse(
     // We dispatch a CORS failure for the case.
     // TODO(yhirano): This is probably not spec conformant. Fix it after
     // https://github.com/w3c/preload/issues/100 is addressed.
-    if (request_mode != WebURLRequest::kFetchRequestModeNoCORS &&
+    if (!out_of_blink_cors_ &&
+        request_mode != WebURLRequest::kFetchRequestModeNoCORS &&
         response.ResponseTypeViaServiceWorker() ==
             mojom::FetchResponseType::kOpaque) {
       StringBuilder builder;
@@ -910,7 +933,8 @@ void DocumentThreadableLoader::HandleResponse(
              fallback_request_for_service_worker_.Url()));
   fallback_request_for_service_worker_ = ResourceRequest();
 
-  if (IsCORSEnabledRequestMode(request_mode) && cors_flag_) {
+  if (!out_of_blink_cors_ && IsCORSEnabledRequestMode(request_mode) &&
+      cors_flag_) {
     CrossOriginAccessControl::AccessStatus cors_status =
         CrossOriginAccessControl::CheckAccess(response, credentials_mode,
                                               GetSecurityOrigin());
@@ -1039,6 +1063,8 @@ void DocumentThreadableLoader::LoadActualRequest() {
 void DocumentThreadableLoader::HandlePreflightFailure(
     const KURL& url,
     const String& error_description) {
+  DCHECK(!out_of_blink_cors_);
+
   // Prevent handleSuccessfulFinish() from bypassing access check.
   actual_request_ = ResourceRequest();
 
@@ -1213,7 +1239,8 @@ void DocumentThreadableLoader::LoadRequest(
       // mode is in use. See the following issues:
       // - https://github.com/whatwg/fetch/issues/130
       // - https://github.com/whatwg/fetch/issues/169
-      allow_stored_credentials = !cors_flag_ || suborigin_force_credentials_;
+      allow_stored_credentials =
+          (!out_of_blink_cors_ && !cors_flag_) || suborigin_force_credentials_;
       break;
     case WebURLRequest::kFetchCredentialsModeInclude:
     case WebURLRequest::kFetchCredentialsModePassword:
