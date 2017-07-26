@@ -43,6 +43,14 @@ Polymer({
       }
     },
 
+    isStylusAttached_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('isStylusAttached');
+      },
+      readOnly: true,
+    },
+
     /**
      * Currently selected note taking app.
      * @private {?settings.NoteAppInfo}
