@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04846620_8d7e5c20",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-26T18:09:38Z",
+      "side": 1,
+      "message": "Do we validate browser-side that the security_origin is legit?",
+      "range": {
+        "startLine": 39,
+        "startChar": 41,
+        "endLine": 39,
+        "endChar": 74
+      },
+      "revId": "c85add6af5b31e852bfa32a5e663f1750c1e31a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
