@@ -32,7 +32,9 @@ const char kBubbleReshowsHistogramName[] =
 MouseLockController::MouseLockController(ExclusiveAccessManager* manager)
     : ExclusiveAccessControllerBase(manager),
       mouse_lock_state_(MOUSELOCK_UNLOCKED),
-      fake_mouse_lock_for_test_(false) {}
+      fake_mouse_lock_for_test_(false),
+      bubble_hide_callback_for_test_(),
+      weak_ptr_factory_(this) {}
 
 MouseLockController::~MouseLockController() {
 }
@@ -77,7 +79,11 @@ void MouseLockController::RequestToLockMouse(WebContents* web_contents,
     SetTabWithExclusiveAccess(nullptr);
     mouse_lock_state_ = MOUSELOCK_UNLOCKED;
   }
-  exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent();
+
+  exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent(
+      base::BindOnce(
+          &MouseLockController::DidMouseLockExclusiveAccessBubbleHide,
+          weak_ptr_factory_.GetWeakPtr(), web_contents));
 }
 
 void MouseLockController::ExitExclusiveAccessIfNecessary() {
@@ -90,7 +96,8 @@ void MouseLockController::NotifyTabExclusiveAccessLost() {
     UnlockMouse();
     SetTabWithExclusiveAccess(nullptr);
     mouse_lock_state_ = MOUSELOCK_UNLOCKED;
-    exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent();
+    exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent(
+        ExclusiveAccessBubbleHideCallback());
   }
 }
 
@@ -117,7 +124,8 @@ void MouseLockController::LostMouseLock() {
   mouse_lock_state_ = MOUSELOCK_UNLOCKED;
   SetTabWithExclusiveAccess(nullptr);
   NotifyMouseLockChange();
-  exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent();
+  exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent(
+      ExclusiveAccessBubbleHideCallback());
 }
 
 void MouseLockController::NotifyMouseLockChange() {
@@ -150,4 +158,12 @@ void MouseLockController::UnlockMouse() {
 
   if (mouse_lock_view)
     mouse_lock_view->UnlockMouse();
+}
+
+void MouseLockController::DidMouseLockExclusiveAccessBubbleHide(
+    WebContents*,
+    ExclusiveAccessBubbleHideReason reason) {
+  if (bubble_hide_callback_for_test_)
+    bubble_hide_callback_for_test_.Run(reason);
+  // TODO(chongz): Add silent mouse logic.
 }
