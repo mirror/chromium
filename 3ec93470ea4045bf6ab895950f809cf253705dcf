@@ -45,6 +45,29 @@
       "revId": "3ec93470ea4045bf6ab895950f809cf253705dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50008dc_45e7107e",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T16:25:53Z",
+      "side": 1,
+      "message": "Update this comment and that on 1244.",
+      "range": {
+        "startLine": 1221,
+        "startChar": 10,
+        "endLine": 1221,
+        "endChar": 29
+      },
+      "revId": "3ec93470ea4045bf6ab895950f809cf253705dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
