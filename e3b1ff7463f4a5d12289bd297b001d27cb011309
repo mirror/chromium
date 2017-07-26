@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dcbe073_8158f0ec",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T16:09:18Z",
+      "side": 1,
+      "message": "Nit: let\u0027s drop the bug URL b/c it\u0027s available if someone does a blame on the code.",
+      "range": {
+        "startLine": 30,
+        "startChar": 36,
+        "endLine": 30,
+        "endChar": 61
+      },
+      "revId": "e3b1ff7463f4a5d12289bd297b001d27cb011309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
