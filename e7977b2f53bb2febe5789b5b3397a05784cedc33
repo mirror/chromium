@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3baef22_dc8552d1",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-07-26T05:09:22Z",
+      "side": 1,
+      "message": "Would it be safer to create new AXTreeSourceArc every time? Destructor of AXTreeSourceArc will call DispatchTreeDestroyedEvent.\n\noptional: This shouldn\u0027t happen if events are fired properly. How about to add DLOG here with the package name as we can notice those cases?",
+      "range": {
+        "startLine": 235,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 41
+      },
+      "revId": "e7977b2f53bb2febe5789b5b3397a05784cedc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
