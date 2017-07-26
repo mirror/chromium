@@ -205,9 +205,17 @@ class TaskSchedulerImplTest
          {kMaxNumForegroundBlockingThreads, kSuggestedReclaimTime}});
   }
 
-  void TearDown() override { scheduler_.JoinForTesting(); }
+  void TearDown() override {
+    if (!did_shutdown_in_test_body_) {
+      scheduler_.FlushForTesting();
+      scheduler_.Shutdown();
+    }
+    scheduler_.JoinForTesting();
+  }
 
   TaskSchedulerImpl scheduler_;
+
+  bool did_shutdown_in_test_body_ = false;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TaskSchedulerImplTest);
@@ -463,6 +471,7 @@ TEST_F(TaskSchedulerImplTest, DelayedTasksNotRunAfterShutdown) {
                                        BindOnce([]() { ADD_FAILURE(); }),
                                        TestTimeouts::tiny_timeout());
   scheduler_.Shutdown();
+  did_shutdown_in_test_body_ = true;
   PlatformThread::Sleep(TestTimeouts::tiny_timeout() * 2);
 }
 
