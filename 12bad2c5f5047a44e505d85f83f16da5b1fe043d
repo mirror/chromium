@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e213777c_72c274cc",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-26T21:50:04Z",
+      "side": 0,
+      "message": "you may remove shadow_underlay_in_surface_ path, but pleas keep the other path as it\u0027s still used by MNC ARC++. I *THINK* we can remove on 62, but this CL needs to be merge back to 61, so let\u0027s keep it in this CL.",
+      "revId": "12bad2c5f5047a44e505d85f83f16da5b1fe043d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
