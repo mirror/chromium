@@ -39,7 +39,6 @@ struct ExpectedFrameBytes {
   size_t uncached_kb;
 };
 
-enum class AdType { GOOGLE = 0, SUBRESOURCE_FILTER = 1, ALL = 2 };
 enum class ResourceCached { NOT_CACHED, CACHED };
 enum class FrameType { AD = 0, NON_AD };
 
@@ -122,20 +121,23 @@ class DelayWillProcessResponseObserver : public content::WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(DelayWillProcessResponseObserver);
 };
 
-std::string AdTypeToString(AdType ad_type) {
+std::string AdTypeToString(AdsPageLoadMetricsObserver::AdType ad_type) {
   switch (ad_type) {
-    case AdType::GOOGLE:
+    case AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE:
       return "Google";
-    case AdType::SUBRESOURCE_FILTER:
+    case AdsPageLoadMetricsObserver::AD_TYPE_SUBRESOURCE_FILTER:
       return "SubresourceFilter";
-    case AdType::ALL:
+    case AdsPageLoadMetricsObserver::AD_TYPE_ALL:
       return "All";
+    case AdsPageLoadMetricsObserver::AD_TYPE_OTHER:
+      return "Other";
   }
   ADD_FAILURE();
   return "";
 }
 
-std::string TypedHistogram(const std::string& suffix, AdType ad_type) {
+std::string TypedHistogram(const std::string& suffix,
+                           AdsPageLoadMetricsObserver::AdType ad_type) {
   return base::StringPrintf("PageLoad.Clients.Ads.%s.%s",
                             AdTypeToString(ad_type).c_str(), suffix.c_str());
 }
@@ -147,7 +149,7 @@ void TestHistograms(const base::HistogramTester& histograms,
                     const std::vector<ExpectedFrameBytes>& google_ad_frames,
                     size_t non_ad_cached_kb,
                     size_t non_ad_uncached_kb,
-                    AdType ad_type) {
+                    AdsPageLoadMetricsObserver::AdType ad_type) {
   size_t total_ad_cached_kb = 0;
   size_t total_ad_uncached_kb = 0;
   size_t total_ad_kb = 0;
@@ -350,7 +352,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithNoAds) {
 
   TestHistograms(histogram_tester(), std::vector<ExpectedFrameBytes>(),
                  0 /* non_ad_cached_kb */, 30 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
 
   // Verify that other UMA wasn't written.
   histogram_tester().ExpectTotalCount(
@@ -379,10 +381,11 @@ TEST_F(AdsPageLoadMetricsObserverTest, ResourceBeforeAdFrameCommits) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 10}}, 0 /* non_ad_cached_kb */,
-                 10 /*non_ad_uncached_kb*/, AdType::GOOGLE);
+                 10 /*non_ad_uncached_kb*/,
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
 }
 
-TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
+TEST_F(AdsPageLoadMetricsObserverTest, MultipleAdTypesInPage) {
   RenderFrameHost* main_frame = NavigateMainFrame(kNonAdUrl);
   RenderFrameHost* non_ad_frame =
       CreateAndNavigateSubFrame(kNonAdUrl, kNonAdName, main_frame);
@@ -428,13 +431,46 @@ TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
 
   TestHistograms(histogram_tester(), {{10, 0}, {0, 10}},
                  30 /* non_ad_cached_kb */, 30 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
   TestHistograms(histogram_tester(), {{0, 10}, {10, 10}},
                  30 /* non_ad_cached_kb */, 20 /* non_ad_uncached_kb */,
-                 AdType::SUBRESOURCE_FILTER);
+                 AdsPageLoadMetricsObserver::AD_TYPE_SUBRESOURCE_FILTER);
   TestHistograms(histogram_tester(), {{10, 0}, {0, 10}, {0, 10}, {10, 10}},
                  20 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
-                 AdType::ALL);
+                 AdsPageLoadMetricsObserver::AD_TYPE_ALL);
+  histogram_tester().ExpectBucketCount(
+      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
+  histogram_tester().ExpectTotalCount(
+      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound", 0);
+}
+
+TEST_F(AdsPageLoadMetricsObserverTest, OtherAdTypesInPage) {
+  RenderFrameHost* main_frame = NavigateMainFrame(kNonAdUrl);
+
+  RenderFrameHost* ym_frame = CreateAndNavigateSubFrame(
+      "http://ad.yieldmanager.com/", kNonAdName, main_frame);
+  RenderFrameHost* adex_frame = CreateAndNavigateSubFrame(
+      "http://cdn1.adexprt.com/", kNonAdName, main_frame);
+  RenderFrameHost* adex_frame2 = CreateAndNavigateSubFrame(
+      "http://cdn2.adexprt.com/", kNonAdName, main_frame);
+  RenderFrameHost* adex_frame3 = CreateAndNavigateSubFrame(
+      "http://cdn3.adexprt.com/", kNonAdName, main_frame);
+
+  LoadResource(main_frame, ResourceCached::NOT_CACHED, 10);
+  LoadResource(ym_frame, ResourceCached::CACHED, 10);
+  LoadResource(adex_frame, ResourceCached::CACHED, 10);
+  LoadResource(adex_frame2, ResourceCached::CACHED, 10);
+  LoadResource(adex_frame3, ResourceCached::CACHED, 10);
+
+  // Navigate again to trigger histograms.
+  NavigateFrame(kNonAdUrl, main_frame);
+
+  TestHistograms(histogram_tester(), {{10, 0}, {10, 0}, {10, 0}, {10, 0}},
+                 0 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
+                 AdsPageLoadMetricsObserver::AD_TYPE_OTHER);
+  TestHistograms(histogram_tester(), {{10, 0}, {10, 0}, {10, 0}, {10, 0}},
+                 0 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
+                 AdsPageLoadMetricsObserver::AD_TYPE_ALL);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
@@ -497,7 +533,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithAdFrameThatRenavigates) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */,
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
@@ -533,7 +570,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithNonAdFrameThatRenavigatesToAd) {
 
   TestHistograms(histogram_tester(), {{0, 10}, {0, 10}},
                  0 /* non_ad_cached_kb */, 20 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
@@ -564,7 +601,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedNavigation) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */,
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedSecondNavigationForFrame) {
@@ -593,7 +631,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedSecondNavigationForFrame) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 20 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 20 /* non_ad_uncached_kb */,
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, TwoResourceLoadsBeforeCommit) {
@@ -628,7 +667,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, TwoResourceLoadsBeforeCommit) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */,
+                 AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectUniqueSample(

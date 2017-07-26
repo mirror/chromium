@@ -29,7 +29,8 @@ class AdsPageLoadMetricsObserver
   enum AdType {
     AD_TYPE_GOOGLE = 0,
     AD_TYPE_SUBRESOURCE_FILTER = 1,
-    AD_TYPE_ALL = 2,
+    AD_TYPE_OTHER = 2,
+    AD_TYPE_ALL = 3,
     AD_TYPE_MAX = AD_TYPE_ALL
   };
 
