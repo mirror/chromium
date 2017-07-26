@@ -16,6 +16,24 @@
       "revId": "e6e2f572eb94e15d4db9ca00a4c11d27291ee3c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace318a6_4a8baf74",
+        "filename": "base/vlog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-26T15:28:14Z",
+      "side": 1,
+      "message": "No, operator\u003d is NoBarrier_Store() in atomics.\n\nThis isn\u0027t an increment, it\u0027s a set.",
+      "parentUuid": "74829a43_0759902c",
+      "revId": "e6e2f572eb94e15d4db9ca00a4c11d27291ee3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
