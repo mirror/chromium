@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "276ace63_65af5e2f",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-26T22:42:43Z",
+      "side": 1,
+      "message": "Maybe consider UMA_HISTOGRAM_EXACT_LINEAR instead now that you have this max to be exactly 7.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 29
+      },
+      "revId": "2d7d8aa5da355c96d02781410e0485a8571dcbc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06c2413_b052c8a9",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-26T22:42:43Z",
+      "side": 1,
+      "message": "optional nit: remove this newline to avoid introducing unnecessary changes.",
+      "revId": "2d7d8aa5da355c96d02781410e0485a8571dcbc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
