@@ -78,11 +78,15 @@ HistoryTabHelper::CreateHistoryAddPageArgs(
 
   history::HistoryAddPageArgs add_page_args(
       navigation_handle->GetURL(), timestamp,
-      history::ContextIDForWebContents(web_contents()),
-      nav_entry_id, navigation_handle->GetReferrer().url,
+      history::ContextIDForWebContents(web_contents()), nav_entry_id,
+      navigation_handle->GetReferrer().url,
       navigation_handle->GetRedirectChain(),
       navigation_handle->GetPageTransition(), history::SOURCE_BROWSED,
-      navigation_handle->DidReplaceEntry(), consider_for_ntp_most_visited);
+      navigation_handle->DidReplaceEntry(),
+      navigation_handle->IsSameDocument()
+          ? base::Optional<GURL>(navigation_handle->GetPreviousURL())
+          : base::nullopt,
+      consider_for_ntp_most_visited);
   if (ui::PageTransitionIsMainFrame(navigation_handle->GetPageTransition()) &&
       virtual_url != navigation_handle->GetURL()) {
     // Hack on the "virtual" URL so that it will appear in history. For some

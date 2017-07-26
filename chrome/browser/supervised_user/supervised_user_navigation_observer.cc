@@ -93,7 +93,7 @@ void SupervisedUserNavigationObserver::OnRequestBlockedInternal(
   history::HistoryAddPageArgs add_page_args(
       url, timestamp, history::ContextIDForWebContents(web_contents()), 0, url,
       history::RedirectList(), ui::PAGE_TRANSITION_BLOCKED,
-      history::SOURCE_BROWSED, false, true);
+      history::SOURCE_BROWSED, false, base::nullopt, true);
 
   // Add the entry to the history database.
   Profile* profile =

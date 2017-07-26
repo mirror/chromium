@@ -171,7 +171,8 @@ void AddToHistory(history::HistoryService* service,
                    nullptr,  // scope
                    1234,     // nav_entry_id
                    GURL(),   // referrer
-                   history::RedirectList(), transition, source, false);
+                   history::RedirectList(), transition, source, false,
+                   base::nullopt);
 }
 
 history::URLRows GetTypedUrlsFromHistoryService(

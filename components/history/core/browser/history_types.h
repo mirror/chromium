@@ -18,6 +18,7 @@
 #include "base/containers/stack_container.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted_memory.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "components/favicon_base/favicon_types.h"
@@ -366,6 +367,7 @@ struct HistoryAddPageArgs {
                      ui::PageTransition transition,
                      VisitSource source,
                      bool did_replace_entry,
+                     const base::Optional<GURL>& is_same_document_as,
                      bool consider_for_ntp_most_visited);
   HistoryAddPageArgs(const HistoryAddPageArgs& other);
   ~HistoryAddPageArgs();
@@ -379,6 +381,7 @@ struct HistoryAddPageArgs {
   ui::PageTransition transition;
   VisitSource visit_source;
   bool did_replace_entry;
+  base::Optional<GURL> is_same_document_as;
   // Specifies whether a page visit should contribute to the Most Visited tiles
   // in the New Tab Page. Note that setting this to true (most common case)
   // doesn't guarantee it's relevant for Most Visited, since other requirements
