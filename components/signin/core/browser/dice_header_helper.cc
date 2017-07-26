@@ -37,8 +37,8 @@ DiceAction GetDiceActionFromHeader(const std::string& value) {
 
 }  // namespace
 
-DiceHeaderHelper::DiceHeaderHelper(bool sync_has_auth_error)
-    : sync_has_auth_error_(sync_has_auth_error) {}
+DiceHeaderHelper::DiceHeaderHelper(bool is_signed_in, bool sync_has_auth_error)
+    : is_signed_in_(is_signed_in), sync_has_auth_error_(sync_has_auth_error) {}
 
 // static
 DiceResponseParams DiceHeaderHelper::BuildDiceSigninResponseParams(
@@ -133,8 +133,11 @@ bool DiceHeaderHelper::IsUrlEligibleForRequestHeader(const GURL& url) {
   if (!IsDiceFixAuthErrorsEnabled())
     return false;
 
-  if (!sync_has_auth_error_ && (GetAccountConsistencyMethod() ==
-                                AccountConsistencyMethod::kDiceFixAuthErrors)) {
+  // With kDiceFixAuthError, only set the request header if the user is signed
+  // in and has a sync auth error.
+  if ((!sync_has_auth_error_ || !is_signed_in_) &&
+      (GetAccountConsistencyMethod() ==
+       AccountConsistencyMethod::kDiceFixAuthErrors)) {
     return false;
   }
 
