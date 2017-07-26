@@ -13,6 +13,7 @@
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -770,6 +771,73 @@ std::string HttpUtil::GenerateAcceptLanguageHeader(
       qvalue10 -= kQvalueDecrement10;
   }
   return lang_list_with_q;
+}
+
+std::string HttpUtil::GenerateAcceptLanguageHeaderWithExpansion(
+    const std::string& raw_language_list) {
+  // We use integers for qvalue and qvalue decrement that are 10 times
+  // larger than actual values to avoid a problem with comparing
+  // two floating point numbers.
+  const unsigned int kQvalueDecrement = 2;
+  unsigned int qvalue = 10;
+
+  // We need to check for duplicates during the expansion.
+  // We check for duplicates in the entire list, even though preferences should
+  // not contain duplicates.
+  std::unordered_set<std::string> seen;
+  std::vector<std::string> languages = base::SplitString(
+      raw_language_list, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  // Data structure that holds the languages with their q value.
+  std::forward_list<std::pair<std::string, unsigned int>> language_list;
+  auto it = language_list.before_begin();
+
+  // #1: Add all the languages from the input.
+  for (const auto& language : languages) {
+    if (seen.find(language) == seen.end()) {
+      it = language_list.emplace_after(it, language, qvalue);
+      seen.insert(language);
+
+      // It does not make sense to have 'q=0'.
+      if (qvalue > kQvalueDecrement)
+        qvalue -= kQvalueDecrement;
+    }
+  }
+
+  // #2: Add the base languages expansion with the same q as the locale.
+  it = language_list.begin();
+  while (it != language_list.end()) {
+    std::vector<std::string> tokens = base::SplitString(
+        it->first, "-", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+    if (tokens.size() == 2) {
+      const std::string base = tokens[0];
+      if (seen.find(base) == seen.end()) {
+        qvalue = it->second;
+        it = language_list.emplace_after(it, base, qvalue);
+        seen.insert(base);
+      }
+    }
+    ++it;
+  }
+
+  if (language_list.empty())
+    return "";
+
+  // #3: Create the final formatted string that can be included in the headers.
+  it = language_list.begin();
+  std::string final_list_str = it->first;
+  ++it;
+  while (it != language_list.end()) {
+    if (it->second == 10) {
+      base::StringAppendF(&final_list_str, ",%s", it->first.c_str());
+    } else {
+      base::StringAppendF(&final_list_str, ",%s;q=0.%d", it->first.c_str(),
+                          it->second);
+    }
+    ++it;
+  }
+
+  return final_list_str;
 }
 
 bool HttpUtil::HasStrongValidators(HttpVersion version,

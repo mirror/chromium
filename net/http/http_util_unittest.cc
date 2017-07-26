@@ -716,6 +716,29 @@ TEST(HttpUtilTest, GenerateAcceptLanguageHeader) {
             HttpUtil::GenerateAcceptLanguageHeader("en-US,fr,de,ko,zh-CN,ja"));
 }
 
+TEST(HttpUtilTest, GenerateAcceptLanguageHeaderWithExpansion) {
+  std::string header = HttpUtil::GenerateAcceptLanguageHeaderWithExpansion("");
+  EXPECT_TRUE(header.empty());
+
+  header = HttpUtil::GenerateAcceptLanguageHeaderWithExpansion("es");
+  EXPECT_EQ(std::string("es"), header);
+
+  // Base languages generated as a result of the expansion are right after the
+  // respective locale, with same score.
+  header = HttpUtil::GenerateAcceptLanguageHeaderWithExpansion("es-AR");
+  EXPECT_EQ(std::string("es-AR,es"), header);
+
+  header =
+      HttpUtil::GenerateAcceptLanguageHeaderWithExpansion("es-AR,fr,en-US");
+  EXPECT_EQ(std::string("es-AR,es,fr;q=0.8,en-US;q=0.6,en;q=0.6"), header);
+
+  // Base languages are not added if they are already in the input string.
+  header =
+      HttpUtil::GenerateAcceptLanguageHeaderWithExpansion("es-AR,fr,es,en-US");
+  EXPECT_EQ(std::string("es-AR,fr;q=0.8,es;q=0.6,en-US;q=0.4,en;q=0.4"),
+            header);
+}
+
 // HttpResponseHeadersTest.GetMimeType also tests ParseContentType.
 TEST(HttpUtilTest, ParseContentType) {
   const struct {

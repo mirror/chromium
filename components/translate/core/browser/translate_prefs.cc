@@ -105,6 +105,9 @@ void ExpandLanguageCodes(const std::vector<std::string>& languages,
 const base::Feature kTranslateUI2016Q2{"TranslateUI2016Q2",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kImprovedLanguageSettings{
+    "ImprovedLanguageSettings", base::FEATURE_DISABLED_BY_DEFAULT};
+
 DenialTimeUpdate::DenialTimeUpdate(PrefService* prefs,
                                    const std::string& language,
                                    size_t max_denial_count)
@@ -217,7 +220,11 @@ void TranslatePrefs::BlockLanguage(const std::string& original_language) {
   if (std::find(languages.begin(), languages.end(), language) ==
       languages.end()) {
     languages.push_back(language);
-    UpdateLanguageList(languages);
+    if (base::FeatureList::IsEnabled(kImprovedLanguageSettings)) {
+      UpdateLanguageListNoExpansion(languages);
+    } else {
+      UpdateLanguageList(languages);
+    }
   }
 }
 
@@ -482,6 +489,17 @@ void TranslatePrefs::UpdateLanguageList(
   ExpandLanguageCodes(languages, &accept_languages);
   std::string accept_languages_str = base::JoinString(accept_languages, ",");
   prefs_->SetString(accept_languages_pref_, accept_languages_str);
+}
+
+void TranslatePrefs::UpdateLanguageListNoExpansion(
+    const std::vector<std::string>& languages) {
+  std::string languages_str = base::JoinString(languages, ",");
+
+#if defined(OS_CHROMEOS)
+  prefs_->SetString(preferred_languages_pref_.c_str(), languages_str);
+#endif
+
+  prefs_->SetString(accept_languages_pref_, languages_str);
 }
 
 bool TranslatePrefs::CanTranslateLanguage(

@@ -214,6 +214,14 @@ class NET_EXPORT HttpUtil {
   static std::string GenerateAcceptLanguageHeader(
       const std::string& raw_language_list);
 
+  // Same method as GenerateAcceptLanguageHeader(), except the locale expansion
+  // is performed: for each locale, the base language is added, if not already
+  // present.
+  // For example, if input is "en-AU,es-AR,en", then we will include "es" after
+  // "es-AR".
+  static std::string GenerateAcceptLanguageHeaderWithExpansion(
+      const std::string& raw_language_list);
+
   // Returns true if the parameters describe a response with a strong etag or
   // last-modified header.  See section 13.3.3 of RFC 2616.
   // An empty string should be passed for missing headers.
