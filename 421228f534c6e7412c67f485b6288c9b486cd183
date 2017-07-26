@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94cb3fb6_0c5801c6",
+        "filename": "base/i18n/file_util_icu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-26T00:08:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9978504e_3c4d12a4",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ba3136e_043ececf",
         "filename": "base/i18n/file_util_icu.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96da55d_23999879",
+        "filename": "base/i18n/file_util_icu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-26T00:08:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ba3136e_043ececf",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 126,
+        "endChar": 22
+      },
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "772465c4_96fab47c",
+        "filename": "base/i18n/file_util_icu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-26T00:08:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678517f5_413d567f",
+      "range": {
+        "startLine": 128,
+        "startChar": 3,
+        "endLine": 128,
+        "endChar": 11
+      },
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a27396_c6f0ed7a",
         "filename": "base/i18n/file_util_icu.h",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-21T19:52:30Z",
       "side": 1,
       "message": "Let\u0027s just have this one function. Given the issue described here, it\u0027s quite likely that someone adding a call site to ReplaceIllegalCharactersInPath() is doing the wrong thing.",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1b6c5f_7d630d3d",
+        "filename": "base/i18n/file_util_icu.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-26T00:08:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "59a27396_c6f0ed7a",
       "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "e07741c7_7b865e21",
+        "filename": "base/i18n/file_util_icu.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-26T00:08:13Z",
+      "side": 1,
+      "message": "Done, now use bool |is_utf8|.",
+      "parentUuid": "1d4a5bd1_d0a84d80",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65d2310e_382b8fb7",
         "filename": "net/base/filename_util_internal.cc",
         "patchSetId": 2
@@ -128,6 +230,24 @@
       "writtenOn": "2017-07-21T19:52:30Z",
       "side": 1,
       "message": "Hmm. I thought we\u0027ve moved all sanitization steps away from using \u0027-\u0027 as a replacement character. It\u0027s safer to use \u0027_\u0027, specially on Posix.\n\nImagine what would happen if there was a file named \"\u003cCR\u003erf\" which gets escaped into \"-rf\", and someone tries to remove it without thinking too hard.\n\nApplies both here and in SanitizeGeneratedFilename(). I looked at some of the call sites of ReplaceIllegalCharacters...(). Looks like we are mostly getting it right elsewhere.",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834b5815_8f075e58",
+        "filename": "net/base/filename_util_internal.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-26T00:08:13Z",
+      "side": 1,
+      "message": "Done, makes sense, other call sites all use \"_\" instead.",
+      "parentUuid": "65d2310e_382b8fb7",
       "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
