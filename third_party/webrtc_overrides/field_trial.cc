@@ -3,13 +3,19 @@
 // found in the LICENSE file.
 
 #include "base/metrics/field_trial.h"
+#include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 
-// Define webrtc::field_trial::FindFullName to provide webrtc with a field trial
-// implementation.
 namespace webrtc {
 namespace field_trial {
 std::string FindFullName(const std::string& trial_name) {
   return base::FieldTrialList::FindFullName(trial_name);
+}
+
+bool RegisterSyntheticFieldTrial(
+    const std::string& trial_name,
+    const std::string& group_name) {
+  return ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial(
+     trial_name, group_name);
 }
 }  // namespace field_trial
 }  // namespace webrtc

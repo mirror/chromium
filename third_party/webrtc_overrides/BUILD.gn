@@ -29,6 +29,7 @@ config("jingle_public_configs") {
 group("jingle_deps") {
   public_deps = [
     "//third_party/expat",
+    "//third_party/protobuf:protobuf_lite",
   ]
   deps = [
     "//base",
