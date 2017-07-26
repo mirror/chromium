@@ -16,6 +16,24 @@
       "revId": "adb2300dbe64668ea76d33ba82ecb02e21f19e6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7b2569_a31137dc",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T23:16:18Z",
+      "side": 1,
+      "message": "There is ongoing discussion at https://groups.google.com/a/google.com/d/msg/chrome-settings/aZEUgO0mUUc/lM9GtqivBAAJ (internal).\n\nSo far it seems that allowing both is prefered, which matches Google\u0027s styleguide.",
+      "parentUuid": "51396675_323d6788",
+      "revId": "adb2300dbe64668ea76d33ba82ecb02e21f19e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
