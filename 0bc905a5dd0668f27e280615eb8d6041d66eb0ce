@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34f387a_423bad41",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T05:58:55Z",
+      "side": 1,
+      "message": "nit: httpContentType -\u003e HttpContentType(), mimeType() -\u003e MimeType()",
+      "revId": "0bc905a5dd0668f27e280615eb8d6041d66eb0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cb2edc_da010349",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T05:58:55Z",
+      "side": 1,
+      "message": "nit: fetch -\u003e Fetch, notifyFinished -\u003e NotifyFinished (here and below)",
+      "revId": "0bc905a5dd0668f27e280615eb8d6041d66eb0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
