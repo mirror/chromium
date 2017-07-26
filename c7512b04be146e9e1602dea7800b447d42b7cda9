@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "910da4dd_d3fcb7ad",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-07-26T11:19:40Z",
+      "side": 1,
+      "message": "I was thinking that Android already does SW fusion when HW does not provide it. https://android.googlesource.com/platform/frameworks/native/+/fcaf6b91c359ff131cabdf275295d11271e84ce7/services/sensorservice\n\nI might be wrong though.",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 4
+      },
+      "revId": "c7512b04be146e9e1602dea7800b447d42b7cda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
