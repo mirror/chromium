@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "554a81db_dcca37f8",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-26T11:55:07Z",
+      "side": 0,
+      "message": "Can we add a dcheck to verify that code is running on an expected thread?",
+      "revId": "8bd070008643e274e0c46d9e941964ff3bcdd533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
