@@ -156,6 +156,9 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
       app_list_view_(app_list_view),
       focused_view_(FOCUS_SEARCH_BOX),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+  SetPaintToLayer();
+  layer()->SetFillsBoundsOpaquely(false);
+
   SetLayoutManager(new views::FillLayout);
   SetPreferredSize(gfx::Size(is_fullscreen_app_list_enabled_
                                  ? kPreferredWidthFullscreen
@@ -520,6 +523,23 @@ void SearchBoxView::ButtonPressed(views::Button* sender,
   } else {
     NOTREACHED();
   }
+}
+
+void SearchBoxView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {
+  float opacity = 1.0f;
+  if (!is_end_gesture) {
+    gfx::Rect search_box_bounds = this->GetBoundsInScreen();
+    float delta_y = std::max<float>(
+        (work_area_bottom - search_box_bounds.CenterPoint().y()), 0.0f);
+    opacity = std::min<float>(
+        delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize),
+        1.0f);
+  }
+
+  // Restores the opacity of searchbox to 1.0f if it is the end of the gesture
+  // dragging.
+  this->layer()->SetOpacity(opacity);
+  contents_view_->layer()->SetOpacity(opacity);
 }
 
 void SearchBoxView::UpdateModel() {
