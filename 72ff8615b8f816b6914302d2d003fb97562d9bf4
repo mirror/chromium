@@ -16,6 +16,24 @@
       "revId": "72ff8615b8f816b6914302d2d003fb97562d9bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bcb4af5_294fddb9",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-26T20:15:29Z",
+      "side": 1,
+      "message": "So I tried it like this, but it runs into trouble in the Shipping Address screen. In that context, we want to defer calling GoBack until after the spec has been updated (since we don\u0027t go back if the merchant rejects the shipping address), and SelectItem happens before kicking off the spec update.\n\nI\u0027m open to other ideas...perhaps it would be less uncomfortable adding this dependency if we added a GoBack method to the ItemList, rather than giving full access to the parent sheet?",
+      "parentUuid": "065d16a1_16d1cde4",
+      "revId": "72ff8615b8f816b6914302d2d003fb97562d9bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
