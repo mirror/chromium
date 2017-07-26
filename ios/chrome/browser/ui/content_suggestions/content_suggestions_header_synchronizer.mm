@@ -126,6 +126,8 @@ initWithCollectionController:
       animations:^{
         if (self.collectionView.contentOffset.y < pinnedOffsetY) {
           self.collectionView.contentOffset = CGPointMake(0, pinnedOffsetY);
+          // Layout the header for the constraints to be animated.
+          [self.headerController layoutHeader];
           [self.collectionView.collectionViewLayout invalidateLayout];
         }
       }
