@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2faea66e_6271b462",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T19:48:45Z",
+      "side": 1,
+      "message": "Does AccessibilityEventCallbackHelper.this.notifyCalled() not work here?",
+      "revId": "c794cee42581bcc4161c29bdbf66f27985dac9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ce843e_62f08734",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T19:48:45Z",
+      "side": 1,
+      "message": "Can we assert any more than this? Like, each rectangle has width \u0026 height \u003e 0, and each rectangle is to the right of the one before it?",
+      "revId": "c794cee42581bcc4161c29bdbf66f27985dac9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e96d2f8_baac9b14",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T19:48:45Z",
+      "side": 1,
+      "message": "Is this imitating getVirtualDescendantId()? Because the math is different in that function.",
+      "revId": "c794cee42581bcc4161c29bdbf66f27985dac9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
