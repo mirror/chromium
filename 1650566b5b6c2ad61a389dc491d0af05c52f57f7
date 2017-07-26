@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f4db0f41_61176ca5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-26T21:46:47Z",
+      "side": 1,
+      "message": "Discussed offline. I missed that this is for non-repeating use case.",
+      "parentUuid": "3ea3be1e_1b87dec9",
+      "range": {
+        "startLine": 62,
+        "startChar": 53,
+        "endLine": 62,
+        "endChar": 70
+      },
+      "revId": "1650566b5b6c2ad61a389dc491d0af05c52f57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e593b13c_14a40c4e",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 2
