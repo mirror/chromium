@@ -60,6 +60,13 @@ void AddressValidator::LoadRules(const std::string& region_code) {
   supplier_->LoadRules(region_code, *rules_loaded_);
 }
 
+std::map<std::string, const Rule*> AddressValidator::GetRulesForRegion(
+    const std::string& region_code) {
+  if (!AreRulesLoadedForRegion(region_code))
+    return std::map<std::string, const Rule*>();
+  return supplier_->GetRulesForRegion(region_code);
+}
+
 std::vector<std::pair<std::string, std::string>>
 AddressValidator::GetRegionSubKeys(const std::string& region_code,
                                    const std::string& language) {

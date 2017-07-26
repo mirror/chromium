@@ -20,6 +20,7 @@
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_validator.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/callback.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/preload_supplier.h"
+#include "third_party/libaddressinput/src/cpp/src/rule.h"
 
 namespace i18n {
 namespace addressinput {
@@ -94,6 +95,9 @@ class AddressValidator {
   // If the rules are already in progress of being loaded, it does nothing.
   // Invokes |load_rules_listener| when the loading has finished.
   virtual void LoadRules(const std::string& region_code);
+
+  std::map<std::string, const ::i18n::addressinput::Rule*> GetRulesForRegion(
+      const std::string& region_code);
 
   // Returns the list of sub-regions (recorded as sub-keys) of the region
   // (recorded as rule) indicated by |region_code|, while the device language
