@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7fb521b4_02b2eaee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-26T16:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bdabaee_544c29be",
+      "range": {
+        "startLine": 390,
+        "startChar": 68,
+        "endLine": 390,
+        "endChar": 72
+      },
+      "revId": "c40692c4a95522d51aee75d9c6e0b6059e6950ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5d53e6d_3c0cbb2e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 6
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "I also don\u0027t perceive it as a bug. It\u0027as about not changing what the user has seen when they don\u0027t expect it. Adding items to a list is included in that, even if the list was shorter than we would have liked.\nIf the last suggestion got removed then I\u0027d expect that it has been seen, so the user saw everything at some point. And if not, the new penultimate suggestion is now the last one and the user saw everything.\nMaybe we could use whether the user saw PAST the last suggestion (more item or footer?) to determine when we should not add, but that distinction mattering would be a rare enough occurrence so I wouldn\u0027t want to make changes just for that.",
       "parentUuid": "02b87587_6785efc1",
+      "range": {
+        "startLine": 461,
+        "startChar": 12,
+        "endLine": 465,
+        "endChar": 41
+      },
+      "revId": "c40692c4a95522d51aee75d9c6e0b6059e6950ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdc2a4a_07f149a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-26T16:10:32Z",
+      "side": 1,
+      "message": "ok, thanks for clarifying. Changed into a comment describing the trade-offs. Let me know if you like it.",
+      "parentUuid": "c77d24a5_9676d4ca",
       "range": {
         "startLine": 461,
         "startChar": 12,
