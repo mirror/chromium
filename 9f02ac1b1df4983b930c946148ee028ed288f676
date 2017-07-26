@@ -46,6 +46,30 @@
       "revId": "9f02ac1b1df4983b930c946148ee028ed288f676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63b707d_2e6f0110",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T23:51:03Z",
+      "side": 1,
+      "message": "lets change the bug, and include chromeeos here.",
+      "parentUuid": "f7872577_9c629d3f",
+      "range": {
+        "startLine": 1567,
+        "startChar": 0,
+        "endLine": 1567,
+        "endChar": 21
+      },
+      "revId": "9f02ac1b1df4983b930c946148ee028ed288f676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
