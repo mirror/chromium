@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf8c2a93_f59a2b6d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-26T03:50:06Z",
+      "side": 1,
+      "message": "Can we use HTTP_ORIGIN here?",
+      "range": {
+        "startLine": 13,
+        "startChar": 116,
+        "endLine": 13,
+        "endChar": 145
+      },
+      "revId": "92b91be780b05f2c5da6bc23b0fe0917ca765dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23634998_5003096c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-26T03:50:06Z",
+      "side": 1,
+      "message": "Change this too, plz",
+      "revId": "92b91be780b05f2c5da6bc23b0fe0917ca765dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
