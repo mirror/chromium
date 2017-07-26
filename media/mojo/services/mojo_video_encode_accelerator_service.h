@@ -15,6 +15,8 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
+#include "gpu/config/gpu_info.h"
+#include "media/gpu/gpu_video_encode_accelerator_factory.h"
 #include "media/mojo/interfaces/video_encode_accelerator.mojom.h"
 #include "media/mojo/services/media_mojo_export.h"
 #include "media/video/video_encode_accelerator.h"
@@ -39,6 +41,9 @@ class MEDIA_MOJO_EXPORT MojoVideoEncodeAcceleratorService
           uint32_t initial_bitrate,
           Client* client,
           const gpu::GpuPreferences& gpu_preferences)>;
+
+  static gpu::VideoEncodeAcceleratorSupportedProfiles GetSupportedProfiles(
+      const gpu::GpuPreferences& gpu_preferences);
 
   static void Create(mojom::VideoEncodeAcceleratorRequest request,
                      const CreateAndInitializeVideoEncodeAcceleratorCallback&
