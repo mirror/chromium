@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f2784df_a2772c88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T06:20:13Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "e8f89e625cc88e3d33debcbf513c6652248d8b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d6c5b7_87b32a0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T06:20:13Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "e8f89e625cc88e3d33debcbf513c6652248d8b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5341e7e0_12adbdce",
         "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.h",
         "patchSetId": 3
