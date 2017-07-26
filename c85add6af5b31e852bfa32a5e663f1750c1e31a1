@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eeec62e3_5f75e690",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-26T20:06:12Z",
+      "side": 1,
+      "message": "MediaStreamDispatcherHost still inherits BrowserMessageFilter. This method being pure virtual has to be implemented. We will eventually remove this when browser to renderer IPC messages are migrated as well.",
+      "parentUuid": "d89d14b2_fd724223",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 49
+      },
+      "revId": "c85add6af5b31e852bfa32a5e663f1750c1e31a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04846620_8d7e5c20",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 7
