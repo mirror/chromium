@@ -122,5 +122,23 @@ chrome.test.runTests([
       caught = true;
     }
     chrome.test.assertTrue(caught);
+
+    caught = false;
+    try {
+      cs.microphone.set(
+          {primaryPattern: 'http://example.com/*', setting: 'allow'});
+    } catch (e) {
+      caught = true;
+    }
+    chrome.test.assertTrue(caught);
+
+    caught = false;
+    try {
+      cs.camera.set(
+          {primaryPattern: 'http://example.com/*', setting: 'allow'});
+    } catch (e) {
+      caught = true;
+    }
+    chrome.test.assertTrue(caught);
   }
 ]);

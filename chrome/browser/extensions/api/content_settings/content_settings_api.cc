@@ -212,33 +212,12 @@ ContentSettingsContentSettingSetFunction::Run() {
           ->Get(content_type)
           ->IsSettingValid(setting));
 
-  // Some content setting types support the full set of values listed in
-  // content_settings.json only for exceptions. For the default setting,
-  // some values might not be supported.
-  // For example, camera supports [allow, ask, block] for exceptions, but only
-  // [ask, block] for the default setting.
   if (primary_pattern == ContentSettingsPattern::Wildcard() &&
-      secondary_pattern == ContentSettingsPattern::Wildcard() &&
-      !content_settings::ContentSettingsRegistry::GetInstance()
-           ->Get(content_type)
-           ->IsDefaultSettingValid(setting)) {
-    static const char kUnsupportedDefaultSettingError[] =
-        "'%s' is not supported as the default setting of %s.";
-
-    // TODO(msramek): Get the same human readable name as is presented
-    // externally in the API, i.e. chrome.contentSettings.<name>.set().
-    std::string readable_type_name;
-    if (content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC) {
-      readable_type_name = "microphone";
-    } else if (content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA) {
-      readable_type_name = "camera";
-    } else {
-      NOTREACHED() << "No human-readable type name defined for this type.";
-    }
-
-    return RespondNow(Error(base::StringPrintf(kUnsupportedDefaultSettingError,
-                                               setting_str.c_str(),
-                                               readable_type_name.c_str())));
+      secondary_pattern == ContentSettingsPattern::Wildcard()) {
+    EXTENSION_FUNCTION_VALIDATE(
+        content_settings::ContentSettingsRegistry::GetInstance()
+            ->Get(content_type)
+            ->IsDefaultSettingValid(setting));
   }
 
   ExtensionPrefsScope scope = kExtensionPrefsScopeRegular;
