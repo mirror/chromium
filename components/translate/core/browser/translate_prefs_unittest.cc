@@ -237,6 +237,48 @@ TEST_F(TranslatePrefTest, UpdateLanguageList) {
   EXPECT_EQ("en-US,en,ja,en-CA", prefs_->GetString(kAcceptLanguagesPref));
 }
 
+TEST_F(TranslatePrefTest, UpdateLanguageListNoExpansion) {
+  // Empty update.
+  std::vector<std::string> languages;
+  translate_prefs_->UpdateLanguageListNoExpansion(languages);
+  EXPECT_TRUE(prefs_->GetString(kAcceptLanguagesPref).empty());
+#if defined(OS_CHROMEOS)
+  EXPECT_TRUE(prefs_->GetString(kPreferredLanguagesPref).empty());
+#endif
+
+  // One language.
+  languages = {"en"};
+  translate_prefs_->UpdateLanguageListNoExpansion(languages);
+  EXPECT_EQ("en", prefs_->GetString(kAcceptLanguagesPref));
+#if defined(OS_CHROMEOS)
+  EXPECT_EQ("en", prefs_->GetString(kPreferredLanguagesPref));
+#endif
+
+  // More than one language.
+  languages = {"en", "ja", "it"};
+  translate_prefs_->UpdateLanguageListNoExpansion(languages);
+  EXPECT_EQ("en,ja,it", prefs_->GetString(kAcceptLanguagesPref));
+#if defined(OS_CHROMEOS)
+  EXPECT_EQ("en,ja,it", prefs_->GetString(kPreferredLanguagesPref));
+#endif
+
+  // Locales.
+  languages = {"en-US", "ja", "en-CA", "fr-CA"};
+  translate_prefs_->UpdateLanguageListNoExpansion(languages);
+  EXPECT_EQ("en-US,ja,en-CA,fr-CA", prefs_->GetString(kAcceptLanguagesPref));
+#if defined(OS_CHROMEOS)
+  EXPECT_EQ("en-US,ja,en-CA,fr-CA", prefs_->GetString(kPreferredLanguagesPref));
+#endif
+
+  // List already expanded.
+  languages = {"en-US", "en", "fr", "fr-CA"};
+  translate_prefs_->UpdateLanguageListNoExpansion(languages);
+  EXPECT_EQ("en-US,en,fr,fr-CA", prefs_->GetString(kAcceptLanguagesPref));
+#if defined(OS_CHROMEOS)
+  EXPECT_EQ("en-US,en,fr,fr-CA", prefs_->GetString(kPreferredLanguagesPref));
+#endif
+}
+
 TEST_F(TranslatePrefTest, ULPPrefs) {
   // Mock the pref.
   // Case 1: well formed ULP.

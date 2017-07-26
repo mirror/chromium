@@ -664,6 +664,12 @@ const char kImportantSitesInCbdDescription[] =
     "Include the option to whitelist important sites in the clear browsing "
     "data dialog.";
 
+const char kImprovedLanguageSettingsName[] = "Improved Language Settings";
+const char kImprovedLanguageSettingsDescription[] =
+    "Set of changes for Language Settings. The list of languages does not "
+    "automatically expand to back-off languages. The checkbox for translation "
+    "is enabled for the UI language too. These changes support the new UI.";
+
 const char kInertVisualViewportName[] = "Inert visual viewport.";
 const char kInertVisualViewportDescription[] =
     "Experiment to have all APIs reflect the layout viewport. This will make "

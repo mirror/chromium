@@ -4,9 +4,13 @@
 
 #include "chrome/browser/net/chrome_http_user_agent_settings.h"
 
+#include "base/strings/string_piece.h"
+#include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "components/translate/core/browser/translate_prefs.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/http/http_util.h"
 
@@ -14,8 +18,14 @@ ChromeHttpUserAgentSettings::ChromeHttpUserAgentSettings(PrefService* prefs) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   pref_accept_language_.Init(prefs::kAcceptLanguages, prefs);
   last_pref_accept_language_ = *pref_accept_language_;
-  last_http_accept_language_ =
-      net::HttpUtil::GenerateAcceptLanguageHeader(last_pref_accept_language_);
+  if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+    last_http_accept_language_ =
+        net::HttpUtil::GenerateAcceptLanguageHeaderWithExpansion(
+            last_pref_accept_language_);
+  } else {
+    last_http_accept_language_ =
+        net::HttpUtil::GenerateAcceptLanguageHeader(last_pref_accept_language_);
+  }
   pref_accept_language_.MoveToThread(
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::IO));
@@ -34,8 +44,14 @@ std::string ChromeHttpUserAgentSettings::GetAcceptLanguage() const {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   std::string new_pref_accept_language = *pref_accept_language_;
   if (new_pref_accept_language != last_pref_accept_language_) {
-    last_http_accept_language_ =
-        net::HttpUtil::GenerateAcceptLanguageHeader(new_pref_accept_language);
+    if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+      last_http_accept_language_ =
+          net::HttpUtil::GenerateAcceptLanguageHeaderWithExpansion(
+              new_pref_accept_language);
+    } else {
+      last_http_accept_language_ =
+          net::HttpUtil::GenerateAcceptLanguageHeader(new_pref_accept_language);
+    }
     last_pref_accept_language_ = new_pref_accept_language;
   }
   return last_http_accept_language_;

@@ -33,6 +33,7 @@
 #include "chrome/common/pref_names.h"
 #include "components/spellcheck/common/spellcheck_common.h"
 #include "components/translate/core/browser/translate_download_manager.h"
+#include "components/translate/core/browser/translate_prefs.h"
 #include "third_party/icu/source/i18n/unicode/coll.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_collator.h"
@@ -272,7 +273,11 @@ LanguageSettingsPrivateEnableLanguageFunction::Run() {
   }
 
   languages.push_back(parameters->language_code);
-  translate_prefs->UpdateLanguageList(languages);
+  if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+    translate_prefs->UpdateLanguageListNoExpansion(languages);
+  } else {
+    translate_prefs->UpdateLanguageList(languages);
+  }
 
   return RespondNow(NoArguments());
 }
@@ -306,7 +311,11 @@ LanguageSettingsPrivateDisableLanguageFunction::Run() {
   }
 
   languages.erase(it);
-  translate_prefs->UpdateLanguageList(languages);
+  if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+    translate_prefs->UpdateLanguageListNoExpansion(languages);
+  } else {
+    translate_prefs->UpdateLanguageList(languages);
+  }
 
   return RespondNow(NoArguments());
 }
