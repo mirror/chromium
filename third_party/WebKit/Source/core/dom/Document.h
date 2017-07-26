@@ -1166,7 +1166,7 @@ class CORE_EXPORT Document : public ContainerNode,
   V0CustomElementMicrotaskRunQueue* CustomElementMicrotaskRunQueue();
 
   void ClearImportsController();
-  void CreateImportsController();
+  HTMLImportsController* EnsureImportsController();
   HTMLImportsController* ImportsController() const {
     return imports_controller_;
   }
