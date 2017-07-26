@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62ce4ab_d17d5262",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T20:59:40Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED();",
+      "revId": "1ee45c87bfc36036b1558aed5bff2d236995e585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113875ff_0d13c37d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T20:59:40Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED();",
+      "revId": "1ee45c87bfc36036b1558aed5bff2d236995e585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f1e06c_d6c41300",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T20:59:40Z",
+      "side": 1,
+      "message": "Remove the semi-colon.",
+      "revId": "1ee45c87bfc36036b1558aed5bff2d236995e585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f57f5de_836afe60",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T20:59:40Z",
+      "side": 1,
+      "message": "The comments belong on the variable declarations, rather than these statements.",
+      "revId": "1ee45c87bfc36036b1558aed5bff2d236995e585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
