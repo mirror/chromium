@@ -46,6 +46,30 @@
       "revId": "c4dec76bb86e073fb9c7fb7c6a15de78ff0de729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a9eb6c_65ff3cfd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-26T05:27:14Z",
+      "side": 1,
+      "message": "It\u0027s mainly a defensive measure against future changes that may add a call to this method before onFinishedNativeInit. Right now it\u0027s safe because we\u0027re only coming in off methods that can only be called when onFinishedNativeInit has run.\n\nAn alternative is to assert mCompositorViewHolder !\u003d null if we\u0027re sure it should never be null. I would also be happy with that.",
+      "parentUuid": "43b38688_4d392d4b",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 58
+      },
+      "revId": "c4dec76bb86e073fb9c7fb7c6a15de78ff0de729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
