@@ -377,14 +377,13 @@ void MediaDrmBridge::Create(
 
   base::OnceClosure create_media_drm_cb = base::BindOnce(
       &MediaDrmBridge::CreateInternal, scheme_uuid, security_level,
-      base::Passed(&storage), create_fetcher_cb, session_message_cb,
+      std::move(storage), create_fetcher_cb, session_message_cb,
       session_closed_cb, session_keys_change_cb, session_expiration_update_cb,
-      base::Passed(&created_cb));
+      std::move(created_cb));
 
   if (IsPersistentLicenseTypeSupported(key_system) &&
       !security_origin.is_empty() && !create_storage_cb.is_null()) {
-    raw_storage->Initialize(url::Origin(security_origin), create_storage_cb,
-                            std::move(create_media_drm_cb));
+    raw_storage->Initialize(create_storage_cb, std::move(create_media_drm_cb));
   } else {
     std::move(create_media_drm_cb).Run();
   }
@@ -868,15 +867,8 @@ MediaDrmBridge::MediaDrmBridge(
       // CreateWithoutSessionSupport, which is used to reset credentials.
       !storage_->origin_id().empty();
 
-  // TODO(yucliu): Per EME spec on individualization, implementation should not
-  // expose application-specific information. Considering encode origin before
-  // passing to MediaDrm.
   ScopedJavaLocalRef<jstring> j_security_origin = ConvertUTF8ToJavaString(
       env, use_origin_isolated_storage ? storage_->origin_id() : "");
-
-  // TODO(yucliu): Use |create_storage_cb_| to create MediaDrmStorage which can
-  // be used by Java side to store/retrieve persistent data. This should only
-  // be used when |use_origin_isolated_storage| is true.
 
   // Note: OnMediaCryptoReady() could be called in this call.
   j_media_drm_.Reset(Java_MediaDrmBridge_create(
