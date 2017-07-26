@@ -22,6 +22,30 @@
       "revId": "c4dec76bb86e073fb9c7fb7c6a15de78ff0de729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b38688_4d392d4b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-26T02:10:43Z",
+      "side": 1,
+      "message": "I did that, but then I figured I cannot see it ever being executed. Why would you like to add it?",
+      "parentUuid": "9921cacf_a3f92e80",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 58
+      },
+      "revId": "c4dec76bb86e073fb9c7fb7c6a15de78ff0de729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
