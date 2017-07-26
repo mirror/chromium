@@ -1505,6 +1505,10 @@ bool PepperPluginInstanceImpl::CanCut() {
   return PP_ToBool(plugin_pdf_interface_->CanCut(pp_instance()));
 }
 
+void PepperPluginInstanceImpl::DeleteSelectedText() {
+  plugin_pdf_interface_->DeleteSelectedText(pp_instance());
+}
+
 void PepperPluginInstanceImpl::RequestSurroundingText(
     size_t desired_number_of_characters) {
   // Keep a reference on the stack. See NOTE above.

@@ -366,13 +366,21 @@ void WebPluginContainerImpl::PrintEnd() {
   web_plugin_->PrintEnd();
 }
 
-void WebPluginContainerImpl::Copy() {
+bool WebPluginContainerImpl::Copy() {
   if (!web_plugin_->HasSelection())
-    return;
+    return false;
 
   Platform::Current()->Clipboard()->WriteHTML(
       web_plugin_->SelectionAsMarkup(), WebURL(),
       web_plugin_->SelectionAsText(), false);
+
+  return true;
+}
+
+void WebPluginContainerImpl::Cut() {
+  // If copy operation is successful, then delete selected text.
+  if (Copy())
+    web_plugin_->DeleteSelectedText();
 }
 
 bool WebPluginContainerImpl::ExecuteEditCommand(const WebString& name) {
@@ -829,15 +837,24 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
     if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
             WebInputEvent::kControlKey
 #endif
-        && (web_event.windows_key_code == VKEY_C ||
-            web_event.windows_key_code == VKEY_INSERT)
-        // Only copy if there's a selection, so that we only ever do this
-        // for Pepper plugins that support copying.  Windowless NPAPI
-        // plugins will get the event as before.
+        // Only copy/cut if there's a selection, so that we only ever do
+        // this for Pepper plugins that support copying/cutting.
+        // Windowless NPAPI plugins will get the event as before.
         && web_plugin_->HasSelection()) {
-      Copy();
-      event->SetDefaultHandled();
-      return;
+
+      if (web_event.windows_key_code == VKEY_C ||
+          web_event.windows_key_code == VKEY_INSERT) {
+        Copy();
+        event->SetDefaultHandled();
+        return;
+      }
+
+      // Ask the plugin if it can cut text before calling Cut().
+      if (web_event.windows_key_code == VKEY_X && web_plugin_->CanCut()) {
+        Cut();
+        event->SetDefaultHandled();
+        return;
+      }
     }
   }
 
