@@ -144,6 +144,7 @@ source_set("common") {
     "font_list_fontconfig.cc",
     "font_list_mac.mm",
     "font_list_win.cc",
+    "frame_host_messages.h",
     "frame_message_enums.h",
     "frame_messages.h",
     "frame_owner_properties.cc",
