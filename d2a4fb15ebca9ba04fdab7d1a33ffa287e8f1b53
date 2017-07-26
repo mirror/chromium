@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "313fc419_2ad8d864",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-26T23:48:43Z",
+      "side": 1,
+      "message": "I think we might need to distinguish between the two anyway? Settings blocked due to insecure origins can\u0027t be changed but embargoed ones can. So maybe we just plumb both through even if the message will be the same? \n\nBTW I can\u0027t remember where the strings for these were decided - do you have a doc somewhere?",
+      "parentUuid": "69df424d_a199964c",
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b7177d_63bd5efa",
         "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
         "patchSetId": 2
@@ -137,6 +155,24 @@
       "side": 1,
       "message": ":) I hope it\u0027s ok that it doesn\u0027t test embargo or kill switches. I updated it to test insecure origins now though (and found a bug, which is why CalculateSiteSettingSource() is refactored).",
       "parentUuid": "41c5f912_c030b7d3",
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4858b786_9606cee4",
+        "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-26T23:48:43Z",
+      "side": 1,
+      "message": "Yeah I think that\u0027s ok for now.",
+      "parentUuid": "80a89d22_b30cf0be",
       "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
