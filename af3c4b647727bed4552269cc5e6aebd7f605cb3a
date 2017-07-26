@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae2fd973_c9768c79",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T11:44:32Z",
+      "side": 1,
+      "message": "base::BindOnce?",
+      "range": {
+        "startLine": 695,
+        "startChar": 8,
+        "endLine": 695,
+        "endChar": 19
+      },
+      "revId": "af3c4b647727bed4552269cc5e6aebd7f605cb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c886691_84af14f2",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T11:44:32Z",
+      "side": 1,
+      "message": "please remove the curly braces.",
+      "range": {
+        "startLine": 803,
+        "startChar": 51,
+        "endLine": 803,
+        "endChar": 52
+      },
+      "revId": "af3c4b647727bed4552269cc5e6aebd7f605cb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e6db5b_c4e7b774",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T11:44:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 806,
+        "startChar": 58,
+        "endLine": 806,
+        "endChar": 60
+      },
+      "revId": "af3c4b647727bed4552269cc5e6aebd7f605cb3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
