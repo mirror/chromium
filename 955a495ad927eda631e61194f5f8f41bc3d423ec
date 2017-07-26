@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a92c59ca_8673347a",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: add {} as multiple lines",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55ddf1f_5f1b1a83",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: store \"expiration time for event\" instead of current time in map to make logic below simpler. ie. s/base::TimeTicks::Now()/base::TimeTicks::Now() + expiration_delay_for_pending_key_acks_/",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8c3c2c_bc2623ce",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: add {} as multiple lines",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09901a5_575589dc",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: s/base::TimeTicks::Now()/base::TimeTicks::Now() + expiration_delay_for_pending_key_acks_/",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4196ef8e_1c3f049f",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be \"if (pending_key_acks_.empty())\" ?",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9775ee_b1e1d367",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: avoid calling base::TimeTicks::Now() multiple times in this function by moving this above the loop as:\n\nbase::TimeTicks current_time \u003d base::TimeTicks::Now();",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c443514_eda73b0e",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: move to top of function and DCHECK(process_expired_pending_key_acks_pending_) above it",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10b3f15_9307b439",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: delay_until_next_process_expired_pending_key_acks",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b214d2d1_cce98771",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: s/base::TimeTicks::Now()/current_time/",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f758c16e_12e51aa4",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: DCHECK(!process_expired_pending_key_acks_pending_) above this",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05503f07_02670db5",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: \"as they have not been acknowledged.\"",
+      "range": {
+        "startLine": 75,
+        "startChar": 62,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90545034_cf63ec24",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: Indicates",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b3f647_94dcb026",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: using KeyStateChange \u003d std::pair\u003cui::KeyEvent, base::TimeTicks\u003e;",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef63300_80347490",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T16:22:33Z",
+      "side": 1,
+      "message": "nit: Indicates",
+      "revId": "955a495ad927eda631e61194f5f8f41bc3d423ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
