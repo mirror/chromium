@@ -152,8 +152,10 @@ class ChromeDownloadManagerDelegate
       uint32_t download_id,
       const base::Closure& user_complete_callback);
 
+  // Set the next download id, and run all cached id callbacks.
   void SetNextId(uint32_t id);
 
+  // Run the |callback| with next id. Results in the download being started.
   void ReturnNextId(const content::DownloadIdCallback& callback);
 
   void OnDownloadTargetDetermined(
@@ -169,8 +171,16 @@ class ChromeDownloadManagerDelegate
   bool ShouldBlockFile(content::DownloadDangerType danger_type) const;
 
   Profile* profile_;
+
+  // Incremented by one for each download, the first available download id is
+  // assigned from history database or 1 when history database fails to
+  // intialize.
   uint32_t next_download_id_;
+
+  // The |GetNextId| callbacks that may be cached before the history database
+  // is loaded.
   IdCallbackVector id_callbacks_;
+
   std::unique_ptr<DownloadPrefs> download_prefs_;
 
   // SequencedTaskRunner to check for file existence. A sequence is used so that
