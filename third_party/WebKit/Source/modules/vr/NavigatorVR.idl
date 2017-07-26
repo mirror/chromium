@@ -6,5 +6,6 @@
 [
     OriginTrialEnabled=WebVR
 ] partial interface Navigator {
+    readonly attribute VR vr;
     [CallWith=ScriptState] Promise getVRDisplays();
 };
