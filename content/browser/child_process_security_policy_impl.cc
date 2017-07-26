@@ -648,6 +648,10 @@ bool ChildProcessSecurityPolicyImpl::CanRequestURL(
     return false;
   }
 
+  // Can't request error pages directly.
+  if (scheme == kErrorScheme)
+    return false;
+
   // Blob and filesystem URLs require special treatment, since they embed an
   // inner origin.
   if (url.SchemeIsBlob() || url.SchemeIsFileSystem()) {
@@ -676,6 +680,10 @@ bool ChildProcessSecurityPolicyImpl::CanRedirectToURL(const GURL& url) {
     return false;  // Can't redirect to invalid URLs.
 
   const std::string& scheme = url.scheme();
+
+  // Can't redirect to error pages.
+  if (scheme == kErrorScheme)
+    return false;
 
   if (IsPseudoScheme(scheme)) {
     // Redirects to a pseudo scheme (about, javascript, view-source, ...) are

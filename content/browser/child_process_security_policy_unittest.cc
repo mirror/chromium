@@ -997,4 +997,18 @@ TEST_F(ChildProcessSecurityPolicyTest, IsolateOriginsFromCommandLine) {
       policy->IsIsolatedOrigin(url::Origin(GURL("https://c.com:8000"))));
 }
 
+// Verifies that web pages can't directly request or redirect to error page
+// URLs.
+TEST_F(ChildProcessSecurityPolicyTest, NoAccessToErrorPageURL) {
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  policy->Add(kRendererID);
+
+  EXPECT_FALSE(
+      policy->CanRequestURL(kRendererID, GURL(kUnreachableWebDataURL)));
+  EXPECT_FALSE(policy->CanRedirectToURL(GURL(kUnreachableWebDataURL)));
+  EXPECT_FALSE(policy->CanCommitURL(kRendererID, GURL(kUnreachableWebDataURL)));
+
+  policy->Remove(kRendererID);
+}
+
 }  // namespace content
