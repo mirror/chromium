@@ -17,6 +17,7 @@
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
+#include "components/offline_pages/core/prefetch/mark_operation_done_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
@@ -82,9 +83,6 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
 
   background_task_ = std::move(background_task);
 
-  // Check if there are NEW_REQUEST urls, send them to the service to
-  // start offlining. Transition state of sent urls to
-  // SENT_GENERATE_PAGE_BUNDLE.
   std::unique_ptr<Task> generate_page_bundle_task =
       base::MakeUnique<GeneratePageBundleTask>(
           service_->GetPrefetchStore(), service_->GetPrefetchGCMHandler(),
@@ -121,10 +119,9 @@ void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
   if (!IsPrefetchingOfflinePagesEnabled())
     return;
 
-  task_queue_.AddTask(base::MakeUnique<GetOperationTask>(
-      operation_name, service_->GetPrefetchNetworkRequestFactory(),
-      base::Bind(&PrefetchDispatcherImpl::DidPrefetchRequest,
-                 weak_factory_.GetWeakPtr(), "GetOperation")));
+  PrefetchStore* prefetch_store = service_->GetPrefetchStore();
+  task_queue_.AddTask(
+      base::MakeUnique<MarkOperationDoneTask>(prefetch_store, operation_name));
 }
 
 void PrefetchDispatcherImpl::DidPrefetchRequest(
