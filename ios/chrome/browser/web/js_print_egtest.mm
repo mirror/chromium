@@ -42,16 +42,13 @@
   [ChromeEarlGrey tapWebViewElementWithID:@"printButton"];
 
   // Test if print dialog appeared.
-  id<GREYMatcher> printerOption = grey_allOf(
-      grey_accessibilityLabel(@"Printer Options"),
-      grey_not(grey_accessibilityTrait(UIAccessibilityTraitHeader)), nil);
-  [[EarlGrey selectElementWithMatcher:printerOption]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Printer Options")]
       assertWithMatcher:grey_sufficientlyVisible()];
 
   // Clean up and close print dialog.
   id<GREYMatcher> cancelButton =
       grey_allOf(grey_accessibilityLabel(@"Cancel"),
-                 grey_accessibilityTrait(UIAccessibilityTraitButton), nil);
+                 grey_kindOfClass([UIButton class]), nil);
   [[EarlGrey selectElementWithMatcher:cancelButton] performAction:grey_tap()];
 }
 
