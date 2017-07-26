@@ -100,7 +100,7 @@ bool PictureLayer::Update() {
 
   recording_source_->SetBackgroundColor(SafeOpaqueBackgroundColor());
   recording_source_->SetRequiresClear(
-      !contents_opaque() &&
+      !IsContentsOpaque() &&
       !picture_layer_inputs_.client->FillsBoundsCompletely());
 
   TRACE_EVENT1("cc", "PictureLayer::Update", "source_frame_number",
@@ -257,7 +257,7 @@ bool PictureLayer::ShouldUseTransformedRasterization() const {
   // external edges, and layer opaque region can't be computed in layer space
   // due to rounding under extreme scaling. This defeats many opaque layer
   // optimization. Prefer optimization over quality for this particular case.
-  if (contents_opaque())
+  if (IsContentsOpaque())
     return false;
 
   const TransformTree& transform_tree =

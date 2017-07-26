@@ -140,7 +140,7 @@ void HeadsUpDisplayLayerImpl::AppendQuads(
                                 internal_contents_scale_);
 
   gfx::Rect quad_rect(internal_content_bounds_);
-  gfx::Rect opaque_rect(contents_opaque() ? quad_rect : gfx::Rect());
+  gfx::Rect opaque_rect(IsContentsOpaque() ? quad_rect : gfx::Rect());
   gfx::Rect visible_quad_rect(quad_rect);
   bool premultiplied_alpha = true;
   gfx::PointF uv_top_left(0.f, 0.f);

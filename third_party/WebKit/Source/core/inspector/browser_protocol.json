@@ -3475,6 +3475,7 @@
     {
         "domain": "IO",
         "description": "Input/Output operations for streams produced by DevTools.",
+        "dependencies": ["Runtime"],
         "experimental": true,
         "types": [
             {

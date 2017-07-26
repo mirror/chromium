@@ -44,6 +44,9 @@ struct CC_EXPORT DrawProperties {
   // True if the layer needs to be clipped by clip_rect.
   bool is_clipped;
 
+  // True is the layer is filled opaquely.
+  bool is_opaque;
+
   // This rect is a bounding box around what part of the layer is visible, in
   // the layer's coordinate space.
   gfx::Rect visible_layer_rect;

@@ -35,7 +35,7 @@ TEST(TextureLayerImplTest, VisibleOpaqueRegion) {
   layer->SetBlendBackgroundColor(true);
 
   // Verify initial conditions.
-  EXPECT_FALSE(layer->contents_opaque());
+  EXPECT_FALSE(layer->IsContentsOpaque());
   EXPECT_EQ(0u, layer->background_color());
   EXPECT_EQ(Region().ToString(), layer->VisibleOpaqueRegion().ToString());
 

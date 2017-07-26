@@ -83,6 +83,9 @@ class CC_EXPORT RenderSurfaceImpl {
   }
   bool is_clipped() const { return draw_properties_.is_clipped; }
 
+  void SetIsOpaque(bool is_clipped) { draw_properties_.is_opaque = is_clipped; }
+  bool is_opaque() const { return draw_properties_.is_opaque; }
+
   void SetClipRect(const gfx::Rect& clip_rect);
   gfx::Rect clip_rect() const { return draw_properties_.clip_rect; }
 
@@ -211,6 +214,9 @@ class CC_EXPORT RenderSurfaceImpl {
 
     // True if the surface needs to be clipped by clip_rect.
     bool is_clipped : 1;
+
+    // True is the surface is opaque.
+    bool is_opaque : 1;
   };
 
   DrawProperties draw_properties_;
