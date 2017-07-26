@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7755a1dc_7fdda1bb",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "402c2b66_6f93632c",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 10
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c287fd35_a80a03c9",
         "filename": "chromeos/components/tether/host_scanner_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b43affc_16a0aaa1",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c287fd35_a80a03c9",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 58
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "770b04ea_7ec7bd8b",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edb03901_fbbf2b6a",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 75
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc7d32d4_ae22012b",
         "filename": "chromeos/components/tether/host_scanner_unittest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca27c612_7164b0d6",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7d32d4_ae22012b",
+      "range": {
+        "startLine": 420,
+        "startChar": 0,
+        "endLine": 423,
+        "endChar": 43
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
