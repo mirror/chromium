@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b3d594a_5cc83522",
+        "filename": "content/public/test/render_view_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T10:06:50Z",
+      "side": 1,
+      "message": "Nit: use std::move() if passing WeakPtr by value.",
+      "range": {
+        "startLine": 124,
+        "startChar": 45,
+        "endLine": 124,
+        "endChar": 54
+      },
+      "revId": "904cd9ed2e6af0e63d1b78638102967920529912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297edd49_25af5143",
+        "filename": "content/public/test/render_view_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T10:06:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 149,
+        "startChar": 33,
+        "endLine": 149,
+        "endChar": 42
+      },
+      "revId": "904cd9ed2e6af0e63d1b78638102967920529912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea457b0_6eba9679",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T10:06:50Z",
+      "side": 1,
+      "message": "In that case, pretty much non of Blink will work. I suggest returning a mutable ref here and DCHECKing that the global is initialized.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "904cd9ed2e6af0e63d1b78638102967920529912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
