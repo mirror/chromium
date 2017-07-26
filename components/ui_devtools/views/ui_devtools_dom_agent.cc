@@ -319,10 +319,17 @@ void UIDevToolsDOMAgent::ShowDistances(int pinned_id, int element_id) {
     r1 = r2;
     r2 = temp;
   }
+  LOG(ERROR) << "r1: " << r1.ToString();
+  LOG(ERROR) << "r2: " << r2.ToString();
   if (r1.Contains(r2)) {
     show_distances_ = RectPositionsType::R1_CONTAINS_R2;
   } else if (r1.x() + r1.width() <= r2.x()) {
-    if (r1.y() <= r2.y() && r2.y() <= r1.y() + r1.height())
+    if ((r1.y() <= r2.y() && r2.y() <= r1.y() + r1.height()) ||
+        (r1.y() <= r2.y() + r2.height() &&
+         r2.y() + r2.height() <= r1.y() + r1.height()) ||
+        (r2.y() <= r1.y() && r1.y() <= r2.y() + r2.height()) ||
+        (r2.y() <= r1.y() + r1.height() &&
+         r1.y() + r1.height() <= r2.y() + r2.height()))
       show_distances_ = RectPositionsType::R1_HORIZONTAL_FULL_LEFT_R2;
     else if (r1.y() + r1.height() <= r2.y())
       show_distances_ = RectPositionsType::R1_TOP_FULL_LEFT_R2;
@@ -483,6 +490,39 @@ void UIDevToolsDOMAgent::DrawR1ContainsR2(const gfx::RectF& pinned_rectF,
                    RectSide::RIGHT_SIDE);
 }
 
+void UIDevToolsDOMAgent::DrawR1HorizontalFullLeftR2(
+    const gfx::RectF& pinned_rectF,
+    const gfx::RectF& hovered_rectF,
+    const cc::PaintFlags& flags,
+    gfx::Canvas* canvas_) {
+  float x1, y1, x2, y2;
+  LOG(ERROR) << __PRETTY_FUNCTION__;
+
+  LOG(ERROR) << "Line point 1: " << pinned_rectF.x() << ", "
+             << pinned_rectF.y() + pinned_rectF.height() / 2 << " -- Point 2: "
+             << pinned_rectF.x() + hovered_rectF.x() - pinned_rectF.x() << ", "
+             << pinned_rectF.y() + pinned_rectF.height() / 2;
+  if (is_swap_) {
+    // Horizontal left dotted line.
+    x1 = pinned_rectF.x();
+    y1 = pinned_rectF.y() + pinned_rectF.height() / 2;
+    x2 = hovered_rectF.x() + hovered_rectF.width();
+    y2 = pinned_rectF.y() + pinned_rectF.height() / 2;
+    canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+    DrawTextOnLine(gfx::Rect(x2, y2, x1 - x2, y1 - y2), canvas_,
+                   RectSide::BOTTOM_SIDE);
+  } else {
+    // Horizontal left dotted line.
+    x1 = pinned_rectF.x() + pinned_rectF.width();
+    y1 = pinned_rectF.y() + pinned_rectF.height() / 2;
+    x2 = hovered_rectF.x();
+    y2 = pinned_rectF.y() + pinned_rectF.height() / 2;
+    canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+    DrawTextOnLine(gfx::Rect(x1, y1, x2 - x1, y2 - y1), canvas_,
+                   RectSide::BOTTOM_SIDE);
+  }
+}
+
 void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
   LOG(ERROR) << __PRETTY_FUNCTION__
              << " -- show_distances_: " << show_distances_;
@@ -532,7 +572,7 @@ void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
       DrawR1ContainsR2(pinned_rectF, hovered_rectF, flags, canvas_);
       return;
     case RectPositionsType::R1_HORIZONTAL_FULL_LEFT_R2:
-      NOTIMPLEMENTED();
+      DrawR1HorizontalFullLeftR2(pinned_rectF, hovered_rectF, flags, canvas_);
       return;
     case RectPositionsType::R1_TOP_FULL_LEFT_R2:
       NOTIMPLEMENTED();
