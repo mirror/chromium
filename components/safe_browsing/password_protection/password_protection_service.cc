@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <string>
+#include <unordered_map>
 
 #include "base/base64.h"
 #include "base/bind.h"
@@ -83,12 +84,22 @@ const base::Feature kProtectedPasswordEntryPinging{
 const base::Feature kPasswordProtectionInterstitial{
     "PasswordProtectionInterstitial", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kGoogleBrandedPhishingWarning{
+    "PasswordProtectionGoogleBrandedPhishingWarning",
+    base::FEATURE_DISABLED_BY_DEFAULT};
+
 const char kPasswordOnFocusRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.PasswordFieldOnFocus";
 const char kPasswordEntryRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.ProtectedPasswordEntry";
 const char kSyncPasswordEntryRequestOutcomeHistogramName[] =
     "PasswordProtection.RequestOutcome.SyncPasswordEntry";
+const char kSyncPasswordWarningDialogHistogramName[] =
+    "PasswordProtection.ModalWarningDialogAction.SyncPasswordEntry";
+const char kSyncPasswordPageInfoHistogramName[] =
+    "PasswordProtection.PageInfoAction.SyncPasswordEntry";
+const char kSyncPasswordChromeSettingsHistogramName[] =
+    "PasswordProtection.ChromeSettingsAction.SyncPasswordEntry";
 
 PasswordProtectionService::PasswordProtectionService(
     const scoped_refptr<SafeBrowsingDatabaseManager>& database_manager,
@@ -121,6 +132,62 @@ bool PasswordProtectionService::CanGetReputationOfURL(const GURL& url) {
   const std::string hostname = url.HostNoBrackets();
   return !net::IsLocalhost(hostname) && !net::IsHostnameNonUnique(hostname) &&
          hostname.find('.') != std::string::npos;
+}
+
+void PasswordProtectionService::RecordWarningAction(WarningUIType ui_type,
+                                                    WarningAction action) {
+  switch (ui_type) {
+    case PAGE_INFO:
+      UMA_HISTOGRAM_ENUMERATION(kSyncPasswordPageInfoHistogramName, action,
+                                MAX_ACTION);
+      break;
+    case MODAL_DIALOG:
+      UMA_HISTOGRAM_ENUMERATION(kSyncPasswordWarningDialogHistogramName, action,
+                                MAX_ACTION);
+      break;
+    case CHROME_SETTINGS:
+      UMA_HISTOGRAM_ENUMERATION(kSyncPasswordChromeSettingsHistogramName,
+                                action, MAX_ACTION);
+      break;
+    default:
+      NOTREACHED();
+  }
+}
+
+void PasswordProtectionService::OnWarningDone(
+    content::WebContents* web_contents,
+    WarningUIType ui_type,
+    WarningAction action) {
+  RecordWarningAction(ui_type, action);
+  // TODO(jialiul): Need to update security state, send post-warning report and
+  // other things.
+  web_contents_to_proto_map_.erase(web_contents);
+}
+
+void PasswordProtectionService::ShowWarning(
+    content::WebContents* web_contents,
+    WarningUIType ui_type,
+    const LoginReputationClientRequest* request_proto,
+    const LoginReputationClientResponse* response_proto) {
+  RecordWarningAction(ui_type, SHOWN);
+
+  if (ui_type == MODAL_DIALOG) {
+    DCHECK(request_proto);
+    DCHECK(response_proto);
+    // Do nothing if there is already a warning showing for this WebContents.
+    if (web_contents_to_proto_map().find(web_contents) !=
+        web_contents_to_proto_map().end())
+      return;
+
+    web_contents_to_proto_map().insert(std::make_pair(
+        web_contents,
+        std::make_pair(LoginReputationClientRequest(*request_proto),
+                       LoginReputationClientResponse(*response_proto))));
+
+    // Update security state for |web_contents|.
+    UpdateSecurityState(SB_THREAT_TYPE_GOOGLE_BRANDED_PHISHING, web_contents);
+    // TODO(jialiul): instantiate modal warning dialog.
+  }
 }
 
 // We cache both types of pings under the same content settings type (
