@@ -89,7 +89,8 @@ bool PlatformSensorFusion::CheckSensorConfiguration(
 
 void PlatformSensorFusion::OnSensorReadingChanged() {
   SensorReading reading;
-  reading.timestamp = (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();
+  reading.raw.timestamp =
+      (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();
 
   std::vector<SensorReading> sensor_readings(source_sensors_.size());
   for (size_t i = 0; i < source_sensors_.size(); ++i) {
