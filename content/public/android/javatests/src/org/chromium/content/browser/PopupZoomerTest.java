@@ -43,8 +43,8 @@ public class PopupZoomerTest {
         Canvas mCanvas;
         long mPendingDraws = 0;
 
-        CustomCanvasPopupZoomer(Context context, Canvas c) {
-            super(context);
+        CustomCanvasPopupZoomer(Context context, WebContents webContents, Canvas c) {
+            super(context, webContents);
             mCanvas = c;
         }
 
@@ -75,9 +75,10 @@ public class PopupZoomerTest {
 
     }
 
-    private CustomCanvasPopupZoomer createPopupZoomerForTest(Context context) {
-        return new CustomCanvasPopupZoomer(
-                context, new Canvas(Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8)));
+    private CustomCanvasPopupZoomer createPopupZoomerForTest(
+            Context context, WebContents webContents) {
+        return new CustomCanvasPopupZoomer(context, webContents,
+                new Canvas(Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8)));
     }
 
     private void sendSingleTapTouchEventOnView(View view, float x, float y) {
@@ -102,7 +103,8 @@ public class PopupZoomerTest {
                 mContentViewCore.setImeAdapterForTest(new ImeAdapter(webContents,
                         mActivityTestRule.getContentViewCore().getContainerView(),
                         new TestInputMethodManagerWrapper(mContentViewCore)));
-                mPopupZoomer = createPopupZoomerForTest(InstrumentationRegistry.getTargetContext());
+                mPopupZoomer = createPopupZoomerForTest(
+                        InstrumentationRegistry.getTargetContext(), webContents);
                 mContentViewCore.setPopupZoomerForTest(mPopupZoomer);
             }
         });

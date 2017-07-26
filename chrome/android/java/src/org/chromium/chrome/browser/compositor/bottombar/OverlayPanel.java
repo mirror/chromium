@@ -802,12 +802,7 @@ public class OverlayPanel extends OverlayPanelAnimation implements ActivityState
      */
     protected void resizePanelContentViewCore(float width, float height) {
         if (!isShowing()) return;
-        if (getContentViewCore() != null) {
-            getOverlayPanelContent().onSizeChanged(
-                    (int) (width / mPxToDp), (int) (height / mPxToDp));
-            getOverlayPanelContent().onPhysicalBackingSizeChanged(
-                    (int) (width / mPxToDp), (int) (height / mPxToDp));
-        }
+        getOverlayPanelContent().onSizeChanged((int) (width / mPxToDp), (int) (height / mPxToDp));
     }
 
     @Override

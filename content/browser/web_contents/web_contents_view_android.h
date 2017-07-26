@@ -105,6 +105,7 @@ class WebContentsViewAndroid : public WebContentsView,
                     bool for_touch_handle) override;
   bool OnMouseEvent(const ui::MotionEventAndroid& event) override;
   bool OnDragEvent(const ui::DragEventAndroid& event) override;
+  void OnSizeChanged() override;
   void OnPhysicalBackingSizeChanged() override;
 
  private:
@@ -119,6 +120,7 @@ class WebContentsViewAndroid : public WebContentsView,
                      const gfx::Point& screen_location);
   void OnDragEnded();
 
+ private:
   // The WebContents whose contents we display.
   WebContentsImpl* web_contents_;
 

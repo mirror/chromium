@@ -22,6 +22,7 @@
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/android/interstitial_page_delegate_android.h"
 #include "content/browser/android/load_url_params.h"
+#include "content/browser/android/popup_zoomer.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/smart_selection_client.h"
 #include "content/browser/android/tracing_controller_android.h"
@@ -62,6 +63,7 @@ base::android::RegistrationMethod kContentRegisteredMethods[] = {
     {"NavigationControllerAndroid",
      content::NavigationControllerAndroid::Register},
     {"RegisterImeAdapter", content::RegisterImeAdapter},
+    {"RegisterPopupZoomer", content::RegisterPopupZoomer},
     {"RegisterSelectionPopupController",
      content::RegisterSelectionPopupController},
     {"RenderFrameHostAndroid", content::RenderFrameHostAndroid::Register},
