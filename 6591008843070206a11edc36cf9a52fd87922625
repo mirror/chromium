@@ -16,6 +16,24 @@
       "revId": "6591008843070206a11edc36cf9a52fd87922625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a149e77_5c199c97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T18:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9249d2_b0a6b425",
+      "revId": "6591008843070206a11edc36cf9a52fd87922625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
