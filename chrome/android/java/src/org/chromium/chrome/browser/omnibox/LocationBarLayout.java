@@ -2565,4 +2565,8 @@ public class LocationBarLayout extends FrameLayout
     public boolean mustQueryUrlBarLocationForSuggestions() {
         return DeviceFormFactor.isTablet();
     }
+
+    public UrlBar getUrlBar() {
+        return mUrlBar;
+    }
 }
