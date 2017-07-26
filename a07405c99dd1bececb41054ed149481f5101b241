@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42df8df0_0b7e3e81",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_accounts_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-26T14:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa8043b9_3707b443",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25aa036b_23ae953e",
         "filename": "services/identity/identity_manager.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a07405c99dd1bececb41054ed149481f5101b241",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438c41d9_163c714d",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-26T14:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25aa036b_23ae953e",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 52
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8eed0d80_890c25c2",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-26T14:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9c74087_35e7fc13",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b9560b_150c0646",
         "filename": "services/identity/public/interfaces/identity_manager.mojom",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ce3ddeab_247cad7b",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-26T14:15:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42b9560b_150c0646",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 23
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8981a7_eb312e17",
         "filename": "services/identity/public/interfaces/identity_manager.mojom",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-25T04:47:47Z",
       "side": 1,
       "message": "With the new strict, it kind of feels like this should just return Account.",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 65
+      },
+      "revId": "a07405c99dd1bececb41054ed149481f5101b241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1ec4b9_e4239236",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-26T14:15:21Z",
+      "side": 1,
+      "message": "Absolutely. I\u0027m going to switch over all these APIs to talk in terms of Account in a followup.",
+      "parentUuid": "9e8981a7_eb312e17",
       "range": {
         "startLine": 32,
         "startChar": 39,
