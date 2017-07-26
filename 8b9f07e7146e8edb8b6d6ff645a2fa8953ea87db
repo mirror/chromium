@@ -52,6 +52,24 @@
       "revId": "8b9f07e7146e8edb8b6d6ff645a2fa8953ea87db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfb63e59_b3390ad9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-26T02:42:40Z",
+      "side": 1,
+      "message": "Ah IC, thanks for explaining, seems like a fine name then. \n\nStill LGTM, maybe runs some try jobs ...",
+      "parentUuid": "9a4907e2_7c977eb0",
+      "revId": "8b9f07e7146e8edb8b6d6ff645a2fa8953ea87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
