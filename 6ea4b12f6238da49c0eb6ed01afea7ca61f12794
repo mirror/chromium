@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c4ce28cb_34bdb25e",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T00:03:13Z",
+      "side": 1,
+      "message": "Btw, I think this should be handle-\u003eGetURL()--it\u0027s not clear to me that the visible URL will already have been updated at this point.",
+      "range": {
+        "startLine": 410,
+        "startChar": 2,
+        "endLine": 410,
+        "endChar": 55
+      },
+      "revId": "6ea4b12f6238da49c0eb6ed01afea7ca61f12794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63f5a2a4_b14c2468",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 7
