@@ -23,6 +23,7 @@ class PermissionReporterBrowserTest;
 }
 
 namespace test {
+class PermissionManagerStatusSourceTest;
 class PermissionRequestManagerTestApi;
 }
 
@@ -122,8 +123,9 @@ class PermissionRequestManager
   friend class MockPermissionPromptFactory;
   friend class PermissionContextBaseTests;
   friend class PermissionRequestManagerTest;
-  friend class safe_browsing::PermissionReporterBrowserTest;
   friend class content::WebContentsUserData<PermissionRequestManager>;
+  friend class test::PermissionManagerStatusSourceTest;
+  friend class safe_browsing::PermissionReporterBrowserTest;
   FRIEND_TEST_ALL_PREFIXES(DownloadTest, TestMultipleDownloadsBubble);
 
   explicit PermissionRequestManager(content::WebContents* web_contents);

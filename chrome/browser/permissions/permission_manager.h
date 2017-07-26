@@ -23,7 +23,11 @@ class Profile;
 
 namespace content {
 enum class PermissionType;
-};  // namespace content
+}
+
+namespace test {
+class PermissionManagerTest;
+}
 
 class PermissionManager : public KeyedService,
                           public content::PermissionManager,
@@ -104,8 +108,8 @@ class PermissionManager : public KeyedService,
   bool IsPermissionKillSwitchOn(ContentSettingsType);
 
  private:
-  friend class PermissionManagerTest;
   friend class GeolocationPermissionContextTests;
+  friend class test::PermissionManagerTest;
 
   class PendingRequest;
   using PendingRequestsMap = IDMap<std::unique_ptr<PendingRequest>>;

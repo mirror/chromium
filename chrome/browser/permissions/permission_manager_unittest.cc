@@ -23,6 +23,8 @@
 using blink::mojom::PermissionStatus;
 using content::PermissionType;
 
+namespace test {
+
 namespace {
 
 int kNoPendingOperation = -1;
@@ -39,7 +41,7 @@ class PermissionManagerTestingProfile final : public TestingProfile {
   DISALLOW_COPY_AND_ASSIGN(PermissionManagerTestingProfile);
 };
 
-}  // anonymous namespace
+}  // namespace
 
 class PermissionManagerTest : public ChromeRenderViewHostTestHarness {
  public:
@@ -156,7 +158,7 @@ TEST_F(PermissionManagerTest, GetPermissionStatusAfterSet) {
 #endif
 }
 
-TEST_F(PermissionManagerTest, CheckPersmissionResultDefault) {
+TEST_F(PermissionManagerTest, CheckPermissionResultDefault) {
   CheckPermissionResult(CONTENT_SETTINGS_TYPE_MIDI_SYSEX, CONTENT_SETTING_ASK,
                         PermissionStatusSource::UNSPECIFIED);
   CheckPermissionResult(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING,
@@ -456,3 +458,49 @@ TEST_F(PermissionManagerTest, PermissionIgnoredCleanup) {
   EXPECT_FALSE(callback_called());
   EXPECT_TRUE(PendingRequestsEmpty());
 }
+
+class PermissionManagerStatusSourceTest
+    : public ChromeRenderViewHostTestHarness {
+ public:
+  PermissionManagerStatusSourceTest() {}
+
+  void SetUp() override {
+    ChromeRenderViewHostTestHarness::SetUp();
+    PermissionRequestManager::CreateForWebContents(web_contents());
+  }
+
+  PermissionManager* GetPermissionManager() {
+    return PermissionManagerFactory::GetForProfile(profile());
+  }
+
+  void NavigateToAndLoadGurl(GURL& gurl) {
+    NavigateAndCommit(gurl);
+    PermissionRequestManager::FromWebContents(web_contents())
+        ->DocumentOnLoadCompletedInMainFrame();
+  }
+};
+
+// Check PermissionResult shows requests denied due to insecure origins.
+TEST_F(PermissionManagerStatusSourceTest, InsecureOrigin) {
+  GURL insecure_frame("http://www.example.com/geolocation");
+  NavigateToAndLoadGurl(insecure_frame);
+
+  PermissionResult result = GetPermissionManager()->GetPermissionStatusForFrame(
+      CONTENT_SETTINGS_TYPE_GEOLOCATION, web_contents()->GetMainFrame(),
+      insecure_frame);
+
+  EXPECT_EQ(CONTENT_SETTING_BLOCK, result.content_setting);
+  EXPECT_EQ(PermissionStatusSource::INSECURE_ORIGIN, result.source);
+
+  GURL secure_frame("https://www.example.com/geolocation");
+  NavigateToAndLoadGurl(secure_frame);
+
+  result = GetPermissionManager()->GetPermissionStatusForFrame(
+      CONTENT_SETTINGS_TYPE_GEOLOCATION, web_contents()->GetMainFrame(),
+      secure_frame);
+
+  EXPECT_EQ(CONTENT_SETTING_ASK, result.content_setting);
+  EXPECT_EQ(PermissionStatusSource::UNSPECIFIED, result.source);
+}
+
+}  // namespace test
