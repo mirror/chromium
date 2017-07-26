@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ac19731_7d5bc3d7",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T21:50:35Z",
+      "side": 1,
+      "message": "It\u0027s better to compare GURL against GURL, e.g.\nEXPECT_EQ(GURL(url::kAboutBlankURL), ..-\u003eGetLastCommittedURL());",
+      "range": {
+        "startLine": 457,
+        "startChar": 13,
+        "endLine": 457,
+        "endChar": 24
+      },
+      "revId": "5e061d840341b261776c30001cdda1fb7d71e446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
