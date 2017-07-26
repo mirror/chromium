@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "214b82c5_4b61966c",
+        "filename": "cc/layers/render_surface_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T20:46:39Z",
+      "side": 1,
+      "message": "I think this should be SetAppendQuadRects or SetQuadRectsForTest. Expected implies that we expect the passed rects to be produced by some tested code.",
+      "revId": "8f28a39453e7b519a6ca5df88b0c7c9391699e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d5ad78_f029ef21",
+        "filename": "cc/layers/render_surface_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T20:46:39Z",
+      "side": 1,
+      "message": "nit: Can we copy or move these in?",
+      "revId": "8f28a39453e7b519a6ca5df88b0c7c9391699e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0052b5a5_07014624",
+        "filename": "cc/layers/render_surface_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T20:46:39Z",
+      "side": 1,
+      "message": "nit: const auto\u0026 to avoid copying here: https://google.github.io/styleguide/cppguide.html#auto",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 13
+      },
+      "revId": "8f28a39453e7b519a6ca5df88b0c7c9391699e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e97782_9aa3719a",
+        "filename": "cc/layers/render_surface_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T20:46:39Z",
+      "side": 1,
+      "message": "\"CreatesCorrectRenderPassDrawQuads\" doesn\u0027t really explain what we\u0027re testing. Maybe we should say SantiyCheckSurfaceDropsOccludedRenderPassDrawQuads?",
+      "range": {
+        "startLine": 243,
+        "startChar": 24,
+        "endLine": 243,
+        "endChar": 75
+      },
+      "revId": "8f28a39453e7b519a6ca5df88b0c7c9391699e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabb32d5_43af49d5",
+        "filename": "cc/layers/render_surface_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T20:46:39Z",
+      "side": 1,
+      "message": "nit: can just create an empty vector by defining the type with no construction. i.e. std::vector\u003cgfx::Rect\u003e quad_rects;",
+      "revId": "8f28a39453e7b519a6ca5df88b0c7c9391699e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ed3a12_ddd54a6a",
+        "filename": "cc/layers/render_surface_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T20:46:39Z",
+      "side": 1,
+      "message": "comment somewhere that the occluded quad (0, 0, 100, 100) should be dropped.",
+      "revId": "8f28a39453e7b519a6ca5df88b0c7c9391699e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
