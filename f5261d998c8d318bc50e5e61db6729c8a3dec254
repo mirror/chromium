@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce4cec2_ad5970d8",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-26T19:40:16Z",
+      "side": 1,
+      "message": "This breaks gn if enable_mojo_media is false, as //media/mojo/clients is only added to //content/renderer\u0027s deps when it\u0027s true: https://codesearch.chromium.org/chromium/src/content/renderer/BUILD.gn?rcl\u003d12bad2c5f5047a44e505d85f83f16da5b1fe043d\u0026l\u003d978",
+      "revId": "f5261d998c8d318bc50e5e61db6729c8a3dec254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
