@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "375443b2_1b798631",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-26T13:22:38Z",
+      "side": 1,
+      "message": "it is worth noting how the skipping will work. Will it be an extra boolean in the bundle with the new support lib or the bundle-related changes are only for benchmark?",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "1b31f8cc35d29ca8d4596c1e2b2f90633ea14c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0c24eb_4c179de1",
+        "filename": "tools/android/customtabs_benchmark/java/src/org/chromium/customtabs/test/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-26T13:22:38Z",
+      "side": 1,
+      "message": "why do we need mSkipBlah in the callback?",
+      "range": {
+        "startLine": 263,
+        "startChar": 12,
+        "endLine": 263,
+        "endChar": 33
+      },
+      "revId": "1b31f8cc35d29ca8d4596c1e2b2f90633ea14c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5e1f9d_4b750eaa",
+        "filename": "tools/android/customtabs_benchmark/java/src/org/chromium/customtabs/test/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-26T13:22:38Z",
+      "side": 1,
+      "message": "so this change is only plumbing this boolean and not providing the real skipping? Some backgroun about it would be nice to have in the commit message",
+      "range": {
+        "startLine": 408,
+        "startChar": 76,
+        "endLine": 408,
+        "endChar": 96
+      },
+      "revId": "1b31f8cc35d29ca8d4596c1e2b2f90633ea14c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc7ffdc_7a152e2d",
+        "filename": "tools/android/customtabs_benchmark/scripts/customtabs_benchmark.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-26T13:22:38Z",
+      "side": 1,
+      "message": "is this a debug print leftover or going to be useful for all invocations with once\u003d\u003dTrue?",
+      "range": {
+        "startLine": 188,
+        "startChar": 10,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "1b31f8cc35d29ca8d4596c1e2b2f90633ea14c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
