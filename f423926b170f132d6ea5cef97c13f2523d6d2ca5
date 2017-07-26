@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "49ea72c8_fe3a9de9",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T20:26:51Z",
+      "side": 1,
+      "message": "Recording the non-suffixed version in addition to the suffixed one makes sense. So for things like multiple priorities during a pending tree\u0027s life, just use the latest one to choose the bucket?",
+      "parentUuid": "b43da3e2_6331f510",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb40c32c_2f4577e5",
         "filename": "cc/scheduler/compositor_timing_history.cc",
         "patchSetId": 6
@@ -50,6 +68,24 @@
       "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4ee541_4951a4f7",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T20:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb40c32c_2f4577e5",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "089291c3_4361c221",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T20:26:51Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "856805fc_e24db188",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43397f8_c5f57f6a",
         "filename": "cc/scheduler/compositor_timing_history.cc",
         "patchSetId": 6
@@ -84,6 +138,24 @@
       "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f48c09f_4c6e9e3b",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T20:26:51Z",
+      "side": 1,
+      "message": "That should be fine. The pending tree creation doesn\u0027t involve anything for an impl-side tree. Both DidCommit and WillInvalidate will record the time before UpdateSyncTreeAfterCommitOrImplSideInvalidation which actually does some heavy lifting.\n\nAlso, InvalidateContentOnImplSide can synchronously activate the tree, so DidInvalidateOnImplSide would end up in a weird spot with those cases.",
+      "parentUuid": "e43397f8_c5f57f6a",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "d80e4d89_4bd62e83",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T20:26:51Z",
+      "side": 1,
+      "message": "I just removed this altogether. I\u0027m not sure if we really need this complexity for the multiple priority case. Let me know if you think that\u0027s better.",
+      "parentUuid": "b4d0dedf_40526756",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe04c69b_092bad5a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -115,6 +205,24 @@
       "writtenOn": "2017-07-26T19:10:15Z",
       "side": 1,
       "message": "In a way, this histogram is no longer recorded directly and we are only recording suffixed versions of it.\n\nAlexei: Is that okay? Is there a way to mark this one obsolete without marking it\u0027s suffixed versions as obsolete?",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd87e594_bd87ee3f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 90521,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T20:26:51Z",
+      "side": 1,
+      "message": "I changed it to record both the suffixed and the default version. So not obsolete anymore?",
+      "parentUuid": "fe04c69b_092bad5a",
       "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
