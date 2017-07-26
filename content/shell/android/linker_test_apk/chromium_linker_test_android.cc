@@ -8,24 +8,10 @@
 #include "content/public/app/content_jni_onload.h"
 #include "content/public/app/content_main.h"
 #include "content/public/browser/android/compositor.h"
-#include "content/shell/android/linker_test_apk/chromium_linker_test_linker_tests.h"
 #include "content/shell/android/linker_test_apk/linker_test_jni_registration.h"
-#include "content/shell/android/shell_jni_registrar.h"
 #include "content/shell/app/shell_main_delegate.h"
 
 namespace {
-
-bool RegisterJNI(JNIEnv* env) {
-  // To be called only from the UI thread.  If loading the library is done on
-  // a separate thread, this should be moved elsewhere.
-  if (!content::android::RegisterShellJni(env))
-    return false;
-
-  if (!content::RegisterLinkerTestsJni(env))
-    return false;
-
-  return true;
-}
 
 bool NativeInit() {
   if (!content::android::OnJNIOnLoadInit())
@@ -46,8 +32,7 @@ JNI_EXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
   }
   // TODO(agrieve): Delete this block, this is a no-op now.
   // https://crbug.com/683256.
-  if (!content::android::OnJNIOnLoadRegisterJNI(env) || !RegisterJNI(env) ||
-      !NativeInit()) {
+  if (!content::android::OnJNIOnLoadRegisterJNI(env) || !NativeInit()) {
     return -1;
   }
   return JNI_VERSION_1_4;
