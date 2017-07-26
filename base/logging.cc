@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <stdint.h>
 
+#include "base/atomicops.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 
@@ -97,7 +98,7 @@ const char* log_severity_name(int severity) {
   return "UNKNOWN";
 }
 
-int g_min_log_level = 0;
+base::subtle::Atomic32 g_min_log_level = 0;
 
 LoggingDestination g_logging_destination = LOG_DEFAULT;
 
@@ -409,15 +410,15 @@ bool BaseInitLoggingImpl(const LoggingSettings& settings) {
 }
 
 void SetMinLogLevel(int level) {
-  g_min_log_level = std::min(LOG_FATAL, level);
+  base::subtle::NoBarrier_Store(&g_min_log_level, std::min(LOG_FATAL, level));
 }
 
 int GetMinLogLevel() {
-  return g_min_log_level;
+  return base::subtle::NoBarrier_Load(&g_min_log_level);
 }
 
 bool ShouldCreateLogMessage(int severity) {
-  if (severity < g_min_log_level)
+  if (severity < GetMinLogLevel())
     return false;
 
   // Return true here unless we know ~LogMessage won't do anything. Note that
@@ -924,7 +925,7 @@ void CloseLogFile() {
 }
 
 void RawLog(int level, const char* message) {
-  if (level >= g_min_log_level && message) {
+  if (level >= GetMinLogLevel() && message) {
     size_t bytes_written = 0;
     const size_t message_len = strlen(message);
     int rv;
