@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f662844f_ba84f524",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T18:36:18Z",
+      "side": 1,
+      "message": "Makes sense.  Since we want to get rid of (Or at least completely rejigger) how devtools is hooked up, though, not going to bother.  If we end up keeping injection at this level, can clean up the interface then.",
+      "parentUuid": "ee35c8f8_2b1b91ee",
+      "range": {
+        "startLine": 251,
+        "startChar": 6,
+        "endLine": 251,
+        "endChar": 33
+      },
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e70883e4_c5fb1486",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 2
@@ -89,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "71fd2729_6f74b589",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T18:36:18Z",
+      "side": 1,
+      "message": "The HttpNetworkTransaction factory can be wrapped independently of using a cache.",
+      "parentUuid": "353cced2_65adb62d",
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "588ab69c_ceb631fb",
         "filename": "net/url_request/url_request_context_builder.cc",
         "patchSetId": 2
@@ -106,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "b5424ca2_164f31dd",
+        "filename": "net/url_request/url_request_context_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T18:36:18Z",
+      "side": 1,
+      "message": "Keeping as is, mostly because I think that creates some potential problems:  What if we decide Devtools should do something similar when using the NetworkService?  We create the URLRequestContextBuilder in chrome and pass it in to the NetworkService, so the inheritance option doesn\u0027t work at all in that case, for the transitional NetworkService configuration code.\n\nAlso, we\u0027ll be inheriting from the mojo subclass of URLRequestContextBuilder - and I\u0027m not the biggest fan of chained inheritance, though we certainly do use it.",
+      "parentUuid": "588ab69c_ceb631fb",
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5351fcb9_decb027d",
         "filename": "net/url_request/url_request_context_builder.h",
         "patchSetId": 2
@@ -117,6 +177,24 @@
       "writtenOn": "2017-07-26T17:58:32Z",
       "side": 1,
       "message": "Another thought, which you may disagree with: Bug link here.  This isn\u0027t because I think a bug will be more useful than a TODO to keep track of this issue, but because there\u0027s larger discussions about how to implement the devtools traffic shaping long term, which it would be good to have this TODO linked to in some fashion.  A bug that collects the discussion about how to implement devtools traffic shaping would be a way of doing that link.",
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7451b9e_a919ad76",
+        "filename": "net/url_request/url_request_context_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T18:36:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5351fcb9_decb027d",
       "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
