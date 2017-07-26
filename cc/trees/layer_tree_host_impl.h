@@ -613,6 +613,8 @@ class CC_EXPORT LayerTreeHostImpl
 
   void ClearImageCacheOnNavigation();
 
+  LayerTreeHostImplClient* client_for_testing() const { return client_; }
+
  protected:
   LayerTreeHostImpl(
       const LayerTreeSettings& settings,
