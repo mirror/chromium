@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a959382_5eed248e",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T08:39:26Z",
+      "side": 1,
+      "message": "Also stop if the timer here if job_queues_ is empty.",
+      "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fea7d1f_6474fbab",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T08:39:26Z",
+      "side": 1,
+      "message": "Sorry, I missed this in the previous patch. This means the test doesn\u0027t actually exercise the timeout timer function itself, which is a bit unfortunate.\n\nWhy not just call ServiceWorkerJobCoordinator::MaybeTimeoutJobs() after setting job-\u003estart_time_ to a value N minutes in the past?",
+      "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4a924c_7c565b71",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T08:39:26Z",
+      "side": 1,
+      "message": "It\u0027d also be nice to test that a job that *hasn\u0027t* timed out is not Aborted by the timeout timer, and to test that the timer stops after all jobs are finally removed.\n\nSomething like\n\n// Add two jobs.\n// Set job-\u003estart_time_ to 30 min in the past for one job.\n// Run MaybeTimeoutJobs\n// Check that the job was aborted/removed.\n// Check timeout timer is still running.\n// Set job-\u003estart_time_ to 30 min in the past for the other job.\n// Run MaybeTimeoutJobs\n// Check that the job was aborted/removed.\n// Check timeout timer is stopped.",
+      "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
