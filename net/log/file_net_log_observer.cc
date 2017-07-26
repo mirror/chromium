@@ -360,6 +360,8 @@ void FileNetLogObserver::OnAddEntry(const NetLogEntry& entry) {
   if (!base::JSONWriter::Write(*entry.ToValue(), json.get()))
     return;
 
+  VLOG(1) << "Entry: " << json.get()->c_str();
+
   size_t queue_size = write_queue_->AddEntryToQueue(std::move(json));
 
   // If events build up in |write_queue_|, trigger the file task runner to drain
