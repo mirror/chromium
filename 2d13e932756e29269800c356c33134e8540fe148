@@ -34,6 +34,24 @@
       "revId": "2d13e932756e29269800c356c33134e8540fe148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d359c2fd_8101484b",
+        "filename": "chrome/android/webapk/shell_apk/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-26T20:02:06Z",
+      "side": 1,
+      "message": "I think that output_api.PresubmitPromptOrNotify() sometimes prompts the user. I think that output_api.PresubmitNotifyResult() is the one which just displays text\n\nI don\u0027t think that we should keep using PresubmitError()",
+      "parentUuid": "8ef446b3_72e1a261",
+      "revId": "2d13e932756e29269800c356c33134e8540fe148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
