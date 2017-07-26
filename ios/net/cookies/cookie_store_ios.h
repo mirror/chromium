@@ -25,9 +25,10 @@
 #include "net/cookies/cookie_store.h"
 #include "url/gurl.h"
 
+@class NSArray;
 @class NSHTTPCookie;
 @class NSHTTPCookieStorage;
-@class NSArray;
+@class NSNotification;
 
 namespace net {
 
@@ -63,12 +64,6 @@ class CookieStoreIOS : public net::CookieStore,
   ~CookieStoreIOS() override;
 
   enum CookiePolicy { ALLOW, BLOCK };
-
-  // Must be called when the state of
-  // |NSHTTPCookieStorage sharedHTTPCookieStorage| changes.
-  // Affects only those CookieStoreIOS instances that are backed by
-  // |NSHTTPCookieStorage sharedHTTPCookieStorage|.
-  static void NotifySystemCookiesChanged();
 
   // Only one cookie store may enable metrics.
   void SetMetricsEnabled();
@@ -158,6 +153,12 @@ class CookieStoreIOS : public net::CookieStore,
   // Copies the cookies to the backing CookieMonster.
   virtual void WriteToCookieMonster(NSArray* system_cookies);
 
+  // Must be called when the state of
+  // |NSHTTPCookieStorage sharedHTTPCookieStorage| changes.
+  // Affects only those CookieStoreIOS instances that are backed by
+  // |NSHTTPCookieStorage sharedHTTPCookieStorage|.
+  void NotifySystemCookiesChanged(NSNotification* notification);
+
   // Inherited CookieNotificationObserver methods.
   void OnSystemCookiesChanged() override;
 
@@ -167,6 +168,7 @@ class CookieStoreIOS : public net::CookieStore,
   std::unique_ptr<net::CookieMonster> cookie_monster_;
   base::scoped_nsobject<NSHTTPCookieStorage> system_store_;
   std::unique_ptr<CookieCreationTimeManager> creation_time_manager_;
+  base::scoped_nsprotocol<id> system_cookies_changed_observer_;
   bool metrics_enabled_;
   base::CancelableClosure flush_closure_;
 
