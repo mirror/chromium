@@ -8,7 +8,12 @@
 #include "ash/ash_export.h"
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "ui/views/view.h"
+
+namespace base {
+class SequencedTaskRunner;
+}  // namespace base
 
 namespace ash {
 
@@ -55,6 +60,10 @@ class ASH_EXPORT LoginPinView : public views::View {
 
   using OnPinKey = base::RepeatingCallback<void(int value)>;
   using OnPinBackspace = base::RepeatingClosure;
+
+  // Set the TaskRunner instance used for testing.
+  static void SetTaskRunnerForTesting(
+      scoped_refptr<base::SequencedTaskRunner> task_runner);
 
   // |on_key| is called whenever the user taps one of the pin buttons.
   // |on_backspace| is called when the user wants to erase the most recently

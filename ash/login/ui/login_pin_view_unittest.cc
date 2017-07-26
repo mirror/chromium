@@ -6,11 +6,48 @@
 
 #include "ash/login/ui/login_pin_view.h"
 #include "ash/login/ui/login_test_base.h"
+#include "base/single_thread_task_runner.h"
 #include "ui/events/test/event_generator.h"
 
 namespace ash {
 
 namespace {
+
+class FakeTaskRunner : public base::SingleThreadTaskRunner {
+ public:
+  FakeTaskRunner() {}
+
+  void RunAllPostedTasks() {
+    // Running a task could post a new task to |tasks_|, which is why we have to
+    // swap the list before using it.
+    std::vector<base::OnceClosure> tasks_to_run;
+    std::swap(tasks_to_run, tasks_);
+    for (auto& task : tasks_to_run)
+      std::move(task).Run();
+  }
+
+  // base::SingleThreadTaskRunner:
+  bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override {
+    tasks_.emplace_back(std::move(task));
+    return true;
+  }
+  bool PostDelayedTask(const tracked_objects::Location& from_here,
+                       base::OnceClosure task,
+                       base::TimeDelta delay) override {
+    tasks_.emplace_back(std::move(task));
+    return true;
+  }
+  bool RunsTasksInCurrentSequence() const override { return true; }
+
+ private:
+  ~FakeTaskRunner() override {}
+
+  std::vector<base::OnceClosure> tasks_;
+
+  DISALLOW_COPY_AND_ASSIGN(FakeTaskRunner);
+};
 
 class LoginPinViewTest : public LoginTestBase {
  protected:
@@ -21,20 +58,30 @@ class LoginPinViewTest : public LoginTestBase {
   void SetUp() override {
     LoginTestBase::SetUp();
 
+    task_runner_ = new FakeTaskRunner();
+    LoginPinView::SetTaskRunnerForTesting(task_runner_);
+
     view_ = new LoginPinView(
         base::Bind(&LoginPinViewTest::OnPinKey, base::Unretained(this)),
         base::Bind(&LoginPinViewTest::OnPinBackspace, base::Unretained(this)));
 
     ShowWidgetWithContent(view_);
   }
+  void TearDown() override {
+    LoginTestBase::TearDown();
+    LoginPinView::SetTaskRunnerForTesting(nullptr);
+  }
 
   // Called when a password is submitted.
   void OnPinKey(int value) { value_ = value; }
-  void OnPinBackspace() { backspace_ = true; }
+  void OnPinBackspace() { ++backspace_; }
 
   LoginPinView* view_ = nullptr;  // Owned by test widget view hierarchy.
   base::Optional<int> value_;
-  bool backspace_ = false;
+  // Number of times the backspace event has been fired.
+  int backspace_ = 0;
+
+  scoped_refptr<FakeTaskRunner> task_runner_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(LoginPinViewTest);
@@ -57,10 +104,10 @@ TEST_F(LoginPinViewTest, ButtonsFireEvents) {
   }
 
   // Verify backspace events are emitted.
-  EXPECT_FALSE(backspace_);
+  EXPECT_EQ(0, backspace_);
   test_api.GetBackspaceButton()->RequestFocus();
   generator.PressKey(ui::KeyboardCode::VKEY_RETURN, ui::EF_NONE);
-  EXPECT_TRUE(backspace_);
+  EXPECT_EQ(1, backspace_);
 }
 
 // Validates buttons have the correct spacing.
@@ -113,6 +160,30 @@ TEST_F(LoginPinViewTest, ButtonSpacingAndSize) {
                   LoginPinView::kButtonSeparatorSizeDp,
               sorted_y[i + 1]);
   }
+}
+
+// Verifies that holding the backspace button automatically triggers and begins
+// repeating if it is held down.
+TEST_F(LoginPinViewTest, BackspaceAutoSubmitsAndRepeats) {
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  LoginPinView::TestApi test_api(view_);
+
+  // Verify backspace events are emitted.
+  EXPECT_EQ(0, backspace_);
+  generator.MoveMouseTo(
+      test_api.GetBackspaceButton()->GetBoundsInScreen().CenterPoint());
+  generator.PressLeftButton();
+
+  // Backspace event triggers after every timer task.
+  for (int i = 0; i < 10; ++i) {
+    task_runner_->RunAllPostedTasks();
+    EXPECT_EQ(i + 1, backspace_);
+  }
+
+  // Backspace does not trigger after releasing the mouse.
+  backspace_ = 0;
+  generator.ReleaseLeftButton();
+  EXPECT_EQ(0, backspace_);
 }
 
 }  // namespace ash
