@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4a5f7f_35f49eed",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17003,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-26T18:31:57Z",
+      "side": 1,
+      "message": "This looks wrong. GL_RED? The comments above say GL_RGB. This code change and the one below have the effect of never taking this code path.",
+      "range": {
+        "startLine": 17003,
+        "startChar": 15,
+        "endLine": 17003,
+        "endChar": 30
+      },
+      "revId": "87ba93fd6c80fc84e61990c0b041c56981c0cd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
