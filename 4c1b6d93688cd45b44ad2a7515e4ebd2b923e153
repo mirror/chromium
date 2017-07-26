@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed985a0d_a47982de",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-26T18:36:15Z",
+      "side": 1,
+      "message": "add { } for the if statement since the condition is not in one line.",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8d08bc_ea60efc1",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-26T18:36:15Z",
+      "side": 1,
+      "message": "The description for PROXIMITY sensor data is missing.",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2689ee_91e4c47d",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-26T18:36:15Z",
+      "side": 1,
+      "message": "The description for PRESSURE sensor data is missing.",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663855d1_812b1463",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-26T18:36:15Z",
+      "side": 1,
+      "message": "Start the \"orientation_quat.y\" description in a new line.\n\nSame for other data entries.",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc66e97_8bc6c692",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-26T18:36:15Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f316aca_bb05b40b",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-26T18:36:15Z",
+      "side": 1,
+      "message": "Add entries for PROXIMITY and PRESSURE sensors data.",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

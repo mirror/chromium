@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65377fb7_d46ba7d1",
+        "filename": "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-26T18:36:15Z",
+      "side": 0,
+      "message": "Noticed that the new code doesn\u0027t set the last value to 0.0, is the last value initialized to 0? If not, the PlatformSensorFusionAlgorithm::IsReadingSignificantlyDifferent() will probably return incorrect result, since it compares all four values.",
+      "revId": "8ecb49e3c2be8e2abaed6f045735114f1911a515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
