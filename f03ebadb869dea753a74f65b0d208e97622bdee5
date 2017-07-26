@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ed7b7c4_9bd005e8",
+        "filename": "chrome/browser/printing/cloud_print/cloud_print_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-26T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59632709_0cbf45f2",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "864eee36_922d3bf4",
         "filename": "chrome/browser/service_process/service_process_control.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ae0c38_faa2b382",
+        "filename": "chrome/browser/service_process/service_process_control.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-26T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "864eee36_922d3bf4",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5c855933_7d50dcb7",
+        "filename": "chrome/browser/service_process/service_process_control.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-26T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b2327d_4c9e768b",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e81d81ab_a2416e9a",
         "filename": "chrome/service/cloud_print/cloud_print_message_handler.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-24T21:25:17Z",
       "side": 1,
       "message": "Do we need to expose the ctor, now that there\u0027s a Create() method?",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3d763c_87b5c69b",
+        "filename": "chrome/service/cloud_print/cloud_print_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-26T08:17:33Z",
+      "side": 1,
+      "message": "We do to allow MakeUnique inside Create().",
+      "parentUuid": "e81d81ab_a2416e9a",
       "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2e903544_4b999c52",
+        "filename": "chrome/service/service_ipc_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-26T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a1a5d95_93c34863",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de8a77d8_467e9b79",
         "filename": "chrome/service/service_ipc_server.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d9fd38_7de3393c",
+        "filename": "chrome/service/service_ipc_server.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-26T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de8a77d8_467e9b79",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
