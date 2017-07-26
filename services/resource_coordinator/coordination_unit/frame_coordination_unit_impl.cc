@@ -4,6 +4,8 @@
 
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 
+#include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
+
 namespace resource_coordinator {
 
 FrameCoordinationUnitImpl::FrameCoordinationUnitImpl(
@@ -55,12 +57,29 @@ FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
   }
 }
 
+const WebContentsCoordinationUnitImpl*
+FrameCoordinationUnitImpl::GetWebContentsCoordinationUnit() const {
+  for (auto* parent : parents_) {
+    if (parent->id().type != CoordinationUnitType::kWebContents)
+      continue;
+    return CoordinationUnitImpl::ToWebContentsCoordinationUnit(parent);
+  }
+  return nullptr;
+}
+
 bool FrameCoordinationUnitImpl::IsMainFrame() const {
   for (auto* parent : parents_) {
     if (parent->id().type == CoordinationUnitType::kFrame)
       return false;
   }
   return true;
+}
+
+bool FrameCoordinationUnitImpl::IsVisible() const {
+  if (auto* parent = GetWebContentsCoordinationUnit()) {
+    return parent->IsVisible();
+  }
+  return false;
 }
 
 }  // namespace resource_coordinator
