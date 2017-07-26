@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "346122c1_e2733550",
+        "filename": "chrome/browser/browser_about_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-26T23:56:05Z",
+      "side": 1,
+      "message": "Ack\n\n(Though I\u0027m mainly leaving it up to whoever reviews this change, as I\u0027ll have to pull in additional owners.)",
+      "parentUuid": "3e45bd30_d8629804",
+      "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fde82df9_3f2c7551",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T23:45:59Z",
       "side": 1,
       "message": "I\u0027ll clean this up.\nNote to self: Hard-code \"settings\" at \nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/BUILD.gn?l\u003d20\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings.html?l\u003d7",
+      "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce0b591a_c09a130a",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-26T23:56:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fde82df9_3f2c7551",
       "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -50,6 +86,24 @@
       "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ffcbd3_ed24e8ef",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-26T23:56:05Z",
+      "side": 1,
+      "message": "+1 TODO, -1 TODO\n\nTODO karma: neutral",
+      "parentUuid": "33e7cbee_74bf40a0",
+      "revId": "545313dc5364932ff26fe0952a49cf9ad7a9e8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
