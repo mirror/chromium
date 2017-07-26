@@ -161,6 +161,12 @@ class CC_BASE_EXPORT MathUtil {
   }
 
   template <typename T>
+  static bool ApproximatelyEqual(T lhs, T rhs, T tolerance) {
+    T delta = rhs - lhs;
+    return delta >= -tolerance && delta <= tolerance;
+  }
+
+  template <typename T>
   static bool IsWithinEpsilon(T a, T b) {
     return std::abs(a - b) < std::numeric_limits<T>::epsilon();
   }
