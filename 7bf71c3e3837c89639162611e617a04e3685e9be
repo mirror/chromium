@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a121b449_84568981",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T16:38:05Z",
+      "side": 1,
+      "message": "Very nice find. Can this use ScopedObserver to prevent future bugs?",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "7bf71c3e3837c89639162611e617a04e3685e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
