@@ -295,11 +295,15 @@ void OfflineInternalsUIMessageHandler::HandleScheduleNwake(
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 
+  std::string message;
   if (prefetch_service_) {
     prefetch_service_->GetPrefetchBackgroundTaskHandler()
         ->EnsureTaskScheduled();
+    message = "Scheduled.";
+  } else {
+    message = "Not scheduled - no PrefetchService available.";
   }
-  ResolveJavascriptCallback(*callback_id, base::Value("Scheduled."));
+  ResolveJavascriptCallback(*callback_id, base::Value(message));
 }
 
 void OfflineInternalsUIMessageHandler::HandleCancelNwake(
@@ -308,12 +312,15 @@ void OfflineInternalsUIMessageHandler::HandleCancelNwake(
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 
+  std::string message;
   if (prefetch_service_) {
     prefetch_service_->GetPrefetchBackgroundTaskHandler()
         ->CancelBackgroundTask();
+    message = "Cancelled.";
+  } else {
+    message = "Not cancelled - no PrefetchService available.";
   }
-
-  ResolveJavascriptCallback(*callback_id, base::Value("Cancelled."));
+  ResolveJavascriptCallback(*callback_id, base::Value(message));
 }
 
 void OfflineInternalsUIMessageHandler::HandleGeneratePageBundle(
