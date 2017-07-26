@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1bd24f_73bfc5d0",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T17:46:52Z",
+      "side": 1,
+      "message": "Did you get a chance to peek into BrowserProcessImpl::local_state()? I don\u0027t think this can ever eval to true.",
+      "revId": "515f57008a212604455ccf71b48b10b89c4ad946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
