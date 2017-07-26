@@ -91,6 +91,11 @@ function QuickViewController(
   this.volumeManager_ = volumeManager;
 
   /**
+   * @type {!Array<string>}
+   * @private
+   */
+  this.fileFormatBlacklist_ = ['TIFF'];
+  /**
    * Current selection of selectionHandler.
    *
    * @type {!Array<!FileEntry>}
@@ -326,6 +331,8 @@ QuickViewController.prototype.onMetadataLoaded_ = function(
         this.quickView_.audioArtwork = params.audioArtwork || '';
         this.quickView_.autoplay = params.autoplay || false;
         this.quickView_.browsable = params.browsable || false;
+        this.quickView_.hasImageQuickView =
+            params.hasQuickView && this.quickView_.contentUrl;
       }.bind(this));
 };
 
@@ -333,6 +340,7 @@ QuickViewController.prototype.onMetadataLoaded_ = function(
  * @typedef {{
  *   type: string,
  *   filePath: string,
+ *   hasQuickView: boolean,
  *   contentUrl: (string|undefined),
  *   videoPoster: (string|undefined),
  *   audioArtwork: (string|undefined),
@@ -353,13 +361,15 @@ var QuickViewParams;
 QuickViewController.prototype.getQuickViewParameters_ = function(
     entry, items, tasks) {
   var item = items[0];
-  var type = FileType.getType(entry).type;
+  var typeInfo = FileType.getType(entry);
+  var type = typeInfo.type;
 
   /** @type {!QuickViewParams} */
   var params = {
     type: type,
     filePath: entry.name,
     hasTask: tasks.length > 0,
+    hasQuickView: this.fileFormatBlacklist_.indexOf(typeInfo.subtype) === -1,
   };
 
   var volumeInfo = this.volumeManager_.getVolumeInfo(entry);
