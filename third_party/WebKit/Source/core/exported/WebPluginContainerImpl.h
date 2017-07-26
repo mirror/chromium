@@ -163,8 +163,12 @@ class CORE_EXPORT WebPluginContainerImpl final
   // Ends the print operation.
   void PrintEnd();
 
-  // Copy the selected text.
-  void Copy();
+  // Copy the selected text. If there is no selected text, return false.
+  // Otherwise return true.
+  bool Copy();
+
+  // Cut the selected text.
+  void Cut();
 
   // Pass the edit command to the plugin.
   bool ExecuteEditCommand(const WebString& name);
