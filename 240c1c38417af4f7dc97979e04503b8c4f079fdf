@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e332ce_63cc6b3e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-26T18:05:34Z",
+      "side": 0,
+      "message": "Could you keep this variable to reduce code duplication?\n\nWe can also change it into |const VisiblePosition\u0026 visible_extent| for better coding style.",
+      "revId": "240c1c38417af4f7dc97979e04503b8c4f079fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58078322_07659240",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-26T18:05:34Z",
+      "side": 1,
+      "message": "nit: s/Right/Left/",
+      "range": {
+        "startLine": 9,
+        "startChar": 53,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "7034112a4f12f5bdde2ec4c80a1ec86662cc8c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1869283_31460812",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-26T18:05:34Z",
+      "side": 1,
+      "message": "nit: s/VisiblePosition/VisiblePosition\u0026/",
+      "range": {
+        "startLine": 421,
+        "startChar": 8,
+        "endLine": 421,
+        "endChar": 23
+      },
+      "revId": "7034112a4f12f5bdde2ec4c80a1ec86662cc8c12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
