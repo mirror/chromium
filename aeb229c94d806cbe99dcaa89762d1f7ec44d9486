@@ -603,6 +603,24 @@
       "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c458ca7_83a51e09",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63bce90a_f58ea0bb",
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
