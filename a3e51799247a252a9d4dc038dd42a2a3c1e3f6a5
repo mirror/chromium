@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b728efb_0f8116ea",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-26T16:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81971342_c4a58577",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 402,
+        "endChar": 9
+      },
+      "revId": "a3e51799247a252a9d4dc038dd42a2a3c1e3f6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59acfa55_bb41b8fd",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0a610406_00a860af",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-26T16:42:01Z",
+      "side": 1,
+      "message": "Mouse click activate the search box without expanding it, so only SearchBoxView::SetSearchBoxActive will be called.\n\nBoth SearchBoxView::SetSearchBoxActive and SearchBoxView::UpdateBackground are called after typing query in the search box. The search box will expand and the latter will overwrite the former.\n\nThis change is for search box V1. In V2, mouse click will also expand the search box. So the color will always smoothly transit from themed color to white.\n\nI could leave TODO here, or should I discuss with UX to not make this change because we are going to abandon this in V2?",
+      "parentUuid": "59acfa55_bb41b8fd",
+      "revId": "a3e51799247a252a9d4dc038dd42a2a3c1e3f6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46401a29_5867ec48",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-26T15:34:01Z",
       "side": 1,
       "message": "Do we really need this? Layout should invalidate view?",
+      "range": {
+        "startLine": 422,
+        "startChar": 22,
+        "endLine": 422,
+        "endChar": 35
+      },
+      "revId": "a3e51799247a252a9d4dc038dd42a2a3c1e3f6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7934cb_7df02215",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-26T16:42:01Z",
+      "side": 1,
+      "message": "It seems I need this here, because otherwise the |search_box_| has different color with |content_container_|.",
+      "parentUuid": "46401a29_5867ec48",
       "range": {
         "startLine": 422,
         "startChar": 22,
