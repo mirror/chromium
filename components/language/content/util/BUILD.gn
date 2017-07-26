@@ -1,0 +1,26 @@
+import("//build/config/compiler/compiler.gni")
+
+action("make_s2_language_locator") {
+  script = "convert_s2_cell.py"
+
+  # TODO(renjieliu): add custom rule to separte template with data.
+  inputs = [
+    "template/language_code_locator.cpp.tmpl",
+    "adminregionsdata.csv",
+  ]
+  outputs = [
+    "$root_gen_dir/components/language/content/util/language_code_locator.cpp",
+  ]
+
+  args = [ "-o" ] + rebase_path(outputs, root_build_dir)
+  args += rebase_path(inputs, root_build_dir)
+}
+
+source_set("util") {
+  sources = [
+    "language_code_locator.h",
+  ]
+  deps = [
+    ":make_s2_language_locator",
+  ]
+}

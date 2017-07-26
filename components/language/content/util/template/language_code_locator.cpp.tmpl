@@ -1,0 +1,21 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/language/content/util/language_code_locator.h"
+
+namespace language {
+
+LanguageCodeLocator::LanguageCodeLocator() : district_lang_({
+  {% set c = 1 %}
+  {%- for district_with_lang in district_with_langs -%}
+    {"{{district_with_lang[0]}}", "{{district_with_lang[1]}}"}{% if c < district_with_langs|length%},{% endif %}
+    {% set c = c + 1%}
+  {%- endfor -%}
+}) {}
+
+std::string LanguageCodeLocator::GetLanguageCode(double lat, double lng) {
+  
+}
+
+}  // namespace language
