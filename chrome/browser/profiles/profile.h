@@ -290,6 +290,14 @@ class Profile : public content::BrowserContext {
     return restored_last_session_;
   }
 
+  // Has the user opened a webpage from the Windows JumpList? This is set by
+  // StartupBrowserCreator.
+  void set_has_used_jumplist(bool has_used_jumplist) {
+    has_used_jumplist_ = has_used_jumplist;
+  }
+
+  bool has_used_jumplist() const { return has_used_jumplist_; }
+
   // Sets the ExitType for the profile. This may be invoked multiple times
   // during shutdown; only the first such change (the transition from
   // EXIT_CRASHED to one of the other values) is written to prefs, any
@@ -356,6 +364,9 @@ class Profile : public content::BrowserContext {
   // Used to prevent the notification that this Profile is destroyed from
   // being sent twice.
   bool sent_destroyed_notification_;
+
+  // Used to record if the user has opened a webpage using the Windows JumpList.
+  bool has_used_jumplist_ = false;
 
   // Accessibility events will only be propagated when the pause
   // level is zero.  PauseAccessibilityEvents and ResumeAccessibilityEvents
