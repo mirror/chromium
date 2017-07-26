@@ -656,6 +656,30 @@
       "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73df463_19c149cd",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDelayDSPKernel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T21:01:30Z",
+      "side": 1,
+      "message": "Actually, having a default return true is ok.  Pretending every node has a tail is safe. it just means it will live for an extra render or two until PropagatesSilence returns true due to the zero tail and latency.\n\nOnly those nodes that definitely have no tail would need an overriding method.  I\u0027ll look into that soon.",
+      "parentUuid": "c12b9e99_69303b90",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 14
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
