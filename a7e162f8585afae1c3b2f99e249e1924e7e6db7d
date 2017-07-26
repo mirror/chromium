@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47a1051_4935fc0d",
+        "filename": "components/guest_view/browser/guest_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-26T19:40:12Z",
+      "side": 1,
+      "message": "I assume we need this boolean because something checks attached() between here and DidAttach() ? Where\u0027s that?\n\nCan we fix this by moving the place we set the element_instance_id_ ?",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524147d7_be5bd38f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5056,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-26T19:40:12Z",
+      "side": 1,
+      "message": "This seems very generic, basically allowing a lot of stuff to go through. Can we do something more specific? What I have in mind is something like:\n\nWC::FromRFH(target_rfh)-\u003eGetBrowserPluginGuest()-\u003eembedder_web_contents() \u003d\u003d this",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2af442_e08b5e4c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5068,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-26T19:40:12Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right.\n\nSo, it looks like your change removed the BrowserPluginEmbedder that was created in BrowserPluginGuest::Init, so we should never be checking GetBrowserPluginEmbedder() \u0026\u0026 IsCrossProcessFramesGuest().\n\nLooking at the comment above, I think what we could be doing is something like:\nif (source_web_contents-\u003eGetBrowserPluginGuest()-\u003eembedder_web_contents() \u003d\u003d this \u0026\u0026 IsCrossProcessFrameGuest(source_web_contents)) { ... }.",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
