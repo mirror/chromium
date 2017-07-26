@@ -46,6 +46,30 @@
       "revId": "950ff45f0dfbe42785f591756cab4244d5ba75ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b3cc82_81b3601d",
+        "filename": "chrome/browser/resources/md_bookmarks/app.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T02:51:53Z",
+      "side": 1,
+      "message": "I added the parentheses, automatically by modifying ESLint config locally and using --fix flag. I\u0027ll look into updating our ESLint config in a follow up CL, since there are other pages already migrated to arrow functions that are not yet using parentheses (print_preview/ and settings/).\n\nAlso given that the styleguide only suggests using the parentheses, but it is not mandatory, should probably ask other WebUI developers before adding a rule. For now, allowing both styles seems reasonable.",
+      "parentUuid": "7f4151cb_50d32965",
+      "range": {
+        "startLine": 99,
+        "startChar": 40,
+        "endLine": 99,
+        "endChar": 41
+      },
+      "revId": "950ff45f0dfbe42785f591756cab4244d5ba75ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
