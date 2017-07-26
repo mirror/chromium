@@ -22,6 +22,30 @@
       "revId": "0c4d06e9ef8a9f218b1f5891abfc9184c843c6e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe62ff95_e709ba18",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-26T06:27:01Z",
+      "side": 1,
+      "message": "Thanks for your input! I see what you mean. Is it all right the way it is in the new patch?",
+      "parentUuid": "9fefc3ba_86cbb5d6",
+      "range": {
+        "startLine": 5,
+        "startChar": 68,
+        "endLine": 5,
+        "endChar": 76
+      },
+      "revId": "0c4d06e9ef8a9f218b1f5891abfc9184c843c6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
