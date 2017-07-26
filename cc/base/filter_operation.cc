@@ -345,6 +345,9 @@ gfx::Rect MapRectInternal(const FilterOperation& op,
                           const gfx::Rect& rect,
                           const SkMatrix& matrix,
                           SkImageFilter::MapDirection direction) {
+  if (rect.IsEmpty())
+    return rect;
+
   switch (op.type()) {
     case FilterOperation::BLUR: {
       SkVector spread = MapStdDeviation(op.amount(), matrix);
