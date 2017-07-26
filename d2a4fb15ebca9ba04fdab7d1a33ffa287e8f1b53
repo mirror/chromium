@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69df424d_a199964c",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-26T09:01:38Z",
+      "side": 1,
+      "message": "Yeah, I thought about that, but since we are also using this to describe insecure origin blocking, does that make sense? I also thought about something like \u0027kAutoBlock\u0027 or whatever, but then I thought maybe the name aligned too closely with the Autoblocker which just also suggests embargo. Do you have any ideas?",
+      "parentUuid": "0c7ac7bb_7b873a71",
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b7177d_63bd5efa",
         "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
         "patchSetId": 2
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "3d5b12ec_57ba67c6",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-26T09:01:38Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "54d9eed2_e0b58b10",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41c5f912_c030b7d3",
         "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
         "patchSetId": 2
@@ -80,6 +122,24 @@
       "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a89d22_b30cf0be",
+        "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-26T09:01:38Z",
+      "side": 1,
+      "message": ":) I hope it\u0027s ok that it doesn\u0027t test embargo or kill switches. I updated it to test insecure origins now though (and found a bug, which is why CalculateSiteSettingSource() is refactored).",
+      "parentUuid": "41c5f912_c030b7d3",
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
