@@ -63,6 +63,30 @@
       "revId": "961b6efc37f5621bb744cfc82ceeae89548d27c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abd15c8_bda10881",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-26T05:35:32Z",
+      "side": 1,
+      "message": "We could retrieve the |web_worker_fetch_context| from |worker_clients| in the ctor of InProcessWorkerMessagingProxy and then call SetIsDedicatedWorkerOnSubframe() there.\n\nOr, we can copy lines 44-59 to the ctors of InProcessWorkerMessagingProxy and ThreadedWorkletMessagingProxy, and then call SetIsDedicatedWorkerOnSubframe() only in InProcessWorkerMessagingProxy, this causes code duplication though. Although InProcessWorkerMessagingProxy is shared among DedicatedWorker and CompositorWorker, it wouldn\u0027t be a matter because CompositorWorker will be removed soon (https://crbug.com/746212)",
+      "parentUuid": "513a5b75_dfa68519",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "961b6efc37f5621bb744cfc82ceeae89548d27c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
