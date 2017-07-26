@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "48673c91_fdb9bf1b",
+        "filename": "android_webview/browser/aw_form_database_service_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T10:13:48Z",
+      "side": 1,
+      "message": "Argh, Gerrit ate my long explanation of this, so here\u0027s a shorter one.\n\nAlmost sure I had test failures without this, due to |service_| being torn down while tasks that posted referencing it were still in the queue.  This could maybe be fixed by swapping the declaration order so the thread bundle is torn down first.  But that feels kinda wrong in principle, and fragile since it relies on the service not posting any tasks during its destruction, which is probably true now, but I would be leery of relying on.  In general, having a service that still holds a task runner to a now-deleted thread bundle seems bad.\n\nSo doing it this way (flush, then destroy service, then destroy thread bundle) feels safest.",
+      "parentUuid": "8002fe19_342b8c73",
+      "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f0cf99c_6b8036e4",
         "filename": "chrome/browser/password_manager/password_store_win_unittest.cc",
         "patchSetId": 19
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cbf930cb_3a7ce14f",
+        "filename": "chrome/browser/sync/profile_sync_service_factory_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T10:13:48Z",
+      "side": 1,
+      "message": "Same story of why this matters.  Pretty sure I had test failures here too.  It\u0027s possible swapping the profile and thread bundle declaration order would fix this, but I\u0027m leery for the same reason as before.",
+      "parentUuid": "9b4eb7f5_9b5e7826",
+      "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e3cbe66_9c149fb2",
         "filename": "chrome/browser/sync/test/integration/autofill_helper.cc",
         "patchSetId": 19
@@ -129,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "9be4ff4d_16d52e9a",
+        "filename": "chrome/browser/sync/test/integration/autofill_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T10:13:48Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s part of the same issue.",
+      "parentUuid": "4e3cbe66_9c149fb2",
+      "range": {
+        "startLine": 98,
+        "startChar": 68,
+        "endLine": 98,
+        "endChar": 78
+      },
+      "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9ad81d3_ae4dafc7",
         "filename": "components/webdata_services/web_data_service_wrapper.cc",
         "patchSetId": 19
@@ -140,6 +200,24 @@
       "writtenOn": "2017-07-25T20:18:42Z",
       "side": 1,
       "message": "Seems like every instance of WebDatabaseService is using its own task runner. Could we instead have it get its own task runner (and expose it through WebDatabaseService::GetTaskRunner() for the few use cases that require sharing as below)?",
+      "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cdff9f_0c899600",
+        "filename": "components/webdata_services/web_data_service_wrapper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T10:13:48Z",
+      "side": 1,
+      "message": "Maybe.  I\u0027m weakly inclined not to do this; passing it in lets tests control whether it operates on the same thread or a different one, so changing that might break the ones that currently run it on the same thread.  (And in general it seems better to let creators inject this than to compute it internally, from a testability perspective.)\n\nIt\u0027s not clear whether we even need all these other services to run on the same sequence (see comments above), so whether this needs to expose GetTaskRunner() is unclear.  But that\u0027s not a problem I want to address in this CL as just getting to this point has been several weeks of work.\n\nIt seems like the main benefit of all this would be simplifying the existing callsites, but I don\u0027t think they\u0027re that bad.  Given the cost/benefit tradeoff, I\u0027d prefer to punt, and address this issue as part of the bug mentioned in the above comment.",
+      "parentUuid": "d9ad81d3_ae4dafc7",
       "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -193,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "48100e88_c63d74e6",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T10:13:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23147402_020eb095",
+      "range": {
+        "startLine": 349,
+        "startChar": 2,
+        "endLine": 349,
+        "endChar": 56
+      },
+      "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b92dfe73_fab2cd80",
         "filename": "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory_unittest.cc",
         "patchSetId": 19
@@ -204,6 +306,24 @@
       "writtenOn": "2017-07-25T20:18:42Z",
       "side": 1,
       "message": "ditto",
+      "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33b543c_927bfe33",
+        "filename": "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-26T10:13:48Z",
+      "side": 1,
+      "message": "Same story here too.",
+      "parentUuid": "b92dfe73_fab2cd80",
       "revId": "f8f515b6be2f5e32964255650dc26584c1073c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
