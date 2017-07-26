@@ -116,7 +116,7 @@ cr.define('cr.ui', function() {
 
   /**
    * The index of the selected tab or -1 if no tab is selected.
-   * @type {number}
+   * type {number}
    */
   cr.defineProperty(
       TabBox, 'selectedIndex', cr.PropertyKind.JS_PROP, selectedIndexSetHook);
@@ -197,7 +197,6 @@ cr.define('cr.ui', function() {
 
   /**
    * Whether the tab is selected.
-   * @type {boolean}
    */
   cr.defineProperty(Tab, 'selected', cr.PropertyKind.BOOL_ATTR);
 
@@ -227,7 +226,6 @@ cr.define('cr.ui', function() {
 
   /**
    * Whether the tab is selected.
-   * @type {boolean}
    */
   cr.defineProperty(TabPanel, 'selected', cr.PropertyKind.BOOL_ATTR);
 
