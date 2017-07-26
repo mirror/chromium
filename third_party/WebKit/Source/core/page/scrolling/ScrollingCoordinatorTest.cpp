@@ -41,6 +41,7 @@
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsLayer.h"
+#include "platform/graphics/TouchAction.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -534,6 +535,41 @@ TEST_P(ScrollingCoordinatorTest, clippedBodyTest) {
   WebLayer* root_scroll_layer = GetRootScrollLayer();
   ASSERT_TRUE(root_scroll_layer);
   ASSERT_EQ(0u, root_scroll_layer->NonFastScrollableRegion().size());
+}
+
+TEST_P(ScrollingCoordinatorTest, touchAction) {
+  RegisterMockedHttpURLLoad("touch-action.html");
+  NavigateTo(base_url_ + "touch-action.html");
+  ForceFullCompositingUpdate();
+
+  /*Element* scrollable_element =
+      GetFrame()->GetDocument()->getElementById("scrollable");
+  DCHECK(scrollable_element);
+  ForceFullCompositingUpdate();
+
+  LayoutObject* layout_object = scrollable_element->GetLayoutObject();
+  ASSERT_TRUE(layout_object->IsBox());
+  ASSERT_TRUE(layout_object->HasLayer());
+
+  LayoutBox* box = ToLayoutBox(layout_object);
+  ASSERT_TRUE(box->UsesCompositedScrolling());
+  ASSERT_EQ(kPaintsIntoOwnBacking, box->Layer()->GetCompositingState());
+
+  CompositedLayerMapping* composited_layer_mapping =
+      box->Layer()->GetCompositedLayerMapping();
+  ASSERT_TRUE(composited_layer_mapping->HasScrollingLayer());
+  DCHECK(composited_layer_mapping->ScrollingContentsLayer());
+
+  GraphicsLayer* graphics_layer =
+      composited_layer_mapping->ScrollingContentsLayer();
+  ASSERT_EQ(box->Layer()->GetScrollableArea(),
+            graphics_layer->GetScrollableArea());
+
+  WebLayer* web_layer =
+      composited_layer_mapping->ScrollingContentsLayer()->PlatformLayer();
+  WebVector<WebRect> panx_rects = web_layer->TouchEventHandlerRegionForTouchAction(TouchAction::kTouchActionPanX);
+  WebVector<WebRect> pandown_rects = web_layer->TouchEventHandlerRegionForTouchAction(TouchAction::kTouchActionPanDown);
+  fprintf(stderr, "%zu %zu\n", panx_rects.size(), pandown_rects.size());*/
 }
 
 TEST_P(ScrollingCoordinatorTest, overflowScrolling) {

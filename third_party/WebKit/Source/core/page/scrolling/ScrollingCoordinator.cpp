@@ -34,6 +34,7 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLElement.h"
+#include "core/input/TouchActionUtil.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutGeometryMap.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
@@ -764,13 +765,15 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
     }
     GraphicsLayer* main_graphics_layer =
         layer->GraphicsLayerBacking(&layer->GetLayoutObject());
-    if (main_graphics_layer)
+    if (main_graphics_layer) {
       graphics_layer_rects.insert(main_graphics_layer, Vector<LayoutRect>());
+    }
     GraphicsLayer* scrolling_contents_layer = layer->GraphicsLayerBacking();
     if (scrolling_contents_layer &&
-        scrolling_contents_layer != main_graphics_layer)
+        scrolling_contents_layer != main_graphics_layer) {
       graphics_layer_rects.insert(scrolling_contents_layer,
                                   Vector<LayoutRect>());
+    }
   }
 
   layers_with_touch_rects_.clear();
@@ -783,20 +786,52 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
       layers_with_touch_rects_.insert(composited_layer);
     }
   }
-
+  
   ProjectRectsToGraphicsLayerSpace(page_->DeprecatedLocalMainFrame(),
                                    layer_rects, graphics_layer_rects);
 
+  WTF::HashMap<const GraphicsLayer*, TouchAction> paint_layer_touch_action;
+  for (const PaintLayer* layer : layers_with_touch_rects_) {
+    if (layer->GetLayoutObject().GetFrameView() &&
+        layer->GetLayoutObject().GetFrameView()->ShouldThrottleRendering()) {
+      continue;
+    }
+    LOG(ERROR) << layer->DebugName();
+    TouchAction effective_touch_action =
+        TouchActionUtil::ComputeEffectiveTouchAction(*(layer->EnclosingNode()));
+    GraphicsLayer* main_graphics_layer =
+        layer->GraphicsLayerBacking(&layer->GetLayoutObject());
+    if (main_graphics_layer) {
+      paint_layer_touch_action.insert(main_graphics_layer,
+                                      effective_touch_action);
+    }
+    if (layer->GetCompositedLayerMapping()->ScrollingContentsLayer())
+      LOG(ERROR) << "Not null";
+    else
+      LOG(ERROR) << "Null";
+    GraphicsLayer* scrolling_contents_layer = layer->GraphicsLayerBacking();
+    LOG(ERROR) << scrolling_contents_layer->DebugName();
+    if (scrolling_contents_layer &&
+        scrolling_contents_layer != main_graphics_layer) {
+      paint_layer_touch_action.insert(scrolling_contents_layer,
+                                      effective_touch_action);
+    }
+  }
+
   for (const auto& layer_rect : graphics_layer_rects) {
     const GraphicsLayer* graphics_layer = layer_rect.key;
+    TouchAction effective_touch_action = TouchAction::kTouchActionNone;
+    if (paint_layer_touch_action.Contains(graphics_layer)) {
+      effective_touch_action = paint_layer_touch_action.at(graphics_layer);
+    }
     WebVector<WebTouchInfo> touch(layer_rect.value.size());
     for (size_t i = 0; i < layer_rect.value.size(); ++i) {
       touch[i].rect = EnclosingIntRect(layer_rect.value[i]);
-      // TODO(xidachen): route the real value here
-      touch[i].touch_action = TouchAction::kTouchActionNone;
+      touch[i].touch_action = effective_touch_action;
     }
     graphics_layer->PlatformLayer()->SetTouchEventHandlerRegion(touch);
   }
+  LOG(ERROR) << "\n\n";
 }
 
 void ScrollingCoordinator::TouchEventTargetRectsDidChange() {
