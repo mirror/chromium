@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "eceda85f_3fe8c0e2",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-26T20:29:12Z",
+      "side": 1,
+      "message": "I tested with --ash-enable-scale-settings-tray, for the top fade-out zone, it still works fine. However, we cannot see bottom fade-out zone on higher device scale. IMO, fullscreen app list is not optimized for higher device scale. I will file a bug for this.",
+      "parentUuid": "e57a3ef8_d3b505a5",
+      "revId": "f36a8263d0b5a05276f9a23b46302dd2057cb5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40199199_bb93a573",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 6
