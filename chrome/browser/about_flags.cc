@@ -1501,6 +1501,11 @@ const FeatureEntry kFeatureEntries[] = {
         kOsMac | kOsWin | kOsCrOS | kOsAndroid,
         SINGLE_DISABLE_VALUE_TYPE(switches::kDisableAcceleratedVideoDecode),
     },
+    {"disable-mojo-video-encode-accelerator",
+     flag_descriptions::kMojoVideoEncodeAcceleratorName,
+     flag_descriptions::kMojoVideoEncodeAcceleratorDescription,
+     kOsMac | kOsWin | kOsCrOS | kOsAndroid,
+     SINGLE_DISABLE_VALUE_TYPE(switches::kDisableMojoVideoEncodeAccelerator)},
 #if defined(OS_WIN)
     {
         "enable-hdr", flag_descriptions::kEnableHDRName,
