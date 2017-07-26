@@ -25,7 +25,13 @@ class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
   std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) override;
 
+  const WebContentsCoordinationUnitImpl* GetWebContentsCoordinationUnit() const;
+
   bool IsMainFrame() const;
+  // Returns false when |this| frame coordination unit doesn't have a parent web
+  // contents coordination unit or the parent web contents coordination unit is
+  // not visible.
+  bool IsVisible() const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FrameCoordinationUnitImpl);
