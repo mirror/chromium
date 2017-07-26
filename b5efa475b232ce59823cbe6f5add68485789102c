@@ -69,6 +69,30 @@
       "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dc998e_4964b5b8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinatorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-26T17:26:59Z",
+      "side": 1,
+      "message": "Hmm, I did ran chrome with --enable-prefer-compositing-to-lcd-text.\n\nThe full output looks like this:\n\"LayoutBlockFlow DIV id\u003d\u0027scrollable\u0027\"\nNot null\n\"Scrolling Contents Layer\"\n\"LayoutView #document\"\nNull\n\"LayoutView #document\"\n\n\n\"LayoutBlockFlow DIV id\u003d\u0027scrollable\u0027\"\nNot null\n\"Scrolling Contents Layer\"\n\"LayoutView #document\"\nNull\n\"LayoutView #document\"\n\n\nIs that the same as the output that you saw?\n\nIn the above output, it always thinks that the document\u0027s scrolling contents layer is null, which should be the case. But when I ran the this test it thinks that the scrolling contents layer is not null, and I don\u0027t know why.",
+      "parentUuid": "0b5ab19d_2322948b",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 31
+      },
+      "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
