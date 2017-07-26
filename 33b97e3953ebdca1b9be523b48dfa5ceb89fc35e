@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d58d7452_cc71ba15",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-26T03:40:10Z",
+      "side": 1,
+      "message": "In practice, the only current use of this is to get the\nbounding box of one word at a time for Select-to-speak.\nThe longest word on most pages is at most a few dozen\ncharacters.\n\nI updated the comment a bit to explain the reasoning; I wanted\nit to be one order of magnitude larger than probably needed, but\nsmall enough to prevent wasting memory or cpu if abused.",
+      "parentUuid": "15847460_6c070af0",
+      "range": {
+        "startLine": 297,
+        "startChar": 10,
+        "endLine": 297,
+        "endChar": 37
+      },
+      "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc9a6207_3b3a367f",
         "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
         "patchSetId": 1
@@ -42,6 +66,42 @@
     },
     {
       "key": {
+        "uuid": "6a65ba9c_2edebfa8",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-26T03:40:10Z",
+      "side": 1,
+      "message": "If start+len exceeds the text length, GetPageBoundsForRange\nwill return an empty rect, so we\u0027ll fall back on the object\nbounds.\n\nAfter playing around with Select-to-speak, I decided it was\na better user experience to return the object bounds rather\nthan return null rects, because otherwise the highlight just\ndisappears and reappears a lot when reading a web page, every\ntime it lands on something other than text.",
+      "parentUuid": "cc9a6207_3b3a367f",
+      "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d43f53f_0c910277",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-26T03:40:10Z",
+      "side": 1,
+      "message": "If start+len exceeds the text length, GetPageBoundsForRange\nwill return an empty rect, so we\u0027ll fall back on the object\nbounds.\n\nAfter playing around with Select-to-speak, I decided it was\na better user experience to return the object bounds rather\nthan return null rects, because otherwise the highlight just\ndisappears and reappears a lot when reading a web page, every\ntime it lands on something other than text.",
+      "parentUuid": "cc9a6207_3b3a367f",
+      "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0defc232_8ec24a2e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/OWebContentsAccessibility.java",
         "patchSetId": 1
@@ -53,6 +113,24 @@
       "writtenOn": "2017-07-21T00:48:43Z",
       "side": 1,
       "message": "Is it really possible for coords to be non-null, but of the wrong length? If not, then the length check should probably be an assert.",
+      "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72716e0d_48c9c9e1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/OWebContentsAccessibility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-26T03:40:10Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "0defc232_8ec24a2e",
       "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
