@@ -11,10 +11,15 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/service_manager_connection.h"
 #include "device/serial/serial_device_enumerator.h"
 #include "extensions/browser/api/serial/serial_connection.h"
 #include "extensions/browser/api/serial/serial_event_dispatcher.h"
 #include "extensions/common/api/serial.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/device/public/interfaces/serial.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 using content::BrowserThread;
 
@@ -49,6 +54,14 @@ void SetDefaultScopedPtrValue(std::unique_ptr<T>& ptr, const T& value) {
     ptr.reset(new T(value));
 }
 
+void BindInterfaceOnUI(device::mojom::SerialDeviceEnumeratorRequest request) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(content::ServiceManagerConnection::GetForProcess());
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(device::mojom::kServiceName, std::move(request));
+}
+
 }  // namespace
 
 SerialAsyncApiFunction::SerialAsyncApiFunction() : manager_(NULL) {}
@@ -77,20 +90,24 @@ void SerialAsyncApiFunction::RemoveSerialConnection(int api_resource_id) {
 SerialGetDevicesFunction::SerialGetDevicesFunction() {}
 
 bool SerialGetDevicesFunction::Prepare() {
-  set_work_task_runner(base::CreateSequencedTaskRunnerWithTraits(
-      {base::MayBlock(), base::TaskPriority::BACKGROUND}));
   return true;
 }
 
-void SerialGetDevicesFunction::Work() {
-  DCHECK(work_task_runner()->RunsTasksInCurrentSequence());
+void SerialGetDevicesFunction::AsyncWorkStart() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  device::mojom::SerialDeviceEnumeratorPtr enumerator;
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&BindInterfaceOnUI, mojo::MakeRequest(&enumerator)));
+  enumerator->GetDevices(
+      base::BindOnce(&SerialGetDevicesFunction::OnGetDevicesComplete, this));
+}
 
-  std::unique_ptr<device::SerialDeviceEnumerator> enumerator =
-      device::SerialDeviceEnumerator::Create();
-  std::vector<device::mojom::SerialDeviceInfoPtr> devices =
-      enumerator->GetDevices();
+void SerialGetDevicesFunction::OnGetDevicesComplete(
+    std::vector<device::mojom::SerialDeviceInfoPtr> devices) {
   results_ = serial::GetDevices::Results::Create(
       mojo::ConvertTo<std::vector<serial::DeviceInfo>>(devices));
+  AsyncWorkCompleted();
 }
 
 SerialConnectFunction::SerialConnectFunction() {}
