@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "a36128c0_0b351b95",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-26T00:32:01Z",
+      "side": 1,
+      "message": "You forgot to get rid of the \"size() \u003e 1\" check. It\u0027s no longer needed since we already make an !empty() check beforehand.",
+      "parentUuid": "c1ee3b93_14040ba4",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0be78ef2_6ede428f",
         "filename": "chromeos/components/tether/host_scanner.h",
         "patchSetId": 3

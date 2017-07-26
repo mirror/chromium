@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "402c2b66_6f93632c",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-26T00:32:01Z",
+      "side": 1,
+      "message": "Use an \"else if\" and an \"else\" at the end. It\u0027s always better to have your code less indented if there\u0027s a good way to do so.",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 10
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c287fd35_a80a03c9",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-26T00:32:01Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need to verify this since you\u0027re it\u0027s assumed we are not connected to start any of these tests.",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 402,
+        "endChar": 58
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb03901_fbbf2b6a",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-26T00:32:01Z",
+      "side": 1,
+      "message": "Instead, let\u0027s connect to a specific network. See [1] for an example. You don\u0027t need to have an is_connected parameter since we are only adding a network in the case where we want it to be connected. Just add a AddWifiNetwork() helper function (which internally calls ConfigureService()) and call it from this test.\n\n[1] https://cs.chromium.org/chromium/src/chromeos/components/tether/crash_recovery_manager_unittest.cc?q\u003dCreateConfigurationJsonString",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 75
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7d32d4_ae22012b",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-26T00:32:01Z",
+      "side": 1,
+      "message": "Please add at least one more scan result so that we verify that the notification isn\u0027t shown in the case where there are multiple scan results and we are online.\n\nAlso, please complete the scan (i.e., receive the final scan result) at the end. Look at other tests in this file for an example.",
+      "range": {
+        "startLine": 420,
+        "startChar": 0,
+        "endLine": 423,
+        "endChar": 43
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
