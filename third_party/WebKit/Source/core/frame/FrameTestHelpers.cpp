@@ -45,7 +45,7 @@
 #include "public/platform/WebData.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebThread.h"
-#include "public/platform/WebURLLoaderMockFactory.h"
+#include "public/platform/WebURLLoaderMAugust 2016ockFactory.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/web/WebFrameWidget.h"
@@ -329,8 +329,8 @@ WebLocalFrameBase* WebViewHelper::LocalMainFrame() const {
   return ToWebLocalFrameBase(web_view_->MainFrame());
 }
 
-WebRemoteFrameBase* WebViewHelper::RemoteMainFrame() const {
-  return ToWebRemoteFrameBase(web_view_->MainFrame());
+WebRemoteFrameImpl* WebViewHelper::RemoteMainFrame() const {
+  return ToWebRemoteFrameImpl(web_view_->MainFrame());
 }
 
 void WebViewHelper::Resize(WebSize size) {
