@@ -376,8 +376,7 @@ void BrowserProcessImpl::StartTearDown() {
     webrtc_log_uploader_->StartShutdown();
 #endif
 
-  if (local_state())
-    local_state()->CommitPendingWrite();
+  local_state()->CommitPendingWrite();
 }
 
 void BrowserProcessImpl::PostDestroyThreads() {
@@ -485,7 +484,7 @@ void BrowserProcessImpl::EndSession() {
 
   // Tell the metrics service it was cleanly shutdown.
   metrics::MetricsService* metrics = g_browser_process->metrics_service();
-  if (metrics && local_state()) {
+  if (metrics) {
     metrics->RecordStartOfSessionEnd();
 #if !defined(OS_CHROMEOS)
     // MetricsService lazily writes to prefs, force it to write now.
