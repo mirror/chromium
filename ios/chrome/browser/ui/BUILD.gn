@@ -340,6 +340,7 @@ source_set("ui_internal") {
     "//base",
     "//base:i18n",
     "//components/bookmarks/browser",
+    "//components/feature_engagement_tracker",
     "//components/image_fetcher/ios",
     "//components/infobars/core",
     "//components/payments/core",
