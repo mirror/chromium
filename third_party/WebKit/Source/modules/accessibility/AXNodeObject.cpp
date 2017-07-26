@@ -95,8 +95,11 @@ class BoolAttributeSetter : public SparseAttributeSetter {
   void Run(const AXObject& obj,
            AXSparseAttributeClient& attribute_map,
            const AtomicString& value) override {
-    attribute_map.AddBoolAttribute(attribute_,
-                                   EqualIgnoringASCIICase(value, "true"));
+    // ARIA booleans are true if not "false" and not specifically undefined.
+    bool is_true = !value.IsEmpty() &&
+                   !EqualIgnoringASCIICase(value, "false") &&
+                   !EqualIgnoringASCIICase(value, "undefined");
+    attribute_map.AddBoolAttribute(attribute_, is_true);
   }
 };
 
@@ -210,6 +213,8 @@ static AXSparseAttributeSetterMap& GetSparseAttributeSetterMap() {
     ax_sparse_attribute_setter_map.Set(
         aria_roledescriptionAttr,
         new StringAttributeSetter(AXStringAttribute::kAriaRoleDescription));
+    ax_sparse_attribute_setter_map.Set(
+        aria_busyAttr, new BoolAttributeSetter(AXBoolAttribute::kAriaBusy));
   }
   return ax_sparse_attribute_setter_map;
 }
