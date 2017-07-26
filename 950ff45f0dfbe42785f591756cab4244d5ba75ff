@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec1f6cc4_9f61b3c1",
+        "filename": "chrome/browser/resources/md_bookmarks/app.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-26T01:48:05Z",
+      "side": 1,
+      "message": "Do we have an official style guide rule for including/excluding params for single parameter arrows?\n\nThe Google style guide suggests that they should generally be included: https://google.github.io/styleguide/jsguide.html#features-functions-arrow-functions\n\nChris and I have been following this recommendation in the few places we\u0027ve used arrow functions (eg, https://cs.chromium.org/chromium/src/chrome/browser/resources/md_bookmarks/toolbar.js?type\u003dcs\u0026q\u003d%3D%3E+file:md_bookmarks\u0026l\u003d77).\n\nI don\u0027t personally have a strong opinion between the two options, but this is a good opportunity to try to be consistent \u003d).",
+      "range": {
+        "startLine": 99,
+        "startChar": 40,
+        "endLine": 99,
+        "endChar": 41
+      },
+      "revId": "950ff45f0dfbe42785f591756cab4244d5ba75ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
