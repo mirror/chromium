@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94474970_c9f7ca93",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T20:15:56Z",
+      "side": 1,
+      "message": "Sorry, could you label these values as well?  Just want the tests to be a little more self-contained.",
+      "range": {
+        "startLine": 547,
+        "startChar": 37,
+        "endLine": 547,
+        "endChar": 39
+      },
+      "revId": "092bd412ee7db19ccb21f22f98c9fd78a2d1d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade7d808_a4c07686",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T20:15:56Z",
+      "side": 1,
+      "message": "optional:  I think it\u0027s more common to put labels second?",
+      "range": {
+        "startLine": 549,
+        "startChar": 38,
+        "endLine": 549,
+        "endChar": 54
+      },
+      "revId": "092bd412ee7db19ccb21f22f98c9fd78a2d1d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

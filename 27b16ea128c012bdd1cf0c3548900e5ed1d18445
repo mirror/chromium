@@ -93,6 +93,30 @@
       "revId": "27b16ea128c012bdd1cf0c3548900e5ed1d18445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a447ba67_68cf8a88",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T20:15:56Z",
+      "side": 1,
+      "message": "Ahh.  One thing we could do is end with \"/* modify_http_only */ false)\".  Then it would verify that we\u0027re really not supporting modify_http_only, and if that changes, ensure the test is updated.  Anyhow, fine as-is.  (Though testing this much stuff in a test, making this block necessary, is bad form, IMHO, that\u0027s a pre-existing condition).",
+      "parentUuid": "ab7aa6ed_ae8ad8bd",
+      "range": {
+        "startLine": 575,
+        "startChar": 22,
+        "endLine": 575,
+        "endChar": 0
+      },
+      "revId": "27b16ea128c012bdd1cf0c3548900e5ed1d18445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
