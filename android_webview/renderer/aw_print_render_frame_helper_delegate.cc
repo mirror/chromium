@@ -2,33 +2,34 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "android_webview/renderer/aw_print_web_frame_helper_delegate.h"
+#include "android_webview/renderer/aw_print_render_frame_helper_delegate.h"
 
 #include "third_party/WebKit/public/web/WebElement.h"
 
 namespace android_webview {
 
-AwPrintWebViewHelperDelegate::~AwPrintWebViewHelperDelegate() {}
+AwPrintRenderFrameHelperDelegate::~AwPrintRenderFrameHelperDelegate() {}
 
-bool AwPrintWebViewHelperDelegate::CancelPrerender(
+bool AwPrintRenderFrameHelperDelegate::CancelPrerender(
     content::RenderFrame* render_frame) {
   return false;
 }
 
-blink::WebElement AwPrintWebViewHelperDelegate::GetPdfElement(
+blink::WebElement AwPrintRenderFrameHelperDelegate::GetPdfElement(
     blink::WebLocalFrame* frame) {
   return blink::WebElement();
 }
 
-bool AwPrintWebViewHelperDelegate::IsPrintPreviewEnabled() {
+bool AwPrintRenderFrameHelperDelegate::IsPrintPreviewEnabled() {
   return false;
 }
 
-bool AwPrintWebViewHelperDelegate::IsScriptedPrintEnabled() {
+bool AwPrintRenderFrameHelperDelegate::IsScriptedPrintEnabled() {
   return false;
 }
 
-bool AwPrintWebViewHelperDelegate::OverridePrint(blink::WebLocalFrame* frame) {
+bool AwPrintRenderFrameHelperDelegate::OverridePrint(
+    blink::WebLocalFrame* frame) {
   return false;
 }
 
