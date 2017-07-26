@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca4a1fe_d330a6c2",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Remove this comment.\nStart() doesn\u0027t call WakeUp() right? Callers should be checking the return value of Start().",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 36
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cd57a9_c8d9cc7d",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Split this DCHECK.\n\nMove !started_ to the join_called_for_testing_ DCHECK.",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 31
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef9f5af_fb95c52d",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Since we\u0027re DCHECKing thread_, this if check is no longer necessary.",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 14
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dcfeb9c_a9b95584",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "These should be removed. Seems like they\u0027re no longer called.",
+      "range": {
+        "startLine": 74,
+        "startChar": 46,
+        "endLine": 75,
+        "endChar": 15
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a366e8a_507cf579",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "This is mentioned later in this comment. Remove.",
+      "range": {
+        "startLine": 109,
+        "startChar": 50,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b2be3d_3f6f8aa9",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Calling this if Start() failed is undefined.",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 65
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b884fe_c766cad5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "finish before calling JoinForTesting()",
+      "range": {
+        "startLine": 369,
+        "startChar": 18,
+        "endLine": 369,
+        "endChar": 29
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d074ebab_84f3add9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Shutdown() must return before calling JoinForTesting().",
+      "range": {
+        "startLine": 374,
+        "startChar": 10,
+        "endLine": 374,
+        "endChar": 63
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4cba93_ce8be0db",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Should we rename detach-\u003ecleanup in this CL or would that be better as a separate CL?",
+      "range": {
+        "startLine": 544,
+        "startChar": 71,
+        "endLine": 544,
+        "endChar": 77
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a080f32_e33071b6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Demorganize this expression.",
+      "range": {
+        "startLine": 559,
+        "startChar": 4,
+        "endLine": 559,
+        "endChar": 72
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9349c5_339dc485",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 602,
+        "startChar": 7,
+        "endLine": 602,
+        "endChar": 14
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e071d4_04ca39e9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Reword this comment. It\u0027s not clear what returning a TaskTracker means here.\n\nDo you mean TaskTracker::Shutdown() must be completed before calling JoinForTesting()? If so, also add an explanation why (BLOCK_SHUTDOWN tasks could still be in flight without a Shutdown() call)",
+      "range": {
+        "startLine": 100,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 39
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2546c792_aee76d13",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "These lock comments aren\u0027t necessary since we have the AssertAcquired() calls.",
+      "range": {
+        "startLine": 124,
+        "startChar": 45,
+        "endLine": 125,
+        "endChar": 30
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd636497_f2823673",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Cleanup, here and henceforth.",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1022187_917e78d7",
+        "filename": "base/threading/sequenced_worker_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-26T21:09:34Z",
+      "side": 1,
+      "message": "Why are both of these required?",
+      "range": {
+        "startLine": 296,
+        "startChar": 6,
+        "endLine": 297,
+        "endChar": 47
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
