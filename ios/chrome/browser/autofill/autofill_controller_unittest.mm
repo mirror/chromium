@@ -346,6 +346,7 @@ void AutofillControllerTest::SetUpForSuggestions(NSString* data) {
   profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16("55123"));
   EXPECT_EQ(0U, personal_data_manager->GetProfiles().size());
   personal_data_manager->SaveImportedProfile(profile);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   EXPECT_EQ(1U, personal_data_manager->GetProfiles().size());
 
   LoadHtml(data);
@@ -475,6 +476,7 @@ void AutofillControllerTest::SetUpKeyValueData() {
   fieldData.value = base::UTF8ToUTF16("Bonjour");
   values.push_back(fieldData);
   web_data_service->AddFormFields(values);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
 
   // Load test page.
   LoadHtml(kKeyValueFormHtml);
