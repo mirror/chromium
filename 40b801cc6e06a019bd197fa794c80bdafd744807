@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ba132f6b_b000adda",
+        "filename": "components/ntp_snippets/remote/test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-26T14:37:20Z",
+      "side": 1,
+      "message": "\u003e The problem is that I need a default value for RemoteSuggestionBuilder, when it is not set manually.\n\nMy suggestion is that tests set it manually. The default is not much of a convenience and will make tests harder to understand.\n\nIf there\u0027s a real reason they can\u0027t, make this a really obvious \"user did not set a timestamp\" value, like 1970-01-01T00:00:00Z.",
+      "parentUuid": "827c28ac_a2296bdd",
+      "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0e3e958_b89b6188",
         "filename": "components/ntp_snippets/time_utils.h",
         "patchSetId": 2
