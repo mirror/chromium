@@ -4,14 +4,26 @@
 
 package org.chromium.net;
 
+import static org.chromium.net.CronetTestRule.SERVER_CERT_PEM;
+import static org.chromium.net.CronetTestRule.SERVER_KEY_PKCS8_PEM;
+
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.chromium.base.Log;
 import org.chromium.base.PathUtils;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.impl.CronetUrlRequestContext;
 import org.chromium.net.test.EmbeddedTestServer;
 
@@ -24,27 +36,30 @@ import java.net.URL;
 /**
  * Tests for experimental options.
  */
+@RunWith(BaseJUnit4ClassRunner.class)
 @JNINamespace("cronet")
-public class ExperimentalOptionsTest extends CronetTestBase {
+public class ExperimentalOptionsTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private static final String TAG = ExperimentalOptionsTest.class.getSimpleName();
     private ExperimentalCronetEngine.Builder mBuilder;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        mBuilder = new ExperimentalCronetEngine.Builder(getContext());
+    @Before
+    public void setUp() throws Exception {
+        mBuilder = new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
         CronetTestUtil.setMockCertVerifierForTesting(
                 mBuilder, QuicTestServer.createMockCertVerifier());
-        assertTrue(Http2TestServer.startHttp2TestServer(
-                getContext(), SERVER_CERT_PEM, SERVER_KEY_PKCS8_PEM));
+        Assert.assertTrue(Http2TestServer.startHttp2TestServer(
+                InstrumentationRegistry.getTargetContext(), SERVER_CERT_PEM, SERVER_KEY_PKCS8_PEM));
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        assertTrue(Http2TestServer.shutdownHttp2TestServer());
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        Assert.assertTrue(Http2TestServer.shutdownHttp2TestServer());
     }
 
+    @Test
     @MediumTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -66,15 +81,16 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         UrlRequest urlRequest = builder.build();
         urlRequest.start();
         callback.blockForDone();
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("GET", callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("GET", callback.mResponseAsString);
         cronetEngine.stopNetLog();
         assertFileContainsString(logfile, "HostResolverRules");
-        assertTrue(logfile.delete());
-        assertFalse(logfile.exists());
+        Assert.assertTrue(logfile.delete());
+        Assert.assertFalse(logfile.exists());
         cronetEngine.shutdown();
     }
 
+    @Test
     @MediumTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -93,12 +109,12 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         UrlRequest urlRequest = builder.build();
         urlRequest.start();
         callback.blockForDone();
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("GET", callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("GET", callback.mResponseAsString);
 
         assertFileContainsString(file, "CLIENT_RANDOM");
-        assertTrue(file.delete());
-        assertFalse(file.exists());
+        Assert.assertTrue(file.delete());
+        Assert.assertFalse(file.exists());
         cronetEngine.shutdown();
     }
 
@@ -112,7 +128,7 @@ public class ExperimentalOptionsTest extends CronetTestBase {
             Log.i(TAG, "Retrying...");
             Thread.sleep(100);
         }
-        assertTrue("file content doesn't match", contains);
+        Assert.assertTrue("file content doesn't match", contains);
     }
 
     // Returns whether a file contains a particular string.
@@ -141,13 +157,15 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         return false;
     }
 
+    @Test
     @MediumTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
     // Tests that basic Cronet functionality works when host cache persistence is enabled, and that
     // persistence works.
     public void testHostCachePersistence() throws Exception {
-        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(getContext());
+        EmbeddedTestServer testServer =
+                EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getTargetContext());
 
         String realUrl = testServer.getURL("/echo?status=200");
         URL javaUrl = new URL(realUrl);
@@ -156,7 +174,8 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         String testHost = "host-cache-test-host";
         String testUrl = new URL("http", testHost, realPort, javaUrl.getPath()).toString();
 
-        mBuilder.setStoragePath(getTestStorage(getContext()))
+        mBuilder.setStoragePath(
+                        CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext()))
                 .enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 0);
 
         // Set a short delay so the pref gets written quickly.
@@ -180,8 +199,8 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         UrlRequest urlRequest = builder.build();
         urlRequest.start();
         callback.blockForDone();
-        assertNull(callback.mError);
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertNull(callback.mError);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
 
         // Shut down the context, persisting contents to disk, and build a new one.
         context.shutdown();
@@ -194,8 +213,8 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         urlRequest = builder.build();
         urlRequest.start();
         callback.blockForDone();
-        assertNull(callback.mError);
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertNull(callback.mError);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
     }
 
     // Sets a host cache entry with hostname "host-cache-test-host" and an AddressList containing
