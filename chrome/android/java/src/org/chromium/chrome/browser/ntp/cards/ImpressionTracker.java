@@ -97,8 +97,9 @@ public class ImpressionTracker
             // dismissing or reassigning a View. In this case |rect| appears to be invalid.
             if (parent.getChildVisibleRect(mView, rect, null)
                     && rect.height() >= 2 * mView.getHeight() / 3) {
-                mTriggered = true;
                 mListener.onImpression();
+                mTriggered = true; // Set the flag after notifying so we can see if it's the first
+                                   // trigger.
             }
         }
         // Proceed with the current drawing pass.

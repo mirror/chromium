@@ -374,7 +374,7 @@ public class TileGroupUnitTest {
     @Test
     public void testIconLoadingWhenTileNotRegistered() {
         TileGroup tileGroup = initialiseTileGroup();
-        Tile tile = new Tile("title", URLS[0], "", 0, TileSource.POPULAR);
+        Tile tile = new Tile(new Tile.Data("title", URLS[0], "", TileSource.POPULAR));
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
         tileGroup.buildTileView(tile, layout);

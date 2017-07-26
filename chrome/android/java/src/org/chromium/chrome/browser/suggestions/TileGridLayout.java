@@ -174,8 +174,9 @@ public class TileGridLayout extends FrameLayout {
         int paddingTop = getPaddingTop();
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
         for (int i = 0; i < visibleChildCount; i++) {
-            View child = getChildAt(i);
+            TileView child = (TileView) getChildAt(i);
             child.setVisibility(View.VISIBLE);
+            child.onGridPositionAssigned(i);
             int row = i / numColumns;
             int column = i % numColumns;
             int verticalOffset = Math.round(mExtraVerticalSpacing * ((float) (row + 1) / numRows));
@@ -189,7 +190,9 @@ public class TileGridLayout extends FrameLayout {
         // Hide any extra children in case there are more than needed for the maximum number of
         // rows.
         for (int i = visibleChildCount; i < childCount; i++) {
-            getChildAt(i).setVisibility(View.GONE);
+            TileView child = (TileView) getChildAt(i);
+            child.setVisibility(View.GONE);
+            child.onGridPositionAssigned(null);
         }
 
         int totalHeight = paddingTop + getPaddingBottom() + numRows * childHeight

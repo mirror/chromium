@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.chromium.base.Callback;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.TitleUtil;
 
@@ -32,13 +33,14 @@ public class TileView extends FrameLayout {
         int MODERN = 2;
     }
 
-    /** The url currently associated to this tile. */
-    private String mUrl;
+    /** The data currently associated to this tile. */
+    private Tile.Data mTileData;
 
     private TextView mTitleView;
     private View mIconBackgroundView;
     private ImageView mIconView;
     private ImageView mBadgeView;
+    private Callback<Integer> mCb;
 
     /**
      * Constructor for inflating from XML.
@@ -64,9 +66,10 @@ public class TileView extends FrameLayout {
      * @param titleLines The number of text lines to use for the tile title.
      * @param tileStyle The visual style of the tile.
      */
-    public void initialize(Tile tile, int titleLines, @Style int tileStyle) {
+    public void initialize(Tile tile, int titleLines, @Style int tileStyle, Callback<Integer> cb) {
         mTitleView.setLines(titleLines);
-        mUrl = tile.getUrl();
+        mTileData = tile.getData();
+        mCb = cb;
 
         Resources res = getResources();
 
@@ -107,7 +110,11 @@ public class TileView extends FrameLayout {
 
     /** @return The url associated with this view. */
     public String getUrl() {
-        return mUrl;
+        return mTileData.url;
+    }
+
+    public Tile.Data getData() {
+        return mTileData;
     }
 
     /**
@@ -127,8 +134,8 @@ public class TileView extends FrameLayout {
         if (!isUpToDate(tile)) renderTile(tile);
     }
 
-    private boolean isUpToDate(Tile tile) {
-        assert mUrl.equals(tile.getUrl());
+    public boolean isUpToDate(Tile tile) {
+        assert mTileData.equals(tile.getData());
 
         if (tile.getIcon() != mIconView.getDrawable()) return false;
         if (!tile.getTitle().equals(mTitleView.getText())) return false;
@@ -137,11 +144,15 @@ public class TileView extends FrameLayout {
     }
 
     private void renderTile(Tile tile) {
-        // A TileView should not be reused across tiles having different urls, as registered
+        // A TileView should not be reused across tiles having different data, as registered
         // callbacks and handlers use it to look up the data and notify the rest of the system.
-        assert mUrl.equals(tile.getUrl());
+        assert mTileData.equals(tile.getData());
         mTitleView.setText(TitleUtil.getTitleForDisplay(tile.getTitle(), tile.getUrl()));
         renderOfflineBadge(tile);
         renderIcon(tile);
+    }
+
+    public void onGridPositionAssigned(Integer gridPosition) {
+        mCb.onResult(gridPosition);
     }
 }

@@ -32,6 +32,7 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.ContextMenuItemId;
+import org.chromium.chrome.browser.ntp.cards.ImpressionTracker;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.widget.RoundedIconGenerator;
 import org.chromium.ui.mojom.WindowOpenDisposition;
@@ -183,7 +184,7 @@ public class TileGroup implements MostVisitedSites.Observer {
 
     /** Most recently received tile data that has not been displayed yet. */
     @Nullable
-    private List<Tile> mPendingTiles;
+    private List<Tile.Data> mPendingTiles;
 
     /**
      * URL of the most recently removed tile. Used to identify when a tile removal is confirmed by
@@ -281,11 +282,10 @@ public class TileGroup implements MostVisitedSites.Observer {
             if (sources[i] == TileSource.HOMEPAGE) {
                 int homeTilePosition = Math.min(mPendingTiles.size(), mNumColumns - 1);
                 mPendingTiles.add(homeTilePosition,
-                        new Tile(titles[i], urls[i], whitelistIconPaths[i], homeTilePosition,
-                                sources[i]));
+                        new Tile.Data(titles[i], urls[i], whitelistIconPaths[i], sources[i]));
             } else {
-                mPendingTiles.add(new Tile(titles[i], urls[i], whitelistIconPaths[i],
-                        mPendingTiles.size(), sources[i]));
+                mPendingTiles.add(
+                        new Tile.Data(titles[i], urls[i], whitelistIconPaths[i], sources[i]));
             }
 
             addedUrls.add(urls[i]);
@@ -336,11 +336,12 @@ public class TileGroup implements MostVisitedSites.Observer {
      */
     public void renderTileViews(ViewGroup parent) {
         // Map the old tile views by url so they can be reused later.
-        Map<String, TileView> oldTileViews = new HashMap<>();
+        Map<Tile.Data, TileView> oldTileViews = new HashMap<>();
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             TileView tileView = (TileView) parent.getChildAt(i);
-            oldTileViews.put(tileView.getUrl(), tileView);
+            TileView previousMapping = oldTileViews.put(tileView.getData(), tileView);
+            assert previousMapping == null : "There shouldn't be multiple views for the same data.";
         }
 
         // Remove all views from the layout because even if they are reused later they'll have to be
@@ -348,11 +349,11 @@ public class TileGroup implements MostVisitedSites.Observer {
         parent.removeAllViews();
 
         for (Tile tile : mTiles) {
-            TileView tileView = oldTileViews.get(tile.getUrl());
+            TileView tileView = oldTileViews.get(tile.getData());
             if (tileView == null) {
                 tileView = buildTileView(tile, parent);
             } else {
-                tileView.updateIfDataChanged(tile);
+                assert tileView.isUpToDate(tile);
             }
 
             parent.addView(tileView);
@@ -388,10 +389,16 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @return The new tile view.
      */
     @VisibleForTesting
-    TileView buildTileView(Tile tile, ViewGroup parentView) {
+    TileView buildTileView(final Tile tile, ViewGroup parentView) {
         TileView tileView = (TileView) LayoutInflater.from(parentView.getContext())
                                     .inflate(R.layout.tile_view, parentView, false);
-        tileView.initialize(tile, mTitleLinesCount, mTileStyle);
+        tileView.initialize(tile, mTitleLinesCount, mTileStyle, new Callback<Integer>() {
+            @Override
+            public void onResult(@Nullable Integer result) {
+                Log.d("DGN", "Grid position %d assigned to %s", result, tile.getTitle());
+                tile.setIndex(result);
+            }
+        });
 
         if (isLoadTracked()) addTask(TileTask.FETCH_ICON);
 
@@ -400,9 +407,10 @@ public class TileGroup implements MostVisitedSites.Observer {
         LargeIconCallback iconCallback = new LargeIconCallbackImpl(tile.getUrl(), isLoadTracked());
         loadWhitelistIcon(tile, iconCallback);
 
-        TileInteractionDelegate delegate = new TileInteractionDelegate(tile.getUrl());
+        TileInteractionDelegate delegate = new TileInteractionDelegate(tile.getData());
         tileView.setOnClickListener(delegate);
         tileView.setOnCreateContextMenuListener(delegate);
+        delegate.trackImpressions(tileView);
 
         return tileView;
     }
@@ -444,13 +452,28 @@ public class TileGroup implements MostVisitedSites.Observer {
         boolean isInitialLoad = !mHasReceivedData;
         mHasReceivedData = true;
 
+        // Put the new tiles in a different array from the final one so that tile lookup is still
+        // possible with the existing ones.
+        Tile[] newTiles = new Tile[mPendingTiles.size()];
+
         boolean countChanged = isInitialLoad || mTiles.length != mPendingTiles.size();
         boolean dataChanged = countChanged;
-        for (Tile newTile : mPendingTiles) {
-            if (newTile.importData(getTile(newTile.getUrl()))) dataChanged = true;
+        for (int i = 0; i < mPendingTiles.size(); ++i) {
+            Tile.Data newTileData = mPendingTiles.get(i);
+            assert getTile(newTileData, newTiles) == null : "Detected a duplicated tile";
+
+            Tile newTile;
+            Tile matchingTile = getTile(newTileData);
+            if (matchingTile != null) {
+                newTile = matchingTile;
+            } else {
+                dataChanged = true;
+                newTile = new Tile(newTileData);
+            }
+            newTiles[i] = newTile;
         }
 
-        mTiles = mPendingTiles.toArray(new Tile[mPendingTiles.size()]);
+        mTiles = newTiles;
         mPendingTiles = null;
 
         if (!dataChanged) return;
@@ -467,11 +490,27 @@ public class TileGroup implements MostVisitedSites.Observer {
         if (isInitialLoad) removeTask(TileTask.FETCH_DATA);
     }
 
-    /** @return A tile matching the provided URL, or {@code null} if none is found. */
+    /** @return The first tile matching the provided URL, or {@code null} if none is found. */
     @Nullable
+    @Deprecated
     private Tile getTile(String url) {
         for (Tile tile : mTiles) {
             if (tile.getUrl().equals(url)) return tile;
+        }
+        return null;
+    }
+
+    /** @return The first tile matching the provided data, or {@code null} if none is found. */
+    @Nullable
+    private Tile getTile(Tile.Data tileData) {
+        return getTile(tileData, mTiles);
+    }
+
+    @Nullable
+    private Tile getTile(Tile.Data tileData, Tile[] dataSource) {
+        for (Tile tile : dataSource) {
+            if (tile == null) return null; // Handle partially filled array during data load.
+            if (tile.getData().equals(tileData)) return tile;
         }
         return null;
     }
@@ -544,17 +583,20 @@ public class TileGroup implements MostVisitedSites.Observer {
         }
     }
 
-    private class TileInteractionDelegate
-            implements ContextMenuManager.Delegate, OnClickListener, OnCreateContextMenuListener {
-        private final String mUrl;
+    private class TileInteractionDelegate implements ContextMenuManager.Delegate, OnClickListener,
+                                                     OnCreateContextMenuListener,
+                                                     ImpressionTracker.Listener {
+        private final Tile.Data mTileData;
+        private final ImpressionTracker mImpressionTracker;
 
-        public TileInteractionDelegate(String url) {
-            mUrl = url;
+        public TileInteractionDelegate(Tile.Data tileData) {
+            mTileData = tileData;
+            mImpressionTracker = new ImpressionTracker(null, this);
         }
 
         @Override
         public void onClick(View view) {
-            Tile tile = getTile(mUrl);
+            Tile tile = getTile(mTileData);
             if (tile == null) return;
 
             SuggestionsMetrics.recordTileTapped();
@@ -563,7 +605,7 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         @Override
         public void openItem(int windowDisposition) {
-            Tile tile = getTile(mUrl);
+            Tile tile = getTile(mTileData);
             if (tile == null) return;
 
             mTileGroupDelegate.openMostVisitedItem(windowDisposition, tile);
@@ -571,18 +613,18 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         @Override
         public void removeItem() {
-            Tile tile = getTile(mUrl);
+            Tile tile = getTile(mTileData);
             if (tile == null) return;
 
             // Note: This does not track all the removals, but will track the most recent one. If
             // that removal is committed, it's good enough for change detection.
-            mPendingRemovalUrl = mUrl;
+            mPendingRemovalUrl = mTileData.url;
             mTileGroupDelegate.removeMostVisitedItem(tile, new RemovalUndoneCallback());
         }
 
         @Override
         public String getUrl() {
-            return mUrl;
+            return mTileData.url;
         }
 
         @Override
@@ -597,6 +639,28 @@ public class TileGroup implements MostVisitedSites.Observer {
         public void onCreateContextMenu(
                 ContextMenu contextMenu, View view, ContextMenuInfo contextMenuInfo) {
             mContextMenuManager.createContextMenu(contextMenu, view, this);
+        }
+
+        public void trackImpressions(TileView tileView) {
+            mImpressionTracker.reset(tileView);
+        }
+
+        @Override
+        public void onImpression() {
+            Tile tile = getTile(mTileData);
+            assert(tile != null)
+                : "We should not show a tile for which we have no data. " + mTileData.title;
+            assert tile.getIndex()
+                    != null : "An index should have been assigned to the tile. " + mTileData.title;
+            assert !mImpressionTracker.wasTriggered()
+                : "We got triggered more than once. "
+                    + mTileData.title;
+
+            Log.d("DGN", "onImpression: record impression for tile %s at position %d",
+                    tile.getTitle(), tile.getIndex());
+
+            // Unregister the observer
+            mImpressionTracker.reset(null);
         }
     }
 

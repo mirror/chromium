@@ -6,18 +6,18 @@ package org.chromium.chrome.browser.suggestions;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import org.chromium.chrome.browser.ntp.cards.ImpressionTracker;
 
 /**
  * Holds the details to populate a site suggestion tile.
  */
 public class Tile implements OfflinableSuggestion {
-    private final String mTitle;
-    private final String mUrl;
-    private final String mWhitelistIconPath;
-    private final int mIndex;
+    private Data mData;
 
-    @TileSource
-    private final int mSource;
+    @Nullable
+    private Integer mIndex;
 
     @TileVisualType
     private int mType = TileVisualType.NONE;
@@ -28,51 +28,16 @@ public class Tile implements OfflinableSuggestion {
     @Nullable
     private Long mOfflinePageOfflineId;
 
-    /**
-     * @param title The tile title.
-     * @param url The site URL.
-     * @param whitelistIconPath The path to the icon image file, if this is a whitelisted tile.
-     * Empty otherwise.
-     * @param index The index of this tile in the list of tiles.
-     * @param source The {@code TileSource} that generated this tile.
-     */
-    public Tile(
-            String title, String url, String whitelistIconPath, int index, @TileSource int source) {
-        mTitle = title;
-        mUrl = url;
-        mWhitelistIconPath = whitelistIconPath;
-        mIndex = index;
-        mSource = source;
-    }
+    @Nullable
+    private ImpressionTracker mImpressionTracker;
 
-    /**
-     * Imports transient data from an old tile, and reports whether there is a significant
-     * difference between the two that would require a redraw.
-     * Assumes that the current tile and the old tile (if provided) both describe the same site,
-     * so the URLs have to be the same.
-     */
-    public boolean importData(@Nullable Tile tile) {
-        if (tile == null) return true;
-
-        assert tile.getUrl().equals(mUrl);
-
-        mType = tile.getType();
-        mIcon = tile.getIcon();
-        mOfflinePageOfflineId = tile.mOfflinePageOfflineId;
-
-        if (!tile.getTitle().equals(mTitle)) return true;
-        if (tile.getIndex() != mIndex) return true;
-
-        // Ignore the whitelist changes when we already have an icon, since we won't need to reload
-        // it. We also omit requesting a redraw when |mSource| changes, as it only affects UMA.
-        if (!tile.getWhitelistIconPath().equals(mWhitelistIconPath) && mIcon == null) return true;
-
-        return false;
+    public Tile(Data data) {
+        mData = data;
     }
 
     @Override
     public String getUrl() {
-        return mUrl;
+        return mData.url;
     }
 
     @Override
@@ -95,14 +60,14 @@ public class Tile implements OfflinableSuggestion {
      * @return The title of this tile.
      */
     public String getTitle() {
-        return mTitle;
+        return mData.title;
     }
 
     /**
      * @return The path of the whitelist icon associated with the URL.
      */
     public String getWhitelistIconPath() {
-        return mWhitelistIconPath;
+        return mData.whitelistIconPath;
     }
 
     /**
@@ -112,11 +77,14 @@ public class Tile implements OfflinableSuggestion {
         return getOfflinePageOfflineId() != null;
     }
 
-    /**
-     * @return The index of this tile in the list of tiles.
-     */
-    public int getIndex() {
+    /** @return The position the tile is displayed at, or {@code null} if it's hidden. */
+    public Integer getIndex() {
         return mIndex;
+    }
+
+    /** The position the tile is displayed at, or {@code null} if it's hidden. */
+    public void setIndex(@Nullable Integer index) {
+        mIndex = index;
     }
 
     /**
@@ -125,7 +93,7 @@ public class Tile implements OfflinableSuggestion {
      */
     @TileSource
     public int getSource() {
-        return mSource;
+        return mData.source;
     }
 
     /**
@@ -157,5 +125,46 @@ public class Tile implements OfflinableSuggestion {
      */
     public void setIcon(@Nullable Drawable icon) {
         mIcon = icon;
+    }
+
+    public Data getData() {
+        return mData;
+    }
+
+    public static final class Data {
+        public final String title;
+        public final String url;
+        public final String whitelistIconPath;
+        @TileSource
+        public final int source;
+
+        public Data(String title, String url, String whitelistIconPath, @TileSource int source) {
+            this.title = title;
+            this.url = url;
+            this.whitelistIconPath = whitelistIconPath;
+            this.source = source;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Data data = (Data) o;
+
+            if (source != data.source) return false;
+            if (!title.equals(data.title)) return false;
+            if (!url.equals(data.url)) return false;
+            return whitelistIconPath.equals(data.whitelistIconPath);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = title.hashCode();
+            result = 31 * result + source;
+            result = 31 * result + url.hashCode();
+            result = 31 * result + whitelistIconPath.hashCode();
+            return result;
+        }
     }
 }
