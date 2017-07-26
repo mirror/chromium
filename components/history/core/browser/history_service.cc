@@ -377,11 +377,12 @@ void HistoryService::AddPage(const GURL& url,
                              const RedirectList& redirects,
                              ui::PageTransition transition,
                              VisitSource visit_source,
-                             bool did_replace_entry) {
+                             bool did_replace_entry,
+                             const base::Optional<GURL>& is_same_document_as) {
   DCHECK(thread_checker_.CalledOnValidThread());
   AddPage(HistoryAddPageArgs(url, time, context_id, nav_entry_id, referrer,
                              redirects, transition, visit_source,
-                             did_replace_entry, true));
+                             did_replace_entry, is_same_document_as, true));
 }
 
 void HistoryService::AddPage(const GURL& url,
@@ -390,7 +391,7 @@ void HistoryService::AddPage(const GURL& url,
   DCHECK(thread_checker_.CalledOnValidThread());
   AddPage(HistoryAddPageArgs(url, time, nullptr, 0, GURL(), RedirectList(),
                              ui::PAGE_TRANSITION_LINK, visit_source, false,
-                             true));
+                             base::nullopt, true));
 }
 
 void HistoryService::AddPage(const HistoryAddPageArgs& add_page_args) {

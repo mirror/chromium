@@ -356,9 +356,8 @@ class HistoryBackendTest : public HistoryBackendTestBase {
 
     ContextID context_id = reinterpret_cast<ContextID>(1);
     history::HistoryAddPageArgs request(
-        redirects.back(), time, context_id, nav_entry_id, GURL(),
-        redirects, transition, history::SOURCE_BROWSED,
-        true, true);
+        redirects.back(), time, context_id, nav_entry_id, GURL(), redirects,
+        transition, history::SOURCE_BROWSED, true, base::nullopt, true);
     backend_->AddPage(request);
   }
 
@@ -367,8 +366,8 @@ class HistoryBackendTest : public HistoryBackendTestBase {
   // |did_replace| is true if the transition is non-user initiated and the
   // navigation entry for |url2| has replaced that for |url1|. The possibly
   // updated transition code of the visit records for |url1| and |url2| is
-  // returned by filling in |*transition1| and |*transition2|, respectively.
-  // |time| is a time of the redirect.
+  // returned by filling in |*transition1| and |*transition2|, respectively,
+  // unless null. |time| is a time of the redirect.
   void AddClientRedirect(const GURL& url1,
                          const GURL& url2,
                          bool did_replace,
@@ -381,14 +380,17 @@ class HistoryBackendTest : public HistoryBackendTestBase {
       redirects.push_back(url1);
     if (url2.is_valid())
       redirects.push_back(url2);
-    HistoryAddPageArgs request(
-        url2, time, dummy_context_id, 0, url1,
-        redirects, ui::PAGE_TRANSITION_CLIENT_REDIRECT,
-        history::SOURCE_BROWSED, did_replace, true);
+    HistoryAddPageArgs request(url2, time, dummy_context_id, 0, url1, redirects,
+                               ui::PAGE_TRANSITION_CLIENT_REDIRECT,
+                               history::SOURCE_BROWSED, did_replace,
+                               base::nullopt, true);
     backend_->AddPage(request);
 
-    *transition1 = GetTransition(url1);
-    *transition2 = GetTransition(url2);
+    if (transition1)
+      *transition1 = GetTransition(url1);
+
+    if (transition2)
+      *transition2 = GetTransition(url2);
   }
 
   int GetTransition(const GURL& url) {
@@ -780,10 +782,10 @@ TEST_F(HistoryBackendTest, DeleteAllThenAddData) {
 
   base::Time visit_time = base::Time::Now();
   GURL url("http://www.google.com/");
-  HistoryAddPageArgs request(url, visit_time, NULL, 0, GURL(),
-                             history::RedirectList(),
-                             ui::PAGE_TRANSITION_KEYWORD_GENERATED,
-                             history::SOURCE_BROWSED, false, true);
+  HistoryAddPageArgs request(
+      url, visit_time, NULL, 0, GURL(), history::RedirectList(),
+      ui::PAGE_TRANSITION_KEYWORD_GENERATED, history::SOURCE_BROWSED, false,
+      base::nullopt, true);
   backend_->AddPage(request);
 
   // Check that a row was added.
@@ -913,10 +915,10 @@ TEST_F(HistoryBackendTest, KeywordGenerated) {
   GURL url("http://google.com");
 
   base::Time visit_time = base::Time::Now() - base::TimeDelta::FromDays(1);
-  HistoryAddPageArgs request(url, visit_time, NULL, 0, GURL(),
-                             history::RedirectList(),
-                             ui::PAGE_TRANSITION_KEYWORD_GENERATED,
-                             history::SOURCE_BROWSED, false, true);
+  HistoryAddPageArgs request(
+      url, visit_time, NULL, 0, GURL(), history::RedirectList(),
+      ui::PAGE_TRANSITION_KEYWORD_GENERATED, history::SOURCE_BROWSED, false,
+      base::nullopt, true);
   backend_->AddPage(request);
 
   // A row should have been added for the url.
@@ -946,9 +948,9 @@ TEST_F(HistoryBackendTest, KeywordGenerated) {
   // Going back to the same entry should not increment the typed count.
   ui::PageTransition back_transition = ui::PageTransitionFromInt(
       ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FORWARD_BACK);
-  HistoryAddPageArgs back_request(url, visit_time, NULL, 0, GURL(),
-                                  history::RedirectList(), back_transition,
-                                  history::SOURCE_BROWSED, false, true);
+  HistoryAddPageArgs back_request(
+      url, visit_time, NULL, 0, GURL(), history::RedirectList(),
+      back_transition, history::SOURCE_BROWSED, false, base::nullopt, true);
   backend_->AddPage(back_request);
   url_id = backend_->db()->GetRowForURL(url, &row);
   ASSERT_NE(0, url_id);
@@ -1472,22 +1474,22 @@ TEST_F(HistoryBackendTest, AddPageArgsSource) {
   GURL url("http://testpageargs.com");
 
   // Assume this page is browsed by user.
-  HistoryAddPageArgs request1(url, base::Time::Now(), NULL, 0, GURL(),
-                             history::RedirectList(),
-                             ui::PAGE_TRANSITION_KEYWORD_GENERATED,
-                             history::SOURCE_BROWSED, false, true);
+  HistoryAddPageArgs request1(
+      url, base::Time::Now(), NULL, 0, GURL(), history::RedirectList(),
+      ui::PAGE_TRANSITION_KEYWORD_GENERATED, history::SOURCE_BROWSED, false,
+      base::nullopt, true);
   backend_->AddPage(request1);
   // Assume this page is synced.
   HistoryAddPageArgs request2(url, base::Time::Now(), NULL, 0, GURL(),
-                             history::RedirectList(),
-                             ui::PAGE_TRANSITION_LINK,
-                             history::SOURCE_SYNCED, false, true);
+                              history::RedirectList(), ui::PAGE_TRANSITION_LINK,
+                              history::SOURCE_SYNCED, false, base::nullopt,
+                              true);
   backend_->AddPage(request2);
   // Assume this page is browsed again.
-  HistoryAddPageArgs request3(url, base::Time::Now(), NULL, 0, GURL(),
-                             history::RedirectList(),
-                             ui::PAGE_TRANSITION_TYPED,
-                             history::SOURCE_BROWSED, false, true);
+  HistoryAddPageArgs request3(
+      url, base::Time::Now(), NULL, 0, GURL(), history::RedirectList(),
+      ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED, false, base::nullopt,
+      true);
   backend_->AddPage(request3);
 
   // Three visits should be added with proper sources.
@@ -1808,7 +1810,6 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirects) {
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url2, favicon_base::FAVICON));
 }
 
-
 // Test that SetFaviconMappingsForPageAndRedirects correctly updates icon
 // mappings when the final URL has a fragment.
 TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirectsWithFragment) {
@@ -1866,6 +1867,56 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirectsWithFragment) {
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, favicon_base::FAVICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url2, favicon_base::FAVICON));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url3, favicon_base::FAVICON));
+}
+
+// Test that |recent_redirects_| stores the redirect chain in case of
+// navigations within the same document (in this case, fragment navigation).
+TEST_F(HistoryBackendTest, RecentRedirectsForFragmentNavigations) {
+  GURL url1("http://google.com/a");
+  GURL url2("http://google.com/b");
+  GURL url3("http://google.com/c#foo");
+
+  // Page A is browsed by user and server redirects to B.
+  HistoryAddPageArgs request1(
+      url2, base::Time::Now(), NULL, 0, GURL(),
+      /*redirects=*/{url1, url2}, ui::PAGE_TRANSITION_TYPED,
+      history::SOURCE_BROWSED, false, base::nullopt, true);
+  backend_->AddPage(request1);
+
+  // User navigates to a fragment.
+  HistoryAddPageArgs request2(
+      url3, base::Time::Now(), NULL, 0, GURL(), history::RedirectList(),
+      ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED, false, url2, true);
+  backend_->AddPage(request2);
+
+  EXPECT_THAT(backend_->recent_redirects_.Get(url3)->second,
+              ElementsAre(url1, url2, url3));
+}
+
+// Test that |recent_redirects_| stores the full redirect chain in case of
+// client redirects. In this case, a server-side redirect is followed by a
+// client-side one.
+TEST_F(HistoryBackendTest, RecentRedirectsForClientRedirects) {
+  GURL server_redirect_url("http://google.com/a");
+  GURL client_redirect_url("http://google.com/b");
+  GURL landing_url("http://google.com/c");
+
+  // Page A is browsed by user and server redirects to B.
+  HistoryAddPageArgs request(
+      client_redirect_url, base::Time::Now(), NULL, 0, GURL(),
+      /*redirects=*/{server_redirect_url, client_redirect_url},
+      ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED, false, base::nullopt,
+      true);
+  backend_->AddPage(request);
+
+  // Client redirect to page C.
+  AddClientRedirect(client_redirect_url, landing_url, /*did_replace=*/false,
+                    base::Time(), /*transition1=*/nullptr,
+                    /*transition2=*/nullptr);
+
+  EXPECT_THAT(
+      backend_->recent_redirects_.Get(landing_url)->second,
+      ElementsAre(server_redirect_url, client_redirect_url, landing_url));
 }
 
 // Test that there is no churn in icon mappings from calling
@@ -3618,9 +3669,9 @@ TEST_F(HistoryBackendTest, RemoveNotification) {
   EXPECT_TRUE(service->Init(
       TestHistoryDatabaseParamsForPath(scoped_temp_dir.GetPath())));
 
-  service->AddPage(
-      url, base::Time::Now(), NULL, 1, GURL(), RedirectList(),
-      ui::PAGE_TRANSITION_TYPED, SOURCE_BROWSED, false);
+  service->AddPage(url, base::Time::Now(), NULL, 1, GURL(), RedirectList(),
+                   ui::PAGE_TRANSITION_TYPED, SOURCE_BROWSED, false,
+                   base::nullopt);
 
   // This won't actually delete the URL, rather it'll empty out the visits.
   // This triggers blocking on the BookmarkModel.
