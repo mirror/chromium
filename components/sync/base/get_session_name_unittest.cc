@@ -4,6 +4,8 @@
 
 #include "components/sync/base/get_session_name.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -22,9 +24,10 @@ namespace {
 
 class GetSessionNameTest : public ::testing::Test {
  public:
-  void SetSessionNameAndQuit(const std::string& session_name) {
+  void SetSessionName(const std::string& session_name,
+                      base::OnceClosure on_done) {
     session_name_ = session_name;
-    message_loop_.QuitWhenIdle();
+    std::move(on_done).Run();
   }
 
  protected:
@@ -65,10 +68,12 @@ TEST_F(GetSessionNameTest, GetSessionNameSynchronouslyChromebox) {
 // with a session name.  Makes sure the returned session name is equal
 // to the return value of GetSessionNameSynchronouslyForTesting().
 TEST_F(GetSessionNameTest, GetSessionName) {
-  GetSessionName(message_loop_.task_runner(),
-                 base::Bind(&GetSessionNameTest::SetSessionNameAndQuit,
-                            base::Unretained(this)));
-  base::RunLoop().Run();
+  base::RunLoop run_loop;
+  GetSessionName(
+      message_loop_.task_runner(),
+      base::Bind(&GetSessionNameTest::SetSessionName, base::Unretained(this),
+                 run_loop.QuitWhenIdleClosure()));
+  run_loop.Run();
   EXPECT_EQ(session_name_, GetSessionNameSynchronouslyForTesting());
 }
 
