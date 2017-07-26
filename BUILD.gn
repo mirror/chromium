@@ -26,6 +26,8 @@ if (is_android) {
   import("//build/config/android/config.gni")
 }
 
+#TEST TEST TEST
+
 declare_args() {
   # A list of extra dependencies to add to the root target. This allows a
   # checkout to add additional targets without explicitly changing any checked-
