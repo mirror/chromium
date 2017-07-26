@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285b13b2_544bb802",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T00:56:36Z",
+      "side": 1,
+      "message": "What is ETA for this? When prod server is ready. And if it is not ready, what is the benefit to include code that does not work for users?",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 269,
+        "endChar": 16
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
