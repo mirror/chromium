@@ -5058,7 +5058,8 @@ bool WebContentsImpl::ShouldRouteMessageEvent(
   // postMessage from anyone (not just its own guests). However, this is
   // probably not a risk for apps since other pages won't have references
   // to App windows.
-  return GetBrowserPluginGuest() || GetBrowserPluginEmbedder();
+  return GetBrowserPluginEmbedder() || GetBrowserPluginGuest() ||
+         !node_.inner_web_contents().empty();
 }
 
 void WebContentsImpl::EnsureOpenerProxiesExist(RenderFrameHost* source_rfh) {
@@ -5069,7 +5070,7 @@ void WebContentsImpl::EnsureOpenerProxiesExist(RenderFrameHost* source_rfh) {
     // If this message is going to outer WebContents from inner WebContents,
     // then we should not create a RenderView. AttachToOuterWebContentsFrame()
     // already created a RenderFrameProxyHost for that purpose.
-    if (GetBrowserPluginEmbedder() &&
+    if ((GetBrowserPluginEmbedder() || !node_.inner_web_contents().empty()) &&
         GuestMode::IsCrossProcessFrameGuest(source_web_contents)) {
       return;
     }
