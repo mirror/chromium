@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca95ca87_9438d886",
+        "filename": "extensions/browser/bad_message.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T02:12:30Z",
+      "side": 1,
+      "message": "nit:\nI think you can add a new comment before the newly added method and leave this one as is. e.g.:\n\n// Same as ReceivedBadMessage above, but takes a render process id. Non-existent render process ids are ignored.\nvoid ReceivedBadMessage(int ...)",
+      "range": {
+        "startLine": 43,
+        "startChar": 3,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "2461028773f6285920fc8c9a6dd249cc1b051709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
