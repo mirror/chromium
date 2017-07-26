@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/metrics/histogram_macros.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/search_box_model_observer.h"
 
 namespace app_list {
@@ -37,6 +38,13 @@ void SearchBoxModel::SetSpeechRecognitionButton(
   speech_button_ = std::move(speech_button);
   for (auto& observer : observers_)
     observer.SpeechRecognitionButtonPropChanged();
+}
+
+const SearchBoxModel::SpeechButtonProperty* SearchBoxModel::speech_button()
+    const {
+  if (features::IsFullscreenAppListEnabled())
+    return nullptr;
+  return speech_button_.get();
 }
 
 void SearchBoxModel::SetHintText(const base::string16& hint_text) {

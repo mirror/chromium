@@ -50,9 +50,7 @@ class APP_LIST_EXPORT SearchBoxModel {
   // Sets/gets the properties for the button of speech recognition.
   void SetSpeechRecognitionButton(
       std::unique_ptr<SpeechButtonProperty> speech_button);
-  const SpeechButtonProperty* speech_button() const {
-    return speech_button_.get();
-  }
+  const SpeechButtonProperty* speech_button() const;
 
   // Sets/gets the hint text to display when there is in input.
   void SetHintText(const base::string16& hint_text);
