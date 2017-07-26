@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "99a2b17c_52a72692",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T23:43:22Z",
+      "side": 1,
+      "message": "Change this comment? \"Check file path validity\" or sth.",
+      "range": {
+        "startLine": 88,
+        "startChar": 21,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "48f0e19c5d9bc5fc6d7a9b001baa8090c46df11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0967957a_29e98bf8",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
         "patchSetId": 8
@@ -18,6 +41,29 @@
         "startChar": 9,
         "endLine": 99,
         "endChar": 24
+      },
+      "revId": "48f0e19c5d9bc5fc6d7a9b001baa8090c46df11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de16184_c00ccac5",
+        "filename": "extensions/common/api/declarative_net_request/utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T23:43:22Z",
+      "side": 1,
+      "message": "This should be\nTODO(karandeepb): Use Feature::... correctly. https://crbug.com/748309.\n\n(That\u0027s what I\u0027ve always used, did some guide change recently?)",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 19
       },
       "revId": "48f0e19c5d9bc5fc6d7a9b001baa8090c46df11c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
