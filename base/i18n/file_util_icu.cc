@@ -105,7 +105,8 @@ bool IsFilenameLegal(const string16& file_name) {
 }
 
 void ReplaceIllegalCharactersInPath(FilePath::StringType* file_name,
-                                    char replace_char) {
+                                    char replace_char,
+                                    bool is_utf8) {
   IllegalCharacters* illegal = IllegalCharacters::GetInstance();
 
   DCHECK(!(illegal->DisallowedEverywhere(replace_char)));
@@ -115,8 +116,9 @@ void ReplaceIllegalCharactersInPath(FilePath::StringType* file_name,
   while (cursor < static_cast<int>(file_name->size())) {
     int char_begin = cursor;
     uint32_t code_point;
-#if defined(OS_MACOSX)
-    // Mac uses UTF-8 encoding for filenames.
+#if defined(OS_MACOSX) || defined(CHROME_OS)
+    // Mac and Chrome OS use UTF-8 encoding for filenames.
+    DCHECK(base::IsStringUTF8(file_name));
     U8_NEXT(file_name->data(), cursor, static_cast<int>(file_name->length()),
             code_point);
 #elif defined(OS_WIN)
@@ -124,12 +126,19 @@ void ReplaceIllegalCharactersInPath(FilePath::StringType* file_name,
     U16_NEXT(file_name->data(), cursor, static_cast<int>(file_name->length()),
              code_point);
 #elif defined(OS_POSIX)
-    // Linux doesn't actually define an encoding. It basically allows anything
-    // except for a few special ASCII characters.
-    unsigned char cur_char = static_cast<unsigned char>((*file_name)[cursor++]);
-    if (cur_char >= 0x80)
-      continue;
-    code_point = cur_char;
+    // Linux doesn't actually define file system encoding. Try to parse UTF8 if
+    // |is_utf8| is true. Or parse it as ASCII, a few special ASCII
+    // characters are not allowed.
+    if (is_utf8) {
+      U8_NEXT(file_name->data(), cursor, static_cast<int>(file_name->length()),
+              code_point);
+    } else {
+      unsigned char cur_char =
+          static_cast<unsigned char>((*file_name)[cursor++]);
+      if (cur_char >= 0x80)
+        continue;
+      code_point = cur_char;
+    }
 #else
     NOTREACHED();
 #endif

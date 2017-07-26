@@ -277,7 +277,8 @@ base::string16 GetSuggestedFilenameImpl(
                      : base::FilePath::StringType(kFinalFallbackName);
     overwrite_extension = false;
   }
-  replace_illegal_characters_function(&result_str, '-');
+
+  replace_illegal_characters_function(&result_str, '_', true);
   base::FilePath result(result_str);
   // extension should not appended to filename derived from
   // content-disposition, if it does not have one.

@@ -23,7 +23,8 @@ class FileUtilICUTest : public PlatformTest {
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
 
-// Linux disallows some evil ASCII characters, but passes all non-ASCII.
+// When the file name is not parsed as UTF8, Linux disallows some evil ASCII
+// characters, but passes all non-ASCII.
 static const struct GoodBadPairLinux {
   const char* bad_name;
   const char* good_name;
@@ -40,7 +41,7 @@ static const struct GoodBadPairLinux {
 TEST_F(FileUtilICUTest, ReplaceIllegalCharacersInPathLinuxTest) {
   for (size_t i = 0; i < arraysize(kLinuxIllegalCharacterCases); ++i) {
     std::string bad_name(kLinuxIllegalCharacterCases[i].bad_name);
-    ReplaceIllegalCharactersInPath(&bad_name, '-');
+    ReplaceIllegalCharactersInPath(&bad_name, '-', false);
     EXPECT_EQ(kLinuxIllegalCharacterCases[i].good_name, bad_name);
   }
 }
@@ -82,7 +83,7 @@ static const struct goodbad_pair {
     {L".    ", L"-   -"}
 };
 
-#if defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_POSIX)
 
 TEST_F(FileUtilICUTest, ReplaceIllegalCharactersInPathTest) {
   for (size_t i = 0; i < arraysize(kIllegalCharacterCases); ++i) {
@@ -93,6 +94,10 @@ TEST_F(FileUtilICUTest, ReplaceIllegalCharactersInPathTest) {
 #elif defined(OS_MACOSX)
     std::string bad_name(WideToUTF8(kIllegalCharacterCases[i].bad_name));
     ReplaceIllegalCharactersInPath(&bad_name, '-');
+    EXPECT_EQ(WideToUTF8(kIllegalCharacterCases[i].good_name), bad_name);
+#elif defined(OS_POSIX)
+    std::string bad_name(WideToUTF8(kIllegalCharacterCases[i].bad_name));
+    ReplaceIllegalCharactersInPath(&bad_name, '-', true);
     EXPECT_EQ(WideToUTF8(kIllegalCharacterCases[i].good_name), bad_name);
 #endif
   }
