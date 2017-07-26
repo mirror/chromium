@@ -74,6 +74,7 @@
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -1217,6 +1218,10 @@ void MediaControlsImpl::ToggleOverflowMenu() {
 
   if (!overflow_list_->IsWanted())
     window_event_listener_->Start();
+
+  LayoutRect bounding_box = overflow_menu_->BoundingBox();
+  overflow_list_->style()->setProperty("bottom", WTF::String::Number(bounding_box.MaxY().ToInt()), "important", ASSERT_NO_EXCEPTION);
+  overflow_list_->style()->setProperty("right", WTF::String::Number(bounding_box.MaxX().ToInt()), "important", ASSERT_NO_EXCEPTION);
   overflow_list_->SetIsWanted(!overflow_list_->IsWanted());
 }
 
