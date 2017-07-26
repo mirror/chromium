@@ -22,6 +22,30 @@
       "revId": "6233ebfb8a777b3b45d5c7d7eff207c62b659d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5126c7d_bc05a208",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-26T20:03:38Z",
+      "side": 1,
+      "message": "Good point. One thing I can think of to fool this test is extra items visible but not enabled. Or there are nested menu items, but we are not going to do that, right?\n\nIf all the menu items are linear, we could add something like getVisibleMenuSize() that only checks isVisible() but not isEnabled(), and use it in additional to getActualMenuSize(). Then we don\u0027t need these assertFalse checkings here and in testAppMenuForMediaViewer(). Does this make sense?",
+      "parentUuid": "fff31023_71300237",
+      "range": {
+        "startLine": 593,
+        "startChar": 26,
+        "endLine": 593,
+        "endChar": 30
+      },
+      "revId": "6233ebfb8a777b3b45d5c7d7eff207c62b659d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
