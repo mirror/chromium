@@ -22,6 +22,30 @@
       "revId": "961b6efc37f5621bb744cfc82ceeae89548d27c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513a5b75_dfa68519",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-26T05:15:28Z",
+      "side": 1,
+      "message": "I want set this flag only for Dedicated Workers.\nCould you please let me know what is the best way to do so?",
+      "parentUuid": "4e5509af_0149ffd9",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "961b6efc37f5621bb744cfc82ceeae89548d27c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
