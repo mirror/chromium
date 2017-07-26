@@ -52,6 +52,40 @@
       "revId": "a7203df5028d28d3bfd99050a9505e422e51e07b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea718902_f94ce512",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T03:32:39Z",
+      "side": 1,
+      "message": "OK how about a comment like this:\n\n// If script streaming is enabled, for installed service workers, typically all the scripts are served via script streaming, so we don\u0027t come here. However, we still come here when the service worker is A) importing a script that was never installed, or B) loading the same script twice. For now, return false here to fallback to network. Eventually, A) should be deprecated (https://crbug.com/719052), and B) should be handled by script streaming as well, see the TODO in WebServiceWorkerInstalledScriptsManagerImpl::GetRawScriptData().\n//\n// When script streaming is not enabled, we get here even for the main script. Therefore, ScriptURLLoader must handle the request (even though it currently just does a network fetch for now), because it sets the main script\u0027s HTTP Response Info (via ServiceWorkerVersion::SetMainScriptHttpResponseInfo()) which otherwise would never be set.",
+      "revId": "a7203df5028d28d3bfd99050a9505e422e51e07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e1e995_1d1be25e",
+        "filename": "content/common/service_worker/service_worker_provider.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-26T03:32:39Z",
+      "side": 1,
+      "message": "// For servicified service worker only.\n// The loader to use for loading the worker\u0027s main script and importScripts().\n\n(feels like we need a codename for servicified service worker)",
+      "revId": "a7203df5028d28d3bfd99050a9505e422e51e07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
