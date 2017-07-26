@@ -850,7 +850,6 @@ extern const char kForceBrowserSignin[];
 extern const char kEasyUnlockDeviceId[];
 extern const char kEasyUnlockHardlockState[];
 extern const char kEasyUnlockLocalStateTpmKeys[];
-extern const char kEasyUnlockLocalStateUserPrefs[];
 
 extern const char kRecoveryComponentNeedsElevation[];
 

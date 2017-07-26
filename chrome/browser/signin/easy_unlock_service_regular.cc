@@ -103,11 +103,6 @@ EasyUnlockServiceRegular::EasyUnlockServiceRegular(
 EasyUnlockServiceRegular::~EasyUnlockServiceRegular() {
 }
 
-proximity_auth::ProximityAuthPrefManager*
-EasyUnlockServiceRegular::GetProximityAuthPrefManager() {
-  return pref_manager_.get();
-}
-
 void EasyUnlockServiceRegular::LoadRemoteDevices() {
   if (GetCryptAuthDeviceManager()->GetUnlockKeys().empty()) {
     SetProximityAuthDevices(GetAccountId(), cryptauth::RemoteDeviceList());
@@ -222,6 +217,11 @@ void EasyUnlockServiceRegular::StartPromotionManager() {
       base::MakeUnique<base::DefaultClock>(),
       base::ThreadTaskRunnerHandle::Get()));
   promotion_manager_->Start();
+}
+
+proximity_auth::ProximityAuthPrefManager*
+EasyUnlockServiceRegular::GetProximityAuthPrefManager() {
+  return pref_manager_.get();
 }
 
 EasyUnlockService::Type EasyUnlockServiceRegular::GetType() const {
@@ -744,10 +744,10 @@ void EasyUnlockServiceRegular::SyncProfilePrefsToLocalState() {
       profile_prefs->GetBoolean(
           proximity_auth::prefs::kProximityAuthIsChromeOSLoginEnabled));
 
-  DictionaryPrefUpdate update(local_state,
-                              prefs::kEasyUnlockLocalStateUserPrefs);
-  update->SetWithoutPathExpansion(GetAccountId().GetUserEmail(),
-                                  std::move(user_prefs_dict));
+  // DictionaryPrefUpdate update(local_state,
+  //                            prefs::kEasyUnlockLocalStateUserPrefs);
+  // update->SetWithoutPathExpansion(GetAccountId().GetUserEmail(),
+  //                                std::move(user_prefs_dict));
 }
 
 cryptauth::CryptAuthEnrollmentManager*
