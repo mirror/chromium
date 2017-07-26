@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9445bf3d_c9341a67",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-26T00:56:57Z",
+      "side": 1,
+      "message": "PwaPersistentNotification (sigh the inconsistency in this file is sad). This may need you to rerun the unit test.",
+      "range": {
+        "startLine": 246,
+        "startChar": 5,
+        "endLine": 246,
+        "endChar": 30
+      },
+      "revId": "58a0d9a147703d54b89ad91cc21b36645d278334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff4d55c_6eff2dec",
+        "filename": "chrome/browser/android/chrome_feature_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-26T00:56:57Z",
+      "side": 1,
+      "message": "Nit: the style guide suggests this should be kPwaPersistentNotification (the NTP examples above are non-conformant).",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "58a0d9a147703d54b89ad91cc21b36645d278334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d6fc9c_8351b930",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-26T00:56:57Z",
+      "side": 1,
+      "message": "kPwaPersistentNotificationName",
+      "range": {
+        "startLine": 1103,
+        "startChar": 18,
+        "endLine": 1103,
+        "endChar": 48
+      },
+      "revId": "58a0d9a147703d54b89ad91cc21b36645d278334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
