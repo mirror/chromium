@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e70545c_8b4a7f11",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2739,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T22:07:32Z",
+      "side": 1,
+      "message": "This is a property of both Mojo and legacy sync IPC. While waiting for a sync IPC reply (which is what the browser is doing in 1.1.2 due to 1.1.1), we MUST wake up to dispatch incoming sync IPCs because the reply to our pending sync IPC may in turn depend on us replying to someone else\u0027s sync IPC. We do not dispatch async IPCs during this window except under special circumstances.",
+      "parentUuid": "42672fc6_52a5788f",
+      "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "754445a1_72c378c7",
         "filename": "services/service_manager/public/cpp/interface_provider.h",
         "patchSetId": 20
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "In media/, some clients use mojom::InterfaceProvider*, and hold on to the pointer across navigations.\n\nIn lieu of refactoring them to use service_manager::InterfaceProvider, this was the simplest way to allow swapping out our |interface_provider_| on commits without those media/ clients needing to care.\n\nI can introduce an adapter if you prefer.",
       "parentUuid": "754445a1_72c378c7",
+      "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8083d8_575abb2c",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T22:07:32Z",
+      "side": 1,
+      "message": "I see. This is unfortunate.\n\nEven changing the media code to use service_manager::InterfaceProvider does not sound very appealing to me, because I think it\u0027s fundamentally not great that the media code is holding on to an unsafe reference to any such object. In fact I ultimately prefer that RenderFrameImpl completely replace its InterfaceProvider on navigation rather than just rebind its pipe, which would leave that solution with the same problem anyway.\n\nThe reason for that is that InterfaceProvider also can hold some testing state (used by e.g. layout tests) that we most likely don\u0027t want to persist across navigations, and the API starts to get pretty murky if we implicitly tie the lifetime of that stuff to the lifetime of the underlying IP pipe binding.\n\nIs it too risky to try rebuilding the media client stuff on each navigation and just keep using mojom::InterfaceProvider* and get()?",
+      "parentUuid": "1642405e_ebaa4571",
       "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
