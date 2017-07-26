@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95117f99_da201889",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-26T03:04:40Z",
+      "side": 1,
+      "message": "Nit: also rename the argument?",
+      "revId": "b6807ab7380d18d2fd3414e4a2c05288af33a3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d3ba30_0bec918b",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-26T03:04:40Z",
+      "side": 1,
+      "message": "Nit: also rename the argument?",
+      "revId": "b6807ab7380d18d2fd3414e4a2c05288af33a3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
