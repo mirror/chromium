@@ -60,7 +60,7 @@ void ChromeTemplateURLServiceClient::AddKeywordGeneratedVisit(const GURL& url) {
     history_service_->AddPage(url, base::Time::Now(), NULL, 0, GURL(),
                               history::RedirectList(),
                               ui::PAGE_TRANSITION_KEYWORD_GENERATED,
-                              history::SOURCE_BROWSED, false);
+                              history::SOURCE_BROWSED, false, base::nullopt);
 }
 
 bool ChromeTemplateURLServiceClient::IsOmniboxExtensionURL(

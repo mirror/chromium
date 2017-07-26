@@ -893,7 +893,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     historyService->AddPage(url, item->GetTimestamp(), &_tabHistoryContext,
                             item->GetUniqueID(), referrer.url, redirects,
                             item->GetTransitionType(), history::SOURCE_BROWSED,
-                            false);
+                            false, base::nullopt);
     [self saveTitleToHistoryDB];
   }
 }

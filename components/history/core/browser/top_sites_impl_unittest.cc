@@ -193,18 +193,20 @@ class TopSitesImplTest : public HistoryUnitTestBase {
   void AddPageToHistory(const GURL& url) {
     RedirectList redirects;
     redirects.push_back(url);
-    history_service()->AddPage(
-        url, base::Time::Now(), reinterpret_cast<ContextID>(1), 0, GURL(),
-        redirects, ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED, false);
+    history_service()->AddPage(url, base::Time::Now(),
+                               reinterpret_cast<ContextID>(1), 0, GURL(),
+                               redirects, ui::PAGE_TRANSITION_TYPED,
+                               history::SOURCE_BROWSED, false, base::nullopt);
   }
 
   // Adds a page to history.
   void AddPageToHistory(const GURL& url, const base::string16& title) {
     RedirectList redirects;
     redirects.push_back(url);
-    history_service()->AddPage(
-        url, base::Time::Now(), reinterpret_cast<ContextID>(1), 0, GURL(),
-        redirects, ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED, false);
+    history_service()->AddPage(url, base::Time::Now(),
+                               reinterpret_cast<ContextID>(1), 0, GURL(),
+                               redirects, ui::PAGE_TRANSITION_TYPED,
+                               history::SOURCE_BROWSED, false, base::nullopt);
     history_service()->SetPageTitle(url, title);
   }
 
@@ -213,10 +215,9 @@ class TopSitesImplTest : public HistoryUnitTestBase {
                         const base::string16& title,
                         const history::RedirectList& redirects,
                         base::Time time) {
-    history_service()->AddPage(
-        url, time, reinterpret_cast<ContextID>(1), 0, GURL(),
-        redirects, ui::PAGE_TRANSITION_TYPED, history::SOURCE_BROWSED,
-        false);
+    history_service()->AddPage(url, time, reinterpret_cast<ContextID>(1), 0,
+                               GURL(), redirects, ui::PAGE_TRANSITION_TYPED,
+                               history::SOURCE_BROWSED, false, base::nullopt);
     history_service()->SetPageTitle(url, title);
   }
 
