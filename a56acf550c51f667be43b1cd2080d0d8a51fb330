@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "964202fe_9d1a1072",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3936277e_5e00ccee",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab6f2eb_e1ef6d05",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "nit: system notifications in general are only used on Chrome OS",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4903e041_2e59b61e",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "micro nit: I realise the other function did this too, but nowadays we prefer this pattern as it avoids the bare new.\n\nstd::unique_ptr\u003cT\u003e foo \u003d base::MakeUnique\u003cT\u003e(args...);",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6e2db5_366ec32a",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "Do you prefer this over passing in a SkColor to CreateSystemNotification to avoid people from defaulting to SkColor()? That seems fine to me, but you might want to name it SystemNotificationWarningLevel or something similar.",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbebab4_48ce9e9e",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "nit: docs",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406bdad4_7fd1591c",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "Should this default to gfx::kChromeIconGrey (the current value)? That way we can make the assumption that an accent_color *always* is available for a Notification object, avoiding the conditional in NotificationViewMD::CreateOrUpdateContextTitleView().",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f92e0a7_9615114f",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "Should existing users be updated to use the new method? (Not suggesting you do this -- just to get a long term idea.)",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d638b5_c2f6278b",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e148ef0_f1bd6ff9",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T16:14:48Z",
+      "side": 1,
+      "message": "As something to think about, the small_image() may not be masked with the accent_color_ at this point, which could lead to inconsistent display. (I believe we had this problem with Android K, where status bar icons could be colourful.)",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
