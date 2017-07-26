@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cfc3fac_6a8d8efb",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T21:08:04Z",
+      "side": 1,
+      "message": "Typically we use \u0027using\u0027 for this case. That is:\nusing browserNavigatorTestChromeOS \u003d BrowserNavigatorTest;",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "79196eae8a5972061a2b31a3616002ee56c0c610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
