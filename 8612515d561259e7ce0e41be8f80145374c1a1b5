@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f645a4e_60fdf9de",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T22:27:17Z",
+      "side": 1,
+      "message": "vim tip, to fix the line wrapping:\n\n:set textwidth\u003d100\nShift+v (and then move the cursor to select the lines)\ng\nq",
+      "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8dfbe8_0d272f21",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T22:27:17Z",
+      "side": 1,
+      "message": "You put the redundant comments back. You only need one comment, since they both mention JobService.",
+      "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41f2f87_186116e5",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsSeedFetchServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T22:27:17Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
