@@ -181,6 +181,9 @@ public class Tab
     /** Controls overscroll pull-to-refresh behavior for this tab. */
     private SwipeRefreshHandler mSwipeRefreshHandler;
 
+    /** Text bubble to show various in-product-help messages. */
+    private ViewAnchoredTextBubble mTextBubble;
+
     /** The sync id of the Tab if session sync is enabled. */
     private int mSyncId = SyncConstants.INVALID_TAB_NODE_ID;
 
@@ -589,6 +592,7 @@ public class Tab
      * Goes to the navigation entry before the current one.
      */
     public void goBack() {
+        if (mTextBubble != null) mTextBubble.dismiss();
         if (getWebContents() != null) getWebContents().getNavigationController().goBack();
     }
 
@@ -1565,13 +1569,13 @@ public class Tab
     }
 
     private void showDataSaverInProductHelp(final FeatureEngagementTracker tracker) {
-        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
+        mTextBubble = new ViewAnchoredTextBubble(getActivity(),
                 getActivity().getToolbarManager().getMenuButton(),
                 R.string.iph_data_saver_detail_text,
                 R.string.iph_data_saver_detail_accessibility_text);
-        textBubble.setDismissOnTouchInteraction(true);
+        mTextBubble.setDismissOnTouchInteraction(true);
         getActivity().getAppMenuHandler().setMenuHighlight(R.id.data_reduction_footer);
-        textBubble.addOnDismissListener(new OnDismissListener() {
+        mTextBubble.addOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
                 ThreadUtils.postOnUiThread(new Runnable() {
@@ -1585,9 +1589,9 @@ public class Tab
         });
         int yInsetPx = mThemedApplicationContext.getResources().getDimensionPixelOffset(
                 R.dimen.text_bubble_menu_anchor_y_inset);
-        textBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
+        mTextBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
                 FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
-        textBubble.show();
+        mTextBubble.show();
     }
 
     /**

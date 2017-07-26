@@ -913,6 +913,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
     @Override
     public boolean back() {
+        if (mTextBubble != null) mTextBubble.dismiss();
         Tab tab = mToolbarModel.getTab();
         if (tab != null && tab.canGoBack()) {
             tab.goBack();
