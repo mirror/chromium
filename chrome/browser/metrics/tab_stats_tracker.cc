@@ -4,6 +4,8 @@
 
 #include "chrome/browser/metrics/tab_stats_tracker.h"
 
+#include "base/metrics/histogram_macros.h"
+#include "base/power_monitor/power_monitor.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -19,9 +21,9 @@ base::LazyInstance<TabStatsTracker>::Leaky g_instance =
 }  // namespace
 
 // static
-void TabStatsTracker::Initialize() {
+void TabStatsTracker::Initialize(std::unique_ptr<StatsReportingDelegate> reporting_delegate) {
   DCHECK(g_instance == static_cast<TabStatsTracker*>(nullptr));
-  g_instance.Get();
+  g_instance.Get().set_reporting_delegate(std::move(reporting_delegate));
 }
 
 // static
@@ -29,7 +31,9 @@ TabStatsTracker* TabStatsTracker::GetInstance() {
   return g_instance.Pointer();
 }
 
-TabStatsTracker::TabStatsTracker() : total_tabs_count_(0U), browser_count_(0U) {
+TabStatsTracker::TabStatsTracker()
+    : total_tabs_count_(0U),
+      browser_count_(0U) {
   // Get the list of existing browsers/tabs. There shouldn't be any if this is
   // initialized at startup but this will ensure that the count stay accurate if
   // the initialization gets moved to after the creation of the first tab.
@@ -39,7 +43,11 @@ TabStatsTracker::TabStatsTracker() : total_tabs_count_(0U), browser_count_(0U) {
     browser->tab_strip_model()->AddObserver(this);
     total_tabs_count_ += browser->tab_strip_model()->count();
   }
+  browser_count_ += *(static_cast<size_t*>(nullptr));
   browser_list->AddObserver(this);
+  base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+  ::MessageBoxA(nullptr, "TabStatsTracker", "TabStatsTracker", MB_OK);
+  power_monitor->AddObserver(this);
 }
 
 TabStatsTracker::~TabStatsTracker() {
@@ -51,6 +59,9 @@ TabStatsTracker::~TabStatsTracker() {
     total_tabs_count_ -= browser->tab_strip_model()->count();
   }
   browser_list->RemoveObserver(this);
+
+  base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+  power_monitor->RemoveObserver(this);
 }
 
 void TabStatsTracker::OnBrowserAdded(Browser* browser) {
@@ -78,6 +89,16 @@ void TabStatsTracker::TabClosingAt(TabStripModel* model,
                                    int index) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   --total_tabs_count_;
+}
+
+void TabStatsTracker::OnResume() {
+  ::MessageBoxA(nullptr, "ReportTabCountOnResume", "ReportTabCountOnResume", MB_OK);
+  reporting_delegate_->ReportTabCountOnResume(total_tabs_count_);
+}
+
+void TabStatsTracker::UmaStatsReportingDelegate::ReportTabCountOnResume(size_t tab_count) {
+  ::MessageBoxA(nullptr, "OnResume", "OnResume", MB_OK);
+  UMA_HISTOGRAM_COUNTS_100("TabStats.NumberOfTabsOnResume", tab_count);
 }
 
 }  // namespace metrics
