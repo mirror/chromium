@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf309783_4b235fde",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T21:51:21Z",
+      "side": 1,
+      "message": "Woot!",
+      "range": {
+        "startLine": 58,
+        "startChar": 43,
+        "endLine": 58,
+        "endChar": 55
+      },
+      "revId": "68a7ec2f0fa04ea42b064a8134d8b45fc99c85cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0abfb8_1bd1d794",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T21:51:21Z",
+      "side": 1,
+      "message": "If we give this an id\u003d\"contentNode\", then we can also add:\n\n  // Give all child nodes role\u003d\u0027menuitem\u0027.\n  attached: function() {\n    this._observer \u003d Polymer.dom(this.$.contentNode).observeNodes((info) \u003d\u003e {\n      info.addedNodes.forEach(node \u003d\u003e node.setAttribute(\u0027role\u0027, \u0027menuitem\u0027));\n    });\n  },",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 14
+      },
+      "revId": "68a7ec2f0fa04ea42b064a8134d8b45fc99c85cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
