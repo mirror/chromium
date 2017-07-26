@@ -16,6 +16,24 @@
       "revId": "54763f695d39a3e8e33c94be7b7942d5274bf762",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62667362_58b391c8",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-26T21:32:47Z",
+      "side": 1,
+      "message": "This method is to get the total number of decoded video bytes from media pipeline. It seems that it has nothing to do with seeking. There is a logic in RendererController to avoid using any result obtained before seeking in the content bitrate estimation if seeking happens during the estimation. But I don\u0027t feel properly to add such comment here. WDYT?",
+      "parentUuid": "312bc489_66d024da",
+      "revId": "54763f695d39a3e8e33c94be7b7942d5274bf762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
