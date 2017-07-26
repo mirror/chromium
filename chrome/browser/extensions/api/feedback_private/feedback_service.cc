@@ -9,12 +9,12 @@
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string_number_conversions.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/feedback/system_logs/chrome_system_logs_fetcher.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_content_client.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/blob_reader.h"
+#include "extensions/browser/extensions_browser_client.h"
 #include "net/base/network_change_notifier.h"
 
 using content::BrowserThread;
@@ -32,7 +32,8 @@ void FeedbackService::SendFeedback(
     Profile* profile,
     scoped_refptr<FeedbackData> feedback_data,
     const SendFeedbackCallback& callback) {
-  feedback_data->set_locale(g_browser_process->GetApplicationLocale());
+  feedback_data->set_locale(
+      ExtensionsBrowserClient::Get()->GetApplicationLocale());
   feedback_data->set_user_agent(GetUserAgent());
 
   if (!feedback_data->attached_file_uuid().empty()) {
