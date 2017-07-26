@@ -10,6 +10,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "components/exo/notification_surface.h"
@@ -120,14 +121,11 @@ std::unique_ptr<Buffer> Display::CreateLinuxDMABufBuffer(
   // Using zero-copy for optimal performance.
   bool use_zero_copy = true;
 
-  bool is_overlay_candidate =
-      std::find(overlay_formats_.begin(), overlay_formats_.end(), format) !=
-      overlay_formats_.end();
-
   return base::MakeUnique<Buffer>(
       std::move(gpu_memory_buffer), GL_TEXTURE_EXTERNAL_OES,
       // COMMANDS_COMPLETED queries are required by native pixmaps.
-      GL_COMMANDS_COMPLETED_CHROMIUM, use_zero_copy, is_overlay_candidate);
+      GL_COMMANDS_COMPLETED_CHROMIUM, use_zero_copy,
+      base::ContainsValue(overlay_formats_, format));
 }
 #endif
 
