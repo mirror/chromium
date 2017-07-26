@@ -3,9 +3,7 @@
 // found in the LICENSE file.
 
 #include "cc/paint/solid_color_analyzer.h"
-#include "base/memory/ref_counted.h"
 #include "base/optional.h"
-#include "cc/paint/display_item_list.h"
 #include "cc/paint/record_paint_canvas.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkOffsetImageFilter.h"
@@ -16,52 +14,36 @@ namespace {
 
 class SolidColorAnalyzerTest : public testing::Test {
  public:
-  void SetUp() override {
-    display_item_list_ = base::MakeRefCounted<DisplayItemList>(
-        DisplayItemList::kToBeReleasedAsPaintOpBuffer);
-    display_item_list_->StartPaint();
-  }
+  void SetUp() override {}
 
   void TearDown() override {
-    Finalize();
     canvas_.reset();
-    display_item_list_ = nullptr;
-    buffer_ = nullptr;
+    buffer_.Reset();
   }
 
   void Initialize(const gfx::Rect& rect = gfx::Rect(0, 0, 100, 100)) {
-    canvas_.emplace(display_item_list_.get(), gfx::RectToSkRect(rect));
+    canvas_.emplace(&buffer_, gfx::RectToSkRect(rect));
     rect_ = rect;
   }
   RecordPaintCanvas* canvas() { return &*canvas_; }
+  PaintOpBuffer* paint_op_buffer() { return &buffer_; }
 
   bool IsSolidColor() {
-    Finalize();
-    auto color = SolidColorAnalyzer::DetermineIfSolidColor(buffer_.get(), rect_,
-                                                           1, nullptr);
+    auto color =
+        SolidColorAnalyzer::DetermineIfSolidColor(&buffer_, rect_, 1, nullptr);
     return !!color;
   }
 
-  SkColor GetColor() {
-    Finalize();
-    auto color = SolidColorAnalyzer::DetermineIfSolidColor(buffer_.get(), rect_,
-                                                           1, nullptr);
+  SkColor GetColor() const {
+    auto color =
+        SolidColorAnalyzer::DetermineIfSolidColor(&buffer_, rect_, 1, nullptr);
     EXPECT_TRUE(color);
     return color ? *color : SK_ColorTRANSPARENT;
   }
 
  private:
-  void Finalize() {
-    if (buffer_)
-      return;
-    display_item_list_->EndPaintOfUnpaired(gfx::Rect());
-    display_item_list_->Finalize();
-    buffer_ = display_item_list_->ReleaseAsRecord();
-  }
-
   gfx::Rect rect_;
-  scoped_refptr<DisplayItemList> display_item_list_;
-  sk_sp<PaintOpBuffer> buffer_;
+  PaintOpBuffer buffer_;
   base::Optional<RecordPaintCanvas> canvas_;
   base::Optional<SolidColorAnalyzer> analyzer_;
 };

@@ -6,7 +6,6 @@
 #define PaintChunksToCcLayer_h
 
 #include "base/memory/ref_counted.h"
-#include "cc/paint/display_item_list.h"
 #include "platform/PlatformExport.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/wtf/Vector.h"
@@ -47,7 +46,6 @@ class PLATFORM_EXPORT PaintChunksToCcLayer {
       const PropertyTreeState& layer_state,
       const gfx::Vector2dF& layer_offset,
       const DisplayItemList&,
-      cc::DisplayItemList::UsageHint,
       RasterUnderInvalidationCheckingParams* = nullptr);
 };
 
