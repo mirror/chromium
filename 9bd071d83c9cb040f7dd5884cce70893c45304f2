@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8d8d63b7_e3161938",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T23:29:59Z",
+      "side": 1,
+      "message": "I would just delete lines 195 and 196. I\u0027m not sure how the system tray handles a view being deleted out from under it. It might be caching pointers to the views.\n\nThis code only matters if the menu happens to be open when the user opts-in to a cellular update. Right now it looks like the flow is:\n\n* Icon shows in status area\n* User clicks icon, menu opens\n* User clicks label in menu, webui settings opens, menu closes (line 133)\n\nUsers should almost never have the menu open when the state changes. I wouldn\u0027t bother trying to update it. In the common case the menu will be closed, and it will rebuild itself when the user reopens the menu.",
+      "parentUuid": "b116ba34_9684fac3",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916fb8c1_347b2fec",
         "filename": "ash/system/update/tray_update.cc",
         "patchSetId": 3
