@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff31023_71300237",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-26T18:04:22Z",
+      "side": 1,
+      "message": "some assertFalse\u0027s here would also save you from headaches in the future when we decide to move the default menu items around.",
+      "range": {
+        "startLine": 593,
+        "startChar": 26,
+        "endLine": 593,
+        "endChar": 30
+      },
+      "revId": "6233ebfb8a777b3b45d5c7d7eff207c62b659d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
