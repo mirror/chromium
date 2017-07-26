@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fddc2e85_c09128cc",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T22:12:19Z",
+      "side": 1,
+      "message": "nit: Could you also reset the |paint_record_rect_|.",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "85060a78db1216d7462d16e32d84afc7a5212e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6317f358_2f252ac4",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T22:12:19Z",
+      "side": 1,
+      "message": "Update the comment to specify that this is used to swap out the content representation (SkImage/PaintRecord) of this image with an SkImage.",
+      "range": {
+        "startLine": 77,
+        "startChar": 72,
+        "endLine": 77,
+        "endChar": 79
+      },
+      "revId": "85060a78db1216d7462d16e32d84afc7a5212e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
