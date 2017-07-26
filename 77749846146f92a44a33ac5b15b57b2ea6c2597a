@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "969ce90b_98d9aac0",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-26T21:56:41Z",
+      "side": 1,
+      "message": "Can you call ShelfLayoutManager::OnAppListVisibilityChanged instead of adding this setter?",
+      "revId": "77749846146f92a44a33ac5b15b57b2ea6c2597a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36968d1_b1395ee2",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-26T21:56:41Z",
+      "side": 1,
+      "message": "nit: \"Swiping left\"",
+      "revId": "77749846146f92a44a33ac5b15b57b2ea6c2597a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0d5f4e_ce6b88bf",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-26T21:56:41Z",
+      "side": 1,
+      "message": "nit: \"Swiping right\"",
+      "revId": "77749846146f92a44a33ac5b15b57b2ea6c2597a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
