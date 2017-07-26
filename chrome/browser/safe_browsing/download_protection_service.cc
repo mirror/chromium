@@ -406,6 +406,11 @@ class DownloadProtectionService::CheckClientDownloadRequest
       is_incognito_ = item_->GetBrowserContext()->IsOffTheRecord();
     }
 
+    // If whitelist match for URL, do not continue processing.
+    if (CheckUrlAgainstWhitelists()) {
+      return;
+    }
+
     DownloadCheckResultReason reason = REASON_MAX;
     if (!IsSupportedDownload(
         *item_, item_->GetTargetFilePath(), &reason, &type_)) {
@@ -682,7 +687,9 @@ class DownloadProtectionService::CheckClientDownloadRequest
     // download URL is hosted on the internal network.
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&CheckClientDownloadRequest::CheckWhitelists, this));
+        base::BindOnce(
+            &CheckClientDownloadRequest::CheckCertificateChainAgainstWhitelists,
+            this));
 
     // We wait until after the file checks finish to start the timeout, as
     // windows can cause permissions errors if the timeout fired while we were
@@ -897,7 +904,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
            base::RandDouble() < service_->whitelist_sample_rate();
   }
 
-  void CheckWhitelists() {
+  void CheckCertificateChainAgainstWhitelists() {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
     if (!database_manager_.get()) {
@@ -952,6 +959,32 @@ class DownloadProtectionService::CheckClientDownloadRequest
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&CheckClientDownloadRequest::GetTabRedirects, this));
+  }
+
+  bool CheckUrlAgainstWhitelists() {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+    if (!database_manager_.get()) {
+      PostFinishTask(UNKNOWN, REASON_SB_DISABLED);
+      return true;
+    }
+
+    const GURL& url = url_chain_.back();
+    // TODO(asanka): This may acquire a lock on the SB DB on the IO thread.
+    if (url.is_valid() && database_manager_->MatchDownloadWhitelistUrl(url)) {
+      DVLOG(2) << url << " is on the download whitelist.";
+      RecordCountOfWhitelistedDownload(URL_WHITELIST);
+      if (ShouldSampleWhitelistedDownload()) {
+        skipped_url_whitelist_ = true;
+      } else {
+        // TODO(grt): Continue processing without uploading so that
+        // ClientDownloadRequest callbacks can be run even for this type of safe
+        // download.
+        PostFinishTask(SAFE, REASON_WHITELISTED_URL);
+        return true;
+      }
+    }
+    return false;
   }
 
   void GetTabRedirects() {
