@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55102248_9920e6cd",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:24:10Z",
+      "side": 1,
+      "message": "We could write a test that validates that this triggers callbacks with the right value right?  We could also validate that this no longer repros the failure case.  e.g.:\n\nEXPECT_CALL(SomeCallbackHelper1(1));\nEXPECT_CALL(SomeCallbackHelper2(2));\n\ndelegate_.GetNextId(SomeCallbackHelper1);\ndelegate_.GetNextId(SomeCallbackHelper2);\n\ndelegate_.SetNextId(invalidid);\n\n?",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 256,
+        "endChar": 65
+      },
+      "revId": "28f535b258b9b60e02d6731ca3ba5c403337a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac56fb50_8a2bc1e5",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:24:10Z",
+      "side": 1,
+      "message": "content::DownloadItem::kInvalidId",
+      "range": {
+        "startLine": 260,
+        "startChar": 5,
+        "endLine": 260,
+        "endChar": 6
+      },
+      "revId": "28f535b258b9b60e02d6731ca3ba5c403337a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c6945a_1570d307",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14808,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:24:10Z",
+      "side": 1,
+      "message": "when startup completes?",
+      "range": {
+        "startLine": 14808,
+        "startChar": 40,
+        "endLine": 14808,
+        "endChar": 41
+      },
+      "revId": "28f535b258b9b60e02d6731ca3ba5c403337a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
