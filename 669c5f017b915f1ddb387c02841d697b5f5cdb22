@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4837e0e9_67cec584",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-26T18:46:20Z",
+      "side": 1,
+      "message": "Yes, it\u0027s better to put this to private section. Done.",
+      "parentUuid": "116a1b0e_a6d1c08f",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "669c5f017b915f1ddb387c02841d697b5f5cdb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "530bfb1b_b1c1a93d",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "669c5f017b915f1ddb387c02841d697b5f5cdb22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648339f7_b00bc457",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-26T18:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "530bfb1b_b1c1a93d",
+      "range": {
+        "startLine": 157,
+        "startChar": 23,
+        "endLine": 157,
+        "endChar": 44
+      },
+      "revId": "669c5f017b915f1ddb387c02841d697b5f5cdb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
