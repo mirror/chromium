@@ -1,0 +1,57 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faef5e01_b627cd6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-26T02:36:47Z",
+      "side": 1,
+      "message": "Let\u0027s say that a user installs Chrome M-62 [with this feature]. They sync bookmarks from a version of Chrome M-61 [that doesn\u0027t have this feature]. Won\u0027t they still see this promo?\n\nIs there any reason we don\u0027t check to see if the user already has bookmarks? That seems like a good safety check regardless.",
+      "parentUuid": "b970e4e1_c73d93fa",
+      "revId": "550fd5d18f88c849a390eca86f1568da466082f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ca9aa9_26916f4e",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-26T02:36:47Z",
+      "side": 1,
+      "message": "There is still a significant amount of copy-pasted code. e.g. UpdateSessionTime and OnSessionEnded. \n\nAnd to a lesser extent, all the setup/configuration, and the unit test.\n\nFind a way to pull out this common code. Popular techniques include inheritance, composition, or just pulling out helper functions.",
+      "parentUuid": "52ca91d7_d796fc74",
+      "revId": "550fd5d18f88c849a390eca86f1568da466082f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676ef84a_b356eefe",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-26T02:36:47Z",
+      "side": 1,
+      "message": "this seems out of date.",
+      "revId": "550fd5d18f88c849a390eca86f1568da466082f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
