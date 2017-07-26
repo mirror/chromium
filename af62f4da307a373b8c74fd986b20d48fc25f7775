@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62089e08_e5255dd9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T20:29:58Z",
+      "side": 0,
+      "message": "Bringing this one back to keep it in spirit of refactoring.\n\nIdea for a separate patch:\nLong term I think it would make sense to validate the input parameters inside of show and simply not show if activity, current tab, web contents are null... that would be less code in call sites.",
+      "parentUuid": "9c09f0aa_44201785",
+      "range": {
+        "startLine": 1938,
+        "startChar": 38,
+        "endLine": 1938,
+        "endChar": 65
+      },
+      "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "248f744c_1bf1de5b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 8
@@ -93,6 +117,24 @@
       "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6967e2_5574bc96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T20:29:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "85168cf8_a7a5b008",
+      "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
