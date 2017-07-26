@@ -11,6 +11,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
+#import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/settings/accounts_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/import_data_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/settings_collection_view_controller.h"
@@ -19,6 +20,7 @@
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
+#import "ios/chrome/test/app/tab_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
@@ -592,6 +594,21 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   if (!IsIPadIdiom()) {
     [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
         performAction:grey_tap()];
+  } else {
+    // At the end of the test, there are 2 tabs.  Close 1 tab here.
+    chrome_test_util::CloseTabAtIndex(1);
+    [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
+    // Go back to the Home Panel (Most Visited Panel) so that it will be the
+    // default panel when next egtest starts.
+    [chrome_test_util::GetCurrentNewTabPageController()
+        selectPanel:NewTabPage::kHomePanel];
+    [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
+    // On iPad Pro iOS 10.3 simulator, It needs ~9 seconds to let the default
+    // panel get updated.  If <8.5 seconds, the default panel will still remain
+    // as Bookmarks Panel.
+    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(9000));
   }
 }
 
