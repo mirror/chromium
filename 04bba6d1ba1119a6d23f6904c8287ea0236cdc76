@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d4fdb1a_b6b147af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-26T12:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4e0acb_e5919919",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "04bba6d1ba1119a6d23f6904c8287ea0236cdc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b08c8a0_8d107846",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "15678b3f_e4f867c2",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-26T12:22:29Z",
+      "side": 1,
+      "message": "Fixed.\n\nMore intriguing, that\u0027s the only use and it should be probably should be switched to PauseRenderer, but that should be a separate patch.",
+      "parentUuid": "1b08c8a0_8d107846",
+      "range": {
+        "startLine": 1007,
+        "startChar": 25,
+        "endLine": 1007,
+        "endChar": 39
+      },
+      "revId": "04bba6d1ba1119a6d23f6904c8287ea0236cdc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85360275_c2d27933",
         "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "04bba6d1ba1119a6d23f6904c8287ea0236cdc76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ff7bce_5b04bb84",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-26T12:22:29Z",
+      "side": 1,
+      "message": "No, that one is correct — more interestingly, this method is not used at all! They should be merged with PauseTimerQueue, but it will happen in a separate patch.",
+      "parentUuid": "85360275_c2d27933",
+      "range": {
+        "startLine": 135,
+        "startChar": 15,
+        "endLine": 135,
+        "endChar": 28
+      },
+      "revId": "04bba6d1ba1119a6d23f6904c8287ea0236cdc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
