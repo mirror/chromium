@@ -216,7 +216,7 @@ class QUIC_EXPORT_PRIVATE BbrSender : public SendAlgorithmInterface {
 
   // Bandwidth sampler provides BBR with the bandwidth measurements at
   // individual points.
-  BandwidthSampler sampler_;
+  std::unique_ptr<BandwidthSamplerInterface> sampler_;
 
   // The number of the round trips that have occurred during the connection.
   QuicRoundTripCount round_trip_count_;
