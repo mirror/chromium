@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73ddb4e4_c3979ace",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T16:42:12Z",
+      "side": 1,
+      "message": "Nit: public types, including nested classes, usually go at the top of the class before any methods/constructors. Alternatively, perhaps this should be in the private: section? If so, then things get a little messier, as having all this code in between the public and private method bodies of Core makes it hard to read - so if you make DownloadItemObserver private, I\u0027d suggest out-of-lining all the method bodies in both Core and DownloadItemObserver so you can de-interleave them.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 7
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bd7058_9071bcd4",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T16:42:12Z",
+      "side": 1,
+      "message": "Please add a DCHECK_CURRENTLY_ON(BrowserThread::UI);",
+      "range": {
+        "startLine": 142,
+        "startChar": 56,
+        "endLine": 142,
+        "endChar": 57
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73baf84d_0bb4eb05",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T16:42:12Z",
+      "side": 1,
+      "message": "Nit: Why does this remove/delete the observer if COMPLETE, but not if CANCELLED? Can we just rely on OnDownloadDestroyed to remove/delete it in all cases? Or does that not get called soon enough?",
+      "range": {
+        "startLine": 178,
+        "startChar": 10,
+        "endLine": 178,
+        "endChar": 23
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ceed73_33b13194",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T16:42:12Z",
+      "side": 1,
+      "message": "Since |downloads_| is only accessed by DownloadItemObserver, you could remove this map, and instead store the BackgroundFetchRequestInfo within the DownloadItemObserver.\n\nSince the DIOs aren\u0027t destroyed when BackgroundFetchDelegateProxy is destroyed, it\u0027d probably be best to store only a WeakPtr\u003cBackgroundFetchRequestInfo\u003e (which\u0027ll involve adding a new WeakPtrFactory), unless you instead introduce a map from DownloadItem* to DownloadItemObserver purely in order to be able to remove the observers when the Core is destroyed (which would make this somewhat pointless).\n\nHowever that means that BackgroundFetchRequestInfo::PopulateResponseFromDownloadItemOnUI can\u0027t be called on the UI thread since the WeakPtr is bound to the IO thread - that can be solved by making PopulateResponseFromDownloadItemOnUI a static method that takes a WeakPtr\u003cBackgroundFetchRequestInfo\u003e and internally takes care of posting to the IO thread before writing the state; and then we can get rid of BackgroundFetchRequestInfo::SetResponseDataPopulated. This does introduce some additional copies (of e.g. the headers which could be large) - that could be avoided by creating a DownloadState struct that is constructed on UI but then lives on IO.\n\n(Similar refactorings could be done for BackgroundFetchRequestInfo::PopulateDownloadStateOnUI to clean that up, even though the WeakPtr issue doesn\u0027t apply).\n\nThis is obviously way into new patch territory though, so can just be a follow-up for one of us.",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 266,
+        "endChar": 20
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c5413f_2268608c",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T16:42:12Z",
+      "side": 1,
+      "message": "Nit: add a DCHECK(job_controller.get()) to document that the WeakPtr isn\u0027t expected to be invalid yet (or add a public GetWeakPtr() method to the controller and make the method parameter non-weak).",
+      "range": {
+        "startLine": 302,
+        "startChar": 17,
+        "endLine": 302,
+        "endChar": 31
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a396286_6d089020",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T16:42:12Z",
+      "side": 1,
+      "message": "Micro-nit: Capital B. Might also be clearer to say \"It is owned by\" instead of \"Its lifetime is controlled by\", since controlled sounds more complicated (i.e. it sounds more likely that it could be destroyed before the BFContext is destroyed).",
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8723f51_9f9bfdce",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-07-26T16:42:12Z",
+      "side": 0,
+      "message": "Please keep the DCHECK_CURRENTLY_ON(BrowserThread::UI), since it\u0027s vital that this class is destructed on the same class its methods are called on.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "35313b31ccc52eb7264af4f79afd4353039612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
