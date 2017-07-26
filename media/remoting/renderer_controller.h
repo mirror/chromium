@@ -123,6 +123,9 @@ class RendererController final : public SharedSession::Client,
   // Helper to request the media pipeline switch to the remoting renderer.
   void StartRemoting(StartTrigger start_trigger);
 
+  // Callback to get the estimated transmission capacity from Remoter.
+  void OnTransmissionCapacity(double rate);
+
   // Indicates whether remoting is started.
   bool remote_rendering_started_ = false;
 
@@ -179,6 +182,9 @@ class RendererController final : public SharedSession::Client,
   // TODO(xjz): Estimate whether the transmission bandwidth is sufficient to
   // remote the content while this timer is running.
   base::OneShotTimer delayed_start_stability_timer_;
+
+  // The estimated transmission capacity (bytes/s) from Remoter.
+  double transmission_capacity_ = 0;
 
   base::WeakPtrFactory<RendererController> weak_factory_;
 
