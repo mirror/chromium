@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "851bafe5_6d567a8a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-26T15:01:59Z",
+      "side": 1,
+      "message": "Thanks for catching that -- I had an earlier local draft that exposed the strings in that file, until I remembered that OriginTrials.h was a much better fit.",
+      "parentUuid": "9c1523c7_25feee2c",
+      "range": {
+        "startLine": 144,
+        "startChar": 18,
+        "endLine": 144,
+        "endChar": 40
+      },
+      "revId": "2e961d1653e3c26bc538711ed754c5cc4e0cbada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f85bb9c_0490548d",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-26T14:21:13Z",
       "side": 1,
       "message": "This is a good solution to the problem. I was wondering if this script would have to also consume the RuntimeEnabledFeatures.json5. Nice to see we can avoid that.\n\nI guess we\u0027ll see if this approach works for other kinds of conditional installation. Maybe origin trials will be the only one where \"feature name\" \u003c\u003e \"name to be installed\".",
+      "range": {
+        "startLine": 167,
+        "startChar": 10,
+        "endLine": 167,
+        "endChar": 23
+      },
+      "revId": "2e961d1653e3c26bc538711ed754c5cc4e0cbada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b487bee6_9da5b4d0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-26T15:01:59Z",
+      "side": 1,
+      "message": "So far it is; at least it\u0027s the only mechanism that goes from user-facing strings directly to \"try to turn this feature on\". Feature policy, for instance, converts to an enum before doing comparisons like this.\n\nAnd I\u0027m also glad to avoid reading the json5 file here -- it\u0027s in Platform, and the existing scripts are in Build, rather than Source. It would have required some ugly layering violations, for certain.",
+      "parentUuid": "8f85bb9c_0490548d",
       "range": {
         "startLine": 167,
         "startChar": 10,
