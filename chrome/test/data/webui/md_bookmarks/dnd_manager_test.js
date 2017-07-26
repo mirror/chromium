@@ -66,27 +66,29 @@ suite('drag and drop', function() {
   }
 
   setup(function() {
+    var nodes = testTree(
+        createFolder(
+            '1',
+            [
+              createFolder(
+                  '11',
+                  [
+                    createFolder(
+                        '111',
+                        [
+                          createItem('1111'),
+                        ]),
+                    createFolder('112', []),
+                  ]),
+              createItem('12'),
+              createItem('13'),
+              createFolder('14', []),
+              createFolder('15', []),
+            ]),
+        createFolder('2', []));
     store = new bookmarks.TestStore({
-      nodes: testTree(
-          createFolder(
-              '1',
-              [
-                createFolder(
-                    '11',
-                    [
-                      createFolder(
-                          '111',
-                          [
-                            createItem('1111'),
-                          ]),
-                      createFolder('112', []),
-                    ]),
-                createItem('12'),
-                createItem('13'),
-                createFolder('14', []),
-                createFolder('15', []),
-              ]),
-          createFolder('2', [])),
+      nodes: nodes,
+      folderOpenState: getAllFoldersOpenState(nodes),
       selectedFolder: '1',
     });
     store.replaceSingleton();
@@ -198,8 +200,7 @@ suite('drag and drop', function() {
     dispatchDragEvent('dragstart', dragElement);
     dndManager.dragInfo_.handleChromeDragEnter(createDragData(draggedIds));
     assertEquals(
-        DropPosition.NONE,
-        dndManager.calculateValidDropPositions_(dragTarget));
+        DropPosition.NONE, dndManager.calculateValidDropPositions_(dragTarget));
 
     dispatchDragEvent('dragover', dragTarget);
 
@@ -224,7 +225,8 @@ suite('drag and drop', function() {
     dispatchDragEvent('dragend', dragElement);
     assertDragStyle(dragTarget, DRAG_STYLE.NONE);
 
-    store.data.closedFolders.add('11');
+    store.data.folderOpenState.set('11', false);
+    store.notifyObservers();
 
     dispatchDragEvent('dragstart', dragElement);
     dndManager.dragInfo_.handleChromeDragEnter(createDragData(draggedIds));
@@ -386,7 +388,7 @@ suite('drag and drop', function() {
 
   test('auto expander', function() {
     var autoExpander = dndManager.autoExpander_;
-    store.data.closedFolders = new Set(['11']);
+    store.data.folderOpenState = new Map([['11', false]]);
     store.notifyObservers();
     Polymer.dom.flush();
 

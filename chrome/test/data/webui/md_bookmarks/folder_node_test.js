@@ -11,20 +11,22 @@ suite('<bookmarks-folder-node>', function() {
   }
 
   setup(function() {
+    var nodes = testTree(
+        createFolder(
+            '1',
+            [
+              createFolder(
+                  '2',
+                  [
+                    createFolder('3', []),
+                    createFolder('4', []),
+                  ]),
+              createItem('5'),
+            ]),
+        createFolder('7', []));
     store = new bookmarks.TestStore({
-      nodes: testTree(
-          createFolder(
-              '1',
-              [
-                createFolder(
-                    '2',
-                    [
-                      createFolder('3', []),
-                      createFolder('4', []),
-                    ]),
-                createItem('5'),
-              ]),
-          createFolder('7', [])),
+      nodes: nodes,
+      folderOpenState: getAllFoldersOpenState(nodes),
       selectedFolder: '1',
     });
     store.replaceSingleton();
@@ -103,7 +105,7 @@ suite('<bookmarks-folder-node>', function() {
     assertEquals('7', rootNode.getLastVisibleDescendant_().itemId);
     assertEquals('4', getFolderNode('1').getLastVisibleDescendant_().itemId);
 
-    store.data.closedFolders = new Set('2');
+    store.data.folderOpenState = new Map([['2', false]]);
     store.notifyObservers();
 
     assertEquals('2', getFolderNode('1').getLastVisibleDescendant_().itemId);
@@ -131,7 +133,7 @@ suite('<bookmarks-folder-node>', function() {
     assertEquals('4', getNextChild('0', '7', true).itemId);
 
     // Skips closed folders.
-    store.data.closedFolders = new Set('2');
+    store.data.folderOpenState = new Map([['2', false]]);
     store.notifyObservers();
 
     assertEquals(null, getNextChild('1', '2', false));
