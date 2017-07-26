@@ -16,6 +16,24 @@
       "revId": "515f57008a212604455ccf71b48b10b89c4ad946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61dea0a6_7b66fb5d",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-26T18:37:51Z",
+      "side": 1,
+      "message": "Good point, removed. (this logic was copied from the CrOS code tweaked in this CL which was making this check as well)",
+      "parentUuid": "7a1bd24f_73bfc5d0",
+      "revId": "515f57008a212604455ccf71b48b10b89c4ad946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
