@@ -117,6 +117,30 @@
       "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dd3e80_30f9fcea",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinatorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-26T18:24:00Z",
+      "side": 1,
+      "message": "OK, I know why. I open chrome with --root-layer-scrolls flag, and it now thinks that the document\u0027s scrolling contents layer is not null. I will think about how to fix this. Thanks for your help.",
+      "parentUuid": "e1815576_888521c0",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 31
+      },
+      "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
