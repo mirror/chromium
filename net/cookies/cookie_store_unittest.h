@@ -537,6 +537,44 @@ TYPED_TEST_P(CookieStoreTest, SetCanonicalCookieTest) {
           COOKIE_PRIORITY_DEFAULT),
       false, true));
 
+  if (TypeParam::supports_http_only) {
+    // Permission to modify http only cookies is required to create an
+    // httponly cookie.
+    EXPECT_FALSE(this->SetCanonicalCookie(
+        cs,
+        base::MakeUnique<CanonicalCookie>(
+            "G", "H", http_foo_host, "/unique", base::Time(), base::Time(),
+            base::Time(), false, true, CookieSameSite::DEFAULT_MODE,
+            COOKIE_PRIORITY_DEFAULT),
+        false, false));
+
+    // Permission to modify httponly cookies is also required to overwrite
+    // an httponly cookie.
+    EXPECT_TRUE(this->SetCanonicalCookie(
+        cs,
+        base::MakeUnique<CanonicalCookie>(
+            "G", "H", http_foo_host, "/unique", base::Time(), base::Time(),
+            base::Time(), false, true, CookieSameSite::DEFAULT_MODE,
+            COOKIE_PRIORITY_DEFAULT),
+        false, true));
+
+    EXPECT_FALSE(this->SetCanonicalCookie(
+        cs,
+        base::MakeUnique<CanonicalCookie>(
+            "G", "H", http_foo_host, "/unique", base::Time(), base::Time(),
+            base::Time(), false, true, CookieSameSite::DEFAULT_MODE,
+            COOKIE_PRIORITY_DEFAULT),
+        false, false));
+  } else {
+    EXPECT_TRUE(this->SetCanonicalCookie(
+        cs,
+        base::MakeUnique<CanonicalCookie>(
+            "G", "H", http_foo_host, "/unique", base::Time(), base::Time(),
+            base::Time(), false, true, CookieSameSite::DEFAULT_MODE,
+            COOKIE_PRIORITY_DEFAULT),
+        false, true));
+  }
+
   // Get all the cookies for a given URL, regardless of properties. This 'get()'
   // operation shouldn't update the access time, as the test checks that the
   // access time is set properly upon creation. Updating the access time would
