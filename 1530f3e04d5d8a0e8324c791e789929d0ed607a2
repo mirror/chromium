@@ -16,6 +16,24 @@
       "revId": "1530f3e04d5d8a0e8324c791e789929d0ed607a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d6773f_af98888a",
+        "filename": "chromeos/dbus/services/org.chromium.LibCrosService.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1210164
+      },
+      "writtenOn": "2017-07-26T15:25:36Z",
+      "side": 1,
+      "message": "receive_sender has the same owner-of semantics as send_destination, but I don\u0027t know if this rule is necessary. I\u0027m inclined to leave this line in this patch and remove the entire rule separately.",
+      "parentUuid": "0d1586bc_f9d3661f",
+      "revId": "1530f3e04d5d8a0e8324c791e789929d0ed607a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
