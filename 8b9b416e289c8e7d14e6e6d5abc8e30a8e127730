@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e82cafdd_9e7f1fc9",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-26T19:40:01Z",
+      "side": 1,
+      "message": "Let\u0027s move this to a new file.",
+      "revId": "8b9b416e289c8e7d14e6e6d5abc8e30a8e127730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06156e3f_86f72481",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-26T19:40:01Z",
+      "side": 1,
+      "message": "Consider prefixing all of these methods with \"On\", which is what Chromium code tends to do for C++ delegate methods.",
+      "revId": "8b9b416e289c8e7d14e6e6d5abc8e30a8e127730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
