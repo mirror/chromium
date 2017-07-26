@@ -773,6 +773,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 mAnimatingToolbarButtonDisappearance = false;
                 mAnimatingToolbarButtonAppearance = false;
                 mToolbarButtonVisibilityAnimator = null;
+                BottomToolbarPhone.this.mLocationBar.getUrlBar().scrollToTLD();
             }
         });
 
