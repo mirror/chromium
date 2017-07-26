@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ee7cd54_b70a3533",
+        "filename": "extensions/browser/api/messaging/message_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T19:11:17Z",
+      "side": 1,
+      "message": "Add lifetime note (guaranteed to outlive this object).",
+      "revId": "39c79ce104cbaaed89534770e909bcc1ad561e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
