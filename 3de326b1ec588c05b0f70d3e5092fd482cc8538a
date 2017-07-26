@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e33ae6d_cc44c49a",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T09:32:24Z",
+      "side": 1,
+      "message": "\"It is not necessary to handle MojoResult here since...\" ?\n\n(deferring to falken@)",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db86e847_58460227",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -19,6 +36,74 @@
         "endLine": 44,
         "endChar": 74
       },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f10370_73b1da4b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T09:32:24Z",
+      "side": 1,
+      "message": "DCHECK(!IsFinished()) ?\n\nhere and below",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4cae35_8674f4a9",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T09:32:24Z",
+      "side": 1,
+      "message": "nit: IsFinished() ? (not a simple getter)",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba05cbf_6024a5f8",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T09:32:24Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc10b4aa_84c55c64",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T09:32:24Z",
+      "side": 1,
+      "message": "this DCHECK looks unnecessary",
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
