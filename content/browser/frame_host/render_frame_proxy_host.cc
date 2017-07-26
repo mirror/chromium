@@ -292,8 +292,11 @@ void RenderFrameProxyHost::OnRouteMessageEvent(
   SiteInstance* target_site_instance = target_rfh->GetSiteInstance();
   if (!target_site_instance->IsRelatedSiteInstance(GetSiteInstance()) &&
       !target_rfh->delegate()->ShouldRouteMessageEvent(target_rfh,
-                                                       GetSiteInstance()))
+                                                       GetSiteInstance())) {
+    // TODO(wjmaclean): Should we really just drop a message here without a log
+    // message?
     return;
+  }
 
   FrameMsg_PostMessage_Params new_params(params);
 

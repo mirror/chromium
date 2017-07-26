@@ -107,14 +107,6 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
   // Returns whether the given RenderviewHost is a BrowserPlugin guest.
   static bool IsGuest(RenderViewHostImpl* render_view_host);
 
-  // BrowserPluginGuest::Init is called after the associated guest WebContents
-  // initializes. If this guest cannot navigate without being attached to a
-  // container, then this call is a no-op. For guest types that can be
-  // navigated, this call adds the associated RenderWdigetHostViewGuest to the
-  // view hierachy and sets up the appropriate RendererPreferences so that this
-  // guest can navigate and resize offscreen.
-  void Init();
-
   // Returns a WeakPtr to this BrowserPluginGuest.
   base::WeakPtr<BrowserPluginGuest> AsWeakPtr();
 
@@ -419,10 +411,6 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
   gfx::Size last_seen_view_size_;
 
   bool is_in_destruction_;
-
-  // BrowserPluginGuest::Init can only be called once. This flag allows it to
-  // exit early if it's already been called.
-  bool initialized_;
 
   // Text input type states.
   // Using scoped_ptr to avoid including the header file: view_messages.h.
