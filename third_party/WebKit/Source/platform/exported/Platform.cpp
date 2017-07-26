@@ -43,6 +43,7 @@
 #include "platform/fonts/FontCacheMemoryDumpProvider.h"
 #include "platform/heap/BlinkGCMemoryDumpProvider.h"
 #include "platform/heap/GCTaskRunner.h"
+#include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/instrumentation/tracing/MemoryCacheDumpProvider.h"
 #include "platform/wtf/HashMap.h"
 #include "public/platform/InterfaceProvider.h"
@@ -149,6 +150,9 @@ void Platform::Initialize(Platform* platform) {
         InstanceCountersMemoryDumpProvider::Instance(), "BlinkObjectCounters",
         base::ThreadTaskRunnerHandle::Get());
   }
+
+  if (RendererResourceCoordinator::IsEnabled())
+    RendererResourceCoordinator::Initialize();
 }
 
 void Platform::SetCurrentPlatformForTesting(Platform* platform) {

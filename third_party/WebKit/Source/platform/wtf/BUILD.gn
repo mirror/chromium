@@ -52,6 +52,7 @@ component("wtf") {
     "Assertions.h",
     "Atomics.h",
     "AutoReset.h",
+    "BaseValueConverter.h",
     "BitVector.cpp",
     "BitVector.h",
     "BitwiseOperations.h",
