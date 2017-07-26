@@ -26,6 +26,9 @@ int NetworkDelegate::NotifyBeforeURLRequest(
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(request);
   DCHECK(!callback.is_null());
+
+  VLOG(1) << "Requesting URL: "
+          << request->url().possibly_invalid_spec().c_str();
   // TODO(cbentzel): Remove ScopedTracker below once crbug.com/475753 is fixed.
   tracked_objects::ScopedTracker tracking_profile(
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
