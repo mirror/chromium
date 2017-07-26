@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f04ee71_3b096aef",
+        "filename": "ui/app_list/search_box_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-26T17:58:57Z",
+      "side": 1,
+      "message": "This would need to be renamed GetSpeechButton() if it is not a trivial getter, but it seems like it would be better not to create it in the first place?",
+      "revId": "787b2871733c1e2023ba10de98c4a2fd2313dc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
