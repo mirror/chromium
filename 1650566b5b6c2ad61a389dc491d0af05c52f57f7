@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ece03fd_383f3e0d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-26T18:12:45Z",
+      "side": 1,
+      "message": "Should we pass 0 interval here? I see you have a DCHECK in SwapMetricsDriverImpl:\nhttps://chromium-review.googlesource.com/c/565346/12/content/browser/memory/swap_metrics_driver_impl.cc#45",
+      "range": {
+        "startLine": 62,
+        "startChar": 53,
+        "endLine": 62,
+        "endChar": 70
+      },
+      "revId": "1650566b5b6c2ad61a389dc491d0af05c52f57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e593b13c_14a40c4e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-26T18:12:45Z",
+      "side": 1,
+      "message": "I still feel it is better to just make TabManagerStatsCollecter subclass SwapMetricsDriver::Delegate directly to remove some duplication. But I am not strongly against this.\n\nFadi and Peiyong, WDYT?",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "1650566b5b6c2ad61a389dc491d0af05c52f57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
