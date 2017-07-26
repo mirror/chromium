@@ -1508,21 +1508,6 @@ DrawTextBlobOp::DrawTextBlobOp(sk_sp<SkTextBlob> blob,
 
 DrawTextBlobOp::~DrawTextBlobOp() = default;
 
-PaintOpBuffer::CompositeIterator::CompositeIterator(
-    const PaintOpBuffer* buffer,
-    const std::vector<size_t>* offsets)
-    : using_offsets_(!!offsets) {
-  if (using_offsets_)
-    offset_iter_.emplace(buffer, offsets);
-  else
-    iter_.emplace(buffer);
-}
-
-PaintOpBuffer::CompositeIterator::CompositeIterator(
-    const CompositeIterator& other) = default;
-PaintOpBuffer::CompositeIterator::CompositeIterator(CompositeIterator&& other) =
-    default;
-
 PaintOpBuffer::PaintOpBuffer()
     : has_non_aa_paint_(false), has_discardable_images_(false) {}
 
@@ -1553,14 +1538,10 @@ void PaintOpBuffer::Reset() {
   for (auto* op : Iterator(this))
     op->DestroyThis();
 
-  // Leave data_ allocated, reserved_ unchanged. ShrinkToFit will take care of
-  // that if called.
+  // Leave data_ allocated, reserved_ unchanged.
   used_ = 0;
   op_count_ = 0;
   num_slow_paths_ = 0;
-  has_non_aa_paint_ = false;
-  subrecord_bytes_used_ = 0;
-  has_discardable_images_ = false;
 }
 
 // When |op| is a nested PaintOpBuffer, this returns the PaintOp inside
@@ -1590,16 +1571,11 @@ static const PaintOp* GetNestedSingleDrawingOp(const PaintOp* op) {
 }
 
 void PaintOpBuffer::Playback(SkCanvas* canvas,
-                             SkPicture::AbortCallback* callback) const {
-  Playback(canvas, callback, nullptr);
-}
-
-void PaintOpBuffer::Playback(SkCanvas* canvas,
                              SkPicture::AbortCallback* callback,
-                             const std::vector<size_t>* offsets) const {
+                             const std::vector<size_t>* indices) const {
   if (!op_count_)
     return;
-  if (offsets && offsets->empty())
+  if (indices && indices->empty())
     return;
 
   // Prevent PaintOpBuffers from having side effects back into the canvas.
@@ -1614,7 +1590,7 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
 
   // FIFO queue of paint ops that have been peeked at.
   base::StackVector<const PaintOp*, 3> stack;
-  CompositeIterator iter(this, offsets);
+  Iterator iter(this, indices);
   auto next_op = [&stack, &iter]() -> const PaintOp* {
     if (stack->size()) {
       const PaintOp* op = stack->front();
@@ -1681,8 +1657,7 @@ void PaintOpBuffer::ReallocBuffer(size_t new_size) {
   DCHECK_GE(new_size, used_);
   std::unique_ptr<char, base::AlignedFreeDeleter> new_data(
       static_cast<char*>(base::AlignedAlloc(new_size, PaintOpAlign)));
-  if (data_)
-    memcpy(new_data.get(), data_.get(), used_);
+  memcpy(new_data.get(), data_.get(), used_);
   data_ = std::move(new_data);
   reserved_ = new_size;
 }
@@ -1710,14 +1685,9 @@ std::pair<void*, size_t> PaintOpBuffer::AllocatePaintOp(size_t sizeof_op,
 }
 
 void PaintOpBuffer::ShrinkToFit() {
-  if (used_ == reserved_)
+  if (!used_ || used_ == reserved_)
     return;
-  if (!used_) {
-    reserved_ = 0;
-    data_.reset();
-  } else {
-    ReallocBuffer(used_);
-  }
+  ReallocBuffer(used_);
 }
 
 }  // namespace cc

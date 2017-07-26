@@ -101,10 +101,8 @@ void PaintArtifact::Replay(const FloatRect& bounds,
   for (const auto& chunk : PaintChunks())
     pointer_paint_chunks.push_back(&chunk);
   scoped_refptr<cc::DisplayItemList> display_item_list =
-      PaintChunksToCcLayer::Convert(
-          pointer_paint_chunks, replay_state, gfx::Vector2dF(),
-          GetDisplayItemList(),
-          cc::DisplayItemList::kToBeReleasedAsPaintOpBuffer);
+      PaintChunksToCcLayer::Convert(pointer_paint_chunks, replay_state,
+                                    gfx::Vector2dF(), GetDisplayItemList());
   canvas.drawPicture(display_item_list->ReleaseAsRecord());
 }
 

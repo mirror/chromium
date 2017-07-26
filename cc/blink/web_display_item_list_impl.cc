@@ -40,8 +40,8 @@ void WebDisplayItemListImpl::AppendDrawingItem(
     const blink::WebRect& visual_rect,
     sk_sp<const cc::PaintOpBuffer> record,
     const blink::WebRect& record_bounds) {
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::DrawRecordOp>(std::move(record));
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::DrawRecordOp>(std::move(record));
   display_item_list_->EndPaintOfUnpaired(visual_rect);
 }
 
@@ -49,17 +49,16 @@ void WebDisplayItemListImpl::AppendClipItem(
     const blink::WebRect& clip_rect,
     const blink::WebVector<SkRRect>& rounded_clip_rects) {
   bool antialias = true;
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::SaveOp>();
-  display_item_list_->push<cc::ClipRectOp>(gfx::RectToSkRect(clip_rect),
-                                           SkClipOp::kIntersect, antialias);
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::SaveOp>();
+  buffer->push<cc::ClipRectOp>(gfx::RectToSkRect(clip_rect),
+                               SkClipOp::kIntersect, antialias);
   for (const SkRRect& rrect : rounded_clip_rects) {
     if (rrect.isRect()) {
-      display_item_list_->push<cc::ClipRectOp>(rrect.rect(),
-                                               SkClipOp::kIntersect, antialias);
+      buffer->push<cc::ClipRectOp>(rrect.rect(), SkClipOp::kIntersect,
+                                   antialias);
     } else {
-      display_item_list_->push<cc::ClipRRectOp>(rrect, SkClipOp::kIntersect,
-                                                antialias);
+      buffer->push<cc::ClipRRectOp>(rrect, SkClipOp::kIntersect, antialias);
     }
   }
   display_item_list_->EndPaintOfPairedBegin();
@@ -71,10 +70,9 @@ void WebDisplayItemListImpl::AppendEndClipItem() {
 
 void WebDisplayItemListImpl::AppendClipPathItem(const SkPath& clip_path,
                                                 bool antialias) {
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::SaveOp>();
-  display_item_list_->push<cc::ClipPathOp>(clip_path, SkClipOp::kIntersect,
-                                           antialias);
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::SaveOp>();
+  buffer->push<cc::ClipPathOp>(clip_path, SkClipOp::kIntersect, antialias);
   display_item_list_->EndPaintOfPairedBegin();
 }
 
@@ -85,10 +83,10 @@ void WebDisplayItemListImpl::AppendEndClipPathItem() {
 void WebDisplayItemListImpl::AppendFloatClipItem(
     const blink::WebFloatRect& clip_rect) {
   bool antialias = false;
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::SaveOp>();
-  display_item_list_->push<cc::ClipRectOp>(gfx::RectFToSkRect(clip_rect),
-                                           SkClipOp::kIntersect, antialias);
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::SaveOp>();
+  buffer->push<cc::ClipRectOp>(gfx::RectFToSkRect(clip_rect),
+                               SkClipOp::kIntersect, antialias);
   display_item_list_->EndPaintOfPairedBegin();
 }
 
@@ -97,10 +95,10 @@ void WebDisplayItemListImpl::AppendEndFloatClipItem() {
 }
 
 void WebDisplayItemListImpl::AppendTransformItem(const SkMatrix44& matrix) {
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::SaveOp>();
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::SaveOp>();
   if (!matrix.isIdentity())
-    display_item_list_->push<cc::ConcatOp>(static_cast<SkMatrix>(matrix));
+    buffer->push<cc::ConcatOp>(static_cast<SkMatrix>(matrix));
   display_item_list_->EndPaintOfPairedBegin();
 }
 
@@ -121,8 +119,8 @@ void WebDisplayItemListImpl::AppendCompositingItem(
   auto alpha = static_cast<uint8_t>(gfx::ToFlooredInt(255 * opacity));
 
   if (xfermode == SkBlendMode::kSrcOver && !color_filter) {
-    display_item_list_->StartPaint();
-    display_item_list_->push<cc::SaveLayerAlphaOp>(bounds, alpha, false);
+    cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+    buffer->push<cc::SaveLayerAlphaOp>(bounds, alpha, false);
     display_item_list_->EndPaintOfPairedBegin();
     return;
   }
@@ -132,8 +130,8 @@ void WebDisplayItemListImpl::AppendCompositingItem(
   flags.setAlpha(alpha);
   flags.setColorFilter(sk_ref_sp(color_filter));
 
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::SaveLayerOp>(bounds, &flags);
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::SaveLayerOp>(bounds, &flags);
   display_item_list_->EndPaintOfPairedBegin();
 }
 
@@ -145,13 +143,13 @@ void WebDisplayItemListImpl::AppendFilterItem(
     const cc::FilterOperations& filters,
     const blink::WebFloatRect& filter_bounds,
     const blink::WebFloatPoint& origin) {
-  display_item_list_->StartPaint();
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
 
   // TODO(danakj): Skip the save+translate+restore if the origin is 0,0. This
   // should be easier to do when this code is part of the blink DisplayItem
   // which can keep related state.
-  display_item_list_->push<cc::SaveOp>();
-  display_item_list_->push<cc::TranslateOp>(origin.x, origin.y);
+  buffer->push<cc::SaveOp>();
+  buffer->push<cc::TranslateOp>(origin.x, origin.y);
 
   cc::PaintFlags flags;
   flags.setImageFilter(cc::RenderSurfaceFilters::BuildImageFilter(
@@ -159,28 +157,27 @@ void WebDisplayItemListImpl::AppendFilterItem(
 
   SkRect layer_bounds = gfx::RectFToSkRect(filter_bounds);
   layer_bounds.offset(-origin.x, -origin.y);
-  display_item_list_->push<cc::SaveLayerOp>(&layer_bounds, &flags);
-  display_item_list_->push<cc::TranslateOp>(-origin.x, -origin.y);
+  buffer->push<cc::SaveLayerOp>(&layer_bounds, &flags);
+  buffer->push<cc::TranslateOp>(-origin.x, -origin.y);
 
   display_item_list_->EndPaintOfPairedBegin(
       gfx::ToEnclosingRect(filter_bounds));
 }
 
 void WebDisplayItemListImpl::AppendEndFilterItem() {
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::RestoreOp>();  // For SaveLayerOp.
-  display_item_list_->push<cc::RestoreOp>();  // For SaveOp.
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::RestoreOp>();  // For SaveLayerOp.
+  buffer->push<cc::RestoreOp>();  // For SaveOp.
   display_item_list_->EndPaintOfPairedEnd();
 }
 
 void WebDisplayItemListImpl::AppendScrollItem(
     const blink::WebSize& scroll_offset,
     ScrollContainerId) {
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::SaveOp>();
-  display_item_list_->push<cc::TranslateOp>(
-      static_cast<float>(-scroll_offset.width),
-      static_cast<float>(-scroll_offset.height));
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::SaveOp>();
+  buffer->push<cc::TranslateOp>(static_cast<float>(-scroll_offset.width),
+                                static_cast<float>(-scroll_offset.height));
   display_item_list_->EndPaintOfPairedBegin();
 }
 
@@ -189,8 +186,8 @@ void WebDisplayItemListImpl::AppendEndScrollItem() {
 }
 
 void WebDisplayItemListImpl::AppendRestore() {
-  display_item_list_->StartPaint();
-  display_item_list_->push<cc::RestoreOp>();
+  cc::PaintOpBuffer* buffer = display_item_list_->StartPaint();
+  buffer->push<cc::RestoreOp>();
   display_item_list_->EndPaintOfPairedEnd();
 }
 

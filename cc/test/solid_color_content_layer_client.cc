@@ -22,28 +22,27 @@ scoped_refptr<DisplayItemList>
 SolidColorContentLayerClient::PaintContentsToDisplayList(
     PaintingControlSetting painting_control) {
   auto display_list = base::MakeRefCounted<DisplayItemList>();
-  display_list->StartPaint();
-  display_list->push<SaveOp>();
+  PaintOpBuffer* buffer = display_list->StartPaint();
+  buffer->push<SaveOp>();
 
   SkRect clip = gfx::RectToSkRect(PaintableRegion());
-  display_list->push<ClipRectOp>(clip, SkClipOp::kIntersect, false);
+  buffer->push<ClipRectOp>(clip, SkClipOp::kIntersect, false);
   SkColor color = SK_ColorTRANSPARENT;
-  display_list->push<DrawColorOp>(color, SkBlendMode::kSrc);
+  buffer->push<DrawColorOp>(color, SkBlendMode::kSrc);
 
   if (border_size_ != 0) {
     PaintFlags flags;
     flags.setStyle(PaintFlags::kFill_Style);
     flags.setColor(border_color_);
-    display_list->push<DrawRectOp>(clip, flags);
+    buffer->push<DrawRectOp>(clip, flags);
   }
 
   PaintFlags flags;
   flags.setStyle(PaintFlags::kFill_Style);
   flags.setColor(color_);
-  display_list->push<DrawRectOp>(clip.makeInset(border_size_, border_size_),
-                                 flags);
+  buffer->push<DrawRectOp>(clip.makeInset(border_size_, border_size_), flags);
 
-  display_list->push<RestoreOp>();
+  buffer->push<RestoreOp>();
   display_list->EndPaintOfUnpaired(PaintableRegion());
   display_list->Finalize();
   return display_list;

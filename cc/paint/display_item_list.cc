@@ -35,31 +35,25 @@ bool GetCanvasClipBounds(SkCanvas* canvas, gfx::Rect* clip_bounds) {
 
 }  // namespace
 
-DisplayItemList::DisplayItemList(UsageHint usage_hint)
-    : usage_hint_(usage_hint) {
-  if (usage_hint_ == kTopLevelDisplayItemList) {
-    visual_rects_.reserve(1024);
-    offsets_.reserve(1024);
-    begin_paired_indices_.reserve(32);
-  }
+DisplayItemList::DisplayItemList() {
+  visual_rects_.reserve(1024);
+  begin_paired_indices_.reserve(32);
 }
 
 DisplayItemList::~DisplayItemList() = default;
 
 void DisplayItemList::Raster(SkCanvas* canvas,
                              SkPicture::AbortCallback* callback) const {
-  DCHECK(usage_hint_ == kTopLevelDisplayItemList);
   gfx::Rect canvas_playback_rect;
   if (!GetCanvasClipBounds(canvas, &canvas_playback_rect))
     return;
 
-  std::vector<size_t> offsets = rtree_.Search(canvas_playback_rect);
-  paint_op_buffer_.Playback(canvas, callback, &offsets);
+  std::vector<size_t> indices = rtree_.Search(canvas_playback_rect);
+  paint_op_buffer_.Playback(canvas, callback, &indices);
 }
 
 void DisplayItemList::GrowCurrentBeginItemVisualRect(
     const gfx::Rect& visual_rect) {
-  DCHECK(usage_hint_ == kTopLevelDisplayItemList);
   if (!begin_paired_indices_.empty())
     visual_rects_[begin_paired_indices_.back().first].Union(visual_rect);
 }
@@ -71,25 +65,12 @@ void DisplayItemList::Finalize() {
   // If this fails we had more calls to EndPaintOfPairedBegin() than
   // to EndPaintOfPairedEnd().
   DCHECK_EQ(0, in_paired_begin_count_);
-  DCHECK_EQ(visual_rects_.size(), offsets_.size());
 
-  if (usage_hint_ == kTopLevelDisplayItemList) {
-    rtree_.Build(visual_rects_,
-                 [](const std::vector<gfx::Rect>& rects, size_t index) {
-                   return rects[index];
-                 },
-                 [this](const std::vector<gfx::Rect>& rects, size_t index) {
-                   // Ignore the given rects, since the payload comes from
-                   // offsets. However, the indices match, so we can just index
-                   // into offsets.
-                   return offsets_[index];
-                 });
-  }
   paint_op_buffer_.ShrinkToFit();
+  rtree_.Build(visual_rects_);
+
   visual_rects_.clear();
   visual_rects_.shrink_to_fit();
-  offsets_.clear();
-  offsets_.shrink_to_fit();
   begin_paired_indices_.shrink_to_fit();
 }
 
@@ -120,13 +101,14 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
   if (include_items) {
     state->BeginArray("items");
 
-    for (const PaintOp* op : PaintOpBuffer::Iterator(&paint_op_buffer_)) {
+    for (size_t i = 0; i < paint_op_buffer_.size(); ++i) {
       state->BeginDictionary();
 
       SkPictureRecorder recorder;
       SkCanvas* canvas =
           recorder.beginRecording(gfx::RectToSkRect(rtree_.GetBounds()));
-      op->Raster(canvas, SkMatrix::I());
+      std::vector<size_t> indices{i};
+      paint_op_buffer_.Playback(canvas, nullptr, &indices);
       sk_sp<SkPicture> picture = recorder.finishRecordingAsPicture();
 
       std::string b64_picture;
@@ -159,7 +141,6 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
 }
 
 void DisplayItemList::GenerateDiscardableImagesMetadata() {
-  DCHECK(usage_hint_ == kTopLevelDisplayItemList);
   image_map_.Generate(&paint_op_buffer_, rtree_.GetBounds());
 }
 
@@ -171,11 +152,7 @@ void DisplayItemList::Reset() {
   image_map_.Reset();
   paint_op_buffer_.Reset();
   visual_rects_.clear();
-  visual_rects_.shrink_to_fit();
-  offsets_.clear();
-  offsets_.shrink_to_fit();
   begin_paired_indices_.clear();
-  begin_paired_indices_.shrink_to_fit();
   current_range_start_ = 0;
   in_paired_begin_count_ = 0;
   in_painting_ = false;
@@ -192,17 +169,16 @@ sk_sp<PaintRecord> DisplayItemList::ReleaseAsRecord() {
 bool DisplayItemList::GetColorIfSolidInRect(const gfx::Rect& rect,
                                             SkColor* color,
                                             int max_ops_to_analyze) {
-  DCHECK(usage_hint_ == kTopLevelDisplayItemList);
-  std::vector<size_t>* offsets_to_use = nullptr;
-  std::vector<size_t> offsets;
+  std::vector<size_t>* indices_to_use = nullptr;
+  std::vector<size_t> indices;
   if (!rect.Contains(rtree_.GetBounds())) {
-    offsets = rtree_.Search(rect);
-    offsets_to_use = &offsets;
+    indices = rtree_.Search(rect);
+    indices_to_use = &indices;
   }
 
   base::Optional<SkColor> solid_color =
       SolidColorAnalyzer::DetermineIfSolidColor(
-          &paint_op_buffer_, rect, max_ops_to_analyze, offsets_to_use);
+          &paint_op_buffer_, rect, max_ops_to_analyze, indices_to_use);
   if (solid_color) {
     *color = *solid_color;
     return true;
