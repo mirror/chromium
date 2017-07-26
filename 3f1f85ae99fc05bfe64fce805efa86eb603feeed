@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "e9fc91ff_addf67b4",
+        "filename": "tools/perf/core/test_timings_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-26T19:46:11Z",
+      "side": 1,
+      "message": "I think you should just wait for Ashley to add per-story timing data rather than parse the log. She should be very closed.",
+      "revId": "3f1f85ae99fc05bfe64fce805efa86eb603feeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acb82686_1ab21988",
         "filename": "tools/perf/core/test_timings_generator.py",
         "patchSetId": 3
