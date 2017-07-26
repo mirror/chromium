@@ -34,7 +34,7 @@ source_set("steps") {
     "//ios/net",
     "//ios/shared/chrome/browser/ui/browser_list",
     "//ios/shared/chrome/browser/ui/coordinators",
-    "//ios/web:web_arc",
+    "//ios/web:web",
   ]
 }
 
