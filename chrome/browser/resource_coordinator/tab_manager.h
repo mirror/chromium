@@ -394,9 +394,8 @@ class TabManager : public TabStripModelObserver,
   void OnSessionRestoreStartedLoadingTabs();
   void OnSessionRestoreFinishedLoadingTabs();
 
-  // Returns true if the navigation should be delayed.
-  bool ShouldDelayNavigation(
-      content::NavigationHandle* navigation_handle) const;
+  // Returns true if TabManager can start loading next tab.
+  bool CanLoadNextTab() const;
 
   // Start |force_load_timer_| to load the next background tab if the timer
   // expires before the current tab loading is finished.
