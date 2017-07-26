@@ -102,6 +102,10 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
   static_position.offset -= container_border_physical_offset_;
 
   // The block estimate is in the descendant's writing mode.
+  RefPtr<NGConstraintSpace> descendant_constraint_space =
+      NGConstraintSpaceBuilder(&(*container_space_))
+          .ToConstraintSpace(
+              FromPlatformWritingMode(descendant.Style().GetWritingMode()));
   Optional<MinMaxSize> min_max_size;
   Optional<LayoutUnit> block_estimate;
 
@@ -115,8 +119,9 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
   }
 
   NGAbsolutePhysicalPosition node_position =
-      ComputePartialAbsoluteWithChildInlineSize(
-          *container_space_, descendant.Style(), static_position, min_max_size);
+      ComputePartialAbsoluteWithChildInlineSize(*descendant_constraint_space,
+                                                descendant.Style(),
+                                                static_position, min_max_size);
 
   if (AbsoluteNeedsChildBlockSize(descendant.Style())) {
     layout_result = GenerateFragment(descendant, block_estimate, node_position);
@@ -128,9 +133,9 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
     block_estimate = fragment.BlockSize();
   }
 
-  ComputeFullAbsoluteWithChildBlockSize(*container_space_, descendant.Style(),
-                                        static_position, block_estimate,
-                                        &node_position);
+  ComputeFullAbsoluteWithChildBlockSize(*descendant_constraint_space,
+                                        descendant.Style(), static_position,
+                                        block_estimate, &node_position);
 
   // Skip this step if we produced a fragment when estimating the block size.
   if (!layout_result) {
