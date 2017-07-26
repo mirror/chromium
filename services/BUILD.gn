@@ -25,6 +25,7 @@ service_test("services_unittests") {
     deps += [
       "//services/data_decoder:tests",
       "//services/device:tests",
+      "//services/file:tests",
       "//services/preferences:tests",
       "//services/resource_coordinator:tests",
       "//services/shape_detection:tests",
@@ -87,6 +88,7 @@ catalog("services_unittests_catalog") {
   if (!is_ios) {
     catalog_deps += [
       "//services/device:tests_catalog",
+      "//services/file:tests_catalog",
       "//services/preferences:tests_catalog",
       "//services/resource_coordinator:tests_catalog",
       "//services/video_capture:tests_catalog",
