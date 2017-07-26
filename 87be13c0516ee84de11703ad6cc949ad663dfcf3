@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7c9bcb4_7b69c1d2",
+        "filename": "net/url_request/url_request_context.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-26T17:23:31Z",
+      "side": 1,
+      "message": "Done (already?)",
+      "parentUuid": "74af0bb8_47c2b134",
+      "revId": "87be13c0516ee84de11703ad6cc949ad663dfcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef02bc67_a052d9a7",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e7935d00_2003637b",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7013,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-26T17:23:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef02bc67_a052d9a7",
+      "range": {
+        "startLine": 7013,
+        "startChar": 34,
+        "endLine": 7013,
+        "endChar": 37
+      },
+      "revId": "87be13c0516ee84de11703ad6cc949ad663dfcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e4d989_dacbfaa3",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 10
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-26T16:18:12Z",
       "side": 1,
       "message": "nit: Https",
+      "range": {
+        "startLine": 7081,
+        "startChar": 54,
+        "endLine": 7081,
+        "endChar": 59
+      },
+      "revId": "87be13c0516ee84de11703ad6cc949ad663dfcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417925f5_c4aa6b61",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7081,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-26T17:23:31Z",
+      "side": 1,
+      "message": "Done, and fixed the Reporting one I copied it from too.",
+      "parentUuid": "74e4d989_dacbfaa3",
       "range": {
         "startLine": 7081,
         "startChar": 54,
