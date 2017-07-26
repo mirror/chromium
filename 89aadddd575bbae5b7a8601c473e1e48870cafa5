@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "754445a1_72c378c7",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T21:32:36Z",
+      "side": 1,
+      "message": "Why this change? I don\u0027t think we want to do this.",
+      "revId": "89aadddd575bbae5b7a8601c473e1e48870cafa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

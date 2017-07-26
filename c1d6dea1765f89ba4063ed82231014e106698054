@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eab68ae_9d247912",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T21:32:36Z",
+      "side": 0,
+      "message": "I could see you wanting to get rid of this (hence the inheritance) but long-term I don\u0027t think we really want either the inheritance OR the get() API. It\u0027s kind of a hack to support some existing uses.\n\nThis might be worth discussing further, but in any case I don\u0027t think it makes sense to include this change in this CL.",
+      "revId": "c1d6dea1765f89ba4063ed82231014e106698054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
