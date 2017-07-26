@@ -1688,7 +1688,6 @@
   },
   "Linux TSan Tests": {
     "disabled_tests": {
-      "browser_tests": "Too many errors, clean content_browsertests first. http://crbug.com/368525",
       "interactive_ui_tests": "http://crbug.com/455679"
     },
     "gtest_tests": [
@@ -1709,6 +1708,13 @@
           "can_use_on_swarming_builders": true
         },
         "test": "base_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 20
+        },
+        "test": "browser_tests"
       },
       {
         "swarming": {
