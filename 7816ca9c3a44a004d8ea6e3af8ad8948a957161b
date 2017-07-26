@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d281cce9_5c62c075",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-26T23:08:05Z",
+      "side": 1,
+      "message": "Done, although I don\u0027t think it can actually happen right now based on the accepted values of the API.",
+      "parentUuid": "c63be344_11f8f08e",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 10
+      },
+      "revId": "7816ca9c3a44a004d8ea6e3af8ad8948a957161b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eba4947_ddbc076e",
         "filename": "chrome/test/data/extensions/api_test/content_settings/standard/test.js",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "7816ca9c3a44a004d8ea6e3af8ad8948a957161b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c49ffc_439221ae",
+        "filename": "chrome/test/data/extensions/api_test/content_settings/standard/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-26T23:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eba4947_ddbc076e",
+      "revId": "7816ca9c3a44a004d8ea6e3af8ad8948a957161b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
