@@ -16,6 +16,24 @@
       "revId": "c45f281d0e2c5a0a546a0c6456a6c295263e0832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb92f4dd_ed98324e",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-26T21:16:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02e0406b_4e3e22d4",
+      "revId": "c45f281d0e2c5a0a546a0c6456a6c295263e0832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

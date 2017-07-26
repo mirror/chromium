@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db1f6a53_6a5232da",
+        "filename": "ash/login/ui/login_pin_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-26T21:16:33Z",
+      "side": 1,
+      "message": "Any idea why this doesn\u0027t do the same thing?\n\n  base::RunLoop run_loop;\n  // ...\n  run_loop.RunUntilIdle();\n\n(I also played around with TickClock but you cannot fire/run the timer event through it.)",
+      "revId": "cd942cd1df7d0df30d37954193d8d90524f36008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
