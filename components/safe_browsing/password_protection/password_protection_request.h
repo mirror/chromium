@@ -78,6 +78,8 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
     return trigger_type_;
   }
 
+  bool IsSyncPasswordReuse() const;
+
  private:
   friend class base::RefCountedThreadSafe<PasswordProtectionRequest>;
   friend struct content::BrowserThread::DeleteOnThread<
