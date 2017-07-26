@@ -9,6 +9,7 @@
 #include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h"
+#include "components/metrics/proto/system_profile.pb.h"
 #include "components/ukm/ukm_source.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/nqe/network_quality_provider.h"
@@ -148,9 +149,10 @@ TEST_F(UkmPageLoadMetricsObserverTest, FailedProvisionalLoad) {
   test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
                                    internal::kUkmPageTransition,
                                    ui::PAGE_TRANSITION_LINK);
-  test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
-                                   internal::kUkmEffectiveConnectionType,
-                                   net::EFFECTIVE_CONNECTION_TYPE_2G);
+  test_ukm_recorder().ExpectMetric(
+      *source, internal::kUkmPageLoadEventName,
+      internal::kUkmEffectiveConnectionType,
+      metrics::SystemProfileProto::Network::EFFECTIVE_CONNECTION_TYPE_2G);
   test_ukm_recorder().ExpectMetric(
       *source, internal::kUkmPageLoadEventName, internal::kUkmNetErrorCode,
       static_cast<int64_t>(net::ERR_TIMED_OUT) * -1);
@@ -262,9 +264,10 @@ TEST_F(UkmPageLoadMetricsObserverTest, NetworkQualityEstimates) {
   EXPECT_EQ(GURL(kTestUrl1), source->url());
 
   EXPECT_GE(test_ukm_recorder().entries_count(), 1ul);
-  test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
-                                   internal::kUkmEffectiveConnectionType,
-                                   net::EFFECTIVE_CONNECTION_TYPE_3G);
+  test_ukm_recorder().ExpectMetric(
+      *source, internal::kUkmPageLoadEventName,
+      internal::kUkmEffectiveConnectionType,
+      metrics::SystemProfileProto::Network::EFFECTIVE_CONNECTION_TYPE_3G);
   test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
                                    internal::kUkmHttpRttEstimate, 100);
   test_ukm_recorder().ExpectMetric(*source, internal::kUkmPageLoadEventName,
