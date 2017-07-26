@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "827c28ac_a2296bdd",
+        "filename": "components/ntp_snippets/remote/test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-26T14:28:16Z",
+      "side": 1,
+      "message": "The problem is that I need a default value for RemoteSuggestionBuilder, when it is not set manually. I do not see any appropriate way to avoid this.",
+      "parentUuid": "fc5f7221_10736f7d",
+      "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0e3e958_b89b6188",
         "filename": "components/ntp_snippets/time_utils.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4769fb_416ccf33",
+        "filename": "components/ntp_snippets/time_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-26T14:28:16Z",
+      "side": 1,
+      "message": "As per our offline discussion with tschumann@, I left the name, but added a comment and renamed the file.",
+      "parentUuid": "b0e3e958_b89b6188",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
