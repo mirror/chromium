@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f620f82_9ea10257",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-fonts/variations/font-parse-numeric-stretch-style-weight.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T21:12:23Z",
+      "side": 1,
+      "message": "why split this into 2 files when the html is essentially empty?",
+      "revId": "ae69969408db21213657a95b55d79aacaba8be9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e3b5a0_7c8ff7ca",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T21:12:23Z",
+      "side": 1,
+      "message": "why delete the comment/spec link from the last patch?",
+      "revId": "ae69969408db21213657a95b55d79aacaba8be9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62137b2b_16e576ce",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T21:12:23Z",
+      "side": 1,
+      "message": "please add username or bug id to TODO",
+      "revId": "ae69969408db21213657a95b55d79aacaba8be9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b149026d_02a88ce5",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T21:12:23Z",
+      "side": 1,
+      "message": "you are correct sorry I was confusing the 2",
+      "parentUuid": "850b49a6_c53c8309",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34c0abb7_769d0dc7",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
         "patchSetId": 7
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Added ConsumeFontStretchKeywordOnly and incorporated that into the ConsumeFontStretch regular method. Can you clarify the suggestion to make it private? Can I make the generated method CSSPropertyAPIFontStretch::parseSingleValue private, or do you suggest to make ConsumeFontStretchKeywordOnly private in CSSPropertyFontUtils?",
       "parentUuid": "38c03eb5_1c37a5cf",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfbe3b4_f9451ecc",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-26T21:12:23Z",
+      "side": 1,
+      "message": "that can be ignored now. I meant move the ConsumeFontStretch method to the font-stretch api cpp file inside an unnamed namespace (as that would have been the only place using it), but now I see that the CSSPropertyParser.cpp file still needs to call it so it needs to stay in the utils file",
+      "parentUuid": "f88da94a_999fdf87",
       "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
