@@ -2,6 +2,148 @@
   "comments": [
     {
       "key": {
+        "uuid": "4473761b_e9e39db2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Note that this CL title and description is inconsistent with the bug description (which says \"_clicking_ on a node in the UIElement tree will show and highlight...). It looks like the bug description needs to be changed in this case.",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d6278c_710a0e07",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Instead of introducing this new type, is it possible to just re-use NodeId?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4b998b_434dda03",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "nit: The style elsewhere in this file looks like it has a space following every :\n\nIs there a json-formatting script that will adjust that automatically?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e072f4bc_61d4e5ee",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Looks like the description on lines 473 and 477 need to be updated.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853fd22b_6f03daec",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Is including \"...or with the given JavaScript object wrapper\" relevant/correct documentation for our purposes?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca404ce1_ca5621cd",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Should this be specified as an event? Maybe I\u0027m misunderstanding, but I don\u0027t see anywhere in this CL where you use it, i.e., there are no places where you call frontend()-\u003esetInspectMode(...).",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea82921_5c1280f6",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Is it necessary to define the HighlightConfig type in two domains (DOM and Overlay)? Here\u0027s a thought I had, which may or may not make sense (let me know what you think):\n\n* In this .json, define the HighlightConfig type in the Overlay domain as you have done here, but don\u0027t define it in the DOM domain.\n* Have the UIDevToolsDOMAgent::layer_for_highlighting_ member instead be owned by UIDevToolsOverlayAgent.\n* Move UIDevToolsDOMAgent::HighlightNode() and possibly other highlighting-related methods into UIDevToolsOverlayAgent.\n\nMy thinking here is that if you are introducing a domain dedicated to overlay logic, then logic related to highlighting of UIElements should belong there (instead of in the DOM domain).",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7fe045_d4b36e9f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "style nit: even though the body of this conditional is only a single line, {} should be used in this case since the condition itself spans multiple lines. Nit also applies to lines 135 and 149.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1be1ba85_d7d3c352",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -19,6 +161,40 @@
     },
     {
       "key": {
+        "uuid": "b317aff9_92547b06",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "nit: no {} since conditional and body are both single lines.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73dccde5_8bc733ed",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "In the case where a custom event-targeter is installed on the Window, it is possible for a Window to be the target of mouse events even if the location is outside of the Window\u0027s bounds (see for example EasyResizeWindowTargeter). So for that reason I\u0027m not sure you want to include this check. I think that the check of |point_window| on line 294 is necessary and sufficient.\n\nIf you *do* keep it, should line 291 be a \"continue\" rather than a \"return\" ?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1665753_ba56ed82",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -30,6 +206,166 @@
       "writtenOn": "2017-07-24T21:24:43Z",
       "side": 1,
       "message": "early-out/early-continue where possible.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edba9267_ed8112f2",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "+1. Especially if |point_window| can be non-null for at most one iteration of the for loop (I think that\u0027s true, but please correct me if I am mistaken), then you will want to return immediately after |element_id| is set.",
+      "parentUuid": "a1665753_ba56ed82",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9295828_0289799d",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Consider adding brief function-level documentation here, since in this case I don\u0027t think it\u0027s 100% clear what the function is doing based on the function name and parameter names alone.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd87cb6_e9e8ed42",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about the meaning of the values of the InspectMode enum defined in the .json (\"searchForNode\", \"searchForUAShadowDOM\", \"none\"). I assume we are forced to use these values since they are what have been specified by the setInspectMode() command (coming from the FE)?",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e59be01_b582de99",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Since this is a no-op, does UIDevToolsOverlayAgent actually need to be a UIDevToolsDOMAgentObserver? If not, then I don\u0027t think you need to have support for the enable() or disable() commands, but please correct me if I am misunderstanding.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e50676_30601902",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Is it possible to add a unit test for the new behavior in this CL?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712d0a47_22a44b03",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this check is necessary. Can you please explain and/or add a comment to clarify?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359119bb_815a5a9e",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "Consider shortening the parameter list of this method by making |element_id| its return value rather than a pointer type.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b4f457_b9a399c4",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "As-is, any mouse event other than a MOUSE_PRESSED will request a highlight, which means we are requesting a highlight every time the user moves the mouse cursor (each ET_MOUSE_MOVED event). If you haven\u0027t done so already, can you see if it is sufficient to only request a highlight if the event type is ET_MOUSE_ENTERED ?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36afecad_dde6998f",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-26T20:15:22Z",
+      "side": 1,
+      "message": "nit: newline and \"UIDevToolsDOMAgentObserver:\" above this override",
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
