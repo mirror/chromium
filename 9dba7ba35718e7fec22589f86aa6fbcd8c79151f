@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "6fa7e07a_82ff1971",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-26T10:57:23Z",
+      "side": 1,
+      "message": "I guess that\u0027d be the same ref as in the HTML, but yeah fine to wait.",
+      "parentUuid": "5b6d2910_a90e9d13",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 23
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6600dec1_bf1a78d3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
         "patchSetId": 1
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "e2cdd7cf_12c91557",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-26T10:57:23Z",
+      "side": 1,
+      "message": "(marking as resolved)",
+      "parentUuid": "47b0d857_343e2991",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7ca08ba_300253d7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
         "patchSetId": 1
@@ -187,6 +235,30 @@
       "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d17845_dfd573b9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-26T10:57:23Z",
+      "side": 1,
+      "message": "Thanks, looks better now.",
+      "parentUuid": "570422e5_d719dc6e",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -519,6 +591,30 @@
     },
     {
       "key": {
+        "uuid": "4e4501e0_8494f9c7",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-26T10:57:23Z",
+      "side": 1,
+      "message": "(marking resolved)",
+      "parentUuid": "83290068_9161f9a9",
+      "range": {
+        "startLine": 664,
+        "startChar": 2,
+        "endLine": 664,
+        "endChar": 34
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9b5c13d_a7201d2b",
         "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
         "patchSetId": 1
@@ -563,6 +659,30 @@
       "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd061c98_fc526e54",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-26T10:57:23Z",
+      "side": 1,
+      "message": "I suspect this is generally \"saved\" by calling code checking a similar predicate (ErrorOccurred being checked in ImageNotifyFinished for example.)\n\nI sifted through the tests and didn\u0027t see one that invoked decode() after the image load had \u0027completed\u0027 (become completely available) with an error (\u0027error\u0027 being dispatched.) So maybe a test (or two) like that would be useful (i.e calling decode() from onerror), but maybe I just missed those in my quick scan.",
+      "parentUuid": "70d9d1db_27462f1d",
+      "range": {
+        "startLine": 701,
+        "startChar": 32,
+        "endLine": 701,
+        "endChar": 54
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -648,6 +768,30 @@
       "side": 1,
       "message": "Can you elaborate on this a bit? What do you mean by \"re-materialize the String\" here?\n\nFWIW, I think this was a premature optimization on my part. I\u0027ve changed both the SVG image case and the HTML image case to always invalidate pending requests when the source is updated. I\u0027ve removed the tests that verify that if it\u0027s the same string, then they still succeed. This simplifies the code and makes it easier to reason about... My reasoning here is that 1. it\u0027s likely to be an extremely rare case that the src would change to the same thing while the decode is still in flight 2. this can be checked by the calling script to avoid unnecessary source url mutations and 3. the spec doesn\u0027t mention anything about setting the value to the same thing and whether that should succeed or fail.",
       "parentUuid": "42e38ecf_1cd034ab",
+      "range": {
+        "startLine": 103,
+        "startChar": 69,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88fe1efc_3b10f434",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-26T10:57:23Z",
+      "side": 1,
+      "message": "\u003e Can you elaborate on this a bit? What do you mean by \"re-materialize the String\" here?\n\nWe don\u0027t necessarily have a String representation of the value in question available when SvgAttributeChanged() is called, so then we\u0027d need to serialize the value just to provide the String - which would be a waste of cycles. (This notifier is called for instance by SMIL animations and when updating SVG DOM attributes, and not really a generic thing but has a strong affinity towards the SVG DOM implementation.)\n \n\u003e FWIW, I think this was a premature optimization on my part. I\u0027ve changed both the SVG image case and the HTML image case to always invalidate pending requests when the source is updated. I\u0027ve removed the tests that verify that if it\u0027s the same string, then they still succeed. This simplifies the code and makes it easier to reason about...\n\nThis is however not in line with what the spec says. The spec could be updated, but I think the spec makes more sense than the (updated) implementation in that regard \u003d)\n\n\u003e My reasoning here is that 1. it\u0027s likely to be an extremely rare case that the src would change to the same thing while the decode is still in flight\n\nOn the web, what one would think no one would do, someone most definitely will do...\n\n\u003e 2. this can be checked by the calling script to avoid unnecessary source url mutations and\n\n...and to follow the same train, this will definitely not be checked by author code.\n\n\u003e 3. the spec doesn\u0027t mention anything about setting the value to the same thing and whether that should succeed or fail.\n\nIt does say:\n\n  \"This img element\u0027s current request changes or is mutated\"\n\nwhich is pretty much saying that. The algorithm for \"updating the image data\" [1] is not the most approachable (much like it\u0027s implementation in ImageLoader... surprisingly), but I think the relevant step here is step 12 (rough correspondence implementation-wise would be ImageLoader::DoUpdateFromElement, probably checking if new_image !\u003d old_image or so.)\nAs mentioned elsewhere did would also help address the node adoption case (didn\u0027t see a test for that):\n\nI.e something like:\n\n\u003ciframe id\u003dfoo src\u003dsame-origin\u003e\u003c/iframe\u003e\n\u003cscript\u003e\nvar img \u003d new Image();\nimg.src \u003d ....;\nimg.onload \u003d function() {\n  img.decode().then(...);\n  foo.contentDocument.appendChild(img);\n};\n\u003c/script\u003e\n\n(or variants thereof), which may end up mutating \u0027current request\u0027. (Called in \"relevant mutations\" of \u0027img\u0027 as \"The element\u0027s adopting steps are run.\" In Blink this would correspond to the DidMoveToNewDocument method on Node - as overridden by HTML/SVGImageElement.) \n\n[1] https://html.spec.whatwg.org/multipage/images.html#updating-the-image-data",
+      "parentUuid": "dcebe436_f5d36ceb",
       "range": {
         "startLine": 103,
         "startChar": 69,
