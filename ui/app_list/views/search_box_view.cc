@@ -398,6 +398,14 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
 
   is_search_box_active_ = active;
   UpdateSearchIcon();
+
+  SkColor background_color =
+      active ? kSearchBoxBackgroundDefault : background_color_;
+  SearchBoxBackground* background =
+      static_cast<SearchBoxBackground*>(content_container_->background());
+  background->set_color(background_color);
+
+  search_box_->SetBackgroundColor(background_color);
   search_box_->set_placeholder_text_draw_flags(
       active ? gfx::Canvas::TEXT_ALIGN_LEFT : gfx::Canvas::TEXT_ALIGN_CENTER);
   search_box_->set_placeholder_text_color(active ? kZeroQuerySearchboxColor
@@ -411,6 +419,7 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   if (focused_view_ != FOCUS_CONTENTS_VIEW)
     ResetTabFocus(false);
   content_container_->Layout();
+  content_container_->SchedulePaint();
 }
 
 void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
