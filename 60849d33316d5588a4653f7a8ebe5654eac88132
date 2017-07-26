@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "f6b77675_48a784c4",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T23:57:34Z",
+      "side": 1,
+      "message": "I mean:\n\n\n  if (!headers-\u003eGetNormalizedHeader(kSearchAnswerIssuedQuery, \u0026issued_query)) {\n    VLOG(1) \u003c\u003c \"Warning: \" \u003c\u003c kSearchAnswerIssuedQuery\n            \u003c\u003c \" header is not present\";\n    return true;\n  }\n\n  // The header contains the autocompleted query that corresponds to the card\n  // contents. Use it for the open-URL, and for deduplication with the omnibox\n  // search results.\n  result_url_ \u003d\n      template_url_service_-\u003eGetDefaultSearchProvider()\n          -\u003eurl_ref()\n          .ReplaceSearchTerms(TemplateURLRef::SearchTermsArgs(\n                                  base::UTF8ToUTF16(issued_query)),\n                              template_url_service_-\u003esearch_terms_data());\n  \n  return true;\n}",
+      "parentUuid": "9094f110_a254237f",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 8
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d6b0b56_a079051f",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
         "patchSetId": 1
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Not worth it IMHO, as in ~1 week I\u0027ll check in the code that will remove the other copy (when the server change ends up in prod). This is the part of cleanup covered by the above TODO.",
       "parentUuid": "2d6b0b56_a079051f",
+      "range": {
+        "startLine": 277,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 76
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63b3700_ed2848fd",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T23:57:34Z",
+      "side": 1,
+      "message": "This is few min work that keeps code well structured.",
+      "parentUuid": "ea1fb824_e7891566",
       "range": {
         "startLine": 277,
         "startChar": 4,
