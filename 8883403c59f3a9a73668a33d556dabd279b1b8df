@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "07c3f938_46a5f4c9",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-26T06:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab358d2a_ef9c1271",
+      "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9456f7e_07ea1339",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
         "patchSetId": 7
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "952fe565_a391d5f3",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-26T06:27:25Z",
+      "side": 1,
+      "message": "Thanks! Added that.",
+      "parentUuid": "f9456f7e_07ea1339",
+      "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c95fa1b_8e218aa1",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
         "patchSetId": 7
@@ -68,6 +104,24 @@
       "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8719669_a8941ba2",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-26T06:27:25Z",
+      "side": 1,
+      "message": "It looks good, thanks!",
+      "parentUuid": "1c95fa1b_8e218aa1",
+      "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
