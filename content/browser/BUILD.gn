@@ -731,6 +731,8 @@ source_set("browser") {
     "frame_host/interstitial_page_navigator_impl.h",
     "frame_host/mixed_content_navigation_throttle.cc",
     "frame_host/mixed_content_navigation_throttle.h",
+    "frame_host/mojo_frame_host_forwarder.cc",
+    "frame_host/mojo_frame_host_forwarder.h",
     "frame_host/navigation_controller_android.cc",
     "frame_host/navigation_controller_android.h",
     "frame_host/navigation_controller_delegate.h",

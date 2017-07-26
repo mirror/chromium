@@ -30,15 +30,10 @@ interface FrameBindingsControl {
   AllowBindings(int32 enabled_bindings_flags);
 };
 
-// Implemented by the frame server (i.e. the browser process).
-interface FrameHostInterfaceBroker {
-  GetInterfaceProvider(service_manager.mojom.InterfaceProvider& interfaces);
-};
-
 // Implemented by a service that provides implementations of the Frame
 // interface. (e.g. renderer processes).
 interface FrameFactory {
-  CreateFrame(int32 frame_routing_id, Frame& frame, FrameHostInterfaceBroker host);
+  CreateFrame(int32 frame_routing_id, Frame& frame);
 };
 
 struct CreateNewWindowParams {
@@ -92,6 +87,25 @@ struct CreateNewWindowReply {
   int64 cloned_session_storage_namespace_id;
 };
 
+[Native]
+struct DidCommitProvisionalLoadNativeParams;
+
+struct DidCommitProvisionalLoadParams {
+  // Encapsulates FrameHostMsg_DidCommiProvisionalLoad_Params.
+  // TODO: Eventually this should be converted to a Mojo struct, and the
+  // members below should be merged into it.
+  DidCommitProvisionalLoadNativeParams native_params;
+
+  // If the previously active document in the frame issued an InterfaceRequest
+  // just before it was destroyed, that request may be at race with
+  // DidCommitProvisionalLoad. To make sure it is never processed in the
+  // context of the new document, the RFH's InterfaceProvider is re-bound to
+  // the RFHI's InterfaceRegistry using a new pipe whose request end is passed
+  // in here.
+  service_manager.mojom.InterfaceProvider&
+  interface_provider_request_for_new_document;
+};
+
 // Implemented by the frame server (i.e. the browser process). For messages that
 // must be associated with the IPC channel.
 interface FrameHost {
@@ -100,4 +114,11 @@ interface FrameHost {
   // be created.
   [Sync] CreateNewWindow(CreateNewWindowParams params)
       => (CreateNewWindowReply reply);
+
+  // Sent by the renderer immediately after a RenderFrame is created.
+  BindInterfaceProviderForInitialEmptyDocument(
+      service_manager.mojom.InterfaceProvider& request);
+
+  // Sent by the renderer when a navigation commits in the frame.
+  DidCommitProvisionalLoad(DidCommitProvisionalLoadParams params);
 };

@@ -20,6 +20,7 @@
 #include "content/common/file_utilities_messages.h"
 #include "content/common/fileapi/file_system_messages.h"
 #include "content/common/fileapi/webblob_messages.h"
+#include "content/common/frame_host_messages.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input_messages.h"
 #include "content/common/media/aec_dump_messages.h"

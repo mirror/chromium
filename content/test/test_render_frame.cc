@@ -22,13 +22,34 @@ class MockFrameHost : public mojom::FrameHost {
   MockFrameHost() : binding_(this) {}
   ~MockFrameHost() override = default;
 
+  const base::Optional<FrameHostMsg_DidCommitProvisionalLoad_Params>&
+  last_commit_params() const {
+    return last_commit_params_;
+  }
+
+ protected:
+  // mojom::FrameHost:
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override {
-    mojom::CreateNewWindowReplyPtr reply = mojom::CreateNewWindowReply::New();
+    // Only the sync call signature below is used.
+    NOTREACHED();
+  }
+
+  bool CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
+                       mojom::CreateNewWindowReplyPtr* reply) override {
+    *reply = mojom::CreateNewWindowReply::New();
     MockRenderThread* mock_render_thread =
         static_cast<MockRenderThread*>(RenderThread::Get());
-    mock_render_thread->OnCreateWindow(*params, reply.get());
-    std::move(callback).Run(std::move(reply));
+    mock_render_thread->OnCreateWindow(*params, reply->get());
+    return true;
+  }
+
+  void BindInterfaceProviderForInitialEmptyDocument(
+      service_manager::mojom::InterfaceProviderRequest request) override {}
+
+  void DidCommitProvisionalLoad(
+      mojom::DidCommitProvisionalLoadParamsPtr params) override {
+    last_commit_params_ = params->native_params;
   }
 
   void Bind(mojo::ScopedInterfaceEndpointHandle handle) {
@@ -37,6 +58,8 @@ class MockFrameHost : public mojom::FrameHost {
 
  private:
   mojo::AssociatedBinding<mojom::FrameHost> binding_;
+  base::Optional<FrameHostMsg_DidCommitProvisionalLoad_Params>
+      last_commit_params_;
 
   DISALLOW_COPY_AND_ASSIGN(MockFrameHost);
 };
@@ -49,15 +72,9 @@ RenderFrameImpl* TestRenderFrame::CreateTestRenderFrame(
 
 TestRenderFrame::TestRenderFrame(const RenderFrameImpl::CreateParams& params)
     : RenderFrameImpl(params),
-      mock_frame_host_(base::MakeUnique<MockFrameHost>()) {
-  GetRemoteAssociatedInterfaces()->OverrideBinderForTesting(
-      mojom::FrameHost::Name_,
-      base::Bind(&MockFrameHost::Bind,
-                 base::Unretained(mock_frame_host_.get())));
-}
+      mock_frame_host_(base::MakeUnique<MockFrameHost>()) {}
 
-TestRenderFrame::~TestRenderFrame() {
-}
+TestRenderFrame::~TestRenderFrame() {}
 
 void TestRenderFrame::Navigate(const CommonNavigationParams& common_params,
                                const StartNavigationParams& start_params,
@@ -130,12 +147,13 @@ std::unique_ptr<blink::WebURLLoader> TestRenderFrame::CreateURLLoader(
       nullptr, base::ThreadTaskRunnerHandle::Get(), nullptr);
 }
 
-mojom::FrameHostAssociatedPtr TestRenderFrame::GetFrameHost() {
-  mojom::FrameHostAssociatedPtr ptr = RenderFrameImpl::GetFrameHost();
+mojom::FrameHost* TestRenderFrame::GetFrameHost() {
+  return mock_frame_host_.get();
+}
 
-  // Needed to ensure no deadlocks when waiting for sync IPC.
-  ptr.FlushForTesting();
-  return ptr;
+const base::Optional<FrameHostMsg_DidCommitProvisionalLoad_Params>&
+TestRenderFrame::last_commit_params() const {
+  return mock_frame_host_->last_commit_params();
 }
 
 }  // namespace content

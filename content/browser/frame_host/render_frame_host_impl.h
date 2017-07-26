@@ -27,6 +27,7 @@
 #include "build/build_config.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/bad_message.h"
+#include "content/browser/frame_host/mojo_frame_host_forwarder.h"
 #include "content/browser/loader/global_routing_id.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/browser/webui/web_ui_impl.h"
@@ -118,7 +119,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
       public base::SupportsUserData,
       NON_EXPORTED_BASE(public mojom::FrameHost),
-      NON_EXPORTED_BASE(public mojom::FrameHostInterfaceBroker),
       public BrowserAccessibilityDelegate,
       public SiteInstanceImpl::Observer,
       public NON_EXPORTED_BASE(service_manager::mojom::InterfaceProvider),
@@ -198,10 +198,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
       blink::WebSuddenTerminationDisablerType disabler_type) override;
 
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
-
-  // mojom::FrameHostInterfaceBroker
-  void GetInterfaceProvider(
-      service_manager::mojom::InterfaceProviderRequest interfaces) override;
 
   // IPC::Sender
   bool Send(IPC::Message* msg) override;
@@ -656,6 +652,17 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return stream_handle_.get();
   }
 
+  // Sets up a |receiver| to receive all mojom::FrameHost calls on behalf, and
+  // instead of, this RFHI. The |receiver| must either outlive this RFHI, or
+  // remove the override by passing in nullptr as |receiver|, in which case the
+  // RFHI will continue processing mojo::FrameHost calls as before.
+  //
+  // This mechanism can be used in unit and browser tests, to redirect these
+  // calls to a testing object, thus allowing these calls to be intercepted (and
+  // possibly scrutinized or delayed).
+  void override_mojo_frame_host_receiver_for_testing(
+      mojom::FrameHost* receiver);
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -726,7 +733,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
       int error_code,
       const base::string16& error_description,
       bool was_ignored_by_handler);
-  void OnDidCommitProvisionalLoad(const IPC::Message& msg);
   void OnUpdateState(const PageState& state);
   void OnBeforeUnloadACK(
       bool proceed,
@@ -830,9 +836,17 @@ class CONTENT_EXPORT RenderFrameHostImpl
                            const gfx::Rect& initial_rect,
                            bool user_gesture);
 
-  // mojom::FrameHost
+  // Binds the |request| end of frame-scopedInterfaceProvider interface.
+  void BindInterfaceProviderForNewDocument(
+      service_manager::mojom::InterfaceProviderRequest request);
+
+  // mojom::FrameHost:
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void BindInterfaceProviderForInitialEmptyDocument(
+      service_manager::mojom::InterfaceProviderRequest request) override;
+  void DidCommitProvisionalLoad(
+      mojom::DidCommitProvisionalLoadParamsPtr params) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,
@@ -1201,9 +1215,13 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // same Previews status as the top-level frame.
   PreviewsState last_navigation_previews_state_;
 
-  mojo::Binding<mojom::FrameHostInterfaceBroker>
-      frame_host_interface_broker_binding_;
+  // By default, forwards all calls to mojo::FrameHost to this RFHI. However, in
+  // unit and browser tests, it can be configured to redirect these calls to a
+  // testing object instead, thus allowing these calls to be intercepted (and
+  // possibly scrutinized or delayed) for testing.
+  MojoFrameHostForwarder frame_host_forwarder_;
   mojo::AssociatedBinding<mojom::FrameHost> frame_host_associated_binding_;
+
   mojom::FramePtr frame_;
   mojom::FrameBindingsControlAssociatedPtr frame_bindings_control_;
 
@@ -1256,8 +1274,15 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<JavaInterfaceProvider> java_interface_registry_;
 #endif
 
-  mojo::BindingSet<service_manager::mojom::InterfaceProvider>
-      interface_provider_bindings_;
+  // The InterfaceProvider binding that is re-bound to a newly created message
+  // pipe each time a non-same-document navigation commits.
+  //
+  // GetInterface messages dispatched through this binding are therefore
+  // guaranteed to originate from document corresponding to the last committed
+  // navigation; or from the inital empty document if no real navigation has
+  // ever been committed in the frame.
+  mojo::Binding<service_manager::mojom::InterfaceProvider>
+      document_scoped_interface_provider_binding_;
 
   // IPC-friendly token that represents this host for AndroidOverlays, if we
   // have created one yet.
