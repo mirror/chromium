@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "7accf763_a9fbd36f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-26T23:45:38Z",
+      "side": 1,
+      "message": "Question for Paul:\n\nHere the finch data is stored in: /data/user/0/org.appname/files/WebView_Variations/variations_seed_data\n\nPreviously we saw the client id is stored in:\n/data/user/0/org.appname/app_webview/metrics_guid\n\nWe had discussed storing these pieces together, so I\u0027m wondering if they should be at least in the same directory?",
+      "range": {
+        "startLine": 309,
+        "startChar": 23,
+        "endLine": 309,
+        "endChar": 44
+      },
+      "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db8dfbe8_0d272f21",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
         "patchSetId": 7
