@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b116ba34_9684fac3",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-26T22:53:45Z",
+      "side": 1,
+      "message": "Yes, you are right, it close the system tray bubble. Could I just delete the view here?",
+      "parentUuid": "2a6c143b_8e1c2114",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916fb8c1_347b2fec",
         "filename": "ash/system/update/tray_update.cc",
         "patchSetId": 3
