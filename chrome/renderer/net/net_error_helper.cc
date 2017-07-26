@@ -85,6 +85,7 @@ NetErrorHelperCore::FrameType GetFrameType(RenderFrame* render_frame) {
 NetErrorHelper::NetErrorHelper(RenderFrame* render_frame)
     : RenderFrameObserver(render_frame),
       content::RenderFrameObserverTracker<NetErrorHelper>(render_frame),
+      navigation_corrector_binding_(this),
       weak_controller_delegate_factory_(this) {
   RenderThread::Get()->AddObserver(this);
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
@@ -102,6 +103,8 @@ NetErrorHelper::NetErrorHelper(RenderFrame* render_frame)
   render_frame->GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&NetErrorHelper::OnNetworkDiagnosticsClientRequest,
                  base::Unretained(this)));
+  render_frame->GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
+      &NetErrorHelper::OnNavigationCorrectorRequest, base::Unretained(this)));
 }
 
 NetErrorHelper::~NetErrorHelper() {
@@ -154,18 +157,6 @@ void NetErrorHelper::WasShown() {
 
 void NetErrorHelper::WasHidden() {
   core_->OnWasHidden();
-}
-
-bool NetErrorHelper::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-
-  IPC_BEGIN_MESSAGE_MAP(NetErrorHelper, message)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_SetNavigationCorrectionInfo,
-                        OnSetNavigationCorrectionInfo);
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
 }
 
 void NetErrorHelper::OnDestruct() {
@@ -353,7 +344,7 @@ void NetErrorHelper::DNSProbeStatus(int32_t status_num) {
   core_->OnNetErrorInfo(static_cast<DnsProbeStatus>(status_num));
 }
 
-void NetErrorHelper::OnSetNavigationCorrectionInfo(
+void NetErrorHelper::SetNavigationCorrectionInfo(
     const GURL& navigation_correction_url,
     const std::string& language,
     const std::string& country_code,
@@ -384,6 +375,11 @@ void NetErrorHelper::OnTrackingRequestComplete(
 void NetErrorHelper::OnNetworkDiagnosticsClientRequest(
     chrome::mojom::NetworkDiagnosticsClientAssociatedRequest request) {
   network_diagnostics_client_bindings_.AddBinding(this, std::move(request));
+}
+
+void NetErrorHelper::OnNavigationCorrectorRequest(
+    chrome::mojom::NavigationCorrectorAssociatedRequest request) {
+  navigation_corrector_binding_.Bind(std::move(request));
 }
 
 void NetErrorHelper::SetCanShowNetworkDiagnosticsDialog(bool can_show) {
