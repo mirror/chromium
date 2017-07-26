@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "e5107b35_d6400b2a",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77af8dae_d929c0b8",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52d11c45_75cb31f1",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "Deleted",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69950a24_302c783e",
         "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
         "patchSetId": 9
@@ -63,6 +110,24 @@
       "revId": "65f326507fd7066029bed920a4497315f859e54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e44ea4_d215d705",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69950a24_302c783e",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "87b1c664_4ff3bb7a",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de62f959_ee6c1832",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34053cc8_b7f65f88",
         "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
         "patchSetId": 9
@@ -97,6 +180,24 @@
       "revId": "65f326507fd7066029bed920a4497315f859e54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73c27f4_78ab201a",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34053cc8_b7f65f88",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "1608fe4e_ad540767",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec3ac201_b34cb243",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5553eb8_ab1f6eb6",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 9
@@ -134,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "5d716114_8398c7f7",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "We can\u0027t use the private member job_queues_ directly because FRIEND_TEST_ALL_PREFIXES has been deleted.\nAdd a function job_queues().",
+      "parentUuid": "b5553eb8_ab1f6eb6",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96c286c8_4ef90ab4",
         "filename": "content/browser/service_worker/service_worker_register_job.h",
         "patchSetId": 9
@@ -148,6 +285,24 @@
       "revId": "65f326507fd7066029bed920a4497315f859e54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c06da89_f4d8f147",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T07:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c286c8_4ef90ab4",
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
