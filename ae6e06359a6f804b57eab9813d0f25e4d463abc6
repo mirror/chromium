@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e546b89a_5a9e4871",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-26T22:31:51Z",
+      "side": 1,
+      "message": "do we also want to bonk the renderer here, too?",
+      "range": {
+        "startLine": 1522,
+        "startChar": 3,
+        "endLine": 1522,
+        "endChar": 11
+      },
+      "revId": "ae6e06359a6f804b57eab9813d0f25e4d463abc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ec013e8_640bc342",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 3
