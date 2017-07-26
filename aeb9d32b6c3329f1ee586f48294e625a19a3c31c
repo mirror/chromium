@@ -46,6 +46,30 @@
       "revId": "aeb9d32b6c3329f1ee586f48294e625a19a3c31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba089d74_f16893de",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-26T22:34:07Z",
+      "side": 0,
+      "message": "\u003e - The tracking for whether we\u0027ve already sent the signal is based on the state of\n\u003e the autcomplete session. It does honestly feel like that latching would make more sense\n\u003e in the provider client, but that would require adding a method to it to reset the state\n\u003e and I opted for the simpler approach here.\n\nThis is something to keep in mind, as I can easily conceive of adding additional warm-up calls from the omnibox code.  That said, I think omnibox warm-up calls would probably want to live in autocomplete_controller, so they can reuse the |search_service_worker_signal_sent_| field from here.",
+      "parentUuid": "155dee64_c19ced7f",
+      "range": {
+        "startLine": 356,
+        "startChar": 44,
+        "endLine": 356,
+        "endChar": 0
+      },
+      "revId": "aeb9d32b6c3329f1ee586f48294e625a19a3c31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

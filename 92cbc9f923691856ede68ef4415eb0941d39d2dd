@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "577bf067_2adf9fe4",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-26T22:34:07Z",
+      "side": 1,
+      "message": "nit: |bars|",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "92cbc9f923691856ede68ef4415eb0941d39d2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
