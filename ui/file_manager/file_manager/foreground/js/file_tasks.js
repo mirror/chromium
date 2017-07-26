@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
+
 /**
  * Represents a collection of available tasks to execute for a specific list
  * of entries.
@@ -14,11 +16,13 @@
  * @param {!Array<?string>} mimeTypes
  * @param {!Array<!Object>} tasks
  * @param {Object} defaultTask
+ * @param {!TaskHistory} taskHistory
  * @constructor
  * @struct
  */
-function FileTasks(volumeManager, metadataModel, directoryModel, ui, entries,
-    mimeTypes, tasks, defaultTask) {
+function FileTasks(
+    volumeManager, metadataModel, directoryModel, ui, entries, mimeTypes, tasks,
+    defaultTask, taskHistory) {
   /**
    * @private {!VolumeManagerWrapper}
    * @const
@@ -66,6 +70,12 @@ function FileTasks(volumeManager, metadataModel, directoryModel, ui, entries,
    * @const
    */
   this.defaultTask_ = defaultTask;
+
+  /**
+   * @private {!TaskHistory}
+   * @const
+   */
+  this.taskHistory_ = taskHistory;
 };
 
 FileTasks.prototype = {
@@ -111,10 +121,12 @@ FileTasks.TaskMenuButtonItemType = {
  * @param {!FileManagerUI} ui
  * @param {!Array<!Entry>} entries
  * @param {!Array<?string>} mimeTypes
+ * @param {!TaskHistory} taskHistory
  * @return {!Promise<!FileTasks>}
  */
-FileTasks.create = function(volumeManager, metadataModel, directoryModel, ui,
-    entries, mimeTypes) {
+FileTasks.create = function(
+    volumeManager, metadataModel, directoryModel, ui, entries, mimeTypes,
+    taskHistory) {
   var tasksPromise = new Promise(function(fulfill) {
     if (entries.length === 0) {
       fulfill([]);
@@ -135,11 +147,11 @@ FileTasks.create = function(volumeManager, metadataModel, directoryModel, ui,
     return FileTasks.getDefaultTask(tasks);
   });
 
-  return Promise.all([tasksPromise, defaultTaskPromise]).then(
-      function(args) {
-        return new FileTasks(volumeManager, metadataModel, directoryModel, ui,
-            entries, mimeTypes, args[0], args[1]);
-      });
+  return Promise.all([tasksPromise, defaultTaskPromise]).then(function(args) {
+    return new FileTasks(
+        volumeManager, metadataModel, directoryModel, ui, entries, mimeTypes,
+        args[0], args[1], taskHistory);
+  });
 };
 
 /**
@@ -442,8 +454,11 @@ FileTasks.prototype.executeDefaultInternal_ = function(opt_callback) {
 
     this.openSuggestAppsDialog(
         function() {
-          FileTasks.create(this.volumeManager_, this.metadataModel_,
-              this.directoryModel_, this.ui_, this.entries_, this.mimeTypes_)
+          FileTasks
+              .create(
+                  this.volumeManager_, this.metadataModel_,
+                  this.directoryModel_, this.ui_, this.entries_,
+                  this.mimeTypes_, this.taskHistory_)
               .then(
                   function(tasks) {
                     tasks.executeDefault();
@@ -506,6 +521,7 @@ FileTasks.prototype.execute = function(taskId) {
  */
 FileTasks.prototype.executeInternal_ = function(taskId) {
   this.checkAvailability_(function() {
+    this.taskHistory_.recordTaskExecuted(taskId);
     if (FileTasks.isInternalTask_(taskId)) {
       this.executeInternalTask_(taskId);
     } else {
@@ -806,22 +822,22 @@ FileTasks.prototype.createItems_ = function(tasks) {
     }
   }
 
-  // Sort items (Sort order: isDefault, isGenericFileHandler, label).
+  // Sort items (Sort order: isDefault, lastExecutedTime, label).
   items.sort(function(a, b) {
     // Sort by isDefaultTask.
     var isDefault = (b.isDefault ? 1 : 0) - (a.isDefault ? 1 : 0);
     if (isDefault !== 0)
       return isDefault;
 
-    // Sort by isGenericFileHandler.
-    var isGenericFileHandler =
-        (a.isGenericFileHandler ? 1 : 0) - (b.isGenericFileHandler ? 1 : 0);
-    if (isGenericFileHandler !== 0)
-      return isGenericFileHandler;
+    // Sort by last-executed time.
+    var aTime = this.taskHistory_.getLastExecutedTime(a.task.taskId);
+    var bTime = this.taskHistory_.getLastExecutedTime(b.task.taskId);
+    if (aTime != bTime)
+      return bTime - aTime;
 
     // Sort by label.
     return a.label.localeCompare(b.label);
-  });
+  }.bind(this));
 
   return items;
 };
