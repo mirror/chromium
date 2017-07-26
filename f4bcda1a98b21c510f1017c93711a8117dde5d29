@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7793ebf_f2ce3738",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T18:12:01Z",
+      "side": 1,
+      "message": "There shouldn\u0027t be, right?\nI\u0027ve changed this to USER_BLOCKING.\nSame for webstore_installer and zipfile_installer.",
+      "parentUuid": "a510e42e_713d51a6",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26e4684b_cbff9e20",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8001626d_15ad458e",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T18:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e4684b_cbff9e20",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1c4ca04a_7b409de6",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T18:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02fd8a38_184e6431",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c33c6e69_86126bc1",
         "filename": "chrome/browser/extensions/zipfile_installer.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2feaf4ab_1afc5185",
+        "filename": "chrome/browser/extensions/zipfile_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-26T18:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c33c6e69_86126bc1",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
