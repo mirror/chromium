@@ -4864,6 +4864,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
       newContext->SetIsSameDocument(true);
       _webStateImpl->OnNavigationFinished(newContext.get());
     } else {
+      if (!existingContext) {
+        // It is unexpected state to have a navigation which changes the
+        // document, and was not seen before. In this situation there is not
+        // much value in crashing, because missing DidFinishNavigation call does
+        // not have uny impact on security.
+        [self updateSSLStatusForCurrentNavigationItem];
+        return;
+      }
+
       // Same document navigation does not contain response headers.
       net::HttpResponseHeaders* headers =
           isSameDocumentNavigation ? nullptr
