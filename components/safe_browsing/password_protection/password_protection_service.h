@@ -18,6 +18,7 @@
 #include "base/values.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/safe_browsing/csd.pb.h"
+#include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/protobuf/src/google/protobuf/repeated_field.h"
 
@@ -40,9 +41,13 @@ class PasswordProtectionRequest;
 extern const base::Feature kPasswordFieldOnFocusPinging;
 extern const base::Feature kProtectedPasswordEntryPinging;
 extern const base::Feature kPasswordProtectionInterstitial;
+extern const base::Feature kGoogleBrandedPhishingWarning;
 extern const char kPasswordOnFocusRequestOutcomeHistogramName[];
 extern const char kPasswordEntryRequestOutcomeHistogramName[];
 extern const char kSyncPasswordEntryRequestOutcomeHistogramName[];
+extern const char kSyncPasswordWarningDialogHistogramName[];
+extern const char kSyncPasswordPageInfoHistogramName[];
+extern const char kSyncPasswordChromeSettingsHistogramName[];
 
 // Manage password protection pings and verdicts. There is one instance of this
 // class per profile. Therefore, every PasswordProtectionService instance is
@@ -53,6 +58,9 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   using TriggerType = LoginReputationClientRequest::TriggerType;
   using SyncAccountType =
       LoginReputationClientRequest::PasswordReuseEvent::SyncAccountType;
+  using WebContentsToProtoMap = std::unordered_map<
+      content::WebContents*,
+      std::pair<LoginReputationClientRequest, LoginReputationClientResponse>>;
 
   // The outcome of the request. These values are used for UMA.
   // DO NOT CHANGE THE ORDERING OF THESE VALUES.
@@ -73,6 +81,26 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
     DISABLED_DUE_TO_USER_POPULATION = 13,
     URL_NOT_VALID_FOR_REPUTATION_COMPUTING = 14,
     MAX_OUTCOME
+  };
+
+  // Actions on password protection warnings. These values are used for UMA.
+  // DO NOT CHANGE THE ORDERING OF THESE VALUES.
+  enum WarningAction {
+    SHOWN = 0,
+    CHANGE_PASSWORD = 1,  // User clicks on "Change Password" button.
+    IGNORE_WARNING = 2,   // User clicks on "Ignore" button.
+    CLOSE = 3,  // User navigates page away or hit "ESC" to close dialog.
+    MARK_AS_LEGITIMATE = 4,  // User explicitly mark the site as legitimate.
+    MAX_ACTION
+  };
+
+  // Type of password protection warning UI.
+  enum WarningUIType {
+    NOT_USED = 0,
+    PAGE_INFO = 1,
+    MODAL_DIALOG = 2,
+    CHROME_SETTINGS = 3,
+    MAX_UI_TYPE
   };
 
   PasswordProtectionService(
@@ -139,6 +167,19 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // (6) Its hostname is a dotless domain.
   static bool CanGetReputationOfURL(const GURL& url);
 
+  // Record user action to corresponding histograms.
+  void RecordWarningAction(WarningUIType ui_type, WarningAction action);
+
+  void OnWarningDone(content::WebContents* web_contents,
+                     WarningUIType ui_type,
+                     WarningAction action);
+
+  virtual void ShowWarning(
+      content::WebContents* web_contents,
+      WarningUIType ui_type,
+      const LoginReputationClientRequest* request_proto = nullptr,
+      const LoginReputationClientResponse* response_proto = nullptr);
+
  protected:
   friend class PasswordProtectionRequest;
 
@@ -204,7 +245,14 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
 
   void CheckCsdWhitelistOnIOThread(const GURL& url, bool* check_result);
 
+  virtual void UpdateSecurityState(safe_browsing::SBThreatType threat_type,
+                                   content::WebContents* web_contents) {}
+
   HostContentSettingsMap* content_settings() const { return content_settings_; }
+
+  WebContentsToProtoMap web_contents_to_proto_map() const {
+    return web_contents_to_proto_map_;
+  }
 
  private:
   friend class PasswordProtectionServiceTest;
@@ -293,6 +341,8 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Weakptr can only cancel task if it is posted to the same thread. Therefore,
   // we need CancelableTaskTracker to cancel tasks posted to IO thread.
   base::CancelableTaskTracker tracker_;
+
+  WebContentsToProtoMap web_contents_to_proto_map_;
 
   base::WeakPtrFactory<PasswordProtectionService> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(PasswordProtectionService);
