@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ffbd643_a7ca259d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T02:27:02Z",
+      "side": 1,
+      "message": "Should this be\n\nRefPtr\u003cWebTaskRunner\u003e file_runner \u003d\n\n? (while the current code should be safe from its usage)",
+      "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0663ee9_e208ed3b",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T02:27:02Z",
+      "side": 1,
+      "message": "We pre-create this because we want to call this in a non-racy way (i.e. on main thread)? Maybe worth having a brief comment about that?",
+      "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
