@@ -117,6 +117,75 @@
       "revId": "1ac50ebfc58a5701d81397028d7ac87338291045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e01515f_af8cf90d",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-26T14:46:44Z",
+      "side": 1,
+      "message": "/UseContextProvider/Use ContextProvider/",
+      "range": {
+        "startLine": 195,
+        "startChar": 5,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "1ac50ebfc58a5701d81397028d7ac87338291045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d288e95_c2e39c62",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-26T14:46:44Z",
+      "side": 1,
+      "message": "why is this in this CL?",
+      "range": {
+        "startLine": 79,
+        "startChar": 20,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "1ac50ebfc58a5701d81397028d7ac87338291045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fa4045_ab75604d",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupport.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-26T14:46:44Z",
+      "side": 1,
+      "message": "where did you need this?",
+      "range": {
+        "startLine": 220,
+        "startChar": 20,
+        "endLine": 220,
+        "endChar": 45
+      },
+      "revId": "1ac50ebfc58a5701d81397028d7ac87338291045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
