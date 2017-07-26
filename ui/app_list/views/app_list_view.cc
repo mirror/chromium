@@ -433,8 +433,10 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
 
   gfx::Rect app_list_overlay_view_bounds(
       display_work_area_bounds.x(),
-      bottom_of_screen,  // Set the widget at the bottom of the screen so it can
-                         // animate up when shown.
+      bottom_of_screen -
+          kShelfSize,  // Set the widget height to the shelf height to replace
+                       // the shelf background on show animation with no
+                       // flicker.
       display_work_area_bounds.width(),
       display_work_area_bounds.height() + kShelfSize);
 
@@ -920,6 +922,7 @@ void AppListView::SetState(AppListState new_state) {
       StartAnimationForState(new_state_override);
       break;
     case CLOSED:
+      StartAnimationForState(new_state_override);
       app_list_main_view_->Close();
       delegate_->Dismiss();
       break;
@@ -930,6 +933,7 @@ void AppListView::SetState(AppListState new_state) {
 void AppListView::StartAnimationForState(AppListState target_state) {
   const int display_height = GetDisplayNearestView().size().height();
   int target_state_y = 0;
+  float target_opacity = 1.0;
 
   switch (target_state) {
     case PEEKING:
@@ -938,6 +942,8 @@ void AppListView::StartAnimationForState(AppListState target_state) {
     case HALF:
       target_state_y = display_height - kHalfAppListHeight;
       break;
+    case CLOSED:
+      return;
     default:
       break;
   }
@@ -945,17 +951,18 @@ void AppListView::StartAnimationForState(AppListState target_state) {
   gfx::Rect target_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
   target_bounds.set_y(target_state_y);
 
-  std::unique_ptr<ui::LayerAnimationElement> animation_element =
+  std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =
       ui::LayerAnimationElement::CreateBoundsElement(
           target_bounds,
           base::TimeDelta::FromMilliseconds(kAppListAnimationDurationMs));
-  animation_element->set_tween_type(gfx::Tween::EASE_OUT);
+
+  bounds_animation_element->set_tween_type(gfx::Tween::EASE_OUT);
 
   ui::LayerAnimator* animator = fullscreen_widget_->GetLayer()->GetAnimator();
   animator->set_preemption_strategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
   animator->ScheduleAnimation(
-      new ui::LayerAnimationSequence(std::move(animation_element)));
+      new ui::LayerAnimationSequence(std::move(bounds_animation_element)));
 }
 
 void AppListView::OnWidgetDestroying(views::Widget* widget) {
