@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9858f74_cbe37c10",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T21:07:30Z",
+      "side": 1,
+      "message": "nit: move down to usage.",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38bdfb2_06b85064",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T21:07:30Z",
+      "side": 1,
+      "message": "nit: extract visual_viewport into variable?",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f683203_4b2e0341",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T21:07:30Z",
+      "side": 1,
+      "message": "Check mouse button?",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3906cfed_ccca7a82",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T21:07:30Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd7c402_b38875e5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T21:07:30Z",
+      "side": 1,
+      "message": "Should we cancel screenshot if ctrl was released prior to a button?",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4566a732_388081b7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T21:07:30Z",
+      "side": 1,
+      "message": "nit: the word viewport is a bit confusing, considering we actually pass page coordinates.",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
