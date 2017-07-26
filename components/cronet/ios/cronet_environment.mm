@@ -269,8 +269,7 @@ void CronetEnvironment::InitializeOnNetworkThread() {
   if (!ssl_key_log_file_set && !ssl_key_log_file_name_.empty()) {
     ssl_key_log_file_set = true;
     base::FilePath ssl_key_log_file(ssl_key_log_file_name_);
-    net::SSLClientSocket::SetSSLKeyLogFile(ssl_key_log_file,
-                                           file_thread_->task_runner());
+    net::SSLClientSocket::SetSSLKeyLogFile(ssl_key_log_file);
   }
 
   if (user_agent_partial_)
