@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "944bbefa_8ea5daab",
+        "filename": "chrome/renderer/page_load_metrics/fake_page_timing_sender.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T21:07:11Z",
+      "side": 1,
+      "message": "Luna mentioned in chat that since the features is reset on each send, it makes sense to not use a const reference here.\n\nI\u0027d still like to make new_features the last arg in the method signature, but keeping it as non-const makes sense to me, thanks!",
+      "parentUuid": "50066630_08c7eae1",
+      "revId": "df9a95ecb839c424d5914a939ead5016294a7b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f3bb70a_4c3ef467",
         "filename": "chrome/renderer/page_load_metrics/metrics_render_frame_observer.cc",
         "patchSetId": 23
