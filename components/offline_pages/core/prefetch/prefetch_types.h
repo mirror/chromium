@@ -100,8 +100,9 @@ enum class PrefetchItemState {
 // Error codes used to identify the reason why a prefetch item has finished
 // processing.
 enum class PrefetchItemErrorCode {
-  SUCCESS,
+  SUCCESS = 0,  // 0 used as default value for SQLite field.
   EXPIRED,
+  TOO_MANY_NEW_URLS,  // Received >100 Urls from suggestions, canceled this one.
 };
 
 // Callback invoked upon completion of a prefetch request.
