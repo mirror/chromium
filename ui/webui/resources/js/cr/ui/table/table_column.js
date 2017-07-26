@@ -91,49 +91,49 @@ cr.define('cr.ui.table', function() {
 
   /**
    * The column id.
-   * @type {string}
+   * type {string}
    */
   cr.defineProperty(TableColumn, 'id');
 
   /**
    * The column name
-   * @type {string}
+   * type {string}
    */
   cr.defineProperty(TableColumn, 'name');
 
   /**
    * The column width.
-   * @type {number}
+   * type {number}
    */
   cr.defineProperty(TableColumn, 'width');
 
   /**
    * The column visibility.
-   * @type {boolean}
+   * type {boolean}
    */
   cr.defineProperty(TableColumn, 'visible');
 
   /**
    * True if the column is aligned to end.
-   * @type {boolean}
+   * type {boolean}
    */
   cr.defineProperty(TableColumn, 'endAlign');
 
   /**
    * The column render function.
-   * @type {function(*, string, Element): HTMLElement}
+   * type {function(*, string, Element): HTMLElement}
    */
   cr.defineProperty(TableColumn, 'renderFunction');
 
   /**
    * The column header render function.
-   * @type {function(Element): Text}
+   * type {function(Element): Text}
    */
   cr.defineProperty(TableColumn, 'headerRenderFunction');
 
   /**
    * Default sorting order for the column ('asc' or 'desc').
-   * @type {string}
+   * type {string}
    */
   cr.defineProperty(TableColumn, 'defaultOrder');
 

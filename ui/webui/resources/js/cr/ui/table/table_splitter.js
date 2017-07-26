@@ -71,13 +71,13 @@ cr.define('cr.ui', function() {
 
   /**
    * The column index.
-   * @type {number}
+   * type {number}
    */
   cr.defineProperty(TableSplitter, 'columnIndex');
 
   /**
    * The table associated with the splitter.
-   * @type {Element}
+   * type {Element}
    */
   cr.defineProperty(TableSplitter, 'table');
 
