@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e47ace23_6465f5b4",
+        "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-26T18:30:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d1ece5_5ee22749",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 65
+      },
+      "revId": "e8039f71732e6465691aee49421a0c40fab77d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "875ecda6_bc820da4",
         "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1327a11f_1861dc1d",
+        "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-26T18:30:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "875ecda6_bc820da4",
+      "range": {
+        "startLine": 23,
+        "startChar": 54,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "e8039f71732e6465691aee49421a0c40fab77d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f63c4d77_12580a33",
         "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-26T16:19:07Z",
       "side": 1,
       "message": "why isn\u0027t this simply\n  } else {\n?",
+      "range": {
+        "startLine": 870,
+        "startChar": 6,
+        "endLine": 870,
+        "endChar": 8
+      },
+      "revId": "e8039f71732e6465691aee49421a0c40fab77d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4061d391_f432bb49",
+        "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-26T18:30:54Z",
+      "side": 1,
+      "message": "Sorry for the confusion. We need this because keys like ESC will also go into this path, which doesn\u0027t produce non-control characters even if modifiers are stripped out.\n\nAdded comments to the code.",
+      "parentUuid": "f63c4d77_12580a33",
       "range": {
         "startLine": 870,
         "startChar": 6,
