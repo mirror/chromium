@@ -16,6 +16,24 @@
       "revId": "f5261d998c8d318bc50e5e61db6729c8a3dec254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8be38a_5c81e008",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T20:56:14Z",
+      "side": 1,
+      "message": "Trying to resolve this here https://chromium-review.googlesource.com/c/587029/ .",
+      "parentUuid": "0ce4cec2_ad5970d8",
+      "revId": "f5261d998c8d318bc50e5e61db6729c8a3dec254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
