@@ -5,6 +5,7 @@
 #ifndef MEDIA_BASE_MEDIA_OBSERVER_H_
 #define MEDIA_BASE_MEDIA_OBSERVER_H_
 
+#include "base/optional.h"
 #include "media/base/cdm_context.h"
 #include "media/base/pipeline_metadata.h"
 #include "url/gurl.h"
@@ -18,8 +19,11 @@ class MEDIA_EXPORT MediaObserverClient {
   // Requests to restart the media pipeline and create a new renderer as soon as
   // possible. |is_rendered_remotely| indicates whether the media is rendered
   // remotely. When it is true, all the optimizations that might suspend the
-  // media pipeline should be disabled.
-  virtual void SwitchRenderer(bool is_rendered_remotely) = 0;
+  // media pipeline should be disabled. |sink_name| is the remote device name
+  // and is required only when media is rendered remotely. Otherwise, its value
+  // is ignored.
+  virtual void SwitchRenderer(bool is_rendered_remotely,
+                              const base::Optional<std::string>& sink_name) = 0;
 
   // Requests to activate monitoring changes on viewport intersection.
   virtual void ActivateViewportIntersectionMonitoring(bool activate) = 0;

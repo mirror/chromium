@@ -117,7 +117,7 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   virtual WebMediaPlayer::TrackId GetSelectedVideoTrackId() = 0;
 
   // Informs that media starts/stops being rendered and played back remotely.
-  virtual void MediaRemotingStarted() {}
+  virtual void MediaRemotingStarted(const WebString&) {}
   virtual void MediaRemotingStopped() {}
 
   // Returns whether the media element has native controls. It does not mean

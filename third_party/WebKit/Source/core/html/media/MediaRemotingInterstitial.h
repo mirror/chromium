@@ -32,7 +32,7 @@ class MediaRemotingInterstitial final : public HTMLDivElement {
   explicit MediaRemotingInterstitial(HTMLVideoElement&);
 
   // Show/Hide Media Remoting interstitial.
-  void Show();
+  void Show(const WebString&);
   void Hide();
 
   void OnPosterImageChanged();

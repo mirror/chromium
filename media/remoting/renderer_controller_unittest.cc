@@ -56,6 +56,8 @@ mojom::RemotingSinkMetadata GetDefaultSinkMetadata(bool enable) {
   return metadata;
 }
 
+const std::string kDefaultReceiver = "your TV";
+
 }  // namespace
 
 class RendererControllerTest : public ::testing::Test,
@@ -69,9 +71,14 @@ class RendererControllerTest : public ::testing::Test,
   static void RunUntilIdle() { base::RunLoop().RunUntilIdle(); }
 
   // MediaObserverClient implementation.
-  void SwitchRenderer(bool disable_pipeline_auto_suspend) override {
+  void SwitchRenderer(bool disable_pipeline_auto_suspend,
+                      const base::Optional<std::string>& sink_name) override {
     is_rendering_remotely_ = disable_pipeline_auto_suspend;
     disable_pipeline_suspend_ = disable_pipeline_auto_suspend;
+    if (sink_name.has_value())
+      sink_name_ = base::MakeUnique<std::string>(sink_name.value());
+    else
+      sink_name_.reset();
   }
 
   void ActivateViewportIntersectionMonitoring(bool activate) override {
@@ -87,6 +94,7 @@ class RendererControllerTest : public ::testing::Test,
       const PipelineMetadata& pipeline_metadata,
       const mojom::RemotingSinkMetadata& sink_metadata) {
     EXPECT_FALSE(is_rendering_remotely_);
+    EXPECT_FALSE(sink_name_);
     controller_ = base::MakeUnique<RendererController>(shared_session);
     controller_->SetClient(this);
     RunUntilIdle();
@@ -133,6 +141,7 @@ class RendererControllerTest : public ::testing::Test,
   bool is_remoting_cdm_ = false;
   bool activate_viewport_intersection_monitoring_ = false;
   bool disable_pipeline_suspend_ = false;
+  std::unique_ptr<std::string> sink_name_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(RendererControllerTest);
@@ -150,6 +159,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnDominantChange) {
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 
   // Leaving fullscreen should shut down remoting.
   controller_->OnBecameDominantVisibleContent(false);
@@ -157,6 +167,25 @@ TEST_F(RendererControllerTest, ToggleRendererOnDominantChange) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(disable_pipeline_suspend_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(sink_name_);
+}
+
+TEST_F(RendererControllerTest, PassRemotingSinkName) {
+  const scoped_refptr<SharedSession> shared_session =
+      FakeRemoterFactory::CreateSharedSession(false);
+  mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
+  const std::string receiver_name = "TestingChromeCast";
+  sink_metadata.friendly_name = receiver_name;
+  InitializeControllerAndBecomeDominant(
+      shared_session, DefaultMetadata(VideoCodec::kCodecVP8), sink_metadata);
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_TRUE(IsInDelayedStart());
+  DelayedStartEnds();
+  RunUntilIdle();
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(receiver_name, *sink_name_);
 }
 
 TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
@@ -170,11 +199,13 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   // the controller to toggle remote rendering on.
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(sink_name_);
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(sink_name_);
   // A sink that *does* support remote rendering *does* cause the controller to
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true).Clone());
@@ -190,6 +221,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 }
 
 TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
@@ -205,6 +237,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 
   // If the page disables remote playback (e.g., by setting the
   // disableRemotePlayback attribute), this should shut down remoting.
@@ -213,6 +246,7 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(sink_name_);
 }
 
 TEST_F(RendererControllerTest, WithVP9VideoCodec) {
@@ -226,6 +260,7 @@ TEST_F(RendererControllerTest, WithVP9VideoCodec) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(disable_pipeline_suspend_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(sink_name_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
@@ -241,6 +276,7 @@ TEST_F(RendererControllerTest, WithVP9VideoCodec) {
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 }
 
 TEST_F(RendererControllerTest, WithHEVCVideoCodec) {
@@ -254,12 +290,14 @@ TEST_F(RendererControllerTest, WithHEVCVideoCodec) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(sink_name_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(sink_name_);
   mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
   sink_metadata.video_capabilities.push_back(
       mojom::RemotingSinkVideoCapability::CODEC_HEVC);
@@ -273,6 +311,7 @@ TEST_F(RendererControllerTest, WithHEVCVideoCodec) {
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 }
 
 TEST_F(RendererControllerTest, WithAACAudioCodec) {
@@ -290,11 +329,13 @@ TEST_F(RendererControllerTest, WithAACAudioCodec) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(disable_pipeline_suspend_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(sink_name_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(sink_name_);
   mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
   sink_metadata.audio_capabilities.push_back(
       mojom::RemotingSinkAudioCapability::CODEC_AAC);
@@ -308,6 +349,7 @@ TEST_F(RendererControllerTest, WithAACAudioCodec) {
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 }
 
 TEST_F(RendererControllerTest, WithOpusAudioCodec) {
@@ -325,6 +367,7 @@ TEST_F(RendererControllerTest, WithOpusAudioCodec) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(sink_name_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
@@ -341,6 +384,7 @@ TEST_F(RendererControllerTest, WithOpusAudioCodec) {
   EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_TRUE(disable_pipeline_suspend_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 }
 
 TEST_F(RendererControllerTest, StartFailed) {
@@ -355,6 +399,7 @@ TEST_F(RendererControllerTest, StartFailed) {
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(sink_name_);
 }
 
 TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
@@ -374,6 +419,7 @@ TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_TRUE(is_remoting_cdm_);
+  EXPECT_FALSE(sink_name_);
 
   // Create a RemotingCdm with |cdm_controller|.
   const scoped_refptr<RemotingCdm> remoting_cdm = new RemotingCdm(
@@ -385,6 +431,7 @@ TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {
   controller_->OnSetCdm(remoting_cdm_context.get());
   RunUntilIdle();
   EXPECT_TRUE(is_rendering_remotely_);
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 
   // For encrypted contents, becoming/exiting dominant has no effect.
   controller_->OnBecameDominantVisibleContent(true);
@@ -414,6 +461,7 @@ TEST_F(RendererControllerTest, EncryptedWithLocalCdm) {
                                         GetDefaultSinkMetadata(true));
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(IsInDelayedStart());
+  EXPECT_FALSE(sink_name_);
 
   const scoped_refptr<SharedSession> cdm_shared_session =
       FakeRemoterFactory::CreateSharedSession(true);
@@ -426,6 +474,7 @@ TEST_F(RendererControllerTest, EncryptedWithLocalCdm) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_FALSE(is_remoting_cdm_);
   EXPECT_FALSE(IsInDelayedStart());
+  EXPECT_FALSE(sink_name_);
 }
 
 TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
@@ -447,10 +496,12 @@ TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
   EXPECT_FALSE(is_rendering_remotely_);
   EXPECT_TRUE(is_remoting_cdm_);
   EXPECT_FALSE(IsInDelayedStart());
+  EXPECT_FALSE(sink_name_);
 
   cdm_shared_session->OnSinkGone();
   RunUntilIdle();
   EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(sink_name_);
   EXPECT_NE(SharedSession::SESSION_PERMANENTLY_STOPPED,
             controller_->session()->state());
 
@@ -468,6 +519,7 @@ TEST_F(RendererControllerTest, EncryptedWithFailedRemotingCdm) {
   EXPECT_FALSE(IsInDelayedStart());
   EXPECT_EQ(SharedSession::SESSION_PERMANENTLY_STOPPED,
             controller_->session()->state());
+  EXPECT_EQ(kDefaultReceiver, *sink_name_);
 }
 
 }  // namespace remoting
