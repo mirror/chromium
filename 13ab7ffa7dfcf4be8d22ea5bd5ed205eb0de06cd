@@ -22,6 +22,30 @@
       "revId": "13ab7ffa7dfcf4be8d22ea5bd5ed205eb0de06cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b329b311_dc317949",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-26T21:50:53Z",
+      "side": 1,
+      "message": "Ah that\u0027s right. I\u0027ve updated this comment to read:\nTODO(pdr): Simplify the logic here and the equivalent logic in\nScrollTree::PushScrollUpdatesFromMainThread where two types of changes\nare detected: whether the current value changed, and whether the pushes\nhave any effect.",
+      "parentUuid": "d9c51a79_772902d8",
+      "range": {
+        "startLine": 793,
+        "startChar": 0,
+        "endLine": 793,
+        "endChar": 74
+      },
+      "revId": "13ab7ffa7dfcf4be8d22ea5bd5ed205eb0de06cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
