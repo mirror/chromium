@@ -88,6 +88,8 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
 
   std::vector<std::string> GetDriverBugWorkarounds() const;
 
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const;
+
   void AddLogMessage(int level,
                      const std::string& header,
                      const std::string& message);
