@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "312bc489_66d024da",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-26T04:03:19Z",
+      "side": 1,
+      "message": "Please add a comment on whether this count gets reset during seek.",
+      "revId": "54763f695d39a3e8e33c94be7b7942d5274bf762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
