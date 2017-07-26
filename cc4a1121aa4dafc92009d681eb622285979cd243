@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33f14f8a_b89e4bcc",
+        "filename": "chrome/browser/chromeos/login/screenshot_testing/screenshot_tester.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-26T20:38:05Z",
+      "side": 1,
+      "message": "let\u0027s use argname like runloop here",
+      "range": {
+        "startLine": 112,
+        "startChar": 24,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "cc4a1121aa4dafc92009d681eb622285979cd243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
