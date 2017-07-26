@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "36647c19_dbc8e83d",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-26T16:45:30Z",
+      "side": 1,
+      "message": "Looks like you added the Wi-Fi DeviceState instead of a Wi-Fi network. Please follow the example I sent in this comment instead - thanks.",
+      "parentUuid": "770b04ea_7ec7bd8b",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 75
+      },
+      "revId": "53049e18ceb9ef05055652a566d41e7a5156591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc7d32d4_ae22012b",
         "filename": "chromeos/components/tether/host_scanner_unittest.cc",
         "patchSetId": 5
