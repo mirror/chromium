@@ -20,9 +20,19 @@
 
 namespace {
 const SkMScalar kAngleEpsilon = 1e-4f;
+const SkMScalar kApproximationEpsilon = 1e-4f;
 }
 
 namespace cc {
+
+namespace {
+
+bool FloatsApproximatelyEqual(SkMScalar lhs, SkMScalar rhs) {
+  SkMScalar delta = rhs - lhs;
+  return delta > -kApproximationEpsilon && delta < kApproximationEpsilon;
+}
+
+}  // namespace
 
 bool TransformOperation::IsIdentity() const {
   return matrix.IsIdentity();
@@ -116,36 +126,37 @@ void TransformOperation::Bake() {
   }
 }
 
-bool TransformOperation::operator==(const TransformOperation& other) const {
+bool TransformOperation::ApproximatelyEqual(
+    const TransformOperation& other) const {
   if (type != other.type)
     return false;
   switch (type) {
     case TransformOperation::TRANSFORM_OPERATION_TRANSLATE:
-      return translate.x == other.translate.x &&
-             translate.y == other.translate.y &&
-             translate.z == other.translate.z;
+      return FloatsApproximatelyEqual(translate.x, other.translate.x) &&
+             FloatsApproximatelyEqual(translate.y, other.translate.y) &&
+             FloatsApproximatelyEqual(translate.z, other.translate.z);
     case TransformOperation::TRANSFORM_OPERATION_ROTATE:
-      return rotate.axis.x == other.rotate.axis.x &&
-             rotate.axis.y == other.rotate.axis.y &&
-             rotate.axis.z == other.rotate.axis.z &&
-             rotate.angle == other.rotate.angle;
+      return FloatsApproximatelyEqual(rotate.axis.x, other.rotate.axis.x) &&
+             FloatsApproximatelyEqual(rotate.axis.y, other.rotate.axis.y) &&
+             FloatsApproximatelyEqual(rotate.axis.z, other.rotate.axis.z) &&
+             FloatsApproximatelyEqual(rotate.angle, other.rotate.angle);
     case TransformOperation::TRANSFORM_OPERATION_SCALE:
-      return scale.x == other.scale.x && scale.y == other.scale.y &&
-             scale.z == other.scale.z;
+      return FloatsApproximatelyEqual(scale.x, other.scale.x) &&
+             FloatsApproximatelyEqual(scale.y, other.scale.y) &&
+             FloatsApproximatelyEqual(scale.z, other.scale.z);
     case TransformOperation::TRANSFORM_OPERATION_SKEW:
-      return skew.x == other.skew.x && skew.y == other.skew.y;
+      return FloatsApproximatelyEqual(skew.x, other.skew.x) &&
+             FloatsApproximatelyEqual(skew.y, other.skew.y);
     case TransformOperation::TRANSFORM_OPERATION_PERSPECTIVE:
-      return perspective_depth == other.perspective_depth;
+      return FloatsApproximatelyEqual(perspective_depth,
+                                      other.perspective_depth);
     case TransformOperation::TRANSFORM_OPERATION_MATRIX:
+      return matrix.ApproximatelyEqual(other.matrix);
     case TransformOperation::TRANSFORM_OPERATION_IDENTITY:
-      return matrix == other.matrix;
+      return other.matrix.IsIdentity();
   }
   NOTREACHED();
   return false;
-}
-
-bool TransformOperation::operator!=(const TransformOperation& other) const {
-  return !(*this == other);
 }
 
 bool TransformOperation::BlendTransformOperations(
