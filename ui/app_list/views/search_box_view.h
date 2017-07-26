@@ -38,6 +38,7 @@ class AppListView;
 class AppListViewDelegate;
 class SearchBoxModel;
 class SearchBoxViewDelegate;
+class SearchBoxBackground;
 class SearchBoxImageButton;
 
 // SearchBoxView consists of an icon and a Textfield. SearchBoxModel is its data
@@ -116,6 +117,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // Returns background color for the given state.
   SkColor GetBackgroundColorForState(AppListModel::State state) const;
 
+  // Updates the search box's background color.
+  void UpdateBackgroundColor(SkColor color);
+
   // Updates the search box's background corner radius and color.
   void UpdateBackground(double progress,
                         AppListModel::State current_state,
@@ -148,6 +152,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
 
   // Sets the search box color.
   void SetSearchBoxColor(SkColor color);
+
+  // Gets the search box background.
+  SearchBoxBackground* search_box_background() const;
 
   // Overridden from views::TextfieldController:
   void ContentsChanged(views::Textfield* sender,
