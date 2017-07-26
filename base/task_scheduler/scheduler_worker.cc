@@ -24,7 +24,10 @@ namespace internal {
 
 class SchedulerWorker::Thread : public PlatformThread::Delegate {
  public:
-  ~Thread() override = default;
+  ~Thread() override {
+    if (!outer_->join_called_for_testing_.IsSet())
+      PlatformThread::Detach(thread_handle_);
+  }
 
   static std::unique_ptr<Thread> Create(scoped_refptr<SchedulerWorker> outer) {
     std::unique_ptr<Thread> thread(new Thread(std::move(outer)));
@@ -68,14 +71,6 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
       scoped_refptr<Sequence> sequence =
           outer_->delegate_->GetWork(outer_.get());
       if (!sequence) {
-        if (outer_->delegate_->CanDetach(outer_.get())) {
-          detached_thread = outer_->DetachThreadObject(DetachNotify::DELEGATE);
-          if (detached_thread) {
-            DCHECK_EQ(detached_thread.get(), this);
-            PlatformThread::Detach(thread_handle_);
-            break;
-          }
-        }
         outer_->delegate_->WaitForWork(&wake_up_event_);
         continue;
       }
@@ -110,21 +105,21 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
 
     // This thread is generally responsible for cleaning itself up except when
     // JoinForTesting() is called.
-    // We arrive here in the following cases:
-    // Thread Detachment Request:
-    //   * |detached_thread| will not be nullptr.
-    // ShouldExit() returns true:
+    // We arrive here in the following cases when ShouldExit() returns true:
     //   * Shutdown: DetachThreadObject() returns the thread object.
     //   * Cleanup: DetachThreadObject() returns the thread object.
     //   * Join: DetachThreadObject() could return either the thread object or
     //           nullptr. JoinForTesting() cleans up if we get nullptr.
     if (!detached_thread)
-      detached_thread = outer_->DetachThreadObject(DetachNotify::SILENT);
+      detached_thread = outer_->DetachThreadObject();
 
-    outer_->delegate_->OnMainExit();
+    outer_->delegate_->OnMainExit(outer_.get());
   }
 
-  void Join() { PlatformThread::Join(thread_handle_); }
+  void Join() {
+    DCHECK(outer_->join_called_for_testing_.IsSet());
+    PlatformThread::Join(thread_handle_);
+  }
 
   void WakeUp() { wake_up_event_.Signal(); }
 
@@ -208,16 +203,14 @@ SchedulerWorker::SchedulerWorker(
     std::unique_ptr<Delegate> delegate,
     TaskTracker* task_tracker,
     const SchedulerLock* predecessor_lock,
-    SchedulerBackwardCompatibility backward_compatibility,
-    InitialState initial_state)
+    SchedulerBackwardCompatibility backward_compatibility)
     : thread_lock_(predecessor_lock),
       priority_hint_(priority_hint),
       delegate_(std::move(delegate)),
-      task_tracker_(task_tracker),
 #if defined(OS_WIN) && !defined(COM_INIT_CHECK_HOOK_ENABLED)
       backward_compatibility_(backward_compatibility),
 #endif
-      initial_state_(initial_state) {
+      task_tracker_(task_tracker) {
   DCHECK(delegate_);
   DCHECK(task_tracker_);
 }
@@ -232,12 +225,8 @@ bool SchedulerWorker::Start() {
 
   started_ = true;
 
-  if (initial_state_ == InitialState::ALIVE) {
-    CreateThread();
-    return !!thread_;
-  }
-
-  return true;
+  CreateThread();
+  return !!thread_;
 }
 
 void SchedulerWorker::WakeUp() {
@@ -245,9 +234,9 @@ void SchedulerWorker::WakeUp() {
 
   DCHECK(!join_called_for_testing_.IsSet());
 
-  if (!thread_)
-    CreateThread();
-
+  // This DCHECK could fail if the call to CreateThread() within
+  // SchedulerWorker::Start() fails.
+  DCHECK(!started_ || thread_);
   if (thread_)
     thread_->WakeUp();
 }
@@ -297,8 +286,7 @@ SchedulerWorker::~SchedulerWorker() {
   DCHECK(!thread_);
 }
 
-std::unique_ptr<SchedulerWorker::Thread> SchedulerWorker::DetachThreadObject(
-    DetachNotify detach_notify) {
+std::unique_ptr<SchedulerWorker::Thread> SchedulerWorker::DetachThreadObject() {
   AutoSchedulerLock auto_lock(thread_lock_);
 
   // Do not detach if the thread is being joined.
@@ -312,12 +300,6 @@ std::unique_ptr<SchedulerWorker::Thread> SchedulerWorker::DetachThreadObject(
   // guarantee that we call GetWork() after a successful wakeup.
   if (thread_->IsWakeUpPending())
     return nullptr;
-
-  if (detach_notify == DetachNotify::DELEGATE) {
-    // Call OnDetach() within the scope of |thread_lock_| to prevent the
-    // delegate from being used concurrently from an old and a new thread.
-    delegate_->OnDetach();
-  }
 
   return std::move(thread_);
 }

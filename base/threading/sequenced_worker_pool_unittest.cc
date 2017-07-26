@@ -291,8 +291,10 @@ class SequencedWorkerPoolTest
   void DeletePool() { pool_owner_.reset(); }
 
   // Destroys and unregisters the registered TaskScheduler, if any.
-  void DeleteTaskScheduler() {
+  virtual void DeleteTaskScheduler() {
     if (TaskScheduler::GetInstance()) {
+      TaskScheduler::GetInstance()->FlushForTesting();
+      TaskScheduler::GetInstance()->Shutdown();
       TaskScheduler::GetInstance()->JoinForTesting();
       TaskScheduler::SetInstance(nullptr);
     }
@@ -345,6 +347,18 @@ class SequencedWorkerPoolTest
   const scoped_refptr<TestTracker> tracker_;
 };
 
+class SequencedWorkerPoolShutdownTest : public SequencedWorkerPoolTest {
+ public:
+  // Override DeleteTaskScheduler so that tasks which already call Shutdown()
+  // in their body do not call it again during TearDown().
+  virtual void DeleteTaskScheduler() override {
+    if (TaskScheduler::GetInstance()) {
+      TaskScheduler::GetInstance()->JoinForTesting();
+      TaskScheduler::SetInstance(nullptr);
+    }
+  }
+};
+
 // Checks that the given number of entries are in the tasks to complete of
 // the given tracker, and then signals the given event the given number of
 // times. This is used to wake up blocked background threads before blocking
@@ -380,7 +394,7 @@ void ShouldNotRun(const scoped_refptr<DeletionHelper>& helper) {
 }
 
 // Tests that shutdown does not wait for delayed tasks.
-TEST_P(SequencedWorkerPoolTest, DelayedTaskDuringShutdown) {
+TEST_P(SequencedWorkerPoolShutdownTest, DelayedTaskDuringShutdown) {
   // Post something to verify the pool is started up.
   EXPECT_TRUE(pool()->PostTask(
       FROM_HERE, base::BindOnce(&TestTracker::FastTask, tracker(), 1)));
@@ -596,7 +610,7 @@ TEST_P(SequencedWorkerPoolTest, DISABLED_IgnoresAfterShutdown) {
   ASSERT_EQ(old_has_work_call_count, has_work_call_count());
 }
 
-TEST_P(SequencedWorkerPoolTest, AllowsAfterShutdown) {
+TEST_P(SequencedWorkerPoolShutdownTest, AllowsAfterShutdown) {
   // Test that <n> new blocking tasks are allowed provided they're posted
   // by a running tasks.
   EnsureAllWorkersCreated();
@@ -661,7 +675,7 @@ TEST_P(SequencedWorkerPoolTest, AllowsAfterShutdown) {
 
 // Tests that blocking tasks can still be posted during shutdown, as long as
 // the task is not being posted within the context of a running task.
-TEST_P(SequencedWorkerPoolTest,
+TEST_P(SequencedWorkerPoolShutdownTest,
        AllowsBlockingTasksDuringShutdownOutsideOfRunningTask) {
   EnsureAllWorkersCreated();
   ThreadBlocker blocker;
@@ -760,7 +774,7 @@ TEST_P(SequencedWorkerPoolTest, DiscardOnShutdown) {
 }
 
 // Tests that CONTINUE_ON_SHUTDOWN tasks don't block shutdown.
-TEST_P(SequencedWorkerPoolTest, ContinueOnShutdown) {
+TEST_P(SequencedWorkerPoolShutdownTest, ContinueOnShutdown) {
   scoped_refptr<TaskRunner> runner(pool()->GetTaskRunnerWithShutdownBehavior(
       SequencedWorkerPool::CONTINUE_ON_SHUTDOWN));
   scoped_refptr<SequencedTaskRunner> sequenced_runner(
@@ -984,7 +998,7 @@ TEST_P(SequencedWorkerPoolTest,
 }
 
 // Verify that FlushForTesting works as intended.
-TEST_P(SequencedWorkerPoolTest, FlushForTesting) {
+TEST_P(SequencedWorkerPoolShutdownTest, FlushForTesting) {
   // Should be fine to call on a new instance.
   pool()->FlushForTesting();
 
@@ -1101,6 +1115,15 @@ INSTANTIATE_TEST_CASE_P(
 INSTANTIATE_TEST_CASE_P(
     RedirectionToTaskScheduler,
     SequencedWorkerPoolTest,
+    ::testing::Values(SequencedWorkerPoolRedirection::TO_TASK_SCHEDULER));
+
+INSTANTIATE_TEST_CASE_P(
+    NoRedirection,
+    SequencedWorkerPoolShutdownTest,
+    ::testing::Values(SequencedWorkerPoolRedirection::NONE));
+INSTANTIATE_TEST_CASE_P(
+    RedirectionToTaskScheduler,
+    SequencedWorkerPoolShutdownTest,
     ::testing::Values(SequencedWorkerPoolRedirection::TO_TASK_SCHEDULER));
 
 class SequencedWorkerPoolTaskRunnerTestDelegate {

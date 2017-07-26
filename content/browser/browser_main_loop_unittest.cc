@@ -34,6 +34,7 @@ TEST(BrowserMainLoopTest, CreateThreadsInSingleProcess) {
               base::SysInfo::NumberOfProcessors());
     browser_main_loop.ShutdownThreadsAndCleanUp();
   }
+  base::TaskScheduler::GetInstance()->Shutdown();
   base::TaskScheduler::GetInstance()->JoinForTesting();
   base::TaskScheduler::SetInstance(nullptr);
 }

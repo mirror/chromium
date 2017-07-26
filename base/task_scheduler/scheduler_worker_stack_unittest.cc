@@ -35,10 +35,10 @@ class MockSchedulerWorkerDelegate : public SchedulerWorker::Delegate {
   TimeDelta GetSleepTimeout() override {
     return TimeDelta::Max();
   }
-  bool CanDetach(SchedulerWorker* worker) override {
-    return false;
+  bool CanCleanup(SchedulerWorker* worker) override { return false; }
+  void OnCleanup() override {
+    ADD_FAILURE() << "Unexpected call to OnDetach()";
   }
-  void OnDetach() override { ADD_FAILURE() << "Unexpected call to OnDetach()"; }
 };
 
 class TaskSchedulerWorkerStackTest : public testing::Test {
