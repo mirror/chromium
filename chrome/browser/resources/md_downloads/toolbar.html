@@ -45,8 +45,7 @@
         <iron-icon icon="cr:more-vert"></iron-icon>
       </button>
     </cr-toolbar>
-    <!-- TODO(dbeam): should cr-action-menu be role="menu" by default? -->
-    <dialog is="cr-action-menu" id="moreActionsMenu" role="menu">
+    <dialog is="cr-action-menu" id="moreActionsMenu">
       <button class="dropdown-item clear-all" on-tap="onClearAllTap_"
           role="menuitem">
         $i18n{clearAll}

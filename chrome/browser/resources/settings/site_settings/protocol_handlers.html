@@ -59,12 +59,12 @@
     </template>
 
     <dialog is="cr-action-menu">
-      <button class="dropdown-item" role="option" on-tap="onDefaultTap_"
+      <button class="dropdown-item" role="menuitem" on-tap="onDefaultTap_"
           hidden$="[[isModelDefault_(actionMenuModel_)]]"
           id="defaultButton">
         $i18n{handlerSetDefault}
       </button>
-      <button class="dropdown-item" role="option" on-tap="onRemoveTap_"
+      <button class="dropdown-item" role="menuitem" on-tap="onRemoveTap_"
           id="removeButton">
         $i18n{handlerRemove}
       </button>
