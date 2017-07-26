@@ -358,9 +358,10 @@ SDK.DOMNode = class {
   /**
    * @param {string} name
    * @param {function(?Protocol.Error, number)=} callback
+   * @return {!Promise}
    */
   setNodeName(name, callback) {
-    this._agent.invoke_setNodeName({nodeId: this.id, name}).then(response => {
+    return this._agent.invoke_setNodeName({nodeId: this.id, name}).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -408,9 +409,10 @@ SDK.DOMNode = class {
    * @param {string} name
    * @param {string} text
    * @param {function(?Protocol.Error)=} callback
+   * @return {!Promise}
    */
   setAttribute(name, text, callback) {
-    this._agent.invoke_setAttributesAsText({nodeId: this.id, text, name}).then(response => {
+    return this._agent.invoke_setAttributesAsText({nodeId: this.id, text, name}).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -474,6 +476,13 @@ SDK.DOMNode = class {
     this._agent.invoke_requestChildNodes({nodeId: this.id}).then(response => {
       callback(response[Protocol.Error] ? null : this.children());
     });
+  }
+
+  /**
+   * @return {!Promise<?Array<!SDK.DOMNode>>}
+   */
+  getChildNodesPromise() {
+    return new Promise(resolve => this.getChildNodes(resolve));
   }
 
   /**

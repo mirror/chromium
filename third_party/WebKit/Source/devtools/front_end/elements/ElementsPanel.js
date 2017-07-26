@@ -50,9 +50,10 @@ Elements.ElementsPanel = class extends UI.Panel {
     var stackElement = this._searchableView.element;
 
     this._contentElement = createElement('div');
-    var crumbsContainer = createElement('div');
+    var footer = createElement('div');
+    footer.id = 'elements-footer';
     stackElement.appendChild(this._contentElement);
-    stackElement.appendChild(crumbsContainer);
+    stackElement.appendChild(footer);
 
     this._splitWidget.setMainWidget(this._searchableView);
     /** @type {?Elements.ElementsPanel._splitMode} */
@@ -64,10 +65,14 @@ Elements.ElementsPanel = class extends UI.Panel {
       this._contentElement.classList.add('elements-wrap');
     Common.moduleSetting('domWordWrap').addChangeListener(this._domWordWrapSettingChanged.bind(this));
 
+    var crumbsContainer = footer.createChild('div');
     crumbsContainer.id = 'elements-crumbs';
     this._breadcrumbs = new Elements.ElementsBreadcrumbs();
     this._breadcrumbs.show(crumbsContainer);
     this._breadcrumbs.addEventListener(Elements.ElementsBreadcrumbs.Events.NodeSelected, this._crumbNodeSelected, this);
+
+    this._counter = new Main.Main.DOMWarningErrorCounter(SDK.targetManager.mainTarget().model(SDK.AnalysisModel));
+    footer.appendChild(this._counter.item().element);
 
     this._stylesWidget = new Elements.StylesSidebarPane();
     this._computedStyleWidget = new Elements.ComputedStyleWidget();
@@ -989,5 +994,26 @@ Elements.ElementsPanel.PseudoStateMarkerDecorator = class {
       color: 'orange',
       title: Common.UIString('Element state: %s', ':' + node.domModel().cssModel().pseudoState(node).join(', :'))
     };
+  }
+};
+
+/**
+ * @implements {UI.ToolbarItem.Provider}
+ * @unrestricted
+ */
+Main.Main.DOMWarningErrorCounter = class extends Main.Main.WarningErrorCounter {
+  /**
+   * @param {SDK.AnalysisModel} analysisModel
+   */
+  constructor(analysisModel) {
+    super(
+        () => analysisModel.flagCount('error'), () => analysisModel.flagCount('warning'), [{
+          model: analysisModel,
+          events: [
+            SDK.AnalysisModel.Events.NodeFlagged,
+            SDK.AnalysisModel.Events.ClearFlags,
+          ]
+        }],
+        UI.viewManager.showView.bind(UI.viewManager, 'elements.domAnalysis'));
   }
 };

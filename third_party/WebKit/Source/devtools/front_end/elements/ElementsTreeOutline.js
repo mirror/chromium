@@ -84,6 +84,11 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     /** @type {!Set<!Elements.ElementsTreeElement>} */
     this._treeElementsBeingUpdated = new Set();
 
+    /** @type {!Map<string, !Map<any, !Set<!SDK.DOMNode>>>} */
+    this._flagDependencies = new Map();
+    /** @type {!Map<!SDK.DOMNode, !Map<string, any>>} */
+    this._nodeAttributeMap = new Map();
+
     this._domModel.addEventListener(SDK.DOMModel.Events.MarkersChanged, this._markersChanged, this);
     this._showHTMLCommentsSetting = Common.moduleSetting('showHTMLComments');
     this._showHTMLCommentsSetting.addChangeListener(this._onShowHTMLCommentsChange.bind(this));
@@ -386,8 +391,110 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       }
     }
 
+    this._updateFlagsForNode(this.rootDOMNode, true);
+
     if (selectedNode)
       this._revealAndSelectNode(selectedNode, true);
+  }
+
+  /**
+   * Updates the flags associated with a node and propagates them to the AnalysisModel and the respective
+   * ElementsTreeElements.
+   * @param {?SDK.DOMNode} node
+   * @param {?boolean} flagChildren
+   * @return {!Promise}
+   */
+  async _updateFlagsForNode(node, flagChildren) {
+    if (!node)
+      return Promise.resolve();
+    if (node.nodeType() === Node.ELEMENT_NODE) {
+      var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
+      analysisModel.addFlagGroup(node);
+      var flags = await this._flagsForNode(node, analysisModel, flagChildren);
+      analysisModel.nodeFlagged(node, flags);
+    }
+    if (flagChildren) {
+      // Recursively update the flags for all of the node's children before resolving.
+      var children = await node.getChildNodesPromise();
+      if (children)
+        await Promise.all(children.map(child => this._updateFlagsForNode(child, true)));
+    }
+    var treeElement = this.findTreeElement(node);
+    if (treeElement)
+      treeElement.updateInlineFlags();
+  }
+
+  /**
+   * Identifies common issues with a DOM node, such as sharing an id with another, in order to flag them.
+   * @param {?SDK.DOMNode} node
+   * @param {!SDK.Analysis} analysisModel
+   * @param {boolean} preventPropagation
+   * @return {!Array<!SDK.AnalysisModel.Flag>}
+   */
+  async _flagsForNode(node, analysisModel, preventPropagation) {
+    var flags = [];
+
+    // Conflicting/duplicate id attribute.
+    var id = node.getAttribute('id');
+    if (id !== undefined) {
+      var doc = await node._domModel.requestDocumentPromise();
+      var nodes = await node._domModel.querySelectorAll(doc.id, `#${id}`);
+      if (nodes.length > 1)
+        flags.push(new SDK.AnalysisModel.Flag(this, 'error', 'The `id` attribute must be unique'));
+      this._updateFlagDependency(node, 'id', id, preventPropagation);
+    }
+
+    // No parent form.
+    if (node.nodeName().toLowerCase() === 'input') {
+      var parent = node.parentNode;
+      while (parent !== null) {
+        if (parent.nodeName().toLowerCase() === 'form')
+          break;
+        parent = parent.parentNode;
+      }
+      if (parent === null) {
+        flags.push(new SDK.AnalysisModel.Flag(this, 'warning', '`input` elements should have an associated `form`'));
+      }
+    }
+
+    // Missing autocomplete attribute.
+    if (node.nodeName().toLowerCase() === 'input' && node.getAttribute('type') !== undefined &&
+        node.getAttribute('autocomplete') === undefined) {
+      flags.push(new SDK.AnalysisModel.Flag(
+          this, 'warning', 'Adding an `autocomplete` attribute enhances the user experience'));
+    }
+
+    return flags;
+  }
+
+  /**
+   * Updates a constraint associated with a node attribute and resolves the modified dependencies from the old and new
+   * values of the attribute.
+   * @param {!SDK.DOMNode} node
+   * @param {string} attribute
+   * @param {any} newValue
+   * @param {boolean} preventPropagation
+   */
+  _updateFlagDependency(node, attribute, newValue, preventPropagation) {
+    if (!this._nodeAttributeMap.has(node))
+      this._nodeAttributeMap.set(node, new Map());
+    var attributes = this._nodeAttributeMap.get(node);
+    var oldValue = attributes.get(attribute);
+    attributes.set(attribute, newValue);
+    if (oldValue === newValue)
+      return;
+    var map = this._flagDependencies.get(attribute);
+    if (map)
+      (map.get(oldValue) || []).forEach(dependant => dependant !== node ? this._updateFlagsForNode(dependant) : null);
+    else
+      this._flagDependencies.set(attribute, map = new Map());
+    if (!map.has(newValue))
+      map.set(newValue, new Set());
+    var set = map.get(newValue);
+    if (!preventPropagation)
+      for (var dependant of set)
+        this._updateFlagsForNode(dependant);
+    set.add(node);
   }
 
   /**
@@ -964,6 +1071,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     delete this._clipboardNodeData;
     SDK.OverlayModel.hideDOMNodeHighlight();
     this._updateRecords.clear();
+    SDK.targetManager.mainTarget().model(SDK.AnalysisModel)._clearFlags();
   }
 
   wireToDOMModel() {

@@ -5614,6 +5614,7 @@ void Document::FinishedParsing() {
                          TRACE_EVENT_SCOPE_THREAD, "data",
                          InspectorMarkLoadEvent::Data(frame));
     probe::domContentLoadedEventFired(frame);
+    probe::trivialPasswordManagerEventFired(frame);
   }
 
   // Schedule dropping of the ElementDataCache. We keep it alive for a while

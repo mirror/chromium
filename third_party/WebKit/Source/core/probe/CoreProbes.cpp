@@ -38,6 +38,7 @@
 #include "core/inspector/InspectorDOMDebuggerAgent.h"
 #include "core/inspector/InspectorNetworkAgent.h"
 #include "core/inspector/InspectorPageAgent.h"
+#include "core/inspector/InspectorPasswordManagerAgent.h"
 #include "core/inspector/InspectorSession.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/inspector/MainThreadDebugger.h"

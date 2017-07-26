@@ -48,6 +48,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     this._decorationsElement = this._gutterContainer.createChild('div', 'hidden');
 
     this._elementCloseTag = elementCloseTag;
+    this._flagElement = null;
 
     if (this._node.nodeType() === Node.ELEMENT_NODE && !elementCloseTag)
       this._canAddAttributes = true;
@@ -914,7 +915,8 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     }
 
     if ((attributeName.trim() || newText.trim()) && oldText !== newText) {
-      this._node.setAttribute(attributeName, newText, moveToNextAttributeIfNeeded.bind(this));
+      this._node.setAttribute(attributeName, newText, moveToNextAttributeIfNeeded.bind(this))
+          .then(this._updateFlags.bind(this));
       return;
     }
 
@@ -968,7 +970,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
       var newTreeItem = treeOutline.selectNodeAfterEdit(wasExpanded, error, nodeId);
       moveToNextAttributeIfNeeded.call(newTreeItem);
     }
-    this._node.setNodeName(newText, changeTagNameCallback);
+    this._node.setNodeName(newText, changeTagNameCallback).then(this._updateFlags.bind(this));
   }
 
   /**
@@ -1058,6 +1060,12 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
       if (this.selected) {
         this._createSelection();
         this._createHint();
+      }
+      if (this._flagElement) {
+        this._createSelection();
+        this.listItemElement.appendChild(this._flagElement);
+      } else if (this._node.nodeType() === Node.ELEMENT_NODE && !this.isClosingTag()) {
+        this.updateInlineFlags();
       }
     }
 
@@ -1378,6 +1386,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
           tagElement.createTextChild(' ');
           this._buildAttributeDOM(tagElement, attr.name, attr.value, updateRecord, false, node);
         }
+        this.addPlaceholders(tagElement);
       }
       if (updateRecord) {
         var hasUpdates = updateRecord.hasRemovedAttributes() || updateRecord.hasRemovedChildren();
@@ -1630,6 +1639,95 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
   _editAsHTML() {
     var promise = Common.Revealer.revealPromise(this.node());
     promise.then(() => UI.actionRegistry.action('elements.edit-as-html').execute());
+  }
+
+  /**
+   * Get the inferences made by the Password Manager about the role of the current node, to offer annotation sugestions.
+   * @return {?string} node
+   */
+  passwordManagerInferredTypeForInput() {
+    var node = this._node;
+    if (node.getAttribute('type') === 'text')
+      return 'username';
+    if (node.getAttribute('type') === 'password')
+      return 'password';
+    return null;
+  }
+
+  updateInlineFlags() {
+    if (!Elements.ElementsPanel.instance().element.isAncestor(this._titleElement.firstChild))
+      return;
+
+    if (this._flagElement !== null) {
+      this.listItemElement.classList.remove('error');
+      this.listItemElement.classList.remove('warning');
+      this.listItemElement.classList.remove('has-flagged-children');
+      this._flagElement.remove();
+      this._flagElement = null;
+    }
+    var node = this._node;
+    var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
+    var flags = analysisModel.flags().get(node);
+
+    if (flags !== undefined && flags.length > 0) {
+      // The flags are sorted by severity, so displaying the first element on top should be a reasonable decision.
+      var flag = flags[0];
+      this._flagElement = this.listItemElement.createChild('div', 'element-flag');
+      SDK.AnalysisModel.appendFlagContentToNode(flag, this._flagElement);
+      this.listItemElement.classList.add(flag.level);
+      // Any remaining flags are displayed in a dropdown.
+      if (flags.length > 1) {
+        var toggle = this._flagElement.createChild('span', 'element-icon-count');
+        toggle.createTextChild(flags.length);
+        toggle.addEventListener('click', () => toggle.classList.toggle('open'));
+        var additional = this._flagElement.createChild('div', 'element-flags-additional');
+        for (var flag of flags.slice(1)) {
+          var line = additional.createChild('div', `element-flag-additional ${flag.level}`);
+          SDK.AnalysisModel.appendFlagContentToNode(flag, line);
+        }
+      }
+
+      // Flags highlight the line of the node, which makes use of the selection fill.
+      this._createSelection();
+      return;
+    }
+
+    // Even if there are no flags for the current element directly, some of its descendants may be flagged, in which
+    // case the current element is highlighted when collapsed.
+    var descendantFlags = analysisModel.flagsForDescendants(node);
+    if (descendantFlags.length > 0) {
+      var flag = descendantFlags.find(flag => flag.level === 'error') || descendantFlags[0];
+      this.listItemElement.classList.add('has-flagged-children', flag.level);
+      this._createSelection();
+    }
+  }
+
+  /** Whenever the node is changed in any way, the parent is notified, to propogate any resulting flag changes. */
+  _updateFlags() {
+    if (this._node.nodeType() === Node.ELEMENT_NODE && !this.isClosingTag())
+      this.treeOutline._updateFlagsForNode(this._node);
+  }
+
+  /**
+   * Add attribute annotations to the tag if it is inferred that the attribute is intended or required.
+   * @param {!DOMNode} tagElement
+   */
+  addPlaceholders(tagElement) {
+    var node = this._node;
+    // Autocomplete attributes.
+    if (node.nodeName().toLowerCase() === 'input' && node.getAttribute('autocomplete') === undefined) {
+      var inference = this.passwordManagerInferredTypeForInput();
+      if (inference !== null) {
+        tagElement.createTextChild(' ');
+        var placeholder = tagElement.createChild('span', 'placeholder-attribute');
+        placeholder.title = Common.UIString('Double-click to add the attribute');
+        placeholder.createChild('code').createTextChild(`autocomplete="${inference}"`);
+        placeholder.addEventListener('dblclick', () => {
+          node.setAttribute('', `autocomplete="${inference}"`).then(this._updateFlags.bind(this));
+          placeholder.remove();
+        });
+      }
+    }
   }
 };
 
