@@ -16,6 +16,24 @@
       "revId": "c3c64e562eea5b5dcac99895f5f3abd99dc85311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520890c4_597314d5",
+        "filename": "build/config/win/manifest.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-26T02:10:45Z",
+      "side": 1,
+      "message": "That\u0027s necessary, without this /manifest:embed will add some uac stuff to the manifest.",
+      "parentUuid": "c737f759_c9c95042",
+      "revId": "c3c64e562eea5b5dcac99895f5f3abd99dc85311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
