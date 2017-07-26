@@ -159,6 +159,17 @@ def UploadPDBToSymbolServer():
         sys.exit(exit_code)
 
 
+def ZipUpBinary(dir, binary_name, upload_args, platform):
+  shutil.rmtree(dir, ignore_errors=True)
+  os.makedirs(os.path.join(dir, 'bin'))
+  shutil.copy(os.path.join(LLVM_RELEASE_DIR, 'bin', binary_name),
+              os.path.join(dir, 'bin'))
+  with tarfile.open(dir + '.tgz', 'w:gz') as tar:
+    tar.add(os.path.join(dir, 'bin'), arcname='bin',
+            filter=PrintTarProgress)
+  MaybeUpload(upload_args, dir, platform)
+
+
 def main():
   parser = argparse.ArgumentParser(description='build and package clang')
   parser.add_argument('--upload', action='store_true',
@@ -335,27 +346,15 @@ def main():
   MaybeUpload(args, pdir, platform)
 
   # Zip up llvm-objdump for sanitizer coverage.
-  objdumpdir = 'llvmobjdump-' + stamp
-  shutil.rmtree(objdumpdir, ignore_errors=True)
-  os.makedirs(os.path.join(objdumpdir, 'bin'))
-  shutil.copy(os.path.join(LLVM_RELEASE_DIR, 'bin', 'llvm-objdump' + exe_ext),
-              os.path.join(objdumpdir, 'bin'))
-  with tarfile.open(objdumpdir + '.tgz', 'w:gz') as tar:
-    tar.add(os.path.join(objdumpdir, 'bin'), arcname='bin',
-            filter=PrintTarProgress)
-  MaybeUpload(args, objdumpdir, platform)
+  ZipUpBinary('llvmobjdump-' + stamp, 'llvm-objdump' + exe_ext, args, platform)
 
+  # Zip up llvm-cov and llvm-profdata
+  ZipUpBinary('llvmcov-' + stamp, 'llvmcov' + exe_ext, args, platform)
+  ZipUpBinary('llvmprofdata-' + stamp,
+              'llvmprofdata' + exe_ext, args, platform)
   # Zip up the translation_unit tool.
-  translation_unit_dir = 'translation_unit-' + stamp
-  shutil.rmtree(translation_unit_dir, ignore_errors=True)
-  os.makedirs(os.path.join(translation_unit_dir, 'bin'))
-  shutil.copy(os.path.join(LLVM_RELEASE_DIR, 'bin', 'translation_unit' +
-                           exe_ext),
-              os.path.join(translation_unit_dir, 'bin'))
-  with tarfile.open(translation_unit_dir + '.tgz', 'w:gz') as tar:
-    tar.add(os.path.join(translation_unit_dir, 'bin'), arcname='bin',
-            filter=PrintTarProgress)
-  MaybeUpload(args, translation_unit_dir, platform)
+  ZipUpBinary('translation_unit-' + stamp,
+              'translation_unit' + exe_ext, args, platform)
 
   if sys.platform == 'win32' and args.upload:
     UploadPDBToSymbolServer()
