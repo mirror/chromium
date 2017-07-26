@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d25ebbd_c43cdd5a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-07-26T17:06:33Z",
+      "side": 1,
+      "message": "I will remove it. Actually they are few places in the same file with the same check, so followed that.",
+      "parentUuid": "4fd31c64_9228d6a1",
+      "range": {
+        "startLine": 2042,
+        "startChar": 30,
+        "endLine": 2042,
+        "endChar": 55
+      },
+      "revId": "ebfe4a5833f74830017613b51ddccccd2b9e9aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27273e08_4c8601e6",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-26T15:57:49Z",
       "side": 1,
       "message": "Is this check needed?  How will this be called when we are not the main frame root layer?",
+      "range": {
+        "startLine": 2045,
+        "startChar": 8,
+        "endLine": 2045,
+        "endChar": 32
+      },
+      "revId": "ebfe4a5833f74830017613b51ddccccd2b9e9aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd9aeb6_6a9f00c9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-07-26T17:06:33Z",
+      "side": 1,
+      "message": "I think for overflow scroll scenario also this function gets called. If we dont add this check there are two tests which are crashing. I have pasted the callstack few days back, please check.",
+      "parentUuid": "27273e08_4c8601e6",
       "range": {
         "startLine": 2045,
         "startChar": 8,
