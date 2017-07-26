@@ -22,6 +22,30 @@
       "revId": "c7512b04be146e9e1602dea7800b447d42b7cda9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426f4a4b_a6ad125f",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-26T15:38:16Z",
+      "side": 1,
+      "message": "Changes like this one, and the general architecture of the //device/sensors Android code show that there are some devices where particular sensor types are not available:\n\nhttps://chromium-review.googlesource.com/c/574491/",
+      "parentUuid": "910da4dd_d3fcb7ad",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 4
+      },
+      "revId": "c7512b04be146e9e1602dea7800b447d42b7cda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
