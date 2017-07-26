@@ -5,9 +5,13 @@
 #include "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.h"
 
 #include "base/bind_helpers.h"
+#include "chrome/browser/media/media_storage_id_salt.h"
+#include "chrome/browser/media/storage_id.h"
+#include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_ppapi_host.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ppapi/c/pp_errors.h"
 #include "ppapi/host/dispatch_host_message.h"
@@ -115,14 +119,35 @@ void PepperPlatformVerificationMessageFilter::ChallengePlatformCallback(
 
 int32_t PepperPlatformVerificationMessageFilter::OnGetStorageId(
     ppapi::host::HostMessageContext* context) {
-  // TODO(jrummell): Implement Storage ID. For now simply returns empty string.
-  // http://crbug.com/478960.
-  ppapi::host::ReplyMessageContext reply_context =
-      context->MakeReplyMessageContext();
+  Profile* profile = nullptr;
+  content::RenderFrameHost* rfh =
+      content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
+  if (rfh && rfh->GetProcess()) {
+    profile =
+        Profile::FromBrowserContext(rfh->GetProcess()->GetBrowserContext());
+  }
+
+  if (profile && !profile->IsOffTheRecord()) {
+    StorageId::ComputeStorageId(
+        MediaStorageIdSalt::GetSalt(profile->GetPrefs()),
+        rfh->GetLastCommittedOrigin(),
+        base::BindOnce(
+            &PepperPlatformVerificationMessageFilter::GetStorageIdCallback,
+            this, context->MakeReplyMessageContext()));
+    return PP_OK_COMPLETIONPENDING;
+  }
+
+  // Profile not available/usable, so return empty string as the result.
+  GetStorageIdCallback(context->MakeReplyMessageContext(), std::string());
+  return PP_OK_COMPLETIONPENDING;
+}
+
+void PepperPlatformVerificationMessageFilter::GetStorageIdCallback(
+    ppapi::host::ReplyMessageContext reply_context,
+    const std::string& storage_id) {
   reply_context.params.set_result(PP_OK);
   SendReply(reply_context,
-            PpapiHostMsg_PlatformVerification_GetStorageIdReply(std::string()));
-  return PP_OK_COMPLETIONPENDING;
+            PpapiHostMsg_PlatformVerification_GetStorageIdReply(storage_id));
 }
 
 }  // namespace chrome

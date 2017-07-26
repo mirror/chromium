@@ -58,6 +58,8 @@ class PepperPlatformVerificationMessageFilter
 #endif
 
   int32_t OnGetStorageId(ppapi::host::HostMessageContext* context);
+  void GetStorageIdCallback(ppapi::host::ReplyMessageContext reply_context,
+                            const std::string& storage_id);
 
   // Used to lookup the WebContents associated with this PP_Instance.
   int render_process_id_;
