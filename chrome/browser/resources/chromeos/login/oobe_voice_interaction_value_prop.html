@@ -14,15 +14,16 @@
           <webview id="value-prop-view"></webview>
         </div>
         <div id="error-container">
-          <div class="title"
-            i18n-content="voiceInteractionValuePropLoadErrorTitle"></div>
+          <div class="title">
+            $i18n{voiceInteractionValuePropLoadErrorTitle}
+          </div>
           <div id="subtitle">
-            <div i18n-content="voiceInteractionValuePropLoadErrorMessage"></div>
+            <div>$i18n{voiceInteractionValuePropLoadErrorMessage}</div>
           </div>
         </div>
         <div id="loading-container">
           <div id="loading-message">
-            <div i18n-content="voiceInteractionValuePropLoading"></div>
+            <div>$i18n{voiceInteractionValuePropLoading}</div>
           </div>
           <paper-progress class="slow" indeterminate></paper-progress>
         </div>
@@ -30,16 +31,16 @@
       <div class="bottom-buttons flex layout horizontal">
         <oobe-text-button id="skip-button" android on-tap="onSkipTap_"
             disabled="[[valuePropButtonsDisabled]]">
-         <div i18n-content="voiceInteractionValuePropSkipButton"></div>
+         <div>$i18n{voiceInteractionValuePropSkipButton}</div>
         </oobe-text-button>
         <div class="flex"></div>
         <oobe-text-button id="retry-button" inverse android on-tap="onRetryTap_"
             disabled="[[valuePropButtonsDisabled]]">
-         <div i18n-content="voiceInteractionValuePropRetryButton"></div>
+         <div>$i18n{voiceInteractionValuePropRetryButton}</div>
         </oobe-text-button>
         <oobe-text-button id="next-button" inverse android
             on-tap="onNextTap_" disabled="[[valuePropButtonsDisabled]]">
-         <div i18n-content="voiceInteractionValuePropNextButton"></div>
+         <div>$i18n{voiceInteractionValuePropNextButton}</div>
         </oobe-text-button>
       </div>
     </oobe-dialog>

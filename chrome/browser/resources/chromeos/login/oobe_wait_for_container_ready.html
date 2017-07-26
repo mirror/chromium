@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="oobe_wait_for_container_ready.css">
     <oobe-dialog id="waitForContainerReadyDialog" role="dialog" hide-shadow
         no-footer android>
-      <iron-icon src="https://www.gstatic.com/opa-chromeos/oobe/images/assistant_logo.png" class="oobe-icon">
+      <iron-icon
+          src="https://www.gstatic.com/opa-chromeos/oobe/images/assistant_logo.png"
+          class="oobe-icon">
       </iron-icon>
       <div class="header">
-        <div class="title" i18n-content="waitForContainerReadyTitle"></div>
+        <div class="title">$i18n{waitForContainerReadyTitle}</div>
         <div id="subtitle">
-          <div i18n-content="waitForContainerReadyIntroMessage"></div>
+          <div>$i18n{waitForContainerReadyIntroMessage}</div>
         </div>
         <div class="content">
           <paper-progress class="slow" indeterminate></paper-progress>
