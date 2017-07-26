@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bc8d979_59fee14b",
+        "filename": "components/arc/common/video.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "line too long.",
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506357f6_0c63776a",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "Why not just BitstreamBuffer?\nWe should have a typemap from arc::mojom::BitstreamBuffer to media::BitstreamBuffer in the implementation later.",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1929f99_0e066e36",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "Maybe just CropRect, and simply named the member as left, top, right, bottom. We already have CursorRect and ScreenRect in ARC++ mojom files. \n\nBut unfortunately, we still cannot use gfx::Rect now. Maybe it would be good to keep them as much as similar.",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43713310_824ca33a",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "extensible?",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039a454b_86b02cf3",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "In mojo, no call will be synchronous. The caller need to wait if need.",
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdc03a8_f89e58f8",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "I think the point is about decode not import.\n\nDecodes the content in the shared memory of the bitstream buffer. The callee needs to map the the shared memory to read the content and is responsible to release the shared memory by closing the file descriptor.",
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52ee906_5e29d366",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "How about s/index/picture_id/ here and in PictureReady().",
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e740e0_5ef8f18b",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "s/deliver/indicate/ ?\n\nto indicate the picture of the specified index is decoded ....",
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6928e2_f0300867",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "has decoded to the end of the bitstream buffer with the specified |bitstream_id|.",
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f3ebae_4ffa6b29",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-26T07:28:11Z",
+      "side": 1,
+      "message": "The error of Initialize() will be returned in its callback function.",
+      "range": {
+        "startLine": 107,
+        "startChar": 44,
+        "endLine": 107,
+        "endChar": 53
+      },
+      "revId": "5366c67e2b2b3f5e796567af0aab5de098c7ba41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
