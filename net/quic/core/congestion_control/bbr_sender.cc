@@ -99,6 +99,7 @@ BbrSender::BbrSender(const RttStats* rtt_stats,
       rtt_variance_weight_(
           static_cast<float>(FLAGS_quic_bbr_rtt_variation_weight)),
       num_startup_rtts_(kRoundTripsWithoutGrowthBeforeExitingStartup),
+      exit_startup_on_loss_(false),
       cycle_current_offset_(0),
       last_cycle_start_(QuicTime::Zero()),
       is_at_full_bandwidth_(false),
@@ -179,6 +180,11 @@ bool BbrSender::InRecovery() const {
 
 void BbrSender::SetFromConfig(const QuicConfig& config,
                               Perspective perspective) {
+  if (FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss &&
+      config.HasClientRequestedIndependentOption(kLRTT, perspective)) {
+    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_bbr_exit_startup_on_loss);
+    exit_startup_on_loss_ = true;
+  }
   if (config.HasClientRequestedIndependentOption(k1RTT, perspective)) {
     num_startup_rtts_ = 1;
   }
@@ -425,7 +431,8 @@ void BbrSender::CheckIfFullBandwidthReached() {
   }
 
   rounds_without_bandwidth_gain_++;
-  if (rounds_without_bandwidth_gain_ >= num_startup_rtts_) {
+  if ((rounds_without_bandwidth_gain_ >= num_startup_rtts_) ||
+      (exit_startup_on_loss_ && InRecovery())) {
     is_at_full_bandwidth_ = true;
   }
 }

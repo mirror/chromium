@@ -273,6 +273,9 @@ class QUIC_EXPORT_PRIVATE BbrSender : public SendAlgorithmInterface {
   const float rtt_variance_weight_;
   // The number of RTTs to stay in STARTUP mode.  Defaults to 3.
   QuicRoundTripCount num_startup_rtts_;
+  // If true, exit startup if 1RTT has passed with no bandwidth increase and
+  // the connection is in recovery.
+  bool exit_startup_on_loss_;
 
   // Number of round-trips in PROBE_BW mode, used for determining the current
   // pacing gain cycle.
