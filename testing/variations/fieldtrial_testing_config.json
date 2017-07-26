@@ -112,34 +112,6 @@
             ]
         }
     ],
-    "AutodetectEncoding": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "AutofillClassifier": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
     "AutofillCreditCardDropdownVariations": [
         {
             "platforms": [
@@ -482,23 +454,6 @@
             ]
         }
     ],
-    "ChromotingQUIC": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
     "ClientSidePreviews": [
         {
             "platforms": [
@@ -718,22 +673,6 @@
             "experiments": [
                 {
                     "name": "SettingsTextNotNow"
-                }
-            ]
-        }
-    ],
-    "DefaultBrowserPromptStyle": [
-        {
-            "platforms": [
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "ColoredLogoOnWhiteBackground",
-                    "params": {
-                        "IconColor": "Colored",
-                        "InfoBarType": "PageAction"
-                    }
                 }
             ]
         }
@@ -1001,66 +940,6 @@
             "experiments": [
                 {
                     "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "EnableMediaRouterWithCastExtension": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "EnableMediaThreadForMediaPlayback": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "EnableSessionCrashedBubbleUI": [
-        {
-            "platforms": [
-                "linux",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "EnableSyncClientToServerCompression": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "EnableSyncClientToServerCompression"
-                    ]
                 }
             ]
         }
@@ -1450,18 +1329,6 @@
             ]
         }
     ],
-    "LimitSyncPassphrasePrompt": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
     "LoadingWithMojo": [
         {
             "platforms": [
@@ -1509,50 +1376,6 @@
                     },
                     "enable_features": [
                         "MacAllowBackgroundingProcesses"
-                    ]
-                }
-            ]
-        }
-    ],
-    "MacMemoryMechanism": [
-        {
-            "platforms": [
-                "mac"
-            ],
-            "experiments": [
-                {
-                    "name": "Mach"
-                }
-            ]
-        }
-    ],
-    "MaterialDesignDownloads": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "MaterialDesignUserManager": [
-        {
-            "platforms": [
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "MaterialDesignUserManager"
                     ]
                 }
             ]
@@ -2864,54 +2687,6 @@
             ]
         }
     ],
-    "SaveAsMenuText": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "download"
-                }
-            ]
-        }
-    ],
-    "SchedulerExpensiveTaskBlocking": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "SdchPersistence": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
     "SearchEnginePromo": [
         {
             "platforms": [
@@ -3093,22 +2868,6 @@
                 },
                 {
                     "name": "Disabled"
-                }
-            ]
-        }
-    ],
-    "StrictSecureCookies": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
                 }
             ]
         }
@@ -3421,18 +3180,6 @@
                     "enable_features": [
                         "Ukm"
                     ]
-                }
-            ]
-        }
-    ],
-    "UnifiedMediaPipelineTrial": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
                 }
             ]
         }
