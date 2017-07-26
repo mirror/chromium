@@ -70,9 +70,8 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   void Start() override;
   void Abort() override;
   bool Equals(ServiceWorkerRegisterJobBase* job) const override;
+  base::TimeTicks StartTime() const override;
   RegistrationJobType GetType() const override;
-
-  void DoomInstallingWorker();
 
  private:
   enum Phase {
@@ -151,13 +150,15 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   // The ServiceWorkerContextCore object should always outlive this.
   base::WeakPtr<ServiceWorkerContextCore> context_;
 
+  // Holds the time the job started.
+  base::TimeTicks start_time_;
+
   RegistrationJobType job_type_;
   const GURL pattern_;
   GURL script_url_;
   std::vector<RegistrationCallback> callbacks_;
   Phase phase_;
   Internal internal_;
-  bool doom_installing_worker_;
   bool is_promise_resolved_;
   bool should_uninstall_on_failure_;
   bool force_bypass_cache_;
