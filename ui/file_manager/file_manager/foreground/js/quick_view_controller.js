@@ -91,6 +91,11 @@ function QuickViewController(
   this.volumeManager_ = volumeManager;
 
   /**
+   * @type {!Array<string>}
+   * @private
+   */
+  this.fileFormatBlacklist_ = ['TIFF'];
+  /**
    * Current selection of selectionHandler.
    *
    * @type {!Array<!FileEntry>}
@@ -353,7 +358,8 @@ var QuickViewParams;
 QuickViewController.prototype.getQuickViewParameters_ = function(
     entry, items, tasks) {
   var item = items[0];
-  var type = FileType.getType(entry).type;
+  var typeInfo = FileType.getType(entry);
+  var type = typeInfo.type;
 
   /** @type {!QuickViewParams} */
   var params = {
@@ -405,7 +411,11 @@ QuickViewController.prototype.getQuickViewParameters_ = function(
       .then(function(file) {
         switch (type) {
           case 'image':
-            params.contentUrl = URL.createObjectURL(file);
+            if (this.fileFormatBlacklist_.indexOf(typeInfo.subtype) !== -1) {
+              params.contentUrl = '';
+            } else {
+              params.contentUrl = URL.createObjectURL(file);
+            }
             return params;
           case 'video':
             params.contentUrl = URL.createObjectURL(file);
