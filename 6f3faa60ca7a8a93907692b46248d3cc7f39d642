@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "538540c8_e871a8c5",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-26T03:23:56Z",
+      "side": 1,
+      "message": "Is this something clients - in particular the renderers - need to know? Workarounds should really be an implementation detail on the service side, and should generally not be something clients need to know. I guess it\u0027s not actively harmful for them to know, but mostly I worry about code creeping in that tries to make decisions on the client side when it really needs to make them on the service side for security reasons. So it\u0027s more of a \"don\u0027t make it easy to do the wrong thing\" concern - unless we really need to.",
+      "revId": "6f3faa60ca7a8a93907692b46248d3cc7f39d642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
