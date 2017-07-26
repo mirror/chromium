@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4d3d927_eb713780",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T00:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e2494f_ce73411c",
+      "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a918661_f0c033c7",
         "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T23:10:13Z",
       "side": 1,
       "message": "What is the purpose of this accessibility identifier?",
+      "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea170d39_e4c8ba4f",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T00:35:14Z",
+      "side": 1,
+      "message": "It is the accessibility identifier of the ReadingListMenuViewCell\u0027s text badge. It is not currently accessed externally, but in the future Earl Grey tests will use it.",
+      "parentUuid": "2a918661_f0c033c7",
       "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "793512d2_9bb3a2eb",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T00:35:14Z",
+      "side": 1,
+      "message": "In theory yes. In practice however |numberBadgeHidden| being |YES| does not mean that |_numberBadge.hidden| is |YES|. The number badge hides itself by setting its alpha to 0.0, not by using the |hidden| property. This allows the number badge to show / hide itself just using animations, because |hidden| is not animatable. Using |_numberBadge.hidden| would require modifying the NumberBadgeView to check the |hidden| property and modify it in all animations (before the animation and in its completion block).",
+      "parentUuid": "f230bf25_ec9fc6fe",
+      "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9179b91_66a68a71",
         "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-25T23:10:13Z",
       "side": 1,
       "message": "At the end of this method, the numberBadgeView is visible (not hidden) and yet the numberBadgeHidden property is YES. This feels like an internal inconsistency.",
+      "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02c3a91_bbfd7496",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T00:35:14Z",
+      "side": 1,
+      "message": "The NumberBadgeView object hides itself in its initializer.",
+      "parentUuid": "b9179b91_66a68a71",
       "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "384a389a_11f5c82a",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T00:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae42529_09b568e4",
+      "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "288cbf94_9a028aa1",
         "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
         "patchSetId": 14
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2d404869_09e89f82",
+        "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T00:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "288cbf94_9a028aa1",
+      "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c894ba18_785e3777",
         "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
         "patchSetId": 14
@@ -118,6 +226,24 @@
       "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c51b6f9_c4c2fd89",
+        "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T00:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c894ba18_785e3777",
+      "revId": "e40bc4ab4496192e9259ab127129f53945d55920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
