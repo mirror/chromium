@@ -16,6 +16,41 @@
       "revId": "40ba56fa628669b09cb376bc209b0a057d48f1bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c350d5e6_bfaca13e",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-26T21:20:03Z",
+      "side": 1,
+      "message": "Hmhh. I see. Thanks for updating this.",
+      "parentUuid": "5b0eb8b8_6e670b00",
+      "revId": "40ba56fa628669b09cb376bc209b0a057d48f1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04dd2515_da225ae4",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-26T21:20:03Z",
+      "side": 1,
+      "message": "nits: remove extra spaces",
+      "revId": "40ba56fa628669b09cb376bc209b0a057d48f1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
