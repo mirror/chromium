@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6948a0dc_22b7245b",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T22:58:44Z",
+      "side": 1,
+      "message": "instead of making this be a method, how about passing the id/location to it as an arg and making it be a function in the anon namespace? then you have less coupling with the class and it\u0027s clearer which wallpaper\u0027s colors it\u0027s going to be returning.",
+      "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fcdc9bc_151200a8",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T22:58:44Z",
+      "side": 1,
+      "message": "how about combining this with the earlier statement?\n\n  const base::ListValue* prominent_colors \u003d nullptr;\n  if (!cache_id_.has_value() || !Shell::Get()-\u003eGetLocalStatePrefService() ||\n      !Shell::Get()-\u003eGetLocalStatePrefService()-\u003e...) {\n    return cached_colors_out;\n  }\n\nfeels a bit cleaner since these checks are all related and you aren\u0027t actually doing any work between them.",
+      "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0a532c_ceef58bc",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T22:58:44Z",
+      "side": 1,
+      "message": "instead of calling this a \"cache id\" (which feels a bit confusing, since there isn\u0027t another member or class called \"cache\" that this indexes into), how about something like this?\n\n  // Location (see WallpaperInfo::location) used by the current wallpaper.\n  // Used as a key for storing |prominent_colors_| in the\n  // wallpaper::kWallpaperColors pref.\n  base::Optional\u003cstd::string\u003e current_location_;",
+      "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
