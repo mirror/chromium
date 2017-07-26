@@ -16,6 +16,24 @@
       "revId": "2d13e932756e29269800c356c33134e8540fe148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef446b3_72e1a261",
+        "filename": "chrome/android/webapk/shell_apk/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-26T19:52:12Z",
+      "side": 1,
+      "message": "PresubmitError prevents user from submitting the change. PresubmitPromptWarning is a warning, and PresubmitPromptOrNotify is just a text to display. Should we keep using PresubmitError, or remove this error check and use PresubmitPromptWarning instead?",
+      "parentUuid": "3b73f355_9bbc8266",
+      "revId": "2d13e932756e29269800c356c33134e8540fe148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
