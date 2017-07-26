@@ -16,6 +16,24 @@
       "revId": "6ffd9b105799baf8473129c43b0272f964ca94ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3341711_14e76102",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-26T00:54:28Z",
+      "side": 1,
+      "message": "Riiiiiiight... Thanks for enlightening me about this. Think I get it now.\n\nI\u0027ve fixed it to use GetBinaryClassName(), and I think it actually is more correct now, as it was omitting the outer class for nested classes.",
+      "parentUuid": "beb10354_3b64e324",
+      "revId": "6ffd9b105799baf8473129c43b0272f964ca94ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
