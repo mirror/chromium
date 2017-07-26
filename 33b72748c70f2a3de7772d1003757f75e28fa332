@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "093ba34f_2c9a5a83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-26T20:24:25Z",
+      "side": 1,
+      "message": "Above this add: mBottomSheet.getSheetMetrics().recordSheetOpenReason(...)",
+      "range": {
+        "startLine": 433,
+        "startChar": 28,
+        "endLine": 433,
+        "endChar": 91
+      },
+      "revId": "33b72748c70f2a3de7772d1003757f75e28fa332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1c1d43_cd20d6cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2309,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-26T20:24:25Z",
+      "side": 1,
+      "message": "nit: Make private or roll into maybeSetBottomSheetStateToHalfOnStartup.",
+      "range": {
+        "startLine": 2309,
+        "startChar": 4,
+        "endLine": 2309,
+        "endChar": 46
+      },
+      "revId": "33b72748c70f2a3de7772d1003757f75e28fa332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74d1ea3_1f8a8ac3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-26T20:24:25Z",
+      "side": 1,
+      "message": "The boundary is always the last item in an intdef (see above). So startup should be 4 and boundary should be 5. You are also going to need to update tools/metrics/histograms/enums.xml to include the new value:\n\nhttps://cs.chromium.org/chromium/src/tools/metrics/histograms/enums.xml?rcl\u003daa061e550891fab4b55e75d85955e27eed25bf94\u0026l\u003d4166",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 50
+      },
+      "revId": "33b72748c70f2a3de7772d1003757f75e28fa332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
