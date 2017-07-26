@@ -52,6 +52,24 @@
       "revId": "d2b58d5f7991876d0942580c2b306378977f4d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1bc9227_80a76374",
+        "filename": "chrome/browser/browsing_data/browsing_data_file_system_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-26T01:33:46Z",
+      "side": 1,
+      "message": "I think this assumes Notify() will have been called once the current loop and the pool is idle? So it assumes idle means success. If a bug is introduced that prevents Notify() from being called, how would we know?\n\nWould it make sense to change Notify() to call Quit() and to change the BlockUntilNotified()\n  base::RunLoop().Run();  // won\u0027t stop until Notify() is called\n  content::RunAllBlockingPoolTasksUntilIdle();  // flushes everything else thru till idle",
+      "parentUuid": "400afd23_2bf827fa",
+      "revId": "d2b58d5f7991876d0942580c2b306378977f4d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae78c35_f22714fc",
+        "filename": "storage/browser/quota/quota_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-26T01:33:46Z",
+      "side": 1,
+      "message": "why do we need sync primitives?",
+      "range": {
+        "startLine": 829,
+        "startChar": 35,
+        "endLine": 829,
+        "endChar": 57
+      },
+      "revId": "80dcfd0e8f3869739cc51bb507f9a99998ad9da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
