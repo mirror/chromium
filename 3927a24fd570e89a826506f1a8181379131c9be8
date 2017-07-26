@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97708dea_a8528a4f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-26T00:08:15Z",
+      "side": 1,
+      "message": "Nit: \"because\"",
+      "range": {
+        "startLine": 252,
+        "startChar": 36,
+        "endLine": 252,
+        "endChar": 43
+      },
+      "revId": "3927a24fd570e89a826506f1a8181379131c9be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
