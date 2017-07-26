@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6e7e4f_c47926e5",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-26T13:44:06Z",
+      "side": 1,
+      "message": "Is this a bug in FreeType? Can we remove this additional include if we have this changed in upstream to FT_CONFIG_CONFIG_H? I guess we do not have any customizations to ftconfig.h at this point?",
+      "revId": "6af5d063dbbdb8c0d2a1fe4be56fd39575828d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bed5b02_ab25d779",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-26T13:44:06Z",
+      "side": 1,
+      "message": "Is this necessary when \":freetype_config\" is already in public_configs?",
+      "revId": "6af5d063dbbdb8c0d2a1fe4be56fd39575828d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
