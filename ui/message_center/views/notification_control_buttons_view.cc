@@ -215,13 +215,13 @@ void NotificationControlButtonsView::AdjustLayerBounds() {
 
 #endif  // defined(OS_CHROMEOS)
 
-message_center::PaddedButton*
-NotificationControlButtonsView::close_button_for_testing() const {
+message_center::PaddedButton* NotificationControlButtonsView::close_button()
+    const {
   return close_button_.get();
 }
 
-message_center::PaddedButton*
-NotificationControlButtonsView::settings_button_for_testing() const {
+message_center::PaddedButton* NotificationControlButtonsView::settings_button()
+    const {
   return settings_button_.get();
 }
 
