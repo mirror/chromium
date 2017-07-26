@@ -123,7 +123,10 @@ Polymer({
   /** @private */
   onItemChanged_: function() {
     this.isFolder_ = !this.item_.url;
-    this.setAttribute('aria-label', this.item_.title);
+    this.setAttribute(
+        'aria-label',
+        this.item_.title || this.item_.url ||
+            loadTimeData.getString('folderLabel'));
   },
 
   /**
