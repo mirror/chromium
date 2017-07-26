@@ -124,6 +124,24 @@
       "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1983a554_9cec8225",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-26T19:47:31Z",
+      "side": 1,
+      "message": "Mocking the binder has the disadvantage that you cannot start intercepting calls an already existing RFHI, which makes some tests cumbersome.\n\nI ended up implementing my first proposal. Please take an overall look. It\u0027s still a bit rough around the edges.",
+      "parentUuid": "8d1fabcc_2c602e99",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
