@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70d03e22_5aeac9bf",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0878dd1e_6a5acb14",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 25,
+        "endChar": 66
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1341e9e_b0b73353",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-26T21:19:15Z",
       "side": 1,
       "message": "is there a need to dynamically add commands? could you instead initialize the registry with a constexpr array of commands?",
+      "range": {
+        "startLine": 99,
+        "startChar": 22,
+        "endLine": 99,
+        "endChar": 25
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc671a5_47a21e72",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "Okay doing that. Now we can wipe out the registry, and replace it with a single function.",
+      "parentUuid": "a1341e9e_b0b73353",
       "range": {
         "startLine": 99,
         "startChar": 22,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a6e8f88b_05105992",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "Updated comments.",
+      "parentUuid": "2114edd0_1336b5bc",
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3df56dbb_46461358",
         "filename": "chrome/installer/zucchini/zucchini_commands.h",
         "patchSetId": 9
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "54b68e5b_2580ca47",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df56dbb_46461358",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64d8e322_b5bc2841",
         "filename": "chrome/installer/zucchini/zucchini_commands.h",
         "patchSetId": 9
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "d4108328_42b33a61",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "Made this file-local constexpr array in main_utils.cc.  This means Command can also be file-local.",
+      "parentUuid": "64d8e322_b5bc2841",
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15e7f112_5a8fdf82",
         "filename": "chrome/installer/zucchini/zucchini_commands.h",
         "patchSetId": 9
@@ -116,6 +224,30 @@
       "writtenOn": "2017-07-26T21:19:15Z",
       "side": 1,
       "message": "nit: Generate?",
+      "range": {
+        "startLine": 76,
+        "startChar": 30,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41804cdf_74de9444",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "zucchini_lib has its own \"Generate\" and \"Apply\" interface. I\u0027d like to avoid repeating function name declaration, and add prefix/suffix to show that they\u0027re siblings. Also, using \"Gen\" instead of \"Generate\" to match \"-gen\" command.",
+      "parentUuid": "15e7f112_5a8fdf82",
       "range": {
         "startLine": 76,
         "startChar": 30,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "ff439cbb_4664ed49",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "Same as above?",
+      "parentUuid": "5c06e012_00e1af3c",
+      "range": {
+        "startLine": 82,
+        "startChar": 32,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dbc4ae7_7b430429",
         "filename": "chrome/installer/zucchini/zucchini_main.cc",
         "patchSetId": 9
@@ -162,6 +318,24 @@
       "writtenOn": "2017-07-26T21:19:15Z",
       "side": 1,
       "message": "in the interest of simplification, everything here on down could be replaced with:\n  return RunCommand(\u0026std::cerr, GetCommands(), command_line);\n\nrejiggering of CommandRegistry into RunCommand is left as an exercise for the reader. ;-)",
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48896f96_60c6cd2e",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T22:37:09Z",
+      "side": 1,
+      "message": "I did it this way so a reader can look at main() and immediately see a catalog of commands to follow.  This also makes it easy for binary size experiments, where we can just comment out commands (specifically, Zucchini-Gen) and examine impact on binary size.\n\nIf brevity is preferred, then I\u0027ll just hard-code the array as static constexpr in main_utils.cc.  This means we can remove CommandRegistry altogether!",
+      "parentUuid": "4dbc4ae7_7b430429",
       "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
