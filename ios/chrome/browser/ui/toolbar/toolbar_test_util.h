@@ -36,4 +36,4 @@ class ToolbarTestNavigationManager : public web::TestNavigationManager {
   bool can_go_forward_;
 };
 
-#endif  // IOS_SHARED_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_TEST_UTIL_H_
+#endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_TEST_UTIL_H_
