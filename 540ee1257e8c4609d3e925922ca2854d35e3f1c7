@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c4951c_48aaa2dc",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T21:45:10Z",
+      "side": 1,
+      "message": "Please clarify the argument name. Something like navigation_service_name would be much better.",
+      "revId": "540ee1257e8c4609d3e925922ca2854d35e3f1c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
