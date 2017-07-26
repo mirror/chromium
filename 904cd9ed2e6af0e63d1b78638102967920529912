@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "8f6fa0ee_f183ac8b",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-26T21:40:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59f7be3_ec63746e",
+      "revId": "904cd9ed2e6af0e63d1b78638102967920529912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea457b0_6eba9679",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h",
         "patchSetId": 14
