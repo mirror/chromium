@@ -357,9 +357,6 @@ source_set("browser_sources") {
   }
 
   if (is_chromeos) {
-    sources += [
-      "arc_tracing_agent.cc",
-      "arc_tracing_agent.h",
-    ]
+    sources += [ "arc_tracing_agent.h" ]
   }
 }
