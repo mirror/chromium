@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "bbdfd0e6_b1e3d357",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-26T08:35:04Z",
+      "side": 1,
+      "message": "Hm... does it really matter in which order you discard the two values that you\u0027re not going to use? Isn\u0027t shrink-to-fit essentially about finding the median value among the three values anyway?",
+      "parentUuid": "17c72007_c1b71fd3",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddb52488_7edfd82c",
         "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cc",
         "patchSetId": 3
