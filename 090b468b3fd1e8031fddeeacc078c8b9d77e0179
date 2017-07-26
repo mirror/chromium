@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a92cafa3_d163d57c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T23:19:51Z",
+      "side": 1,
+      "message": "can we DCHECK_GE(swap_timestamp, timestamp); here?",
+      "revId": "090b468b3fd1e8031fddeeacc078c8b9d77e0179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7ff0f1_470d0cf3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T23:19:51Z",
+      "side": 1,
+      "message": "can update this comment to drop Swap from end of method name",
+      "revId": "090b468b3fd1e8031fddeeacc078c8b9d77e0179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
