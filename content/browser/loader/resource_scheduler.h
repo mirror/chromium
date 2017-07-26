@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "base/compiler_specific.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
@@ -131,11 +132,9 @@ class CONTENT_EXPORT ResourceScheduler {
     return GetMaxDelayableRequestsExperimentConfig();
   }
 
-  // Public for tests
+  // Public for tests.
   static net::EffectiveConnectionType
-  GetMaxDelayableRequestsExperimentMaxECTForTests() {
-    return GetMaxDelayableRequestsExperimentMaxECT();
-  }
+  GetMaxECTForMaxDelayableRequestsNetworkOverrideForTests();
 
  private:
   class RequestQueue;
@@ -173,7 +172,13 @@ class CONTENT_EXPORT ResourceScheduler {
 
   // Reads the experiment parameters to determine the maximum effective
   // connection type for which the experiment should be run.
-  static net::EffectiveConnectionType GetMaxDelayableRequestsExperimentMaxECT();
+  static net::EffectiveConnectionType GetMaxECTForExperiment(
+      const base::Feature& experiment);
+
+  // Reads the experiment parameters to get the multiplier for non-delayable
+  // requests while determining the number of delayable requests to be allowed
+  // in-flight.
+  static int GetNonDelayableThrottlesDelayableConfig();
 
   // This function computes the maximum number of delayable requests to allow
   // based on the configuration of the experiment
@@ -189,6 +194,12 @@ class CONTENT_EXPORT ResourceScheduler {
   // |MaxRequestsForBDPRange| entry for which the value of |max_bdp_kbits| is
   // greater than or equal to the input BDP value.
   int GetNumberOfDelayableRequestsForBDP(int64_t bdp_in_kbits) const;
+
+  // Returns the factor with which the number of non-delayable requests
+  // in-flight must be multiplied to get the reduction in the limit of delayable
+  // requests.
+  int GetNonDelayableThrottlesDelayableMultiplier(
+      const net::NetworkQualityEstimator* network_quality_estimator) const;
 
   ClientMap client_map_;
   RequestSet unowned_requests_;
@@ -209,6 +220,15 @@ class CONTENT_EXPORT ResourceScheduler {
   // The maximum ECT for which the maximum delayable requests in flight should
   // be overridden.
   const net::EffectiveConnectionType max_delayable_requests_threshold_;
+
+  // The multiplier for the number of non-delayable requests when determining
+  // the limit of delayable requests to be allowed in-flight.
+  const size_t non_delayable_throttle_delayable_multiplier_;
+
+  // The maximum ECT for which the presence of non-delayable requests must
+  // result in the throttling of the delayable requests.
+  const net::EffectiveConnectionType
+      non_delayable_throttle_delayable_threshold_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
