@@ -10,6 +10,7 @@ import "mojo/common/values.mojom";
 // Event signal scoped to a tab.
 enum TabEvent {
   kDoneLoading,
+  kExpectedTaskQueueingDurationReceived,
 };
 
 // A TabSignalObserver implementation receives tab-scoped signal from
@@ -20,6 +21,7 @@ enum TabEvent {
 // TabSignalGenerator::AddObserver.
 interface TabSignalObserver {
   OnEventReceived(CoordinationUnitID cu_id, TabEvent event);
+  OnPropertyChanged(CoordinationUnitID cu_id, PropertyType property_type, mojo.common.mojom.Value value);
 };
 
 // A TabSignalGenerator implementation will be implemented inside GRC to observe

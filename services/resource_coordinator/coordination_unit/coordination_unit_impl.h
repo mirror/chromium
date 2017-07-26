@@ -24,6 +24,7 @@ namespace resource_coordinator {
 
 class CoordinationUnitGraphObserver;
 class FrameCoordinationUnitImpl;
+class WebContentsCoordinationUnitImpl;
 
 class CoordinationUnitImpl : public mojom::CoordinationUnit {
  public:
@@ -33,6 +34,8 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   ~CoordinationUnitImpl() override;
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
+      const CoordinationUnitImpl* coordination_unit);
+  static const WebContentsCoordinationUnitImpl* ToWebContentsCoordinationUnit(
       const CoordinationUnitImpl* coordination_unit);
 
   // Overridden from mojom::CoordinationUnit:
@@ -53,7 +56,9 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   virtual std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type);
   // Recalculate property internally.
-  virtual void RecalculateProperty(const mojom::PropertyType property_type) {}
+  virtual void RecalculateProperty(
+      const mojom::PropertyType property_type,
+      base::Optional<base::Value> value = base::nullopt) {}
 
   // Operations performed on the internal key-value store.
   base::Value GetProperty(const mojom::PropertyType property_type) const;

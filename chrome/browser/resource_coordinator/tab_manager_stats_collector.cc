@@ -5,8 +5,10 @@
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 
 #include "base/metrics/histogram_macros.h"
+#include "base/values.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
+#include "content/public/browser/web_contents.h"
 
 namespace resource_coordinator {
 
@@ -22,6 +24,17 @@ void TabManagerStatsCollector::RecordSwitchToTab(
     DCHECK(data);
     UMA_HISTOGRAM_ENUMERATION("TabManager.SessionRestore.SwitchToTab",
                               data->tab_loading_state(), TAB_LOADING_STATE_MAX);
+  }
+}
+
+void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
+    content::WebContents* web_contents,
+    std::unique_ptr<base::Value> queueing_time_millis) const {
+  if (tab_manager_->IsSessionRestoreLoadingTabs()) {
+    // tab_manager_->IsDuringSessionRestore(web_contents)) {
+    UMA_HISTOGRAM_TIMES(
+        "RendererScheduler.ExpectedTaskQueueingDuration",
+        base::TimeDelta::FromMillisecondsD(queueing_time_millis->GetDouble()));
   }
 }
 

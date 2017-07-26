@@ -24,6 +24,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread.h"
 #include "base/time/tick_clock.h"
+#include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
@@ -510,6 +511,13 @@ bool TabManager::CompareTabStats(const TabStats& first,
 // static
 int64_t TabManager::IdFromWebContents(WebContents* web_contents) {
   return reinterpret_cast<int64_t>(web_contents);
+}
+
+void TabManager::OnExpectedTaskQueueingDurationUpdated(
+    content::WebContents* web_contents,
+    std::unique_ptr<base::Value> queueing_time_millis) {
+  tab_manager_stats_collector_->RecordExpectedTaskQueueingDuration(
+      web_contents, std::move(queueing_time_millis));
 }
 
 void TabManager::OnSessionRestoreStartedLoadingTabs() {

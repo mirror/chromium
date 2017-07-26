@@ -4,6 +4,7 @@
 
 #include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_id.h"
@@ -48,6 +49,19 @@ void TabManager::GRCTabSignalObserver::OnEventReceived(
     auto* web_contents_data =
         TabManager::WebContentsData::FromWebContents(web_contents_iter->second);
     web_contents_data->DoneLoading();
+  }
+}
+
+void TabManager::GRCTabSignalObserver::OnPropertyChanged(
+    const CoordinationUnitID& cu_id,
+    mojom::PropertyType property_type,
+    std::unique_ptr<base::Value> value) {
+  auto web_contents_iter = cu_id_web_contents_map_.find(cu_id);
+  if (web_contents_iter == cu_id_web_contents_map_.end())
+    return;
+  if (property_type == mojom::PropertyType::kExpectedTaskQueueingDuration) {
+    g_browser_process->GetTabManager()->OnExpectedTaskQueueingDurationUpdated(
+        web_contents_iter->second, std::move(value));
   }
 }
 
