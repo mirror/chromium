@@ -34,6 +34,40 @@
       "revId": "ab84c2446c5d2b0caeb0b3010499fda0fda4f61c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58ee42e9_e4d547a0",
+        "filename": "third_party/WebKit/Source/core/loader/MixedContentChecker.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-26T05:07:36Z",
+      "side": 1,
+      "message": "don\u0027t we need to also count up WebFeature::kMixedContentPresent?",
+      "revId": "ab84c2446c5d2b0caeb0b3010499fda0fda4f61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f5db3b_c9388b41",
+        "filename": "third_party/WebKit/Source/core/loader/MixedContentChecker.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-26T05:07:36Z",
+      "side": 1,
+      "message": "ditto about WebFeature::kMixedContentBlockableAllowed",
+      "revId": "ab84c2446c5d2b0caeb0b3010499fda0fda4f61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
