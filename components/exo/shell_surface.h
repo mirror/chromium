@@ -16,7 +16,6 @@
 #include "components/exo/surface_observer.h"
 #include "components/exo/surface_tree_host.h"
 #include "components/exo/wm_helper.h"
-#include "ui/aura/window_observer.h"
 #include "ui/base/hit_test.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
@@ -47,7 +46,6 @@ class ShellSurface : public SurfaceTreeHost,
                      public views::WidgetDelegate,
                      public views::View,
                      public ash::wm::WindowStateObserver,
-                     public aura::WindowObserver,
                      public WMHelper::ActivationObserver,
                      public WMHelper::DisplayConfigurationObserver {
  public:
@@ -186,8 +184,9 @@ class ShellSurface : public SurfaceTreeHost,
   // Setting empty bounds will disable the shadow.
   void SetRectangularSurfaceShadow(const gfx::Rect& content_bounds);
 
-  // Set the pacity of the background for the window that has a shadow.
-  void SetRectangularShadowBackgroundOpacity(float opacity);
+  // [Deprecated]Set the pacity of the background for the window that has a
+  // shadow.
+  void SetRectangularShadowBackgroundOpacity_DEPRECATED(float opacity);
 
   // Enable/disable window frame.
   void SetFrame(bool enabled);
@@ -258,6 +257,9 @@ class ShellSurface : public SurfaceTreeHost,
   void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
+  void OnWindowAddedToRootWindow(aura::Window* window) override;
+  void OnWindowRemovingFromRootWindow(aura::Window* window,
+                                      aura::Window* new_root) override;
   void OnWindowDestroying(aura::Window* window) override;
 
   // Overridden from WMHelper::ActivationObserver:
@@ -277,7 +279,6 @@ class ShellSurface : public SurfaceTreeHost,
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
 
   aura::Window* shadow_overlay() { return shadow_overlay_.get(); }
-  aura::Window* shadow_underlay() { return shadow_underlay_.get(); }
 
   Surface* surface_for_testing() { return root_surface(); }
 
@@ -365,9 +366,7 @@ class ShellSurface : public SurfaceTreeHost,
   int resize_component_ = HTCAPTION;  // HT constant (see ui/base/hit_test.h)
   int pending_resize_component_ = HTCAPTION;
   std::unique_ptr<aura::Window> shadow_overlay_;
-  std::unique_ptr<aura::Window> shadow_underlay_;
   gfx::Rect shadow_content_bounds_;
-  float shadow_background_opacity_ = 1.0;
   std::deque<Config> pending_configs_;
   std::unique_ptr<ash::WindowResizer> resizer_;
   std::unique_ptr<ScopedAnimationsDisabled> scoped_animations_disabled_;

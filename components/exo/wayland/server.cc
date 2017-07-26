@@ -2068,8 +2068,9 @@ void remote_surface_set_rectangular_shadow_background_opacity(
     wl_client* client,
     wl_resource* resource,
     wl_fixed_t opacity) {
-  GetUserDataAs<ShellSurface>(resource)->SetRectangularShadowBackgroundOpacity(
-      wl_fixed_to_double(opacity));
+  GetUserDataAs<ShellSurface>(resource)
+      ->SetRectangularShadowBackgroundOpacity_DEPRECATED(
+          wl_fixed_to_double(opacity));
 }
 
 void remote_surface_set_title(wl_client* client,
