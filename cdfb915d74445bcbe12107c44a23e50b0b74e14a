@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2e82b08_2fc5c0cf",
+        "filename": "content/renderer/input/main_thread_event_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-26T08:40:16Z",
+      "side": 1,
+      "message": "tiny nit: Passing a const ref to a unique pointer seems a little weird since we\u0027re not passing ownership. I\u0027d write this as \"const MainThreadEventQueueTask\u003e\u0026 item\" and deref at the call site.",
+      "range": {
+        "startLine": 217,
+        "startChar": 32,
+        "endLine": 217,
+        "endChar": 42
+      },
+      "revId": "cdfb915d74445bcbe12107c44a23e50b0b74e14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
