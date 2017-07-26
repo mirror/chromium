@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PRINTING_RENDERER_PRINT_WEB_VIEW_HELPER_H_
-#define COMPONENTS_PRINTING_RENDERER_PRINT_WEB_VIEW_HELPER_H_
+#ifndef COMPONENTS_PRINTING_RENDERER_PRINT_WEB_FRAME_HELPER_H_
+#define COMPONENTS_PRINTING_RENDERER_PRINT_WEB_FRAME_HELPER_H_
 
 #include <memory>
 #include <vector>
@@ -564,4 +564,4 @@ class PrintWebViewHelper
 
 }  // namespace printing
 
-#endif  // COMPONENTS_PRINTING_RENDERER_PRINT_WEB_VIEW_HELPER_H_
+#endif  // COMPONENTS_PRINTING_RENDERER_PRINT_WEB_FRAME_HELPER_H_
