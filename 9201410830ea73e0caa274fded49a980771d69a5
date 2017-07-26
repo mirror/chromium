@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e84dd648_13f411b3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1946,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T19:24:23Z",
+      "side": 1,
+      "message": "We should rename the parameter to reflect the fact that it means (and we are basically using it as) whether the layer has already been composited.",
+      "range": {
+        "startLine": 1946,
+        "startChar": 6,
+        "endLine": 1946,
+        "endChar": 28
+      },
+      "revId": "9201410830ea73e0caa274fded49a980771d69a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6aed22_2ab8c4f9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-26T19:24:23Z",
+      "side": 1,
+      "message": "As I mentioned in my comment, let\u0027s fix this condition too to still composite the scroll if it\u0027s already composited. These two reasons can probably be in the same condition check (that we\u0027re not already composited) as reasons we may not want to composite the scroll for memory reasons.",
+      "revId": "9201410830ea73e0caa274fded49a980771d69a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
