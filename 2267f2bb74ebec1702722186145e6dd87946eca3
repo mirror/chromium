@@ -25,6 +25,138 @@
     },
     {
       "key": {
+        "uuid": "02c5d704_ff2c9eb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Is there a reason why this isn\u0027t a public method of the ThumbnailProvider?",
+      "range": {
+        "startLine": 361,
+        "startChar": 24,
+        "endLine": 361,
+        "endChar": 50
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56ee677_2045a9fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "{@link ThumbnailDiskStorage}s",
+      "range": {
+        "startLine": 29,
+        "startChar": 67,
+        "endLine": 29,
+        "endChar": 96
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39dbc658_2088b15a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Nit: Double space before comment",
+      "range": {
+        "startLine": 39,
+        "startChar": 59,
+        "endLine": 39,
+        "endChar": 60
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4d3fe8_9df028ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Could you document why this is static ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc44142e_cbc3ecc8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "I think this requires being constructed on the UI thread? Maybe add an assert?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7d12cc_e40e24ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "This seems to be used multiple times. Like commented other places, it would be great if this was indeed a callback that can be different callers each time.\nIf you decide to keep it like this though, this should probably be called a delegate instead?",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56bde7a9_69ea7efa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 8
@@ -42,6 +174,154 @@
         "endLine": 122,
         "endChar": 30
       },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a840104d_875149ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "This is the constructor, so when would this ever be non-null?\nIs it because anyone in the package can call initDiskCache(), so technically the requester which gets a reference to |this| can set it as part of the setRequester() call? If so, could you instead just move this line up and assert that it\u0027s null before it\u0027s set in initDiskCache()?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405faa3f_d9c7aa9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Should this assert that it is invoked from the UI thread since it\u0027s public?\nYou require that since you are creating an AsyncTask (which must be created on the UI thread)",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6011f60f_8e78d078",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Should this be executed on a particular executor like AsyncTask.SERIAL_EXECUTOR.execute(...)?\nI know it\u0027s default in the current version of Android (but not in [donut,honeycomb) ), but I think it\u0027s still helpful to document, since it is heavily depended on throughout this class. I see that there have been discussions around this before, so it\u0027s up to you though. Feel free to keep around.",
+      "range": {
+        "startLine": 152,
+        "startChar": 42,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a759c534_b45ca627",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "This feels a little bit scary. Any reason why we\u0027re not writing protos to disk instead? Otherwise we could risk that the underlying object type could change, etc. I do realize this is the type String, but still though, it will be persisted forever.",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0865f1d1_18b61ec8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "invoked on?",
+      "range": {
+        "startLine": 203,
+        "startChar": 43,
+        "endLine": 203,
+        "endChar": 45
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dd5c62_aee85473",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Should these methods assert that the disk initialization has already happened?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85cdbe6_675fcd93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Could we use AtomicFile.startWrite(...) instead?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07418008_ba44ce9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Oh, here we\u0027re writing even more data to disk. This feels iffy to write. What if we ever needed other data fields? As it is now, the versioning is set in stone in this commit :-/\n\nMaybe something like:\n\n  message ContentId {\n    optional string id \u003d 1;\n  }\n  \n  message CachedFile {\n    // required\n    optional ContentId content_id \u003d 1;\n    optional string compressed_png \u003d 2;\n  }\n\nThat way we could move away from PNG later for example, if we wanted something like WebP, etc., without having to go through hoops to figure out the compression technology used, etc.",
       "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +374,131 @@
     },
     {
       "key": {
+        "uuid": "e2203d2c_cc7ff4cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Add ThreadUtils.assertOnBackgroundThread(); ?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4ff304_3340a68b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "This implies that the directory is created by this method, where in fact, it is not?",
+      "range": {
+        "startLine": 318,
+        "startChar": 7,
+        "endLine": 318,
+        "endChar": 32
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04879a9_1908ceb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "mention that it returns the path?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b39492_aff7b0e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "This seems like a very specific API to require of the requestor, when the only method that\u0027s ever called is onThumbnailRetrieved(...). Could there be an interface ThumbnailGenerator.Callback { onThumbnailRetrieved(...); } or something like that?\n\nThat should enable you to test this class without the storage too.",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436619bd_9df2748a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "This constructor doesn\u0027t seem to do anything.",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62eb347_6583b615",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Any reason why we couldn\u0027t have this as part of the ThumbnailRequest and pass it through native?\nAs it stands now, if you ever call this again, the wrong requester would get the callback.",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640cd597_30da3f81",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderCallback.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "This seems to be a little bit backwards to me? Is this only invoked by the disk storage, but implemented by the ThumbnailProvider?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7e6d2bb_48b6e205",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 8
@@ -134,6 +539,57 @@
         "endLine": 177,
         "endChar": 23
       },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29b4ba9_5b21fdec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Should this also remove from memory? If not, why not specify it as removeThumbnailFromDisk()?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a60810_57067f9f",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Maybe mention that it invokes the Java method #onThumbnailRetrieved(...) when finished?",
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa57e53_f5d5dcca",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T20:46:01Z",
+      "side": 1,
+      "message": "Nit: This seems like it could be a private method? It\u0027s only invoked by the callback for the retrieval.",
       "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
