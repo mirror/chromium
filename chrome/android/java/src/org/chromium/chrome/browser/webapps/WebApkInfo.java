@@ -33,7 +33,7 @@ public class WebApkInfo extends WebappInfo {
     public static final String RESOURCE_SHORT_NAME = "short_name";
     public static final String RESOURCE_STRING_TYPE = "string";
 
-    private static final String TAG = "WebApkInfo";
+    private static final String TAG = "WebApkInfo"; //////////////////////////////////////////////
 
     private Icon mBadgeIcon;
     private String mWebApkPackageName;
