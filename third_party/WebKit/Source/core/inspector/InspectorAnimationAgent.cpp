@@ -22,7 +22,6 @@
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/DOMNodeIds.h"
 #include "core/frame/LocalFrame.h"
-#include "core/inspector/AddStringToDigestor.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorCSSAgent.h"
 #include "core/inspector/InspectorStyleSheet.h"
@@ -476,8 +475,13 @@ String InspectorAnimationAgent::CreateCSSId(blink::Animation& animation) {
       css_agent_->MatchingStyles(element);
   std::unique_ptr<WebCryptoDigestor> digestor =
       CreateDigestor(kHashAlgorithmSha1);
-  AddStringToDigestor(digestor.get(), type);
-  AddStringToDigestor(digestor.get(), animation.id());
+  const CString c_type = type.Utf8();
+  digestor->Consume(reinterpret_cast<const unsigned char*>(c_type.data()),
+                    c_type.length());
+  const CString c_animation_id = animation.id().Utf8();
+  digestor->Consume(
+      reinterpret_cast<const unsigned char*>(c_animation_id.data()),
+      c_animation_id.length());
   for (CSSPropertyID property : css_properties) {
     CSSStyleDeclaration* style =
         css_agent_->FindEffectiveDeclaration(property, styles);
@@ -485,11 +489,19 @@ String InspectorAnimationAgent::CreateCSSId(blink::Animation& animation) {
     if (!style || !style->ParentStyleSheet() || !style->parentRule() ||
         style->parentRule()->type() != CSSRule::kStyleRule)
       continue;
-    AddStringToDigestor(digestor.get(), getPropertyNameString(property));
-    AddStringToDigestor(digestor.get(),
-                        css_agent_->StyleSheetId(style->ParentStyleSheet()));
-    AddStringToDigestor(digestor.get(),
-                        ToCSSStyleRule(style->parentRule())->selectorText());
+    const CString c_property_name = getPropertyNameString(property).Utf8();
+    digestor->Consume(
+        reinterpret_cast<const unsigned char*>(c_property_name.data()),
+        c_property_name.length());
+    const CString c_stylesheet_id =
+        css_agent_->StyleSheetId(style->ParentStyleSheet()).Utf8();
+    digestor->Consume(
+        reinterpret_cast<const unsigned char*>(c_stylesheet_id.data()),
+        c_stylesheet_id.length());
+    const CString c_css_rule =
+        ToCSSStyleRule(style->parentRule())->selectorText().Utf8();
+    digestor->Consume(reinterpret_cast<const unsigned char*>(c_css_rule.data()),
+                      c_css_rule.length());
   }
   DigestValue digest_result;
   FinishDigestor(digestor.get(), digest_result);

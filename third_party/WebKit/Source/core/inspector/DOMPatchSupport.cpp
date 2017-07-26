@@ -43,7 +43,6 @@
 #include "core/html/HTMLDocument.h"
 #include "core/html/HTMLHeadElement.h"
 #include "core/html/parser/HTMLDocumentParser.h"
-#include "core/inspector/AddStringToDigestor.h"
 #include "core/inspector/DOMEditor.h"
 #include "core/inspector/InspectorHistory.h"
 #include "core/xml/parser/XMLDocumentParser.h"
@@ -441,15 +440,21 @@ DOMPatchSupport::Digest* DOMPatchSupport::CreateDigest(
   Node::NodeType node_type = node->getNodeType();
   digestor->Consume(reinterpret_cast<const unsigned char*>(&node_type),
                     sizeof(node_type));
-  AddStringToDigestor(digestor.get(), node->nodeName());
-  AddStringToDigestor(digestor.get(), node->nodeValue());
+  const CString c_node_name = node->nodeName().Utf8();
+  digestor->Consume(reinterpret_cast<const unsigned char*>(c_node_name.data()),
+                    c_node_name.length());
+  const CString c_node_value = node->nodeValue().Utf8();
+  digestor->Consume(reinterpret_cast<const unsigned char*>(c_node_value.data()),
+                    c_node_value.length());
 
   if (node->IsElementNode()) {
     Element& element = ToElement(*node);
     Node* child = element.firstChild();
     while (child) {
       Digest* child_info = CreateDigest(child, unused_nodes_map);
-      AddStringToDigestor(digestor.get(), child_info->sha1_);
+      const CString c_sha1 = child_info->sha1_.Utf8();
+      digestor->Consume(reinterpret_cast<const unsigned char*>(c_sha1.data()),
+                        c_sha1.length());
       child = child->nextSibling();
       digest->children_.push_back(child_info);
     }
@@ -459,15 +464,21 @@ DOMPatchSupport::Digest* DOMPatchSupport::CreateDigest(
       std::unique_ptr<WebCryptoDigestor> attrs_digestor =
           CreateDigestor(kHashAlgorithmSha1);
       for (auto& attribute : attributes) {
-        AddStringToDigestor(attrs_digestor.get(),
-                            attribute.GetName().ToString());
-        AddStringToDigestor(attrs_digestor.get(),
-                            attribute.Value().GetString());
+        const CString c_name = attribute.GetName().ToString().Utf8();
+        attrs_digestor->Consume(
+            reinterpret_cast<const unsigned char*>(c_name.data()),
+            c_name.length());
+        const CString c_value = attribute.Value().GetString().Utf8();
+        attrs_digestor->Consume(
+            reinterpret_cast<const unsigned char*>(c_value.data()),
+            c_value.length());
       }
       FinishDigestor(attrs_digestor.get(), digest_result);
       digest->attrs_sha1_ =
           Base64Encode(reinterpret_cast<const char*>(digest_result.data()), 10);
-      AddStringToDigestor(digestor.get(), digest->attrs_sha1_);
+      const CString c_sha1 = digest->attrs_sha1_.Utf8();
+      digestor->Consume(reinterpret_cast<const unsigned char*>(c_sha1.data()),
+                        c_sha1.length());
       digest_result.clear();
     }
   }

@@ -11,8 +11,6 @@ _inspector_protocol_dir = "//third_party/inspector_protocol"
 
 blink_core_sources("inspector") {
   sources = [
-    "AddStringToDigestor.cpp",
-    "AddStringToDigestor.h",
     "ConsoleMessage.cpp",
     "ConsoleMessage.h",
     "ConsoleMessageStorage.cpp",
