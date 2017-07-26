@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b666ccef_0917eb04",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T23:05:12Z",
+      "side": 1,
+      "message": "I think having this as updateRowHieght() is more readable than this -- just add annotation for this._rawRowHeight \u0026 this._rowHeight?",
+      "revId": "ba0117ff0c1f11b1e9fee351dc75b2dc2994a53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3386a31_5a56d4eb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T23:05:12Z",
+      "side": 1,
+      "message": "you could as well inline  this._computeRowHeight() here.",
+      "revId": "ba0117ff0c1f11b1e9fee351dc75b2dc2994a53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ea9394_8ee8d689",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T23:05:12Z",
+      "side": 1,
+      "message": "nit: no need for !!",
+      "revId": "ba0117ff0c1f11b1e9fee351dc75b2dc2994a53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d99402_d1890ac1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T23:05:12Z",
+      "side": 1,
+      "message": "Let\u0027s not return it, rather get it directly from this._columns.dataGrid() on the call site.",
+      "revId": "ba0117ff0c1f11b1e9fee351dc75b2dc2994a53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f284381_ba1d6d87",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T23:05:12Z",
+      "side": 1,
+      "message": "nice catch!",
+      "revId": "ba0117ff0c1f11b1e9fee351dc75b2dc2994a53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
