@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a328faf_4b788039",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-26T10:45:29Z",
+      "side": 1,
+      "message": "Why did you put this preference in ash prefs list?\nThis seems to be a Chrome OS preference...\n\nAlso, this preference is used both in Local State and in user prefs.\nWe usually avoid this. If you really need the same preference name, please describe this in comment.",
+      "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed8dcaa_f182d00c",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-26T10:45:29Z",
+      "side": 1,
+      "message": "Try to avoid using GetActiveUser.\nAnd I don\u0027t thin you actually need access to prefs from Ash. Usually Ash exposes some APi whish is handled outside.",
+      "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f7aad9_0b23dbdf",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1331,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-26T10:45:29Z",
+      "side": 1,
+      "message": "Login Display host is used inside user sessions too.\nYou probably want to move bluetooth configuration to another object, because otherwise you\u0027ll have to deal with duplicate device control (both from LoginDislayHost and user Preferences).",
+      "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e38fe67_80d19a77",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-26T10:45:29Z",
+      "side": 1,
+      "message": "It looks like this InitializeBluetoothOnAdapterReady() and LoginDisplayHostImpl::OnBluetoothAdapterReady() are doing the same job. You should move this to another object. Probably this should be global singleton object that is responsible for bluetooth control.\n\nI\u0027d suggest adding it to g_browser_process-\u003eplatform_part() like TimeZoneResolverManager , for example.",
+      "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
