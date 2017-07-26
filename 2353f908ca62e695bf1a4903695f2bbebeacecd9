@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935adb02_b8e056cd",
+        "filename": "tools/perf/convert_legacy_wpr_archive",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-26T18:06:47Z",
+      "side": 1,
+      "message": "I think we may want to do GetAllBenchmarks() instead of GetAllPerfBenchmarks() because there are benchmarks in contrib/ directory as well.",
+      "revId": "2353f908ca62e695bf1a4903695f2bbebeacecd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2422dd4b_280ed144",
+        "filename": "tools/perf/convert_legacy_wpr_archive",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-26T18:06:47Z",
+      "side": 1,
+      "message": "We should assert length(set(buckets)) \u003d\u003d 1. I am almost certain that there are no json file which maps to 2 different buckets.",
+      "revId": "2353f908ca62e695bf1a4903695f2bbebeacecd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
