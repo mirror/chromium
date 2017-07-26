@@ -552,6 +552,14 @@ class TestRunner : public WebTestRunner {
                                         const std::string& avatar,
                                         const std::string& password);
   void ClearMockCredentialManagerResponse();
+
+  void SetMockCredentialManagerWebauthResponse(
+      const std::string& id,
+      const std::string& client_data_json,
+      const std::string& attestation_object /*nullable*/,
+      const std::string& authenticator_data /*nullable*/,
+      const std::string& signature /*nullable*/);
+  void ClearMockCredentialManagerWebauthResponse();
   void SetMockCredentialManagerError(const std::string& error);
 
   // Takes care of notifying the delegate after a change to layout test runtime
