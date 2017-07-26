@@ -8598,6 +8598,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Compositing.Browser.GPUMemoryForTilingsInKb" units="Kb">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    We use tilings for decomposition of the layer's entire contents at a picture
+    screenspace resolution to do threaded rasterization. For the composited
+    scrollable areas, we need to record the GPU memory we allocate for them (in
+    a browser process).
+
+    Team: threaded-rendering-dev@chromium.org.
+  </summary>
+</histogram>
+
 <histogram base="true" name="Compositing.Browser.LayersUpdateTime"
     units="microseconds">
   <owner>threaded-rendering-dev@chromium.org</owner>
@@ -8921,6 +8933,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time spent updating (i.e. recording) a display list, in microseconds.
     Recorded when display list is updated (in a renderer process).
+  </summary>
+</histogram>
+
+<histogram name="Compositing.Renderer.GPUMemoryForTilingsInKb" units="Kb">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    We use tilings for decomposition of the layer's entire contents at a picture
+    screenspace resolution to do threaded rasterization. For the composited
+    scrollable areas, we need to record the GPU memory we allocate for them (in
+    a renderer process).
+
+    Team: threaded-rendering-dev@chromium.org.
   </summary>
 </histogram>
 
