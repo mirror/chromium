@@ -84,6 +84,8 @@ mojom("serial_mojo") {
   visibility = [
     ":serial",
     "//extensions:extensions_renderer_resources_grit",
+    "//services/device/public/interfaces",
+    "//services/device/public/interfaces:interfaces_blink",
   ]
 
   sources = [
