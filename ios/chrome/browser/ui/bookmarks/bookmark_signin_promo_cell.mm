@@ -13,6 +13,8 @@
 #error "This file requires ARC support."
 #endif
 
+const NSInteger kSigninPromoMargin = 8;
+
 @implementation BookmarkSigninPromoCell {
   SigninPromoView* _signinPromoView;
   UIButton* _closeButton;
@@ -36,8 +38,20 @@
     _signinPromoView = [[SigninPromoView alloc] initWithFrame:self.bounds];
     _signinPromoView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_signinPromoView];
-    AddSameConstraints(_signinPromoView, contentView);
-
+    if (IsIPadIdiom()) {
+      AddSameConstraints(_signinPromoView, contentView);
+    } else {
+      _signinPromoView.layer.borderColor =
+          [UIColor colorWithWhite:0.0 alpha:0.08].CGColor;
+      _signinPromoView.layer.borderWidth = 1.0f;
+      NSArray* visualConstraints = @[
+        @"V:|-[signin_promo_view]-(margin)-|",
+        @"H:|-(margin)-[signin_promo_view]-(margin)-|",
+      ];
+      NSDictionary* views = @{@"signin_promo_view" : _signinPromoView};
+      NSDictionary* metrics = @{ @"margin" : @(kSigninPromoMargin) };
+      ApplyVisualConstraintsWithMetrics(visualConstraints, views, metrics);
+    }
     _signinPromoView.closeButton.hidden = NO;
     [_signinPromoView.closeButton addTarget:self
                                      action:@selector(closeButtonAction:)
