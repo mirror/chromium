@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42b1d003_d5c5ede6",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-26T01:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e212938b_9f8f1231",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 7
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7396f63f_89e612d9",
         "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9530f1e_5e227f6f",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-26T01:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7396f63f_89e612d9",
+      "range": {
+        "startLine": 253,
+        "startChar": 21,
+        "endLine": 253,
+        "endChar": 38
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "36b6e276_d90980c2",
+        "filename": "chrome/browser/media/router/media_router_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-26T01:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9642c700_a900550f",
+      "range": {
+        "startLine": 108,
+        "startChar": 34,
+        "endLine": 108,
+        "endChar": 51
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc1c0962_65acd254",
         "filename": "chrome/common/media_router/mojo/dial_device_description_parser.mojom",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdb2557_fc3af8ee",
+        "filename": "chrome/common/media_router/mojo/dial_device_description_parser.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-26T01:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1c0962_65acd254",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
