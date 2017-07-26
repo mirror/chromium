@@ -151,6 +151,14 @@ int64_t ProximityAuthProfilePrefManager::GetLastPromotionCheckTimestampMs()
       prefs::kProximityAuthLastPromotionCheckTimestampMs);
 }
 
+void ProximityAuthProfilePrefManager::SetPromotionShownCount(int count) {
+  pref_service_->SetInteger(prefs::kProximityAuthPromotionShownCount, count);
+}
+
+int ProximityAuthProfilePrefManager::GetPromotionShownCount() const {
+  return pref_service_->GetInteger(prefs::kProximityAuthPromotionShownCount);
+}
+
 void ProximityAuthProfilePrefManager::SetProximityThreshold(
     ProximityThreshold value) {
   pref_service_->SetInteger(prefs::kEasyUnlockProximityThreshold, value);
