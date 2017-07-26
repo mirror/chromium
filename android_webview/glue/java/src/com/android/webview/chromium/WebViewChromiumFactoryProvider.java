@@ -46,6 +46,8 @@ import org.chromium.android_webview.AwNetworkChangeNotifierRegistrationPolicy;
 import org.chromium.android_webview.AwQuotaManagerBridge;
 import org.chromium.android_webview.AwResource;
 import org.chromium.android_webview.AwSettings;
+import org.chromium.android_webview.AwSwitches;
+import org.chromium.android_webview.AwVariationsConfigurationService;
 import org.chromium.android_webview.HttpAuthDatabase;
 import org.chromium.android_webview.ResourcesContextWrapperFactory;
 import org.chromium.android_webview.command_line.CommandLineUtil;
@@ -453,6 +455,11 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         }
 
         mRunQueue.drainQueue();
+
+        boolean enableFinch = CommandLine.getInstance().hasSwitch(AwSwitches.WEBVIEW_ENABLE_FINCH);
+        if (enableFinch) {
+            AwVariationsConfigurationService.bindToVariationsService();
+        }
     }
 
     boolean hasStarted() {
@@ -631,7 +638,8 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         }
 
         if (shouldDisable) {
-            Log.w(TAG, "Disabling thread check in WebView. "
+            Log.w(TAG,
+                    "Disabling thread check in WebView."
                             + "APK name: " + appName + ", versionCode: " + versionCode
                             + ", targetSdkVersion: " + appTargetSdkVersion);
         }
