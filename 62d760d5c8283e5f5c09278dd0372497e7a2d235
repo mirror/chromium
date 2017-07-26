@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0671437_2b5b1363",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T20:36:18Z",
+      "side": 1,
+      "message": "Better! I suggest a few tweaks (in brackets [...]), for readability:\n\nAwVariationsConfigurationService is a bound servicee to share Finch seed with all the WebViews on the system. When a WebView asks for [the] seed, it will immediately return the existing seed if it is not expired. Otherwise it will fetch the seed by scheduling a job to AwVariationsSeedFetchService and return the new seed after the seed fetch completes. When multiple WebViews ask for the seed, sScheduleLock will [allow the first to schedule a job, while putting the others into a waiting] state. The job service will used the sSeedFetchCompleteNotifier to notify the AwVariationsConfigurationService that seed fetch complete[s]. It will wake the wait[ing] threads and let them send the new seed back to [their] WebViews. The tryLock mechanism on the job service side is just to make sure that no seed fetch job will be scheduled when there is one still running.",
+      "revId": "62d760d5c8283e5f5c09278dd0372497e7a2d235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5883f0_a4af6e64",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-26T20:36:18Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be an assert; we don\u0027t want to crash just because of a corrupted seed file. We should just log an error and not use it (and eventually get a new one from the service).\n\nIMO, in error handling, the times when it\u0027s appropriate to die are when:\n- the program can\u0027t fulfill the fundamental purpose for which it was executed (e.g. the \"cp\" command can\u0027t find the input file).\n- we get into a state so fundamentally broken that it\u0027s not safe to continue (e.g. memory corruption).\n\nOtherwise, the show must go on.",
+      "range": {
+        "startLine": 408,
+        "startChar": 18,
+        "endLine": 408,
+        "endChar": 19
+      },
+      "revId": "62d760d5c8283e5f5c09278dd0372497e7a2d235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
