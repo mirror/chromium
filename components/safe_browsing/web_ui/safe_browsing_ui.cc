@@ -4,18 +4,78 @@
 
 #include "components/safe_browsing/web_ui/safe_browsing_ui.h"
 
+#include <stddef.h>
+#include <algorithm>
+#include <utility>
+#include <vector>
+
+#include "base/i18n/time_formatting.h"
+#include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 #include "base/values.h"
 #include "components/grit/components_resources.h"
 #include "components/grit/components_scaled_resources.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
+#include "components/safe_browsing_db/v4_local_database_manager.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/browser_context.h"
 
-namespace safe_browsing {
+using base::Time;
 
+namespace safe_browsing {
+namespace {
+
+void AddStoreInfo(base::ListValue* databaseInfoList,
+                  DatabaseManagerInfo::DatabaseInfo::StoreInfo* store_info) {
+  databaseInfoList->GetList().push_back(base::Value(store_info->file_name()));
+  databaseInfoList->GetList().push_back(
+      base::Value(static_cast<double>(store_info->file_size_bytes())));
+  // status for each database
+  databaseInfoList->GetList().push_back(base::Value("Store update status"));
+  databaseInfoList->GetList().push_back(
+      base::Value(store_info->update_status()));
+}
+
+void AddDatabaseInfo(base::ListValue* databaseInfoList,
+                     DatabaseManagerInfo::DatabaseInfo* database_info) {
+  // Database size.
+  databaseInfoList->GetList().push_back(base::Value("Database size in bytes"));
+  databaseInfoList->GetList().push_back(
+      base::Value(static_cast<double>(database_info->database_size_bytes())));
+
+  // Database updated status.
+  databaseInfoList->GetList().push_back(base::Value("Database updated"));
+  databaseInfoList->GetList().push_back(
+      base::Value(database_info->update_successful()));
+
+  // Add the information specific to each store.
+  for (int i = 0; i < database_info->store_info_size(); i++) {
+    AddStoreInfo(databaseInfoList, database_info->mutable_store_info(i));
+  }
+}
+
+void AddUpdateInfo(base::ListValue* databaseInfoList,
+                   DatabaseManagerInfo::UpdateInfo* update_info) {
+  if (update_info->network_status_code()) {
+    // Network status of the last GetUpdate().
+    databaseInfoList->GetList().push_back(
+        base::Value("Last update network status code"));
+    databaseInfoList->GetList().push_back(
+        base::Value(update_info->network_status_code()));
+    // Time since the last GetUpdate().
+    databaseInfoList->GetList().push_back(base::Value("Last update time"));
+    // Converting time to Base::Time
+    base::Time last_update =
+        base::Time::UnixEpoch() + base::TimeDelta::FromMicroseconds(
+                                      update_info->last_update_time_micros());
+    databaseInfoList->GetList().push_back(
+        base::Value(UTF16ToASCII(TimeFormatShortDateAndTime(last_update))));
+  }
+}
+}  // namespace
 SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
     : content::WebUIController(web_ui) {
   // Set up the chrome://safe-browsing source.
@@ -47,6 +107,7 @@ SafeBrowsingUI::~SafeBrowsingUI() {}
 
 SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)
     : browser_context_(context) {}
+SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}
 
 void SafeBrowsingUIHandler::GetExperiments(const base::ListValue* args) {
   AllowJavascript();
@@ -63,7 +124,35 @@ void SafeBrowsingUIHandler::GetPrefs(const base::ListValue* args) {
                             safe_browsing::GetSafeBrowsingPreferencesList(
                                 user_prefs::UserPrefs::Get(browser_context_)));
 }
-SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}
+
+void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
+    const base::ListValue* args) {
+  // Instance of the DatabaseManagerInfo message to be initialized.
+  DatabaseManagerInfo database_manager_info_proto;
+
+  if (V4LocalDatabaseManager::local_database_manager_instance) {
+    /* TODO(@hkamila) Will un-comment when patch
+    *https://chromium-review.googlesource.com/c/585412 lands.
+
+    V4LocalDatabaseManager::local_database_manager_instance->CollectDatabaseManagerInfo(
+        &database_manager_info_proto);
+    */
+    base::ListValue database_manager_info;
+
+    AddUpdateInfo(&database_manager_info,
+                  database_manager_info_proto.mutable_update_info());
+
+    AddDatabaseInfo(&database_manager_info,
+                    database_manager_info_proto.mutable_database_info());
+  }
+
+  // Return the list of database parameters as a promise.
+  AllowJavascript();
+  std::string callback_id;
+  args->GetString(0, &callback_id);
+
+  ResolveJavascriptCallback(base::Value(callback_id), database_manager_info);
+}
 
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -72,6 +161,10 @@ void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getPrefs",
       base::Bind(&SafeBrowsingUIHandler::GetPrefs, base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getDatabaseManagerInfo",
+      base::Bind(&SafeBrowsingUIHandler::GetDatabaseManagerInfo,
+                 base::Unretained(this)));
 }
 
 }  // namespace safe_browsing
