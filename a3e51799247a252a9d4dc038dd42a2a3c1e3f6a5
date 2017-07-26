@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81971342_c4a58577",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T15:34:01Z",
+      "side": 1,
+      "message": "nit const SkColor...",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 402,
+        "endChar": 9
+      },
+      "revId": "a3e51799247a252a9d4dc038dd42a2a3c1e3f6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59acfa55_bb41b8fd",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T15:34:01Z",
+      "side": 1,
+      "message": "nit: Should not have empty line above. Please add below.\n\nFew questions/requests.\n1. There is method: SearchBoxView::UpdateBackground. Can we make sure that this method does not override value you set here?\n\n2. Construction\n  background-\u003eset_color(color);\n  search_box_-\u003eSetBackgroundColor(color);\nis already used. Could you please extract the functionality to separate function?",
+      "revId": "a3e51799247a252a9d4dc038dd42a2a3c1e3f6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46401a29_5867ec48",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T15:34:01Z",
+      "side": 1,
+      "message": "Do we really need this? Layout should invalidate view?",
+      "range": {
+        "startLine": 422,
+        "startChar": 22,
+        "endLine": 422,
+        "endChar": 35
+      },
+      "revId": "a3e51799247a252a9d4dc038dd42a2a3c1e3f6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
