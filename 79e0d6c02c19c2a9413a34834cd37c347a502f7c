@@ -425,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "679ca22c_e0179c2f",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T18:17:49Z",
+      "side": 1,
+      "message": "Oops, I\u0027ve postponed answering to this one last because it required a lengthy explanation and forgot about it after answering the rest. Sorry for that.\n\n\nMy initial implementation of AccountManagerResult included hasValue/hasException and getValue/getException, but I\u0027ve removed them because they weren\u0027t used anywhere. I can add them if you want.\nImplementation of onResult using getValue/getException:\n\nif (result.hasValue()) {\n    List\u003cString\u003e accountNames \u003d new ArrayList\u003c\u003e();\n    for (Account account : result.getValue()) {\n        accountNames.add(account.name);\n    }\n    callback.onResult(new AccountManagerResult\u003c\u003e(accountNames));\n} else {\n    callback.onResult(\n            new AccountManagerResult\u003cList\u003cString\u003e\u003e(result.getException()));\n}\n\nSo it\u0027s almost the same line number and similar structure as get-based approach. Should I reimplement it this way?",
+      "parentUuid": "555c6511_ab8dcf9e",
+      "range": {
+        "startLine": 218,
+        "startChar": 49,
+        "endLine": 218,
+        "endChar": 55
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e52f8421_5121729c",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
         "patchSetId": 1
@@ -484,6 +508,30 @@
       "side": 1,
       "message": "You could have the subclasses be static inner classes of this one. You don\u0027t need to expose them anywhere, as clients can just use them via the base class.",
       "parentUuid": "d6e9836c_1a2c235c",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccf4685_1fb08d5f",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T18:17:49Z",
+      "side": 1,
+      "message": "Hm, haven\u0027t thought of it, sorry.\nBasically, there are three options here:\n1. Current implementation:\n\n callback.onResult(new AccountManagerResult\u003cList\u003cString\u003e\u003e(ex));\n\n2. Nested Value and Exception static classes that are public and created explicitly:\n\n callback.onResult(new AccountManagerResult.Exception\u003cList\u003cString\u003e\u003e(ex));\n\n3. Nested Value and Exception static classes that are private and created by static fromValue/fromException factory methods. This option will require ugly explicit syntax in some contexts:\n\n callback.onResult(AccountManagerResult.\u003cList\u003cString\u003e\u003efromException(ex));\n\nAm I missing something here? I\u0027m still quite new to Java, so feel free to correct me.\n\nWhich one of these options would you prefer?",
+      "parentUuid": "6a6a4bdb_10807968",
       "range": {
         "startLine": 23,
         "startChar": 12,
