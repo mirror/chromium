@@ -13,14 +13,13 @@ namespace device {
 class MockBluetoothAdvertisement : public device::BluetoothAdvertisement {
  public:
   MockBluetoothAdvertisement();
+  ~MockBluetoothAdvertisement() override;
 
   // BluetoothAdvertisement overrides:
   void Unregister(const SuccessCallback& success_callback,
                   const ErrorCallback& error_callback) override;
 
  private:
-  ~MockBluetoothAdvertisement() override;
-
   DISALLOW_COPY_AND_ASSIGN(MockBluetoothAdvertisement);
 };
 

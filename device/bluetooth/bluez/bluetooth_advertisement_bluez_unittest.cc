@@ -30,9 +30,8 @@ namespace bluez {
 
 class TestAdvertisementObserver : public BluetoothAdvertisement::Observer {
  public:
-  explicit TestAdvertisementObserver(
-      scoped_refptr<BluetoothAdvertisement> advertisement)
-      : released_(false), advertisement_(advertisement) {
+  explicit TestAdvertisementObserver(BluetoothAdvertisement* advertisement)
+      : released_(false), advertisement_(std::move(advertisement)) {
     advertisement_->AddObserver(this);
   }
 
@@ -49,7 +48,7 @@ class TestAdvertisementObserver : public BluetoothAdvertisement::Observer {
 
  private:
   bool released_;
-  scoped_refptr<BluetoothAdvertisement> advertisement_;
+  BluetoothAdvertisement* advertisement_;
 
   DISALLOW_COPY_AND_ASSIGN(TestAdvertisementObserver);
 };
@@ -113,7 +112,7 @@ class BluetoothAdvertisementBlueZTest : public testing::Test {
   }
 
   // Creates and registers an advertisement with the adapter.
-  scoped_refptr<BluetoothAdvertisement> CreateAdvertisement() {
+  BluetoothAdvertisement* CreateAdvertisement() {
     // Clear the last advertisement we created.
     advertisement_ = nullptr;
 
@@ -125,11 +124,10 @@ class BluetoothAdvertisementBlueZTest : public testing::Test {
                    base::Unretained(this)));
 
     base::RunLoop().RunUntilIdle();
-    return advertisement_;
+    return advertisement_.get();
   }
 
-  void UnregisterAdvertisement(
-      scoped_refptr<BluetoothAdvertisement> advertisement) {
+  void UnregisterAdvertisement(BluetoothAdvertisement* advertisement) {
     advertisement->Unregister(
         base::Bind(&BluetoothAdvertisementBlueZTest::Callback,
                    base::Unretained(this)),
@@ -139,9 +137,9 @@ class BluetoothAdvertisementBlueZTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
   }
 
-  void TriggerReleased(scoped_refptr<BluetoothAdvertisement> advertisement) {
+  void TriggerReleased(BluetoothAdvertisement* advertisement) {
     BluetoothAdvertisementBlueZ* adv =
-        static_cast<BluetoothAdvertisementBlueZ*>(advertisement.get());
+        static_cast<BluetoothAdvertisementBlueZ*>(advertisement);
     bluez::FakeBluetoothLEAdvertisementServiceProvider* provider =
         static_cast<bluez::FakeBluetoothLEAdvertisementServiceProvider*>(
             adv->provider());
@@ -149,9 +147,9 @@ class BluetoothAdvertisementBlueZTest : public testing::Test {
   }
 
   // Called whenever RegisterAdvertisement is completed successfully.
-  void RegisterCallback(scoped_refptr<BluetoothAdvertisement> advertisement) {
+  void RegisterCallback(std::unique_ptr<BluetoothAdvertisement> advertisement) {
     ++callback_count_;
-    advertisement_ = advertisement;
+    advertisement_ = std::move(advertisement);
 
     ASSERT_NE(advertisement_.get(), nullptr);
   }
@@ -195,11 +193,11 @@ class BluetoothAdvertisementBlueZTest : public testing::Test {
 
   std::unique_ptr<TestAdvertisementObserver> observer_;
   scoped_refptr<BluetoothAdapter> adapter_;
-  scoped_refptr<BluetoothAdvertisement> advertisement_;
+  std::unique_ptr<BluetoothAdvertisement> advertisement_;
 };
 
 TEST_F(BluetoothAdvertisementBlueZTest, RegisterSucceeded) {
-  scoped_refptr<BluetoothAdvertisement> advertisement = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement);
 
@@ -208,12 +206,12 @@ TEST_F(BluetoothAdvertisementBlueZTest, RegisterSucceeded) {
 }
 
 TEST_F(BluetoothAdvertisementBlueZTest, DoubleRegisterSucceeded) {
-  scoped_refptr<BluetoothAdvertisement> advertisement = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement);
 
   // Creating a second advertisement should still be fine.
-  scoped_refptr<BluetoothAdvertisement> advertisement2 = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement2 = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement2);
 }
@@ -223,8 +221,8 @@ TEST_F(BluetoothAdvertisementBlueZTest, RegisterTooManyFailed) {
   constexpr size_t kMaxBluezAdvertisements =
       bluez::FakeBluetoothLEAdvertisingManagerClient::kMaxBluezAdvertisements;
 
-  std::vector<scoped_refptr<BluetoothAdvertisement>> advertisements;
-  scoped_refptr<BluetoothAdvertisement> current_advertisement;
+  std::vector<std::unique_ptr<BluetoothAdvertisement>> advertisements;
+  BluetoothAdvertisement* current_advertisement;
   for (size_t i = 0; i < kMaxBluezAdvertisements; i++) {
     current_advertisement = CreateAdvertisement();
     ExpectSuccess();
@@ -239,7 +237,7 @@ TEST_F(BluetoothAdvertisementBlueZTest, RegisterTooManyFailed) {
 }
 
 TEST_F(BluetoothAdvertisementBlueZTest, DoubleUnregisterFailed) {
-  scoped_refptr<BluetoothAdvertisement> advertisement = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement);
 
@@ -253,7 +251,7 @@ TEST_F(BluetoothAdvertisementBlueZTest, DoubleUnregisterFailed) {
 }
 
 TEST_F(BluetoothAdvertisementBlueZTest, UnregisterAfterReleasedFailed) {
-  scoped_refptr<BluetoothAdvertisement> advertisement = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement);
 
@@ -268,7 +266,7 @@ TEST_F(BluetoothAdvertisementBlueZTest, UnregisterAfterReleasedFailed) {
 }
 
 TEST_F(BluetoothAdvertisementBlueZTest, UnregisterAfterAdapterShutdown) {
-  scoped_refptr<BluetoothAdvertisement> advertisement = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement);
 
@@ -286,10 +284,10 @@ TEST_F(BluetoothAdvertisementBlueZTest, ResetAdvertising) {
               ->GetBluetoothLEAdvertisingManagerClient());
 
   // Creates and registers multiple advertisements.
-  scoped_refptr<BluetoothAdvertisement> advertisement1 = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement1 = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement1);
-  scoped_refptr<BluetoothAdvertisement> advertisement2 = CreateAdvertisement();
+  BluetoothAdvertisement* advertisement2 = CreateAdvertisement();
   ExpectSuccess();
   EXPECT_TRUE(advertisement2);
   // There should be 2 currently registered advertisements.
