@@ -249,6 +249,13 @@ class PLATFORM_EXPORT BlobDataHandle
 
   ~BlobDataHandle();
 
+  void ReadAll(mojo::ScopedDataPipeProducerHandle,
+               storage::mojom::blink::BlobReaderClientPtr);
+  void ReadRange(uint64_t offset,
+                 uint64_t length,
+                 mojo::ScopedDataPipeProducerHandle,
+                 storage::mojom::blink::BlobReaderClientPtr);
+
  private:
   BlobDataHandle();
   BlobDataHandle(std::unique_ptr<BlobData>, long long size);
