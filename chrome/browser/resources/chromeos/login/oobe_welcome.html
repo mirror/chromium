@@ -84,7 +84,7 @@
     <link rel="stylesheet" href="oobe_dialog_parameters.css">
     <link rel="stylesheet" href="oobe_flex_layout.css">
     <oobe-welcome-dialog id="welcomeScreen" role="dialog"
-        i18n-values="aria-label:networkScreenGreeting"
+        aria-label="i18nDynamic(locale, 'networkScreenGreeting')]]"
         current-language="[[currentLanguage]]"
         on-language-button-clicked="onWelcomeSelectLanguageButtonClicked_"
         on-accessibility-button-clicked="onWelcomeAccessibilityButtonClicked_"
@@ -95,7 +95,7 @@
         debugging-link-visible="[[debuggingLinkVisible]]">
     </oobe-welcome-dialog>
     <oobe-dialog id="languageScreen" role="dialog" hidden has-buttons
-        i18n-values="aria-label:languageSectionTitle">
+        aria-label="i18nDynamic(locale, 'languageSectionTitle')]]">
       <hd-iron-icon class="oobe-icon"
           icon1x="oobe-welcome-32:language" icon2x="oobe-welcome-64:language">
       </hd-iron-icon>
@@ -112,9 +112,8 @@
               [[i18nDynamic(locale, 'languageDropdownTitle')]]
             </div>
             <oobe-i18n-dropdown id="languageSelect" items="[[languages]]"
-                on-select-item="onLanguageSelected_"
-                class="focus-on-show"
-                i18n-values="label-for-aria:languageDropdownLabel">
+                on-select-item="onLanguageSelected_" class="focus-on-show"
+                label-for-aria="i18nDynamic(locale, 'languageDropdownLabel')]]">
             </oobe-i18n-dropdown>
           </div>
           <div id="keyboardDropdownContainer"
@@ -126,7 +125,7 @@
             </div>
             <oobe-i18n-dropdown id="keyboardSelect" items="[[keyboards]]"
                 on-select-item="onKeyboardSelected_"
-                i18n-values="label-for-aria:keyboardDropdownLabel">
+                label-for-aria="i18nDynamic(locale, 'keyboardDropdownLabel')]]">
             </oobe-i18n-dropdown>
           </div>
         </template>
@@ -138,7 +137,7 @@
       </div>
     </oobe-dialog>
     <oobe-dialog id="accessibilityScreen" role="dialog" hidden has-buttons
-        i18n-values="aria-label:accessibilitySectionTitle">
+        aria-label="i18nDynamic(locale, 'accessibilitySectionTitle')]]">
       <hd-iron-icon class="oobe-icon"
           icon1x="oobe-welcome-32:accessibility"
           icon2x="oobe-welcome-64:accessibility">
@@ -155,7 +154,7 @@
         <oobe-a11y-option checked="[[a11yStatus.spokenFeedbackEnabled]]"
             on-change="onA11yOptionChanged_"
             chrome-message="enableSpokenFeedback"
-            i18n-values="label-for-aria:spokenFeedbackOption"
+            label-for-aria="i18nDynamic(locale, 'spokenFeedbackOption')]]"
             class="focus-on-show">
           <span class="title">
             [[i18nDynamic(locale, 'spokenFeedbackOption')]]
@@ -168,9 +167,8 @@
           </span>
         </oobe-a11y-option>
         <oobe-a11y-option checked="[[a11yStatus.largeCursorEnabled]]"
-            on-change="onA11yOptionChanged_"
-            chrome-message="enableLargeCursor"
-            i18n-values="label-for-aria:largeCursorOption">
+            on-change="onA11yOptionChanged_" chrome-message="enableLargeCursor"
+            label-for-aria="i18nDynamic(locale, 'largeCursorOption')]]">
           <span class="title">
             [[i18nDynamic(locale, 'largeCursorOption')]]
           </span>
@@ -182,9 +180,8 @@
           </span>
         </oobe-a11y-option>
         <oobe-a11y-option checked="[[a11yStatus.highContrastEnabled]]"
-            on-change="onA11yOptionChanged_"
-            chrome-message="enableHighContrast"
-            i18n-values="label-for-aria:highContrastOption">
+            on-change="onA11yOptionChanged_" chrome-message="enableHighContrast"
+            label-for-aria="i18nDynamic(locale, 'highContrastOption')]]">
           <span class="title">
             [[i18nDynamic(locale, 'highContrastOption')]]
           </span>
@@ -198,7 +195,7 @@
         <oobe-a11y-option checked="[[a11yStatus.screenMagnifierEnabled]]"
             on-change="onA11yOptionChanged_"
             chrome-message="enableScreenMagnifier"
-            i18n-values="label-for-aria:screenMagnifierOption">
+            label-for-aria="i18nDynamic(locale, 'screenMagnifierOption')]]">
           <span class="title">
             [[i18nDynamic(locale, 'screenMagnifierOption')]]
           </span>
@@ -212,7 +209,7 @@
         <oobe-a11y-option checked="[[a11yStatus.virtualKeyboardEnabled]]"
             on-change="onA11yOptionChanged_"
             chrome-message="enableVirtualKeyboard"
-            i18n-values="label-for-aria:virtualKeyboardOption">
+            label-for-aria="i18nDynamic(locale, 'virtualKeyboardOption')]]">
           <span class="title">
             [[i18nDynamic(locale, 'virtualKeyboardOption')]]
           </span>
@@ -231,7 +228,7 @@
       </div>
     </oobe-dialog>
     <oobe-dialog id="timezoneScreen" role="dialog" hidden has-buttons
-        i18n-values="aria-label:timezoneSectionTitle">
+        aria-label="i18nDynamic(locale, 'timezoneSectionTitle')]]">
       <hd-iron-icon class="oobe-icon"
           icon1x="oobe-welcome-32:timezone" icon2x="oobe-welcome-64:timezone">
       </hd-iron-icon>
@@ -247,7 +244,7 @@
           </div>
           <oobe-i18n-dropdown id="timezoneSelect" items="[[timezones]]"
               on-select-item="onTimezoneSelected_"
-              i18n-values="label-for-aria:timezoneDropdownLabel"
+              label-for-aria="i18nDynamic(locale, 'timezoneDropdownLabel')]]"
               class="focus-on-show">
           </oobe-i18n-dropdown>
         </div>
@@ -259,7 +256,7 @@
       </div>
     </oobe-dialog>
     <oobe-dialog id="networkSelectionScreen" role="dialog" hidden has-buttons
-        i18n-values="aria-label:networkSectionTitle"
+        aria-label="i18nDynamic(locale, 'networkSectionTitle')]]"
         on-show-dialog="onNetworkSelectionScreenShown_">
       <hd-iron-icon class="oobe-icon"
           icon1x="oobe-welcome-32:wifi" icon2x="oobe-welcome-64:wifi">

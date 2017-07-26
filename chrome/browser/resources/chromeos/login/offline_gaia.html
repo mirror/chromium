@@ -128,8 +128,7 @@
         <neon-animatable id="emailSection" class="fit">
             <gaia-card class="fit">
               <div class="header flex vertical layout end-justified start">
-                <h1 class="welcome-message" i18n-content="loginWelcomeMessage">
-                </h1>
+                <h1 class="welcome-message">$i18n{loginWelcomeMessage}</h1>
                 <p id="managedBy" class="enterprise-info"
                     hidden$="[[!showEnterpriseMessage]]">
                 </p>
@@ -137,11 +136,11 @@
               <div class="footer flex vertical layout justified">
                 <gaia-input-form on-submit="onEmailSubmitted_"
                     disabled="[[disabled]]"
-                    i18n-values="button-text:offlineLoginNextBtn">
+                    button-text="$i18n{offlineLoginNextBtn}">
                   <gaia-input id="emailInput" type="email" required
                       domain="[[emailDomain]]"
-                      i18n-values="error:offlineLoginInvalidEmail;
-                                   label:offlineLoginEmail">
+                      error="$i18n{offlineLoginInvalidEmail}"
+                      label="$i18n{offlineLoginEmail}">
                   </gaia-input>
                 </gaia-input-form>
                 <img src="chrome://theme/IDR_LOGO_GOOGLE_COLOR_90"
@@ -156,13 +155,13 @@
               </gaia-header>
               <gaia-input-form class="footer" disabled="[[disabled]]"
                   on-submit="onPasswordSubmitted_"
-                  i18n-values="button-text:offlineLoginNextBtn">
+                  button-text="$i18n{offlineLoginNextBtn}">
                 <gaia-input id="passwordInput" type="password" required
-                    i18n-values="error:offlineLoginInvalidPassword;
-                                 label:offlineLoginPassword">
+                    error="$i18n{offlineLoginInvalidPassword}"
+                    label="$i18n{offlineLoginPassword}">
                 </gaia-input>
-                <gaia-button type="link" on-tap="onForgotPasswordClicked_"
-                    i18n-content="offlineLoginForgotPasswordBtn">
+                <gaia-button type="link" on-tap="onForgotPasswordClicked_">
+                  $i18n{offlineLoginForgotPasswordBtn}
                 </gaia-button>
               </gaia-input-form>
             </gaia-card>
@@ -172,11 +171,11 @@
 
     <dialog is="cr-dialog" id="forgotPasswordDlg"
         on-close="onDialogOverlayClosed_">
-      <div class="body" slot="body"
-          i18n-content="offlineLoginForgotPasswordDlg"></div>
+      <div class="body" slot="body">$i18n{offlineLoginForgotPasswordDlg}</div>
       <div class="button-container" slot="button-container">
         <paper-button autofocus on-tap="onForgotPasswordCloseTap_"
-            i18n-content="offlineLoginCloseBtn" class="action-button">
+            class="action-button">
+          $i18n{offlineLoginCloseBtn}
         </paper-button>
       </div>
     </dialog>
