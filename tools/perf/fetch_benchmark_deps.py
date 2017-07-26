@@ -80,6 +80,16 @@ def FetchDepsForBenchmark(benchmark, output):
     print >> output, dep
 
 
+def GetStorySet(benchmark, user_agent=None):
+  # Create a dummy options object which hold default values that are expected
+  # by Benchmark.CreateStorySet(options) method.
+  parser = optparse.OptionParser()
+  benchmark.AddBenchmarkCommandLineArgs(parser)
+  options, _ = parser.parse_args([])
+  options.user_agent = user_agent
+  return benchmark().CreateStorySet(options)
+
+
 def main(args, output):
   parser = argparse.ArgumentParser(
          description='Fetch the dependencies of perf benchmark(s).')
@@ -101,13 +111,38 @@ def main(args, output):
       raise ValueError('No such benchmark: %s' % options.benchmark_name)
     FetchDepsForBenchmark(benchmark, output)
   else:
-    if not options.force:
-      raw_input(
-          'No benchmark name is specified. Fetching all benchmark deps. '
-          'Press enter to continue...')
-    for b in benchmark_finders.GetAllPerfBenchmarks():
-      print >> output, ('Fetch dependencies for benchmark %s' % b.Name())
-      FetchDepsForBenchmark(b, output)
+    page_sets_affected = {}
+    buckets = {}
+    benchmarks_to_skip = ['skpicture_printer_ct',
+                          'screenshot_ct',
+                          'repaint_ct',
+                          'rasterize_and_record_micro_ct',
+                          'multipage_skpicture_printer_ct',
+                          'loading.cluster_telemetry',
+                          'skpicture_printer',
+                          'cros_tab_switching.typical_24',
+                          'multipage_skpicture_printer']
+    for b in benchmark_finders.GetAllBenchmarks():
+      if b.Name() in benchmarks_to_skip:
+        print "skipping %s" % b.Name()
+        continue
+      print "creating %s" % b.Name()
+      s = GetStorySet(b)
+      if s.archive_data_file == None or s.archive_data_file == '':
+        continue
+      if s.bucket != None:
+        if not s.archive_data_file in buckets:
+          buckets[s.archive_data_file] = []
+        buckets[s.archive_data_file] += [s.bucket]
+      if not s.archive_data_file in page_sets_affected:
+        page_sets_affected[s.archive_data_file] = []
+      page_sets_affected[s.archive_data_file] += [b.Name()]
+    for name, k, v in sorted([(k.split('/')[-1], k, v) for (k, v) in page_sets_affected.iteritems()]):
+      bucket_name = list(set(buckets[k]))
+      assert len(bucket_name) == 1
+      print name, ',', (' ').join(v), ',', bucket_name[0]
+      # print >> output, ('Fetch dependencies for benchmark %s' % b.Name())
+      # FetchDepsForBenchmark(b, output)
 
 if __name__ == '__main__':
   main(sys.argv[1:], sys.stdout)
