@@ -22,6 +22,23 @@
       "revId": "7816ca9c3a44a004d8ea6e3af8ad8948a957161b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eba4947_ddbc076e",
+        "filename": "chrome/test/data/extensions/api_test/content_settings/standard/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T16:23:39Z",
+      "side": 1,
+      "message": "nit: no \u0027\u0027 around keys.\n{primaryPattern: \u0027http://...",
+      "revId": "7816ca9c3a44a004d8ea6e3af8ad8948a957161b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
