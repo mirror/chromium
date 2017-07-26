@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60e39d90_b7f448bf",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-26T02:08:49Z",
+      "side": 1,
+      "message": "sorry, but I don\u0027t follow why these are associated targets. AS per your previous definition, don\u0027t you first have to set up an equivalence [with regions in old and new binaries]",
+      "revId": "1ccb5e6d176225c710be0b72ce4eddbecc79a40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
