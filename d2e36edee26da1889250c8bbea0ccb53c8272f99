@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e9d7aa3_014f0aa9",
+        "filename": "content/renderer/p2p/ipc_network_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1162829
+      },
+      "writtenOn": "2017-07-26T17:40:14Z",
+      "side": 1,
+      "message": "1 IP address.",
+      "range": {
+        "startLine": 110,
+        "startChar": 53,
+        "endLine": 110,
+        "endChar": 67
+      },
+      "revId": "d2e36edee26da1889250c8bbea0ccb53c8272f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
