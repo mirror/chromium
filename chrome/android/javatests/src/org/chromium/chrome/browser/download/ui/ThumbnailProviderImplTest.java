@@ -207,6 +207,11 @@ public class ThumbnailProviderImplTest {
         }
 
         @Override
+        public String getContentId() {
+            return "";
+        }
+
+        @Override
         public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
             Assert.assertEquals(mTestFilePath, filePath);
             mRetrievedThumbnail = thumbnail;
@@ -216,6 +221,11 @@ public class ThumbnailProviderImplTest {
         @Override
         public int getIconSize() {
             return mRequiredSize;
+        }
+
+        @Override
+        public boolean shouldCacheToDisk() {
+            return false;
         }
 
         Bitmap getRetrievedThumbnail() {

@@ -8,16 +8,25 @@ import android.graphics.Bitmap;
 
 /** Provides thumbnails that represent different files. */
 public interface ThumbnailProvider {
-    /** Used to request the retrieval of a thumbnail. */
+    /**
+     * Used to request the retrieval of a thumbnail. The requested thumbnail should be cached if
+     * it is implemented by {@link DownloadItemView}.
+     */
     public static interface ThumbnailRequest {
         /** Local storage path to the file. */
         String getFilePath();
 
+        /** Content ID that uniquely identifies the file. */
+        String getContentId();
+
         /** Called when a thumbnail is ready. */
-        void onThumbnailRetrieved(String filePath, Bitmap thumbnail);
+        void onThumbnailRetrieved(String contentId, Bitmap thumbnail);
 
         /** The size of the thumbnail to be retrieved. */
         int getIconSize();
+
+        /** Determines whether to cache the thumbnail to disk. */
+        boolean shouldCacheToDisk();
     }
 
     /** Destroys the class. */

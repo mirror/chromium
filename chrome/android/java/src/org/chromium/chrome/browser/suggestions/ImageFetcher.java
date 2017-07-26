@@ -349,13 +349,23 @@ public class ImageFetcher {
         }
 
         @Override
-        public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
+        public String getContentId() {
+            return mSuggestion.getAssetDownloadGuid();
+        }
+
+        @Override
+        public void onThumbnailRetrieved(String contentId, Bitmap thumbnail) {
             mThumbnailReceivedPromise.fulfill(thumbnail);
         }
 
         @Override
         public int getIconSize() {
             return mSize;
+        }
+
+        @Override
+        public boolean shouldCacheToDisk() {
+            return false;
         }
 
         public void cancel() {
