@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a2787b6_739952f0",
+        "filename": "third_party/WebKit/Source/web/tests/ChromeClientImplTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T22:20:40Z",
+      "side": 1,
+      "message": "The original code toggled the scrollbar property, though my manual revert in https://chromium-review.googlesource.com/c/575122/ accidentally kept it as toolbar.",
+      "range": {
+        "startLine": 93,
+        "startChar": 25,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "e4d5742d09fd1a98a0bf94a9afbee4b53fd4fbb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
