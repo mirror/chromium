@@ -16,6 +16,24 @@
       "revId": "8bd070008643e274e0c46d9e941964ff3bcdd533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9b8c2a_ef1bae86",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-26T17:20:24Z",
+      "side": 0,
+      "message": "The file operations itself already call base::ThreadRestrictions::AssertIOAllowed(), but I believe in the renderer process we don\u0027t actually set IO thread restrictions on the main/worker threads, so that doesn\u0027t really mean much.\nI did add a DCHECK to make sure it is running on Platform::Current()-\u003eFileTaskRunner() if there is such a task runner, but not sure I really like that, as it feels like a much stricter check than I really need.",
+      "parentUuid": "554a81db_dcca37f8",
+      "revId": "8bd070008643e274e0c46d9e941964ff3bcdd533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

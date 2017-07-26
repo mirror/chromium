@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a41a0656_452946fb",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-26T17:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ffbd643_a7ca259d",
+      "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0663ee9_e208ed3b",
         "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
         "patchSetId": 9
@@ -51,6 +69,24 @@
       "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d85a46_8415e824",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-26T17:20:24Z",
+      "side": 1,
+      "message": "\u003e We pre-create this because we want to call this in a non-racy way (i.e. on main thread)? Maybe worth having a brief comment about that?\n\nYes, because we\u0027ll be calling Platform::FileTaskRunner() from multiple threads later (i.e. main thread and worker threads) it seemed simplest to just always pre-create it. There are of course ways to lazily initialize it in a thread safe manner, but I wasn\u0027t sure that was worth the extra logic.\n\n\u003e Are we creating a new file thread here? Doesn\u0027t it already exist in the renderer process?\n\nYes, there more or less already exists a file thread in the renderer process. Ultimately creating a new one here shouldn\u0027t generally result in more threads though, since after the blob system is moved into blink the file thread in content wouldn\u0027t be created until either ppapi or SaveToMHTML need it.\n\nBut on the other hand mojo-blobs-in-blink isn\u0027t going to be turned on right away, so for a while this would mean having a completely unused extra thread indeed, which probably isn\u0027t desirable, and it\u0027s easy enough to update RenderThreadImpl::GetFileThreadTaskRunner to reuse the same thread, so I\u0027ve changed it to do that.",
+      "parentUuid": "794572fd_635232b9",
+      "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
