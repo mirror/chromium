@@ -103,21 +103,16 @@ class ResourceMultiBufferDataProviderTest : public testing::Test {
         new ResourceMultiBufferDataProvider(url_data_.get(), first_position_));
     loader_ = loader.get();
     url_data_->multibuffer()->AddProvider(std::move(loader));
-
-    // |test_loader_| will be used when Start() is called.
-    url_loader_ = new NiceMock<MockWebAssociatedURLLoader>();
-    loader_->test_loader_ =
-        std::unique_ptr<blink::WebAssociatedURLLoader>(url_loader_);
   }
 
   void Start() {
     InSequence s;
     got_frfr = false;
+    url_loader_ = new NiceMock<MockWebAssociatedURLLoader>();
     EXPECT_CALL(
         *url_loader_,
         LoadAsynchronously(Truly(CorrectAcceptEncodingAndProxy), loader_));
-
-    loader_->Start();
+    loader_->Start(base::WrapUnique(url_loader_));
   }
 
   void FullResponse(int64_t instance_size, bool ok = true) {
