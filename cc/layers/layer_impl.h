@@ -121,6 +121,8 @@ class CC_EXPORT LayerImpl {
 
   bool is_clipped() const { return draw_properties_.is_clipped; }
 
+  bool is_opaque() const { return draw_properties_.is_opaque; }
+
   void UpdatePropertyTreeScrollOffset();
 
   LayerTreeImpl* layer_tree_impl() const { return layer_tree_impl_; }
@@ -172,7 +174,7 @@ class CC_EXPORT LayerImpl {
   void SetBackgroundColor(SkColor background_color);
   SkColor background_color() const { return background_color_; }
   void SetSafeOpaqueBackgroundColor(SkColor background_color);
-  // If contents_opaque(), return an opaque color else return a
+  // If IsContentsOpaque(), return an opaque color else return a
   // non-opaque color.  Tries to return background_color(), if possible.
   SkColor SafeOpaqueBackgroundColor() const;
 
@@ -182,7 +184,6 @@ class CC_EXPORT LayerImpl {
   bool masks_to_bounds() const { return masks_to_bounds_; }
 
   void SetContentsOpaque(bool opaque);
-  bool contents_opaque() const { return contents_opaque_; }
 
   float Opacity() const;
   const gfx::Transform& Transform() const;
@@ -352,6 +353,8 @@ class CC_EXPORT LayerImpl {
   virtual void DidBecomeActive() {}
 
   virtual void DidBeginTracing();
+
+  virtual bool IsContentsOpaque() const;
 
   // Release resources held by this layer. Called when the output surface
   // that rendered this layer was lost.

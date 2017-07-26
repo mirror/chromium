@@ -199,7 +199,7 @@ void RasterizeAndRecordBenchmarkImpl::RunOnLayer(PictureLayerImpl* layer) {
                  rasterize_repeat_count_, &min_time, &is_solid_color);
 
     int tile_size = content_rect.width() * content_rect.height();
-    if (layer->contents_opaque())
+    if (layer->IsContentsOpaque())
       rasterize_results_.pixels_rasterized_as_opaque += tile_size;
 
     if (!is_solid_color)

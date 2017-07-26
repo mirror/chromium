@@ -7487,7 +7487,7 @@ class BlendStateCheckLayer : public LayerImpl {
     quads_appended_ = true;
 
     gfx::Rect opaque_rect;
-    if (contents_opaque())
+    if (IsContentsOpaque())
       opaque_rect = quad_rect_;
     else
       opaque_rect = opaque_content_rect_;

@@ -186,9 +186,9 @@ TEST(SolidColorLayerImplTest, VerifyOpaqueRect) {
       root.get(), gfx::Size(500, 500));
   LayerTreeHostCommon::CalculateDrawPropertiesForTesting(&inputs);
 
-  EXPECT_FALSE(layer->contents_opaque());
+  EXPECT_FALSE(layer->IsContentsOpaque());
   layer->SetBackgroundColor(SkColorSetARGBInline(255, 10, 20, 30));
-  EXPECT_TRUE(layer->contents_opaque());
+  EXPECT_TRUE(layer->IsContentsOpaque());
   {
     DebugScopedSetImplThread scoped_impl_thread(host->GetTaskRunnerProvider());
     host->FinishCommitOnImplThread(host->host_impl());
@@ -196,7 +196,7 @@ TEST(SolidColorLayerImplTest, VerifyOpaqueRect) {
         host->host_impl()->active_tree()->LayerById(layer->id());
 
     // The impl layer should call itself opaque as well.
-    EXPECT_TRUE(layer_impl->contents_opaque());
+    EXPECT_TRUE(layer_impl->IsContentsOpaque());
 
     // Impl layer has 1 opacity, and the color is opaque, so the opaque_rect
     // should be the full tile.
@@ -212,9 +212,9 @@ TEST(SolidColorLayerImplTest, VerifyOpaqueRect) {
               render_pass->quad_list.front()->opaque_rect.ToString());
   }
 
-  EXPECT_TRUE(layer->contents_opaque());
+  EXPECT_TRUE(layer->IsContentsOpaque());
   layer->SetBackgroundColor(SkColorSetARGBInline(254, 10, 20, 30));
-  EXPECT_FALSE(layer->contents_opaque());
+  EXPECT_FALSE(layer->IsContentsOpaque());
   {
     DebugScopedSetImplThread scoped_impl_thread(host->GetTaskRunnerProvider());
     host->FinishCommitOnImplThread(host->host_impl());
@@ -222,7 +222,7 @@ TEST(SolidColorLayerImplTest, VerifyOpaqueRect) {
         host->host_impl()->active_tree()->LayerById(layer->id());
 
     // The impl layer should not call itself opaque anymore.
-    EXPECT_FALSE(layer_impl->contents_opaque());
+    EXPECT_FALSE(layer_impl->IsContentsOpaque());
 
     // Impl layer has 1 opacity, but the color is not opaque, so the opaque_rect
     // should be empty.

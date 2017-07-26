@@ -237,7 +237,7 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
         DebugColors::DirectPictureBorderWidth(device_scale_factor));
 
     gfx::Rect geometry_rect = shared_quad_state->visible_quad_layer_rect;
-    gfx::Rect opaque_rect = contents_opaque() ? geometry_rect : gfx::Rect();
+    gfx::Rect opaque_rect = IsContentsOpaque() ? geometry_rect : gfx::Rect();
     gfx::Rect visible_geometry_rect =
         scaled_occlusion.GetUnoccludedContentRect(geometry_rect);
 
@@ -338,7 +338,7 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
            shared_quad_state->visible_quad_layer_rect, ideal_contents_scale_);
        iter; ++iter) {
     gfx::Rect geometry_rect = iter.geometry_rect();
-    gfx::Rect opaque_rect = contents_opaque() ? geometry_rect : gfx::Rect();
+    gfx::Rect opaque_rect = IsContentsOpaque() ? geometry_rect : gfx::Rect();
     gfx::Rect visible_geometry_rect =
         scaled_occlusion.GetUnoccludedContentRect(geometry_rect);
     if (visible_geometry_rect.IsEmpty())
@@ -714,7 +714,7 @@ std::unique_ptr<Tile> PictureLayerImpl::CreateTile(
   if (mask_type_ != Layer::LayerMaskType::SINGLE_TEXTURE_MASK)
     flags = Tile::USE_PICTURE_ANALYSIS;
 
-  if (contents_opaque())
+  if (IsContentsOpaque())
     flags |= Tile::IS_OPAQUE;
 
   return layer_tree_impl()->tile_manager()->CreateTile(

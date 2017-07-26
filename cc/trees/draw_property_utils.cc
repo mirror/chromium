@@ -977,6 +977,7 @@ void ComputeDrawPropertiesOfVisibleLayers(const LayerImplList* layer_list,
     layer->draw_properties().clip_rect = gfx::ToEnclosingRect(clip.clip_rect);
     layer->draw_properties().visible_layer_rect =
         LayerVisibleRect(property_trees, layer);
+    layer->draw_properties().is_opaque = layer->IsContentsOpaque();
   }
 
   // Compute drawable content rects
