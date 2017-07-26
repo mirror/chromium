@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "a99b0626_35cc8db7",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T21:43:44Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "d9d5ac6d_1323dbff",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f0bf17_965bbb5e",
         "filename": "ios/chrome/browser/ui/payments/payment_request_egtest_base.h",
         "patchSetId": 5
@@ -218,6 +236,24 @@
       "side": 1,
       "message": "Done. Just noticed this already exists in ChromeEarlGrey. Scraping this.",
       "parentUuid": "60f0bf17_965bbb5e",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "440d1f9e_169e2e26",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_egtest_base.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T21:43:44Z",
+      "side": 1,
+      "message": "Cool! You could have just told me you wrote it and taken credit for it. :)",
+      "parentUuid": "323eafe2_d6558436",
       "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -323,6 +359,24 @@
       "side": 1,
       "message": "I want this file to contain tests that don\u0027t really fit in with another group of tests. I can think of one or two other tests that should be added here in the future.",
       "parentUuid": "95733c3d_78e9e92e",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205686b8_778cf03b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_misc_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T21:43:44Z",
+      "side": 1,
+      "message": "Thanks for clarifying. \"misc\" isn\u0027t a great name in a file, but I\u0027m having trouble thinking of anything else. Would payment_request_egtest.mm make it to confusing since it\u0027s separate from the more specific cases?\n\nPlease go with whatever you decide, no need to change based on me, since I can\u0027t think of anything better. :)",
+      "parentUuid": "cf7e6cbc_c735f679",
       "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
