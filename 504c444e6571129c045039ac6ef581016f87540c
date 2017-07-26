@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2682c777_c174ac5f",
+        "filename": "chrome/common/navigation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-26T08:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e99aae_d1c8fc28",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "504c444e6571129c045039ac6ef581016f87540c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "899a8085_b3159dda",
         "filename": "chrome/common/navigation.mojom",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "This is the result of the auto-format.  I also noticed it to be different than what happens for c++.  I\u0027ll check again to run \u0027git cl format\u0027 to make sure this is the expected formatting.",
       "parentUuid": "899a8085_b3159dda",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "504c444e6571129c045039ac6ef581016f87540c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eec9e3b9_853b7714",
+        "filename": "chrome/common/navigation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-26T08:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60be232a_ca80ebfb",
       "range": {
         "startLine": 13,
         "startChar": 31,
