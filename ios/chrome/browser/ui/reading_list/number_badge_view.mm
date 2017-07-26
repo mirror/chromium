@@ -78,6 +78,7 @@ const CGFloat labelMargin = 2.5f;
 
     // Start hidden.
     self.alpha = 0.0;
+    self.hidden = YES;
   }
   return self;
 }
@@ -95,22 +96,30 @@ const CGFloat labelMargin = 2.5f;
   if (self.displayNumber != number) {
     self.displayNumber = number;
     if (animated) {
+      if (number > 0) {
+        self.hidden = NO;
+      }
       [UIView animateWithDuration:kAnimationDuration
-                       animations:^{
-                         if (number > 0) {
-                           self.alpha = 1.0;
-                           // Only setting when > 0 as this makes the animation
-                           // look better than switching to 0 then fading out.
-                           self.label.text =
-                               [NSString stringWithFormat:@"%" PRIdNS, number];
-                         } else {
-                           self.alpha = 0.0;
-                         }
-                         [self setNeedsLayout];
-                         [self layoutIfNeeded];
-                       }];
+          animations:^{
+            if (number > 0) {
+              self.alpha = 1.0;
+              // Only setting when > 0 as this makes the animation
+              // look better than switching to 0 then fading out.
+              self.label.text = [NSString stringWithFormat:@"%" PRIdNS, number];
+            } else {
+              self.alpha = 0.0;
+            }
+            [self setNeedsLayout];
+            [self layoutIfNeeded];
+          }
+          completion:^(BOOL finished) {
+            if (finished && number <= 0) {
+              self.hidden = YES;
+            }
+          }];
     } else {
       self.label.text = [NSString stringWithFormat:@"%" PRIdNS, number];
+      self.hidden = (number > 0 ? NO : YES);
     }
   }
 }
