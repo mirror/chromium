@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35c5343e_9fde7630",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "Set it to default value in both constructors.",
+      "range": {
+        "startLine": 202,
+        "startChar": 50,
+        "endLine": 202,
+        "endChar": 69
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b343044f_ceb65211",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "Where do you use these functions?",
+      "range": {
+        "startLine": 246,
+        "startChar": 7,
+        "endLine": 246,
+        "endChar": 29
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4c3eee_04df5db5",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "Username vote type is assigned to a field. So, several fields may have username vote and the type. Here vote_type is declared once for the whole form. I believe we should not do that.",
+      "range": {
+        "startLine": 359,
+        "startChar": 34,
+        "endLine": 359,
+        "endChar": 35
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b2e8f2_ef7cb086",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2428,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "I guess it will broke the test.\n\nYou changed the upload, but didn\u0027t change what it will compare with - FormFieldData",
+      "range": {
+        "startLine": 2427,
+        "startChar": 2,
+        "endLine": 2428,
+        "endChar": 53
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5bcd41_f6c38084",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "Let\u0027s add more info here. \nCREDENTIALS_REUSED and USERNAME_OVERWRITTEN. \n\nWDYT?",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 12
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c335b295_df69cbe6",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "Both if-branches ends with the same line, lets move out of the if.",
+      "range": {
+        "startLine": 871,
+        "startChar": 4,
+        "endLine": 871,
+        "endChar": 70
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3e9694_b099e276",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "We can have only one additional argument here, |expected_username_vote_type|. \n\nIf any username vote found in |arg| (see the loop below), its type should be |expected_username_vote_type|",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 133,
+        "endChar": 43
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bcf889_1c68ccd8",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-26T14:54:24Z",
+      "side": 1,
+      "message": "We need to check the fields in |arg|. Here you check one argument with another one.",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 3
+      },
+      "revId": "412e6679e97325f4f8f13503e94d208005ba4b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
