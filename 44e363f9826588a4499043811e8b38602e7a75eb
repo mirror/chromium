@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e3e4757_f1c84aa5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3381,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-26T19:25:28Z",
+      "side": 1,
+      "message": "The geolocation service may attempt to cancel permission requests so",
+      "range": {
+        "startLine": 3381,
+        "startChar": 5,
+        "endLine": 3381,
+        "endChar": 79
+      },
+      "revId": "44e363f9826588a4499043811e8b38602e7a75eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1d9940_c8e06b6c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3382,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-26T19:25:28Z",
+      "side": 1,
+      "message": "mapping is removed",
+      "range": {
+        "startLine": 3382,
+        "startChar": 44,
+        "endLine": 3382,
+        "endChar": 61
+      },
+      "revId": "44e363f9826588a4499043811e8b38602e7a75eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
