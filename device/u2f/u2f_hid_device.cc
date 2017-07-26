@@ -34,62 +34,76 @@ U2fHidDevice::~U2fHidDevice() {
 }
 
 void U2fHidDevice::DeviceTransact(std::unique_ptr<U2fApduCommand> command,
-                                  const DeviceCallback& callback) {
-  Transition(std::move(command), callback);
+                                  DeviceCallback callback) {
+  Transition(std::move(command), std::move(callback));
 }
 
 void U2fHidDevice::Transition(std::unique_ptr<U2fApduCommand> command,
-                              const DeviceCallback& callback) {
+                              DeviceCallback callback) {
   switch (state_) {
-    case State::INIT:
+    case State::INIT: {
       state_ = State::BUSY;
-      ArmTimeout(callback);
-      Connect(base::Bind(&U2fHidDevice::OnConnect, weak_factory_.GetWeakPtr(),
-                         base::Passed(&command), callback));
+
+      auto copyable_callback =
+          base::AdaptCallbackForRepeating(std::move(callback));
+      ArmTimeout(copyable_callback);
+      Connect(base::BindOnce(&U2fHidDevice::OnConnect,
+                             weak_factory_.GetWeakPtr(), std::move(command),
+                             copyable_callback));
       break;
-    case State::CONNECTED:
+    }
+    case State::CONNECTED: {
       state_ = State::BUSY;
-      ArmTimeout(callback);
-      AllocateChannel(std::move(command), callback);
+
+      auto copyable_callback =
+          base::AdaptCallbackForRepeating(std::move(callback));
+      ArmTimeout(copyable_callback);
+      AllocateChannel(std::move(command), copyable_callback);
       break;
+    }
     case State::IDLE: {
       state_ = State::BUSY;
       std::unique_ptr<U2fMessage> msg = U2fMessage::Create(
           channel_id_, U2fMessage::Type::CMD_MSG, command->GetEncodedCommand());
 
-      ArmTimeout(callback);
+      auto copyable_callback =
+          base::AdaptCallbackForRepeating(std::move(callback));
+      ArmTimeout(copyable_callback);
       // Write message to the device
-      WriteMessage(std::move(msg), true,
-                   base::Bind(&U2fHidDevice::MessageReceived,
-                              weak_factory_.GetWeakPtr(), callback));
+      WriteMessage(
+          std::move(msg), true,
+          base::BindOnce(&U2fHidDevice::MessageReceived,
+                         weak_factory_.GetWeakPtr(), copyable_callback));
       break;
     }
     case State::BUSY:
-      pending_transactions_.push_back({std::move(command), callback});
+      pending_transactions_.push_back(
+          {std::move(command), std::move(callback)});
       break;
     case State::DEVICE_ERROR:
     default:
       base::WeakPtr<U2fHidDevice> self = weak_factory_.GetWeakPtr();
-      callback.Run(false, nullptr);
+      std::move(callback).Run(false, nullptr);
       // Executing callbacks may free |this|. Check |self| first.
       while (self && !pending_transactions_.empty()) {
         // Respond to any pending requests
-        DeviceCallback pending_cb = pending_transactions_.front().second;
+        DeviceCallback pending_cb =
+            std::move(pending_transactions_.front().second);
         pending_transactions_.pop_front();
-        pending_cb.Run(false, nullptr);
+        std::move(pending_cb).Run(false, nullptr);
       }
       break;
   }
 }
 
-void U2fHidDevice::Connect(const HidService::ConnectCallback& callback) {
+void U2fHidDevice::Connect(HidService::ConnectCallback callback) {
   HidService* hid_service = DeviceClient::Get()->GetHidService();
 
-  hid_service->Connect(device_info_->device_guid(), callback);
+  hid_service->Connect(device_info_->device_guid(), std::move(callback));
 }
 
 void U2fHidDevice::OnConnect(std::unique_ptr<U2fApduCommand> command,
-                             const DeviceCallback& callback,
+                             DeviceCallback callback,
                              scoped_refptr<HidConnection> connection) {
   if (state_ == State::DEVICE_ERROR)
     return;
@@ -101,26 +115,26 @@ void U2fHidDevice::OnConnect(std::unique_ptr<U2fApduCommand> command,
   } else {
     state_ = State::DEVICE_ERROR;
   }
-  Transition(std::move(command), callback);
+  Transition(std::move(command), std::move(callback));
 }
 
 void U2fHidDevice::AllocateChannel(std::unique_ptr<U2fApduCommand> command,
-                                   const DeviceCallback& callback) {
+                                   DeviceCallback callback) {
   // Send random nonce to device to verify received message
   std::vector<uint8_t> nonce(8);
   crypto::RandBytes(nonce.data(), nonce.size());
   std::unique_ptr<U2fMessage> message =
       U2fMessage::Create(channel_id_, U2fMessage::Type::CMD_INIT, nonce);
 
-  WriteMessage(
-      std::move(message), true,
-      base::Bind(&U2fHidDevice::OnAllocateChannel, weak_factory_.GetWeakPtr(),
-                 nonce, base::Passed(&command), callback));
+  WriteMessage(std::move(message), true,
+               base::BindOnce(&U2fHidDevice::OnAllocateChannel,
+                              weak_factory_.GetWeakPtr(), nonce,
+                              std::move(command), std::move(callback)));
 }
 
 void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
                                      std::unique_ptr<U2fApduCommand> command,
-                                     const DeviceCallback& callback,
+                                     DeviceCallback callback,
                                      bool success,
                                      std::unique_ptr<U2fMessage> message) {
   if (state_ == State::DEVICE_ERROR)
@@ -129,7 +143,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
 
   if (!success || !message) {
     state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+    Transition(nullptr, std::move(callback));
     return;
   }
   // Channel allocation response is defined as:
@@ -143,7 +157,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
   std::vector<uint8_t> payload = message->GetMessagePayload();
   if (payload.size() != 17) {
     state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+    Transition(nullptr, std::move(callback));
     return;
   }
 
@@ -151,7 +165,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
                                       std::begin(payload) + 8);
   if (nonce != received_nonce) {
     state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+    Transition(nullptr, std::move(callback));
     return;
   }
 
@@ -163,7 +177,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
   capabilities_ = payload[16];
 
   state_ = State::IDLE;
-  Transition(std::move(command), callback);
+  Transition(std::move(command), std::move(callback));
 }
 
 void U2fHidDevice::WriteMessage(std::unique_ptr<U2fMessage> message,
@@ -178,8 +192,8 @@ void U2fHidDevice::WriteMessage(std::unique_ptr<U2fMessage> message,
 
   connection_->Write(
       buffer, buffer->size(),
-      base::Bind(&U2fHidDevice::PacketWritten, weak_factory_.GetWeakPtr(),
-                 base::Passed(&message), true, base::Passed(&callback)));
+      base::BindOnce(&U2fHidDevice::PacketWritten, weak_factory_.GetWeakPtr(),
+                     std::move(message), true, std::move(callback)));
 }
 
 void U2fHidDevice::PacketWritten(std::unique_ptr<U2fMessage> message,
@@ -264,7 +278,7 @@ void U2fHidDevice::OnReadContinuation(std::unique_ptr<U2fMessage> message,
                  base::Passed(&message), base::Passed(&callback)));
 }
 
-void U2fHidDevice::MessageReceived(const DeviceCallback& callback,
+void U2fHidDevice::MessageReceived(DeviceCallback callback,
                                    bool success,
                                    std::unique_ptr<U2fMessage> message) {
   if (state_ == State::DEVICE_ERROR)
@@ -273,7 +287,7 @@ void U2fHidDevice::MessageReceived(const DeviceCallback& callback,
 
   if (!success) {
     state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+    Transition(nullptr, std::move(callback));
     return;
   }
 
@@ -282,52 +296,53 @@ void U2fHidDevice::MessageReceived(const DeviceCallback& callback,
     response = U2fApduResponse::CreateFromMessage(message->GetMessagePayload());
   state_ = State::IDLE;
   base::WeakPtr<U2fHidDevice> self = weak_factory_.GetWeakPtr();
-  callback.Run(success, std::move(response));
+  std::move(callback).Run(success, std::move(response));
 
   // Executing |callback| may have freed |this|. Check |self| first.
   if (self && !pending_transactions_.empty()) {
     // If any transactions were queued, process the first one
     std::unique_ptr<U2fApduCommand> pending_cmd =
         std::move(pending_transactions_.front().first);
-    DeviceCallback pending_cb = pending_transactions_.front().second;
+    DeviceCallback pending_cb = std::move(pending_transactions_.front().second);
     pending_transactions_.pop_front();
-    Transition(std::move(pending_cmd), pending_cb);
+    Transition(std::move(pending_cmd), std::move(pending_cb));
   }
 }
 
-void U2fHidDevice::TryWink(const WinkCallback& callback) {
+void U2fHidDevice::TryWink(WinkCallback callback) {
   // Only try to wink if device claims support
   if (!(capabilities_ & kWinkCapability) || state_ != State::IDLE) {
-    callback.Run();
+    std::move(callback).Run();
     return;
   }
 
   std::unique_ptr<U2fMessage> wink_message = U2fMessage::Create(
       channel_id_, U2fMessage::Type::CMD_WINK, std::vector<uint8_t>());
-  WriteMessage(
-      std::move(wink_message), true,
-      base::Bind(&U2fHidDevice::OnWink, weak_factory_.GetWeakPtr(), callback));
+  WriteMessage(std::move(wink_message), true,
+               base::BindOnce(&U2fHidDevice::OnWink, weak_factory_.GetWeakPtr(),
+                              std::move(callback)));
 }
 
-void U2fHidDevice::OnWink(const WinkCallback& callback,
+void U2fHidDevice::OnWink(WinkCallback callback,
                           bool success,
                           std::unique_ptr<U2fMessage> response) {
-  callback.Run();
+  std::move(callback).Run();
 }
 
-void U2fHidDevice::ArmTimeout(const DeviceCallback& callback) {
+void U2fHidDevice::ArmTimeout(DeviceCallback callback) {
   DCHECK(timeout_callback_.IsCancelled());
   timeout_callback_.Reset(base::Bind(&U2fHidDevice::OnTimeout,
-                                     weak_factory_.GetWeakPtr(), callback));
+                                     weak_factory_.GetWeakPtr(),
+                                     base::Passed(&callback)));
   // Setup timeout task for 3 seconds
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, timeout_callback_.callback(),
       base::TimeDelta::FromMilliseconds(3000));
 }
 
-void U2fHidDevice::OnTimeout(const DeviceCallback& callback) {
+void U2fHidDevice::OnTimeout(DeviceCallback callback) {
   state_ = State::DEVICE_ERROR;
-  Transition(nullptr, callback);
+  Transition(nullptr, std::move(callback));
 }
 
 std::string U2fHidDevice::GetId() {

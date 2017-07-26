@@ -60,19 +60,20 @@ class MockHidConnection : public device::HidConnection {
 
   void PlatformClose() override {}
 
-  void PlatformRead(const ReadCallback& callback) override {
+  void PlatformRead(ReadCallback callback) override {
     const char kResult[] = "This is a HID input report.";
     uint8_t report_id = device_info()->has_report_id() ? 1 : 0;
     scoped_refptr<IOBuffer> buffer(new IOBuffer(sizeof(kResult)));
     buffer->data()[0] = report_id;
     memcpy(buffer->data() + 1, kResult, sizeof(kResult) - 1);
     ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, true, buffer, sizeof(kResult)));
+        FROM_HERE,
+        base::BindOnce(std::move(callback), true, buffer, sizeof(kResult)));
   }
 
   void PlatformWrite(scoped_refptr<net::IOBuffer> buffer,
                      size_t size,
-                     const WriteCallback& callback) override {
+                     WriteCallback callback) override {
     const char kExpected[] = "o-report";  // 8 bytes
     bool result = false;
     if (size == sizeof(kExpected)) {
@@ -84,12 +85,12 @@ class MockHidConnection : public device::HidConnection {
         }
       }
     }
-    ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                            base::Bind(callback, result));
+    ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), result));
   }
 
   void PlatformGetFeatureReport(uint8_t report_id,
-                                const ReadCallback& callback) override {
+                                ReadCallback callback) override {
     const char kResult[] = "This is a HID feature report.";
     scoped_refptr<IOBuffer> buffer(new IOBuffer(sizeof(kResult)));
     size_t offset = 0;
@@ -98,13 +99,13 @@ class MockHidConnection : public device::HidConnection {
     }
     memcpy(buffer->data() + offset, kResult, sizeof(kResult) - 1);
     ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(callback, true, buffer, sizeof(kResult) - 1 + offset));
+        FROM_HERE, base::BindOnce(std::move(callback), true, buffer,
+                                  sizeof(kResult) - 1 + offset));
   }
 
   void PlatformSendFeatureReport(scoped_refptr<net::IOBuffer> buffer,
                                  size_t size,
-                                 const WriteCallback& callback) override {
+                                 WriteCallback callback) override {
     const char kExpected[] = "The app is setting this HID feature report.";
     bool result = false;
     if (size == sizeof(kExpected)) {
@@ -115,8 +116,8 @@ class MockHidConnection : public device::HidConnection {
         result = true;
       }
     }
-    ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                            base::Bind(callback, result));
+    ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), result));
   }
 
  private:
@@ -181,7 +182,7 @@ class HidApiTest : public ShellApiTest {
     // MockDeviceClient replaces ShellDeviceClient.
     device_client_.reset(new MockDeviceClient());
 
-    ON_CALL(*device_client_->hid_service(), Connect(_, _))
+    ON_CALL(*device_client_->hid_service(), ConnectInternal(_, _))
         .WillByDefault(Invoke(this, &HidApiTest::Connect));
     ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
@@ -189,7 +190,7 @@ class HidApiTest : public ShellApiTest {
   }
 
   void Connect(const std::string& device_guid,
-               const device::HidService::ConnectCallback& callback) {
+               device::HidService::ConnectCallback& callback) {
     const auto& devices = device_client_->hid_service()->devices();
     const auto& device_entry = devices.find(device_guid);
     scoped_refptr<MockHidConnection> connection;
@@ -197,8 +198,8 @@ class HidApiTest : public ShellApiTest {
       connection = new MockHidConnection(device_entry->second);
     }
 
-    ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                            base::Bind(callback, connection));
+    ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), connection));
   }
 
   void LazyFirstEnumeration() {
