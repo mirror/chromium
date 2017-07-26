@@ -16,6 +16,24 @@
       "revId": "a14e61d99a65e0ed973b6fbb912d36f08e9558f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace6fc5f_79d8502c",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-26T02:29:52Z",
+      "side": 1,
+      "message": "I agree that depending on the underlying implementation detail seems dangerous..\n\nLet me replace relying on the implicit ordering assumption to using WaitableEvent explicitly. It\u0027s clearly simpler and much confident to guarantee the order of tasks.",
+      "parentUuid": "a014d23f_ffe3b56b",
+      "revId": "a14e61d99a65e0ed973b6fbb912d36f08e9558f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
