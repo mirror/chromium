@@ -114,15 +114,43 @@ CSSIdentifierValue* CSSPropertyFontUtils::ConsumeFontStretchKeywordOnly(
   return nullptr;
 }
 
-CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
+CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(
+    CSSParserTokenRange& range,
+    const CSSParserMode& parser_mode) {
   CSSIdentifierValue* parsed_keyword = ConsumeFontStretchKeywordOnly(range);
   if (parsed_keyword)
     return parsed_keyword;
-  CSSPrimitiveValue* percent =
+
+  CSSPrimitiveValue* start_percent = nullptr;
+  start_percent =
       CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeNonNegative);
-  if (!percent || percent->GetFloatValue() <= 0)
+  if (!start_percent || start_percent->GetFloatValue() <= 0)
     return nullptr;
-  return percent;
+
+  range.ConsumeWhitespace();
+  // In a non-font-face context, more than one percentage is not allowed.
+  if (parser_mode != kCSSFontFaceRuleMode && !range.AtEnd())
+    return nullptr;
+
+  CSSPrimitiveValue* end_percent = nullptr;
+  if (!range.AtEnd()) {
+    end_percent =
+        CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeNonNegative);
+    if (!end_percent || end_percent->GetFloatValue() <= 0)
+      return nullptr;
+  }
+
+  if (start_percent && end_percent) {
+    CSSValueList* value_list = CSSValueList::CreateSpaceSeparated();
+    value_list->Append(*start_percent);
+    value_list->Append(*end_percent);
+    return value_list;
+  }
+
+  if (start_percent)
+    return start_percent;
+
+  return nullptr;
 }
 
 CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(
