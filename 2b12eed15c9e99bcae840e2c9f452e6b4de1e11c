@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c302eb50_4809aebc",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4146,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-26T21:33:35Z",
+      "side": 1,
+      "message": "nit: S",
+      "range": {
+        "startLine": 4146,
+        "startChar": 32,
+        "endLine": 4146,
+        "endChar": 33
+      },
+      "revId": "2b12eed15c9e99bcae840e2c9f452e6b4de1e11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
