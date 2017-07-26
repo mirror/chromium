@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d55c62c7_ea4c2abd",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T05:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea718902_f94ce512",
+      "revId": "a7203df5028d28d3bfd99050a9505e422e51e07b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7e1e995_1d1be25e",
         "filename": "content/common/service_worker/service_worker_provider.mojom",
         "patchSetId": 4
