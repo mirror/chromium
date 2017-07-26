@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "83a7ab83_2cd7e769",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-26T01:43:40Z",
+      "side": 0,
+      "message": "Yes, good point.  On second thought, I reverted removal of |request_priority|.",
+      "parentUuid": "843a7742_6a92539d",
+      "range": {
+        "startLine": 1541,
+        "startChar": 50,
+        "endLine": 1541,
+        "endChar": 51
+      },
+      "revId": "7b6076c0973e7eb24cc3cea3bb8d00112eddda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d06b838_9e601552",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-26T01:43:40Z",
+      "side": 0,
+      "message": "Oh, forgot to mention, I\u0027m removing this TODO because it sounds like it does not relate to a code TODO but rather one for the HTTP/2 (formerly known as SPDY) specification, which is now codified as an RFC, so this TODO is moot.",
+      "range": {
+        "startLine": 1545,
+        "startChar": 0,
+        "endLine": 1545,
+        "endChar": 70
+      },
+      "revId": "7b6076c0973e7eb24cc3cea3bb8d00112eddda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43a6b2b0_36f4d5ce",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 4
