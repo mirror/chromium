@@ -452,6 +452,12 @@ void Element::setNonce(const AtomicString& nonce) {
   EnsureElementRareData().SetNonce(nonce);
 }
 
+bool Element::IsInertRoot() const {
+  if (!GetElementData())
+    return false;
+  return GetElementData()->Attributes().Find(inertAttr);
+}
+
 void Element::scrollIntoView(ScrollIntoViewOptionsOrBoolean arg) {
   ScrollIntoViewOptions options;
   if (arg.isBoolean()) {
@@ -3260,6 +3266,7 @@ bool Element::IsInDescendantTreeOf(const Element* shadow_host) const {
 
 const ComputedStyle* Element::EnsureComputedStyle(
     PseudoId pseudo_element_specifier) {
+  LOG(INFO) << "EnsureComputedStyle for " << this->DebugName();
   if (PseudoElement* element = GetPseudoElement(pseudo_element_specifier))
     return element->EnsureComputedStyle();
 
