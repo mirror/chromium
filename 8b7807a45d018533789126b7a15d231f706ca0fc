@@ -16,6 +16,24 @@
       "revId": "8b7807a45d018533789126b7a15d231f706ca0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fc12b7_78c59c64",
+        "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-26T16:54:03Z",
+      "side": 1,
+      "message": "Why do you say that I can assume min \u003c\u003d max? That\u0027s definitely not true for the min/max-width case:\n\n  min-width: 50px;\n  max-width: 10px;\n^ perfectly valid. And if you use keywords for one of those, it may even make sense.\n\nI think you may be right that for min/max-content computations that may be true, though I\u0027m not 100% certain.",
+      "parentUuid": "7b2a37ff_fa454412",
+      "revId": "8b7807a45d018533789126b7a15d231f706ca0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
