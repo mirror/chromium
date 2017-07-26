@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5caebc48_fb3e3d19",
+        "filename": "chrome/browser/resources/md_history/history_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-26T01:39:47Z",
+      "side": 1,
+      "message": "nit (here and elsewhere): I\u0027ve been enforcing \"parens around single arg arrow functions\" as a rule due to the tip at\n\nhttps://google.github.io/styleguide/jsguide.html#features-functions-arrow-functions\n\nIt would be nice if the linter could enforce that?",
+      "range": {
+        "startLine": 145,
+        "startChar": 31,
+        "endLine": 145,
+        "endChar": 36
+      },
+      "revId": "e7e86c26386f6771371619e316d08ff8f0656875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
