@@ -83,7 +83,11 @@ void Scheduler::SetCanDraw(bool can_draw) {
 }
 
 void Scheduler::NotifyReadyToActivate() {
-  compositor_timing_history_->ReadyToActivate();
+  if (!state_machine_.pending_tree_is_ready_for_activation()) {
+    // We only care about the first ready to activate signal
+    // after a commit or invalidation.
+    compositor_timing_history_->ReadyToActivate();
+  }
   state_machine_.NotifyReadyToActivate();
   ProcessScheduledActions();
 }
@@ -148,6 +152,7 @@ void Scheduler::DidReceiveCompositorFrameAck() {
 void Scheduler::SetTreePrioritiesAndScrollState(
     TreePriority tree_priority,
     ScrollHandlerState scroll_handler_state) {
+  compositor_timing_history_->SetTreePriority(tree_priority);
   state_machine_.SetTreePrioritiesAndScrollState(tree_priority,
                                                  scroll_handler_state);
   ProcessScheduledActions();
@@ -655,6 +660,7 @@ void Scheduler::ProcessScheduledActions() {
         break;
       case SchedulerStateMachine::ACTION_PERFORM_IMPL_SIDE_INVALIDATION:
         state_machine_.WillPerformImplSideInvalidation();
+        compositor_timing_history_->WillInvalidateOnImplSide();
         client_->ScheduledActionPerformImplSideInvalidation();
         break;
       case SchedulerStateMachine::ACTION_DRAW_IF_POSSIBLE:

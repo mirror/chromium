@@ -292,6 +292,10 @@ class CC_EXPORT SchedulerStateMachine {
     return previous_pending_tree_was_impl_side_;
   }
 
+  bool pending_tree_is_ready_for_activation() const {
+    return pending_tree_is_ready_for_activation_;
+  }
+
  protected:
   bool BeginFrameRequiredForAction() const;
   bool BeginFrameNeededForVideo() const;
