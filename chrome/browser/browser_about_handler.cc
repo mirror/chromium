@@ -61,9 +61,13 @@ bool WillHandleBrowserAboutURL(GURL* url,
   if (host == chrome::kChromeUIAboutHost)
     host = chrome::kChromeUIChromeURLsHost;
 
+  const kLegacyMaterialDesignSettingsUrl = "md-settings";
+
   // Legacy redirect from chrome://history-frame to chrome://history.
   if (host == chrome::kDeprecatedChromeUIHistoryFrameHost)
     host = chrome::kChromeUIHistoryHost;
+  else if (host == kLegacyMaterialDesignSettingsUrl)
+    host = chrome::kChromeUISettingsHost;
 
   // Replace cache with view-http-cache.
   if (host == chrome::kChromeUICacheHost) {
