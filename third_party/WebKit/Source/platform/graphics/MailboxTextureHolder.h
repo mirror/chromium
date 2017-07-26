@@ -13,15 +13,17 @@
 
 namespace blink {
 
+class WebTaskRunner;
+
 class PLATFORM_EXPORT MailboxTextureHolder final : public TextureHolder {
  public:
   ~MailboxTextureHolder() override;
 
   bool IsSkiaTextureHolder() final { return false; }
   bool IsMailboxTextureHolder() final { return true; }
-  unsigned SharedContextId() final;
   IntSize Size() const final { return size_; }
   bool CurrentFrameKnownToBeOpaque(Image::MetadataMode) final { return false; }
+  bool IsValid() const final;
 
   gpu::Mailbox GetMailbox() final { return mailbox_; }
   gpu::SyncToken GetSyncToken() final { return sync_token_; }
@@ -35,21 +37,22 @@ class PLATFORM_EXPORT MailboxTextureHolder final : public TextureHolder {
   MailboxTextureHolder(const gpu::Mailbox&,
                        const gpu::SyncToken&,
                        unsigned texture_id_to_delete_after_mailbox_consumed,
-                       WeakPtr<WebGraphicsContext3DProviderWrapper>,
+                       WeakPtr<WebGraphicsContext3DProviderWrapper>&&,
                        IntSize mailbox_size);
   // This function turns a texture-backed SkImage into a mailbox and a
   // syncToken.
   MailboxTextureHolder(std::unique_ptr<TextureHolder>);
 
  private:
-  void ReleaseTextureThreadSafe();
+  void InitCommon();
 
   gpu::Mailbox mailbox_;
   gpu::SyncToken sync_token_;
   unsigned texture_id_;
-  WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_;
   IntSize size_;
   bool is_converted_from_skia_texture_;
+  RefPtr<WebTaskRunner> texture_thread_task_runner_;
+  PlatformThreadId thread_id_;
 };
 
 }  // namespace blink
