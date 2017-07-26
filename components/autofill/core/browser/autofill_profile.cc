@@ -278,6 +278,11 @@ void AutofillProfile::SetRawInfo(ServerFieldType type,
     form_group->SetRawInfo(type, value);
 }
 
+base::string16 AutofillProfile::GetInfo(const ServerFieldType& type,
+                                        const std::string& app_locale) const {
+  return GetInfo(AutofillType(type), app_locale);
+}
+
 base::string16 AutofillProfile::GetInfo(const AutofillType& type,
                                         const std::string& app_locale) const {
   if (type.html_type() == HTML_TYPE_FULL_ADDRESS) {
@@ -296,6 +301,12 @@ base::string16 AutofillProfile::GetInfo(const AutofillType& type,
     return base::string16();
 
   return form_group->GetInfo(type, app_locale);
+}
+
+bool AutofillProfile::SetInfo(const ServerFieldType& type,
+                              const base::string16& value,
+                              const std::string& app_locale) {
+  return SetInfo(AutofillType(type), value, app_locale);
 }
 
 bool AutofillProfile::SetInfo(const AutofillType& type,

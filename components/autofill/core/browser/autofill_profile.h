@@ -71,8 +71,13 @@ class AutofillProfile : public AutofillDataModel {
                         ServerFieldTypeSet* matching_types) const override;
   base::string16 GetRawInfo(ServerFieldType type) const override;
   void SetRawInfo(ServerFieldType type, const base::string16& value) override;
+  base::string16 GetInfo(const ServerFieldType& type,
+                         const std::string& app_locale) const;
   base::string16 GetInfo(const AutofillType& type,
                          const std::string& app_locale) const override;
+  bool SetInfo(const ServerFieldType& type,
+               const base::string16& value,
+               const std::string& app_locale);
   bool SetInfo(const AutofillType& type,
                const base::string16& value,
                const std::string& app_locale) override;
