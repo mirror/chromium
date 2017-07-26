@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4400b0e3_3cc1a3c9",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-26T22:48:20Z",
+      "side": 1,
+      "message": "sorry for the churn. This L was suggested only because I thought we would be able to change it to a uint64_t. With uint32_t the correct suffix is just U.",
+      "range": {
+        "startLine": 284,
+        "startChar": 46,
+        "endLine": 284,
+        "endChar": 47
+      },
+      "revId": "7a51f3d7ed01de5c11a78cd9058dccfac98cb55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
