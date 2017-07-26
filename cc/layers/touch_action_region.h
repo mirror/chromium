@@ -19,9 +19,11 @@ class CC_EXPORT TouchActionRegion {
   TouchActionRegion();
   TouchActionRegion(const TouchActionRegion& touch_action_region);
   TouchActionRegion(TouchActionRegion&& touch_action_region);
+  explicit TouchActionRegion(const base::flat_map<TouchAction, Region>&);
   ~TouchActionRegion();
 
   void Union(TouchAction, const gfx::Rect&);
+  void SetRegionFromMap();
   const Region& region() const { return *region_; }
   const Region& GetRegionForTouchAction(TouchAction) const;
 

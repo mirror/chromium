@@ -16,11 +16,20 @@ TouchActionRegion::TouchActionRegion(
       region_(base::MakeUnique<Region>(touch_action_region.region())) {}
 TouchActionRegion::TouchActionRegion(TouchActionRegion&& touch_action_region) =
     default;
+TouchActionRegion::TouchActionRegion(
+    const base::flat_map<TouchAction, Region>& region_map)
+    : map_(region_map) {}
 TouchActionRegion::~TouchActionRegion() = default;
 
 void TouchActionRegion::Union(TouchAction touch_action, const gfx::Rect& rect) {
   region_->Union(rect);
   map_[touch_action].Union(rect);
+}
+
+void TouchActionRegion::SetRegionFromMap() {
+  for (const auto& pair : map_) {
+    region_->Union(pair.second);
+  }
 }
 
 const Region& TouchActionRegion::GetRegionForTouchAction(

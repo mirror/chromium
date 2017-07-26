@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/containers/flat_map.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_checker.h"
 #include "base/trace_event/trace_event_impl.h"
@@ -307,9 +308,11 @@ WebVector<WebRect> WebLayerImpl::NonFastScrollableRegion() const {
 
 void WebLayerImpl::SetTouchEventHandlerRegion(
     const WebVector<blink::WebTouchInfo>& touch_info) {
-  cc::TouchActionRegion touch_action_region;
+  base::flat_map<blink::WebTouchAction, cc::Region> region_map;
   for (size_t i = 0; i < touch_info.size(); ++i)
-    touch_action_region.Union(touch_info[i].touch_action, touch_info[i].rect);
+    region_map[touch_info[i].touch_action].Union(touch_info[i].rect);
+  cc::TouchActionRegion touch_action_region(region_map);
+  touch_action_region.SetRegionFromMap();
   layer_->SetTouchActionRegion(std::move(touch_action_region));
 }
 
