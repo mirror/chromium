@@ -91,6 +91,23 @@
       "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e7f3e5_4a573bdc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-26T11:48:43Z",
+      "side": 1,
+      "message": "I think we\u0027re overusing LOG(DFATAL) a bit these days. This could perceivably happen if the push server returned weird responses, i.e. without any bug in Chrome. In that case, do we really want to break other developers (because their builds will crash)? I kinda think DLOG(WARNING) would be enough here. WDYT?",
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

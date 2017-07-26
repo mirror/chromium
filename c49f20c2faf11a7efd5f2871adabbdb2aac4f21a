@@ -104,6 +104,24 @@
       "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "964980a2_06e210bc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-26T11:48:43Z",
+      "side": 1,
+      "message": "Okay, SG. I believe I saw a discussion elsewhere that the listener shouldn\u0027t return base::Value but something more specific (and I agree), so that\u0027s good.\n\nYes, the method can and should be private. It should also not be called \"On*\", that style is used for observer methods. Maybe \"IntegratePushSuggestions\" or something like that? (\"Integrate\" is used elsewhere in this class, but I\u0027m not sure it refers to the same concept.)",
+      "parentUuid": "6a7c5353_bbce7b77",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
