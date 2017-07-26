@@ -161,8 +161,8 @@
 #endif
 
 #if BUILDFLAG(ENABLE_PRINTING)
-#include "chrome/renderer/printing/chrome_print_web_frame_helper_delegate.h"
-#include "components/printing/renderer/print_web_frame_helper.h"
+#include "chrome/renderer/printing/chrome_print_render_frame_helper_delegate.h"
+#include "components/printing/renderer/print_render_frame_helper.h"
 #include "printing/print_settings.h"
 #endif
 
@@ -550,8 +550,8 @@ void ChromeContentRendererClient::RenderFrameCreated(
 #endif
 
 #if BUILDFLAG(ENABLE_PRINTING)
-  new printing::PrintWebViewHelper(
-      render_frame, base::MakeUnique<ChromePrintWebViewHelperDelegate>());
+  new printing::PrintRenderFrameHelper(
+      render_frame, base::MakeUnique<ChromePrintRenderFrameHelperDelegate>());
 #endif
 
 #if defined(OS_ANDROID)
