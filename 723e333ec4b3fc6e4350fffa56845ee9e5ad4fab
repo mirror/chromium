@@ -22,6 +22,30 @@
       "revId": "723e333ec4b3fc6e4350fffa56845ee9e5ad4fab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f78c37_7ddb97c2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 8605,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-26T19:31:11Z",
+      "side": 1,
+      "message": "Thanks for editing the description! It reads better now.\nMy previous phrase was inaccurate. If a composited area is not scrollable, we do need to record the GPU memory that we have allocated for it. However, if a scrollable area is not composited we won\u0027t allocate extra GPU memory for it therefore there is no need (or nothing) to record. More general, for non-composited elements, we don\u0027t do tilings so no recording as well.",
+      "parentUuid": "75372ca2_830f59cb",
+      "range": {
+        "startLine": 8605,
+        "startChar": 21,
+        "endLine": 8605,
+        "endChar": 0
+      },
+      "revId": "723e333ec4b3fc6e4350fffa56845ee9e5ad4fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
