@@ -86,8 +86,12 @@
         hidden="[[isRootFolder_(depth)]]"
         role="treeitem">
       <template is="dom-if" if="[[hasChildFolder_]]">
-        <button is="paper-icon-button-light" id="arrow"
-            on-tap="toggleFolder_" on-mousedown="preventDefault_" tabindex="-1">
+        <button is="paper-icon-button-light"
+            id="arrow"
+            on-tap="toggleFolder_"
+            on-mousedown="preventDefault_"
+            tabindex="-1"
+            aria-hidden="true">
           <iron-icon icon="cr:arrow-drop-down" is-open$="[[!isClosed_]]">
           </iron-icon>
         </button>
