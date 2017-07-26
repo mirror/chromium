@@ -42,6 +42,7 @@ std::map<std::string, std::string>& GetServiceNameByProcessTypeMap() {
        {switches::kPpapiPluginProcess, "content_plugin"},
        {switches::kRendererProcess, "content_renderer"},
        {switches::kUtilityProcess, "content_utility"},
+       {"profiling", "profiling"},
        {"ppapi-broker", "ppapi_broker"},
        {"nacl-loader", "nacl_loader"},
        {"nacl-loader-nonsfi", "nacl_loader_nonsfi"}});

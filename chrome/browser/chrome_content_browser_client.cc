@@ -1568,6 +1568,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
   static const char* const kCommonSwitchNames[] = {
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
     switches::kMemlogPipe,
+    "foobar",
 #endif
     switches::kUserAgent,
     switches::kUserDataDir,  // Make logs go to the right file.

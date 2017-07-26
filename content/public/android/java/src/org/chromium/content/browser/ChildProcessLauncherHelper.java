@@ -177,7 +177,7 @@ public class ChildProcessLauncherHelper {
                 sandboxed = false;
             } else {
                 // We only support sandboxed utility processes now.
-                assert ContentSwitches.SWITCH_UTILITY_PROCESS.equals(processType);
+//                assert ContentSwitches.SWITCH_UTILITY_PROCESS.equals(processType);
             }
         }
 

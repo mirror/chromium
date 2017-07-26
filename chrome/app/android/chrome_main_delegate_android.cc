@@ -21,6 +21,17 @@
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "content/public/browser/browser_main_runner.h"
 
+#include "chrome/common/features.h"
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "base/command_line.h"
+#include "chrome/browser/profiling_host/profiling_process_host.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/profiling/profiling_main.h"
+#include "content/public/common/content_switches.h"
+#include "content/public/common/main_function_params.h"
+#endif
+
 using safe_browsing::SafeBrowsingApiHandler;
 
 namespace {
@@ -56,6 +67,11 @@ bool ChromeMainDelegateAndroid::BasicStartupComplete(int* exit_code) {
 
 void ChromeMainDelegateAndroid::SandboxInitialized(
     const std::string& process_type) {
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  const base::CommandLine& cmdline = *base::CommandLine::ForCurrentProcess();
+  LOG(ERROR) << "Android **--**--**--**--**--**~~~ Startup: " << cmdline.GetCommandLineString();
+#endif
+
   ChromeMainDelegate::SandboxInitialized(process_type);
 }
 
@@ -97,6 +113,12 @@ int ChromeMainDelegateAndroid::RunProcess(
       browser_runner_.reset(content::BrowserMainRunner::Create());
     }
     return browser_runner_->Initialize(main_function_params);
+  } else if (process_type == switches::kUtilityProcess &&
+             main_function_params.command_line.HasSwitch("foobar")) {
+    LOG(ERROR) << "**--**--**--**--**--**~~~ Profiling OOP Profiling Came back!.";
+     profiling::ProfilingMain(*base::CommandLine::ForCurrentProcess());
+     CHECK(false) << "DIE PROFILING -------------============-----------------===========~~~~~~";
+     return 0;
   }
 
   return ChromeMainDelegate::RunProcess(process_type, main_function_params);

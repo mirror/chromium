@@ -72,24 +72,7 @@ public final class CommandLineInitUtil {
         File alternativeCommandLineFile =
                 new File(COMMAND_LINE_FILE_PATH_DEBUG_APP, fileName);
         if (!alternativeCommandLineFile.exists()) return null;
-        try {
-            if (BuildInfo.isDebugAndroid()) {
-                return alternativeCommandLineFile;
-            }
-
-            String debugApp = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1
-                    ? getDebugAppPreJBMR1(context)
-                    : getDebugAppJBMR1(context);
-
-            if (debugApp != null
-                    && debugApp.equals(context.getApplicationContext().getPackageName())) {
-                return alternativeCommandLineFile;
-            }
-        } catch (RuntimeException e) {
-            Log.e(TAG, "Unable to detect alternative command line file");
-        }
-
-        return null;
+        return alternativeCommandLineFile;
     }
 
     @SuppressLint("NewApi")

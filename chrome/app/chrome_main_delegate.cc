@@ -848,6 +848,7 @@ void ChromeMainDelegate::PreSandboxStartup() {
     // Initialize ResourceBundle which handles files loaded from external
     // sources.  The language should have been passed in to us from the
     // browser process as a command line flag.
+    /*
 #if defined(DISABLE_NACL)
     DCHECK(command_line.HasSwitch(switches::kLang) ||
            process_type == switches::kZygoteProcess ||
@@ -862,6 +863,7 @@ void ChromeMainDelegate::PreSandboxStartup() {
            process_type == switches::kPpapiBrokerProcess ||
            process_type == switches::kPpapiPluginProcess);
 #endif
+    */
 
     // TODO(markusheintz): The command line flag --lang is actually processed
     // by the CommandLinePrefStore, and made available through the PrefService

@@ -24,6 +24,7 @@ namespace profiling {
 int ProfilingMain(const base::CommandLine& cmdline) {
   ProfilingGlobals globals;
 
+  LOG(ERROR) << "**--**--**--**--**--**~~~ Android profiling process started.";
   mojo::edk::Init();
   mojo::edk::ScopedIPCSupport ipc_support(
       globals.GetIORunner(),

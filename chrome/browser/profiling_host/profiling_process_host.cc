@@ -4,9 +4,11 @@
 
 #include "chrome/browser/profiling_host/profiling_process_host.h"
 
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/path_service.h"
 #include "base/process/launch.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_switches.h"
@@ -18,19 +20,21 @@
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
-#if defined(OS_LINUX)
-#include <fcntl.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
+#if 1  // Weird crazy hacky headers for our test here of BrowserChildProcess launching.
+#include "content/public/browser/browser_child_process_host.h"
+#include "content/public/browser/browser_child_process_host_delegate.h"
+#include "content/public/common/sandboxed_process_launcher_delegate.h"
+#include "ipc/ipc_message.h"
+#include "ui/base/ui_base_switches.h"
+#endif
 
+#if defined(OS_POSIX)
 #include "base/files/scoped_file.h"
 #include "base/process/process_metrics.h"
 #include "base/third_party/valgrind/valgrind.h"
 #include "chrome/common/profiling/profiling_constants.h"
 #include "content/public/browser/file_descriptor_info.h"
+#include "chrome/profiling/profiling_main.h"
 #endif
 
 namespace profiling {
@@ -38,6 +42,26 @@ namespace profiling {
 namespace {
 
 ProfilingProcessHost* pph_singleton = nullptr;
+
+std::atomic_int num_pipes_created{0};
+
+/*
+class ProfilingChild : public content::ChildProcess{
+ public:
+  ProfilingChild()
+    : ChildProcess(base::ThreadPriority::NORMAL, "ProfilingProcess") {
+  }
+};
+*/
+
+class ProfilingHostDelegate : public content::BrowserChildProcessHostDelegate {
+ public:
+  ~ProfilingHostDelegate() override {}
+
+  bool OnMessageReceived(const IPC::Message& message) override {
+    return true;
+  }
+};
 
 #if defined(OS_LINUX)
 bool IsRunningOnValgrind() {
@@ -61,7 +85,10 @@ base::CommandLine MakeProfilingCommandLine(const std::string& pipe_id) {
     base::PathService::Get(base::FILE_EXE, &child_path);
   base::CommandLine result(child_path);
 
-  result.AppendSwitchASCII(switches::kProcessType, switches::kProfiling);
+  //result.AppendSwitchASCII(switches::kProcessType, switches::kProfiling);
+  result.AppendSwitchASCII(switches::kProcessType, switches::kUtilityProcess);
+  result.AppendSwitchASCII("foobar", "foobar");
+  result.AppendSwitchASCII(switches::kLang, "en-US");
   result.AppendSwitchASCII(switches::kMemlogPipe, pipe_id);
 
 #if defined(OS_WIN)
@@ -97,6 +124,7 @@ ProfilingProcessHost* ProfilingProcessHost::Get() {
 // static
 void ProfilingProcessHost::AddSwitchesToChildCmdLine(
     base::CommandLine* child_cmd_line) {
+  EnsureStarted();
   // TODO(ajwong): Figure out how to trace the zygote process.
   if (child_cmd_line->GetSwitchValueASCII(switches::kProcessType) ==
       switches::kZygoteProcess) {
@@ -119,6 +147,7 @@ void ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
     const base::CommandLine& command_line,
     int child_process_id,
     content::FileDescriptorInfo* mappings) {
+  EnsureStarted();
   // TODO(ajwong): Figure out how to trace the zygote process.
   if (command_line.GetSwitchValueASCII(switches::kProcessType) ==
       switches::kZygoteProcess) {
@@ -131,6 +160,8 @@ void ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
 
   pph->EnsureControlChannelExists();
 
+  LOG(ERROR) << "Num data pipes created: " <<
+             num_pipes_created.fetch_add(1, std::memory_order_relaxed);
   mojo::edk::PlatformChannelPair data_channel;
   mappings->Transfer(
       kProfilingDataPipe,
@@ -149,48 +180,58 @@ void ProfilingProcessHost::Launch() {
   mojo::edk::PlatformChannelPair control_channel;
   mojo::edk::HandlePassingInformation handle_passing_info;
 
-// TODO(brettw) most of this logic can be replaced with PlatformChannelPair.
-
-#if defined(OS_WIN)
-  base::Process process = base::Process::Current();
-  pipe_id_ = base::IntToString(static_cast<int>(process.Pid()));
-  base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
-#else
-
   // Create the socketpair for the low level memlog pipe.
-  // TODO(ajwong): Should this use base/posix/unix_domain_socket_linux.h?
-  int memlog_fds[2];
-  PCHECK(socketpair(AF_UNIX, SOCK_STREAM, 0, memlog_fds) == 0);
-  PCHECK(fcntl(memlog_fds[0], F_SETFL, O_NONBLOCK) == 0);
-  PCHECK(fcntl(memlog_fds[1], F_SETFL, O_NONBLOCK) == 0);
+  mojo::edk::PlatformChannelPair data_channel;
+  pipe_id_ = data_channel.PrepareToPassClientHandleToChildProcessAsString(
+      &handle_passing_info);
 
-  // Store one end for our message sender to use.
-  base::ScopedFD child_end(memlog_fds[1]);
-  // TODO(brettw) need to get rid of pipe_id when we can share over Mojo.
-  pipe_id_ = base::IntToString(memlog_fds[0]);
+  mojo::edk::ScopedPlatformHandle child_end = data_channel.PassClientHandle();
 
-  handle_passing_info.emplace_back(child_end.get(), child_end.get());
-  base::CommandLine profiling_cmd =
-      MakeProfilingCommandLine(base::IntToString(child_end.get()));
-#endif
+  base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
 
   // Keep the server handle, pass the client handle to the child.
   pending_control_connection_ = control_channel.PassServerHandle();
+  /*
   control_channel.PrepareToPassClientHandleToChildProcess(&profiling_cmd,
                                                           &handle_passing_info);
+                                                          */
+  mojo::edk::ScopedPlatformHandle control_child_end = control_channel.PassClientHandle();
+  handle_passing_info.push_back(
+      std::pair<int, int>(control_child_end.get().handle, 20003));
 
   base::LaunchOptions options;
 #if defined(OS_WIN)
   options.handles_to_inherit = &handle_passing_info;
 #elif defined(OS_POSIX)
   options.fds_to_remap = &handle_passing_info;
+#if defined(OS_LINUX)
   options.kill_on_parent_death = true;
+#endif
 #else
 #error Unsupported OS.
 #endif
 
-  process_ = base::LaunchProcess(profiling_cmd, options);
-  StartMemlogSender(pipe_id_);
+  LOG(ERROR) << "PPH Launch **--**--**--**--**--**~~~ " << profiling_cmd.GetCommandLineString();
+  //process_ = base::LaunchProcess(profiling_cmd, options);
+//  CHECK(process_.IsValid());
+  static ProfilingHostDelegate delegate;
+  content::BrowserChildProcessHost* host = content::BrowserChildProcessHost::Create(
+      // TODO(ajwong): Clearly bad. Base off of PROCESS_TYPE_CONTENT_END and
+      // don't clash with NACL.
+      static_cast<content::ProcessType>(2000), &delegate);
+  LOG(ERROR) << "PPH BCH requested **--**--**--**--**--**~~~ ";
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+      ->PostTask(
+          FROM_HERE,
+          base::BindOnce(&content::BrowserChildProcessHost::Launch,
+                         base::Unretained(host),
+                         base::MakeUnique<content::SandboxedProcessLauncherDelegate>(),
+                         base::MakeUnique<base::CommandLine>(profiling_cmd),
+                         true
+                         ));
+  LOG(ERROR) << "PPH Launched On IO **--**--**--**--**--**~~~ " << profiling_cmd.GetCommandLineString();
+  StartMemlogSender(
+      base::IntToString(data_channel.PassServerHandle().release().handle));
 }
 
 void ProfilingProcessHost::EnsureControlChannelExists() {

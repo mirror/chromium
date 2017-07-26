@@ -160,6 +160,8 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
   AddFilter(new HistogramMessageFilter);
 
   g_child_process_list.Get().push_back(this);
+  GetContentClient();
+  CHECK(GetContentClient()->browser());
   GetContentClient()->browser()->BrowserChildProcessHostCreated(this);
 
   if (!service_name.empty()) {

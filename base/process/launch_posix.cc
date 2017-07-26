@@ -298,6 +298,7 @@ Process LaunchProcess(const CommandLine& cmdline,
 
 Process LaunchProcess(const std::vector<std::string>& argv,
                       const LaunchOptions& options) {
+    RAW_LOG(ERROR, "LaunchProcess: launching:");
 #if defined(OS_MACOSX)
   if (FeatureList::IsEnabled(kMacLaunchProcessPosixSpawn)) {
     // TODO(rsesek): Do this unconditionally. There is one user for each of

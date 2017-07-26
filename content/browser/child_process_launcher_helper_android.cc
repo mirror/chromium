@@ -45,6 +45,7 @@ void ChildProcessLauncherHelper::BeforeLaunchOnClientThread() {
   // Android only supports renderer, sandboxed utility and gpu.
   std::string process_type =
       command_line()->GetSwitchValueASCII(switches::kProcessType);
+  /*
   CHECK(process_type == switches::kGpuProcess ||
         process_type == switches::kRendererProcess ||
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -52,6 +53,7 @@ void ChildProcessLauncherHelper::BeforeLaunchOnClientThread() {
 #endif
         process_type == switches::kUtilityProcess)
       << "Unsupported process type: " << process_type;
+      */
 
   // Non-sandboxed utility or renderer process are currently not supported.
   DCHECK(process_type == switches::kGpuProcess ||
