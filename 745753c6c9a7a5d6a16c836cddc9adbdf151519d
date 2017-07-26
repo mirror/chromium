@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebfc99b8_0c9ef50b",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:51:01Z",
+      "side": 1,
+      "message": "Should we add an option to make reads complete asynchronously?  Looking at the code, I don\u0027t think the difference is that interesting, but we\u0027ve often run into bugs where only async/sync was tested, and the other pattern had subtle issues.",
+      "range": {
+        "startLine": 82,
+        "startChar": 18,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "745753c6c9a7a5d6a16c836cddc9adbdf151519d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bb1d55_935f2629",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:51:01Z",
+      "side": 1,
+      "message": "Should we check that the request succeeded?\n\nEXPECT_EQ(net::OK, client_.completion_status().error_code);?",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "745753c6c9a7a5d6a16c836cddc9adbdf151519d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744ae6eb_33efa75b",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:51:01Z",
+      "side": 1,
+      "message": "Any reason for this not to just be EXPECT_EQ?",
+      "range": {
+        "startLine": 167,
+        "startChar": 23,
+        "endLine": 167,
+        "endChar": 31
+      },
+      "revId": "745753c6c9a7a5d6a16c836cddc9adbdf151519d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59803af9_26b19eef",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:51:01Z",
+      "side": 1,
+      "message": "nit:  +const\n\nThat is, \"std::string mime_type() const {\"",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "745753c6c9a7a5d6a16c836cddc9adbdf151519d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9f9d79_cac515cf",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:51:01Z",
+      "side": 1,
+      "message": "nit: +const",
+      "range": {
+        "startLine": 199,
+        "startChar": 38,
+        "endLine": 199,
+        "endChar": 46
+      },
+      "revId": "745753c6c9a7a5d6a16c836cddc9adbdf151519d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2026ce5_a6449e3d",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:51:01Z",
+      "side": 1,
+      "message": "I think we want a test where the second read (or nth read) is enough to sniff?  Just make the second packet have a length of kMaxBytesToSniff, or have kMaxBytesToSniff 1-byte packets.\n\nAlso, maybe a test where the first packet is enough to sniff?  I\u0027m not sure if that\u0027s guaranteed to be the case with any of the above tests.  Just need one read of length kMaxBytesToSniff.",
+      "range": {
+        "startLine": 336,
+        "startChar": 26,
+        "endLine": 336,
+        "endChar": 51
+      },
+      "revId": "745753c6c9a7a5d6a16c836cddc9adbdf151519d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
