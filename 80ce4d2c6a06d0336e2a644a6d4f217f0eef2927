@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7fb9926_4671adb3",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-26T18:17:02Z",
+      "side": 1,
+      "message": "nit: should we just use RefPtr instead of PassRefPtr? The latter is becoming obsolete.",
+      "range": {
+        "startLine": 746,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 10
+      },
+      "revId": "80ce4d2c6a06d0336e2a644a6d4f217f0eef2927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
