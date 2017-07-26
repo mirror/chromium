@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c2a817bc_10cce664",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-26T00:33:10Z",
+      "side": 1,
+      "message": "as discussed offline, this value will not be used for background loading, which means it\u0027s not in our current scope, so I\u0027d like to keep this as previous value 7000.",
+      "parentUuid": "187c20d0_1ec533d9",
+      "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "875fb4ab_969bc2c2",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 1
@@ -66,6 +84,41 @@
       "side": 1,
       "message": "\u003e I\u0027m not sure what the delay after RenovationsCompleted is for. IMO the Client already said they are completed, no need to wait. \n\nThe delay is to allow time for resources to be fetched; for the Wikipedia case, it allows for images in the unfolded sections to be retrieved. This was an interim solution before better RMD is available.\n\n\u003e Also, I think we need to wait before renovations are applied. Effectively, the old OnLoad-triggered snapshot moment should become a moment when we apply renovations, and actual snapshot shoudl happen once Client reports the renovations are applied... In this version, you don\u0027t wait for network-triggering renovations anyways, so this would be a simple and reliable schema.\n\nI think it would be more effective to not wait before taking the snapshot, but then wait afterward, for the reason I gave above. From my understanding, the purpose of DelayAfterDocumentOnLoadCompleted is to let the page finish fetching resources and generally \u0027settle\u0027 after scripts run. This would be equally useful after renovations complete. Furthermore, resource loads that would\u0027ve happened without renovations still have plenty of time to complete: they\u0027d have DelayAfterDocumentOnLoadCompleted + the time renovations take to complete.\n\nI\u0027m open to changing it, just wanted to say my rationale.",
       "parentUuid": "875fb4ab_969bc2c2",
+      "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0910a2e_55b31815",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-26T00:33:10Z",
+      "side": 1,
+      "message": "If we limit the scope to not caring about the placeholder for expanded areas on wikipedia pages, there\u0027s no difference between these two methods. The RenovationsCompleted is only used to load wikipedia placeholders. Personally I prefer Collin\u0027s solution since:\n1. It will not affect normal background loading we have for now.\n2. For wikipedia case, this approach will more likely to have a better page.\nBut TBH i don\u0027t have strong opinion on this one.",
+      "parentUuid": "6928ed4a_683326e8",
+      "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c22b31_dcbc08f8",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-26T00:33:10Z",
+      "side": 1,
+      "message": "you\u0027re posting a task to run MaybeStartSnapshotThenStop after 10 seconds of renovation starts. So basically this is waiting for 10 seconds before we take a snapshot, would it be too long? There is no need to clear the state of PageRenovator in BackgroundLoaderOffliner since there isn\u0027t a state for it, am I understanding it correctly?",
       "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
