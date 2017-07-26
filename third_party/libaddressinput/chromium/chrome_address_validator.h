@@ -20,6 +20,7 @@
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_validator.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/callback.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/preload_supplier.h"
+#include "third_party/libaddressinput/src/cpp/src/rule.h"
 
 namespace i18n {
 namespace addressinput {
