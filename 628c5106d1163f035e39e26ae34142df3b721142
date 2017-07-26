@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b4de5e6_626e706f",
+        "filename": "chrome/installer/linux/common/apt.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-07-26T22:48:10Z",
+      "side": 1,
+      "message": "The key now has subkeys, and it\u0027s the subkeys that we actually use for signing (and which we intend to update ~annually).",
+      "parentUuid": "759b4151_87d8b5ec",
+      "revId": "628c5106d1163f035e39e26ae34142df3b721142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72472723_b8fbaac4",
         "filename": "chrome/installer/linux/common/rpm.include",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T22:37:51Z",
       "side": 1,
       "message": "Just grep -q?",
+      "revId": "628c5106d1163f035e39e26ae34142df3b721142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3e22ae_d1039528",
+        "filename": "chrome/installer/linux/common/rpm.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-07-26T22:48:10Z",
+      "side": 1,
+      "message": "Ugh, yes.",
+      "parentUuid": "72472723_b8fbaac4",
       "revId": "628c5106d1163f035e39e26ae34142df3b721142",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
