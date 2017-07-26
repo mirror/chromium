@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b315f93e_4183a9d1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-26T15:48:21Z",
+      "side": 1,
+      "message": "Is this still under review? I didn\u0027t find it in ToT.",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "7de433f1daacec2af3098e0abd6530e00c21e0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "831a3a7c_9a2cda1c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 1
@@ -61,6 +84,30 @@
       "side": 1,
       "message": "My thought was that while it has the same interface, it\u0027s not actually a delegate used by a SwapMetricsDriver and its lifetime isn\u0027t tied to a SwapMetricsDriver, like a delegate is. Also, this follows the pattern that\u0027s already in TabManager for the SessionRestoreObserver - the TabManager has the same methods but doesn\u0027t implement the SessionRestoreObserver interface. I was trying to be consistent, but fine with changing too. WDYT?",
       "parentUuid": "2baf63b5_8df1a9ab",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 47
+      },
+      "revId": "7de433f1daacec2af3098e0abd6530e00c21e0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbe9e5e_32e43a5b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-26T15:48:21Z",
+      "side": 1,
+      "message": "I see SwapMetricsDriver is created in TabManager\u0027s constructor. So SwapMetricsDriver\u0027s lifetime is tied to TabManager, which is the same as the stats collector.\n\nThis class does not change any statss in TabManager. TabManagerSessionRestoreObserver will change TabManager state. So this class is more tied to stats collector than TabManager.",
+      "parentUuid": "2dca94d2_88334c95",
       "range": {
         "startLine": 150,
         "startChar": 0,
