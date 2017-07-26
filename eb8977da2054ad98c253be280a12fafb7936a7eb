@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "668d910a_2a1a34af",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T21:25:59Z",
+      "side": 1,
+      "message": "Ah, sorry, I missed that this was else.",
+      "parentUuid": "3f1459bc_bd74526c",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d716e9b_a780e088",
         "filename": "content/renderer/renderer_v2.sb",
         "patchSetId": 4
@@ -81,6 +105,24 @@
       "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d9cd5b_59268634",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T21:25:59Z",
+      "side": 1,
+      "message": "Got it. They shoved all of CG into SL in 10.12.",
+      "parentUuid": "3c4cf462_e9f40fd9",
+      "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
