@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea294ac_d162242a",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-26T22:51:15Z",
+      "side": 1,
+      "message": "Would it be easier to just have three methods, one for each operation?\n\nIf we require that only one of the three options is chosen, maybe that should be enforced inside the startup parameters object.",
+      "range": {
+        "startLine": 2166,
+        "startChar": 19,
+        "endLine": 2166,
+        "endChar": 58
+      },
+      "revId": "561db9610dbf4564c0a68b80cae7d7308fe155e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5155e9_ed776415",
+        "filename": "ios/chrome/browser/chrome_url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-26T22:51:15Z",
+      "side": 1,
+      "message": "bool, to match the rest of the file.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 4
+      },
+      "revId": "561db9610dbf4564c0a68b80cae7d7308fe155e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
