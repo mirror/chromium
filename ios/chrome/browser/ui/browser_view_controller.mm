@@ -4093,6 +4093,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self addToReadingListURL:[command URL] title:[command title]];
 }
 
+- (void)showQRScanner {
+  _qrScannerViewController =
+      [[QRScannerViewController alloc] initWithDelegate:_toolbarController];
+  [self presentViewController:[_qrScannerViewController
+                                  getViewControllerToPresent]
+                     animated:YES
+                   completion:nil];
+}
+
 #pragma mark - Command Handling
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -4213,9 +4222,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       if ([sender isKindOfClass:[UIView class]])
         _voiceSearchButton = sender;
       [super chromeExecuteCommand:sender];
-      break;
-    case IDC_SHOW_QR_SCANNER:
-      [self showQRScanner];
       break;
     default:
       // Unknown commands get sent up the responder chain.
@@ -4444,15 +4450,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                           loader:self];
 
   [_readingListCoordinator start];
-}
-
-- (void)showQRScanner {
-  _qrScannerViewController =
-      [[QRScannerViewController alloc] initWithDelegate:_toolbarController];
-  [self presentViewController:[_qrScannerViewController
-                                  getViewControllerToPresent]
-                     animated:YES
-                   completion:nil];
 }
 
 - (void)showNTPPanel:(NewTabPage::PanelIdentifier)panel {

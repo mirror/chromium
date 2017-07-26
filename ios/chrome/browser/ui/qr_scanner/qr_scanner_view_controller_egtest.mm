@@ -133,9 +133,8 @@ void ShowQRScanner() {
 
     [[EarlGrey selectElementWithMatcher:matcher] performAction:grey_tap()];
   } else {
-    GenericChromeCommand* command =
-        [[GenericChromeCommand alloc] initWithTag:IDC_SHOW_QR_SCANNER];
-    chrome_test_util::RunCommandWithActiveViewController(command);
+    // Will be removed along IsKeyboardAccessoryViewWithCameraSearchEnabled.
+    NOTREACHED();
   }
 }
 
