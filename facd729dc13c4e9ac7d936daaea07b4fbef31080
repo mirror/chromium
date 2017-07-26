@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f5c29e7_0f842844",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-26T23:36:22Z",
+      "side": 1,
+      "message": "This is by our current design. This can be triggered by dispatching payment request event error or by payment handler.",
+      "parentUuid": "63537751_14d19ee4",
+      "range": {
+        "startLine": 126,
+        "startChar": 22,
+        "endLine": 126,
+        "endChar": 29
+      },
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc8d431_da7946c6",
         "filename": "content/browser/payments/payment_app_provider_impl.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84d7554_ae01dc25",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-26T23:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc8d431_da7946c6",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d38fccf6_1e479f3e",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-26T23:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38be6761_fa038d51",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22d59082_96f396ad",
         "filename": "content/browser/payments/payment_app_provider_impl.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32760d57_4872c17d",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-26T23:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d59082_96f396ad",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "ea54e27e_9aca3767",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-26T23:36:22Z",
+      "side": 1,
+      "message": "It\u0027s not possible since below StartRequest and and RunAfterStartWorker do not accept it.\n\nI used WeakPtr in case it might be called multiple times (should not in current codebase). We could migrate this interface when the interfaces in service worker have been migrated.",
+      "parentUuid": "b97a871e_508e434e",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ef6fd4e_5bb1cedc",
         "filename": "content/browser/payments/payment_app_provider_impl.cc",
         "patchSetId": 5
@@ -113,6 +215,24 @@
       "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb31b4d_56fd6a5c",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-26T23:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ef6fd4e_5bb1cedc",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
