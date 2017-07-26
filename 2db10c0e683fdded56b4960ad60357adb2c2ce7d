@@ -141,6 +141,24 @@
       "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2b32eb5_37c89d01",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-26T19:47:05Z",
+      "side": 1,
+      "message": "\u003e I guess that one wasn\u0027t uploaded yet since I\u0027m still seeing the call to CreateThread?\n\nNot sure what you mean? Yes, blink::Platform still calls CreateThread to create its File thread. But in the Patch Set #10 the content side code was updated to not also create its own thread, but instead use the same thread Platform::FileTaskRunner uses.",
+      "parentUuid": "3dfcda85_95790e31",
+      "revId": "2db10c0e683fdded56b4960ad60357adb2c2ce7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
