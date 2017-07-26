@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "77f003d4_2b73fa11",
+        "filename": "build/android/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1142197
+      },
+      "writtenOn": "2017-07-26T22:02:12Z",
+      "side": 1,
+      "message": "nit: put this before J(\u0027pylib\u0027, \u0027local\u0027, \u0027device\u0027, \u0027local_device_test_run_test.py\u0027).",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 67,
+        "endChar": 61
+      },
+      "revId": "3e9ad1c806345094ccd08c3ddf472b3e34bcbc9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32b79189_3a7ed38f",
         "filename": "build/android/pylib/local/device/local_device_test_run.py",
         "patchSetId": 1
