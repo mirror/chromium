@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a9249d2_b0a6b425",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-26T17:13:29Z",
+      "side": 1,
+      "message": "Paused is also a special state, and need to update the notification immediately",
+      "revId": "6591008843070206a11edc36cf9a52fd87922625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
