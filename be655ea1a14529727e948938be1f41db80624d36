@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2ff58fea_ee4e4e8d",
+        "filename": "base/android/library_loader/library_loader_hooks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-26T06:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "343a0f74_e8ad58ff",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 48
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "984190cc_c4f0007f",
         "filename": "base/debug/activity_tracker.cc",
         "patchSetId": 7
@@ -93,6 +117,30 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f7db6f_b1a8c38c",
+        "filename": "base/debug/activity_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-26T06:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0053dc_7ed963fb",
+      "range": {
+        "startLine": 1374,
+        "startChar": 30,
+        "endLine": 1374,
+        "endChar": 66
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -239,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "5284d06c_70c39eca",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-26T06:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "debd44b4_3d3078c1",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 966,
+        "endChar": 74
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12e01e96_5764bd4a",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 7
@@ -304,6 +376,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "1e71d3a0_7a3155e5",
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37b2fa5b_b63469a9",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-26T06:43:18Z",
+      "side": 1,
+      "message": "Alexei, can we do this without changing the name?",
+      "parentUuid": "cb69f1b3_40dde0a5",
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
