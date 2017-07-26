@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b2a37ff_fa454412",
+        "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-26T08:35:28Z",
+      "side": 1,
+      "message": "So I think this does exactly the same as ShrinkToFit() (except the DCHECK).\n\nIn both cases you have a max_size and a min_size, that you want to clamp |size| to. If |size| is within the range of [min_size, max_size], simply return |size|. Otherwise return the constrain value that |size| \"violated\".\n\nIn either case you\u0027ll end up returning the median value. Since you should be able to assume that min_size \u003c\u003d max_size (so that the \"array\" of 3 items is already partially sorted), finding the median can be done easily with two comparisons. (Otherwise, you\u0027d need more.)",
+      "revId": "8b7807a45d018533789126b7a15d231f706ca0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
