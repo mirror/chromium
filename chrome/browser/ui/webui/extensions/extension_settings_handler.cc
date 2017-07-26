@@ -219,6 +219,7 @@ void ExtensionSettingsHandler::GetLocalizedValues(
       l10n_util::GetStringUTF16(IDS_EXTENSION_PACK_DIALOG_PRIVATE_KEY_LABEL));
   source->AddString("packExtensionBrowseButton",
       l10n_util::GetStringUTF16(IDS_EXTENSION_PACK_DIALOG_BROWSE));
+  LOG(ERROR) << "FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO";
   source->AddString("packExtensionProceedAnyway",
       l10n_util::GetStringUTF16(IDS_EXTENSION_PROCEED_ANYWAY));
   source->AddString("packExtensionWarningTitle",
