@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68e8739e_cd30cf45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T21:13:34Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this is useful as a commit message.  I\u0027d delete this and just reply with this comment to describe what happened.",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230a9f48_9479f9c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T21:13:34Z",
+      "side": 1,
+      "message": "Nit:  \"This CL adds a\" -\u003e \"Add a\"\n\nAn explanation of why you need to manage them all would be good.  It\u0027s not clear to me why you need to do this (without having read the CL yet).",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c99b7ab_def2ebd6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T21:13:34Z",
+      "side": 1,
+      "message": "Add comment on why you need to keep track of the contexts.",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c73096_c26773a9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T21:13:34Z",
+      "side": 1,
+      "message": "Seems you don\u0027t really need a hashset here.  Can\u0027t it just be a simple Vector\u003cMember\u003cBaseAudioContext\u003e\u003e?  Seems much lighter than a hash set.",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dd682f_864028b0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T21:13:34Z",
+      "side": 1,
+      "message": "I\u0027ll have to defer to someone else to review this function.",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
