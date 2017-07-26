@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "defee282_cfffcb23",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T15:37:39Z",
+      "side": 1,
+      "message": "better use construction:\nis_fullscreen_app_list_enabled_ ? 0 : initial_apps_page",
+      "range": {
+        "startLine": 400,
+        "startChar": 36,
+        "endLine": 400,
+        "endChar": 53
+      },
+      "revId": "a101a16388a556dc8b880c84127d6a32189cbad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
