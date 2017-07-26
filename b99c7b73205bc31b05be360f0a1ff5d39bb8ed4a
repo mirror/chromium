@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eda16fba_ac54f4f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 8604,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-26T05:02:07Z",
+      "side": 1,
+      "message": "Considering leading with your previous description:\nThe GPU memory allocated for tilings when compositing a layer (in a browser process).\nThe continuing with the explanation you have.  This description makes it clear that this is emitted once per layer that\u0027s been composited.\n\nOr wait -- the code makes it look like it\u0027s emitted once per drawing, and this is summed over all the layers.  Which is it?\n\nThe description should be clear.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded",
+      "range": {
+        "startLine": 8604,
+        "startChar": 4,
+        "endLine": 8604,
+        "endChar": 6
+      },
+      "revId": "b99c7b73205bc31b05be360f0a1ff5d39bb8ed4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc7dc90_0a913e4e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 8607,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-26T05:02:07Z",
+      "side": 1,
+      "message": "Consider adding:\nNothing is recorded if this is not a picture layer.\nor\nNothing is recorded if there are no picture layers.\n(depending on when this is emitted)",
+      "range": {
+        "startLine": 8607,
+        "startChar": 23,
+        "endLine": 8607,
+        "endChar": 0
+      },
+      "revId": "b99c7b73205bc31b05be360f0a1ff5d39bb8ed4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
