@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d72baee_10fd75f7",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/BarcodeDetectionProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-26T01:27:19Z",
+      "side": 1,
+      "message": "Ouch, yeah, corrected.",
+      "parentUuid": "59998ed8_f5ffa88e",
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd18d69c_ff6218a2",
         "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dc562f_05e7c619",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-26T01:27:19Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "fd18d69c_ff6218a2",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0608145c_d46f2e68",
+        "filename": "services/shape_detection/barcode_detection_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-26T01:27:19Z",
+      "side": 1,
+      "message": "Neither, removed as well.",
+      "parentUuid": "97339b12_f1add88a",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e5e90a2_b5ed7d5f",
         "filename": "services/shape_detection/manifest.json",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e9c504eb_5e2b38ec",
+        "filename": "services/shape_detection/manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-26T01:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e5e90a2_b5ed7d5f",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 2
+      },
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aa8c491_35825ef1",
         "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.h",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91b6c1a_511d6a86",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-26T01:27:19Z",
+      "side": 1,
+      "message": "Removed. It was a remnant of splitting this out of the\nplayground patch.",
+      "parentUuid": "7aa8c491_35825ef1",
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
