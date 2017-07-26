@@ -10,10 +10,19 @@
 #include "base/logging.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/limits.h"
+#include "media/gpu/gpu_video_accelerator_util.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace media {
+
+// static
+gpu::VideoEncodeAcceleratorSupportedProfiles
+MojoVideoEncodeAcceleratorService::GetSupportedProfiles(
+    const gpu::GpuPreferences& gpu_preferences) {
+  return GpuVideoAcceleratorUtil::ConvertMediaToGpuEncodeProfiles(
+      GpuVideoEncodeAcceleratorFactory::GetSupportedProfiles(gpu_preferences));
+}
 
 // static
 void MojoVideoEncodeAcceleratorService::Create(
