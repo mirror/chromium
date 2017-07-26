@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a629e6a_3b20ce2d",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-26T02:20:55Z",
+      "side": 0,
+      "message": "why did you get rid of this?",
+      "revId": "9ed1431620c445d5e6c3551d34b8d282b360966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
