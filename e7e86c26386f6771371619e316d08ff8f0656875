@@ -22,6 +22,30 @@
       "revId": "e7e86c26386f6771371619e316d08ff8f0656875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9906fe85_afb6552c",
+        "filename": "chrome/browser/resources/md_history/history_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-26T02:41:12Z",
+      "side": 1,
+      "message": "http://eslint.org/docs/rules/arrow-parens should be able to help enforce always having parentheses. I\u0027ll look into adding this check in our config.",
+      "parentUuid": "5caebc48_fb3e3d19",
+      "range": {
+        "startLine": 145,
+        "startChar": 31,
+        "endLine": 145,
+        "endChar": 36
+      },
+      "revId": "e7e86c26386f6771371619e316d08ff8f0656875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
