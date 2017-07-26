@@ -254,7 +254,7 @@ void TypingCommand::UpdateSelectionIfDifferentFromCurrentSelection(
   DCHECK(frame);
   VisibleSelection current_selection =
       frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
-  if (current_selection == typing_command->EndingSelection())
+  if (current_selection == typing_command->EndingVisibleSelection())
     return;
 
   typing_command->SetStartingSelection(current_selection);
@@ -356,7 +356,8 @@ void TypingCommand::InsertText(
   // that can be used by all of the commands.
   if (TypingCommand* last_typing_command =
           LastTypingCommandIfStillOpenForTyping(frame)) {
-    if (last_typing_command->EndingSelection() != selection_for_insertion) {
+    if (last_typing_command->EndingVisibleSelection() !=
+        selection_for_insertion) {
       last_typing_command->SetStartingSelection(selection_for_insertion);
       last_typing_command->SetEndingVisibleSelection(selection_for_insertion);
     }
@@ -618,7 +619,7 @@ void TypingCommand::InsertTextRunWithoutNewlines(const String& text,
             : InsertTextCommand::kRebalanceAllWhitespaces);
   }
 
-  ApplyCommandToComposite(command, EndingSelection(), editing_state);
+  ApplyCommandToComposite(command, EndingVisibleSelection(), editing_state);
   if (editing_state->IsAborted())
     return;
 
@@ -626,7 +627,7 @@ void TypingCommand::InsertTextRunWithoutNewlines(const String& text,
 }
 
 void TypingCommand::InsertLineBreak(EditingState* editing_state) {
-  if (!CanAppendNewLineFeedToSelection(EndingSelection()))
+  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
     return;
 
   ApplyCommandToComposite(InsertLineBreakCommand::Create(GetDocument()),
@@ -637,7 +638,7 @@ void TypingCommand::InsertLineBreak(EditingState* editing_state) {
 }
 
 void TypingCommand::InsertParagraphSeparator(EditingState* editing_state) {
-  if (!CanAppendNewLineFeedToSelection(EndingSelection()))
+  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
     return;
 
   ApplyCommandToComposite(
@@ -723,8 +724,8 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
   frame->GetSpellChecker().UpdateMarkersForWordsAffectedByEditing(false);
 
   if (EndingSelection().IsRange()) {
-    DeleteKeyPressedInternal(EndingSelection(), EndingSelection(), kill_ring,
-                             editing_state);
+    DeleteKeyPressedInternal(EndingVisibleSelection(), EndingSelection(),
+                             kill_ring, editing_state);
     return;
   }
 
@@ -746,7 +747,7 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
   smart_delete_ = false;
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  SelectionModifier selection_modifier(*frame, EndingSelection());
+  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kBackward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -903,7 +904,7 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
   frame->GetSpellChecker().UpdateMarkersForWordsAffectedByEditing(false);
 
   if (EndingSelection().IsRange()) {
-    ForwardDeleteKeyPressedInternal(EndingSelection(), EndingSelection(),
+    ForwardDeleteKeyPressedInternal(EndingVisibleSelection(), EndingSelection(),
                                     kill_ring, editing_state);
     return;
   }
@@ -919,7 +920,7 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
   // Handle delete at beginning-of-block case.
   // Do nothing in the case that the caret is at the start of a
   // root editable element or at the start of a document.
-  SelectionModifier selection_modifier(*frame, EndingSelection());
+  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kForward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
