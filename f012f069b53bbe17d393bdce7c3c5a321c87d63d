@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "771701b0_5d32718a",
+        "filename": "chrome/browser/extensions/extension_action_test_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T15:53:09Z",
+      "side": 1,
+      "message": "Now that default arguments aren\u0027t banned, we should probably get rid of this second method and just do:\n\nscoped_refptr\u003cconst Extension\u003e CreateActionExtension(\n    const std::string\u0026 name,\n    ActionType action_type,\n    Manifest::Location location \u003d Manifest::INTERNAL,\n    std::unique_ptr\u003cbase::DictionaryValue\u003e extra_keys \u003d nullptr);",
+      "revId": "f012f069b53bbe17d393bdce7c3c5a321c87d63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcc9844_50203f4f",
+        "filename": "chrome/browser/extensions/extension_action_test_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T15:53:09Z",
+      "side": 1,
+      "message": "Now that default arguments aren\u0027t banned, we should probably get rid of this second method and just do:\n\nscoped_refptr\u003cconst Extension\u003e CreateActionExtension(\n    const std::string\u0026 name,\n    ActionType action_type,\n    Manifest::Location location \u003d Manifest::INTERNAL,\n    std::unique_ptr\u003cbase::DictionaryValue\u003e extra_keys \u003d nullptr);",
+      "revId": "f012f069b53bbe17d393bdce7c3c5a321c87d63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
