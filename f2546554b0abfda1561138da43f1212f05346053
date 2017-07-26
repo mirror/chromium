@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "746ff91b_be10dcd3",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T19:45:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc087961_4a64c687",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ccfc68_837904f0",
         "filename": "chrome/installer/zucchini/buffer_view.h",
         "patchSetId": 5
@@ -519,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "575536ad_cee3d31c",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T19:45:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0e9a201_69b100fa",
+      "range": {
+        "startLine": 15,
+        "startChar": 36,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6738462_cd2d1a65",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 5
@@ -939,6 +987,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2215a3ad_bebef7c9",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T19:45:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9818ecb5_b9fd8423",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
