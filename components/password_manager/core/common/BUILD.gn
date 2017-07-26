@@ -4,6 +4,8 @@
 
 static_library("common") {
   sources = [
+    "credential_manager_features.cc",
+    "credential_manager_features.h",
     "credential_manager_types.cc",
     "credential_manager_types.h",
     "experiments.cc",
