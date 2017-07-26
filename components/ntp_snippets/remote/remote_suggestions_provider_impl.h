@@ -142,6 +142,9 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // the constructor.
   CachedImageFetcher& GetImageFetcherForTesting() { return image_fetcher_; }
 
+  // Callback for pushing suggestions.
+  void OnSuggestionsPushed(std::vector<FetchedCategory> fetched_categories);
+
  private:
   friend class RemoteSuggestionsProviderImplTest;
 

@@ -607,6 +607,12 @@ void RemoteSuggestionsProviderImpl::OnDatabaseLoaded(
     std::sort(content->suggestions.begin(), content->suggestions.end(),
               [](const std::unique_ptr<RemoteSuggestion>& lhs,
                  const std::unique_ptr<RemoteSuggestion>& rhs) {
+                if (lhs->is_pushed() != rhs->is_pushed()) {
+                  return lhs->is_pushed();
+                }
+                if (lhs->is_pushed()) {
+                  return lhs->fetch_date() > rhs->fetch_date();
+                }
                 return lhs->score() > rhs->score();
               });
   }
@@ -763,6 +769,37 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
 
   if (callback) {
     callback.Run(status);
+  }
+}
+
+void RemoteSuggestionsProviderImpl::OnSuggestionsPushed(
+    std::vector<FetchedCategory> fetched_categories) {
+  if (!ready()) {
+    return;
+  }
+
+  ClearExpiredDismissedSuggestions();
+
+  for (FetchedCategory& fetched_category : fetched_categories) {
+    auto content_it = category_contents_.find(articles_category_);
+    if (content_it == category_contents_.end()) {
+      LOG(DFATAL) << " Trying to push a suggestion into unknown category "
+                  << fetched_category.category << ".";
+      continue;
+    }
+    CategoryContent* content = &content_it->second;
+
+    SanitizeReceivedSuggestions(content->dismissed,
+                                &fetched_category.suggestions);
+
+    database_->SaveSnippets(fetched_category.suggestions);
+
+    content->suggestions.insert(
+        content->suggestions.begin(),
+        std::make_move_iterator(fetched_category.suggestions.begin()),
+        std::make_move_iterator(fetched_category.suggestions.end()));
+
+    NotifyNewSuggestions(fetched_category.category, *content);
   }
 }
 
