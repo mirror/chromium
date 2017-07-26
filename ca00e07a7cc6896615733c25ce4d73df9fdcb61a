@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5274fca_faa32966",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-26T17:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0ada111_a759995b",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c4cd66_40b7b002",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f01d76a_52f96242",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-26T17:59:55Z",
+      "side": 1,
+      "message": "OK then I\u0027ll make all UMA constants real constants here.",
+      "parentUuid": "b5c4cd66_40b7b002",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +139,54 @@
       "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac0cb33_cfb26594",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-26T17:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d624b1db_5003a52c",
+      "range": {
+        "startLine": 267,
+        "startChar": 36,
+        "endLine": 267,
+        "endChar": 41
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbc6ad26_fdf61741",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-26T17:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "143ec0b3_827c4241",
+      "range": {
+        "startLine": 267,
+        "startChar": 69,
+        "endLine": 267,
+        "endChar": 76
+      },
+      "revId": "ca00e07a7cc6896615733c25ce4d73df9fdcb61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
