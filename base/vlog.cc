@@ -49,7 +49,7 @@ VlogInfo::VlogInfo(const std::string& v_switch,
                    const std::string& vmodule_switch,
                    int* min_log_level)
     : min_log_level_(min_log_level) {
-  DCHECK(min_log_level != NULL);
+  DCHECK(min_log_level != nullptr);
 
   int vlog_level = 0;
   if (!v_switch.empty()) {
@@ -118,11 +118,11 @@ int VlogInfo::GetVlogLevel(const base::StringPiece& file) const {
 
 void VlogInfo::SetMaxVlogLevel(int level) {
   // Log severity is the negative verbosity.
-  *min_log_level_ = -level;
+  base::subtle::NoBarrier_Store(min_log_level_, -level);
 }
 
 int VlogInfo::GetMaxVlogLevel() const {
-  return -*min_log_level_;
+  return -base::subtle::NoBarrier_Load(min_log_level_);
 }
 
 bool MatchVlogPattern(const base::StringPiece& string,

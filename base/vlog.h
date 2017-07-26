@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
@@ -39,7 +40,7 @@ class BASE_EXPORT VlogInfo {
   // source files under a "foo/bar" directory.
   VlogInfo(const std::string& v_switch,
            const std::string& vmodule_switch,
-           int* min_log_level);
+           base::subtle::Atomic32* min_log_level);
   ~VlogInfo();
 
   // Returns the vlog level for a given file (usually taken from
@@ -54,7 +55,7 @@ class BASE_EXPORT VlogInfo {
   // from |vmodule_switch|.
   struct VmodulePattern;
   std::vector<VmodulePattern> vmodule_levels_;
-  int* min_log_level_;
+  base::subtle::Atomic32* min_log_level_;
 
   DISALLOW_COPY_AND_ASSIGN(VlogInfo);
 };
