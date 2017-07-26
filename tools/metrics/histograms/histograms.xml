@@ -30824,19 +30824,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Media.Remoting.PosterDownloadDuration.Fail" units="ms">
+<histogram name="Media.Remoting.FailedWithTooHighBitrate" enum="BooleanEnabled">
   <owner>miu@chromium.org</owner>
   <summary>
-    Measures the amount of time it took to ultimately fail to download a poster
-    image for an HTML5 video while remoting content.
-  </summary>
-</histogram>
-
-<histogram name="Media.Remoting.PosterDownloadDuration.Success" units="ms">
-  <owner>miu@chromium.org</owner>
-  <summary>
-    Measures the amount of time it took to successfully download a poster image
-    for an HTML5 video while remoting content.
+    Tracks whether content bitrate is too high to start media remoting.
   </summary>
 </histogram>
 

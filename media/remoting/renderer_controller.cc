@@ -20,9 +20,16 @@ namespace media {
 namespace remoting {
 
 namespace {
+
 // The duration to delay the start of media remoting to ensure all preconditions
 // are held stable before switching to media remoting.
 constexpr base::TimeDelta kDelayedStart = base::TimeDelta::FromSeconds(5);
+
+// The transmission capacity for media remoting(bytes per second).
+// TODO(xjz): Estimates this according to receiver setup info and the reported
+// wifiSnr.
+constexpr double kTransmissionCapacity = 10000000.0 / 8.0;
+
 }  // namespace
 
 RendererController::RendererController(scoped_refptr<SharedSession> session)
@@ -402,26 +409,32 @@ void RendererController::WaitForStabilityBeforeStart(
   delayed_start_stability_timer_.Start(
       FROM_HERE, kDelayedStart,
       base::Bind(&RendererController::OnDelayedStartTimerFired,
-                 base::Unretained(this), start_trigger));
-
-  // TODO(xjz): Start content bitrate estimation.
+                 base::Unretained(this), start_trigger,
+                 client_->VideoDecodedByteCount()));
 }
 
 void RendererController::CancelDelayedStart() {
   delayed_start_stability_timer_.Stop();
-
-  // TODO(xjz): Stop content bitrate estimation.
 }
 
-void RendererController::OnDelayedStartTimerFired(StartTrigger start_trigger) {
+void RendererController::OnDelayedStartTimerFired(StartTrigger start_trigger,
+                                                  size_t decoded_bytes) {
   DCHECK(is_dominant_content_);
   DCHECK(!remote_rendering_started_);
   DCHECK(!is_encrypted_);
 
-  // TODO(xjz): Stop content bitrate estimation and evaluate whether the
-  // estimated bitrate is supported by remoting.
-
-  StartRemoting(start_trigger);
+  double bps = (client_->VideoDecodedByteCount() - decoded_bytes) /
+               kDelayedStart.InSecondsF();
+  DCHECK_GE(bps, 0);
+  // TODO(xjz): Gets the transmission capacity from Remoter.
+  if (bps <= kTransmissionCapacity) {
+    metrics_recorder_.OnStartFailedWithTooHighVideoBitrate(false);
+    StartRemoting(start_trigger);
+  } else {
+    VLOG(1) << "Media remoting is not supported: bitrate(bytes/s) =" << bps;
+    encountered_renderer_fatal_error_ = true;
+    metrics_recorder_.OnStartFailedWithTooHighVideoBitrate(true);
+  }
 }
 
 void RendererController::StartRemoting(StartTrigger start_trigger) {

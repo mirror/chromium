@@ -27,6 +27,9 @@ class MEDIA_EXPORT MediaObserverClient {
   // Reports the latest compatibility state of the element's source for remote
   // playback.
   virtual void UpdateRemotePlaybackCompatibility(bool is_compatible) = 0;
+
+  // Gets the number of video bytes decoded so far.
+  virtual size_t VideoDecodedByteCount() const = 0;
 };
 
 // This class is an observer of media player events.
