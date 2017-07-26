@@ -47,6 +47,7 @@ using base::Time;
 namespace {
 
 const char kIconsDirName[] = "icons";
+const char kScopeUrlHandlerId[] = "scope";
 
 // Create the public key for the converted web app.
 //
@@ -115,6 +116,42 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
   if (web_app.generated_icon_color != SK_ColorTRANSPARENT) {
     root->SetString(keys::kAppIconColor, image_util::GenerateHexColorString(
                                              web_app.generated_icon_color));
+  }
+
+  if (!web_app.scope.is_empty()) {
+    // Use the scope to create a url handler for the app.
+    // To create a URL handler that will match the same URLs as the "within
+    // scope" algorithm of the Web Manifest spec, we remove everything
+    // but the origin and path and append a wildcard, i.e. "*", to the result.
+    // According to the Web Manifest spec, a URL |url| is within scope of
+    // |scope_url| if |url|'s origin is the same as |scope_url|'s origin and
+    // |url|'s path starts with |scope_url|'s path.
+    // Note that this results in some unexpected URLs being within scope
+    // according to the spec:
+    // Suppose |scope_url| is "https://example.com/foo" and |url| is
+    // "https://example.com/foobar.html", then according to the spec algorithm
+    // |url| is within scope.
+    // See https://github.com/w3c/manifest/issues/554 for details.
+    // Note that this handler is also used to retrieve the scope for the app
+    // (by removing the '*'), so if you change this, you also have to change
+    // BookmarkAppHelper::GetScopeFromBookmarkApp().
+
+    auto matches = base::MakeUnique<base::ListValue>();
+    matches->AppendString(
+        web_app.scope.GetOrigin().Resolve(web_app.scope.path()).spec() + "*");
+
+    auto scope_handler = base::MakeUnique<base::DictionaryValue>();
+    scope_handler->SetList(keys::kMatches, std::move(matches));
+    // The URL handler title is not used anywhere but we set it to the
+    // web app's title just in case.
+    scope_handler->SetString(keys::kUrlHandlerTitle,
+                             base::UTF16ToUTF8(web_app.title));
+
+    auto url_handlers = base::MakeUnique<base::DictionaryValue>();
+    // Use "scope" as the url handler's identifier.
+    url_handlers->SetDictionary(kScopeUrlHandlerId, std::move(scope_handler));
+
+    root->SetDictionary(keys::kUrlHandlers, std::move(url_handlers));
   }
 
   // Add the icons and linked icon information.
