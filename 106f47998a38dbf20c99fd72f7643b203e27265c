@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa168fec_240b2601",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-07-26T17:26:08Z",
+      "side": 1,
+      "message": "Nit: This can be a local variable in handleIntent() instead of an instance variable.",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "106f47998a38dbf20c99fd72f7643b203e27265c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c333b4_a7ceced2",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-07-26T17:26:08Z",
+      "side": 1,
+      "message": "Do we need to unregisterReceiver() for mScreenOffBroadcastReceiver and mWindowDestroyedBroadcastReceiver here? The Android documentation is unclear.",
+      "range": {
+        "startLine": 200,
+        "startChar": 19,
+        "endLine": 200,
+        "endChar": 28
+      },
+      "revId": "106f47998a38dbf20c99fd72f7643b203e27265c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
