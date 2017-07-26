@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad6ce19_472cb015",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-26T02:20:13Z",
+      "side": 1,
+      "message": "This is breaking AccountConsistencyServiceTest.OnInactive since, in this test\u0027s case, web_view_  is OCMockObject.  I\u0027m hesitant to revert this CL, however, since it fixes a much larger issue.",
+      "revId": "28dfaa0da2e4ca268f6bbec2ede88c8a8c1933f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
