@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1f399a0_22c30950",
+        "filename": "gpu/config/gpu_feature_info.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-26T17:55:51Z",
+      "side": 1,
+      "message": "seperated -\u003e separated",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "09823f9f9235c70e2d71b6e62359d4c54c2ef67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
