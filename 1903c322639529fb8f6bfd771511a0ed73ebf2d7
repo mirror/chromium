@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7a78799_33e438a1",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T22:25:14Z",
+      "side": 1,
+      "message": "Isn\u0027t this only needed in the !make_pen_touch_flag?\n\nThis function has gotten rather unwieldy. Maybe break into GenerateMouseEventFromPointerEvent() for the !make_pen_touch_flag case?",
+      "range": {
+        "startLine": 2810,
+        "startChar": 6,
+        "endLine": 2810,
+        "endChar": 21
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea74dc9d_89b10454",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2831,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T22:25:14Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to explicitly check for POINTER_CHANGE_FIRSTBUTTON_DOWN and use that as LEFT_MOUSE_BUTTON and map everything else to RIGHT_MOUSE_BUTTON?",
+      "range": {
+        "startLine": 2831,
+        "startChar": 16,
+        "endLine": 2831,
+        "endChar": 33
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f14b22_1af25ef2",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T22:25:14Z",
+      "side": 1,
+      "message": "The second \u0027flag\u0027 parameter is the changed flags. The code you have here assumes the down state and the changed state are the same. Are you sure that is valid? For example, isn\u0027t it possible to get a WM_POINTERDOWN for FIRSTBUTTON followed by a WM_POINTERDOWN for SECONDBUTTON?",
+      "range": {
+        "startLine": 2868,
+        "startChar": 69,
+        "endLine": 2868,
+        "endChar": 73
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba204b96_e324c03b",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2913,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T22:25:14Z",
+      "side": 1,
+      "message": "TRUE -\u003e true",
+      "range": {
+        "startLine": 2913,
+        "startChar": 17,
+        "endLine": 2913,
+        "endChar": 21
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1df9493_5c1e76a1",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
@@ -34,6 +126,52 @@
       "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "708bc069_8bb433a8",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T22:25:14Z",
+      "side": 1,
+      "message": "Can you elaborate on why you need to generate a mouse event here? Shouldn\u0027t it be a touch event with ET_TOUCH_MOVED?",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf1088c_96ec3fd2",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-26T22:25:14Z",
+      "side": 1,
+      "message": "Why is the angle between 0-180 and not 360?",
+      "range": {
+        "startLine": 2921,
+        "startChar": 6,
+        "endLine": 2921,
+        "endChar": 20
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
