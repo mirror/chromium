@@ -156,8 +156,6 @@ class MTPDeviceDelegateImplMacTest : public testing::Test {
   void SetUp() override {
     ui_thread_.reset(new content::TestBrowserThread(
         content::BrowserThread::UI, &message_loop_));
-    file_thread_.reset(new content::TestBrowserThread(
-        content::BrowserThread::FILE, &message_loop_));
     io_thread_.reset(new content::TestBrowserThread(
         content::BrowserThread::IO));
     ASSERT_TRUE(io_thread_->Start());
@@ -288,9 +286,8 @@ class MTPDeviceDelegateImplMacTest : public testing::Test {
 
  protected:
   base::MessageLoopForUI message_loop_;
-  // Note: threads must be made in this order: UI > FILE > IO
+  // The UI thread must be constructed before the IO thread.
   std::unique_ptr<content::TestBrowserThread> ui_thread_;
-  std::unique_ptr<content::TestBrowserThread> file_thread_;
   std::unique_ptr<content::TestBrowserThread> io_thread_;
   base::ScopedTempDir temp_dir_;
   storage_monitor::ImageCaptureDeviceManager manager_;
