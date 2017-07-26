@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cb38b19_b5fa88f2",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-26T22:30:13Z",
+      "side": 1,
+      "message": "nit: Probably not useful to reset this if |this| is going to get deleted right after.",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 26
+      },
+      "revId": "8af55a47f7dec1dd7930f3c49f7884abeb878693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
