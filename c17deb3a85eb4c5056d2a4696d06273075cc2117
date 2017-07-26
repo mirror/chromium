@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a171e9f_e12e2a51",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-26T17:47:40Z",
+      "side": 1,
+      "message": "bool dispatching_page_navigate \u003d method \u003d\u003d \"Page.navigate\";",
+      "revId": "c17deb3a85eb4c5056d2a4696d06273075cc2117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
