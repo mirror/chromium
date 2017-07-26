@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00c0c874_ce17cbd7",
+        "filename": "chrome/common/cloud_print.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:25:21Z",
+      "side": 1,
+      "message": "Please give this an interface-level comment.",
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9143a1_eef224d7",
+        "filename": "chrome/common/service_process.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:25:21Z",
+      "side": 1,
+      "message": "Please give this an interface-level comment.",
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d7db11_0e69a58d",
+        "filename": "chrome/service/cloud_print/cloud_print_message_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:25:21Z",
+      "side": 1,
+      "message": "Create is an odd name for something that doesn\u0027t return a value. Is this typical for Mojo? Perhaps \"BindRequest\" would be better? Comment at least.",
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce668130_dafb7519",
+        "filename": "chrome/service/service_ipc_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:25:21Z",
+      "side": 1,
+      "message": "According to https://chromium.googlesource.com/chromium/src/+/d5292452b2f2be80fbdd27b89be6be3cae978e3c/ipc/README.md#Using-Content_s-Interface-Registries, the preferred way is to use a \"Connector\". I\u0027m not familiar enough with the difference to say which to use. Do you know?",
+      "range": {
+        "startLine": 30,
+        "startChar": 56,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430de6b9_787a132e",
+        "filename": "chrome/service/service_ipc_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:25:21Z",
+      "side": 1,
+      "message": "Since this is a BindingSet, name this service_process_bindings_ (plural).",
+      "range": {
+        "startLine": 99,
+        "startChar": 50,
+        "endLine": 99,
+        "endChar": 74
+      },
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
