@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4a16667_3c5e686a",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-26T05:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af2ebf0_f2b15799",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ce3a14_3f7f63de",
         "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196e8c17_4cbe1f2f",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-26T05:00:13Z",
+      "side": 1,
+      "message": "Done. GetFile does not take BindOnce so I changed it to use BindRepeating here instead of old Bind.",
+      "parentUuid": "31ce3a14_3f7f63de",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0556812e_64607685",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-26T05:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa646cf9_79549ae2",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76768369_8f67e592",
         "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "850dba72_5017348a",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-26T05:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76768369_8f67e592",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea433b85_2b2daed9",
         "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8c35a2_c80cdbb3",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-26T05:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea433b85_2b2daed9",
+      "revId": "3bbdf275a82c7061e293ff53eb4191cd40a502f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
