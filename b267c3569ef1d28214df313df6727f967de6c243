@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fcc342f_d1092fad",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T18:46:01Z",
+      "side": 1,
+      "message": "Eeek. CloneWithSkImage will still retain the cached_sk_image_ from the previous image. :/\n\nI think you need to reset whatever content the previous image had (record/sk_image and the cached_sk_image_).",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "b267c3569ef1d28214df313df6727f967de6c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0846ad5f_b4236952",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T18:46:01Z",
+      "side": 1,
+      "message": "nit: May be we can just expose bounds() instead of duplicating all the convenience functions?",
+      "revId": "b267c3569ef1d28214df313df6727f967de6c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42959a88_0257e543",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T18:46:01Z",
+      "side": 1,
+      "message": "TakePaintImage and move it instead?",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "b267c3569ef1d28214df313df6727f967de6c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
