@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9921cacf_a3f92e80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-26T01:24:02Z",
+      "side": 1,
+      "message": "If mCompositorViewHolder is null, I would just immediately call animateHidingSplashScreen and return. Thoughts?",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 58
+      },
+      "revId": "c4dec76bb86e073fb9c7fb7c6a15de78ff0de729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
