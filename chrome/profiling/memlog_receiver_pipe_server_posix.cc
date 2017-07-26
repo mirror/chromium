@@ -9,6 +9,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/common/profiling/memlog_stream.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
 
 namespace profiling {
 
@@ -17,9 +18,9 @@ MemlogReceiverPipeServer::MemlogReceiverPipeServer(
     const std::string& first_pipe_id,
     NewConnectionCallback on_new_conn)
     : io_runner_(io_runner), on_new_connection_(on_new_conn) {
-  int fd;
-  CHECK(base::StringToInt(first_pipe_id, &fd));
-  first_pipe_.reset(fd);
+  mojo::edk::ScopedPlatformHandle handle = mojo::edk::PlatformChannelPair::
+      PassClientHandleFromParentProcessFromString(first_pipe_id);
+  first_pipe_.reset(handle.release().handle);
 }
 
 MemlogReceiverPipeServer::~MemlogReceiverPipeServer() {}

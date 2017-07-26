@@ -21,6 +21,13 @@
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "content/public/browser/browser_main_runner.h"
 
+#include "chrome/common/features.h"
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "chrome/profiling/profiling_main.h"
+#include "content/public/common/content_switches.h"
+#include "content/public/common/main_function_params.h"
+#endif
+
 using safe_browsing::SafeBrowsingApiHandler;
 
 namespace {
@@ -97,6 +104,10 @@ int ChromeMainDelegateAndroid::RunProcess(
       browser_runner_.reset(content::BrowserMainRunner::Create());
     }
     return browser_runner_->Initialize(main_function_params);
+  } else if (process_type == switches::kUtilityProcess) {
+    LOG(ERROR) << "   ____------^^^^^^------______   "
+               << "OOP calling ProfilingMain";
+    profiling::ProfilingMain(main_function_params.command_line);
   }
 
   return ChromeMainDelegate::RunProcess(process_type, main_function_params);

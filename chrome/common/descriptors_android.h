@@ -16,6 +16,8 @@ enum {
   kAndroidUIResourcesPakDescriptor,
   kAndroidMinidumpDescriptor,
 #endif
+
+  kAndroidMaxDescriptor,  // Ensure this is last.
 };
 
 #endif  // CHROME_COMMON_DESCRIPTORS_ANDROID_H_
