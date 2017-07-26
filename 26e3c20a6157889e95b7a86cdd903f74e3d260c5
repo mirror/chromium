@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "608b8c3a_ed717376",
+        "filename": "ash/system/update/tray_update_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T21:59:48Z",
+      "side": 1,
+      "message": "Nice test.",
+      "revId": "26e3c20a6157889e95b7a86cdd903f74e3d260c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

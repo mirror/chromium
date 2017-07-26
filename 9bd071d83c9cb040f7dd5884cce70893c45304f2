@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2a6c143b_8e1c2114",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-26T21:59:48Z",
+      "side": 1,
+      "message": "Are you sure? I suspect that GetWidget() returns the entire system tray bubble, not just the row. If it\u0027s the whole bubble you should be calling SystemTray::CloseSystemBubble(). The bubble rebuilds all the views every time it opens, so maybe that\u0027s why it looks like this closes the row.",
+      "parentUuid": "233686bf_29f366e2",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916fb8c1_347b2fec",
         "filename": "ash/system/update/tray_update.cc",
         "patchSetId": 3
