@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e212938b_9f8f1231",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T00:20:02Z",
+      "side": 1,
+      "message": "Nit: please don\u0027t write auto here, it\u0027s not really clear what the return type is.",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 7
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7396f63f_89e612d9",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T00:20:02Z",
+      "side": 1,
+      "message": "I\u0027m assuming it\u0027s a scoped enum: in that case, this static_cast is unnecessary (see https://cs.chromium.org/chromium/src/base/logging.h?rcl\u003d43842c74ece44a3098321f3c2159235d3891c778\u0026l\u003d689).",
+      "range": {
+        "startLine": 253,
+        "startChar": 21,
+        "endLine": 253,
+        "endChar": 38
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9642c700_a900550f",
+        "filename": "chrome/browser/media/router/media_router_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T00:20:02Z",
+      "side": 1,
+      "message": "Please remove the static casts in UMA_HISTOGRAM_ENUMERATION.",
+      "range": {
+        "startLine": 108,
+        "startChar": 34,
+        "endLine": 108,
+        "endChar": 51
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1c0962_65acd254",
+        "filename": "chrome/common/media_router/mojo/dial_device_description_parser.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T00:20:02Z",
+      "side": 1,
+      "message": "Please a TODO(https://crbug.com/742517) for being able to remove this enum value.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "6f0c8bd1dfc75a3a6f03e255ebfd915730483a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
