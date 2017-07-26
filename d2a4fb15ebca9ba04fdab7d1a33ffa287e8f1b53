@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36b7177d_63bd5efa",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-26T04:51:43Z",
+      "side": 1,
+      "message": "Hey Raymes, do you have any ideas on how this should be implemented? It looks like we need to know IsRestrictedToSecureOrigins(), which is a member on the PermissionContext for each permission. Should I try to rebase and land https://codereview.chromium.org/2945243002/, even if it\u0027s just for insecure origins?",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
