@@ -624,6 +624,8 @@ bool SearchBoxView::HandleGestureEvent(views::Textfield* sender,
 }
 
 void SearchBoxView::SpeechRecognitionButtonPropChanged() {
+  if (is_fullscreen_app_list_enabled_)
+    return;
   const SearchBoxModel::SpeechButtonProperty* speech_button_prop =
       model_->search_box()->speech_button();
   if (speech_button_prop) {
@@ -695,9 +697,12 @@ void SearchBoxView::WallpaperProminentColorsChanged() {
   SetBackgroundColor(
       prominent_colors[static_cast<int>(ColorProfileType::LIGHT_VIBRANT)]);
   UpdateSearchIcon();
-  speech_button_->SetImage(
-      views::Button::STATE_NORMAL,
-      gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize, search_box_color_));
+  if (speech_button_) {
+    speech_button_->SetImage(
+        views::Button::STATE_NORMAL,
+        gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize,
+                              search_box_color_));
+  }
   close_button_->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize, search_box_color_));
