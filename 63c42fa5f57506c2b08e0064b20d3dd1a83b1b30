@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2741835e_939dbb13",
+        "filename": "cc/ipc/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-26T13:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f8e646c_b9962bba",
+      "revId": "63c42fa5f57506c2b08e0064b20d3dd1a83b1b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2bbafbd_ead83fbc",
         "filename": "services/ui/ws/BUILD.gn",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "63c42fa5f57506c2b08e0064b20d3dd1a83b1b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5f28cb_8db6cde3",
+        "filename": "services/ui/ws/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-26T13:57:03Z",
+      "side": 1,
+      "message": "I will move compositor_util to viz/host and rename it in a separate CL.",
+      "parentUuid": "a2bbafbd_ead83fbc",
+      "revId": "63c42fa5f57506c2b08e0064b20d3dd1a83b1b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
