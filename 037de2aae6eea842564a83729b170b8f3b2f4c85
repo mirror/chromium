@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08656ef4_c4c14f0c",
+        "filename": "cc/animation/transform_operations_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1599,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-26T14:13:04Z",
+      "side": 1,
+      "message": "Not advocating for it, but I wonder if, to keep the EXPECT_EQ(arg1, arg2) verbosity, you could use a matcher and EXPECT_THAT().  I\u0027ve personally never tried and it\u0027s probably too much work.",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da19ac8e_a575fa27",
+        "filename": "cc/base/math_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-26T14:13:04Z",
+      "side": 1,
+      "message": "Why not use std::abs() like the methed below, for consistency?",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac1fa4f_75841bca",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-26T14:13:04Z",
+      "side": 1,
+      "message": "Hey, what happens if the curve is an underdamped response that overshoots?  In other words, it hits its target value at an intermediate point mid-animation?",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
