@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bc53e68a_b8d12778",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T17:54:18Z",
+      "side": 1,
+      "message": "Do we have a bug? Let\u0027s add a screenshot there.\nLet\u0027s add bettes@ to the bug, he\u0027s our UX designer",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bbe9de6_3fde013f",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.js",
         "patchSetId": 4
@@ -13,6 +36,30 @@
       "writtenOn": "2017-07-26T16:06:37Z",
       "side": 1,
       "message": "The Closure Compiler is not happy with this line:\n\n ERROR - Behaviors must be global names or qualified names that are declared as object literals or array literals of other valid Behaviors.\n\nI tried to mimic how FocusRowBehavior is used, do you happen to know what I am missing here?",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72b5e2d_69f01f6e",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T17:54:18Z",
+      "side": 1,
+      "message": "You\u0027ll need to update the compiled_resources2.gyp file so closure can know about the dependencies.\n\nYou can run the closure compiler locally by running:\n`//third_party/closure_compiler/run_compiler`",
+      "parentUuid": "9bbe9de6_3fde013f",
       "range": {
         "startLine": 16,
         "startChar": 14,
@@ -48,6 +95,76 @@
     },
     {
       "key": {
+        "uuid": "9d879bf3_fbdc22df",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T17:54:18Z",
+      "side": 1,
+      "message": "dom-if makes this code a bit more readable IMO, but if there\u0027s a good reason not to dom-if I\u0027m ok changing it.",
+      "parentUuid": "da26d12f_c1367ae7",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea8fb43_bd141b32",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T17:54:18Z",
+      "side": 1,
+      "message": "This icon button might make more sense as a button inside the overflow menu. We don\u0027t currently have other line items w/ more than one button on the end.\n\nIf the button will stay here, it\u0027ll need focus-row-control and focus-type to make it accessible.",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843570ad_cd1977b3",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T17:54:18Z",
+      "side": 1,
+      "message": "This can fit in one line:\nitem \u003d\u003e event.detail.password \u003d item.plaintextPassword",
+      "range": {
+        "startLine": 376,
+        "startChar": 8,
+        "endLine": 378,
+        "endChar": 9
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "837e9bdf_c6a38bcd",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
         "patchSetId": 4
@@ -64,6 +181,53 @@
         "startChar": 4,
         "endLine": 11,
         "endChar": 24
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dde4b0d_5b6b5ebb",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T17:54:18Z",
+      "side": 1,
+      "message": "+1 for behavior, it looks like the right approach here.",
+      "parentUuid": "837e9bdf_c6a38bcd",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8aa73b_1880652a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T17:54:18Z",
+      "side": 1,
+      "message": "We can remove the attached function if we set a default to the password.\n\npassword: {\n  type: String,\n  value: \u0027\u0027,\n},\n\nPlease add a comment that initialization is needed to display when password hasn\u0027t been fetched.\n\nIIRC: We were resetting the password in the attached because we reused the dialog, but now that we restamp, there\u0027s no need for this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
       },
       "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
