@@ -22,6 +22,30 @@
       "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f863e7_b8ba60e2",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-26T23:07:42Z",
+      "side": 1,
+      "message": "Perhaps, in a week.\nBut we also have a problem with dogfooding/bug bashing (we want to test as fresh functionality as possible, of course). Currently, only dev-channel (and up), but no Canary devices can access the prod server. And there might be big gaps (several weeks) between Dev builds.\nSo, it seems a right thing to land changes with new functionality as soon as possible, making them work with both old and new server, and then wait when both server and dev channel become ready, as opposed to waiting for the server, then landing the client-side CL, then waiting for dev channel release.",
+      "parentUuid": "285b13b2_544bb802",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 269,
+        "endChar": 16
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
