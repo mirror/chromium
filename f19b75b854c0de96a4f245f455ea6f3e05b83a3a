@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37053ae6_69b86723",
+        "filename": "chrome/browser/android/compositor/layer_title_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-07-26T18:10:25Z",
+      "side": 1,
+      "message": "Thanks for catching this!\n\nJust a style nit. Could you instead write as follows?\n\nif (title_layer \u0026\u0026 favicon_resource_id !\u003d -1) {",
+      "range": {
+        "startLine": 85,
+        "startChar": 18,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "f19b75b854c0de96a4f245f455ea6f3e05b83a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
