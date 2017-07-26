@@ -14,6 +14,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class ChannelDefinitions {
     public static final String CHANNEL_ID_DOWNLOADS = "downloads";
     public static final String CHANNEL_ID_INCOGNITO = "incognito";
     public static final String CHANNEL_ID_MEDIA = "media";
+    public static final String CHANNEL_ID_SCREENCAPTURE = "screencapture";
     // TODO(crbug.com/700377): Deprecate the 'sites' channel.
     public static final String CHANNEL_ID_SITES = "sites";
     public static final String CHANNEL_ID_PREFIX_SITES = "web:";
@@ -40,7 +42,7 @@ public class ChannelDefinitions {
      * the set of channels returned by {@link #getStartupChannelIds()} or
      * {@link #getLegacyChannelIds()} changes.
      */
-    static final int CHANNELS_VERSION = 0;
+    static final int CHANNELS_VERSION = 1;
 
     /**
      * To define a new channel, add the channel ID to this StringDef and add a new entry to
@@ -49,7 +51,7 @@ public class ChannelDefinitions {
      * Predefined Channels.MAP, and add the ID to the LEGACY_CHANNELS_ID array below.
      */
     @StringDef({CHANNEL_ID_BROWSER, CHANNEL_ID_DOWNLOADS, CHANNEL_ID_INCOGNITO, CHANNEL_ID_MEDIA,
-            CHANNEL_ID_SITES})
+            CHANNEL_ID_SCREENCAPTURE, CHANNEL_ID_SITES})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ChannelId {}
 
@@ -61,9 +63,10 @@ public class ChannelDefinitions {
     @TargetApi(Build.VERSION_CODES.N) // for NotificationManager.IMPORTANCE_* constants
     private static class PredefinedChannels {
         /**
-         * The set of predefined channels to be initialized on startup. CHANNELS_VERSION must be
-         * incremented every time an entry is modified, removed or added to this map.
-         * If an entry is removed from here then it must be added to the LEGACY_CHANNEL_IDs array.
+         * The set of predefined channels to be initialized on startup or first use.
+         * CHANNELS_VERSION must be incremented every time an entry is modified, removed or added to
+         * this map. If an entry is removed from here then it must be added to the
+         * LEGACY_CHANNEL_IDs array.
          */
         static final Map<String, PredefinedChannel> MAP;
         static {
@@ -84,6 +87,10 @@ public class ChannelDefinitions {
                     new PredefinedChannel(CHANNEL_ID_MEDIA,
                             org.chromium.chrome.R.string.notification_category_media,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            map.put(CHANNEL_ID_SCREENCAPTURE,
+                    new PredefinedChannel(CHANNEL_ID_SCREENCAPTURE,
+                            org.chromium.chrome.R.string.notification_category_screencapture,
+                            NotificationManager.IMPORTANCE_HIGH, CHANNEL_GROUP_ID_GENERAL));
             map.put(CHANNEL_ID_SITES,
                     new PredefinedChannel(CHANNEL_ID_SITES,
                             org.chromium.chrome.R.string.notification_category_sites,
@@ -91,6 +98,13 @@ public class ChannelDefinitions {
             MAP = Collections.unmodifiableMap(map);
         }
     }
+
+    /**
+     * List of channel IDs that need to be initialized on first use instead of startup.
+     * Such channel IDs should be added to |PredefinedChannels.MAP| and this list at same time.
+     */
+    private static final String[] CHANNEL_IDS_CRAEATE_ON_FIRST_USE =
+            new String[] {CHANNEL_ID_SCREENCAPTURE};
 
     /**
      * When channels become deprecated they should be removed from PredefinedChannels and their ids
@@ -119,7 +133,11 @@ public class ChannelDefinitions {
      */
     static Set<String> getStartupChannelIds() {
         // CHANNELS_VERSION must be incremented if the set of channels returned here changes.
-        return PredefinedChannels.MAP.keySet();
+        Set<String> startupChannelIds = new HashSet<String>(PredefinedChannels.MAP.keySet());
+        for (String channelId : CHANNEL_IDS_CRAEATE_ON_FIRST_USE) {
+            startupChannelIds.remove(channelId);
+        }
+        return startupChannelIds;
     }
 
     /**
