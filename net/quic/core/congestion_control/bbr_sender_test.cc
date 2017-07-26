@@ -821,11 +821,7 @@ TEST_F(BbrSenderTest, ResumeConnectionState) {
   FLAGS_quic_reloadable_flag_quic_bbr_bandwidth_resumption = true;
   CreateDefaultSetup();
 
-  CachedNetworkParameters params;
-  params.set_bandwidth_estimate_bytes_per_second(
-      kTestLinkBandwidth.ToBytesPerSecond());
-  params.set_min_rtt_ms(kTestRtt.ToMilliseconds());
-  sender_->ResumeConnectionState(params, false);
+  sender_->AdjustNetworkParameters(kTestLinkBandwidth, kTestRtt);
   EXPECT_EQ(kTestLinkBandwidth, sender_->ExportDebugState().max_bandwidth);
   EXPECT_EQ(kTestLinkBandwidth, sender_->BandwidthEstimate());
   ExpectApproxEq(kTestRtt, sender_->ExportDebugState().min_rtt, 0.01f);

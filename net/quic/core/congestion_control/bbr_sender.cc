@@ -191,23 +191,17 @@ void BbrSender::SetFromConfig(const QuicConfig& config,
   }
 }
 
-void BbrSender::ResumeConnectionState(
-    const CachedNetworkParameters& cached_network_params,
-    bool max_bandwidth_resumption) {
+void BbrSender::AdjustNetworkParameters(QuicBandwidth bandwidth,
+                                        QuicTime::Delta rtt) {
   if (!FLAGS_quic_reloadable_flag_quic_bbr_bandwidth_resumption) {
     return;
   }
 
   QUIC_FLAG_COUNT(quic_reloadable_flag_quic_bbr_bandwidth_resumption);
 
-  QuicBandwidth bandwidth = QuicBandwidth::FromBytesPerSecond(
-      max_bandwidth_resumption
-          ? cached_network_params.max_bandwidth_estimate_bytes_per_second()
-          : cached_network_params.bandwidth_estimate_bytes_per_second());
-  QuicTime::Delta rtt =
-      QuicTime::Delta::FromMilliseconds(cached_network_params.min_rtt_ms());
-
-  max_bandwidth_.Update(bandwidth, round_trip_count_);
+  if (!bandwidth.IsZero()) {
+    max_bandwidth_.Update(bandwidth, round_trip_count_);
+  }
   if (!rtt.IsZero() && (min_rtt_ > rtt || min_rtt_.IsZero())) {
     min_rtt_ = rtt;
   }

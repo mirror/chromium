@@ -805,8 +805,7 @@ class MockSendAlgorithm : public SendAlgorithmInterface {
   MOCK_CONST_METHOD0(InRecovery, bool());
   MOCK_CONST_METHOD0(GetSlowStartThreshold, QuicByteCount());
   MOCK_CONST_METHOD0(GetCongestionControlType, CongestionControlType());
-  MOCK_METHOD2(ResumeConnectionState,
-               void(const CachedNetworkParameters&, bool));
+  MOCK_METHOD2(AdjustNetworkParameters, void(QuicBandwidth, QuicTime::Delta));
   MOCK_METHOD1(OnApplicationLimited, void(QuicByteCount));
 
  private:
