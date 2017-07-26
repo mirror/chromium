@@ -77,6 +77,8 @@ NativeViewHostAura::NativeViewHostAura(NativeViewHost* host)
   clipping_window_.SetName("NativeViewHostAuraClip");
   clipping_window_.layer()->SetMasksToBounds(true);
   clipping_window_.SetProperty(views::kHostViewKey, static_cast<View*>(host_));
+  LOG(ERROR) << " w=" << &clipping_window_
+             << " type=" << clipping_window_.type();
 }
 
 NativeViewHostAura::~NativeViewHostAura() {
