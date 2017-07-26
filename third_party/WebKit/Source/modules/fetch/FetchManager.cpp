@@ -217,7 +217,7 @@ class FetchManager::Loader final
       if (r == WebDataConsumerHandle::kDone) {
         SubresourceIntegrity::ReportInfo report_info;
         bool check_result = SubresourceIntegrity::CheckSubresourceIntegrity(
-            integrity_metadata_, buffer_.data(), buffer_.size(), url_,
+            integrity_metadata_, buffer_.data(), buffer_.size(), url_, nullptr,
             report_info);
         SubresourceIntegrityHelper::DoReport(*loader_->GetExecutionContext(),
                                              report_info);

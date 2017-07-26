@@ -352,7 +352,7 @@ void Resource::CheckResourceIntegrity() {
 
   integrity_report_info_.Clear();
   if (SubresourceIntegrity::CheckSubresourceIntegrity(IntegrityMetadata(), data,
-                                                      data_length, Url(), *this,
+                                                      data_length, Url(), this,
                                                       integrity_report_info_))
     integrity_disposition_ = ResourceIntegrityDisposition::kPassed;
   else
