@@ -84,12 +84,16 @@ class WallpaperResizerTest : public testing::Test,
     return worker_thread_.task_runner();
   }
 
-  void WaitForResize() { base::RunLoop().Run(); }
+  void WaitForResize() {
+    active_runloop_ = base::MakeUnique<base::RunLoop>();
+    active_runloop_->Run();
+  }
 
-  void OnWallpaperResized() override { message_loop_.QuitWhenIdle(); }
+  void OnWallpaperResized() override { active_runloop_->Quit(); }
 
  private:
   base::MessageLoop message_loop_;
+  std::unique_ptr<base::Runloop> active_runloop_;
   base::Thread worker_thread_;
 
   DISALLOW_COPY_AND_ASSIGN(WallpaperResizerTest);
