@@ -24,6 +24,8 @@ constexpr base::TimeDelta kMaxAudioSlientTime = base::TimeDelta::FromMinutes(1);
 
 const char kTabFromBackgroundedToFirstAudioStartsUMA[] =
     "TabManager.Heuristics.FromBackgroundedToFirstAudioStarts";
+const char kTabFromBackgroundedToFirstTitleUpdatedUMA[] =
+    "TabManager.Heuristics.FromBackgroundedToFirstTitleUpdated";
 
 MetricsCollector::MetricsCollector() : clock_(&default_tick_clock_) {}
 
@@ -45,6 +47,16 @@ void MetricsCollector::OnBeforeCoordinationUnitDestroyed(
   }
 }
 
+void MetricsCollector::OnEventReceived(
+    const CoordinationUnitImpl* coordination_unit,
+    mojom::Event event) {
+  if (coordination_unit->id().type == CoordinationUnitType::kFrame) {
+    OnFrameEventReceived(
+        CoordinationUnitImpl::ToFrameCoordinationUnit(coordination_unit),
+        event);
+  }
+}
+
 void MetricsCollector::OnPropertyChanged(
     const CoordinationUnitImpl* coordination_unit,
     const mojom::PropertyType property_type,
@@ -53,6 +65,25 @@ void MetricsCollector::OnPropertyChanged(
     OnFramePropertyChanged(
         CoordinationUnitImpl::ToFrameCoordinationUnit(coordination_unit),
         property_type, value);
+  }
+}
+
+void MetricsCollector::OnFrameEventReceived(
+    const FrameCoordinationUnitImpl* coordination_unit,
+    mojom::Event event) {
+  if (event == mojom::Event::kTitleUpdated) {
+    // Only record metrics while it is backgrounded.
+    if (coordination_unit->IsVisible())
+      return;
+    auto now = clock_->NowTicks();
+    MetricsReportRecord& record = metrics_report_record_map_
+        [coordination_unit->GetWebContentsCoordinationUnit()->id()];
+    if (!record.first_title_updated_after_backgrounded_reported) {
+      HEURISTICS_HISTOGRAM(
+          kTabFromBackgroundedToFirstTitleUpdatedUMA,
+          now - frame_data_map_[coordination_unit->id()].last_invisible_time);
+      record.first_title_updated_after_backgrounded_reported = true;
+    }
   }
 }
 
@@ -92,6 +123,7 @@ void MetricsCollector::OnFramePropertyChanged(
 
 MetricsCollector::MetricsReportRecord::MetricsReportRecord() {
   first_audible_after_backgrounded_reported = false;
+  first_title_updated_after_backgrounded_reported = false;
 }
 
 }  // namespace resource_coordinator

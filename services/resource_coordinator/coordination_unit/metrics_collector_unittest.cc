@@ -99,4 +99,37 @@ TEST_F(MetricsCollectorTest, FromBackgroundedToFirstAudioStartsUMA) {
                                      1);
 }
 
+TEST_F(MetricsCollectorTest, FromBackgroundedToFirstTitleUpdatedUMA) {
+  CoordinationUnitID tab_cu_id(CoordinationUnitType::kWebContents,
+                               std::string());
+  CoordinationUnitID frame_cu_id(CoordinationUnitType::kFrame, std::string());
+
+  std::unique_ptr<CoordinationUnitImpl> tab_coordination_unit =
+      coordination_unit_factory::CreateCoordinationUnit(
+          tab_cu_id, service_context_ref_factory()->CreateRef());
+  std::unique_ptr<CoordinationUnitImpl> frame_coordination_unit =
+      coordination_unit_factory::CreateCoordinationUnit(
+          frame_cu_id, service_context_ref_factory()->CreateRef());
+  coordination_unit_manager().OnCoordinationUnitCreated(
+      tab_coordination_unit.get());
+  coordination_unit_manager().OnCoordinationUnitCreated(
+      frame_coordination_unit.get());
+
+  tab_coordination_unit->AddChild(frame_coordination_unit->id());
+
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(true));
+  frame_coordination_unit->SendEvent(mojom::Event::kTitleUpdated);
+  // The tab is not backgrounded, thus no metrics recorded.
+  histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstTitleUpdatedUMA,
+                                     0);
+
+  tab_coordination_unit->SetProperty(mojom::PropertyType::kVisible,
+                                     base::MakeUnique<base::Value>(false));
+  frame_coordination_unit->SendEvent(mojom::Event::kTitleUpdated);
+  // The tab is backgrounded, thus metrics recorded.
+  histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstTitleUpdatedUMA,
+                                     1);
+}
+
 }  // namespace resource_coordinator

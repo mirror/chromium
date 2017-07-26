@@ -51,13 +51,9 @@ void ResourceCoordinatorInterface::ConnectToService(
   service_.set_connection_error_handler(base::Bind(&OnConnectionError));
 }
 
-void ResourceCoordinatorInterface::SendEvent(
-    const mojom::EventType& event_type) {
+void ResourceCoordinatorInterface::SendEvent(mojom::Event event) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  mojom::EventPtr event = mojom::Event::New();
-  event->type = event_type;
-
-  service_->SendEvent(std::move(event));
+  service_->SendEvent(event);
 }
 
 void ResourceCoordinatorInterface::SetProperty(

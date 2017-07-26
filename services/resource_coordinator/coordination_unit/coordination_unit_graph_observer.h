@@ -51,6 +51,10 @@ class CoordinationUnitGraphObserver {
       const CoordinationUnitImpl* coordination_unit,
       const CoordinationUnitImpl* parent_coordination_unit) {}
 
+  // Called whenever an event is received in |coordination_unit|.
+  virtual void OnEventReceived(const CoordinationUnitImpl* coordination_unit,
+                               const mojom::Event event) {}
+
   // Called whenever a |property| within the |coordination_unit|'s
   // internal property store has changed.
   virtual void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,

@@ -39,11 +39,11 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
       const CoordinationUnitImpl* coordination_unit);
 
   // Overridden from mojom::CoordinationUnit:
-  void SendEvent(mojom::EventPtr event) override;
   void GetID(const GetIDCallback& callback) override;
   void AddBinding(mojom::CoordinationUnitRequest request) override;
   void AddChild(const CoordinationUnitID& child_id) override;
   void RemoveChild(const CoordinationUnitID& child_id) override;
+  void SendEvent(mojom::Event event) override;
   void SetProperty(mojom::PropertyType property_type,
                    std::unique_ptr<base::Value> value) override;
   // TODO(crbug.com/691886) Consider removing this.

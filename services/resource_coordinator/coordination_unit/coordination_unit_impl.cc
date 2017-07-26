@@ -115,22 +115,23 @@ void CoordinationUnitImpl::RecalcCoordinationPolicy() {
   policy_callback_->SetCoordinationPolicy(std::move(policy));
 }
 
-void CoordinationUnitImpl::SendEvent(mojom::EventPtr event) {
+void CoordinationUnitImpl::SendEvent(mojom::Event event) {
+  NOTIFY_OBSERVERS(observers_, OnEventReceived, this, event);
   // TODO(crbug.com/691886) Consider removing the following code.
-  switch (event->type) {
-    case mojom::EventType::kOnWebContentsShown:
+  switch (event) {
+    case mojom::Event::kOnWebContentsShown:
       state_flags_[kTabVisible] = true;
       break;
-    case mojom::EventType::kOnWebContentsHidden:
+    case mojom::Event::kOnWebContentsHidden:
       state_flags_[kTabVisible] = false;
       break;
-    case mojom::EventType::kOnProcessAudioStarted:
+    case mojom::Event::kOnProcessAudioStarted:
       state_flags_[kAudioPlaying] = true;
       break;
-    case mojom::EventType::kOnProcessAudioStopped:
+    case mojom::Event::kOnProcessAudioStopped:
       state_flags_[kAudioPlaying] = false;
       break;
-    case mojom::EventType::kTestEvent:
+    case mojom::Event::kTestEvent:
       state_flags_[kTestState] = true;
       break;
     default:

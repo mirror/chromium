@@ -16,6 +16,7 @@ class CoordinationUnitImpl;
 class FrameCoordinationUnitImpl;
 
 extern const char kTabFromBackgroundedToFirstAudioStartsUMA[];
+extern const char kTabFromBackgroundedToFirstTitleUpdatedUMA[];
 
 // A MetricsCollector observes changes happened inside CoordinationUnit Graph,
 // and reports UMA/UKM.
@@ -28,6 +29,8 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) override;
   void OnBeforeCoordinationUnitDestroyed(
       const CoordinationUnitImpl* coordination_unit) override;
+  void OnEventReceived(const CoordinationUnitImpl* coordination_unit,
+                       mojom::Event event) override;
   void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,
                          const mojom::PropertyType property_type,
                          const base::Value& value) override;
@@ -38,6 +41,7 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   struct MetricsReportRecord {
     MetricsReportRecord();
     bool first_audible_after_backgrounded_reported;
+    bool first_title_updated_after_backgrounded_reported;
   };
 
   struct FrameData {
@@ -45,6 +49,8 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
     base::TimeTicks last_invisible_time;
   };
 
+  void OnFrameEventReceived(const FrameCoordinationUnitImpl* coordination_unit,
+                            mojom::Event event);
   void OnFramePropertyChanged(
       const FrameCoordinationUnitImpl* coordination_unit,
       const mojom::PropertyType property_type,
