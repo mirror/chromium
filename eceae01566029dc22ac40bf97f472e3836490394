@@ -16,6 +16,24 @@
       "revId": "eceae01566029dc22ac40bf97f472e3836490394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09220a10_0b85ed05",
+        "filename": "third_party/WebKit/LayoutTests/paint/selection/text-selection-update-style.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-26T06:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9245110b_da06af64",
+      "revId": "eceae01566029dc22ac40bf97f472e3836490394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
