@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0724f6c8_2d713aab",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T15:22:28Z",
+      "side": 1,
+      "message": "What\u0027s the difference here between file-read* and file-read-data above? This seems like it should join its /usr friends?",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "5a4cab15fd07e04bff2939ef9b721e005238ceca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
