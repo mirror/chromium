@@ -397,6 +397,24 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5bb6833_1e5e0b68",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-26T19:56:33Z",
+      "side": 1,
+      "message": "Yep, no name change is needed - changing an enum to sparse histogram is similar to adding more buckets to an enum histogram - both are supported. The breaking changes are related to numeric histograms - changing max or number of buckets.",
+      "parentUuid": "37b2fa5b_b63469a9",
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
