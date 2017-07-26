@@ -133,8 +133,14 @@ class RootFrameViewStub : public ScrollableAreaStub {
   RootFrameViewStub(const IntSize& viewport_size, const IntSize& contents_size)
       : ScrollableAreaStub(viewport_size, contents_size) {}
 
-  int VisibleWidth() const override { return viewport_size_.Width(); }
-  int VisibleHeight() const override { return viewport_size_.Height(); }
+  int VisibleWidth(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return viewport_size_.Width();
+  }
+  int VisibleHeight(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return viewport_size_.Height();
+  }
 };
 
 class VisualViewportStub : public ScrollableAreaStub {
@@ -158,8 +164,12 @@ class VisualViewportStub : public ScrollableAreaStub {
   VisualViewportStub(const IntSize& viewport_size, const IntSize& contents_size)
       : ScrollableAreaStub(viewport_size, contents_size), scale_(1) {}
 
-  int VisibleWidth() const override { return viewport_size_.Width() / scale_; }
-  int VisibleHeight() const override {
+  int VisibleWidth(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return viewport_size_.Width() / scale_;
+  }
+  int VisibleHeight(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
     return viewport_size_.Height() / scale_;
   }
   IntRect VisibleContentRect(IncludeScrollbarsInRect) const override {
