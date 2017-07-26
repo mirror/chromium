@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e13a328_104c5f5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee7a39e_8d04de5e",
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "548392e4_37994b8b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0732775f_7331d9de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548392e4_37994b8b",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3ecb7c0a_9f44c63c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "No reason--thanks!",
+      "parentUuid": "b3fe6980_fa1bb5af",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70b72661_d159cefa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "377e72aa_71e2e8dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70b72661_d159cefa",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4dd7f74_76547811",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 3
@@ -108,6 +198,30 @@
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba7b75f_d2a4dac2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": ":P",
+      "parentUuid": "b4dd7f74_76547811",
+      "range": {
+        "startLine": 33,
+        "startChar": 47,
+        "endLine": 33,
+        "endChar": 50
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "7eee2fd0_744cba89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc0f52b0_e29e9ae4",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b90c8b9_fd9fe04f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 3
@@ -177,6 +315,30 @@
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47206cb8_1c4941ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b90c8b9_fd9fe04f",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "a997b396_85e08f1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b44461_e28565ef",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f0bb644_7945856c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 3
@@ -223,6 +409,30 @@
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f47f43_ee32e1f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Sure--I originally had it the other way around because technically the case of !mIsServiceBound happens before the service gets bound, but it could go either way!",
+      "parentUuid": "7f0bb644_7945856c",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "4a6cdea6_b1bac753",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "This is now slightly different because I just realized I could call mBoundService.startForeground inside the DFSM, but here is the logic:\n\n- mIsServiceBound lets us know if we\u0027ve called context.bindService()\n- mBoundService !\u003d null lets us know if onServiceConnected, context.startForeground() has been called, etc.\n\nIn this specific case, the cases that \"fall through\" during the startup between context.bindService() and onServiceConnected will be handled in handlePendingNotifications, where it bases it\u0027s decisions on the updated mPinnedNotificationId/mPinnedNotification to see if stop has been called or the pinned notification is updated.",
+      "parentUuid": "b8d00907_f178af5f",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec3d1a9_5508ba65",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 3
@@ -269,6 +503,30 @@
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6ea017_983fa6ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "See the description above about the use of mBoundService \u0026 mIsServiceBound (I will include this in the Javadoc too!)",
+      "parentUuid": "8ec3d1a9_5508ba65",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "9e4eb9d0_49268e1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Derp.",
+      "parentUuid": "637e7fc4_11c93eea",
+      "range": {
+        "startLine": 161,
+        "startChar": 61,
+        "endLine": 161,
+        "endChar": 62
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "812d3b25_c91061cd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
         "patchSetId": 3
@@ -315,6 +597,30 @@
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54dd6ed1_1ce6a7ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:27:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812d3b25_c91061cd",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
