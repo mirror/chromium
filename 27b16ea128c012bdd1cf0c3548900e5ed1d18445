@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaadb3a1_940c17bb",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-26T19:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf48e2d9_d7a9fa7d",
+      "range": {
+        "startLine": 549,
+        "startChar": 23,
+        "endLine": 549,
+        "endChar": 0
+      },
+      "revId": "27b16ea128c012bdd1cf0c3548900e5ed1d18445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fe94c50_187242f7",
         "filename": "net/cookies/cookie_store_unittest.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T19:37:51Z",
       "side": 1,
       "message": "This exactly matches the second test above.  Should we pull this out of the block, with a comment that it should work whether or not http_only cookies are supported?",
+      "range": {
+        "startLine": 575,
+        "startChar": 22,
+        "endLine": 575,
+        "endChar": 0
+      },
+      "revId": "27b16ea128c012bdd1cf0c3548900e5ed1d18445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7aa6ed_ae8ad8bd",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-26T19:24:04Z",
+      "side": 1,
+      "message": "Hmmm.  Not really.  This isn\u0027t a test, this is simply leaving the cookie store in the same state if we\u0027re not testing httponly support as we would if we did test httponly support.  The point of the equivalent statement to this one in the above is to create an httponly cookie and make sure that it can\u0027t be overwritten without the modify_http_only parameter.  \n\nI\u0027ve added a comment to that effect; if you\u0027d like I could also eliminate this clause and put a cookie deletion in the clause above, or just make sure the rest of the test does the same thing whether or not this cookie is in the store.  Let me know what you\u0027d like.",
+      "parentUuid": "7fe94c50_187242f7",
       "range": {
         "startLine": 575,
         "startChar": 22,
