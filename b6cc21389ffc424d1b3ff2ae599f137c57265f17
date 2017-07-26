@@ -46,6 +46,30 @@
       "revId": "b6cc21389ffc424d1b3ff2ae599f137c57265f17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec35edd_5dbb46a0",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T22:16:53Z",
+      "side": 1,
+      "message": "This constant is used in SetBackgroundColor();\nIn this case please add DCHECK(is_fullscreen_app_list_enabled_) to make sure that SetBackgroundColor is called only for full_screen",
+      "parentUuid": "78ed4388_c6e88940",
+      "range": {
+        "startLine": 64,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "b6cc21389ffc424d1b3ff2ae599f137c57265f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
