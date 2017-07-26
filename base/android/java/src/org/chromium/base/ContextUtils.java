@@ -94,6 +94,11 @@ public class ContextUtils {
         Holder.sSharedPreferences = fetchAppSharedPreferences();
     }
 
+    @VisibleForTesting
+    public static void initApplicationContextForTests2(Context appContext) {
+        initApplicationContextForTests(appContext);
+    }
+
     private static void initJavaSideApplicationContext(Context appContext) {
         if (appContext == null) {
             throw new RuntimeException("Global application context cannot be set to null.");
