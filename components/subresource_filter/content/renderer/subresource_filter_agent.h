@@ -65,7 +65,7 @@ class SubresourceFilterAgent
       content::RenderFrame* render_frame);
 
   void OnActivateForNextCommittedLoad(ActivationState activation_state);
-  void RecordHistogramsOnLoadCommitted();
+  void RecordHistogramsOnLoadCommitted(const ActivationState activation_state);
   void RecordHistogramsOnLoadFinished();
   void ResetActivatonStateForNextCommit();
 
