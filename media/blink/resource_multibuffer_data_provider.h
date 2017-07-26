@@ -36,8 +36,7 @@ class MEDIA_BLINK_EXPORT ResourceMultiBufferDataProvider
   ResourceMultiBufferDataProvider(UrlData* url_data, MultiBufferBlockId pos);
   ~ResourceMultiBufferDataProvider() override;
 
-  // Virtual for testing purposes.
-  virtual void Start();
+  void Start(std::unique_ptr<blink::WebAssociatedURLLoader> loader);
 
   // MultiBuffer::DataProvider implementation
   MultiBufferBlockId Tell() const override;
@@ -64,6 +63,9 @@ class MEDIA_BLINK_EXPORT ResourceMultiBufferDataProvider
   friend class MultibufferDataSourceTest;
   friend class ResourceMultiBufferDataProviderTest;
   friend class MockBufferedDataSource;
+
+  // Virtual for testing purposes.
+  virtual void StartLoading();
 
   // Callback used when we're asked to fetch data after the end of the file.
   void Terminate();
@@ -110,10 +112,8 @@ class MEDIA_BLINK_EXPORT ResourceMultiBufferDataProvider
   const GURL origin_;
 
   // Keeps track of an active WebAssociatedURLLoader.
+  // Only valid while loading resource.
   std::unique_ptr<blink::WebAssociatedURLLoader> active_loader_;
-
-  // Injected WebAssociatedURLLoader instance for testing purposes.
-  std::unique_ptr<blink::WebAssociatedURLLoader> test_loader_;
 
   // When we encounter a redirect, this is the source of the redirect.
   GURL redirects_to_;

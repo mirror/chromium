@@ -55,23 +55,22 @@ class TestMultiBufferDataProvider : public ResourceMultiBufferDataProvider {
   ~TestMultiBufferDataProvider() override {
     CHECK_EQ(static_cast<size_t>(1), test_data_providers.erase(this));
   }
-  void Start() override {
-    // Create a mock active loader.
-    active_loader_ = base::MakeUnique<NiceMock<MockWebAssociatedURLLoader>>();
-    if (!on_start_.is_null()) {
-      on_start_.Run();
-    }
-  }
-  void SetDeferred(bool defer) override {
-    deferred_ = defer;
-    ResourceMultiBufferDataProvider::SetDeferred(defer);
-  }
 
   bool loading() const { return !!active_loader_; }
   bool deferred() const { return deferred_; }
   void RunOnStart(base::Closure cb) { on_start_ = cb; }
 
  private:
+  // ResourceMultiBufferDataProvider overrides.
+  void StartLoading() override {
+    if (!on_start_.is_null())
+      on_start_.Run();
+  }
+  void SetDeferred(bool defer) override {
+    deferred_ = defer;
+    ResourceMultiBufferDataProvider::SetDeferred(defer);
+  }
+
   bool deferred_;
   base::Closure on_start_;
 };
@@ -87,7 +86,7 @@ class TestResourceMultiBuffer : public ResourceMultiBuffer {
       const BlockId& pos) override {
     TestMultiBufferDataProvider* ret =
         new TestMultiBufferDataProvider(url_data_, pos);
-    ret->Start();
+    ret->Start(base::MakeUnique<NiceMock<MockWebAssociatedURLLoader>>());
     return std::unique_ptr<MultiBuffer::DataProvider>(ret);
   }
 
@@ -282,6 +281,13 @@ class MultibufferDataSourceTest : public testing::Test {
     ReceiveData(kDataSize);
   }
 
+  // Starts data source.
+  void Start() {
+    EXPECT_TRUE(data_provider());
+    data_provider()->Start(
+        base::MakeUnique<NiceMock<MockWebAssociatedURLLoader>>());
+  }
+
   // Stops any active loaders and shuts down the data source.
   //
   // This typically happens when the page is closed and for our purposes is
@@ -326,14 +332,6 @@ class MultibufferDataSourceTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
   }
 
-  void Restart() {
-    EXPECT_TRUE(data_provider());
-    EXPECT_FALSE(active_loader_allownull());
-    if (!data_provider())
-      return;
-    data_provider()->Start();
-  }
-
   MOCK_METHOD1(ReadCallback, void(int size));
 
   void ReadAt(int64_t position, int64_t howmuch = kDataSize) {
@@ -356,7 +354,7 @@ class MultibufferDataSourceTest : public testing::Test {
     EXPECT_TRUE(loading());
 
     FinishLoading();
-    Restart();
+    Start();
     ReadAt(kDataSize);
     Respond(response2);
     ReceiveData(kDataSize);
@@ -381,7 +379,7 @@ class MultibufferDataSourceTest : public testing::Test {
     EXPECT_TRUE(loading());
 
     FinishLoading();
-    Restart();
+    Start();
     ReadAt(kDataSize);
     Respond(response2);
     EXPECT_TRUE(failed_);
@@ -426,14 +424,6 @@ class MultibufferDataSourceTest : public testing::Test {
       return nullptr;
     return data_provider->active_loader_.get();
   }
-  /*
-    WebAssociatedURLLoader* url_loader() {
-      EXPECT_TRUE(active_loader());
-      if (!active_loader())
-        return nullptr;
-      return active_loader()->loader_.get();
-    }
-  */
   bool loading() { return multibuffer()->loading(); }
 
   MultibufferDataSource::Preload preload() { return data_source_->preload_; }
@@ -636,7 +626,7 @@ TEST_F(MultibufferDataSourceTest, Http_Retry) {
   // Issue a pending read but terminate the connection to force a retry.
   ReadAt(kDataSize);
   FinishLoading();
-  Restart();
+  Start();
   Respond(response_generator_->Generate206(kDataSize));
 
   // Complete the read.
@@ -666,7 +656,6 @@ TEST_F(MultibufferDataSourceTest, Http_RetryOnError) {
   Respond(response_generator_->Generate206(kDataSize));
   ReceiveData(kDataSize);
   FinishLoading();
-  EXPECT_FALSE(loading());
   Stop();
 }
 
@@ -690,7 +679,7 @@ TEST_F(MultibufferDataSourceTest, Http_PartialResponsePrefetch) {
   EXPECT_TRUE(loading());
 
   FinishLoading();
-  Restart();
+  Start();
   Respond(response2);
   ReceiveData(kDataSize);
   ReceiveData(kDataSize);
@@ -818,7 +807,7 @@ TEST_F(MultibufferDataSourceTest, File_Retry) {
   // Issue a pending read but terminate the connection to force a retry.
   ReadAt(kDataSize);
   FinishLoading();
-  Restart();
+  Start();
   Respond(response_generator_->GenerateFileResponse(kDataSize));
 
   // Complete the read.
@@ -837,7 +826,7 @@ TEST_F(MultibufferDataSourceTest, Http_TooManyRetries) {
 
   for (int i = 0; i < ResourceMultiBufferDataProvider::kMaxRetries; i++) {
     FailLoading();
-    data_provider()->Start();
+    Start();
     Respond(response_generator_->Generate206(kDataSize));
   }
 
@@ -860,7 +849,7 @@ TEST_F(MultibufferDataSourceTest, File_TooManyRetries) {
 
   for (int i = 0; i < ResourceMultiBufferDataProvider::kMaxRetries; i++) {
     FailLoading();
-    data_provider()->Start();
+    Start();
     Respond(response_generator_->Generate206(kDataSize));
   }
 
@@ -1374,7 +1363,6 @@ TEST_F(MultibufferDataSourceTest, Http_NotStreamingAfterRedirect) {
   EXPECT_FALSE(data_source_->IsStreaming());
 
   FinishLoading();
-  EXPECT_FALSE(loading());
   Stop();
 }
 
