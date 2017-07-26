@@ -17,22 +17,30 @@
 
 namespace content {
 namespace {
+using StatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
 
 class ResponseCallback
     : public payments::mojom::PaymentHandlerResponseCallback {
  public:
-  static payments::mojom::PaymentHandlerResponseCallbackPtr Create(
-      int payment_request_id,
-      scoped_refptr<ServiceWorkerVersion> service_worker_version,
-      PaymentAppProvider::InvokePaymentAppCallback callback) {
-    ResponseCallback* response_callback = new ResponseCallback(
-        payment_request_id, std::move(service_worker_version),
-        std::move(callback));
+  ResponseCallback(scoped_refptr<ServiceWorkerVersion> service_worker_version,
+                   PaymentAppProvider::InvokePaymentAppCallback callback)
+      : service_worker_version_(service_worker_version),
+        callback_(std::move(callback)),
+        binding_(this) {}
+  ~ResponseCallback() override {}
+
+  payments::mojom::PaymentHandlerResponseCallbackPtr
+  getPaymentHandlerResponseCallback(int payment_request_id) {
+    payment_request_id_ = payment_request_id;
     payments::mojom::PaymentHandlerResponseCallbackPtr callback_proxy;
-    response_callback->binding_.Bind(mojo::MakeRequest(&callback_proxy));
+    binding_.Bind(mojo::MakeRequest(&callback_proxy));
     return callback_proxy;
   }
-  ~ResponseCallback() override {}
+
+  StatusCallback getErrorStatusCallback() {
+    return base::Bind(&ResponseCallback::OnErrorStatusCallback,
+                      base::Unretained(this));
+  }
 
   void OnPaymentHandlerResponse(
       payments::mojom::PaymentHandlerResponsePtr response,
@@ -46,15 +54,18 @@ class ResponseCallback
     delete this;
   }
 
- private:
-  ResponseCallback(int payment_request_id,
-                   scoped_refptr<ServiceWorkerVersion> service_worker_version,
-                   PaymentAppProvider::InvokePaymentAppCallback callback)
-      : payment_request_id_(payment_request_id),
-        service_worker_version_(service_worker_version),
-        callback_(std::move(callback)),
-        binding_(this) {}
+  void OnErrorStatusCallback(ServiceWorkerStatusCode service_worker_status) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    DCHECK(service_worker_status != SERVICE_WORKER_OK);
 
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(std::move(callback_),
+                       payments::mojom::PaymentHandlerResponse::New()));
+    delete this;
+  }
+
+ private:
   int payment_request_id_;
   scoped_refptr<ServiceWorkerVersion> service_worker_version_;
   PaymentAppProvider::InvokePaymentAppCallback callback_;
@@ -78,28 +89,22 @@ void GetAllPaymentAppsOnIO(
       base::BindOnce(&DidGetAllPaymentAppsOnIO, std::move(callback)));
 }
 
-void DispatchPaymentRequestEventError(
-    ServiceWorkerStatusCode service_worker_status) {
-  NOTIMPLEMENTED();
-}
-
 void DispatchPaymentRequestEvent(
     payments::mojom::PaymentRequestEventDataPtr event_data,
-    PaymentAppProvider::InvokePaymentAppCallback callback,
-    scoped_refptr<ServiceWorkerVersion> active_version) {
+    scoped_refptr<ServiceWorkerVersion> active_version,
+    ResponseCallback* response_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(active_version);
 
   int payment_request_id = active_version->StartRequest(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
-      base::Bind(&DispatchPaymentRequestEventError));
+      response_callback->getErrorStatusCallback());
   int event_finish_id = active_version->StartRequest(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
       base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
 
   payments::mojom::PaymentHandlerResponseCallbackPtr response_callback_ptr =
-      ResponseCallback::Create(payment_request_id, active_version,
-                               std::move(callback));
+      response_callback->getPaymentHandlerResponseCallback(payment_request_id);
   DCHECK(response_callback_ptr);
   active_version->event_dispatcher()->DispatchPaymentRequestEvent(
       payment_request_id, std::move(event_data),
@@ -114,19 +119,25 @@ void DidFindRegistrationOnIO(
     scoped_refptr<ServiceWorkerRegistration> service_worker_registration) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  if (service_worker_status != SERVICE_WORKER_OK)
+  if (service_worker_status != SERVICE_WORKER_OK) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(std::move(callback),
+                       payments::mojom::PaymentHandlerResponse::New()));
     return;
+  }
 
   ServiceWorkerVersion* active_version =
       service_worker_registration->active_version();
   DCHECK(active_version);
+  ResponseCallback* response_callback =
+      new ResponseCallback(active_version, std::move(callback));
   active_version->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
       base::Bind(&DispatchPaymentRequestEvent,
                  base::Passed(std::move(event_data)),
-                 base::Passed(std::move(callback)),
-                 make_scoped_refptr(active_version)),
-      base::Bind(&DispatchPaymentRequestEventError));
+                 make_scoped_refptr(active_version), response_callback),
+      response_callback->getErrorStatusCallback());
 }
 
 void FindRegistrationOnIO(
