@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc5f7221_10736f7d",
+        "filename": "components/ntp_snippets/remote/test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-26T13:51:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure I like having defaults in a utils file. If it\u0027s local to the test, you can see where the numbers come from, but here it\u0027s harder.\n\nWould it be a problem to remove the default and pass this value from the original test?",
+      "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e3e958_b89b6188",
+        "filename": "components/ntp_snippets/time_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-26T13:51:24Z",
+      "side": 1,
+      "message": "I wouldn\u0027t call this \"serialization\".\n\n\"TimeToMicros()\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
