@@ -328,6 +328,7 @@ class HomePrefNotificationBridge {
 
   if ([touchBar respondsToSelector:
       @selector(setEscapeKeyReplacementItemIdentifier:)]) {
+    LOG(INFO) << "Set the ESC KEY replacement";
     NSString* exitIdentifier =
         ui::GetTouchBarItemId(kTabFullscreenTouchBarId, kExitFullscreenTouchId);
     [touchBar setEscapeKeyReplacementItemIdentifier:exitIdentifier];
@@ -448,6 +449,7 @@ class HomePrefNotificationBridge {
 }
 
 - (void)exitFullscreenForTab:(id)sender {
+  LOG(INFO) << "exitFullscreenForTab";
   browser_->exclusive_access_manager()
       ->fullscreen_controller()
       ->ExitExclusiveAccessIfNecessary();
