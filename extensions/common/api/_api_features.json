@@ -85,7 +85,6 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://bluetooth-pairing/*",
-      "chrome://md-settings/*",
       "chrome://settings/*",
       "chrome://settings-frame/*"
     ]
@@ -103,7 +102,6 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://bluetooth-pairing/*",
-      "chrome://md-settings/*",
       "chrome://settings/*",
       "chrome://settings-frame/*"
     ]
@@ -227,7 +225,6 @@
       "chrome://extensions/*",
       "chrome://extensions-frame/*",
       "chrome://chrome/extensions/*",
-      "chrome://md-settings/*",
       "chrome://settings/*",
       "chrome://settings-frame/*"
     ]
@@ -260,7 +257,6 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://bookmarks/*",
-      "chrome://md-settings/*",
       "chrome://settings/*",
       "chrome://settings-frame/*"
     ]
@@ -334,7 +330,6 @@
     "channel": "stable",
     "contexts": ["webui"],
     "matches": [
-      "chrome://md-settings/*",
       "chrome://network/*",
       "chrome://oobe/*",
       "chrome://settings/*",
@@ -471,7 +466,6 @@
     "channel": "stable",
     "contexts": ["webui"],
     "matches": [
-      "chrome://md-settings/*",
       "chrome://settings/*",
       "chrome://settings-frame/*"
     ]

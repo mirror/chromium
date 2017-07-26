@@ -30,7 +30,7 @@ class SettingsPageUIHandler;
 // Exposed for testing.
 bool IsValidOrigin(const GURL& url);
 
-// The WebUI handler for chrome://md-settings.
+// The WebUI handler for chrome://settings.
 class MdSettingsUI : public content::WebUIController,
                      public content::WebContentsObserver {
  public:
