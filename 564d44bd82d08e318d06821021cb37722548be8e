@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f015c6_21686533",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/module.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-07-26T17:49:07Z",
+      "side": 1,
+      "message": "Does \"do not force ad blocking\" adequately communicate that a blacklisted site will not be affected, i.e. ads will still be blocked? Some options to consider, with both the true and *false value text shown.\n\nBlock ads on this site\n*Show ads on this site, if allowed\n\nTurn on ad blocking\n*Turn off ad blocking, if allowed\n\n\"If allowed\" may clarify that Chrome may still block ads per Chromenolia. \n\nAlso, is \"on this site\" needed? Seems like the context should be clear to the Dev Tool user. Consider dropping it for brevity.",
+      "range": {
+        "startLine": 264,
+        "startChar": 30,
+        "endLine": 264,
+        "endChar": 67
+      },
+      "revId": "564d44bd82d08e318d06821021cb37722548be8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
