@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65f49ff4_cf1d73fd",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:11:56Z",
+      "side": 1,
+      "message": "Reconcilers may find nothing to reconcile.. In which case they would not request processing.\nOne case is a bunch of NEW_REQUEST urls and nothing else going on...",
+      "parentUuid": "533b546c_d4fc421f",
+      "range": {
+        "startLine": 40,
+        "startChar": 40,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e63c367a_8a0e76c8",
         "filename": "components/offline_pages/core/task_queue.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37e797f_95f855ef",
+        "filename": "components/offline_pages/core/task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:11:56Z",
+      "side": 1,
+      "message": "Nice catch. I *think* you mean what happens if OnIdle resutls in more tasks being queued right away? Modified.",
+      "parentUuid": "e63c367a_8a0e76c8",
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "2628f53b_a879992e",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:11:56Z",
+      "side": 1,
+      "message": "I though about it, but I think Delegate (also popular pattern) is better because:\n1. There is never more than one receiver of OnIdle. In fact, it\u0027s very error prone to call OnIdle on multiple hypothetical observers, because if they queue more tasks, the second OnIdle is incorrect (the queue is not idle). So supporting a list of Observers is unnecessary complexity. See here for example usage of Delegate (there are lots): https://cs.chromium.org/chromium/src/mojo/edk/system/channel.h?rcl\u003deb7572a1c04926d4eb5e41b7d7de8233530c4844\u0026l\u003d238\n\n2. The lifetime is simpler for delegate and matches this case. Delegates typically create and own the objects, in this case TaskQueue. This is exactly how it is used.\n\nI thought about Clint vs Delegate and I think this is Delegate because Client is a)optional b)lifetime is less specific c) usually set with SetClient(Client*), so it is less appropriate in this case.",
+      "parentUuid": "81f969a0_93093fe3",
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "063bc665_2826f5aa",
         "filename": "components/offline_pages/core/task_queue.h",
         "patchSetId": 2
@@ -100,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "01b6e1a8_ca9a43be",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063bc665_2826f5aa",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693bbf39_af39e7f1",
         "filename": "components/offline_pages/core/task_queue.h",
         "patchSetId": 2
@@ -111,6 +195,30 @@
       "writtenOn": "2017-07-25T23:30:06Z",
       "side": 1,
       "message": "isIdle()\nor\nisEmpty()",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40473a78_e76618e4",
+        "filename": "components/offline_pages/core/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:11:56Z",
+      "side": 1,
+      "message": "Those are usually query methods, like\nbool IsIdle();\n\nThe \u0027this just happened\u0027 callbacks are usually OnFooHappened or just FooHappened right?\nOnLastTaskCompleted or LastTaskCompleted or OnFinishedLastTask maybe?",
+      "parentUuid": "693bbf39_af39e7f1",
       "range": {
         "startLine": 35,
         "startChar": 17,
@@ -143,6 +251,30 @@
       "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afe2ca8_26491fb1",
+        "filename": "components/offline_pages/core/task_queue_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T01:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9b15715_c186edf6",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "f9a4f51d11af57631e14b4629f60cdd7269e366f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
