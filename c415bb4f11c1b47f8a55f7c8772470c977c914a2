@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70552328_638a1b30",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-26T08:16:55Z",
+      "side": 1,
+      "message": "This utility function is useful and is good to be placed in somewhere in message_center namespace (e.g MessageCenter class).",
+      "range": {
+        "startLine": 178,
+        "startChar": 5,
+        "endLine": 178,
+        "endChar": 34
+      },
+      "revId": "c415bb4f11c1b47f8a55f7c8772470c977c914a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170098f1_d532b7f0",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-26T08:16:55Z",
+      "side": 1,
+      "message": "Could you rename this to \"progress_status\"? I think status sounds very general for the status text for progress notification.",
+      "range": {
+        "startLine": 114,
+        "startChar": 17,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "c415bb4f11c1b47f8a55f7c8772470c977c914a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3385ee_be99f62b",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-26T08:16:55Z",
+      "side": 1,
+      "message": "Could you early-return if status_view_ is null? Having multiple or-conditions in DCHECK may sometime be hard to debug and should be avoided if possible.",
+      "range": {
+        "startLine": 611,
+        "startChar": 12,
+        "endLine": 611,
+        "endChar": 24
+      },
+      "revId": "c415bb4f11c1b47f8a55f7c8772470c977c914a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
