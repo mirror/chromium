@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7ddfae_f792f10a",
+        "filename": "content/public/common/sandbox_type.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:47:12Z",
+      "side": 1,
+      "message": "Maybe DCHECK that no other |procss_type|s specify this flag?",
+      "revId": "2dfb16c6cfca66a54ce9a04591c7291d3a9ddc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b596f25_fe77b4b6",
+        "filename": "content/public/common/sandbox_type.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-26T20:47:12Z",
+      "side": 1,
+      "message": "How about having this function take a CommandLine* and then writing a unittest for it?",
+      "range": {
+        "startLine": 49,
+        "startChar": 27,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "2dfb16c6cfca66a54ce9a04591c7291d3a9ddc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
