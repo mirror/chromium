@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7c92c4_25ef5bcb",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "DCHECK_GE(in_flight_requests_.size(), in_flight_delayable_count_);",
+      "range": {
+        "startLine": 805,
+        "startChar": 17,
+        "endLine": 805,
+        "endChar": 25
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129ebf57_d0421150",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "s/non_delayable_throttle_count/sum_non_delayable_request_weights/",
+      "range": {
+        "startLine": 806,
+        "startChar": 11,
+        "endLine": 806,
+        "endChar": 39
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95afd0e_f25d31fa",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "s/non_delayable_throttle_delayable/non_delayable_throttles_delayable/\nand below.",
+      "range": {
+        "startLine": 996,
+        "startChar": 6,
+        "endLine": 996,
+        "endChar": 38
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dedaee5_671d58f2",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "this check is unnecessary. GetFieldTrialParamByFeatureAsInt() below would return 0 anyways.",
+      "range": {
+        "startLine": 1275,
+        "startChar": 12,
+        "endLine": 1275,
+        "endChar": 13
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd7c6f8_7812f919",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "s/multiplier/weight/\nor something more descriptive?",
+      "range": {
+        "startLine": 178,
+        "startChar": 48,
+        "endLine": 178,
+        "endChar": 58
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83346664_19517bce",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "s/with/by/",
+      "range": {
+        "startLine": 198,
+        "startChar": 24,
+        "endLine": 198,
+        "endChar": 28
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1a30f1_e243e0d0",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "s/GetNonDelayableThrottlesDelayableMultiplier/GetCurrentNonDelayableThrottlesDelayableMultiplier/\n\nto sort of make it clearer that it is doing more than just returning |non_delayable_throttle_delayable_multiplier_|.",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 201,
+        "endChar": 49
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5ba613_f4f9c153",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "The relative weight of a non-delayable request compared to a delayable request.",
+      "range": {
+        "startLine": 224,
+        "startChar": 9,
+        "endLine": 225,
+        "endChar": 61
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf01b8a_7cc7c821",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "just use the string directly instead of storing it in a temp. var.",
+      "range": {
+        "startLine": 364,
+        "startChar": 16,
+        "endLine": 364,
+        "endChar": 21
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ade75e_e3082a49",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "It is not clear where this 8 comes from. A suggestion is that at the top of this method you define:\nint multiplier \u003d 2;\nconst int kMaxNumDelayableRequestsPerClient \u003d 10;  // Should match the .cc.\n\nThen, here:\ns/8/kMaxNumDelayableRequestsPerClient - multiplier * 1/",
+      "range": {
+        "startLine": 455,
+        "startChar": 24,
+        "endLine": 455,
+        "endChar": 25
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca1071c_79efadd6",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(experiment_status, !last_low-\u003estarted());",
+      "range": {
+        "startLine": 468,
+        "startChar": 18,
+        "endLine": 468,
+        "endChar": 26
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3101013_aca89b42",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "Is it possible to combine this with the method above. The method can take two args:\nbool experiment status AND\nint non_delayable_multiplier",
+      "range": {
+        "startLine": 471,
+        "startChar": 7,
+        "endLine": 471,
+        "endChar": 57
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20f49a4_de69a9c8",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-26T21:29:36Z",
+      "side": 1,
+      "message": "s/requests/request/",
+      "range": {
+        "startLine": 483,
+        "startChar": 31,
+        "endLine": 483,
+        "endChar": 39
+      },
+      "revId": "9cd831e1062793c41bec26fbf29f04baa92400fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
