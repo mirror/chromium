@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62f984c0_8ad00e24",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-26T17:27:33Z",
+      "side": 1,
+      "message": "it seems from the screenshots that the problem is with the lower separator but this appears to be fixing primarily the upper separator (?)",
+      "range": {
+        "startLine": 596,
+        "startChar": 31,
+        "endLine": 596,
+        "endChar": 42
+      },
+      "revId": "cf51560bdce2dccf050090c4a54a1932052e4f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
