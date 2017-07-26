@@ -1,9 +1,7 @@
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-/**
- * @unrestricted
- */
+
 Network.NetworkLogViewColumns = class {
   /**
    * @param {!Network.NetworkLogView} networkLogView
@@ -26,9 +24,6 @@ Network.NetworkLogViewColumns = class {
 
     this._gridMode = true;
 
-    /** @type {!Array.<!Network.NetworkLogViewColumns.Descriptor>} */
-    this._columns = [];
-
     this._waterfallRequestsAreStale = false;
     this._waterfallScrollerWidthIsStale = true;
 
@@ -40,8 +35,30 @@ Network.NetworkLogViewColumns = class {
     this._calculatorsMap.set(Network.NetworkLogViewColumns._calculatorTypes.Time, timeCalculator);
     this._calculatorsMap.set(Network.NetworkLogViewColumns._calculatorTypes.Duration, durationCalculator);
 
-    this._setupDataGrid();
-    this._setupWaterfall();
+    this._popoverHelper = new UI.PopoverHelper(this._networkLogView.element, this._getPopoverRequest.bind(this));
+    this._popoverHelper.setHasPadding(true);
+    this._popoverHelper.setTimeout(300, 300);
+
+    this._columns = this._buildColumns();
+    this._dataGrid = this._buildDataGrid(this._columns);
+    this._dataGridScroller = this._dataGrid.scrollContainer;
+
+    this._activeWaterfallSortId = Network.NetworkLogViewColumns.WaterfallSortIds.StartTime;
+
+    this._splitWidget = new UI.SplitWidget(true, true, 'networkPanelSplitViewWaterfall', 200);
+    var widget = this._dataGrid.asWidget();
+    widget.setMinimumSize(150, 0);
+    this._splitWidget.setMainWidget(widget);
+
+    this._waterfallColumn = this._buildWaterfall();
+
+    this._waterfallColumnSortIcon = UI.Icon.create('', 'sort-order-icon');
+    this._waterfallHeaderElement = this._buildWaterfallHeader(this._waterfallColumnSortIcon);
+
+    this._waterfallScroller = this._waterfallColumn.contentElement.createChild('div', 'network-waterfall-v-scroll');
+    this._waterfallScrollerContent = this._waterfallScroller.createChild('div', 'network-waterfall-v-scroll-content');
+    this._activeScroller = this._waterfallScroller;
+    this.switchViewMode(false);
   }
 
   /**
@@ -73,59 +90,54 @@ Network.NetworkLogViewColumns = class {
     this._eventDividers.clear();
   }
 
-  _setupDataGrid() {
-    var defaultColumns = Network.NetworkLogViewColumns._defaultColumns;
-
-    var defaultColumnConfig = Network.NetworkLogViewColumns._defaultColumnConfig;
-
-    this._columns = /** @type {!Array<!Network.NetworkLogViewColumns.Descriptor>} */ ([]);
-    for (var currentConfigColumn of defaultColumns) {
+  /**
+   * @return {!Array<!Network.NetworkLogViewColumns.Descriptor>}
+   */
+  _buildColumns() {
+    var columns = [];
+    for (var currentConfigColumn of Network.NetworkLogViewColumns._defaultColumns) {
       var columnConfig = /** @type {!Network.NetworkLogViewColumns.Descriptor} */ (
-          Object.assign({}, defaultColumnConfig, currentConfigColumn));
+          Object.assign({}, Network.NetworkLogViewColumns._defaultColumnConfig, currentConfigColumn));
       columnConfig.id = columnConfig.id;
       if (columnConfig.subtitle)
         columnConfig.titleDOMFragment = this._makeHeaderFragment(columnConfig.title, columnConfig.subtitle);
-      this._columns.push(columnConfig);
+      columns.push(columnConfig);
     }
+    return columns;
+  }
+
+  /**
+   * @param {!Array<!Network.NetworkLogViewColumns.Descriptor>} columns
+   * @return {!DataGrid.SortableDataGrid<!Network.NetworkNode>}
+   */
+  _buildDataGrid(columns) {
     this._loadCustomColumnsAndSettings();
 
-    this._popoverHelper = new UI.PopoverHelper(this._networkLogView.element, this._getPopoverRequest.bind(this));
-    this._popoverHelper.setHasPadding(true);
-    this._popoverHelper.setTimeout(300, 300);
-
-    /** @type {!DataGrid.SortableDataGrid<!Network.NetworkNode>} */
-    this._dataGrid =
-        new DataGrid.SortableDataGrid(this._columns.map(Network.NetworkLogViewColumns._convertToDataGridDescriptor));
-    this._dataGrid.element.addEventListener('mousedown', event => {
-      if (!this._dataGrid.selectedNode && event.button)
+    var dataGrid =
+        new DataGrid.SortableDataGrid(columns.map(Network.NetworkLogViewColumns._convertToDataGridDescriptor));
+    dataGrid.element.addEventListener('mousedown', event => {
+      if (!dataGrid.selectedNode && event.button)
         event.consume();
     }, true);
 
-    this._dataGridScroller = this._dataGrid.scrollContainer;
-
     this._updateColumns();
-    this._dataGrid.addEventListener(DataGrid.DataGrid.Events.SortingChanged, this._sortHandler, this);
-    this._dataGrid.setHeaderContextMenuCallback(this._innerHeaderContextMenu.bind(this));
+    dataGrid.addEventListener(DataGrid.DataGrid.Events.SortingChanged, this._sortHandler, this);
+    dataGrid.setHeaderContextMenuCallback(this._innerHeaderContextMenu.bind(this));
 
-    this._activeWaterfallSortId = Network.NetworkLogViewColumns.WaterfallSortIds.StartTime;
-    this._dataGrid.markColumnAsSortedBy(
-        Network.NetworkLogViewColumns._initialSortColumn, DataGrid.DataGrid.Order.Ascending);
+    dataGrid.markColumnAsSortedBy(Network.NetworkLogViewColumns._initialSortColumn, DataGrid.DataGrid.Order.Ascending);
 
-    this._splitWidget = new UI.SplitWidget(true, true, 'networkPanelSplitViewWaterfall', 200);
-    var widget = this._dataGrid.asWidget();
-    widget.setMinimumSize(150, 0);
-    this._splitWidget.setMainWidget(widget);
+    return dataGrid;
   }
 
-  _setupWaterfall() {
-    this._waterfallColumn = new Network.NetworkWaterfallColumn(this._networkLogView.calculator());
+  /**
+   * @return {!Network.NetworkWaterfallColumn}
+   */
+  _buildWaterfall() {
+    var waterfallColumn = new Network.NetworkWaterfallColumn(this._networkLogView.calculator());
 
-    this._waterfallColumn.element.addEventListener('contextmenu', handleContextMenu.bind(this));
-    this._waterfallColumn.element.addEventListener('mousewheel', this._onMouseWheel.bind(this, false), {passive: true});
+    waterfallColumn.element.addEventListener('contextmenu', handleContextMenu.bind(this));
+    waterfallColumn.element.addEventListener('mousewheel', this._onMouseWheel.bind(this, false), {passive: true});
     this._dataGridScroller.addEventListener('mousewheel', this._onMouseWheel.bind(this, true), true);
-
-    this._waterfallScroller = this._waterfallColumn.contentElement.createChild('div', 'network-waterfall-v-scroll');
-    this._waterfallScrollerContent = this._waterfallScroller.createChild('div', 'network-waterfall-v-scroll-content');
 
     this._dataGrid.addEventListener(DataGrid.DataGrid.Events.PaddingChanged, () => {
       this._waterfallScrollerWidthIsStale = true;
@@ -134,13 +146,12 @@ Network.NetworkLogViewColumns = class {
     this._dataGrid.addEventListener(
         DataGrid.ViewportDataGrid.Events.ViewportCalculated, this._redrawWaterfallColumn.bind(this));
 
-    this._createWaterfallHeader();
-    this._waterfallColumn.contentElement.classList.add('network-waterfall-view');
+    waterfallColumn.contentElement.classList.add('network-waterfall-view');
 
-    this._waterfallColumn.setMinimumSize(100, 0);
-    this._splitWidget.setSidebarWidget(this._waterfallColumn);
+    waterfallColumn.setMinimumSize(100, 0);
+    this._splitWidget.setSidebarWidget(waterfallColumn);
 
-    this.switchViewMode(false);
+    return waterfallColumn;
 
     /**
      * @param {!Event} event
@@ -198,16 +209,20 @@ Network.NetworkLogViewColumns = class {
     this._waterfallColumn.update(this._activeScroller.scrollTop, this._eventDividers, nodes);
   }
 
-  _createWaterfallHeader() {
-    this._waterfallHeaderElement = this._waterfallColumn.contentElement.createChild('div', 'network-waterfall-header');
-    this._waterfallHeaderElement.addEventListener('click', waterfallHeaderClicked.bind(this));
-    this._waterfallHeaderElement.addEventListener(
+  /**
+   * @param {!UI.Icon} sortIcon
+   * @return {!Element}
+   */
+  _buildWaterfallHeader(sortIcon) {
+    var waterfallHeaderElement = this._waterfallColumn.contentElement.createChild('div', 'network-waterfall-header');
+    waterfallHeaderElement.addEventListener('click', waterfallHeaderClicked.bind(this));
+    waterfallHeaderElement.addEventListener(
         'contextmenu', event => this._innerHeaderContextMenu(new UI.ContextMenu(event)));
-    var innerElement = this._waterfallHeaderElement.createChild('div');
+    var innerElement = waterfallHeaderElement.createChild('div');
     innerElement.textContent = Common.UIString('Waterfall');
-    this._waterfallColumnSortIcon = UI.Icon.create('', 'sort-order-icon');
-    this._waterfallHeaderElement.createChild('div', 'sort-order-icon-container')
-        .appendChild(this._waterfallColumnSortIcon);
+
+    waterfallHeaderElement.createChild('div', 'sort-order-icon-container').appendChild(sortIcon);
+    return waterfallHeaderElement;
 
     /**
      * @this {Network.NetworkLogViewColumns}
