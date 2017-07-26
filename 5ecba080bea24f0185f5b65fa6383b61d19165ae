@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82a861db_548c3bd5",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-26T19:37:35Z",
+      "side": 1,
+      "message": "Did you mean to leave this DCHECK?",
+      "range": {
+        "startLine": 833,
+        "startChar": 12,
+        "endLine": 833,
+        "endChar": 36
+      },
+      "revId": "5ecba080bea24f0185f5b65fa6383b61d19165ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
