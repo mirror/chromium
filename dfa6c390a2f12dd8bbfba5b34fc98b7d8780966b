@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "548392e4_37994b8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "Do we need these?  Could we just call startForeground directly from the manager?  That means they don\u0027t have to be part of the intent either :).",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b72661_d159cefa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "This would have to be startForegroundService for things \u003e\u003d Android O.  Look at AppHooks.get().startForegroundService(intent);\n\nYou could also probably just do this in the caller as well.  Either is fine :).",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5462da53_edc2d7ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "don\u0027t need",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b90c8b9_fd9fe04f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "Comment about what this is for to help clarify?",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d00907_f178af5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "I think the result of calling bind is asynchronous, so a call following this might try to call directly into updatePinnedNotificationIfNeeded().  This would just return early because mBoundService is null right?  I think there are a few \u0027checkpoints\u0027 along the initialization route:\n\n1. Have we called Context.startForegroundService() and Context.bindService()?\n2. Have we gotten a callback to the ServiceConnection with the actual Service reference?\n\nIf 1 is done, we still need to wait for 2 to finish before calling directly into the Service.\nIf 2 is done, we are good to go.\n\nThese two should affect startup, shutdown, and update code paths.",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec3d1a9_5508ba65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "Should this never be the case?",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637e7fc4_11c93eea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "\u0026\u0026?",
+      "range": {
+        "startLine": 161,
+        "startChar": 61,
+        "endLine": 161,
+        "endChar": 62
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812d3b25_c91061cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T22:05:27Z",
+      "side": 1,
+      "message": "INVALID?",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
