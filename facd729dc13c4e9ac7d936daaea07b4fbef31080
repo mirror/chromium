@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bc8d431_da7946c6",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-26T19:23:08Z",
+      "side": 1,
+      "message": "Newline after \"namespace {\"",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38be6761_fa038d51",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-26T19:23:08Z",
+      "side": 1,
+      "message": "Self-deleting objects should have a private destructor, so only they can manage their own lifetime.",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d59082_96f396ad",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-26T19:23:08Z",
+      "side": 1,
+      "message": "Here and elsewhere: The first character of a method name should be capitalized in C++ according to Chromium style.",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97a871e_508e434e",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-26T19:23:08Z",
+      "side": 1,
+      "message": "Is it possible to use base::OnceCallback here?",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef6fd4e_5bb1cedc",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-26T19:23:08Z",
+      "side": 1,
+      "message": "Add a comment that this object self-deletes after either success or error callback is invoked.",
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
