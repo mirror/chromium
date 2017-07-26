@@ -192,7 +192,6 @@ void DumpAccessibilityTreeTest::AddDefaultFilters(
   // States
   AddFilter(filters, "check*");
   AddFilter(filters, "descript*");
-  AddFilter(filters, "busy");
   AddFilter(filters, "collapsed");
   AddFilter(filters, "default");
   AddFilter(filters, "haspopup");
@@ -205,6 +204,7 @@ void DumpAccessibilityTreeTest::AddDefaultFilters(
   AddFilter(filters, "select*");
   AddFilter(filters, "visited");
   // Other attributes
+  AddFilter(filters, "busy=*");
   AddFilter(filters, "valueForRange*");
   AddFilter(filters, "minValueForRange*");
   AddFilter(filters, "maxValueForRange*");

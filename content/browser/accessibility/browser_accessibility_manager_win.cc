@@ -182,7 +182,7 @@ BrowserAccessibilityEvent::Result
 
   if ((event_type == ui::AX_EVENT_LIVE_REGION_CREATED ||
        event_type == ui::AX_EVENT_LIVE_REGION_CHANGED) &&
-      target->GetBoolAttribute(ui::AX_ATTR_CONTAINER_LIVE_BUSY)) {
+      target->GetBoolAttribute(ui::AX_ATTR_CONTAINER_BUSY)) {
     return BrowserAccessibilityEvent::DiscardedBecauseLiveRegionBusy;
   }
 

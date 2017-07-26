@@ -118,8 +118,6 @@ enum TextUnderElementMode {
                         // present
 };
 
-enum class AXBoolAttribute {};
-
 class AXSparseAttributeClient {
  public:
   virtual void AddBoolAttribute(AXBoolAttribute, bool) = 0;
@@ -444,6 +442,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   bool IsWebArea() const { return RoleValue() == kWebAreaRole; }
 
   // Check object state.
+  virtual bool IsBusy() const { return false; }
   virtual bool IsClickable() const;
   virtual bool IsCollapsed() const { return false; }
   virtual AccessibilityExpanded IsExpanded() const {
