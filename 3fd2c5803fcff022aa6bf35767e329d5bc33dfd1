@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00659e3a_06ee074a",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T06:30:45Z",
+      "side": 1,
+      "message": "nit: please update this field name as well.",
+      "revId": "3fd2c5803fcff022aa6bf35767e329d5bc33dfd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05decb2_6cd4665e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerSettings.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T06:30:45Z",
+      "side": 1,
+      "message": "Not from your change, but this code looks a bit awkward... we could just initialize these in the header file and remove line 12-13 and this method?",
+      "revId": "3fd2c5803fcff022aa6bf35767e329d5bc33dfd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
