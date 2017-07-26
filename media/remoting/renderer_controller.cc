@@ -404,13 +404,13 @@ void RendererController::WaitForStabilityBeforeStart(
       base::Bind(&RendererController::OnDelayedStartTimerFired,
                  base::Unretained(this), start_trigger));
 
-  // TODO(xjz): Start content bitrate estimation.
+  session_->EstimateTransmissionCapacity(base::BindOnce(
+      &RendererController::OnTransmissionCapacity, weak_factory_.GetWeakPtr()));
 }
 
 void RendererController::CancelDelayedStart() {
   delayed_start_stability_timer_.Stop();
-
-  // TODO(xjz): Stop content bitrate estimation.
+  transmission_capacity_ = 0;
 }
 
 void RendererController::OnDelayedStartTimerFired(StartTrigger start_trigger) {
@@ -418,8 +418,8 @@ void RendererController::OnDelayedStartTimerFired(StartTrigger start_trigger) {
   DCHECK(!remote_rendering_started_);
   DCHECK(!is_encrypted_);
 
-  // TODO(xjz): Stop content bitrate estimation and evaluate whether the
-  // estimated bitrate is supported by remoting.
+  // TODO(xjz): Estimates the content bitrate and check whether the transmission
+  // capacity is sufficient to deliver the content.
 
   StartRemoting(start_trigger);
 }
@@ -436,6 +436,11 @@ void RendererController::StartRemoting(StartTrigger start_trigger) {
   // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
   // started successfully.
   session_->StartRemoting(this);
+}
+
+void RendererController::OnTransmissionCapacity(double rate) {
+  DCHECK_GE(rate, 0);
+  transmission_capacity_ = rate;
 }
 
 void RendererController::OnRendererFatalError(StopTrigger stop_trigger) {
