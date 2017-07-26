@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "chrome/browser/media/router/discovery/dial/dial_device_data.h"
 #include "chrome/browser/media/router/discovery/dial/dial_registry.h"
+#include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
 #include "chrome/common/extensions/api/dial.h"
 #include "components/keyed_service/core/refcounted_keyed_service.h"
 #include "extensions/browser/api/async_api_function.h"
@@ -44,7 +45,8 @@ class DialFetchDeviceDescriptionFunction;
 // real DialRegsitry.
 class DialAPI : public RefcountedKeyedService,
                 public EventRouter::Observer,
-                public media_router::DialRegistry::Observer {
+                public media_router::DialRegistry::Observer,
+                public DiscoveryNetworkMonitor::Observer {
  public:
   explicit DialAPI(Profile* profile);
 
@@ -81,6 +83,9 @@ class DialAPI : public RefcountedKeyedService,
       const media_router::DialRegistry::DeviceList& devices) override;
   void OnDialError(media_router::DialRegistry::DialErrorCode type) override;
 
+  // DiscoveryNetworkMonitor::Observer:
+  void OnNetworksChanged(const std::string& network_id) override;
+
   // Methods to notify the DialRegistry on the correct thread of new/removed
   // listeners.
   void NotifyListenerAddedOnIOThread();
@@ -100,6 +105,8 @@ class DialAPI : public RefcountedKeyedService,
   std::unique_ptr<media_router::DialDeviceData> test_device_data_;
   std::unique_ptr<media_router::DialDeviceDescriptionData>
       test_device_description_;
+
+  int num_network_id_listeners_;
 
   DISALLOW_COPY_AND_ASSIGN(DialAPI);
 };
@@ -160,6 +167,24 @@ class DialFetchDeviceDescriptionFunction : public AsyncExtensionFunction {
   DialAPI* dial_;
 
   DISALLOW_COPY_AND_ASSIGN(DialFetchDeviceDescriptionFunction);
+};
+
+class DialGetNetworkIdFunction : public AsyncExtensionFunction {
+ public:
+  DialGetNetworkIdFunction();
+
+ protected:
+  ~DialGetNetworkIdFunction() override;
+
+  // AsyncExtensionFunction:
+  bool RunAsync() override;
+
+ private:
+  DECLARE_EXTENSION_FUNCTION("dial.getNetworkId", DIAL_GETNETWORKID);
+
+  void OnNetworkInfoReady(const std::string& network_id);
+
+  DISALLOW_COPY_AND_ASSIGN(DialGetNetworkIdFunction);
 };
 
 }  // namespace extensions
