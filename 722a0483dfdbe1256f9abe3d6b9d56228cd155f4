@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c111912_338f3f26",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:13:42Z",
+      "side": 1,
+      "message": "2016 -\u003e 2017",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e9fc19_67ed1fe8",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:13:42Z",
+      "side": 1,
+      "message": "2016 -\u003e 2017",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ea1295_b2d59fd8",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:13:42Z",
+      "side": 1,
+      "message": "Do you need CORE_EXPORT?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140e92f6_3a327800",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:13:42Z",
+      "side": 1,
+      "message": "Do you need CORE_EXPORT?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d245f6_6e8b695f",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:13:42Z",
+      "side": 1,
+      "message": "Do you need CORE_EXPORT?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
