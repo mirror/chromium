@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "609a5170_18c46cae",
+        "filename": "chrome/browser/browser_process.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T20:59:37Z",
+      "side": 1,
+      "message": "Update comment too.",
+      "revId": "12d25829498fbb6c02df06021eed02de6fb4689a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
