@@ -95,6 +95,7 @@ InvalidatableInterpolation::MaybeConvertUnderlyingValue(
     InterpolationValue result =
         interpolation_type->MaybeConvertUnderlyingValue(environment);
     if (result) {
+      DCHECK(!result.interpolable_value || (result.interpolable_value && result.non_interpolable_value));
       return TypedInterpolationValue::Create(
           *interpolation_type, std::move(result.interpolable_value),
           std::move(result.non_interpolable_value));
@@ -154,9 +155,11 @@ InvalidatableInterpolation::EnsureValidConversion(
     return cached_value_.get();
   ClearConversionCache();
   if (current_fraction_ == 0) {
+    DCHECK(start_keyframe_);
     cached_value_ = ConvertSingleKeyframe(*start_keyframe_, environment,
                                           underlying_value_owner);
   } else if (current_fraction_ == 1) {
+    DCHECK(end_keyframe_);
     cached_value_ = ConvertSingleKeyframe(*end_keyframe_, environment,
                                           underlying_value_owner);
   } else {
@@ -166,6 +169,8 @@ InvalidatableInterpolation::EnsureValidConversion(
       cached_value_ = pairwise_conversion->InitialValue();
       cached_pair_conversion_ = std::move(pairwise_conversion);
     } else {
+      DCHECK(start_keyframe_);
+      DCHECK(end_keyframe_);
       cached_pair_conversion_ = FlipPrimitiveInterpolation::Create(
           ConvertSingleKeyframe(*start_keyframe_, environment,
                                 underlying_value_owner),
@@ -234,8 +239,12 @@ void InvalidatableInterpolation::ApplyStack(
       ToInvalidatableInterpolation(*interpolations.at(starting_index));
   first_interpolation.EnsureValidInterpolationTypes(environment);
   if (first_interpolation.DependsOnUnderlyingValue()) {
-    underlying_value_owner.Set(
-        first_interpolation.MaybeConvertUnderlyingValue(environment));
+    std::unique_ptr<TypedInterpolationValue> value_to_set = first_interpolation.MaybeConvertUnderlyingValue(environment);
+    DCHECK(value_to_set);
+    DCHECK(value_to_set->Value().non_interpolable_value);
+    underlying_value_owner.Set(value_to_set.release());
+    //underlying_value_owner.Set(
+    //    first_interpolation.MaybeConvertUnderlyingValue(environment));
   } else {
     const TypedInterpolationValue* first_value =
         first_interpolation.EnsureValidConversion(environment,
@@ -277,12 +286,12 @@ void InvalidatableInterpolation::ApplyStack(
           underlying_value_owner, underlying_fraction, current_value->Value(),
           current_interpolation.current_fraction_);
   }
-
-  if (should_apply && underlying_value_owner)
+  if (should_apply && underlying_value_owner) {
     underlying_value_owner.GetType().Apply(
         *underlying_value_owner.Value().interpolable_value,
         underlying_value_owner.Value().non_interpolable_value.Get(),
         environment);
+  }
 }
 
 }  // namespace blink
