@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9c51a79_772902d8",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-26T21:42:22Z",
+      "side": 1,
+      "message": "I guess the delta check on 777 is taking this into account but its still super confusing. Would be nice to simplify the logic here and in scroll offsets.",
+      "range": {
+        "startLine": 793,
+        "startChar": 0,
+        "endLine": 793,
+        "endChar": 74
+      },
+      "revId": "13ab7ffa7dfcf4be8d22ea5bd5ed205eb0de06cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
