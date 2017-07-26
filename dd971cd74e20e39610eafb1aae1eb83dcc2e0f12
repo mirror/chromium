@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a6ca27_30015dc0",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:48:03Z",
+      "side": 1,
+      "message": "I think we can directly use switch in this condition.\n\nif (base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n        switches::kEnableMessageCenterNewStyleNotification)) {\n  ...\n}\n\nOr, if we want to check |new_style_notification_enabled| in multiple places,\nit should be handy to have a function\n\nbool IsNewStyleNotificationEnabled() {\n  return base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n       switches::kEnableMessageCenterNewStyleNotification);\n}\n\nin unnamed namespace.",
+      "range": {
+        "startLine": 383,
+        "startChar": 6,
+        "endLine": 383,
+        "endChar": 36
+      },
+      "revId": "dd971cd74e20e39610eafb1aae1eb83dcc2e0f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7052e4_46b142ac",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:48:03Z",
+      "side": 1,
+      "message": "looks redundant.",
+      "range": {
+        "startLine": 868,
+        "startChar": 6,
+        "endLine": 868,
+        "endChar": 11
+      },
+      "revId": "dd971cd74e20e39610eafb1aae1eb83dcc2e0f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a95937_6ffe71ea",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:48:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 877,
+        "startChar": 6,
+        "endLine": 877,
+        "endChar": 11
+      },
+      "revId": "dd971cd74e20e39610eafb1aae1eb83dcc2e0f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a5d9cb_6fdd01fe",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:48:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 890,
+        "startChar": 6,
+        "endLine": 890,
+        "endChar": 11
+      },
+      "revId": "dd971cd74e20e39610eafb1aae1eb83dcc2e0f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af2dad1_bbec911b",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:48:03Z",
+      "side": 1,
+      "message": "Adding |short_form| looks unnecessary, since we can know whether the MD notification is enabled or not inside this function.\n(It should be better to use a consistent way to refer the flags.)",
+      "revId": "dd971cd74e20e39610eafb1aae1eb83dcc2e0f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe1e931_6a1ddef5",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-26T06:48:03Z",
+      "side": 1,
+      "message": "s/these/this/",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 51
+      },
+      "revId": "dd971cd74e20e39610eafb1aae1eb83dcc2e0f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
