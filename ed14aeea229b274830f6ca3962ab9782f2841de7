@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6556400c_fe77f446",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-26T16:56:39Z",
+      "side": 1,
+      "message": "Don\u0027t actually add Tether capability yet. We\u0027ll add it when it\u0027s actually been implemented on the back-end.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "ed14aeea229b274830f6ca3962ab9782f2841de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
