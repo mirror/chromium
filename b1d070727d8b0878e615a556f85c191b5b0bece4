@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb60bc6c_69d615a2",
+        "filename": "tools/perf/convert_legacy_wpr_archive",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-26T15:46:59Z",
+      "side": 1,
+      "message": "I think we should infer the bucket name \u0026 not relying on people doing it themseves. The way we do this is get all the story_set in tools/perf (through s.t like https://cs.chromium.org/chromium/src/tools/perf/fetch_benchmark_deps.py?rcl\u003d19450cb1ddf189d11544d4b3d1281d09efaec0b0\u0026l\u003d72)\n\n(benchmark_finders.GetAllBenchmarks() for getting all perf benchmarks)\n\nThen we find all the story_set that point to the page_sets_json_file \u0026 extract the bucket from the story_sets that match.",
+      "revId": "b1d070727d8b0878e615a556f85c191b5b0bece4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
