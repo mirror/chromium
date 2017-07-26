@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e359308_4c5ce429",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T19:03:31Z",
+      "side": 1,
+      "message": "Please use RunAndCheck(dry_run, ...) here.",
+      "revId": "711a2de5a5563828a88faf606cd2506b04b81e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee38dadc_508bb59e",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T19:03:31Z",
+      "side": 1,
+      "message": "Where\u0027s this mac come from? (I\u0027m totally networking-ignorant, but I\u0027ve got an outstanding cl to run on hardware https://chromium-review.googlesource.com/c/585411/ so phrased another way, will we be able to put something there?)",
+      "revId": "711a2de5a5563828a88faf606cd2506b04b81e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec342cec_34d6584a",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T19:03:31Z",
+      "side": 1,
+      "message": "nit; This looks like it\u0027ll fit on the previous line.",
+      "revId": "711a2de5a5563828a88faf606cd2506b04b81e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a550afb_d8a04afb",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T19:03:31Z",
+      "side": 1,
+      "message": "nit; stripped_line or something instead.",
+      "range": {
+        "startLine": 363,
+        "startChar": 6,
+        "endLine": 363,
+        "endChar": 7
+      },
+      "revId": "711a2de5a5563828a88faf606cd2506b04b81e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
