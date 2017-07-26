@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "832b7477_0e71c25a",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-07-26T16:49:51Z",
+      "side": 1,
+      "message": "Is it possible that a test name will contain PRE_ in the middle? IMHO this needs to check if the test starts with PRE_ and not contains. Same applies to the RemoveAnyPrePrefixes - it should only be removing them from the beginning.",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 38
+      },
+      "revId": "48d7db34f85ab5d8e62976b0b0e3be2ab51804b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
