@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84fa0ab8_dc935324",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T00:52:26Z",
+      "side": 1,
+      "message": "nit: let\u0027s drop this undefined stuff while you\u0027re here. I think its only purpose is to increase the maintenance cost :-)",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c056610a_ff45d031",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T00:52:26Z",
+      "side": 1,
+      "message": "inline?",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68af1676_26e380f1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T00:52:26Z",
+      "side": 1,
+      "message": "You\u0027ve got new spelling for the nick? Looks cool! ;)",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a94f35_cbfb38f2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T00:52:26Z",
+      "side": 1,
+      "message": "Can this be elsewhere?",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49db6d19_9627eb57",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T00:52:26Z",
+      "side": 1,
+      "message": "Do we really need this check now? Looks a bit weird.",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41eed426_a85364a6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/module.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T00:52:26Z",
+      "side": 1,
+      "message": "I think this is somewhat unfortunate.",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
