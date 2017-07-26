@@ -547,7 +547,8 @@ std::unique_ptr<CompositorLock> Compositor::GetCompositorLock(
   active_locks_.push_back(lock.get());
 
   bool should_extend_timeout = false;
-  if ((was_empty || allow_locks_to_extend_timeout_) && !timeout.is_zero()) {
+  if ((scheduled_timeout_.is_null() || allow_locks_to_extend_timeout_) &&
+      !timeout.is_zero()) {
     const base::TimeTicks time_to_timeout = base::TimeTicks::Now() + timeout;
     // For the first lock, scheduled_timeout.is_null is true,
     // |time_to_timeout| will always larger than |scheduled_timeout_|. And it
