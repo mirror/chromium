@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f25d665b_3e55da91",
+        "filename": "components/cryptauth/cryptauth_device_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Could you go into more detail? I did not change the logic here (I just moved the loop that was here previously into NotifySyncFinished()).",
+      "parentUuid": "e34f8c34_e22fa3ad",
+      "range": {
+        "startLine": 481,
+        "startChar": 42,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "959000d8_ca8e73e4",
         "filename": "components/cryptauth/cryptauth_device_manager.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b10b0e6_8fe91b63",
+        "filename": "components/cryptauth/cryptauth_device_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "959000d8_ca8e73e4",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 79
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "158b6b8d_36c4d5d3",
+        "filename": "components/cryptauth/cryptauth_device_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "599c4456_52b4e5a3",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec053a27_93446d19",
         "filename": "components/cryptauth/cryptauth_device_manager.h",
         "patchSetId": 15
@@ -91,6 +163,30 @@
       "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f63cf76_ed6edb2e",
+        "filename": "components/cryptauth/cryptauth_device_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec053a27_93446d19",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 47
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e7679f56_f699603f",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20ca9d80_8ba9b73d",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1703b72b_1dd7f1de",
         "filename": "components/cryptauth/remote_device_provider.h",
         "patchSetId": 15
@@ -137,6 +257,30 @@
       "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f11e8fb_82d9f5aa",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1703b72b_1dd7f1de",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "81569485_9e844897",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee66cd90_491f9b38",
+      "range": {
+        "startLine": 48,
+        "startChar": 43,
+        "endLine": 48,
+        "endChar": 1
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d88558d0_4c92b14e",
         "filename": "components/cryptauth/remote_device_provider.h",
         "patchSetId": 15
@@ -183,6 +351,30 @@
       "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c3a4fc_66e98775",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88558d0_4c92b14e",
+      "range": {
+        "startLine": 71,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 63
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "fcee818a_3340daf8",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a06e13_5aadbeae",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 1
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d0b8e41_65cbe1e8",
         "filename": "components/cryptauth/remote_device_provider_unittest.cc",
         "patchSetId": 15
@@ -220,6 +436,30 @@
       "writtenOn": "2017-07-26T18:32:06Z",
       "side": 1,
       "message": "Why not just use a real RemoteDeviceLoader? That way you don\u0027t need to do all this mocking.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee809a91_e9157bec",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-26T19:45:36Z",
+      "side": 1,
+      "message": "This way allows us to when callbacks are invoked (lines 136 - 148).",
+      "parentUuid": "0d0b8e41_65cbe1e8",
       "range": {
         "startLine": 70,
         "startChar": 6,
