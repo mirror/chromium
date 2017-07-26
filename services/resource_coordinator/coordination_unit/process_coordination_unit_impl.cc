@@ -55,6 +55,13 @@ void ProcessCoordinationUnitImpl::PropagateProperty(
       tab_coordination_unit->RecalculateProperty(
           mojom::PropertyType::kCPUUsage);
     }
+  } else if (property_type ==
+             mojom::PropertyType::kExpectedTaskQueueingDuration) {
+    for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
+             CoordinationUnitType::kWebContents)) {
+      tab_coordination_unit->RecalculateProperty(
+          mojom::PropertyType::kExpectedTaskQueueingDuration, value);
+    }
   }
 }
 
