@@ -75,12 +75,13 @@
     <template is="cr-lazy-render" id="sharedMenu">
       <dialog is="cr-action-menu">
         <button id="menuMoreButton" class="dropdown-item"
-            on-tap="onMoreFromSiteTap_">
+            on-tap="onMoreFromSiteTap_" role="menuitem">
           $i18n{moreFromSite}
         </button>
         <button id="menuRemoveButton" class="dropdown-item"
             hidden="[[!canDeleteHistory_]]"
-            on-tap="onRemoveFromHistoryTap_">
+            on-tap="onRemoveFromHistoryTap_"
+            role="menuitem">
           $i18n{removeFromHistory}
         </button>
       </dialog>

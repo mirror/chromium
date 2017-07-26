@@ -120,9 +120,9 @@
       </div>
     </div>
     <dialog is="cr-action-menu" id="addressSharedMenu">
-      <button id="menuEditAddress" class="dropdown-item"
+      <button id="menuEditAddress" class="dropdown-item" role="menuitem"
           on-tap="onMenuEditAddressTap_">$i18n{edit}</button>
-      <button id="menuRemoveAddress" class="dropdown-item"
+      <button id="menuRemoveAddress" class="dropdown-item" role="menuitem"
           on-tap="onMenuRemoveAddressTap_">$i18n{removeAddress}</button>
     </dialog>
     <template is="dom-if" if="[[showAddressDialog_]]" restamp>
@@ -182,12 +182,12 @@
       </div>
     </div>
     <dialog is="cr-action-menu" id="creditCardSharedMenu">
-      <button id="menuEditCreditCard" class="dropdown-item"
+      <button id="menuEditCreditCard" class="dropdown-item" role="menuitem"
           on-tap="onMenuEditCreditCardTap_">$i18n{edit}</button>
-      <button id="menuRemoveCreditCard" class="dropdown-item"
+      <button id="menuRemoveCreditCard" class="dropdown-item" role="menuitem"
           hidden$="[[!activeCreditCard.metadata.isLocal]]"
           on-tap="onMenuRemoveCreditCardTap_">$i18n{removeCreditCard}</button>
-      <button id="menuClearCreditCard" class="dropdown-item"
+      <button id="menuClearCreditCard" class="dropdown-item" role="menuitem"
           on-tap="onMenuClearCreditCardTap_"
           hidden$="[[!activeCreditCard.metadata.isCached]]">
         $i18n{clearCreditCard}
