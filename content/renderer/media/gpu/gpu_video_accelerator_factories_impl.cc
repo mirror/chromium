@@ -23,11 +23,14 @@
 #include "media/gpu/ipc/client/gpu_video_decode_accelerator_host.h"
 #include "media/gpu/ipc/client/gpu_video_encode_accelerator_host.h"
 #include "media/gpu/ipc/common/media_messages.h"
-#include "media/mojo/clients/mojo_video_encode_accelerator.h"
 #include "media/video/video_decode_accelerator.h"
 #include "media/video/video_encode_accelerator.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
+
+#if BUILDFLAG(ENABLE_MOJO_MEDIA)
+#include "media/mojo/clients/mojo_video_encode_accelerator.h"  // nogncheck
+#endif
 
 namespace content {
 
@@ -162,12 +165,14 @@ GpuVideoAcceleratorFactoriesImpl::CreateVideoEncodeAccelerator() {
   media::mojom::VideoEncodeAcceleratorPtr vea;
   vea.Bind(std::move(unbound_vea_));
   if (vea) {
+#if BUILDFLAG(ENABLE_MOJO_MEDIA)
     return std::unique_ptr<media::VideoEncodeAccelerator>(
         new media::MojoVideoEncodeAccelerator(
             std::move(vea), context_provider_->GetCommandBufferProxy()
                                 ->channel()
                                 ->gpu_info()
                                 .video_encode_accelerator_supported_profiles));
+#endif
   }
 
   return std::unique_ptr<media::VideoEncodeAccelerator>(
