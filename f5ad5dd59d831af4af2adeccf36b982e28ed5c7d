@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c77d9792_56c3d91b",
+        "filename": "chrome/android/java/res/layout/find_in_page.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-26T22:38:34Z",
+      "side": 1,
+      "message": "See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d723052#c21. I think if we use BlackDisabledText1, it could be somewhat misleading. I would prefer keeping the textSize and textColor if we don\u0027t have a better name for the style BlackDisabledText1 yet.",
+      "parentUuid": "91fea54c_1efcfd09",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6b938f6_880f2c84",
         "filename": "ui/android/java/res/layout/dropdown_item.xml",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "66cc954a_1edee7c4",
+        "filename": "ui/android/java/res/layout/dropdown_item.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-26T22:38:34Z",
+      "side": 1,
+      "message": "Yes that\u0027s a very good idea. I think it will be great if we can reference most text sizes from this list without having feature-specific text size. I\u0027ll start changing them little by little along with fixing these bugs.",
+      "parentUuid": "d6b938f6_880f2c84",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 69
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fb9986f_86a16fe8",
         "filename": "ui/android/java/res/values-v17/styles.xml",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-25T20:46:28Z",
       "side": 1,
       "message": "This is used in bookmark_add_edit_folder_activity.xml. If you remove this tools:ignore does lint throw an error? Same question for BlackTitle2 and other styles used in this CL.",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e922e7fa_3c74025d",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-26T22:38:34Z",
+      "side": 1,
+      "message": "It seems that the lint check only checks the usage in ui/android. I am able to remove tools:ignore\u003d\"UnusedResources\" at BlackTitle2 because it has a parent in this style.xml and somehow the lint check doesn\u0027t consider this as unused.",
+      "parentUuid": "4fb9986f_86a16fe8",
       "range": {
         "startLine": 49,
         "startChar": 47,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f7ee704d_48a130eb",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-26T22:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d8e809_40db28f5",
+      "range": {
+        "startLine": 53,
+        "startChar": 74,
+        "endLine": 53,
+        "endChar": 89
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18f708ad_11c4b5e2",
         "filename": "ui/android/java/res/values-v17/styles.xml",
         "patchSetId": 2
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "84792cc1_07b67afd",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-26T22:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f708ad_11c4b5e2",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e222989_3d32fbcd",
         "filename": "ui/android/java/res/values/colors.xml",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e1de3c_f014dd13",
+        "filename": "ui/android/java/res/values/colors.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-26T22:38:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e222989_3d32fbcd",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
