@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b2241a_d49b19d9",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-26T01:44:50Z",
+      "side": 1,
+      "message": "I think it is better to use |EXPECT_TRUE()| for actual verification,\nand using |ASSERT_*()| for prerequisites.\nAlthough, other test cases use |ASSERT_TRUE()|, \nit is OK to follow others.",
+      "revId": "3ec86042cfc03e7301e20bacd8f06beaa7365f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
