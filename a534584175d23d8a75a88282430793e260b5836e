@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c2b969_d0029cc8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T22:53:14Z",
+      "side": 1,
+      "message": "to simplify the patch, do you want to use the timestamp regardless of the result for the time being, and never requeue? then based on the data we collect from UMA, we can decide whether we need to special case some of the failure types.",
+      "revId": "a534584175d23d8a75a88282430793e260b5836e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
