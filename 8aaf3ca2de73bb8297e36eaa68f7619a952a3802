@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a937e046_00334f2b",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-26T20:14:42Z",
+      "side": 1,
+      "message": "Apparently if you new-line the \"include\" attribute, the things in the second-line will work but the things on the first-line won\u0027t apply correctly.. fixing.",
+      "parentUuid": "4ec625f1_6ad06d06",
+      "revId": "8aaf3ca2de73bb8297e36eaa68f7619a952a3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f933975_20ad20c3",
         "filename": "chrome/browser/resources/md_extensions/toolbar.html",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "8aaf3ca2de73bb8297e36eaa68f7619a952a3802",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e47e7ae_d161f163",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-26T20:14:42Z",
+      "side": 1,
+      "message": "Done. Also added ripple color (same as cr-toolbar\u0027s icon-button ripple) for higher contrast, PTAL.",
+      "parentUuid": "2f933975_20ad20c3",
+      "revId": "8aaf3ca2de73bb8297e36eaa68f7619a952a3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
