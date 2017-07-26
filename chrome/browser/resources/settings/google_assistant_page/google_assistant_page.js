@@ -25,17 +25,20 @@ Polymer({
    * @private
    */
   getAssistantOnOffLabel_: function(toggleValue) {
+    console.log("getAssistantOnOffLabel_");
     return this.i18n(toggleValue ? 'toggleOn' : 'toggleOff');
   },
 
   /** @private */
   onGoogleAssistantEnableChange_: function() {
+    console.log("onGoogleAssistantEnableChange_");
     this.browserProxy_.setGoogleAssistantEnabled(
         !!this.getPref('settings.voice_interaction.enabled.value'));
   },
 
   /** @private */
   onGoogleAssistantContextEnableChange_: function() {
+    console.log("onGoogleAssistantContextEnableChange_");
     this.browserProxy_.setGoogleAssistantContextEnabled(
         !!this.getPref('settings.voice_interaction.context.enabled.value'));
   },
