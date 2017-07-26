@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b73f355_9bbc8266",
+        "filename": "chrome/android/webapk/shell_apk/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-26T19:31:21Z",
+      "side": 1,
+      "message": "Is changing the output_api function sufficient? PresubmitPromptWarning() and PresubmitPromptOrNotify() look interesting. I don\u0027t know what the difference between the two functions is.",
+      "revId": "2d13e932756e29269800c356c33134e8540fe148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
