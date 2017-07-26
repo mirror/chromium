@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7865f890_ce0417fd",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-26T19:22:06Z",
+      "side": 1,
+      "message": "Can you make a helper function in the anon namespace above that abstracts this logic?\n\nIt can have both the ifdef and the g_enabled_for_testing check. Something like IsFetchingEnabled().",
+      "range": {
+        "startLine": 316,
+        "startChar": 30,
+        "endLine": 316,
+        "endChar": 31
+      },
+      "revId": "8586d0a79b1a8863aaeb58c3521e111a40bb15ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771ae8ca_ed5f8a10",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-26T19:22:06Z",
+      "side": 1,
+      "message": "Add a DCHECK(IsFetchingEnabled()); here.",
+      "range": {
+        "startLine": 425,
+        "startChar": 2,
+        "endLine": 425,
+        "endChar": 33
+      },
+      "revId": "8586d0a79b1a8863aaeb58c3521e111a40bb15ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
