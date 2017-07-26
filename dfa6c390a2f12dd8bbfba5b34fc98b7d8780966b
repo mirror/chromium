@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cee7a39e_8d04de5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T22:12:49Z",
+      "side": 1,
+      "message": "Is there a bug for this work?",
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "548392e4_37994b8b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 3
@@ -18,6 +35,29 @@
         "startChar": 4,
         "endLine": 27,
         "endChar": 45
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fe6980_fa1bb5af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T22:12:49Z",
+      "side": 1,
+      "message": "Nit: Any particular reason you use !\u003d instead of \u003d\u003d? It\u0027s probably easier to read if you flip it :-)",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 38
       },
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -48,6 +88,29 @@
     },
     {
       "key": {
+        "uuid": "b4dd7f74_76547811",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T22:12:49Z",
+      "side": 1,
+      "message": "DownloadFiniteStateMachine! :-D",
+      "range": {
+        "startLine": 33,
+        "startChar": 47,
+        "endLine": 33,
+        "endChar": 50
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5462da53_edc2d7ea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 3
@@ -59,6 +122,29 @@
       "writtenOn": "2017-07-26T22:05:27Z",
       "side": 1,
       "message": "don\u0027t need",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0f52b0_e29e9ae4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T22:12:49Z",
+      "side": 1,
+      "message": "Nit: Unnecessary.",
       "range": {
         "startLine": 40,
         "startChar": 35,
@@ -87,6 +173,52 @@
         "startChar": 20,
         "endLine": 42,
         "endChar": 42
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b44461_e28565ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T22:12:49Z",
+      "side": 1,
+      "message": "ContextUtils.getApplicationContext() throughout instead?",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0bb644_7945856c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T22:12:49Z",
+      "side": 1,
+      "message": "Could this be flipped to not use the ! ? It\u0027s typically easier to read that way.",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 28
       },
       "revId": "dfa6c390a2f12dd8bbfba5b34fc98b7d8780966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
