@@ -34,6 +34,24 @@
       "revId": "a890daf56a6aba5d970efa0b890ee98d8cf0874d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7e2d06_e4a8c01d",
+        "filename": "components/offline_pages/core/task_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-26T19:44:24Z",
+      "side": 1,
+      "message": "Good catch, thanks! It feels that posting the task is a bit safer here (just get off the stack) so added PostTask.",
+      "parentUuid": "53360ffc_bc80d15e",
+      "revId": "a890daf56a6aba5d970efa0b890ee98d8cf0874d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
