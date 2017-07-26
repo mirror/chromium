@@ -4,6 +4,7 @@
 
 #include "components/offline_pages/core/prefetch/store/prefetch_store_utils.h"
 
+#include <stdint.h>
 #include <limits>
 
 #include "base/rand_util.h"
