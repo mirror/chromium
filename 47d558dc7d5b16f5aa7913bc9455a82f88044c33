@@ -69,6 +69,24 @@
       "revId": "47d558dc7d5b16f5aa7913bc9455a82f88044c33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2633e9f6_aeb905f2",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-26T23:15:32Z",
+      "side": 1,
+      "message": "Maybe I\u0027m misunderstanding the use of \"earliest\" here. I read that as the timeout given which will be arrived at first. Perhaps you mean the first-specified timeout, then I\u0027d agree. Can we make this clear?",
+      "parentUuid": "c826c769_073fda87",
+      "revId": "47d558dc7d5b16f5aa7913bc9455a82f88044c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
