@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4fd4cd8e_b287bfdb",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-26T17:52:16Z",
+      "side": 1,
+      "message": "Oh, I see the title goes here in another CL.",
+      "parentUuid": "568f658b_8334bf1e",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "98f8a23939c5e352adce170b9d51a5a8511c32d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36d96747_f1f64b35",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
         "patchSetId": 10
