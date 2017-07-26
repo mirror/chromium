@@ -695,11 +695,10 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Binds to the FrameHost in the browser.
   void BindFrame(const service_manager::BindSourceInfo& browser_info,
-                 mojom::FrameRequest request,
-                 mojom::FrameHostInterfaceBrokerPtr frame_host);
+                 mojom::FrameRequest request);
 
-  // Virtual so the test render frame can flush the interface.
-  virtual mojom::FrameHostAssociatedPtr GetFrameHost();
+  // Virtual so the test render frame can mock out the interface.
+  virtual mojom::FrameHost* GetFrameHost();
 
   void BindFrameBindingsControl(
       mojom::FrameBindingsControlAssociatedRequest request);
@@ -863,8 +862,11 @@ class CONTENT_EXPORT RenderFrameImpl
   const RenderFrameImpl* GetLocalRoot() const;
 
   // Builds and sends DidCommitProvisionalLoad to the host.
-  void SendDidCommitProvisionalLoad(blink::WebLocalFrame* frame,
-                                    blink::WebHistoryCommitType commit_type);
+  void SendDidCommitProvisionalLoad(
+      blink::WebLocalFrame* frame,
+      blink::WebHistoryCommitType commit_type,
+      service_manager::mojom::InterfaceProviderRequest
+          remote_interfaces_request);
 
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether
@@ -1315,8 +1317,6 @@ class CONTENT_EXPORT RenderFrameImpl
   service_manager::BinderRegistry registry_;
   std::unique_ptr<service_manager::InterfaceProvider> remote_interfaces_;
   std::unique_ptr<BlinkInterfaceRegistryImpl> blink_interface_registry_;
-  service_manager::mojom::InterfaceProviderRequest
-      pending_remote_interface_provider_request_;
 
   service_manager::BindSourceInfo local_info_;
   service_manager::BindSourceInfo remote_info_;
@@ -1399,7 +1399,6 @@ class CONTENT_EXPORT RenderFrameImpl
   mojo::AssociatedBinding<mojom::HostZoom> host_zoom_binding_;
   mojo::AssociatedBinding<mojom::FrameBindingsControl>
       frame_bindings_control_binding_;
-  mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker_;
 
   // Indicates whether |didAccessInitialDocument| was called.
   bool has_accessed_initial_document_;
@@ -1410,6 +1409,7 @@ class CONTENT_EXPORT RenderFrameImpl
   AssociatedInterfaceRegistryImpl associated_interfaces_;
   std::unique_ptr<AssociatedInterfaceProviderImpl>
       remote_associated_interfaces_;
+  mojom::FrameHostAssociatedPtr frame_host_;
 
   // TODO(dcheng): Remove these members.
   bool committed_first_load_ = false;
