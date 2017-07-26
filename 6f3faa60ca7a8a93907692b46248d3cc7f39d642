@@ -34,6 +34,24 @@
       "revId": "6f3faa60ca7a8a93907692b46248d3cc7f39d642",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d090a8d_465e55ea",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-26T18:08:01Z",
+      "side": 1,
+      "message": "I was going to point out that there are many places in the renderer process code where we need to know to do various workarounds like emulating RGB back buffers with RGBA, but realized that much of this information is passed back via the Capabilities of the command buffer:\n\nhttps://cs.chromium.org/chromium/src/gpu/command_buffer/common/capabilities.h\n\nI don\u0027t have a strong opinion on this, though letting the renderer know about the workarounds could probably keep related code closer together.",
+      "parentUuid": "7c7e6f60_88406ff0",
+      "revId": "6f3faa60ca7a8a93907692b46248d3cc7f39d642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
