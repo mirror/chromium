@@ -140,6 +140,30 @@
       "revId": "04bba6d1ba1119a6d23f6904c8287ea0236cdc76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27c1ed18_ccd35a0c",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-26T19:55:16Z",
+      "side": 1,
+      "message": "Hmm, I thought we decided \"pause\" only refers to pausing as spelled out in the spec? This sounds like something different since the spec doesn\u0027t know about renderers. In any case let\u0027s update the comment too if we\u0027re changing the method name.\n\nLet\u0027s (in another patch) also add a glossary of these words to the top of this file :)",
+      "parentUuid": "a2ff7bce_5b04bb84",
+      "range": {
+        "startLine": 135,
+        "startChar": 15,
+        "endLine": 135,
+        "endChar": 28
+      },
+      "revId": "04bba6d1ba1119a6d23f6904c8287ea0236cdc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
