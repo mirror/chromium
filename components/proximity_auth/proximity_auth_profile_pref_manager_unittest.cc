@@ -30,10 +30,10 @@ const int64_t kPasswordEntryTimestampMs2 = 987654321L;
 const int64_t kPromotionCheckTimestampMs1 = 1111111111L;
 const int64_t kPromotionCheckTimestampMs2 = 2222222222L;
 
-const ProximityAuthProfilePrefManager::ProximityThreshold kProximityThreshold1 =
-    ProximityAuthProfilePrefManager::ProximityThreshold::kFar;
-const ProximityAuthProfilePrefManager::ProximityThreshold kProximityThreshold2 =
-    ProximityAuthProfilePrefManager::ProximityThreshold::kVeryFar;
+const ProximityAuthPrefManager::ProximityThreshold kProximityThreshold1 =
+    ProximityAuthPrefManager::ProximityThreshold::kFar;
+const ProximityAuthPrefManager::ProximityThreshold kProximityThreshold2 =
+    ProximityAuthPrefManager::ProximityThreshold::kVeryFar;
 
 }  //  namespace
 

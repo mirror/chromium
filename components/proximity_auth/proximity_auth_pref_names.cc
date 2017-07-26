@@ -7,6 +7,21 @@
 namespace proximity_auth {
 namespace prefs {
 
+// How close the remote and the local device should be in order to use Easy
+// Unlock.
+const char kEasyUnlockProximityThreshold[] = "easy_unlock.proximity_threshold";
+
+// A dictionary in local state containing each user's Easy Unlock profile
+// preferences, so they can be accessed outside of the user's profile. The value
+// is a dictionary containing an entry for each user. Each user's entry mirrors
+// their profile's Easy Unlock preferences.
+const char kEasyUnlockLocalStateUserPrefs[] = "easy_unlock.user_prefs";
+
+// Whether or not EasyUnlock is enabled on the ChromeOS login screen (in
+// addition to the lock screen).
+extern const char kProximityAuthIsChromeOSLoginEnabled[] =
+    "proximity_auth.is_chromeos_login_enabled";
+
 // The timestamp of the last password entry in milliseconds, used to enforce
 // reauthing with the password after a given time period has elapsed.
 const char kProximityAuthLastPasswordEntryTimestampMs[] =
@@ -19,15 +34,6 @@ const char kProximityAuthLastPromotionCheckTimestampMs[] =
 // The dictionary containing remote BLE devices.
 const char kProximityAuthRemoteBleDevices[] =
     "proximity_auth.remote_ble_devices";
-
-// How close the remote and the local device should be in order to use Easy
-// Unlock.
-const char kEasyUnlockProximityThreshold[] = "easy_unlock.proximity_threshold";
-
-// Whether or not EasyUnlock is enabled on the ChromeOS login screen (in
-// addition to the lock screen).
-extern const char kProximityAuthIsChromeOSLoginEnabled[] =
-    "proximity_auth.is_chromeos_login_enabled";
 
 }  // namespace prefs
 }  // namespace proximity_auth

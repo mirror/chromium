@@ -103,11 +103,6 @@ EasyUnlockServiceRegular::EasyUnlockServiceRegular(
 EasyUnlockServiceRegular::~EasyUnlockServiceRegular() {
 }
 
-proximity_auth::ProximityAuthPrefManager*
-EasyUnlockServiceRegular::GetProximityAuthPrefManager() {
-  return pref_manager_.get();
-}
-
 void EasyUnlockServiceRegular::LoadRemoteDevices() {
   if (GetCryptAuthDeviceManager()->GetUnlockKeys().empty()) {
     SetProximityAuthDevices(GetAccountId(), cryptauth::RemoteDeviceList());
@@ -222,6 +217,11 @@ void EasyUnlockServiceRegular::StartPromotionManager() {
       base::MakeUnique<base::DefaultClock>(),
       base::ThreadTaskRunnerHandle::Get()));
   promotion_manager_->Start();
+}
+
+proximity_auth::ProximityAuthPrefManager*
+EasyUnlockServiceRegular::GetProximityAuthPrefManager() {
+  return pref_manager_.get();
 }
 
 EasyUnlockService::Type EasyUnlockServiceRegular::GetType() const {
