@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43603f39_81661f2e",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T17:56:37Z",
+      "side": 1,
+      "message": "It took me a few seconds to verify that top/bottom zone rects are correct. It would have been easier to see if you had this at the top of the function:\n\ngfx::Rect top_rect(0, 0, size.width(), kFadeoutZoneHeight);\ngfx::Rect bottom_rect(0, size.height() - kFadeoutZoneHeight, size.width(), kFadeoutZoneHeight);\n\nand then you could also use those rects when creating the gradients instead of duplicating \"height - kFadeoutZoneHeight\" logic. Your call. Changes look good otherwise.",
+      "revId": "d3d587824500aeca8f220114a6b1b5aaa0a0d032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e57a3ef8_d3b505a5",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T17:56:37Z",
+      "side": 1,
+      "message": "hm, layers are in dp and not pixels so if you\u0027re expecting this to be in pixels then I\u0027m not sure you\u0027re getting the results you want. ie. the top fadeout zone will be 42 physical pixels on screen on a hidpi device that is using device scale factor 2.0.",
+      "parentUuid": "5f790d50_d2dc5045",
+      "revId": "f36a8263d0b5a05276f9a23b46302dd2057cb5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40199199_bb93a573",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 6
