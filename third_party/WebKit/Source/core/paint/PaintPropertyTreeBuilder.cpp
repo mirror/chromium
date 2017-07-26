@@ -228,6 +228,15 @@ void PaintPropertyTreeBuilder::UpdateProperties(
   frame_view.SetTotalPropertyTreeStateForContents(std::move(contents_state));
 }
 
+static bool NeedsScrollTranslation(const LayoutObject& object) {
+  if (!object.HasOverflowClip())
+    return false;
+  const LayoutBox& box = ToLayoutBox(object);
+  auto* scrollable_area = box.GetScrollableArea();
+  IntSize scroll_offset = box.ScrolledContentOffset();
+  return !scroll_offset.IsZero() || scrollable_area->ScrollsOverflow();
+}
+
 static bool NeedsPaintOffsetTranslation(const LayoutObject& object) {
   if (!object.IsBoxModelObject())
     return false;
@@ -238,10 +247,13 @@ static bool NeedsPaintOffsetTranslation(const LayoutObject& object) {
     // ensure fixed and absolute contexts use the correct transform space.
     return true;
   }
+  // TODO(pdr): Can we use NeedsTransform(...) insetead of accessing Layer()?
   if (box_model.HasLayer() && box_model.Layer()->PaintsWithTransform(
                                   kGlobalPaintFlattenCompositingLayers)) {
     return true;
   }
+  if (NeedsScrollTranslation(object))
+    return true;
   return false;
 }
 
@@ -947,15 +959,6 @@ static MainThreadScrollingReasons GetMainThreadScrollingReasons(
     return ancestor_reasons;
   return GetMainThreadScrollingReasons(*object.GetFrameView(),
                                        ancestor_reasons);
-}
-
-static bool NeedsScrollTranslation(const LayoutObject& object) {
-  if (!object.HasOverflowClip())
-    return false;
-  const LayoutBox& box = ToLayoutBox(object);
-  auto* scrollable_area = box.GetScrollableArea();
-  IntSize scroll_offset = box.ScrolledContentOffset();
-  return !scroll_offset.IsZero() || scrollable_area->ScrollsOverflow();
 }
 
 void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
