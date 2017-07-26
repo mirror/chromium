@@ -12,6 +12,7 @@
 #include "chrome/browser/ui/exclusive_access/exclusive_access_bubble.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
+#include "ui/gfx/native_widget_types.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/widget/widget_observer.h"
 
@@ -45,6 +46,9 @@ class ExclusiveAccessBubbleViews : public ExclusiveAccessBubble,
 
   // Repositions |popup_| if it is visible.
   void RepositionIfVisible();
+
+  gfx::NativeView GetPopupNativeView();
+  gfx::NativeWindow GetPopupNativeWindow();
 
   views::View* GetView();
 
