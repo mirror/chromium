@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "8741a7d2_71413f37",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/change_picture_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-26T16:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7edf1ad2_eda70edc",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64cf6cac_46e124a5",
         "filename": "chromeos/chromeos_switches.h",
         "patchSetId": 2
@@ -159,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d14b2a14_8585925f",
+        "filename": "ui/chromeos/resources/default_100_percent/default_user_images/harmony/1-bird.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-26T16:44:05Z",
+      "side": 1,
+      "message": "There is a link to the UX spec in the associated issue.\n\nIf UX is using different sizes for the new login screen and the settings UI... we should probably talk to them about whether that is is a good idea :)",
+      "parentUuid": "26ee2ca7_18b5529d",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "599d371d_cde008a6",
         "filename": "ui/chromeos/resources/default_200_percent/default_user_images/harmony/1-bird.png",
         "patchSetId": 2
@@ -207,6 +243,24 @@
       "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d60825_588ba8af",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-26T16:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d58a6f0_b8d9f3f6",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
