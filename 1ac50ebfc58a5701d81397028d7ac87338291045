@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "b8239914_baf481cf",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-26T15:04:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8e01515f_af8cf90d",
+      "range": {
+        "startLine": 195,
+        "startChar": 5,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "1ac50ebfc58a5701d81397028d7ac87338291045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d288e95_c2e39c62",
         "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
         "patchSetId": 3
@@ -166,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c4717abd_22f8242a",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-26T15:04:38Z",
+      "side": 1,
+      "message": "I must have screw-up a manual merge or something like that.  Thanks for spotting.",
+      "parentUuid": "5d288e95_c2e39c62",
+      "range": {
+        "startLine": 79,
+        "startChar": 20,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "1ac50ebfc58a5701d81397028d7ac87338291045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8fa4045_ab75604d",
         "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupport.h",
         "patchSetId": 3
@@ -177,6 +225,30 @@
       "writtenOn": "2017-07-26T14:46:44Z",
       "side": 1,
       "message": "where did you need this?",
+      "range": {
+        "startLine": 220,
+        "startChar": 20,
+        "endLine": 220,
+        "endChar": 45
+      },
+      "revId": "1ac50ebfc58a5701d81397028d7ac87338291045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ac22fc_7a7ef652",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupport.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-26T15:04:38Z",
+      "side": 1,
+      "message": "Look at that! This CL does not need it anymore.",
+      "parentUuid": "c8fa4045_ab75604d",
       "range": {
         "startLine": 220,
         "startChar": 20,
