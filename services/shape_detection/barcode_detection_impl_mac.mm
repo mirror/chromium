@@ -10,7 +10,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "media/base/scoped_callback_runner.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
-#include "services/shape_detection/barcode_detection_impl.h"
+#include "services/shape_detection/barcode_detection_provider_impl.h"
 #include "services/shape_detection/detection_utils_mac.h"
 
 namespace shape_detection {
@@ -23,6 +23,12 @@ void BarcodeDetectionImpl::Create(
     mojo::MakeStrongBinding(base::MakeUnique<BarcodeDetectionImplMac>(),
                             std::move(request));
   }
+}
+
+void BarcodeDetectionProviderImpl::EnumerateSupportedFormats(
+    EnumerateSupportedFormatsCallback callback) {
+  // Mac implementation supports only one BarcodeFormat.
+  std::move(callback).Run({mojom::BarcodeFormat::QR_CODE});
 }
 
 BarcodeDetectionImplMac::BarcodeDetectionImplMac() {
