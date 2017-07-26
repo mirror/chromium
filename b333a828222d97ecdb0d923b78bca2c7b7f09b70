@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "421eb593_bdcc25af",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-26T23:13:06Z",
+      "side": 1,
+      "message": "Eventually, NG will take over and these arguments will be sane. Until then, I do what Legacy does.\n\nThis is my general approach to NG development. For any task:\n- if you can completely solve it in NG, do it.\n- if not, reuse Legacy as much as possible.\n\nSadly, the set of tasks that \"can be completely solved in NG\" is not as big as I\u0027d like.",
+      "parentUuid": "ab25c947_edbb94bc",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c278951_32615a5c",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 12
