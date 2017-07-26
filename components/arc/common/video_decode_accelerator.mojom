@@ -1,32 +1,25 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 // This file defined the mojo interface between Android and Chromium for video
-// decoding. See comments of VideoDecodeAccelerator for more info.
+// decoding.
 
 module arc.mojom;
 
 import "video_common.mojom";
 
-[Extensible]
-enum HalPixelFormatExtension {
-  HAL_PIXEL_FORMAT_YCbCr_420_888 = 0x23,
-  HAL_PIXEL_FORMAT_H264 = 0x34363248,
-  HAL_PIXEL_FORMAT_VP8 = 0x00385056,
-};
-
-enum PortType {
-  PORT_INPUT = 0,
-  PORT_OUTPUT = 1,
-};
-
-struct BufferMetadata {
-  int64 timestamp;  // in microseconds
+// Information of the shared memory bitstream buffer.
+struct BitstreamBufferInfo {
+  uint32 bitstream_id;
+  handle ashmem_fd;
+  uint32 offset;
+  uint32 length;
   uint32 bytes_used;
 };
 
-struct VideoFormat {
+// Format specification of the picture buffer request.
+struct PictureBufferFormat {
   uint32 pixel_format;
   uint32 buffer_size;
 
@@ -34,28 +27,18 @@ struct VideoFormat {
   uint32 min_num_buffers;
   uint32 coded_width;
   uint32 coded_height;
+};
+
+// Crop information of picture rendering.
+struct CropWindow {
   uint32 crop_left;
   uint32 crop_width;
   uint32 crop_top;
   uint32 crop_height;
 };
 
-struct VideoDecodeAcceleratorConfig {
-  // Deprecated. This config struct is used for decoder only.
-  enum DeviceTypeDeprecated {
-    DEVICE_ENCODER = 0,
-    DEVICE_DECODER = 1,
-  };
-
-  // Deprecated. Only decoder will be supported.
-  DeviceTypeDeprecated device_type_deprecated;
-  uint32 num_input_buffers;
-  uint32 input_pixel_format;
-};
-
-// Next MinVersion: 4
-// Deprecated method IDs: 2, 7
-// Next method ID: 10
+// Next MinVersion: 1
+// Next method ID: 7
 interface VideoDecodeAccelerator {
   enum Result {
     SUCCESS = 0,
@@ -66,36 +49,62 @@ interface VideoDecodeAccelerator {
     INSUFFICIENT_RESOURCES = 5,
   };
 
-  [MinVersion=2]
-  Initialize@8(VideoDecodeAcceleratorConfig config,
+  // Initializes video decoder accelerator with specific video codec profile.
+  // This must be called before any other methods. This call is synchronous and
+  // returns SUCCESS iff initialization is successful.
+  Initialize@0(VideoCodecProfile profile,
                VideoDecodeClient client) => (Result result);
 
-  BindSharedMemory@1(PortType port, uint32 index, handle ashmem_fd,
-                     uint32 offset, uint32 length);
+  // Imports a shared memory with bitstream data with bitstream ID to the
+  // accelerator for decoding.
+  Decode@1(BitstreamBufferInfo info);
 
-  [MinVersion=3]
-  BindDmabuf@9(PortType port, uint32 index, handle dmabuf_fd,
-               array<VideoFramePlane> planes);
+  // Sets the number of output picture buffers.
+  AssignPictureBuffers@2(uint32 number);
 
-  UseBuffer@3(PortType port, uint32 index, BufferMetadata metadata);
+  // Assigns a buffer to be used for the accelerator with specified index. It
+  // must be successfully bound and then sent to be used by the decoder. Already
+  // bound buffers may be reused multiple times without additional bindings via
+  // ReusePictureBuffer().
+  ImportBufferForPicture@3(uint32 index, handle dmabuf_fd,
+                           array<VideoFramePlane> planes);
 
-  SetNumberOfOutputBuffers@4(uint32 number);
+  // Sends picture buffer with specified index to be reused by the accelerator.
+  ReusePictureBuffer@4(uint32 index);
 
+  // Resets the accelerator. When it is done, Client::NotifyResetDone() will
+  // be called. Afterwards, all buffers won't be accessed by the accelerator
+  // and there won't be more callbacks.
   Reset@5();
 
+  // Flushes the accelerator. After all the output buffers pending decode have
+  // been returned to client, Client::NotifyFlushDone() will be called.
   Flush@6();
 };
 
-// Deprecated method IDs: 0
+// Next MinVersion: 1
 // Next method ID: 6
 interface VideoDecodeClient {
-  OnError@1(VideoDecodeAccelerator.Result error);
+  // Callback to tell client how many and what size of buffers to provide.
+  ProvidePictureBuffers@0(PictureBufferFormat format);
 
-  OnBufferDone@2(PortType port, uint32 index, BufferMetadata metadata);
+  // Called to deliver the specified index of picture buffer is decoded and
+  // ready to be displayed. This callback provides the information of crop
+  // window size, and ID of source bitstream as well.
+  PictureReady@1(uint32 index, uint32 bitstream_id, CropWindow crop_window);
 
-  OnResetDone@3();
+  // Called to notify that decoder has decoded the end of the current
+  // bitstream buffer.
+  NotifyEndOfBitstreamBuffer@2(uint32 bitstream_id);
 
-  OnOutputFormatChanged@4(VideoFormat format);
+  // Called as a completion notification for Reset().
+  NotifyResetDone@3();
 
-  OnFlushDone@5();
+  // Called as a completion notification for Flush().
+  NotifyFlushDone@4();
+
+  // Called when an asynchronous error happens. The errors in Initialize()
+  // will not be reported here, but will be indicated by a return value
+  // there.
+  NotifyError@5(VideoDecodeAccelerator.Result error);
 };
