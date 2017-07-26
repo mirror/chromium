@@ -22,6 +22,30 @@
       "revId": "c7320ba19af65eb4e33669c922447f6c63e7029c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f35c7f_c23cf132",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-26T18:26:15Z",
+      "side": 1,
+      "message": "I took a closer look and realized that Settings is just being used as a page to navigate to, so I change the tests to call ShowSettingsSIbPageInTabbedBrowser directly and left these enabled.\n\nI also added a separate test to browser_navigator_browsertest_chromeos.cc that ensures that chrome::ShowSettings() opens a new browser window.",
+      "parentUuid": "69aa58af_c5f78f73",
+      "range": {
+        "startLine": 1112,
+        "startChar": 3,
+        "endLine": 1112,
+        "endChar": 18
+      },
+      "revId": "c7320ba19af65eb4e33669c922447f6c63e7029c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
