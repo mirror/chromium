@@ -16,6 +16,24 @@
       "revId": "3478e5914c5c37e00cc93af722e816772cf08569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eef91f5_bf743c63",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-07-26T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d58aa3e5_0eb87211",
+      "revId": "3478e5914c5c37e00cc93af722e816772cf08569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
