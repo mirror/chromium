@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50bc7a87_2ede7c83",
+        "filename": "media/filters/vp9_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-26T20:52:12Z",
+      "side": 1,
+      "message": "nit: document retval and |result| parameter at minimum for these two new methods.\nIIUC, something like \"Returns false and populates result with non-kOk if .... Otherwise, returns true and populates result with kOk.\"",
+      "range": {
+        "startLine": 407,
+        "startChar": 2,
+        "endLine": 407,
+        "endChar": 6
+      },
+      "revId": "d556eeb04c15beb4e7cdf1605bdefb1c42be89e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
