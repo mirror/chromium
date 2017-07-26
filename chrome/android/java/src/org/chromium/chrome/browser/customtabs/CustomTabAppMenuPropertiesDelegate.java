@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.customtabs;
 
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
+import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MINIMAL_WEBAPP;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST;
 
 import android.view.Menu;
@@ -94,6 +95,11 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
                 // Only the icon row and 'find in page' are shown for openning payment request UI
                 // from Chrome.
                 openInChromeItemVisible = false;
+                requestDesktopSiteVisible = false;
+                addToHomeScreenVisible = false;
+                downloadItemVisible = false;
+                bookmarkItemVisible = false;
+            } else if (mUiType == CUSTOM_TABS_UI_TYPE_MINIMAL_WEBAPP) {
                 requestDesktopSiteVisible = false;
                 addToHomeScreenVisible = false;
                 downloadItemVisible = false;

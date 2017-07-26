@@ -12,6 +12,7 @@ import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.SingleTabActivity;
 import org.chromium.chrome.browser.contextmenu.ChromeContextMenuPopulator;
 import org.chromium.chrome.browser.contextmenu.ContextMenuPopulator;
+import org.chromium.chrome.browser.fullscreen.ComposedBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
@@ -81,7 +82,9 @@ public class WebappDelegateFactory extends TabDelegateFactory {
 
     @Override
     public BrowserControlsVisibilityDelegate createBrowserControlsVisibilityDelegate(Tab tab) {
-        return new WebappBrowserControlsDelegate(mActivity, tab);
+        return new ComposedBrowserControlsVisibilityDelegate(
+                new WebappBrowserControlsDelegate(mActivity, tab),
+                mActivity.getFullscreenManager().getBrowserVisibilityDelegate());
     }
 
     @Override

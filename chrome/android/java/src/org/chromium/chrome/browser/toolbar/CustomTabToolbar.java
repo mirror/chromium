@@ -204,6 +204,11 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     }
 
     @Override
+    public void setCloseButtonVisible(boolean visible) {
+        mCloseButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
     public void setCustomActionButton(Drawable drawable, String description,
             OnClickListener listener) {
         Resources resources = getResources();
@@ -579,7 +584,9 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         int locationBarLayoutChildIndex = -1;
         for (int i = 0; i < getChildCount(); i++) {
             View childView = getChildAt(i);
-            if (childView.getVisibility() != GONE) {
+            if (childView == mCloseButton && childView.getVisibility() == GONE) {
+                startMargin += 16;
+            } else if (childView.getVisibility() != GONE) {
                 LayoutParams childLayoutParams = (LayoutParams) childView.getLayoutParams();
                 if (ApiCompatibilityUtils.getMarginStart(childLayoutParams) != startMargin) {
                     ApiCompatibilityUtils.setMarginStart(childLayoutParams, startMargin);
