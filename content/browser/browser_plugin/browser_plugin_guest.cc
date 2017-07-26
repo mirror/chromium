@@ -115,7 +115,6 @@ BrowserPluginGuest::BrowserPluginGuest(bool has_render_view,
       is_full_page_plugin_(false),
       has_render_view_(has_render_view),
       is_in_destruction_(false),
-      initialized_(false),
       guest_proxy_routing_id_(MSG_ROUTING_NONE),
       last_drag_status_(blink::kWebDragStatusUnknown),
       seen_embedder_system_drag_ended_(false),
@@ -205,23 +204,6 @@ void BrowserPluginGuest::WillDestroy() {
 RenderWidgetHostImpl* BrowserPluginGuest::GetOwnerRenderWidgetHost() const {
   return static_cast<RenderWidgetHostImpl*>(
       delegate_->GetOwnerRenderWidgetHost());
-}
-
-void BrowserPluginGuest::Init() {
-  if (initialized_)
-    return;
-  initialized_ = true;
-
-  // TODO(fsamuel): Initiailization prior to attachment should be behind a
-  // command line flag once we introduce experimental guest types that rely on
-  // this functionality.
-  if (!delegate_->CanRunInDetachedState())
-    return;
-
-  WebContentsImpl* owner_web_contents = static_cast<WebContentsImpl*>(
-      delegate_->GetOwnerWebContents());
-  owner_web_contents->CreateBrowserPluginEmbedderIfNecessary();
-  InitInternal(BrowserPluginHostMsg_Attach_Params(), owner_web_contents);
 }
 
 base::WeakPtr<BrowserPluginGuest> BrowserPluginGuest::AsWeakPtr() {

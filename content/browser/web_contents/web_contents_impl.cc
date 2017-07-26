@@ -1737,11 +1737,6 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
   date_time_chooser_.reset(new DateTimeChooserAndroid());
 #endif
 
-  // BrowserPluginGuest::Init needs to be called after this WebContents has
-  // a RenderWidgetHostViewGuest. That is, |view_->CreateView| above.
-  if (browser_plugin_guest_)
-    browser_plugin_guest_->Init();
-
   for (size_t i = 0; i < g_created_callbacks.Get().size(); i++)
     g_created_callbacks.Get().at(i).Run(this);
 
@@ -5058,7 +5053,8 @@ bool WebContentsImpl::ShouldRouteMessageEvent(
   // postMessage from anyone (not just its own guests). However, this is
   // probably not a risk for apps since other pages won't have references
   // to App windows.
-  return GetBrowserPluginGuest() || GetBrowserPluginEmbedder();
+  return GetBrowserPluginEmbedder() || GetBrowserPluginGuest() ||
+         !node_.inner_web_contents().empty();
 }
 
 void WebContentsImpl::EnsureOpenerProxiesExist(RenderFrameHost* source_rfh) {
@@ -5069,7 +5065,7 @@ void WebContentsImpl::EnsureOpenerProxiesExist(RenderFrameHost* source_rfh) {
     // If this message is going to outer WebContents from inner WebContents,
     // then we should not create a RenderView. AttachToOuterWebContentsFrame()
     // already created a RenderFrameProxyHost for that purpose.
-    if (GetBrowserPluginEmbedder() &&
+    if ((GetBrowserPluginEmbedder() || !node_.inner_web_contents().empty()) &&
         GuestMode::IsCrossProcessFrameGuest(source_web_contents)) {
       return;
     }
