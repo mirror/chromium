@@ -159,15 +159,18 @@ GpuVideoAcceleratorFactoriesImpl::CreateVideoEncodeAccelerator() {
   if (CheckContextLost())
     return nullptr;
 
-  media::mojom::VideoEncodeAcceleratorPtr vea;
-  vea.Bind(std::move(unbound_vea_));
-  if (vea) {
-    return std::unique_ptr<media::VideoEncodeAccelerator>(
-        new media::MojoVideoEncodeAccelerator(
-            std::move(vea), context_provider_->GetCommandBufferProxy()
-                                ->channel()
-                                ->gpu_info()
-                                .video_encode_accelerator_supported_profiles));
+  if (!command_line.HasSwitch(switches::kDisableMojoVideoEncodeAccelerator)) {
+    media::mojom::VideoEncodeAcceleratorPtr vea;
+    vea.Bind(std::move(unbound_vea_));
+    if (vea) {
+      return std::unique_ptr<media::VideoEncodeAccelerator>(
+          new media::MojoVideoEncodeAccelerator(
+              std::move(vea),
+              context_provider_->GetCommandBufferProxy()
+                  ->channel()
+                  ->gpu_info()
+                  .video_encode_accelerator_supported_profiles));
+    }
   }
 
   return std::unique_ptr<media::VideoEncodeAccelerator>(
