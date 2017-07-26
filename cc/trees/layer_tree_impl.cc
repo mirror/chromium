@@ -790,6 +790,10 @@ void LayerTreeImpl::PushPageScaleFactorAndLimits(const float* page_scale_factor,
     changed_page_scale |= page_scale_factor_->PushPendingToActive();
   }
 
+  // TODO(pdr): If the page scale didn't change, the pushed page scale can
+  // differ from the current page scale (accounting for delta) and we should
+  // call DidUpdatePageScale in that case too (i.e., *page_scale_factor !=
+  // page_scale_factor_->Current(IsActiveTree())).
   if (changed_page_scale)
     DidUpdatePageScale();
 
