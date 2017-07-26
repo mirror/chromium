@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "523577ec_a6e8969c",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-26T20:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d514818a_c2f70e49",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d49ea37_dd74a18a",
         "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "606552a7_6c4c9c6b",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-26T20:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd61bc0_c123a05a",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d23b6ea4_a25d1217",
         "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
         "patchSetId": 2
@@ -86,6 +122,24 @@
       "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393aa296_1f1de634",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-26T20:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d23b6ea4_a25d1217",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "544f27ce_c05ceea4",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-26T20:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce7e073_f334efba",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "538297ce_57b190aa",
         "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
         "patchSetId": 2
@@ -120,6 +192,24 @@
       "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e60d96_2665a1fd",
+        "filename": "chrome/browser/plugins/pdf_plugin_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-07-26T20:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538297ce_57b190aa",
+      "revId": "bdc85a9ac3905809595d03381ad6441f3f3c5ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
