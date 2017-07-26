@@ -15,7 +15,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using cc::test::MockCompositorFrameSinkSupportClient;
-using viz::test::MakeCompositorFrame;
+using test::MakeCompositorFrame;
 using testing::_;
 using testing::Eq;
 using testing::IsEmpty;
