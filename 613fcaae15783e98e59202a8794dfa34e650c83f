@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb8bae47_de30667f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-26T18:47:05Z",
+      "side": 1,
+      "message": "Yeah that was my intention. I agree it\u0027s not necessary.",
+      "parentUuid": "115a3b4a_9a690893",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce699fa8_51383f88",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2218f37e_e6e421f5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-26T18:47:05Z",
+      "side": 1,
+      "message": "Good catch! Thank you!",
+      "parentUuid": "ce699fa8_51383f88",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "40f6c56e_3c655bc1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-26T18:47:05Z",
+      "side": 1,
+      "message": "Well it was written in this way in order to deal with an edge case -- during each import, external/WPT_BASE_MANIFEST.json will be updated.\n\nBut in retrospect, I think it\u0027s better to add an assertion to make sure start_directory is under external/ to prevent unintended escaping into parent directories.",
+      "parentUuid": "a7a064d7_710fd921",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffbdc48f_7e583f50",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0d078139_550ba464",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-26T18:47:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffbdc48f_7e583f50",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "259b97dd_316b8906",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor_unittest.py",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713a678c_5ec9b0c3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-26T18:47:05Z",
+      "side": 1,
+      "message": "I played around a couple different styling and personally found that using some constants along with some tweaks in layout made the whole file more readable. WDYT?",
+      "parentUuid": "259b97dd_316b8906",
+      "revId": "613fcaae15783e98e59202a8794dfa34e650c83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
