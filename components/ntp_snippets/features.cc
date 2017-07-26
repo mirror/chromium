@@ -18,7 +18,8 @@ const base::Feature*(kAllFeatures[]) = {&kArticleSuggestionsFeature,
                                         &kBookmarkSuggestionsFeature,
                                         &kCategoryOrder,
                                         &kCategoryRanker,
-                                        &kBreakingNewsPushFeature,
+                                        &kBreakingNewsPushRegistrationFeature,
+                                        &kBreakingNewsPushHandlingFeature,
                                         &kForeignSessionsSuggestionsFeature,
                                         &kIncreasedVisibility,
                                         &kKeepPrefetchedContentSuggestions,
@@ -46,8 +47,11 @@ const base::Feature kPhysicalWebPageSuggestionsFeature{
 const base::Feature kForeignSessionsSuggestionsFeature{
     "NTPForeignSessionsSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kBreakingNewsPushFeature{"BreakingNewsPush",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kBreakingNewsPushRegistrationFeature{
+    "BreakingNewsPushRegistration", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kBreakingNewsPushHandlingFeature{
+    "BreakingNewsPushHandling", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kCategoryRanker{"ContentSuggestionsCategoryRanker",
                                     base::FEATURE_ENABLED_BY_DEFAULT};

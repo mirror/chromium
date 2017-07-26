@@ -4,11 +4,13 @@
 
 #include "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h"
 
+#include "base/feature_list.h"
 #include "base/strings/string_util.h"
 #include "components/gcm_driver/gcm_driver.h"
 #include "components/gcm_driver/gcm_profile_service.h"
 #include "components/gcm_driver/instance_id/instance_id.h"
 #include "components/gcm_driver/instance_id/instance_id_driver.h"
+#include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/pref_names.h"
 
 using instance_id::InstanceID;
@@ -53,7 +55,10 @@ void BreakingNewsGCMAppHandler::StartListening(
 #endif
   Subscribe();
   on_new_content_callback_ = std::move(on_new_content_callback);
-  gcm_driver_->AddAppHandler(kBreakingNewsGCMAppID, this);
+  if (base::FeatureList::IsEnabled(
+          ntp_snippets::kBreakingNewsPushHandlingFeature)) {
+    gcm_driver_->AddAppHandler(kBreakingNewsGCMAppID, this);
+  }
 }
 
 void BreakingNewsGCMAppHandler::StopListening() {
