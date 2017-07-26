@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c4ee5a8_6778ef6f",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T17:48:57Z",
+      "side": 1,
+      "message": "small nit: This method takes a lock, does a map lookup, and performs a string scan. For performance, can this go after the lofi_off() check?",
+      "range": {
+        "startLine": 979,
+        "startChar": 39,
+        "endLine": 979,
+        "endChar": 74
+      },
+      "revId": "1e6b32200ab24fef9960f50912a8d5ce2955f736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
