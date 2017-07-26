@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4115c5d_7559971f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-07-26T18:26:03Z",
+      "side": 1,
+      "message": "\"because _of_ display: contents\"?",
+      "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4984081c_9f197130",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-07-26T18:26:03Z",
+      "side": 1,
+      "message": "So this is new behavior, right? Do we have a test covering the case for PreserveNewLine() \u003d\u003d true?\n\nAh. Saw that in your comment below now.",
+      "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
