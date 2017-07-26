@@ -16,6 +16,24 @@
       "revId": "5c1815eb6d7bec28db0e8ac38e6f93424fefcaf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ab4160_649668f5",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-26T03:17:29Z",
+      "side": 1,
+      "message": "Oh, I see. I don\u0027t have special reason. I will move it back to independent mojom.\n\nWhat do you think if I also move PropertyType together with Event? Should we call it signal.mojom? Or maybe we should have two independent mojom files event.mojom and property.mojom?",
+      "parentUuid": "8deabec5_76a3b6e0",
+      "revId": "5c1815eb6d7bec28db0e8ac38e6f93424fefcaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
