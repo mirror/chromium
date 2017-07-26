@@ -10,6 +10,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_id.h"
 
 namespace resource_coordinator {
@@ -35,6 +36,14 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
     const CoordinationUnitImpl* coordination_unit) {
   DCHECK(coordination_unit->id().type == CoordinationUnitType::kFrame);
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
+}
+
+// static
+const WebContentsCoordinationUnitImpl*
+CoordinationUnitImpl::ToWebContentsCoordinationUnit(
+    const CoordinationUnitImpl* coordination_unit) {
+  DCHECK(coordination_unit->id().type == CoordinationUnitType::kWebContents);
+  return static_cast<const WebContentsCoordinationUnitImpl*>(coordination_unit);
 }
 
 CoordinationUnitImpl::CoordinationUnitImpl(
@@ -262,7 +271,7 @@ void CoordinationUnitImpl::UnregisterCoordinationPolicyCallback() {
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
-    CoordinationUnitType type) {
+    CoordinationUnitType type) const {
   std::set<CoordinationUnitImpl*> coordination_units;
 
   for (auto* child : children()) {
@@ -281,7 +290,7 @@ CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
-    CoordinationUnitType type) {
+    CoordinationUnitType type) const {
   std::set<CoordinationUnitImpl*> coordination_units;
 
   for (auto* parent : parents()) {
@@ -300,7 +309,7 @@ CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
 
 std::set<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
-    CoordinationUnitType type) {
+    CoordinationUnitType type) const {
   NOTREACHED();
   return std::set<CoordinationUnitImpl*>();
 }
