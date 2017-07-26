@@ -113,6 +113,8 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
   void Finish(PasswordProtectionService::RequestOutcome outcome,
               std::unique_ptr<LoginReputationClientResponse> response);
 
+  bool IsSyncPasswordReuse() const;
+
   // WebContents of the password protection event.
   content::WebContents* web_contents_;
 
