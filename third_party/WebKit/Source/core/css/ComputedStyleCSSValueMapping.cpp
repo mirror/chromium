@@ -756,9 +756,9 @@ static CSSPrimitiveValue* ValueForFontSize(const ComputedStyle& style) {
                                 style);
 }
 
-static CSSIdentifierValue* ValueForFontStretch(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(
-      FontSelectionValueStretch(style.GetFontDescription().Stretch()));
+static CSSPrimitiveValue* ValueForFontStretch(const ComputedStyle& style) {
+  return CSSPrimitiveValue::Create(style.GetFontDescription().Stretch(),
+                                   CSSPrimitiveValue::UnitType::kPercentage);
 }
 
 static CSSIdentifierValue* ValueForFontStyle(const ComputedStyle& style) {
