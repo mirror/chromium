@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "735ce1a2_81df94d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:54:42Z",
+      "side": 1,
+      "message": "Oops this doesn\u0027t make sense anymore--updated it!",
+      "parentUuid": "a43465b1_0083cae3",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 34
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f2ef8e0_7d7bad0e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d097d1_ed8592d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:54:42Z",
+      "side": 1,
+      "message": "Oh good point! I\u0027ll make a bug to do this in a separate CL because this touches a lot of files :)",
+      "parentUuid": "2f2ef8e0_7d7bad0e",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 87
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "20631558_5d779f29",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10cab8c9_025ec01d",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 9
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae291e05_a73343b3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 7
@@ -114,6 +186,30 @@
       "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a2cecf_9b93f921",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-26T23:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae291e05_a73343b3",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 19
+      },
+      "revId": "0224618ba0ec4fadb96b8098f55bf522654a20d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
