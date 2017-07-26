@@ -16,7 +16,6 @@
 #include "platform/graphics/paint/GeometryMapper.h"
 #include "platform/graphics/paint/ScrollPaintPropertyNode.h"
 #include "platform/graphics/paint/TransformPaintPropertyNode.h"
-#include "public/platform/WebLayerScrollClient.h"
 #include "third_party/skia/include/effects/SkColorFilterImageFilter.h"
 #include "third_party/skia/include/effects/SkLumaColorFilter.h"
 
@@ -296,37 +295,15 @@ void PropertyTreeManager::UpdateScrollAndScrollTranslationNodes(
   compositor_transform_node.local.MakeIdentity();
   compositor_transform_node.scrolls = true;
   GetTransformTree().set_needs_update(true);
-  // TODO(pdr): Because of a layer dependancy, the scroll tree scroll offset is
-  // set in updateLayerScrollMapping but that should occur here.
+  GetScrollTree().SetScrollOffset(scroll_offset_node->GetCompositorElementId(),
+                                  compositor_transform_node.scroll_offset);
 }
 
-void PropertyTreeManager::UpdateLayerScrollMapping(
-    cc::Layer* layer,
-    const TransformPaintPropertyNode* transform) {
-  auto* enclosing_scroll_node = transform->FindEnclosingScrollNode();
-  int scroll_node_id = EnsureCompositorScrollNode(enclosing_scroll_node);
-  layer->SetScrollTreeIndex(scroll_node_id);
-  auto& compositor_scroll_node = *GetScrollTree().Node(scroll_node_id);
-
-  if (!transform->IsScrollTranslation())
-    return;
-
-  auto& compositor_transform_node =
-      *GetTransformTree().Node(compositor_scroll_node.transform_id);
-  // TODO(pdr): Set this in updateScrollAndScrollTranslationNodes once the
-  // layer id is no longer needed.
-  GetScrollTree().SetScrollOffset(transform->GetCompositorElementId(),
-                                  compositor_transform_node.scroll_offset);
-
-  // TODO(pdr): This approach of setting a callback on all Layers with a scroll
-  // node is wrong because only the base scrollable layer needs this callback.
-  // This should be fixed as part of correctly creating scrollable layers in
-  // https://crbug.com/738613.
-  if (auto* scroll_client = enclosing_scroll_node->ScrollClient()) {
-    layer->set_did_scroll_callback(
-        base::Bind(&blink::WebLayerScrollClient::DidScroll,
-                   base::Unretained(scroll_client)));
-  }
+int PropertyTreeManager::CompositorScrollNode(
+    const ScrollPaintPropertyNode* scroll_node) {
+  auto it = scroll_node_map_.find(scroll_node);
+  DCHECK(it != scroll_node_map_.end());
+  return it->value;
 }
 
 int PropertyTreeManager::SwitchToEffectNode(

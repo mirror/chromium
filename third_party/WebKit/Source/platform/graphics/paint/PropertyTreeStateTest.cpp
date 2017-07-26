@@ -266,4 +266,34 @@ TEST_F(PropertyTreeStateTest, CompositorElementIdWithDifferingElementIds) {
             state.GetCompositorElementId(composited_element_ids));
 }
 
+TEST_F(PropertyTreeStateTest, GetCompositorElementIdWithFilters) {
+  CompositorElementId expected_compositor_element_id =
+      CompositorElementIdFromLayoutObjectId(
+          2, CompositorElementIdNamespace::kPrimary);
+  RefPtr<TransformPaintPropertyNode> transform =
+      TransformPaintPropertyNode::Create(TransformPaintPropertyNode::Root(),
+                                         TransformationMatrix(), FloatPoint3D(),
+                                         false, 0, kCompositingReasonNone,
+                                         expected_compositor_element_id);
+  PropertyTreeState state(transform.Get(), ClipPaintPropertyNode::Root(),
+                          EffectPaintPropertyNode::Root());
+  EXPECT_EQ(
+      expected_compositor_element_id,
+      state.GetCompositorElementIdMatchingNamespace(
+          CompositorElementIdSet(), CompositorElementIdNamespace::kPrimary));
+  EXPECT_EQ(
+      CompositorElementId(),
+      state.GetCompositorElementIdMatchingNamespace(
+          CompositorElementIdSet(), CompositorElementIdNamespace::kScroll));
+
+  EXPECT_EQ(
+      CompositorElementId(),
+      state.GetCompositorElementIdExcludingNamespace(
+          CompositorElementIdSet(), CompositorElementIdNamespace::kPrimary));
+  EXPECT_EQ(
+      expected_compositor_element_id,
+      state.GetCompositorElementIdExcludingNamespace(
+          CompositorElementIdSet(), CompositorElementIdNamespace::kScroll));
+}
+
 }  // namespace blink

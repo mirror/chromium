@@ -61,6 +61,42 @@ const CompositorElementId PropertyTreeState::GetCompositorElementId(
   return CompositorElementId();
 }
 
+const CompositorElementId
+PropertyTreeState::GetCompositorElementIdMatchingNamespace(
+    const CompositorElementIdSet& element_ids,
+    CompositorElementIdNamespace ns) const {
+  // TODO(pdr): Comment this.
+  auto effect_element_id = Effect()->GetCompositorElementId();
+  if (effect_element_id &&
+      NamespaceFromCompositorElementId(effect_element_id) == ns &&
+      !element_ids.Contains(effect_element_id))
+    return effect_element_id;
+  auto transform_element_id = Transform()->GetCompositorElementId();
+  if (transform_element_id &&
+      NamespaceFromCompositorElementId(transform_element_id) == ns &&
+      !element_ids.Contains(transform_element_id))
+    return transform_element_id;
+  return CompositorElementId();
+}
+
+const CompositorElementId
+PropertyTreeState::GetCompositorElementIdExcludingNamespace(
+    const CompositorElementIdSet& element_ids,
+    CompositorElementIdNamespace ns) const {
+  // TODO(pdr): Comment this.
+  auto effect_element_id = Effect()->GetCompositorElementId();
+  if (effect_element_id &&
+      NamespaceFromCompositorElementId(effect_element_id) != ns &&
+      !element_ids.Contains(effect_element_id))
+    return effect_element_id;
+  auto transform_element_id = Transform()->GetCompositorElementId();
+  if (transform_element_id &&
+      NamespaceFromCompositorElementId(transform_element_id) != ns &&
+      !element_ids.Contains(transform_element_id))
+    return transform_element_id;
+  return CompositorElementId();
+}
+
 PropertyTreeState::InnermostNode PropertyTreeState::GetInnermostNode() const {
   // TODO(chrishtr): this is very inefficient when innermostNode() is called
   // repeatedly.
