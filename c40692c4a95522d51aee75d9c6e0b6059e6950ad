@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d53e6d_3c0cbb2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-26T06:46:37Z",
+      "side": 1,
+      "message": "Much better, thanks!",
+      "range": {
+        "startLine": 403,
+        "startChar": 76,
+        "endLine": 403,
+        "endChar": 91
+      },
+      "revId": "c40692c4a95522d51aee75d9c6e0b6059e6950ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02b87587_6785efc1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-26T06:46:37Z",
+      "side": 1,
+      "message": "I am not sure this is a bug. I believe we should never update if the user has seen the end of the list (unless the list is empty). \n\nMaybe my mental model of the UX constraint is wrong: maybe we can always _append_ if the list is shorter than it should be? Then we could keep another bit (mHasRemoved) that makes this function return true above this if clause.",
+      "range": {
+        "startLine": 461,
+        "startChar": 12,
+        "endLine": 465,
+        "endChar": 41
+      },
+      "revId": "c40692c4a95522d51aee75d9c6e0b6059e6950ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
