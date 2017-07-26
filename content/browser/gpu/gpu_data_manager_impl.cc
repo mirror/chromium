@@ -241,6 +241,11 @@ std::vector<std::string> GpuDataManagerImpl::GetDriverBugWorkarounds() const {
   return private_->GetDriverBugWorkarounds();
 }
 
+const gpu::GpuFeatureInfo& GpuDataManagerImpl::GetGpuFeatureInfo() const {
+  base::AutoLock auto_lock(lock_);
+  return private_->GetGpuFeatureInfo();
+}
+
 void GpuDataManagerImpl::AddLogMessage(int level,
                                        const std::string& header,
                                        const std::string& message) {

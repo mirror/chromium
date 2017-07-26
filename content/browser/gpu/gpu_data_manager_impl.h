@@ -140,6 +140,8 @@ class CONTENT_EXPORT GpuDataManagerImpl
   // a vector of strings.
   std::vector<std::string> GetDriverBugWorkarounds() const;
 
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const;
+
   void AddLogMessage(int level,
                      const std::string& header,
                      const std::string& message);

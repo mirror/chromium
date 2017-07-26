@@ -45,6 +45,7 @@ class BrowserGpuChannelHostFactory::EstablishRequest
 
   IPC::ChannelHandle& channel_handle() { return channel_handle_; }
   gpu::GPUInfo gpu_info() { return gpu_info_; }
+  gpu::GpuFeatureInfo gpu_feature_info() { return gpu_feature_info_; }
 
  private:
   friend class base::RefCountedThreadSafe<EstablishRequest>;
@@ -53,6 +54,7 @@ class BrowserGpuChannelHostFactory::EstablishRequest
   void EstablishOnIO();
   void OnEstablishedOnIO(const IPC::ChannelHandle& channel_handle,
                          const gpu::GPUInfo& gpu_info,
+                         const gpu::GpuFeatureInfo& gpu_feature_info,
                          GpuProcessHost::EstablishChannelStatus status);
   void FinishOnIO();
   void FinishOnMain();
@@ -62,6 +64,7 @@ class BrowserGpuChannelHostFactory::EstablishRequest
   const uint64_t gpu_client_tracing_id_;
   IPC::ChannelHandle channel_handle_;
   gpu::GPUInfo gpu_info_;
+  gpu::GpuFeatureInfo gpu_feature_info_;
   bool finished_;
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
 };
@@ -119,6 +122,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::EstablishOnIO() {
 void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     const IPC::ChannelHandle& channel_handle,
     const gpu::GPUInfo& gpu_info,
+    const gpu::GpuFeatureInfo& gpu_feature_info,
     GpuProcessHost::EstablishChannelStatus status) {
   if (!channel_handle.mojo_handle.is_valid() &&
       status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) {
@@ -129,6 +133,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
   }
   channel_handle_ = channel_handle;
   gpu_info_ = gpu_info;
+  gpu_feature_info_ = gpu_feature_info;
   FinishOnIO();
 }
 
@@ -317,6 +322,7 @@ void BrowserGpuChannelHostFactory::GpuChannelEstablished() {
     GetContentClient()->SetGpuInfo(pending_request_->gpu_info());
     gpu_channel_ = gpu::GpuChannelHost::Create(
         this, gpu_client_id_, pending_request_->gpu_info(),
+        pending_request_->gpu_feature_info(),
         pending_request_->channel_handle(), shutdown_event_.get(),
         gpu_memory_buffer_manager_.get());
   }
