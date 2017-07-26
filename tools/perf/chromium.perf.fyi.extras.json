@@ -27,5 +27,55 @@
         }
       }
     ]
+  },
+  "Win 10 4 Core Low-End Perf Tests": {
+    "isolated_scripts": [
+      {
+        "args": [
+          "loading.desktop",
+          "-v",
+          "--upload-results",
+          "--output-format=chartjson",
+          "--experimental-story-shard-begin-index=0",
+          "--experimental-story-shard-begin-index=2",
+          "--output-format=chartjson"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "loading.desktop|(shard 1 of 2)",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 3600
+        }
+      },
+      {
+        "args": [
+          "loading.desktop",
+          "-v",
+          "--upload-results",
+          "--output-format=chartjson",
+          "--experimental-story-shard-begin-index=3",
+          "--experimental-story-shard-begin-index=5",
+          "--output-format=chartjson"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "loading.desktop|(shard 2 of 2)",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 3600
+        }
+      }
+    ]
   }
 }

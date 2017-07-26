@@ -931,8 +931,13 @@ def append_extra_tests(waterfall, tests):
       for key, value in extra_tests.iteritems():
         if key == 'comment':
           continue
-        assert key not in tests
-        tests[key] = value
+
+        if key in tests:
+          assert 'isolated_scripts' in tests[key]
+          assert 'isolated_scripts' in value
+          tests[key]['isolated_scripts'].extend(value['isolated_scripts'])
+        else:
+          tests[key] = value
 
 
 def tests_are_up_to_date(waterfalls):
@@ -950,8 +955,10 @@ def tests_are_up_to_date(waterfalls):
     with open(config_file, 'r') as fp:
       config_data = fp.read().strip()
     up_to_date &= tests_data == config_data
-  verify_all_tests_in_benchmark_csv(all_tests,
-                                    get_all_waterfall_benchmarks_metadata())
+    if 'fyi' in w['name']:
+      continue
+    verify_all_tests_in_benchmark_csv(tests,
+                                      get_all_waterfall_benchmarks_metadata())
   return up_to_date
 
 
@@ -967,8 +974,10 @@ def update_all_tests(waterfalls):
     with open(config_file, 'w') as fp:
       json.dump(tests, fp, indent=2, separators=(',', ': '), sort_keys=True)
       fp.write('\n')
-  verify_all_tests_in_benchmark_csv(all_tests,
-                                    get_all_waterfall_benchmarks_metadata())
+    if 'fyi' in w['name']:
+      continue
+    verify_all_tests_in_benchmark_csv(tests,
+                                      get_all_waterfall_benchmarks_metadata())
 
 
 # not_scheduled means this test is not scheduled on any of the chromium.perf
