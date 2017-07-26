@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d88fd9_04c45547",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-26T21:59:18Z",
+      "side": 1,
+      "message": "This will break language switching in MD-OOBE as well.",
+      "revId": "dccb9a760cc414f0378c772f80fc9ff6b0f3c8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
