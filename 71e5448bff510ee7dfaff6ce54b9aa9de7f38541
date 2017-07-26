@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75b167df_f38acb24",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T09:31:51Z",
+      "side": 1,
+      "message": "It looks like the other mojo call uses a binding set. Will this work as written if there are multiple calls to this method? I think the second Bind() call might fail?",
+      "range": {
+        "startLine": 382,
+        "startChar": 2,
+        "endLine": 382,
+        "endChar": 57
+      },
+      "revId": "71e5448bff510ee7dfaff6ce54b9aa9de7f38541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36a7d87_ab513ba8",
+        "filename": "chrome/renderer/net/net_error_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T09:31:51Z",
+      "side": 1,
+      "message": "Is this a stray line from a rebase/merge?",
+      "revId": "71e5448bff510ee7dfaff6ce54b9aa9de7f38541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
