@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41e827a0_2869a0b2",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/page/frameScheduledNavigation-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-26T09:05:14Z",
+      "side": 1,
+      "message": "Done. I needed to introduce a perl script (and move to http/tests) to make this work, but I was able to test the other type of refresh too.",
+      "parentUuid": "74e8c656_182b9ee9",
+      "revId": "e726874b1474b534f5f7ca8180028005754148bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ed47139_74964729",
         "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T22:37:44Z",
       "side": 1,
       "message": "This will return the Url() that is requesting the navigation, which is not necessarily the url of the document that is being reloaded.\n\ne.g., if an iframe calls top.location.reload(), OriginDocument() will be the iframe\u0027s url instead of top\u0027s url.",
+      "revId": "e726874b1474b534f5f7ca8180028005754148bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d399c12_43d14717",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-26T09:05:14Z",
+      "side": 1,
+      "message": "Lets change it to the frame to avoid confusion :)",
+      "parentUuid": "5ed47139_74964729",
       "revId": "e726874b1474b534f5f7ca8180028005754148bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
