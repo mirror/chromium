@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b0eb8b8_6e670b00",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1222185
+      },
+      "writtenOn": "2017-07-26T20:32:55Z",
+      "side": 1,
+      "message": "Ned, I modified the method signature you proposed slightly as I didn\u0027t want the benchmark to take all of the extra screenshots if say, the very first one proved to have too much dynamic content. I also noticed that my previous implementation was using the base screenshot\u0027s bytearray for both comparison and cyan updates; I updated this so that comparisons are always done against the base screenshot (no cyan added) and if any pixel inconsistencies are found, there is a separate bytearray to mark and accumulate cyan pixels.",
+      "revId": "40ba56fa628669b09cb376bc209b0a057d48f1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
