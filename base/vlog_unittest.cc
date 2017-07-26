@@ -13,7 +13,7 @@ namespace logging {
 namespace {
 
 TEST(VlogTest, NoVmodule) {
-  int min_log_level = 0;
+  base::subtle::Atomic32 min_log_level = 0;
   EXPECT_EQ(0,
             VlogInfo(std::string(), std::string(), &min_log_level)
                 .GetVlogLevel("test1"));
@@ -82,7 +82,7 @@ TEST(VlogTest, VmoduleBasic) {
   const char kVSwitch[] = "-1";
   const char kVModuleSwitch[] =
       "foo=,bar=0,baz=blah,,qux=0blah1,quux=1,corge.ext=5";
-  int min_log_level = 0;
+  base::subtle::Atomic32 min_log_level = 0;
   VlogInfo vlog_info(kVSwitch, kVModuleSwitch, &min_log_level);
   EXPECT_EQ(-1, vlog_info.GetVlogLevel("/path/to/grault.cc"));
   EXPECT_EQ(0, vlog_info.GetVlogLevel("/path/to/foo.cc"));
@@ -97,7 +97,7 @@ TEST(VlogTest, VmoduleBasic) {
 TEST(VlogTest, VmoduleDirs) {
   const char kVModuleSwitch[] =
       "foo/bar.cc=1,baz\\*\\qux.cc=2,*quux/*=3,*/*-inl.h=4";
-  int min_log_level = 0;
+  base::subtle::Atomic32 min_log_level = 0;
   VlogInfo vlog_info(std::string(), kVModuleSwitch, &min_log_level);
   EXPECT_EQ(0, vlog_info.GetVlogLevel("/foo/bar.cc"));
   EXPECT_EQ(0, vlog_info.GetVlogLevel("bar.cc"));
