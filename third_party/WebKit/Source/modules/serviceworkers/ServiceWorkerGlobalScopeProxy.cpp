@@ -36,6 +36,7 @@
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
+#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/workers/ParentFrameTaskRunners.h"
@@ -74,6 +75,7 @@
 #include "modules/serviceworkers/WaitUntilObserver.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/WaitableEvent.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
@@ -545,8 +547,26 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
       WorkerGlobalScope()->ScriptController()->GetContext());
 }
 
-void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript() {
+void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
+    const ContentSecurityPolicyResponseHeaders& csp_headers_on_worker_thread,
+    const String& referrer_policy_on_worker_thread) {
+  DCHECK(embedded_worker_);
+
+  // WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy() should
+  // be executed before all of loading tasks issued during the script
+  // evaluation. |set_params_on_main_thread_event| is to ensure the ordering of
+  // tasks.
+  WaitableEvent set_params_on_main_thread_event;
+  parent_frame_task_runners_->Get(TaskType::kUnthrottled)
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(
+              &WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy,
+              CrossThreadUnretained(embedded_worker_),
+              csp_headers_on_worker_thread, referrer_policy_on_worker_thread,
+              CrossThreadUnretained(&set_params_on_main_thread_event)));
   Client().WorkerScriptLoaded();
+  set_params_on_main_thread_event.Wait();
 }
 
 void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
