@@ -106,7 +106,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   virtual void SetBackgroundColor(SkColor background_color);
   SkColor background_color() const { return inputs_.background_color; }
   void SetSafeOpaqueBackgroundColor(SkColor background_color);
-  // If contents_opaque(), return an opaque color else return a
+  // If IsContentsOpaque(), return an opaque color else return a
   // non-opaque color.  Tries to return background_color(), if possible.
   SkColor SafeOpaqueBackgroundColor() const;
 
@@ -162,7 +162,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   }
 
   void SetContentsOpaque(bool opaque);
-  bool contents_opaque() const { return inputs_.contents_opaque; }
+  bool IsContentsOpaque() const { return inputs_.contents_opaque; }
 
   void SetPosition(const gfx::PointF& position);
   gfx::PointF position() const { return inputs_.position; }

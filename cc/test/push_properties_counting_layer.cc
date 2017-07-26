@@ -33,7 +33,7 @@ std::unique_ptr<LayerImpl> PushPropertiesCountingLayer::CreateLayerImpl(
 }
 
 void PushPropertiesCountingLayer::MakePushProperties() {
-  SetContentsOpaque(!contents_opaque());
+  SetContentsOpaque(!IsContentsOpaque());
 }
 
 void PushPropertiesCountingLayer::AddPushPropertiesCount() {
