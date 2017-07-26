@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "90a69f19_7e208f21",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-26T14:38:01Z",
+      "side": 1,
+      "message": "Well the navigation originates from this RFH, but it may commit in another RFH (hence the return value). So I don\u0027t know about the parameter change. In any case, since the API is already in use, I\u0027d rather do the change in a follow-up CL. Is that ok with you?",
+      "parentUuid": "b599e3ae_269959b7",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "765cdac4d0ea927afaf08e8536416df70debc8f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5de2edb_3e1996f7",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 4

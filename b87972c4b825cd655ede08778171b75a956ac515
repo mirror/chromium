@@ -22,6 +22,30 @@
       "revId": "b87972c4b825cd655ede08778171b75a956ac515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a46d9a_3ae01246",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-26T14:38:01Z",
+      "side": 0,
+      "message": "Yes. One of the reason we\u0027re moving towards NavigationSimulator is that tests using it have less issues with PlzNavigate (IsBrowserSideNavigationEnabled()) and OOPIF (AreAllSitesIsolatedForTesting()). In particular, this test was simulating a commit in the wrong RFH when either of those was turned on. With NavigationSimulator, the right RFH is used and the test works in that case. I\u0027ve updated the CL description.",
+      "parentUuid": "dd218848_77bdbe1d",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 46
+      },
+      "revId": "b87972c4b825cd655ede08778171b75a956ac515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

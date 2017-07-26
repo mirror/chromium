@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d22ca_244f2b8c",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-26T14:38:01Z",
+      "side": 1,
+      "message": "This simulates the RFH receiving a DidStopLoading, which a case where you would get a DidFinishNavigation without committing an error page even though the error should have lead to the commit of an error page. From our conversation offline, it seems this is what this test needs to simulate.",
+      "parentUuid": "3b4d6834_23bdf800",
+      "range": {
+        "startLine": 800,
+        "startChar": 19,
+        "endLine": 800,
+        "endChar": 41
+      },
+      "revId": "728c2f9dbf01c6a1935f27b228c5fda2fe43d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "904d0877_f1dd50ed",
         "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer_unittest.cc",
         "patchSetId": 3
