@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5fc32d_33b0adf4",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-26T13:35:01Z",
+      "side": 0,
+      "message": "IIUC, this is necessary.\n\nhttps://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty\nStep 1 and 2 combined, it\u0027s possible that an array index property name is eligible as a named property, e.g. it\u0027s possible that id\u003d\"0\" should be treated as a named property.\n\nHowever, for a property name \"0\", V8 only calls an IndexedPropertyGetterCallback and never calls an NamedPropertyGetterCallback.\n\nSo, if an interface only supports named properties and does not support indexed properties, we\u0027re installing both of IndexedPropertyGetterCallback and NamedPropertyGetterCallback to handle \"0\" cases.\n    obj[\"0\"];\n    \u003d\u003e indexedPropertyGetterCallback(0, info);\n    \u003d\u003e namedPropertyGetter(\"0\", info);\n\nSee also: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl?type\u003dcs\u0026q\u003dindexedPropertyGetterCallback+case:yes+file:interface.cpp.tmpl\u0026sq\u003dpackage:chromium\u0026l\u003d58\n\nYou may need a similar hack for query/enumerator.",
+      "range": {
+        "startLine": 523,
+        "startChar": 36,
+        "endLine": 523,
+        "endChar": 57
+      },
+      "revId": "d7bea544eaee0e7aee36684491746cd444a39e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

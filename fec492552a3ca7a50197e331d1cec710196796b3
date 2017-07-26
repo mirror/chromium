@@ -16,6 +16,75 @@
       "revId": "fec492552a3ca7a50197e331d1cec710196796b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44484d60_73594969",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-26T13:35:01Z",
+      "side": 1,
+      "message": "Could you add a comment why we need these?\nAdding a comment onto either of here or V8WindowCustom.cpp or both is okay.",
+      "range": {
+        "startLine": 74,
+        "startChar": 32,
+        "endLine": 74,
+        "endChar": 46
+      },
+      "revId": "fec492552a3ca7a50197e331d1cec710196796b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38675398_0a6c57c7",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFormElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-26T13:35:01Z",
+      "side": 1,
+      "message": "We may want a TODO comment to actually implement this function.\nIf you don\u0027t want to be an assignee, tkent@ (an owner of HTMLFormElement) or me is fine, I think.",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "fec492552a3ca7a50197e331d1cec710196796b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2577734c_80a2810f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFormElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-26T13:35:01Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 25
+      },
+      "revId": "fec492552a3ca7a50197e331d1cec710196796b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
