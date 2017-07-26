@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bd809ac_e986fde8",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-26T21:41:08Z",
+      "side": 1,
+      "message": "existing typo..: scheduled_timeout_.is_null()",
+      "revId": "47d558dc7d5b16f5aa7913bc9455a82f88044c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc13a89_ddb05cd2",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-26T21:41:08Z",
+      "side": 1,
+      "message": "I think this is ok, but I don\u0027t think the code is doing that.\n\nIf you did\nGetCompositorLock(null)\nGetCompositorLock(5)\nYou\u0027d get 5.\n\nIf you did\nGetCompositorLock(null)\nGetCompositorLock(5)\nGetCompositorLock(2)\nYou\u0027d still get 5?",
+      "revId": "47d558dc7d5b16f5aa7913bc9455a82f88044c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
