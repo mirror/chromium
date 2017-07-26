@@ -16,6 +16,24 @@
       "revId": "6f3faa60ca7a8a93907692b46248d3cc7f39d642",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7e6f60_88406ff0",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-07-26T17:20:23Z",
+      "side": 1,
+      "message": "prefs-\u003edisable_2d_canvas_copy_on_write \u003d\n    IsDriverBugWorkaroundActive(gpu::BROKEN_EGL_IMAGE_REF_COUNTING) \u0026\u0026\n    command_line-\u003eHasSwitch(switches::kEnableThreadedTextureMailboxes);\n\nThis is the reason I wire workarounds to renderer process. I am open to other ideas to implement this.",
+      "parentUuid": "538540c8_e871a8c5",
+      "revId": "6f3faa60ca7a8a93907692b46248d3cc7f39d642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
