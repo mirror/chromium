@@ -22,6 +22,76 @@
       "revId": "05f7238ea5bf098612279bf568e451cc5b0432b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aeee70b_caaf9f81",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-26T14:13:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce6a284c_47708317",
+      "range": {
+        "startLine": 155,
+        "startChar": 23,
+        "endLine": 155,
+        "endChar": 45
+      },
+      "revId": "05f7238ea5bf098612279bf568e451cc5b0432b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "290f16eb_4616adee",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-26T14:13:27Z",
+      "side": 1,
+      "message": "optional: not sure if there is a style guideline somewhere.\nI have been putting the comment in front of the variable with an equals sign, e.g. /*is_quic_forced_disabled\u003d*/false",
+      "range": {
+        "startLine": 159,
+        "startChar": 31,
+        "endLine": 159,
+        "endChar": 53
+      },
+      "revId": "05f7238ea5bf098612279bf568e451cc5b0432b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f485153f_d7e82966",
+        "filename": "content/shell/browser/shell_url_request_context_getter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-07-26T14:13:27Z",
+      "side": 1,
+      "message": "Could you add in the comment that GetProxyConfigService() and GetProxyService() are mutually exclusive? We only respect GetProxyConfigService() if GetProxyService() returns nullptr.",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "05f7238ea5bf098612279bf568e451cc5b0432b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
