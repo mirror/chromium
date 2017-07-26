@@ -418,10 +418,6 @@ void LayoutSelection::Commit() {
     ClearSelection();
     return;
   }
-  // Just return if the selection hasn't changed.
-  if (paint_range_ == new_range.ToPaintRange())
-    return;
-
   DCHECK(frame_selection_->GetDocument().GetLayoutView()->GetFrameView());
   DCHECK(!frame_selection_->GetDocument().NeedsLayoutTreeUpdate());
   UpdateLayoutObjectState(new_range, paint_range_);
