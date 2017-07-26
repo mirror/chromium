@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db86e847_58460227",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-26T08:53:44Z",
+      "side": 1,
+      "message": "Also fixed an unfortunate bug in this patch...",
+      "range": {
+        "startLine": 44,
+        "startChar": 60,
+        "endLine": 44,
+        "endChar": 74
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
