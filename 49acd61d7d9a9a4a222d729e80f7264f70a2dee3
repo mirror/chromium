@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac599ce8_83d14c83",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-26T05:12:02Z",
+      "side": 1,
+      "message": "I changed the approach a bit. Since we are going to have a bunch of these if statements I figured it would be better if we separated each condition and added some logging. WDYT?",
+      "parentUuid": "35ca3279_28812af0",
+      "range": {
+        "startLine": 73,
+        "startChar": 53,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9910d31d_d0270997",
         "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
         "patchSetId": 22
@@ -39,6 +63,24 @@
       "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2168198f_226fd11b",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-26T05:12:02Z",
+      "side": 1,
+      "message": "Done. Also changed the name of the function to make it more explicit that this should only be used for Bookmark Apps.",
+      "parentUuid": "9910d31d_d0270997",
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fd982b33_8ce4cd47",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-26T05:12:02Z",
+      "side": 1,
+      "message": "Right, it wouldn\u0027t have this property but the previous line would have already returned an empty GURL. I agree it\u0027s a bit fragile but there are quite a few tests that exercise this code:\n\nBookmarkAppHelperExtensionServiceTest.CreateBookmarkAppNoContents\nBookmarkAppHelperExtensionServiceTest.CreateAndUpdateBookmarkApp\nBookmarkAppHelperExtensionServiceTest.GetWebApplicationInfo\nBookmarkAppHelperExtensionServiceTest.CreateBookmarkAppWithManifest\nExtensionFromWebApp.Basic\nExtensionFromWebApp.Minimal (This tests an extension that doesn\u0027t have the url_handlers field)\nExtensionFromWebApp.ScopeDoesNotEndInSlash\n\nI\u0027m OK with changing this to if statements but I can\u0027t see when we would hit them.\n\nI wasn\u0027t sure if this was the right approach either that\u0027s why I sent out the CL for a directional review. Neither Ben nor Chris had any objections :/",
+      "parentUuid": "8fa198e6_32304a24",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f13bdb_1ad143ee",
         "filename": "chrome/browser/extensions/convert_web_app.cc",
         "patchSetId": 22
@@ -79,6 +145,24 @@
       "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4ee3d2_eccb73cb",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-26T05:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f13bdb_1ad143ee",
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c84767b_7352f6fb",
+        "filename": "chrome/browser/ui/extensions/application_launch.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-26T05:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac33ff1_f414d38e",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
