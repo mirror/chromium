@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50e6b2e4_8c1956eb",
+        "filename": "third_party/WebKit/Source/core/streams/CommonOperations.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-26T06:27:13Z",
+      "side": 1,
+      "message": ":facepalm:\n\nFixed.",
+      "parentUuid": "21272879_5a8f7b15",
+      "revId": "8e13e12c45a547bbca60aa627541d384452cd260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641ccfaa_3f797b4c",
         "filename": "third_party/WebKit/Source/core/streams/CommonOperations.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T06:19:09Z",
       "side": 1,
       "message": "Is this use of Boolean() a common practice?",
+      "revId": "8e13e12c45a547bbca60aa627541d384452cd260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e1d6ee_8c43fbba",
+        "filename": "third_party/WebKit/Source/core/streams/CommonOperations.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-26T06:27:13Z",
+      "side": 1,
+      "message": "No. It\u0027s just a quick way to throw out the values we don\u0027t want. Casting it to Boolean isn\u0027t strictly necessary, but ensures the function has a boolean return value.",
+      "parentUuid": "641ccfaa_3f797b4c",
       "revId": "8e13e12c45a547bbca60aa627541d384452cd260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
