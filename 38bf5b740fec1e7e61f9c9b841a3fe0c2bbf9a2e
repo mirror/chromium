@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81292b14_41c49fb1",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-26T22:18:59Z",
+      "side": 1,
+      "message": "nit: conceivably this should be const auto and the line below should create a new var?",
+      "revId": "38bf5b740fec1e7e61f9c9b841a3fe0c2bbf9a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

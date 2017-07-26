@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e29f20f2_6b541952",
+        "filename": "services/viz/hit_test/public/interfaces/hit_test_region_list.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-26T22:18:59Z",
+      "side": 1,
+      "message": "My intuition is no but we should ask security team. In particular: you need to validate that the window ID is correct for the surface ID (in a later CL?) so might as well look up the window ID based on the surface ID yes? And so don\u0027t need this here at all?\n\nConceivably I\u0027m not comprehending your intent with this field.",
+      "parentUuid": "37675094_750a4b12",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b61fed9_81180306",
         "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
         "patchSetId": 14
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Using presence of WindowPortMus::client_surface_embedder() as a signal to use kHitTestChildSurface. Does this seem right?",
       "parentUuid": "6b61fed9_81180306",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31409e98_5114525a",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-26T22:18:59Z",
+      "side": 1,
+      "message": "I think so.",
+      "parentUuid": "7f48423e_0ea57eaf",
       "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
