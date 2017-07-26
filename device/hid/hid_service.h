@@ -42,10 +42,10 @@ class HidService {
     virtual void OnDeviceRemovedCleanup(scoped_refptr<HidDeviceInfo> info);
   };
 
-  using GetDevicesCallback =
-      base::Callback<void(const std::vector<scoped_refptr<HidDeviceInfo>>&)>;
+  using GetDevicesCallback = base::OnceCallback<void(
+      const std::vector<scoped_refptr<HidDeviceInfo>>&)>;
   using ConnectCallback =
-      base::Callback<void(scoped_refptr<HidConnection> connection)>;
+      base::OnceCallback<void(scoped_refptr<HidConnection> connection)>;
 
   static constexpr base::TaskTraits kBlockingTaskTraits = {
       base::MayBlock(), base::TaskPriority::USER_VISIBLE,
@@ -58,7 +58,7 @@ class HidService {
 
   // Enumerates available devices. The provided callback will always be posted
   // to the calling thread's task runner.
-  virtual void GetDevices(const GetDevicesCallback& callback);
+  virtual void GetDevices(GetDevicesCallback callback);
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
@@ -69,7 +69,7 @@ class HidService {
   // Opens a connection to a device. The callback will be run with null on
   // failure.
   virtual void Connect(const std::string& device_guid,
-                       const ConnectCallback& callback) = 0;
+                       ConnectCallback callback) = 0;
 
  protected:
   friend class HidConnectionTest;

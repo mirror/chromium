@@ -42,20 +42,20 @@ class MockHidErrorConnection : public device::HidConnection {
 
   void PlatformClose() override {}
 
-  void PlatformRead(const ReadCallback& callback) override {}
+  void PlatformRead(ReadCallback callback) override {}
 
   void PlatformWrite(scoped_refptr<net::IOBuffer> buffer,
                      size_t size,
-                     const WriteCallback& callback) override {
-    callback.Run(false);
+                     WriteCallback callback) override {
+    std::move(callback).Run(false);
   }
 
   void PlatformGetFeatureReport(uint8_t report_id,
-                                const ReadCallback& callback) override {}
+                                ReadCallback callback) override {}
 
   void PlatformSendFeatureReport(scoped_refptr<net::IOBuffer> buffer,
                                  size_t size,
-                                 const WriteCallback& callback) override {}
+                                 WriteCallback callback) override {}
 
  private:
   ~MockHidErrorConnection() override {}
@@ -67,11 +67,7 @@ namespace device {
 
 class U2fDeviceEnumerate {
  public:
-  U2fDeviceEnumerate()
-      : closure_(),
-        callback_(base::Bind(&U2fDeviceEnumerate::ReceivedCallback,
-                             base::Unretained(this))),
-        run_loop_() {}
+  U2fDeviceEnumerate() {}
   ~U2fDeviceEnumerate() {}
 
   void ReceivedCallback(
@@ -92,23 +88,21 @@ class U2fDeviceEnumerate {
     return devices_;
   }
 
-  const HidService::GetDevicesCallback& callback() { return callback_; }
+  HidService::GetDevicesCallback GetCallback() {
+    return base::BindOnce(&U2fDeviceEnumerate::ReceivedCallback,
+                          base::Unretained(this));
+  }
 
  private:
   HidDeviceFilter filter_;
   std::list<std::unique_ptr<U2fHidDevice>> devices_;
   base::Closure closure_;
-  HidService::GetDevicesCallback callback_;
   base::RunLoop run_loop_;
 };
 
 class TestVersionCallback {
  public:
-  TestVersionCallback()
-      : closure_(),
-        callback_(base::Bind(&TestVersionCallback::ReceivedCallback,
-                             base::Unretained(this))),
-        run_loop_() {}
+  TestVersionCallback() {}
   ~TestVersionCallback() {}
 
   void ReceivedCallback(bool success, U2fDevice::ProtocolVersion version) {
@@ -122,22 +116,20 @@ class TestVersionCallback {
     return version_;
   }
 
-  const U2fDevice::VersionCallback& callback() { return callback_; }
+  U2fDevice::VersionCallback GetCallback() {
+    return base::BindOnce(&TestVersionCallback::ReceivedCallback,
+                          base::Unretained(this));
+  }
 
  private:
   U2fDevice::ProtocolVersion version_;
   base::Closure closure_;
-  U2fDevice::VersionCallback callback_;
   base::RunLoop run_loop_;
 };
 
 class TestDeviceCallback {
  public:
-  TestDeviceCallback()
-      : closure_(),
-        callback_(base::Bind(&TestDeviceCallback::ReceivedCallback,
-                             base::Unretained(this))),
-        run_loop_() {}
+  TestDeviceCallback() {}
   ~TestDeviceCallback() {}
 
   void ReceivedCallback(bool success,
@@ -152,12 +144,14 @@ class TestDeviceCallback {
     return std::move(response_);
   }
 
-  const U2fDevice::DeviceCallback& callback() { return callback_; }
+  U2fDevice::DeviceCallback callback() {
+    return base::BindOnce(&TestDeviceCallback::ReceivedCallback,
+                          base::Unretained(this));
+  }
 
  private:
   std::unique_ptr<U2fApduResponse> response_;
   base::Closure closure_;
-  U2fDevice::DeviceCallback callback_;
   base::RunLoop run_loop_;
 };
 
@@ -178,13 +172,13 @@ TEST_F(U2fHidDeviceTest, TestHidDeviceVersion) {
 
   U2fDeviceEnumerate callback;
   HidService* hid_service = DeviceClient::Get()->GetHidService();
-  hid_service->GetDevices(callback.callback());
+  hid_service->GetDevices(callback.GetCallback());
   std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
       callback.WaitForCallback();
 
   for (auto& device : u2f_devices) {
     TestVersionCallback vc;
-    device->Version(vc.callback());
+    device->Version(vc.GetCallback());
     U2fDevice::ProtocolVersion version = vc.WaitForCallback();
     EXPECT_EQ(version, U2fDevice::ProtocolVersion::U2F_V2);
   }
@@ -196,7 +190,7 @@ TEST_F(U2fHidDeviceTest, TestMultipleRequests) {
 
   U2fDeviceEnumerate callback;
   HidService* hid_service = DeviceClient::Get()->GetHidService();
-  hid_service->GetDevices(callback.callback());
+  hid_service->GetDevices(callback.GetCallback());
   std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
       callback.WaitForCallback();
 
@@ -204,8 +198,8 @@ TEST_F(U2fHidDeviceTest, TestMultipleRequests) {
     TestVersionCallback vc;
     TestVersionCallback vc2;
     // Call version twice to check message queueing
-    device->Version(vc.callback());
-    device->Version(vc2.callback());
+    device->Version(vc.GetCallback());
+    device->Version(vc2.GetCallback());
     U2fDevice::ProtocolVersion version = vc.WaitForCallback();
     EXPECT_EQ(version, U2fDevice::ProtocolVersion::U2F_V2);
     version = vc2.WaitForCallback();
@@ -225,7 +219,7 @@ TEST_F(U2fHidDeviceTest, TestConnectionFailure) {
                         kHIDBusTypeUSB, c_info, 64, 64, 0);
   hid_service->AddDevice(device0);
   hid_service->FirstEnumerationComplete();
-  hid_service->GetDevices(callback.callback());
+  hid_service->GetDevices(callback.GetCallback());
   std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
       callback.WaitForCallback();
 
@@ -270,7 +264,7 @@ TEST_F(U2fHidDeviceTest, TestDeviceError) {
                         kHIDBusTypeUSB, c_info, 64, 64, 0);
   hid_service->AddDevice(device0);
   hid_service->FirstEnumerationComplete();
-  hid_service->GetDevices(callback.callback());
+  hid_service->GetDevices(callback.GetCallback());
   std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
       callback.WaitForCallback();
 

@@ -27,22 +27,24 @@ const char kOpenFailedError[] = "open_failed";
 // permission broker by opening the path specified and returning the resulting
 // file descriptor.
 void OpenPath(const std::string& path,
-              const PermissionBrokerClient::OpenPathCallback& callback,
-              const PermissionBrokerClient::ErrorCallback& error_callback,
+              PermissionBrokerClient::OpenPathCallback callback,
+              PermissionBrokerClient::ErrorCallback error_callback,
               scoped_refptr<base::TaskRunner> task_runner) {
   base::ScopedFD fd(HANDLE_EINTR(open(path.c_str(), O_RDWR)));
   if (!fd.is_valid()) {
     int error_code = logging::GetLastSystemErrorCode();
     task_runner->PostTask(
         FROM_HERE,
-        base::Bind(error_callback, kOpenFailedError,
-                   base::StringPrintf(
-                       "Failed to open '%s': %s", path.c_str(),
-                       logging::SystemErrorCodeToString(error_code).c_str())));
+        base::BindOnce(
+            std::move(error_callback), kOpenFailedError,
+            base::StringPrintf(
+                "Failed to open '%s': %s", path.c_str(),
+                logging::SystemErrorCodeToString(error_code).c_str())));
     return;
   }
 
-  task_runner->PostTask(FROM_HERE, base::Bind(callback, base::Passed(&fd)));
+  task_runner->PostTask(FROM_HERE,
+                        base::BindOnce(std::move(callback), std::move(fd)));
 }
 
 }  // namespace
@@ -53,50 +55,48 @@ FakePermissionBrokerClient::~FakePermissionBrokerClient() {}
 
 void FakePermissionBrokerClient::Init(dbus::Bus* bus) {}
 
-void FakePermissionBrokerClient::CheckPathAccess(
-    const std::string& path,
-    const ResultCallback& callback) {
-  callback.Run(true);
+void FakePermissionBrokerClient::CheckPathAccess(const std::string& path,
+                                                 ResultCallback callback) {
+  std::move(callback).Run(true);
 }
 
 void FakePermissionBrokerClient::OpenPath(const std::string& path,
-                                          const OpenPathCallback& callback,
-                                          const ErrorCallback& error_callback) {
+                                          OpenPathCallback callback,
+                                          ErrorCallback error_callback) {
   base::PostTaskWithTraits(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&chromeos::OpenPath, path, callback, error_callback,
-                 base::ThreadTaskRunnerHandle::Get()));
+      base::BindOnce(&chromeos::OpenPath, path, std::move(callback),
+                     std::move(error_callback),
+                     base::ThreadTaskRunnerHandle::Get()));
 }
 
 void FakePermissionBrokerClient::RequestTcpPortAccess(
     uint16_t port,
     const std::string& interface,
     int lifeline_fd,
-    const ResultCallback& callback) {
-  callback.Run(true);
+    ResultCallback callback) {
+  std::move(callback).Run(true);
 }
 
 void FakePermissionBrokerClient::RequestUdpPortAccess(
     uint16_t port,
     const std::string& interface,
     int lifeline_fd,
-    const ResultCallback& callback) {
-  callback.Run(true);
+    ResultCallback callback) {
+  std::move(callback).Run(true);
 }
 
-void FakePermissionBrokerClient::ReleaseTcpPort(
-    uint16_t port,
-    const std::string& interface,
-    const ResultCallback& callback) {
-  callback.Run(true);
+void FakePermissionBrokerClient::ReleaseTcpPort(uint16_t port,
+                                                const std::string& interface,
+                                                ResultCallback callback) {
+  std::move(callback).Run(true);
 }
 
-void FakePermissionBrokerClient::ReleaseUdpPort(
-    uint16_t port,
-    const std::string& interface,
-    const ResultCallback& callback) {
-  callback.Run(true);
+void FakePermissionBrokerClient::ReleaseUdpPort(uint16_t port,
+                                                const std::string& interface,
+                                                ResultCallback callback) {
+  std::move(callback).Run(true);
 }
 
 }  // namespace chromeos

@@ -50,20 +50,20 @@ void PortReleased(FirewallHole::PortType type,
 void FirewallHole::Open(PortType type,
                         uint16_t port,
                         const std::string& interface,
-                        const OpenCallback& callback) {
+                        OpenCallback callback) {
   int lifeline[2] = {-1, -1};
   if (pipe2(lifeline, O_CLOEXEC) < 0) {
     PLOG(ERROR) << "Failed to create a lifeline pipe";
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, nullptr));
+        FROM_HERE, base::BindOnce(std::move(callback), nullptr));
     return;
   }
   base::ScopedFD lifeline_local(lifeline[0]);
   base::ScopedFD lifeline_remote(lifeline[1]);
 
-  base::Callback<void(bool)> access_granted_closure =
-      base::Bind(&FirewallHole::PortAccessGranted, type, port, interface,
-                 base::Passed(&lifeline_local), callback);
+  base::OnceCallback<void(bool)> access_granted_closure =
+      base::BindOnce(&FirewallHole::PortAccessGranted, type, port, interface,
+                     std::move(lifeline_local), std::move(callback));
 
   PermissionBrokerClient* client =
       DBusThreadManager::Get()->GetPermissionBrokerClient();
@@ -72,11 +72,11 @@ void FirewallHole::Open(PortType type,
   switch (type) {
     case PortType::TCP:
       client->RequestTcpPortAccess(port, interface, lifeline_remote.get(),
-                                   access_granted_closure);
+                                   std::move(access_granted_closure));
       return;
     case PortType::UDP:
       client->RequestUdpPortAccess(port, interface, lifeline_remote.get(),
-                                   access_granted_closure);
+                                   std::move(access_granted_closure));
       return;
   }
 }
@@ -102,13 +102,13 @@ void FirewallHole::PortAccessGranted(PortType type,
                                      uint16_t port,
                                      const std::string& interface,
                                      base::ScopedFD lifeline_fd,
-                                     const FirewallHole::OpenCallback& callback,
+                                     FirewallHole::OpenCallback callback,
                                      bool success) {
   if (success) {
-    callback.Run(base::WrapUnique(
+    std::move(callback).Run(base::WrapUnique(
         new FirewallHole(type, port, interface, std::move(lifeline_fd))));
   } else {
-    callback.Run(nullptr);
+    std::move(callback).Run(nullptr);
   }
 }
 

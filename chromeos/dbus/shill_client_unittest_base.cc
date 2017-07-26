@@ -391,8 +391,8 @@ void ShillClientUnittestBase::OnConnectToPlatformMessage(
   platform_message_handler_ = signal_callback;
   const bool success = true;
   message_loop_.task_runner()->PostTask(
-      FROM_HERE,
-      base::Bind(on_connected_callback, interface_name, signal_name, success));
+      FROM_HERE, base::Bind(std::move(on_connected_callback), interface_name,
+                            signal_name, success));
 }
 
 void ShillClientUnittestBase::OnConnectToPacketReceived(
