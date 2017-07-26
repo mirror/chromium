@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c1523c7_25feee2c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-26T14:21:13Z",
+      "side": 1,
+      "message": "Nit: Why is this include needed? I\u0027m not seeing how it\u0027s used by the code in the templates.",
+      "range": {
+        "startLine": 144,
+        "startChar": 18,
+        "endLine": 144,
+        "endChar": 40
+      },
+      "revId": "2e961d1653e3c26bc538711ed754c5cc4e0cbada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f85bb9c_0490548d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-07-26T14:21:13Z",
+      "side": 1,
+      "message": "This is a good solution to the problem. I was wondering if this script would have to also consume the RuntimeEnabledFeatures.json5. Nice to see we can avoid that.\n\nI guess we\u0027ll see if this approach works for other kinds of conditional installation. Maybe origin trials will be the only one where \"feature name\" \u003c\u003e \"name to be installed\".",
+      "range": {
+        "startLine": 167,
+        "startChar": 10,
+        "endLine": 167,
+        "endChar": 23
+      },
+      "revId": "2e961d1653e3c26bc538711ed754c5cc4e0cbada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
