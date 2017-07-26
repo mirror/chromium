@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "3930a0a3_7faee22c",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-26T14:43:46Z",
+      "side": 1,
+      "message": "Yes, the output parameter makes it clear that it might not be the same as the input, so that is great! Follow up change for reordering sgtm.",
+      "parentUuid": "90a69f19_7e208f21",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "765cdac4d0ea927afaf08e8536416df70debc8f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5de2edb_3e1996f7",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 4
