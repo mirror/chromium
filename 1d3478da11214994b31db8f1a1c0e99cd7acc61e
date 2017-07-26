@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fe6ea86_d8884a71",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-26T21:01:29Z",
+      "side": 1,
+      "message": "\u003e This is debugging code?\nYes, it will go away and get replaced with a TODO. IT helps verify things work as expected at this stage.",
+      "parentUuid": "18f4d823_fe87daac",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa21b1b7_6e26b452",
         "filename": "components/viz/client/client_layer_tree_frame_sink.h",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T18:15:12Z",
       "side": 1,
       "message": "AFAIK: aura may depend on viz/client but viz client may not depend on aura.",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45c59a3_a3049b91",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-26T21:01:29Z",
+      "side": 1,
+      "message": "I guess there is no harm exposing a const accessor to the hit-test data provider.",
+      "parentUuid": "fa21b1b7_6e26b452",
       "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "37675094_750a4b12",
+        "filename": "services/viz/hit_test/public/interfaces/hit_test_region_list.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-26T21:01:29Z",
+      "side": 1,
+      "message": "Would you not need a combination of window ID and surface ID and if so the guessability of the combination is same as guessability of the most secure of its parts?",
+      "parentUuid": "283c369c_220cf3ca",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b61fed9_81180306",
         "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-25T18:15:12Z",
       "side": 1,
       "message": "Shouldn\u0027t some windows correspond to the client region? In which case, they must have kHitTestChildSurface and the child surface id set so that events go to the renderer?",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f48423e_0ea57eaf",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-26T21:01:29Z",
+      "side": 1,
+      "message": "Using presence of WindowPortMus::client_surface_embedder() as a signal to use kHitTestChildSurface. Does this seem right?",
+      "parentUuid": "6b61fed9_81180306",
       "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
