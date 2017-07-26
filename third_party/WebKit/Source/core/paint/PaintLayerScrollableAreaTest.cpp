@@ -455,6 +455,37 @@ TEST_F(PaintLayerScrollableAreaTest, OnlyOpaqueLayersPromoted) {
   EXPECT_FALSE(paint_layer->GraphicsLayerBacking());
 }
 
+// Test that small scrollers (area < 160000px) don't get promoted.
+TEST_F(PaintLayerScrollableAreaTest, SmallScrollerPromotionTest) {
+  GetDocument().GetFrame()->GetSettings()->SetPreferCompositingToLCDTextEnabled(
+      true);
+  RuntimeEnabledFeatures::SetSkipCompositingSmallScrollersEnabled(true);
+  SetBodyInnerHTML(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .smallBox { overflow: scroll; width: 100px; height: 100px; }"
+      " .largeBox { overflow: scroll; width: 400px; height: 400px; }"
+      " .spacer { height: 2000px; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div id='small' class='smallBox'><div class='spacer'></div></div>"
+      "<div id='large' class='largeBox'><div class='spacer'></div></div>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  EXPECT_TRUE(RuntimeEnabledFeatures::SkipCompositingSmallScrollersEnabled());
+  Element* small_scroller = GetDocument().getElementById("small");
+  PaintLayer* small_layer =
+      ToLayoutBoxModelObject(small_scroller->GetLayoutObject())->Layer();
+  ASSERT_TRUE(small_layer);
+  EXPECT_FALSE(small_layer->NeedsCompositedScrolling());
+
+  Element* large_scroller = GetDocument().getElementById("large");
+  PaintLayer* large_layer =
+      ToLayoutBoxModelObject(large_scroller->GetLayoutObject())->Layer();
+  ASSERT_TRUE(large_layer);
+  EXPECT_TRUE(large_layer->NeedsCompositedScrolling());
+}
+
 // Ensure OverlayScrollbarColorTheme get updated when page load
 TEST_F(PaintLayerScrollableAreaTest, OverlayScrollbarColorThemeUpdated) {
   SetBodyInnerHTML(

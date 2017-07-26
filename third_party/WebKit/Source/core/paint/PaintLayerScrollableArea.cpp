@@ -86,6 +86,7 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollerSizeMetrics.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
@@ -1933,6 +1934,14 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
   // scrolls itself so we don't need composited scrolling for it.
   if (RootScrollerUtil::IsGlobal(*layer) && !Layer()->IsScrolledByFrameView())
     return true;
+
+  // This is for an experiment aiming at memory save by not compositing small
+  // scrollers. See http://crbug.com/746018, http://crbug.com/684631.
+  if (!RuntimeEnabledFeatures::SkipCompositingSmallScrollersEnabled() ||
+      VisibleContentRect().Width() * VisibleContentRect().Height() <
+          kSmallScrollerThreshold) {
+    return false;
+  }
 
   if (!layer->ScrollsOverflow())
     return false;
