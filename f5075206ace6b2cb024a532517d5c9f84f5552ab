@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3598b759_84d01c5f",
+        "filename": "chrome/android/java/res/drawable/history_big.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-26T15:16:18Z",
+      "side": 1,
+      "message": "Remove this trailing white spice, here and on line 14",
+      "range": {
+        "startLine": 8,
+        "startChar": 24,
+        "endLine": 8,
+        "endChar": 32
+      },
+      "revId": "f5075206ace6b2cb024a532517d5c9f84f5552ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
