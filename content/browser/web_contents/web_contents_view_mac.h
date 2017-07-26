@@ -55,6 +55,7 @@ CONTENT_EXPORT
 // NSDraggingSource. It is supposedly deprecated, but the non-deprecated API
 // -[NSWindow dragImage:...] still relies on it.
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
+
 @end
 
 namespace content {

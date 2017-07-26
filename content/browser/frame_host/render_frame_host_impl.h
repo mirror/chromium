@@ -130,6 +130,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   using SmartClipCallback = base::Callback<void(const base::string16& text,
                                                 const base::string16& html)>;
 
+  static bool IsFullscreenContentEnabled();
   // An accessibility reset is only allowed to prevent very rare corner cases
   // or race conditions where the browser and renderer get out of sync. If
   // this happens more than this many times, kill the renderer.

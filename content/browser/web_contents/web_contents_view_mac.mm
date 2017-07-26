@@ -217,6 +217,11 @@ gfx::NativeView WebContentsViewMac::GetNativeViewForFocus() const {
       web_contents_->GetFullscreenRenderWidgetHostView();
   if (!rwhv)
     rwhv = web_contents_->GetRenderWidgetHostView();
+  // When the fullscreen content is displayed in the separatefullscreen window,
+  // we don't want the RenderWidgetHostViewCocoa to be focused, as it's no
+  // longer in the FramedBrowserWindow. Use WebContentsViewCocoa instead.
+  if (web_contents_->IsFullscreenForCurrentTab())
+    return cocoa_view_.get();
   return rwhv ? rwhv->GetNativeView() : nil;
 }
 
@@ -727,7 +732,16 @@ void WebContentsViewMac::CloseTab() {
     if ([window occlusionState] & NSWindowOcclusionStateVisible) {
       webContents->WasUnOccluded();
     } else {
-      webContents->WasOccluded();
+      // Because we have WebContentsViewCocoa in the FramedBrowserWindow and the
+      // RenderWidgetHostViewCocoa in the SeparateFullscreeWindow, an
+      // occlusionState notification is sent as the WebContentsViewCocoa is not
+      // currently "visible". Because of this, the renderer pauses and the
+      // RenderWidgetHostViewCocoa is not updated as it is a subview of
+      // WebContentsViewCocoa. For this reason, we ignore the occlusion state
+      // change for the WebContents, so while it's in fullscreen the renderer
+      // doesn't pause.
+      if (!webContents->IsFullscreenForCurrentTab())
+        webContents->WasOccluded();
     }
   }
 }
