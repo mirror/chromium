@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0c7ac7bb_7b873a71",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-26T06:30:41Z",
+      "side": 1,
+      "message": "nit: maybe we should just call this \"embargo\"? Or something a little more descriptive?",
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b7177d_63bd5efa",
         "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
         "patchSetId": 2
@@ -19,6 +36,47 @@
         "endLine": 112,
         "endChar": 34
       },
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d9eed2_e0b58b10",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-26T06:30:41Z",
+      "side": 1,
+      "message": "As discussed I think we can just add an insecure origin source pretty easily :)",
+      "parentUuid": "36b7177d_63bd5efa",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c5f912_c030b7d3",
+        "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-26T06:30:41Z",
+      "side": 1,
+      "message": "Nice test.",
       "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
