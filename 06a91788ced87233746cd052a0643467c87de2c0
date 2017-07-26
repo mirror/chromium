@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c903e2ef_7e3b35c9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-26T21:49:05Z",
+      "side": 1,
+      "message": "So this refactor here was done in order to keep the API of request() unchanged and avoid duplicate code (in the new request_extract_headers).\n\nOne problem with directly returning response is that it\u0027s quite unfriendly to callers -- raw response from urllib2 is not easy to use, and unfortunately poorly documented (see https://docs.python.org/2/library/urllib2.html#urllib2.urlopen).\n\nI can probably make a new JSONResponse class and do some data repacking there to provide a clear interface to users.",
+      "parentUuid": "869526a0_f401b8f7",
+      "revId": "06a91788ced87233746cd052a0643467c87de2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b48905_1afcb89f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-26T21:26:42Z",
       "side": 1,
       "message": "It would be good to add unit tests for all_pull_requests in this CL itself;\n\nTo test the pagination behavior, this will involve setting up the list of responses including body and header, e.g.\n\n        self.wpt_github.host.web.responses \u003d [\n            {\n                \u0027status_code\u0027: 200,\n                \u0027body\u0027: json.dumps(...a list of dicts with all the required fields for prs...)\n                \u0027headers\u0027: \u0027Link: ...\u0027\n            },\n            {\u0027status_code\u0027: 200, ...},\n        ]\n\nIn order to not have to fill the body with 100 fake PRs, I gues _pr_history_window will have to be smaller.\n(I guess this is probably already what you were planning to do.)",
+      "revId": "06a91788ced87233746cd052a0643467c87de2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2311acdc_bd04e8a0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-26T21:49:05Z",
+      "side": 1,
+      "message": "Yep, that was my fallback plan, if I can\u0027t think of anything better.\n\nI did plan to include unit tests in this CL (the pagination is nontrivial and does have some edge cases). Should\u0027ve mentioned the testing part is still WIP.",
+      "parentUuid": "a41c0d33_8fefb239",
       "revId": "06a91788ced87233746cd052a0643467c87de2c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
