@@ -737,6 +737,7 @@ bool StartupBrowserCreator::ProcessCmdLineImpl(
   if (command_line.HasSwitch(switches::kWinJumplistAction)) {
     jumplist::LogJumplistActionFromSwitchValue(
         command_line.GetSwitchValueASCII(switches::kWinJumplistAction));
+    last_used_profile->set_has_used_jumplist(true);
   }
 #endif  // defined(OS_WIN)
 
