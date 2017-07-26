@@ -138,14 +138,12 @@ CommandButton.prototype.handleEvent = function(e) {
 
 /**
  * Whether the button is disabled or not.
- * @type {boolean}
  */
 cr.defineProperty(CommandButton, 'disabled',
                   cr.PropertyKind.BOOL_ATTR);
 
 /**
  * Whether the button is hidden or not.
- * @type {boolean}
  */
 cr.defineProperty(CommandButton, 'hidden',
                   cr.PropertyKind.BOOL_ATTR);

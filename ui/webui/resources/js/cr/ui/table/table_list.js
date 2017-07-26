@@ -187,7 +187,7 @@ cr.define('cr.ui.table', function() {
 
   /**
    * The table associated with the list.
-   * @type {Element}
+   * type {Element}
    */
   cr.defineProperty(TableList, 'table');
 
