@@ -9,6 +9,6 @@ namespace syncer {
 // The feature controls the filling of the unencrypted metadata field for the
 // passwords specifics https://crbug.com/638963.
 const base::Feature kFillPasswordMetadata{"PasswordMetadataFilling",
-                                          base::FEATURE_DISABLED_BY_DEFAULT};
+                                          base::FEATURE_ENABLED_BY_DEFAULT};
 
 }  // namespace syncer
