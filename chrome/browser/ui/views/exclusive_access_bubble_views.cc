@@ -133,6 +133,18 @@ void ExclusiveAccessBubbleViews::RepositionIfVisible() {
     UpdateBounds();
 }
 
+gfx::NativeView ExclusiveAccessBubbleViews::GetPopupNativeView() {
+  if (popup_)
+    return popup_->GetNativeView();
+  return NULL;
+}
+
+gfx::NativeWindow ExclusiveAccessBubbleViews::GetPopupNativeWindow() {
+  if (popup_)
+    return popup_->GetNativeWindow();
+  return NULL;
+}
+
 views::View* ExclusiveAccessBubbleViews::GetView() {
   return view_;
 }
@@ -221,6 +233,15 @@ gfx::Rect ExclusiveAccessBubbleViews::GetPopupRect(
     bool ignore_animation_state) const {
   gfx::Size size(view_->GetPreferredSize());
   gfx::Rect widget_bounds = bubble_view_context_->GetClientAreaBoundsInScreen();
+  // When in fullscreen, the "Exit Fullscreen bubble" widget coordinates should
+  // be (0,0) as the SeparateFullscreeWindow will be in fullscreen mode in a
+  // separate space.
+  if (bubble_view_context_->GetExclusiveAccessManager()
+          ->fullscreen_controller()
+          ->IsWindowFullscreenForTabOrPending()) {
+    widget_bounds.set_x(0);
+    widget_bounds.set_y(0);
+  }
   int x = widget_bounds.x() + (widget_bounds.width() - size.width()) / 2;
 
   int top_container_bottom = widget_bounds.y();

@@ -197,6 +197,8 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
   // crashes. See http://crbug.com/671213.
   BOOL didWindowWillClose_;
 
+  BOOL test_open;
+
   // The Extension Command Registry used to determine which keyboard events to
   // handle.
   std::unique_ptr<ExtensionKeybindingRegistryCocoa>
@@ -514,6 +516,14 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 // Methods having to do with fullscreen mode.
 @interface BrowserWindowController(Fullscreen)
+
+- (NSWindow*)CreateSeparateWindowForTab:(content::WebContents*)separatedTab;
+
+// Method used by ExclusiveAccessController to get the SeparateFullscreeWindow
+// that the newly created "Exit Fullscreen" bubble will attach to.
+// It is assumed that when opening fullscreen, the active WebContents is the
+// WebContents that is entering fullscreen.
+- (NSWindow*)getActiveWebContentsSeparateWindow;
 
 // Enters Browser AppKit Fullscreen.
 - (void)enterBrowserFullscreen;

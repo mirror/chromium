@@ -30,6 +30,8 @@ class Browser;
 // Creates and returns a touch bar for the browser window.
 - (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
 
+- (NSTouchBar*)createTabFullscreenTouchBar;
+
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_BROWSER_WINDOW_TOUCH_BAR_H_
