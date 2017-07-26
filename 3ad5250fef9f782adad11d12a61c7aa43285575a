@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af98662_c9b350d1",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-26T03:40:12Z",
+      "side": 1,
+      "message": "It\u0027s confusing to have both SetSelectionData and SetSelectionOptions.\n\nI hope a follow up patch can clean them up.",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 39
+      },
+      "revId": "3ad5250fef9f782adad11d12a61c7aa43285575a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
