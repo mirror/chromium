@@ -249,6 +249,15 @@ class TestThreatDetailsFactory : public ThreatDetailsFactory {
                                  request_context_getter, history_service);
     return details_;
   }
+  ThreatDetails* CreateTrimmedThreatDetails(
+      BaseUIManager* ui_manager,
+      content::WebContents* web_contents,
+      const security_interstitials::UnsafeResource& unsafe_resource,
+      net::URLRequestContextGetter* request_context_getter,
+      history::HistoryService* history_service) override {
+    return CreateThreatDetails(ui_manager, web_contents, unsafe_resource,
+                               request_context_getter, history_service);
+  }
 
   ThreatDetails* get_details() { return details_; }
 
