@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f790d50_d2dc5045",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-26T04:44:48Z",
+      "side": 1,
+      "message": "pixels",
+      "parentUuid": "a3631a09_2c89f19f",
+      "revId": "f36a8263d0b5a05276f9a23b46302dd2057cb5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40199199_bb93a573",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T22:56:43Z",
       "side": 1,
       "message": "Heh, this is not what I had in mind. The amount of overdraw performed by this loop now is crazy. The cost of DrawRect is proportional to the area of the rect. This function should not contain a loop. I\u0027m expecting it to do the following:\n\n1. Clear the canvas to alpha\u003d255. Ie. drawColor(SK_ColorWHITE, SkBlendMode::kSrc)\n2. Draw a rect at the top that is filled with a gradient where alpha goes from SK_ColorTRANSPARENT at y\u003d0 to SK_AlphaOPAQUE at y\u003dkFadeoutZoneHeight. More details below [a].\n3. Draw a similar rect at the bottom.\n\n[a] Canvas API has support for gradients so no need to use lines or loops to generate your own which will also fail completely if device scale factor is 1.25 for example. PaintShader is your friend: https://cs.chromium.org/chromium/src/cc/paint/paint_shader.h?l\u003d43 Use flags.setBlendMode(SkBlendMode::kSrc) to overwrite what\u0027s in the buffer instead blending on top. flags.setAntiAlias(false) is good for performance and making sure there are no unexpected seams as a result of a weird device scale factor.",
+      "revId": "f36a8263d0b5a05276f9a23b46302dd2057cb5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064496a8_762232fc",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-26T04:44:48Z",
+      "side": 1,
+      "message": "Thanks for this suggestion. Great to know.\n\nDone.",
+      "parentUuid": "40199199_bb93a573",
       "revId": "f36a8263d0b5a05276f9a23b46302dd2057cb5ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
