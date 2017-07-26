@@ -311,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "e4988e8b_4b3b4224",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-26T11:13:45Z",
+      "side": 1,
+      "message": "I think interstitials are passing a widget routing ID in, so it should be OK.\n\nI think your ultimate idea is correct, but I also think that it\u0027s implemented (for legacy IPC). There\u0027s only 3 calls that codesearch knows about: one is for interstitials (which does set the widget routing ID [1]), another is for the main frame (which also sets the widget routing ID [2]), and the final one is for child frame creation (on line 1749, which only populates widget routing ID if we\u0027re crossing a process boundary).\n\n[1] https://cs.chromium.org/chromium/src/content/browser/frame_host/interstitial_page_impl.cc?rcl\u003d43915b4ca70e63ba092db92a55cae20769ab00b5\u0026l\u003d600\n[2] https://cs.chromium.org/chromium/src/content/browser/web_contents/web_contents_impl.cc?rcl\u003d43915b4ca70e63ba092db92a55cae20769ab00b5\u0026l\u003d1691",
+      "parentUuid": "e87f9712_9317c2b2",
+      "range": {
+        "startLine": 1706,
+        "startChar": 25,
+        "endLine": 1706,
+        "endChar": 58
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8e85ddc_7e977135",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
         "patchSetId": 6
