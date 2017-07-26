@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a510e42e_713d51a6",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-26T16:12:59Z",
+      "side": 1,
+      "message": "Is there a time that unpacked extensions *aren\u0027t* triggered by UI (outside of testing)?  Should this be USER_BLOCKING?",
+      "revId": "f4bcda1a98b21c510f1017c93711a8117dde5d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
