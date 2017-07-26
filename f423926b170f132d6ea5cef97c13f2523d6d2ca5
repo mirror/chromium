@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cfac466_0593e480",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-26T19:10:15Z",
+      "side": 1,
+      "message": "Describe bug fixes too?",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43da3e2_6331f510",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-26T19:10:15Z",
+      "side": 1,
+      "message": "Instead of Multiple, could we record the non-suffixed version that always records regardless of priority?\n\nThat way we can monitor a single graph and dig down into the suffixes to see what might have happened.",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb40c32c_2f4577e5",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-26T19:10:15Z",
+      "side": 1,
+      "message": "Is there a more descriptive variable name other than |main| you could use here?",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856805fc_e24db188",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-26T19:10:15Z",
+      "side": 1,
+      "message": "Could you pass begin_main_frame_end_time in as an argument here and move the !aborted logic starting on line 699 to DidCommit. Doing so would keep this method abort agnostic.",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43397f8_c5f57f6a",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-26T19:10:15Z",
+      "side": 1,
+      "message": "I think this code path will record Now before the pending tree is created, while the DidBeginMainFrame code path will record Now after. Is that okay? Should we have a DidInvalidateOnImplSide instead?",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d0dedf_40526756",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-26T19:10:15Z",
+      "side": 1,
+      "message": "Can you DCHECK that tree_priority_ !\u003d priority, or make this assignment conditional?",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe04c69b_092bad5a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 90521,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-26T19:10:15Z",
+      "side": 1,
+      "message": "In a way, this histogram is no longer recorded directly and we are only recording suffixed versions of it.\n\nAlexei: Is that okay? Is there a way to mark this one obsolete without marking it\u0027s suffixed versions as obsolete?",
+      "revId": "f423926b170f132d6ea5cef97c13f2523d6d2ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
