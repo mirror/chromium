@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "621a9a58_c620c0d2",
+        "filename": "extensions/browser/sandboxed_unpacker_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1232091
+      },
+      "writtenOn": "2017-07-26T11:41:53Z",
+      "side": 1,
+      "message": "There was a race in the test tear down. There could be utility process startup task still pending after test fixture was destroyed.",
+      "revId": "fdafca1b1fdb9eea1a15f0cd5256dfc4b9ff3d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
