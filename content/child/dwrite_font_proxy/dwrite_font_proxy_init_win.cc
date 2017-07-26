@@ -44,6 +44,10 @@ void CreateDirectWriteFactory(IDWriteFactory** factory) {
 
 }  // namespace
 
+void UpdateDWriteFontProxySender(IPC::Sender* sender) {
+  g_font_collection->SetSenderOverride(sender);
+}
+
 void InitializeDWriteFontProxy() {
   mswr::ComPtr<IDWriteFactory> factory;
 
