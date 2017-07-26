@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f1459bc_bd74526c",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-26T21:23:45Z",
+      "side": 1,
+      "message": "Are you saying to just allow both subpaths? I could just move it above with the understanding that /u/s/zoneinfo.default doesn\u0027t exist pre-10.13, and /usr/share/zoneinfo is just a symlink on 10.13 (remember sandbox profiles must refer to target paths and not the link file).",
+      "parentUuid": "723938be_48dd7874",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d716e9b_a780e088",
         "filename": "content/renderer/renderer_v2.sb",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-26T20:27:28Z",
       "side": 1,
       "message": "Out of curiosity, what framework is loaded from here?",
+      "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4cf462_e9f40fd9",
+        "filename": "content/renderer/renderer_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-26T21:23:45Z",
+      "side": 1,
+      "message": "yld: Library not loaded: /System/Library/PrivateFrameworks/SkyLight.framework/Versions/A/SkyLight\n  Referenced from: /System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+      "parentUuid": "4d716e9b_a780e088",
       "revId": "eb8977da2054ad98c253be280a12fafb7936a7eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
