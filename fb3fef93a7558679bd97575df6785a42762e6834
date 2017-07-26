@@ -16,6 +16,24 @@
       "revId": "fb3fef93a7558679bd97575df6785a42762e6834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e4dd5c_ea56ec5b",
+        "filename": "content/browser/frame_host/mojo_frame_host_forwarder.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-26T21:20:11Z",
+      "side": 1,
+      "message": "Ah, sorry, misunderstanding. I have removed the Forwarder completely and done what you suggested. PTAL.",
+      "parentUuid": "947252d5_4953f8e7",
+      "revId": "fb3fef93a7558679bd97575df6785a42762e6834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
