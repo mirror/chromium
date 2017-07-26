@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c737f759_c9c95042",
+        "filename": "build/config/win/manifest.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T01:59:08Z",
+      "side": 1,
+      "message": "Is this a necessary change, or just related/nearby?",
+      "revId": "c3c64e562eea5b5dcac99895f5f3abd99dc85311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
