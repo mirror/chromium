@@ -34,6 +34,24 @@
       "revId": "c3a84d9962e324cce8eea57156f582a5da2f7801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47015844_23f3bbd8",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T21:24:06Z",
+      "side": 1,
+      "message": "OK, done.",
+      "parentUuid": "ce257aae_35e69561",
+      "revId": "c3a84d9962e324cce8eea57156f582a5da2f7801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
