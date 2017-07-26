@@ -93,6 +93,30 @@
       "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1815576_888521c0",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinatorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-26T17:42:11Z",
+      "side": 1,
+      "message": "Hmm yeah, I thought this output was the difference:\nScrollingCoordinator.cpp(799)] \"LayoutView #document\"\nScrollingCoordinator.cpp(811)] Null\nScrollingCoordinator.cpp(813)] \"LayoutView #document\"\nScrollingCoordinator.cpp(799)] \"LayoutBlockFlow DIV id\u003d\u0027scrollable\u0027\"\nScrollingCoordinator.cpp(809)] Not null\nScrollingCoordinator.cpp(813)] \"Scrolling Contents Layer\"\n\n\nLooking into this further... ScrollingCoordinatorTest inherits from ScopedRootLayerScrollingForTest which enables root-layer-scrolls which is a new approach to scrolling where the root layer works like all other layers. Can you try running with --root-layer-scroll?\n\nI get the following:\nScrollingCoordinator.cpp(799 )] \"LayoutBlockFlow DIV id\u003d\u0027scrollable\u0027\"\nScrollingCoordinator.cpp(809)] Not null\nScrollingCoordinator.cpp(813)] \"Scrolling Contents Layer\"\nScrollingCoordinator.cpp(799)] \"LayoutView #document\"\nScrollingCoordinator.cpp(809)] Not null\nScrollingCoordinator.cpp(813)] \"Scrolling Contents Layer\"",
+      "parentUuid": "99dc998e_4964b5b8",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 31
+      },
+      "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
