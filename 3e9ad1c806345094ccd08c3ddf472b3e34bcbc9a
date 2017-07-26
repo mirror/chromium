@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e078ee3_a36ce4cf",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-26T21:54:05Z",
+      "side": 1,
+      "message": "and generators!",
+      "parentUuid": "32b79189_3a7ed38f",
+      "revId": "3e9ad1c806345094ccd08c3ddf472b3e34bcbc9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16b49b72_befc2d95",
         "filename": "build/android/pylib/local/device/local_device_test_run.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3e9ad1c806345094ccd08c3ddf472b3e34bcbc9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9799063_56144560",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-26T21:54:05Z",
+      "side": 1,
+      "message": "It will because it will try to run some_suite.* again. That\u0027s how the existing code handles this case, and I don\u0027t intend to change it, so I guess it\u0027s WAI for now. (If memory serves, there are some weird interactions -- maybe with how we handle results? -- that need to be dealt with if _GetTestsToRetry spits out tests that weren\u0027t in the tests list to begin with.)",
+      "parentUuid": "16b49b72_befc2d95",
+      "revId": "3e9ad1c806345094ccd08c3ddf472b3e34bcbc9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
