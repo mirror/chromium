@@ -32,6 +32,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/app_mode/app_mode_utils.h"
+#include "chrome/browser/bad_message.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/platform_util.h"
@@ -460,6 +461,12 @@ bool PrivetPrintingEnabled() {
 #else
   return false;
 #endif
+}
+
+void BadMessageReceived() {
+  bad_message::ReceivedBadMessage(
+      GetInitiator()->GetRenderProcessHost(),
+      bad_message::BadMessageReason::PPH_EXTRA_PREVIEW_MESSAGE);
 }
 
 }  // namespace
@@ -1519,14 +1526,18 @@ void PrintPreviewHandler::OnGotUniqueFileName(const base::FilePath& path) {
 void PrintPreviewHandler::OnPrintPreviewReady(int preview_uid, int request_id) {
   if (request_id < 0)  // invalid ID.
     return;
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty())
+    return BadMessageReceived();
+
   ResolveJavascriptCallback(base::Value(preview_callbacks_.front()),
                             base::Value(preview_uid));
   preview_callbacks_.pop();
 }
 
 void PrintPreviewHandler::OnPrintPreviewFailed() {
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty())
+    return BadMessageReceived();
+
   if (!reported_failed_preview_) {
     reported_failed_preview_ = true;
     ReportUserActionHistogram(PREVIEW_FAILED);
@@ -1537,7 +1548,9 @@ void PrintPreviewHandler::OnPrintPreviewFailed() {
 }
 
 void PrintPreviewHandler::OnInvalidPrinterSettings() {
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty())
+    return BadMessageReceived();
+
   RejectJavascriptCallback(base::Value(preview_callbacks_.front()),
                            base::Value("SETTINGS_INVALID"));
   preview_callbacks_.pop();
@@ -1572,7 +1585,9 @@ void PrintPreviewHandler::SendPagePreviewReady(int page_index,
 }
 
 void PrintPreviewHandler::OnPrintPreviewCancelled() {
-  CHECK(!preview_callbacks_.empty());
+  if (preview_callbacks_.empty())
+    return BadMessageReceived();
+
   RejectJavascriptCallback(base::Value(preview_callbacks_.front()),
                            base::Value("CANCELLED"));
   preview_callbacks_.pop();
