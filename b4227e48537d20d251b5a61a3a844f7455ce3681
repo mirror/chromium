@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83559f93_8de91a9a",
+        "filename": "net/base/network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-26T21:41:01Z",
+      "side": 1,
+      "message": "I suggest giving this a more precise label, such as:\n\nVLOG(1) \u003c\u003c \"NetworkDelegate::NotifyBeforeURLRequest: \" \u003c\u003c request-\u003eurl();",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "b4227e48537d20d251b5a61a3a844f7455ce3681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c07392b_62f8bb23",
+        "filename": "net/base/network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-26T21:41:01Z",
+      "side": 1,
+      "message": "Remove .c_str(). In fact you can remove \"possibly_invalid_spec()\" too as GURL defines operator\u003c\u003c.",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "b4227e48537d20d251b5a61a3a844f7455ce3681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
