@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd08026_4f1df2ae",
+        "filename": "chrome/browser/chromeos/login/users/default_user_image/default_user_images.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-26T18:27:00Z",
+      "side": 1,
+      "message": "FYI, I think this might be called with a negative index sometimes. The caller (UserImageScreen::OnUserImageChanged) might be to blame for that though. Easy to reproduce in a debug build.",
+      "revId": "b98dfb28f9e170cae45a86200693d20002813142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
