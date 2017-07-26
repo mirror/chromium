@@ -203,6 +203,11 @@ const char kDisableLowLatencyDxva[]         = "disable-low-latency-dxva";
 // Dont use a Mojo-based LocalStorage implementation.
 const char kDisableMojoLocalStorage[] = "disable-mojo-local-storage";
 
+// Disables hardware video encode acceleration using Mojo (falls back).
+// TODO(mcasas): remove after https://crbug.com/736517 is closed.
+const char kDisableMojoVideoEncodeAccelerator[] =
+    "disable-mojo-video-encode-accelerator";
+
 // Disables usage of the namespace sandbox.
 const char kDisableNamespaceSandbox[]       = "disable-namespace-sandbox";
 
