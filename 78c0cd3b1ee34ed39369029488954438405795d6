@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a6d9c9d_731a2490",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-26T00:14:21Z",
+      "side": 1,
+      "message": "I think we should use IntentUtils.safeGet here, containsKey will also trigger unparcelling and hence can throw errors if the intent extras cannot be unparselled. Either just safeGetInt() or add a new helper method for contains.",
+      "range": {
+        "startLine": 571,
+        "startChar": 26,
+        "endLine": 571,
+        "endChar": 35
+      },
+      "revId": "78c0cd3b1ee34ed39369029488954438405795d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
