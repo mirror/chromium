@@ -473,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "0f4e08bb_92db684b",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T19:15:17Z",
+      "side": 1,
+      "message": "Done. I\u0027ve kept get(), though - it is quite convenient to use in AccountSigninView.updateAccounts().",
+      "parentUuid": "cfd423a6_61a1dd66",
+      "range": {
+        "startLine": 218,
+        "startChar": 49,
+        "endLine": 218,
+        "endChar": 55
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e52f8421_5121729c",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
         "patchSetId": 1
@@ -580,6 +604,30 @@
       "side": 1,
       "message": "The third one is what I would go for (with the caveat that I haven\u0027t actually seen what it would look like). I think you should be able to leave out the type parameters and just use empty angle brackets because the compiler will infer the type (I know it definitely works for constructors). And other than that, the difference is not that big – 3) is a factory method on the class and 1) is a constructor call, and the only reason why 3) is more complicated is because it avoids overloading, which is not necessarily a bad thing IMO.",
       "parentUuid": "bccf4685_1fb08d5f",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71aea25_80cb1224",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T19:15:17Z",
+      "side": 1,
+      "message": "IIUC, in some contexts it is impossible to leave out type parameters (like the one I\u0027ve used in example). It surely works in return statements, but not when I try to pass AccountManagerResult to Callback.onResult:\n\n error: incompatible types: AccountManagerResult\u003cObject\u003e cannot be converted to AccountManagerResult\u003cList\u003cString\u003e\u003e.\n\nIn this exact situation ambiguity between result and exception types seems very unlikely, so I would probably go with option 1, because it leads to more concise usage for callers while avoiding shady corners of a language (I\u0027m not sure if every Chrome contributor is familiar with explicit syntax for static generic methods).\nThis being said, I\u0027m leaving final decision up to you. Which approach should I take?",
+      "parentUuid": "b7b0d7bd_ec78aa99",
       "range": {
         "startLine": 23,
         "startChar": 12,
