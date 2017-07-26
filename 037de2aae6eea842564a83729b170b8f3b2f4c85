@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "47bb8fe8_f0baf333",
+        "filename": "cc/animation/transform_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-26T14:51:26Z",
+      "side": 1,
+      "message": "Yep, I have seen. I was just concerned that somebody could call this function with 0 tolerance to check if something is perfectly equal and it would return true even though the matrix is a little bit off. Maybe expose the tolerance of gfx::Transform::ApproximatelyEqual and loosen the tolerance for the translation component? Or at least make a note or a TODO here? I will not press hard on this though.",
+      "parentUuid": "d6f30814_0536f862",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08656ef4_c4c14f0c",
         "filename": "cc/animation/transform_operations_unittest.cc",
         "patchSetId": 2
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "I\u0027m only checking the final value here. An intermediate value that overshoots doesn\u0027t have a bearing on the result. Essentially the check is saying \"hey animation, will you ultimately end up where I want to go?\" and bails if that\u0027s the case.",
       "parentUuid": "cbb90e2a_60399a06",
+      "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce10448b_0b8df339",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-26T14:51:26Z",
+      "side": 1,
+      "message": "Cool! Good to know!",
+      "parentUuid": "d87e0eb8_c58bcd4c",
       "revId": "037de2aae6eea842564a83729b170b8f3b2f4c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
