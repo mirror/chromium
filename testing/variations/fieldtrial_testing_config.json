@@ -1558,6 +1558,26 @@
             ]
         }
     ],
+    "MaxDelayableRequestsNetworkOverride": [
+        {
+            "platforms": [
+                "android",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "MaxDelayable4",
+                    "params": {
+                        "MaxBDPKBits1": "100",
+                        "MaxDelayableRequests1": "4",
+                        "MaxEffectiveConnectionType": "3G"
+                    }
+                }
+            ]
+        }
+    ],
     "MediaFoundationH264Encoding": [
         {
             "platforms": [
