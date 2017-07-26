@@ -167,25 +167,14 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   void SetLoggerForTesting(std::unique_ptr<Logger>);
 
  private:
-  void ResetSurface();
-
-  // Callback for mailboxes given to the compositor from PrepareTextureMailbox.
-  void MailboxReleased(const gpu::Mailbox&,
-                       const gpu::SyncToken&,
-                       bool lost_resource);
-  bool IsHidden() { return is_hidden_; }
-
 #if USE_IOSURFACE_FOR_2D_CANVAS
   // All information associated with a CHROMIUM image.
   struct ImageInfo;
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
   struct MailboxInfo {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
     gpu::Mailbox mailbox_;
     sk_sp<SkImage> image_;
-    RefPtr<Canvas2DLayerBridge> parent_layer_bridge_;
-
 #if USE_IOSURFACE_FOR_2D_CANVAS
     // If this mailbox wraps an IOSurface-backed texture, the ids of the
     // CHROMIUM image and the texture.
@@ -195,6 +184,15 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
     MailboxInfo(const MailboxInfo&);
     MailboxInfo();
   };
+
+  void ResetSurface();
+
+  // Callback for mailboxes given to the compositor from PrepareTextureMailbox.
+  void MailboxReleased(std::unique_ptr<MailboxInfo>,
+                       const gpu::Mailbox&,
+                       const gpu::SyncToken&,
+                       bool lost_resource);
+  bool IsHidden() { return is_hidden_; }
 
   gpu::gles2::GLES2Interface* ContextGL();
   void StartRecording();
@@ -214,7 +212,9 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   // MailboxInfo, and prepended it to |m_mailboxs|. Returns whether the
   // mailbox was successfully prepared. |mailbox| is an out parameter only
   // populated on success.
-  bool PrepareIOSurfaceMailboxFromImage(SkImage*, viz::TextureMailbox*);
+  bool PrepareIOSurfaceMailboxFromImage(SkImage*,
+                                        MailboxInfo*,
+                                        viz::TextureMailbox*);
 
   // Creates an IOSurface-backed texture. Returns an ImageInfo, which is empty
   // on failure. The caller takes ownership of both the texture and the image.
@@ -232,7 +232,9 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
 
   // Returns whether the mailbox was successfully prepared from the SkImage.
   // The mailbox is an out parameter only populated on success.
-  bool PrepareMailboxFromImage(sk_sp<SkImage>, viz::TextureMailbox*);
+  bool PrepareMailboxFromImage(sk_sp<SkImage>,
+                               MailboxInfo*,
+                               viz::TextureMailbox*);
 
   // Resets Skia's texture bindings. This method should be called after
   // changing texture bindings.
@@ -270,14 +272,6 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
 
   uint32_t last_image_id_;
 
-  enum {
-    // We should normally not have more that two active mailboxes at a time,
-    // but sometimes we may have three due to the async nature of mailbox
-    // handling.
-    kMaxActiveMailboxes = 3,
-  };
-
-  Deque<MailboxInfo, kMaxActiveMailboxes> mailboxes_;
   GLenum last_filter_;
   AccelerationMode acceleration_mode_;
   OpacityMode opacity_mode_;
