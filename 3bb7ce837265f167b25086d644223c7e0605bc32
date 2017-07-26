@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3459b4a5_ab4ccebe",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T19:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8c9d6b1_2d1a10c5",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "236acf54_9de6f9d8",
         "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec44358_3f3e722e",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T19:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236acf54_9de6f9d8",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "86e62458_a95bd652",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T19:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8e753b6_bca3e41a",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f99bf3_08f0fc45",
         "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98023b3e_09437aba",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T19:31:23Z",
+      "side": 1,
+      "message": "A \"content settings exception\" is a setting that is different from the global and will show up in site settings, etc.",
+      "parentUuid": "d2f99bf3_08f0fc45",
+      "revId": "3bb7ce837265f167b25086d644223c7e0605bc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
