@@ -21,11 +21,13 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/context_menu_params.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "google_apis/gaia/gaia_switches.h"
 #include "net/dns/mock_host_resolver.h"
@@ -441,6 +443,100 @@ IN_PROC_BROWSER_TEST_F(ChromeNavigationBrowserTest,
   EXPECT_TRUE(navigation_observer.has_committed());
   EXPECT_FALSE(navigation_observer.was_same_document());
   EXPECT_FALSE(navigation_observer.was_renderer_initiated());
+}
+
+// Check that if a page has an iframe that loads an error page, that error page
+// does not inherit the Content Security Policy from the parent frame.  See
+// https://crbug.com/703801.
+IN_PROC_BROWSER_TEST_F(ChromeNavigationBrowserTest,
+                       ErrorPageDoesNotInheritCSP) {
+  GURL url(
+      embedded_test_server()->GetURL("/page_with_csp_and_error_iframe.html"));
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Navigate to a page that disallows scripts via CSP and has an iframe that
+  // tries to load an invalid URL, which results in an error page.
+  GURL error_url("http://invalid.foo/");
+  content::NavigationHandleObserver observer(web_contents, error_url);
+  ui_test_utils::NavigateToURL(browser(), url);
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+
+  // The error page should not inherit the CSP directive that blocks all
+  // scripts from the parent frame, so this script should be allowed to
+  // execute.  Since ExecuteScript will execute the passed-in script regardless
+  // of CSP, use a javascript: URL which does go through the CSP checks.
+  content::RenderFrameHost* error_host =
+      ChildFrameAt(web_contents->GetMainFrame(), 0);
+  std::string location;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      error_host,
+      "location='javascript:domAutomationController.send(location.href)';",
+      &location));
+  EXPECT_EQ(location, content::kUnreachableWebDataURL);
+
+  // The error page should have a unique origin.
+  std::string origin;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      error_host, "domAutomationController.send(document.origin);", &origin));
+  EXPECT_EQ("null", origin);
+}
+
+// Test that web pages can't navigate to an error page URL, either directly or
+// via a redirect.
+IN_PROC_BROWSER_TEST_F(ChromeNavigationBrowserTest,
+                       NavigationToErrorURLIsDisallowed) {
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+  ui_test_utils::NavigateToURL(browser(), url);
+  EXPECT_EQ(url, web_contents->GetLastCommittedURL());
+
+  // Try navigating to the error page URL and make sure it doesn't succeed.
+  GURL error_url(content::kUnreachableWebDataURL);
+  {
+    content::TestNavigationObserver observer(web_contents);
+    EXPECT_TRUE(ExecuteScript(web_contents,
+                              "location.href = '" + error_url.spec() + "';"));
+    observer.Wait();
+
+    // The navigation should be blocked as a result of
+    // ChildProcessSecurityPolicyImpl::CanRequestURL returning false for the
+    // error URL.  However, the actual blocking behavior depends on PlzNavigate.
+    // With PlzNavigate, FilterURL rewrites the destination to about:blank in
+    // RenderFrameHostImpl::OnBeginNavigation, and without it, the request is
+    // canceled by ResourceDispatcherHostImpl::ShouldServiceRequest, leaving the
+    // old URL as the last committed one.  Either behavior is fine as long as
+    // the error page URL doesn't end up committing.
+    if (content::IsBrowserSideNavigationEnabled()) {
+      EXPECT_EQ(GURL(url::kAboutBlankURL), web_contents->GetLastCommittedURL());
+    } else {
+      EXPECT_EQ(url, web_contents->GetLastCommittedURL());
+    }
+  }
+
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  // Now try navigating to a URL that tries to redirect to the error page URL,
+  // and make sure the redirect is blocked.
+  GURL redirect_to_error_url(
+      embedded_test_server()->GetURL("/server-redirect?" + error_url.spec()));
+  {
+    content::TestNavigationObserver observer(web_contents);
+    EXPECT_TRUE(ExecuteScript(
+        web_contents,
+        "location.href = '" + redirect_to_error_url.spec() + "';"));
+    observer.Wait();
+
+    // With PlzNavigate, the redirect is blocked when
+    // NavigationRequest::OnRequestRedirected checks
+    // ChildProcessSecurityPolicyImpl::CanRedirectToURL, which fails.  Without
+    // PlzNavigate, the redirect is blocked when
+    // ResourceLoader::OnReceivedRedirect checks CanRequestURL.  Either way,
+    // the request is canceled and the old URL remains the last committed one.
+    EXPECT_EQ(url, web_contents->GetLastCommittedURL());
+  }
 }
 
 class SignInIsolationBrowserTest : public ChromeNavigationBrowserTest {
