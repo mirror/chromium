@@ -562,7 +562,8 @@ void ChromeBrowserMainExtraPartsMetrics::PostBrowserStart() {
 #if !defined(OS_ANDROID)
   metrics::BeginFirstWebContentsProfiling();
   metrics::TabUsageRecorder::InitializeIfNeeded();
-  metrics::TabStatsTracker::Initialize();
+  metrics::TabStatsTracker::Initialize(base::MakeUnique<
+      metrics::TabStatsTracker::UmaStatsReportingDelegate>());
 #endif  // !defined(OS_ANDROID)
 }
 
