@@ -74,6 +74,8 @@ class ContentSubresourceFilterThrottleManager
   // frame is activated.
   // 2. Activation state computing throttles are appended if either the
   // navigation is a main frame navigation, or if the parent frame is activated.
+  // 3. Throttles interacting with SafeBrowsing database are appended if the
+  // navigation is a main frame navigation.
   //
   // Note that there is currently no constraints on the ordering of throttles.
   void MaybeAppendNavigationThrottles(

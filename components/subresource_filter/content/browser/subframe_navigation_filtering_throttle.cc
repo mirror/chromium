@@ -74,8 +74,14 @@ content::NavigationThrottle::ThrottleCheckResult
 SubframeNavigationFilteringThrottle::DeferToCalculateLoadPolicy(
     ThrottlingStage stage) {
   DCHECK_NE(load_policy_, LoadPolicy::DISALLOW);
-  if (load_policy_ == LoadPolicy::WOULD_DISALLOW)
+
+  // If the load policy is WOULD_DISALLOW, it would have been computed in
+  // WillStartRequest, do nothing on a redirect and return from here.
+  if (load_policy_ == LoadPolicy::WOULD_DISALLOW) {
+    DCHECK_EQ(ThrottlingStage::WillRedirectRequest, stage);
     return content::NavigationThrottle::ThrottleCheckResult::PROCEED;
+  }
+
   parent_frame_filter_->GetLoadPolicyForSubdocument(
       navigation_handle()->GetURL(),
       base::Bind(&SubframeNavigationFilteringThrottle::OnCalculatedLoadPolicy,
