@@ -37,6 +37,7 @@ TEST(FilterOperationsTest, MapRectBlur) {
             ops.MapRect(gfx::Rect(0, 0, 20, 20), SkMatrix::MakeScale(2, 2)));
   EXPECT_EQ(gfx::Rect(-60, -70, 130, 130),
             ops.MapRect(gfx::Rect(0, -10, 10, 10), SkMatrix::MakeScale(1, -1)));
+  EXPECT_EQ(gfx::Rect(), ops.MapRect(gfx::Rect(), SkMatrix::MakeScale(1, -1)));
 }
 
 TEST(FilterOperationsTest, MapRectBlurOverflow) {
@@ -58,6 +59,8 @@ TEST(FilterOperationsTest, MapRectReverseBlur) {
   EXPECT_EQ(gfx::Rect(-60, -70, 130, 130),
             ops.MapRectReverse(gfx::Rect(0, -10, 10, 10),
                                SkMatrix::MakeScale(1, -1)));
+  EXPECT_EQ(gfx::Rect(),
+            ops.MapRectReverse(gfx::Rect(), SkMatrix::MakeScale(1, -1)));
 }
 
 TEST(FilterOperationsTest, GetOutsetsDropShadowReferenceFilter) {
