@@ -530,10 +530,11 @@ TEST_F(InMemoryURLIndexTest, Retrieval) {
   EXPECT_EQ(ASCIIToUTF16("Practically Perfect Search Result"),
             matches[0].url_info.title());
 
-  // Search which should result in very poor result.
-  // No results since it will be suppressed by default scoring.
-  matches = url_index_->HistoryItemsForTerms(ASCIIToUTF16("qui c"),
-                                             base::string16::npos, kMaxMatches);
+  // Search which should result in very poor result.  (It's a mid-word match
+  // in a hostname.)  No results since it will be suppressed by default scoring.
+  matches =
+      url_index_->HistoryItemsForTerms(ASCIIToUTF16("heinqui"),  // qui c"),
+                                       base::string16::npos, kMaxMatches);
   EXPECT_EQ(0U, matches.size());
 
   // A URL that comes from the default search engine should not be returned.
