@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7de501_3a8c7a18",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:05:35Z",
+      "side": 1,
+      "message": "I\u0027d like to move it just before GetLayoutObject() below.",
+      "revId": "fecb5f0b1dc7afd539ca648a268e519ca2a47a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
