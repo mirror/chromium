@@ -182,7 +182,7 @@ void ExtensionPrinterHandler::StartPrint(
     const base::string16& job_title,
     const std::string& ticket_json,
     const gfx::Size& page_size,
-    const scoped_refptr<base::RefCountedMemory>& print_data,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
     const PrinterHandler::PrintCallback& callback) {
   std::unique_ptr<extensions::PrinterProviderPrintJob> print_job(
       new extensions::PrinterProviderPrintJob());
@@ -308,7 +308,7 @@ void ExtensionPrinterHandler::WrapPrintCallback(
     const PrinterHandler::PrintCallback& callback,
     bool success,
     const std::string& status) {
-  callback.Run(success, status);
+  callback.Run(success, base::Value(status));
 }
 
 void ExtensionPrinterHandler::WrapGetPrinterInfoCallback(
