@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2a8620b_bc10cd18",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-26T19:48:09Z",
+      "side": 1,
+      "message": "Any chance we can stream the output back to the script, for symbolization?\n\nI haven\u0027t used bootserver yet, still waiting on hardware.",
+      "revId": "a48391b317477ef89eca00cb4edfd29c094c6784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
