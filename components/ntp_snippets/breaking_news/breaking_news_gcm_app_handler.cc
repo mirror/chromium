@@ -53,7 +53,10 @@ void BreakingNewsGCMAppHandler::StartListening(
 #endif
   Subscribe();
   on_new_content_callback_ = std::move(on_new_content_callback);
-  gcm_driver_->AddAppHandler(kBreakingNewsGCMAppID, this);
+  if (base::FeatureList::IsEnabled(
+          ntp_snippets::kBreakingNewsPushHandlingFeature)) {
+    gcm_driver_->AddAppHandler(kBreakingNewsGCMAppID, this);
+  }
 }
 
 void BreakingNewsGCMAppHandler::StopListening() {

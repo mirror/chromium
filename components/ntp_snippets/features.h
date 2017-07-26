@@ -37,8 +37,11 @@ extern const base::Feature kForeignSessionsSuggestionsFeature;
 // Feature to allow UI as specified here: https://crbug.com/660837.
 extern const base::Feature kIncreasedVisibility;
 
-// Feature to listen for GCM push updates from the server.
-extern const base::Feature kBreakingNewsPushFeature;
+// Feature to register for GCM push updates from the content suggestions server.
+extern const base::Feature kBreakingNewsPushRegistrationFeature;
+
+// Feature to handle pushed updates from the content suggestions server.
+extern const base::Feature kBreakingNewsPushHandlingFeature;
 
 // Feature to choose a category ranker.
 extern const base::Feature kCategoryRanker;
