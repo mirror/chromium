@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 
 namespace ui {
 class DropTargetEvent;
@@ -16,6 +17,7 @@ class DropTargetEvent;
 namespace exo {
 
 class DataDeviceDelegate;
+class DataOffer;
 class DataSource;
 class DataEventDispatcher;
 class Surface;
@@ -64,6 +66,8 @@ class DataDevice {
  private:
   DataDeviceDelegate* const delegate_;
   DataEventDispatcher* const data_event_dispatcher_;
+
+  base::WeakPtr<DataOffer> data_offer_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };
