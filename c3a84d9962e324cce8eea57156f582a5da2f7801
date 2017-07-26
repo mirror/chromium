@@ -16,6 +16,24 @@
       "revId": "c3a84d9962e324cce8eea57156f582a5da2f7801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce257aae_35e69561",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-26T21:17:38Z",
+      "side": 1,
+      "message": "I am not sure familiar with this code either. But I think you are right: when the mojo path failed it\u0027ll fallback to the old non-mojo one.\n\nFWIW, \"enable_mojo_media\" was intended for media playback, but recently we added some non-playback mojo clients/services to media/mojo/services, causing some confusions about dependency rules. I\u0027ll see what I can do to clean it up. For now, ISTM pulling in the dependency unconditionally should be the right fix.",
+      "parentUuid": "4d99faa0_19c6756d",
+      "revId": "c3a84d9962e324cce8eea57156f582a5da2f7801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
