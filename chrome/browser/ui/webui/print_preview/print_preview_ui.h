@@ -28,6 +28,10 @@ class FilePath;
 class RefCountedBytes;
 }
 
+namespace content {
+class RenderFrameHost;
+}
+
 namespace gfx {
 class Rect;
 }
@@ -106,18 +110,19 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
   // Notifies the Web UI renderer that preview data is available.
   // |expected_pages_count| specifies the total number of pages.
   // |preview_request_id| indicates which request resulted in this response.
-  void OnPreviewDataIsAvailable(int expected_pages_count,
+  void OnPreviewDataIsAvailable(content::RenderFrameHost* render_frame_host,
+                                int expected_pages_count,
                                 int preview_request_id);
 
   // Notifies the Web UI that the print preview failed to render.
-  void OnPrintPreviewFailed();
+  void OnPrintPreviewFailed(content::RenderFrameHost* render_frame_host);
 
   // Notified the Web UI that this print preview dialog's RenderProcess has been
   // closed, which may occur for several reasons, e.g. tab closure or crash.
   void OnPrintPreviewDialogClosed();
 
   // Notifies the Web UI that the preview request was cancelled.
-  void OnPrintPreviewCancelled();
+  void OnPrintPreviewCancelled(content::RenderFrameHost* render_frame_host);
 
   // Notifies the Web UI that initiator is closed, so we can disable all the
   // controls that need the initiator for generating the preview data.
@@ -125,7 +130,7 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
 
   // Notifies the Web UI that the printer is unavailable or its settings are
   // invalid.
-  void OnInvalidPrinterSettings();
+  void OnInvalidPrinterSettings(content::RenderFrameHost* render_frame_host);
 
   // Notifies the Web UI to cancel the pending preview request.
   void OnCancelPendingPreviewRequest();

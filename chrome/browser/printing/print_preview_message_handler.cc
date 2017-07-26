@@ -139,6 +139,7 @@ void PrintPreviewMessageHandler::OnDidPreviewPage(
 }
 
 void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
+    content::RenderFrameHost* render_frame_host,
     const PrintHostMsg_DidPreviewDocument_Params& params) {
   // Always try to stop the worker.
   StopWorker(params.document_cookie);
@@ -162,17 +163,20 @@ void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
 
   print_preview_ui->SetPrintPreviewDataForIndex(COMPLETE_PREVIEW_DOCUMENT_INDEX,
                                                 std::move(data_bytes));
-  print_preview_ui->OnPreviewDataIsAvailable(
-      params.expected_pages_count, params.preview_request_id);
+  print_preview_ui->OnPreviewDataIsAvailable(render_frame_host,
+                                             params.expected_pages_count,
+                                             params.preview_request_id);
 }
 
-void PrintPreviewMessageHandler::OnPrintPreviewFailed(int document_cookie) {
+void PrintPreviewMessageHandler::OnPrintPreviewFailed(
+    content::RenderFrameHost* render_frame_host,
+    int document_cookie) {
   StopWorker(document_cookie);
 
   PrintPreviewUI* print_preview_ui = GetPrintPreviewUI();
   if (!print_preview_ui)
     return;
-  print_preview_ui->OnPrintPreviewFailed();
+  print_preview_ui->OnPrintPreviewFailed(render_frame_host);
 }
 
 void PrintPreviewMessageHandler::OnDidGetDefaultPageLayout(
@@ -187,7 +191,9 @@ void PrintPreviewMessageHandler::OnDidGetDefaultPageLayout(
                                               has_custom_page_size_style);
 }
 
-void PrintPreviewMessageHandler::OnPrintPreviewCancelled(int document_cookie) {
+void PrintPreviewMessageHandler::OnPrintPreviewCancelled(
+    content::RenderFrameHost* render_frame_host,
+    int document_cookie) {
   // Always need to stop the worker.
   StopWorker(document_cookie);
 
@@ -195,15 +201,17 @@ void PrintPreviewMessageHandler::OnPrintPreviewCancelled(int document_cookie) {
   PrintPreviewUI* print_preview_ui = GetPrintPreviewUI();
   if (!print_preview_ui)
     return;
-  print_preview_ui->OnPrintPreviewCancelled();
+  print_preview_ui->OnPrintPreviewCancelled(render_frame_host);
 }
 
-void PrintPreviewMessageHandler::OnInvalidPrinterSettings(int document_cookie) {
+void PrintPreviewMessageHandler::OnInvalidPrinterSettings(
+    content::RenderFrameHost* render_frame_host,
+    int document_cookie) {
   StopWorker(document_cookie);
   PrintPreviewUI* print_preview_ui = GetPrintPreviewUI();
   if (!print_preview_ui)
     return;
-  print_preview_ui->OnInvalidPrinterSettings();
+  print_preview_ui->OnInvalidPrinterSettings(render_frame_host);
 }
 
 void PrintPreviewMessageHandler::OnSetOptionsFromDocument(
@@ -222,6 +230,13 @@ bool PrintPreviewMessageHandler::OnMessageReceived(
                                    render_frame_host)
     IPC_MESSAGE_HANDLER(PrintHostMsg_RequestPrintPreview,
                         OnRequestPrintPreview)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_MetafileReadyForPrinting,
+                        OnMetafileReadyForPrinting)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_PrintPreviewFailed, OnPrintPreviewFailed)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_PrintPreviewCancelled,
+                        OnPrintPreviewCancelled)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_PrintPreviewInvalidPrinterSettings,
+                        OnInvalidPrinterSettings)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   if (handled)
@@ -232,16 +247,8 @@ bool PrintPreviewMessageHandler::OnMessageReceived(
                         OnDidGetPreviewPageCount)
     IPC_MESSAGE_HANDLER(PrintHostMsg_DidPreviewPage,
                         OnDidPreviewPage)
-    IPC_MESSAGE_HANDLER(PrintHostMsg_MetafileReadyForPrinting,
-                        OnMetafileReadyForPrinting)
-    IPC_MESSAGE_HANDLER(PrintHostMsg_PrintPreviewFailed,
-                        OnPrintPreviewFailed)
     IPC_MESSAGE_HANDLER(PrintHostMsg_DidGetDefaultPageLayout,
                         OnDidGetDefaultPageLayout)
-    IPC_MESSAGE_HANDLER(PrintHostMsg_PrintPreviewCancelled,
-                        OnPrintPreviewCancelled)
-    IPC_MESSAGE_HANDLER(PrintHostMsg_PrintPreviewInvalidPrinterSettings,
-                        OnInvalidPrinterSettings)
     IPC_MESSAGE_HANDLER(PrintHostMsg_SetOptionsFromDocument,
                         OnSetOptionsFromDocument)
     IPC_MESSAGE_UNHANDLED(handled = false)

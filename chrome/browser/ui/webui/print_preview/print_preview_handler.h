@@ -36,6 +36,7 @@ class RefCountedBytes;
 }
 
 namespace content {
+class RenderFrameHost;
 class WebContents;
 }
 
@@ -75,16 +76,18 @@ class PrintPreviewHandler
       const GoogleServiceAuthError& error) override;
 
   // Called when print preview failed.
-  void OnPrintPreviewFailed();
+  void OnPrintPreviewFailed(content::RenderFrameHost* render_frame_host);
 
   // Called when print preview is cancelled due to a new request.
-  void OnPrintPreviewCancelled();
+  void OnPrintPreviewCancelled(content::RenderFrameHost* render_frame_host);
 
   // Called when printer settings were invalid.
-  void OnInvalidPrinterSettings();
+  void OnInvalidPrinterSettings(content::RenderFrameHost* render_frame_host);
 
   // Called when print preview is ready.
-  void OnPrintPreviewReady(int preview_uid, int request_id);
+  void OnPrintPreviewReady(content::RenderFrameHost* render_frame_host,
+                           int preview_uid,
+                           int request_id);
 
   // Called when a print request is cancelled due to its initiator closing.
   void OnPrintRequestCancelled();

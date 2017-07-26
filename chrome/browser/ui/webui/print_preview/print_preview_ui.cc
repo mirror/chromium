@@ -544,8 +544,9 @@ void PrintPreviewUI::OnInitiatorClosed() {
   }
 }
 
-void PrintPreviewUI::OnPrintPreviewCancelled() {
-  handler_->OnPrintPreviewCancelled();
+void PrintPreviewUI::OnPrintPreviewCancelled(
+    content::RenderFrameHost* render_frame_host) {
+  handler_->OnPrintPreviewCancelled(render_frame_host);
 }
 
 void PrintPreviewUI::OnPrintPreviewRequest(int request_id) {
@@ -600,8 +601,10 @@ void PrintPreviewUI::OnDidPreviewPage(int page_number,
   handler_->SendPagePreviewReady(page_number, id_, preview_request_id);
 }
 
-void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
-                                              int preview_request_id) {
+void PrintPreviewUI::OnPreviewDataIsAvailable(
+    content::RenderFrameHost* render_frame_host,
+    int expected_pages_count,
+    int preview_request_id) {
   VLOG(1) << "Print preview request finished with "
           << expected_pages_count << " pages";
 
@@ -615,19 +618,21 @@ void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
         handler_->regenerate_preview_request_count());
     initial_preview_start_time_ = base::TimeTicks();
   }
-  handler_->OnPrintPreviewReady(id_, preview_request_id);
+  handler_->OnPrintPreviewReady(render_frame_host, id_, preview_request_id);
 }
 
 void PrintPreviewUI::OnCancelPendingPreviewRequest() {
   g_print_preview_request_id_map.Get().Set(id_, -1);
 }
 
-void PrintPreviewUI::OnPrintPreviewFailed() {
-  handler_->OnPrintPreviewFailed();
+void PrintPreviewUI::OnPrintPreviewFailed(
+    content::RenderFrameHost* render_frame_host) {
+  handler_->OnPrintPreviewFailed(render_frame_host);
 }
 
-void PrintPreviewUI::OnInvalidPrinterSettings() {
-  handler_->OnInvalidPrinterSettings();
+void PrintPreviewUI::OnInvalidPrinterSettings(
+    content::RenderFrameHost* render_frame_host) {
+  handler_->OnInvalidPrinterSettings(render_frame_host);
 }
 
 void PrintPreviewUI::OnHidePreviewDialog() {
