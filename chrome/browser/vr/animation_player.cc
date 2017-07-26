@@ -231,10 +231,12 @@ void AnimationPlayer::TransitionTransformOperationsTo(
   if (running_animation) {
     const cc::TransformAnimationCurve* curve =
         running_animation->curve()->ToTransformAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
+    if (target.ApproximatelyEqual(
+            curve->GetValue(GetEndTime(running_animation)))) {
       return;
     }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
+    if (target.ApproximatelyEqual(
+            curve->GetValue(GetStartTime(running_animation)))) {
       ReverseAnimation(monotonic_time, running_animation);
       return;
     }

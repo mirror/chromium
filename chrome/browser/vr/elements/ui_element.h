@@ -233,6 +233,7 @@ class UiElement : public cc::AnimationTarget {
   // TODO(vollick): elements should own their children. UiScene can turn into
   // recursive operations on the UiElement tree.
   void AddChild(UiElement* child);
+  void RemoveChild(UiElement* child);
   UiElement* parent() { return parent_; }
 
   gfx::Point3F GetCenter() const;
@@ -274,6 +275,7 @@ class UiElement : public cc::AnimationTarget {
   virtual void OnSetMode();
 
   std::vector<UiElement*>& children() { return children_; }
+  const std::vector<UiElement*>& children() const { return children_; }
 
  private:
   // Valid IDs are non-negative.
