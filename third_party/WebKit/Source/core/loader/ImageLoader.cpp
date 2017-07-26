@@ -146,7 +146,8 @@ ImageLoader::ImageLoader(Element* element)
     : element_(element),
       image_complete_(true),
       loading_image_document_(false),
-      suppress_error_events_(false) {
+      suppress_error_events_(false),
+      decode_sequence_id_(0u) {
   RESOURCE_LOADING_DVLOG(1) << "new ImageLoader " << this;
 }
 
@@ -169,6 +170,7 @@ DEFINE_TRACE(ImageLoader) {
   visitor->Trace(image_);
   visitor->Trace(image_resource_for_image_document_);
   visitor->Trace(element_);
+  visitor->Trace(decode_promise_resolvers_);
 }
 
 void ImageLoader::SetImageForTest(ImageResourceContent* new_image) {
@@ -533,6 +535,15 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
         ->UpdateUseCounters(GetElement()->GetDocument());
   }
 
+  // Start any decodes if we were requested to do so before the load was
+  // finished.
+  if (!decode_promise_resolvers_.IsEmpty()) {
+    if (GetImage()->ErrorOccurred())
+      DecodeRequestFinished(decode_sequence_id_, false);
+    else
+      RequestDecode();
+  }
+
   if (loading_image_document_) {
     CHECK(!pending_load_event_.IsActive());
     return;
@@ -643,6 +654,31 @@ bool ImageLoader::GetImageAnimationPolicy(ImageAnimationPolicy& policy) {
   return true;
 }
 
+ScriptPromise ImageLoader::Decode(ScriptState* script_state,
+                                  ExceptionState& exception_state) {
+  if (!script_state->ContextIsValid()) {
+    exception_state.ThrowDOMException(kEncodingError,
+                                      "The source image cannot be decoded");
+    return ScriptPromise();
+  }
+  decode_promise_resolvers_.push_back(
+      ScriptPromiseResolver::Create(script_state));
+  ScriptPromise promise = decode_promise_resolvers_.back()->Promise();
+  if (ImageComplete())
+    RequestDecode();
+  return promise;
+}
+
+void ImageLoader::InvalidatePendingDecodeRequests() {
+  if (decode_promise_resolvers_.IsEmpty())
+    return;
+
+  DecodeRequestFinished(decode_sequence_id_, false);
+  // Increment the sequence id so that any in flight decode completion tasks
+  // will not trigger promise resolution for new decode requests.
+  ++decode_sequence_id_;
+}
+
 void ImageLoader::ElementDidMoveToNewDocument() {
   if (delay_until_do_update_from_element_) {
     delay_until_do_update_from_element_->DocumentChanged(
@@ -654,6 +690,42 @@ void ImageLoader::ElementDidMoveToNewDocument() {
   }
   ClearFailedLoadURL();
   ClearImage();
+}
+
+void ImageLoader::RequestDecode() {
+  DCHECK(!decode_promise_resolvers_.IsEmpty());
+  LocalFrame* frame = GetElement()->GetDocument().GetFrame();
+  // If we don't have the image, or the document doesn't have a frame, then
+  // reject the decode, since we can't plumb the request to the correct place.
+  if (!frame || !GetImage() || GetImage()->ErrorOccurred()) {
+    DecodeRequestFinished(decode_sequence_id_, false);
+    return;
+  }
+  Image* image = GetImage()->GetImage();
+  frame->GetChromeClient().RequestDecode(
+      frame, image->PaintImageForCurrentFrame(),
+      WTF::Bind(&ImageLoader::DecodeRequestFinished, WrapWeakPersistent(this),
+                decode_sequence_id_));
+}
+
+void ImageLoader::DecodeRequestFinished(uint32_t sequence_id, bool success) {
+  // If the sequence id attached with this callback doesn't match our current
+  // sequence id, then we've been requested to reject these decodes already.
+  // Since we could have had a new decode request since then, we have to make
+  // sure not to resolve/reject those using the stale callback.
+  if (sequence_id != decode_sequence_id_)
+    return;
+
+  if (success) {
+    for (auto& resolver : decode_promise_resolvers_)
+      resolver->Resolve();
+  } else {
+    for (auto& resolver : decode_promise_resolvers_) {
+      resolver->Reject(DOMException::Create(
+          kEncodingError, "The source image cannot be decoded"));
+    }
+  }
+  decode_promise_resolvers_.clear();
 }
 
 }  // namespace blink

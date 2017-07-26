@@ -24,11 +24,15 @@
 #define ImageLoader_h
 
 #include <memory>
+#include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/CoreExport.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/resource/ImageResource.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/loader/resource/ImageResourceObserver.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/WeakPtr.h"
@@ -115,6 +119,11 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
 
   bool GetImageAnimationPolicy(ImageAnimationPolicy&) final;
 
+  ScriptPromise Decode(ScriptState*, ExceptionState&);
+
+  // Reject any decodes that are currently in flight.
+  void InvalidatePendingDecodeRequests();
+
  protected:
   void ImageChanged(ImageResourceContent*, const IntRect*) override;
   void ImageNotifyFinished(ImageResourceContent*) override;
@@ -164,6 +173,13 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   // that have already been finalized in the current lazy sweeping.
   void Dispose();
 
+  // Issues a request to decode the image to the chrome client.
+  void RequestDecode();
+  // A callback that is called when the image with the given sequence id has
+  // been decoded (either successfully or not). This is a signal to
+  // resolve/reject the promises that have been handed out.
+  void DecodeRequestFinished(uint32_t sequence_id, bool success);
+
   Member<Element> element_;
   Member<ImageResourceContent> image_;
   Member<ImageResource> image_resource_for_image_document_;
@@ -196,6 +212,9 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   bool image_complete_ : 1;
   bool loading_image_document_ : 1;
   bool suppress_error_events_ : 1;
+
+  HeapVector<Member<ScriptPromiseResolver>> decode_promise_resolvers_;
+  uint32_t decode_sequence_id_;
 };
 
 }  // namespace blink
