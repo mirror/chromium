@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc087961_4a64c687",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "It is intentional. I believe that rva_t is always used along with a translator anyway.",
+      "parentUuid": "8d60b884_eae75995",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ccfc68_837904f0",
         "filename": "chrome/installer/zucchini/buffer_view.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a57ed9_b9a672c3",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "remove_prefix was because this is also in std::string_view. I wouldn\u0027t mind changing it but other CL relies on it. I\u0027ll switch to read()/write().",
+      "parentUuid": "77ccfc68_837904f0",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e00ede6f_9390a2dd",
+        "filename": "chrome/installer/zucchini/buffer_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82b73bd_97b66981",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 22
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a7e3485_e5a84cbe",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a5a8cf_447d95d2",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a7e3485_e5a84cbe",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "795bbb5d_9dace907",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f83d61_99fcfa96",
+      "range": {
+        "startLine": 62,
+        "startChar": 23,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0574c38_f486de23",
         "filename": "chrome/installer/zucchini/rel32_utils.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1771dd_ec3f3530",
+        "filename": "chrome/installer/zucchini/rel32_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0574c38_f486de23",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ab7ced9f_5e55bc74",
+        "filename": "chrome/installer/zucchini/rel32_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Won\u0027t hurt.",
+      "parentUuid": "6f26fcc6_a45d9525",
+      "range": {
+        "startLine": 36,
+        "startChar": 61,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2716cd_e7793ae1",
         "filename": "chrome/installer/zucchini/rel32_utils.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a295be8_fbf03d43",
+        "filename": "chrome/installer/zucchini/rel32_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa2716cd_e7793ae1",
+      "range": {
+        "startLine": 40,
+        "startChar": 64,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5b4e8dcc_adcdceda",
+        "filename": "chrome/installer/zucchini/rel32_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bfc4ab6_293c995c",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5224e831_ab1d6a0f",
         "filename": "chrome/installer/zucchini/rel32_utils.cc",
         "patchSetId": 5
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "5a833eca_2abbdae8",
+        "filename": "chrome/installer/zucchini/rel32_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5224e831_ab1d6a0f",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 2
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b69611_d7625904",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 5
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-24T20:17:23Z",
       "side": 1,
       "message": "Not sure if this is needed?",
+      "range": {
+        "startLine": 15,
+        "startChar": 36,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e9a201_69b100fa",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "For ReferenceReader and ReferenceWriter interfaces",
+      "parentUuid": "f0b69611_d7625904",
       "range": {
         "startLine": 15,
         "startChar": 36,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "4f2b35d1_c282d910",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6738462_cd2d1a65",
+      "range": {
+        "startLine": 24,
+        "startChar": 37,
+        "endLine": 24,
+        "endChar": 44
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1345e1d_bfe9d0b0",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 5
@@ -298,6 +586,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582d54d4_576a670b",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1345e1d_bfe9d0b0",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "4fb40f6b_8357196f",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83fd257_1c59af77",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 26
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f687fd83_944f9d6d",
         "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
         "patchSetId": 5
@@ -344,6 +680,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987e88d6_e95cddef",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f687fd83_944f9d6d",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "7192abbd_f8a3c287",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e35fd62_137c506f",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "260f83aa_44103a0b",
         "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
         "patchSetId": 5
@@ -390,6 +774,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd1eb37_79982a21",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260f83aa_44103a0b",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "6f9fcbc5_f2303b17",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dce995e_d917e1c4",
+      "range": {
+        "startLine": 33,
+        "startChar": 21,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29940f9_63e618e3",
         "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
         "patchSetId": 5
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "6d0d1486_bff1b083",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29940f9_63e618e3",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63e55572_d1f81aab",
         "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
         "patchSetId": 5
@@ -450,6 +906,30 @@
       "writtenOn": "2017-07-24T20:17:23Z",
       "side": 1,
       "message": "NIT: I wonder if translations that result in some integer should prefer \"-\" over \"+\"? Reason: If the \"old\" data happens to be a pointer or iterator, then you\u0027d want to store the conversion factor with the same type, and then subtraction would yield an integer (offset_t)? In these cases, \"+\" would make less sense since we don\u0027t have negative pointers or iterators.\n\nI remember reading Courgette code and wondering about some weird-looking uses of \"-\", and I think that\u0027s the reason -- but I\u0027ll leave it to you.",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9818ecb5_b9fd8423",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worthwhile to be this rigorous for a unittest. I think offset_to_rva_adjust is just a hack to have some bijective mapping between rva and offset.",
+      "parentUuid": "63e55572_d1f81aab",
       "range": {
         "startLine": 59,
         "startChar": 28,
@@ -482,6 +962,30 @@
       "revId": "f2546554b0abfda1561138da43f1212f05346053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca56c904_ae6c639d",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998c1255_8af3009c",
+      "range": {
+        "startLine": 129,
+        "startChar": 47,
+        "endLine": 129,
+        "endChar": 58
+      },
+      "revId": "f2546554b0abfda1561138da43f1212f05346053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

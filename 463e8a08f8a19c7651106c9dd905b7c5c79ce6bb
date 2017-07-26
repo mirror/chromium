@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f06408fc_00bc6d25",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T18:22:52Z",
+      "side": 1,
+      "message": "Convert sounds good.",
+      "parentUuid": "50b3b952_03fd2efa",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1493f4de_d2099f03",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
