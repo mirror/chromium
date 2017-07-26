@@ -93,6 +93,30 @@
       "revId": "ebfe4a5833f74830017613b51ddccccd2b9e9aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c322dfcb_7bc536ab",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-07-26T17:08:14Z",
+      "side": 1,
+      "message": "\u003e I think for overflow scroll scenario also this function gets called. If we dont add this check there are two tests which are crashing. I have pasted the callstack few days back, please check.\nPasted callstack in the bug",
+      "parentUuid": "dcd9aeb6_6a9f00c9",
+      "range": {
+        "startLine": 2045,
+        "startChar": 8,
+        "endLine": 2045,
+        "endChar": 32
+      },
+      "revId": "ebfe4a5833f74830017613b51ddccccd2b9e9aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
