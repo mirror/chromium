@@ -22,6 +22,23 @@
       "revId": "cf51560bdce2dccf050090c4a54a1932052e4f20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3cb82f_406b4464",
+        "filename": "chrome/browser/ui/libgtkui/native_theme_gtk3.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-26T21:24:46Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of the +1 hack. It seems like it could break behavior for some other scale factors. For me the separator becomes visible if I do\n\n      flags.setAntiAlias(true);\n      canvas-\u003edrawLine(x + 0.5f, y + 0.5f, x + w + 0.5f, y + 0.5f, flags);\n\nThis seems like another one of those cases where we just need to offset by 0.5f to center the line on a pixel instead of the space between two pixels. You could also throw in a setStrokeWidth(1) to make it a dip instead of a hairline (1px) which makes it more consistent with the other separator codepaths here. Are other codepaths also problematic at fractional scales?",
+      "revId": "cf51560bdce2dccf050090c4a54a1932052e4f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
