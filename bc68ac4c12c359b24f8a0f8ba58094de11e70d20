@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3056bd20_ac0c91f0",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-26T22:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1ac71b_c9c71093",
+      "range": {
+        "startLine": 296,
+        "startChar": 16,
+        "endLine": 296,
+        "endChar": 30
+      },
+      "revId": "bc68ac4c12c359b24f8a0f8ba58094de11e70d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2ded617_e3eb485f",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1169d315_7578c812",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-26T22:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ded617_e3eb485f",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 184,
+        "endChar": 21
+      },
+      "revId": "bc68ac4c12c359b24f8a0f8ba58094de11e70d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30b62608_14a225d9",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-25T19:35:14Z",
       "side": 1,
       "message": "Didn\u0027t I hear that off-the-record profiles have a different storage partition?  Shouldn\u0027t you clear that or something, else you might end up testing something that doesn\u0027t correspond with reality.",
+      "range": {
+        "startLine": 186,
+        "startChar": 43,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "bc68ac4c12c359b24f8a0f8ba58094de11e70d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81164c96_ca3c7d11",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-26T22:03:29Z",
+      "side": 1,
+      "message": "Given that I\u0027m injecting a fake storage partition, it doesn\u0027t matter for what I\u0027m testing. But if there was some code in the browser context that somehow influenced what was happening here, I think it would look up the appropriate storage context associated with the new profile provided here.",
+      "parentUuid": "30b62608_14a225d9",
       "range": {
         "startLine": 186,
         "startChar": 43,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "386b883c_8ed2fa33",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-26T22:03:29Z",
+      "side": 1,
+      "message": "I\u0027m afraid so. There\u0027s something in the browser context failing without it. And if you\u0027re wondering, no, ScopedTaskEnvironment is not sufficient, either.",
+      "parentUuid": "e170a5e2_07adb1e4",
+      "revId": "bc68ac4c12c359b24f8a0f8ba58094de11e70d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61ff5cdc_6e4bd626",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
         "patchSetId": 3
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "e0f001b3_66bb7181",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-26T22:03:29Z",
+      "side": 1,
+      "message": "That\u0027s the default, but added it for clarity.",
+      "parentUuid": "61ff5cdc_6e4bd626",
+      "range": {
+        "startLine": 203,
+        "startChar": 71,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "bc68ac4c12c359b24f8a0f8ba58094de11e70d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4c03a89_9a6017c9",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 3
@@ -122,6 +236,24 @@
       "writtenOn": "2017-07-25T19:35:14Z",
       "side": 1,
       "message": "If you now have the easily ability to test, perhaps you want to add a test to autocomplete_controller_unittest relating to the logic here.",
+      "revId": "bc68ac4c12c359b24f8a0f8ba58094de11e70d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03900529_d4cbe4ef",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-26T22:03:29Z",
+      "side": 1,
+      "message": "Even with my new toys, the logic here (e.g. the state of result_) doesn\u0027t look easy to test. I\u0027m not opposed to spending some time on this (in fact, I\u0027m getting more and more eager to do so) but for now I\u0027d like to just ensure we\u0027re testing the privacy-sensitive aspect of running in incognito mode.",
+      "parentUuid": "b4c03a89_9a6017c9",
       "revId": "bc68ac4c12c359b24f8a0f8ba58094de11e70d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

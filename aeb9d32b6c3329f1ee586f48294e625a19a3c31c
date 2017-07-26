@@ -22,6 +22,30 @@
       "revId": "aeb9d32b6c3329f1ee586f48294e625a19a3c31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "155dee64_c19ced7f",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-26T22:03:29Z",
+      "side": 0,
+      "message": "The distinction is based on which class knows what:\n\n- For incognito, I don\u0027t know why I initially put the check here. I\u0027m asking provider_client_ whether it\u0027s in incognito mode before asking provider_client_ to send the service worker hint. The provider client should just check this itself.\n- For the input type, that\u0027s information is here and it wouldn\u0027t make sense to pass the input value to the provider client in order for it to check if it looked like a query.\n- Ditto for the state of result_.\n- The tracking for whether we\u0027ve already sent the signal is based on the state of the autcomplete session. It does honestly feel like that latching would make more sense in the provider client, but that would require adding a method to it to reset the state and I opted for the simpler approach here.\n- The experiment checking could be done either place since it\u0027s a global static function call. So that could go in the provider client but I\u0027d rather not change it just for the sake of changing it.",
+      "parentUuid": "60e52edc_d9348db0",
+      "range": {
+        "startLine": 356,
+        "startChar": 44,
+        "endLine": 356,
+        "endChar": 0
+      },
+      "revId": "aeb9d32b6c3329f1ee586f48294e625a19a3c31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
