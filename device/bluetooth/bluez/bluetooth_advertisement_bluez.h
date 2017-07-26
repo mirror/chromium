@@ -32,6 +32,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisementBlueZ
       std::unique_ptr<device::BluetoothAdvertisement::Data> data,
       scoped_refptr<BluetoothAdapterBlueZ> adapter);
 
+  ~BluetoothAdvertisementBlueZ() override;
+
   // BluetoothAdvertisement overrides:
   void Unregister(const SuccessCallback& success_callback,
                   const ErrorCallback& error_callback) override;
@@ -49,12 +51,18 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdvertisementBlueZ
     return provider_.get();
   }
 
- private:
-  ~BluetoothAdvertisementBlueZ() override;
+  base::WeakPtr<BluetoothAdvertisementBlueZ> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
 
+ private:
   // Adapter this advertisement is advertising on.
   dbus::ObjectPath adapter_path_;
   std::unique_ptr<bluez::BluetoothLEAdvertisementServiceProvider> provider_;
+
+  // Note: This should remain the last member so it'll be destroyed and
+  // invalidate its weak pointers before any other members are destroyed.
+  base::WeakPtrFactory<BluetoothAdvertisementBlueZ> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothAdvertisementBlueZ);
 };
