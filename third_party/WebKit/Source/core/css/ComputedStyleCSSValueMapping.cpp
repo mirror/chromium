@@ -39,6 +39,7 @@
 #include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/CSSFontFamilyValue.h"
 #include "core/css/CSSFontFeatureValue.h"
+#include "core/css/CSSFontStyleRangeValue.h"
 #include "core/css/CSSFontVariationValue.h"
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSGridLineNamesValue.h"
@@ -762,8 +763,25 @@ static CSSPrimitiveValue* ValueForFontStretch(const ComputedStyle& style) {
 }
 
 static CSSIdentifierValue* ValueForFontStyle(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(
-      FontSelectionValueStyle(style.GetFontDescription().Style()));
+  FontSelectionValue angle = style.GetFontDescription().Style();
+  if (angle == NormalSlopeValue()) {
+    return CSSIdentifierValue::Create(CSSValueNormal);
+  }
+
+  if (angle == ItalicSlopeValue()) {
+    return CSSIdentifierValue::Create(CSSValueItalic);
+  }
+
+  NOTREACHED();
+  return CSSIdentifierValue::Create(CSSValueNormal);
+
+  // Returning the new CSSFontStyleRangeValue creates problems with editing
+  // tests, needs to be evaluated. CSSValueList* values =
+  // CSSValueList::CreateSpaceSeparated(); values->Append(
+  //     *CSSPrimitiveValue::Create(angle,
+  //     CSSPrimitiveValue::UnitType::kNumber));
+  // return CSSFontStyleRangeValue::Create(
+  //     *CSSIdentifierValue::Create(CSSValueOblique), *values);
 }
 
 static CSSPrimitiveValue* ValueForFontWeight(const ComputedStyle& style) {
