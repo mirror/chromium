@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a6e6dfe_b5582bd4",
+        "filename": "ash/system/palette/palette_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-26T23:24:46Z",
+      "side": 1,
+      "message": "+derat@ - Do we have a better mechanism for identifying this sort of thing?",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "2c0530383cc8f879fb216bd17bbae90c3afb7504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
