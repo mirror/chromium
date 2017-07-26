@@ -87,6 +87,24 @@
       "revId": "47d558dc7d5b16f5aa7913bc9455a82f88044c33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db15562_0e6d703a",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-26T23:26:33Z",
+      "side": 1,
+      "message": "I agree that is ambiguous. I\u0027ve tried to make it clearer.",
+      "parentUuid": "2633e9f6_aeb905f2",
+      "revId": "47d558dc7d5b16f5aa7913bc9455a82f88044c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
