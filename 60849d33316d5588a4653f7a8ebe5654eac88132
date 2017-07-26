@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "23fa460e_debb8a9e",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-26T23:52:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9499921_6cfde5b2",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 269,
+        "endChar": 16
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cfd4434_f1334c02",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "9094f110_a254237f",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-26T23:52:17Z",
+      "side": 1,
+      "message": "We shouldn\u0027t early return here. The return value should be true, as the header is optional. Returning false would indicate an invalid card that should be ignored.\nIf the header is missing, we are using result_url_ populated in ::Start()",
+      "parentUuid": "6cfd4434_f1334c02",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 8
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d6b0b56_a079051f",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
         "patchSetId": 1
@@ -107,6 +155,30 @@
       "writtenOn": "2017-07-26T23:20:40Z",
       "side": 1,
       "message": "These lines look identical to L94-98. Would it be possible to extract to this to separate function?",
+      "range": {
+        "startLine": 277,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 76
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1fb824_e7891566",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-26T23:52:17Z",
+      "side": 1,
+      "message": "Not worth it IMHO, as in ~1 week I\u0027ll check in the code that will remove the other copy (when the server change ends up in prod). This is the part of cleanup covered by the above TODO.",
+      "parentUuid": "2d6b0b56_a079051f",
       "range": {
         "startLine": 277,
         "startChar": 4,
