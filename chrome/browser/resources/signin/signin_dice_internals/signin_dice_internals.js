@@ -7,6 +7,21 @@ cr.define('signin.dice', function() {
 
   function initialize() {
     $('enableSyncButton').addEventListener('click', onEnableSync);
+    if (loadTimeData.getBoolean('isSignedIn')) {
+      $('syncEnabledSection').hidden = false;
+      $('syncDisabledSection').hidden = true;
+      $('enableSyncButton').hidden = true;
+      $('disableSyncButton').hidden = false;
+    } else {
+      $('syncEnabledSection').hidden = true;
+      $('syncDisabledSection').hidden = false;
+      $('disableSyncButton').hidden = true;
+      if (loadTimeData.getBoolean('isSyncAllowed')) {
+        $('enableSyncButton').hidden = false;
+      } else {
+        $('enableSyncButton').hidden = true;
+      }
+    }
   }
 
   function onEnableSync(e) {
