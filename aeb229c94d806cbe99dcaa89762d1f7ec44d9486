@@ -1,0 +1,308 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890d82cf_5a6182be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "database",
+      "range": {
+        "startLine": 8,
+        "startChar": 43,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892c5567_3c987c13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "testing",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7d283c_835cc991",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "nit: given the if is expanding to 2 lines, please add {}",
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307d1d79_4231a52d",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "Cool. I like this idea. Tests look cleaner, and why not use the task_runner_ immediately after all",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d628f928_5ee1bedd",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "const\u0026?\nThere is going to be one copy someplace anyway when this is called in 66.",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d277ea3_e7fa34aa",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "This is struct, hence fields are public, hence no _ at the end of names.\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7dae6b_88742240",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "Is there a good reason for these functions (this and few that follow) need to be declared static?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 6
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a992af_43ee3051",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "This method is really readable.\nI am very happy with the time we spent coming up with this stuff.",
+      "range": {
+        "startLine": 85,
+        "startChar": 49,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262c6039_31d62041",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "Is nullptr getting wrapped with std::unique_ptr in this case?",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0bb251_e8218cd6",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "can this step fail and provide interpretable result?",
+      "range": {
+        "startLine": 157,
+        "startChar": 36,
+        "endLine": 157,
+        "endChar": 42
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdfba616_efc95330",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "Asking for completeness:\nstd::vector supports move semantics.\nIs there specific benefit to wrapping things in unique_ptr?",
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8defb3d4_c4443a81",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "you are changing the value for expired from 1 to 2.\nIs that intended?",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 19
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222a5348_20a4f7f2",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "GetPrefetchItemSync for consistency and not mixing up fetching and prefetching, please.",
+      "range": {
+        "startLine": 81,
+        "startChar": 30,
+        "endLine": 81,
+        "endChar": 51
+      },
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bce90a_f58ea0bb",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T05:10:09Z",
+      "side": 1,
+      "message": "This line is not readable.\nIf I read correctly:\nouter item is bound to up\u003cPI\u003e* result,\nso that we can take the result of execute, call it item\nand assign it to result pointer (by move semantics), which is really outer item... right?\n\n\nHow about:\n\n          [](std::unique_ptr\u003cPrefetchItem\u003e* item_alias,\n             std::unique_ptr\u003cPrefetchItem\u003e result) { *item_alias \u003d std::move(result); },\n\nCould also say: execute_result instead of result.",
+      "revId": "aeb229c94d806cbe99dcaa89762d1f7ec44d9486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
