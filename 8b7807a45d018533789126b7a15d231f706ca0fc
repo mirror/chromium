@@ -34,6 +34,24 @@
       "revId": "8b7807a45d018533789126b7a15d231f706ca0fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d661a7_7cbb468a",
+        "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-26T17:19:00Z",
+      "side": 1,
+      "message": "Oh! Yeah, that\u0027s what I was talking about min/max-content sizes. I failed to realize that you were dealing with the {min,max}-{width,height} CSS properties. Sorry!\n\nFor min/max-content sizes, on the other hand, order shouldn\u0027t matter, and I really think that MinMaxSize::ShrinkToFit() *could* be implemented by calling your new MinMaxSize::ClampSizeToMinAndMax() (and at the same time keep the DCHECK).\n\nBut I guess it makes sense to keep them separate. Then we implement shrink-to-fit in the same order as in the CSS2 spec.",
+      "parentUuid": "14fc12b7_78c59c64",
+      "revId": "8b7807a45d018533789126b7a15d231f706ca0fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
