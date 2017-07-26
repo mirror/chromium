@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef1fcab3_d7057456",
+        "filename": "ui/gfx/vector_icon_util_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-26T18:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007e3697_6bbbdf71",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "c27129b92b896552df6f0c0b313425d1d559eb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17050ba7_c696a670",
         "filename": "ui/gfx/vector_icon_util_mac.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e7cab542_3840f81d",
+        "filename": "ui/gfx/vector_icon_util_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-26T18:56:35Z",
+      "side": 1,
+      "message": "How\u0027s this?",
+      "parentUuid": "17050ba7_c696a670",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 47
+      },
+      "revId": "c27129b92b896552df6f0c0b313425d1d559eb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2173bff_2727c847",
         "filename": "ui/gfx/vector_icon_util_mac.mm",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-26T18:16:25Z",
       "side": 1,
       "message": "So these lines of code create a skia canvas to draw into, and then draw the vector icon into the canvas. How do the contents of that canvas get into the current graphics context? It seems like after this line you have a skia bitmap but the Cocoa backing store (an NSImageBitmapRep) will still be empty.",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "c27129b92b896552df6f0c0b313425d1d559eb6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba52f68c_32219c13",
+        "filename": "ui/gfx/vector_icon_util_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-26T18:56:35Z",
+      "side": 1,
+      "message": "CanvasSkiaPaint draws to the context in its destructor: https://cs.chromium.org/chromium/src/ui/gfx/canvas_paint_mac.mm?type\u003dcs\u0026l\u003d24\n\nNow that I dig into the abstraction, looks like it still rasterizes in Skia and passes those pixels to CoreGraphics. To draw vectors directly we\u0027d need to either expose the paths and flags used by |PaintVectorIcon| or create a new gfx::Canvas subclass to do the drawing. Not sure if effort/reward is worth it since we only have a few icons like this and they\u0027re small.",
+      "parentUuid": "e2173bff_2727c847",
       "range": {
         "startLine": 25,
         "startChar": 19,
