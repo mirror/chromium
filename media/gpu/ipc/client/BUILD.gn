@@ -8,8 +8,6 @@ source_set("client") {
     "gpu_jpeg_decode_accelerator_host.h",
     "gpu_video_decode_accelerator_host.cc",
     "gpu_video_decode_accelerator_host.h",
-    "gpu_video_encode_accelerator_host.cc",
-    "gpu_video_encode_accelerator_host.h",
   ]
 
   configs += [
