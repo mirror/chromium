@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd7be825_12727cc6",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-26T23:47:18Z",
+      "side": 1,
+      "message": "That would be ideal. The CBDRD unittest already defines a lot of mock classes that might be useful.",
+      "parentUuid": "4d546b45_197c5088",
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2788d9eb_57b27645",
         "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
         "patchSetId": 1
@@ -30,6 +48,47 @@
       "writtenOn": "2017-07-25T15:04:33Z",
       "side": 1,
       "message": "What do you think about these? I think CONTENT_SETTINGS_TYPE_IMPORTANT_SITE_INFO should be deleted with CBD (but needs to be filtered, so we still know which sites are important). CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION should probably also be deleted with CBD?",
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e915a6_e397a312",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-26T23:47:18Z",
+      "side": 1,
+      "message": "Thanks for doing the research! Exactly what this test was meant for.\n\nIMPORTANT_SITE_INFO should be deleted with history (not through CBD, because we don\u0027t support filters for history; but by observing deletions from HistoryService). \nPASSWORD_PROTECTION could fit history or cache",
+      "parentUuid": "2788d9eb_57b27645",
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f07fbb_2b9235bc",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-26T23:47:18Z",
+      "side": 1,
+      "message": "Actually, we can refine this.\n\nCONTENT_SETTINGS should only delete content settings, and no website settings. HISTORY | SITE_DATA the other way around.",
+      "range": {
+        "startLine": 377,
+        "startChar": 48,
+        "endLine": 377,
+        "endChar": 74
+      },
       "revId": "964943044994ed7349d28aa585db967b478d272c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b7a8002_1fc4ca81",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-26T23:47:18Z",
+      "side": 1,
+      "message": "nit: Please place the comments consistently (up in this case).",
+      "range": {
+        "startLine": 319,
+        "startChar": 48,
+        "endLine": 319,
+        "endChar": 50
+      },
+      "revId": "423a014a8b30607b64c5356521bd7ce088f146c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
