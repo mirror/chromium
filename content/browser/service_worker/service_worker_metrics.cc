@@ -481,7 +481,8 @@ void ServiceWorkerMetrics::CountControlledPageLoad(
 void ServiceWorkerMetrics::RecordStartWorkerStatus(
     ServiceWorkerStatusCode status,
     EventType purpose,
-    bool is_installed) {
+    bool is_installed,
+    base::Optional<ServiceWorkerInstalledScriptsSender::Status> sender_status) {
   if (!is_installed) {
     UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartNewWorker.Status", status,
                               SERVICE_WORKER_ERROR_MAX_VALUE);
@@ -490,6 +491,13 @@ void ServiceWorkerMetrics::RecordStartWorkerStatus(
 
   UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartWorker.Status", status,
                             SERVICE_WORKER_ERROR_MAX_VALUE);
+  if (sender_status) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "ServiceWorker.StartWorker.InstalledScriptsSender.Status",
+        static_cast<int>(sender_status.value()),
+        static_cast<int>(
+            ServiceWorkerInstalledScriptsSender::Status::kMaxValue));
+  }
   RecordHistogramEnum(std::string("ServiceWorker.StartWorker.StatusByPurpose") +
                           EventTypeToSuffix(purpose),
                       status, SERVICE_WORKER_ERROR_MAX_VALUE);
