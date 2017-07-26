@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PRINTING_RENDERER_PRINT_WEB_FRAME_HELPER_H_
-#define COMPONENTS_PRINTING_RENDERER_PRINT_WEB_FRAME_HELPER_H_
+#ifndef COMPONENTS_PRINTING_RENDERER_PRINT_RENDER_FRAME_HELPER_H_
+#define COMPONENTS_PRINTING_RENDERER_PRINT_RENDER_FRAME_HELPER_H_
 
 #include <memory>
 #include <vector>
@@ -31,12 +31,13 @@ struct PrintHostMsg_SetOptionsFromDocument_Params;
 // RenderViewTest-based tests crash on Android
 // http://crbug.com/187500
 #if defined(OS_ANDROID)
-#define MAYBE_PrintWebViewHelperTest DISABLED_PrintWebViewHelperTest
-#define MAYBE_PrintWebViewHelperPreviewTest \
-    DISABLED_PrintWebViewHelperPreviewTest
+#define MAYBE_PrintRenderFrameHelperTest DISABLED_PrintRenderFrameHelperTest
+#define MAYBE_PrintRenderFrameHelperPreviewTest \
+  DISABLED_PrintRenderFrameHelperPreviewTest
 #else
-#define MAYBE_PrintWebViewHelperTest PrintWebViewHelperTest
-#define MAYBE_PrintWebViewHelperPreviewTest PrintWebViewHelperPreviewTest
+#define MAYBE_PrintRenderFrameHelperTest PrintRenderFrameHelperTest
+#define MAYBE_PrintRenderFrameHelperPreviewTest \
+  PrintRenderFrameHelperPreviewTest
 #endif  // defined(OS_ANDROID)
 
 namespace base {
@@ -46,7 +47,7 @@ class DictionaryValue;
 namespace blink {
 class WebLocalFrame;
 class WebView;
-}
+}  // namespace blink
 
 namespace printing {
 
@@ -74,12 +75,12 @@ class FrameReference {
   DISALLOW_COPY_AND_ASSIGN(FrameReference);
 };
 
-// PrintWebViewHelper handles most of the printing grunt work for RenderView.
-// We plan on making print asynchronous and that will require copying the DOM
-// of the document and creating a new WebView with the contents.
-class PrintWebViewHelper
+// PrintRenderFrameHelper handles most of the printing grunt work for
+// RenderView. We plan on making print asynchronous and that will require
+// copying the DOM of the document and creating a new WebView with the contents.
+class PrintRenderFrameHelper
     : public content::RenderFrameObserver,
-      public content::RenderFrameObserverTracker<PrintWebViewHelper> {
+      public content::RenderFrameObserverTracker<PrintRenderFrameHelper> {
  public:
   class Delegate {
    public:
@@ -117,9 +118,9 @@ class PrintWebViewHelper
 #endif
   };
 
-  PrintWebViewHelper(content::RenderFrame* render_frame,
-                     std::unique_ptr<Delegate> delegate);
-  ~PrintWebViewHelper() override;
+  PrintRenderFrameHelper(content::RenderFrame* render_frame,
+                         std::unique_ptr<Delegate> delegate);
+  ~PrintRenderFrameHelper() override;
 
   // Minimum valid value for scaling. Since scaling is originally an integer
   // representing a percentage, it should never be less than this if it is
@@ -135,17 +136,17 @@ class PrintWebViewHelper
   void PrintNode(const blink::WebNode& node);
 
  private:
-  friend class PrintWebViewHelperTestBase;
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperPreviewTest,
+  friend class PrintRenderFrameHelperTestBase;
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintRenderFrameHelperPreviewTest,
                            BlockScriptInitiatedPrinting);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest, OnPrintPages);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest,
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintRenderFrameHelperTest, OnPrintPages);
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintRenderFrameHelperTest,
                            BlockScriptInitiatedPrinting);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest,
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintRenderFrameHelperTest,
                            BlockScriptInitiatedPrintingFromPopup);
 #if defined(OS_WIN) || defined(OS_MACOSX)
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest, PrintLayoutTest);
-  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintWebViewHelperTest, PrintWithIframe);
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintRenderFrameHelperTest, PrintLayoutTest);
+  FRIEND_TEST_ALL_PREFIXES(MAYBE_PrintRenderFrameHelperTest, PrintWithIframe);
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
   enum PrintingResult {
@@ -185,7 +186,7 @@ class PrintWebViewHelper
   void ScriptedPrint(bool user_initiated) override;
   bool OnMessageReceived(const IPC::Message& message) override;
 
-  // Message handlers ---------------------------------------------------------
+// Message handlers ---------------------------------------------------------
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   void OnPrintPages();
   void OnPrintForSystemDialog();
@@ -229,7 +230,7 @@ class PrintWebViewHelper
   // Enable/Disable printing.
   void OnSetPrintingEnabled(bool enabled);
 
-  // Main printing code -------------------------------------------------------
+// Main printing code -------------------------------------------------------
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   // Print with the system dialog.
@@ -270,15 +271,14 @@ class PrintWebViewHelper
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   // Get final print settings from the user.
   // WARNING: |this| may be gone after this method returns.
-  void GetPrintSettingsFromUser(
-      blink::WebLocalFrame* frame,
-      const blink::WebNode& node,
-      int expected_pages_count,
-      bool is_scripted,
-      PrintMsg_PrintPages_Params* print_settings);
+  void GetPrintSettingsFromUser(blink::WebLocalFrame* frame,
+                                const blink::WebNode& node,
+                                int expected_pages_count,
+                                bool is_scripted,
+                                PrintMsg_PrintPages_Params* print_settings);
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
-  // Page Printing / Rendering ------------------------------------------------
+// Page Printing / Rendering ------------------------------------------------
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   void OnFramePreparedForPrintPages();
   void PrintPages();
@@ -289,7 +289,7 @@ class PrintWebViewHelper
                            const blink::WebNode& node);
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 
-  // Prints the page listed in |params|.
+// Prints the page listed in |params|.
 #if defined(OS_MACOSX)
   void PrintPagesInternal(const PrintMsg_Print_Params& params,
                           const std::vector<int>& printed_pages,
@@ -306,7 +306,7 @@ class PrintWebViewHelper
                          gfx::Rect* printable_area_in_dpi);
 #endif  // defined(OS_MACOSX)
 
-  // Platform specific helper function for rendering page(s) to |metafile|.
+// Platform specific helper function for rendering page(s) to |metafile|.
 #if defined(OS_MACOSX)
   void RenderPage(const PrintMsg_Print_Params& params,
                   int page_number,
@@ -557,11 +557,11 @@ class PrintWebViewHelper
   // parameters so that it can be invoked after DidStopLoading.
   base::Closure on_stop_loading_closure_;
 
-  base::WeakPtrFactory<PrintWebViewHelper> weak_ptr_factory_;
+  base::WeakPtrFactory<PrintRenderFrameHelper> weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(PrintWebViewHelper);
+  DISALLOW_COPY_AND_ASSIGN(PrintRenderFrameHelper);
 };
 
 }  // namespace printing
 
-#endif  // COMPONENTS_PRINTING_RENDERER_PRINT_WEB_FRAME_HELPER_H_
+#endif  // COMPONENTS_PRINTING_RENDERER_PRINT_RENDER_FRAME_HELPER_H_

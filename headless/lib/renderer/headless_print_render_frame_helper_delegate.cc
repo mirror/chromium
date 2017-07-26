@@ -2,41 +2,43 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "headless/lib/renderer/headless_print_web_frame_helper_delegate.h"
+#include "headless/lib/renderer/headless_print_render_frame_helper_delegate.h"
 
 #include "third_party/WebKit/public/web/WebElement.h"
 
 namespace headless {
 
-HeadlessPrintWebViewHelperDelegate::HeadlessPrintWebViewHelperDelegate() {}
+HeadlessPrintRenderFrameHelperDelegate::
+    HeadlessPrintRenderFrameHelperDelegate() {}
 
-HeadlessPrintWebViewHelperDelegate::~HeadlessPrintWebViewHelperDelegate() {}
+HeadlessPrintRenderFrameHelperDelegate::
+    ~HeadlessPrintRenderFrameHelperDelegate() {}
 
-bool HeadlessPrintWebViewHelperDelegate::CancelPrerender(
+bool HeadlessPrintRenderFrameHelperDelegate::CancelPrerender(
     content::RenderFrame* render_frame) {
   return false;
 }
 
-blink::WebElement HeadlessPrintWebViewHelperDelegate::GetPdfElement(
+blink::WebElement HeadlessPrintRenderFrameHelperDelegate::GetPdfElement(
     blink::WebLocalFrame* frame) {
   return blink::WebElement();
 }
 
-bool HeadlessPrintWebViewHelperDelegate::IsPrintPreviewEnabled() {
+bool HeadlessPrintRenderFrameHelperDelegate::IsPrintPreviewEnabled() {
   return false;
 }
 
-bool HeadlessPrintWebViewHelperDelegate::OverridePrint(
+bool HeadlessPrintRenderFrameHelperDelegate::OverridePrint(
     blink::WebLocalFrame* frame) {
   return false;
 }
 
-bool HeadlessPrintWebViewHelperDelegate::IsAskPrintSettingsEnabled() {
+bool HeadlessPrintRenderFrameHelperDelegate::IsAskPrintSettingsEnabled() {
   return true;
 }
 
 #if defined(OS_MACOSX)
-bool HeadlessPrintWebViewHelperDelegate::UseSingleMetafile() {
+bool HeadlessPrintRenderFrameHelperDelegate::UseSingleMetafile() {
   return true;
 }
 #endif
