@@ -923,6 +923,7 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_ShowCreatedWindow, OnShowCreatedWindow)
     IPC_MESSAGE_HANDLER(FrameHostMsg_StreamHandleConsumed,
                         OnStreamHandleConsumed)
+    IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
   // No further actions here, since we may have been deleted.

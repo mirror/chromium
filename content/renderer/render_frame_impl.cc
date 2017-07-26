@@ -1700,6 +1700,8 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
 #if defined(OS_MACOSX)
     IPC_MESSAGE_HANDLER(InputMsg_CopyToFindPboard, OnCopyToFindPboard)
 #endif
+
+    IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
   return handled;
