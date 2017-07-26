@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "004d55e4_a19f6e75",
+        "filename": "cc/input/scroller_size_metrics.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-26T02:30:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13dff32a_6e8c2f2b",
+      "revId": "598ec9690fb3a728f066095c0f0961cab6a299a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "925a9aa6_5e2107d4",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-25T23:03:46Z",
       "side": 1,
       "message": "Please be a bit clearer.  Is this memory newly allocated for tiling on a layer or all GPU memory for used for tiling?  (i.e., do caches / reuse of previously computed data come into play?)\n\nRecorded on each time a layer is composed?\n\nRecorded regardless of whether there are \"tiling\" in the layer or not?\n(Is this what the !active_tree()-\u003epicture_layers().empty() test does, or is that something else?)\n\nBTW, what is a \"tiling\"?  Is this a well-known term?",
+      "range": {
+        "startLine": 8605,
+        "startChar": 21,
+        "endLine": 8605,
+        "endChar": 0
+      },
+      "revId": "598ec9690fb3a728f066095c0f0961cab6a299a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c3268f_76a06d0c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 8605,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-26T02:30:43Z",
+      "side": 1,
+      "message": "Tiling is a concept that we use for decomposition of the layer\u0027s entire contents at a picture screenspace resolution so that we could do multithreaded rasterization. For example, a 512x512 layer might have a tiling into 4 256x256 tiles for a 1:1 ratio of screenspace pixels to content pixels.\nThe metrics record how much GPU memory we allocate for a composited scrollable area, or how many tiles the scroller occupies. When there is no picture layer in the active tree we don\u0027t need to record anything as there is nothing to record.",
+      "parentUuid": "925a9aa6_5e2107d4",
       "range": {
         "startLine": 8605,
         "startChar": 21,
