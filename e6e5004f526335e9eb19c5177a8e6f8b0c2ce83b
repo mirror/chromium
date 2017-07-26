@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b13a2fa6_246a2aa4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T18:14:23Z",
+      "side": 1,
+      "message": "nit: coalesce the @return into the callback\u0027s @param",
+      "revId": "e6e5004f526335e9eb19c5177a8e6f8b0c2ce83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
