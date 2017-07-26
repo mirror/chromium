@@ -33,8 +33,8 @@ suite('util', function() {
     assertDeepEquals([], normalizeSet(descendants));
   });
 
-  test('removeIdsFromMap', function() {
-    var map = {
+  test('removeIdsFromObject', function() {
+    var obj = {
       '1': true,
       '2': false,
       '4': true,
@@ -42,14 +42,14 @@ suite('util', function() {
 
     var nodes = new Set([2, 3, 4]);
 
-    var newMap = bookmarks.util.removeIdsFromMap(map, nodes);
+    var newMap = bookmarks.util.removeIdsFromObject(obj, nodes);
 
     assertEquals(undefined, newMap['2']);
     assertEquals(undefined, newMap['4']);
     assertTrue(newMap['1']);
 
-    // Should not have changed the input map.
-    assertFalse(map['2']);
+    // Should not have changed the input object.
+    assertFalse(obj['2']);
   });
 
   test('removeIdsFromSet', function() {

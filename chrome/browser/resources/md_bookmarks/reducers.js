@@ -278,7 +278,7 @@ cr.define('bookmarks', function() {
               Object.assign({}, node, {children: newChildren}));
         });
 
-    return bookmarks.util.removeIdsFromMap(newState, action.descendants);
+    return bookmarks.util.removeIdsFromObject(newState, action.descendants);
   };
 
   /**
@@ -368,42 +368,71 @@ cr.define('bookmarks', function() {
     }
   };
 
-  var ClosedFolderState = {};
+  var FolderOpenState = {};
 
   /**
-   * @param {ClosedFolderState} closedFolders
+   * @param {FolderOpenState} folderOpenState
    * @param {string|undefined} id
    * @param {NodeMap} nodes
-   * @return {ClosedFolderState}
+   * @return {FolderOpenState}
    */
-  ClosedFolderState.openFolderAndAncestors = function(
-      closedFolders, id, nodes) {
-    var newClosedFolders = new Set(closedFolders);
+  FolderOpenState.openFolderAndAncestors = function(
+      folderOpenState, id, nodes) {
+    var newFolderOpenState =
+        /** @type {FolderOpenState} */ (new Map(folderOpenState));
     var currentId = id;
     while (currentId) {
-      if (closedFolders.has(currentId))
-        newClosedFolders.delete(currentId);
+      if (folderOpenState.has(currentId))
+        newFolderOpenState.set(currentId, true);
 
       currentId = nodes[currentId].parentId;
     }
 
-    return newClosedFolders;
+    return newFolderOpenState;
   };
 
   /**
-   * @param {ClosedFolderState} closedFolders
+   * @param {FolderOpenState} folderOpenState
    * @param {Action} action
-   * @return {ClosedFolderState}
+   * @return {FolderOpenState}
    */
-  ClosedFolderState.changeFolderOpen = function(closedFolders, action) {
-    var closed = !action.open;
-    var newClosedFolders = new Set(closedFolders);
-    if (closed)
-      newClosedFolders.add(action.id);
+  FolderOpenState.changeFolderOpen = function(folderOpenState, action) {
+    var newFolderOpenState =
+        /** @type {FolderOpenState} */ (new Map(folderOpenState));
+    if (action.open)
+      newFolderOpenState.set(action.id, true);
     else
-      newClosedFolders.delete(action.id);
+      newFolderOpenState.set(action.id, false);
 
-    return newClosedFolders;
+    return newFolderOpenState;
+  };
+
+  /**
+   * @param {FolderOpenState} folderOpenState
+   * @param {Action} action
+   * @param {NodeMap} nodes
+   * @return {FolderOpenState}
+   */
+  FolderOpenState.updateFolderOpenState = function(
+      folderOpenState, action, nodes) {
+    switch (action.name) {
+      case 'change-folder-open':
+        return FolderOpenState.changeFolderOpen(folderOpenState, action);
+      case 'select-folder':
+        return FolderOpenState.openFolderAndAncestors(
+            folderOpenState, nodes[action.id].parentId, nodes);
+      case 'move-bookmark':
+        if (!nodes[action.id].children)
+          return folderOpenState;
+
+        return FolderOpenState.openFolderAndAncestors(
+            folderOpenState, action.parentId, nodes);
+      case 'remove-bookmark':
+        return bookmarks.util.removeIdsFromMap(
+            folderOpenState, action.descendants);
+      default:
+        return folderOpenState;
+    }
   };
 
   var PreferencesState = {};
@@ -429,34 +458,6 @@ cr.define('bookmarks', function() {
   };
 
   /**
-   * @param {ClosedFolderState} closedFolders
-   * @param {Action} action
-   * @param {NodeMap} nodes
-   * @return {ClosedFolderState}
-   */
-  ClosedFolderState.updateClosedFolders = function(
-      closedFolders, action, nodes) {
-    switch (action.name) {
-      case 'change-folder-open':
-        return ClosedFolderState.changeFolderOpen(closedFolders, action);
-      case 'select-folder':
-        return ClosedFolderState.openFolderAndAncestors(
-            closedFolders, nodes[action.id].parentId, nodes);
-      case 'move-bookmark':
-        if (!nodes[action.id].children)
-          return closedFolders;
-
-        return ClosedFolderState.openFolderAndAncestors(
-            closedFolders, action.parentId, nodes);
-      case 'remove-bookmark':
-        return bookmarks.util.removeIdsFromSet(
-            closedFolders, action.descendants);
-      default:
-        return closedFolders;
-    }
-  };
-
-  /**
    * Root reducer for the Bookmarks page. This is called by the store in
    * response to an action, and the return value is used to update the UI.
    * @param {!BookmarksPageState} state
@@ -468,8 +469,8 @@ cr.define('bookmarks', function() {
       nodes: NodeState.updateNodes(state.nodes, action),
       selectedFolder: SelectedFolderState.updateSelectedFolder(
           state.selectedFolder, action, state.nodes),
-      closedFolders: ClosedFolderState.updateClosedFolders(
-          state.closedFolders, action, state.nodes),
+      folderOpenState: FolderOpenState.updateFolderOpenState(
+          state.folderOpenState, action, state.nodes),
       prefs: PreferencesState.updatePrefs(state.prefs, action),
       search: SearchState.updateSearch(state.search, action),
       selection: SelectionState.updateSelection(state.selection, action),
@@ -478,7 +479,7 @@ cr.define('bookmarks', function() {
 
   return {
     reduceAction: reduceAction,
-    ClosedFolderState: ClosedFolderState,
+    FolderOpenState: FolderOpenState,
     NodeState: NodeState,
     PreferencesState: PreferencesState,
     SearchState: SearchState,

@@ -60,7 +60,7 @@ var IncognitoAvailability = {
 };
 
 /** @const */
-var LOCAL_STORAGE_CLOSED_FOLDERS_KEY = 'closedState';
+var LOCAL_STORAGE_FOLDER_STATE_KEY = 'folderOpenState';
 
 /** @const */
 var LOCAL_STORAGE_TREE_WIDTH_KEY = 'treeWidth';
@@ -73,3 +73,6 @@ var BOOKMARKS_BAR_ID = '1';
 
 /** @const {number} */
 var OPEN_CONFIRMATION_LIMIT = 15;
+
+/** @const {number} */
+var FOLDER_OPEN_BY_DEFAULT_DEPTH = 1;
