@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f6fac0f_f300c004",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T14:45:32Z",
+      "side": 1,
+      "message": "This is the test that needs navigation stop. Let\u0027s include a comment about the complex needs here (i.e. no error page, no ERR_ABORTED).",
+      "range": {
+        "startLine": 324,
+        "startChar": 2,
+        "endLine": 324,
+        "endChar": 76
+      },
+      "revId": "65ef646b0162d28de4522dfd1844090e1dd0e5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da76b13b_daba03c2",
+        "filename": "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T14:45:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 17
+      },
+      "revId": "65ef646b0162d28de4522dfd1844090e1dd0e5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
