@@ -16,6 +16,24 @@
       "revId": "941dae278d7b0dfd369cb0168569665601d752ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518d84e2_b9ca2f0a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3485,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-26T00:23:11Z",
+      "side": 0,
+      "message": "Unless tests are failing because of this, I don\u0027t think we should keep this check. Do you think we should do something about it?",
+      "parentUuid": "9a192579_df180fc7",
+      "revId": "941dae278d7b0dfd369cb0168569665601d752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
