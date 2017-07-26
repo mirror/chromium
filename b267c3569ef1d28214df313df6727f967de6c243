@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8490f8ab_7f25ed8c",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T20:54:10Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "0fcc342f_d1092fad",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "b267c3569ef1d28214df313df6727f967de6c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0846ad5f_b4236952",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-26T18:46:01Z",
       "side": 1,
       "message": "nit: May be we can just expose bounds() instead of duplicating all the convenience functions?",
+      "revId": "b267c3569ef1d28214df313df6727f967de6c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f534b0_b990acb4",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T20:54:10Z",
+      "side": 1,
+      "message": "I\u0027d prefer to limit what we expose to just the needed fields. Bounds is used, yes, but it\u0027s not really a difficulty to ask for bounds. The problem is that sometimes we want SkSize and sometimes we want gfx::Size, so I\u0027d rather just have width/height exposed pending some unification.",
+      "parentUuid": "0846ad5f_b4236952",
       "revId": "b267c3569ef1d28214df313df6727f967de6c243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "b267c3569ef1d28214df313df6727f967de6c243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6638bae_8b57e895",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-26T20:54:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42959a88_0257e543",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "b267c3569ef1d28214df313df6727f967de6c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
