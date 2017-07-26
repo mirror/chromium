@@ -277,7 +277,6 @@ Resource::Resource(const ResourceRequest& request,
       is_revalidating_(false),
       is_alive_(false),
       is_add_remove_client_prohibited_(false),
-      integrity_disposition_(ResourceIntegrityDisposition::kNotChecked),
       options_(options),
       response_timestamp_(CurrentTime()),
       cancel_timer_(
@@ -328,13 +327,13 @@ void Resource::CheckResourceIntegrity() {
   // Loading error occurred? Then result is uncheckable.
   if (ErrorOccurred()) {
     CHECK(!Data());
-    integrity_disposition_ = ResourceIntegrityDisposition::kPassed;
+    integrity_result_ = SubresourceIntegrity::Result(ResourceIntegrityDisposition::kPassed, nullptr);
     return;
   }
 
   // No integrity attributes to check? Then we're passing.
   if (IntegrityMetadata().IsEmpty()) {
-    integrity_disposition_ = ResourceIntegrityDisposition::kPassed;
+    integrity_result_ = SubresourceIntegrity::Result(ResourceIntegrityDisposition::kPassed, nullptr);
     return;
   }
 
@@ -351,13 +350,9 @@ void Resource::CheckResourceIntegrity() {
   }
 
   integrity_report_info_.Clear();
-  if (SubresourceIntegrity::CheckSubresourceIntegrity(IntegrityMetadata(), data,
-                                                      data_length, Url(), this,
-                                                      integrity_report_info_))
-    integrity_disposition_ = ResourceIntegrityDisposition::kPassed;
-  else
-    integrity_disposition_ = ResourceIntegrityDisposition::kFailed;
-  DCHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
+  integrity_result_ = SubresourceIntegrity::CheckSubresourceIntegrity(IntegrityMetadata(), data,
+                                                      data_length, Url(), this);
+  DCHECK_NE(integrity_result_.IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
 }
 
 void Resource::CheckNotify() {

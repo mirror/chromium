@@ -33,11 +33,11 @@ WebFeature GetWebFeature(
 
 void SubresourceIntegrityHelper::DoReport(
     ExecutionContext& execution_context,
-    const SubresourceIntegrity::ReportInfo& report_info) {
-  for (auto feature : report_info.UseCounts()) {
+    const SubresourceIntegrity::Result& result) {
+  for (auto feature : result.GetReportInfo()->UseCounts()) {
     UseCounter::Count(&execution_context, GetWebFeature(feature));
   }
-  for (const auto& message : report_info.ConsoleErrorMessages()) {
+  for (const auto& message : result.GetReportInfo()->ConsoleErrorMessages()) {
     execution_context.AddConsoleMessage(ConsoleMessage::Create(
         kSecurityMessageSource, kErrorMessageLevel, message));
   }

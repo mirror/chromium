@@ -5,6 +5,7 @@
 #ifndef SubresourceIntegrity_h
 #define SubresourceIntegrity_h
 
+#include <memory>
 #include "base/gtest_prod_util.h"
 #include "platform/Crypto.h"
 #include "platform/PlatformExport.h"
@@ -45,6 +46,20 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
     Vector<String> console_error_messages_;
   };
 
+  class Result final {
+   public:
+    Result(ResourceIntegrityDisposition integrity_disposition, std::unique_ptr<ReportInfo> report_info) : integrity_disposition_(integrity_disposition), report_info_(std::move(report_info)) {}
+
+    ResourceIntegrityDisposition IntegrityDisposition() const { return integrity_disposition_; }
+    const ReportInfo* GetReportInfo() const {
+      return report_info_.get();
+    }
+
+    private:
+    const ResourceIntegrityDisposition integrity_disposition_;
+    std::unique_ptr<ReportInfo> report_info_;
+  };
+
   enum IntegrityParseResult {
     kIntegrityParseValidResult,
     kIntegrityParseNoValidResult
@@ -54,32 +69,38 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
   // assume that the integrity attribute has already been parsed, and the
   // IntegrityMetadataSet represents the result of that parsing.
  public:
-  static bool CheckSubresourceIntegrity(const String& integrity_attribute,
+  static Result CheckSubresourceIntegrity(const String& integrity_attribute,
                                         const char* content,
                                         size_t,
                                         const KURL& resource_url,
-                                        const Resource*,
-                                        ReportInfo&);
-  static bool CheckSubresourceIntegrity(const IntegrityMetadataSet&,
+                                        const Resource*);
+  static Result CheckSubresourceIntegrity(const IntegrityMetadataSet&,
                                         const char* content,
                                         size_t,
                                         const KURL& resource_url,
-                                        const Resource*,
-                                        ReportInfo&);
+                                        const Resource*);
 
   // The IntegrityMetadataSet arguments are out parameters which contain the
   // set of all valid, parsed metadata from |attribute|.
- public:
-  static IntegrityParseResult ParseIntegrityAttribute(
+  static Result ParseIntegrityAttribute(
       const WTF::String& attribute,
-      IntegrityMetadataSet&,
-      ReportInfo* = nullptr);
+      IntegrityMetadataSet&);
 
  private:
   friend class SubresourceIntegrityTest;
   FRIEND_TEST_ALL_PREFIXES(SubresourceIntegrityTest, Parsing);
   FRIEND_TEST_ALL_PREFIXES(SubresourceIntegrityTest, ParseAlgorithm);
   FRIEND_TEST_ALL_PREFIXES(SubresourceIntegrityTest, Prioritization);
+
+  static Result CheckSubresourceIntegrityInternal(const IntegrityMetadataSet&,
+                                        const char* content,
+                                        size_t,
+                                        const KURL& resource_url,
+                                        const Resource*,
+                                        std::unique_ptr<ReportInfo>);
+  static IntegrityParseResult ParseIntegrityAttributeInternal(
+      const WTF::String& attribute,
+      IntegrityMetadataSet&, ReportInfo*);
 
   enum AlgorithmParseResult {
     kAlgorithmValid,

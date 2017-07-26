@@ -18,7 +18,7 @@ class CORE_EXPORT SubresourceIntegrityHelper final {
 
  public:
   static void DoReport(ExecutionContext&,
-                       const SubresourceIntegrity::ReportInfo&);
+                       const SubresourceIntegrity::Result&);
 };
 
 }  // namespace blink

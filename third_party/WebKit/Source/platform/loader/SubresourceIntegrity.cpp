@@ -103,47 +103,56 @@ HashAlgorithm SubresourceIntegrity::GetPrioritizedHashFunction(
   return algorithm2;
 }
 
-bool SubresourceIntegrity::CheckSubresourceIntegrity(
+SubresourceIntegrity::Result SubresourceIntegrity::CheckSubresourceIntegrity(
     const String& integrity_attribute,
     const char* content,
     size_t size,
     const KURL& resource_url,
-    const Resource* resource,
-    ReportInfo& report_info) {
+    const Resource* resource) {
   if (integrity_attribute.IsEmpty())
-    return true;
+    return Result(true, nullptr);
 
   IntegrityMetadataSet metadata_set;
+  unique_ptr<ReportInfo> report_info = ReportInfo::Create();
   IntegrityParseResult integrity_parse_result =
-      ParseIntegrityAttribute(integrity_attribute, metadata_set, &report_info);
+      ParseIntegrityAttributeInternal(integrity_attribute, metadata_set, report_info.Get());
   if (integrity_parse_result != kIntegrityParseValidResult)
-    return true;
+    return Result(true, std::move(report_info));
 
-  return CheckSubresourceIntegrity(metadata_set, content, size, resource_url,
-                                   resource, report_info);
+  return CheckSubresourceIntegrityInternal(metadata_set, content, size, resource_url,
+                                   resource, std::move(report_info));
 }
 
-bool SubresourceIntegrity::CheckSubresourceIntegrity(
+SubresourceIntegrity::Result SubresourceIntegrity::CheckSubresourceIntegrity(
+    const IntegrityMetadataSet& metadata_set,
+    const char* content,
+    size_t size,
+    const KURL& resource_url,
+    const Resource* resource) {
+  return CheckSubresourceIntegrityInternal(metadata_set, content, size, resource_url, resource, ReportInfo::Create());
+}
+
+SubresourceIntegrity::Result SubresourceIntegrity::CheckSubresourceIntegrityInternal(
     const IntegrityMetadataSet& metadata_set,
     const char* content,
     size_t size,
     const KURL& resource_url,
     const Resource* resource,
-    ReportInfo& report_info) {
+    std::unique_ptr<ReportInfo> report_info) {
   if (resource && !resource->IsSameOriginOrCORSSuccessful()) {
-    report_info.AddConsoleErrorMessage(
+    report_info->AddConsoleErrorMessage(
         "Subresource Integrity: The resource '" + resource_url.ElidedString() +
         "' has an integrity attribute, but the resource "
         "requires the request to be CORS enabled to check "
         "the integrity, and it is not. The resource has been "
         "blocked because the integrity cannot be enforced.");
-    report_info.AddUseCount(ReportInfo::UseCounterFeature::
+    report_info->AddUseCount(ReportInfo::UseCounterFeature::
                                 kSRIElementIntegrityAttributeButIneligible);
-    return false;
+    return Result(false, std::move(report_info));
   }
 
   if (!metadata_set.size())
-    return true;
+    return Result(true, std::move(report_info));
 
   HashAlgorithm strongest_algorithm = kHashAlgorithmSha256;
   for (const IntegrityMetadata& metadata : metadata_set) {
@@ -168,9 +177,9 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
           reinterpret_cast<uint8_t*>(hash_vector.data()), hash_vector.size());
 
       if (DigestsEqual(digest, converted_hash_vector)) {
-        report_info.AddUseCount(ReportInfo::UseCounterFeature::
+        report_info->AddUseCount(ReportInfo::UseCounterFeature::
                                     kSRIElementWithMatchingIntegrityAttribute);
-        return true;
+        return Result(true, std::move(report_info));
       }
     }
   }
@@ -182,19 +191,19 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     // need to be very careful not to expose this in exceptions or
     // JavaScript, otherwise it risks exposing information about the
     // resource cross-origin.
-    report_info.AddConsoleErrorMessage(
+    report_info->AddConsoleErrorMessage(
         "Failed to find a valid digest in the 'integrity' attribute for "
         "resource '" +
         resource_url.ElidedString() + "' with computed SHA-256 integrity '" +
         DigestToString(digest) + "'. The resource has been blocked.");
   } else {
-    report_info.AddConsoleErrorMessage(
+    report_info->AddConsoleErrorMessage(
         "There was an error computing an integrity value for resource '" +
         resource_url.ElidedString() + "'. The resource has been blocked.");
   }
-  report_info.AddUseCount(ReportInfo::UseCounterFeature::
+  report_info->AddUseCount(ReportInfo::UseCounterFeature::
                               kSRIElementWithNonMatchingIntegrityAttribute);
-  return false;
+  return Result(false, std::move(report_info));
 }
 // Before:
 //
@@ -274,8 +283,17 @@ bool SubresourceIntegrity::ParseDigest(const UChar*& position,
   return true;
 }
 
-SubresourceIntegrity::IntegrityParseResult
+SubresourceIntegrity::Result
 SubresourceIntegrity::ParseIntegrityAttribute(
+    const WTF::String& attribute,
+    IntegrityMetadataSet& metadata_set) {
+  std::unique_ptr<ReportInfo> report_info = ReportInfo::Create();
+  IntegrityParseResult result = ParseIntegrityAttributeInternal(attribute, metadata_set, report_info.Get());
+  return Result(result == kIntegrityParseValidResult, std::move(report_info));
+}
+
+SubresourceIntegrity::IntegrityParseResult
+SubresourceIntegrity::ParseIntegrityAttributeInternal(
     const WTF::String& attribute,
     IntegrityMetadataSet& metadata_set,
     ReportInfo* report_info) {

@@ -250,10 +250,10 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     return integrity_metadata_;
   }
   ResourceIntegrityDisposition IntegrityDisposition() const {
-    return integrity_disposition_;
+    return integrity_result_.IntegrityDisposition();
   }
-  SubresourceIntegrity::ReportInfo IntegrityReportInfo() const {
-    return integrity_report_info_;
+  const SubresourceIntegrity::Result& IntegrityResult() const {
+    return integrity_result_;
   }
   bool MustRefetchDueToIntegrityMetadata(const FetchParameters&) const;
 
@@ -460,9 +460,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool is_revalidation_start_forbidden_ = false;
   bool is_unused_preload_ = false;
 
-  ResourceIntegrityDisposition integrity_disposition_;
   IntegrityMetadataSet integrity_metadata_;
-  SubresourceIntegrity::ReportInfo integrity_report_info_;
+  SubresourceIntegrity::Result integrity_result_;
 
   // Ordered list of all redirects followed while fetching this resource.
   Vector<RedirectPair> redirect_chain_;
