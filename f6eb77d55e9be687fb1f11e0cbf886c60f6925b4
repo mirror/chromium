@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5760b2f_8400bcb3",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "Line breaks are a bit odd in this string block. Perhaps you need to manually reconstruct after automatic formatting.",
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0051a6de_c50c9460",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "Passing in the \"Cast file\" string for comparison feels a bit fragile to me. Can we specialize this script to just choosing local file mode by making use of the CastModeType JS enum?",
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9430caa7_13af1fe4",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "I\u0027d be tempted to factor out this part from this method and the one above into a common helper function. Maybe the helper function can take a MRFileDialog as an argument to init the MRUI with.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 47
+      },
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0987e9ef_1e26ac63",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "As commented above, I\u0027d specialize this to just choosing the local file cast mode, until it becomes necessary for us to choose another cast mode.",
+      "range": {
+        "startLine": 288,
+        "startChar": 40,
+        "endLine": 288,
+        "endChar": 54
+      },
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0681b965_7b5a631b",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "Should the test fail at this point? If so, we should CHECK(web_ui) instead.",
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0160a95_f13caa92",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "Please don\u0027t forget to end all the comments with a period :)",
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7664d38f_5744e7e3",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "Classes usually are declared in the anonymous namespace at the top of the file, even if they are used in one location. Also, Mock- prefix seems to generally imply the use of gMock, so it might be good to name it something like Test- instead.",
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad15de8_12ee0048",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-26T22:53:52Z",
+      "side": 1,
+      "message": "You need to prefix test names with MANUAL_ so that the tests are not run by trybots (see other test cases). This is necessary because Chromium builds don\u0027t include the component extension.\n\nPlease let me know if you\u0027re having trouble running them locally.",
+      "range": {
+        "startLine": 699,
+        "startChar": 23,
+        "endLine": 699,
+        "endChar": 53
+      },
+      "revId": "f6eb77d55e9be687fb1f11e0cbf886c60f6925b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
