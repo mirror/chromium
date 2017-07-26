@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90cb030a_76cdae0e",
+        "filename": "chrome/profiling/memlog_receiver_pipe_posix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-26T20:57:48Z",
+      "side": 1,
+      "message": "This seems weird to me, can you just do \" \u003d 0\"?",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "57d2b43675d4827bf9f5fc0469fe15d1d80bc02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
