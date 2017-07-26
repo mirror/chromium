@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "584e805d_02110566",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-26T21:48:43Z",
+      "side": 1,
+      "message": "Drive-by comment: I don\u0027t think enum is worth the added complexity. I think it\u0027s fine if the protocol has -frameForTabSwitcherButton and -frameForToolsMenuButton methods. This will also be easier to refactor later.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e08dd72e_36373c20",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
         "patchSetId": 1
