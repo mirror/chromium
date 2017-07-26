@@ -79,6 +79,7 @@
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ExposedFeaturePolicy.h"
 #include "core/dom/FlatTreeTraversal.h"
 #include "core/dom/FrameRequestCallback.h"
 #include "core/dom/LayoutTreeBuilderTraversal.h"
@@ -6937,6 +6938,10 @@ void Document::RecordDeferredLoadReason(WouldLoadReason reason) {
        i <= static_cast<int>(reason); ++i)
     RecordLoadReasonToHistogram(static_cast<WouldLoadReason>(i));
   would_load_reason_ = reason;
+}
+
+ExposedFeaturePolicy* Document::policy() const {
+  return ExposedFeaturePolicy::create();
 }
 
 DEFINE_TRACE_WRAPPERS(Document) {

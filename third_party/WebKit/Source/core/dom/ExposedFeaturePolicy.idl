@@ -1,0 +1,4 @@
+[RuntimeEnabled=FeaturePolicy] interface ExposedFeaturePolicy {
+  readonly maplike<DOMString,boolean>;
+  readonly attribute boolean enabled;
+};

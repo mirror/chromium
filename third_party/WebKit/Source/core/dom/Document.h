@@ -107,6 +107,7 @@ class EventListener;
 template <typename EventType>
 class EventWithHitTestResults;
 class ExceptionState;
+class ExposedFeaturePolicy;
 class FloatQuad;
 class FloatRect;
 class FormController;
@@ -270,6 +271,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // https://dom.spec.whatwg.org/#dom-document-document
   static Document* Create(const Document&);
   ~Document() override;
+
+  ExposedFeaturePolicy* GetPolicy() const;
 
   MediaQueryMatcher& GetMediaQueryMatcher();
 
