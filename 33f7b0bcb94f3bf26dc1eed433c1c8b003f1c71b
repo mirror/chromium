@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b09046a0_8d5516cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-26T17:30:43Z",
+      "side": 1,
+      "message": "If we add a startup completed observer here after init (or inside maybeSetBottom...), I think we get the best of both worlds. Init is guaranteed to have run, and if the browser startup is complete, the onSuccess callback will be run immediately (otherwise it waits).\n\nBrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)\n        .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {\n            @Override\n            public void onSuccess(boolean alreadyStarted) {\n                // Time check and set sheet state.\n            }\n}\n\nThis way I don\u0027t think we actually need to change BottomSheet.",
+      "range": {
+        "startLine": 419,
+        "startChar": 12,
+        "endLine": 419,
+        "endChar": 52
+      },
+      "revId": "33f7b0bcb94f3bf26dc1eed433c1c8b003f1c71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
