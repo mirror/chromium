@@ -16,6 +16,24 @@
       "revId": "b856d1a5c9e4426f51500eebe7dd9c2ad1699fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097e9249_66211adf",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1699,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-26T22:25:02Z",
+      "side": 0,
+      "message": "I expect not since the scroll_ancestor on sticky should never be inner. I\u0027ve added the DCHECK, cc_unittests pass, I\u0027m running it through the trybots now. +flackr@ to confirm.",
+      "parentUuid": "e9632387_00486a63",
+      "revId": "b856d1a5c9e4426f51500eebe7dd9c2ad1699fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
