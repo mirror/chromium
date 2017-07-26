@@ -5,6 +5,7 @@
 import base64
 import json
 import logging
+import re
 import urllib2
 from collections import namedtuple
 
@@ -13,6 +14,7 @@ from webkitpy.w3c.common import WPT_GH_ORG, WPT_GH_REPO_NAME, EXPORT_PR_LABEL
 
 _log = logging.getLogger(__name__)
 API_BASE = 'https://api.github.com'
+MAX_PER_PAGE = 100
 
 
 class WPTGitHub(object):
@@ -35,7 +37,7 @@ class WPTGitHub(object):
         assert self.has_credentials()
         return base64.b64encode('{}:{}'.format(self.user, self.token))
 
-    def request(self, path, method, body=None):
+    def _request(self, path, method, body=None):
         assert path.startswith('/')
 
         if body:
@@ -54,10 +56,64 @@ class WPTGitHub(object):
         )
 
         status_code = response.getcode()
+        info = response.info()
         try:
-            return json.load(response), status_code
+            return json.load(response), status_code, info
         except ValueError:
-            return None, status_code
+            return None, status_code, info
+
+    def request(self, path, method, body=None):
+        """Sends a request to GitHub API and deserializes the response.
+
+        Args:
+            path: API endpoint without base URL (starting with '/').
+            method: HTTP method to be used for this request.
+            body: Optional payload in the request body (default=None).
+
+        Returns:
+            (data, status_code) where data is a dict decoded from the response,
+            or (None, status_code) if deserialization fails.
+        """
+        data, status_code, _ = self._request(path, method, body)
+        return data, status_code
+
+    def request_extract_headers(self, path, method, body=None):
+        """Same as request() except returning headers as well.
+
+        Returns:
+            (data, status_code, info) where info is an httplib.HTTPMessage instance.
+        """
+        return self._request(path, method, body)
+
+    def extract_link_next(self, info):
+        """Extracts the URI to the next page of results from a response.
+
+        As per GitHub API specs, the link to the next page of results is
+        extracted from the Link header -- the link with relation type "next".
+        Docs: https://developer.github.com/v3/#pagination (and RFC 5988)
+
+        Args:
+            info returned by WPTGitHub.request_extract_headers.
+
+        Returns:
+            Path to the next page (without base URL), or None if not found.
+        """
+        # TODO(robertma): Investigate "may require expansion as URI templates" mentioned in docs.
+        # Example Link header:
+        # <https://api.github.com/resources?page=3>; rel="next", <https://api.github.com/resources?page=50>; rel="last"
+        link_header = info.getheader('Link')
+        if link_header is None:
+            return None
+        link_re = re.compile(r'<(.+?)>; *rel="(.+?)"')
+        match = link_re.search(link_header)
+        while match:
+            link, rel = match.groups()
+            if rel.lower() == 'next':
+                # Strip API_BASE so that the return value is useful for request().
+                assert link.startswith(API_BASE)
+                return link[len(API_BASE):]
+            match = link_re.search(link_header, match.end())
+        return None
 
     def create_pr(self, remote_branch_name, desc_title, body):
         """Creates a PR on GitHub.
@@ -133,18 +189,6 @@ class WPTGitHub(object):
         if status_code not in (200, 204):
             raise GitHubError('Received non-200 status code attempting to delete label: {}'.format(status_code))
 
-    def in_flight_pull_requests(self):
-        path = '/search/issues?q=repo:{}/{}%20is:open%20type:pr%20label:{}'.format(
-            WPT_GH_ORG,
-            WPT_GH_REPO_NAME,
-            EXPORT_PR_LABEL
-        )
-        data, status_code = self.request(path, method='GET')
-        if status_code == 200:
-            return [self.make_pr_from_item(item) for item in data['items']]
-        else:
-            raise Exception('Non-200 status code (%s): %s' % (status_code, data))
-
     def make_pr_from_item(self, item):
         labels = [label['name'] for label in item['labels']]
         return PullRequest(
@@ -156,8 +200,7 @@ class WPTGitHub(object):
 
     @memoized
     def all_pull_requests(self):
-        # TODO(jeffcarp): Add pagination to fetch >99 PRs
-        assert self._pr_history_window <= 100, 'Maximum GitHub page size exceeded.'
+        # TODO(robertma): Write unit tests.
         path = (
             '/search/issues'
             '?q=repo:{}/{}%20type:pr%20label:{}'
@@ -167,14 +210,27 @@ class WPTGitHub(object):
             WPT_GH_ORG,
             WPT_GH_REPO_NAME,
             EXPORT_PR_LABEL,
-            self._pr_history_window
+            min(MAX_PER_PAGE, self._pr_history_window)
         )
 
-        data, status_code = self.request(path, method='GET')
+        data, status_code, info = self.request_extract_headers(path, method='GET')
         if status_code == 200:
-            return [self.make_pr_from_item(item) for item in data['items']]
+            all_prs = [self.make_pr_from_item(item) for item in data['items']]
         else:
             raise Exception('Non-200 status code (%s): %s' % (status_code, data))
+
+        next_path = self.extract_link_next(info)
+        while next_path is not None and len(all_prs) < self._pr_history_window:
+            data, status_code, info = self.request_extract_headers(next_path, method='GET')
+            if status_code == 200:
+                prs = [self.make_pr_from_item(item) for item in data['items']]
+                all_prs += prs[:self._pr_history_window - len(all_prs)]
+            else:
+                _log.warning('Error while fetching all pull requests, list may be incomplete:')
+                _log.warning('Non-200 status code (%s): %s', status_code, data)
+                break
+            next_path = self.extract_link_next(info)
+        return all_prs
 
     def get_pr_branch(self, pr_number):
         path = '/repos/{}/{}/pulls/{}'.format(
