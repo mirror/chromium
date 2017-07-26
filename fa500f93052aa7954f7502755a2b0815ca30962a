@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2671573_ecd1135c",
+        "filename": "net/socket/tcp_client_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:12:42Z",
+      "side": 1,
+      "message": "This can be:\n\nEXPECT_THAT(connect_callback.GetResult(connection_result), IsOk());\n\ni.e., the if isn\u0027t needed.  Feel free to update the instances of this in the other two tests you modified, or not.",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "fa500f93052aa7954f7502755a2b0815ca30962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36500fb9_55bdcea3",
+        "filename": "net/socket/tcp_server_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:12:42Z",
+      "side": 1,
+      "message": "nit:  GetResult",
+      "range": {
+        "startLine": 94,
+        "startChar": 33,
+        "endLine": 94,
+        "endChar": 46
+      },
+      "revId": "fa500f93052aa7954f7502755a2b0815ca30962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ab4f63_31f1f758",
+        "filename": "net/socket/tcp_server_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:12:42Z",
+      "side": 1,
+      "message": "nit:  Can merge the above 3 lines to just be one GetResult.  (Not suggesting getting rid of the other AnyOf\u0027s because of the intervening server socket logic)",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 15
+      },
+      "revId": "fa500f93052aa7954f7502755a2b0815ca30962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84c1e2f_1725a41d",
+        "filename": "net/socket/tcp_server_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:12:42Z",
+      "side": 1,
+      "message": "GetResult",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 32
+      },
+      "revId": "fa500f93052aa7954f7502755a2b0815ca30962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb03375c_e54441c5",
+        "filename": "net/socket/tcp_server_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:12:42Z",
+      "side": 1,
+      "message": "GetResult - not going to call out the rest of these.",
+      "range": {
+        "startLine": 195,
+        "startChar": 33,
+        "endLine": 195,
+        "endChar": 46
+      },
+      "revId": "fa500f93052aa7954f7502755a2b0815ca30962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
