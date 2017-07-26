@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19432ae1_32c6d32b",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-26T21:33:42Z",
+      "side": 1,
+      "message": "We could just make the mojo interface also have the method OnDataPipeReady() or something.  That way we just pass the control-based mojo interface and all communication routes through that.  I think this is roughly what we talked about offline too!",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 80
+      },
+      "revId": "7bb8ad119b3d0361987484fb72230581ad76d0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
