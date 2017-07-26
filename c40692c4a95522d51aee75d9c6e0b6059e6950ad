@@ -164,6 +164,30 @@
       "revId": "c40692c4a95522d51aee75d9c6e0b6059e6950ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05874e9b_3b421a24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-26T17:30:10Z",
+      "side": 1,
+      "message": "Fine with me too, thanks!",
+      "parentUuid": "51d9ada2_0d5640f4",
+      "range": {
+        "startLine": 461,
+        "startChar": 12,
+        "endLine": 465,
+        "endChar": 41
+      },
+      "revId": "c40692c4a95522d51aee75d9c6e0b6059e6950ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
