@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a39831_9a8f6877",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-26T17:04:58Z",
+      "side": 1,
+      "message": "nit: Please extract this to separate function and substitute L504.\nOr alternately  you may pay attention to L164 where Background is created and set this as member of the class.",
+      "range": {
+        "startLine": 496,
+        "startChar": 2,
+        "endLine": 496,
+        "endChar": 69
+      },
+      "revId": "c3208d4f8921518a6e990f0e4ea2bc97df883599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
