@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5944fbe3_39f096c5",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:15:34Z",
+      "side": 1,
+      "message": "Convert double space to single space in sentences?",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b870c38c_5ee20c49",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:15:34Z",
+      "side": 1,
+      "message": "Not defined. Maybe briefly mention COPY, INSERT, and FIX operations in patching\"",
+      "range": {
+        "startLine": 92,
+        "startChar": 32,
+        "endLine": 92,
+        "endChar": 35
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3510e78_9d99d8f8",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:15:34Z",
+      "side": 1,
+      "message": "Are these supposed to be in separate lines?",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 27
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef00b44_8820e5dd",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:15:34Z",
+      "side": 1,
+      "message": "NIT: Move this before varint32, for consistency.",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 11
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c097f04_98845107",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:15:34Z",
+      "side": 1,
+      "message": "Fix wrapping?",
+      "range": {
+        "startLine": 174,
+        "startChar": 69,
+        "endLine": 174,
+        "endChar": 100
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1766e2df_492db6e5",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:15:34Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 179,
+        "startChar": 33,
+        "endLine": 179,
+        "endChar": 35
+      },
+      "revId": "5f8fc6cfd9c3d7eaf139f33583589e5646f49ae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
