@@ -4,6 +4,7 @@
 
 #include "chrome/browser/previews/previews_infobar_delegate.h"
 
+#include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram.h"
@@ -291,8 +292,8 @@ base::string16 PreviewsInfoBarDelegate::GetTimestampText() const {
   if (g_browser_process->network_time_tracker()->GetNetworkTime(&network_time,
                                                                 nullptr) !=
       network_time::NetworkTimeTracker::NETWORK_TIME_AVAILABLE) {
-    // When network time has not been initialized yet, simply rely on the
-    // machine's current time.
+    // When network time has not been initialized yet or is out of sync, simply
+    // rely on the machine's current time.
     network_time = base::Time::Now();
   }
 

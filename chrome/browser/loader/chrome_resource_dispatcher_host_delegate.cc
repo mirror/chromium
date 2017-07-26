@@ -50,6 +50,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "components/google/core/browser/google_util.h"
+#include "components/network_time/network_time_tracker.h"
 #include "components/offline_pages/features/features.h"
 #include "components/policy/core/common/cloud/policy_header_io_helper.h"
 #include "components/previews/core/previews_experiments.h"
@@ -455,6 +456,12 @@ void NotifyUIThreadOfRequestComplete(
           original_content_length, request_creation_time, net_error);
     }
   }
+}
+
+void StartNetworkTimeTrackerFetch() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  g_browser_process->network_time_tracker()->StartTimeFetch(
+      base::Bind(&base::DoNothing));
 }
 
 }  // namespace
@@ -967,6 +974,11 @@ content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
     if (data_reduction_proxy_io_data->ShouldEnableLitePages(url_request,
                                                             previews_io_data)) {
       previews_state |= content::SERVER_LITE_PAGE_ON;
+      // Lite Pages are being enabled. Start a network time query, which will
+      // only fetch the time if network time isn't already available and if
+      // there isn't already a time query in progress.
+      BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                              base::BindOnce(&StartNetworkTimeTrackerFetch));
     }
 
     // Check that data saver is enabled, the user isn't opted out of LoFi for
