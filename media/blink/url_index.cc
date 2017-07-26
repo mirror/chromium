@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "media/blink/resource_multibuffer_data_provider.h"
 #include "media/blink/url_index.h"
+#include "third_party/WebKit/public/web/WebAssociatedURLLoader.h"
 
 namespace media {
 
@@ -28,7 +29,16 @@ std::unique_ptr<MultiBuffer::DataProvider> ResourceMultiBuffer::CreateWriter(
     const MultiBufferBlockId& pos) {
   ResourceMultiBufferDataProvider* ret =
       new ResourceMultiBufferDataProvider(url_data_, pos);
-  ret->Start();
+
+  blink::WebAssociatedURLLoaderOptions options;
+  if (url_data_->cors_mode() != UrlData::CORS_UNSPECIFIED) {
+    options.expose_all_response_headers = true;
+    // The author header set is empty, no preflight should go ahead.
+    options.preflight_policy =
+        blink::WebAssociatedURLLoaderOptions::kPreventPreflight;
+  }
+  ret->Start(
+      base::WrapUnique(url_data_->frame()->CreateAssociatedURLLoader(options)));
   return std::unique_ptr<MultiBuffer::DataProvider>(ret);
 }
 
