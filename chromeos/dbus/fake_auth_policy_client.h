@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/time/time.h"
 
 #include "chromeos/dbus/auth_policy_client.h"
 
@@ -33,6 +34,8 @@ class CHROMEOS_EXPORT FakeAuthPolicyClient : public AuthPolicyClient {
                         AuthCallback callback) override;
   void GetUserStatus(const std::string& object_guid,
                      GetUserStatusCallback callback) override;
+  void GetKerberosFiles(const std::string& object_guid,
+                        GetKerberosFilesCallback callback) override;
   void RefreshDevicePolicy(RefreshPolicyCallback calllback) override;
   void RefreshUserPolicy(const AccountId& account_id,
                          RefreshPolicyCallback callback) override;
@@ -70,8 +73,9 @@ class CHROMEOS_EXPORT FakeAuthPolicyClient : public AuthPolicyClient {
     on_get_status_closure_ = std::move(on_get_status_closure);
   }
 
-  void set_operation_delay(const base::TimeDelta operation_delay) {
-    operation_delay_ = operation_delay;
+  void disable_operation_delay() {
+    dbus_operation_delay_ = disk_operation_delay_ =
+        base::TimeDelta::FromSeconds(0);
   }
 
  private:
@@ -85,7 +89,9 @@ class CHROMEOS_EXPORT FakeAuthPolicyClient : public AuthPolicyClient {
       authpolicy::ActiveDirectoryUserStatus::PASSWORD_VALID;
   authpolicy::ActiveDirectoryUserStatus::TgtStatus tgt_status_ =
       authpolicy::ActiveDirectoryUserStatus::TGT_VALID;
-  base::TimeDelta operation_delay_;
+  // Delay operations to be more realistic.
+  base::TimeDelta dbus_operation_delay_ = base::TimeDelta::FromSeconds(3);
+  base::TimeDelta disk_operation_delay_ = base::TimeDelta::FromSeconds(1);
   DISALLOW_COPY_AND_ASSIGN(FakeAuthPolicyClient);
 };
 
