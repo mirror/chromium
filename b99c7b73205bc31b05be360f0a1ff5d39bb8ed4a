@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ce17614_53760157",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 8604,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-26T13:43:57Z",
+      "side": 1,
+      "message": "It\u0027s actually once per drawing. Thanks for pointing out.",
+      "parentUuid": "eda16fba_ac54f4f5",
+      "range": {
+        "startLine": 8604,
+        "startChar": 4,
+        "endLine": 8604,
+        "endChar": 6
+      },
+      "revId": "b99c7b73205bc31b05be360f0a1ff5d39bb8ed4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dc7dc90_0a913e4e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "b99c7b73205bc31b05be360f0a1ff5d39bb8ed4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f234e653_46f54803",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 8607,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-26T13:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc7dc90_0a913e4e",
+      "range": {
+        "startLine": 8607,
+        "startChar": 23,
+        "endLine": 8607,
+        "endChar": 0
+      },
+      "revId": "b99c7b73205bc31b05be360f0a1ff5d39bb8ed4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
