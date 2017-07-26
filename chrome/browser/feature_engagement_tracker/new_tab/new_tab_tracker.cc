@@ -24,16 +24,16 @@ const int kTwoHoursInMinutes = 120;
 namespace feature_engagement_tracker {
 
 NewTabTracker::NewTabTracker(Profile* profile)
-    : duration_tracker_(metrics::DesktopSessionDurationTracker::Get()),
-      profile_(profile) {
-  duration_tracker_->AddObserver(this);
+    : duration_tracker_observer_(this), profile_(profile) {
+  duration_tracker_observer_.Add(this);
 }
 
 NewTabTracker::NewTabTracker()
-    : duration_tracker_(metrics::DesktopSessionDurationTracker::Get()),
-      profile_(nullptr) {}
+    : duration_tracker_observer_(this), profile_(nullptr) {}
 
-NewTabTracker::~NewTabTracker() = default;
+NewTabTracker::~NewTabTracker() {
+  duration_tracker_observer_.Remove(this);
+}
 
 // static
 void NewTabTracker::RegisterProfilePrefs(
@@ -106,7 +106,7 @@ void NewTabTracker::OnSessionEnded(base::TimeDelta delta) {
   UpdateSessionTime(delta);
   if (HasEnoughSessionTimeElapsed()) {
     OnSessionTimeMet();
-    duration_tracker_->RemoveObserver(this);
+    duration_tracker_observer_.Remove(this);
   }
 }
 
