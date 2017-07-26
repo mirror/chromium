@@ -181,7 +181,7 @@ public class AppMenuPropertiesDelegate {
                     && !isChromeScheme && !isFileScheme && !isContentScheme && !isIncognito;
             prepareAddToHomescreenMenuItem(menu, currentTab, canShowHomeScreenMenuItem);
 
-            updateRequestDesktopSiteMenuItem(menu, currentTab);
+            updateRequestDesktopSiteMenuItem(menu, currentTab, true /* can show */);
 
             // Only display reader mode settings menu option if the current page is in reader mode.
             menu.findItem(R.id.reader_mode_prefs_id)
@@ -377,19 +377,23 @@ public class AppMenuPropertiesDelegate {
      * @param menu {@link Menu} for request desktop site.
      * @param currentTab      Current tab being displayed.
      */
-    protected void updateRequestDesktopSiteMenuItem(Menu menu, Tab currentTab) {
-        MenuItem requestMenuRow = menu.findItem(R.id.request_desktop_site_row_menu_id);
-        MenuItem requestMenuLabel = menu.findItem(R.id.request_desktop_site_id);
-        MenuItem requestMenuCheck = menu.findItem(R.id.request_desktop_site_check_id);
-
+    protected void updateRequestDesktopSiteMenuItem(
+            Menu menu, Tab currentTab, boolean canShowRequestDekstopSite) {
         // Hide request desktop site on all chrome:// pages except for the NTP.
         String url = currentTab.getUrl();
         boolean isChromeScheme = url.startsWith(UrlConstants.CHROME_URL_PREFIX)
                 || url.startsWith(UrlConstants.CHROME_NATIVE_URL_PREFIX);
         // Also hide request desktop site on Reader Mode.
         boolean isDistilledPage = DomDistillerUrlUtils.isDistilledPage(url);
-        requestMenuRow.setVisible(
-                (!isChromeScheme || currentTab.isNativePage()) && !isDistilledPage);
+
+        boolean itemVisible = canShowRequestDekstopSite
+                && (!isChromeScheme || currentTab.isNativePage()) && !isDistilledPage;
+        MenuItem requestMenuRow = menu.findItem(R.id.request_desktop_site_row_menu_id);
+        requestMenuRow.setVisible(itemVisible);
+        if (!itemVisible) return;
+
+        MenuItem requestMenuLabel = menu.findItem(R.id.request_desktop_site_id);
+        MenuItem requestMenuCheck = menu.findItem(R.id.request_desktop_site_check_id);
 
         // Mark the checkbox if RDS is activated on this page.
         requestMenuCheck.setChecked(currentTab.getUseDesktopUserAgent());
