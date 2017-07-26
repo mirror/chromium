@@ -112,6 +112,9 @@ void BufferQueue::SwapBuffers(const gfx::Rect& damage) {
   }
   UpdateBufferDamage(damage);
   in_flight_surfaces_.push_back(std::move(current_surface_));
+  // Advance to the next surface.
+  current_surface_ = GetNextSurface();
+
   // Some things reset the framebuffer (CopySubBufferDamage, some GLRenderer
   // paths), so ensure we restore it here.
   gl_->BindFramebuffer(GL_FRAMEBUFFER, fbo_);
@@ -194,19 +197,9 @@ void BufferQueue::PageFlipComplete() {
 }
 
 uint32_t BufferQueue::GetCurrentTextureId() const {
-  // Return current surface texture if bound.
+  // Return current surface texture.
   if (current_surface_)
     return current_surface_->texture;
-
-  // Return in-flight or displayed surface texture if no surface is
-  // currently bound. This can happen when using overlays and surface
-  // damage is empty. Note: |in_flight_surfaces_| entries can be null
-  // as a result of calling FreeAllSurfaces().
-  if (!in_flight_surfaces_.empty() && in_flight_surfaces_.back())
-    return in_flight_surfaces_.back()->texture;
-  if (displayed_surface_)
-    return displayed_surface_->texture;
-
   return 0;
 }
 
