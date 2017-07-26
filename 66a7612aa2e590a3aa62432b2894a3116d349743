@@ -1,0 +1,337 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f0b923b_507911d4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Why is it always non-zero?",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 64
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def796be_10f19c04",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "s/override/final",
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de508105_95ac82cf",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf513b6_0653eedd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "We should |...| annotation.",
+      "range": {
+        "startLine": 342,
+        "startChar": 16,
+        "endLine": 342,
+        "endChar": 36
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ddac79b_ac96404a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Hope we can rename this method somehow.",
+      "range": {
+        "startLine": 435,
+        "startChar": 6,
+        "endLine": 435,
+        "endChar": 26
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a53894c_5339117c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioScheduledSourceNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 86,
+        "startChar": 38,
+        "endLine": 86,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09fd0214_106d57a0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 13
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c16df1b_e1984fae",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 59,
+        "startChar": 38,
+        "endLine": 59,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2187c520_7fae1510",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ChannelMergerNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Change all |override|s to |final|.",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad43200e_23cd19e2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ChannelSplitterNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "s/override/final",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb67b670_0f8d1342",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DeferredTaskHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Using |PassRefPtr| is not allowed anymore, so I am not sure what to do about this.\n\nAlso the pointer type is `handler` but the argument name is `node`. Perhaps we can just omit the argument in the header file.",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 58
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f64d1cf_551074d3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DeferredTaskHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 113,
+        "startChar": 57,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0908413_2c946c38",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DeferredTaskHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "The storages at l.210 and l.211 are using `..._handlers_`, whereas others at l.189 and l.190 are using `..._nodes_`. Not sure what to follow, but I would use `_handlers_` because that what really is being stored.",
+      "range": {
+        "startLine": 214,
+        "startChar": 47,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699913b6_6581c1aa",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "All the inherited methods at `FooNode` should be `final`.",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610135bf_d91f8b3f",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDelayDSPKernel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-26T16:17:51Z",
+      "side": 1,
+      "message": "Can this code be refactored into its abstract class? Then the children can override only when it is needed to return `false`.",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 14
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
