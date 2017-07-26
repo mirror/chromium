@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe4927dc_a9c7a388",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T09:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a959382_5eed248e",
+      "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fea7d1f_6474fbab",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T08:39:26Z",
       "side": 1,
       "message": "Sorry, I missed this in the previous patch. This means the test doesn\u0027t actually exercise the timeout timer function itself, which is a bit unfortunate.\n\nWhy not just call ServiceWorkerJobCoordinator::MaybeTimeoutJobs() after setting job-\u003estart_time_ to a value N minutes in the past?",
+      "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69388bbf_7f55d4e8",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T09:49:34Z",
+      "side": 1,
+      "message": "oh.. maybe I misunderstood your comments \"Consider adding functions to ServiceWorkerJobTest that can do this\"...",
+      "parentUuid": "7fea7d1f_6474fbab",
       "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176e014e_d20ca123",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T09:49:34Z",
+      "side": 1,
+      "message": "Great idea! Done!",
+      "parentUuid": "2f4a924c_7c565b71",
+      "revId": "84727ffca1272f3c88e2adc0b9115689f70440be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
