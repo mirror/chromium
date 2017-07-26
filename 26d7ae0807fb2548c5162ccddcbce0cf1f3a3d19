@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58925dae_f4977d7a",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/characteristic-is-removed.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-26T05:36:53Z",
+      "side": 1,
+      "message": "See note in web-bluetooth-test.js that .remove() should throw an exception upon failure. Then, this line checking success can be removed.",
+      "revId": "26d7ae0807fb2548c5162ccddcbce0cf1f3a3d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb349d57_375d505a",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/characteristic-is-removed.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-26T05:36:53Z",
+      "side": 1,
+      "message": "As Gio pointed out elsewhere, we\u0027ll need to add simulateGATTServicesChanged after modifying Bluetooth attributes. See design doc: https://docs.google.com/document/d/1Nhv_oVDCodd1pEH_jj9k8gF4rPGb_84VYaZ9IG8M_WY/edit#\n\nThat is the Bluetooth concept required for a peripheral to inform a central that attributes are modified. We have used it in some of the bluetooth platform level tests as well (just for concept example, there\u0027s no shared code between that and these web platform tests)\nhttps://cs.chromium.org/search/?q\u003dSimulateGattServicesChanged\u0026type\u003dcs",
+      "revId": "26d7ae0807fb2548c5162ccddcbce0cf1f3a3d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163f4e8f_67388b81",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-26T05:36:53Z",
+      "side": 1,
+      "message": "On mojo returning failure convert to throwing an exception here. That makes the tests simpler, (see my note in test code).\nexample: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js?l\u003d366-370",
+      "revId": "26d7ae0807fb2548c5162ccddcbce0cf1f3a3d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
