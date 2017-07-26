@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57df7b2d_04e9d70a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d16d491_4f6911ad",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 107
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b799cf_2171e115",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "500899cf_09cf42d0",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "c5b799cf_2171e115",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19da7779_1601d070",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e99065b_8a8f0e59",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2124d845_d6faed9d",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-25T14:04:44Z",
       "side": 1,
       "message": "I\u0027m still not sure about using \"id\". I see it being used internally. I would prefer we use \"url\" for now. The iTunes store URL can be inferred from \"id\". WDYT?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c7edb3_7993f92a",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "I\u0027m fine with this, was URL not used anywhere internally?",
+      "parentUuid": "2124d845_d6faed9d",
       "range": {
         "startLine": 52,
         "startChar": 8,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "9a4e4a1d_6c874b59",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "303bf424_fc0b42d4",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0610f42_fcfe1c34",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "709ace85_c098e366",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done\n\nEDIT: Following our conversation on converting this class to handle multiple payment methods I renamed this to IOSPaymentInstrumentsFoundCallback. Is that sound fine to you?",
+      "parentUuid": "f0610f42_fcfe1c34",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f793f44_475e9cc2",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -145,6 +283,30 @@
       "writtenOn": "2017-07-25T14:04:44Z",
       "side": 1,
       "message": "Do you consider this the entry point to this class? If so, you could consider having *this* function take the FoundCallback (which would then be a base::OnceCallback) instead of the constructor. It could make the calling code a little easier to write, because as it is right now the calling code has to keep track of which |method| it requested, whereas if you have DownloadManifests(const GURL\u0026 method, FoundCallback callback), then you can already bind the |method| into |callback| before it\u0027s passed.\n\nIf it\u0027s really the entry point, I would rename the function FindPaymentAppForMethod.",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fa270e_c25d216c",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Ah this is a very good point, and yes this is the entry point of the class. I will change it so that the callback is added here instead.\n\nEDIT: Following our discussion on handling multiple payment methods I renamed this to GetIOSPaymentInstrumentsForMethods. Does that sound fine?",
+      "parentUuid": "2f793f44_475e9cc2",
       "range": {
         "startLine": 74,
         "startChar": 7,
@@ -174,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "1410e3b7_c08d21fc",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10b827e_8512daa2",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b41f243_4916fcab",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -194,6 +374,30 @@
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445789ce_2257898b",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b41f243_4916fcab",
+      "range": {
+        "startLine": 84,
+        "startChar": 47,
+        "endLine": 84,
+        "endChar": 58
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "371437dd_d02b7c65",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2450396_73a5b048",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a3212b9_4e21f0e6",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -243,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "38f91de0_e3df71ec",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a3212b9_4e21f0e6",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a43322c4_d3e9d6db",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
         "patchSetId": 7
@@ -257,6 +509,24 @@
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82aa442b_593cad93",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a43322c4_d3e9d6db",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "681d8cdf_c01d2793",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3a2c6cf_d220f9e0",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09c221d0_11003b48",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
         "patchSetId": 7
@@ -303,6 +597,30 @@
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f25716_52e45c04",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09c221d0_11003b48",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "d7dec304_313658fb",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83885299_7af0e514",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f085e284_5b9df91e",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
         "patchSetId": 7
@@ -340,6 +682,24 @@
       "writtenOn": "2017-07-25T14:04:44Z",
       "side": 1,
       "message": "How do we keep track of failures? Does the caller eventually know that we couldn\u0027t find a universal link for this payment method?",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205324b3_91e01088",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "In the new version if a failure happens we we immediately decrease the number of addressed payment methods. When all payment methods have been addressed we initiate the callback to the caller. If for some reason all the payment methods resulted in failures the vector sent back to the user will be empty.",
+      "parentUuid": "f085e284_5b9df91e",
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -369,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "c9440784_5d6a2188",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d438e2_3ba69180",
+      "range": {
+        "startLine": 143,
+        "startChar": 17,
+        "endLine": 143,
+        "endChar": 25
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bf22331_8526fdf1",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
         "patchSetId": 7
@@ -392,6 +776,30 @@
     },
     {
       "key": {
+        "uuid": "eaada279_dac68b9d",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf22331_8526fdf1",
+      "range": {
+        "startLine": 21,
+        "startChar": 68,
+        "endLine": 21,
+        "endChar": 77
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e11593b_6deb6806",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
         "patchSetId": 7
@@ -406,6 +814,24 @@
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07f8aee_bbe6c0b1",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done. I had done this before but my compiler complained about using temporary variables. This is working now though!",
+      "parentUuid": "6e11593b_6deb6806",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -432,6 +858,30 @@
     },
     {
       "key": {
+        "uuid": "ce1fb365_05e3affc",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a0ffb4_31ae28fb",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b0ccdee_b1f948a8",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
         "patchSetId": 7
@@ -443,6 +893,24 @@
       "writtenOn": "2017-07-25T14:04:44Z",
       "side": 1,
       "message": "these may not be needed, see above",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8729345c_b883425f",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-26T20:34:39Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "4b0ccdee_b1f948a8",
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
