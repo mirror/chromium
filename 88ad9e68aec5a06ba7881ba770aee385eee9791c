@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13da6d8d_bc77228d",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T09:53:16Z",
+      "side": 1,
+      "message": "will delete this typo",
+      "range": {
+        "startLine": 204,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
