@@ -22,6 +22,30 @@
       "revId": "e7977b2f53bb2febe5789b5b3397a05784cedc33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c902df_6b169409",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-26T16:42:04Z",
+      "side": 1,
+      "message": "It might make sense to track the fallback task id and only re-create the fallback tree when the fallback task id changes. However,\n- AXTree and friends already handle the case where the root changes (i.e. we don\u0027t need to recreate a tree when the entire app/page changes). This actually happens for web renderers often\n- it would be disadvantageous to destroy the tree for each event coming from the fallback tree (app)\n\nI agree we should DLOG.",
+      "parentUuid": "a3baef22_dc8552d1",
+      "range": {
+        "startLine": 235,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 41
+      },
+      "revId": "e7977b2f53bb2febe5789b5b3397a05784cedc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
