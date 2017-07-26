@@ -6,6 +6,7 @@
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/browsing_data/browsing_data_cookie_helper.h"
@@ -13,6 +14,7 @@
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
+#include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/browser/net/url_request_mock_util.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/profiles/profile.h"
@@ -121,6 +123,30 @@ class ContentSettingsTest : public InProcessBrowserTest {
     CloseBrowserSynchronously(incognito);
   }
 
+  // Check the cookie for the given URL in an incognito window.
+  void ClientHintsCheckIncognitoWindow(const GURL& url) {
+    base::HistogramTester histogram_tester;
+
+    Browser* incognito = CreateIncognitoBrowser();
+    ui_test_utils::NavigateToURL(incognito, url);
+
+    // Ensure incognito cookies don't leak to regular profile.
+    //  ASSERT_TRUE(content::GetCookies(browser()->profile(), url).empty());
+
+    // Ensure cookies get wiped after last incognito window closes.
+    CloseBrowserSynchronously(incognito);
+
+    incognito = CreateIncognitoBrowser();
+    // ASSERT_TRUE(content::GetCookies(incognito->profile(), url).empty());
+    CloseBrowserSynchronously(incognito);
+    EXPECT_LE(1u, histogram_tester
+                      .GetAllSamples("ContentSettings.ClientHints.UpdateSize")
+                      .size());
+    EXPECT_GE(2u, histogram_tester
+                      .GetAllSamples("ContentSettings.ClientHints.UpdateSize")
+                      .size());
+  }
+
   void PreBasic(const GURL& url) {
     ASSERT_TRUE(GetCookies(browser()->profile(), url).empty());
 
@@ -162,6 +188,30 @@ IN_PROC_BROWSER_TEST_F(ContentSettingsTest, BasicCookiesHttps) {
   ASSERT_TRUE(https_server_.Start());
   GURL https_url = https_server_.GetURL("/setcookie.html");
   Basic(https_url);
+}
+
+IN_PROC_BROWSER_TEST_F(ContentSettingsTest, ClientHintsHttps) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableExperimentalWebPlatformFeatures);
+  https_server_.ServeFilesFromSourceDirectory("content/test/data");
+
+  base::HistogramTester histogram_tester;
+  ASSERT_TRUE(https_server_.Start());
+  GURL url = https_server_.GetURL("/client_hints_lifetime.html");
+  ASSERT_TRUE(url.SchemeIsHTTPOrHTTPS());
+  ASSERT_TRUE(url.SchemeIsCryptographic());
+  ASSERT_TRUE(GetCookies(browser()->profile(), url).empty());
+
+  ClientHintsCheckIncognitoWindow(url);
+
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  EXPECT_LE(1u, histogram_tester
+                    .GetAllSamples("ContentSettings.ClientHints.UpdateSize")
+                    .size());
+  EXPECT_GE(2u, histogram_tester
+                    .GetAllSamples("ContentSettings.ClientHints.UpdateSize")
+                    .size());
 }
 
 // Verify that cookies are being blocked.
