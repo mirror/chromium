@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e30f9f20_ece17020",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:55:43Z",
+      "side": 1,
+      "message": "There is no style guide rule, I believe.  I think this pattern is a little more common.  If you do a search for that pattern, even allowing an extra space after the \u003d, you only get 85 files (https://cs.chromium.org/search/?q\u003d/%5C*.*%5C%3D%5C+?%5C*/\u0026sq\u003dpackage:chromium\u0026type\u003dcs)\n\nIf you look for this pattern, you get 8000 hits - a lot more false positives, because it\u0027s harder to search for, but if you look through the hits, maybe 30-50% of them are this pattern (Most frequent false hits are a similar pattern, but with comment in front of the value, unnamed arguments).  https://cs.chromium.org/search/?q\u003d/%5C*.*%5C*/.*%5B,)%5D+file:cc$\u0026p\u003d8\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nAnyhow, don\u0027t feel strongly about this, this just seems a little more common.",
+      "parentUuid": "290f16eb_4616adee",
+      "range": {
+        "startLine": 159,
+        "startChar": 31,
+        "endLine": 159,
+        "endChar": 53
+      },
+      "revId": "05f7238ea5bf098612279bf568e451cc5b0432b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f485153f_d7e82966",
         "filename": "content/shell/browser/shell_url_request_context_getter.h",
         "patchSetId": 8
@@ -83,6 +107,30 @@
       "writtenOn": "2017-07-26T14:13:27Z",
       "side": 1,
       "message": "Could you add in the comment that GetProxyConfigService() and GetProxyService() are mutually exclusive? We only respect GetProxyConfigService() if GetProxyService() returns nullptr.",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "05f7238ea5bf098612279bf568e451cc5b0432b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc14c1e_700a4195",
+        "filename": "content/shell/browser/shell_url_request_context_getter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-26T15:55:43Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "f485153f_d7e82966",
       "range": {
         "startLine": 58,
         "startChar": 34,
