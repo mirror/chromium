@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d75e045_b16e6d74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-26T10:29:37Z",
+      "side": 1,
+      "message": "The clear button changes are no longer part of this CL, right?",
+      "revId": "55d8a0b00d558f6a659977f38bdf089a83a6a6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3544a866_233cde72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-26T10:29:37Z",
+      "side": 1,
+      "message": "Could you please explain (either in the CL description, in the bug, or as a comment somewhere) why this change is necessary?  Presumably this worked on iOS10 and earlier.  Did something change in iOS11?  Do we need to make this same change in all of our cells across the whole codebase?",
+      "revId": "55d8a0b00d558f6a659977f38bdf089a83a6a6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
