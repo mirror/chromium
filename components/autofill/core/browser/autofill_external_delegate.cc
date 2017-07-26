@@ -228,10 +228,12 @@ void AutofillExternalDelegate::DidAcceptSuggestion(const base::string16& value,
     manager_->client()->ScanCreditCard(base::Bind(
         &AutofillExternalDelegate::OnCreditCardScanned, GetWeakPtr()));
   } else if (identifier == POPUP_ITEM_ID_CREDIT_CARD_SIGNIN_PROMO) {
-    manager_->client()->StartSigninFlow();
+    manager_->client()->ExecuteCommand(
+        autofill::POPUP_ITEM_ID_CREDIT_CARD_SIGNIN_PROMO);
   } else if (identifier == POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE) {
     AutofillMetrics::LogShowedHttpNotSecureExplanation();
-    manager_->client()->ShowHttpNotSecureExplanation();
+    manager_->client()->ExecuteCommand(
+        autofill::POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
   } else {
     if (identifier > 0)  // Denotes an Autofill suggestion.
       AutofillMetrics::LogAutofillSuggestionAcceptedIndex(position);

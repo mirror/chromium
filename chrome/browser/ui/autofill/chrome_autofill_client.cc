@@ -32,11 +32,13 @@
 #include "chrome/common/url_constants.h"
 #include "components/autofill/content/browser/content_autofill_driver.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
+#include "components/autofill/core/browser/popup_item_ids.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_view.h"
 #include "components/autofill/core/common/autofill_pref_names.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/password_manager/content/browser/content_password_manager_driver.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/profile_identity_provider.h"
 #include "components/signin/core/browser/signin_header_helper.h"
@@ -372,7 +374,20 @@ bool ChromeAutofillClient::ShouldShowSigninPromo() {
 #endif
 }
 
-void ChromeAutofillClient::StartSigninFlow() {
+bool ChromeAutofillClient::ExecuteCommand(int id) {
+  if (id == autofill::POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE) {
+    password_manager::metrics_util::LogShowedHttpNotSecureExplanation();
+    ShowHttpNotSecureExplanation();
+    return true;
+  } else if (id == autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY) {
+#if !defined(OS_ANDROID)
+    chrome::ShowSettingsSubPage(
+        chrome::FindBrowserWithWebContents(web_contents()),
+        chrome::kPasswordManagerSubPage);
+#endif
+
+    return true;
+  } else if (id == autofill::POPUP_ITEM_ID_CREDIT_CARD_SIGNIN_PROMO) {
 #if defined(OS_ANDROID)
   auto* window = web_contents()->GetNativeView()->GetWindowAndroid();
   if (window) {
@@ -380,6 +395,9 @@ void ChromeAutofillClient::StartSigninFlow() {
         window, signin_metrics::AccessPoint::ACCESS_POINT_AUTOFILL_DROPDOWN);
   }
 #endif
+  return true;
+  }
+  return false;
 }
 
 void ChromeAutofillClient::ShowHttpNotSecureExplanation() {

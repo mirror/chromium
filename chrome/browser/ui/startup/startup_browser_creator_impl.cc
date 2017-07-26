@@ -639,7 +639,7 @@ void StartupBrowserCreatorImpl::ProcessLaunchUrlsUsingConsolidatedFlow(
     behavior_options |= PROCESS_STARTUP;
   if (is_post_crash_launch)
     behavior_options |= IS_POST_CRASH_LAUNCH;
-  if (command_line_.HasSwitch(switches::kOpenInNewWindow))
+  if (command_line_.HasSwitch(switches::kOpenInNewIconWindow))
     behavior_options |= HAS_NEW_WINDOW_SWITCH;
   if (!cmd_line_tabs.empty())
     behavior_options |= HAS_CMD_LINE_TABS;
@@ -956,7 +956,7 @@ void StartupBrowserCreatorImpl::ProcessLaunchURLs(
   std::vector<GURL> adjusted_urls = urls_to_open;
   if (adjusted_urls.empty()) {
     AddStartupURLs(&adjusted_urls);
-  } else if (!command_line_.HasSwitch(switches::kOpenInNewWindow)) {
+  } else if (!command_line_.HasSwitch(switches::kOpenInNewIconWindow)) {
     // Always open a list of urls in a window on the native desktop.
     browser = chrome::FindTabbedBrowser(profile_, false);
   }
