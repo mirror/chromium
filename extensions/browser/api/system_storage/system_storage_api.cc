@@ -5,6 +5,7 @@
 #include "extensions/browser/api/system_storage/system_storage_api.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/task_scheduler/post_task.h"
 
 using storage_monitor::StorageMonitor;
 
@@ -118,16 +119,14 @@ SystemStorageGetAvailableCapacityFunction::Run() {
 
 void SystemStorageGetAvailableCapacityFunction::OnStorageMonitorInit(
     const std::string& transient_id) {
-  content::BrowserThread::PostTaskAndReplyWithResult(
-      content::BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      base::BindOnce(
           &StorageInfoProvider::GetStorageFreeSpaceFromTransientIdOnFileThread,
-          StorageInfoProvider::Get(),
-          transient_id),
-      base::Bind(&SystemStorageGetAvailableCapacityFunction::OnQueryCompleted,
-                 this,
-                 transient_id));
+          StorageInfoProvider::Get(), transient_id),
+      base::BindOnce(
+          &SystemStorageGetAvailableCapacityFunction::OnQueryCompleted, this,
+          transient_id));
 }
 
 void SystemStorageGetAvailableCapacityFunction::OnQueryCompleted(
