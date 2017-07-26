@@ -11,10 +11,10 @@
 using password_manager::MigrationStatus;
 
 PasswordStoreMac::PasswordStoreMac(
-    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> main_task_runner,
     std::unique_ptr<password_manager::LoginDatabase> login_db,
     PrefService* prefs)
-    : PasswordStoreDefault(main_thread_runner, nullptr, std::move(login_db)) {
+    : PasswordStoreDefault(main_task_runner, nullptr, std::move(login_db)) {
   migration_status_.Init(password_manager::prefs::kKeychainMigrationStatus,
                          prefs);
 }
@@ -40,9 +40,9 @@ bool PasswordStoreMac::Init(
   return false;
 }
 
-void PasswordStoreMac::ShutdownOnUIThread() {
+void PasswordStoreMac::ShutdownOnUISequence() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  PasswordStoreDefault::ShutdownOnUIThread();
+  PasswordStoreDefault::ShutdownOnUISequence();
   thread_->Stop();
 
   // Unsubscribe the observer, otherwise it's too late in the destructor.
@@ -66,7 +66,7 @@ void PasswordStoreMac::InitOnBackgroundThread(MigrationStatus status) {
     // drop the entries in the DB because they don't have passwords anyway.
     login_db()->RemoveLoginsCreatedBetween(base::Time(), base::Time());
     status = MigrationStatus::MIGRATION_STOPPED;
-    main_thread_runner_->PostTask(
+    main_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&PasswordStoreMac::UpdateStatusPref, this, status));
   }
@@ -78,7 +78,7 @@ void PasswordStoreMac::InitOnBackgroundThread(MigrationStatus status) {
 
 void PasswordStoreMac::UpdateStatusPref(MigrationStatus status) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  // The method can be called after ShutdownOnUIThread().
+  // The method can be called after ShutdownOnUISequence().
   if (migration_status_.prefs())
     migration_status_.SetValue(static_cast<int>(status));
 }

@@ -92,7 +92,7 @@ class PasswordStoreX : public password_manager::PasswordStoreDefault {
 
   // Takes ownership of |login_db| and |backend|. |backend| may be NULL in which
   // case this PasswordStoreX will act the same as PasswordStoreDefault.
-  PasswordStoreX(scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
+  PasswordStoreX(scoped_refptr<base::SequencedTaskRunner> main_ask_runner,
                  std::unique_ptr<password_manager::LoginDatabase> login_db,
                  NativeBackend* backend);
 

@@ -155,28 +155,28 @@ PasswordStoreFactory::BuildServiceInstanceFor(
   std::unique_ptr<password_manager::LoginDatabase> login_db(
       password_manager::CreateLoginDatabase(profile->GetPath()));
 
-  scoped_refptr<base::SequencedTaskRunner> main_thread_runner(
+  scoped_refptr<base::SequencedTaskRunner> main_task_runner(
       base::SequencedTaskRunnerHandle::Get());
   scoped_refptr<PasswordStore> ps;
 #if defined(OS_WIN)
-  scoped_refptr<base::SequencedTaskRunner> background_thread_runner(
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::USER_VISIBLE}));
-  ps = new PasswordStoreWin(main_thread_runner, background_thread_runner,
+  ps = new PasswordStoreWin(main_task_runner, background_task_runner,
                             std::move(login_db),
                             WebDataServiceFactory::GetPasswordWebDataForProfile(
                                 profile, ServiceAccessType::EXPLICIT_ACCESS));
 #elif defined(OS_MACOSX)
-  ps = new PasswordStoreMac(main_thread_runner, std::move(login_db),
+  ps = new PasswordStoreMac(main_task_runner, std::move(login_db),
                             profile->GetPrefs());
 #elif defined(OS_CHROMEOS) || defined(OS_ANDROID)
   // For now, we use PasswordStoreDefault. We might want to make a native
   // backend for PasswordStoreX (see below) in the future though.
-  scoped_refptr<base::SequencedTaskRunner> background_thread_runner(
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::USER_VISIBLE}));
   ps = new password_manager::PasswordStoreDefault(
-      main_thread_runner, background_thread_runner, std::move(login_db));
+      main_task_runner, background_task_runner, std::move(login_db));
 #elif defined(USE_X11)
   // On POSIX systems, we try to use the "native" password management system of
   // the desktop environment currently running, allowing GNOME Keyring in XFCE.
@@ -258,15 +258,15 @@ PasswordStoreFactory::BuildServiceInstanceFor(
         " for more information about password storage options.";
   }
 
-  ps = new PasswordStoreX(main_thread_runner, std::move(login_db),
+  ps = new PasswordStoreX(main_task_runner, std::move(login_db),
                           backend.release());
   RecordBackendStatistics(desktop_env, store_type, used_backend);
 #elif defined(USE_OZONE)
-  scoped_refptr<base::SequencedTaskRunner> background_thread_runner(
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::USER_VISIBLE}));
   ps = new password_manager::PasswordStoreDefault(
-      main_thread_runner, background_thread_runner, std::move(login_db));
+      main_task_runner, background_task_runner, std::move(login_db));
 #else
   NOTIMPLEMENTED();
 #endif

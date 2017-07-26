@@ -226,7 +226,7 @@ TEST_F(PasswordStoreTest, IgnoreOldWwwGoogleLogins) {
 
   base::RunLoop().RunUntilIdle();
 
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -247,7 +247,7 @@ TEST_F(PasswordStoreTest, StartSyncFlare) {
     store->AddLogin(form);
     base::RunLoop().RunUntilIdle();
   }
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -303,7 +303,7 @@ TEST_F(PasswordStoreTest, GetLoginImpl) {
   ASSERT_TRUE(returned_form);
   EXPECT_EQ(*test_form, *returned_form);
 
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -362,7 +362,7 @@ TEST_F(PasswordStoreTest, UpdateLoginPrimaryKeyFields) {
   base::RunLoop().RunUntilIdle();
 
   store->RemoveObserver(&mock_observer);
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -402,7 +402,7 @@ TEST_F(PasswordStoreTest, RemoveLoginsCreatedBetweenCallbackIsCalled) {
   testing::Mock::VerifyAndClearExpectations(&mock_observer);
 
   store->RemoveObserver(&mock_observer);
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -473,7 +473,7 @@ TEST_F(PasswordStoreTest, GetLoginsWithoutAffiliations) {
               OnGetPasswordStoreResultsConstRef(
                   UnorderedPasswordFormElementsAre(&expected_results)));
   store->GetLogins(observed_form, &mock_consumer);
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -595,7 +595,7 @@ TEST_F(PasswordStoreTest, GetLoginsWithAffiliations) {
                   UnorderedPasswordFormElementsAre(&expected_results)));
 
   store->GetLogins(observed_form, &mock_consumer);
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -804,7 +804,7 @@ TEST_F(PasswordStoreTest, MAYBE_UpdatePasswordsStoredForAffiliatedWebsites) {
                                      UnorderedPasswordFormElementsAre(
                                          &expected_credentials_after_update)));
       store->GetAutofillableLogins(&mock_consumer);
-      store->ShutdownOnUIThread();
+      store->ShutdownOnUISequence();
       base::RunLoop().RunUntilIdle();
     }
   }
@@ -877,10 +877,10 @@ TEST_F(PasswordStoreTest, GetLoginsWithAffiliationAndBrandingInformation) {
     }
 
     // Since GetAutofillableLoginsWithAffiliationAndBrandingInformation
-    // schedules a request for affiliation information to UI thread, don't
-    // shutdown UI thread until there are no tasks in the UI queue.
+    // schedules a request for affiliation information to the UI sequence, don't
+    // shutdown the UI sequence until there are no tasks in the UI queue.
     base::RunLoop().RunUntilIdle();
-    store->ShutdownOnUIThread();
+    store->ShutdownOnUISequence();
     base::RunLoop().RunUntilIdle();
   }
 }
@@ -937,7 +937,7 @@ TEST_F(PasswordStoreTest, GetLoginsForSameOrganizationName) {
                   UnorderedPasswordFormElementsAre(&expected_results)));
   store->GetLoginsForSameOrganizationName(observed_form_realm, &mock_consumer);
   base::RunLoop().RunUntilIdle();
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -988,7 +988,7 @@ TEST_F(PasswordStoreTest, CheckPasswordReuse) {
     base::RunLoop().RunUntilIdle();
   }
 
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 #endif
@@ -1032,7 +1032,7 @@ TEST_F(PasswordStoreTest, SavingClearingSyncPassword) {
   store->CheckReuse(input, "https://facebook.com", &mock_consumer);
   base::RunLoop().RunUntilIdle();
 
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 
@@ -1053,7 +1053,7 @@ TEST_F(PasswordStoreTest, SubscriptionAndUnsubscriptionFromSignInEvents) {
 
   // Check that |store| is unsubscribed from sign-in events on shutdown.
   EXPECT_CALL(*notifier_weak, UnsubscribeFromSigninEvents());
-  store->ShutdownOnUIThread();
+  store->ShutdownOnUISequence();
   base::RunLoop().RunUntilIdle();
 }
 #endif

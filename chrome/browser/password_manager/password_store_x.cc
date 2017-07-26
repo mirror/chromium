@@ -75,10 +75,10 @@ scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunnerForBackend(
 }  // namespace
 
 PasswordStoreX::PasswordStoreX(
-    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> main_task_runner,
     std::unique_ptr<password_manager::LoginDatabase> login_db,
     NativeBackend* backend)
-    : PasswordStoreDefault(main_thread_runner,
+    : PasswordStoreDefault(main_task_runner,
                            GetBackgroundTaskRunnerForBackend(backend),
                            std::move(login_db)),
       backend_(backend),
