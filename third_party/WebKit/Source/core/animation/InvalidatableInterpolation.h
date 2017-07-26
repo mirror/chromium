@@ -35,6 +35,8 @@ class CORE_EXPORT InvalidatableInterpolation : public Interpolation {
       const PropertyHandle& property,
       PassRefPtr<PropertySpecificKeyframe> start_keyframe,
       PassRefPtr<PropertySpecificKeyframe> end_keyframe) {
+    DCHECK(start_keyframe);
+    DCHECK(end_keyframe);
     return AdoptRef(new InvalidatableInterpolation(
         property, std::move(start_keyframe), std::move(end_keyframe)));
   }
