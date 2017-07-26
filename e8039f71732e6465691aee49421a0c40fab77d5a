@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d1ece5_5ee22749",
+        "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-07-26T16:19:07Z",
+      "side": 1,
+      "message": "Links to the actual unicode tables would be better:\nC0 control characters: http://unicode.org/charts/PDF/U0000.pdf\nC1 control characters: http://unicode.org/charts/PDF/U0080.pdf",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 65
+      },
+      "revId": "e8039f71732e6465691aee49421a0c40fab77d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875ecda6_bc820da4",
+        "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-07-26T16:19:07Z",
+      "side": 1,
+      "message": "Perhaps simplify to:\n c \u003c\u003d 0x1F || (c \u003e\u003d 0x7F \u0026\u0026 c \u003c\u003d 0x9F);\nunless you\u0027re explicitly trying to keep the C0 and C1 chars separate.",
+      "range": {
+        "startLine": 23,
+        "startChar": 54,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "e8039f71732e6465691aee49421a0c40fab77d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63c4d77_12580a33",
+        "filename": "ui/events/keycodes/keyboard_code_conversion_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-07-26T16:19:07Z",
+      "side": 1,
+      "message": "why isn\u0027t this simply\n  } else {\n?",
+      "range": {
+        "startLine": 870,
+        "startChar": 6,
+        "endLine": 870,
+        "endChar": 8
+      },
+      "revId": "e8039f71732e6465691aee49421a0c40fab77d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
