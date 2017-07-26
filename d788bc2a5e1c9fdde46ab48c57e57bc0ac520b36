@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80eec35d_7626f7e1",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T23:01:08Z",
+      "side": 1,
+      "message": "any change that lowering the diff similarity threshold would let us see diffs from the old file to this one?",
+      "revId": "d788bc2a5e1c9fdde46ab48c57e57bc0ac520b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2e7135_72d1625f",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T23:01:08Z",
+      "side": 1,
+      "message": "could we name the file to match the class? page_load_metrics_observer_tester.h?",
+      "revId": "d788bc2a5e1c9fdde46ab48c57e57bc0ac520b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
