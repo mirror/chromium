@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d46ad9d1_5276635f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-26T09:57:47Z",
+      "side": 0,
+      "message": "Do you have to drop those consts?",
+      "revId": "624c11ca026d33fc65e072b4fa638614ddd0ee82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fecce0a_47f1bb0d",
+        "filename": "third_party/WebKit/Source/core/loader/WorkerThreadableLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-26T09:57:47Z",
+      "side": 0,
+      "message": "Same here.",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 266,
+        "endChar": 12
+      },
+      "revId": "624c11ca026d33fc65e072b4fa638614ddd0ee82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
