@@ -547,6 +547,8 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual const AtomicString ImageSourceURL() const;
   virtual Image* ImageContents() { return nullptr; }
 
+  bool IsInertRoot() const;
+
   virtual void focus(const FocusParams& = FocusParams());
   virtual void UpdateFocusAppearance(SelectionBehaviorOnFocus);
   virtual void blur();

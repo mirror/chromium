@@ -746,6 +746,9 @@ PassRefPtr<ComputedStyle> StyleResolver::StyleForElement(
   if (state.Style()->HasRemUnits())
     GetDocument().GetStyleEngine().SetUsesRemUnit(true);
 
+  if (element->IsInertRoot())
+    state.Style()->SetInert(true);
+
   // Now return the style.
   return state.TakeStyle();
 }

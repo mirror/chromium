@@ -29,9 +29,9 @@
       element.addEventListener('focus', function() { focusedElement = element; }, false);
       element.focus();
       if (canFocus)
-        assert_true(focusedElement === element);
+        assert_true(focusedElement === element, "Can focus element outside Shadow DOM");
       else
-        assert_false(focusedElement === element);
+        assert_false(focusedElement === element, "Can't focus element inside Shadow DOM");
     }
 
     testCanFocus('#button-1', false);

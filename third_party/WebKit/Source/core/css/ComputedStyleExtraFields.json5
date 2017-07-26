@@ -964,5 +964,12 @@
       keywords: ["no-auto-repeat", "auto-fill", "auto-fit"],
       default_value: "no-auto-repeat",
     },
+    {
+      name: "Inert",
+      field_template: "primitive",
+      type_name: "bool",
+      default_value: "false",
+      inherited: true
+    },
   ],
 }

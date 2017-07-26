@@ -452,6 +452,12 @@ void Element::setNonce(const AtomicString& nonce) {
   EnsureElementRareData().SetNonce(nonce);
 }
 
+bool Element::IsInertRoot() const {
+  if (!GetElementData())
+    return false;
+  return GetElementData()->Attributes().Find(inertAttr);
+}
+
 void Element::scrollIntoView(ScrollIntoViewOptionsOrBoolean arg) {
   ScrollIntoViewOptions options;
   if (arg.isBoolean()) {
