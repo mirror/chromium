@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab5f752_bafc599c",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-26T16:54:53Z",
+      "side": 1,
+      "message": "Why not just ensure that speech_button() is null instead?",
+      "revId": "386cc83bf7067450a430bf5a4cfedf779acc5228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
