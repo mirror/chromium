@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe96796_1502e187",
+        "filename": "chrome/browser/printing/print_preview_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T00:57:20Z",
+      "side": 1,
+      "message": "In order for the |render_frame_host| to be passed to a PrintPreviewUI, PrintPreviewMessageHandler::GetPrintPreviewUI() has to succeed. For that to happen, GetPrintPreviewUI() has to do the initiator to print preview renderer mapping. Does that mean in the PrintPreviewHandler, it can just call GetInitiator() and do the mapping to get back the initiator, which is the expected sender? If not, can you point out which IPC message handler will cause the initiator to print preview renderer mapping to get lost?",
+      "revId": "928631726b92d8c7b8cc0c2ffd62e31342c4c8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3beb4dab_e6525838",
+        "filename": "chrome/browser/printing/print_preview_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T00:57:20Z",
+      "side": 1,
+      "message": "Here, the macro pass |render_frame_host| to the IPC handlers. Eventually, that will be call content::WebContents::FromRenderFrameHost(render_frame_host) - Does that end up getting the same WebContents as PrintPreviewMessageHandler::web_contents() ?",
+      "revId": "928631726b92d8c7b8cc0c2ffd62e31342c4c8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
