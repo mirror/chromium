@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bbbb7ad_25d888dc",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-26T18:31:44Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "a499a737d1cb2f5540f83614bc2f22ff6cb41178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
