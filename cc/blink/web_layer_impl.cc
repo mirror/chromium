@@ -148,7 +148,7 @@ void WebLayerImpl::SetOpaque(bool opaque) {
 }
 
 bool WebLayerImpl::Opaque() const {
-  return layer_->contents_opaque();
+  return layer_->IsContentsOpaque();
 }
 
 void WebLayerImpl::SetPosition(const WebFloatPoint& position) {
