@@ -43,6 +43,7 @@ class CC_EXPORT VideoLayerImpl : public LayerImpl {
   SimpleEnclosedRegion VisibleOpaqueRegion() const override;
   void DidBecomeActive() override;
   void ReleaseResources() override;
+  bool IsContentsOpaque() const override;
 
   void SetNeedsRedraw();
   media::VideoRotation video_rotation() const { return video_rotation_; }
