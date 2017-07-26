@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afbd7622_21f916c7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-26T23:45:52Z",
+      "side": 1,
+      "message": "Naming was bad here; hopefully it\u0027s better now. We need this counter because a) requesting a download to be carried out by the downloads system is an async operation and b) the downloads system can deny the request in which case we should probably retry after a while.",
+      "parentUuid": "c934bf5c_ae40176d",
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4211bd9f_c132c78e",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
         "patchSetId": 3
@@ -77,6 +95,48 @@
     },
     {
       "key": {
+        "uuid": "51dfcf58_e21fe7d3",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-26T23:45:52Z",
+      "side": 1,
+      "message": "dimich@: I moved this to the test utils class but I am almost sure we will have to eventually move it out of test-only code.\n\nfgorski@: now both querying and populating methods live in the same CC file and I made the Load* one private. If at some point the populating one should be made public we might need to review this concern again.",
+      "parentUuid": "63049fa5_229f82aa",
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a03b0e3_2071d14c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-26T23:45:52Z",
+      "side": 1,
+      "message": "Given its new location and visibility I renamed it to PopulatePrefetchItem.",
+      "parentUuid": "4211bd9f_c132c78e",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c76cc09_28a99b79",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
         "patchSetId": 3
@@ -88,6 +148,24 @@
       "writtenOn": "2017-07-26T06:25:14Z",
       "side": 1,
       "message": "It\u0027d be better to move the time serialization/deserialization methods into some place and use them. Otherwise it is hard make sure serialization always matches deserialization.",
+      "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7aa3238_b3abf025",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-26T23:45:52Z",
+      "side": 1,
+      "message": "I was planning on doing that on a follow up CL along with refactoring all current occurrences of the Time* deprecated methods. To address this I created the shared method in this CL but will leave the consolidation of other callers to the followup. Is that better?",
+      "parentUuid": "1c76cc09_28a99b79",
       "revId": "fe72afb86a6a8664ab0891e7dc1012eac0652098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
