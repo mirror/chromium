@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "974c6129_01ff81b9",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-07-26T19:21:17Z",
+      "side": 1,
+      "message": "We don\u0027t want to use this for device sanitizer builds.\n\nI think the condition should be\n\nis_msan || is_fuchsia ||\n      is_msan || is_fuchsia || (is_linux \u0026\u0026 !is_chromeos \u0026\u0026 !is_chromecast) ||\n      (is_linux \u0026\u0026 !is_chromeos \u0026\u0026 (!is_chromecast || (is_cast_desktop_build \u0026\u0026 using_sanitizer))",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "3b68912dedb1da6fa256fb14d13a7a0e25a43610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
