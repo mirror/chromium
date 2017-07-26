@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa044e46_19ba76ce",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-26T22:30:41Z",
+      "side": 1,
+      "message": "I added this line to make it extra obvious that this is intentional.",
+      "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
