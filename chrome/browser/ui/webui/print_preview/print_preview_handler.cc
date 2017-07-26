@@ -1073,6 +1073,7 @@ void PrintPreviewHandler::PrintToPdf() {
 }
 
 void PrintPreviewHandler::HandleHidePreview(const base::ListValue* /*args*/) {
+  print_preview_ui()->OnHidePreviewDialog();
   if (settings_) {
     // Print preview is responding to a resolution of "print" promise. Send the
     // print message to the renderer.
@@ -1093,8 +1094,6 @@ void PrintPreviewHandler::HandleHidePreview(const base::ListValue* /*args*/) {
       print_view_manager->PrintPreviewDone();
     }
   }
-
-  print_preview_ui()->OnHidePreviewDialog();
 }
 
 void PrintPreviewHandler::HandleCancelPendingPrintRequest(
