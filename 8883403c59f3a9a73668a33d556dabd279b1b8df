@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c6fba21_478542ed",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-26T03:58:00Z",
+      "side": 1,
+      "message": "Would be nice to note that this may block on main thread operation in some subclasses, i.e. ServiceWorker case.",
+      "revId": "8883403c59f3a9a73668a33d556dabd279b1b8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
