@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe4e744b_1bc06d91",
+        "filename": "components/cryptauth/device_to_device_initiator_operations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T06:46:31Z",
+      "side": 1,
+      "message": "Can you update this documentation to add why this is a class (i.e. needs to be WeakPtr).",
+      "revId": "307309586d5e62509f024490a7958059da4467b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4333ca4_4f7253da",
+        "filename": "components/cryptauth/device_to_device_initiator_operations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-26T06:46:31Z",
+      "side": 1,
+      "message": "Hmm... now that this is a class, I would rename it to something like DeviceToDeviceInitiatorHelper.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "307309586d5e62509f024490a7958059da4467b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
