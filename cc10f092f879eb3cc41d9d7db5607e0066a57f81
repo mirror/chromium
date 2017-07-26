@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bbe9de6_3fde013f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-26T16:06:37Z",
+      "side": 1,
+      "message": "The Closure Compiler is not happy with this line:\n\n ERROR - Behaviors must be global names or qualified names that are declared as object literals or array literals of other valid Behaviors.\n\nI tried to mimic how FocusRowBehavior is used, do you happen to know what I am missing here?",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da26d12f_c1367ae7",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-26T16:06:37Z",
+      "side": 1,
+      "message": "Maybe we should get rid of the \"dom-if\" statements and simply conditionally hide this button, similarly to how it\u0027s done in password-edit-dialog.html.",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837e9bdf_c6a38bcd",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-26T16:06:37Z",
+      "side": 1,
+      "message": "I created this behavior to have a common place for the JavaScript. I thought about creating an own Polymer component (e.g. \u003cshow-password\u003e), but didn\u0027t do it in the end since the mark-up is slightly different in both places. WDYT, is a Behavior the way to go?",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
