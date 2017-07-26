@@ -22,6 +22,30 @@
       "revId": "3b68912dedb1da6fa256fb14d13a7a0e25a43610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5526b389_39d58294",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-07-26T19:24:58Z",
+      "side": 1,
+      "message": "kk, went with a slightly different form to reduce the nesting, but should have the same effect",
+      "parentUuid": "974c6129_01ff81b9",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "3b68912dedb1da6fa256fb14d13a7a0e25a43610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
