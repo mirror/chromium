@@ -201,6 +201,11 @@ class CONTENT_EXPORT RenderFrameProxy
   RenderViewImpl* render_view_;
   RenderWidget* render_widget_;
 
+  // Corresponds to the visibility state of the frame owner in parent process.
+  // We will need to store this value so that we can update the browser
+  // accordingly for cross process navigations.
+  bool is_hidden_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(RenderFrameProxy);
 };
 
