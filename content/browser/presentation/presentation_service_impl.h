@@ -25,7 +25,7 @@
 #include "content/public/browser/presentation_service_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/frame_navigate_params.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h"
 #include "url/gurl.h"
 
@@ -272,9 +272,8 @@ class CONTENT_EXPORT PresentationServiceImpl
   base::hash_map<int, linked_ptr<NewPresentationCallbackWrapper>>
       pending_reconnect_presentation_cbs_;
 
-  // RAII binding of |this| to an Presentation interface request.
-  // The binding is removed when binding_ is cleared or goes out of scope.
-  std::unique_ptr<mojo::Binding<blink::mojom::PresentationService>> binding_;
+  // RAII binding of |this| to an Presentation interface requests.
+  mojo::BindingSet<blink::mojom::PresentationService> bindings_;
 
   // ID of the RenderFrameHost this object is associated with.
   int render_process_id_;

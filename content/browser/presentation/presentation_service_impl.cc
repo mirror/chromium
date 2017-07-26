@@ -107,8 +107,8 @@ void PresentationServiceImpl::CreateMojoService(
 
 void PresentationServiceImpl::Bind(
     blink::mojom::PresentationServiceRequest request) {
-  binding_.reset(new mojo::Binding<blink::mojom::PresentationService>(
-      this, std::move(request)));
+  // TODO(imcheng): Set connection error handler.
+  bindings_.AddBinding(this, std::move(request));
 }
 
 void PresentationServiceImpl::SetClient(
