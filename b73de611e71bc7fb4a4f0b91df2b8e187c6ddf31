@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8aea88d4_14f4290c",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T19:53:55Z",
+      "side": 1,
+      "message": "That file can\u0027t include chrome/browser/ui/views/bubble_anchor_util.h to get at GetPageInfoAnchorPoint(), though, nor include chrome/browser/ui/views/first_run_bubble.h to get FirstRunBubble::ShowBubble(). I think I don\u0027t understand what you\u0027re suggesting, so I\u0027ll try to catch you on IRC so we can talk through it.",
+      "parentUuid": "bdea4b8e_5b914bc2",
+      "revId": "b73de611e71bc7fb4a4f0b91df2b8e187c6ddf31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97cd758d_cc0cbee0",
         "filename": "chrome/browser/ui/cocoa/bubble_anchor_util_views.mm",
         "patchSetId": 5
