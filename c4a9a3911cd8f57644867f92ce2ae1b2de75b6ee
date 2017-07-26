@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbc6e959_d71c9528",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-26T16:18:20Z",
+      "side": 1,
+      "message": "piman@, is it safe to assume that a program binary will never be zero-sized (glGetProgramBinary succeeds but returns no data)? Don\u0027t see how an empty binary could ever exist - but wanted to check with you :D.\n\nOtherwise I\u0027ll need to tweak things a bit.",
+      "range": {
+        "startLine": 226,
+        "startChar": 14,
+        "endLine": 226,
+        "endChar": 26
+      },
+      "revId": "c4a9a3911cd8f57644867f92ce2ae1b2de75b6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

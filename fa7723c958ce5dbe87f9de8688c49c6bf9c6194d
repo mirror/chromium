@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c53cbacf_cda59d3b",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-26T16:18:20Z",
+      "side": 1,
+      "message": "Added error handling and an UMA. If the UMA shows 100% success at all times, we can change this to a DCHECK - if not, we can debug further, as I don\u0027t believe we should ever fail.",
+      "parentUuid": "0a6280df_496020d7",
+      "revId": "fa7723c958ce5dbe87f9de8688c49c6bf9c6194d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eadcb413_54b21ec9",
         "filename": "gpu/command_buffer/service/memory_program_cache.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T18:58:52Z",
       "side": 1,
       "message": "Post commit follow-up: disk corruption shouldn\u0027t lead to crashing the GPU process. I would prefer if we just didn\u0027t load the cached data (i.e. treat is as PROGRAM_LOAD_FAILURE below).",
+      "revId": "fa7723c958ce5dbe87f9de8688c49c6bf9c6194d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbcc4e4f_72b64355",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-26T16:18:20Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "eadcb413_54b21ec9",
       "revId": "fa7723c958ce5dbe87f9de8688c49c6bf9c6194d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
