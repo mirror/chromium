@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4c4d7284_1a343c88",
+        "filename": "components/ntp_snippets/remote/test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-26T15:03:15Z",
+      "side": 1,
+      "message": "\u003e \u003e My suggestion is that tests set it manually. The default is not much of a convenience and will make tests harder to understand.\n\u003e \n\u003e But that\u0027s how it was and how it is. Previously the tests used GetDefaultSuggestionCreationTime when needed. Now they still use it explicitly when needed, I just moved the definition into this file.\n\u003e They do not and should not rely on this value without explicitly setting it, that\u0027s true.\n\nI don\u0027t think you should move the definition into this file.\n\nIf a test fails and says something about 2015, I should be able to look in that test and figure out why 2015 is involved. Previously I could; now I can\u0027t. Therefore, previously the default was OK; now it isn\u0027t.\n\n\u003e \u003e  like 1970-01-01T00:00:00Z.\n\u003e This is not a reasonable default.\n\u003e I want a builder to use reasonable default values when they are not set explicitly.\n\nIf I don\u0027t set a value explicitly, I want a value that says \"this value was not set explicitly\" :)",
+      "parentUuid": "aabf5f8c_b5e1733a",
+      "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0e3e958_b89b6188",
         "filename": "components/ntp_snippets/time_utils.h",
         "patchSetId": 2
