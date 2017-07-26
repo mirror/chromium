@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe8f02b_6a2c444e",
+        "filename": "build/android/java_assertion_enabler/java/org/chromium/javaassertionenabler/AssertionEnabler.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-26T14:58:52Z",
+      "side": 1,
+      "message": "nit: isn\u0027t {} creating an anonymous subclass that\u0027s unnecessary?",
+      "range": {
+        "startLine": 79,
+        "startChar": 96,
+        "endLine": 79,
+        "endChar": 97
+      },
+      "revId": "a7b4b1dc6d2553a849f9b74c635a633b9551ecfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
