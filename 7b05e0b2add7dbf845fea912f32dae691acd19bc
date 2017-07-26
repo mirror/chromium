@@ -16,6 +16,24 @@
       "revId": "7b05e0b2add7dbf845fea912f32dae691acd19bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18a73eb_907379e1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-26T03:20:25Z",
+      "side": 1,
+      "message": "Fixed. Reverted to old code, core bug was in ng_out_of_flow_layout_part.",
+      "parentUuid": "4586864a_541e2e21",
+      "revId": "7b05e0b2add7dbf845fea912f32dae691acd19bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
