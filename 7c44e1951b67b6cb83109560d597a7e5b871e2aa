@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd09a4d8_0e6ebf2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-26T01:11:08Z",
+      "side": 1,
+      "message": "Done, sorry for sloppiness, I somehow missed this.",
+      "parentUuid": "d36f36a4_12957929",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 25
+      },
+      "revId": "7c44e1951b67b6cb83109560d597a7e5b871e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97e9c929_c89d8112",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7c44e1951b67b6cb83109560d597a7e5b871e2aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555ddd79_b616724c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-07-26T01:11:08Z",
+      "side": 1,
+      "message": "Reverted this as CompositorView#didSwapBuffers indeed does the job.",
+      "parentUuid": "97e9c929_c89d8112",
+      "range": {
+        "startLine": 1191,
+        "startChar": 34,
+        "endLine": 1191,
+        "endChar": 64
+      },
+      "revId": "7c44e1951b67b6cb83109560d597a7e5b871e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
