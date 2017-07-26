@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74829a43_0759902c",
+        "filename": "base/vlog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-26T15:06:31Z",
+      "side": 1,
+      "message": "You mean NoBarrier_AtomicIncrement I think?",
+      "revId": "e6e2f572eb94e15d4db9ca00a4c11d27291ee3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
