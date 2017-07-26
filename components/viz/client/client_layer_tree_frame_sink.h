@@ -15,6 +15,10 @@
 #include "components/viz/common/surfaces/surface_id.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+#if DCHECK_IS_ON()
+#include "components/viz/client/local_surface_info.h"
+#endif
+
 namespace viz {
 
 class LocalSurfaceIdProvider;
@@ -70,6 +74,9 @@ class ClientLayerTreeFrameSink : public cc::LayerTreeFrameSink,
                                     const std::string& description);
 
   bool begin_frames_paused_ = false;
+#if DCHECK_IS_ON()
+  LocalSurfaceInfo local_surface_info_;
+#endif
   LocalSurfaceId local_surface_id_;
   std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider_;
   std::unique_ptr<ExternalBeginFrameSource> begin_frame_source_;

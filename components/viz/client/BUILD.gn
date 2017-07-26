@@ -12,6 +12,7 @@ viz_source_set("client") {
     "client_shared_bitmap_manager.h",
     "local_surface_id_provider.cc",
     "local_surface_id_provider.h",
+    "local_surface_info.h",
   ]
 
   public_deps = [

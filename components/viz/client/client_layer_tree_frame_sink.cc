@@ -116,6 +116,20 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(
         local_surface_id_provider_->GetLocalSurfaceIdForFrame(frame);
   }
 
+#if DCHECK_IS_ON()
+  // Verify LocalSurfaceInfo invariants are preserved.
+  gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
+  float device_scale_factor = frame.metadata.device_scale_factor;
+  if (!local_surface_info_.is_valid() ||
+      local_surface_info_.id() != local_surface_id_) {
+    local_surface_info_ =
+        LocalSurfaceInfo(local_surface_id_, device_scale_factor, frame_size);
+  }
+  DCHECK_EQ(local_surface_info_.size_in_pixels().width(), frame_size.width());
+  DCHECK_EQ(local_surface_info_.size_in_pixels().height(), frame_size.height());
+  DCHECK_EQ(local_surface_info_.device_scale_factor(), device_scale_factor);
+#endif
+
   compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
                                                 std::move(frame));
 }
