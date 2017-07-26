@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c221dea_59524552",
+        "filename": "chrome/browser/media_galleries/media_file_system_registry_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T00:09:59Z",
+      "side": 1,
+      "message": "No longer explicit.",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 10
+      },
+      "revId": "9b023a98b46a656cdfb1453b7f1b154bc76496e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732e4c6b_14731eb2",
+        "filename": "components/storage_monitor/media_storage_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T00:09:59Z",
+      "side": 1,
+      "message": "I think we never PostTask() to reach here, so we should always be on the UI thread, right? Can we add a DCHECK_CURRENTLY_ON()?",
+      "revId": "9b023a98b46a656cdfb1453b7f1b154bc76496e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4289fa_d5b1c24b",
+        "filename": "content/public/test/test_renderer_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-26T00:09:59Z",
+      "side": 1,
+      "message": "Can you use base::MakeUnique() here?",
+      "revId": "9b023a98b46a656cdfb1453b7f1b154bc76496e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
