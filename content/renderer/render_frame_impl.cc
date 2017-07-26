@@ -4536,6 +4536,12 @@ void RenderFrameImpl::DidObserveLoadingBehavior(
     observer.DidObserveLoadingBehavior(behavior);
 }
 
+void RenderFrameImpl::DidObserveNewFeatureUsage(
+    blink::mojom::WebFeature feature) {
+  for (auto& observer : observers_)
+    observer.DidObserveNewFeatureUsage(feature);
+}
+
 void RenderFrameImpl::DidCreateScriptContext(v8::Local<v8::Context> context,
                                              int world_id) {
   for (auto& observer : observers_)
