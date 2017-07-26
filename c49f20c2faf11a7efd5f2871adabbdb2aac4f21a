@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6804b296_9b6b73ff",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-26T09:21:18Z",
+      "side": 1,
+      "message": "Right. \n\nIt is not guaranteed, I just did not want to deal with it for now. Overall, it seems unlikely that we will be adding new categories via GCM, because the message is only 4kb.\n\nI know use LOG(DFATAL) and continue afterwards.",
+      "parentUuid": "dac2ab87_fdc16cc5",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65a24949_baab5249",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "348ca581_bf4e1d20",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-26T09:21:18Z",
+      "side": 1,
+      "message": "Done.\n\nThis indeed works, I just did not know about make_move_iterator. Thanks!",
+      "parentUuid": "65a24949_baab5249",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a7b234_2ccd593d",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7c5353_bbce7b77",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-26T09:21:18Z",
+      "side": 1,
+      "message": "The provider should sign up to some communication mean for pushing suggestions first (BreakingNewsListener). For GCM it is BreakingNewsGCMAppHandler. During the sign up, the listener takes a callback, through which to push new suggestions. The interface is misaligned now (listener provides std::unique_ptr\u003cbase::Value\u003e, while here it is std::vector\u003cFetchedCategory\u003e), but we can have an adapter.\n\nI believe a private method can be used as a callback.",
+      "parentUuid": "f7a7b234_2ccd593d",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
