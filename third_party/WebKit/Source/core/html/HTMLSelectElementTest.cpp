@@ -496,4 +496,17 @@ TEST_F(HTMLSelectElementTest, ScrollToOptionAfterLayoutCrash) {
   GetDocument().View()->UpdateAllLifecyclePhases();
 }
 
+TEST_F(HTMLSelectElementTest, SizeAttributeWithStringValue) {
+  GetDocument().documentElement()->setInnerHTML(
+      "<select size=foo><script>"
+      "alert(document.querySelector('select').getAttribute('size'));</script>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  AtomicString exptected("foo");
+
+  HTMLSelectElement* select =
+      toHTMLSelectElement(GetDocument().body()->firstChild());
+  AtomicString size(select->FastGetAttribute(HTMLNames::sizeAttr));
+  EXPECT_EQ(exptected, size);
+}
+
 }  // namespace blink

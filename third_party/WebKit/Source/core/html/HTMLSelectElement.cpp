@@ -300,11 +300,12 @@ void HTMLSelectElement::ParseAttribute(
     // determine the appearance property.
     unsigned size = params.new_value.GetString().ToUInt();
     AtomicString attr_size = AtomicString::Number(size);
+    AtomicString attribute_string(params.new_value.GetString());
     if (attr_size != params.new_value) {
       // FIXME: This is horribly factored.
       if (Attribute* size_attribute =
               EnsureUniqueElementData().Attributes().Find(sizeAttr))
-        size_attribute->SetValue(attr_size);
+        size_attribute->SetValue(attribute_string);
     }
     size_ = size;
     SetNeedsValidityCheck();
