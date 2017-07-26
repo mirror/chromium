@@ -127,7 +127,7 @@ sk_sp<SkImage> CreateTransparentSkImage(const IntSize& size) {
   return surface ? surface->makeImageSnapshot() : nullptr;
 }
 
-PassRefPtr<Image> CreateTransparentImage(const IntSize& size) {
+RefPtr<Image> CreateTransparentImage(const IntSize& size) {
   sk_sp<SkImage> image = CreateTransparentSkImage(size);
   return image ? StaticBitmapImage::Create(image) : nullptr;
 }
@@ -1140,10 +1140,9 @@ void HTMLCanvasElement::EnsureUnacceleratedImageBuffer() {
   did_fail_to_create_image_buffer_ = !image_buffer_;
 }
 
-PassRefPtr<Image> HTMLCanvasElement::CopiedImage(
-    SourceDrawingBuffer source_buffer,
-    AccelerationHint hint,
-    SnapshotReason snapshot_reason) {
+RefPtr<Image> HTMLCanvasElement::CopiedImage(SourceDrawingBuffer source_buffer,
+                                             AccelerationHint hint,
+                                             SnapshotReason snapshot_reason) {
   if (!IsPaintable())
     return nullptr;
   if (!context_)
@@ -1240,7 +1239,7 @@ void HTMLCanvasElement::WillDrawImageTo2DContext(CanvasImageSource* source) {
   }
 }
 
-PassRefPtr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
+RefPtr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint hint,
     SnapshotReason reason,
