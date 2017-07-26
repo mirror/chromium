@@ -46,16 +46,16 @@ TEST_F(QueueingTimeEstimatorTest, AllTasksWithinWindow) {
   QueueingTimeEstimatorForTest estimator(&client,
                                          base::TimeDelta::FromSeconds(5), 1);
   for (int i = 0; i < 3; ++i) {
-    estimator.OnTopLevelTaskStarted(time);
+    estimator.OnTopLevelTaskStarted(time, false);
     time += base::TimeDelta::FromMilliseconds(1000);
-    estimator.OnTopLevelTaskCompleted(time);
+    estimator.OnTopLevelTaskCompleted(time, false);
   }
 
   // Flush the data by adding a task in the next window.
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(500);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   EXPECT_THAT(client.expected_queueing_times(),
               ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(300)));
@@ -74,20 +74,20 @@ TEST_F(QueueingTimeEstimatorTest, MultiWindowTask) {
                                          base::TimeDelta::FromSeconds(5), 1);
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(3000);
 
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(20000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   // Flush the data by adding a task in the next window.
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(500);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   EXPECT_THAT(client.expected_queueing_times(),
               ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(7600),
@@ -109,11 +109,11 @@ TEST_F(QueueingTimeEstimatorTest,
                                          base::TimeDelta::FromSeconds(5), 1);
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   base::TimeTicks start_time = time;
-  estimator.OnTopLevelTaskStarted(start_time);
+  estimator.OnTopLevelTaskStarted(start_time, false);
 
   time += base::TimeDelta::FromMilliseconds(3000);
 
@@ -134,11 +134,11 @@ TEST_F(QueueingTimeEstimatorTest,
                                          base::TimeDelta::FromSeconds(5), 1);
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   base::TimeTicks start_time = time;
-  estimator.OnTopLevelTaskStarted(start_time);
+  estimator.OnTopLevelTaskStarted(start_time, false);
 
   time += base::TimeDelta::FromMilliseconds(13000);
 
@@ -171,11 +171,11 @@ TEST_F(QueueingTimeEstimatorTest,
                                          base::TimeDelta::FromSeconds(5), 5);
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   base::TimeTicks start_time = time;
-  estimator.OnTopLevelTaskStarted(start_time);
+  estimator.OnTopLevelTaskStarted(start_time, false);
 
   time += base::TimeDelta::FromMilliseconds(5500);
 
@@ -208,12 +208,12 @@ TEST_F(QueueingTimeEstimatorTest,
                                          base::TimeDelta::FromSeconds(5), 5);
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(5000);
   base::TimeTicks start_time = time;
-  estimator.OnTopLevelTaskStarted(start_time);
+  estimator.OnTopLevelTaskStarted(start_time, false);
   time += base::TimeDelta::FromMilliseconds(500);
 
   base::TimeDelta estimated_queueing_time =
@@ -230,27 +230,27 @@ TEST_F(QueueingTimeEstimatorTest, IgnoresTasksWithNestedMessageLoops) {
                                          base::TimeDelta::FromSeconds(5), 1);
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(3000);
 
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(20000);
   estimator.OnBeginNestedRunLoop();
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   // Perform an additional task after the nested run loop. A 1 second task
   // in a 5 second window results in a 100ms expected queueing time.
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(1000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   // Flush the data by adding a task in the next window.
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(500);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   EXPECT_THAT(client.expected_queueing_times(),
               ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(0),
@@ -269,25 +269,25 @@ TEST_F(QueueingTimeEstimatorTest, IgnoreExtremelyLongTasks) {
                                          base::TimeDelta::FromSeconds(5), 1);
   // Start with a 1 second task.
   base::TimeTicks time;
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(1000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   // Now perform an invalid task.
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(35000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   // Perform another 1 second task.
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(1000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   // Flush the data by adding a task in the next window.
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(500);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   EXPECT_THAT(client.expected_queueing_times(),
               ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(100),
@@ -320,14 +320,14 @@ TEST_F(QueueingTimeEstimatorTest, SlidingWindowOverOneTask) {
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(1000);
 
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(5000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(6000);
 
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   EXPECT_THAT(client.expected_queueing_times(),
               ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(900),
@@ -362,20 +362,20 @@ TEST_F(QueueingTimeEstimatorTest, SlidingWindowOverTwoTasksWithinFirstWindow) {
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(1000);
 
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(2500);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(500);
 
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(1000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(6000);
 
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   std::vector<base::TimeDelta> expected_durations = {
       base::TimeDelta::FromMilliseconds(400),
@@ -411,23 +411,23 @@ TEST_F(QueueingTimeEstimatorTest,
                                          base::TimeDelta::FromSeconds(5), 5);
   base::TimeTicks time;
   time += base::TimeDelta::FromMilliseconds(1000);
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(4000);
 
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(2500);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
-  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
   time += base::TimeDelta::FromMilliseconds(1000);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   time += base::TimeDelta::FromMilliseconds(6000);
 
-  estimator.OnTopLevelTaskStarted(time);
-  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnTopLevelTaskStarted(time, false);
+  estimator.OnTopLevelTaskCompleted(time, false);
 
   std::vector<base::TimeDelta> expected_durations = {
       base::TimeDelta::FromMilliseconds(0),
@@ -446,6 +446,54 @@ TEST_F(QueueingTimeEstimatorTest,
 
   EXPECT_THAT(client.expected_queueing_times(),
               ::testing::ElementsAreArray(expected_durations));
+}
+
+TEST_F(QueueingTimeEstimatorTest, IgnoreBackgroundedTasks) {
+  TestQueueingTimeEstimatorClient client;
+  QueueingTimeEstimatorForTest estimator(&client,
+                                         base::TimeDelta::FromSeconds(5), 1);
+  base::TimeTicks time;
+  time += base::TimeDelta::FromMilliseconds(1000);
+
+  // This task starts backgrounded and should be ignored.
+  estimator.OnTopLevelTaskStarted(time, true);
+  time += base::TimeDelta::FromMilliseconds(577);
+  estimator.OnTopLevelTaskCompleted(time, false);
+
+  time += base::TimeDelta::FromMilliseconds(200);
+
+  estimator.OnTopLevelTaskStarted(time, false);
+  time += base::TimeDelta::FromMilliseconds(500);
+  estimator.OnTopLevelTaskCompleted(time, false);
+
+  time += base::TimeDelta::FromMilliseconds(200);
+
+  // This task ends backgrounded and should be ignored.
+  estimator.OnTopLevelTaskStarted(time, false);
+  time += base::TimeDelta::FromMilliseconds(589);
+  estimator.OnTopLevelTaskCompleted(time, true);
+
+  time += base::TimeDelta::FromMilliseconds(200);
+
+  estimator.OnTopLevelTaskStarted(time, false);
+  time += base::TimeDelta::FromMilliseconds(700);
+  estimator.OnTopLevelTaskCompleted(time, false);
+
+  time += base::TimeDelta::FromMilliseconds(200);
+
+  // This task starts and ends backgrounded and should be ignored.
+  estimator.OnTopLevelTaskStarted(time, true);
+  time += base::TimeDelta::FromMilliseconds(533);
+  estimator.OnTopLevelTaskCompleted(time, true);
+
+  // Flush the data by adding a task in the next window.
+  time += base::TimeDelta::FromMilliseconds(5000);
+  estimator.OnTopLevelTaskStarted(time, false);
+  time += base::TimeDelta::FromMilliseconds(500);
+  estimator.OnTopLevelTaskCompleted(time, false);
+
+  EXPECT_THAT(client.expected_queueing_times(),
+              ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(74)));
 }
 
 }  // namespace scheduler
