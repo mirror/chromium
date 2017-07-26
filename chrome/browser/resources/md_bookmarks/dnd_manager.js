@@ -620,13 +620,14 @@ cr.define('bookmarks', function() {
      */
     startNativeDrag_: function() {
       var state = bookmarks.Store.getInstance().data;
-      this.dndChip.hide();
 
       if (!this.dragInfo_.isDragValid())
         return false;
 
       var draggedNodes =
           this.dragInfo_.dragData.elements.map((item) => item.id);
+
+      this.clearDragData_();
 
       // TODO(calamity): account for touch.
       chrome.bookmarkManagerPrivate.startDrag(draggedNodes, false);
