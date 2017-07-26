@@ -4856,9 +4856,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
     web::NavigationContextImpl* existingContext =
         [self contextForPendingNavigationWithURL:webViewURL];
-    if (!existingContext && isSameDocumentNavigation) {
-      // This is a renderer-initiated same-document navigation, which needs to
-      // be registered.
+    if (!existingContext) {
+      // This is a renderer-initiated navigation, which needs to be registered.
       std::unique_ptr<web::NavigationContextImpl> newContext =
           [self registerLoadRequestForURL:webViewURL];
       newContext->SetIsSameDocument(true);
