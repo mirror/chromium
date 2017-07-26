@@ -1391,6 +1391,7 @@ test("content_unittests") {
     "../common/content_security_policy/csp_context_unittest.cc",
     "../common/content_security_policy/csp_source_list_unittest.cc",
     "../common/content_security_policy/csp_source_unittest.cc",
+    "../common/cookie_service_impl_unittest.cc",
     "../common/cross_site_document_classifier_unittest.cc",
     "../common/cursors/webcursor_unittest.cc",
     "../common/dom_storage/dom_storage_map_unittest.cc",
