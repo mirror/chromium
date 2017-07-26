@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c7b086_fe37af5f",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-26T19:40:44Z",
+      "side": 1,
+      "message": "You can call FileTaskRunner()-\u003eToSingleThreadTaskRunner() to retrieve this so I think we can get away with just that method.",
+      "range": {
+        "startLine": 466,
+        "startChar": 20,
+        "endLine": 466,
+        "endChar": 38
+      },
+      "revId": "8ad1c0de767dace0497f30a024956ca9c533d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
