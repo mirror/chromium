@@ -7,6 +7,7 @@
 #import <Foundation/Foundation.h>
 
 #include "base/macros.h"
+#import "ios/shared/chrome/browser/ui/metrics/metrics_recorder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -63,6 +64,10 @@
 - (void)hide {
   self.hideCalled = YES;
 }
+
+@end
+
+@interface MetricsRecorderTestSimpleTarget : NSObject<MetricsRecorder>
 
 @end
 
