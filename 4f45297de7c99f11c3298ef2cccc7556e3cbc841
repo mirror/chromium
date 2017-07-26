@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "7fbb0edd_2c6e0add",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-26T21:34:14Z",
+      "side": 1,
+      "message": "That would be nice. In the worst case, you can construct two uint64s from the string and then deserialize from the two uint64s.",
+      "parentUuid": "125b3bf1_bfa4f7d9",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31e43e0c_17c9ea52",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 2
@@ -189,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "fd32de8d_09a565c5",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-26T21:34:14Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "32af9b3f_bdacd6c4",
+      "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d434874a_bdb87767",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 2
@@ -270,6 +312,24 @@
       "writtenOn": "2017-07-24T19:09:09Z",
       "side": 1,
       "message": "Add new test cases for origin_id?",
+      "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94661ea2_9b3e474e",
+        "filename": "components/cdm/browser/media_drm_storage_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-26T21:34:14Z",
+      "side": 1,
+      "message": "This is not resolved yet :)",
+      "parentUuid": "a484f204_6fd9f0e5",
       "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -375,6 +435,24 @@
       "side": 1,
       "message": "This should never fail unless mojo pipe is broken, in which case we should fail anyway. MediaDrmStorageImpl should clear the old map if new origin id is generated in OnProvisioned. I\u0027ll update the comment.",
       "parentUuid": "9be28f3f_1c09628f",
+      "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356999e7_c1bfe4ef",
+        "filename": "media/base/android/media_drm_storage_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-26T21:34:14Z",
+      "side": 1,
+      "message": "If the mojo pipe is broken, we\u0027ll return an empty origin id. Then in MediaDrmBridge use_origin_isolated_storage will be false and we\u0027ll continue without origin ID. This seems wrong to me.",
+      "parentUuid": "6c845f04_69aa1c9a",
       "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
