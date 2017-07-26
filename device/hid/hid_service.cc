@@ -51,7 +51,7 @@ std::unique_ptr<HidService> HidService::Create() {
 #endif
 }
 
-void HidService::GetDevices(const GetDevicesCallback& callback) {
+void HidService::GetDevices(GetDevicesCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (enumeration_ready_) {
     std::vector<scoped_refptr<HidDeviceInfo>> devices;
@@ -59,9 +59,9 @@ void HidService::GetDevices(const GetDevicesCallback& callback) {
       devices.push_back(map_entry.second);
     }
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, devices));
+        FROM_HERE, base::BindOnce(std::move(callback), devices));
   } else {
-    pending_enumerations_.push_back(callback);
+    pending_enumerations_.push_back(std::move(callback));
   }
 }
 
@@ -143,8 +143,8 @@ void HidService::FirstEnumerationComplete() {
       devices.push_back(map_entry.second);
     }
 
-    for (const GetDevicesCallback& callback : pending_enumerations_) {
-      callback.Run(devices);
+    for (GetDevicesCallback& callback : pending_enumerations_) {
+      std::move(callback).Run(devices);
     }
     pending_enumerations_.clear();
   }
