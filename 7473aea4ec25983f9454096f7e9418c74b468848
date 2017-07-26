@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a955560_881375c3",
+        "filename": "tools/ipc_fuzzer/message_lib/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-26T20:11:20Z",
+      "side": 1,
+      "message": "I don\u0027t think we need all of these dependencies. //remoting/host should be enough.\nAlso I think you want this dependency to be conditional on enable_remoting.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "7473aea4ec25983f9454096f7e9418c74b468848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
