@@ -11,6 +11,7 @@
 #include "ash/system/palette/palette_tray.h"
 #include "ash/system/status_area_widget.h"
 #include "base/command_line.h"
+#include "base/sys_info.h"
 #include "ui/display/display.h"
 #include "ui/events/devices/input_device_manager.h"
 #include "ui/events/devices/touchscreen_device.h"
@@ -18,6 +19,11 @@
 
 namespace ash {
 namespace palette_utils {
+namespace {
+
+const char* kBoardsWithAttachedStylus[] = {"caroline", "kevin"};
+
+}  // namespace
 
 bool HasStylusInput() {
   // Allow the user to force enable or disable by passing a switch. If both are
@@ -58,6 +64,16 @@ bool PaletteContainsPointInScreen(const gfx::Point& point) {
         Shelf::ForWindow(window)->GetStatusAreaWidget()->palette_tray();
     if (palette_tray && palette_tray->ContainsPointInScreen(point))
       return true;
+  }
+
+  return false;
+}
+
+bool IsStylusAttached() {
+  std::string board = base::SysInfo::GetLsbReleaseBoard();
+  if (std::find(kBoardsWithAttachedStylus, std::end(kBoardsWithAttachedStylus),
+                board) != std::end(kBoardsWithAttachedStylus)) {
+    return true;
   }
 
   return false;

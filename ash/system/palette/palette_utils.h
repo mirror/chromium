@@ -31,6 +31,9 @@ ASH_EXPORT bool ShouldShowPalette();
 // given point (in screen space).
 ASH_EXPORT bool PaletteContainsPointInScreen(const gfx::Point& point);
 
+// Returns true if the stylus is attached to the device.
+ASH_EXPORT bool IsStylusAttached();
+
 }  // namespace palette_utils
 }  // namespace ash
 
