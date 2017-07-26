@@ -541,7 +541,8 @@ void HTMLCanvasElement::NotifyListenersCanvasChanged() {
         FloatSize());
     if (status != kNormalSourceImageStatus)
       return;
-    sk_sp<SkImage> image = source_image->ImageForCurrentFrame();
+    sk_sp<SkImage> image =
+        source_image->PaintImageForCurrentFrame().GetSkImage();
     for (CanvasDrawListener* listener : listeners_) {
       if (listener->NeedsNewFrame()) {
         listener->SendNewFrame(image);
@@ -677,7 +678,7 @@ ImageData* HTMLCanvasElement::ToImageData(SourceDrawingBuffer source_buffer,
         GetImageBuffer()->NewSkImageSnapshot(kPreferNoAcceleration, reason);
   } else if (PlaceholderFrame()) {
     DCHECK(PlaceholderFrame()->OriginClean());
-    snapshot = PlaceholderFrame()->ImageForCurrentFrame();
+    snapshot = PlaceholderFrame()->PaintImageForCurrentFrame().GetSkImage();
   }
 
   if (snapshot) {
@@ -1294,7 +1295,7 @@ PassRefPtr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
     }
     RefPtr<Image> image = RenderingContext()->GetImage(hint, reason);
     if (image) {
-      sk_image = image->ImageForCurrentFrame();
+      sk_image = image->PaintImageForCurrentFrame().GetSkImage();
     } else {
       sk_image = CreateTransparentSkImage(Size());
     }

@@ -1148,7 +1148,7 @@ void DrawImageOp::RasterWithFlags(const PaintOpWithFlags* base_op,
                                   const SkMatrix& original_ctm) {
   auto* op = static_cast<const DrawImageOp*>(base_op);
   SkPaint paint = flags->ToSkPaint();
-  canvas->drawImage(op->image.sk_image().get(), op->left, op->top, &paint);
+  canvas->drawImage(op->image.GetSkImage().get(), op->left, op->top, &paint);
 }
 
 void DrawImageRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
@@ -1160,7 +1160,7 @@ void DrawImageRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
   SkCanvas::SrcRectConstraint skconstraint =
       static_cast<SkCanvas::SrcRectConstraint>(op->constraint);
   SkPaint paint = flags->ToSkPaint();
-  canvas->drawImageRect(op->image.sk_image().get(), op->src, op->dst, &paint,
+  canvas->drawImageRect(op->image.GetSkImage().get(), op->src, op->dst, &paint,
                         skconstraint);
 }
 
@@ -1456,7 +1456,7 @@ DrawImageOp::DrawImageOp(const PaintImage& image,
 bool DrawImageOp::HasDiscardableImages() const {
   // TODO(khushalsagar): Callers should not be able to change the lazy generated
   // state for a PaintImage.
-  return image.sk_image()->isLazyGenerated();
+  return image.IsLazyGenerated();
 }
 
 DrawImageOp::~DrawImageOp() = default;
@@ -1475,7 +1475,7 @@ DrawImageRectOp::DrawImageRectOp(const PaintImage& image,
       constraint(constraint) {}
 
 bool DrawImageRectOp::HasDiscardableImages() const {
-  return image.sk_image()->isLazyGenerated();
+  return image.IsLazyGenerated();
 }
 
 DrawImageRectOp::~DrawImageRectOp() = default;

@@ -102,11 +102,10 @@ class DiscardableImageGenerator {
           } break;
           case PaintOpType::DrawImage: {
             auto* image_op = static_cast<DrawImageOp*>(op);
-            const SkImage* sk_image = image_op->image.sk_image().get();
-            AddImage(image_op->image,
-                     SkRect::MakeIWH(sk_image->width(), sk_image->height()),
+            const PaintImage& image = image_op->image;
+            AddImage(image, SkRect::MakeIWH(image.width(), image.height()),
                      SkRect::MakeXYWH(image_op->left, image_op->top,
-                                      sk_image->width(), sk_image->height()),
+                                      image.width(), image.height()),
                      nullptr, image_op->flags);
           } break;
           case PaintOpType::DrawImageRect: {
@@ -198,7 +197,7 @@ class DiscardableImageGenerator {
                 const SkRect& rect,
                 const SkMatrix* local_matrix,
                 const PaintFlags& flags) {
-    if (!paint_image.sk_image()->isLazyGenerated())
+    if (!paint_image.IsLazyGenerated())
       return;
 
     const SkRect& clip_rect = SkRect::Make(canvas_.getDeviceClipBounds());
