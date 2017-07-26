@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23273d6b_c4d4770c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T00:38:20Z",
+      "side": 1,
+      "message": "Use this line directly in your test.",
+      "revId": "c533f21f4adb5a40328e7068aa667bffcc25b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939f7a3f_8153dee5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T00:38:20Z",
+      "side": 1,
+      "message": "//  namespace",
+      "revId": "c533f21f4adb5a40328e7068aa667bffcc25b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d189fd_eff313e1",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T00:38:20Z",
+      "side": 1,
+      "message": "Reverse the order of the expectation arguments.",
+      "revId": "c533f21f4adb5a40328e7068aa667bffcc25b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d98fa83_031ab520",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T00:38:20Z",
+      "side": 1,
+      "message": "Simplify this comment. Don\u0027t explain the algorithm (e.g., \"origin minus the height\").\nTry this: \"Tests |OriginY| when the target element is below the bubble.\"\nApply this philosophy elsewhere.",
+      "revId": "c533f21f4adb5a40328e7068aa667bffcc25b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f301a43b_5fe0e7a0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T00:38:20Z",
+      "side": 1,
+      "message": "I assume LTR is the default. No need for this.",
+      "revId": "c533f21f4adb5a40328e7068aa667bffcc25b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63e2b21_5df85756",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T00:38:20Z",
+      "side": 1,
+      "message": "Split into separate tests.",
+      "revId": "c533f21f4adb5a40328e7068aa667bffcc25b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90696cbd_03c6fa25",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-26T00:38:20Z",
+      "side": 1,
+      "message": "I think you do need a test fixture to construct these target rects. They make the test hard to read when they are in-line, and they add to the bulk of the code.",
+      "revId": "c533f21f4adb5a40328e7068aa667bffcc25b12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
