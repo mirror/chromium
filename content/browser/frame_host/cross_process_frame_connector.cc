@@ -85,6 +85,8 @@ void CrossProcessFrameConnector::set_view(
   if (view_) {
     view_->SetCrossProcessFrameConnector(this);
     SetRect(child_frame_rect_);
+    if (is_hidden_)
+      OnVisibilityChanged(false);
   }
 }
 
@@ -276,6 +278,7 @@ void CrossProcessFrameConnector::OnUpdateViewportIntersection(
 }
 
 void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
+  is_hidden_ = !visible;
   if (!view_)
     return;
 
