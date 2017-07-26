@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c43f1945_c9aa3aff",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-26T14:57:50Z",
+      "side": 1,
+      "message": "So there are three LOG here. When I ran the test that I added, I got\n\"LayoutBlockFlow DIV id\u003d\u0027scrollable\u0027\"\nNot null\n\"Scrolling Contents Layer\"\n\"LayoutView #document\"\nNot null\n\"Scrolling Contents Layer\"\n\nIf I directly open the html with chrome, I got\n\"LayoutBlockFlow DIV id\u003d\u0027scrollable\u0027\"\nNot null\n\"Scrolling Contents Layer\"\n\"LayoutView #document\"\nNull\n\"LayoutView #document\"\n\npdr@: as you can see, when I ran the test, somehow it thinks that the document\u0027s scrolling contents layer is not null, and that causes the error. I don\u0027t know why. Begging for suggestions.",
+      "range": {
+        "startLine": 799,
+        "startChar": 4,
+        "endLine": 813,
+        "endChar": 56
+      },
+      "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ce7b28_dd8200c1",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinatorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-26T14:57:50Z",
+      "side": 1,
+      "message": "pdr@: I added a test here, with these three lines, I expect the LOG that I added in ScrollingCoordinator.cpp would be the same as when I open the html with chrome. But they are not the same, please see my comments in ScrollingCoordinator.cpp.",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 31
+      },
+      "revId": "b5efa475b232ce59823cbe6f5add68485789102c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
