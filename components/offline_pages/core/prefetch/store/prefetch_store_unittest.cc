@@ -6,6 +6,9 @@
 
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h"
+#include "components/offline_pages/core/prefetch/prefetch_item.h"
+#include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "sql/connection.h"
 #include "sql/statement.h"
@@ -25,10 +28,6 @@ int CountPrefetchItems(sql::Connection* db) {
   return -1;
 }
 
-void CountPrefetchItemsResult(int expected_count, int actual_count) {
-  EXPECT_EQ(expected_count, actual_count);
-}
-
 }  // namespace
 
 class PrefetchStoreTest : public testing::Test {
@@ -45,12 +44,17 @@ class PrefetchStoreTest : public testing::Test {
 
   PrefetchStore* store() { return store_test_util_.store(); }
 
+  PrefetchStoreTestUtil* store_util() { return &store_test_util_; }
+
+  MockPrefetchItemGenerator* item_generator() { return &item_generator_; }
+
   void PumpLoop() { task_runner_->RunUntilIdle(); }
 
  private:
   PrefetchStoreTestUtil store_test_util_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
+  MockPrefetchItemGenerator item_generator_;
 };
 
 PrefetchStoreTest::PrefetchStoreTest()
@@ -59,8 +63,29 @@ PrefetchStoreTest::PrefetchStoreTest()
 
 TEST_F(PrefetchStoreTest, InitializeStore) {
   store()->Execute<int>(base::BindOnce(&CountPrefetchItems),
-                        base::BindOnce(&CountPrefetchItemsResult, 0));
+                        store_util()->ExpectEqCallback<int>(0));
   PumpLoop();
+}
+
+TEST_F(PrefetchStoreTest, WriteAndLoadOneItem) {
+  PrefetchItem item1(
+      item_generator()->CreateItem(PrefetchItemState::AWAITING_GCM));
+  item1.generate_bundle_attempts = 10;
+  item1.get_operation_attempts = 11;
+  item1.download_initiation_attempts = 12;
+  item1.creation_time = base::Time::FromJavaTime(1000L);
+  item1.freshness_time = base::Time::FromJavaTime(2000L);
+  item1.error_code = PrefetchItemErrorCode::EXPIRED;
+
+  store_util()->InsertItem(item1, store_util()->ExpectTrueCallback());
+  PumpLoop();
+
+  std::set<PrefetchItem> all_items;
+  store_util()->GetAllItems(&all_items,
+                            store_util()->ExpectEqCallback<std::size_t>(1U));
+  PumpLoop();
+
+  EXPECT_EQ(1U, all_items.count(item1));
 }
 
 }  // namespace offline_pages
