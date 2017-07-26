@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "46af6673_ed8b9196",
+        "filename": "cc/base/filter_operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-26T21:08:50Z",
+      "side": 1,
+      "message": "That is what I thought originally. At the calling site, we check if the rect is valid, we can also check if the rect is not empty:\nhttps://cs.chromium.org/chromium/src/cc/trees/damage_tracker.cc?q\u003ddamage_tracker\u0026dr\u003dC\u0026l\u003d190\nand\nhttps://cs.chromium.org/chromium/src/cc/trees/damage_tracker.cc?q\u003ddamage_tracker\u0026dr\u003dC\u0026l\u003d341",
+      "parentUuid": "3d4cead0_61c1c596",
+      "range": {
+        "startLine": 348,
+        "startChar": 5,
+        "endLine": 348,
+        "endChar": 6
+      },
+      "revId": "a1134195f443c6236cc49ca004a8941d968c6538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e123d3c_50855f5e",
         "filename": "cc/base/filter_operations_unittest.cc",
         "patchSetId": 2
