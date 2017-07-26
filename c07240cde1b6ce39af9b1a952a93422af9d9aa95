@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "68183987_9f54abeb",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-26T00:28:48Z",
+      "side": 1,
+      "message": "Done\nThanks for clarifying it to me.",
+      "parentUuid": "22fdb9e0_d0e1fd36",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 56
+      },
+      "revId": "c07240cde1b6ce39af9b1a952a93422af9d9aa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ae764b6_32dee9ce",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 7
