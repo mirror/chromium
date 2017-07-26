@@ -22,6 +22,30 @@
       "revId": "4fb51e6c41154a2117f617a7c38e11a4d4c2dca3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf65769_4df7e2f7",
+        "filename": "content/browser/renderer_host/input/synthetic_pointer_action.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-26T16:00:55Z",
+      "side": 1,
+      "message": "I think DONE should be fine, even though I could not think about why we pass an empty action. Thanks for fixing this.",
+      "parentUuid": "4d2cc3de_d31a579d",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "4fb51e6c41154a2117f617a7c38e11a4d4c2dca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
