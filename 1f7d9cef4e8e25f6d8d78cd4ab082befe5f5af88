@@ -1,0 +1,356 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "027e60da_7615e2d4",
+        "filename": "ash/mus/wallpaper_delegate_mus.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "what\u0027s this used for?",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc69ccb_bba69a91",
+        "filename": "ash/public/cpp/wallpaper_struct_traits.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "nit: maybe just do:\n\n  return data.ReadLocation(...) \u0026\u0026\n         data.ReadLayout(...) \u0026\u0026\n         ...;\n\n?",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57619292_c75bd45c",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "i assume someone is or has already reviewed the mojo side of this, but i take it it\u0027s normal to need to duplicate structs and enums in .mojom files... :-(",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500e364a_0013a214",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "do you really need to call RemoveObserver if you\u0027re about to delete the object?\n\nthis comment applies throughout the file: there are a lot of places where RemoveObserver is called just before the object is destroyed, but i\u0027m not sure whether that\u0027s necessary since this class also owns the object.",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6304f05e_ec6e08c9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "this cast makes me a bit nervous... is SkColor 32 bits? i so, i assume it\u0027s safe.",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112d428f_d20587d3",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "not really sure about base::Optional here. is there any reason you couldn\u0027t just return an empty vector instead?",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3b1111_6818435b",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "instead of base::Optional, why not just make the member be a string and then do \"cache_id_ \u003d cache_id\" here? that seems equivalent, and then you don\u0027t need this method at all.",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93333e6_92f36c55",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "nit: reasons",
+      "range": {
+        "startLine": 483,
+        "startChar": 5,
+        "endLine": 483,
+        "endChar": 11
+      },
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1d5a61_47fc19a3",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "would it be cleaner for the image itself to also be included in the WallpaperInfo struct, or is there a reason that\u0027s not possible?",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127ff9a9_1b764f31",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "this comment seems wrong; it\u0027s caching |colors| rather than the |prominent_colors_| member. with that said, could it just cache the member instead of taking an argument? could you even make this be part of SetProminentColors instead of a separate method?",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59046f62_5cd7b9fe",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242b42ea_1ed08eed",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "use \u0027enum class\u0027 instead and give values names like \"CENTER\" and \"STRETCH\"",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058d19eb_362ca47b",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "nit: add a comment mentioning that this needs to remain last",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6275be84_1b7697f5",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "add a comment documenting what this is used for.\n\nsorry, i know that this struct already existed, but what better time to improve its documentation than when it\u0027s being moved? :-)",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f872bd77_f8a5435e",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need \u0027in_\u0027 in all of these; the initialization list will work even if you do e.g. location(location)",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c20bb4_fa49afb8",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "what does \"first directory level\" mean? does it mean that this is an absolute path, or something else?",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7caa64_afb75b4a",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "this is vague too. if it\u0027s referring to a member in a particular class or struct, please use the full name, e.g. user_managare::User::wallpaper_files_id or whatever",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f610a328_aecbeca4",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "add a blank line after this",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18bcfdc_a8b02c7f",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "document what this means",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4429dba6_2c26d59a",
+        "filename": "components/wallpaper/wallpaper_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-26T20:07:16Z",
+      "side": 1,
+      "message": "move this above data members",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
