@@ -6,10 +6,12 @@
 
 #include <algorithm>
 #include "core/dom/FirstLetterPseudoElement.h"
+#include "core/editing/VisibleUnits.h"
 #include "core/editing/iterators/TextIteratorTextState.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/RootInlineBox.h"
+#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 
 namespace blink {
 
@@ -19,6 +21,11 @@ TextIteratorTextNodeHandler::TextIteratorTextNodeHandler(
     : behavior_(behavior), text_state_(*text_state) {}
 
 bool TextIteratorTextNodeHandler::HandleRemainingTextRuns() {
+  if (inline_node_) {
+    HandleTextNodeWithLayoutNG();
+    return text_state_.PositionNode();
+  }
+
   if (ShouldProceedToRemainingText())
     ProceedToRemainingText();
   // Handle remembered text box
@@ -115,18 +122,56 @@ void TextIteratorTextNodeHandler::HandlePreFormattedTextNode() {
   EmitText(text_node_, text_node_->GetLayoutObject(), run_start, run_end);
 }
 
+void TextIteratorTextNodeHandler::HandleTextNodeWithLayoutNG() {
+  const LayoutObject* layout_object =
+      AssociatedLayoutObjectOf(*text_node_, offset_);
+
+  // Skip invisible content.
+  if (layout_object->Style()->Display() == EDisplay::kNone ||
+      (layout_object->Style()->Visibility() != EVisibility::kVisible &&
+       !IgnoresStyleVisibility())) {
+    offset_ = end_offset_;
+    return;
+  }
+
+  while (offset_ < end_offset_ && !text_state_.PositionNode()) {
+    const NGOffsetMappingUnit* unit =
+        inline_node_->GetMappingUnitForDOMOffset(*text_node_, offset_);
+    // No more text on this node to emit.
+    if (!unit || static_cast<unsigned>(offset_) == unit->DOMEnd()) {
+      offset_ = end_offset_;
+      return;
+    }
+
+    const unsigned run_end =
+        std::min(static_cast<unsigned>(end_offset_), unit->DOMEnd());
+    if (unit->TextContentStart() == unit->TextContentEnd()) {
+      offset_ = run_end;
+      continue;
+    }
+
+    // TODO(xiaochengh): Handle EmitsOriginalText.
+
+    String string = inline_node_->Text();
+    if (behavior_.EmitsSpaceForNbsp())
+      string.Replace(kNoBreakSpaceCharacter, kSpaceCharacter);
+    const unsigned text_content_start =
+        unit->ConvertDOMOffsetToTextContent(offset_);
+    const unsigned text_content_end =
+        unit->ConvertDOMOffsetToTextContent(run_end);
+    text_state_.EmitText(text_node_, offset_, run_end, string,
+                         text_content_start, text_content_end);
+    offset_ = run_end;
+    return;
+  }
+}
+
 void TextIteratorTextNodeHandler::HandleTextNodeInRange(Text* node,
                                                         int start_offset,
                                                         int end_offset) {
   DCHECK(node);
   DCHECK_GE(start_offset, 0);
-
-  // TODO(editing-dev): Add the following DCHECK once we stop assuming equal
-  // number of code units in DOM string and LayoutText::GetText(). Currently
-  // violated by
-  // - external/wpt/innerText/getter.html
-  // - fast/css/case-transform.html
-  // DCHECK_LE(end_offset, static_cast<int>(node->data().length()));
+  DCHECK_LE(end_offset, static_cast<int>(node->data().length()));
 
   // TODO(editing-dev): Stop passing in |start_offset == end_offset|.
   DCHECK_LE(start_offset, end_offset);
@@ -136,6 +181,12 @@ void TextIteratorTextNodeHandler::HandleTextNodeInRange(Text* node,
   end_offset_ = end_offset;
   handled_first_letter_ = false;
   first_letter_text_ = nullptr;
+
+  inline_node_ = GetNGInlineNodeFor(*node);
+  if (inline_node_) {
+    HandleTextNodeWithLayoutNG();
+    return;
+  }
 
   LayoutText* layout_object = text_node_->GetLayoutObject();
   String str = layout_object->GetText();
@@ -184,9 +235,7 @@ void TextIteratorTextNodeHandler::HandleTextNodeInRange(Text* node,
 
 void TextIteratorTextNodeHandler::HandleTextNodeStartFrom(Text* node,
                                                           int start_offset) {
-  HandleTextNodeInRange(node, start_offset,
-                        node->GetLayoutObject()->TextStartOffset() +
-                            node->GetLayoutObject()->GetText().length());
+  HandleTextNodeInRange(node, start_offset, node->data().length());
 }
 
 void TextIteratorTextNodeHandler::HandleTextNodeEndAt(Text* node,
@@ -406,6 +455,8 @@ bool TextIteratorTextNodeHandler::FixLeadingWhiteSpaceForReplacedElement(
     Node* parent) {
   // This is a hacky way for white space fixup in legacy layout. With LayoutNG,
   // we can get rid of this function.
+  if (inline_node_)
+    return false;
 
   if (behavior_.CollapseTrailingSpace()) {
     if (text_node_) {
