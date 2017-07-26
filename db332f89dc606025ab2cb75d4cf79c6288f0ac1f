@@ -70,6 +70,41 @@
       "revId": "db332f89dc606025ab2cb75d4cf79c6288f0ac1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e81825d_c94763c9",
+        "filename": "media/gpu/dxva_picture_buffer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-26T18:40:08Z",
+      "side": 1,
+      "message": "Ok, you make a point. This still isn\u0027t my favourite thing though, but I don\u0027t think I can block you on it.",
+      "parentUuid": "cf7abc10_a2a93449",
+      "revId": "db332f89dc606025ab2cb75d4cf79c6288f0ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d6144b0_659a0b73",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 29729,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-26T18:40:08Z",
+      "side": 1,
+      "message": "Can you mention that since this is recording line numbers, it should not be compared across versions unless there have been no line changes.",
+      "revId": "db332f89dc606025ab2cb75d4cf79c6288f0ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
