@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "f59f7be3_ec63746e",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-26T11:54:05Z",
+      "side": 1,
+      "message": "Please do not introduce new usage of blink::InterfaceProvider, as it\u0027s on its way out. New Blink code should use service_manager::InterfaceProvider instead, and we are intentionally only using this to expose more narrowly (i.e. frame- or worker-) scoped interface bindings.\n\nIf you want a BlinkResourceCoordinatorBase instance which is not bound to a specific frame or worker context, you can use the global Connector (see blink::Platform::GetConnector) to acquire a CoordinatorUnitPtr directly from the resource_coordinator service.",
+      "revId": "904cd9ed2e6af0e63d1b78638102967920529912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ea457b0_6eba9679",
         "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h",
         "patchSetId": 14
