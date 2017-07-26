@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<style>
+  body {
+    margin: 8px; /* This is the default - but it is not scaled */
+    background: black;
+    transform: scale(0.75);
+    transform-origin: top left;
+  }
+
+  .scroller {
+    position: relative;
+    overflow: scroll;
+    width: 152px;
+    height: 152px;
+    background: white local;
+    opacity: 0.5;
+    margin-top: 4px;
+    left: 1px;
+    top: 10px;
+  }
+
+  .filter { /* hides the scrollers scrollbars */
+    position: relative;
+    overflow: hidden;
+    height: 132px;
+    width: 132px;
+  }
+
+  .promoter { /* may promote the relevant div to composited */
+    position: absolute;
+    top: 24px;
+    left: 12px;
+    height: 12px;
+    width: 12px;
+    background: green;
+    will-change: transform;
+  }
+
+  .spacer {
+    height: 400px;
+    width: 400px;
+  }
+</style>
+
+<!-- These have tops and scroll positions that are scaled by
+  the body, and added to the margin around the body -->
+<div class="filter">
+  <div class="promoter"></div>
+  <div id="one" class="scroller"><div class="spacer"></div></div>
+</div>
+<div class="filter">
+  <div class="promoter"></div>
+  <div id="two" class="scroller"><div class="spacer"></div></div>
+</div>
+<div class="filter">
+  <div class="promoter"></div>
+  <div id="three" class="scroller"><div class="spacer"></div></div>
+</div>
+<script>
+document.getElementById('one').scrollTop = 1;
+document.getElementById('two').scrollTop = 2;
+document.getElementById('three').scrollTop = 3;
+</script>
+~
