@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b8cef16_ade1c93e",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-26T08:14:30Z",
+      "side": 1,
+      "message": "Please update the ios factory as well.\n(probably with a constant nullptr, at the moment)",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 564,
+        "endChar": 0
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc0b286_f2597c03",
+        "filename": "components/ntp_snippets/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-26T08:14:30Z",
+      "side": 1,
+      "message": "What about a unit-test? ;)\n\nIf the methods to test are unfinished and thus too early to test, please add TODOs to finish them and to add unit-tests.",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4598ee_60bebbb7",
+        "filename": "components/ntp_snippets/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-26T08:14:30Z",
+      "side": 1,
+      "message": "This feels out of scope of this CL as you do not store anything to the DB in this CL.",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa72a28_da8044ae",
+        "filename": "components/ntp_snippets/contextual_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-26T08:14:30Z",
+      "side": 1,
+      "message": "The name may make the impression that it is a KeyedService (a service accessed via a factory; with a unique instance per profile). What about ContextualSuggestionsSource or ContextualSuggestionsCache?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
