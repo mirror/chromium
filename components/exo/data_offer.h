@@ -7,10 +7,12 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 #include "base/containers/flat_set.h"
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "ui/base/class_property.h"
 
 namespace exo {
@@ -21,8 +23,13 @@ enum class DndAction;
 // Object representing transferred data offered to a client.
 class DataOffer : public ui::PropertyHandler {
  public:
-  explicit DataOffer(DataOfferDelegate* delegate);
+  DataOffer(DataOfferDelegate* delegate,
+            std::vector<std::string> mime_types,
+            const base::flat_set<DndAction>& source_actions,
+            DndAction dnd_action);
   ~DataOffer();
+
+  base::WeakPtr<DataOffer> AsWeakPtr();
 
   // Accepts one of the offered mime types.
   void Accept(const std::string& mime_type);
@@ -38,9 +45,19 @@ class DataOffer : public ui::PropertyHandler {
   void SetActions(const base::flat_set<DndAction>& dnd_actions,
                   DndAction preferred_action);
 
+  // Sends events to the client to notify the current member values of
+  // DataOffer.
+  void SendEvents();
+
+  DndAction dnd_action() { return dnd_action_; }
+
  private:
   DataOfferDelegate* const delegate_;
+  std::vector<std::string> mime_types_;
+  base::flat_set<DndAction> source_actions_;
+  DndAction dnd_action_;
 
+  base::WeakPtrFactory<DataOffer> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(DataOffer);
 };
 
