@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "9133830d_807590e2",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "i\u0027m beyond impressed with the efficiency of zucchini if the overhead of unwinding the top item on the stack skews metrics in any meaningful way. ;-)",
+      "parentUuid": "23fddda8_f58d9815",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed01f68f_cf3bff5f",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 3

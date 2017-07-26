@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0878dd1e_6a5acb14",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "nit: paths or file_paths",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 25,
+        "endChar": 66
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1341e9e_b0b73353",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "is there a need to dynamically add commands? could you instead initialize the registry with a constexpr array of commands?",
+      "range": {
+        "startLine": 99,
+        "startChar": 22,
+        "endLine": 99,
+        "endChar": 25
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2114edd0_1336b5bc",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "hmm. i suggested this comment when it looked like this is what the enum really represented. now that more stuff has moved from the lib to the exe, it\u0027s more muddy. does the interface of the lib dictate exit codes for the exe? maybe this should be documented as general zucchini status codes with a comment on kStatusSuccess mentioning that it\u0027s explicitly zero for convenience when being used as a process exit code?",
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df56dbb_46461358",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "nit: \"_in\" isn\u0027t needed on these",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d8e322_b5bc2841",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "i think it\u0027s bad form to define these in the header. if you follow my advice elsewhere, you could declare a function like:\nstd::pair\u003cconst Command*, const Command*\u003e GetCommandRange();\nand have the definition in the .cc file do something like:\n\nstd::pair\u003cconst Command*, const Command*\u003e GetCommandRange() {\n  static constexpr Command kCommands[] \u003d {...};\n  return std::make_pair(std::begin(kCommands), std::end(kCommands));\n}",
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e7f112_5a8fdf82",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "nit: Generate?",
+      "range": {
+        "startLine": 76,
+        "startChar": 30,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c06e012_00e1af3c",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "Apply?",
+      "range": {
+        "startLine": 82,
+        "startChar": 32,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbc4ae7_7b430429",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-26T21:19:15Z",
+      "side": 1,
+      "message": "in the interest of simplification, everything here on down could be replaced with:\n  return RunCommand(\u0026std::cerr, GetCommands(), command_line);\n\nrejiggering of CommandRegistry into RunCommand is left as an exercise for the reader. ;-)",
+      "revId": "4d9b3fbcc9546530f6d173a73dcd45a4ff06326c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
