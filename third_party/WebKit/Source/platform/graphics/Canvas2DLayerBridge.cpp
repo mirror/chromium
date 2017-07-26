@@ -159,12 +159,12 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(
 
 Canvas2DLayerBridge::~Canvas2DLayerBridge() {
   DCHECK(destruction_in_progress_);
+
 #if USE_IOSURFACE_FOR_2D_CANVAS
   ClearCHROMIUMImageCache();
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
   layer_.reset();
-  DCHECK_EQ(0u, mailboxes_.size());
 }
 
 void Canvas2DLayerBridge::StartRecording() {
@@ -240,6 +240,7 @@ GLenum Canvas2DLayerBridge::GetGLFilter() {
 #if USE_IOSURFACE_FOR_2D_CANVAS
 bool Canvas2DLayerBridge::PrepareIOSurfaceMailboxFromImage(
     SkImage* image,
+    MailboxInfo& info,
     viz::TextureMailbox* out_mailbox) {
   // Need to flush skia's internal queue, because the texture is about to be
   // accessed directly.
@@ -262,7 +263,6 @@ bool Canvas2DLayerBridge::PrepareIOSurfaceMailboxFromImage(
       image_texture, 0, texture_target, image_info->texture_id_, 0, 0, 0, 0, 0,
       size_.Width(), size_.Height(), GL_FALSE, GL_FALSE, GL_FALSE);
 
-  MailboxInfo& info = mailboxes_.front();
   gpu::Mailbox mailbox;
   gl->GenMailboxCHROMIUM(mailbox.name);
   gl->ProduceTextureDirectCHROMIUM(image_info->texture_id_, texture_target,
@@ -364,18 +364,10 @@ void Canvas2DLayerBridge::ClearCHROMIUMImageCache() {
 }
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
-void Canvas2DLayerBridge::CreateMailboxInfo() {
-  MailboxInfo tmp;
-  tmp.parent_layer_bridge_ = this;
-  mailboxes_.push_front(tmp);
-}
-
 bool Canvas2DLayerBridge::PrepareMailboxFromImage(
     sk_sp<SkImage> image,
+    MailboxInfo& mailbox_info,
     viz::TextureMailbox* out_mailbox) {
-  CreateMailboxInfo();
-  MailboxInfo& mailbox_info = mailboxes_.front();
-
   GrContext* gr_context = context_provider_->GetGrContext();
   if (!gr_context) {
     mailbox_info.image_ = std::move(image);
@@ -385,7 +377,7 @@ bool Canvas2DLayerBridge::PrepareMailboxFromImage(
 
 #if USE_IOSURFACE_FOR_2D_CANVAS
   if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
-    if (PrepareIOSurfaceMailboxFromImage(image.get(), out_mailbox))
+    if (PrepareIOSurfaceMailboxFromImage(image.get(), info, out_mailbox))
       return true;
     // Note: if IOSurface backed texture creation failed we fall back to the
     // non-IOSurface path.
@@ -845,11 +837,6 @@ bool Canvas2DLayerBridge::CheckSurfaceValid() {
   if (context_provider_->ContextGL()->GetGraphicsResetStatusKHR() !=
       GL_NO_ERROR) {
     ResetSurface();
-    for (auto mailbox_info = mailboxes_.begin();
-         mailbox_info != mailboxes_.end(); ++mailbox_info) {
-      if (mailbox_info->image_)
-        mailbox_info->image_.reset();
-    }
     if (image_buffer_)
       image_buffer_->NotifySurfaceInvalid();
     CanvasMetrics::CountCanvasContextUsage(
@@ -940,48 +927,38 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
   last_image_id_ = image->uniqueID();
   last_filter_ = filter;
 
-  if (!PrepareMailboxFromImage(std::move(image), out_mailbox))
+  MailboxInfo info;
+  if (!PrepareMailboxFromImage(std::move(image), info, out_mailbox))
     return false;
   out_mailbox->set_nearest_neighbor(GetGLFilter() == GL_NEAREST);
   out_mailbox->set_color_space(color_params_.GetGfxColorSpace());
 
-  auto func =
-      WTF::Bind(&Canvas2DLayerBridge::MailboxReleased,
-                weak_ptr_factory_.CreateWeakPtr(), out_mailbox->mailbox());
+  auto func = WTF::Bind(&Canvas2DLayerBridge::MailboxReleased,
+                        weak_ptr_factory_.CreateWeakPtr(), info,
+                        out_mailbox->mailbox());
   *out_release_callback =
       cc::SingleReleaseCallback::Create(ConvertToBaseCallback(std::move(func)));
   return true;
 }
 
-void Canvas2DLayerBridge::MailboxReleased(const gpu::Mailbox& mailbox,
-                                          const gpu::SyncToken& sync_token,
-                                          bool lost_resource) {
+void Canvas2DLayerBridge::MailboxReleased(
+    const MailboxInfo& released_mailbox_info,
+    const gpu::Mailbox& mailbox,
+    const gpu::SyncToken& sync_token,
+    bool lost_resource) {
   DCHECK(IsAccelerated() || IsHibernating());
   bool context_lost =
       !IsHibernating() &&
       (!surface_ ||
        context_provider_->ContextGL()->GetGraphicsResetStatusKHR() !=
            GL_NO_ERROR);
-  DCHECK(mailboxes_.back().parent_layer_bridge_.Get() == this);
-
-  // Mailboxes are typically released in FIFO order, so we iterate
-  // from the end of m_mailboxes.
-  auto released_mailbox_info = mailboxes_.end();
-  auto first_mailbox = mailboxes_.begin();
-
-  while (true) {
-    --released_mailbox_info;
-    if (released_mailbox_info->mailbox_ == mailbox)
-      break;
-    DCHECK(released_mailbox_info != first_mailbox);
-  }
 
 #if USE_IOSURFACE_FOR_2D_CANVAS
-  if (released_mailbox_info->image_info_ && !lost_resource) {
+  if (released_mailbox_info.image_info_ && !lost_resource) {
     if (context_lost) {
-      DeleteCHROMIUMImage(released_mailbox_info->image_info_);
+      DeleteCHROMIUMImage(released_mailbox_info.image_info_);
     } else {
-      image_info_cache_.push_back(released_mailbox_info->image_info_);
+      image_info_cache_.push_back(released_mailbox_info.image_info_);
     }
   }
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
@@ -989,15 +966,15 @@ void Canvas2DLayerBridge::MailboxReleased(const gpu::Mailbox& mailbox,
   if (!context_lost) {
     // Invalidate texture state in case the compositor altered it since the
     // copy-on-write.
-    if (released_mailbox_info->image_) {
+    if (released_mailbox_info.image_) {
 #if USE_IOSURFACE_FOR_2D_CANVAS
-      DCHECK(!released_mailbox_info->image_info_);
+      DCHECK(!released_mailbox_info.image_info_);
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
       gpu::gles2::GLES2Interface* gl = ContextGL();
       if (sync_token.HasData() && gl) {
         gl->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
       }
-      GrTexture* texture = released_mailbox_info->image_->getTexture();
+      GrTexture* texture = released_mailbox_info.image_->getTexture();
       if (texture) {
         if (lost_resource) {
           texture->abandon();
@@ -1005,29 +982,16 @@ void Canvas2DLayerBridge::MailboxReleased(const gpu::Mailbox& mailbox,
           texture->textureParamsModified();
           // Break the mailbox association to avoid leaking mailboxes every time
           // skia recycles a texture.
-          if (gl)
+          if (gl) {
             gl->ProduceTextureDirectCHROMIUM(
-                0, GL_TEXTURE_2D, released_mailbox_info->mailbox_.name);
+                0, GL_TEXTURE_2D, released_mailbox_info.mailbox_.name);
+          }
         }
       }
     }
   }
 
-  RefPtr<Canvas2DLayerBridge> self_ref;
-  if (destruction_in_progress_) {
-    // To avoid memory use after free, take a scoped self-reference
-    // to postpone destruction until the end of this function.
-    self_ref = this;
-  }
-
-  // The destruction of 'releasedMailboxInfo' will:
-  // 1) Release the self reference held by the mailboxInfo, which may trigger
-  //    the self-destruction of this Canvas2DLayerBridge
-  // 2) Release the SkImage, which will return the texture to skia's scratch
-  //    texture pool.
-  mailboxes_.erase(released_mailbox_info);
-
-  if (mailboxes_.IsEmpty() && acceleration_mode_ == kDisableAcceleration)
+  if (acceleration_mode_ == kDisableAcceleration)
     layer_.reset();
 }
 
