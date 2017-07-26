@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f41c6c5_e2e1b3d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa485c5f_8f39a71f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f6770e_ef9f4cb4",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e2a4ef686473110584953c65f387236965cb722d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3c8a94_a04ca3d6",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f6770e_ef9f4cb4",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "53806038_989abfe7",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c70197ef_e1121685",
+      "range": {
+        "startLine": 217,
+        "startChar": 39,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f388267_ae8474ad",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "e2a4ef686473110584953c65f387236965cb722d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13eb411_66d5f934",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f388267_ae8474ad",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8ff64088_e872b6c7",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done.\nThanks for catching this. It should be private.",
+      "parentUuid": "1ef22cb7_2432d26c",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 26
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c24b4cff_fed52255",
         "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "e2a4ef686473110584953c65f387236965cb722d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b55233f_98d7a165",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c24b4cff_fed52255",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "455818df_f8946740",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5db21e91_e68440c5",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 49
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31c8e8bc_cc7bcf13",
         "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "e2a4ef686473110584953c65f387236965cb722d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2d4f77_71a8a1bb",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31c8e8bc_cc7bcf13",
+      "range": {
+        "startLine": 152,
+        "startChar": 4,
+        "endLine": 152,
+        "endChar": 11
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c1517057_20a89901",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "UpdateSecuriryState happens when modal dialog shows up and when user clicks \"change password\". I\u0027ll handle the change password case in a separate function/CL.",
+      "parentUuid": "b93cf47e_bb67a6d9",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 169,
+        "endChar": 23
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1fe672d_90bcf9c2",
         "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
         "patchSetId": 7
@@ -229,6 +445,30 @@
       "revId": "e2a4ef686473110584953c65f387236965cb722d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10990e24_7af63f23",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "code removed after refactoring. Done",
+      "parentUuid": "a1fe672d_90bcf9c2",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "cce7dd86_5a5cec57",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4fa2a68_fb4c4068",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075a809a_0fe3e380",
         "filename": "components/safe_browsing/password_protection/password_protection_service.h",
         "patchSetId": 7
@@ -275,6 +539,30 @@
       "revId": "e2a4ef686473110584953c65f387236965cb722d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1810de2a_7dfc1cbd",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "075a809a_0fe3e380",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 7
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "e4d0f907_f7e00f48",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "Done. \nAlso refactored a little bit. Break this function into 2.",
+      "parentUuid": "8105a018_7b0476c1",
+      "range": {
+        "startLine": 177,
+        "startChar": 15,
+        "endLine": 177,
+        "endChar": 26
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46ce53e6_a9500bca",
         "filename": "components/safe_browsing/password_protection/password_protection_service.h",
         "patchSetId": 7
@@ -321,6 +633,30 @@
       "revId": "e2a4ef686473110584953c65f387236965cb722d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee490169_ccdccb54",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-26T23:16:39Z",
+      "side": 1,
+      "message": "No longer needs default values after refactoring.",
+      "parentUuid": "46ce53e6_a9500bca",
+      "range": {
+        "startLine": 180,
+        "startChar": 58,
+        "endLine": 180,
+        "endChar": 65
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
