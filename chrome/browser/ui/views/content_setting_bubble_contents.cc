@@ -452,6 +452,17 @@ base::string16 ContentSettingBubbleContents::GetDialogButtonLabel(
   return l10n_util::GetStringUTF16(IDS_DONE);
 }
 
+void ContentSettingBubbleContents::ResetView() {
+  list_item_links_.clear();
+  radio_group_.clear();
+  custom_link_ = nullptr;
+  manage_link_ = nullptr;
+  manage_button_ = nullptr;
+  manage_checkbox_ = nullptr;
+  learn_more_link_ = nullptr;
+  RemoveAllChildViews(true);
+}
+
 void ContentSettingBubbleContents::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->IsInMainFrame() || !navigation_handle->HasCommitted())
@@ -501,7 +512,13 @@ void ContentSettingBubbleContents::LinkClicked(views::Link* source,
 
   ListItemLinks::const_iterator i(list_item_links_.find(source));
   DCHECK(i != list_item_links_.end());
-  content_setting_bubble_model_->OnListItemClicked(i->second);
+  content_setting_bubble_model_->OnListItemClicked(i->second, event_flags);
+
+  // TODO(bug 35097) Need more work here. There's no way to be notified changes
+  // in |content_setting_bubble_model_| dynamically for now.
+  ResetView();
+  Init();
+  SizeToContents();
 }
 
 void ContentSettingBubbleContents::OnPerformAction(views::Combobox* combobox) {

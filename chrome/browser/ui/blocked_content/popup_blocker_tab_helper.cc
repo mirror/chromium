@@ -142,18 +142,26 @@ void PopupBlockerTabHelper::AddBlockedPopup(
       OnContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS);
 }
 
-void PopupBlockerTabHelper::ShowBlockedPopup(int32_t id) {
+void PopupBlockerTabHelper::ShowBlockedPopup(
+    int32_t id,
+    WindowOpenDisposition disposition) {
   BlockedRequest* popup = blocked_popups_.Lookup(id);
   if (!popup)
     return;
+
+  const bool open_as_popup_window =
+      disposition == WindowOpenDisposition::CURRENT_TAB;
   // We set user_gesture to true here, so the new popup gets correctly focused.
   popup->params.user_gesture = true;
+  if (!open_as_popup_window)
+    popup->params.disposition = disposition;
+
 #if defined(OS_ANDROID)
   TabModelList::HandlePopupNavigation(&popup->params);
 #else
   chrome::Navigate(&popup->params);
 #endif
-  if (popup->params.target_contents) {
+  if (open_as_popup_window && popup->params.target_contents) {
     popup->params.target_contents->Send(new ChromeViewMsg_SetWindowFeatures(
         popup->params.target_contents->GetRenderViewHost()->GetRoutingID(),
         popup->window_features));

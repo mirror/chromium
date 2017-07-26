@@ -94,6 +94,8 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
 
   typedef std::map<views::Link*, int> ListItemLinks;
 
+  void ResetView();
+
   // content::WebContentsObserver:
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
