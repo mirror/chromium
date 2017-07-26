@@ -607,6 +607,12 @@ void RemoteSuggestionsProviderImpl::OnDatabaseLoaded(
     std::sort(content->suggestions.begin(), content->suggestions.end(),
               [](const std::unique_ptr<RemoteSuggestion>& lhs,
                  const std::unique_ptr<RemoteSuggestion>& rhs) {
+                if (lhs->is_pushed() != rhs->is_pushed()) {
+                  return lhs->is_pushed();
+                }
+                if (lhs->is_pushed()) {
+                  return lhs->fetch_date() > rhs->fetch_date();
+                }
                 return lhs->score() > rhs->score();
               });
   }
@@ -763,6 +769,36 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
 
   if (callback) {
     callback.Run(status);
+  }
+}
+
+void RemoteSuggestionsProviderImpl::OnSuggestionsPushed(
+    std::vector<FetchedCategory> fetched_categories) {
+  if (!ready()) {
+    return;
+  }
+
+  ClearExpiredDismissedSuggestions();
+
+  for (FetchedCategory& fetched_category : fetched_categories) {
+    DCHECK_EQ(category_contents_.count(fetched_category.category), 1u);
+    CategoryContent* content =
+        &category_contents_.find(articles_category_)->second;
+
+    SanitizeReceivedSuggestions(content->dismissed,
+                                &fetched_category.suggestions);
+
+    database_->SaveSnippets(fetched_category.suggestions);
+
+    std::reverse(fetched_category.suggestions.begin(),
+                 fetched_category.suggestions.end());
+    for (std::unique_ptr<RemoteSuggestion>& suggestion :
+         fetched_category.suggestions) {
+      content->suggestions.insert(content->suggestions.begin(),
+                                  std::move(suggestion));
+    }
+
+    NotifyNewSuggestions(fetched_category.category, *content);
   }
 }
 
