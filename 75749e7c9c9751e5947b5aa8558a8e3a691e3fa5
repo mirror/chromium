@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eef4fbdf_cd41ce02",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-26T19:27:11Z",
+      "side": 1,
+      "message": "Something to consider: You could inline the traffic annotation in this method directly now, avoiding the member too. They compile down to an integral value and their contents are stripped from the code, so we could enjoy the locality.",
+      "revId": "75749e7c9c9751e5947b5aa8558a8e3a691e3fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
