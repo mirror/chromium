@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1681f546_91f9addd",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-26T07:11:09Z",
+      "side": 1,
+      "message": "OK. I thought that it has to be consistent throughout the app for same file types regardless of their source.",
+      "parentUuid": "e30ddd43_57c56e57",
+      "revId": "9e3370ef77591a349e3466c0cdab94a621620890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f114a9e_6166c0b7",
         "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
         "patchSetId": 5
@@ -50,6 +68,24 @@
       "revId": "9e3370ef77591a349e3466c0cdab94a621620890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765b5b00_ffd4796b",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-26T07:11:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f114a9e_6166c0b7",
+      "revId": "9e3370ef77591a349e3466c0cdab94a621620890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
