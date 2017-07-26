@@ -56,6 +56,15 @@ const base::Feature kCaptivePortalCertificateList{
     "CaptivePortalCertificateList", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+const base::Feature kContentFilterInterstitial(
+    "ContentFilterInterstitial",
+    base::FEATURE_ENABLED_BY_DEFAULT);
+
+const base::Feature kContentFilterStringList("ContentFilterStringList",
+                                             base::FEATURE_ENABLED_BY_DEFAULT);
+#endif
+
 const base::Feature kSSLCommonNameMismatchHandling{
     "SSLCommonNameMismatchHandling", base::FEATURE_ENABLED_BY_DEFAULT};
 
@@ -166,11 +175,8 @@ void RecordUMA(SSLErrorHandler::UMAEvent event) {
                             SSLErrorHandler::SSL_ERROR_HANDLER_EVENT_COUNT);
 }
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
-bool IsCaptivePortalInterstitialEnabled() {
-  return base::FeatureList::IsEnabled(kCaptivePortalInterstitial);
-}
-
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
 // Reads the SSL error assistant configuration from the resource bundle.
 std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
 ReadErrorAssistantProtoFromResourceBundle() {
@@ -195,6 +201,18 @@ std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
 }
 #endif
 
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+bool IsCaptivePortalInterstitialEnabled() {
+  return base::FeatureList::IsEnabled(kCaptivePortalInterstitial);
+}
+#endif
+
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+bool IsContentFilterInterstitialEnabled() {
+  return base::FeatureList::IsEnabled(kContentFilterInterstitial);
+}
+#endif
+
 bool IsSSLCommonNameMismatchHandlingEnabled() {
   return base::FeatureList::IsEnabled(kSSLCommonNameMismatchHandling);
 }
@@ -216,6 +234,10 @@ class ConfigSingleton {
   bool IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info);
 #endif
 
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  bool CertContainsContentFilterString(const net::SSLInfo& ssl_info);
+#endif
+
   // Testing methods:
   void ResetForTesting();
   void SetInterstitialDelayForTesting(const base::TimeDelta& delay);
@@ -225,7 +247,8 @@ class ConfigSingleton {
   void SetNetworkTimeTrackerForTesting(
       network_time::NetworkTimeTracker* tracker);
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
   void SetErrorAssistantProto(
       std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
           error_assistant_proto);
@@ -244,15 +267,22 @@ class ConfigSingleton {
 
   network_time::NetworkTimeTracker* network_time_tracker_ = nullptr;
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
   // Error assistant configuration.
   std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
       error_assistant_proto_;
+#endif
 
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   // SPKI hashes belonging to certs treated as captive portals. Null until the
   // first time IsKnownCaptivePortalCert() or SetErrorAssistantProto()
   // is called.
   std::unique_ptr<std::unordered_set<std::string>> captive_portal_spki_hashes_;
+#endif
+
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  std::unique_ptr<std::unordered_set<std::string>> content_filter_regexes_;
 #endif
 };
 
@@ -286,9 +316,15 @@ void ConfigSingleton::ResetForTesting() {
   timer_started_callback_ = nullptr;
   network_time_tracker_ = nullptr;
   testing_clock_ = nullptr;
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
   error_assistant_proto_.reset();
+#endif
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   captive_portal_spki_hashes_.reset();
+#endif
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  content_filter_regexes_.reset();
 #endif
 }
 
@@ -312,7 +348,8 @@ void ConfigSingleton::SetNetworkTimeTrackerForTesting(
   network_time_tracker_ = tracker;
 }
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
 void ConfigSingleton::SetErrorAssistantProto(
     std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig> proto) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -326,7 +363,8 @@ void ConfigSingleton::SetErrorAssistantProto(
   captive_portal_spki_hashes_ =
       LoadCaptivePortalCertHashes(*error_assistant_proto_);
 }
-
+#endif
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!captive_portal_spki_hashes_) {
@@ -342,6 +380,30 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
     }
     if (captive_portal_spki_hashes_->find(hash_value.ToString()) !=
         captive_portal_spki_hashes_->end()) {
+      return true;
+    }
+  }
+  return false;
+}
+#endif
+
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+bool ConfigSingleton::CertContainsContentFilterString(
+    const net::SSLInfo& ssl_info) {
+  if (!content_filter_regexes_) {
+    error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
+    CHECK(error_assistant_proto_);
+    content_filter_regexes_ = LoadContentFilterRegexes(*error_assistant_proto_);
+  }
+
+  const CertPrincipal& cert_issuer = ssl_info.cert.issuer();
+  const CertPrincipal& cert_subject = ssl_info.cert.subject();
+
+  // Return true if one of our content filter strings matches the common name
+  // of the issuer and subject of this certificate.
+  for (const string& regex : content_filter_regexes_) {
+    if (cert_issuer.common_name.compare(regex) &&
+        cert_subject.common_name.compare(regex)) {
       return true;
     }
   }
@@ -414,6 +476,16 @@ void SSLErrorHandlerDelegateImpl::CheckForCaptivePortal() {
 #endif
 }
 
+void SSLErrorGanlderDelegateImpl::CheckForContentFilter() {
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  ContentFilterService* content_filter_service =
+      ContentFilterServiceFactory::GetForProfile(profile_);
+  content_filter_service->DetectContentFilter();
+#else
+  NOTREACHED();
+#endif
+}
+
 bool SSLErrorHandlerDelegateImpl::GetSuggestedUrl(
     const std::vector<std::string>& dns_names,
     GURL* suggested_url) const {
@@ -448,6 +520,18 @@ void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   // Show captive portal blocking page. The interstitial owns the blocking page.
   (new CaptivePortalBlockingPage(web_contents_, request_url_, landing_url,
+                                 std::move(ssl_cert_reporter_), ssl_info_,
+                                 callback_))
+      ->Show();
+#else
+  NOTREACHED();
+#endif
+}
+
+void SSLErrorHandlerDelegateImpl::ShowContentFilterInterstitial(
+    const GURL& landing_url) {
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  (new ContentFilterBlockingPage(web_contents_, request_url_, landing_url,
                                  std::move(ssl_cert_reporter_), ssl_info_,
                                  callback_))
       ->Show();
@@ -548,7 +632,8 @@ bool SSLErrorHandler::IsTimerRunningForTesting() const {
 
 void SSLErrorHandler::SetErrorAssistantProto(
     std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig> config_proto) {
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION) || \
+    BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
   g_config.Pointer()->SetErrorAssistantProto(std::move(config_proto));
 #endif
 }
@@ -607,6 +692,17 @@ void SSLErrorHandler::StartHandlingError() {
   }
 #endif
 
+#if BUILDFLAG(ENABLE_CONTENT_FILTER_DETECTION)
+  if (base::FeatureList::IsEnabled(kContentFilterList) &&
+      only_error_is_name_mismatch &&
+      g_config.Pointer()->CertContainsContentFilterString(ssl_info_)) {
+    RecordUMA(CONTENT_FILTER_CERT_FOUND);
+    ShowContentFilterInterstitial(
+        GURL(content_filter::ContentFilterDetector::kDefaultURL));
+    return;
+  }
+#endif
+
   if (IsSSLCommonNameMismatchHandlingEnabled() &&
       cert_error_ == net::ERR_CERT_COMMON_NAME_INVALID &&
       delegate_->IsErrorOverridable()) {
@@ -641,10 +737,12 @@ void SSLErrorHandler::StartHandlingError() {
     }
   }
 
-  // Always listen to captive portal notifications, otherwise build fails
-  // because profile_ isn't used. This is a no-op on platforms where
+  // Always listen to captive portal and content filter notifications, otherwise
+  // build fails because profile_ isn't used. This is a no-op on platforms where
   // captive portal detection is disabled.
   registrar_.Add(this, chrome::NOTIFICATION_CAPTIVE_PORTAL_CHECK_RESULT,
+                 content::Source<Profile>(profile_));
+  registrar_.Add(this, chrome::NOTIFICATION_CONTENT_FILTER_CHECK_RESULT,
                  content::Source<Profile>(profile_));
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
@@ -676,6 +774,18 @@ void SSLErrorHandler::ShowCaptivePortalInterstitial(const GURL& landing_url) {
   delegate_->ShowCaptivePortalInterstitial(landing_url);
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this". It also destroys the timer.
+  web_contents_->RemoveUserData(UserDataKey());
+#else
+  NOTREACHED();
+#endif
+}
+
+void SSLErrorHandler::ShowContentFilterInterstitial(const GURL& landing_url) {
+#if BUILDFLAG(ENABLE_CONTENT_FITLER_DETECTION)
+  RecordUMA(delegate_->IsErrorOverridable()
+                ? SHOW_CONTENT_FILTER_INTERSTITIAL_OVERRIDABLE
+                : SHOW_CONTENT_FILTER_INTERSTITIAL_NONOVERRIDABLE);
+  delegate_->ShowContentFilterInterstitial(landing_url);
   web_contents_->RemoveUserData(UserDataKey());
 #else
   NOTREACHED();
