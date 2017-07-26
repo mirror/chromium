@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b466edf1_b0f0118e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "nit: Update comment to say these are accessibility tests?",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 16
+      },
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373f9424_cd54969d",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Comment for class?",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40e410c_fa7f7906",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "could you update the comment to specify which UI? payments? (here and in other tests)",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ceb8504_ba3d1146",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "nit: I think comments like this aren\u0027t necessary, since the code is so clear",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b652426_570c12fc",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Could this just be [ChromeEarlGrey waitForWebViewContainingText:\"ABORTED\"]; ?",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f0bf17_965bbb5e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_egtest_base.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Could you add a comment?\n\nAlso, would you mind adding:\n// TODO(crbug.com/749079): Move this to ChromeEarlGrey\n\nI think this API is a good idea and could be used a lot of places.",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812c1200_35150671",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_egtest_base.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Since this waits before asserting, should it we:\ns/expectWeb/waitForWeb",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eabb21c_fac85a2b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_egtest_base.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Instead of this, could you just call:\n[ChromeEarlGrey waitForWebViewContainingText:string] ?\n\nAlso, it\u0027s better to use asserts in tests, than DCHECKS",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95733c3d_78e9e92e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_misc_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Should the file name be payment_request_cache_egtest",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b06e24_2341ab7a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_misc_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Could you use GREAssertEquals instead of EXPECT_EQ ?",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46312ab_5e1560eb",
+        "filename": "ios/web/public/test/web_view_interaction_test_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-26T14:18:38Z",
+      "side": 1,
+      "message": "Instead of this, can you use [ChromeEarlGrey waitForWebViewContainingText:@\"...\"] ?",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
