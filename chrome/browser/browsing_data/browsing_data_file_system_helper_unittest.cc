@@ -19,6 +19,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/common/fileapi/file_system_types.h"
@@ -71,13 +72,13 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
     helper_ = BrowsingDataFileSystemHelper::Create(
         BrowserContext::GetDefaultStoragePartition(profile_.get())->
             GetFileSystemContext());
-    base::RunLoop().RunUntilIdle();
+    content::RunAllBlockingPoolTasksUntilIdle();
     canned_helper_ = new CannedBrowsingDataFileSystemHelper(profile_.get());
   }
   ~BrowsingDataFileSystemHelperTest() override {
     // Avoid memory leaks.
     profile_.reset();
-    base::RunLoop().RunUntilIdle();
+    content::RunAllBlockingPoolTasksUntilIdle();
   }
 
   TestingProfile* GetProfile() {
@@ -85,7 +86,10 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
   }
 
   // Blocks on the current MessageLoop until Notify() is called.
-  void BlockUntilNotified() { base::RunLoop().Run(); }
+  void BlockUntilNotified() {
+    base::RunLoop().Run();                        // Won't return until Notify.
+    content::RunAllBlockingPoolTasksUntilIdle();  // Flush other runners.
+  }
 
   // Unblocks the current MessageLoop. Should be called in response to some sort
   // of async activity in a callback method.

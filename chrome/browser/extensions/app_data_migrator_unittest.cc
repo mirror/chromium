@@ -9,7 +9,6 @@
 
 #include "base/callback_forward.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/extensions/app_data_migrator.h"
@@ -19,6 +18,7 @@
 #include "content/public/browser/indexed_db_context.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
@@ -138,7 +138,7 @@ void OpenFileSystems(storage::FileSystemContext* fs_context,
   fs_context->OpenFileSystem(extension_url, storage::kFileSystemTypePersistent,
                              storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT,
                              base::Bind(&DidOpenFileSystem));
-  base::RunLoop().RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 void GenerateTestFiles(content::MockBlobURLRequestContext* url_request_context,
@@ -169,16 +169,16 @@ void GenerateTestFiles(content::MockBlobURLRequestContext* url_request_context,
 
   fs_context->operation_runner()->CreateFile(fs_persistent_url, false,
                                              base::Bind(&DidCreate));
-  base::RunLoop().RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   fs_context->operation_runner()->Write(url_request_context, fs_temp_url,
                                         blob1.GetBlobDataHandle(), 0,
                                         base::Bind(&DidWrite));
-  base::RunLoop().Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
   fs_context->operation_runner()->Write(url_request_context, fs_persistent_url,
                                         blob1.GetBlobDataHandle(), 0,
                                         base::Bind(&DidWrite));
-  base::RunLoop().Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 void VerifyFileContents(base::File file,
@@ -220,11 +220,11 @@ void VerifyTestFilesMigrated(content::StoragePartition* new_partition,
   new_fs_context->operation_runner()->OpenFile(
       fs_temp_url, base::File::FLAG_READ | base::File::FLAG_OPEN,
       base::Bind(&VerifyFileContents));
-  base::RunLoop().Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
   new_fs_context->operation_runner()->OpenFile(
       fs_persistent_url, base::File::FLAG_READ | base::File::FLAG_OPEN,
       base::Bind(&VerifyFileContents));
-  base::RunLoop().Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(AppDataMigratorTest, ShouldMigrate) {
@@ -268,7 +268,7 @@ TEST_F(AppDataMigratorTest, DISABLED_FileSystemMigration) {
   migrator_->DoMigrationAndReply(old_ext.get(), new_ext.get(),
                                  base::Bind(&MigrationCallback));
 
-  base::RunLoop().RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   registry_->AddEnabled(new_ext);
   GURL extension_url =
@@ -281,6 +281,9 @@ TEST_F(AppDataMigratorTest, DISABLED_FileSystemMigration) {
   ASSERT_NE(new_partition->GetPath(), default_partition_->GetPath());
 
   VerifyTestFilesMigrated(new_partition, new_ext.get());
+
+  // Clean up.
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 }  // namespace extensions
