@@ -173,7 +173,7 @@ void NetErrorHelper::NetworkStateChanged(bool enabled) {
   core_->NetworkStateChanged(enabled);
 }
 
-void NetErrorHelper::GetErrorHTML(const blink::WebURLError& error,
+void NetErrorHelper::GetErrorHTML(const error_page::Error& error,
                                   bool is_failed_post,
                                   bool is_ignoring_cache,
                                   std::string* error_html) {
@@ -195,7 +195,7 @@ NetErrorHelper::GetRemoteNetworkDiagnostics() {
 }
 
 void NetErrorHelper::GenerateLocalizedErrorPage(
-    const blink::WebURLError& error,
+    const error_page::Error& error,
     bool is_failed_post,
     bool can_show_network_diagnostics_dialog,
     std::unique_ptr<ErrorPageParams> params,
@@ -214,9 +214,8 @@ void NetErrorHelper::GenerateLocalizedErrorPage(
   } else {
     base::DictionaryValue error_strings;
     LocalizedError::GetStrings(
-        error.reason, GetDomainString(error.domain), error.unreachable_url,
-        is_failed_post, error.stale_copy_in_cache,
-        can_show_network_diagnostics_dialog,
+        error.reason(), error.domain(), error.url(), is_failed_post,
+        error.stale_copy_in_cache(), can_show_network_diagnostics_dialog,
         ChromeRenderThreadObserver::is_incognito_process(),
         RenderThread::Get()->GetLocale(), std::move(params), &error_strings);
     *reload_button_shown = error_strings.Get("reloadButton", nullptr);
@@ -242,14 +241,13 @@ void NetErrorHelper::EnablePageHelperFunctions() {
       render_frame(), weak_controller_delegate_factory_.GetWeakPtr());
 }
 
-void NetErrorHelper::UpdateErrorPage(const blink::WebURLError& error,
+void NetErrorHelper::UpdateErrorPage(const error_page::Error& error,
                                      bool is_failed_post,
                                      bool can_show_network_diagnostics_dialog) {
   base::DictionaryValue error_strings;
   LocalizedError::GetStrings(
-      error.reason, GetDomainString(error.domain), error.unreachable_url,
-      is_failed_post, error.stale_copy_in_cache,
-      can_show_network_diagnostics_dialog,
+      error.reason(), error.domain(), error.url(), is_failed_post,
+      error.stale_copy_in_cache(), can_show_network_diagnostics_dialog,
       ChromeRenderThreadObserver::is_incognito_process(),
       RenderThread::Get()->GetLocale(), std::unique_ptr<ErrorPageParams>(),
       &error_strings);
@@ -386,18 +384,4 @@ void NetErrorHelper::OnNetworkDiagnosticsClientRequest(
 
 void NetErrorHelper::SetCanShowNetworkDiagnosticsDialog(bool can_show) {
   core_->OnSetCanShowNetworkDiagnosticsDialog(can_show);
-}
-
-std::string NetErrorHelper::GetDomainString(blink::WebURLError::Domain domain) {
-  using Domain = blink::WebURLError::Domain;
-  switch (domain) {
-    case Domain::kNet:
-      return net::kErrorDomain;
-    case Domain::kHttp:
-      return error_page::kHttpErrorDomain;
-    case Domain::kDnsProbe:
-      return error_page::kDnsProbeErrorDomain;
-    default:
-      return error_page::kUnknownErrorDomain;
-  }
 }
