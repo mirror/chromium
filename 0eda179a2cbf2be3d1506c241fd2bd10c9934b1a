@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c6f476f4_f2417cba",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T17:38:01Z",
+      "side": 1,
+      "message": "Yep! :-)",
+      "parentUuid": "cfd60942_4fee1eb7",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a385d04_28887870",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -435,6 +459,30 @@
       "side": 1,
       "message": "Hmm, this whole section was copied from the old PerfTraceEvent class. Do you think just checking for non-null (instead of try-catch) will be enough?",
       "parentUuid": "c865c1e0_291f3e00",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ff4584_d981d0e9",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T17:38:01Z",
+      "side": 1,
+      "message": "Unless you want to catch RuntimeException, it looks like it\u0027s enough. There are no checked exceptions for PrintStream#close()",
+      "parentUuid": "74d73310_b4b00ef8",
       "range": {
         "startLine": 162,
         "startChar": 24,

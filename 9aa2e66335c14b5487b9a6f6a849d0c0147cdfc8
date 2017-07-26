@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc4f205_6fc16cd5",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T17:38:01Z",
+      "side": 1,
+      "message": "Is runChild() guaranteed to only ever be called once?\nThe call to enable() happens in the constructor, but this disable-call happens after every call to runChild(). Is that intentional? I would\u0027ve thought that a runner could have multiple children?\n\nIf the intent is in fact to disable after the first (only?) call, could you add a comment here, since at it is now, it\u0027s a little bit confusing, since most APIs are symmetric related to starting and stopping, etc.",
+      "revId": "9aa2e66335c14b5487b9a6f6a849d0c0147cdfc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20312786_a3fe223a",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-26T17:38:01Z",
+      "side": 1,
+      "message": "Could you add a comment here as to why this has to use System.currentTimeMillis() as that\u0027s not very common to use? Something along the lines of what you wrote in the reply to me would be great!",
+      "range": {
+        "startLine": 134,
+        "startChar": 32,
+        "endLine": 134,
+        "endChar": 58
+      },
+      "revId": "9aa2e66335c14b5487b9a6f6a849d0c0147cdfc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
