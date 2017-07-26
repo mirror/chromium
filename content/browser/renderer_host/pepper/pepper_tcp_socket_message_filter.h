@@ -17,7 +17,6 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "content/browser/renderer_host/pepper/browser_ppapi_host_impl.h"
-#include "content/browser/renderer_host/pepper/ssl_context_helper.h"
 #include "content/common/content_export.h"
 #include "net/base/address_list.h"
 #include "net/base/ip_endpoint.h"
@@ -250,7 +249,6 @@ class CONTENT_EXPORT PepperTCPSocketMessageFilter
   // using a DrainableIOBuffer, which requires an underlying base IOBuffer.
   scoped_refptr<net::IOBuffer> write_buffer_base_;
   scoped_refptr<net::DrainableIOBuffer> write_buffer_;
-  scoped_refptr<SSLContextHelper> ssl_context_helper_;
 
   bool pending_accept_;
   std::unique_ptr<net::TCPSocket> accepted_socket_;
