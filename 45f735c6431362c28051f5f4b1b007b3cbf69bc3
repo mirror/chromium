@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78ce04e8_bb589c71",
+        "filename": "third_party/WebKit/Source/core/css/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-26T12:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "149b488a_64a4616e",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21aedbe3_e5cc9581",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T06:36:15Z",
       "side": 1,
       "message": "this case should be removed, this code will not be hit (handled above through property api)",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850b49a6_c53c8309",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-26T12:11:43Z",
+      "side": 1,
+      "message": "Are you sure? This is in ParseFontFaceDescriptor, which is called from ParseValue and seems a special case for @font-face rules and required. In ParseSingleValue it is indeed handled through the Property API.",
+      "parentUuid": "21aedbe3_e5cc9581",
       "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ef6e4a3_b9875a09",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-26T12:11:43Z",
+      "side": 1,
+      "message": "Good point, I didn\u0027t know about the side effects of using \"manual parsing here\", instead of the ConsumePercent helper which supports calc. I modified the logic to support calc and I added a test in external/wpt/css-fonts/variations/font-parse-numeric-stretch-style-weight.html which checks calc() expressions for stretch as well.\n\nI\u0027ll fix the same issue for ConsumeFontWeight in a separate CL.\n\nSo, done.",
+      "parentUuid": "34c0abb7_769d0dc7",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38c03eb5_1c37a5cf",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-26T06:36:15Z",
       "side": 1,
       "message": "why not add a ConsumeFontStretchKeyword method to the util and call that here as well as from the property api? would remove a bit of code duplication and then i think that the ConsumeFontStretch method can be moved to a private method the property api",
+      "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88da94a_999fdf87",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-26T12:11:43Z",
+      "side": 1,
+      "message": "Added ConsumeFontStretchKeywordOnly and incorporated that into the ConsumeFontStretch regular method. Can you clarify the suggestion to make it private? Can I make the generated method CSSPropertyAPIFontStretch::parseSingleValue private, or do you suggest to make ConsumeFontStretchKeywordOnly private in CSSPropertyFontUtils?",
+      "parentUuid": "38c03eb5_1c37a5cf",
       "revId": "45f735c6431362c28051f5f4b1b007b3cbf69bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
