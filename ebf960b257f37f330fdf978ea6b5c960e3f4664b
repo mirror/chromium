@@ -204,6 +204,24 @@
       "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8c6574_0a541d53",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-26T17:22:43Z",
+      "side": 1,
+      "message": "Awesome, I added some logging.",
+      "parentUuid": "e946f079_246614eb",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
