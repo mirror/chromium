@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f9ebe3_321e36a6",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Here has issue when the job is ServiceWorkerUnregisterJob?",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "65f326507fd7066029bed920a4497315f859e54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

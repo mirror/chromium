@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5cdf4907_0b1544b8",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb7c4c8_e661a8c6",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e0523a9_c8a3e10c",
         "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T08:53:14Z",
       "side": 1,
       "message": "style guide: else() needs {} braces if the if()  has them\nstyle guide: use ++it not it++. this might require changing the code a little.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b1fc71_a898ad80",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Thanks a lot! Done",
+      "parentUuid": "9e0523a9_c8a3e10c",
       "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c6a44257_a2c8c93e",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda73198_83017a0d",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "110a37bc_6d54a39f",
         "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea21b2a_5ef38090",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "110a37bc_6d54a39f",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "68ac97ff_0d662dba",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbf38f06_95418f6f",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59adf1f2_e9176169",
         "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1e2df800_31000e03",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59adf1f2_e9176169",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d158fc5f_c6d32434",
         "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
         "patchSetId": 8
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-25T08:53:14Z",
       "side": 1,
       "message": "i think this value is reversed with line 116? I thought we wanted the timer to go every 5 minutes and timeout jobs older than 30 min.",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33422e82_2d2994ea",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "It\u0027s not reversed, I misunderstood that before. It\u0027s better that the timer go every 5 minutes and timeout jobs older than 30 min.\nDone",
+      "parentUuid": "d158fc5f_c6d32434",
       "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "593cfca7_a6cefc8f",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "Yeah, I forgot update this annotation.\nDone",
+      "parentUuid": "fbf6c62f_1bed9955",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fbe8558_6e651e26",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 8
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d14756e1_899d2467",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "I add the function here, and after that I think here also doesn\u0027t need set start time?",
+      "parentUuid": "3fbe8558_6e651e26",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a7dd362_52e6750b",
         "filename": "content/browser/service_worker/service_worker_register_job.h",
         "patchSetId": 8
@@ -166,6 +328,24 @@
       "writtenOn": "2017-07-25T08:53:14Z",
       "side": 1,
       "message": "preferred: can the test class just set start_time_ directly?\n\notherwise call this set_start_time_for_test",
+      "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338a401f_ef86e67d",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-26T02:26:46Z",
+      "side": 1,
+      "message": "we don\u0027t need this after handle the timeout job in ServiceWorkerJobTest ?",
+      "parentUuid": "8a7dd362_52e6750b",
       "revId": "32c018011517b79af02c39c05c6aa21d5d0065b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
