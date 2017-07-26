@@ -210,8 +210,10 @@ void BluetoothAdapterBlueZ::Shutdown() {
   // the fact that it has been already unregistered and will call our empty
   // error callback with an "Already unregistered" error, which we'll ignore.
   for (auto& it : advertisements_) {
-    it->Unregister(base::Bind(&base::DoNothing),
-                   base::Bind(&DoNothingOnAdvertisementError));
+    if (it) {
+      it->Unregister(base::Bind(&base::DoNothing),
+                     base::Bind(&DoNothingOnAdvertisementError));
+    }
   }
   advertisements_.clear();
 
@@ -504,14 +506,22 @@ void BluetoothAdapterBlueZ::CreateL2capService(
                  base::Bind(callback, socket), error_callback);
 }
 
+static void OnAdvertisementRegistered(
+    const BluetoothAdapterBlueZ::CreateAdvertisementCallback& callback,
+    device::BluetoothAdvertisement* advertisement) {
+  callback.Run(base::WrapUnique(advertisement));
+}
+
 void BluetoothAdapterBlueZ::RegisterAdvertisement(
     std::unique_ptr<device::BluetoothAdvertisement::Data> advertisement_data,
     const CreateAdvertisementCallback& callback,
     const AdvertisementErrorCallback& error_callback) {
-  scoped_refptr<BluetoothAdvertisementBlueZ> advertisement(
-      new BluetoothAdvertisementBlueZ(std::move(advertisement_data), this));
-  advertisement->Register(base::Bind(callback, advertisement), error_callback);
-  advertisements_.emplace_back(advertisement);
+  BluetoothAdvertisementBlueZ* advertisement =
+      new BluetoothAdvertisementBlueZ(std::move(advertisement_data), this);
+  advertisement->Register(
+      base::Bind(&OnAdvertisementRegistered, callback, advertisement),
+      error_callback);
+  advertisements_.emplace_back(advertisement->GetWeakPtr());
 }
 
 void BluetoothAdapterBlueZ::SetAdvertisingInterval(

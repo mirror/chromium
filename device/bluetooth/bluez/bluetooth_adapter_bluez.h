@@ -502,7 +502,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterBlueZ
   // we'll keep a list of all advertisements ever created by this adapter (the
   // unregistered ones will just be inactive). This will be fixed with
   // crbug.com/687396.
-  std::vector<scoped_refptr<BluetoothAdvertisementBlueZ>> advertisements_;
+  std::vector<base::WeakPtr<BluetoothAdvertisementBlueZ>> advertisements_;
 
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.

@@ -519,7 +519,7 @@ class BluetoothLowEnergyRegisterAdvertisementFunction
   std::unique_ptr<bluetooth_low_energy::RegisterAdvertisement::Params> params_;
 
  private:
-  void SuccessCallback(scoped_refptr<device::BluetoothAdvertisement>);
+  void SuccessCallback(std::unique_ptr<device::BluetoothAdvertisement>);
   void ErrorCallback(device::BluetoothAdvertisement::ErrorCode status);
 };
 
