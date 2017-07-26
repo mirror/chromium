@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32b79189_3a7ed38f",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-07-26T21:39:17Z",
+      "side": 1,
+      "message": "so many dicts :O",
+      "revId": "3e9ad1c806345094ccd08c3ddf472b3e34bcbc9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b49b72_befc2d95",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-07-26T21:39:17Z",
+      "side": 1,
+      "message": "If some_suite.* expands to the set of tests (some_suite.testA, some_suite.testB, some_suite.testC) and testA and testB are PASS but testC is NOTRUN, is this going to run all 3 again? If I\u0027m reading all this correctly, it looks like it will. Is that WAI?",
+      "revId": "3e9ad1c806345094ccd08c3ddf472b3e34bcbc9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
