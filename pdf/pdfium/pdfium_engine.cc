@@ -2435,6 +2435,10 @@ bool PDFiumEngine::CanCut() {
   return editable_form_text_area_;
 }
 
+void PDFiumEngine::DeleteSelectedText() {
+  FORM_DeleteSelectedText(form_, pages_[last_page_mouse_down_]->GetPage());
+}
+
 std::string PDFiumEngine::GetLinkAtPosition(const pp::Point& point) {
   std::string url;
   int temp;
