@@ -88,6 +88,24 @@
       "revId": "2d13e932756e29269800c356c33134e8540fe148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d68485e_94e62143",
+        "filename": "chrome/android/webapk/shell_apk/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-26T21:23:11Z",
+      "side": 1,
+      "message": "I think a warning is enough to remind us for updating the apk_shell_verion without doing extra steps. Actually I don\u0027t have a strong perference bewteen PresubmitPromptWarning and PresubmitPromptOrNotify.",
+      "parentUuid": "0aaabb53_2d910cd0",
+      "revId": "2d13e932756e29269800c356c33134e8540fe148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
