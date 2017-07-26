@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f4248d3_c8e3379f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Because TailTime() below always returns non-zero value?  I guess you really want me to add a comment on why TailTime() below returns that particular value?",
+      "parentUuid": "3f0b923b_507911d4",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 64
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "def796be_10f19c04",
         "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "cf905e3f_4bbd936f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def796be_10f19c04",
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de508105_95ac82cf",
         "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0658527c_0a82b01a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de508105_95ac82cf",
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afb2036_96e30174",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf513b6_0653eedd",
+      "range": {
+        "startLine": 342,
+        "startChar": 16,
+        "endLine": 342,
+        "endChar": 36
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "770f89b4_ea3cd3f9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Or just DisableOutputs.",
+      "parentUuid": "30465c26_99f6b0f0",
+      "range": {
+        "startLine": 435,
+        "startChar": 6,
+        "endLine": 435,
+        "endChar": 26
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a53894c_5339117c",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioScheduledSourceNode.h",
         "patchSetId": 2
@@ -149,6 +257,30 @@
       "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3ec23f_68b7ea1f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioScheduledSourceNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a53894c_5339117c",
+      "range": {
+        "startLine": 86,
+        "startChar": 38,
+        "endLine": 86,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5b7911df_dc3df201",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09fd0214_106d57a0",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 13
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c16df1b_e1984fae",
         "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.h",
         "patchSetId": 2
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "625a5f6a_664f25d3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c16df1b_e1984fae",
+      "range": {
+        "startLine": 59,
+        "startChar": 38,
+        "endLine": 59,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2187c520_7fae1510",
         "filename": "third_party/WebKit/Source/modules/webaudio/ChannelMergerNode.h",
         "patchSetId": 2
@@ -209,6 +389,30 @@
       "writtenOn": "2017-07-26T16:17:51Z",
       "side": 1,
       "message": "Change all |override|s to |final|.",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb0721f_273e11ad",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ChannelMergerNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "This isn\u0027t part of the CL.  Do you really want me to do that here? I will change it for RequiresTailProcessing() below, though.",
+      "parentUuid": "2187c520_7fae1510",
       "range": {
         "startLine": 50,
         "startChar": 26,
@@ -241,6 +445,30 @@
       "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d82f65_452e03af",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ChannelSplitterNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad43200e_23cd19e2",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -313,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "09392697_b4218550",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DeferredTaskHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done.\n\nBut also renamed AddTailProcessingNode to AddTailProcessingHandler, and so on.",
+      "parentUuid": "f0908413_2c946c38",
+      "range": {
+        "startLine": 214,
+        "startChar": 47,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "699913b6_6581c1aa",
         "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.h",
         "patchSetId": 2
@@ -336,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "c2033f7c_974366d8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "699913b6_6581c1aa",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "610135bf_d91f8b3f",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDelayDSPKernel.cpp",
         "patchSetId": 2
@@ -347,6 +623,30 @@
       "writtenOn": "2017-07-26T16:17:51Z",
       "side": 1,
       "message": "Can this code be refactored into its abstract class? Then the children can override only when it is needed to return `false`.",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 14
+      },
+      "revId": "66a7612aa2e590a3aa62432b2894a3116d349743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12b9e99_69303b90",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDelayDSPKernel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T20:59:04Z",
+      "side": 1,
+      "message": "As I mentioned offline, I originally had this, but then I forgot to update a subclass with the correct value and it took forever to figure out why the node wasn\u0027t working.\n\nSo I decided that every node that does processing must consciously implement its own version.",
+      "parentUuid": "610135bf_d91f8b3f",
       "range": {
         "startLine": 167,
         "startChar": 2,
