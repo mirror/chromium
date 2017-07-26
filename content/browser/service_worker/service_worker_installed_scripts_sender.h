@@ -19,6 +19,18 @@ class ServiceWorkerVersion;
 // created for worker startup and lives as long as the worker is running.
 class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
  public:
+  // Do not change the order. This is used for UMA.
+  enum class Status {
+    kNotFinished = 0,
+    kSuccess = 1,
+    kNoHttpInfoError = 2,
+    kCreateDataPipeError = 3,
+    kConnectionError = 4,
+    kResponseReaderError = 5,
+    kMetaDataSenderError = 6,
+    kMaxValue = kMetaDataSenderError,
+  };
+
   ServiceWorkerInstalledScriptsSender(
       ServiceWorkerVersion* owner,
       const GURL& main_script_url,
@@ -33,17 +45,15 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
   // Starts sending installed scripts to the worker.
   void Start();
 
+  bool is_sender_finished() const { return state_ == State::kFinished; }
+
+  Status finished_status() {
+    DCHECK(is_sender_finished());
+    return finished_status_;
+  }
+
  private:
   class Sender;
-
-  enum class Status {
-    kSuccess,
-    kNoHttpInfoError,
-    kCreateDataPipeError,
-    kConnectionError,
-    kResponseReaderError,
-    kMetaDataSenderError,
-  };
 
   enum class State {
     kNotStarted,
@@ -58,8 +68,10 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
   void SendScriptInfoToRenderer(
       std::string encoding,
       std::unordered_map<std::string, std::string> headers,
+      mojo::ScopedDataPipeConsumerHandle body_handle,
+      size_t body_size,
       mojo::ScopedDataPipeConsumerHandle meta_data_handle,
-      mojo::ScopedDataPipeConsumerHandle body_handle);
+      size_t meta_data_size);
   void OnHttpInfoRead(scoped_refptr<HttpResponseInfoIOBuffer> http_info);
   void OnFinishSendingScript();
   void OnAbortSendingScript(Status status);
@@ -73,6 +85,7 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
   mojom::ServiceWorkerInstalledScriptsManagerPtr manager_;
   std::unique_ptr<Sender> running_sender_;
   State state_;
+  Status finished_status_;
   std::map<int64_t /* resource_id */, GURL> imported_scripts_;
   std::map<int64_t /* resource_id */, GURL>::iterator imported_script_iter_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
