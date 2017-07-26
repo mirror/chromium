@@ -1457,6 +1457,8 @@ source_set("browser") {
     "service_worker/service_worker_url_request_job.h",
     "service_worker/service_worker_version.cc",
     "service_worker/service_worker_version.h",
+    "service_worker/service_worker_version_proxy.cc",
+    "service_worker/service_worker_version_proxy.h",
     "service_worker/service_worker_write_to_cache_job.cc",
     "service_worker/service_worker_write_to_cache_job.h",
     "shared_worker/shared_worker_host.cc",
