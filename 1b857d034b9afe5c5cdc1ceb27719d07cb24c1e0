@@ -1,0 +1,527 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35db42db_f7d96cc6",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "is this include needed?",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee51549_5e871713",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "is this still needed? the feature got moved from //content to //chrome, right?",
+      "range": {
+        "startLine": 195,
+        "startChar": 32,
+        "endLine": 195,
+        "endChar": 48
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c436e415_1082167b",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "this needs a comment \u0026 should be in objectiveCStyle_",
+      "range": {
+        "startLine": 200,
+        "startChar": 7,
+        "endLine": 200,
+        "endChar": 16
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d2b6cc_3da1e6b2",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "this needs a comment too",
+      "range": {
+        "startLine": 520,
+        "startChar": 13,
+        "endLine": 520,
+        "endChar": 39
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d809a08_564128f8",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "it\u0027s not usually a good idea to comment who calls a method - this kind of comment gets out of date very fast and it\u0027s pretty easy to tell from codesearch who uses a method. better to focus on what it does.",
+      "range": {
+        "startLine": 522,
+        "startChar": 18,
+        "endLine": 522,
+        "endChar": 43
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41d55db_eab52720",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1954,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "method names start with a lowercase letter in objc",
+      "range": {
+        "startLine": 1954,
+        "startChar": 13,
+        "endLine": 1954,
+        "endChar": 39
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caa6a29_1d4ce116",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1960,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "maybe DCHECK([separatedTabView isKindOfClass:...]) here?",
+      "range": {
+        "startLine": 1960,
+        "startChar": 71,
+        "endLine": 1960,
+        "endChar": 72
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77783d2a_8089c9ed",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "can just do: [separateWindow setController:[sourceWindow windowController]]",
+      "range": {
+        "startLine": 1973,
+        "startChar": 18,
+        "endLine": 1973,
+        "endChar": 42
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c7d730_3a440348",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "return helper ? helper-\u003eseparate_fullscreen_window() : nullptr;",
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e05140d_66d85b53",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "if this code is still needed (it might be) it should not be commented out; if it is not needed, it should be deleted",
+      "range": {
+        "startLine": 2066,
+        "startChar": 10,
+        "endLine": 2066,
+        "endChar": 29
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337ea4f9_a4cfcb29",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "this needs a method comment and probably an API_AVAILABLE since touchbar is not supported before 10.12",
+      "range": {
+        "startLine": 33,
+        "startChar": 15,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d450172_faa1b016",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "where did the check against [browserController_ isFullscreenForTabContentOrExtension] go? is it no longer needed?",
+      "range": {
+        "startLine": 157,
+        "startChar": 24,
+        "endLine": 157,
+        "endChar": 42
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4139366_c33c7b0f",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "you can delete all the commented-out code in this file",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a511c1_2314619e",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "if these are overrides of NSWindow methods they don\u0027t need to be declared here; if they\u0027re new methods, they need method comments explaining what they do",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7003fd87_20dab914",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "this already returns a BrowserWindowtouchBar* so the cast is not necessary",
+      "range": {
+        "startLine": 24,
+        "startChar": 49,
+        "endLine": 24,
+        "endChar": 70
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76da52d8_0aab34be",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "don\u0027t need to delete the blank lines that were here",
+      "range": {
+        "startLine": 484,
+        "startChar": 2,
+        "endLine": 484,
+        "endChar": 8
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961dd0e4_6256c060",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "it looks from this like exclusive_access_tab() should no longer be used at all on Mac - if so, can we make it not exist on Mac so we don\u0027t accidentally use it? I see other uses of it all over the place (e.g. in IsFullscreenForCapturedTab) so if it isn\u0027t accurate we should probably fix that",
+      "range": {
+        "startLine": 487,
+        "startChar": 9,
+        "endLine": 487,
+        "endChar": 29
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5fed52_af5f1898",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "you can initialize these in the header: bool is_fullscreen_or_pending_ \u003d false;\n\nand then not in the constructor",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5a559f_779a1c48",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "nullptr?",
+      "range": {
+        "startLine": 139,
+        "startChar": 9,
+        "endLine": 139,
+        "endChar": 13
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa555218_0aa34ab8",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "I think this no longer belongs in //content",
+      "range": {
+        "startLine": 133,
+        "startChar": 14,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58780909_614e300e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "I do not think this include is needed",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4de040_50464e4e",
+        "filename": "content/browser/web_contents/web_contents_view_mac.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "don\u0027t need to add a blank line here",
+      "range": {
+        "startLine": 57,
+        "startChar": 3,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224d0397_8a9e3dd5",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-26T17:16:07Z",
+      "side": 1,
+      "message": "separate fullscreen",
+      "range": {
+        "startLine": 220,
+        "startChar": 53,
+        "endLine": 220,
+        "endChar": 71
+      },
+      "revId": "1b857d034b9afe5c5cdc1ceb27719d07cb24c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
