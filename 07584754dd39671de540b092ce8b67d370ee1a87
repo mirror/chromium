@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc058c83_83fb0a83",
+        "filename": "components/offline_pages/core/task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-26T20:20:22Z",
+      "side": 1,
+      "message": "this should be removed I think, since that is why you call TaskQueue::InformTaskQueueIsIdle right?",
+      "revId": "07584754dd39671de540b092ce8b67d370ee1a87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
