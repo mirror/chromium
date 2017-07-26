@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d57016c_247836ed",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f7578dd_53cd878f",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac90577d_5a28ae95",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e6ba20_338e2b88",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ac90577d_5a28ae95",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "44c48b3f_f3881619",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db0d324c_fd2b1f70",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56d5874_6585f677",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c511ebc_83382ba2",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e56d5874_6585f677",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "543d46fc_6369f237",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "lgtm. Done. Thank you for your advice.!",
+      "parentUuid": "421a7d60_24dc9f32",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54932606_f9fc700b",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acaa1dda_7f019727",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "This method is deleted.",
+      "parentUuid": "54932606_f9fc700b",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4c725040_3005bdcc",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "I rewrite the logic to not depend on timestamp of events. Done.",
+      "parentUuid": "eb67f081_f54099e2",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2bad165_4ebfb5ac",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147c85aa_1a93b2e3",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2bad165_4ebfb5ac",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1637e2af_705befab",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ddb058_7feb42ce",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79762c3d_1a044ae7",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4199b80b_bdf8d71e",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79762c3d_1a044ae7",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "1b65253c_33863a6d",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fe47b49_d58874d1",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c009c586_7a8538f4",
         "filename": "components/exo/keyboard.h",
         "patchSetId": 9
@@ -203,6 +401,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70bdddc_d76da48f",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "This method is removed.",
+      "parentUuid": "c009c586_7a8538f4",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "30527a62_213e0116",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08054f25_6d3690d3",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b732d8e1_0a5c9cd7",
         "filename": "components/exo/keyboard.h",
         "patchSetId": 9
@@ -237,6 +471,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46379f4a_8271cc1e",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b732d8e1_0a5c9cd7",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "2334a8e1_28b3f324",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "Yes. It\u0027s small and key value is monotonically increasing, so flat_map should be better. Thanks!",
+      "parentUuid": "be3933d6_93c59c78",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4797a25_4e11e1af",
         "filename": "components/exo/keyboard.h",
         "patchSetId": 9
@@ -271,6 +541,24 @@
       "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29d297a_c0d13a63",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-26T13:53:32Z",
+      "side": 1,
+      "message": "I\u0027m sorry for misunderstanding. Done.",
+      "parentUuid": "f4797a25_4e11e1af",
+      "revId": "8ad684fb62a0850c8f85ce20834aaef38ba39847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
