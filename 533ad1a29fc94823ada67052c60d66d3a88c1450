@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d198ce7_59b11f7e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T07:10:02Z",
+      "side": 1,
+      "message": "nit: full stop at the end.",
+      "range": {
+        "startLine": 85,
+        "startChar": 43,
+        "endLine": 85,
+        "endChar": 49
+      },
+      "revId": "533ad1a29fc94823ada67052c60d66d3a88c1450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2625f3cd_9ee8daf8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T07:10:02Z",
+      "side": 1,
+      "message": "this isn\u0027t required (and goes against the style guide)",
+      "revId": "533ad1a29fc94823ada67052c60d66d3a88c1450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96435948_aa2d8bb7",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3573,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T07:10:02Z",
+      "side": 1,
+      "message": "Does [NSCursor setHiddenUntilMouseMoves:NO] work to reveal the cursor?\n\n(and can that be used without having to check |cursorHidden_| -- i.e. can we remove the cursorHidden_ member?).",
+      "revId": "533ad1a29fc94823ada67052c60d66d3a88c1450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
