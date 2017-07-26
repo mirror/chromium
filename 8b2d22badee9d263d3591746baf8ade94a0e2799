@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "4c9e91b7_e1283dee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-26T14:51:55Z",
+      "side": 1,
+      "message": "I think it doesn\u0027t make sense to list all the user actions here.",
+      "parentUuid": "83e4c7e1_76b0f816",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d291b61b_c4e3b0e8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 1
