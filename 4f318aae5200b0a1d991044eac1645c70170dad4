@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e7a12f4_018084b1",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-26T21:18:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b84d0dbd_b9b38e89",
+      "range": {
+        "startLine": 43,
+        "startChar": 70,
+        "endLine": 43,
+        "endChar": 79
+      },
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae9f5ca_6b5aaf78",
         "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-26T18:52:03Z",
       "side": 1,
       "message": "nit: maybe modify the comments to further emphasize the difference between current_ and nextStart_? (e.g. current_ is a complete movement which must contain start and end, while nextStart_ is just a start). Currently both are using \u0027last detected\u0027 so it may be confusing at first glance.",
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3c5ec6_cd4cfb19",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-26T21:18:49Z",
+      "side": 1,
+      "message": "tried to clarify it a little more.",
+      "parentUuid": "fae9f5ca_6b5aaf78",
       "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56f0a52_a8756f13",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-26T21:18:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c851b6_a9469df5",
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a2f02b70_02c10efa",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-26T21:18:49Z",
+      "side": 1,
+      "message": "it is\ne.g. user moves their finger around, stops for few seconds, and then lifts the finger;\nif the detector got enabled just before touch end event.\n\nThough, I don\u0027t think this is necessarily needed, this.nextStart is not set, current will be null after addTouch, so the code would bail out there.",
+      "parentUuid": "4697656c_080ac40d",
+      "range": {
+        "startLine": 279,
+        "startChar": 28,
+        "endLine": 279,
+        "endChar": 44
+      },
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cfd289f_da0ef1a3",
         "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
         "patchSetId": 8
@@ -93,6 +177,24 @@
       "writtenOn": "2017-07-26T18:52:03Z",
       "side": 1,
       "message": "optional nit: maybe move the codes below this line to addTouch_, or to a separate function which will be called by addTouch_? Because they depend on the update on this.current_ which is done by addTouch_ it may be more natural to start from there.",
+      "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac85b23_ec93b4d7",
+        "filename": "chrome/browser/resources/chromeos/login/md_top_header_bar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-26T21:18:49Z",
+      "side": 1,
+      "message": "yes, if addTouch_ was called from here only, that would make sense, but we don\u0027t need the code beyond this point to run for onTouchMove",
+      "parentUuid": "1cfd289f_da0ef1a3",
       "revId": "4f318aae5200b0a1d991044eac1645c70170dad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
