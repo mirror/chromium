@@ -9217,6 +9217,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ContentSettings.ClientHints.UpdateSize" units="count">
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+    Count of client hints that were persisted to the disk when the browser
+    process was notified by the renderer.
+  </summary>
+</histogram>
+
 <histogram name="ContentSettings.DefaultAutoplaySetting" enum="ContentSetting">
   <owner>mlamouri@chromium.org</owner>
   <summary>The default autoplay setting at profile open.</summary>

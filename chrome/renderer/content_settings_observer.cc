@@ -4,9 +4,14 @@
 
 #include "chrome/renderer/content_settings_observer.h"
 
+#include "base/strings/string_number_conversions.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/ssl_insecure_content.h"
 #include "components/content_settings/core/common/content_settings.h"
+#include "components/content_settings/core/common/content_settings.mojom.h"
+#include "components/content_settings/core/common/content_settings_pattern.h"
+#include "components/content_settings/core/common/content_settings_utils.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/renderer/render_frame.h"
@@ -23,6 +28,7 @@
 #include "third_party/WebKit/public/web/WebFrameClient.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
+#include "url/gurl.h"
 #include "url/origin.h"
 #include "url/url_constants.h"
 
@@ -445,8 +451,37 @@ void ContentSettingsObserver::PersistClientHints(
     const blink::WebEnabledClientHints& enabled_client_hints,
     base::TimeDelta duration,
     const blink::WebURL& url) {
-  // TODO (tbansal): Send it back to browser which should persist the
-  // preferences.
+  if (duration.InSeconds() <= 0)
+    return;
+
+  GURL hostname = GURL(url).GetOrigin();
+  if (!hostname.is_valid() || !hostname.SchemeIsHTTPOrHTTPS())
+    return;
+
+  // Use wall clock since the expiration time would be persisted across embedder
+  // restarts.
+  double expiration_time = (base::Time::Now() + duration).ToDoubleT();
+
+  // TODO(tbansal): crbug.com/735518. Merge with the current dictionary.
+  std::unique_ptr<base::DictionaryValue> expiration_times(
+      new base::DictionaryValue());
+
+  for (size_t i = 0; i < blink::kWebClientHintsTypeLast + 1; ++i) {
+    if (enabled_client_hints.IsEnabled(
+            static_cast<blink::WebClientHintsType>(i))) {
+      expiration_times->SetDouble(base::IntToString(i), expiration_time);
+    }
+  }
+
+  if (expiration_times->empty())
+    return;
+
+  // Notify the embedder.
+  content_settings::mojom::ContentSettingsAssociatedPtr host_observer;
+  render_frame()->GetRemoteAssociatedInterfaces()->GetInterface(&host_observer);
+  host_observer->UpdateContentSetting(
+      ContentSettingsPattern::FromURLNoWildcard(hostname),
+      std::move(expiration_times));
 }
 
 void ContentSettingsObserver::DidNotAllowPlugins() {
