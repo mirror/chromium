@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9187ee20_50c645da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T00:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05401f62_2bf48c11",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b54abbf_184be1bd",
         "filename": "chromeos/components/tether/host_scanner.cc",
         "patchSetId": 3
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "c1ee3b93_14040ba4",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T00:15:50Z",
+      "side": 1,
+      "message": "Oh yeah, got it! Done.",
+      "parentUuid": "16bdaa39_468fa1e1",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0be78ef2_6ede428f",
         "filename": "chromeos/components/tether/host_scanner.h",
         "patchSetId": 3
@@ -116,6 +164,30 @@
       "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52545b9_8c63dbb3",
+        "filename": "chromeos/components/tether/host_scanner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T00:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be78ef2_6ede428f",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 57
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "a36ca9d3_ed3dd55d",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T00:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e509a77_4fbf2eb6",
+      "range": {
+        "startLine": 183,
+        "startChar": 6,
+        "endLine": 183,
+        "endChar": 21
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beb65bf7_a7c72648",
         "filename": "chromeos/components/tether/host_scanner_unittest.cc",
         "patchSetId": 3
@@ -162,6 +258,30 @@
       "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd92e691_845514ae",
+        "filename": "chromeos/components/tether/host_scanner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-26T00:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beb65bf7_a7c72648",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 60
+      },
+      "revId": "8d3e1a06d440261a6805fed6ec0f946990872a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
