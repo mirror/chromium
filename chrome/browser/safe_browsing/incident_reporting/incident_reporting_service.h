@@ -18,7 +18,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "chrome/browser/safe_browsing/download_protection_service.h"
+#include "chrome/browser/safe_browsing/download_protection/download_protection_service.h"
 #include "chrome/browser/safe_browsing/incident_reporting/delayed_analysis_callback.h"
 #include "chrome/browser/safe_browsing/incident_reporting/delayed_callback_runner.h"
 #include "chrome/browser/safe_browsing/incident_reporting/download_metadata_manager.h"
