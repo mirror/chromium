@@ -22,6 +22,47 @@
       "revId": "222267f914e4f7a75a607313db15c2379c0f64ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad6a460_b225deef",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-26T11:21:50Z",
+      "side": 1,
+      "message": "Sounds nice.\n\nAlso I\u0027d like to understand why the caller site of the ProvideTo family is so much scattered in the code base though :) Basically ProvideTo methods should be called when the supplementable object gets instantiated. A follow-up CL is fine :)",
+      "parentUuid": "87c8e79b_fc5691bb",
+      "range": {
+        "startLine": 115,
+        "startChar": 15,
+        "endLine": 115,
+        "endChar": 33
+      },
+      "revId": "222267f914e4f7a75a607313db15c2379c0f64ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37e7063_25fc540c",
+        "filename": "third_party/WebKit/Source/modules/storage/StorageNamespaceController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-26T11:21:50Z",
+      "side": 1,
+      "message": "You don\u0027t need to store web_view_ though.\n\nYou can get the WebView by GetSupplementable()-\u003eGetWebView().",
+      "revId": "222267f914e4f7a75a607313db15c2379c0f64ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
