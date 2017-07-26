@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c36a4ec_5879b8c5",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3124,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-26T06:14:01Z",
+      "side": 1,
+      "message": "improved-language-settings seems pretty non-specific. Is there a better name?",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875512bb_ea8df89f",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-26T06:14:01Z",
+      "side": 1,
+      "message": "Is this change going to affect both Chrome and Chrome OS? I thought Chrome OS already did the right thing regarding expansion?",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37c898e_b3167a9a",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-26T06:14:01Z",
+      "side": 1,
+      "message": "Why c_str() here and not below?",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25582933_0bb4ec1a",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-26T06:14:01Z",
+      "side": 1,
+      "message": "What does this comment mean? It is not clear.",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39eb01e_d223181d",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-26T06:14:01Z",
+      "side": 1,
+      "message": "Do you really want to new method here? Can\u0027t you just keep the existing method and modify the behavior based on the feature flag?\n\nThe question here is will UpdateLanguageList() be completely replaced by  UpdateLanguageListNoExpansion() at some point? If so, then maybe it is better not to create a new method.",
+      "revId": "3ee16f526938bdd4ae5f0c2f93ae32efe2480a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
