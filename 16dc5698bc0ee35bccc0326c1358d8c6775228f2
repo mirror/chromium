@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86ba35b0_9853b481",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-26T22:31:13Z",
+      "side": 1,
+      "message": "nit: Update -\u003e Updates. You may want to make the comments a little more concise.",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91b785f_1cc9f4ee",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-26T22:31:13Z",
+      "side": 1,
+      "message": "nit: Update-\u003eUpdates",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b513ff40_87b9d825",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-26T22:31:13Z",
+      "side": 1,
+      "message": "The operations of calculating delta_y, opacity and updating opacity are pretty much the same, it will be better to refactor them into a common function and call it at different places with different parameters.",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca9d7d1_4db18283",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-26T22:31:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e184df16_7a055556",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-26T22:31:13Z",
+      "side": 1,
+      "message": "Please add a comment to explain how the opacity is set if |is_end| is true.",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151b9a53_b514a5b5",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-26T22:31:13Z",
+      "side": 1,
+      "message": "nit: Update -\u003e Updates. Does |is_end| mean is_end_gesture?",
+      "revId": "16dc5698bc0ee35bccc0326c1358d8c6775228f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
