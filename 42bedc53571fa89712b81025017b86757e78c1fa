@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c237c22c_400f369a",
+        "filename": "cc/output/dc_layer_overlay.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-26T18:54:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a57ad014_6e86fcec",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "737f6166_70991b32",
         "filename": "cc/output/gl_renderer.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T21:12:46Z",
       "side": 1,
       "message": "should we check if the colorspace IsValid?",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e346f1_a70a318f",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3317,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-26T18:54:32Z",
+      "side": 1,
+      "message": "I think we still want to be able to send an invalid colorspace to reset it to its default behavior - e.g. Rec 709.",
+      "parentUuid": "737f6166_70991b32",
       "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45f9e19d_24417233",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3318,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-26T18:54:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4518e1_de9c5362",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bf98622_e366cc3f",
         "filename": "cc/output/gl_renderer.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4ec2e845_ae895c4a",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3320,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-26T18:54:32Z",
+      "side": 1,
+      "message": "Yeah it\u0027s weird, but there\u0027s no native GL type that can handle everything that can be captured with a gfx::ColorSpace. This type is defined in gpu/command_buffer/client/gles2_interface.h, similar to what we already do with ClientBuffer.",
+      "parentUuid": "4bf98622_e366cc3f",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "909ca4c0_66526f5d",
         "filename": "ui/gfx/color_space.h",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-25T21:12:46Z",
       "side": 1,
       "message": "This is unusual... why isn\u0027t this in the IPC param trait?",
+      "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09b3579_d20b762c",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-26T18:54:32Z",
+      "side": 1,
+      "message": "gpu/command_buffer doesn\u0027t and shouldn\u0027t depend on IPC, so we need to have this directly in gfx::ColorSpace.",
+      "parentUuid": "909ca4c0_66526f5d",
       "revId": "42bedc53571fa89712b81025017b86757e78c1fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
