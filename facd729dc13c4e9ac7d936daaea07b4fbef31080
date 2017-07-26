@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "63537751_14d19ee4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-07-26T19:36:37Z",
+      "side": 1,
+      "message": "So on empty method name we now error? Seems sane but how is it triggered? And could the same thing happen in payment app integration code?",
+      "range": {
+        "startLine": 126,
+        "startChar": 22,
+        "endLine": 126,
+        "endChar": 29
+      },
+      "revId": "facd729dc13c4e9ac7d936daaea07b4fbef31080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc8d431_da7946c6",
         "filename": "content/browser/payments/payment_app_provider_impl.cc",
         "patchSetId": 5
