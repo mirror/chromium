@@ -70,6 +70,40 @@
     },
     {
       "key": {
+        "uuid": "46678d44_f1d5fc01",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:16:44Z",
+      "side": 1,
+      "message": "I don\u0027t like such negative flag.  Can we change it SetFocus(), and set true to it by default?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9e3cbe_cc872408",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-26T23:16:44Z",
+      "side": 1,
+      "message": "I don\u0027t like such negative flag.  Can we change it ShouldClearStrategy(), and set true to it by default?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89d245f6_6e8b695f",
         "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
         "patchSetId": 6
