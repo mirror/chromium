@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "673c8edb_d2330742",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-26T12:26:54Z",
+      "side": 1,
+      "message": "Did you run git cl format here?",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "99a3ed07eab2c79839ce1732bbc2f61c793f18c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6af27ed_e6892299",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-26T12:26:54Z",
+      "side": 1,
+      "message": "should these be std::string() ?",
+      "revId": "99a3ed07eab2c79839ce1732bbc2f61c793f18c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64f853c_2fcaa5d2",
+        "filename": "chrome/browser/ui/sync/one_click_signin_sync_starter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-26T12:26:54Z",
+      "side": 1,
+      "message": "Should these be GURL()?",
+      "revId": "99a3ed07eab2c79839ce1732bbc2f61c793f18c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
