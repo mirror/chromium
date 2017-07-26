@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ad160e0_9d119564",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T23:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "584e805d_02110566",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e08dd72e_36373c20",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4d25e7_d101e283",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T23:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e08dd72e_36373c20",
+      "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "60b61459_b7ad1366",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T23:39:58Z",
+      "side": 1,
+      "message": "Enum removed, as per marq\u0027s comment.",
+      "parentUuid": "6b4e3af6_90e822ef",
+      "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3106cc08_3b0d4523",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9937733_afe3df80",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T23:39:58Z",
+      "side": 1,
+      "message": "Enum removed, as per marq\u0027s comment.",
+      "parentUuid": "3106cc08_3b0d4523",
+      "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "8b1e9c6d_952a5ae0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T23:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "013565e6_82fafe58",
+      "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a03f4e9_fe7911c2",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ece05d_6221f7ff",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-26T23:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a03f4e9_fe7911c2",
+      "revId": "90bf7646f74f4cd388bb29eddfd3d8afabbb29e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
