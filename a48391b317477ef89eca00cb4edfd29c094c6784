@@ -16,6 +16,24 @@
       "revId": "a48391b317477ef89eca00cb4edfd29c094c6784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68809e2_8161c146",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-26T19:51:20Z",
+      "side": 1,
+      "message": "No, not at the moment. This just sends the kernel and fs to the device and hangs up, it doesn\u0027t know anything about the run.\n\nI\u0027m looking at setting up sshd on the device, then we could switch to sshing into it and then we could pull logs back, etc. but that\u0027s further off (I\u0027m not sure all the necessary bits are there yet.)",
+      "parentUuid": "d2a8620b_bc10cd18",
+      "revId": "a48391b317477ef89eca00cb4edfd29c094c6784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
