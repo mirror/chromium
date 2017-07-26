@@ -33,6 +33,7 @@ class BlobStorageContext;
 }
 
 namespace content {
+class CacheStorageManager;
 class CacheStorageCacheHandle;
 class CacheStorageIndex;
 class CacheStorageScheduler;
@@ -68,6 +69,8 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
   // Any unfinished asynchronous operations may not complete or call their
   // callbacks.
   virtual ~CacheStorage();
+
+  void SetManager(base::WeakPtr<CacheStorageManager> cache_storage_manager);
 
   // Get the cache for the given key. If the cache is not found it is
   // created. The CacheStorgeCacheHandle in the callback prolongs the lifetime
@@ -222,6 +225,9 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
   bool InitiateScheduledIndexWriteForTest(
       base::OnceCallback<void(bool)> callback);
 
+  void NotifyCacheListChanged();
+  void NotifyCacheDataChanged();
+
   // Whether or not we've loaded the list of cache names into memory.
   bool initialized_;
   bool initializing_;
@@ -260,6 +266,9 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
 
   // The origin that this CacheStorage is associated with.
   GURL origin_;
+
+  // The manager that owns this cache storage.
+  base::WeakPtr<CacheStorageManager> cache_storage_manager_;
 
   base::CancelableClosure index_write_task_;
 

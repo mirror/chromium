@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/storage.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -33,9 +34,17 @@ class StorageHandler : public DevToolsDomainHandler,
   void GetUsageAndQuota(
       const String& origin,
       std::unique_ptr<GetUsageAndQuotaCallback> callback) override;
+  void TrackOrigin(const String& origin,
+                   std::unique_ptr<TrackOriginCallback> callback) override;
+  void UntrackOrigin(const String& origin,
+                     std::unique_ptr<UntrackOriginCallback> callback) override;
+
+  void NotifyCacheStorageListChanged(const String& origin);
 
  private:
+  std::unique_ptr<Storage::Frontend> frontend_;
   RenderFrameHostImpl* host_;
+  std::vector<std::pair<url::Origin, int64_t>> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(StorageHandler);
 };

@@ -16,6 +16,7 @@
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 #include "storage/browser/quota/special_storage_policy.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -25,6 +26,14 @@ CacheStorageContextImpl::CacheStorageContextImpl(
 }
 
 CacheStorageContextImpl::~CacheStorageContextImpl() {
+}
+
+// static
+std::atomic<int64_t> CacheStorageContextImpl::generated_id_{0};
+
+// static
+int64_t CacheStorageContextImpl::GenerateObserverID() {
+  return generated_id_++;
 }
 
 void CacheStorageContextImpl::Init(
@@ -97,6 +106,21 @@ void CacheStorageContextImpl::DeleteForOrigin(const GURL& origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (cache_manager_)
     cache_manager_->DeleteOriginData(origin);
+}
+
+void CacheStorageContextImpl::AddObserver(
+    const GURL& origin,
+    int64_t id,
+    base::RepeatingCallback<void(ObservationType, const GURL&)> callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (cache_manager_)
+    cache_manager_->AddObserver(origin, id, std::move(callback));
+}
+
+void CacheStorageContextImpl::RemoveObserver(const GURL& origin, int64_t id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (cache_manager_)
+    cache_manager_->RemoveObserver(origin, id);
 }
 
 void CacheStorageContextImpl::CreateCacheStorageManager(

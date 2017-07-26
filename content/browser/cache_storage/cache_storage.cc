@@ -30,6 +30,7 @@
 #include "content/browser/cache_storage/cache_storage_cache.h"
 #include "content/browser/cache_storage/cache_storage_cache_handle.h"
 #include "content/browser/cache_storage/cache_storage_index.h"
+#include "content/browser/cache_storage/cache_storage_manager.h"
 #include "content/browser/cache_storage/cache_storage_scheduler.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/directory_lister.h"
@@ -527,6 +528,11 @@ CacheStorage::CacheStorage(
 CacheStorage::~CacheStorage() {
 }
 
+void CacheStorage::SetManager(
+    base::WeakPtr<CacheStorageManager> cache_storage_manager) {
+  cache_storage_manager_ = cache_storage_manager;
+}
+
 void CacheStorage::OpenCache(const std::string& cache_name,
                              CacheAndErrorCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -794,6 +800,7 @@ void CacheStorage::CreateCacheDidCreateCache(
                      base::Passed(CreateCacheHandle(cache_ptr))));
 
   cache_loader_->NotifyCacheCreated(cache_name, CreateCacheHandle(cache_ptr));
+  NotifyCacheListChanged();
 }
 
 void CacheStorage::CreateCacheDidWriteIndex(
@@ -869,6 +876,7 @@ void CacheStorage::DeleteCacheDidWriteIndex(
 void CacheStorage::DeleteCacheFinalize(CacheStorageCache* doomed_cache) {
   doomed_cache->Size(base::BindOnce(&CacheStorage::DeleteCacheDidGetSize,
                                     weak_factory_.GetWeakPtr(), doomed_cache));
+  NotifyCacheListChanged();
 }
 
 void CacheStorage::DeleteCacheDidGetSize(CacheStorageCache* doomed_cache,
@@ -1113,6 +1121,18 @@ void CacheStorage::SizeImpl(SizeCallback callback) {
                                base::Passed(std::move(cache_handle)),
                                barrier_closure, accumulator_ptr));
   }
+}
+
+void CacheStorage::NotifyCacheListChanged() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (cache_storage_manager_)
+    cache_storage_manager_->NotifyCacheListChanged(origin_);
+}
+
+void CacheStorage::NotifyCacheDataChanged() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (cache_storage_manager_)
+    cache_storage_manager_->NotifyCacheDataChanged(origin_);
 }
 
 }  // namespace content

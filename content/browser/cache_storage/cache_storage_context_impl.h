@@ -12,6 +12,7 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/cache_storage_context.h"
 #include "content/public/browser/cache_storage_usage_info.h"
+#include "url/gurl.h"
 
 namespace base {
 class FilePath;
@@ -41,6 +42,8 @@ class CONTENT_EXPORT CacheStorageContextImpl
  public:
   explicit CacheStorageContextImpl(BrowserContext* browser_context);
 
+  static int64_t GenerateObserverID();
+
   // Init and Shutdown are for use on the UI thread when the profile,
   // storagepartition is being setup and torn down.
   void Init(const base::FilePath& user_data_directory,
@@ -66,6 +69,13 @@ class CONTENT_EXPORT CacheStorageContextImpl
   void GetAllOriginsInfo(const GetUsageInfoCallback& callback) override;
   void DeleteForOrigin(const GURL& origin) override;
 
+  // Only callable on the IO thread.
+  void AddObserver(const GURL& origin,
+                   int64_t id,
+                   base::RepeatingCallback<void(ObservationType, const GURL&)>
+                       callback) override;
+  void RemoveObserver(const GURL& origin, int64_t id) override;
+
  protected:
   ~CacheStorageContextImpl() override;
 
@@ -76,6 +86,8 @@ class CONTENT_EXPORT CacheStorageContextImpl
       scoped_refptr<storage::QuotaManagerProxy> quota_manager_proxy);
 
   void ShutdownOnIO();
+
+  static std::atomic<int64_t> generated_id_;
 
   // Initialized in Init(); true if the user data directory is empty.
   bool is_incognito_ = false;
