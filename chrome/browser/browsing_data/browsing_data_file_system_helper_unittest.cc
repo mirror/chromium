@@ -19,6 +19,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/common/fileapi/file_system_types.h"
@@ -59,10 +60,7 @@ typedef std::unique_ptr<FileSystemInfoList> ScopedFileSystemInfoList;
 // The FileSystem APIs are all asynchronous; this testing class wraps up the
 // boilerplate code necessary to deal with waiting for responses. In a nutshell,
 // any async call whose response we want to test ought to be followed by a call
-// to BlockUntilNotified(), which will (shockingly!) block until Notify() is
-// called. For this to work, you'll need to ensure that each async call is
-// implemented as a class method that that calls Notify() at an appropriate
-// point.
+// to BlockUntilIdle().
 class BrowsingDataFileSystemHelperTest : public testing::Test {
  public:
   BrowsingDataFileSystemHelperTest() {
@@ -71,25 +69,20 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
     helper_ = BrowsingDataFileSystemHelper::Create(
         BrowserContext::GetDefaultStoragePartition(profile_.get())->
             GetFileSystemContext());
-    base::RunLoop().RunUntilIdle();
+    content::RunAllBlockingPoolTasksUntilIdle();
     canned_helper_ = new CannedBrowsingDataFileSystemHelper(profile_.get());
   }
   ~BrowsingDataFileSystemHelperTest() override {
     // Avoid memory leaks.
     profile_.reset();
-    base::RunLoop().RunUntilIdle();
+    content::RunAllBlockingPoolTasksUntilIdle();
   }
 
   TestingProfile* GetProfile() {
     return profile_.get();
   }
 
-  // Blocks on the current MessageLoop until Notify() is called.
-  void BlockUntilNotified() { base::RunLoop().Run(); }
-
-  // Unblocks the current MessageLoop. Should be called in response to some sort
-  // of async activity in a callback method.
-  void Notify() { base::MessageLoop::current()->QuitWhenIdle(); }
+  void BlockUntilIdle() { content::RunAllBlockingPoolTasksUntilIdle(); }
 
   // Callback that should be executed in response to
   // storage::FileSystemContext::OpenFileSystem.
@@ -97,7 +90,6 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
                               const std::string& name,
                               base::File::Error error) {
     open_file_system_result_ = error;
-    Notify();
   }
 
   bool OpenFileSystem(const GURL& origin,
@@ -109,7 +101,7 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
             base::Bind(
                 &BrowsingDataFileSystemHelperTest::OpenFileSystemCallback,
                 base::Unretained(this)));
-    BlockUntilNotified();
+    BlockUntilIdle();
     return open_file_system_result_ == base::File::FILE_OK;
   }
 
@@ -132,7 +124,6 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
     file_system_info_list_.reset(
         new std::list<BrowsingDataFileSystemHelper::FileSystemInfo>(
             file_system_info_list));
-    Notify();
   }
 
   // Calls StartFetching() on the test's BrowsingDataFileSystemHelper
@@ -141,7 +132,7 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
     helper_->StartFetching(
         base::Bind(&BrowsingDataFileSystemHelperTest::CallbackStartFetching,
                    base::Unretained(this)));
-    BlockUntilNotified();
+    BlockUntilIdle();
   }
 
   // Calls StartFetching() on the test's CannedBrowsingDataFileSystemHelper
@@ -150,7 +141,7 @@ class BrowsingDataFileSystemHelperTest : public testing::Test {
     canned_helper_->StartFetching(
         base::Bind(&BrowsingDataFileSystemHelperTest::CallbackStartFetching,
                    base::Unretained(this)));
-    BlockUntilNotified();
+    BlockUntilIdle();
   }
 
   // Sets up kOrigin1 with a temporary file system, kOrigin2 with a persistent
