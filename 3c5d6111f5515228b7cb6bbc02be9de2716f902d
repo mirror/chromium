@@ -22,6 +22,30 @@
       "revId": "3c5d6111f5515228b7cb6bbc02be9de2716f902d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92701566_add37715",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-26T19:15:28Z",
+      "side": 1,
+      "message": "Alright, this new patch-set should have the desired behavior.",
+      "parentUuid": "9d29caf5_c349914f",
+      "range": {
+        "startLine": 259,
+        "startChar": 32,
+        "endLine": 259,
+        "endChar": 0
+      },
+      "revId": "3c5d6111f5515228b7cb6bbc02be9de2716f902d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
