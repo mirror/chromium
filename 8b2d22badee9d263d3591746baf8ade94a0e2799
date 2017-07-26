@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "72e5704c_1960e1fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-26T14:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25fb40ec_be05d283",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b5d62c_888030e4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "526f4537_4c7bd2ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-26T14:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57b5d62c_888030e4",
+      "range": {
+        "startLine": 9,
+        "startChar": 47,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "601ff987_827e27ff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-26T14:05:12Z",
       "side": 1,
       "message": "Nit: we record several metrics in this call, so it would be good to update this.",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e4c7e1_76b0f816",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-26T14:14:28Z",
+      "side": 1,
+      "message": "Should I add a more detailed description explaining the exact user actions which will be recorded depending on the state or the access point?",
+      "parentUuid": "601ff987_827e27ff",
       "range": {
         "startLine": 70,
         "startChar": 15,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "28357412_50a3d2fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-26T14:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d291b61b_c4e3b0e8",
+      "range": {
+        "startLine": 147,
+        "startChar": 30,
+        "endLine": 147,
+        "endChar": 32
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7435612a_bf8861b2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa452cd_a7116c0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-26T14:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7435612a_bf8861b2",
+      "range": {
+        "startLine": 166,
+        "startChar": 30,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "8b2d22badee9d263d3591746baf8ade94a0e2799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
