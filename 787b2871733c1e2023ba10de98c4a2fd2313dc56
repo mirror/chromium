@@ -16,6 +16,24 @@
       "revId": "787b2871733c1e2023ba10de98c4a2fd2313dc56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d356879f_6f137de7",
+        "filename": "ui/app_list/search_box_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-26T18:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f04ee71_3b096aef",
+      "revId": "787b2871733c1e2023ba10de98c4a2fd2313dc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
