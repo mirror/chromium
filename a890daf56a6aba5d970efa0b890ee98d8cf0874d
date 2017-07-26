@@ -16,6 +16,24 @@
       "revId": "a890daf56a6aba5d970efa0b890ee98d8cf0874d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53360ffc_bc80d15e",
+        "filename": "components/offline_pages/core/task_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-26T17:38:36Z",
+      "side": 1,
+      "message": "If you don\u0027t want to post task, I believe that return without the if is appropriate, since AddTask will call StartTaskIfAvailable, and cause current_task_ to be set properly.\n\nThe current code will improperly cancel current_task_ if something is added during OnIdle.",
+      "parentUuid": "ad6a0ffb_9e23ee67",
+      "revId": "a890daf56a6aba5d970efa0b890ee98d8cf0874d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
