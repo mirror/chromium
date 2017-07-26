@@ -322,6 +322,74 @@
       "revId": "ded4721774ab79e26caf493445987066150beaac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc64cf0_d21a6e12",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioBus.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T17:25:44Z",
+      "side": 1,
+      "message": "Not sure if \"*last_mix_gain\" should be \"*|last_mix_gain|\" or something else. Maybe just leave it as you have it now?",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad90b885_22836cc2",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T17:25:44Z",
+      "side": 1,
+      "message": "I think AudioHardwareBufferSize is now HardwareBufferSize(). (Line 254 below.)",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a58379_ae11ed9f",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T17:25:44Z",
+      "side": 1,
+      "message": "Rename AudioHardwareBufferSize as above.",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c201693a_1b91bf18",
+        "filename": "third_party/WebKit/Source/platform/audio/UpSampler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-26T17:25:44Z",
+      "side": 1,
+      "message": "\"sourceFramesToProcess\" needs renaming.",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
