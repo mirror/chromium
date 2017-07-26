@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406b9f14_578c9615",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T18:47:49Z",
+      "side": 1,
+      "message": "i notice we use this string in 3 different places. what we typically do in other page load metrics observers is declare a constant in the \u0027internal\u0027 namespace of the observer header, and then reference that constant in the implementation and tests. could we do that here as well?",
+      "revId": "67eb2e9edd7ecfa7df9fb3596d737fc74ad4f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125f954d_dcb0ae9d",
+        "filename": "chrome/test/data/use_counter_features.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-26T18:47:49Z",
+      "side": 1,
+      "message": "we typically put page load metrics browsertest test files in the chrome/test/data/page_load_metrics/ subdirectory. i\u0027m fine leaving these here if you prefer though - up to you.",
+      "revId": "67eb2e9edd7ecfa7df9fb3596d737fc74ad4f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
