@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58aa3e5_0eb87211",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-26T00:58:46Z",
+      "side": 1,
+      "message": "Let\u0027s keep parameters consistent with the substitution string, i.e.\n\n... \u003d gapCount \u003d\u003d\u003d 1 ? Common.UIString(\u0027empty\u0027) : Common.UIString(\u0027empty × %d\u0027, gapCount);",
+      "revId": "3478e5914c5c37e00cc93af722e816772cf08569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
