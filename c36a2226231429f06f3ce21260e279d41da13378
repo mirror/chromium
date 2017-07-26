@@ -45,6 +45,30 @@
       "revId": "c36a2226231429f06f3ce21260e279d41da13378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80837126_50f7fb33",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-26T21:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0760454_a4fcf3c4",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 32
+      },
+      "revId": "c36a2226231429f06f3ce21260e279d41da13378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
