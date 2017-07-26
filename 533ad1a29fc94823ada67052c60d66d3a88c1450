@@ -42,6 +42,52 @@
     },
     {
       "key": {
+        "uuid": "a605b372_d8021aae",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3569,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T07:27:44Z",
+      "side": 1,
+      "message": "nit: do -\u003e does",
+      "range": {
+        "startLine": 3569,
+        "startChar": 70,
+        "endLine": 3569,
+        "endChar": 72
+      },
+      "revId": "533ad1a29fc94823ada67052c60d66d3a88c1450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0247c0_363efbc1",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3571,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T07:27:44Z",
+      "side": 1,
+      "message": "Make the the cursor updated -\u003e Update the cursor",
+      "range": {
+        "startLine": 3571,
+        "startChar": 5,
+        "endLine": 3571,
+        "endChar": 32
+      },
+      "revId": "533ad1a29fc94823ada67052c60d66d3a88c1450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96435948_aa2d8bb7",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 1
@@ -53,6 +99,24 @@
       "writtenOn": "2017-07-26T07:10:02Z",
       "side": 1,
       "message": "Does [NSCursor setHiddenUntilMouseMoves:NO] work to reveal the cursor?\n\n(and can that be used without having to check |cursorHidden_| -- i.e. can we remove the cursorHidden_ member?).",
+      "revId": "533ad1a29fc94823ada67052c60d66d3a88c1450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82e756e_bd122e24",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3573,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-26T07:27:44Z",
+      "side": 1,
+      "message": "Ah whoops - I see we actually want to change the cursor. (I\u0027m guessing setHiddenUntilMouseMoves:NO won\u0027t cause it to update). And I see CGCursorIsVisible() is deprecated.\n\nOne problem I see -- it\u0027s not always RenderWidgetHostViewCocoa that will hide the cursor. Sometimes it is the omnibox.\n\nE.g. Cmd+L followed by another key will hide the cursor - but I think |cursorHidden_| will remain NO.\n\nI wonder whether we can just ignore whether the cursor is hidden, and always call [currentCursor_ set] when the cursor changes, making it visible in some cases.\n\nBut |cursorHidden_| seems like a reasonable way to get a majority of use cases.",
+      "parentUuid": "96435948_aa2d8bb7",
       "revId": "533ad1a29fc94823ada67052c60d66d3a88c1450",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
