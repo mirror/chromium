@@ -16,6 +16,24 @@
       "revId": "5c9de839c3b0215e0aa992498142590aa03288de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c59a54_f934b877",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-26T23:31:10Z",
+      "side": 1,
+      "message": "No because MessageLoop::Quit() is an implementation of a RunLoopDelegate override so by definition this is only ever called from a running RunLoop.",
+      "parentUuid": "7f54e35b_fa00527b",
+      "revId": "5c9de839c3b0215e0aa992498142590aa03288de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
