@@ -122,6 +122,24 @@
       "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51725c92_b885f3bc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-07-26T11:59:34Z",
+      "side": 1,
+      "message": "as I mentioned on a different patch-set, i think we should make this function much more narrow.\n\nif this would also be used for push-to-refresh, then we should pass in a vector of suggestions for the article category. No need to support other categories.\nif this is also for push-value, then accepting a single suggestion should be sufficent.\n\nIntegratePushedArticle(...) would clarify the context in the method signature.",
+      "parentUuid": "964980a2_06e210bc",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
