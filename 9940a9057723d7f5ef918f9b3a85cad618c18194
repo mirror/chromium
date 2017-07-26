@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f2b165b_dd3d91e1",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-26T18:19:05Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ll keep the TODO but skip it for now.",
+      "parentUuid": "822cef4d_69ead4ce",
+      "revId": "9940a9057723d7f5ef918f9b3a85cad618c18194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64a7cae5_ad915986",
         "filename": "content/renderer/net/cors_url_loader.cc",
         "patchSetId": 18
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-25T12:52:28Z",
       "side": 1,
       "message": "You can do the same like what you\u0027re going to do for preflights. But ideally we want to send only the diff to the browser process.\n\nThe IPC to instruct the browser process to follow redirect is currently insufficient. ResourceLoader cannot update credentials mode, Origin header, etc. while DTL can. I\u0027m working on fixing that. So, I suggest you wait for my work and do similar to ResourceLoader than DocumentThreadableLoader for this new CORS module.",
+      "revId": "9940a9057723d7f5ef918f9b3a85cad618c18194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4999d4a_11bce0db",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-26T18:19:05Z",
+      "side": 1,
+      "message": "Sounds good. It there already a CL that I could cc me to? I did not find one, but I might have missed it.",
+      "parentUuid": "64a7cae5_ad915986",
       "revId": "9940a9057723d7f5ef918f9b3a85cad618c18194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
