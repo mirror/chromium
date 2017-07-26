@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca2307c8_80cb51cd",
+        "filename": "gpu/config/gpu_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-26T00:52:52Z",
+      "side": 1,
+      "message": "nit: longstanding typo: separated",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "51ccbf76241dfced5931ea8f44fc3cb1f6dc0dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4aa3db2_293d354a",
+        "filename": "gpu/ipc/common/gpu_feature_info.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-26T00:52:52Z",
+      "side": 1,
+      "message": "Could you add a comment here about which header these numbers come from?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "51ccbf76241dfced5931ea8f44fc3cb1f6dc0dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d890ab_18cb830b",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-26T00:52:52Z",
+      "side": 1,
+      "message": "Could you expand upon this comment? The earlier comment was clearer. Is it feasible to fix this TODO?",
+      "range": {
+        "startLine": 255,
+        "startChar": 5,
+        "endLine": 255,
+        "endChar": 9
+      },
+      "revId": "51ccbf76241dfced5931ea8f44fc3cb1f6dc0dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
