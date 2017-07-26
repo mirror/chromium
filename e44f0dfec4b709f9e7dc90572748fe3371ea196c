@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "434e5626_8780fa2f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-26T17:23:24Z",
+      "side": 1,
+      "message": "So this CL depends on the other, as it requires variations service not to be null. I see!",
+      "range": {
+        "startLine": 684,
+        "startChar": 2,
+        "endLine": 684,
+        "endChar": 20
+      },
+      "revId": "e44f0dfec4b709f9e7dc90572748fe3371ea196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba838963_e4b01b2e",
         "filename": "components/variations/service/variations_field_trial_creator.cc",
         "patchSetId": 15
@@ -140,6 +163,29 @@
       "revId": "e44f0dfec4b709f9e7dc90572748fe3371ea196c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b8e359a_0e2279e4",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-26T17:23:24Z",
+      "side": 1,
+      "message": "I think this should have the main comment. The comment on Variations::SetupFieldTrials can refer to this method for details and be the shorter one.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 1
+      },
+      "revId": "e44f0dfec4b709f9e7dc90572748fe3371ea196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
