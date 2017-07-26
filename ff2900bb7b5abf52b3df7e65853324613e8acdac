@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77ce7d43_ceed3f5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-26T20:59:37Z",
+      "side": 1,
+      "message": "What\u0027s the reason for revert?",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 41
+      },
+      "revId": "ff2900bb7b5abf52b3df7e65853324613e8acdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
