@@ -45,6 +45,54 @@
       "revId": "0f26241a42a7ce680ce6236f5f65df690cf15dc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c33ccb0_6de43c5e",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71134055_96b834b6",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 7
+      },
+      "revId": "0f26241a42a7ce680ce6236f5f65df690cf15dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8f3ad91_1259f5e9",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-26T00:07:21Z",
+      "side": 1,
+      "message": "You mean zucchini_command.h? Move Command and kCommand* there.",
+      "parentUuid": "c250317e_a4c30478",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "0f26241a42a7ce680ce6236f5f65df690cf15dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
