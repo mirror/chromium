@@ -3251,4 +3251,20 @@
     </message>
   </if>
 
+  <!-- Password protection -->
+  <message name="IDS_SETTINGS_RESET_PASSWORD_TITLE" desc="Title of the reset password warning.">
+    Change Stolen Password
+  </message>
+  <message name="IDS_SETTINGS_RESET_PASSWORD_TITLE_SOFTER" desc="Title of the reset password warning.">
+    Change Compromised Password
+  </message>
+  <message name="IDS_SETTINGS_RESET_PASSWORD_DETAIL" desc="Detailed description of the reset password warning.">
+    A site you visited may have just stolen your password. Chrome can help you change your password to protect your Google account.
+  </message>
+  <message name="IDS_SETTINGS_RESET_PASSWORD_DETAILS_SOFTER" desc="Detailed description of the reset password warning.">
+    Your password may be compromised. Chrome can help you change your password to protect your Google account.
+  </message>
+  <message name="IDS_SETTINGS_RESET_PASSWORD_BUTTON" desc="Label on button that takes user to change password page.">
+    Change Password
+  </message>
 </grit-part>
