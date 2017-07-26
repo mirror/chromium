@@ -136,8 +136,8 @@ void PaintedScrollbarLayerImpl::AppendQuads(
   gfx::Rect scaled_visible_track_quad_rect = gfx::ScaleToEnclosingRect(
       visible_track_quad_rect, internal_contents_scale_);
   if (track_resource_id && !visible_track_quad_rect.IsEmpty()) {
-    gfx::Rect opaque_rect(contents_opaque() ? scaled_track_quad_rect
-                                            : gfx::Rect());
+    gfx::Rect opaque_rect(IsContentsOpaque() ? scaled_track_quad_rect
+                                             : gfx::Rect());
     const float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
     TextureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();

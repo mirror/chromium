@@ -65,7 +65,7 @@ std::unique_ptr<JSONObject> ContentLayerClientImpl::LayerAsJSON(
   if (!bounds.IsEmpty())
     json->SetArray("bounds", SizeAsJSONArray(bounds));
 
-  json->SetBoolean("contentsOpaque", cc_picture_layer_->contents_opaque());
+  json->SetBoolean("contentsOpaque", cc_picture_layer_->IsContentsOpaque());
   json->SetBoolean("drawsContent", cc_picture_layer_->DrawsContent());
 
   if (flags & kLayerTreeIncludesDebugInfo) {
