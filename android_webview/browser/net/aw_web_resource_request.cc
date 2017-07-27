@@ -16,6 +16,8 @@ using base::android::ToJavaArrayOfStrings;
 
 namespace android_webview {
 
+AwWebResourceRequest::AwWebResourceRequest() = default;
+
 AwWebResourceRequest::AwWebResourceRequest(const net::URLRequest& request)
     : url(request.url().spec()), method(request.method()) {
   const content::ResourceRequestInfo* info =
