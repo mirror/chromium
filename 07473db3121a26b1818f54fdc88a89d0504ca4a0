@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec9d7b3b_e53a5bb8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T14:45:46Z",
+      "side": 1,
+      "message": "Please add why you\u0027re doing this, e.g. \"The goal is to use the user\u0027s Kerberos ticket (through GSSAPI) to enable single sign-on to other services that use Active Directory authentication, e.g. ARC account provisioning for Chromad Tier 1.5.\".\nGood read: https://chris.beams.io/posts/git-commit/#why-not-how",
+      "revId": "07473db3121a26b1818f54fdc88a89d0504ca4a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f215b3f_ff3843bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T14:45:46Z",
+      "side": 1,
+      "message": "Please use full sentences, not bullet points. Don\u0027t use imperative mood (i.e. Fetch -\u003e [This CL] fetches).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "07473db3121a26b1818f54fdc88a89d0504ca4a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d583820e_7909c4e9",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T14:45:46Z",
+      "side": 1,
+      "message": "Nit: Credential cache.",
+      "range": {
+        "startLine": 39,
+        "startChar": 55,
+        "endLine": 39,
+        "endChar": 61
+      },
+      "revId": "07473db3121a26b1818f54fdc88a89d0504ca4a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d540c8_3d876864",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T14:45:46Z",
+      "side": 1,
+      "message": "r",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 22
+      },
+      "revId": "07473db3121a26b1818f54fdc88a89d0504ca4a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
