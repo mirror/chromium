@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4846ed3_8047faa6",
+        "filename": "chrome/browser/loader/safe_browsing_resource_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T00:59:30Z",
+      "side": 1,
+      "message": "could you please annotate the \u0027false\u0027 values with argument names?",
+      "range": {
+        "startLine": 58,
+        "startChar": 58,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "a38e2884c4d5816b3254910cadf36413b2f275b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab9e685_bd67039d",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T00:59:30Z",
+      "side": 1,
+      "message": "I wonder why it\u0027s been renamed.\nif (safe) reads more natural to me.",
+      "range": {
+        "startLine": 78,
+        "startChar": 53,
+        "endLine": 78,
+        "endChar": 60
+      },
+      "revId": "a38e2884c4d5816b3254910cadf36413b2f275b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
