@@ -33,6 +33,13 @@ namespace extensions {
 
 namespace {
 
+const char manifest_content[] =
+    "{\n"
+    "  \"name\": \"Underscore folder test\",\n"
+    "  \"version\": \"1.0\",\n"
+    "  \"manifest_version\": 2\n"
+    "}\n";
+
 scoped_refptr<Extension> LoadExtensionManifest(
     const base::DictionaryValue& manifest,
     const base::FilePath& manifest_dir,
@@ -120,6 +127,167 @@ TEST_F(FileUtilTest, InstallUninstallGarbageCollect) {
   ASSERT_FALSE(base::DirectoryExists(version_2.DirName()));
   ASSERT_FALSE(base::DirectoryExists(version_3.DirName()));
   ASSERT_TRUE(base::DirectoryExists(all_extensions));
+}
+
+TEST_F(FileUtilTest, ValidateExtensionWithMetadataFolder) {
+  base::ScopedTempDir temp;
+  ASSERT_TRUE(temp.CreateUniqueTempDir());
+
+  base::FilePath ext_path = temp.GetPath();
+  ASSERT_TRUE(base::CreateDirectory(ext_path));
+
+  // Create _metadata subdirectory.
+  base::FilePath metadata_subdir = ext_path.AppendASCII("_metadata");
+  ASSERT_TRUE(base::CreateDirectory(metadata_subdir));
+
+  std::string error;
+  scoped_refptr<Extension> extension = LoadExtensionManifest(
+      manifest_content, ext_path, Manifest::UNPACKED, 0, &error);
+  ASSERT_TRUE(extension.get()) << error;
+
+  std::vector<InstallWarning> warnings;
+  ASSERT_TRUE(file_util::ValidateExtension(extension.get(), &error, &warnings));
+  EXPECT_EQ(1u, warnings.size());
+  EXPECT_EQ(
+      "_metadata is a reserved directory that will not be allowed at "
+      "the time of Chrome Web Store upload.",
+      warnings[0].message);
+}
+
+TEST_F(FileUtilTest, ValidateExtensionWithUnderscoreFolder) {
+  base::ScopedTempDir temp;
+  ASSERT_TRUE(temp.CreateUniqueTempDir());
+
+  base::FilePath ext_path = temp.GetPath();
+  ASSERT_TRUE(base::CreateDirectory(ext_path));
+
+  // Create subdirectory prefixed with an underscore.
+  base::FilePath underscore_subdir = ext_path.AppendASCII("_badfolder");
+  ASSERT_TRUE(base::CreateDirectory(underscore_subdir));
+
+  std::string error;
+  scoped_refptr<Extension> extension = LoadExtensionManifest(
+      manifest_content, ext_path, Manifest::UNPACKED, 0, &error);
+  ASSERT_TRUE(extension.get()) << error;
+
+  std::vector<InstallWarning> warnings;
+  ASSERT_TRUE(file_util::ValidateExtension(extension.get(), &error, &warnings));
+  EXPECT_EQ(1u, warnings.size());
+  EXPECT_EQ(
+      "Cannot load extension with file or directory name _badfolder. "
+      "Filenames starting with \"_\" are reserved for use by the system.",
+      warnings[0].message);
+}
+
+TEST_F(FileUtilTest, ValidateExtensionWithMetadataAndUnderscoreFolders) {
+  base::ScopedTempDir temp;
+  ASSERT_TRUE(temp.CreateUniqueTempDir());
+
+  base::FilePath ext_path = temp.GetPath();
+  ASSERT_TRUE(base::CreateDirectory(ext_path));
+
+  // Create subdirectory prefixed with an underscore.
+  base::FilePath underscore_subdir = ext_path.AppendASCII("_badfolder");
+  ASSERT_TRUE(base::CreateDirectory(underscore_subdir));
+
+  // Create _metadata subdirectory.
+  base::FilePath metadata_subdir = ext_path.AppendASCII("_metadata");
+  ASSERT_TRUE(base::CreateDirectory(metadata_subdir));
+
+  std::string error;
+  scoped_refptr<Extension> extension = LoadExtensionManifest(
+      manifest_content, ext_path, Manifest::UNPACKED, 0, &error);
+  ASSERT_TRUE(extension.get()) << error;
+
+  std::vector<InstallWarning> warnings;
+  ASSERT_TRUE(file_util::ValidateExtension(extension.get(), &error, &warnings));
+  EXPECT_EQ(1u, warnings.size());
+  EXPECT_EQ(
+      "Cannot load extension with file or directory name _badfolder. "
+      "Filenames starting with \"_\" are reserved for use by the system.",
+      warnings[0].message);
+}
+
+TEST_F(FileUtilTest, LoadExtensionWithMetadataFolder) {
+  base::ScopedTempDir temp;
+  ASSERT_TRUE(temp.CreateUniqueTempDir());
+
+  base::FilePath ext_path = temp.GetPath();
+  ASSERT_TRUE(base::CreateDirectory(ext_path));
+
+  ASSERT_EQ(static_cast<int>(strlen(manifest_content)),
+            base::WriteFile(ext_path.AppendASCII("manifest.json"),
+                            manifest_content, strlen(manifest_content)));
+
+  // Create _metadata subdirectory.
+  base::FilePath metadata_subdir = ext_path.AppendASCII("_metadata");
+  ASSERT_TRUE(base::CreateDirectory(metadata_subdir));
+
+  std::string error;
+  scoped_refptr<Extension> extension(file_util::LoadExtension(
+      ext_path, Manifest::UNPACKED, Extension::NO_FLAGS, &error));
+  // LoadExtension() does not block the loading of an extension if a filename
+  // starts with _.
+  ASSERT_TRUE(extension);
+
+  // LoadExtension() does not throw an error in this case, only a warning.
+  EXPECT_TRUE(error.empty());
+}
+
+TEST_F(FileUtilTest, LoadExtensionWithUnderscoreFolder) {
+  base::ScopedTempDir temp;
+  ASSERT_TRUE(temp.CreateUniqueTempDir());
+
+  base::FilePath ext_path = temp.GetPath();
+  ASSERT_TRUE(base::CreateDirectory(ext_path));
+
+  ASSERT_EQ(static_cast<int>(strlen(manifest_content)),
+            base::WriteFile(ext_path.AppendASCII("manifest.json"),
+                            manifest_content, strlen(manifest_content)));
+
+  // Create subdirectory prefixed with an underscore.
+  base::FilePath underscore_subdir = ext_path.AppendASCII("_badfolder");
+  ASSERT_TRUE(base::CreateDirectory(underscore_subdir));
+
+  std::string error;
+  scoped_refptr<Extension> extension(file_util::LoadExtension(
+      ext_path, Manifest::UNPACKED, Extension::NO_FLAGS, &error));
+  // LoadExtension() does not block the loading of an extension if a filename
+  // starts with _.
+  ASSERT_TRUE(extension);
+
+  // LoadExtension() does not throw an error in this case, only a warning.
+  EXPECT_TRUE(error.empty());
+}
+
+TEST_F(FileUtilTest, LoadExtensionWithMetadataAndUnderscoreFolders) {
+  base::ScopedTempDir temp;
+  ASSERT_TRUE(temp.CreateUniqueTempDir());
+
+  base::FilePath ext_path = temp.GetPath();
+  ASSERT_TRUE(base::CreateDirectory(ext_path));
+
+  ASSERT_EQ(static_cast<int>(strlen(manifest_content)),
+            base::WriteFile(ext_path.AppendASCII("manifest.json"),
+                            manifest_content, strlen(manifest_content)));
+
+  // Create _metadata subdirectory.
+  base::FilePath metadata_subdir = ext_path.AppendASCII("_metadata");
+  ASSERT_TRUE(base::CreateDirectory(metadata_subdir));
+
+  // Create subdirectory prefixed with an underscore.
+  base::FilePath underscore_subdir = ext_path.AppendASCII("_badfolder");
+  ASSERT_TRUE(base::CreateDirectory(underscore_subdir));
+
+  std::string error;
+  scoped_refptr<Extension> extension(file_util::LoadExtension(
+      ext_path, Manifest::UNPACKED, Extension::NO_FLAGS, &error));
+  // LoadExtension() does not block the loading of an extension if a filename
+  // starts with _.
+  ASSERT_TRUE(extension);
+
+  // LoadExtension() does not throw an error in this case, only a warning.
+  EXPECT_TRUE(error.empty());
 }
 
 TEST_F(FileUtilTest, LoadExtensionWithValidLocales) {
