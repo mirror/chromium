@@ -99,7 +99,7 @@ video:-webkit-full-page-media::-webkit-media-controls-panel {
 
 audio::-webkit-media-controls-mute-button,
 video::-webkit-media-controls-mute-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_sound_not_muted.png) 1x);
     background-size: 32px;
@@ -144,7 +144,7 @@ video::-webkit-media-controls-overlay-enclosure {
 }
 
 video::-webkit-media-controls-overlay-play-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_overlay_play.png) 1x);
     background-size: 48px;
@@ -194,7 +194,7 @@ video::-internal-media-remoting-background-image {
 }
 
 video::-internal-media-remoting-cast-icon {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaremoting_cast.png) 1x,
       url(default_200_percent/mediaremoting_cast.png) 2x);
@@ -257,7 +257,7 @@ video::-internal-media-remoting-disable-button:hover {
 }
 
 video::-internal-media-controls-overlay-cast-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_overlay_cast_off.png) 1x);
     background-size: cover;
@@ -284,7 +284,7 @@ video::-internal-media-controls-overlay-cast-button.on {
 
 audio::-webkit-media-controls-play-button,
 video::-webkit-media-controls-play-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_pause.png) 1x);
     background-size: 32px;
@@ -427,7 +427,7 @@ input[type="range" i]::-webkit-media-slider-container > div {
 }
 
 input[type="range" i]::-webkit-media-slider-thumb {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_slider_thumb.png) 1x);
     background-size: 10px;
@@ -442,7 +442,7 @@ input[type="range" i]::-webkit-media-slider-thumb {
 
 audio::-webkit-media-controls-fullscreen-button,
 video::-webkit-media-controls-fullscreen-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_enter_fullscreen.png) 1x);
     background-size: 32px;
@@ -467,7 +467,7 @@ video::-webkit-media-controls-fullscreen-button.fullscreen {
 }
 
 audio::-internal-media-controls-cast-button, video::-internal-media-controls-cast-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_cast_off.png) 1x);
     background-size: 32px;
@@ -497,7 +497,7 @@ audio::-webkit-media-controls-toggle-closed-captions-button {
 }
 
 video::-webkit-media-controls-toggle-closed-captions-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_closedcaption_disabled.png) 1x);
     background-size: 32px;
@@ -553,7 +553,7 @@ video::-internal-media-controls-text-track-list-item:hover, video::-internal-med
 }
 
 video::-internal-media-controls-text-track-list-item-input {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_trackselection_checkmark.png) 1x);
     background-size: 32px;
@@ -573,7 +573,7 @@ video::-internal-media-controls-text-track-list-item-input:checked {
 }
 
 video::-internal-media-controls-text-track-list-kind-captions {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_closedcaptions_icon.png) 1x);
     background-size: 32px;
@@ -586,7 +586,7 @@ video::-internal-media-controls-text-track-list-kind-captions {
 }
 
 video::-internal-media-controls-text-track-list-kind-subtitles {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_subtitles_icon.png) 1x);
     background-size: 32px;
@@ -599,7 +599,7 @@ video::-internal-media-controls-text-track-list-kind-subtitles {
 }
 
 video::-internal-media-controls-overflow-button, audio::-internal-media-controls-overflow-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_overflow_menu.png) 1x);
     background-size: 32px;
@@ -619,7 +619,7 @@ video::-internal-media-controls-overflow-button, audio::-internal-media-controls
 }
 
 video::-internal-media-controls-download-button, audio::-internal-media-controls-download-button {
-    -webkit-appearance: none;
+    -webkit-appearance: -internal-media-control;
     background-image: -webkit-image-set(
       url(default_100_percent/mediaplayer_download.png) 1x);
     background-size: 32px;

@@ -539,9 +539,19 @@ void StyleResolver::AdjustComputedStyle(StyleResolverState& state,
                                         Element* element) {
   DCHECK(state.LayoutParentStyle());
   DCHECK(state.ParentStyle());
-  StyleAdjuster::AdjustComputedStyle(state.MutableStyleRef(),
-                                     *state.ParentStyle(),
+  ComputedStyle& style = state.MutableStyleRef();
+  StyleAdjuster::AdjustComputedStyle(style, *state.ParentStyle(),
                                      *state.LayoutParentStyle(), element);
+
+  bool is_media_control =
+      element && element->ShadowPseudoId().StartsWith("-webkit-media-controls");
+  if (is_media_control && style.Appearance() == kNoControlPart) {
+    // For compatibility reasons if the element is a media control and the
+    // -webkit-appearance is none then we should clear the background image.
+    if (!HasAuthorBackground(state)) {
+      style.MutableBackgroundInternal().ClearImage();
+    }
+  }
 }
 
 // Start loading resources referenced by this style.
