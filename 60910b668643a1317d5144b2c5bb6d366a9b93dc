@@ -22,6 +22,30 @@
       "revId": "60910b668643a1317d5144b2c5bb6d366a9b93dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edef4f85_958a8df5",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T19:57:51Z",
+      "side": 1,
+      "message": "I tried this for the test_support target in [1], but got a compile error as the linker was told to create a static library without input sources. The logs have been pruned since, unfortunately.\n\nFor the message_center_unittests target it means we\u0027d continue to create an executable that doesn\u0027t do anything for Mac and iOS `all` builds. That seems less desirable than having a conditional in targets that may have to depend on them.\n\nI can remove the conditional in this file, of course. Would you be OK with adding an \"assert(enable_message_center)\" to the top of them, to avoid accidental dependencies?\n\n[1] https://chromium-review.googlesource.com/c/559391/1/ui/message_center/BUILD.gn",
+      "parentUuid": "0416c098_4e1ff987",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 14
+      },
+      "revId": "60910b668643a1317d5144b2c5bb6d366a9b93dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
