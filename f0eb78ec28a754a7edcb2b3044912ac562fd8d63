@@ -16,6 +16,24 @@
       "revId": "f0eb78ec28a754a7edcb2b3044912ac562fd8d63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2bc9a0_0a28721a",
+        "filename": "ios/testing/earl_grey/matchers.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-27T23:40:40Z",
+      "side": 0,
+      "message": "The matcher is specifically used here to fetch the context menu items, and the grey_ancestor is used as an extra check to make sure it locates the right button if there are two buttons with the same \"text\". Not sure how necessary this is, if there are two buttons matched, earl grey fails with clear error messages.",
+      "parentUuid": "6f2ed4d5_eea8eab6",
+      "revId": "f0eb78ec28a754a7edcb2b3044912ac562fd8d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
