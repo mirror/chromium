@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8be01744_b752023c",
+        "filename": "components/guest_view/browser/guest_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-27T15:10:41Z",
+      "side": 1,
+      "message": "Yes, it looks like the code that signals the callback below is virtual, and WebViewContentScriptManager overrides it.\n\nIn this case, it seems reasonable to go with your current change, as it should be more resilient.",
+      "parentUuid": "5ee18488_a8f939a4",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "524147d7_be5bd38f",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 3
