@@ -16,6 +16,9 @@
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
+#include "platform/loader/fetch/FetchUtils.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 
 namespace blink {
@@ -28,6 +31,38 @@ const char kEmptyRequestSequenceErrorMessage[] =
 
 // Message for the TypeError thrown when a null request is seen.
 const char kNullRequestErrorMessage[] = "Requests must not be null.";
+
+bool AllHttpsOrLocalhost(const Vector<WebServiceWorkerRequest>& web_requests) {
+  for (const WebServiceWorkerRequest& web_request : web_requests) {
+    KURL url(web_request.Url());
+    if (!SecurityOrigin::Create(url)->IsPotentiallyTrustworthy())
+      return false;
+    // Additionally disallow schemes like wss: and file: by requiring http(s):.
+    // The previous check ensures that http: is only localhost.
+    if (!url.ProtocolIs(WTF::g_https_atom) && !url.ProtocolIs(WTF::g_http_atom))
+      return false;
+  }
+  return true;
+}
+
+bool AllSameOriginOrCORSSafelisted(
+    ScriptState* script_state,
+    const Vector<WebServiceWorkerRequest>& web_requests) {
+  SecurityOrigin* origin =
+      ExecutionContext::From(script_state)->GetSecurityOrigin();
+  for (const WebServiceWorkerRequest& web_request : web_requests) {
+    bool same_origin = origin->CanRequestNoSuborigin(web_request.Url());
+    // TODO: Should this additionally check the request mode?
+    // TODO: Make sure that cross origin redirects are disabled.
+    if (same_origin)
+      continue;
+    if (!FetchUtils::IsCORSSafelistedMethod(web_request.Method()) ||
+        !FetchUtils::ContainsOnlyCORSSafelistedHeaders(web_request.Headers())) {
+      return false;
+    }
+  }
+  return true;
+}
 
 }  // namespace
 
@@ -56,6 +91,24 @@ ScriptPromise BackgroundFetchManager::fetch(
       CreateWebRequestVector(script_state, requests, exception_state);
   if (exception_state.HadException())
     return ScriptPromise();
+
+  if (!AllHttpsOrLocalhost(web_requests)) {
+    return ScriptPromise::Reject(
+        script_state,
+        V8ThrowException::CreateTypeError(script_state->GetIsolate(),
+                                          "Requests must use the https: scheme "
+                                          "(or http: only if the origin is "
+                                          "localhost)."));
+  }
+
+  if (!AllSameOriginOrCORSSafelisted(script_state, web_requests)) {
+    return ScriptPromise::Reject(
+        script_state,
+        V8ThrowException::CreateTypeError(script_state->GetIsolate(),
+                                          "Requests requiring a CORS preflight "
+                                          "are not yet supported by this "
+                                          "browser."));
+  }
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
