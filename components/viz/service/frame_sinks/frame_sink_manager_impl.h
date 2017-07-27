@@ -65,6 +65,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   void CreateRootCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
+      const RendererSettings& renderer_settings,
       cc::mojom::CompositorFrameSinkAssociatedRequest request,
       cc::mojom::CompositorFrameSinkClientPtr client,
       cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
