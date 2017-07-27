@@ -37,3 +37,7 @@ NETWORK_SWITCH(kQuicVersion, "quic-version")
 // Allows for forcing socket connections to http/https to use fixed ports.
 NETWORK_SWITCH(kTestingFixedHttpPort, "testing-fixed-http-port")
 NETWORK_SWITCH(kTestingFixedHttpsPort, "testing-fixed-https-port")
+
+// Uses experimental simple cache backend if possible when set to "on", and
+// blockfile backend when set to "off".
+NETWORK_SWITCH(kUseSimpleCacheBackend, "use-simple-cache-backend")

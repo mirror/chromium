@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
+#include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/network/cache_url_loader.h"
 #include "content/network/network_service_impl.h"
@@ -30,6 +31,23 @@ namespace {
 void ApplyContextParamsToBuilder(
     net::URLRequestContextBuilder* builder,
     mojom::NetworkContextParams* network_context_params) {
+  if (!network_context_params->http_cache_enabled) {
+    builder->DisableHttpCache();
+  } else {
+    net::URLRequestContextBuilder::HttpCacheParams cache_params;
+    cache_params.max_size = network_context_params->http_cache_max_size;
+    if (!network_context_params->http_cache_path) {
+      cache_params.type =
+          net::URLRequestContextBuilder::HttpCacheParams::IN_MEMORY;
+    } else {
+      cache_params.path = *network_context_params->http_cache_path;
+      cache_params.type = network_session_configurator::ChooseCacheType(
+          *base::CommandLine::ForCurrentProcess());
+    }
+
+    builder->EnableHttpCache(cache_params);
+  }
+
   builder->set_data_enabled(network_context_params->enable_data_url_support);
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
   builder->set_file_enabled(network_context_params->enable_file_url_support);
