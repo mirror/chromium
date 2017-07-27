@@ -41,11 +41,8 @@ source_set("formats") {
   ]
 
   deps = [
-    "//skia",
-  ]
-
-  public_deps = [
     "//media/base",
+    "//skia",
   ]
 
   configs += [
