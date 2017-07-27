@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd1e9245_f2cfa1b5",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-27T23:47:07Z",
+      "side": 1,
+      "message": "nit: Maybe I\u0027d call this |message| and the above \"message\" |message_handle| instead?",
+      "revId": "e85313581bc3c12ff52787191da0bda791cf1349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
