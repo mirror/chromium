@@ -70,6 +70,30 @@
       "revId": "87ba93fd6c80fc84e61990c0b041c56981c0cd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f39006_238e2891",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17003,
+      "author": {
+        "id": 1165541
+      },
+      "writtenOn": "2017-07-27T01:13:43Z",
+      "side": 1,
+      "message": "Yes, I am thinking about it. I will re-submit it when it\u0027s done. Thanks.",
+      "parentUuid": "68d1c1c5_0b5ce644",
+      "range": {
+        "startLine": 17003,
+        "startChar": 15,
+        "endLine": 17003,
+        "endChar": 30
+      },
+      "revId": "87ba93fd6c80fc84e61990c0b041c56981c0cd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
