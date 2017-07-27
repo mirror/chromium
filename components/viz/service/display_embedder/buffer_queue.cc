@@ -82,12 +82,18 @@ void BufferQueue::UpdateBufferDamage(const gfx::Rect& damage) {
   for (auto& surface : available_surfaces_)
     surface->damage.Union(damage);
   for (auto& surface : in_flight_surfaces_) {
-    if (surface)
-      surface->damage.Union(damage);
+    if (surface.first && !surface.second)
+      surface.first->damage.Union(damage);
   }
 }
 
 void BufferQueue::SwapBuffers(const gfx::Rect& damage) {
+  bool empty_swap = damage.IsEmpty();
+  if (empty_swap) {
+    in_flight_surfaces_.push_back(std::make_pair(nullptr, true));
+    return;
+  }
+
   if (current_surface_) {
     if (damage != gfx::Rect(size_)) {
       // Copy damage from the most recently swapped buffer. In the event that
@@ -95,8 +101,8 @@ void BufferQueue::SwapBuffers(const gfx::Rect& damage) {
       // recently available buffer.
       uint32_t texture_id = 0;
       for (auto& surface : base::Reversed(in_flight_surfaces_)) {
-        if (surface) {
-          texture_id = surface->texture;
+        if (surface.first && !surface.second) {
+          texture_id = surface.first->texture;
           break;
         }
       }
@@ -111,7 +117,8 @@ void BufferQueue::SwapBuffers(const gfx::Rect& damage) {
     current_surface_->damage = gfx::Rect();
   }
   UpdateBufferDamage(damage);
-  in_flight_surfaces_.push_back(std::move(current_surface_));
+  in_flight_surfaces_.push_back(
+      std::make_pair(std::move(current_surface_), false));
   // Some things reset the framebuffer (CopySubBufferDamage, some GLRenderer
   // paths), so ensure we restore it here.
   gl_->BindFramebuffer(GL_FRAMEBUFFER, fbo_);
@@ -152,7 +159,7 @@ void BufferQueue::RecreateBuffers() {
 
   // Recreate all in-flight surfaces and put the recreated copies in the queue.
   for (auto& surface : in_flight_surfaces_)
-    surface = RecreateBuffer(std::move(surface));
+    surface.first = RecreateBuffer(std::move(surface.first));
 
   current_surface_ = RecreateBuffer(std::move(current_surface_));
   displayed_surface_ = RecreateBuffer(std::move(displayed_surface_));
@@ -183,18 +190,19 @@ std::unique_ptr<BufferQueue::AllocatedSurface> BufferQueue::RecreateBuffer(
 }
 
 void BufferQueue::PageFlipComplete() {
-  // Early out when no surface is in-flight. This can happen when using
-  // overlays and page flipping without changing the primary plane.
-  if (in_flight_surfaces_.empty())
+  DCHECK(!in_flight_surfaces_.empty());
+  if (in_flight_surfaces_.front().second) {
+    in_flight_surfaces_.pop_front();
     return;
+  }
+
   if (displayed_surface_)
     available_surfaces_.push_back(std::move(displayed_surface_));
-  displayed_surface_ = std::move(in_flight_surfaces_.front());
+  displayed_surface_ = std::move(in_flight_surfaces_.front().first);
   in_flight_surfaces_.pop_front();
 }
 
 uint32_t BufferQueue::GetCurrentTextureId() const {
-  // Return current surface texture if bound.
   if (current_surface_)
     return current_surface_->texture;
 
@@ -202,8 +210,13 @@ uint32_t BufferQueue::GetCurrentTextureId() const {
   // currently bound. This can happen when using overlays and surface
   // damage is empty. Note: |in_flight_surfaces_| entries can be null
   // as a result of calling FreeAllSurfaces().
-  if (!in_flight_surfaces_.empty() && in_flight_surfaces_.back())
-    return in_flight_surfaces_.back()->texture;
+  if (!in_flight_surfaces_.empty()) {
+    for (auto& surface : base::Reversed(in_flight_surfaces_)) {
+      if (surface.first && !surface.second) {
+        return surface.first->texture;
+      }
+    }
+  }
   if (displayed_surface_)
     return displayed_surface_->texture;
 
@@ -216,7 +229,7 @@ void BufferQueue::FreeAllSurfaces() {
   // This is intentionally not emptied since the swap buffers acks are still
   // expected to arrive.
   for (auto& surface : in_flight_surfaces_)
-    surface = nullptr;
+    surface.first = nullptr;
   available_surfaces_.clear();
 }
 
