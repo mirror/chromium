@@ -16,6 +16,24 @@
       "revId": "e9be48a32fb108e90afc3e1f12e7c12059e63df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b90730_3f747e34",
+        "filename": "ui/webui/resources/js/cr/ui/table/table_column.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-27T02:39:48Z",
+      "side": 1,
+      "message": "\"type {Type}\" looks \"wrong\", as if someone had forgotten the @. I\u0027m also not sure how useful this is; in my experience, type annotations that aren\u0027t statically checked will become erroneous over time (or start that way).\n\nIs there work being done to replace cr.defineProperty itself?",
+      "parentUuid": "7714279e_d70152a0",
+      "revId": "e9be48a32fb108e90afc3e1f12e7c12059e63df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
