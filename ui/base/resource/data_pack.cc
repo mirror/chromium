@@ -151,8 +151,7 @@ class DataPack::BufferDataSource : public DataPack::DataSource {
 DataPack::DataPack(ui::ScaleFactor scale_factor)
     : resource_count_(0),
       text_encoding_type_(BINARY),
-      scale_factor_(scale_factor) {
-}
+      scale_factor_(scale_factor) {}
 
 DataPack::~DataPack() {
 }
