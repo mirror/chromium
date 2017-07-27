@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a9bedd5_1f36558d",
+        "filename": "content/public/browser/content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-27T16:14:36Z",
+      "side": 1,
+      "message": "We\u0027ll probably need a better place for this, eventually.",
+      "range": {
+        "startLine": 500,
+        "startChar": 18,
+        "endLine": 500,
+        "endChar": 41
+      },
+      "revId": "852af0b7cecd10d37e95380bf0f6c04046e3cce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
