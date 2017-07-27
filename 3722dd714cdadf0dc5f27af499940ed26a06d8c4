@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e73202b3_48bfc16c",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetchRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-27T00:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4cc4a0_59adb08f",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b008272_03567e0b",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43749bdb_5dbf2e8b",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-27T00:48:40Z",
+      "side": 1,
+      "message": "I removed ModuleScriptFetchRequest and used HashSet\u003cKURL\u003e directly.",
+      "parentUuid": "0b008272_03567e0b",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6a6c2231_49ddb025",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-27T00:48:40Z",
+      "side": 1,
+      "message": "Clean up and updated spec comments largely.",
+      "parentUuid": "534f3c68_c128ce48",
+      "range": {
+        "startLine": 233,
+        "startChar": 25,
+        "endLine": 233,
+        "endChar": 0
+      },
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ef0792e_a1e97aa8",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 4
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "7b95d4a1_50d36bd2",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-27T00:48:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ef0792e_a1e97aa8",
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dc5b30a_abe24845",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2017-07-25T08:45:33Z",
       "side": 1,
       "message": "I don\u0027t understand this completely.\nWhat is PropagateError trying to achieve? I assumed we can rely on V8 to propagate all the errors when we InstantiateModule?",
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75fd92a_36aed877",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-27T00:48:40Z",
+      "side": 1,
+      "message": "This handles null and pre-instantiation error propagation of Step 7.1 and 7.2 of\nhttps://dl.dropboxusercontent.com/u/20140634/modules-all-better/index.html#fetch-the-descendants-of-a-module-script\n\nI\u0027m not sure about the intention of the spec.\nPerhaps if there are pre-instantiation errors we don\u0027t call V8\u0027s instantiatation?",
+      "parentUuid": "5dc5b30a_abe24845",
       "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
