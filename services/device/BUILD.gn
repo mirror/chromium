@@ -51,6 +51,10 @@ source_set("lib") {
       "//services/device/vibration",
     ]
   }
+
+  if (is_win || is_linux || is_mac) {
+    deps += [ "//services/device/serial" ]
+  }
 }
 
 is_linux_without_udev = is_linux && !use_udev
