@@ -8,29 +8,14 @@
 
 namespace ash {
 
-const float kHorizontalStrokeLengthThreshold = 20;
-const float kHorizontalStrokeThicknessThreshold = 2;
-const float kHorizontalStrokeFlatnessThreshold = 0.1;
+constexpr float kHorizontalStrokeLengthThreshold = 20;
+constexpr float kHorizontalStrokeThicknessThreshold = 2;
+constexpr float kHorizontalStrokeFlatnessThreshold = 0.1;
 
-const double kClosedShapeWrapThreshold = M_PI * 2 * 0.95;
-const double kClosedShapeSweepThreshold = M_PI * 2 * 0.8;
-const double kClosedShapeJiggleThreshold = 0.1;
+constexpr double kClosedShapeSweepThreshold = M_PI * 2 * 0.8;
+constexpr double kClosedShapeJiggleThreshold = 0.1;
 
-gfx::RectF GetBoundingBox(const std::vector<gfx::PointF>& points) {
-  if (points.empty())
-    return gfx::RectF();
-
-  gfx::PointF min_point = points[0];
-  gfx::PointF max_point = points[0];
-  for (size_t i = 1; i < points.size(); ++i) {
-    min_point.SetToMin(points[i]);
-    max_point.SetToMax(points[i]);
-  }
-
-  return gfx::BoundingRect(min_point, max_point);
-}
-
-bool DetectHorizontalStroke(const gfx::RectF& box,
+bool DetectHorizontalStroke(const gfx::Rect& box,
                             const gfx::SizeF& pen_tip_size) {
   return box.width() > kHorizontalStrokeLengthThreshold &&
          box.height() <
@@ -38,12 +23,12 @@ bool DetectHorizontalStroke(const gfx::RectF& box,
          box.height() < box.width() * kHorizontalStrokeFlatnessThreshold;
 }
 
-bool DetectClosedShape(const gfx::RectF& box,
+bool DetectClosedShape(const gfx::Rect& box,
                        const std::vector<gfx::PointF>& points) {
   if (points.size() < 3)
     return false;
 
-  const gfx::PointF center = box.CenterPoint();
+  const gfx::Point center = box.CenterPoint();
 
   // Analyze vectors pointing from the center to each point.
   // Compute the cumulative swept angle and count positive
@@ -59,9 +44,9 @@ bool DetectClosedShape(const gfx::RectF& box,
     const double angle = atan2(point.y() - center.y(), point.x() - center.x());
     if (has_prev_angle) {
       double diff_angle = angle - prev_angle;
-      if (diff_angle > kClosedShapeWrapThreshold) {
+      if (diff_angle > M_PI) {
         diff_angle -= M_PI * 2;
-      } else if (diff_angle < -kClosedShapeWrapThreshold) {
+      } else if (diff_angle < -M_PI) {
         diff_angle += M_PI * 2;
       }
       swept_angle += diff_angle;

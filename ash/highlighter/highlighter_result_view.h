@@ -32,18 +32,24 @@ namespace ash {
 // the result of the selection.
 class HighlighterResultView : public views::View {
  public:
+  enum class AnimationMode {
+    kFadein,
+    kDeflate,
+  };
+
   HighlighterResultView(aura::Window* root_window);
 
   ~HighlighterResultView() override;
 
-  void AnimateInPlace(const gfx::Rect& bounds, SkColor color);
-  void AnimateDeflate(const gfx::Rect& bounds);
+  void Animate(const gfx::Rect& bounds,
+               AnimationMode animation_mode,
+               const base::Closure& done);
 
  private:
-  void ScheduleFadeIn(const base::TimeDelta& delay,
-                      const base::TimeDelta& duration);
-  void FadeIn(const base::TimeDelta& duration);
-  void FadeOut();
+  void FadeIn(const base::TimeDelta& duration, const base::Closure& done);
+  void FadeOut(const base::Closure& done);
+
+  void Schedule(base::TimeDelta delay, const base::Closure& action);
 
   std::unique_ptr<views::Widget> widget_;
   std::unique_ptr<ui::Layer> result_layer_;
