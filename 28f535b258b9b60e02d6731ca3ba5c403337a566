@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d401a8e6_2dcfe084",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-27T00:42:34Z",
+      "side": 1,
+      "message": "Done,\n\nI tried to do something in the browser test with a real database, but there is no clean way to inject error to HistoryBackend for external tests. So this is probably already the best thing we can do.",
+      "parentUuid": "55102248_9920e6cd",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 256,
+        "endChar": 65
+      },
+      "revId": "28f535b258b9b60e02d6731ca3ba5c403337a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac56fb50_8a2bc1e5",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2e9ffb25_fcf4a589",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-27T00:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac56fb50_8a2bc1e5",
+      "range": {
+        "startLine": 260,
+        "startChar": 5,
+        "endLine": 260,
+        "endChar": 6
+      },
+      "revId": "28f535b258b9b60e02d6731ca3ba5c403337a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82c6945a_1570d307",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "28f535b258b9b60e02d6731ca3ba5c403337a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e78ae45_1d22e981",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14808,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-27T00:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c6945a_1570d307",
+      "range": {
+        "startLine": 14808,
+        "startChar": 40,
+        "endLine": 14808,
+        "endChar": 41
+      },
+      "revId": "28f535b258b9b60e02d6731ca3ba5c403337a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
