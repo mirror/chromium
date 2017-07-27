@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd214020_89d226b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-07-27T05:44:20Z",
+      "side": 1,
+      "message": "Work around",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "dbad88223a671b2e4dd0e345fc0a303b7a1d8271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7440c8d8_14cc093d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-07-27T05:44:20Z",
+      "side": 1,
+      "message": "Please write some more explanation about the problem and solution here.",
+      "revId": "dbad88223a671b2e4dd0e345fc0a303b7a1d8271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
