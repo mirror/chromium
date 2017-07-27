@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a9214ed_f62f7dee",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T14:39:35Z",
+      "side": 1,
+      "message": "Do you know if we have an UMA to track how often we successfully save local state vs not on shutdown on cros?",
+      "range": {
+        "startLine": 1012,
+        "startChar": 27,
+        "endLine": 1012,
+        "endChar": 31
+      },
+      "revId": "b1af7ffb1f92f8ca46c32e330a6f715fc1bed0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1dcd3b0_f53f1878",
+        "filename": "chrome/browser/chromeos/login/chrome_restart_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T14:39:35Z",
+      "side": 1,
+      "message": "This is fallback to make sure we restart if the local state doesn\u0027t get written within 3 seconds, correct?",
+      "range": {
+        "startLine": 294,
+        "startChar": 17,
+        "endLine": 294,
+        "endChar": 47
+      },
+      "revId": "b1af7ffb1f92f8ca46c32e330a6f715fc1bed0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
