@@ -120,7 +120,6 @@ class ResourcePrefetchPredictorTest : public testing::Test {
   ResourcePrefetchPredictorTest();
   ~ResourcePrefetchPredictorTest() override;
   void SetUp() override;
-  void TearDown() override;
 
  protected:
   void AddUrlToHistory(const std::string& url, int visit_count) {
@@ -181,7 +180,18 @@ ResourcePrefetchPredictorTest::ResourcePrefetchPredictorTest()
     : profile_(base::MakeUnique<TestingProfile>()),
       mock_tables_(new StrictMock<MockResourcePrefetchPredictorTables>()) {}
 
-ResourcePrefetchPredictorTest::~ResourcePrefetchPredictorTest() = default;
+ResourcePrefetchPredictorTest::~ResourcePrefetchPredictorTest() {
+  EXPECT_EQ(*predictor_->url_resource_data_->data_cache_,
+            mock_tables_->url_resource_table_.data_);
+  EXPECT_EQ(*predictor_->url_redirect_data_->data_cache_,
+            mock_tables_->url_redirect_table_.data_);
+  EXPECT_EQ(*predictor_->host_resource_data_->data_cache_,
+            mock_tables_->host_resource_table_.data_);
+  EXPECT_EQ(*predictor_->host_redirect_data_->data_cache_,
+            mock_tables_->host_redirect_table_.data_);
+  EXPECT_EQ(*predictor_->origin_data_->data_cache_,
+            mock_tables_->origin_table_.data_);
+}
 
 void ResourcePrefetchPredictorTest::SetUp() {
   InitializeSampleData();
@@ -202,21 +212,6 @@ void ResourcePrefetchPredictorTest::SetUp() {
   url_request_context_.set_job_factory(&url_request_job_factory_);
 
   histogram_tester_.reset(new base::HistogramTester());
-}
-
-void ResourcePrefetchPredictorTest::TearDown() {
-  EXPECT_EQ(*predictor_->url_resource_data_->data_cache_,
-            mock_tables_->url_resource_table_.data_);
-  EXPECT_EQ(*predictor_->url_redirect_data_->data_cache_,
-            mock_tables_->url_redirect_table_.data_);
-  EXPECT_EQ(*predictor_->host_resource_data_->data_cache_,
-            mock_tables_->host_resource_table_.data_);
-  EXPECT_EQ(*predictor_->host_redirect_data_->data_cache_,
-            mock_tables_->host_redirect_table_.data_);
-  EXPECT_EQ(*predictor_->origin_data_->data_cache_,
-            mock_tables_->origin_table_.data_);
-  loading_predictor_->Shutdown();
-  profile_->DestroyHistoryService();
 }
 
 void ResourcePrefetchPredictorTest::InitializeSampleData() {

@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <tuple>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"

@@ -36,7 +36,6 @@ class LoadingPredictorTest : public testing::Test {
   LoadingPredictorTest();
   ~LoadingPredictorTest() override;
   void SetUp() override;
-  void TearDown() override;
 
  protected:
   content::TestBrowserThreadBundle thread_bundle_;
@@ -66,11 +65,6 @@ void LoadingPredictorTest::SetUp() {
   predictor_->set_mock_resource_prefetch_predictor(std::move(mock));
   predictor_->StartInitialization();
   base::RunLoop().RunUntilIdle();
-}
-
-void LoadingPredictorTest::TearDown() {
-  predictor_->Shutdown();
-  profile_->DestroyHistoryService();
 }
 
 TEST_F(LoadingPredictorTest, TestPrefetchingDurationHistogram) {
