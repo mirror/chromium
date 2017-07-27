@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "a6a7fe0e_783e5458",
+        "filename": "content/shell/android/shell_library_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T18:22:20Z",
+      "side": 1,
+      "message": "Just wanted to ensure you kept on not deleting them :)",
+      "parentUuid": "e3971fcd_9dab09fd",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1381b07f_c4aebe88",
         "filename": "content/shell/android/shell_library_loader.cc",
         "patchSetId": 4
