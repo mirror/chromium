@@ -2424,6 +2424,8 @@ TEST_F(FormStructureTest,
                         "email", 86U);
   upload_username_field->set_form_classifier_outcome(
       AutofillUploadContents::Field::NON_GENERATION_ELEMENT);
+  upload_username_field->set_username_vote_type(
+      AutofillUploadContents::Field::NO_INFORMATION);
   upload_username_field->set_properties_mask(FieldPropertiesFlags::HAD_FOCUS |
                                              FieldPropertiesFlags::USER_TYPED);
 

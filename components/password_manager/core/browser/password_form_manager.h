@@ -393,6 +393,10 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // Adds a vote from HTML parsing based form classifier to |form_structure|.
   void AddFormClassifierVote(autofill::FormStructure* form_structure);
 
+  // Adds a vote on username type to |form_structure|.
+  void AddUsernameVote(autofill::FormStructure* form_structure,
+    autofill::AutofillUploadContents::Field::UsernameVoteType type);
+
   // Create pending credentials from provisionally saved form and forms received
   // from password store.
   void CreatePendingCredentials();
@@ -581,6 +585,9 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // Takes care of recording metrics and events for this PasswordFormManager.
   // Make sure to call Init before using |*this|, to ensure it is not null.
   scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder_;
+
+  // A username field name that is used for sending the votes.
+  base::string16 username_vote_element_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormManager);
 };

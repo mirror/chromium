@@ -1088,10 +1088,14 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
         added_field->set_generated_password_changed(
             field->generated_password_changed());
       }
-
+      
       if (field->form_classifier_outcome()) {
         added_field->set_form_classifier_outcome(
             field->form_classifier_outcome());
+      }
+
+      if (field->username_vote_type()) {
+        added_field->set_username_vote_type(field->username_vote_type());
       }
 
       added_field->set_signature(field->GetFieldSignature());
