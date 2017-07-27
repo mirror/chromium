@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4628a1d7_ed1fc019",
+        "filename": "content/app/android/library_loader_hooks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-27T18:46:26Z",
+      "side": 0,
+      "message": "i noticed also cause I picked up the device/ one and this would conflict but I\u0027ll rebase after yours :)",
+      "parentUuid": "e230b6c2_3f2c37c5",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06ad78b9_4952b533",
         "filename": "content/browser/android/browser_startup_controller.h",
         "patchSetId": 4
