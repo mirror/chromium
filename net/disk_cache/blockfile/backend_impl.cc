@@ -38,6 +38,7 @@
 #include "net/disk_cache/blockfile/histogram_macros.h"
 #include "net/disk_cache/blockfile/webfonts_histogram.h"
 #include "net/disk_cache/cache_util.h"
+#include "net/disk_cache/cleanup_context.h"
 
 // Provide a BackendImpl object to macros from histogram_macros.h.
 #define CACHE_UMA_BACKEND_IMPL_OBJ this
@@ -145,9 +146,11 @@ namespace disk_cache {
 
 BackendImpl::BackendImpl(
     const base::FilePath& path,
+    CleanupContext* cleanup_context,
     const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
     net::NetLog* net_log)
-    : background_queue_(this, FallbackToInternalIfNull(cache_thread)),
+    : cleanup_context_(cleanup_context),
+      background_queue_(this, FallbackToInternalIfNull(cache_thread)),
       path_(path),
       block_files_(path),
       mask_(0),
