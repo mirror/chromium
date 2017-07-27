@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c79216f9_e76392e1",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-27T01:34:34Z",
+      "side": 1,
+      "message": "Oh, true - I forgot about that. Yes, in that case we\u0027ll need plumbing for both. Updated \u0026 will ping you the strings doc privately.",
+      "parentUuid": "313fc419_2ad8d864",
+      "revId": "d2a4fb15ebca9ba04fdab7d1a33ffa287e8f1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36b7177d_63bd5efa",
         "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
         "patchSetId": 2
