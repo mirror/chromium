@@ -18,7 +18,6 @@ class ExecutionContext;
 class ModuleMap;
 class ModuleScriptLoaderRegistry;
 class ModuleTreeLinkerRegistry;
-class ModuleTreeReachedUrlSet;
 class ResourceFetcher;
 class ScriptState;
 class WebTaskRunner;
@@ -49,18 +48,11 @@ class ModulatorImpl final : public Modulator {
   void FetchTree(const ModuleScriptFetchRequest&, ModuleTreeClient*) override;
   void FetchDescendantsForInlineScript(ModuleScript*,
                                        ModuleTreeClient*) override;
-  void FetchTreeInternal(const ModuleScriptFetchRequest&,
-                         const AncestorList&,
-                         ModuleGraphLevel,
-                         ModuleTreeReachedUrlSet*,
-                         ModuleTreeClient*) override;
   void FetchSingle(const ModuleScriptFetchRequest&,
-                   ModuleGraphLevel,
                    SingleModuleClient*) override;
   ModuleScript* GetFetchedModuleScript(const KURL&) override;
   bool HasValidContext() override;
   void FetchNewSingleModule(const ModuleScriptFetchRequest&,
-                            ModuleGraphLevel,
                             ModuleScriptLoaderClient*) override;
   ScriptModule CompileModule(const String& script,
                              const String& url_str,

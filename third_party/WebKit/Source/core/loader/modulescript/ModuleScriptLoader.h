@@ -19,7 +19,6 @@ class Modulator;
 class ModuleScript;
 class ModuleScriptLoaderClient;
 class ModuleScriptLoaderRegistry;
-enum class ModuleGraphLevel;
 
 // A ModuleScriptLoader is responsible for loading a new single ModuleScript.
 //
@@ -54,9 +53,7 @@ class CORE_EXPORT ModuleScriptLoader final
   ~ModuleScriptLoader() override;
 
   // Note: fetch may notify |m_client| synchronously or asynchronously.
-  void Fetch(const ModuleScriptFetchRequest&,
-             ResourceFetcher*,
-             ModuleGraphLevel);
+  void Fetch(const ModuleScriptFetchRequest&, ResourceFetcher*);
 
   bool IsInitialState() const { return state_ == State::kInitial; }
   bool HasFinished() const { return state_ == State::kFinished; }

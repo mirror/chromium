@@ -7,7 +7,6 @@
 
 #include "bindings/core/v8/ScriptModule.h"
 #include "core/CoreExport.h"
-#include "core/dom/AncestorList.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/V8PerContextData.h"
 #include "platform/heap/Handle.h"
@@ -23,7 +22,6 @@ class ExceptionState;
 class ModuleScript;
 class ModuleScriptFetchRequest;
 class ModuleScriptLoaderClient;
-class ModuleTreeReachedUrlSet;
 class ScriptModuleResolver;
 class ScriptState;
 class ScriptValue;
@@ -55,10 +53,6 @@ class CORE_EXPORT ModuleTreeClient
   virtual void NotifyModuleTreeLoadFinished(ModuleScript*) = 0;
 };
 
-// spec: "top-level module fetch flag"
-// https://html.spec.whatwg.org/multipage/webappapis.html#fetching-scripts-is-top-level
-enum class ModuleGraphLevel { kTopLevelModuleFetch, kDependentModuleFetch };
-
 // A Modulator is an interface for "environment settings object" concept for
 // module scripts.
 // https://html.spec.whatwg.org/#environment-settings-object
@@ -88,18 +82,10 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   virtual void FetchTree(const ModuleScriptFetchRequest&,
                          ModuleTreeClient*) = 0;
 
-  // https://html.spec.whatwg.org/#internal-module-script-graph-fetching-procedure
-  virtual void FetchTreeInternal(const ModuleScriptFetchRequest&,
-                                 const AncestorList&,
-                                 ModuleGraphLevel,
-                                 ModuleTreeReachedUrlSet*,
-                                 ModuleTreeClient*) = 0;
-
   // Asynchronously retrieve a module script from the module map, or fetch it
   // and put it in the map if it's not there already.
   // https://html.spec.whatwg.org/#fetch-a-single-module-script
   virtual void FetchSingle(const ModuleScriptFetchRequest&,
-                           ModuleGraphLevel,
                            SingleModuleClient*) = 0;
 
   virtual void FetchDescendantsForInlineScript(ModuleScript*,
@@ -149,7 +135,6 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   // if the cached entry doesn't exist.
   // The client can be notified either synchronously or asynchronously.
   virtual void FetchNewSingleModule(const ModuleScriptFetchRequest&,
-                                    ModuleGraphLevel,
                                     ModuleScriptLoaderClient*) = 0;
 };
 
