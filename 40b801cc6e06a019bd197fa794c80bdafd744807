@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "f95a230a_bf519a96",
+        "filename": "components/ntp_snippets/remote/test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-27T09:47:42Z",
+      "side": 1,
+      "message": "Done.\n\nBased on our discussion yesterday, I went for\n\nCreationTime \u003d \"Sat, 01 Jan 2000 00:00:01\" (UTC)\nExpirationTime \u003d \"Fri, 01 Jan 2100 00:00:01\" (UTC)\nin the builder.\n\nI restored old values in RemoteSuggestionProviderImpl unittests.",
+      "parentUuid": "4c4d7284_1a343c88",
+      "revId": "40b801cc6e06a019bd197fa794c80bdafd744807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0e3e958_b89b6188",
         "filename": "components/ntp_snippets/time_utils.h",
         "patchSetId": 2
