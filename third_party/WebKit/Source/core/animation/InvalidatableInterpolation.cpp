@@ -277,7 +277,6 @@ void InvalidatableInterpolation::ApplyStack(
           underlying_value_owner, underlying_fraction, current_value->Value(),
           current_interpolation.current_fraction_);
   }
-
   if (should_apply && underlying_value_owner)
     underlying_value_owner.GetType().Apply(
         *underlying_value_owner.Value().interpolable_value,
