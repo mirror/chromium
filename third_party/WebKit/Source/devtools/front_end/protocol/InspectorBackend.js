@@ -591,15 +591,19 @@ Protocol.InspectorBackend._AgentPrototype = class {
     var params = this._prepareParameters(method, signature, args, onError);
     if (errorMessage)
       return Promise.resolve(null);
-
     return new Promise(resolve => {
       this._target._wrapCallbackAndSendMessageObject(this._domain, method, params, (error, result) => {
         if (error) {
           resolve(null);
           return;
         }
-        var args = this._replyArgs[method];
-        resolve(result && args.length ? result[args[0]] : undefined);
+        var returnValues = this._replyArgs[method];
+        if (!result || !returnValues.length)
+          resolve(undefined);
+        else if (returnValues.length === 1)
+          resolve(result[returnValues[0]]);
+        else
+          resolve(result);
       });
     });
   }

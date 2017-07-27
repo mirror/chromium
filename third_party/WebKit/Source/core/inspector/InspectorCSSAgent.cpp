@@ -2227,7 +2227,10 @@ Response InspectorCSSAgent::setEffectivePropertyValueForNode(
 
 Response InspectorCSSAgent::getBackgroundColors(
     int node_id,
-    Maybe<protocol::Array<String>>* result) {
+    Maybe<protocol::Array<String>>* backgroundColors,
+    Maybe<String>* computedFontSize,
+    Maybe<String>* computedFontWeight,
+    Maybe<String>* computedBodyFontSize) {
   Element* element = nullptr;
   Response response = dom_agent_->AssertElement(node_id, element);
   if (!response.isSuccess())
@@ -2273,9 +2276,28 @@ Response InspectorCSSAgent::getBackgroundColors(
     }
   }
 
-  *result = protocol::Array<String>::create();
-  for (auto color : colors)
-    result->fromJust()->addItem(color.SerializedAsCSSComponentValue());
+  *backgroundColors = protocol::Array<String>::create();
+  for (auto color : colors) {
+    backgroundColors->fromJust()->addItem(
+        color.SerializedAsCSSComponentValue());
+  }
+
+  CSSComputedStyleDeclaration* computed_style_info =
+      CSSComputedStyleDeclaration::Create(element, true);
+  const CSSValue* font_size =
+      computed_style_info->GetPropertyCSSValue(CSSPropertyFontSize);
+  *computedFontSize = font_size->CssText();
+  const CSSValue* font_weight =
+      computed_style_info->GetPropertyCSSValue(CSSPropertyFontWeight);
+  *computedFontWeight = font_weight->CssText();
+
+  HTMLElement* body = element->GetDocument().body();
+  CSSComputedStyleDeclaration* computed_style_body =
+      CSSComputedStyleDeclaration::Create(body, true);
+  const CSSValue* body_font_size =
+      computed_style_body->GetPropertyCSSValue(CSSPropertyFontSize);
+  *computedBodyFontSize = body_font_size->CssText();
+
   return Response::OK();
 }
 
