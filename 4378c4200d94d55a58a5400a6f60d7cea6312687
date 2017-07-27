@@ -22,6 +22,30 @@
       "revId": "4378c4200d94d55a58a5400a6f60d7cea6312687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f76822_effa29fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-27T12:08:05Z",
+      "side": 1,
+      "message": "I imagine there is some race condition when the new tab is created and sometimes we don\u0027t have a web contents. I didn\u0027t manage to reproduce it. The culprit CL added recording for newly created tabs, so for M61 I was thinking about just avoiding the crash, I can listen on webcontents being set and defer the visit recording on M62",
+      "parentUuid": "7bd18c81_755a3895",
+      "range": {
+        "startLine": 144,
+        "startChar": 34,
+        "endLine": 144,
+        "endChar": 69
+      },
+      "revId": "4378c4200d94d55a58a5400a6f60d7cea6312687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
