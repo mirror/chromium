@@ -43,11 +43,19 @@ Polymer({
      * @private
      */
     isRTL_: Boolean,
+
+    /**
+     * Whether to use the 24-hour format for the time shown in the label
+     * bubbles.
+     * @private
+     */
+    shouldUse24Hours_: Boolean,
   },
 
   observers: [
     'customTimesChanged_(prefs.ash.night_light.custom_start_time.*, ' +
         'prefs.ash.night_light.custom_end_time.*)',
+    'hourFormatChanged_(prefs.settings.clock.use_24hour_clock.*)',
   ],
 
   keyBindings: {
@@ -80,9 +88,21 @@ Polymer({
     }
 
     this.async(function() {
+      this.hourFormatChanged_();
+
       // Read the initial prefs values and refresh the slider.
       this.customTimesChanged_();
     });
+  },
+
+  /**
+   * Called when the value of the pref associated with whether to use the
+   * 24-hour clock format is changed.
+   * @private
+   */
+  hourFormatChanged_: function() {
+    this.shouldUse24Hours_ = /** @type {boolean} */ (
+        this.getPref('settings.clock.use_24hour_clock').value);
   },
 
   /**
@@ -229,17 +249,19 @@ Polymer({
    * sensitive time string representation.
    * @param {number} hour The hour of the day (0 - 23).
    * @param {number} minutes The minutes of the hour (0 - 59).
+   * @param {boolean} shouldUse24Hours Whether to use the 24-hour time format.
    * @return {string}
    * @private
    */
-  getLocaleTimeString_: function(hour, minutes) {
+  getLocaleTimeString_: function(hour, minutes, shouldUse24Hours) {
     var d = new Date();
     d.setHours(hour);
     d.setMinutes(minutes);
     d.setSeconds(0);
     d.setMilliseconds(0);
 
-    return d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    return d.toLocaleTimeString(
+        [], {hour: '2-digit', minute: '2-digit', hour12: !shouldUse24Hours});
   },
 
   /**
@@ -254,7 +276,7 @@ Polymer({
     var hour = Math.floor(offsetMinutes / 60);
     var minute = Math.floor(offsetMinutes % 60);
 
-    return this.getLocaleTimeString_(hour, minute);
+    return this.getLocaleTimeString_(hour, minute, this.shouldUse24Hours_);
   },
 
   /**
