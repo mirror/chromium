@@ -314,6 +314,9 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
     if (params.is_offscreen) {
       surface_ = gl::init::CreateOffscreenGLSurface(gfx::Size());
     } else {
+#if defined(OS_FUCHSIA)
+      NOTIMPLEMENTED();
+#else
       surface_ = ImageTransportSurface::CreateNativeSurface(
           gpu_thread_weak_ptr_factory_.GetWeakPtr(), params.window,
           gl::GLSurfaceFormat());
@@ -322,6 +325,7 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
         DLOG(ERROR) << "Failed to create surface.";
         return false;
       }
+#endif  // defined(OS_FUCHSIA)
     }
   }
 

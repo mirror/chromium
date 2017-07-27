@@ -205,7 +205,7 @@ typedef int32_t AcceleratedWidget;
 constexpr AcceleratedWidget kNullAcceleratedWidget = 0;
 #elif defined(OS_FUCHSIA)
 // TODO(fuchsia): Update when we have a plan for UI on Fuchsia.
-typedef void* AcceleratedWidget;
+typedef uintptr_t AcceleratedWidget;
 constexpr AcceleratedWidget kNullAcceleratedWidget = 0;
 #else
 #error unknown platform
