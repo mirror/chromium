@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a6c459d_5874e884",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T18:21:49Z",
+      "side": 1,
+      "message": "nit: define a global variable? |global| is meant to be the name to refer to the current global scope, I don\u0027t know if |self| is documented. Just a global variable of our own is much simpler and allows you to do something like:\n\nvar nextBackgroundFetchTag \u003d 0;\nfunction uniqueTag() {\n  return \u0027tag\u0027 + nextBackgroundFetchTag++;\n}",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d878d942_9ec91e54",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T18:21:49Z",
+      "side": 1,
+      "message": "It would be nice to refer to a spec on why these cases are OK.",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2a270e_71259b1b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T18:21:49Z",
+      "side": 1,
+      "message": "Does regular fetch() allow HTTP requests from HTTPS origins?",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a38858_4f44c24b",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T18:21:49Z",
+      "side": 1,
+      "message": "This needs a comment to explain that this restriction is temporary, preferably with a reference to a bug about implementing full CORS support.",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e579004f_3ce08899",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T18:21:49Z",
+      "side": 1,
+      "message": "nit: attribute",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e874673b_f9074fd7",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T18:21:49Z",
+      "side": 1,
+      "message": "\"Requests may only be made to a secure context.\"",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
