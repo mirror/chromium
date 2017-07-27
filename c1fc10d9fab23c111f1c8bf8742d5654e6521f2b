@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c5bdac_f3766ec5",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-27T02:02:34Z",
+      "side": 1,
+      "message": "we should probably only allocate a sourceid if this is a main frame navigation, as we don\u0027t want to accidentally record UKM for subframe navs",
+      "revId": "c1fc10d9fab23c111f1c8bf8742d5654e6521f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39232008_195fa396",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-27T02:02:34Z",
+      "side": 1,
+      "message": "maybe DCHECK(IsInMainFrame()); here as well?",
+      "revId": "c1fc10d9fab23c111f1c8bf8742d5654e6521f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83188951_1de0aef6",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-27T02:02:34Z",
+      "side": 1,
+      "message": "we probably want to remove the calls to UpdateSourceURL in PageLoadTracker (the RecordUkmSourceInfo method), since those calls may collide with this call in terms of how they update the UKM initial_url field.\n\nIn fact, can we do the following here:\nukm_recorder-\u003eUpdateSourceURL(ukm_source_id_, original_url_);\nukm_recorder-\u003eUpdateSourceURL(ukm_source_id_, url_);\n\nwhich will set initial url correctly if the URL changed over the lifetime of this navigation.\n\nNote though that we also want to record URLs for failed navigations, not just those that committed, so this logic may be better placed in the NavigationHandleImpl destructor. clamy@ or nasko@ can say for sure what is best here.",
+      "revId": "c1fc10d9fab23c111f1c8bf8742d5654e6521f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
