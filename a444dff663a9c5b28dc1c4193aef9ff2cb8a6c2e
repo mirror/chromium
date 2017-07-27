@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dff680a7_5274f6af",
+        "filename": "chrome/browser/chrome_browser_main_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-27T14:54:37Z",
+      "side": 0,
+      "message": "M45!",
+      "range": {
+        "startLine": 199,
+        "startChar": 73,
+        "endLine": 199,
+        "endChar": 76
+      },
+      "revId": "a444dff663a9c5b28dc1c4193aef9ff2cb8a6c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
