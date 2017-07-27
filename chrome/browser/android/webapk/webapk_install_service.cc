@@ -5,6 +5,7 @@
 #include "chrome/browser/android/webapk/webapk_install_service.h"
 
 #include "base/bind.h"
+#include "base/files/file_path.h"
 #include "chrome/browser/android/shortcut_info.h"
 #include "chrome/browser/android/webapk/webapk_install_service_factory.h"
 #include "chrome/browser/android/webapk/webapk_installer.h"
@@ -42,13 +43,9 @@ void WebApkInstallService::InstallAsync(const ShortcutInfo& shortcut_info,
 }
 
 void WebApkInstallService::UpdateAsync(
-    const std::string& webapk_package,
-    const GURL& start_url,
-    const base::string16& short_name,
-    std::unique_ptr<std::vector<uint8_t>> serialized_proto,
+    const base::FilePath& update_request_file,
     const FinishCallback& finish_callback) {
-  WebApkInstaller::UpdateAsync(browser_context_, webapk_package, start_url,
-                               short_name, std::move(serialized_proto),
+  WebApkInstaller::UpdateAsync(browser_context_, update_request_file,
                                finish_callback);
 }
 
