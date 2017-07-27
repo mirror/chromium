@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.content_public.common.ScreenOrientationValues;
 import org.chromium.webapk.lib.common.WebApkConstants;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -69,6 +70,9 @@ public class WebappDataStorage {
 
     // Whether the user has dismissed the disclosure UI.
     static final String KEY_DISMISSED_DISCLOSURE = "dismissed_dislosure";
+
+    // The path of the file with data to update the WebAPK.
+    static final String KEY_PENDING_UPDATE_FILE_PATH = "pending_update_file_name";
 
     // Number of milliseconds between checks for whether the WebAPK's Web Manifest has changed.
     public static final long UPDATE_INTERVAL = TimeUnit.DAYS.toMillis(3L);
@@ -304,6 +308,7 @@ public class WebappDataStorage {
      * file. This does NOT delete the file itself but the file is left empty.
      */
     void delete() {
+        deletePendingUpdateFile();
         mPreferences.edit().clear().apply();
     }
 
@@ -312,6 +317,8 @@ public class WebappDataStorage {
      * This does not remove the stored splash screen image (if any) for the app.
      */
     void clearHistory() {
+        deletePendingUpdateFile();
+
         SharedPreferences.Editor editor = mPreferences.edit();
 
         editor.remove(KEY_LAST_USED);
@@ -500,6 +507,35 @@ public class WebappDataStorage {
     /** Returns whether we should check for updates less frequently. */
     private boolean shouldRelaxUpdates() {
         return mPreferences.getBoolean(KEY_RELAX_UPDATES, false);
+    }
+
+    /** Sets the path of the file which contains data to update the WebAPK. */
+    void setPendingUpdateFilePath(String filePath) {
+        assert filePath != null;
+        mPreferences.edit().putString(KEY_PENDING_UPDATE_FILE_PATH, filePath).apply();
+    }
+
+    /** Returns the path of the file which contains data to update the WebAPK. */
+    String getPendingUpdateFilePath() {
+        return mPreferences.getString(KEY_PENDING_UPDATE_FILE_PATH, null);
+    }
+
+    /**
+     * Deletes the file which contains data to update the WebAPK. The file is large (> 1Kb) and
+     * should be deleted when the update completes.
+     */
+    void deletePendingUpdateFile() {
+        final String pendingUpdateFilePath = getPendingUpdateFilePath();
+        if (pendingUpdateFilePath == null) return;
+
+        mPreferences.edit().remove(KEY_PENDING_UPDATE_FILE_PATH).apply();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                new File(pendingUpdateFilePath).delete();
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /** Returns whether we should check for update. */

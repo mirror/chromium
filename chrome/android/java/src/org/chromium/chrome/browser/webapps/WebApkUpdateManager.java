@@ -6,9 +6,11 @@ package org.chromium.chrome.browser.webapps;
 
 import static org.chromium.webapk.lib.common.WebApkConstants.WEBAPK_PACKAGE_PREFIX;
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.StrictMode;
 import android.text.TextUtils;
 
 import org.chromium.base.ActivityState;
@@ -24,6 +26,7 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.webapk.lib.client.WebApkVersion;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -45,11 +48,8 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     /** Data extracted from the WebAPK's launch intent and from the WebAPK's Android Manifest. */
     private WebApkInfo mInfo;
 
-    /**
-     * The cached data for a pending update request which needs to be sent after the WebAPK isn't
-     * running in the foreground.
-     */
-    private PendingUpdate mPendingUpdate;
+    /** Whether an update request should be made once the WebAPK is backgrounded. */
+    private boolean mHasPendingUpdate;
 
     /** The WebApkActivity which owns the WebApkUpdateManager. */
     private final WebApkActivity mActivity;
@@ -58,20 +58,6 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     private final WebappDataStorage mStorage;
 
     private WebApkUpdateDataFetcher mFetcher;
-
-    /**
-     * Contains all the data which is cached for a pending update request once the WebAPK is no
-     * longer running foreground.
-     */
-    private static class PendingUpdate {
-        public WebApkInfo mUpdateInfo;
-        byte[] mSerializedProto;
-
-        public PendingUpdate(WebApkInfo info, byte[] serializedProto) {
-            mUpdateInfo = info;
-            mSerializedProto = serializedProto;
-        }
-    }
 
     /** Called with update result. */
     private static interface WebApkUpdateCallback {
@@ -104,8 +90,9 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
      * @return Whether a pending update request is sent to the WebAPK server.
      */
     public boolean requestPendingUpdate() {
-        if (mPendingUpdate != null) {
-            updateAsync(mPendingUpdate.mUpdateInfo, mPendingUpdate.mSerializedProto);
+        String updateRequestFilePath = mStorage.getPendingUpdateFilePath();
+        if (mHasPendingUpdate && updateRequestFilePath != null) {
+            updateAsync(updateRequestFilePath);
             return true;
         }
         return false;
@@ -116,7 +103,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     }
 
     public boolean getHasPendingUpdateForTesting() {
-        return mPendingUpdate != null;
+        return mHasPendingUpdate;
     }
 
     public static void setUpdatesEnabledForTesting(boolean enabled) {
@@ -167,7 +154,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         recordUpdate(WebApkInstallResult.FAILURE, false /* relaxUpdates*/);
 
         if (fetchedInfo != null) {
-            buildProtoAndScheduleUpdate(
+            buildUpdateRequestAndScheduleUpdate(
                     fetchedInfo, primaryIconUrl, badgeIconUrl, false /* isManifestStale */);
             return;
         }
@@ -175,7 +162,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         // Tell the server that the our version of the Web Manifest might be stale and to ignore
         // our Web Manifest data if the server's Web Manifest data is newer. This scenario can
         // occur if the Web Manifest is temporarily unreachable.
-        buildProtoAndScheduleUpdate(
+        buildUpdateRequestAndScheduleUpdate(
                 mInfo, "" /* primaryIconUrl */, "" /* badgeIconUrl */, true /* isManifestStale */);
     }
 
@@ -187,7 +174,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     }
 
     /** Builds proto to send to the WebAPK server. */
-    protected void buildProtoAndScheduleUpdate(final WebApkInfo info, String primaryIconUrl,
+    protected void buildUpdateRequestAndScheduleUpdate(final WebApkInfo info, String primaryIconUrl,
             String badgeIconUrl, boolean isManifestStale) {
         int versionCode = readVersionCodeFromAndroidManifest(info.webApkPackageName());
         int size = info.iconUrlToMurmur2HashMap().size();
@@ -201,28 +188,49 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
             i++;
         }
 
-        Callback<byte[]> callback = new Callback<byte[]>() {
+        final String protoFilePath = getUpdateRequestFilePath(info);
+        mStorage.setPendingUpdateFilePath(protoFilePath);
+        Callback<Boolean> callback = new Callback<Boolean>() {
             @Override
-            public void onResult(byte[] result) {
-                scheduleUpdate(info, result);
+            public void onResult(Boolean success) {
+                if (!success) {
+                    mStorage.updateLastRequestedShellApkVersion(
+                            WebApkVersion.CURRENT_SHELL_APK_VERSION);
+                    recordUpdate(WebApkInstallResult.FAILURE, false /* relaxUpdates*/);
+                    mStorage.deletePendingUpdateFile();
+                    return;
+                }
+                scheduleUpdate(protoFilePath);
             }
         };
-        nativeBuildUpdateWebApkProto(info.manifestStartUrl(), info.scopeUri().toString(),
-                info.name(), info.shortName(), primaryIconUrl, info.icon(), badgeIconUrl,
-                info.badgeIcon(), iconUrls, iconHashes, info.displayMode(), info.orientation(),
-                info.themeColor(), info.backgroundColor(), info.manifestUrl(),
-                info.webApkPackageName(), versionCode, isManifestStale, callback);
+        nativeStoreWebApkUpdateRequestToDisk(protoFilePath, info.manifestStartUrl(),
+                info.scopeUri().toString(), info.name(), info.shortName(), primaryIconUrl,
+                info.icon(), badgeIconUrl, info.badgeIcon(), iconUrls, iconHashes,
+                info.displayMode(), info.orientation(), info.themeColor(), info.backgroundColor(),
+                info.manifestUrl(), info.webApkPackageName(), versionCode, isManifestStale,
+                callback);
+    }
+
+    /** Returns the path of the file with data to update WebAPK. */
+    protected String getUpdateRequestFilePath(WebApkInfo info) {
+        Context context = ContextUtils.getApplicationContext();
+
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
+        File protoDir = new File(context.getDir("webapk", Context.MODE_PRIVATE), "update");
+        StrictMode.setThreadPolicy(oldPolicy);
+
+        return new File(protoDir, info.webApkPackageName()).getPath();
     }
 
     /**
-     * Sends update request to WebAPK Server if the WebAPK is running in the background; caches the
-     * fetched WebApkInfo otherwise.
+     * Sends update request to WebAPK Server if the WebAPK is running in the background; sets
+     * update as "pending" otherwise.
      */
-    protected void scheduleUpdate(WebApkInfo info, byte[] serializedProto) {
+    protected void scheduleUpdate(String updateRequestFilePath) {
         int numberOfUpdateRequests = mStorage.getUpdateRequests();
         boolean forceUpdateNow =  numberOfUpdateRequests >= MAX_UPDATE_ATTEMPTS;
         if (!isInForeground() || forceUpdateNow) {
-            updateAsync(info, serializedProto);
+            updateAsync(updateRequestFilePath);
             WebApkUma.recordUpdateRequestSent(WebApkUma.UPDATE_REQUEST_SENT_FIRST_TRY);
             return;
         }
@@ -231,7 +239,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         // The {@link numberOfUpdateRequests} can never exceed 2 here (otherwise we'll have taken
         // the branch above and have returned before reaching this statement).
         WebApkUma.recordUpdateRequestQueued(numberOfUpdateRequests);
-        mPendingUpdate = new PendingUpdate(info, serializedProto);
+        mHasPendingUpdate = true;
     }
 
     /** Returns whether the associated WebApkActivity is running in foreground. */
@@ -243,30 +251,26 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     /**
      * Sends update request to the WebAPK Server and cleanup.
      */
-    private void updateAsync(WebApkInfo info, byte[] serializedProto) {
-        updateAsyncImpl(info, serializedProto);
+    private void updateAsync(String updateRequestFilePath) {
+        updateAsyncImpl(updateRequestFilePath);
         mStorage.resetUpdateRequests();
-        mPendingUpdate = null;
+        mHasPendingUpdate = false;
     }
 
     /**
      * Sends update request to the WebAPK Server.
      */
-    protected void updateAsyncImpl(WebApkInfo info, byte[] serializedProto) {
-        if (info == null || serializedProto == null) {
-            return;
-        }
-
+    protected void updateAsyncImpl(String updateRequestFilePath) {
         WebApkUpdateCallback callback = new WebApkUpdateCallback() {
             @Override
             public void onResultFromNative(@WebApkInstallResult int result, boolean relaxUpdates) {
                 recordUpdate(result, relaxUpdates);
                 mStorage.updateLastRequestedShellApkVersion(
                         WebApkVersion.CURRENT_SHELL_APK_VERSION);
+                mStorage.deletePendingUpdateFile();
             }
         };
-        nativeUpdateWebApk(info.webApkPackageName(), info.manifestStartUrl(), info.shortName(),
-                serializedProto, callback);
+        nativeUpdateWebApkFromStoredRequest(updateRequestFilePath, callback);
     }
 
     /**
@@ -399,12 +403,12 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         return UrlUtilities.urlsMatchIgnoringFragments(url1, url2);
     }
 
-    private static native void nativeBuildUpdateWebApkProto(String startUrl, String scope,
-            String name, String shortName, String primaryIconUrl, Bitmap primaryIcon,
-            String badgeIconUrl, Bitmap badgeIcon, String[] iconUrls, String[] iconHashes,
-            int displayMode, int orientation, long themeColor, long backgroundColor,
-            String manifestUrl, String webApkPackage, int webApkVersion, boolean isManifestStale,
-            Callback<byte[]> callback);
-    private static native void nativeUpdateWebApk(String webApkPackage, String startUrl,
-            String shortName, byte[] serializedProto, WebApkUpdateCallback callback);
+    private static native void nativeStoreWebApkUpdateRequestToDisk(String filePath,
+            String startUrl, String scope, String name, String shortName, String primaryIconUrl,
+            Bitmap primaryIcon, String badgeIconUrl, Bitmap badgeIcon, String[] iconUrls,
+            String[] iconHashes, int displayMode, int orientation, long themeColor,
+            long backgroundColor, String manifestUrl, String webApkPackage, int webApkVersion,
+            boolean isManifestStale, Callback<Boolean> callback);
+    private static native void nativeUpdateWebApkFromStoredRequest(
+            String requestFilePath, WebApkUpdateCallback callback);
 }
