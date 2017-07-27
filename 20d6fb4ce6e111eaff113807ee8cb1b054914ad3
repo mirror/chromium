@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b1ba418_cd4edcb4",
+        "filename": "content/renderer/p2p/ipc_network_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-27T12:33:32Z",
+      "side": 1,
+      "message": "If network_list_received_ is true, this unconditionally does SignalNetworksChanged() in a post.\nIf it\u0027s false, SignalNetworksChanged() only happens at #173 if MergeNetworkList() says changed \u003d true. This could make listening to this signal racey when StartUpdating() is called more than once. Could be related to the bug maybe.",
+      "revId": "20d6fb4ce6e111eaff113807ee8cb1b054914ad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
