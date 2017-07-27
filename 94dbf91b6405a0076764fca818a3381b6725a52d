@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ebe3b36_76dbb9d5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:46:32Z",
+      "side": 1,
+      "message": "This should be always true, so could you use DCHECK for consistency?",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb6b87c_aa5eff49",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:46:32Z",
+      "side": 1,
+      "message": "As Observer subclass\u0027s instance is not designed to deleted via Observer*, could you move this to \"protected:\"?",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c8bacf_c998e410",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:46:32Z",
+      "side": 1,
+      "message": "Could you call this in ArcServiceLauncher::OnPrimaryUserProfileReady() ?\nAlso, with this change, I do not think ArcFileSystemOperationRunner needs to be instantiated in the function, so could you remove it?",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4de4d01_904ffab9",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
         "patchSetId": 2
@@ -36,6 +87,30 @@
       "writtenOn": "2017-07-27T03:53:12Z",
       "side": 1,
       "message": "Is it possible |file_system_bridge| is nullptr? If so could you add a comment about the condition (just like |arc_session_manager| above?)",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f390583_68d38375",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:46:32Z",
+      "side": 1,
+      "message": "If not, please DCHECK.",
+      "parentUuid": "034a48df_cc724d3d",
       "range": {
         "startLine": 102,
         "startChar": 2,
@@ -128,6 +203,23 @@
       "writtenOn": "2017-07-27T03:53:12Z",
       "side": 1,
       "message": "I think it\u0027s not okay to delete |profile_| before destructing runner_. How about not doing anything in TearDown() and relying on member variable destruction order?",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a61815c_00ae6972",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:46:32Z",
+      "side": 1,
+      "message": "Could you move this between L111 and L112, and add comments that the order is as same as instantiate order in real use case?\nIt should help to address nya@-san\u0027s comments above.",
       "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
