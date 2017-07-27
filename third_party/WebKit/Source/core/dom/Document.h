@@ -620,16 +620,23 @@ class CORE_EXPORT Document : public ContainerNode,
   void SetURL(const KURL&);
 
   // Bind the url to document.url, if unavailable bind to about:blank.
-  KURL urlForBinding();
+  KURL urlForBinding() const;
 
   // To understand how these concepts relate to one another, please see the
   // comments surrounding their declaration.
+
+  // Document base URL.
+  // https://html.spec.whatwg.org/multipage/urls-and-fetching.html#document-base-url
   const KURL& BaseURL() const;
   void SetBaseURLOverride(const KURL&);
   const KURL& BaseURLOverride() const { return base_url_override_; }
   KURL ValidBaseElementURL() const;
   const AtomicString& BaseTarget() const { return base_target_; }
   void ProcessBaseElement();
+
+  // Fallback base URL.
+  // https://html.spec.whatwg.org/multipage/urls-and-fetching.html#fallback-base-url
+  KURL FallbackBaseURL() const;
 
   // Creates URL based on passed relative url and this documents base URL.
   // Depending on base URL value it is possible that parent document
@@ -947,6 +954,7 @@ class CORE_EXPORT Document : public ContainerNode,
   String designMode() const;
   void setDesignMode(const String&);
 
+  // The document of the parent frame.
   Document* ParentDocument() const;
   Document& TopDocument() const;
   Document* ContextDocument();
@@ -1617,6 +1625,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   LayoutView* layout_view_;
 
+  // The document of creator browsing context for frame-less documents such as
+  // documents created by DOMParser and DOMImplementation.
   WeakMember<Document> context_document_;
 
   // For early return in Fullscreen::fromIfExists()
