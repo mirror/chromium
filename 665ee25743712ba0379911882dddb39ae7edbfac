@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "261e059c_db2cd85d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T16:44:43Z",
+      "side": 1,
+      "message": "Could this long name be changed to just \u0027stats_collector_\u0027? Because it is inside TabManager class, there is no ambiguity here. It is like TabLoader uses |stats_collector_| in its class (https://cs.chromium.org/chromium/src/chrome/browser/sessions/tab_loader.h?sq\u003dpackage:chromium\u0026l\u003d170)",
+      "range": {
+        "startLine": 479,
+        "startChar": 44,
+        "endLine": 479,
+        "endChar": 72
+      },
+      "revId": "665ee25743712ba0379911882dddb39ae7edbfac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
