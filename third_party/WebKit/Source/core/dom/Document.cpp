@@ -3093,7 +3093,6 @@ void Document::close() {
 void Document::ImplicitClose() {
   DCHECK(!InStyleRecalc());
   DCHECK(parser_);
-
   load_event_progress_ = kLoadEventInProgress;
 
   // We have to clear the parser, in case someone document.write()s from the
