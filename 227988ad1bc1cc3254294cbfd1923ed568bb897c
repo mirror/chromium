@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ca145d28_5d1bb0d6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-27T22:18:14Z",
+      "side": 1,
+      "message": "Failing loudly (i.e. log errors and exit) sounds like the right thing to do to me.",
+      "parentUuid": "95d4b19d_66ab4933",
+      "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0771481_836d26b9",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "You mean the assertEqual call, if put in one single line? No, it does not. (It did in an early iteration when full URLs were returned.) I\u0027ll reformat it. Thx.\n\nBTW, isn\u0027t the line limit 132 characters?",
       "parentUuid": "c0771481_836d26b9",
+      "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c15f4ce_64ccc0ae",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-27T22:18:14Z",
+      "side": 1,
+      "message": "That\u0027s right, the line limit now is 132 characters.\n\nBut -- bikeshedding here -- I prefer more line breaks and shorter lines in any case.",
+      "parentUuid": "61379a33_c9377edf",
       "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
