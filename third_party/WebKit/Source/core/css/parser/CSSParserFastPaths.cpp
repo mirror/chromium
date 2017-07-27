@@ -861,6 +861,12 @@ bool CSSParserFastPaths::IsValidKeywordPropertyAndValue(
     case CSSPropertyScrollSnapStop:
       DCHECK(RuntimeEnabledFeatures::CSSScrollSnapPointsEnabled());
       return value_id == CSSValueNormal || value_id == CSSValueAlways;
+    case CSSPropertyScrollCustomization:
+      DCHECK(RuntimeEnabledFeatures::CSSOMSmoothScrollEnabled());
+      return value_id == CSSValueAuto || value_id == CSSValuePanX ||
+             value_id == CSSValuePanY || value_id == CSSValuePanLeft ||
+             value_id == CSSValuePanRight || value_id == CSSValuePanUp ||
+             value_id == CSSValuePanDown;
     default:
       NOTREACHED();
       return false;

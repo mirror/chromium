@@ -2861,6 +2861,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CSSIdentifierValue::Create(style.GetRubyPosition());
     case CSSPropertyScrollBehavior:
       return CSSIdentifierValue::Create(style.GetScrollBehavior());
+    case CSSPropertyScrollCustomization:
+      return CSSIdentifierValue::Create(style.ScrollCustomization());
     case CSSPropertyTableLayout:
       return CSSIdentifierValue::Create(style.TableLayout());
     case CSSPropertyTextAlign:

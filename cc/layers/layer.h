@@ -428,6 +428,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   bool has_transform_node() { return has_transform_node_; }
   void SetHasTransformNode(bool val) { has_transform_node_ = val; }
 
+  void SetScrollCustomization(unsigned int scroll_customization) {}
+
  protected:
   friend class LayerImpl;
   friend class TreeSynchronizer;

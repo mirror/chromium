@@ -229,6 +229,8 @@ class WebLayer {
 
   // Called on the scroll layer to trigger showing the overlay scrollbars.
   virtual void ShowScrollbars() = 0;
+
+  virtual void SetScrollCustomization(unsigned) = 0;
 };
 
 }  // namespace blink

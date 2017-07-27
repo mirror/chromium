@@ -1038,6 +1038,8 @@ void PaintLayerScrollableArea::UpdateAfterStyleChange(
                             HasScrollableVerticalOverflow());
   }
 
+  if (old_style->ScrollCustomization() != Box().Style()->ScrollCustomization())
+    UpdateScrollCustomization();
   // Whenever background changes on the scrollable element, the scroll bar
   // overlay style might need to be changed to have contrast against the
   // background.
@@ -2254,6 +2256,13 @@ void PaintLayerScrollableArea::DelayScrollOffsetClampScope::
     scrollable_area->ClampScrollOffsetAfterOverflowChange();
   delete needs_clamp_;
   needs_clamp_ = nullptr;
+}
+
+void PaintLayerScrollableArea::UpdateScrollCustomization() {
+  unsigned int scroll_customization =
+      static_cast<unsigned int>(Box().Style()->ScrollCustomization());
+  LayerForScrolling()->PlatformLayer()->SetScrollCustomization(
+      scroll_customization);
 }
 
 }  // namespace blink

@@ -559,6 +559,9 @@ class CORE_EXPORT PaintLayerScrollableArea final
   }
 
   bool ComputeNeedsCompositedScrolling(const LCDTextMode, const PaintLayer*);
+
+  void UpdateScrollCustomization();
+
   PaintLayer& layer_;
 
   PaintLayer* next_topmost_scroll_child_;

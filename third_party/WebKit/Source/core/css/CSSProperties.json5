@@ -2097,6 +2097,13 @@
       default_generated_functions: ["getter", "setter"],
     },
     {
+      name: "scroll-customization",
+      field_template: "keyword",
+      keywords: ["auto", "pan-x", "pan-left", "pan-right", "pan-y", "pan-up", "pan-down"],
+      runtime_flag: "CSSOMSmoothScroll",
+      default_value: "auto",
+    },
+    {
       name: "scroll-snap-type",
       api_class: true,
       api_methods: ["parseSingleValue"],

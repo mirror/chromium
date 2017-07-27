@@ -474,6 +474,13 @@ void WebLayerImpl::SetClipParent(blink::WebLayer* parent) {
   layer_->SetClipParent(clip_parent);
 }
 
+void WebLayerImpl::SetScrollCustomization(unsigned int scroll_customization) {
+  LOG(ERROR) << "Scroll optimization updated for the layer: "
+             << scroll_customization;
+  if (layer_)
+    layer_->SetScrollCustomization(scroll_customization);
+}
+
 Layer* WebLayerImpl::layer() const {
   return layer_.get();
 }

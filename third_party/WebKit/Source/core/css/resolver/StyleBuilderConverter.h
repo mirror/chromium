@@ -194,7 +194,6 @@ class StyleBuilderConverter {
   static void ConvertOrderedNamedGridLinesMapToNamedGridLinesMap(
       const OrderedNamedGridLines&,
       NamedGridLinesMap&);
-
   static ScrollSnapType ConvertSnapType(StyleResolverState&, const CSSValue&);
   static ScrollSnapAlign ConvertSnapAlign(StyleResolverState&, const CSSValue&);
   static PassRefPtr<TranslateTransformOperation> ConvertTranslate(

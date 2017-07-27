@@ -133,6 +133,8 @@ class CC_BLINK_EXPORT WebLayerImpl : public NON_EXPORTED_BASE(blink::WebLayer) {
   void SetScrollParent(blink::WebLayer* parent) override;
   void SetClipParent(blink::WebLayer* parent) override;
 
+  void SetScrollCustomization(unsigned int scroll_customization) override;
+
  protected:
   scoped_refptr<cc::Layer> layer_;
 
