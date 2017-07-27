@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a446935_c65b2f42",
+        "filename": "media/formats/mp4/box_definitions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-27T19:24:39Z",
+      "side": 1,
+      "message": "Refresh my memory - at first I worried this could be hit in byte-by-byte appends, but IIRC that wont happen because we only create a BoxReader and get to this point when the top level box is completely appended.\n\nSo for this to hit... it would mean the box is fully appended, its just missing stuff. right?",
+      "range": {
+        "startLine": 909,
+        "startChar": 2,
+        "endLine": 909,
+        "endChar": 21
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687df1b4_ec585212",
+        "filename": "media/formats/mp4/box_definitions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-27T19:24:39Z",
+      "side": 1,
+      "message": "This comment is referring to already read bytes in stream_info, right? Not bytes that are still sitting in the reader?",
+      "range": {
+        "startLine": 942,
+        "startChar": 5,
+        "endLine": 942,
+        "endChar": 8
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b5144a_bb3a2571",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-27T19:24:39Z",
+      "side": 1,
+      "message": "Aside: do you know why FLAC and EAC went this route? From 14496-12, this seems acceptable, but definitely not preferred. Are you aware of some reason they couldn\u0027t just add an object type?",
+      "range": {
+        "startLine": 281,
+        "startChar": 26,
+        "endLine": 281,
+        "endChar": 37
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ff9507_e8b7f1b3",
+        "filename": "media/formats/mp4/mp4_stream_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-27T19:24:39Z",
+      "side": 1,
+      "message": "nit: name it \"features\" or similar, here and in 192kHz",
+      "range": {
+        "startLine": 474,
+        "startChar": 32,
+        "endLine": 474,
+        "endChar": 35
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbd6ab7_7ed13f51",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-27T19:24:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1427,
+        "startChar": 32,
+        "endLine": 1427,
+        "endChar": 35
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
