@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71e5dbb6_908bca0a",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Finish this comment?",
+      "range": {
+        "startLine": 12,
+        "startChar": 73,
+        "endLine": 12,
+        "endChar": 78
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d311ac_6a64e388",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "I\u0027m cracking down on method comments that describe when a method is called instead of what it does. The preferred verb for this kind of method is \"tells\", so \"Tells the receiver that it has been added to |queue| ... \".",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c9bb6f_da41687f",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Add that the base class implementation does nothing.",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69ae5e9_2cd2c1d1",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "-cancelOverlay or -cancel?",
+      "range": {
+        "startLine": 25,
+        "startChar": 47,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee17afe_5e81a233",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "We\u0027re using -disconnect for this (deterministic pre-dealloc cleanup) in other coordinators -- notably TabCoordinator. I think I prefer that as a name because it\u0027s more clearly distinct from \"stop\". \n\nIf the expectation is that after -cancel/-disconnect is called that the coordinator will never be started, please make that explicit.",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b02b59_2e64edc8",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "What does this DCHECK guard against?",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4aae577_9c8ede55",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Generally the parent is the owner of the child, so even though we\u0027d never expect |self| to be deallocated between these two lines, would it be better for -removeChiledCoordinator to be the last step in this method?",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c72e76a_e95828e5",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Nit: I think we\u0027re moving to putting namespaced forward declarations in alpha order with non-namespaced ones, so web::WebState should come after OverlayCoordinator.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9ffafd_3c69bd8d",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Tells the OverlayQueue that ...",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8393a5_8a7ffc7d",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Tells the observer that ..., here and elsewhere.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862d2106_bdf0b8ec",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "virtual void Foo() \u003d 0;, right?",
+      "range": {
+        "startLine": 19,
+        "startChar": 63,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a0e429_c493ef63",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "If the queue manager and the scheduler are both BrowserUserData (meaning they are both 1:1 with the browser), doesn\u0027t that imply that there will be a single queue manager for each scheduler -- modulo annoying which-one-was-created-first issues?\n\nI\u0027m trying to understand the use case for handling this class being able to work with an arbitrary queue manager. Is it just decoupling?",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 40
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b537ac_f7ee57e9",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Maybe indicate that instances of this service run on the UI thread.",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2dd6ea_afa9d9db",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Why no CancelOverlayForBrowser()?",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c1f2ff_12257aea",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "Maybe CancelAllOverlaysForWebState() so it\u0027s clear that multiple overlays may be cleared?",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82379d32_459a371e",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "What prevents the parent coordinator form being passed in the ShowOverlayForWebState() call? That seems cleanest (and most isomorphic to the browser overlay API).",
+      "range": {
+        "startLine": 67,
+        "startChar": 15,
+        "endLine": 67,
+        "endChar": 43
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ea5133_fcdb32ac",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_parent_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "childCount \u003c\u003d 1U seems simpler.",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae6422c_fb4a0c5f",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_parent_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "This is test code, so can we assume that the DCHECK has passed? If so, you can just ObjCCast -anyObject, and it will be nil if there\u0027s no children (or a child that\u0027s not an OverlayCoordinator).",
+      "range": {
+        "startLine": 35,
+        "startChar": 23,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9f2a94_420aa86b",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T23:58:24Z",
+      "side": 1,
+      "message": "I think this comment isn\u0027t true any more -- the plan is for the to-be-displayed webState to be pushed into the webCoordinator for each (e.g.) change of active tabs.\n\nPresumably the overlay service should be informed each time the webState this coordinator is displaying changes.",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "d8dfb01a223d3a11646de899834f51026244f0fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
