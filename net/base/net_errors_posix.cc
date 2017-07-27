@@ -10,6 +10,8 @@
 #include <unistd.h>
 
 #include "base/logging.h"
+#include "base/posix/safe_strerror.cc"
+#include "build/build_config.h"
 
 namespace net {
 
@@ -108,14 +110,17 @@ Error MapSystemError(logging::SystemErrorCode os_error) {
       return ERR_INSUFFICIENT_RESOURCES;
     case EMFILE:  // Too many open files.
       return ERR_INSUFFICIENT_RESOURCES;
-    case EIO:  // Generic IO error.
+#if defined(OS_FUCHSIA)
+    case EIO:
+      DLOG(WARNING) << "EIO was returned by MXIO.";
       return ERR_FAILED;
+#endif  // OS_FUCHSIA
 
     case 0:
       return OK;
     default:
-      LOG(WARNING) << "Unknown error " << os_error
-                   << " mapped to net::ERR_FAILED";
+      LOG(WARNING) << "Unknown error " << base::safe_strerror(os_error) << " ("
+                   << os_error << ") mapped to net::ERR_FAILED";
       return ERR_FAILED;
   }
 }
