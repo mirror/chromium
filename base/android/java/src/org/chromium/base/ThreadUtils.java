@@ -78,7 +78,7 @@ public class ThreadUtils {
             try {
                 task.get();
             } catch (Exception e) {
-                throw new RuntimeException("Exception occurred while waiting for runnable", e);
+                throw new RuntimeException("Exception occured while waiting for runnable", e);
             }
         }
     }
