@@ -46,6 +46,30 @@
       "revId": "a95867541fd575d28e2784edff88d6addb11b1a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2964ee2a_b5cc0b68",
+        "filename": "chromecast/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-07-27T20:13:59Z",
+      "side": 1,
+      "message": "In practice, libcast_shell_android is the only library we bring in to our apk (unless the component build will behave differently or if Doug\u0027s team has plans to add new shared libraries that also use chromium JNI). But I would agree with putting it in the defaults, rather than here.",
+      "parentUuid": "db01e942_3f8ea6ca",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "a95867541fd575d28e2784edff88d6addb11b1a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
