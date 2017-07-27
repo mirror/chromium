@@ -10,6 +10,8 @@ static_library("core") {
     "base_safe_browsing_error_ui.h",
     "common_string_util.cc",
     "common_string_util.h",
+    "content_filter_ui.cc",
+    "content_filter_ui.h",
     "controller_client.cc",
     "controller_client.h",
     "metrics_helper.cc",

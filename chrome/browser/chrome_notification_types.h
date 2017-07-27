@@ -401,6 +401,9 @@ enum NotificationType {
   // Details are a Details<CaptivePortalService::CheckResults>.
   NOTIFICATION_CAPTIVE_PORTAL_CHECK_RESULT,
 
+  // TODO(sperigo): write me
+  NOTIFICATION_CONTENT_FILTER_CHECK_RESULT,
+
   // Sent when the applications in the NTP app launcher have been reordered.
   // The details, if not NoDetails, is the std::string ID of the extension that
   // was moved.

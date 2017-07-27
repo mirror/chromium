@@ -18,7 +18,19 @@ message CaptivePortalCert {
   optional string sha256_hash = 1;
 }
 
+message ContentFilterEntry {
+  // Regex we will match against in order to identify certificates issued by
+  // content filters.
+  optional string regex = 1;
+  // Name of the content filter to display on the interstitial.
+  optional string name = 2;
+  // Link to a help center URL with information about how to uninstall or
+  // reconfigure the offending content filter.
+  optional string help_url = 3;
+}
+
 message SSLErrorAssistantConfig {
   optional uint32 version_id = 1;
   repeated CaptivePortalCert captive_portal_cert = 2;
+  repeated ContentFilterEntry content_filter = 3;
 }

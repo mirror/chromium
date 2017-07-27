@@ -1,0 +1,50 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+component("content_filter") {
+  sources = [
+    "content_filter_detector.cc",
+    "content_filter_detector.h",
+    "content_filter_export.h",
+  ]
+
+  defines = [ "CONTENT_FILTER_IMPLEMENTATION" ]
+
+  deps = [
+    "//base",
+    "//components/data_use_measurement/core",
+    "//net",
+    "//url",
+  ]
+}
+
+static_library("test_support") {
+  testonly = true
+  sources = [
+    "content_filter_testing_utils.cc",
+    "content_filter_testing_utils.h",
+  ]
+
+  deps = [
+    ":content_filter",
+    "//base",
+    "//net:test_support",
+    "//url",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "content_filter_detector_unittest.cc",
+  ]
+
+  deps = [
+    ":content_filter",
+    ":test_support",
+    "//base",
+    "//net:test_support",
+    "//testing/gtest",
+  ]
+}
