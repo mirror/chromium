@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18323753_5bfe43fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-27T07:23:08Z",
+      "side": 1,
+      "message": "[optional] I would like to call |url| as |path|, because it\u0027s not a complete url.",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "dec134d0ede38ccfa8c2c8f44ef3f13597b9ab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea36811_6f9edfe8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-27T07:23:08Z",
+      "side": 1,
+      "message": "This is not your problem (i.e., the original test has the problem), but no test case uses addCustomHeader setting. Can you remove the parameter?",
+      "revId": "dec134d0ede38ccfa8c2c8f44ef3f13597b9ab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
