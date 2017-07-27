@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75573f4a_3671dc17",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-27T02:15:47Z",
+      "side": 1,
+      "message": "const ActivationState\u0026",
+      "range": {
+        "startLine": 68,
+        "startChar": 45,
+        "endLine": 68,
+        "endChar": 60
+      },
+      "revId": "d30d82000980be14aba3bbf1e9f225c2e04f628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
