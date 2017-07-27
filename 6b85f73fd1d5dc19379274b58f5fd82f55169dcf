@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdcd5c1d_c1f5346c",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T01:26:40Z",
+      "side": 1,
+      "message": "What does \"OR IGNORE\" do? If it is intentional here, lets add comment explaining why it is here.\nSame above.",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8130ea_51edee8d",
+        "filename": "components/offline_pages/core/prefetch/import_archives_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T01:26:40Z",
+      "side": 1,
+      "message": "There is a potential bad condition here:\nLets say we fail to move the file (SD card issue, storage full etc). Then we\u0027d try to do it unlimited number of times, for infinite time. The reason is that we start an operation that can very realistically break and we not update the state of the item to \"IMPORTING\" to reflect that we have started it. If we had such a state, we would have a Reconciler that could have come later (on NWake) and check for all items in that state and move them all to FINISHED.",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568b78d0_8c7b3da2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T01:26:40Z",
+      "side": 1,
+      "message": "You will need DownloadFailed(std::string guid) as well. Will it be processed by a separate task or by the same one? If by the same one, perhaps better to do it now...",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79536603_365780b2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T01:26:40Z",
+      "side": 1,
+      "message": "Curious: what forced you to convert this into int64_t?",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daadcec9_64c94e37",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T01:26:40Z",
+      "side": 1,
+      "message": "While I see the benefit of folding a bunch of parameters into a single struct, the PrefetchItem is too much overkill here - you are hardly using half the fields.\n\nI would suggest to define a struct at PrefetchImporter, something like PrefetchItemImportParams, and only include the fields you need. then you also only need to fetch those fields from database, not the whole PrefetchItem. \n\nAlso, then you don\u0027t need MakePrefetchItem(statement, item*) in utils.",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
