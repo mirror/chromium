@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a86adfee_097f9406",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-27T15:27:37Z",
+      "side": 1,
+      "message": "Yes. It seems to be called once even before attached has been called.",
+      "parentUuid": "58d651fc_c8556025",
+      "range": {
+        "startLine": 202,
+        "startChar": 27,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "b30039268190e36ba37b6b74df811ca70d4fb3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d511f413_8ac6890f",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_proxy.js",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e5bf8be7_989064c9",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-27T15:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d511f413_8ac6890f",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "b30039268190e36ba37b6b74df811ca70d4fb3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54727c63_07efcda8",
         "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "b30039268190e36ba37b6b74df811ca70d4fb3a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d606aad8_1c1ee5d1",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-27T15:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54727c63_07efcda8",
+      "range": {
+        "startLine": 64,
+        "startChar": 54,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "b30039268190e36ba37b6b74df811ca70d4fb3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
