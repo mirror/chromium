@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "688c190e_ce588165",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "nit: replace the period after \u0027true\u0027 with a comma",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f7f3a2_5b32da47",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "nit: could this just do something like:\n  // TODO(weidongg/691108): ...\n  if (show)\n    SetIconColor(IconColorForUpdateSeverity(mojom::UpdateSeverity::LOW, false));\n  update_over_cellular_available_ \u003d show;\n  tray_view()-\u003eSetVisible(show);",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0da5139_e8ad0008",
+        "filename": "ash/system/update/tray_update.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "ditto nit",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7d21af_1b40c7eb",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "nit: private DISALLOW_COPY_AND_ASSIGN",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c1cae9_6d92af04",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "nit: \u0027TargetSet\u0027 doesn\u0027t convey the meaning well here, consider NotifyUpdateOverCellularPremissionNeeded or similar?",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52a57b3_f3c4a36a",
+        "filename": "chrome/browser/upgrade_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511d8901_d3c232cf",
+        "filename": "chromeos/dbus/fake_update_engine_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73aa8833_40453ae2",
+        "filename": "chromeos/dbus/update_engine_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "nit: \"// User permission is needed to download an update on a cellular connection.\"",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beb169b_c17f4b28",
+        "filename": "chromeos/dbus/update_engine_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:15:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
