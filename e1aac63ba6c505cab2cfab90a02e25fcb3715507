@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "492b9798_d2d333ac",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-27T04:54:13Z",
+      "side": 1,
+      "message": "I would expect the dispatcher to hold a strong reference to the recorder. Other classes don\u0027t need to retain ownership, as they don\u0027t access them again.",
+      "parentUuid": "818d5766_1ad094e0",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "e1aac63ba6c505cab2cfab90a02e25fcb3715507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba350f35_10726dc9",
         "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c35e0629_330f4ebf",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-27T04:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba350f35_10726dc9",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "e1aac63ba6c505cab2cfab90a02e25fcb3715507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9436a29a_86e085c1",
         "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "e1aac63ba6c505cab2cfab90a02e25fcb3715507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1767d47_fb5fcccf",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-27T04:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9436a29a_86e085c1",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 27
+      },
+      "revId": "e1aac63ba6c505cab2cfab90a02e25fcb3715507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
