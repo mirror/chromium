@@ -23,6 +23,7 @@ source_set("renderers") {
 
   deps = [
     "//gpu/command_buffer/client:gles2_interface",
+    "//media/base",  # required for ppapi/features/features.h
     "//skia",
     "//third_party/libyuv",
   ]
