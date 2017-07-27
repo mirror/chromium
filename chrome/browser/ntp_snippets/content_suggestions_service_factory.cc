@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
@@ -47,6 +48,7 @@
 #include "components/ntp_snippets/content_suggestions_service.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/ntp_snippets_constants.h"
+#include "components/ntp_snippets/remote/contextual_suggestions_fetcher.h"
 #include "components/ntp_snippets/remote/persistent_scheduler.h"
 #include "components/ntp_snippets/remote/prefetched_pages_tracker.h"
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
@@ -104,6 +106,7 @@ using ntp_snippets::BreakingNewsGCMAppHandler;
 using ntp_snippets::BreakingNewsSuggestionsProvider;
 using ntp_snippets::CategoryRanker;
 using ntp_snippets::ContentSuggestionsService;
+using ntp_snippets::ContextualSuggestionsFetcher;
 using ntp_snippets::ForeignSessionsSuggestionsProvider;
 using ntp_snippets::GetFetchEndpoint;
 using ntp_snippets::GetPushUpdatesSubscriptionEndpoint;
@@ -521,10 +524,44 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
   std::unique_ptr<CategoryRanker> category_ranker =
       ntp_snippets::BuildSelectedCategoryRanker(
           pref_service, base::MakeUnique<base::DefaultClock>());
+
+  std::unique_ptr<ntp_snippets::ContextualSuggestionsService>
+      contextual_suggestions_service;
+  if (base::FeatureList::IsEnabled(
+          chrome::android::kContextualSuggestionsCarousel)) {
+    OAuth2TokenService* token_service =
+        ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
+    scoped_refptr<net::URLRequestContextGetter> request_context =
+        content::BrowserContext::GetDefaultStoragePartition(profile)
+            ->GetURLRequestContext();
+    auto contextual_suggestions_fetcher =
+        base::MakeUnique<ContextualSuggestionsFetcher>(
+            signin_manager, token_service, request_context, pref_service,
+            base::Bind(&safe_json::SafeJsonParser::Parse));
+    base::FilePath database_dir(
+        profile->GetPath().Append("contextualSuggestionsDatabase"));
+    scoped_refptr<base::SequencedTaskRunner> task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::BACKGROUND,
+             base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
+    std::unique_ptr<RemoteSuggestionsDatabase> contextual_suggestions_database =
+        base::MakeUnique<RemoteSuggestionsDatabase>(database_dir, task_runner);
+    std::unique_ptr<ntp_snippets::CachedImageFetcher> cached_image_fetcher =
+        base::MakeUnique<ntp_snippets::CachedImageFetcher>(
+            base::MakeUnique<image_fetcher::ImageFetcherImpl>(
+                base::MakeUnique<ImageDecoderImpl>(), request_context.get()),
+            pref_service, contextual_suggestions_database.get());
+    contextual_suggestions_service =
+        base::MakeUnique<ntp_snippets::ContextualSuggestionsService>(
+            std::move(contextual_suggestions_fetcher),
+            std::move(cached_image_fetcher),
+            std::move(contextual_suggestions_database));
+  }
+
   auto* service = new ContentSuggestionsService(
       State::ENABLED, signin_manager, history_service, large_icon_service,
       pref_service, std::move(category_ranker), std::move(user_classifier),
-      std::move(scheduler));
+      std::move(scheduler), std::move(contextual_suggestions_service));
 
   RegisterArticleProviderIfEnabled(service, profile, signin_manager,
                                    user_classifier_raw, offline_page_model);
