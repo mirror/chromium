@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992054a0_88123d8b",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-07-27T21:52:37Z",
+      "side": 1,
+      "message": "nit: Any idea how often this will be triggered? I expect this will be encountered more often as we start using more complex overlay strategies. I\u0027m wondering if it should go to VLOG?",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "31be55246cd8b5c9f7d8ef6b54cb92bf91654531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
