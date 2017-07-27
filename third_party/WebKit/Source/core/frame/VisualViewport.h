@@ -195,8 +195,14 @@ class CORE_EXPORT VisualViewport final
   IntSize MinimumScrollOffsetInt() const override;
   IntSize MaximumScrollOffsetInt() const override;
   ScrollOffset MaximumScrollOffset() const override;
-  int VisibleHeight() const override { return VisibleRect().Height(); }
-  int VisibleWidth() const override { return VisibleRect().Width(); }
+  int VisibleHeight(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return VisibleRect().Height();
+  }
+  int VisibleWidth(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return VisibleRect().Width();
+  }
   IntSize ContentsSize() const override;
   bool ScrollbarsCanBeActive() const override { return false; }
   IntRect ScrollableAreaBoundingBox() const override;
