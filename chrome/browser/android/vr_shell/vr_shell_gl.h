@@ -72,7 +72,7 @@ struct WebVrBounds {
 // This class manages all GLThread owned objects and GL rendering for VrShell.
 // It is not threadsafe and must only be used on the GL thread.
 class VrShellGl : public device::mojom::VRPresentationProvider,
-                  public vr::UiInputManagerDelegate {
+                  public vr::ContentInputDelegate {
  public:
   VrShellGl(GlBrowserInterface* browser,
             gvr_context* gvr_api,
@@ -136,7 +136,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void UpdateGesture(const gfx::PointF& normalized_content_hit_point,
                      blink::WebGestureEvent& gesture);
 
-  // vr::UiInputManagerDelegate.
+  // vr::ContentInputDelegate.
   void OnContentEnter(const gfx::PointF& normalized_hit_point) override;
   void OnContentLeave() override;
   void OnContentMove(const gfx::PointF& normalized_hit_point) override;

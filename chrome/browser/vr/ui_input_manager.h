@@ -23,33 +23,6 @@ class UiElement;
 
 using GestureList = std::vector<std::unique_ptr<blink::WebGestureEvent>>;
 
-// Receives interaction events with the web content from the UiInputManager.
-class UiInputManagerDelegate {
- public:
-  virtual ~UiInputManagerDelegate();
-
-  virtual void OnContentEnter(const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentLeave() = 0;
-  virtual void OnContentMove(const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentDown(const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentUp(const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentFlingBegin(
-      std::unique_ptr<blink::WebGestureEvent> gesture,
-      const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentFlingCancel(
-      std::unique_ptr<blink::WebGestureEvent> gesture,
-      const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentScrollBegin(
-      std::unique_ptr<blink::WebGestureEvent> gesture,
-      const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentScrollUpdate(
-      std::unique_ptr<blink::WebGestureEvent> gesture,
-      const gfx::PointF& normalized_hit_point) = 0;
-  virtual void OnContentScrollEnd(
-      std::unique_ptr<blink::WebGestureEvent> gesture,
-      const gfx::PointF& normalized_hit_point) = 0;
-};
-
 // Based on controller input finds the hit UI element and determines the
 // interaction with UI elements and the web contents.
 class UiInputManager {
@@ -60,7 +33,7 @@ class UiInputManager {
     CLICKED,  // Since the last update the button has been pressed and released.
               // The button is released now.
   };
-  UiInputManager(UiScene* scene, UiInputManagerDelegate* delegate);
+  explicit UiInputManager(UiScene* scene);
   ~UiInputManager();
   // TODO(tiborg): Use generic gesture type instead of blink::WebGestureEvent.
   void HandleInput(const gfx::Vector3dF& laser_direction,
@@ -71,6 +44,16 @@ class UiInputManager {
                    UiElement** out_reticle_render_target);
 
  private:
+  struct HitTestRecord {
+    // This should store a stable ID. Pointers are unstable since elements may
+    // be deleted and reallocated at the same spot in memory.
+    UiElement* element;
+    float depth;
+    gfx::Point3F target_point;
+    gfx::PointF target_local_point;
+  };
+  typedef std::vector<HitTestRecord> HitTestRecords;
+
   void SendFlingCancel(GestureList* gesture_list,
                        const gfx::PointF& target_point);
   void SendScrollEnd(GestureList* gesture_list,
@@ -90,21 +73,17 @@ class UiInputManager {
   void SendButtonUp(UiElement* target,
                     const gfx::PointF& target_point,
                     ButtonState button_state);
-  void GetVisualTargetElement(const gfx::Vector3dF& laser_direction,
-                              const gfx::Point3F& laser_origin,
-                              gfx::Vector3dF* out_eye_to_target,
-                              gfx::Point3F* out_target_point,
-                              UiElement** out_target_element,
-                              gfx::PointF* out_target_local_point) const;
+  void HitTest(const gfx::Vector3dF& laser_direction,
+               const gfx::Point3F& laser_origin,
+               gfx::Vector3dF* eye_to_target,
+               HitTestRecords* records) const;
   bool GetTargetLocalPoint(const gfx::Vector3dF& eye_to_target,
                            const UiElement& element,
-                           float max_distance_to_plane,
                            gfx::PointF* out_target_local_point,
                            gfx::Point3F* out_target_point,
                            float* out_distance_to_plane) const;
 
   UiScene* scene_;
-  UiInputManagerDelegate* delegate_;
   // TODO(mthiesse): We need to handle elements being removed, and update this
   // state appropriately.
   UiElement* hover_target_ = nullptr;
