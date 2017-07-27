@@ -23,11 +23,6 @@
 #include "content/common/content_constants_internal.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/result_codes.h"
-#include "device/bluetooth/android/bluetooth_jni_registrar.h"
-#include "device/gamepad/android/gamepad_jni_registrar.h"
-#include "device/geolocation/android/geolocation_jni_registrar.h"
-#include "device/sensors/android/device_sensor_jni_registrar.h"
-#include "device/usb/android/usb_jni_registrar.h"
 #include "media/base/android/media_jni_registrar.h"
 #include "media/capture/content/android/screen_capture_jni_registrar.h"
 #include "media/capture/video/android/capture_jni_registrar.h"
@@ -71,21 +66,6 @@ bool EnsureJniRegistered(JNIEnv* env) {
     }
 
     if (!content::android::RegisterAppJni(env))
-      return false;
-
-    if (!device::android::RegisterBluetoothJni(env))
-      return false;
-
-    if (!device::android::RegisterDeviceSensorJni(env))
-      return false;
-
-    if (!device::android::RegisterGamepadJni(env))
-      return false;
-
-    if (!device::android::RegisterGeolocationJni(env))
-      return false;
-
-    if (!device::android::RegisterUsbJni(env))
       return false;
 
     if (!media::RegisterJni(env))
