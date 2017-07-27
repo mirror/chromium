@@ -168,6 +168,29 @@
     },
     {
       "key": {
+        "uuid": "7bb49284_480f6517",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:12:05Z",
+      "side": 1,
+      "message": "If this is only used for patch generation then it should be mentioned. Otherwise we can use this to replace Abs32CollisionDetector!",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03a1917c_aea4c292",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 1
