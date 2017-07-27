@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5cbf6f4_30254ffd",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:11:31Z",
+      "side": 1,
+      "message": "ModifyExtentingXXX() \u003d ModifyExtentingXXXInternal() + Adjusting user-select-all.\n\nThus we need to return a position which is NOT adjusted for user-select-all.",
+      "parentUuid": "3b5f333c_e6d966f9",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 45
+      },
+      "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9e64ed_a1be7ee5",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-26T18:09:41Z",
       "side": 1,
       "message": "nit: s/VisiblePosition/VisiblePosition\u0026/",
+      "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257778f3_069a8ab1",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:11:31Z",
+      "side": 1,
+      "message": "Good catch!\nIn these days, I have been good at copy/direct initialization.\n\nBTW, in VC in debug build, VP\u0026 allocates stack for holding pointer\nto stack allocated object. Of course release build generates same code.\n\n\nhttps://stackoverflow.com/questions/35962647/confusion-in-copy-initialization-and-direct-initialization",
+      "parentUuid": "cb9e64ed_a1be7ee5",
       "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

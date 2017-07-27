@@ -16,6 +16,24 @@
       "revId": "240c1c38417af4f7dc97979e04503b8c4f079fdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9370f740_831a2976",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:11:31Z",
+      "side": 0,
+      "message": "I have an opposite opinion. |pos| doesn\u0027t use all cases, e.g. kSentence, kLine, etc. I don\u0027t want to have redundant computation.\n\nI plan to replace CreateVP(Extent()), more call sites in the file, with new member function ComputeVisibleExtent(). In this way, source code and binary\ncode will be smaller.\n\nI filed a bug for tracking this[1]\n\n[1] http://crbug.com/749380 ⚐\tIntroduce SelectionModifier::ComputeVisibleExtent()",
+      "parentUuid": "09c68d64_48ac7f8c",
+      "revId": "240c1c38417af4f7dc97979e04503b8c4f079fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
