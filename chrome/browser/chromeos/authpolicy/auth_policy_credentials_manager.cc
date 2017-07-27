@@ -4,9 +4,13 @@
 
 #include "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h"
 
+#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/memory/singleton.h"
+#include "base/path_service.h"
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
@@ -31,6 +35,19 @@ namespace {
 constexpr base::TimeDelta kGetUserStatusCallsInterval =
     base::TimeDelta::FromHours(1);
 const char kProfileSigninNotificationId[] = "chrome://settings/signin/";
+
+// Prefix for KRB5CCNAME environment variable. Defines ccache type.
+const char kKrb5CCFilePrefix[] = "FILE:";
+// Directory in the user home to store Kerberos files.
+const char kKrb5Directory[] = "kerberos";
+// Environment variable pointing to credential cache file.
+const char kKrb5CCEnvName[] = "KRB5CCNAME";
+// Credential cache file name.
+const char kKrb5CCFile[] = "krb5cc";
+// Environment variable pointing to Kerberos config file.
+const char kKrb5ConfEnvName[] = "KRB5_CONFIG";
+// Kerberos config file name.
+const char kKrb5ConfFile[] = "krb5.conf";
 
 // A notification delegate for the sign-out button.
 class SigninNotificationDelegate : public NotificationDelegate {
@@ -67,6 +84,35 @@ std::string SigninNotificationDelegate::id() const {
   return id_;
 }
 
+// Writes |blob| into file <UserPath>/kerberos/|file_name|. First writes into
+// temporary file and then replace existing one.
+void WriteFile(const std::string& file_name, const std::string& blob) {
+  base::FilePath dir;
+  PathService::Get(base::DIR_HOME, &dir);
+  dir = dir.Append(kKrb5Directory);
+  base::File::Error error;
+  if (!base::CreateDirectoryAndGetError(dir, &error)) {
+    LOG(ERROR) << "Failed to create '" << dir.value()
+               << "' directory: " << base::File::ErrorToString(error);
+    return;
+  }
+
+  base::FilePath temp_file;
+  if (!base::CreateTemporaryFileInDir(dir, &temp_file))
+    return;
+
+  if (base::WriteFile(temp_file, blob.data(), blob.size()) !=
+      static_cast<int>(blob.size())) {
+    return;
+  }
+
+  base::FilePath dest_file = dir.Append(file_name);
+  if (!base::ReplaceFile(temp_file, dest_file, &error))
+    LOG(ERROR) << "Failed to replace '" << dest_file.value() << "' with '"
+               << temp_file.value()
+               << "' :" << base::File::ErrorToString(error);
+}
+
 }  // namespace
 
 namespace chromeos {
@@ -79,6 +125,16 @@ AuthPolicyCredentialsManager::AuthPolicyCredentialsManager(Profile* profile)
   StartObserveNetwork();
   account_id_ = user->GetAccountId();
   GetUserStatus();
+  GetUserKerberosFiles();
+
+  // Setting environment variables for GSSAPI library.
+  std::unique_ptr<base::Environment> env(base::Environment::Create());
+  base::FilePath path;
+  PathService::Get(base::DIR_HOME, &path);
+  path = path.Append(kKrb5Directory);
+  env->SetVar(kKrb5CCEnvName,
+              kKrb5CCFilePrefix + path.Append(kKrb5CCFile).value());
+  env->SetVar(kKrb5ConfEnvName, path.Append(kKrb5ConfFile).value());
 }
 
 AuthPolicyCredentialsManager::~AuthPolicyCredentialsManager() {}
@@ -102,7 +158,8 @@ void AuthPolicyCredentialsManager::OnShuttingDown() {
 }
 
 void AuthPolicyCredentialsManager::GetUserStatus() {
-  DCHECK(!weak_factory_.HasWeakPtrs());
+  DCHECK(!is_get_status_in_progress_);
+  is_get_status_in_progress_ = true;
   rerun_get_status_on_error_ = false;
   scheduled_get_user_status_call_.Cancel();
   chromeos::DBusThreadManager::Get()->GetAuthPolicyClient()->GetUserStatus(
@@ -114,7 +171,8 @@ void AuthPolicyCredentialsManager::GetUserStatus() {
 void AuthPolicyCredentialsManager::OnGetUserStatusCallback(
     authpolicy::ErrorType error,
     const authpolicy::ActiveDirectoryUserStatus& user_status) {
-  DCHECK(weak_factory_.HasWeakPtrs());
+  DCHECK(is_get_status_in_progress_);
+  is_get_status_in_progress_ = false;
   ScheduleGetUserStatus();
   last_error_ = error;
   if (error != authpolicy::ERROR_NONE) {
@@ -158,6 +216,33 @@ void AuthPolicyCredentialsManager::OnGetUserStatusCallback(
                   user_status.password_status() ==
                       authpolicy::ActiveDirectoryUserStatus::PASSWORD_VALID;
   user_manager::UserManager::Get()->SaveForceOnlineSignin(account_id_, !ok);
+}
+
+void AuthPolicyCredentialsManager::GetUserKerberosFiles() {
+  chromeos::DBusThreadManager::Get()
+      ->GetAuthPolicyClient()
+      ->GetUserKerberosFiles(
+          account_id_.GetObjGuid(),
+          base::BindOnce(
+              &AuthPolicyCredentialsManager::OnGetUserKerbefosFilesCallback,
+              weak_factory_.GetWeakPtr()));
+}
+
+void AuthPolicyCredentialsManager::OnGetUserKerbefosFilesCallback(
+    authpolicy::ErrorType error,
+    const authpolicy::KerberosFiles& kerberos_files) {
+  if (kerberos_files.has_krb5cc()) {
+    base::PostTaskWithTraits(FROM_HERE,
+                             {base::MayBlock(), base::TaskPriority::BACKGROUND},
+                             base::BindOnce(&WriteFile, kKrb5CCFile,
+                                            kerberos_files.krb5cc().data()));
+  }
+  if (kerberos_files.has_krb5conf()) {
+    base::PostTaskWithTraits(FROM_HERE,
+                             {base::MayBlock(), base::TaskPriority::BACKGROUND},
+                             base::BindOnce(&WriteFile, kKrb5ConfFile,
+                                            kerberos_files.krb5conf().data()));
+  }
 }
 
 void AuthPolicyCredentialsManager::ScheduleGetUserStatus() {
@@ -250,8 +335,7 @@ void AuthPolicyCredentialsManager::GetUserStatusIfConnected(
     const chromeos::NetworkState* network) {
   if (!network || !network->IsConnectedState())
     return;
-  if (weak_factory_.HasWeakPtrs()) {
-    // Another call is in progress.
+  if (is_get_status_in_progress_) {
     rerun_get_status_on_error_ = true;
     return;
   }
