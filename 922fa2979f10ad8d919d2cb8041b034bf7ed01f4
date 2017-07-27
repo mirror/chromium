@@ -16,6 +16,24 @@
       "revId": "922fa2979f10ad8d919d2cb8041b034bf7ed01f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76243690_16af2814",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-27T00:44:42Z",
+      "side": 1,
+      "message": "Fragments will in general have different property tree nodes, and also local border box\nproperties, content properties, etc.\n\nExample: consider a two-column layout with a child that has a transform, and is fragmented\ninto two pieces. We\u0027ll allocate two transform nodes, one for each fragment. Any fragmented\nchildren of the transform that have a a transform will also parent to their containing\nfragment.\n\nFragments will also end up with their own paint offset I think, but that hasn\u0027t been\nimplemented either yet.\n\nRegarding \"FirstFragment\" usage: each of these is in general wrong, I\u0027ll need to fix them\nin future patches.",
+      "parentUuid": "429bc0fe_65c6e6b8",
+      "revId": "922fa2979f10ad8d919d2cb8041b034bf7ed01f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
