@@ -155,4 +155,20 @@ TEST(WorkletModuleResponsesMapTest, Isolation) {
   EXPECT_EQ(ClientImpl::Result::kInitial, client2->GetResult());
 }
 
+TEST(WorkletModuleResponsesMapTest, InvalidURL) {
+  WorkletModuleResponsesMap* map = new WorkletModuleResponsesMap;
+
+  const KURL kEmptyURL;
+  ClientImpl* client1 = new ClientImpl;
+  map->ReadOrCreateEntry(kEmptyURL, client1);
+  EXPECT_EQ(ClientImpl::Result::kFailed, client1->GetResult());
+  EXPECT_FALSE(client1->GetParams().has_value());
+
+  const KURL kNullURL;
+  ClientImpl* client2 = new ClientImpl;
+  map->ReadOrCreateEntry(kEmptyURL, client2);
+  EXPECT_EQ(ClientImpl::Result::kFailed, client2->GetResult());
+  EXPECT_FALSE(client2->GetParams().has_value());
+}
+
 }  // namespace blink
