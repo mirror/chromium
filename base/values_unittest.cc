@@ -596,6 +596,38 @@ TEST(ValuesTest, SetKey) {
   EXPECT_EQ(Value(std::move(storage)), dict);
 }
 
+TEST(ValuesTest, FindPath) {
+  // Construct a dictionary path {root}.foo.bar = 123
+  Value foo(Value::Type::DICTIONARY);
+  foo.SetKey("bar", Value(123));
+
+  Value root(Value::Type::DICTIONARY);
+  root.SetKey("foo", std::move(foo));
+
+  // No key (stupid but well-defined and takes work to prevent).
+  Value* found = root.FindPath({});
+  EXPECT_EQ(&root, found);
+
+  // Single not found key.
+  Value* found = root.FindPath({"notfound"});
+  EXPECT_FALSE(found);
+
+  // Single found key.
+  found = root.FindPath({"foo"});
+  ASSERT_TRUE(found);
+  EXPECT_TRUE(found->is_dict());
+
+  // Double key, second not found.
+  found = root.FindPath({"foo", "notfound"});
+  EXPECT_FALSE(found);
+
+  // Double key, found.
+  found = root.FindPath({"foo", "bar"});
+  EXPECT_TRUE(found);
+  EXPECT_TRUE(found->is_int());
+  EXPECT_EQ(123, found->GetInt());
+}
+
 TEST(ValuesTest, DictEnd) {
   Value dict(Value::Type::DICTIONARY);
   EXPECT_EQ(dict.DictItems().end(), dict.DictEnd());
