@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9ed85922_0e76eb45",
+        "filename": "components/guest_view/browser/guest_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-07-27T12:43:54Z",
+      "side": 1,
+      "message": "A further note: if we can somehow confirm that *nothing* can ever call attached() between the end of WillAttach() and the start of DidAttach(), then we can remove this ... but I\u0027m not sure yet that I know that for sure. I sort of thought this might be the least change that would give us this guarantee.",
+      "parentUuid": "0386ec8b_e3547848",
+      "revId": "a7e162f8585afae1c3b2f99e249e1924e7e6db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "524147d7_be5bd38f",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 3
