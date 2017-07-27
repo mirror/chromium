@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94b38e32_eb5d709d",
+        "filename": "chrome/browser/resources/md_bookmarks/constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T07:08:54Z",
+      "side": 1,
+      "message": "Maybe add a comment here.",
+      "revId": "e2c8d38ef410999cd67b9cf1605cac4f1056f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e3f5e9_5f6e59a2",
+        "filename": "chrome/browser/resources/md_bookmarks/folder_node.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T07:08:54Z",
+      "side": 1,
+      "message": "Add closure annotations here",
+      "revId": "e2c8d38ef410999cd67b9cf1605cac4f1056f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39654d95_711c51e9",
+        "filename": "chrome/browser/resources/md_bookmarks/reducers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T07:08:54Z",
+      "side": 1,
+      "message": "I think this check is unnecessary?\n\nIt\u0027s possible to have a parent folder at depth 2 that is not in the folderOpenState, so it will appear as closed in the sidebar. When you double click a child of that folder in the list, all of its parents should open.",
+      "revId": "e2c8d38ef410999cd67b9cf1605cac4f1056f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cfa30d_d66646c0",
+        "filename": "chrome/test/data/webui/md_bookmarks/app_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T07:08:54Z",
+      "side": 1,
+      "message": "Calling normalizeSet on a Map is fine, but a bit wonky. Maybe it should be renamed?\n\n(\u0027normalizeIterable\u0027? \u0027normalize\u0027?)",
+      "range": {
+        "startLine": 55,
+        "startChar": 29,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "e2c8d38ef410999cd67b9cf1605cac4f1056f34a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62b353db_80c184ea",
+        "filename": "chrome/browser/resources/md_bookmarks/reducers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T07:08:54Z",
+      "side": 1,
+      "message": "Can replace the if/else with\n\n  newFolderOpenState.set(action.id, action.open)",
+      "revId": "5a1a2835f5a71d99a163e9c16da898d0781c4904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e466154b_a5a09a23",
+        "filename": "chrome/browser/resources/md_bookmarks/types.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T07:08:54Z",
+      "side": 1,
+      "message": "I would be happy with going back to calling this `openFolders`, since having \u0027state\u0027 in the name is a little redundant. I get that openFolders isn\u0027t perfect either, though, so /shruggie. Up to you.",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "5a1a2835f5a71d99a163e9c16da898d0781c4904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40cf1c7_4e9992f8",
+        "filename": "chrome/test/data/webui/md_bookmarks/md_bookmarks_focus_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T07:08:54Z",
+      "side": 1,
+      "message": "whoah there",
+      "range": {
+        "startLine": 377,
+        "startChar": 6,
+        "endLine": 377,
+        "endChar": 50
+      },
+      "revId": "5a1a2835f5a71d99a163e9c16da898d0781c4904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
