@@ -16,6 +16,7 @@
 #include "base/win/scoped_comptr.h"
 #include "third_party/iaccessible2/ia2_api_all.h"
 #include "ui/accessibility/ax_export.h"
+#include "ui/accessibility/ax_modes.h"
 #include "ui/accessibility/ax_text_utils.h"
 #include "ui/accessibility/platform/ax_platform_node_base.h"
 
@@ -650,6 +651,9 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
   void Dispose() override;
 
  private:
+  // Helper function that calls delegate to enable modes.
+  void EnableAccessibilityMode(ui::AXMode mode_flags);
+
   int MSAAEvent(ui::AXEvent event);
   bool IsWebAreaForPresentationalIframe();
   bool ShouldNodeHaveReadonlyStateByDefault(const AXNodeData& data) const;
