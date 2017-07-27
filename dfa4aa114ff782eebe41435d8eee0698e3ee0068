@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b73ec3e6_c4035c15",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3549,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-07-27T15:14:35Z",
+      "side": 1,
+      "message": "Why can\u0027t it run on Swarming? No new test should be added that cannot run there.",
+      "revId": "dfa4aa114ff782eebe41435d8eee0698e3ee0068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
