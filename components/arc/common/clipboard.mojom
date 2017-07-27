@@ -2,23 +2,56 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Next MinVersion: 2
+
+// TODO(ricardoq): it is be safe to remove Deprecated methods once ClipBoard v1
+// changes are upreved both on Android and Chrome
+
 module arc.mojom;
+
+// Struct for HTML: markup, text and url
+struct ClipItem {
+  // mime type
+  string mime_type;
+  // clip data
+  array<uint8> data;
+};
+
+// The Clip Data to send
+struct ClipData {
+  // a clip data could contain multiple items
+  // real example: some chrome images are represented both with with a
+  // image/png and text/html mime types
+  array<ClipItem> items;
+};
 
 interface ClipboardHost {
   // Tells the host to change its content, usually when the user initiates
   // a 'copy' action.
-  SetTextContent@0(string text);
+  SetTextContentDeprecated@0(string text);
 
   // Tells the host to return its content, usually when the user initiates
   // a 'paste' action or when the instance needs to re-sync its clipboard
-  // content with the host.
-  GetTextContent@1();
+  // content with the host. Deprecated
+  GetTextContentDeprecated@1();
+
+  // Tells the host to update its clipboard content, usually when the user
+  // initiates a 'copy' action.
+  [MinVersion=1] SetClipContent@2(ClipData data);
+
+  // Tells the host to return its clipboard content, usually when the user
+  // initiates a 'paste' action or when the instance needs to re-sync its
+  // clipboard content with the host.
+  [MinVersion=1] GetClipContent@3() => (ClipData data);
 };
 
 interface ClipboardInstance {
   // Establishes full-duplex communication with the host.
   Init@0(ClipboardHost host_ptr);
 
-  // Pass the result of ClipboardHost.GetTextContent().
-  OnGetTextContent@1(string returnedText);
+  // Passes the result of ClipboardHost.GetTextContent().
+  OnGetTextContentDeprecated@1(string returned_text);
+
+  // Tells that the Host clipboard has been updated
+  [MinVersion=1] HostClipboardUpdated@2();
 };
