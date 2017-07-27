@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0896797f_b692e4ed",
+        "filename": "components/viz/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-27T17:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c33edc_a939d521",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "0712cf5da357cb1c647282494e6ab0ba0a19b50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a41562_6666cc47",
         "filename": "components/viz/README.md",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T16:57:00Z",
       "side": 1,
       "message": "nit: in gitiles, ##### are very small and hard to differentiate typographically as headings. Might be nice to strip a # from each of them? Or file a bug to adjust gitiles css.",
+      "range": {
+        "startLine": 95,
+        "startChar": 14,
+        "endLine": 95,
+        "endChar": 21
+      },
+      "revId": "0712cf5da357cb1c647282494e6ab0ba0a19b50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f34c1e_d9fb1ec3",
+        "filename": "components/viz/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-27T17:01:13Z",
+      "side": 1,
+      "message": "oh thanks, i meant for these to be one more not 2 more than the next level up.",
+      "parentUuid": "d6a41562_6666cc47",
       "range": {
         "startLine": 95,
         "startChar": 14,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "17fecec8_57f3c785",
+        "filename": "components/viz/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-27T17:01:13Z",
+      "side": 1,
+      "message": "tried to improve",
+      "parentUuid": "890ce8dd_8bc805f6",
+      "revId": "0712cf5da357cb1c647282494e6ab0ba0a19b50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01805f42_4ed44c82",
         "filename": "components/viz/README.md",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-27T16:57:00Z",
       "side": 1,
       "message": "I\u0027ll probably write a longer hit_test blither and link from here to it.",
+      "revId": "0712cf5da357cb1c647282494e6ab0ba0a19b50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becfb765_1f9b8962",
+        "filename": "components/viz/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-27T17:01:13Z",
+      "side": 1,
+      "message": "Great! Or just put it into this file?",
+      "parentUuid": "01805f42_4ed44c82",
       "revId": "0712cf5da357cb1c647282494e6ab0ba0a19b50e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
