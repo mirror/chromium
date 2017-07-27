@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "3260d3e7_89b34355",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-27T00:04:00Z",
+      "side": 1,
+      "message": "That makes sense, thanks for the explanation. I removed the L195 and L196, it works fine.",
+      "parentUuid": "8d8d63b7_e3161938",
+      "revId": "9bd071d83c9cb040f7dd5884cce70893c45304f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916fb8c1_347b2fec",
         "filename": "ash/system/update/tray_update.cc",
         "patchSetId": 3
