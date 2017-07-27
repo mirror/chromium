@@ -150,7 +150,6 @@ class TestBrowserWindow : public BrowserWindow {
     ~TestLocationBar() override {}
 
     // LocationBar:
-    void ShowFirstRunBubble() override {}
     GURL GetDestinationURL() const override;
     WindowOpenDisposition GetWindowOpenDisposition() const override;
     ui::PageTransition GetPageTransition() const override;
