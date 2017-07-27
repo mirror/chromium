@@ -684,6 +684,7 @@ PasswordAutofillAgent::PasswordAutofillAgent(content::RenderFrame* render_frame)
       was_username_autofilled_(false),
       was_password_autofilled_(false),
       sent_request_to_store_(false),
+      is_gaia_reauthentication_page_(false),
       checked_safe_browsing_reputation_(false),
       binding_(this),
       form_element_observer_(nullptr) {
@@ -928,7 +929,8 @@ bool PasswordAutofillAgent::FindPasswordInfoForElement(
     // If there is a password field, but a request to the store hasn't been sent
     // yet, then do fetch saved credentials now.
     if (!sent_request_to_store_) {
-      SendPasswordForms(false);
+      if (!is_gaia_reauthentication_page_)
+        SendPasswordForms(false);
       return false;
     }
 
@@ -1201,6 +1203,12 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
 
   std::vector<PasswordForm> password_forms;
   for (const blink::WebFormElement& form : forms) {
+    if (IsGaiaReauthenticationForm(form)) {
+      // Bail if this is a GAIA passwords site reauthentication form, so that
+      // page will be ignored.
+      is_gaia_reauthentication_page_ = true;
+      return;
+    }
     if (only_visible) {
       bool is_form_visible = form_util::AreFormContentsVisible(form);
       if (logger) {
@@ -1751,6 +1759,7 @@ void PasswordAutofillAgent::FrameClosing() {
   provisionally_saved_form_.Reset();
   field_value_and_properties_map_.clear();
   sent_request_to_store_ = false;
+  is_gaia_reauthentication_page_ = false;
   checked_safe_browsing_reputation_ = false;
 }
 
