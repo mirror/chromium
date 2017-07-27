@@ -17,6 +17,7 @@
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state_manager.h"
+#include "ios/chrome/browser/infobars/infobar_manager_impl.h"
 #import "ios/chrome/browser/metrics/previous_session_info.h"
 #import "ios/chrome/browser/metrics/previous_session_info_private.h"
 #import "ios/chrome/browser/tabs/tab.h"
@@ -158,7 +159,10 @@ void RunCommandWithActiveViewController(GenericChromeCommand* command) {
 }
 
 void RemoveAllInfoBars() {
-  infobars::InfoBarManager* info_bar_manager = [GetCurrentTab() infoBarManager];
+  web::WebState* webState = [GetCurrentTab() webState];
+  DCHECK(webState);
+  infobars::InfoBarManager* info_bar_manager =
+      InfoBarManagerImpl::FromWebState(webState);
   if (info_bar_manager) {
     info_bar_manager->RemoveAllInfoBars(false /* animate */);
   }
