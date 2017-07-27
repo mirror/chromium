@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "f50b10f4_d4d6a3e8",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:29:38Z",
+      "side": 1,
+      "message": "Yes, because we use SetSelectionData in webkit_unit_tests",
+      "parentUuid": "a7ea1295_b2d59fd8",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "140e92f6_3a327800",
         "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
         "patchSetId": 6
@@ -64,6 +82,24 @@
       "writtenOn": "2017-07-26T23:13:42Z",
       "side": 1,
       "message": "Do you need CORE_EXPORT?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da022bfc_b1964688",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:29:38Z",
+      "side": 1,
+      "message": "Yes, because we use SetSelectionData in webkit_unit_tests",
+      "parentUuid": "140e92f6_3a327800",
       "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "b13c484b_6a06bcbb",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:29:38Z",
+      "side": 1,
+      "message": "Agree. I use this name for ease of transition.\nThis name should be renamed[1].\n\n[1] http://crbug.com/749385 Avoid negative name flag name in SetSelectionData",
+      "parentUuid": "46678d44_f1d5fc01",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e9e3cbe_cc872408",
         "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
         "patchSetId": 6
@@ -98,6 +152,24 @@
       "writtenOn": "2017-07-26T23:16:44Z",
       "side": 1,
       "message": "I don\u0027t like such negative flag.  Can we change it ShouldClearStrategy(), and set true to it by default?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d10f31d_a5cf10fa",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:29:38Z",
+      "side": 1,
+      "message": "Ditto as DoNotSetFocus()",
+      "parentUuid": "3e9e3cbe_cc872408",
       "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "d97bdb4d_4d709e2e",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:29:38Z",
+      "side": 1,
+      "message": "True value makes complex situation for replacing case of 0.\n\nWhen we use should_close_typing_ \u003d true and should_clear_typing_true_ \u003d true, we have following replacements:\n\n1. SetSelection(..., kCloseTyping)\nSetSelection(..., SetSelectionData::Builder()\n  .SetShouldClearTyping(false).Build())\n\n2. SetSelection(..., 0)\nSetSelection(..., SetSelectionData::Builder()\n  .SetShouldCloseTying(false)\n  .SetShouldClearTyping(false).Build())\n\nI found this is hard to rewrite.\n\nI think in general using non-zero default value makes hard to read\ncode in later.",
+      "parentUuid": "92ae611f_eb8c6fb8",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89d245f6_6e8b695f",
         "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
         "patchSetId": 6
@@ -132,6 +222,24 @@
       "writtenOn": "2017-07-26T23:13:42Z",
       "side": 1,
       "message": "Do you need CORE_EXPORT?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a198df5_3c66a1c8",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:29:38Z",
+      "side": 1,
+      "message": "VS wants to have CORE_EXPORT both forward class declaration and class\ndeclaration.",
+      "parentUuid": "89d245f6_6e8b695f",
       "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
