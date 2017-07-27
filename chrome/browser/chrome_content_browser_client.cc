@@ -3007,6 +3007,12 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
       base::ASCIIToUTF16("PDF Compositor Service"),
       content::SANDBOX_TYPE_UTILITY};
 #endif
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  (*services)[profiling::mojom::kServiceName] = {
+      base::ASCIIToUTF16("Profiling process"),
+      content::SANDBOX_TYPE_UTILITY};
+#endif
 }
 
 std::unique_ptr<base::Value>

@@ -4,6 +4,9 @@
 
 module profiling.mojom;
 
+// By convention, having a constant for the service name is nice.
+const string kServiceName = "profiling_control";
+
 interface ProfilingControl {
   // Adds a new platform-specific pipe to read memlog trace data from.
   // In normal usage, each child process launch will have a corresponding call

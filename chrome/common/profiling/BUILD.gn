@@ -4,6 +4,9 @@
 
 import("//chrome/common/features.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
+import("//services/service_manager/public/cpp/service.gni")
+import("//services/service_manager/public/service_manifest.gni")
+
 
 if (enable_oop_heap_profiling) {
   static_library("profiling") {
@@ -40,4 +43,9 @@ if (enable_oop_heap_profiling) {
   # Dummy group so this target can be unconditionally depended on.
   group("profiling") {
   }
+}
+
+service_manifest("manifest") {
+  name = "profiling_control"
+  source = "manifest.json"
 }

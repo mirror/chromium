@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "chrome/common/file_patcher.mojom.h"
+#include "chrome/common/features.h"
 #include "chrome/utility/utility_message_handler.h"
 #include "components/payments/content/utility/payment_manifest_parser.h"
 #include "components/safe_json/utility/safe_json_parser_mojo_impl.h"
@@ -48,6 +49,11 @@
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/utility/extensions/extensions_handler.h"
+#endif
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "chrome/common/profiling/profiling_control.mojom.h"
+#include "chrome/profiling/profiling_control_impl.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) || \
@@ -263,11 +269,13 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
   extensions::utility_handler::ExposeInterfacesToBrowser(
       registry.get(), utility_process_running_elevated_);
 #endif
+
   // If our process runs with elevated privileges, only add elevated Mojo
   // interfaces to the interface registry.
   if (!utility_process_running_elevated_) {
     registry->AddInterface(base::Bind(&FilePatcherImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
+
 #if !defined(OS_ANDROID)
     registry->AddInterface<net::interfaces::ProxyResolverFactory>(
         base::Bind(CreateProxyResolverFactory),
@@ -323,6 +331,13 @@ void ChromeContentUtilityClient::RegisterServices(
   pdf_compositor_info.factory =
       base::Bind(&printing::CreatePdfCompositorService, GetUserAgent());
   services->emplace(printing::mojom::kServiceName, pdf_compositor_info);
+#endif
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  service_manager::EmbeddedServiceInfo profiling_control_info;
+  profiling_control_info.factory =
+      base::Bind(&profiling::ProfilingControlImpl::CreateService);
+  services->emplace(profiling::mojom::kServiceName, profiling_control_info);
 #endif
 }
 
