@@ -5656,6 +5656,10 @@ void Document::FinishedParsing() {
 
   if (IsPrefetchOnly())
     WebPrerenderingSupport::Current()->PrefetchFinished();
+
+  // Guarantee at least one call to the client specifying a title.
+  if (title_.IsEmpty())
+    frame_->Client()->DispatchDidReceiveTitle(String());
 }
 
 void Document::ElementDataCacheClearTimerFired(TimerBase*) {
