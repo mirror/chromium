@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cc6535c_5c5974b9",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-27T21:28:04Z",
+      "side": 1,
+      "message": "Can you make sure that you follow the desktop and Android convention for what happens when SSL is not valid or origin is not allowed? Instead of deaming context insecure, desktop and Android rejects .show() with \"NotSupportedError\" and resolves .CanMakePayment() with \"false\". See:\n\nhttps://cs.chromium.org/chromium/src/components/payments/content/payment_request.cc?rcl\u003da3cf4d27ce27706c9cb253216a98f0bafd20096e\u0026l\u003d81\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java?rcl\u003da3cf4d27ce27706c9cb253216a98f0bafd20096e\u0026l\u003d460\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java?rcl\u003da3cf4d27ce27706c9cb253216a98f0bafd20096e\u0026l\u003d472\n\nAs opposed to straight up insecure context, which throws \"SecurityError\" in PaymentRequest contsructor. (If browser then detects that it\u0027s still running insecure context, it immediately terminates the connection to the renderer.)",
+      "revId": "26cdc3ccf809bbb304c52dba23b85fb7cf5608e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
