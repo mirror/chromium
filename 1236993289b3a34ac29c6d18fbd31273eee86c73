@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e15a699_45b21d7d",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T10:35:21Z",
+      "side": 0,
+      "message": "Please move this change into another patch.\nWe can commit this patch by standalone as a preparation of moving is_directional_ to FrameSelection.",
+      "revId": "1236993289b3a34ac29c6d18fbd31273eee86c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
