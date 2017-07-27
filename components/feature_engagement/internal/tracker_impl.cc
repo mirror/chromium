@@ -187,6 +187,11 @@ bool TrackerImpl::ShouldTriggerHelpUI(const base::Feature& feature) {
   return result.NoErrors();
 }
 
+Tracker::TriggerState TrackerImpl::GetTriggerState(
+    const base::Feature& feature) {
+  return Tracker::TriggerState::NOT_READY;
+}
+
 void TrackerImpl::Dismissed(const base::Feature& feature) {
   DVLOG(2) << "Dismissing " << feature.name;
   condition_validator_->NotifyDismissed(feature);
