@@ -640,6 +640,30 @@
     },
     {
       "key": {
+        "uuid": "c163a0eb_c67392a2",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-27T11:35:20Z",
+      "side": 1,
+      "message": "We have a handful of static generic method calls in Chrome (https://cs.chromium.org/search/?q\u003d%5Cw%2B%5C.%3C%5Cw%2B%3E%5Cw%2B%5C(+lang:java+-file:third_party\u0026sq\u003dpackage:chromium\u0026type\u003dcs), but it isn\u0027t super common. If you want to keep this approach, I\u0027m fine with it.",
+      "parentUuid": "f71aea25_80cb1224",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d85be74_b7af63fe",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
         "patchSetId": 1

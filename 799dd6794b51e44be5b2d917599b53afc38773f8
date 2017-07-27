@@ -45,6 +45,57 @@
       "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c2fc06_2c9c626e",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-27T11:35:20Z",
+      "side": 1,
+      "message": "Can you document the invariants about nullability? I.e. |mValue| can genuinely hold a null value, whereas with |mException| null is used to signal that there is no exception.",
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12227fe5_aef3e812",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-27T11:35:20Z",
+      "side": 1,
+      "message": "And also add @Nullable here.",
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93308a21_946f3c18",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-27T11:35:20Z",
+      "side": 1,
+      "message": "@Nullable?",
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
