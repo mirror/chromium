@@ -33,8 +33,7 @@ class ArcPaiStarter;
 class ArcTermsOfServiceNegotiator;
 enum class ProvisioningResult : int;
 
-// This class proxies the request from the client to fetch an auth code from
-// LSO. It lives on the UI thread.
+// This class is responsible for handing stages of ARC life-cycle.
 class ArcSessionManager : public ArcSessionRunner::Observer,
                           public ArcSupportHost::ErrorDelegate {
  public:
