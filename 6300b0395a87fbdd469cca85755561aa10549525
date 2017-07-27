@@ -69,6 +69,24 @@
       "revId": "6300b0395a87fbdd469cca85755561aa10549525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab86ef74_98bbf71c",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage_search.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T22:10:19Z",
+      "side": 1,
+      "message": "My preference would be to use user-select in this CL, and change remaining ones in a separate CL.",
+      "parentUuid": "4b2805f2_8f46df5c",
+      "revId": "6300b0395a87fbdd469cca85755561aa10549525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
