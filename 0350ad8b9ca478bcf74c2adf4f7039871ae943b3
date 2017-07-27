@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "ea63dffc_9f022b17",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-27T17:37:37Z",
+      "side": 1,
+      "message": "ic, thanks you for the info. no, you may keep it",
+      "parentUuid": "86ad2df6_341321f3",
+      "range": {
+        "startLine": 203,
+        "startChar": 49,
+        "endLine": 203,
+        "endChar": 54
+      },
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "450a1582_dfe6d24f",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 4
@@ -148,6 +172,24 @@
       "side": 1,
       "message": "Sorry, I\u0027m a bit confused. Can you rephrase?",
       "parentUuid": "44e45008_ef10f90d",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2457063_c3c2608d",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-27T17:37:37Z",
+      "side": 1,
+      "message": "you put the comment for callback, which isn\u0027t so common, but you may keep it if you refer.",
+      "parentUuid": "ef9f2d77_7b6e4dc4",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -300,6 +342,24 @@
       "side": 1,
       "message": "iirc, the view is still focusable when you do that.",
       "parentUuid": "d733d792_547d4920",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b26e480_9e5a60ae",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-27T17:37:37Z",
+      "side": 1,
+      "message": "you can disable it.",
+      "parentUuid": "144ddace_016a0180",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -475,6 +535,24 @@
       "side": 1,
       "message": "Yep, it doesn\u0027t work as well (animations end up queuing up even with IMMEDIATELY_ANIMATE_TO_NEW_TARGET or REPLACE_QUEUED_ANIMATIONS).",
       "parentUuid": "3a92e296_278fbe2c",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9106f0_87a081cc",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-27T17:37:37Z",
+      "side": 1,
+      "message": "Do you mean it new animation doesn\u0027t start immediately?",
+      "parentUuid": "0ebb8e84_10e2ddbc",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
