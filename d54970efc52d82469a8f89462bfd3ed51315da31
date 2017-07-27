@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9947863_889401ec",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T08:34:03Z",
+      "side": 1,
+      "message": "This took me a moment to get... how about \"UrlContainsTitle\"?",
+      "range": {
+        "startLine": 34,
+        "startChar": 80,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "d54970efc52d82469a8f89462bfd3ed51315da31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fde506_1f364112",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T08:34:03Z",
+      "side": 1,
+      "message": "This seems like a somewhat indirect way of checking things. Maybe at least also check that tiles.size() is 1? As it is, the test would also pass if there were a different tile (say, a default prepopulated one) which happens to fulfill the condition.",
+      "range": {
+        "startLine": 114,
+        "startChar": 50,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "d54970efc52d82469a8f89462bfd3ed51315da31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f88439_e4f598d8",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T08:34:03Z",
+      "side": 1,
+      "message": "Oh wow, that\u0027s weird. Would you mind adding a reference to crbug.com/567132? Thanks!",
+      "range": {
+        "startLine": 160,
+        "startChar": 68,
+        "endLine": 160,
+        "endChar": 0
+      },
+      "revId": "d54970efc52d82469a8f89462bfd3ed51315da31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
