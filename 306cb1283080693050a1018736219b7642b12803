@@ -16,6 +16,24 @@
       "revId": "306cb1283080693050a1018736219b7642b12803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a98c12_8d3c37ea",
+        "filename": "chrome/browser/chromeos/login/bluetooth_host_pairing_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-27T00:22:30Z",
+      "side": 1,
+      "message": "We could pass a raw pointer to RunLoop but I prefer to use the RunLoop\u0027s quit closure when all we need is to invoke it to continue (this paradigm makes it so it works the same if you pass it into a non-test method -- where manipulating the raw RunLoop is outright undesired)\n\nWe need std::move() because of the OnceClosure semantics (Run() will consume |continuation_callback| and invoking on an lvalue won\u0027t compile: https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md",
+      "parentUuid": "59d74591_9e0118b5",
+      "revId": "306cb1283080693050a1018736219b7642b12803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
