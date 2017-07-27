@@ -10,6 +10,8 @@
 #include "base/memory/singleton.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
+#include "chrome/browser/download/download_prefs.h"
+#include "chrome/browser/offline_pages/download_manager_notifier.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_constants.h"
@@ -47,11 +49,14 @@ KeyedService* OfflinePageModelFactory::BuildServiceInstanceFor(
   std::unique_ptr<OfflinePageMetadataStore> metadata_store(
       new OfflinePageMetadataStoreSQL(background_task_runner, store_path));
 
-  base::FilePath archives_dir =
-      profile->GetPath().Append(chrome::kOfflinePageArchivesDirname);
+  base::FilePath archives_dir = DownloadPrefs::GetDefaultDownloadDirectory();
+  // profile->GetPath().Append(chrome::kOfflinePageArchivesDirname);
 
-  return new OfflinePageModelImpl(std::move(metadata_store), archives_dir,
-                                  background_task_runner);
+  OfflinePageModelImpl* model = new OfflinePageModelImpl(
+      std::move(metadata_store), archives_dir, background_task_runner);
+
+  DownloadManagerNotifier::CreateAndStartObserving(model);
+  return model;
 }
 
 }  // namespace offline_pages
