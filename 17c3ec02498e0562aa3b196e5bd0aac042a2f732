@@ -567,6 +567,24 @@
     },
     {
       "key": {
+        "uuid": "61310d7e_ec05259a",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T20:29:47Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "6169ff9d_e68fdb58",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b65448b9_2f8369fe",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 5

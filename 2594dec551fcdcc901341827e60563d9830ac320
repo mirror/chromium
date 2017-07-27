@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff132fc0_0b7a0900",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T20:29:47Z",
+      "side": 1,
+      "message": "Done, but any particular reason for not using unsigned int?",
+      "parentUuid": "d9792518_12db94ea",
+      "revId": "2594dec551fcdcc901341827e60563d9830ac320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ae759a_8480f72a",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "2594dec551fcdcc901341827e60563d9830ac320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fb1602_3d36d2eb",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T20:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ae759a_8480f72a",
+      "revId": "2594dec551fcdcc901341827e60563d9830ac320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
