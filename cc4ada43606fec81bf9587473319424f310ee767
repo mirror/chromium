@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59a6902b_e44ee6b8",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87df32d8_ff65b1d5",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d91ac68_4a1a9cb1",
         "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a163ce5_4c687dd8",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d91ac68_4a1a9cb1",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02813257_7696f2ac",
         "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800474a2_31757d93",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02813257_7696f2ac",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "cae0a6f2_c59ff4e3",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199ba9f4_2ced8844",
+      "range": {
+        "startLine": 546,
+        "startChar": 64,
+        "endLine": 546,
+        "endChar": 0
+      },
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca13f0f_9930bbb1",
         "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
         "patchSetId": 5
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3cedd890_34121f1b",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dca13f0f_9930bbb1",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1893f651_0602ffb7",
         "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55971d2_368fdb14",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "I added a TODO for this.",
+      "parentUuid": "1893f651_0602ffb7",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "2fd45355_a0f539b0",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Of course not, it\u0027s removed.",
+      "parentUuid": "fb4dc86a_8ac96567",
+      "range": {
+        "startLine": 27,
+        "startChar": 76,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9145d1c4_5df3ab80",
         "filename": "components/ntp_snippets/content_suggestions_service.h",
         "patchSetId": 5
@@ -147,6 +285,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2db99e_4b32fd6b",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "The mid-term plan is to become separate. Currently, the UI still uses ContentSuggestionsService::FetchSuggestionImage but after that is removed becoming a separate service is better.",
+      "parentUuid": "9145d1c4_5df3ab80",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "b12353c6_9d8743ef",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "591bc35e_f9450871",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b424da38_eef9d405",
         "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
         "patchSetId": 5
@@ -181,6 +355,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b129195_61312576",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b424da38_eef9d405",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "66aaf08c_be725f87",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c5c2771_3e1d689a",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ab0cdf8_7f567da9",
         "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
         "patchSetId": 5
@@ -215,6 +425,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a3c87a_1d16eba7",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ab0cdf8_7f567da9",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "4805ff63_c5d923fb",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "217410b7_d7360fb4",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0c28479_0e31636b",
         "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
         "patchSetId": 5
@@ -249,6 +495,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262e0f39_0f7e8777",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "The contextual suggestion themselves are not cached yet (I added yet another TODO). But after a restart, only suggestions will be fetched over network, they have the same id_within_category and their images will be found in cache when those are fetched.",
+      "parentUuid": "a0c28479_0e31636b",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +533,24 @@
     },
     {
       "key": {
+        "uuid": "795c69f9_5b0beb32",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "I updated the description.",
+      "parentUuid": "85c28e86_82744821",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1711ddf_3e416189",
         "filename": "components/ntp_snippets/contextual_suggestions_source.h",
         "patchSetId": 5
@@ -283,6 +565,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dcd5b7_2130c310",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1711ddf_3e416189",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "5bd90963_5c9c9d44",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6835c187_a0dd7f75",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30026d87_163b2f79",
         "filename": "components/ntp_snippets/contextual_suggestions_source.h",
         "patchSetId": 5
@@ -317,6 +635,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64008de8_4a10aaab",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30026d87_163b2f79",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +673,24 @@
     },
     {
       "key": {
+        "uuid": "2de80edb_7abdcf2e",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0bcfd32_a8f75d9e",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4215a71_690d1936",
         "filename": "components/ntp_snippets/contextual_suggestions_source.h",
         "patchSetId": 5
@@ -354,6 +708,24 @@
     },
     {
       "key": {
+        "uuid": "5a9e3dba_9f2bb248",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4215a71_690d1936",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49a1d17_19e71322",
         "filename": "components/ntp_snippets/contextual_suggestions_source.h",
         "patchSetId": 5
@@ -368,6 +740,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c6b076_27b82237",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T13:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c49a1d17_19e71322",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
