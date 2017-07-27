@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ded22b9b_c079c610",
+        "filename": "ui/base/ime/chromeos/input_method_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-27T17:26:12Z",
+      "side": 1,
+      "message": "Alpha sorted the whole array.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 50
+      },
+      "revId": "4af792def1543b645ed4d5c69110cf276a92deae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
