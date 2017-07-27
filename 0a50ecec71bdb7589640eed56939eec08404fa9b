@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ec5dd6_780929be",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:21:31Z",
+      "side": 0,
+      "message": "just checking: do we have a test  somewhere else (or coming in next CLs) that checks that we receive the OS dumps (separately) when doing a global memory dump?",
+      "range": {
+        "startLine": 328,
+        "startChar": 1,
+        "endLine": 328,
+        "endChar": 55
+      },
+      "revId": "0a50ecec71bdb7589640eed56939eec08404fa9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
