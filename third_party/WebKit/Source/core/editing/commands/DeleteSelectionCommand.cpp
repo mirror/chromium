@@ -280,7 +280,7 @@ void DeleteSelectionCommand::InitializePositionData(
   if (NumEnclosingMailBlockquotes(start) != NumEnclosingMailBlockquotes(end) &&
       IsStartOfParagraph(visible_end) &&
       IsStartOfParagraph(CreateVisiblePosition(start)) &&
-      EndingSelection().IsRange()) {
+      EndingVisibleSelection().IsRange()) {
     merge_blocks_after_delete_ = false;
     prune_start_block_if_necessary_ = true;
   }
@@ -1059,7 +1059,7 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
   // If selection has not been set to a custom selection when the command was
   // created, use the current ending selection.
   if (!has_selection_to_delete_)
-    selection_to_delete_ = EndingSelection();
+    selection_to_delete_ = EndingVisibleSelection();
 
   if (!selection_to_delete_.IsValidFor(GetDocument()) ||
       !selection_to_delete_.IsRange() ||

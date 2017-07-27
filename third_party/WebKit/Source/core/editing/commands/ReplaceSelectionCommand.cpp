@@ -950,9 +950,10 @@ void ReplaceSelectionCommand::MergeEndIfNeeded(EditingState* editing_state) {
   if (merge_forward) {
     if (start_of_inserted_content_.IsOrphan()) {
       start_of_inserted_content_ =
-          EndingSelection().VisibleStart().DeepEquivalent();
+          EndingVisibleSelection().VisibleStart().DeepEquivalent();
     }
-    end_of_inserted_content_ = EndingSelection().VisibleEnd().DeepEquivalent();
+    end_of_inserted_content_ =
+        EndingVisibleSelection().VisibleEnd().DeepEquivalent();
     // If we merged text nodes, m_endOfInsertedContent could be null. If
     // this is the case, we use m_startOfInsertedContent.
     if (end_of_inserted_content_.IsNull())
@@ -1001,7 +1002,7 @@ ElementToSplitToAvoidPastingIntoInlineElementsWithStyle(
 
 void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   TRACE_EVENT0("blink", "ReplaceSelectionCommand::doApply");
-  const VisibleSelection selection = EndingSelection();
+  const VisibleSelection selection = EndingVisibleSelection();
   DCHECK(!selection.IsNone());
   DCHECK(selection.Start().AnchorNode());
   if (!selection.IsNonOrphanedCaretOrRange() || !selection.Start().AnchorNode())
@@ -1078,7 +1079,8 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       return;
     if (fragment.HasInterchangeNewlineAtStart()) {
       GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-      VisiblePosition start_after_delete = EndingSelection().VisibleStart();
+      VisiblePosition start_after_delete =
+          EndingVisibleSelection().VisibleStart();
       if (IsEndOfParagraph(start_after_delete) &&
           !IsStartOfParagraph(start_after_delete) &&
           !IsEndOfEditableOrNonEditableContent(start_after_delete)) {
@@ -1124,16 +1126,17 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
     //   <div>xbar<div>bar</div><div>bazx</div></div>
     // Don't do this if the selection started in a Mail blockquote.
     if (prevent_nesting_ && !start_is_inside_mail_blockquote &&
-        !IsEndOfParagraph(EndingSelection().VisibleStart()) &&
-        !IsStartOfParagraph(EndingSelection().VisibleStart())) {
+        !IsEndOfParagraph(EndingVisibleSelection().VisibleStart()) &&
+        !IsStartOfParagraph(EndingVisibleSelection().VisibleStart())) {
       InsertParagraphSeparator(editing_state);
       if (editing_state->IsAborted())
         return;
       GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
       SetEndingSelection(
           SelectionInDOMTree::Builder()
-              .Collapse(PreviousPositionOf(EndingSelection().VisibleStart())
-                            .DeepEquivalent())
+              .Collapse(
+                  PreviousPositionOf(EndingVisibleSelection().VisibleStart())
+                      .DeepEquivalent())
               .Build());
     }
   }
@@ -1498,10 +1501,10 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
 
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
     start_of_inserted_content_ = MostForwardCaretPosition(
-        EndingSelection().VisibleStart().DeepEquivalent());
+        EndingVisibleSelection().VisibleStart().DeepEquivalent());
     if (end_of_inserted_content_.IsOrphan()) {
       end_of_inserted_content_ = MostBackwardCaretPosition(
-          EndingSelection().VisibleEnd().DeepEquivalent());
+          EndingVisibleSelection().VisibleEnd().DeepEquivalent());
     }
   }
 
@@ -1527,7 +1530,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
                                .Build());
         // Select up to the paragraph separator that was added.
         last_position_to_select =
-            EndingSelection().VisibleStart().DeepEquivalent();
+            EndingVisibleSelection().VisibleStart().DeepEquivalent();
       } else if (!IsStartOfParagraph(end_of_inserted_content)) {
         SetEndingSelection(
             SelectionInDOMTree::Builder()
@@ -1564,7 +1567,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
 
         // Select up to the paragraph separator that was added.
         last_position_to_select =
-            EndingSelection().VisibleStart().DeepEquivalent();
+            EndingVisibleSelection().VisibleStart().DeepEquivalent();
         UpdateNodesInserted(last_position_to_select.AnchorNode());
       }
     } else {

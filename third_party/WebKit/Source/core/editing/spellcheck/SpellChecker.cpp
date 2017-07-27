@@ -383,7 +383,7 @@ void SpellChecker::MarkMisspellingsAfterApplyingCommand(
 
   if (!IsSpellCheckingEnabled())
     return;
-  if (!IsSpellCheckingEnabledFor(cmd.EndingSelection()))
+  if (!IsSpellCheckingEnabledFor(cmd.EndingVisibleSelection()))
     return;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -499,7 +499,7 @@ void SpellChecker::MarkMisspellingsAfterReplaceSelectionCommand(
   if (inserted_range.IsNull())
     return;
 
-  Node* node = cmd.EndingSelection().RootEditableElement();
+  Node* node = cmd.EndingVisibleSelection().RootEditableElement();
   if (!node)
     return;
 

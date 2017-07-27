@@ -84,14 +84,14 @@ static HTMLQuoteElement* TopBlockquoteOf(const Position& start) {
 }
 
 void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
-  if (EndingSelection().IsNone())
+  if (EndingVisibleSelection().IsNone())
     return;
 
   if (!TopBlockquoteOf(EndingSelection().Start()))
     return;
 
   // Delete the current selection.
-  if (EndingSelection().IsRange()) {
+  if (EndingVisibleSelection().IsRange()) {
     DeleteSelection(editing_state, false, false);
     if (editing_state->IsAborted())
       return;
@@ -100,14 +100,14 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
   // This is a scenario that should never happen, but we want to
   // make sure we don't dereference a null pointer below.
 
-  DCHECK(!EndingSelection().IsNone());
+  DCHECK(!EndingVisibleSelection().IsNone());
 
-  if (EndingSelection().IsNone())
+  if (EndingVisibleSelection().IsNone())
     return;
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  VisiblePosition visible_pos = EndingSelection().VisibleStart();
+  VisiblePosition visible_pos = EndingVisibleSelection().VisibleStart();
 
   // pos is a position equivalent to the caret.  We use downstream() so that pos
   // will be in the first node that we need to move (there are a few exceptions
