@@ -75,9 +75,9 @@ KURL HTMLBaseElement::href() const {
     return GetDocument().Url();
 
   KURL url = GetDocument().Encoding().IsValid()
-                 ? KURL(GetDocument().Url(),
+                 ? KURL(GetDocument().FallbackBaseURL(),
                         StripLeadingAndTrailingHTMLSpaces(attribute_value))
-                 : KURL(GetDocument().Url(),
+                 : KURL(GetDocument().FallbackBaseURL(),
                         StripLeadingAndTrailingHTMLSpaces(attribute_value),
                         GetDocument().Encoding());
 
