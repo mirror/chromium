@@ -34,6 +34,7 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLElement.h"
+#include "core/input/TouchActionUtil.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutGeometryMap.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
@@ -768,9 +769,10 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
       graphics_layer_rects.insert(main_graphics_layer, Vector<LayoutRect>());
     GraphicsLayer* scrolling_contents_layer = layer->GraphicsLayerBacking();
     if (scrolling_contents_layer &&
-        scrolling_contents_layer != main_graphics_layer)
+        scrolling_contents_layer != main_graphics_layer) {
       graphics_layer_rects.insert(scrolling_contents_layer,
                                   Vector<LayoutRect>());
+    }
   }
 
   layers_with_touch_rects_.clear();
@@ -787,13 +789,37 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
   ProjectRectsToGraphicsLayerSpace(page_->DeprecatedLocalMainFrame(),
                                    layer_rects, graphics_layer_rects);
 
+  // Why can't we integrate the following for loop into the first one in this
+  // function? Well, the first for loop is to store which composited layers that
+  // previously had rects. After the first for loop, we use the second for loop
+  // to update the |layers_with_touch_rects|. So after the second for loop, we
+  // know exactly which layers currently have touch rects.
+  WTF::HashMap<const GraphicsLayer*, TouchAction>
+      paint_layer_touch_action for (const PaintLayer* layer :
+                                    layers_with_touch_rects_) {
+    if (layer->GetLayoutObject().GetFrameView() &&
+        layer->GetLayoutObject().GetFrameView()->ShouldThrottleRendering()) {
+      continue;
+    }
+    TouchAction effective_touch_action =
+        TouchActionUtil::ComputeEffectiveTouchAction(*(layer->EnclosingNode()));
+    GraphicsLayer* main_graphics_layer =
+        layer->GraphicsLayerBacking(&layer->GetLayoutObject());
+    if (main_graphics_layer) {
+      paint_layer_touch_action.insert(main_graphics_layer,
+                                      effective_touch_action);
+    }
+  }
+
   for (const auto& layer_rect : graphics_layer_rects) {
     const GraphicsLayer* graphics_layer = layer_rect.key;
+    TouchAction effective_touch_action = TouchAction::kTouchActionNone;
+    if (paint_layer_touch_action.Contains(graphics_layer))
+      effective_touch_action = paint_layer_touch_action.at(graphics_layer);
     WebVector<WebTouchInfo> touch(layer_rect.value.size());
     for (size_t i = 0; i < layer_rect.value.size(); ++i) {
       touch[i].rect = EnclosingIntRect(layer_rect.value[i]);
-      // TODO(xidachen): route the real value here
-      touch[i].touch_action = TouchAction::kTouchActionNone;
+      touch[i].touch_action = effective_touch_action;
     }
     graphics_layer->PlatformLayer()->SetTouchEventHandlerRegion(touch);
   }
