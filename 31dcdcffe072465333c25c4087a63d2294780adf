@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "399a7c09_c60417f1",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b070a707_6baca4c6",
+      "range": {
+        "startLine": 745,
+        "startChar": 5,
+        "endLine": 745,
+        "endChar": 6
+      },
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d77d5a53_3af829ab",
         "filename": "chrome/browser/extensions/menu_manager.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e95224e8_d642a582",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d77d5a53_3af829ab",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55edc047_c46b5da2",
         "filename": "chrome/browser/extensions/menu_manager.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5321956f_38cdd21c",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55edc047_c46b5da2",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "6fc4de96_4394ac82",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9787f4a8_c4f2376f",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "085c4e6c_35642a9d",
         "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
         "patchSetId": 1
@@ -108,6 +186,24 @@
       "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24ca5b7_1f198b86",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "085c4e6c_35642a9d",
+      "revId": "31dcdcffe072465333c25c4087a63d2294780adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

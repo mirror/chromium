@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd41aee4_d1273d33",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 0,
+      "message": "I removed SanitizeRadioList because it isn\u0027t applicable to the possible cases with radio item selection or deselection. Consider a list with at least 2 items. All possible cases are listed below. In any case, we either call RadioItemSelected or do nothing. The \"do nothing\" case is now handled in context_menus_api_helpers.h. \n\nCASE 1a: \nThe radio 1 begins as checked and radio 2 is unchecked. Then radio 2 is updated to be checked.\nRadioItemSelected should set radio 2 to checked.\n\nCASE 1b: \nThe radio 1 begins as checked and radio 2 is unchecked. Then radio 2 is updated to be unchecked.\nNothing should happen. Radio 2 should stay unchecked. \n\nCASE 1c1 \u0026 c2: \nThe radio 1 begins as checked and radio 2 is unchecked. Then radio 1 is updated to be unchecked or checked. Nothing should happen. Radio 1 should stay checked. \n\nCASE 2a: \nThe radio 1 is unchecked and radio 2 is checked. Then radio 1 is updated to be checked.\nRadioItemSelected should set radio 2 to checked.\n\nCASE 2b: \nThe radio 1 is unchecked and radio 2 is checked. Then radio 1 is updated to be unchecked.\nNothing should happen. Radio 1 should stay unchecked.\n\nCASE 2c1 \u0026 c2: \nThe radio 1 is unchecked and radio 2 is checked. Then radio 2 is updated to be checked or unchecked. Nothing should happen. Radio 2 should stay checked.",
+      "revId": "910974935304cfd94382d35ca9e1b5f56a989058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdaeac92_075640c0",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 0,
+      "message": "I removed this test because this case would never happen.\n\nThere isn\u0027t a scenario when two items have SetChecked called twice and then ItemUpdated would be called. ItemUpdated is only called once in the codebase, and that\u0027s in context_menus_api_helpers.h via UpdateMenuItem.\n\nSecondly, in this scenario after line 671, I would think that item 1 should be checked since that was updated the latest.",
+      "revId": "910974935304cfd94382d35ca9e1b5f56a989058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

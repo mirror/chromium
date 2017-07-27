@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d294981b_ecbac892",
+        "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T23:41:58Z",
+      "side": 1,
+      "message": "I added these tests because I wanted to test chrome.contextMenus.update. The menu_manager_unittest.cc only tests SanitizeRadioList.",
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
