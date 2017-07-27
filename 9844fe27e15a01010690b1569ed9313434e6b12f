@@ -70,6 +70,24 @@
       "revId": "9844fe27e15a01010690b1569ed9313434e6b12f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057b4d93_ce87abea",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-27T14:37:55Z",
+      "side": 1,
+      "message": "Removed |UpdateExclusiveAccessExitBubbleContent()| (so we only have a single |UpdateExclusiveAccessExitBubbleContent(ExclusiveAccessBubbleHideCallback)|).",
+      "parentUuid": "2eae635c_7def2e5e",
+      "revId": "9844fe27e15a01010690b1569ed9313434e6b12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

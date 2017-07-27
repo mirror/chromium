@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d9e488_ea2cfefb",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-27T14:37:55Z",
+      "side": 1,
+      "message": "The callback will stop here (instead of \u0027chrome/browser/ui/browser.cc\u0027 etc.)",
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
