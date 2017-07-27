@@ -13,6 +13,7 @@
 #include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
@@ -39,7 +40,9 @@ class ArcFileSystemOperationRunnerFactory
 
  private:
   friend base::DefaultSingletonTraits<ArcFileSystemOperationRunnerFactory>;
-  ArcFileSystemOperationRunnerFactory() = default;
+  ArcFileSystemOperationRunnerFactory() {
+    DependsOn(ArcFileSystemBridge::GetFactory());
+  }
   ~ArcFileSystemOperationRunnerFactory() override = default;
 };
 
@@ -60,11 +63,12 @@ BrowserContextKeyedServiceFactory* ArcFileSystemOperationRunner::GetFactory() {
 // static
 std::unique_ptr<ArcFileSystemOperationRunner>
 ArcFileSystemOperationRunner::CreateForTesting(
+    content::BrowserContext* context,
     ArcBridgeService* bridge_service) {
   // We can't use base::MakeUnique() here because we are calling a private
   // constructor.
   return base::WrapUnique<ArcFileSystemOperationRunner>(
-      new ArcFileSystemOperationRunner(nullptr, bridge_service, false));
+      new ArcFileSystemOperationRunner(context, bridge_service, false));
 }
 
 ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
@@ -83,11 +87,9 @@ ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
     : context_(context),
       arc_bridge_service_(bridge_service),
       set_should_defer_by_events_(set_should_defer_by_events),
-      binding_(this),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // We need to observe FileSystemInstance even in unit tests to call Init().
   arc_bridge_service_->file_system()->AddObserver(this);
 
   // ArcSessionManager may not exist in unit tests.
@@ -95,20 +97,16 @@ ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
   if (arc_session_manager)
     arc_session_manager->AddObserver(this);
 
+  // ArcFileSystemBridge may not exist in unit tests.
+  auto* file_system_bridge =
+      ArcFileSystemBridge::GetForBrowserContext(context_);
+  if (file_system_bridge)
+    file_system_bridge->AddObserver(this);
+
   OnStateChanged();
 }
 
-ArcFileSystemOperationRunner::~ArcFileSystemOperationRunner() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  // ArcSessionManager may not exist in unit tests.
-  auto* arc_session_manager = ArcSessionManager::Get();
-  if (arc_session_manager)
-    arc_session_manager->RemoveObserver(this);
-
-  arc_bridge_service_->file_system()->RemoveObserver(this);
-  // On destruction, deferred operations are discarded.
-}
+ArcFileSystemOperationRunner::~ArcFileSystemOperationRunner() = default;
 
 void ArcFileSystemOperationRunner::AddObserver(Observer* observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -285,6 +283,23 @@ void ArcFileSystemOperationRunner::RemoveWatcher(
   file_system_instance->RemoveWatcher(watcher_id, callback);
 }
 
+void ArcFileSystemOperationRunner::Shutdown() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // ArcFileSystemBridge may not exist in unit tests.
+  auto* file_system_bridge =
+      ArcFileSystemBridge::GetForBrowserContext(context_);
+  if (file_system_bridge)
+    file_system_bridge->RemoveObserver(this);
+
+  // ArcSessionManager may not exist in unit tests.
+  auto* arc_session_manager = ArcSessionManager::Get();
+  if (arc_session_manager)
+    arc_session_manager->RemoveObserver(this);
+
+  arc_bridge_service_->file_system()->RemoveObserver(this);
+  // On destruction, deferred operations are discarded.
+}
+
 void ArcFileSystemOperationRunner::OnDocumentChanged(int64_t watcher_id,
                                                      ChangeType type) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -305,13 +320,6 @@ void ArcFileSystemOperationRunner::OnArcPlayStoreEnabledChanged(bool enabled) {
 
 void ArcFileSystemOperationRunner::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* file_system_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->file_system(), Init);
-  if (file_system_instance) {
-    mojom::FileSystemHostPtr host_proxy;
-    binding_.Bind(mojo::MakeRequest(&host_proxy));
-    file_system_instance->Init(std::move(host_proxy));
-  }
   OnStateChanged();
 }
 
