@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "510a1255_54193642",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-27T03:27:38Z",
+      "side": 1,
+      "message": "I\u0027d gladly accept a better name, if you think this is indeed the right way to go.",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 41
+      },
+      "revId": "8550db4481a27adf2028b03eb25f4e7eae621c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
