@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_FEATURE_ENGAGEMENT_TRACKER_NEW_TAB_NEW_TAB_TRACKER_H_
 #define CHROME_BROWSER_FEATURE_ENGAGEMENT_TRACKER_NEW_TAB_NEW_TAB_TRACKER_H_
 
+#include "base/scoped_observer.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
@@ -62,13 +63,17 @@ class NewTabTracker : public metrics::DesktopSessionDurationTracker::Observer,
   // new tab in-product help has been displayed already.
   virtual void UpdateSessionTime(base::TimeDelta elapsed);
 
-  // metrics::DesktopSessionDurationtracker::Observer::
+  // metrics::DesktopSessionDurationTracker::Observer::
   void OnSessionEnded(base::TimeDelta delta) override;
 
-  // These pointers are owned by NewTabTracker.
-  metrics::DesktopSessionDurationTracker* const duration_tracker_;
-
+  // Owned by ProfileManager.
   Profile* const profile_;
+
+  // Observes the DesktopSessionDurationTracker and notifies when a desktop
+  // session starts and ends.
+  ScopedObserver<metrics::DesktopSessionDurationTracker,
+                 metrics::DesktopSessionDurationTracker::Observer>
+      duration_tracker_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(NewTabTracker);
 };
