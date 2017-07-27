@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434d953e_09873ffe",
+        "filename": "chrome/browser/resources/settings/people_page/lock_screen.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-27T23:55:00Z",
+      "side": 1,
+      "message": "presumbit wont let me commit without putting braces around the capture list, but the rest of settings has no braces",
+      "range": {
+        "startLine": 202,
+        "startChar": 11,
+        "endLine": 202,
+        "endChar": 26
+      },
+      "revId": "cb163ad5c760057e46235c333c8ebe6680680746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
