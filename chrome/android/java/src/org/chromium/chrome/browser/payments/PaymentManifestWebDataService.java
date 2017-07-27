@@ -16,10 +16,12 @@ public class PaymentManifestWebDataService {
         /**
          * Called when getPaymentMethodManifest success.
          *
-         * @param appPackageNames The supported apps' package names in the payment method manifest.
+         * @param appIdentifiers The list of package names and origins of the supported apps in the
+         *                       payment method manifest. May also contain "*" to indicate that
+         *                       all origins are supported.
          */
         @CalledByNative("PaymentManifestWebDataServiceCallback")
-        void onPaymentMethodManifestFetched(String[] appPackageNames);
+        void onPaymentMethodManifestFetched(String[] appIdentifiers);
 
         /**
          * Called when getPaymentWebAppManifest success.
