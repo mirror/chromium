@@ -337,17 +337,19 @@ void CreateIconAndSetRelaunchDetails(
     const base::FilePath& icon_file,
     HWND hwnd,
     const web_app::ShortcutInfo& shortcut_info) {
+  DLOG(WARNING) << "CreateIconAndSetRelaunchDetails: shortcut info! url: " << shortcut_info.url << " extension_id: " << shortcut_info.extension_id << " profile_path: " << shortcut_info.profile_path.value();
   base::CommandLine command_line =
       shell_integration::CommandLineArgsForLauncher(shortcut_info.url,
                                                     shortcut_info.extension_id,
                                                     shortcut_info.profile_path);
-
   base::FilePath chrome_exe;
   if (!PathService::Get(base::FILE_EXE, &chrome_exe)) {
     NOTREACHED();
     return;
   }
   command_line.SetProgram(chrome_exe);
+  DLOG(WARNING) << "CreateIconAndSetRelaunchDetails: got command line string: " << command_line.GetCommandLineString();
+
   ui::win::SetRelaunchDetailsForWindow(command_line.GetCommandLineString(),
                                        shortcut_info.title, hwnd);
 
@@ -371,6 +373,7 @@ void OnShortcutInfoLoadedForSetRelaunchDetails(
   base::FilePath icon_file =
       web_app::internals::GetIconFilePath(web_app_path, shortcut_info->title);
 
+  DLOG(WARNING) << "Posting CreateIconAndSetRelaunchDetails";
   web_app::ShortcutInfo::PostIOTask(
       base::BindOnce(&CreateIconAndSetRelaunchDetails, web_app_path, icon_file,
                      hwnd),

@@ -69,6 +69,7 @@ void BrowserWindowPropertyManager::UpdateWindowProperties() {
         ExtensionRegistry::EVERYTHING);
     if (extension) {
       ui::win::SetAppIdForWindow(app_id, hwnd_);
+      DLOG(WARNING) << "Calling UpdateRelaunchDetailsForApp in UpdateWindowProperties";
       web_app::UpdateRelaunchDetailsForApp(profile, extension, hwnd_);
       return;
     }
@@ -88,6 +89,7 @@ void BrowserWindowPropertyManager::UpdateWindowProperties() {
                                             &pinned_name, &icon_path);
     command_line_string = command_line.GetCommandLineString();
   }
+  DLOG(WARNING) << "Setting command line string from UpdateWindowProperties: " << command_line_string;
   ui::win::SetAppDetailsForWindow(app_id, icon_path, 0, command_line_string,
                                   pinned_name, hwnd_);
 }
