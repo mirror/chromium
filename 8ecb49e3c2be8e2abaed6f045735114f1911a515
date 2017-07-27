@@ -16,6 +16,24 @@
       "revId": "8ecb49e3c2be8e2abaed6f045735114f1911a515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f260b3db_5dad96e3",
+        "filename": "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-27T14:07:10Z",
+      "side": 0,
+      "message": "all fields are set to 0.0 at construction time",
+      "parentUuid": "65377fb7_d46ba7d1",
+      "revId": "8ecb49e3c2be8e2abaed6f045735114f1911a515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

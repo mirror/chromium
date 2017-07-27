@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "14b32fb7_ccbeef16",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-27T14:07:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c8d08bc_ea60efc1",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b2689ee_91e4c47d",
         "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "96c102f2_4d3ce36a",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-27T14:07:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b2689ee_91e4c47d",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663855d1_812b1463",
         "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
         "patchSetId": 4
@@ -67,6 +103,24 @@
       "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af16446b_52f1eb26",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-27T14:07:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "663855d1_812b1463",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -98,6 +152,24 @@
       "writtenOn": "2017-07-26T18:36:15Z",
       "side": 1,
       "message": "Add entries for PROXIMITY and PRESSURE sensors data.",
+      "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cd7dee_638c0a6e",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-27T14:07:10Z",
+      "side": 1,
+      "message": "these are not currently used, but ok, let them be",
+      "parentUuid": "4f316aca_bb05b40b",
       "revId": "4c1b6d93688cd45b44ad2a7515e4ebd2b923e153",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

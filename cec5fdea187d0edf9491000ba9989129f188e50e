@@ -22,6 +22,30 @@
       "revId": "cec5fdea187d0edf9491000ba9989129f188e50e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416a06d3_bcc1ca7b",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-27T14:07:10Z",
+      "side": 0,
+      "message": "OK, let\u0027s keep it",
+      "parentUuid": "97b8ea54_9cce42e1",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "cec5fdea187d0edf9491000ba9989129f188e50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
