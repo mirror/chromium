@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fa9a764_68fd903f",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:49:53Z",
+      "side": 1,
+      "message": "maybe reuse the Memory.Experimental namespace (i.e. Memory.Experimental.Debug....).\nReally up to metrics folks. I am fine in any case.",
+      "range": {
+        "startLine": 127,
+        "startChar": 24,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "55666d3997f5e5afffd39a63d1be85a9fab0e67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfbed2d_6d60c49f",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:49:53Z",
+      "side": 1,
+      "message": "can you make this a field of the request instead of part of the global state. That seems more robust imagine one day we start supporting multiple outstanding dumps, this thing will silently break if this is not tied to the actual request",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "55666d3997f5e5afffd39a63d1be85a9fab0e67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
