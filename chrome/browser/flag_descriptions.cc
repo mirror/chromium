@@ -1395,6 +1395,10 @@ const char kAndroidSigninPromosDescription[] =
     "New signin promos for Android which will be displayed in content "
     "suggestions, Settings, Bookmarks and Recent Tabs.";
 
+const char kAndroidViewPasswordsName[] = "Copy and view passwords for Android";
+const char kAndroidViewPasswordsDescription[] =
+    "Enables copying and viewing passwords in settings.";
+
 const char kAutofillAccessoryViewName[] =
     "Autofill suggestions as keyboard accessory view";
 const char kAutofillAccessoryViewDescription[] =
@@ -1600,6 +1604,10 @@ const char kEnableNtpSuggestionsNotificationsName[] =
 const char kEnableNtpSuggestionsNotificationsDescription[] =
     "If enabled, notifications will inform about new content suggestions on "
     "the New Tab page.";
+
+const char kEnableCopyViewPasswordManagerSettingsPage[] =
+    "If enabled, passwords can be copied from the password manager settings "
+    "page";
 
 const char kEnablePhysicalWebName[] = "Enable the Physical Web.";
 const char kEnablePhysicalWebDescription[] =
