@@ -13,6 +13,8 @@ import android.os.Message;
 import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
+import android.util.Pair;
+import android.webkit.JavascriptInterface;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
@@ -38,8 +40,12 @@ import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -110,6 +116,29 @@ import java.util.UUID;
     // The media session for this WebContents. It is constructed by the native MediaSession and has
     // the same life time as native MediaSession.
     private MediaSessionImpl mMediaSession;
+
+    // If the embedder adds a JavaScript interface object that contains an indirect reference to
+    // the WebContentsImpl, then storing a strong ref to the interface object on the native
+    // side would prevent garbage collection of the WebContentsImpl (as that strong ref would
+    // create a new GC root).
+    // For that reason, we store only a weak reference to the interface object on the
+    // native side. However we still need a strong reference on the Java side to
+    // prevent garbage collection if the embedder doesn't maintain their own ref to the
+    // interface object - the Java side ref won't create a new GC root.
+    // This map stores those references. We put into the map on addJavaScriptInterface()
+    // and remove from it in removeJavaScriptInterface(). The annotation class is stored for
+    // the purpose of migrating injected objects from one instance of WCI to another, which
+    // is used by Android WebView to support WebChromeClient.onCreateWindow scenario.
+    private final Map<String, Pair<Object, Class>> mJavaScriptInterfaces =
+            new HashMap<String, Pair<Object, Class>>();
+
+    // Additionally, we keep track of all Java bound JS objects that are in use on the
+    // current page to ensure that they are not garbage collected until the page is
+    // navigated. This includes interface objects that have been removed
+    // via the removeJavaScriptInterface API and transient objects returned from methods
+    // on the interface object. Note we use HashSet rather than Set as the native side
+    // expects HashSet (no bindings for interfaces).
+    private final HashSet<Object> mRetainedJavaScriptObjects = new HashSet<Object>();
 
     class SmartClipCallbackImpl implements SmartClipCallback {
         public SmartClipCallbackImpl(final Handler smartClipHandler) {
@@ -209,6 +238,8 @@ import java.util.UUID;
             throw new IllegalStateException("Attempting to destroy WebContents on non-UI thread");
         }
         if (mNativeWebContentsAndroid != 0) nativeDestroyWebContents(mNativeWebContentsAndroid);
+        mJavaScriptInterfaces.clear();
+        mRetainedJavaScriptObjects.clear();
     }
 
     @Override
@@ -622,6 +653,44 @@ import java.util.UUID;
         sizes.add(new Rect(0, 0, width, height));
     }
 
+    @CalledByNative
+    private HashSet<Object> getRetainedJavascriptObjects() {
+        return mRetainedJavaScriptObjects;
+    }
+
+    @Override
+    public void setAllowJavascriptInterfacesInspection(boolean allow) {
+        nativeSetAllowJavascriptInterfacesInspection(mNativeWebContentsAndroid, allow);
+    }
+
+    @Override
+    public Map<String, Pair<Object, Class>> getJavascriptInterfaces() {
+        return mJavaScriptInterfaces;
+    }
+
+    @Override
+    public void addJavascriptInterface(Object object, String name) {
+        addPossiblyUnsafeJavascriptInterface(object, name, JavascriptInterface.class);
+    }
+
+    @Override
+    public void addPossiblyUnsafeJavascriptInterface(
+            Object object, String name, Class<? extends Annotation> requiredAnnotation) {
+        if (mNativeWebContentsAndroid != 0 && object != null) {
+            mJavaScriptInterfaces.put(name, new Pair<Object, Class>(object, requiredAnnotation));
+            nativeAddJavascriptInterface(
+                    mNativeWebContentsAndroid, object, name, requiredAnnotation);
+        }
+    }
+
+    @Override
+    public void removeJavascriptInterface(String name) {
+        mJavaScriptInterfaces.remove(name);
+        if (mNativeWebContentsAndroid != 0) {
+            nativeRemoveJavascriptInterface(mNativeWebContentsAndroid, name);
+        }
+    }
+
     // This is static to avoid exposing a public destroy method on the native side of this class.
     private static native void nativeDestroyWebContents(long webContentsAndroidPtr);
 
@@ -691,4 +760,9 @@ import java.util.UUID;
     private native boolean nativeHasActiveEffectivelyFullscreenVideo(long nativeWebContentsAndroid);
     private native List<Rect> nativeGetCurrentlyPlayingVideoSizes(long nativeWebContentsAndroid);
     private native EventForwarder nativeGetOrCreateEventForwarder(long nativeWebContentsAndroid);
+    private native void nativeSetAllowJavascriptInterfacesInspection(
+            long nativeWebContentsAndroid, boolean allow);
+    private native void nativeAddJavascriptInterface(
+            long nativeWebContentsAndroid, Object object, String name, Class requiredAnnotation);
+    private native void nativeRemoveJavascriptInterface(long nativeWebContentsAndroid, String name);
 }
