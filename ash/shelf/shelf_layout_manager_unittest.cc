@@ -335,7 +335,8 @@ TEST_F(ShelfLayoutManagerTest, SwipingUpOnShelfForFullscreenAppList) {
   EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
 
   // Note: A window must be visible in order to hide the shelf.
-  CreateTestWidget();
+  views::Widget* widget = CreateTestWidget();
+  EXPECT_TRUE(GetShelfLayoutManager()->HasVisibleWindow());
 
   app_list::test::TestAppListPresenter test_app_list_presenter;
   shell->app_list()->SetAppListPresenter(
@@ -389,6 +390,47 @@ TEST_F(ShelfLayoutManagerTest, SwipingUpOnShelfForFullscreenAppList) {
   EXPECT_EQ(2u, test_app_list_presenter.show_count());
   EXPECT_EQ(1u, test_app_list_presenter.dismiss_count());
   EXPECT_GE(test_app_list_presenter.set_y_position_count(), 1u);
+
+  // Swiping down should hide the shelf.
+  generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
+  RunAllPendingInMessageLoop();
+  EXPECT_EQ(SHELF_AUTO_HIDE, shelf->GetVisibilityState());
+  EXPECT_EQ(SHELF_AUTO_HIDE_HIDDEN, shelf->GetAutoHideState());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS, shelf->auto_hide_behavior());
+
+  // Minimize the visible window, the shelf should be shown if there are no
+  // visible windows, even in auto-hide mode.
+  widget->Minimize();
+  EXPECT_FALSE(GetShelfLayoutManager()->HasVisibleWindow());
+  EXPECT_EQ(SHELF_AUTO_HIDE, shelf->GetVisibilityState());
+  EXPECT_EQ(SHELF_AUTO_HIDE_SHOWN, shelf->GetAutoHideState());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS, shelf->auto_hide_behavior());
+
+  // Swiping up on the shelf in this state should open the app list.
+  ShelfLayoutManager* layout_manager = GetShelfLayoutManager();
+  float delta_y = -work_area_bounds.height() / 2.0;
+  base::TimeTicks timestamp = base::TimeTicks::Now();
+  ui::GestureEventDetails begin_details(ui::ET_GESTURE_SCROLL_BEGIN, 0, -1.0f);
+  ui::GestureEvent begin_event = ui::GestureEvent(
+      start.x(), start.y(), ui::EF_NONE, timestamp, begin_details);
+  aura::Window* target = GetShelfWidget()->GetNativeWindow();
+  layout_manager->ProcessGestureEventOnWindow(&begin_event, target);
+
+  ui::GestureEventDetails update_details(ui::ET_GESTURE_SCROLL_UPDATE, 0,
+                                         delta_y);
+  timestamp += base::TimeDelta::FromMilliseconds(100);
+  ui::GestureEvent update_event = ui::GestureEvent(
+      start.x(), start.y() + delta_y, ui::EF_NONE, timestamp, update_details);
+  layout_manager->ProcessGestureEventOnWindow(&update_event, target);
+
+  ui::GestureEventDetails end_details(ui::ET_GESTURE_SCROLL_END);
+  ui::GestureEvent end_event = ui::GestureEvent(
+      start.x(), start.y() + delta_y, ui::EF_NONE, timestamp, end_details);
+  layout_manager->ProcessGestureEventOnWindow(&end_event, target);
+  RunAllPendingInMessageLoop();
+
+  EXPECT_EQ(3u, test_app_list_presenter.show_count());
+  EXPECT_EQ(1u, test_app_list_presenter.dismiss_count());
 }
 
 void ShelfLayoutManagerTest::RunGestureDragTests(gfx::Vector2d delta) {
