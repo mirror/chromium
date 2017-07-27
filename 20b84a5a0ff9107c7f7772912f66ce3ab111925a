@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa293b6_791e97cc",
+        "filename": "content/app/strings/content_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "We need to add the variable (the name of the sink) to this string. This is for the translators to use, so they know what is being programmatically filled-in at runtime.\n\nI think this should be:\n\n  Now Casting to \u003cph name\u003d\"DEVICE_FRIENDLY_NAME\"\u003e$1\u003cex\u003eLiving Room TV\u003c/ex\u003e\u003c/ph\u003e\n\nFor example, in English, the complete message would be \"Now Casting to Living Room TV.\" But in another language, like Japanese, it would be something like \"今Living Room TVにキャストをしています。\" Notice how the \"Living Room\" is in a very different part of the string.",
+      "range": {
+        "startLine": 828,
+        "startChar": 7,
+        "endLine": 828,
+        "endChar": 21
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed86811_897bff8c",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "nit: For simplicity, just use const std::string\u0026 here. It should be fine for callers to pass std::string() for the \"not applicable\" cases.",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 74
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cd3433_1548d432",
+        "filename": "third_party/WebKit/Source/core/html/HTMLVideoElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "naming nit: We use \"sink\" in media/remoting code, but in Blink it\u0027s probably better to be more UI-focused. This is why I suggest \"remote_device_friendly_name.\"",
+      "range": {
+        "startLine": 508,
+        "startChar": 61,
+        "endLine": 508,
+        "endChar": 70
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4d3649_8ed96601",
+        "filename": "third_party/WebKit/Source/core/html/HTMLVideoElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "const WebString\u0026 remote_device_friendly_name",
+      "range": {
+        "startLine": 148,
+        "startChar": 28,
+        "endLine": 148,
+        "endChar": 44
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbe9d88_4947d12f",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingInterstitial.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "A few things here:\n\n1. There is no need to convert towards and back from UTF8. There is an implicit conversion operator from WebString to WTF::String.\n\n2. What should happen if sink_name is empty (i.e., we don\u0027t know the remote device\u0027s friendly name)?\n\n3. Need to use locale-strings substitution API (as discussed in comment in .grd file).\n\nPutting it all together, I\u0027d suggest:\n\n  if (sink_name.IsEmpty()) {\n    cast_text_message_-\u003esetInnerText(\n        GetVideoElement().GetLocale().QueryString(\n            WebLocalizedString::kMediaRemotingCastToUnknownText),\n        ASSERT_NO_EXCEPTION);\n  } else {\n    cast_text_message_-\u003esetInnerText(\n        GetVideoElement().GetLocale().QueryString(\n            WebLocalizedString::kMediaRemotingCastText, sink_name),\n        ASSERT_NO_EXCEPTION);\n  }\n\nNote that you\u0027ll need to define kMediaRemotingCastToUnknownText, and add an entry in the .grd file.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9607f8ae_779f148f",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingInterstitial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "ditto: argument name, and what if string is empty?",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc510a42_2accd8aa",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "...after the other changes, you can now just pass WebString() instead of \"your TV\" here.",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 76
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fe702a_d06c397b",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayerClient.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:39:28Z",
+      "side": 1,
+      "message": "Let\u0027s name the argument, to have self-documenting code:\n\n  const WebString\u0026 remote_device_friendly_name\n\nBTW--What if the friendly name is unknown? Would we pass the empty string? (The method comment should mention this.)",
+      "range": {
+        "startLine": 120,
+        "startChar": 36,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "20b84a5a0ff9107c7f7772912f66ce3ab111925a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
