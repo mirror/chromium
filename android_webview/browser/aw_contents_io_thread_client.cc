@@ -8,7 +8,6 @@
 #include <memory>
 #include <utility>
 
-#include "android_webview/browser/aw_contents_background_thread_client.h"
 #include "android_webview/browser/net/aw_web_resource_request.h"
 #include "android_webview/browser/net/aw_web_resource_response.h"
 #include "android_webview/common/devtools_instrumentation.h"
@@ -17,6 +16,7 @@
 #include "base/android/jni_weak_ref.h"
 #include "base/lazy_instance.h"
 #include "base/synchronization/lock.h"
+#include "base/task_scheduler/post_task.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -24,6 +24,7 @@
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "jni/AwContentsBackgroundThreadClient_jni.h"
 #include "jni/AwContentsIoThreadClient_jni.h"
 #include "net/url_request/url_request.h"
 
@@ -310,7 +311,6 @@ namespace {
 std::unique_ptr<AwWebResourceResponse> RunShouldInterceptRequest(
     const AwWebResourceRequest& request,
     JavaObjectWeakGlobalRef ref) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   JNIEnv* env = AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jobject> obj = ref.get(env);
   if (obj.is_null())
@@ -322,7 +322,7 @@ std::unique_ptr<AwWebResourceResponse> RunShouldInterceptRequest(
   devtools_instrumentation::ScopedEmbedderCallbackTask embedder_callback(
       "shouldInterceptRequest");
   ScopedJavaLocalRef<jobject> ret =
-      AwContentsBackgroundThreadClient::shouldInterceptRequest(
+      Java_AwContentsBackgroundThreadClient_shouldInterceptRequestFromNative(
           env, obj, java_web_resource_request.jurl, request.is_main_frame,
           request.has_user_gesture, java_web_resource_request.jmethod,
           java_web_resource_request.jheader_names,
@@ -354,8 +354,7 @@ void AwContentsIoThreadClient::ShouldInterceptRequestAsync(
         &RunShouldInterceptRequest, AwWebResourceRequest(*request),
         JavaObjectWeakGlobalRef(env, bg_thread_client_object_.obj()));
   }
-  BrowserThread::PostTaskAndReplyWithResult(BrowserThread::FILE, FROM_HERE,
-                                            get_response, callback);
+  base::PostTaskAndReplyWithResult(FROM_HERE, get_response, callback);
 }
 
 bool AwContentsIoThreadClient::ShouldBlockContentUrls() const {
