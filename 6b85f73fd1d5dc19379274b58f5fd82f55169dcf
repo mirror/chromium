@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22130663_56ba8bf5",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-27T23:09:15Z",
+      "side": 1,
+      "message": "We should not add IGNORE. Removed.",
+      "parentUuid": "cdcd5c1d_c1f5346c",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da8130ea_51edee8d",
         "filename": "components/offline_pages/core/prefetch/import_archives_task.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7a7c711c_8f55357d",
+        "filename": "components/offline_pages/core/prefetch/import_archives_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-27T23:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8130ea_51edee8d",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "568b78d0_8c7b3da2",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-27T01:26:40Z",
       "side": 1,
       "message": "You will need DownloadFailed(std::string guid) as well. Will it be processed by a separate task or by the same one? If by the same one, perhaps better to do it now...",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5f82e3_a8bc65db",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-27T23:09:15Z",
+      "side": 1,
+      "message": "DownloadCompleted applies to both success and failure. PrefetchDownloadResult contains a field |success| to indicate this.",
+      "parentUuid": "568b78d0_8c7b3da2",
       "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ff234b41_d62f20f3",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-27T23:09:15Z",
+      "side": 1,
+      "message": "OfflinePageModel takes int64_t. I think it will be simpler to convert it asap.",
+      "parentUuid": "79536603_365780b2",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "daadcec9_64c94e37",
         "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3a0b95_8f6d18dd",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-27T23:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daadcec9_64c94e37",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
