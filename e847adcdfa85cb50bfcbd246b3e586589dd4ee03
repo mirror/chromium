@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82848253_cc46baa7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T20:55:43Z",
+      "side": 1,
+      "message": "Why is this whitespace line removed?",
+      "revId": "e847adcdfa85cb50bfcbd246b3e586589dd4ee03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e089373a_9c527a19",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T20:55:43Z",
+      "side": 1,
+      "message": "Header guards.",
+      "revId": "e847adcdfa85cb50bfcbd246b3e586589dd4ee03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
