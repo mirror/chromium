@@ -280,7 +280,7 @@ void DeleteSelectionCommand::InitializePositionData(
   if (NumEnclosingMailBlockquotes(start) != NumEnclosingMailBlockquotes(end) &&
       IsStartOfParagraph(visible_end) &&
       IsStartOfParagraph(CreateVisiblePosition(start)) &&
-      EndingSelection().IsRange()) {
+      EndingVisibleSelection().IsRange()) {
     merge_blocks_after_delete_ = false;
     prune_start_block_if_necessary_ = true;
   }
@@ -932,7 +932,7 @@ void DeleteSelectionCommand::MergeParagraphs(EditingState* editing_state) {
   need_placeholder_ = need_placeholder;
   // The endingPosition was likely clobbered by the move, so recompute it
   // (moveParagraph selects the moved paragraph).
-  ending_position_ = EndingSelection().Start();
+  ending_position_ = EndingVisibleSelection().Start();
 }
 
 void DeleteSelectionCommand::RemovePreviouslySelectedEmptyTableRows(
@@ -1059,7 +1059,7 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
   // If selection has not been set to a custom selection when the command was
   // created, use the current ending selection.
   if (!has_selection_to_delete_)
-    selection_to_delete_ = EndingSelection();
+    selection_to_delete_ = EndingVisibleSelection();
 
   if (!selection_to_delete_.IsValidFor(GetDocument()) ||
       !selection_to_delete_.IsRange() ||
@@ -1126,7 +1126,7 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
     SelectionInDOMTree::Builder builder;
     builder.SetAffinity(affinity);
-    builder.SetIsDirectional(EndingSelection().IsDirectional());
+    builder.SetIsDirectional(EndingVisibleSelection().IsDirectional());
     if (ending_position_.IsNotNull())
       builder.Collapse(ending_position_);
     SetEndingSelection(builder.Build());
@@ -1187,7 +1187,7 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
 
   SelectionInDOMTree::Builder builder;
   builder.SetAffinity(affinity);
-  builder.SetIsDirectional(EndingSelection().IsDirectional());
+  builder.SetIsDirectional(EndingVisibleSelection().IsDirectional());
   if (ending_position_.IsNotNull())
     builder.Collapse(ending_position_);
   SetEndingSelection(builder.Build());
@@ -1205,7 +1205,7 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
   // Fixes: <rdar://problem/3910425> REGRESSION (Mail): Crash in
   // ReplaceSelectionCommand; selection is empty, leading to null deref
   if (!reference_move_position_.IsConnected())
-    reference_move_position_ = EndingSelection().Start();
+    reference_move_position_ = EndingVisibleSelection().Start();
 
   // Move selection shouldn't left empty <li> block.
   CleanupAfterDeletion(editing_state,
