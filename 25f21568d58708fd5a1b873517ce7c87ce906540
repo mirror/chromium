@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "931344e0_2f4e459d",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T01:11:52Z",
+      "side": 1,
+      "message": "Could you pass Position to |IsCompositionTooLong()| to make call site simpler?",
+      "revId": "25f21568d58708fd5a1b873517ce7c87ce906540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
