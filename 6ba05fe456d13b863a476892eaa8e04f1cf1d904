@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b533a0_30ca04ed",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-27T19:54:43Z",
+      "side": 1,
+      "message": "move this to the top of the function, then you can remove line 388.",
+      "range": {
+        "startLine": 373,
+        "startChar": 18,
+        "endLine": 373,
+        "endChar": 24
+      },
+      "revId": "6ba05fe456d13b863a476892eaa8e04f1cf1d904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5223aff_582d0d4a",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-27T19:54:43Z",
+      "side": 1,
+      "message": "Your current implementation is leaking resources. You need to move most of the code of MailboxReleased into this wrapper so that resources will be correctly deleted and the context state properly managed even when the Canvas2DLayerBridge is already dead.",
+      "range": {
+        "startLine": 954,
+        "startChar": 2,
+        "endLine": 954,
+        "endChar": 3
+      },
+      "revId": "6ba05fe456d13b863a476892eaa8e04f1cf1d904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
