@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da46964d_29f4b33a",
+        "filename": "content/test/data/accessibility/aom/aom-busy.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-27T17:50:18Z",
+      "side": 1,
+      "message": "Minor nit, but I\u0027d prefer three cases, as a sanity check\nto ensure we\u0027re using aria-busy correctly and it\u0027s not\npassing for the wrong reason.\n\n1. AOM busy\u003dtrue\n2. aria-busy\u003dtrue \u003c-- add this one as a sanity check\n3. aria-busy\u003dtrue AOM busy\u003dfalse",
+      "revId": "9efceb95f7c5ccec2cc7a0847d327b3e60e064b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18acc979_d8eda162",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-27T17:50:18Z",
+      "side": 1,
+      "message": "Didn\u0027t you already add a helper function to do this\nwhen you added your other change to support \"undefined\"?\nCould we share this logic?",
+      "revId": "9efceb95f7c5ccec2cc7a0847d327b3e60e064b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84e101c_7a766a9d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-27T17:50:18Z",
+      "side": 1,
+      "message": "Is this correct, can \"busy\" only be set on the root of\na live region and not elsewhere? If so then this seems good.",
+      "revId": "9efceb95f7c5ccec2cc7a0847d327b3e60e064b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786c9cca_8ffa092b",
+        "filename": "third_party/WebKit/public/web/WebAXObject.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-27T17:50:18Z",
+      "side": 1,
+      "message": "At first I was going to suggest we get rid of this,\nbut it looks like this is cheaper to compute since\nwe can do nothing if it\u0027s not a live region.\n\nStill, I\u0027m thinking it might be better to eventually\nget rid of these and just walk up the ancestry on the\nbrowser side to determine a node\u0027s live region attributes.\n\nFor now this is fine.",
+      "revId": "9efceb95f7c5ccec2cc7a0847d327b3e60e064b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
