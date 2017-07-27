@@ -2,7 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("mime_util") {
+source_set("mime_util") {
+  visibility = [ "//third_party/WebKit/common/*" ]
+
+  defines = [ "BLINK_COMMON_IMPLEMENTATION" ]
+
   sources = [
     "mime_util.cc",
     "mime_util.h",
