@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97812eb_9479233a",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-27T20:01:32Z",
+      "side": 1,
+      "message": "It looks like this is adapted from a C codebase, but this file is written in C++ not C.  I think you should use C++ string manipulation routines, raw strcpy() and pointer is always suspect. I\u0027m not familiar with everything that base has for strings nowadays but I\u0027m pretty sure this could get nicer with some use of StringPiece to keep track of the offsets.",
+      "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0358b716_5e97fb2e",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-27T20:01:32Z",
+      "side": 1,
+      "message": "This should be a size_t - I\u0027m surprised you don\u0027t get a warning about the narrowing conversion",
+      "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753638e1_d0453c36",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-27T20:01:32Z",
+      "side": 1,
+      "message": "Would recommend using C++ string routines",
+      "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
