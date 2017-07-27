@@ -854,7 +854,7 @@ android_library("android_webview_java") {
     "//components/minidump_uploader:minidump_uploader_java",
     "//components/navigation_interception/android:navigation_interception_java",
     "//components/policy/android:policy_java",
-    "//components/safe_browsing_db/android:safe_browsing_java",
+    "//components/safe_browsing/android:safe_browsing_java",
     "//components/variations/android:variations_java",
     "//components/web_contents_delegate_android:web_contents_delegate_android_java",
     "//components/web_restrictions:client_java",

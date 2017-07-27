@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_SAFE_BROWSING_DB_ANDROID_JNI_REGISTRAR_H
-#define COMPONENTS_SAFE_BROWSING_DB_ANDROID_JNI_REGISTRAR_H
+#ifndef COMPONENTS_SAFE_BROWSING_ANDROID_JNI_REGISTRAR_H
+#define COMPONENTS_SAFE_BROWSING_ANDROID_JNI_REGISTRAR_H
 
 #include <jni.h>
 
@@ -16,4 +16,4 @@ bool RegisterBrowserJNI(JNIEnv* env);
 }  // namespace android
 }  // namespace safe_browsing
 
-#endif  // COMPONENTS_SAFE_BROWSING_DB_ANDROID_JNI_REGISTRAR_H
+#endif  // COMPONENTS_SAFE_BROWSING_ANDROID_JNI_REGISTRAR_H
