@@ -9,6 +9,7 @@ import android.view.View;
 
 import org.junit.Assert;
 
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.content.R;
@@ -38,6 +39,7 @@ public class TextSuggestionMenuTest extends ChromeActivityTestCaseBase<ChromeAct
     }
 
     @LargeTest
+    @RetryOnFailure
     public void testDeleteMisspelledWord() throws InterruptedException, TimeoutException {
         loadUrl(URL);
         final ContentViewCore cvc = getActivity().getActivityTab().getContentViewCore();
