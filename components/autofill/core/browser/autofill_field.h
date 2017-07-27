@@ -112,6 +112,15 @@ class AutofillField : public FormFieldData {
     return form_classifier_outcome_;
   }
 
+  void set_username_vote_type(
+      AutofillUploadContents::Field::UsernameVoteType type) {
+    username_vote_type_ = type;
+  }
+
+  AutofillUploadContents::Field::UsernameVoteType username_vote_type() const {
+    return username_vote_type_;
+  }
+
   // Set |field_data|'s value to |value|. Uses |field|, |address_language_code|,
   // and |app_locale| as hints when filling exceptional cases like phone number
   // values and <select> fields. Returns |true| if the field has been filled,
@@ -188,6 +197,9 @@ class AutofillField : public FormFieldData {
 
   // The outcome of HTML parsing based form classifier.
   AutofillUploadContents::Field::FormClassifierOutcome form_classifier_outcome_;
+
+  // The username vote type, if it happened.
+  AutofillUploadContents::Field::UsernameVoteType username_vote_type_;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillField);
 };
