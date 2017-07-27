@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba41c78b_de2b503e",
+        "filename": "ios/chrome/browser/ui/authentication/authentication_ui_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-27T17:09:39Z",
+      "side": 1,
+      "message": "I think this will print something like:\n\"\u003clocalized_description\u003e (domain, code, domain, code, domain, code)\".\n\"-- (domain, code, domain, code, domain, code)\".\n\nI think it would make it more human friendly to print:\n\"\u003clocalized_description\u003e (domain, code, domain, code, domain, code)\".\n\"Error {(domain, code), (domain, code), (domain, code)}",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "aca1d5a6852bb5e35a16a543eff94c3b14543780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
