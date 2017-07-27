@@ -22,6 +22,30 @@
       "revId": "624d8985adfea0e0b1f3d021cad1ecf1a49cfcfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e014bd28_c8d72124",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-07-27T17:04:09Z",
+      "side": 1,
+      "message": "Mistake. Thanks for catching that.",
+      "parentUuid": "5c7e71b9_1fd82701",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "624d8985adfea0e0b1f3d021cad1ecf1a49cfcfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
