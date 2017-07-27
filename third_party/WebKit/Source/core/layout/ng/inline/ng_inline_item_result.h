@@ -29,9 +29,9 @@ struct CORE_EXPORT NGInlineItemResult {
 
  public:
   // The index of NGInlineItem and its text range.
-  unsigned item_index;
-  unsigned start_offset;
-  unsigned end_offset;
+  unsigned item_index = 0;
+  unsigned start_offset = 0;
+  unsigned end_offset = 0;
 
   // Inline size of this item.
   LayoutUnit inline_size;
@@ -51,15 +51,15 @@ struct CORE_EXPORT NGInlineItemResult {
   LayoutUnit borders_paddings_block_end;
 
   // Create a box when the box is empty, for open/close tags.
-  unsigned needs_box_when_empty : 1;
+  bool needs_box_when_empty = false;
 
-  // Inside of this is not breakable.
+  // Inside of this is not breakable. Set only for text items.
   // Used only during line breaking.
-  unsigned no_break_opportunities_inside : 1;
+  bool no_break_opportunities_inside = false;
 
-  // Lines must not break after this.
+  // Lines must not break after this. Set for all items.
   // Used only during line breaking.
-  unsigned prohibit_break_after : 1;
+  bool prohibit_break_after = false;
 
   NGInlineItemResult();
   NGInlineItemResult(unsigned index, unsigned start, unsigned end);
