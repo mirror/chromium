@@ -320,6 +320,24 @@
     },
     {
       "key": {
+        "uuid": "370cbd43_78e79005",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-27T13:55:42Z",
+      "side": 1,
+      "message": "Urr, Jochen is really the appropriate owner here, he just removed himself from the OWNERS file in favor of a higher-level one.",
+      "parentUuid": "5bca1d45_5509eae3",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7abd767_18011564",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 7
