@@ -9,6 +9,9 @@
 #include "components/grpc_support/test/quic_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include "components/cronet/interfaces/cronet.mojom.h"
+
+
 @interface Cronet (ExposedForTesting)
 + (void)shutdownForTesting;
 @end
@@ -27,6 +30,7 @@ class NetLogTest : public ::testing::Test {
     [Cronet shutdownForTesting];
   }
 };
+
 
 TEST_F(NetLogTest, OpenFile) {
   bool netlog_started =
