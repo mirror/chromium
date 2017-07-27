@@ -364,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "10685807_6baabc1e",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-27T00:51:05Z",
+      "side": 1,
+      "message": "Sorry about that. The function has been moved to the anonymous namespace and the comments are changed. \n\nThis can\u0027t be part of SetProminentColors. I didn\u0027t write SetProminentColors but the rationale should be, the observers will always need a color update when wallpaper changes, so SetProminentColors will always be called (regardless of whether we should do calculation, or the calculation succeeds or fails). Of course, only when the calculation succeeds do we really need caching, otherwise the observers will be notified of a default color. bruthig@ implemented this part so he may have more info on that.\n\nIn addition, though I changed the comments, I don\u0027t think it\u0027s a problem to mention |prominent_colors_| here. It\u0027s true that not all prominent colors are cached (i.e. invalid color is also set as prominent color), but I doubt that causes confusion.",
+      "parentUuid": "5f6cc991_203effac",
+      "revId": "1f7d9cef4e8e25f6d8d78cd4ab082befe5f5af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59046f62_5cd7b9fe",
         "filename": "components/wallpaper/wallpaper_info.h",
         "patchSetId": 13

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0253a733_b73ed862",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-27T00:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6948a0dc_22b7245b",
+      "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fcdc9bc_151200a8",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4d894dc5_5e2d1551",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-27T00:51:05Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "4fcdc9bc_151200a8",
+      "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e0a532c_ceef58bc",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-26T22:58:44Z",
       "side": 1,
       "message": "instead of calling this a \"cache id\" (which feels a bit confusing, since there isn\u0027t another member or class called \"cache\" that this indexes into), how about something like this?\n\n  // Location (see WallpaperInfo::location) used by the current wallpaper.\n  // Used as a key for storing |prominent_colors_| in the\n  // wallpaper::kWallpaperColors pref.\n  base::Optional\u003cstd::string\u003e current_location_;",
+      "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b2921a_ac2442f0",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-27T00:51:05Z",
+      "side": 1,
+      "message": "The cache ID may change from location to something else in the future, so what\u0027s actually being used as cache ID is intentionally hidden. That being said if you do feel strongly that current_location is a better name I can change.",
+      "parentUuid": "5e0a532c_ceef58bc",
       "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
