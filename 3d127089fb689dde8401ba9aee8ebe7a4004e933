@@ -16,6 +16,24 @@
       "revId": "3d127089fb689dde8401ba9aee8ebe7a4004e933",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638cb594_8275418d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T14:56:56Z",
+      "side": 1,
+      "message": "In fact, worth noting in a comment on loading_slots_, or CanLoadNextTab, rather than here.",
+      "parentUuid": "55472cb5_166104b0",
+      "revId": "3d127089fb689dde8401ba9aee8ebe7a4004e933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
