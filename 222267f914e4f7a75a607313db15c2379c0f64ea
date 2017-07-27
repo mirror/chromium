@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9dc30f1e_bf92ff55",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-27T01:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad6a460_b225deef",
+      "range": {
+        "startLine": 115,
+        "startChar": 15,
+        "endLine": 115,
+        "endChar": 33
+      },
+      "revId": "222267f914e4f7a75a607313db15c2379c0f64ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37e7063_25fc540c",
         "filename": "third_party/WebKit/Source/modules/storage/StorageNamespaceController.cpp",
         "patchSetId": 6
@@ -60,6 +84,24 @@
       "writtenOn": "2017-07-26T11:21:50Z",
       "side": 1,
       "message": "You don\u0027t need to store web_view_ though.\n\nYou can get the WebView by GetSupplementable()-\u003eGetWebView().",
+      "revId": "222267f914e4f7a75a607313db15c2379c0f64ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d260f4cc_5de75a3b",
+        "filename": "third_party/WebKit/Source/modules/storage/StorageNamespaceController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-27T01:17:03Z",
+      "side": 1,
+      "message": "Page doesn\u0027t have GetWebView, I had to get it through Page-\u003eChromeClient-\u003eWebView.",
+      "parentUuid": "f37e7063_25fc540c",
       "revId": "222267f914e4f7a75a607313db15c2379c0f64ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
