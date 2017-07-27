@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bc7b7a4_cdf8ddbb",
+        "filename": "ash/ash_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-27T16:07:42Z",
+      "side": 1,
+      "message": "s/a/an/",
+      "revId": "be05b785a5517843324fad3980e2e9350e1519ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1b1999_60143635",
+        "filename": "ash/ash_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-27T16:07:42Z",
+      "side": 1,
+      "message": "This seems unrelated?",
+      "revId": "be05b785a5517843324fad3980e2e9350e1519ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
