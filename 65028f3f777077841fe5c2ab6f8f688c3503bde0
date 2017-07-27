@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "480c2dcc_e7e94ba1",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-27T19:31:03Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with the prefs policy code. Why is this one a local state pref whereas the other one is a user profile pref?",
+      "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
