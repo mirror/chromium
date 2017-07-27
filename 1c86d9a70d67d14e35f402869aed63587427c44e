@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f0e044e_2d7467ea",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T17:49:08Z",
+      "side": 1,
+      "message": "Nit: Technically this is a stub (or a spy, but we don\u0027t use that nomenclature in Chrome as far as I know) -- see https://martinfowler.com/articles/mocksArentStubs.html. Mocks specifically embed their own verification logic. Most commonly we use the general \"test\u0027 naming pattern, so maybe TestMetricsRecorder is better here, and a name that matches the existing pattern used in this file (CommandDispatcherSimpleTestTarget) would be better.\n\n(I\u0027m mostly harping on this because I see a lot of overuse of OCMock when actual fakes or stubs could be used instead, so I prefer to reserve \u0027Mock\u0027 naming for actual OCMock instances so they\u0027re easy to see in review.)",
+      "range": {
+        "startLine": 130,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 30
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01efcad8_1c2db679",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T17:49:08Z",
+      "side": 1,
+      "message": "move this below line 413, and call -hide once before metrics are called on it to verify that metrics recording doesn\u0027t happen for a selector until it\u0027s registered. \n\n(For example, there could be a bug in -registerMetricsRecorder:forSelectior: that causes the first recorder to be used for every selector, or there could be a bug in -startDispatchingToTarget:forSelector: that causes a previously-registered recorder to be used for a newly-registered selector).",
+      "range": {
+        "startLine": 408,
+        "startChar": 3,
+        "endLine": 408,
+        "endChar": 13
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802cd9f3_3bf665c0",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T17:49:08Z",
+      "side": 1,
+      "message": "Add a comment explaining why index 2 is used.",
+      "range": {
+        "startLine": 442,
+        "startChar": 76,
+        "endLine": 442,
+        "endChar": 77
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9fce2b_6e4bb829",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T17:49:08Z",
+      "side": 1,
+      "message": "I don\u0027t think both this test and MetricsRecorderNoArguments are both needed, sine you can add a few more EXPECTs to the earlier test and cover the same cases this one does.",
+      "range": {
+        "startLine": 457,
+        "startChar": 3,
+        "endLine": 457,
+        "endChar": 8
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
