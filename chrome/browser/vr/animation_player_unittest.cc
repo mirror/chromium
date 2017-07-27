@@ -32,27 +32,32 @@ class TestAnimationTarget : public cc::AnimationTarget {
   bool visible() const { return visible_; }
 
   void NotifyClientSizeAnimated(const gfx::SizeF& size,
+                                int target_property_id,
                                 cc::Animation* animation) override {
     size_ = size;
   }
 
   void NotifyClientTransformOperationsAnimated(
       const cc::TransformOperations& operations,
+      int target_property_id,
       cc::Animation* animation) override {
     operations_ = operations;
   }
 
   void NotifyClientFloatAnimated(float opacity,
+                                 int target_property_id,
                                  cc::Animation* animation) override {
     opacity_ = opacity;
   }
 
   void NotifyClientColorAnimated(SkColor color,
+                                 int target_property_id,
                                  cc::Animation* animation) override {
     background_color_ = color;
   }
 
   void NotifyClientBooleanAnimated(bool visible,
+                                   int target_property_id,
                                    cc::Animation* animation) override {
     visible_ = visible;
   }
