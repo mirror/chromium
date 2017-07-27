@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb81bae_fec503fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T05:20:59Z",
+      "side": 1,
+      "message": "should this point to the font-style heading?",
+      "revId": "2d2bb044f42187b9f7a3ac88bb6e81b7444c09b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74747a86_81a740e4",
+        "filename": "third_party/WebKit/Source/core/css/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T05:20:59Z",
+      "side": 1,
+      "message": ".h file needs to be added to core/BUILD.gn",
+      "revId": "2d2bb044f42187b9f7a3ac88bb6e81b7444c09b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6075bbf0_d02b8c35",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T05:20:59Z",
+      "side": 1,
+      "message": "nit: \u0027these three methods\u0027 is unclear, is it style, weight, and stretch?",
+      "revId": "2d2bb044f42187b9f7a3ac88bb6e81b7444c09b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad90c95_5dfb444c",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T05:20:59Z",
+      "side": 1,
+      "message": "seems like this can just call ConsumeFontStyle because the check for id is handled in there already. If this is going to be parsed differently between shorthand and longhand in the future then I would suggest a common ConsumFontStyleKeywordOnly as was done with the font-stretch property to avoid duplication of the id checking",
+      "revId": "2d2bb044f42187b9f7a3ac88bb6e81b7444c09b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925f0810_8a9ab8d2",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T05:20:59Z",
+      "side": 1,
+      "message": "should this \u0027if\u0027 be on the following line?",
+      "revId": "2d2bb044f42187b9f7a3ac88bb6e81b7444c09b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
