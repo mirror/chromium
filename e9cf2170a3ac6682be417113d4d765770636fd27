@@ -16,6 +16,24 @@
       "revId": "e9cf2170a3ac6682be417113d4d765770636fd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a901fd33_c54a0469",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-27T08:36:52Z",
+      "side": 1,
+      "message": "\u003e nit: remove \u0027een\u0027\n\nFixed een -\u003e even.\n\n\u003e These functions are not directly used even in debug builds, it\u0027s useful to\n\u003e use from debugger, or is convenient when adding a debug print code.\n\u003e E.g. CSSSelector::Show() exists for the same purpose.\n\nAhh, I see!\n\n\u003e But I think it\u0027s okay to remove this code in HTML Imports.\n\nOK. Thank you.",
+      "parentUuid": "8e9753b7_b08590ba",
+      "revId": "e9cf2170a3ac6682be417113d4d765770636fd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
