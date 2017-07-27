@@ -22,6 +22,7 @@ build_dotfile_settings = {
     "//build/config/posix/BUILD.gn",
     "//build/config/sysroot.gni",
     "//build/config/win/BUILD.gn",
+    "//build/config/win/manifest.gni",
     "//build/config/win/visual_studio_version.gni",
     "//build/toolchain/concurrent_links.gni",
     "//build/toolchain/mac/BUILD.gn",
