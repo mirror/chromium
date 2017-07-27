@@ -217,6 +217,12 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
                   : layer->Compositor()->RootLayer();
           if (HasClippedStackingAncestor(layer, clipping_layer))
             properties.clip_parent = clipping_layer;
+
+          // If the clipping container of this PaintLayer has a clip_parent,
+          // that means it escapes some stacking ancestor clip above it.
+          // Thus the clip for this PaintLayer should also escape that clip.
+          if (!properties.clip_parent)
+            properties.clip_parent = clipping_layer->ClipParent();
         }
       }
 
