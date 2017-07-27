@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31795d52_2e709de1",
+        "filename": "content/app/android/library_loader_hooks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-27T16:11:34Z",
+      "side": 0,
+      "message": "is this logic built into the auto generated hooks? just curious..",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
