@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "55b7b5d7_2d8925ea",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-27T01:55:18Z",
+      "side": 1,
+      "message": "I\u0027m fine with the current structure. While there is a prevalence of early returns over if/else blocks at the end of functions, it seems to me this is done mostly when there isn\u0027t a reason to do one or the other. Here, there is a reason. We want to able to, and are likely to, add code after the current block.\n\nI think it\u0027s good to leave code in a state where it\u0027s easy to read and easy to add to. The structure of the code for the single case suggests that the structure can be extended to parsing extra headers. An early return for the single case doesn\u0027t seem to be generalizable to multiple headers, if we will need to revert back to a single return at the end for multiple headers.\n\nPut another way, if I came to this code without understanding anything and wanted to parse another header, I\u0027d probably just copy-paste the first one, and it would be nice if a naive approach yielded the correct behavior.\n\nPersonally, I see patterns as guidelines, that can be broken if there are good reasons. Hope this helps!\n\n\n\nHaving said all that, it might be worth inverting the logic here so that the error case is in the else clause.\n\nif (hasThing())\n  doWork()\nelse\n  warn(error)\n\nseems more natural than\n\nif (!hasThing())\n  warn(error)\nelse\n  doWork()",
+      "parentUuid": "3adf10ae_9f3c7ba3",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 8
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d6b0b56_a079051f",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
         "patchSetId": 1
