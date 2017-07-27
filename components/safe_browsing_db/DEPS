@@ -2,6 +2,7 @@ include_rules = [
   "+components/data_use_measurement/core",
   "+components/safe_browsing/common/safe_browsing_prefs.h",
   "+components/safe_browsing/features.h",
+  "+components/safe_browsing/safe_browsing_api_handler.h",
   "+components/variations",
   "+components/version_info",
   "+content/public/browser",
