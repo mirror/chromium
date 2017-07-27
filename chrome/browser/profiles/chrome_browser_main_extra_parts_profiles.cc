@@ -143,7 +143,7 @@
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
-#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_factory.h"
 #endif
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)

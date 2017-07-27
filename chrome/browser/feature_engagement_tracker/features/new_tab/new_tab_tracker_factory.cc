@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_factory.h"
 
 #include "base/memory/singleton.h"
 #include "chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h"
-#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
