@@ -7,8 +7,13 @@ package org.chromium.android_webview;
 import android.annotation.TargetApi;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -26,7 +31,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.concurrent.locks.Lock;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -43,8 +49,17 @@ public class AwVariationsSeedFetchService extends JobService {
     public static final String SEED_DATA_FILENAME = "variations_seed_data";
     public static final String SEED_PREF_FILENAME = "variations_seed_pref";
 
+    private Messenger mMessenger;
+
     // Synchronization lock to prevent simultaneous local seed file writing.
-    private static final Lock sLock = new ReentrantLock();
+    private static final ReentrantLock sLock = new ReentrantLock();
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        mMessenger = intent.getParcelableExtra(
+                AwVariationsConfigurationService.SEED_FETCH_COMPLETE_NOTIFIER_INTENT_KEY);
+        return START_NOT_STICKY;
+    }
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -77,14 +92,19 @@ public class AwVariationsSeedFetchService extends JobService {
         @Override
         protected void onPostExecute(Void success) {
             jobFinished(mJobParams, false /* false -> don't reschedule */);
+            if (mMessenger != null) {
+                try {
+                    mMessenger.send(Message.obtain());
+                } catch (RemoteException e) {
+                    Log.e(TAG, "Failed to send seed fetch complete notification. " + e);
+                }
+            }
         }
     }
 
     private static void fetchVariationsSeed() {
         assert !ThreadUtils.runningOnUiThread();
         // TryLock will drop calls from other threads when there is a thread executing the function.
-        // TODO(yiyuny): Add explicitly control to ensure there's only one threading fetching at a
-        // time and that the seed doesn't get fetched too frequently.
         if (sLock.tryLock()) {
             try {
                 SeedInfo seedInfo = VariationsSeedFetcher.get().downloadContent(
@@ -115,12 +135,18 @@ public class AwVariationsSeedFetchService extends JobService {
         public final String country;
         public final String date;
         public final boolean isGzipCompressed;
+        public static final int FIELD_SIZE = 4;
 
         public SeedPreference(SeedInfo seedInfo) {
             signature = seedInfo.signature;
             country = seedInfo.country;
             date = seedInfo.date;
             isGzipCompressed = seedInfo.isGzipCompressed;
+        }
+
+        public ArrayList<String> toArrayList() {
+            return new ArrayList<String>(
+                    Arrays.asList(signature, country, date, Boolean.toString(isGzipCompressed)));
         }
     }
 
@@ -168,17 +194,10 @@ public class AwVariationsSeedFetchService extends JobService {
      * @throws IOException if fail to get or create the WebView Variations directory.
      */
     @VisibleForTesting
-    public static byte[] getVariationsSeedData() throws IOException {
-        FileInputStream fisSeedData = null;
-        try {
-            File webViewVariationsDir = getOrCreateWebViewVariationsDir();
-            fisSeedData = new FileInputStream(new File(webViewVariationsDir, SEED_DATA_FILENAME));
-            return VariationsSeedFetcher.convertInputStreamToByteArray(fisSeedData);
-        } finally {
-            if (fisSeedData != null) {
-                fisSeedData.close();
-            }
-        }
+    public static ParcelFileDescriptor getVariationsSeedDataFileDescriptor() throws IOException {
+        File webViewVariationsDir = getOrCreateWebViewVariationsDir();
+        return ParcelFileDescriptor.open(new File(webViewVariationsDir, SEED_DATA_FILENAME),
+                ParcelFileDescriptor.MODE_READ_ONLY);
     }
 
     /**
@@ -218,14 +237,23 @@ public class AwVariationsSeedFetchService extends JobService {
         webViewVariationsDir.delete();
     }
 
+    /**
+     * Rename a temp file to a new name.
+     * @params tempFile The temp file.
+     * @params newFile The new file.
+     */
     @SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_BAD_PRACTICE")
     // ignoring File.delete() and File.renameTo() return
-    private static void renameTempFile(File tempFile, File newFile) {
+    public static void renameTempFile(File tempFile, File newFile) {
         newFile.delete();
         tempFile.renameTo(newFile);
     }
 
-    private static void closeStream(Closeable stream) {
+    /**
+     * Safely close a stream.
+     * @params stream The stream to be closed.
+     */
+    public static void closeStream(Closeable stream) {
         if (stream != null) {
             try {
                 stream.close();
