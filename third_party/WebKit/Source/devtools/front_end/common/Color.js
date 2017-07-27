@@ -334,6 +334,43 @@ Common.Color = class {
   }
 
   /**
+   * @param {string} fontSize
+   * @param {string} fontWeight
+   * @param {?string} bodyFontSize
+   */
+  static isLargeFont(fontSize, fontWeight, bodyFontSize) {
+    const boldWeights = ['bold', 'bolder', '600', '700', '800', '900'];
+
+    var fontSizePx = parseFloat(fontSize.replace('px', ''));
+    var isBold = (boldWeights.indexOf(fontWeight) !== -1);
+
+    if (bodyFontSize) {
+      var bodyFontSizePx = parseFloat(bodyFontSize.replace('px', ''));
+      if (isBold) {
+        if (fontSizePx >= (bodyFontSizePx * 1.2))
+          return true;
+      } else if (fontSizePx >= (bodyFontSizePx * 1.5)) {
+        return true;
+      }
+      return false;
+    }
+
+    var fontSizePt = Math.ceil(fontSizePx * 72 / 96);
+    if (isBold)
+      return fontSizePt >= 14;
+    else
+      return fontSizePt >= 18;
+  }
+
+  /**
+   * @param {boolean} isLargeFont
+   */
+  static contrastThresholds(isLargeFont) {
+    const thresholds = {largeFont: {AA: 3.0, AAA: 4.5}, normalFont: {AA: 4.5, AAA: 7.0}};
+    return thresholds[isLargeFont ? 'largeFont' : 'normalFont'];
+  }
+
+  /**
    * Compute a desired luminance given a given luminance and a desired contrast
    * ratio.
    * @param {number} luminance The given luminance.

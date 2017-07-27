@@ -103,6 +103,7 @@ Elements.ColorSwatchPopoverIcon = class {
     this._swatch.iconElement().title = Common.UIString('Open color picker. %s', shiftClickMessage);
     this._swatch.iconElement().addEventListener('click', this._iconClick.bind(this));
     this._contrastColor = null;
+    this._fontSize = null;
 
     this._boundSpectrumChanged = this._spectrumChanged.bind(this);
     this._boundOnScroll = this._onScroll.bind(this);
@@ -117,12 +118,12 @@ Elements.ColorSwatchPopoverIcon = class {
   }
 
   /**
-   * @param {!Common.Color} color
+   * @param {?Object} contrastInfo
    */
-  setContrastColor(color) {
-    this._contrastColor = color;
+  setContrastInfo(contrastInfo) {
+    this._contrastInfo = contrastInfo;
     if (this._spectrum)
-      this._spectrum.setContrastColor(this._contrastColor);
+      this._spectrum.setContrastInfo(contrastInfo);
   }
 
   /**
@@ -145,8 +146,8 @@ Elements.ColorSwatchPopoverIcon = class {
       format = color.format();
     this._spectrum = new ColorPicker.Spectrum();
     this._spectrum.setColor(color, format);
-    if (this._contrastColor)
-      this._spectrum.setContrastColor(this._contrastColor);
+    if (this._contrastInfo)
+      this._spectrum.setContrastInfo(this._contrastInfo);
 
     this._spectrum.addEventListener(ColorPicker.Spectrum.Events.SizeChanged, this._spectrumResized, this);
     this._spectrum.addEventListener(ColorPicker.Spectrum.Events.ColorChanged, this._boundSpectrumChanged);
