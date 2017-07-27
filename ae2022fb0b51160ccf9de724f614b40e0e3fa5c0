@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53d826a6_78aa7a7a",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-27T13:59:27Z",
+      "side": 0,
+      "message": "This condition has been met now. Deleted this instead of updating the logic to use the feature.",
+      "revId": "ae2022fb0b51160ccf9de724f614b40e0e3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36250dfd_c675a743",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-27T13:59:27Z",
+      "side": 0,
+      "message": "Same here -- deleted this instead of updating the logic to use the feature.",
+      "revId": "ae2022fb0b51160ccf9de724f614b40e0e3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330012c4_48c42de8",
+        "filename": "content/browser/web_contents/web_contents_view_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-27T13:59:27Z",
+      "side": 0,
+      "message": "See comments in display_unittests about this.",
+      "revId": "ae2022fb0b51160ccf9de724f614b40e0e3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce3fbbf_a7ff8943",
+        "filename": "gpu/ipc/service/direct_composition_child_surface_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-27T13:59:27Z",
+      "side": 0,
+      "message": "We now receive the color space parameter from the Resize method -- use that instead of querying the new feature.\n\n(when we add the \"force hdr\" mode in a future patch, that will result in the color space here always reporting that it is hdr).",
+      "revId": "ae2022fb0b51160ccf9de724f614b40e0e3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

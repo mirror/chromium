@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec1c3be7_20b540f1",
+        "filename": "ui/display/display_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-27T13:59:27Z",
+      "side": 1,
+      "message": "The next patch will add a function display::Display::SetColorSpaceAndBitDepth, which will update the bit depth based on whether or not the color space is HDR.\n\nFor now, leave this test disabled.",
+      "revId": "6aed74dddef044cb6503ec1eae01ae8cd83c3c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
