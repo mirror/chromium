@@ -43,6 +43,10 @@ class BASE_EXPORT UnguessableToken {
   // initialized via Create(). This is a security issue, and should be handled.
   static UnguessableToken Deserialize(uint64_t high, uint64_t low);
 
+  // Return a UnguessableToken built from string.
+  // It should only be used in deserialization scenarios.
+  static UnguessableToken Deserialize(const std::string& str);
+
   // Creates an empty UnguessableToken.
   // Assign to it with Create() before using it.
   constexpr UnguessableToken() = default;
@@ -51,7 +55,7 @@ class BASE_EXPORT UnguessableToken {
   uint64_t GetHighForSerialization() const {
     DCHECK(!is_empty());
     return high_;
-  };
+  }
 
   // NOTE: Serializing an empty UnguessableToken is an illegal operation.
   uint64_t GetLowForSerialization() const {
@@ -59,8 +63,13 @@ class BASE_EXPORT UnguessableToken {
     return low_;
   }
 
+  // NOTE: Serializing an empty UnguessableToken is an illegal operation.
+  std::string GetStringForSerialization() const;
+
   bool is_empty() const { return high_ == 0 && low_ == 0; }
 
+  // Get a human readable string.
+  // NOTE: Don't use it for serialization.
   std::string ToString() const;
 
   explicit operator bool() const { return !is_empty(); }

@@ -66,6 +66,16 @@ TEST(UnguessableTokenTest, VerifySerialization) {
   EXPECT_EQ(token, Deserialized);
 }
 
+TEST(UnguessableTokenTest, VerifyStringSerialization) {
+  for (size_t i = 0; i < 100; i++) {
+    UnguessableToken token = UnguessableToken::Create();
+    std::string serialized = token.GetStringForSerialization();
+
+    UnguessableToken deserialized = UnguessableToken::Deserialize(serialized);
+    EXPECT_EQ(token, deserialized);
+  }
+}
+
 TEST(UnguessableTokenTest, VerifyToString) {
   UnguessableToken token = UnguessableToken::Deserialize(0x123, 0xABC);
   std::string expected = "(0000012300000ABC)";
