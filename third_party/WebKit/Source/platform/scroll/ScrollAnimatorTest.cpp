@@ -81,8 +81,14 @@ class MockScrollableArea : public GarbageCollectedFinalized<MockScrollableArea>,
   bool UserInputScrollable(ScrollbarOrientation) const override { return true; }
   bool ShouldPlaceVerticalScrollbarOnLeft() const override { return false; }
   IntSize ScrollOffsetInt() const override { return IntSize(); }
-  int VisibleHeight() const override { return 768; }
-  int VisibleWidth() const override { return 1024; }
+  int VisibleHeight(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return 768;
+  }
+  int VisibleWidth(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return 1024;
+  }
   bool ScrollAnimatorEnabled() const override {
     return scroll_animator_enabled_;
   }
