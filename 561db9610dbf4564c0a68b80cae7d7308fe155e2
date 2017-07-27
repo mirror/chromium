@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "851f3e5d_dc0e3a59",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-27T13:01:49Z",
+      "side": 1,
+      "message": "agreed that something that enforces a single choice would be better.",
+      "parentUuid": "42578a48_11897c5d",
+      "range": {
+        "startLine": 2166,
+        "startChar": 19,
+        "endLine": 2166,
+        "endChar": 58
+      },
+      "revId": "561db9610dbf4564c0a68b80cae7d7308fe155e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb5155e9_ed776415",
         "filename": "ios/chrome/browser/chrome_url_util.h",
         "patchSetId": 1

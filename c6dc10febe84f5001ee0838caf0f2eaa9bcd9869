@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a428bc95_50ff773b",
+        "filename": "ios/chrome/app/application_delegate/tab_opening.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-27T13:01:49Z",
+      "side": 1,
+      "message": "triggering, not trigerring",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "c6dc10febe84f5001ee0838caf0f2eaa9bcd9869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "155f8995_87812962",
+        "filename": "ios/chrome/app/application_delegate/url_opener.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-27T13:01:49Z",
+      "side": 1,
+      "message": "Should this comment be updated?",
+      "revId": "c6dc10febe84f5001ee0838caf0f2eaa9bcd9869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
