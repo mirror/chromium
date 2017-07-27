@@ -34,6 +34,24 @@
       "revId": "53837e18faa5d251b1ec3166347c9aeaa6d57908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2c5c2d_90e3ef52",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-27T05:04:15Z",
+      "side": 1,
+      "message": "Let\u0027s go with this for now.",
+      "parentUuid": "27ca9138_d2ad7c1f",
+      "revId": "53837e18faa5d251b1ec3166347c9aeaa6d57908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
