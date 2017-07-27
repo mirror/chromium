@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fc6c798_be413ec7",
+        "filename": "third_party/brotli/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-07-27T18:54:00Z",
+      "side": 1,
+      "message": "is it intentional the deps + public_deps never do the single-line format?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 3
+      },
+      "revId": "489151de0dba2c6236c30565ef2771a560169c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
