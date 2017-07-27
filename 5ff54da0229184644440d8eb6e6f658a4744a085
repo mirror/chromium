@@ -251,6 +251,24 @@
       "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47eb7ed5_08d095af",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T10:38:38Z",
+      "side": 1,
+      "message": "Good point.",
+      "parentUuid": "1a396286_6d089020",
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
