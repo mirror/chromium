@@ -55,3 +55,10 @@ const char kEnableUnifiedDesktop[] = "ash-enable-unified-desktop";
 #endif
 
 }  // namespace switches
+
+namespace features {
+
+const base::Feature kHighDynamicRange{"HighDynamicRange",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
+
+}  // namespace features
