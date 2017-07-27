@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d7de07a_f6de397b",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T08:17:27Z",
+      "side": 1,
+      "message": "\u0027used on the worker thread\u0027 part is probably about the renderer process thing, while we\u0027re in the browser process here?  (I think this one\u0027s created and lives on the IO thread)\n\nCan you also note about the new lifetime semantics e.g. kept alive while the connection is held in the renderer)",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d2c86a_e1acf8c7",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T08:17:27Z",
+      "side": 1,
+      "message": "handle -\u003e content_settings_ptr_handle ?",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301ce92d_50f56c44",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T08:17:27Z",
+      "side": 1,
+      "message": "Sorry, so what was the reason we need IsolatedCopy here?  security_origin_ is already isolated, and we only refer these on a single thread?",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78be61ca_3b44e59b",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T08:17:27Z",
+      "side": 1,
+      "message": "by shared workers -\u003e by the shared worker ?  (Now it\u0027s per-shared-worker)",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed9d598_c0251f2d",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T08:17:27Z",
+      "side": 1,
+      "message": "Can this just use url.mojom.Origin (and take SecurityOrigin)?",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
