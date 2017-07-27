@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2adc66c0_ea0a3f7d",
+        "filename": "media/base/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T16:56:36Z",
+      "side": 1,
+      "message": "Hmm, I think this should always be a source_set, but we can figure this out in another patch set.",
+      "revId": "905696470746bd20f0cbf3666a065eb7d14d7bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498d5871_f0c9dbd4",
+        "filename": "media/renderers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T16:56:36Z",
+      "side": 1,
+      "message": "It\u0027s not just for that. All of the above files include code from \"media/base\" which means they must be listed as deps. I.e., anything you see in #include should be listed as a dep here.",
+      "revId": "905696470746bd20f0cbf3666a065eb7d14d7bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
