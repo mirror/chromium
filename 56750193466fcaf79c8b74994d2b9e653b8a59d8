@@ -34,6 +34,24 @@
       "revId": "56750193466fcaf79c8b74994d2b9e653b8a59d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bac6b78_62622bbc",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T03:17:34Z",
+      "side": 1,
+      "message": "I didn\u0027t see that! please do use abc ordering, sorry.",
+      "parentUuid": "13051aa3_986c5ef0",
+      "revId": "56750193466fcaf79c8b74994d2b9e653b8a59d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
