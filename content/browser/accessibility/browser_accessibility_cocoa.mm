@@ -663,7 +663,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   if (![self instanceActive])
     return nil;
   return [NSNumber numberWithBool:
-      GetState(browserAccessibility_, ui::AX_STATE_BUSY)];
+      browserAccessibility_->GetBoolAttribute(ui::AX_ATTR_BUSY)];
 }
 
 - (NSNumber*)ariaColumnCount {
@@ -2713,8 +2713,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
           ui::AX_ATTR_LIVE_ATOMIC)) {
     [ret addObjectsFromArray:@[ NSAccessibilityARIAAtomicAttribute ]];
   }
-  if (browserAccessibility_->HasBoolAttribute(
-          ui::AX_ATTR_LIVE_BUSY)) {
+  if (browserAccessibility_->HasBoolAttribute(ui::AX_ATTR_BUSY)) {
     [ret addObjectsFromArray:@[ NSAccessibilityARIABusyAttribute ]];
   }
 
