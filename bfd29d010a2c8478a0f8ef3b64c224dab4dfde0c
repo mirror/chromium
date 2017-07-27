@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff64e5e1_d491f691",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-27T16:32:36Z",
+      "side": 1,
+      "message": "In writing this CL, noticed that this has been wrong.\n\nI\u0027m thinking about just removing this call. See https://chromium-review.googlesource.com/c/581955/",
+      "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b4dade_d9a89242",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-27T16:32:36Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
