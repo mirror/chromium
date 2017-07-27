@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9509dd19_df49d6b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-27T22:31:07Z",
+      "side": 1,
+      "message": "nit: drop {} for brevity, use void operator if you need to suppress return value.",
+      "revId": "d17d41d1da44eef5896a507a4afc95c7371fb6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "003676dd_14e3a120",
         "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
         "patchSetId": 9
@@ -13,6 +30,23 @@
       "writtenOn": "2017-07-27T21:47:34Z",
       "side": 1,
       "message": "@dgozman I think this \u0026 L484 should do the trick for handling reloads in the new world.",
+      "revId": "d17d41d1da44eef5896a507a4afc95c7371fb6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6d93dd_bab8817f",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/migrate_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-27T22:31:07Z",
+      "side": 1,
+      "message": "You don\u0027t need this globally, do you? Let\u0027s keep it in main.",
       "revId": "d17d41d1da44eef5896a507a4afc95c7371fb6c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
