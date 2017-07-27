@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3dae9392_7ced4621",
+        "filename": "base/callback_internal.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-27T07:17:28Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly on this, so I\u0027m okay either way, but...\n\nprobe::AsyncTask() expects this ID to be a pointer (void*), which will then be used in V8 as a key that identifies a task. So, the implicit contract of this ID space is: \"pass a pointer to one of your live objects.\" If you don\u0027t follow this rule, the ID may conflict with some of the others, because there\u0027s no other synchronization or namespacing mechanism. This essentially requires this Identifier() function returns a valid pointer; if it returns an arbitrary integer, you cannot make sure this ID is unique in the V8\u0027s task ID space.\n\nThe current implementation happens to return a pointer as a uintptr_t, so this works well for now. However, the value can\u0027t really be an arbitrary integer, so returning void* would be clearer.",
+      "parentUuid": "1b012177_fb677fd4",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 11
+      },
+      "revId": "105c0281cdd6fd00cbf82da724e01cd9f5d2ecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab873471_27a37458",
         "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
         "patchSetId": 9
