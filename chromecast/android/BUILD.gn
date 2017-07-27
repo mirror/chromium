@@ -49,4 +49,7 @@ cast_shared_library("libcast_shell_android") {
   if (is_cast_using_cma_backend) {
     deps += [ "//chromecast/media/cma/backend/android:cast_media_android" ]
   }
+
+  configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+  configs += [ "//build/config/android:hide_all_but_jni" ]
 }
