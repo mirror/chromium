@@ -598,8 +598,13 @@ Protocol.InspectorBackend._AgentPrototype = class {
           resolve(null);
           return;
         }
-        var args = this._replyArgs[method];
-        resolve(result && args.length ? result[args[0]] : undefined);
+        var returnValues = this._replyArgs[method];
+        if (!result || !returnValues.length)
+          resolve(undefined);
+        else if (returnValues.length === 1)
+          resolve(result[returnValues[0]]);
+        else
+          resolve(result);
       });
     });
   }
