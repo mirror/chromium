@@ -244,6 +244,7 @@ public class WebApkInfo extends WebappInfo {
         intent.putExtra(ShortcutHelper.EXTRA_SOURCE, source());
         intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackageName());
         intent.putExtra(ShortcutHelper.EXTRA_FORCE_NAVIGATION, shouldForceNavigation());
+        intent.putExtra(ShortcutHelper.EXTRA_ID, id());
     }
 
     /**
