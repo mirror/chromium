@@ -778,7 +778,7 @@ PaintOp* ClipRRectOp::Deserialize(const void* input,
                                   size_t output_size) {
   ClipRRectOp* op =
       SimpleDeserialize<ClipRRectOp>(input, input_size, output, output_size);
-  return op && IsValidSkClipOp(op->op) ? op : nullptr;
+  return op && IsValidSkClipOp(op->op) && op->rrect.isValid() ? op : nullptr;
 }
 
 PaintOp* ConcatOp::Deserialize(const void* input,
@@ -849,7 +849,7 @@ PaintOp* DrawDRRectOp::Deserialize(const void* input,
   helper.Read(&op->flags);
   helper.Read(&op->outer);
   helper.Read(&op->inner);
-  if (!helper.valid()) {
+  if (!helper.valid() || !op->outer.isValid() || !op->inner.isValid()) {
     op->~DrawDRRectOp();
     return nullptr;
   }
@@ -1044,7 +1044,7 @@ PaintOp* DrawRRectOp::Deserialize(const void* input,
   PaintOpReader helper(input, input_size);
   helper.Read(&op->flags);
   helper.Read(&op->rrect);
-  if (!helper.valid()) {
+  if (!helper.valid() || !op->rrect.isValid()) {
     op->~DrawRRectOp();
     return nullptr;
   }
@@ -1205,6 +1205,7 @@ void ClipRectOp::Raster(const ClipRectOp* op,
 void ClipRRectOp::Raster(const ClipRRectOp* op,
                          SkCanvas* canvas,
                          const PlaybackParams& params) {
+  DCHECK(op->rrect.isValid());
   canvas->clipRRect(op->rrect, op->op, op->antialias);
 }
 
@@ -1241,6 +1242,8 @@ void DrawDRRectOp::RasterWithFlags(const DrawDRRectOp* op,
                                    const PaintFlags* flags,
                                    SkCanvas* canvas,
                                    const PlaybackParams& params) {
+  DCHECK(op->inner.isValid());
+  DCHECK(op->outer.isValid());
   SkPaint paint = flags->ToSkPaint();
   canvas->drawDRRect(op->outer, op->inner, paint);
 }
@@ -1385,6 +1388,7 @@ void DrawRRectOp::RasterWithFlags(const DrawRRectOp* op,
                                   const PaintFlags* flags,
                                   SkCanvas* canvas,
                                   const PlaybackParams& params) {
+  DCHECK(op->rrect.isValid());
   SkPaint paint = flags->ToSkPaint();
   canvas->drawRRect(op->rrect, paint);
 }
