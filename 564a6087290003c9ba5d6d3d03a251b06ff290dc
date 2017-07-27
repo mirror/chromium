@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22946f16_cb58a6dc",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698fb5c1_6fcb4f79",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "926f2035_dea7e8df",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T17:16:50Z",
       "side": 1,
       "message": "nit: ()",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869b43b3_8e6a6d9e",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "926f2035_dea7e8df",
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e9de4c17_faff0b12",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "I find \"T*\" and \"T\u0026\" a lot more readable personally, since there\u0027s one less layer of indirection in my head.",
+      "parentUuid": "2a8ecc4d_db9d0f90",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80bd73d8_4fec23e7",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-24T17:16:50Z",
       "side": 1,
       "message": "Decrement here too",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50ca985_9ed84054",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Woo! Added a new \"IteratorIncDec\" test.",
+      "parentUuid": "80bd73d8_4fec23e7",
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "646fe9f2_65c25049",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Yeah, I figured this will be the 99% case, I added a note.",
+      "parentUuid": "ec2bd57a_ba95832a",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de3d6a90_3f6ad15c",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c1379865_337a32b5",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de3d6a90_3f6ad15c",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efd496cd_db83292c",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-24T17:16:50Z",
       "side": 1,
       "message": "nit: I think this can be\n\nusing base::circular_deque_const_iterator;",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f3950c_5c69dabd",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Crazypants!",
+      "parentUuid": "efd496cd_db83292c",
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "fa625d73_deadcce2",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "I was originally thinking it should be the same, but I would expect size() from a vector, added (size+1 since there\u0027s an extra item required).",
+      "parentUuid": "48130709_7e543fab",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "465791b1_0cd393bd",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -152,6 +296,24 @@
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59235574_805547ef",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "465791b1_0cd393bd",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a224101b_121ffe6f",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a6d9a8_262d007c",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d51bfdd_81a6a610",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -186,6 +366,24 @@
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7453902_574ec1bc",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d51bfdd_81a6a610",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "a28791df_9568b667",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82876af_8a98268a",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc30c95_b8517672",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -217,6 +433,24 @@
       "writtenOn": "2017-07-24T17:16:50Z",
       "side": 1,
       "message": "I don\u0027t think it matters too much here, but typically the const version is the one that is implemented, and the non-const version is the one that calls the const version, since it\u0027s you can reason from the non-const version that it\u0027s safe to cast to const and back. It\u0027s not as clear that you can remove the const from the const version if that makes sense...",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d82d8f_d38bfd07",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-27T22:09:36Z",
+      "side": 1,
+      "message": "Good point, changed.",
+      "parentUuid": "7bc30c95_b8517672",
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
