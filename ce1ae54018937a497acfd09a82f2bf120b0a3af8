@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b65558ae_4930f6b8",
+        "filename": "chrome/app/resources/manpage.1.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1119597
+      },
+      "writtenOn": "2017-07-27T10:43:48Z",
+      "side": 1,
+      "message": "This is from your original CL (http://codereview.chromium.org/503023) but I think it\u0027s not/no longer accurate.\n\nHow about simply \"Open the given URL in a new window.\"?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 60
+      },
+      "revId": "ce1ae54018937a497acfd09a82f2bf120b0a3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
