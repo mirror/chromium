@@ -34,6 +34,24 @@
       "revId": "940681112a8821afe21a6c3e9da1b31645eaf924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632ede29_1d48c2af",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T23:26:11Z",
+      "side": 1,
+      "message": "Ah got it. This explains why a CHECK() is used in similar cases, see examples https://cs.chromium.org/search/?q\u003d%22Get(0%22+file:%5Esrc/chrome/browser/ui/webui/+package:%5Echromium$\u0026type\u003dcs.",
+      "parentUuid": "3b7f3e1f_98b5bc00",
+      "revId": "940681112a8821afe21a6c3e9da1b31645eaf924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
