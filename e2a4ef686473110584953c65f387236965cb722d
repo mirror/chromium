@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "f07505ff_16687b9c",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T18:05:38Z",
+      "side": 1,
+      "message": "Still present in PasswordProtectionService::ShowModalWarning",
+      "parentUuid": "10990e24_7af63f23",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "e2a4ef686473110584953c65f387236965cb722d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4fa2a68_fb4c4068",
         "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
         "patchSetId": 7

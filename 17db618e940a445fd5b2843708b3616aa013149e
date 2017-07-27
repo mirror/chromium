@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91d06b59_af74c1a0",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T18:05:38Z",
+      "side": 1,
+      "message": "else not needed",
+      "range": {
+        "startLine": 241,
+        "startChar": 3,
+        "endLine": 241,
+        "endChar": 9
+      },
+      "revId": "17db618e940a445fd5b2843708b3616aa013149e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78dd3b48_74efbbbd",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T18:05:38Z",
+      "side": 1,
+      "message": "Please add them to kExperimentalFeatures also",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "17db618e940a445fd5b2843708b3616aa013149e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
