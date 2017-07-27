@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "754bfa6a_a86a441d",
+        "filename": "ios/chrome/browser/suggestions/suggestions_service_factory.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-27T15:12:20Z",
+      "side": 1,
+      "message": "Out of curiosity, why is this continue on shutdown?",
+      "revId": "00b5c1fbcf0529f3b268b64f5de32a3bd386b422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
