@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e60aec64_306abeb7",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-27T00:14:42Z",
+      "side": 1,
+      "message": "Please add a comment to all proto message structures indicating the next available id. It really helps with adding new fields when they the messages get larger and fields may not be listed in the correct order. See https://cs.chromium.org/chromium/src/remoting/proto/video_stats.proto?sq\u003dpackage:chromium\u0026dr for an example (although we don\u0027t do it very consistently).",
+      "range": {
+        "startLine": 8,
+        "startChar": 31,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56964569_236dfbbf",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-27T00:14:42Z",
+      "side": 1,
+      "message": "I think you\u0027ll want an id field here (and in FileTransferResponse) so that the client can disambiguate FileTransferResponse messages sent for concurrent uploads.",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78501bb0_845d908f",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-27T00:14:42Z",
+      "side": 1,
+      "message": "I think we tend to avoid using zero in enums. Certainly when looking at our metrics, they\u0027re impossible to distinguish from missing fields, which can be confusing. I recommend starting at 1.",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d281f6_67887aa3",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-27T00:14:42Z",
+      "side": 1,
+      "message": "Since the error code is optional, do you need an explicit value for OK? Why not just omit the field for non-error states?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e00bad7_97c306d6",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-27T00:14:42Z",
+      "side": 1,
+      "message": "Why do you need to know the filename at the client?",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
