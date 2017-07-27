@@ -4,18 +4,31 @@
 
 #include "modules/storage/StorageNamespaceController.h"
 
+#include "core/exported/WebViewBase.h"
+#include "core/frame/ContentSettingsClient.h"
+#include "core/page/ChromeClient.h"
 #include "modules/storage/InspectorDOMStorageAgent.h"
-#include "modules/storage/StorageClient.h"
 #include "modules/storage/StorageNamespace.h"
+#include "platform/wtf/PtrUtil.h"
+#include "public/platform/WebStorageNamespace.h"
+#include "public/web/WebViewClient.h"
 
 namespace blink {
+
+#define STATIC_ASSERT_MATCHING_ENUM(enum_name1, enum_name2)                   \
+  static_assert(static_cast<int>(enum_name1) == static_cast<int>(enum_name2), \
+                "mismatching enums: " #enum_name1)
+STATIC_ASSERT_MATCHING_ENUM(kLocalStorage,
+                            ContentSettingsClient::StorageType::kLocal);
+STATIC_ASSERT_MATCHING_ENUM(kSessionStorage,
+                            ContentSettingsClient::StorageType::kSession);
 
 const char* StorageNamespaceController::SupplementName() {
   return "StorageNamespaceController";
 }
 
-StorageNamespaceController::StorageNamespaceController(StorageClient* client)
-    : client_(client), inspector_agent_(nullptr) {}
+StorageNamespaceController::StorageNamespaceController()
+    : inspector_agent_(nullptr) {}
 
 StorageNamespaceController::~StorageNamespaceController() {}
 
@@ -27,15 +40,30 @@ DEFINE_TRACE(StorageNamespaceController) {
 StorageNamespace* StorageNamespaceController::SessionStorage(
     bool optional_create) {
   if (!session_storage_ && optional_create)
-    session_storage_ = client_->CreateSessionStorageNamespace();
+    session_storage_ = CreateSessionStorageNamespace();
   return session_storage_.get();
 }
 
-void StorageNamespaceController::ProvideStorageNamespaceTo(
-    Page& page,
-    StorageClient* client) {
+void StorageNamespaceController::ProvideStorageNamespaceTo(Page& page) {
   StorageNamespaceController::ProvideTo(page, SupplementName(),
-                                        new StorageNamespaceController(client));
+                                        new StorageNamespaceController());
+}
+
+std::unique_ptr<StorageNamespace>
+StorageNamespaceController::CreateSessionStorageNamespace() {
+  WebViewClient* client =
+      GetSupplementable()->GetChromeClient().GetWebView()->Client();
+  if (!client)
+    return nullptr;
+  return WTF::WrapUnique(new StorageNamespace(
+      WTF::WrapUnique(client->CreateSessionStorageNamespace())));
+}
+
+bool StorageNamespaceController::CanAccessStorage(LocalFrame* frame,
+                                                  StorageType type) const {
+  DCHECK(frame->GetContentSettingsClient());
+  return frame->GetContentSettingsClient()->AllowStorage(
+      static_cast<ContentSettingsClient::StorageType>(type));
 }
 
 }  // namespace blink
