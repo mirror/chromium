@@ -37,6 +37,7 @@ namespace content {
 class MediaInternals;
 class RenderFrameImpl;
 class RenderWidgetHostLatencyTracker;
+class NavigationHandleImpl;
 }  // namespace content
 
 namespace resource_coordinator {
@@ -114,6 +115,7 @@ class METRICS_EXPORT UkmRecorder {
   friend translate::TranslateRankerImpl;
   friend TestRecordingHelper;
   friend UkmInterface;
+  friend content::NavigationHandleImpl;
   friend content::MediaInternals;
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;

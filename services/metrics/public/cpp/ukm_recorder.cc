@@ -34,7 +34,8 @@ UkmRecorder* UkmRecorder::Get() {
 // static
 ukm::SourceId UkmRecorder::GetNewSourceID() {
   static base::AtomicSequenceNumber seq;
-  return static_cast<ukm::SourceId>(seq.GetNext());
+  int val = seq.GetNext();
+  return static_cast<ukm::SourceId>(seq.GetNext() + 1);
 }
 
 std::unique_ptr<UkmEntryBuilder> UkmRecorder::GetEntryBuilder(
