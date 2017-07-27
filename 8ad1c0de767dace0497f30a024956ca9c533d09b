@@ -46,6 +46,30 @@
       "revId": "8ad1c0de767dace0497f30a024956ca9c533d09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fde13e76_65fdeef4",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-27T09:34:53Z",
+      "side": 1,
+      "message": "Yeah, it would be nicer to expose WebTaskRunner (instead of exposing //base types to Blink -- even though we have decided to allow Blink to use //base types, we\u0027re careful about types allowed in Blink).",
+      "parentUuid": "b7db1215_51898c2e",
+      "range": {
+        "startLine": 466,
+        "startChar": 20,
+        "endLine": 466,
+        "endChar": 38
+      },
+      "revId": "8ad1c0de767dace0497f30a024956ca9c533d09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
