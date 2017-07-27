@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0669afeb_06585550",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-27T08:59:47Z",
+      "side": 1,
+      "message": "Done for L548. L632 uses GURL interface. I\u0027ve changed this to create a GURL instance there for them.",
+      "parentUuid": "8ab541a1_92ee1ee6",
+      "revId": "42f5bbdcc2632b74f7ceb309660075e5af89d938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbbe2e1a_a1766507",
         "filename": "content/child/web_url_loader_impl.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T08:48:43Z",
       "side": 1,
       "message": "Do we want to have RedirectInfo equivalent struct in blink?",
+      "revId": "42f5bbdcc2632b74f7ceb309660075e5af89d938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4557530c_7cddb8a9",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-27T08:59:47Z",
+      "side": 1,
+      "message": "Yutaka just suggested the same idea (https://chromium-review.googlesource.com/c/583107/9/content/child/web_url_loader_impl_unittest.cc#147). I\u0027ll consider doing that later.",
+      "parentUuid": "fbbe2e1a_a1766507",
       "revId": "42f5bbdcc2632b74f7ceb309660075e5af89d938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
