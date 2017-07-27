@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5e09d37_481e5a75",
+        "filename": "chrome/browser/ui/webui/help/version_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T20:04:13Z",
+      "side": 1,
+      "message": "nit: s/an/a/",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 13
+      },
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20c066e_2b1c1631",
+        "filename": "chrome/browser/ui/webui/help/version_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T20:04:13Z",
+      "side": 1,
+      "message": "nit: \u0027an update that the user\u0027",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b647849_a12ea10f",
+        "filename": "chrome/browser/ui/webui/help/version_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T20:04:13Z",
+      "side": 1,
+      "message": "nit: \u0027with a larger\u0027",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c9f208_07db3ebf",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T20:04:13Z",
+      "side": 1,
+      "message": "Thanks for the rename and broader updates to comments and names. I might prefer this \u0027success\u0027 argument be renamed |granted| or |permission_granted|, as James suggested, but the function rename is already a big help.",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ed184d_5dbdfbc7",
+        "filename": "chromeos/dbus/update_engine_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T20:04:13Z",
+      "side": 1,
+      "message": "nit: s/a/an/ ditto to my other nits on the duplicated comment.",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
