@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51e86760_0b909888",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-27T15:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4b8bcef_10940c18",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "cca5e5c7d96ad6b48d5066704a721b320ebd82df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c78120e_f6b141bf",
         "filename": "components/ntp_snippets/features.h",
         "patchSetId": 3
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "you can say \"ignored by GCM without Chrome wakeup\"",
       "parentUuid": "7c78120e_f6b141bf",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "cca5e5c7d96ad6b48d5066704a721b320ebd82df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c0dc3e_e4ee5555",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-07-27T15:34:51Z",
+      "side": 1,
+      "message": "Actually I checked with Peter and they would actually wake up Chrome.",
+      "parentUuid": "bc748dd3_cc0c83bb",
       "range": {
         "startLine": 44,
         "startChar": 40,
