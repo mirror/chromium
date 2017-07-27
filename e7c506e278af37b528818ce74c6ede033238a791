@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fa82a86e_e3b20068",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-27T18:17:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d28bc09c_b4516628",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bd364cf_7c3a198e",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "That is intentional. The recipe currently passes --test_launcher_summary_output because that\u0027s the only flag that exists in the tree version, but everything else uses --test-launcher-summary-output so I\u0027d like to use that here. After this CL lands, I plan to flip the recipe and then remove the underscore version from here.",
       "parentUuid": "1bd364cf_7c3a198e",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7f61688_05a43961",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-27T18:17:41Z",
+      "side": 1,
+      "message": "Oh! As usual, I missed the - vs _ distinction.  Thanks for clarifying.",
+      "parentUuid": "c89c3893_6f165b1a",
       "revId": "e7c506e278af37b528818ce74c6ede033238a791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
