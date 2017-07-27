@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a7d1a88_9c13268b",
+        "filename": "chrome/renderer/net/net_error_helper_core.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T06:09:45Z",
+      "side": 1,
+      "message": "At this point it feels weird to call this method IsBlinkDnsError... should just IsDnsError() be fine?",
+      "revId": "a0a2079671569d2ba6fa1b9498d44ad0a946d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c6771e_66c2e878",
+        "filename": "components/error_page/common/error.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T06:09:45Z",
+      "side": 1,
+      "message": "nit: This may sound a bit tautological... just say \u0027Represents an error info necessary to show an error page\u0027 or something?",
+      "revId": "a0a2079671569d2ba6fa1b9498d44ad0a946d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
