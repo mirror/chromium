@@ -16,6 +16,24 @@
       "revId": "9caa0060f97185016e6b7d786e09c01431234955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3321769e_08599ded",
+        "filename": "ash/login/ui/login_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-27T23:33:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1c7f46c_8dfd05ea",
+      "revId": "9caa0060f97185016e6b7d786e09c01431234955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
