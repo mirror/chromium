@@ -28,6 +28,9 @@ class CHROMEOS_EXPORT AuthPolicyClient : public DBusClient {
   using GetUserStatusCallback = base::OnceCallback<void(
       authpolicy::ErrorType error,
       const authpolicy::ActiveDirectoryUserStatus& user_status)>;
+  using GetKerberosFilesCallback =
+      base::OnceCallback<void(authpolicy::ErrorType error,
+                              const authpolicy::KerberosFiles& kerberos_files)>;
   using JoinCallback = base::OnceCallback<void(authpolicy::ErrorType error)>;
   using RefreshPolicyCallback = base::OnceCallback<void(bool success)>;
 
@@ -65,6 +68,11 @@ class CHROMEOS_EXPORT AuthPolicyClient : public DBusClient {
   // |callback| is called after getting (or failing to get) D-Bus response.
   virtual void GetUserStatus(const std::string& object_guid,
                              GetUserStatusCallback callback) = 0;
+
+  // Calls GetKerberosFiles. If authpolicyd has kerberos files it sends these in
+  // response: credentials cache and krb5 config files.
+  virtual void GetKerberosFiles(const std::string& object_guid,
+                                GetKerberosFilesCallback callback) = 0;
 
   // Calls RefreshDevicePolicy - handle policy for the device.
   // Fetch GPO files from Active directory server, parse it, encode it into
