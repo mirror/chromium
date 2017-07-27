@@ -16,6 +16,24 @@
       "revId": "20d6fb4ce6e111eaff113807ee8cb1b054914ad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dbce18_93a26834",
+        "filename": "content/renderer/p2p/ipc_network_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-27T12:35:36Z",
+      "side": 1,
+      "message": "You might want to VLOG around the two SignalNetworksChanged() calls too, and VLOG if changed \u003d false.",
+      "parentUuid": "2b1ba418_cd4edcb4",
+      "revId": "20d6fb4ce6e111eaff113807ee8cb1b054914ad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
