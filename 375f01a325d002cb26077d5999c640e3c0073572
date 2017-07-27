@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f0838e5_3fa66466",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-27T19:07:53Z",
+      "side": 1,
+      "message": "I think these functions would benefit a lot from being non anonymous since we will be able to unittest them :) \n\nAnd since this ValidationRequest class holds what basically is 3 pointers, I think you could just create an object/struct to store these and move the logic out. It could even be in another file like validation_utils.h or something like that.\n\nThen this class could become the entry point to the validation feature, which is in charge of loading the rules, handling the validation requests, etc.\n\nI think this would create a good separation of responsibilities, make easier testing (each can be tested individually).\n\nWhat do you think?",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 48
+      },
+      "revId": "375f01a325d002cb26077d5999c640e3c0073572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14784efd_c1826609",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-27T19:07:53Z",
+      "side": 1,
+      "message": "I think this class will need to handle multiple validation requests at the same time. Also possibly multiple profiles from the same country.",
+      "range": {
+        "startLine": 101,
+        "startChar": 27,
+        "endLine": 101,
+        "endChar": 43
+      },
+      "revId": "375f01a325d002cb26077d5999c640e3c0073572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
