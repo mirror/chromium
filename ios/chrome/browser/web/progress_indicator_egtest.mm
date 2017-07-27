@@ -195,7 +195,7 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
 }
 
 // Tests that the progress indicator disappears after form has been submitted.
-- (void)testProgressIndicatorDisappearsAfterFormSubmit {
+- (void)ss_testProgressIndicatorDisappearsAfterFormSubmit {
   if (IsIPadIdiom()) {
     EARL_GREY_TEST_SKIPPED(@"Skipped for iPad (no progress view in tablet)");
   }
@@ -225,7 +225,7 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
 
 // Tests that the progress indicator disappears after form post attempt with a
 // submit event that returns false.
-- (void)testProgressIndicatorDisappearsAfterSuppressedFormPost {
+- (void)ss_testProgressIndicatorDisappearsAfterSuppressedFormPost {
   if (IsIPadIdiom()) {
     EARL_GREY_TEST_SKIPPED(@"Skipped for iPad (no progress view in tablet)");
   }
