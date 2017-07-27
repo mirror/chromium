@@ -269,6 +269,11 @@ public class BottomSheetContentController extends BottomNavigationView
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_SCROLLING
+                || mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK) {
+            return false;
+        }
+
         if (mSelectedItemId == item.getItemId()) return false;
 
         mBottomSheet.defocusOmnibox();
