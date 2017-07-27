@@ -42,18 +42,17 @@ void RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
   //
   DCHECK(readings.size() == 1);
 
-  double acceleration_x = readings[0].values[0].value();
-  double acceleration_y = readings[0].values[1].value();
-  double acceleration_z = readings[0].values[2].value();
+  double acceleration_x = readings[0].accel.x;
+  double acceleration_y = readings[0].accel.y;
+  double acceleration_z = readings[0].accel.z;
 
   double alpha = 0.0;
   double beta = std::atan2(-acceleration_y, acceleration_z);
   double gamma = std::asin(acceleration_x / kMeanGravity);
 
-  fused_reading->values[0].value() = beta;
-  fused_reading->values[1].value() = gamma;
-  fused_reading->values[2].value() = alpha;
-  fused_reading->values[3].value() = 0.0;
+  fused_reading->orientation_euler.x = beta;
+  fused_reading->orientation_euler.y = gamma;
+  fused_reading->orientation_euler.z = alpha;
 }
 
 }  // namespace device

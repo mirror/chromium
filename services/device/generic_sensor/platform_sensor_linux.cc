@@ -14,8 +14,9 @@ namespace {
 
 // Checks if at least one value has been changed.
 bool HaveValuesChanged(const SensorReading& lhs, const SensorReading& rhs) {
-  return lhs.values[0] != rhs.values[0] || lhs.values[1] != rhs.values[1] ||
-         lhs.values[2] != rhs.values[2];
+  return lhs.raw.values[0] != rhs.raw.values[0] ||
+         lhs.raw.values[1] != rhs.raw.values[1] ||
+         lhs.raw.values[2] != rhs.raw.values[2];
 }
 
 }  // namespace
@@ -55,7 +56,8 @@ void PlatformSensorLinux::UpdatePlatformSensorReading(SensorReading reading) {
     notifyNeeded = true;
   }
   old_values_ = reading;
-  reading.timestamp = (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();
+  reading.raw.timestamp =
+      (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();
   UpdateSensorReading(reading, notifyNeeded);
 }
 
