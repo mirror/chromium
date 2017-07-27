@@ -28,32 +28,39 @@ TEST(InputFileParsersTest, ParseJSON) {
       "  \"entries\": ["
       "    {"
       "      \"name\": \"hsts.example.com\","
+      "      \"type\": \"bulk\","
       "      \"mode\": \"force-https\", "
       "      \"include_subdomains\": true"
       "    }, {"
       "      \"name\": \"hsts-no-subdomains.example.com\","
+      "      \"type\": \"bulk\","
       "      \"mode\": \"force-https\", "
       "      \"include_subdomains\": false"
       "    }, {"
       "      \"name\": \"hpkp.example.com\","
+      "      \"type\": \"custom\","
       "      \"pins\": \"thepinset\","
       "      \"include_subdomains_for_pinning\": true"
       "    }, {"
       "      \"name\": \"hpkp-no-subdomains.example.com\","
+      "      \"type\": \"custom\","
       "      \"pins\": \"thepinset2\", "
       "      \"include_subdomains_for_pinning\": false"
       "    }, {"
       "      \"name\": \"expect-ct.example.com\","
+      "      \"type\": \"custom\","
       "      \"expect_ct\": true,"
       "      \"expect_ct_report_uri\": \"https://expect-ct-log.example.com\""
       "    }, {"
       "      \"name\": \"expect-staple.example.com\","
+      "      \"type\": \"custom\","
       "      \"expect_staple\": true,"
       "      \"expect_staple_report_uri\": "
       "\"https://expect-staple-log.example.com\","
       "      \"include_subdomains_for_expect_staple\": true"
       "    }, {"
       "      \"name\": \"expect-staple-no-subdomains.example.com\","
+      "      \"type\": \"custom\","
       "      \"expect_staple\": true,"
       "      \"include_subdomains_for_expect_staple\": false"
       "    }"
@@ -80,6 +87,7 @@ TEST(InputFileParsersTest, ParseJSON) {
   ASSERT_EQ(7U, entries.size());
   TransportSecurityStateEntry* entry = entries[0].get();
   EXPECT_EQ("hsts.example.com", entry->hostname);
+  EXPECT_EQ(Type::Bulk, entry->type);
   EXPECT_TRUE(entry->force_https);
   EXPECT_TRUE(entry->include_subdomains);
   EXPECT_FALSE(entry->hpkp_include_subdomains);
@@ -92,6 +100,7 @@ TEST(InputFileParsersTest, ParseJSON) {
 
   entry = entries[1].get();
   EXPECT_EQ("hsts-no-subdomains.example.com", entry->hostname);
+  EXPECT_EQ(Type::Bulk, entry->type);
   EXPECT_TRUE(entry->force_https);
   EXPECT_FALSE(entry->include_subdomains);
   EXPECT_FALSE(entry->hpkp_include_subdomains);
@@ -104,6 +113,7 @@ TEST(InputFileParsersTest, ParseJSON) {
 
   entry = entries[2].get();
   EXPECT_EQ("hpkp.example.com", entry->hostname);
+  EXPECT_EQ(Type::Custom, entry->type);
   EXPECT_FALSE(entry->force_https);
   EXPECT_FALSE(entry->include_subdomains);
   EXPECT_TRUE(entry->hpkp_include_subdomains);
@@ -116,6 +126,7 @@ TEST(InputFileParsersTest, ParseJSON) {
 
   entry = entries[3].get();
   EXPECT_EQ("hpkp-no-subdomains.example.com", entry->hostname);
+  EXPECT_EQ(Type::Custom, entry->type);
   EXPECT_FALSE(entry->force_https);
   EXPECT_FALSE(entry->include_subdomains);
   EXPECT_FALSE(entry->hpkp_include_subdomains);
@@ -128,6 +139,7 @@ TEST(InputFileParsersTest, ParseJSON) {
 
   entry = entries[4].get();
   EXPECT_EQ("expect-ct.example.com", entry->hostname);
+  EXPECT_EQ(Type::Custom, entry->type);
   EXPECT_FALSE(entry->force_https);
   EXPECT_FALSE(entry->include_subdomains);
   EXPECT_FALSE(entry->hpkp_include_subdomains);
@@ -140,6 +152,7 @@ TEST(InputFileParsersTest, ParseJSON) {
 
   entry = entries[5].get();
   EXPECT_EQ("expect-staple.example.com", entry->hostname);
+  EXPECT_EQ(Type::Custom, entry->type);
   EXPECT_FALSE(entry->force_https);
   EXPECT_FALSE(entry->include_subdomains);
   EXPECT_FALSE(entry->hpkp_include_subdomains);
@@ -153,6 +166,7 @@ TEST(InputFileParsersTest, ParseJSON) {
 
   entry = entries[6].get();
   EXPECT_EQ("expect-staple-no-subdomains.example.com", entry->hostname);
+  EXPECT_EQ(Type::Custom, entry->type);
   EXPECT_FALSE(entry->force_https);
   EXPECT_FALSE(entry->include_subdomains);
   EXPECT_FALSE(entry->hpkp_include_subdomains);
@@ -188,12 +202,38 @@ TEST(InputFileParsersTest, ParseJSONInvalid) {
       "  \"pinsets\": [],"
       "  \"entries\": ["
       "    {"
-      "      \"mode\": \"force-https\""
+      "      \"mode\": \"force-https\","
+      "      \"type\": \"bulk\""
       "    }"
       "  ]"
       "}";
 
   EXPECT_FALSE(ParseJSON(missing_hostname, &entries, &pinsets));
+
+  std::string missing_type =
+      "{"
+      "  \"pinsets\": [],"
+      "  \"entries\": ["
+      "    {"
+      "      \"name\": \"example.com\","
+      "    }"
+      "  ]"
+      "}";
+
+  EXPECT_FALSE(ParseJSON(missing_type, &entries, &pinsets));
+
+  std::string invalid_type =
+      "{"
+      "  \"pinsets\": [],"
+      "  \"entries\": ["
+      "    {"
+      "      \"name\": \"example.com\","
+      "      \"type\": \"invalid\""
+      "    }"
+      "  ]"
+      "}";
+
+  EXPECT_FALSE(ParseJSON(invalid_type, &entries, &pinsets));
 }
 
 // Test that parsing valid JSON with an invalid (HPKP) pinset fails.

@@ -13,12 +13,21 @@ namespace net {
 
 namespace transport_security_state {
 
+// The preload policy applying to the entry.
+enum Type {
+  Bulk,
+  Custom
+};
+
 // TransportSecurityStateEntry represents a preloaded entry.
 struct TransportSecurityStateEntry {
   TransportSecurityStateEntry();
   ~TransportSecurityStateEntry();
 
   std::string hostname;
+  // The type is currently not consumed by any code, but we include it in the
+  // parsed format to ensure that the preloaded entries have valid values.
+  Type type;
 
   bool include_subdomains = false;
   bool force_https = false;
