@@ -248,7 +248,6 @@ using base::TimeDelta;
 using blink::WebCachePolicy;
 using blink::WebContentDecryptionModule;
 using blink::WebContextMenuData;
-using blink::WebCString;
 using blink::WebData;
 using blink::WebDataSource;
 using blink::WebDocument;
@@ -4748,12 +4747,19 @@ void RenderFrameImpl::UnregisterProtocolHandler(const WebString& scheme,
 }
 
 void RenderFrameImpl::DidSerializeDataForFrame(
-    const WebCString& data,
+    const WebData& data,
     WebFrameSerializerClient::FrameSerializationStatus status) {
   bool end_of_data =
       status == WebFrameSerializerClient::kCurrentFrameIsFinished;
+  std::string serialized_contents;
+  data.ForEachSegment([&serialized_contents](const char* segment,
+                                             size_t segment_size,
+                                             size_t segment_offset) {
+    serialized_contents += std::string(segment, segment_size);
+    return true;
+  });
   Send(new FrameHostMsg_SerializedHtmlWithLocalLinksResponse(
-      routing_id_, data, end_of_data));
+      routing_id_, serialized_contents, end_of_data));
 }
 
 void RenderFrameImpl::AddObserver(RenderFrameObserver* observer) {
