@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "b29dac4d_9e436c11",
+        "filename": "content/app/android/library_loader_hooks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-27T18:36:04Z",
+      "side": 0,
+      "message": "this does more than you removed (code is sorta inconsistent after) but I guess it\u0027s all dead code anyway so no harm in nuking now :)",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06ad78b9_4952b533",
         "filename": "content/browser/android/browser_startup_controller.h",
         "patchSetId": 4
