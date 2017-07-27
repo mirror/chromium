@@ -9,7 +9,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
-#include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
@@ -69,13 +68,12 @@ TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
       background_color_(SK_ColorWHITE) {
 #if defined(OS_ANDROID)
   frame_sink_id_ = AllocateFrameSinkId();
-  GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(frame_sink_id_);
+  GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
 #else
   // Not all tests initialize or need an image transport factory.
   if (ImageTransportFactory::GetInstance()) {
     frame_sink_id_ = AllocateFrameSinkId();
-    GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(
-        frame_sink_id_);
+    GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
   }
 #endif
 
@@ -92,7 +90,7 @@ TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
 TestRenderWidgetHostView::~TestRenderWidgetHostView() {
   viz::FrameSinkManagerImpl* manager = GetFrameSinkManager();
   if (manager) {
-    manager->surface_manager()->InvalidateFrameSinkId(frame_sink_id_);
+    manager->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
 
