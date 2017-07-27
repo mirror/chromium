@@ -34,6 +34,24 @@
       "revId": "e9be48a32fb108e90afc3e1f12e7c12059e63df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6108db_03d97cae",
+        "filename": "ui/webui/resources/js/cr/ui/table/table_column.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T02:51:50Z",
+      "side": 1,
+      "message": "Current annotations are not statically checked. You could replace any of these with\n@type {DoesNotExist}\nand there would be no compilation error thrown.\n\nAs of a few minutes ago, @dbeam has a candidate closure compiler CL that might make this CL obsolete. CC\u0027ed you on that CL.",
+      "parentUuid": "f5b90730_3f747e34",
+      "revId": "e9be48a32fb108e90afc3e1f12e7c12059e63df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
