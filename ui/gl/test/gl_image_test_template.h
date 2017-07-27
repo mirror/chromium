@@ -385,7 +385,7 @@ TYPED_TEST_P(GLImageCopyTest, CopyTexImage) {
                GL_RGBA, GL_UNSIGNED_BYTE, pixels.get());
 
   // Copy |image| to |texture|.
-  bool rv = image->CopyTexImage(target);
+  bool rv = image->CopyTexImage(target, 0);
   EXPECT_TRUE(rv);
 
   // Draw |texture| to viewport.

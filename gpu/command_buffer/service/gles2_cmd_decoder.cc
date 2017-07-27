@@ -9733,7 +9733,7 @@ void GLES2DecoderImpl::DoCopyTexImage(Texture* texture,
   // and ensure that CopyTexImage() is called each time the texture is
   // used.
   texture->SetLevelImageState(textarget, 0, Texture::COPIED);
-  bool rv = image->CopyTexImage(textarget);
+  bool rv = image->CopyTexImage(textarget, 0);
   DCHECK(rv) << "CopyTexImage() failed";
 }
 
@@ -17010,7 +17010,7 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
   if (image && dest_level == 0 && !unpack_flip_y &&
       !unpack_premultiply_alpha_change) {
     glBindTexture(dest_binding_target, dest_texture->service_id());
-    if (image->CopyTexImage(dest_target))
+    if (image->CopyTexImage(dest_target, internal_format))
       return;
   }
 
@@ -17428,7 +17428,7 @@ void GLES2DecoderImpl::DoCompressedCopyTextureCHROMIUM(GLuint source_id,
           dest_texture_ref, dest_texture->target(), 0, true);
     }
 
-    if (image->CopyTexImage(dest_texture->target()))
+    if (image->CopyTexImage(dest_texture->target(), source_internal_format))
       return;
   }
 

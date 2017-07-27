@@ -23,7 +23,7 @@ class GL_EXPORT GLImageNativePixmap : public gl::GLImageEGL {
 
   // Overridden from GLImage:
   unsigned GetInternalFormat() override;
-  bool CopyTexImage(unsigned target) override;
+  bool CopyTexImage(unsigned target, unsigned internalformat) override;
   bool ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                             int z_order,
                             gfx::OverlayTransform transform,
