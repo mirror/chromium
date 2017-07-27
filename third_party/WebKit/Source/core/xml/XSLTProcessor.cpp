@@ -81,7 +81,9 @@ Document* XSLTProcessor::CreateDocumentFromSource(
     // document in place. Document::Shutdown() tears down the LocalFrameView, so
     // remember whether or not there was one.
     bool has_view = frame->View();
-    old_document->Shutdown();
+    if (old_document)
+      old_document->Shutdown();
+
     // Re-create the LocalFrameView if needed.
     if (has_view)
       frame->Client()->TransitionToCommittedForNewPage();
