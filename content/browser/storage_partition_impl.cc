@@ -508,10 +508,12 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
   scoped_refptr<ChromeBlobStorageContext> blob_context =
       ChromeBlobStorageContext::GetFor(context);
 
+  partition->network_context_ =
+      GetContentClient()->browser()->CreateNetworkContext(
+          context, in_memory, relative_partition_path);
+
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    partition->network_context_ =
-        GetContentClient()->browser()->CreateNetworkContext(
-            context, in_memory, relative_partition_path);
+    DCHECK(partition->network_context_);
 
     BlobURLLoaderFactory::BlobContextGetter blob_getter =
         base::BindOnce(&BlobStorageContextGetter, blob_context);
