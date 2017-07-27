@@ -238,6 +238,13 @@ cr.define('device_page_tests', function() {
         },
       },
       settings: {
+        clock: {
+          use_24hour_clock: {
+            key: 'settings.clock.use_24hour_clock',
+            type: chrome.settingsPrivate.PrefType.BOOLEAN,
+            value: false,
+          },
+        },
         touchpad: {
           enable_tap_to_click: {
             key: 'settings.touchpad.enable_tap_to_click',
