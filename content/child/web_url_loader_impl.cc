@@ -895,7 +895,6 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
 
     if (error_code != net::OK) {
       WebURLError error(request_.Url(), stale_copy_in_cache, error_code);
-      error.was_ignored_by_handler = was_ignored_by_handler;
       client_->DidFail(error, total_transfer_size, encoded_body_size,
                        decoded_body_size);
     } else {
