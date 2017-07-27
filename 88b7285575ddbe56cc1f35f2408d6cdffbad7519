@@ -16,6 +16,58 @@
       "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b530f5e9_eeedc3cb",
+        "filename": "content/app/android/library_loader_hooks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 0,
+      "message": "Yes :). Only classes tagged as @MainDex are registered in non-browser processes.",
+      "parentUuid": "31795d52_2e709de1",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ad78b9_4952b533",
+        "filename": "content/browser/android/browser_startup_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 0,
+      "message": "delete?",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73a99fb_57676f84",
+        "filename": "content/browser/android/content_feature_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 0,
+      "message": "delete",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

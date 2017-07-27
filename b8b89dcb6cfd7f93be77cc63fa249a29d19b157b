@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfabf005_d39c5f17",
+        "filename": "components/test/android/browsertests_apk/components_browser_tests_jni_onload.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "Can delete these two calls as well (not NativeInit(), although probably makes sense to inline it)",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6541bbc9_b2384c3a",
+        "filename": "content/app/android/library_loader_hooks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "Looks like this is called only from content::android::OnJNIOnLoadRegisterJNI(). Will make it nicer for others that are deleting code to not need to modify this file as well.",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c3aaeb_0239c6a1",
+        "filename": "content/public/test/content_test_suite_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "Would be good to delete the rest of these. They are all already dead code.",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb99770_c3227346",
+        "filename": "content/public/test/test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "Delete?",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a143bb_8b47bdf8",
+        "filename": "content/shell/android/browsertests_apk/content_browser_tests_jni_onload.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "Delete OnJNIOnLoadRegisterJNI() call",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62c0c0d_db475343",
+        "filename": "content/shell/android/linker_test_apk/chromium_linker_test_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "Delete OnJNIOnLoadRegisterJNI()",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfb688b_713e802b",
+        "filename": "content/shell/android/shell_library_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "Do not delete these :P. This is the \"new way\"",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1381b07f_c4aebe88",
+        "filename": "content/shell/android/shell_library_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:02:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b8b89dcb6cfd7f93be77cc63fa249a29d19b157b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
