@@ -137,6 +137,7 @@ void ViewCacheHelper::DoCallback(int rv) {
   DCHECK_NE(ERR_IO_PENDING, rv);
   DCHECK(!callback_.is_null());
 
+  // The callback can delete |this|.
   callback_.Run(rv);
   callback_.Reset();
 }
