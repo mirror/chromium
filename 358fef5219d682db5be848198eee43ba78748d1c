@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63809d66_53b06114",
+        "filename": ".eslintrc.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T17:54:16Z",
+      "side": 0,
+      "message": "I had accidentally committed this line at https://chromium-review.googlesource.com/c/585843/. It was not meant to be committed (the discussion is ongoing)., so I am removing it here.",
+      "revId": "358fef5219d682db5be848198eee43ba78748d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
