@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957cb8a7_09562369",
+        "filename": "content/browser/service_worker/service_worker_url_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:59:39Z",
+      "side": 1,
+      "message": "It\u0027s because data_pipe.producer_handle is not reset here. IIRC, this test is trying to check if the data has been received even though it\u0027s in the middle of data transfer.\nCould you add a comment?",
+      "revId": "6066c367b418d13ac67ed18e734b82ce6b32e2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5966cc7e_573b3e1e",
+        "filename": "content/browser/service_worker/service_worker_url_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:59:39Z",
+      "side": 1,
+      "message": "ditto. \ndata_pipe.producer_handle has not been reset here.",
+      "revId": "6066c367b418d13ac67ed18e734b82ce6b32e2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
