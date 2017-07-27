@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f05356c4_f3a8924d",
+        "filename": "chrome/browser/ui/webui/help/version_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-27T20:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e09d37_481e5a75",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 13
+      },
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20c066e_2b1c1631",
         "filename": "chrome/browser/ui/webui/help/version_updater.h",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "c9822a035155009602218456efb64d0614378710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fabdb75a_e9950596",
+        "filename": "chrome/browser/ui/webui/help/version_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-27T20:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e20c066e_2b1c1631",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "a813676e_ff8c4ab2",
+        "filename": "chrome/browser/ui/webui/help/version_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-27T20:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b647849_a12ea10f",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62c9f208_07db3ebf",
         "filename": "chrome/browser/upgrade_detector.h",
         "patchSetId": 8
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-27T20:04:13Z",
       "side": 1,
       "message": "Thanks for the rename and broader updates to comments and names. I might prefer this \u0027success\u0027 argument be renamed |granted| or |permission_granted|, as James suggested, but the function rename is already a big help.",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9965aef2_1fc6e2b8",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-27T20:54:15Z",
+      "side": 1,
+      "message": "I think it would be better to change the function name to  NotifyUpdateOverCellularOneTimePermissionGranted and remove parameter |success| because the code does nothing if |success| is false.",
+      "parentUuid": "62c9f208_07db3ebf",
       "revId": "c9822a035155009602218456efb64d0614378710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "c9822a035155009602218456efb64d0614378710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8378616e_65a9f48c",
+        "filename": "chromeos/dbus/update_engine_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-27T20:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06ed184d_5dbdfbc7",
+      "revId": "c9822a035155009602218456efb64d0614378710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
