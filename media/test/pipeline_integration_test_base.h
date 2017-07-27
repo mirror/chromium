@@ -10,6 +10,7 @@
 
 #include "base/md5.h"
 #include "base/message_loop/message_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_scheduler.h"
 #include "media/audio/clockless_audio_sink.h"
 #include "media/audio/null_audio_sink.h"
