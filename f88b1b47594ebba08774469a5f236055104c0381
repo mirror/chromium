@@ -34,6 +34,24 @@
       "revId": "f88b1b47594ebba08774469a5f236055104c0381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02edea9e_fc40fc18",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T17:06:45Z",
+      "side": 0,
+      "message": "I don\u0027t think that understanding is correct. As a simple test if any of the above files contains a #include path to one of these deps, it must be included here.",
+      "parentUuid": "42093149_e754a7f1",
+      "revId": "f88b1b47594ebba08774469a5f236055104c0381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
