@@ -69,7 +69,7 @@ void InsertLineBreakCommand::DoApply(EditingState* editing_state) {
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  VisibleSelection selection = EndingSelection();
+  VisibleSelection selection = EndingVisibleSelection();
   if (!selection.IsNonOrphanedCaretOrRange())
     return;
 
