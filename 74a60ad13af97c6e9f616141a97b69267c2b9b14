@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ddb6462_0ef39359",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "What\u0027s this for?",
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403bba93_57ac9372",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "So this is only used for privet printers now? And it\u0027s always going to be a list of just 1?",
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56af4062_256c5e6b",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "Pre-existing typo.",
+      "range": {
+        "startLine": 327,
+        "startChar": 11,
+        "endLine": 327,
+        "endChar": 22
+      },
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512a6e8f_3050fc69",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "Comment out of date. Same on line 373.",
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce273a52_523f195a",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "Can this also take a Profile* for consistency, or vice versa?",
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6fdcf5_e143ca39",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED() ?\n\nIf it\u0027s not implemented, don\u0027t you still have to call |callback| ?",
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab96375_cf0ee6a3",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "Forward declare instead?",
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfe8001_0bac4f46",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T05:18:25Z",
+      "side": 1,
+      "message": "Can we drop \"Privet\" from some of these method names, since they are now part of the PrivetPrinterHandler class?",
+      "revId": "74a60ad13af97c6e9f616141a97b69267c2b9b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
