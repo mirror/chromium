@@ -22,6 +22,30 @@
       "revId": "ce1ae54018937a497acfd09a82f2bf120b0a3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f9a38a_a452c1e7",
+        "filename": "chrome/app/resources/manpage.1.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-27T15:41:25Z",
+      "side": 1,
+      "message": "Yea that seems better. In fact this flag only seems relevant if you pass a url. If you don\u0027t, you get a new window regardless. So maybe \"given URL, if any\"?",
+      "parentUuid": "b65558ae_4930f6b8",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 60
+      },
+      "revId": "ce1ae54018937a497acfd09a82f2bf120b0a3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
