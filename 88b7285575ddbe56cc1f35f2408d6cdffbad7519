@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3d3bc011_d69748ec",
+        "filename": "content/browser/android/browser_startup_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-27T18:18:21Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "06ad78b9_4952b533",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d73a99fb_57676f84",
         "filename": "content/browser/android/content_feature_list.h",
         "patchSetId": 4
@@ -68,6 +86,24 @@
       "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ded77a_d006e7bd",
+        "filename": "content/browser/android/content_feature_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-27T18:18:21Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d73a99fb_57676f84",
+      "revId": "88b7285575ddbe56cc1f35f2408d6cdffbad7519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
