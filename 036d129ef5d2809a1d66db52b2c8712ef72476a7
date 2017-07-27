@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f59bfe_98d18aee",
+        "filename": "ui/gl/gl_gl_api_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-27T20:36:28Z",
+      "side": 1,
+      "message": "This is testing that filtered_exts_.size() is greater than zero -- but InitializeFilteredExtensionsIfNeeded is what populates filtered_exts_. Isn\u0027t this logic wrong?",
+      "range": {
+        "startLine": 295,
+        "startChar": 36,
+        "endLine": 295,
+        "endChar": 50
+      },
+      "revId": "036d129ef5d2809a1d66db52b2c8712ef72476a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab8944b_1dfa51aa",
+        "filename": "ui/gl/gl_gl_api_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-27T20:36:28Z",
+      "side": 1,
+      "message": "Same here; it looks to me like this test is backward.",
+      "range": {
+        "startLine": 304,
+        "startChar": 32,
+        "endLine": 304,
+        "endChar": 50
+      },
+      "revId": "036d129ef5d2809a1d66db52b2c8712ef72476a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7467a150_fe584a6c",
+        "filename": "ui/gl/gl_gl_api_implementation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-27T20:36:28Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to do what the comment says -- it zaps the filtered extensions, requiring InitializeFilteredExtensionsIfNeeded to be called again. Perhaps this comment should be above InitializeFilteredExtensionsIfNeeded.",
+      "revId": "036d129ef5d2809a1d66db52b2c8712ef72476a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
