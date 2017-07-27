@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25f81b29_d99b04e6",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T17:21:26Z",
+      "side": 1,
+      "message": "Yes, we can. I will send it directly to stats collector as we discussed.",
+      "parentUuid": "4790e82d_203007e8",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 64,
+        "endChar": 53
+      },
+      "revId": "1142ee971a693bcb520fa9f5080312a59b9cba81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d1a4e00_6efd3244",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "1142ee971a693bcb520fa9f5080312a59b9cba81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73c665d_a9edc3fa",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T17:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d1a4e00_6efd3244",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "1142ee971a693bcb520fa9f5080312a59b9cba81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bcb4e115_e1dc1485",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T17:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5411347d_de1264d2",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 75
+      },
+      "revId": "1142ee971a693bcb520fa9f5080312a59b9cba81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1f04c6_9fd536f7",
         "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-27T16:22:37Z",
       "side": 1,
       "message": "Do we still need this?",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "1142ee971a693bcb520fa9f5080312a59b9cba81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09a4f11_e9d00fc8",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T17:21:26Z",
+      "side": 1,
+      "message": "No, we do not need it. Sorry for not removing it.",
+      "parentUuid": "ef1f04c6_9fd536f7",
       "range": {
         "startLine": 13,
         "startChar": 2,
