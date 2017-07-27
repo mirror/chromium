@@ -11,8 +11,8 @@
 
 namespace testing {
 
-// Matcher for context menu item whose text is exactly |text|.
-id<GREYMatcher> ContextMenuItemWithText(NSString* text);
+// Matcher for context menu item whose label is |label|.
+id<GREYMatcher> ContextMenuButtonWithLabel(NSString* label);
 
 // Matcher for a UI element to tap to dismiss the the context menu, where
 // |cancel_text| is the localized text used for the action sheet cancel control.
