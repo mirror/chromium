@@ -48,13 +48,28 @@ ProcessCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
 void ProcessCoordinationUnitImpl::PropagateProperty(
     mojom::PropertyType property_type,
     const base::Value& value) {
-  // Trigger tab coordination units to recalculate their CPU usage.
-  if (property_type == mojom::PropertyType::kCPUUsage) {
-    for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
-             CoordinationUnitType::kWebContents)) {
-      tab_coordination_unit->RecalculateProperty(
-          mojom::PropertyType::kCPUUsage);
+  switch (property_type) {
+    // Trigger tab coordination units to recalculate their CPU usage.
+    case mojom::PropertyType::kCPUUsage: {
+      for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
+               CoordinationUnitType::kWebContents)) {
+        tab_coordination_unit->RecalculateProperty(
+            mojom::PropertyType::kCPUUsage);
+      }
+      break;
     }
+    case mojom::PropertyType::kExpectedTaskQueueingDuration: {
+      for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
+               CoordinationUnitType::kWebContents)) {
+        tab_coordination_unit->RecalculateProperty(
+            mojom::PropertyType::kExpectedTaskQueueingDuration, value);
+      }
+      break;
+    }
+    case mojom::PropertyType::kNetworkIdle:
+    case mojom::PropertyType::kVisible:
+    case mojom::PropertyType::kTest:
+      break;
   }
 }
 

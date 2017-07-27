@@ -66,12 +66,20 @@ double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
 }
 
 void WebContentsCoordinationUnitImpl::RecalculateProperty(
-    const mojom::PropertyType property_type) {
-  if (property_type == mojom::PropertyType::kCPUUsage) {
-    double cpu_usage = CalculateCPUUsage();
-
-    SetProperty(mojom::PropertyType::kCPUUsage,
-                base::MakeUnique<base::Value>(cpu_usage));
+    const mojom::PropertyType property_type,
+    base::Optional<base::Value> value) {
+  switch (property_type) {
+    case mojom::PropertyType::kCPUUsage:
+      SetProperty(mojom::PropertyType::kCPUUsage,
+                  base::MakeUnique<base::Value>(CalculateCPUUsage()));
+      break;
+    case mojom::PropertyType::kExpectedTaskQueueingDuration:
+      SetProperty(property_type, base::MakeUnique<base::Value>(value.value()));
+      break;
+    case mojom::PropertyType::kNetworkIdle:
+    case mojom::PropertyType::kTest:
+    case mojom::PropertyType::kVisible:
+      break;
   }
 }
 
