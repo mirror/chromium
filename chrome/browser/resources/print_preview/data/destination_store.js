@@ -1542,14 +1542,17 @@ cr.define('print_preview', function() {
 
     /**
      * Called when a Privet printer is added to the local network.
-     * @param {!{serviceName: string,
-     *           name: string,
-     *           hasLocalPrinting: boolean,
-     *           isUnregistered: boolean,
-     *           cloudID: string}} printer Information about the added printer.
+     * @param {!Array<{serviceName: string,
+     *                 name: string,
+     *                 hasLocalPrinting: boolean,
+     *                 isUnregistered: boolean,
+     *                 cloudID: string}>} printers
+     *     Information about the added printer. Note: array will always contain
+     *     only 1 element.
      * @private
      */
-    onPrivetPrinterAdded_: function(printer) {
+    onPrivetPrinterAdded_: function(printers) {
+      var printer = printers[0];
       if (printer.serviceName == this.waitForRegisterDestination_ &&
           !printer.isUnregistered) {
         this.waitForRegisterDestination_ = null;
