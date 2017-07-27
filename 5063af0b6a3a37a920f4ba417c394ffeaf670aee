@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd1beb1_512a6047",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:38:04Z",
+      "side": 1,
+      "message": "add a comment? I can make some speculations about this, but it\u0027s not immediately clear to me what is the right reason of this.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "5063af0b6a3a37a920f4ba417c394ffeaf670aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6627e0_283d518f",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:38:04Z",
+      "side": 1,
+      "message": "yeah I saw your mail, this makes me really nervous (as in: \"did we forgot some other place\")?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 49
+      },
+      "revId": "5063af0b6a3a37a920f4ba417c394ffeaf670aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
