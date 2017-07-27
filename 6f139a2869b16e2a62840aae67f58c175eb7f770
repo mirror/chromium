@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "697065d7_801eb691",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-27T16:41:23Z",
+      "side": 1,
+      "message": "Instead of assigning default values why not have the constructor initialize the values? That would also avoid double assignment for the constructor that takes an index and offsets.",
+      "revId": "6f139a2869b16e2a62840aae67f58c175eb7f770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
