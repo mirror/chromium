@@ -18,30 +18,66 @@ class MockPermissionBrokerClient : public PermissionBrokerClient {
   ~MockPermissionBrokerClient() override;
 
   MOCK_METHOD1(Init, void(dbus::Bus* bus));
-  MOCK_METHOD2(CheckPathAccess,
-               void(const std::string& path, const ResultCallback& callback));
-  MOCK_METHOD3(OpenPath,
+
+  void CheckPathAccess(const std::string& path, ResultCallback callback) {
+    CheckPathAccessInternal(path, callback);
+  }
+  MOCK_METHOD2(CheckPathAccessInternal,
+               void(const std::string& path, ResultCallback& callback));
+
+  void OpenPath(const std::string& path,
+                OpenPathCallback callback,
+                ErrorCallback error_callback) {
+    OpenPathInternal(path, callback, error_callback);
+  }
+  MOCK_METHOD3(OpenPathInternal,
                void(const std::string& path,
-                    const OpenPathCallback& callback,
-                    const ErrorCallback& error_callback));
-  MOCK_METHOD4(RequestTcpPortAccess,
+                    OpenPathCallback& callback,
+                    ErrorCallback& error_callback));
+
+  void RequestTcpPortAccess(uint16_t port,
+                            const std::string& interface,
+                            int lifeline_fd,
+                            ResultCallback callback) {
+    RequestTcpPortAccessInternal(port, interface, lifeline_fd, callback);
+  }
+  MOCK_METHOD4(RequestTcpPortAccessInternal,
                void(uint16_t port,
                     const std::string& interface,
                     int lifeline_fd,
-                    const ResultCallback& callback));
-  MOCK_METHOD4(RequestUdpPortAccess,
+                    ResultCallback& callback));
+
+  void RequestUdpPortAccess(uint16_t port,
+                            const std::string& interface,
+                            int lifeline_fd,
+                            ResultCallback callback) {
+    RequestUdpPortAccessInternal(port, interface, lifeline_fd, callback);
+  }
+  MOCK_METHOD4(RequestUdpPortAccessInternal,
                void(uint16_t port,
                     const std::string& interface,
                     int lifeline_fd,
-                    const ResultCallback& callback));
-  MOCK_METHOD3(ReleaseTcpPort,
+                    ResultCallback& callback));
+
+  void ReleaseTcpPort(uint16_t port,
+                      const std::string& interface,
+                      ResultCallback callback) {
+    ReleaseTcpPortInternal(port, interface, callback);
+  }
+  MOCK_METHOD3(ReleaseTcpPortInternal,
                void(uint16_t port,
                     const std::string& interface,
-                    const ResultCallback& callback));
-  MOCK_METHOD3(ReleaseUdpPort,
+                    ResultCallback& callback));
+
+  void ReleaseUdpPort(uint16_t port,
+                      const std::string& interface,
+                      ResultCallback callback) {
+    ReleaseUdpPortInternal(port, interface, callback);
+  }
+  MOCK_METHOD3(ReleaseUdpPortInternal,
                void(uint16_t port,
                     const std::string& interface,
-                    const ResultCallback& callback));
+                    ResultCallback& callback));
 };
 
 }  // namespace chromeos

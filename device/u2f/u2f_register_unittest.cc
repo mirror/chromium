@@ -66,7 +66,7 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
   std::unique_ptr<MockU2fDevice> device(new MockU2fDevice());
   EXPECT_CALL(*device.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorRegister));
-  EXPECT_CALL(*device.get(), TryWink(testing::_))
+  EXPECT_CALL(*device.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
@@ -87,7 +87,7 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
   EXPECT_CALL(*device.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::NotSatisfied))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorRegister));
-  EXPECT_CALL(*device.get(), TryWink(testing::_))
+  EXPECT_CALL(*device.get(), TryWinkInternal(testing::_))
       .Times(2)
       .WillRepeatedly(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestRegisterCallback cb;
@@ -111,11 +111,11 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
   EXPECT_CALL(*device0.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::NotSatisfied));
   // One wink per device
-  EXPECT_CALL(*device0.get(), TryWink(testing::_))
+  EXPECT_CALL(*device0.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
   EXPECT_CALL(*device1.get(), DeviceTransactPtr(testing::_, testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorRegister));
-  EXPECT_CALL(*device1.get(), TryWink(testing::_))
+  EXPECT_CALL(*device1.get(), TryWinkInternal(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestRegisterCallback cb;

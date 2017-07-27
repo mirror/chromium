@@ -21,24 +21,24 @@ class CHROMEOS_EXPORT FakePermissionBrokerClient
 
   void Init(dbus::Bus* bus) override;
   void CheckPathAccess(const std::string& path,
-                       const ResultCallback& callback) override;
+                       ResultCallback callback) override;
   void OpenPath(const std::string& path,
-                const OpenPathCallback& callback,
-                const ErrorCallback& error_callback) override;
+                OpenPathCallback callback,
+                ErrorCallback error_callback) override;
   void RequestTcpPortAccess(uint16_t port,
                             const std::string& interface,
                             int lifeline_fd,
-                            const ResultCallback& callback) override;
+                            ResultCallback callback) override;
   void RequestUdpPortAccess(uint16_t port,
                             const std::string& interface,
                             int lifeline_fd,
-                            const ResultCallback& callback) override;
+                            ResultCallback callback) override;
   void ReleaseTcpPort(uint16_t port,
                       const std::string& interface,
-                      const ResultCallback& callback) override;
+                      ResultCallback callback) override;
   void ReleaseUdpPort(uint16_t port,
                       const std::string& interface,
-                      const ResultCallback& callback) override;
+                      ResultCallback callback) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakePermissionBrokerClient);
