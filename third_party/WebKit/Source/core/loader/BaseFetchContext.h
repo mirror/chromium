@@ -11,9 +11,6 @@
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/ResourceRequest.h"
-#include "platform/weborigin/ReferrerPolicy.h"
-#include "platform/wtf/Optional.h"
-#include "public/platform/WebAddressSpace.h"
 
 namespace blink {
 
@@ -26,8 +23,6 @@ class SubresourceFilter;
 // Frame. This class provides basic default implementation for some methods.
 class CORE_EXPORT BaseFetchContext : public FetchContext {
  public:
-  void AddAdditionalRequestHeaders(ResourceRequest&,
-                                   FetchResourceType) override;
   ResourceRequestBlockedReason CanRequest(
       Resource::Type,
       const ResourceRequest&,
@@ -69,18 +64,10 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       SecurityViolationReportingPolicy) const = 0;
   virtual bool ShouldBlockFetchAsCredentialedSubresource(const ResourceRequest&,
                                                          const KURL&) const = 0;
-  virtual ReferrerPolicy GetReferrerPolicy() const = 0;
-  virtual String GetOutgoingReferrer() const = 0;
   virtual const KURL& Url() const = 0;
   virtual const SecurityOrigin* GetParentSecurityOrigin() const = 0;
-  virtual Optional<WebAddressSpace> GetAddressSpace() const = 0;
   virtual const ContentSecurityPolicy* GetContentSecurityPolicy() const = 0;
   virtual void AddConsoleMessage(ConsoleMessage*) const = 0;
-  using FetchContext::AddConsoleMessage;
-
-  // Utility method that can be used to implement other methods.
-  void PrintAccessDeniedMessage(const KURL&) const;
-  void AddCSPHeaderIfNecessary(Resource::Type, ResourceRequest&);
 
   // Utility methods that are used in default implement for CanRequest,
   // CanFollowRedirect and AllowResponse.
@@ -94,6 +81,9 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       ResourceRequest::RedirectStatus) const;
 
  private:
+  // Utility method that can be used to implement other methods.
+  void PrintAccessDeniedMessage(const KURL&) const;
+
   ResourceRequestBlockedReason CheckCSPForRequestInternal(
       WebURLRequest::RequestContext,
       const KURL&,

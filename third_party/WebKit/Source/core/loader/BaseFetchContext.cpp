@@ -16,32 +16,8 @@
 #include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
 #include "platform/weborigin/SchemeRegistry.h"
-#include "platform/weborigin/SecurityPolicy.h"
 
 namespace blink {
-
-void BaseFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
-                                                   FetchResourceType type) {
-  bool is_main_resource = type == kFetchMainResource;
-  if (!is_main_resource) {
-    if (!request.DidSetHTTPReferrer()) {
-      request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
-          GetReferrerPolicy(), request.Url(), GetOutgoingReferrer()));
-      request.AddHTTPOriginIfNeeded(GetSecurityOrigin());
-    } else {
-      DCHECK_EQ(SecurityPolicy::GenerateReferrer(request.GetReferrerPolicy(),
-                                                 request.Url(),
-                                                 request.HttpReferrer())
-                    .referrer,
-                request.HttpReferrer());
-      request.AddHTTPOriginIfNeeded(request.HttpReferrer());
-    }
-  }
-
-  auto address_space = GetAddressSpace();
-  if (address_space)
-    request.SetExternalRequestStateFromRequestorAddressSpace(*address_space);
-}
 
 ResourceRequestBlockedReason BaseFetchContext::CanRequest(
     Resource::Type type,
@@ -81,15 +57,6 @@ void BaseFetchContext::PrintAccessDeniedMessage(const KURL& url) const {
 
   AddConsoleMessage(ConsoleMessage::Create(kSecurityMessageSource,
                                            kErrorMessageLevel, message));
-}
-
-void BaseFetchContext::AddCSPHeaderIfNecessary(Resource::Type type,
-                                               ResourceRequest& request) {
-  const ContentSecurityPolicy* csp = GetContentSecurityPolicy();
-  if (!csp)
-    return;
-  if (csp->ShouldSendCSPHeader(type))
-    request.AddHTTPHeaderField("CSP", "active");
 }
 
 ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequest(
@@ -146,8 +113,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   if (origin_restriction != FetchParameters::kNoOriginRestriction &&
       security_origin && !security_origin->CanDisplay(url)) {
     if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
-      AddConsoleMessage("Not allowed to load local resource: " +
-                        url.GetString());
+      AddErrorJSConsoleMessage("Not allowed to load local resource: " +
+                               url.GetString());
     }
     RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::requestResource URL was not "
                                  "allowed by SecurityOrigin::CanDisplay";

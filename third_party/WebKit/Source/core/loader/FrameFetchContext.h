@@ -73,8 +73,6 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   bool IsFrameFetchContext() { return true; }
 
-  void AddAdditionalRequestHeaders(ResourceRequest&,
-                                   FetchResourceType) override;
   WebCachePolicy ResourceRequestCachePolicy(
       const ResourceRequest&,
       Resource::Type,
@@ -121,6 +119,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
                              const AtomicString& fetch_initiator_name) override;
   void DidLoadResource(Resource*) override;
 
+  // FetchContext
+  void AddAdditionalRequestHeaders(ResourceRequest&) const override;
   void AddResourceTiming(const ResourceTimingInfo&) override;
   bool AllowImage(bool images_enabled, const KURL&) const override;
   bool IsControlledByServiceWorker() const override;
@@ -133,9 +133,10 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   bool PageDismissalEventBeingDispatched() const override;
   bool UpdateTimingInfoForIFrameNavigation(ResourceTimingInfo*) override;
   void SendImagePing(const KURL&) override;
-  void AddConsoleMessage(const String&,
-                         LogMessageType = kLogErrorMessage) const override;
   SecurityOrigin* GetSecurityOrigin() const override;
+
+  void AddWarningJSConsoleMessage(const String& message) const;
+  void AddErrorJSConsoleMessage(const String& message) const;
 
   void PopulateResourceRequest(Resource::Type,
                                const ClientHintsPreferences&,
@@ -144,7 +145,6 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
 
   // Exposed for testing.
-  void ModifyRequestForCSP(ResourceRequest&);
   void AddClientHintsIfNecessary(const ClientHintsPreferences&,
                                  const FetchParameters::ResourceWidth&,
                                  ResourceRequest&);
@@ -160,6 +160,9 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   FetchContext* Detach() override;
 
   DECLARE_VIRTUAL_TRACE();
+
+ protected:
+  void AddConsoleMessage(ConsoleMessage*) const override;
 
  private:
   struct FrozenState;
@@ -205,7 +208,6 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   const SecurityOrigin* GetParentSecurityOrigin() const override;
   Optional<WebAddressSpace> GetAddressSpace() const override;
   const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
-  void AddConsoleMessage(ConsoleMessage*) const override;
 
   ContentSettingsClient* GetContentSettingsClient() const;
   Settings* GetSettings() const;
