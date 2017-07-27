@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0987f24_7df962ac",
+        "filename": "ash/ash_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T02:37:09Z",
+      "side": 1,
+      "message": "nit: consider removing \"ash\" from this, since it\u0027s not actually describing anything ash-specific. maybe this is okay?\n\n  const char kHasInternalStylus[] \u003d \"has-internal-stylus\";\n\nthat naming style matches some other similar switches, has-chromeos-keyboard and has-chromeos-diamond-key.",
+      "revId": "62d4ee5ed6de59a767676a75fd82434297853d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4273d8ad_b267ae31",
+        "filename": "ash/system/palette/palette_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T02:37:09Z",
+      "side": 1,
+      "message": "nit: remove this now",
+      "revId": "62d4ee5ed6de59a767676a75fd82434297853d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6daa561_1db96ff6",
+        "filename": "ash/system/palette/palette_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T02:37:09Z",
+      "side": 1,
+      "message": "nit: HasInternalStylus()?",
+      "revId": "62d4ee5ed6de59a767676a75fd82434297853d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e176e168_dc3a857b",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T02:37:09Z",
+      "side": 1,
+      "message": "do we actually need to include this in chrome://flags? seems unlikely to me. if you\u0027re just adding it to have some way to force the options to be shown even when the flag wasn\u0027t passed, would it be possible to instead tie that to ForceEnableStylusTools?",
+      "revId": "62d4ee5ed6de59a767676a75fd82434297853d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
