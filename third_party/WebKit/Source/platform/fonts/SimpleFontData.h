@@ -102,6 +102,19 @@ class PLATFORM_EXPORT SimpleFontData : public FontData {
     return const_cast<SimpleFontData*>(this);
   }
 
+  // True if this font is for "horizontal typographic mode":
+  // https://drafts.csswg.org/css-writing-modes-3/#typographic-mode
+  // This includes rotated (sideways) vertical flow, where lines are laid out as
+  // if they are in horizontal flow.
+  // False only if vertical-flow-specific typographic characteristics are
+  // needed, such as different baseline, as seen in East Asian scripts.
+  bool IsHorizontalMode() const {
+    return !platform_data_.IsVerticalAnyUpright();
+  }
+  FontBaseline BaselineType() const {
+    return IsHorizontalMode() ? kAlphabeticBaseline : kIdeographicBaseline;
+  }
+
   PassRefPtr<SimpleFontData> VerticalRightOrientationFontData() const;
   PassRefPtr<SimpleFontData> UprightOrientationFontData() const;
 
