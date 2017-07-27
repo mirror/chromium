@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d304e3_96702698",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-07-27T18:42:27Z",
+      "side": 1,
+      "message": "Should this code be updated to handle the \u0027Cut\u0027 edit command also, or is it OK to treat the edit commands supported completely separately from the keyboard behavior?",
+      "revId": "227cd1cb74a1533a6f8b4c40e3ebfa05ce95af06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58de99c_6efc9883",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-07-27T18:42:27Z",
+      "side": 1,
+      "message": "nit: please avoid duplicating this block with the code above.  Also why don\u0027t you call CanCut in this case?\n\nIf you want to avoid a complicated multi-part if statement you can always  \u0027const bool isShiftDelete \u003d ...\u0027 etc.",
+      "range": {
+        "startLine": 869,
+        "startChar": 9,
+        "endLine": 869,
+        "endChar": 10
+      },
+      "revId": "227cd1cb74a1533a6f8b4c40e3ebfa05ce95af06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
