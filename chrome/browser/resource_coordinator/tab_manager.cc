@@ -137,6 +137,18 @@ class TabManager::TabManagerSessionRestoreObserver
 
   void OnSessionRestoreFinishedLoadingTabs() override {
     tab_manager_->OnSessionRestoreFinishedLoadingTabs();
+    DCHECK(tab_manager_->tabs_restoring_.empty());
+  }
+
+  void OnWillRestoreTab(WebContents* web_contents) override {
+    tab_manager_->tabs_restoring_.insert(web_contents);
+  }
+
+  void OnDidRestoreTab(WebContents* web_contents) override {
+    std::unordered_set<WebContents*>::iterator i =
+        tab_manager_->tabs_restoring_.find(web_contents);
+    DCHECK(i != tab_manager_->tabs_restoring_.end());
+    tab_manager_->tabs_restoring_.erase(i);
   }
 
  private:
