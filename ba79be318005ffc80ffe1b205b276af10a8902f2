@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99d37dbb_53e1f68c",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1228209
+      },
+      "writtenOn": "2017-07-27T17:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e32827f_4987d968",
+      "range": {
+        "startLine": 566,
+        "startChar": 65,
+        "endLine": 566,
+        "endChar": 66
+      },
+      "revId": "ba79be318005ffc80ffe1b205b276af10a8902f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed01cdc1_d0a64452",
         "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T17:18:12Z",
       "side": 1,
       "message": "Could you make a little helper function for this? eg\n\nint AlignedBufferSize(int size) {\n  return size \u0026 ~(kBufferAlignment - 1);\n}",
+      "range": {
+        "startLine": 585,
+        "startChar": 30,
+        "endLine": 585,
+        "endChar": 75
+      },
+      "revId": "ba79be318005ffc80ffe1b205b276af10a8902f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90555417_1f8fee02",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1228209
+      },
+      "writtenOn": "2017-07-27T17:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed01cdc1_d0a64452",
       "range": {
         "startLine": 585,
         "startChar": 30,
