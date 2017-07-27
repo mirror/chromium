@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc44a2a5_001afd20",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-27T14:16:42Z",
+      "side": 1,
+      "message": "I\u0027d find it odd that a value gets set only to be overwritten later under certain circumstances. This could be taken as a potential bug or at least confuse the reader.",
+      "parentUuid": "cd408b65_d2e222fd",
+      "range": {
+        "startLine": 254,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 40
+      },
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b48f1ae_ce74f3a0",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0e005057_3ac26f00",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-27T14:16:42Z",
+      "side": 1,
+      "message": "From common_theme.cc, kColorId_ButtonDisabledColor returns kDisabledMenuItemForegroundColor, which is a1a192 (a1a19c is a typo).",
+      "parentUuid": "0b48f1ae_ce74f3a0",
+      "range": {
+        "startLine": 288,
+        "startChar": 57,
+        "endLine": 288,
+        "endChar": 63
+      },
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f8ed685_7256fee5",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba469d6f_26635f42",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-27T14:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8ed685_7256fee5",
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de986721_5d46a9cc",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-27T14:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da79117a_00e06f2a",
+      "range": {
+        "startLine": 311,
+        "startChar": 21,
+        "endLine": 311,
+        "endChar": 43
+      },
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
