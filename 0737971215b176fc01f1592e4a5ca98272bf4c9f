@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c45ed88_5f03b101",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-27T20:12:26Z",
+      "side": 1,
+      "message": "we don\u0027t have mId field in WebApkInfo, and id() is not override in WebApkInfo.\nDeleted this function.",
+      "parentUuid": "78a1ec60_443f6878",
+      "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5176072_3550b6c0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7ca4ae7f_be4d146f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-27T20:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5176072_3550b6c0",
+      "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5529630_e65d37ee",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a7ce1b_eea27f4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-27T20:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5529630_e65d37ee",
+      "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
