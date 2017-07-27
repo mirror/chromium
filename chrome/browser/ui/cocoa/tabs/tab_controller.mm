@@ -491,6 +491,10 @@ static const CGFloat kTabElementYOrigin = 6;
 }
 
 - (void)keyUp:(NSEvent*)event {
+  // Ignore dead keys.
+  if ([[event characters] length] == 0)
+    return;
+
   unichar keyChar = [[event characters] characterAtIndex:0];
   if (keyChar == '\r' || keyChar == '\n')
     [self selectTab:self];
