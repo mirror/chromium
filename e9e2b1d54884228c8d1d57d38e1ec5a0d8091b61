@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9092c03b_4f64495d",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapingLineBreaker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-27T16:44:16Z",
+      "side": 1,
+      "message": "We might want to move this to ShapeResult but this is fine for now.",
+      "range": {
+        "startLine": 129,
+        "startChar": 10,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "e9e2b1d54884228c8d1d57d38e1ec5a0d8091b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
