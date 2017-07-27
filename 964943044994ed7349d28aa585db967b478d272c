@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "db287521_1e688213",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-27T09:55:08Z",
+      "side": 1,
+      "message": "I turned it into a unittest",
+      "parentUuid": "fd7be825_12727cc6",
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2788d9eb_57b27645",
         "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "aa3c0968_f769bb33",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-27T09:55:08Z",
+      "side": 1,
+      "message": "I will add a note to the bug and then work on fixing them individually.",
+      "parentUuid": "f9e915a6_e397a312",
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f07fbb_2b9235bc",
         "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
         "patchSetId": 1
@@ -83,6 +119,30 @@
       "writtenOn": "2017-07-26T23:47:18Z",
       "side": 1,
       "message": "Actually, we can refine this.\n\nCONTENT_SETTINGS should only delete content settings, and no website settings. HISTORY | SITE_DATA the other way around.",
+      "range": {
+        "startLine": 377,
+        "startChar": 48,
+        "endLine": 377,
+        "endChar": 74
+      },
+      "revId": "964943044994ed7349d28aa585db967b478d272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7366ff_fdaf3645",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-27T09:55:08Z",
+      "side": 1,
+      "message": "I can try to improve this but I think that can be another CL. This assumption is currently not true for CONTENT_SETTINGS_TYPE_DURABLE_STORAGE, which is a content setting but deleted with site data. \n\nhttps://cs.chromium.org/chromium/src/chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d755",
+      "parentUuid": "41f07fbb_2b9235bc",
       "range": {
         "startLine": 377,
         "startChar": 48,
