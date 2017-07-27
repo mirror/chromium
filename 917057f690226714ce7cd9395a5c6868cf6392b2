@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85d7e41a_d7acdcbe",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-27T14:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed1e4394_879c8415",
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fa4bd75_4ea43884",
         "filename": "chrome/browser/ui/views/first_run_bubble.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2aac037_70f51c51",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-27T14:54:03Z",
+      "side": 1,
+      "message": "Oops! Done :)",
+      "parentUuid": "8fa4bd75_4ea43884",
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2597abc2_b6a3def9",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-27T14:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0e5028e_ff56ba20",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 70
+      },
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb99b0c7_4dc3c8f4",
         "filename": "chrome/browser/ui/views/first_run_bubble.cc",
         "patchSetId": 8
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "de465dd4_91ddaa38",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-27T14:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb99b0c7_4dc3c8f4",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 55
+      },
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cc3101c_91dc9071",
         "filename": "chrome/browser/ui/views/first_run_bubble.h",
         "patchSetId": 8
@@ -96,6 +180,24 @@
       "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd86039_cde1a85a",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-27T14:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc3101c_91dc9071",
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +221,30 @@
       "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7781b6_fed93639",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-27T14:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "895f6a7a_a75a5841",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
