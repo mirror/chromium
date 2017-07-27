@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b0a46c_99fd9b3b",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-27T19:33:00Z",
+      "side": 1,
+      "message": "The goal is to keep this config as similar as possible to the config that we eventually plan to launch. So, can we make it same as one (the one that you think is most promising) of the configs that we are experimenting with?",
+      "range": {
+        "startLine": 1574,
+        "startChar": 25,
+        "endLine": 1574,
+        "endChar": 37
+      },
+      "revId": "aa40185734f5c6687c266ca2dcf5a4d7681067ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
