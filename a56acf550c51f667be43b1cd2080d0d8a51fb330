@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a14805b_54af9031",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "964202fe_9d1a1072",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3936277e_5e00ccee",
         "filename": "ui/message_center/notification.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b91e735_a37c29ff",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3936277e_5e00ccee",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b8639ca3_70524845",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab6f2eb_e1ef6d05",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4903e041_2e59b61e",
         "filename": "ui/message_center/notification.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de1871e_53d43dce",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4903e041_2e59b61e",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ff652292_75879fc7",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6e2db5_366ec32a",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afbebab4_48ce9e9e",
         "filename": "ui/message_center/notification.h",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b0ee9f_f37320ca",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afbebab4_48ce9e9e",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "d18de5d3_88423211",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Old CreateSystemNotification will be kept. (The usage is limited  https://cs.chromium.org/search/?q\u003dCreateSystemNotification\u0026sq\u003dpackage:chromium )\nI think notifications created by system should be updated to use the new CreateSystemNotification.",
+      "parentUuid": "4f92e0a7_9615114f",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2d638b5_c2f6278b",
         "filename": "ui/message_center/views/notification_header_view.cc",
         "patchSetId": 14
@@ -152,6 +278,24 @@
       "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3cb151_f306da8d",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T08:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d638b5_c2f6278b",
+      "revId": "a56acf550c51f667be43b1cd2080d0d8a51fb330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
