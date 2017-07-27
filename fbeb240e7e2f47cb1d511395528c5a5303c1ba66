@@ -45,6 +45,40 @@
       "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822767b5_da211020",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T18:24:25Z",
+      "side": 1,
+      "message": "Nit: Semicolon missing here and in other similar assignments in this file.",
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8ca6da_a2a9596a",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T18:24:25Z",
+      "side": 1,
+      "message": "Is this file compiled by JS Compiler, or are the annotations just for documentation purposes?\n\nIf it is compiled, I don\u0027t see how this is passing compilation without errors. The compiler should throw a \"missing return statement\", since the function says it returns something but it does not. Same question for other methods in this file.",
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
