@@ -1,0 +1,370 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c15cc1_03869c57",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "as per comment below, let\u0027s make the CacheStorageManager* a contructor argument, and make it a raw ptr.",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63b02ce_a5261394",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "maybe put the NotifyCacheListChanged up here instead of DeleteCacheFinalize?",
+      "range": {
+        "startLine": 868,
+        "startChar": 0,
+        "endLine": 868,
+        "endChar": 60
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676b55ed_8e84fe52",
+        "filename": "content/browser/cache_storage/cache_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "remove these methods - cache storage manager should always be alive for this object.",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3195b62_2d92c495",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "hmmm... can we DCHECK here that the manager is created? It should always be there. If not then we can figure something out.",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee9b800_f6701b87",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "hmmm... can we DCHECK here that the manager is created? It should always be there. If not then we can figure something out.",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5643d36_e00dba7c",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "you can put this in the cc file in the GenerateObserverID method.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284b4394_38955dc9",
+        "filename": "content/browser/cache_storage/cache_storage_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "I think you can do \u003d default here, as both member variables have move operators.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 27
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3551e2cf_c9da9709",
+        "filename": "content/browser/cache_storage/cache_storage_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "it looks like we\u0027ll be owning all the cache storage object, so we can avoid the WeakPtr in CacheStorage, and just store a raw CacheStorageManager* in there (with the comment that we are owned by the CacheStorageManager.\n\nYou hopefully can make that a constructor argument for CacheStorage, so we don\u0027t have to add the method calls.",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4614f1_b92d5982",
+        "filename": "content/browser/cache_storage/cache_storage_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "it looks like we\u0027ll be owning all the cache storage object, so we can avoid the WeakPtr in CacheStorage, and just store a raw CacheStorageManager* in there (with the comment that we are owned by the CacheStorageManager.\n\nYou hopefully can make that a constructor argument for CacheStorage, so we don\u0027t have to add the method calls.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 72
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6d1af3_0b3b5ee4",
+        "filename": "content/browser/cache_storage/cache_storage_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "Please use order:\n\n- Contructor\n- Move constructor\n- Destructor\n- variables\n\nand then at the bottom:\n\nprivate:\n DISALLOW_COPY_AND_ASSIGN(ObserverData);",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f702ac90_17de32f5",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "put \", ptr_factory(this)\" after host_(nullptr)",
+      "range": {
+        "startLine": 142,
+        "startChar": 21,
+        "endLine": 142,
+        "endChar": 22
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969d4bc4_80b1320a",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "see below comment on NotifyCacheStorageListChanged - create that callback here, and then bind that in a call to ReportCacheStorageListChangedOnUIThread w/ the ui task runner, and then send that along as your callback.",
+      "range": {
+        "startLine": 257,
+        "startChar": 27,
+        "endLine": 257,
+        "endChar": 41
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ac959d_c7ce9915",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "since we have an invariant that there is no duplicate origins in our vector, we can just use find_if here like above and grab the id from that (and then remove it). Error if we don\u0027t find it.",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda1aecc_0de17848",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "so you can actually bind this method directly with a weakptr - like base::Bind(\u0026StorageHandler::NotifyCacheStorageListChanged, ptr_factory_.GetWeakPtr()), which will automatically drop the call if the weakptr isn\u0027t around anymore - isn\u0027t that cool?\n\nYou just have to make sure you call that callback on the right thread.",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 74
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180740d9_5e190ae5",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "#include \"base/memory/weak_ptr.h\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414299d7_292e1364",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "do we need the callback anymore? I think you can remove the callback part for these methods, which should simplify some of the cc code.\n\nAh - I see how we send failures. Let\u0027s document that we ignore all double calls to track an origin (so the first untrack will totally untrack that origin).\n\nOR - we can just send success at the end of the method call in the storagehandler, instead of wiring it through to IO and back.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 75
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da2f78a_f737ec0f",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "comment that there will never be multiple of the same origin in this vector.",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137f4fec_1440c4ba",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T00:15:55Z",
+      "side": 1,
+      "message": "put a WeakPtrFactory\u003cStorageHandler\u003e ptr_factory_; here at the end of the arguments.",
+      "revId": "855550aafddc3c15ebfee1ec6bc0c8032ad44cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
