@@ -541,7 +541,8 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
   RegisterPrefetchingObserver(service, profile);
 #endif
 
-  if (base::FeatureList::IsEnabled(ntp_snippets::kBreakingNewsPushFeature)) {
+  if (base::FeatureList::IsEnabled(
+          ntp_snippets::kBreakingNewsPushRegistrationFeature)) {
     SubscribeForGCMPushUpdates(pref_service, service, profile);
   }
   return service;
