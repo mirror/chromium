@@ -52,22 +52,35 @@ class ModuleScriptFetchRequest final {
   const AtomicString& GetReferrer() const { return referrer_; }
   const TextPosition& GetReferrerPosition() const { return referrer_position_; }
 
+  enum class OverrideInitiatorInfoOption {
+    kOverrideForDependentModule,
+    kDoNotOverride
+  };
+
+  OverrideInitiatorInfoOption GetOverrideInitiatorInfoOption() const {
+    return override_initiator_info_option_;
+  }
+
  private:
   // Referrer is set only for internal module script fetch algorithms triggered
   // from ModuleTreeLinker to fetch descendant module scripts.
   friend class ModuleTreeLinker;
-  ModuleScriptFetchRequest(const KURL& url,
-                           const String& nonce,
-                           ParserDisposition parser_state,
-                           WebURLRequest::FetchCredentialsMode credentials_mode,
-                           const String& referrer,
-                           const TextPosition& referrer_position)
+  ModuleScriptFetchRequest(
+      const KURL& url,
+      const String& nonce,
+      ParserDisposition parser_state,
+      WebURLRequest::FetchCredentialsMode credentials_mode,
+      const String& referrer,
+      const TextPosition& referrer_position,
+      OverrideInitiatorInfoOption override_initiator_info_option =
+          OverrideInitiatorInfoOption::kDoNotOverride)
       : url_(url),
         nonce_(nonce),
         parser_state_(parser_state),
         credentials_mode_(credentials_mode),
         referrer_(referrer),
-        referrer_position_(referrer_position) {}
+        referrer_position_(referrer_position),
+        override_initiator_info_option_(override_initiator_info_option) {}
 
   const KURL url_;
   const String nonce_;
@@ -75,6 +88,10 @@ class ModuleScriptFetchRequest final {
   const WebURLRequest::FetchCredentialsMode credentials_mode_;
   const AtomicString referrer_;
   const TextPosition referrer_position_;
+
+  // [not spec'ed] Indicates whether InitiatorInfo is overridden. This is used
+  // for passing the initiator information of dependent modules to Inspector.
+  const OverrideInitiatorInfoOption override_initiator_info_option_;
 };
 
 }  // namespace blink

@@ -142,8 +142,7 @@ TEST_F(ModuleScriptLoaderTest, fetchDataURL) {
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
-  registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
-                  GetModulator(), Fetcher(), client);
+  registry->Fetch(module_request, GetModulator(), Fetcher(), client);
 
   EXPECT_TRUE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish synchronously.";
@@ -159,8 +158,7 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier) {
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
   GetModulator()->SetModuleRequests({"invalid"});
-  registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
-                  GetModulator(), Fetcher(), client);
+  registry->Fetch(module_request, GetModulator(), Fetcher(), client);
 
   EXPECT_TRUE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish synchronously.";
@@ -175,8 +173,7 @@ TEST_F(ModuleScriptLoaderTest, fetchInvalidURL) {
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
-  registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
-                  GetModulator(), Fetcher(), client);
+  registry->Fetch(module_request, GetModulator(), Fetcher(), client);
 
   EXPECT_TRUE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish synchronously.";
@@ -192,8 +189,7 @@ TEST_F(ModuleScriptLoaderTest, fetchURL) {
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   TestModuleScriptLoaderClient* client = new TestModuleScriptLoaderClient;
-  registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
-                  GetModulator(), Fetcher(), client);
+  registry->Fetch(module_request, GetModulator(), Fetcher(), client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleScriptLoader unexpectedly finished synchronously.";

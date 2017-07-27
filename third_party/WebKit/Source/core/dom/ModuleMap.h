@@ -19,7 +19,6 @@ class Modulator;
 class ModuleScript;
 class ModuleScriptFetchRequest;
 class SingleModuleClient;
-enum class ModuleGraphLevel;
 
 // A ModuleMap implements "module map" spec.
 // https://html.spec.whatwg.org/#module-map
@@ -37,7 +36,6 @@ class CORE_EXPORT ModuleMap final : public GarbageCollected<ModuleMap>,
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-single-module-script
   void FetchSingleModuleScript(const ModuleScriptFetchRequest&,
-                               ModuleGraphLevel,
                                SingleModuleClient*);
 
   // Synchronously get the ModuleScript for a given URL.
