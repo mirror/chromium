@@ -298,6 +298,9 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // True indicates that a request for credentials has been sent to the store.
   bool sent_request_to_store_;
 
+  // True iff the current page is a gaia reauthentication page.
+  bool is_gaia_reauthentication_page_;
+
   // True indicates that a safe browsing reputation check has been triggered.
   bool checked_safe_browsing_reputation_;
 
