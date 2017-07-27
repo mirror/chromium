@@ -33,6 +33,24 @@
       "revId": "f012f069b53bbe17d393bdce7c3c5a321c87d63d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21b1ec5_77a2a7bf",
+        "filename": "chrome/browser/extensions/extension_action_test_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T01:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adcc9844_50203f4f",
+      "revId": "f012f069b53bbe17d393bdce7c3c5a321c87d63d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
