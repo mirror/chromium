@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c5895a_2a14e909",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-27T20:53:46Z",
+      "side": 1,
+      "message": "Do we want to fall through in the else case?  If so can we add a comment?  I think you want to return an empty string though right?",
+      "range": {
+        "startLine": 859,
+        "startChar": 6,
+        "endLine": 860,
+        "endChar": 70
+      },
+      "revId": "3459ec9c64bad7f1b5cb14ed54b916b9118536e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
