@@ -242,9 +242,9 @@ bool ResourceLoader::WillFollowRedirect(
 
       String cors_error_msg;
       if (!CrossOriginAccessControl::HandleRedirect(
-              source_origin, new_request, redirect_response,
-              request.GetFetchCredentialsMode(), resource_->MutableOptions(),
-              cors_error_msg)) {
+              source_origin, new_url, new_request.GetRequestContext(),
+              redirect_response, request.GetFetchCredentialsMode(),
+              resource_->MutableOptions(), cors_error_msg)) {
         resource_->SetCORSStatus(CORSStatus::kFailed);
 
         if (!unused_preload)
