@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5262bf8d_3c109e8e",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T00:44:24Z",
+      "side": 1,
+      "message": "Add some reasoning for this value: \"This value was chosen conservatively based on the timeout for starting a new worker (ServiceWorkerVersion::kStartNewWorkerTimeout \u003d 5 minutes) and the timeout for the \u0027install\u0027 event (ServiceWorkerVersion::kRequestTimeout \u003d 5 minutes).\"",
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13da6d8d_bc77228d",
         "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
         "patchSetId": 11
@@ -19,6 +36,108 @@
         "endLine": 204,
         "endChar": 0
       },
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dc96aa_e3ba2341",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T00:44:24Z",
+      "side": 1,
+      "message": "is_job_timer_running",
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc06f17_ef8435e8",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T00:44:24Z",
+      "side": 1,
+      "message": "A little hard to mentally parse this name.\n\nTimeoutFirstJob() maybe?",
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b003688_d891be0d",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T00:44:24Z",
+      "side": 1,
+      "message": "job timeout timer",
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f3b5ec_d8424628",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T00:44:24Z",
+      "side": 1,
+      "message": "// Timeout the first job. The timer should still be running.",
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9fd521_7ab66d20",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T00:44:24Z",
+      "side": 1,
+      "message": "// Timeout the second job. The queue should be empty and the timer should be stopped.",
+      "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b601281_1b512d95",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T00:44:24Z",
+      "side": 1,
+      "message": "style guide: function comments take the verb tense \"Sets\", not \"Set\".",
       "revId": "88ad9e68aec5a06ba7881ba770aee385eee9791c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
