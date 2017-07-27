@@ -2618,15 +2618,19 @@ void WebMediaPlayerImpl::ReportTimeFromForegroundToFirstFrame(
                         time_to_first_frame);
   }
 }
-void WebMediaPlayerImpl::SwitchRenderer(bool is_rendered_remotely) {
+void WebMediaPlayerImpl::SwitchRenderer(
+    bool is_rendered_remotely,
+    const std::string& remote_device_friendly_name) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   disable_pipeline_auto_suspend_ = is_rendered_remotely;
   ScheduleRestart();
   if (client_) {
-    if (is_rendered_remotely)
-      client_->MediaRemotingStarted();
-    else
+    if (is_rendered_remotely) {
+      client_->MediaRemotingStarted(
+          WebString::FromUTF8(remote_device_friendly_name));
+    } else {
       client_->MediaRemotingStopped();
+    }
   }
 }
 
