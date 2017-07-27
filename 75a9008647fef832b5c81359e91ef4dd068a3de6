@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98d7870d_3b5cc8d7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-27T22:43:04Z",
+      "side": 1,
+      "message": "Do we need to shrink the padding around the tools button in a similar manner?",
+      "revId": "75a9008647fef832b5c81359e91ef4dd068a3de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a4ff56_559ec88f",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-27T22:43:04Z",
+      "side": 1,
+      "message": "Consider converting this to window coordinates, so that the caller doesn\u0027t need to make any assumptions about the coordinate frame this is in.",
+      "revId": "75a9008647fef832b5c81359e91ef4dd068a3de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e79825_2c35041d",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_element_frame_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-27T22:43:04Z",
+      "side": 1,
+      "message": "Consider renaming this protocol and moving it to a bubble/requirements subdirectory.  The ToolbarController can continue to publicly conform to the protocol.",
+      "revId": "75a9008647fef832b5c81359e91ef4dd068a3de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
