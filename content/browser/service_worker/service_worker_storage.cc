@@ -5,15 +5,15 @@
 #include "content/browser/service_worker/service_worker_storage.h"
 
 #include <stddef.h>
+#include <utility>
 
 #include "base/bind_helpers.h"
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/sequenced_task_runner.h"
-#include "base/single_thread_task_runner.h"
 #include "base/task_runner_util.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/trace_event/trace_event.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_disk_cache.h"
@@ -28,6 +28,8 @@
 #include "net/base/net_errors.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 #include "storage/browser/quota/special_storage_policy.h"
+
+using std::swap;
 
 namespace content {
 
@@ -121,12 +123,11 @@ std::unique_ptr<ServiceWorkerStorage> ServiceWorkerStorage::Create(
     const base::FilePath& path,
     const base::WeakPtr<ServiceWorkerContextCore>& context,
     std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-    const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
     storage::QuotaManagerProxy* quota_manager_proxy,
     storage::SpecialStoragePolicy* special_storage_policy) {
-  return base::WrapUnique(new ServiceWorkerStorage(
-      path, context, std::move(database_task_manager), disk_cache_thread,
-      quota_manager_proxy, special_storage_policy));
+  return base::WrapUnique(
+      new ServiceWorkerStorage(path, context, std::move(database_task_manager),
+                               quota_manager_proxy, special_storage_policy));
 }
 
 // static
@@ -135,7 +136,7 @@ std::unique_ptr<ServiceWorkerStorage> ServiceWorkerStorage::Create(
     ServiceWorkerStorage* old_storage) {
   return base::WrapUnique(new ServiceWorkerStorage(
       old_storage->path_, context, old_storage->database_task_manager_->Clone(),
-      old_storage->disk_cache_thread_, old_storage->quota_manager_proxy_.get(),
+      old_storage->quota_manager_proxy_.get(),
       old_storage->special_storage_policy_.get()));
 }
 
@@ -842,13 +843,26 @@ bool ServiceWorkerStorage::OriginHasForeignFetchRegistrations(
 void ServiceWorkerStorage::DeleteAndStartOver(const StatusCallback& callback) {
   Disable();
 
-  // Delete the database on the database thread.
-  PostTaskAndReplyWithResult(
-      database_task_manager_->GetTaskRunner(), FROM_HERE,
-      base::Bind(&ServiceWorkerDatabase::DestroyDatabase,
-                 base::Unretained(database_.get())),
-      base::Bind(&ServiceWorkerStorage::DidDeleteDatabase,
-                 weak_factory_.GetWeakPtr(), callback));
+  // Will be looked at OnDiskCacheCleanupComplete
+  delete_and_start_over_callback_ = callback;
+
+  if (!expecting_cleanup_complete_on_disable_)
+    OnDiskCacheCleanupComplete();
+}
+
+void ServiceWorkerStorage::OnDiskCacheCleanupComplete() {
+  expecting_cleanup_complete_on_disable_ = false;
+  if (!delete_and_start_over_callback_.is_null()) {
+    StatusCallback callback;
+    swap(callback, delete_and_start_over_callback_);
+    // Delete the database on the database thread.
+    PostTaskAndReplyWithResult(
+        database_task_manager_->GetTaskRunner(), FROM_HERE,
+        base::Bind(&ServiceWorkerDatabase::DestroyDatabase,
+                   base::Unretained(database_.get())),
+        base::Bind(&ServiceWorkerStorage::DidDeleteDatabase,
+                   weak_factory_.GetWeakPtr(), callback));
+  }
 }
 
 int64_t ServiceWorkerStorage::NewRegistrationId() {
@@ -923,17 +937,16 @@ ServiceWorkerStorage::ServiceWorkerStorage(
     const base::FilePath& path,
     base::WeakPtr<ServiceWorkerContextCore> context,
     std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-    const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
     storage::QuotaManagerProxy* quota_manager_proxy,
     storage::SpecialStoragePolicy* special_storage_policy)
     : next_registration_id_(kInvalidServiceWorkerRegistrationId),
       next_version_id_(kInvalidServiceWorkerVersionId),
       next_resource_id_(kInvalidServiceWorkerResourceId),
       state_(UNINITIALIZED),
+      expecting_cleanup_complete_on_disable_(false),
       path_(path),
       context_(context),
       database_task_manager_(std::move(database_task_manager)),
-      disk_cache_thread_(disk_cache_thread),
       quota_manager_proxy_(quota_manager_proxy),
       special_storage_policy_(special_storage_policy),
       is_purge_pending_(false),
@@ -1468,8 +1481,11 @@ ServiceWorkerDiskCache* ServiceWorkerStorage::disk_cache() {
 
 void ServiceWorkerStorage::InitializeDiskCache() {
   disk_cache_->set_is_waiting_to_initialize(false);
+  expecting_cleanup_complete_on_disable_ = true;
   int rv = disk_cache_->InitWithDiskBackend(
-      GetDiskCachePath(), kMaxDiskCacheSize, false, disk_cache_thread_,
+      GetDiskCachePath(), kMaxDiskCacheSize, false,
+      base::BindOnce(&ServiceWorkerStorage::OnDiskCacheCleanupComplete,
+                     weak_factory_.GetWeakPtr()),
       base::Bind(&ServiceWorkerStorage::OnDiskCacheInitialized,
                  weak_factory_.GetWeakPtr()));
   if (rv != net::ERR_IO_PENDING)
@@ -1477,6 +1493,8 @@ void ServiceWorkerStorage::InitializeDiskCache() {
 }
 
 void ServiceWorkerStorage::OnDiskCacheInitialized(int rv) {
+  // We have to save this since we may want it after deleting
+  // disk_cache_.
   if (rv != net::OK) {
     LOG(ERROR) << "Failed to open the serviceworker diskcache: "
                << net::ErrorToString(rv);
@@ -1923,12 +1941,14 @@ void ServiceWorkerStorage::DidDeleteDatabase(
   }
   DVLOG(1) << "Deleted ServiceWorkerDatabase successfully.";
 
-  // Delete the disk cache on the cache thread.
+  // Delete the disk cache.  // ### these traits are highly suspect.
   // TODO(nhiroki): What if there is a bunch of files in the cache directory?
   // Deleting the directory could take a long time and restart could be delayed.
   // We should probably rename the directory and delete it later.
-  PostTaskAndReplyWithResult(
-      disk_cache_thread_.get(), FROM_HERE,
+  PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+       base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
       base::Bind(&base::DeleteFile, GetDiskCachePath(), true),
       base::Bind(&ServiceWorkerStorage::DidDeleteDiskCache,
                  weak_factory_.GetWeakPtr(), callback));

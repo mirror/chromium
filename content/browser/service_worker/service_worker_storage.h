@@ -29,7 +29,6 @@
 
 namespace base {
 class SequencedTaskRunner;
-class SingleThreadTaskRunner;
 }
 
 namespace storage {
@@ -83,7 +82,6 @@ class CONTENT_EXPORT ServiceWorkerStorage
       const base::FilePath& path,
       const base::WeakPtr<ServiceWorkerContextCore>& context,
       std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-      const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
       storage::QuotaManagerProxy* quota_manager_proxy,
       storage::SpecialStoragePolicy* special_storage_policy);
 
@@ -355,7 +353,6 @@ class CONTENT_EXPORT ServiceWorkerStorage
       const base::FilePath& path,
       base::WeakPtr<ServiceWorkerContextCore> context,
       std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-      const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
       storage::QuotaManagerProxy* quota_manager_proxy,
       storage::SpecialStoragePolicy* special_storage_policy);
 
@@ -531,9 +528,9 @@ class CONTENT_EXPORT ServiceWorkerStorage
 
   bool IsDisabled() const;
   void ScheduleDeleteAndStartOver();
-  void DidDeleteDatabase(
-      const StatusCallback& callback,
-      ServiceWorkerDatabase::Status status);
+  void OnDiskCacheCleanupComplete();
+  void DidDeleteDatabase(const StatusCallback& callback,
+                         ServiceWorkerDatabase::Status status);
   void DidDeleteDiskCache(
       const StatusCallback& callback,
       bool result);
@@ -561,6 +558,13 @@ class CONTENT_EXPORT ServiceWorkerStorage
   };
   State state_;
 
+  // non-null if cache backend cleanup phase of DeleteAndStartOver is pending.
+  StatusCallback delete_and_start_over_callback_;
+
+  // This is set when we know that a call to Disable() will result in
+  // OnDiskCacheCleanupComplete() eventually called.
+  bool expecting_cleanup_complete_on_disable_;
+
   base::FilePath path_;
 
   // The context should be valid while the storage is alive.
@@ -570,7 +574,6 @@ class CONTENT_EXPORT ServiceWorkerStorage
   std::unique_ptr<ServiceWorkerDatabase> database_;
 
   std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager_;
-  scoped_refptr<base::SingleThreadTaskRunner> disk_cache_thread_;
   scoped_refptr<storage::QuotaManagerProxy> quota_manager_proxy_;
   scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy_;
 
