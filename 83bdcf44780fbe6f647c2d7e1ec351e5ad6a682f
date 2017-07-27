@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "397ec821_a2f8c1b2",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-27T21:56:03Z",
+      "side": 1,
+      "message": "Could you just comment which event does trigger handling\nrichly editable controls?",
+      "revId": "83bdcf44780fbe6f647c2d7e1ec351e5ad6a682f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
