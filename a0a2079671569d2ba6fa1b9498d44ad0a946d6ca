@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6028d705_bb226cff",
+        "filename": "chrome/renderer/net/net_error_helper_core.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-27T06:26:15Z",
+      "side": 1,
+      "message": "How about IsNetDnsError? IsDnsError() sounds returning true when error.domain() is kDnsProbeErrorDomain.",
+      "parentUuid": "2a7d1a88_9c13268b",
+      "revId": "a0a2079671569d2ba6fa1b9498d44ad0a946d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4c6771e_66c2e878",
         "filename": "components/error_page/common/error.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "a0a2079671569d2ba6fa1b9498d44ad0a946d6ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f84150_1d5315c6",
+        "filename": "components/error_page/common/error.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-27T06:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c6771e_66c2e878",
+      "revId": "a0a2079671569d2ba6fa1b9498d44ad0a946d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
