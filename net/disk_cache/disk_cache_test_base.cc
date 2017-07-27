@@ -316,8 +316,8 @@ void DiskCacheTestWithCache::CreateBackend(uint32_t flags) {
   if (simple_cache_mode_) {
     net::TestCompletionCallback cb;
     std::unique_ptr<disk_cache::SimpleBackendImpl> simple_backend(
-        new disk_cache::SimpleBackendImpl(cache_path_, size_, type_, runner,
-                                          NULL));
+        new disk_cache::SimpleBackendImpl(cache_path_, nullptr, size_, type_,
+                                          runner, nullptr));
     int rv = simple_backend->Init(cb.callback());
     ASSERT_THAT(cb.GetResult(rv), IsOk());
     simple_cache_impl_ = simple_backend.get();
@@ -332,9 +332,11 @@ void DiskCacheTestWithCache::CreateBackend(uint32_t flags) {
   }
 
   if (mask_)
-    cache_impl_ = new disk_cache::BackendImpl(cache_path_, mask_, runner, NULL);
+    cache_impl_ =
+        new disk_cache::BackendImpl(cache_path_, mask_, runner, nullptr);
   else
-    cache_impl_ = new disk_cache::BackendImpl(cache_path_, runner, NULL);
+    cache_impl_ =
+        new disk_cache::BackendImpl(cache_path_, nullptr, runner, nullptr);
   cache_.reset(cache_impl_);
   ASSERT_TRUE(cache_);
   if (size_)
