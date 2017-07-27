@@ -71,9 +71,7 @@ TEST(DisplayTest, ForcedDeviceScaleFactor) {
   Display::ResetForceDeviceScaleFactorForTesting();
 }
 
-// TODO(ccameron): Re-enable this test after refactoring display::Display to
-// set color space and bit depth together.
-TEST(DisplayTest, DISABLED_DisplayHDRValues) {
+TEST(DisplayTest, DisplayHDRValues) {
   Display display;
   EXPECT_EQ(24, display.color_depth());
   EXPECT_EQ(8, display.depth_per_component());
