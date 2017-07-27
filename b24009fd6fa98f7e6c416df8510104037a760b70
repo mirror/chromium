@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6de4dac_b5bbb0b2",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T23:18:59Z",
+      "side": 1,
+      "message": "Nit (optional): It\u0027s not really a \"value\" but rather the name of the pref.",
+      "range": {
+        "startLine": 37,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "b24009fd6fa98f7e6c416df8510104037a760b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0b1b35f_2b035872",
+        "filename": "ash/system/session/logout_button_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T23:18:59Z",
+      "side": 1,
+      "message": "That\u0027s certainly better than storing the prefs! :)",
+      "range": {
+        "startLine": 106,
+        "startChar": 56,
+        "endLine": 106,
+        "endChar": 61
+      },
+      "revId": "b24009fd6fa98f7e6c416df8510104037a760b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

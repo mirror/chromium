@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2764662d_f14dcd98",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T23:18:59Z",
+      "side": 0,
+      "message": "Wow! All of these were not used!",
+      "revId": "f220af3c568e88b072ba8e5b072a16c8c4c5d5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
