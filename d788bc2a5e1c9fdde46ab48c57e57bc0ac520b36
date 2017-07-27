@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "262fb86f_9b7e0816",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-27T00:51:52Z",
+      "side": 1,
+      "message": "I don\u0027t think gerrit supports custom similarity:\nhttps://groups.google.com/a/chromium.org/d/msg/chromium-dev/ipfokfDWtP4/W7Jg5ZGSAAAJ",
+      "parentUuid": "80eec35d_7626f7e1",
+      "revId": "d788bc2a5e1c9fdde46ab48c57e57bc0ac520b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b2e7135_72d1625f",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_util.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d788bc2a5e1c9fdde46ab48c57e57bc0ac520b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcea899c_3bfd66d4",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-27T00:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b2e7135_72d1625f",
+      "revId": "d788bc2a5e1c9fdde46ab48c57e57bc0ac520b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
