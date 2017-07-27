@@ -508,9 +508,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
         fragment.foreground_rect.Move(negative_offset);
         fragment.pagination_offset.Move(negative_offset);
       }
-    }
-
-    if (should_paint_content) {
+    } else if (should_paint_content) {
       // TODO(wangxianzhu): This is for old slow scrolling. Implement similar
       // optimization for slimming paint v2.
       should_paint_content = AtLeastOneFragmentIntersectsDamageRect(
