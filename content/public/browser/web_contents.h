@@ -572,6 +572,9 @@ class WebContents : public PageNavigator,
 
   // Misc state & callbacks ----------------------------------------------------
 
+  // Returns true if the audio is currently audible.
+  virtual bool IsCurrentlyAudible() = 0;
+
   // Check whether we can do the saving page operation this page given its MIME
   // type.
   virtual bool IsSavable() = 0;

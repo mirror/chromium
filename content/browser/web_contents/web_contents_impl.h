@@ -405,6 +405,7 @@ class CONTENT_EXPORT WebContentsImpl
   bool ShowingInterstitialPage() const override;
   void AdjustPreviewsStateForNavigation(PreviewsState* previews_state) override;
   InterstitialPage* GetInterstitialPage() const override;
+  bool IsCurrentlyAudible() override;
   bool IsSavable() override;
   void OnSavePage() override;
   bool SavePage(const base::FilePath& main_file,

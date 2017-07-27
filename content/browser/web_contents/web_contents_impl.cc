@@ -1449,6 +1449,13 @@ void WebContentsImpl::OnAudioStateChanged(bool is_audible) {
 
   // Notification for UI updates in response to the changed audio state.
   NotifyNavigationStateChanged(INVALIDATE_TYPE_TAB);
+
+  if (delegate_)
+    delegate_->OnAudioStateChanged(is_audible);
+}
+
+bool WebContentsImpl::IsCurrentlyAudible() {
+  return audio_stream_monitor()->IsCurrentlyAudible();
 }
 
 base::TimeTicks WebContentsImpl::GetLastActiveTime() const {
