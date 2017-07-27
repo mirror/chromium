@@ -49,7 +49,7 @@ public class CastWebContentsActivity extends Activity {
     private Handler mHandler;
     private String mInstanceId;
     private BroadcastReceiver mWindowDestroyedBroadcastReceiver;
-    private IntentFilter mWindowDestroyedIntentFilter;
+    private BroadcastReceiver mScreenOffBroadcastReceiver;
     private FrameLayout mCastWebContentsLayout;
     private AudioManager mAudioManager;
     private ContentViewRenderView mContentViewRenderView;
@@ -62,6 +62,8 @@ public class CastWebContentsActivity extends Activity {
 
     public static final String ACTION_STOP_ACTIVITY =
             "com.google.android.apps.castshell.intent.action.STOP_ACTIVITY";
+    public static final String ACTION_SCREEN_OFF =
+            "com.google.android.apps.castshell.intent.action.ACTION_SCREEN_OFF";
 
     /*
      * Intended to be called from "onStop" to determine if this is a "legitimate" stop or not.
@@ -131,6 +133,7 @@ public class CastWebContentsActivity extends Activity {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(
                     mWindowDestroyedBroadcastReceiver);
         }
+
         mWindowDestroyedBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -138,7 +141,8 @@ public class CastWebContentsActivity extends Activity {
                 maybeFinishLater();
             }
         };
-        mWindowDestroyedIntentFilter = new IntentFilter();
+
+        IntentFilter mWindowDestroyedIntentFilter = new IntentFilter();
         mWindowDestroyedIntentFilter.addDataScheme(intent.getData().getScheme());
         mWindowDestroyedIntentFilter.addDataAuthority(intent.getData().getAuthority(), null);
         mWindowDestroyedIntentFilter.addDataPath(mInstanceId, PatternMatcher.PATTERN_LITERAL);
@@ -146,8 +150,26 @@ public class CastWebContentsActivity extends Activity {
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mWindowDestroyedBroadcastReceiver, mWindowDestroyedIntentFilter);
 
+        if (mScreenOffBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mScreenOffBroadcastReceiver);
+        }
+
+        mScreenOffBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                detachWebContentsIfAny();
+                maybeFinishLater();
+            }
+        };
+
+        IntentFilter mScreenOffIntentFilter = new IntentFilter();
+        mScreenOffIntentFilter.addAction(ACTION_SCREEN_OFF);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mScreenOffBroadcastReceiver, mScreenOffIntentFilter);
+
         WebContents webContents = (WebContents) intent.getParcelableExtra(
                 CastWebContentsComponent.ACTION_EXTRA_WEB_CONTENTS);
+
         if (webContents == null) {
             Log.e(TAG, "Received null WebContents in intent.");
             maybeFinishLater();
@@ -179,6 +201,15 @@ public class CastWebContentsActivity extends Activity {
     @Override
     protected void onDestroy() {
         if (DEBUG) Log.d(TAG, "onDestroy");
+
+        if (mWindowDestroyedBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(
+                    mWindowDestroyedBroadcastReceiver);
+        }
+
+        if (mScreenOffBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mScreenOffBroadcastReceiver);
+        }
         super.onDestroy();
     }
 
