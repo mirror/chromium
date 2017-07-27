@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1bc993d_ae9e7e5d",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T00:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06ecbce0_4dd33654",
+      "range": {
+        "startLine": 99,
+        "startChar": 19,
+        "endLine": 99,
+        "endChar": 21
+      },
+      "revId": "45e64f385ce7d9d101e37a98afe55c218bb6551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbdeeb9c_efcaab88",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f30dfefa_1fe982de",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T00:54:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cbdeeb9c_efcaab88",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 5
+      },
+      "revId": "45e64f385ce7d9d101e37a98afe55c218bb6551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b652b96f_c2508cf3",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "45e64f385ce7d9d101e37a98afe55c218bb6551e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81b75d4_7dca1530",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T00:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b652b96f_c2508cf3",
+      "range": {
+        "startLine": 105,
+        "startChar": 35,
+        "endLine": 105,
+        "endChar": 38
+      },
+      "revId": "45e64f385ce7d9d101e37a98afe55c218bb6551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
