@@ -379,6 +379,24 @@
       "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8b3923_c490469f",
+        "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-27T16:33:27Z",
+      "side": 1,
+      "message": "const variable at namespace scope has internal linkage, so \"static\" is redundant:\n\nhttps://stackoverflow.com/questions/14616183/how-to-define-a-constant-double-at-namespace-scope-with-external-linkage",
+      "parentUuid": "ee3be31a_88fdae4f",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
