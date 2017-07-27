@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37b83461_decccd97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-27T17:39:05Z",
+      "side": 1,
+      "message": "SG, change to \"displayNotificationInternal\" since there are lots of XXXInternal in the code base:)",
+      "parentUuid": "da733870_56130d94",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64363728_1a8c0c48",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dc04c9_1b2d9d83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-27T17:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64363728_1a8c0c48",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c14fead6_39bf2675",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-27T17:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed523f03_2c4cb58d",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e7a64bb_e03e4fc4",
         "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-27T17:13:23Z",
       "side": 1,
       "message": "nit: has_queried_web_apk_package? (C++ naming style)",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d717f0_174b4fad",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-27T17:39:05Z",
+      "side": 1,
+      "message": "Sorry for ignoring this mistake:(",
+      "parentUuid": "3e7a64bb_e03e4fc4",
       "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
