@@ -1001,7 +1001,7 @@ ElementToSplitToAvoidPastingIntoInlineElementsWithStyle(
 
 void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   TRACE_EVENT0("blink", "ReplaceSelectionCommand::doApply");
-  const VisibleSelection selection = EndingSelection();
+  const VisibleSelection selection = EndingVisibleSelection();
   DCHECK(!selection.IsNone());
   DCHECK(selection.Start().AnchorNode());
   if (!selection.IsNonOrphanedCaretOrRange() || !selection.Start().AnchorNode())
