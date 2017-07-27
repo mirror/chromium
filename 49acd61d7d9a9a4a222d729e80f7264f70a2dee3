@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "17ae5486_9c4d7250",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:13:36Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "ac599ce8_83d14c83",
+      "range": {
+        "startLine": 73,
+        "startChar": 53,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9910d31d_d0270997",
         "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
         "patchSetId": 22
@@ -128,6 +152,30 @@
       "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e698d972_d7407a4f",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:13:36Z",
+      "side": 1,
+      "message": "Sorry to ask about this so late.\n\nMy concern is not with the current code to generate bookmark apps interacting with this code, but rather with PREVIOUS code to generate bookmark apps. Am I correct that this is based on state that\u0027s stored in prefs? So if a previous version of Chrome generated a Bookmark app with a different URL handler, that would get incorrectly interpreted here?\n\nProbably all past versions of Chrome would\u0027ve generated Bookmark apps with 0 handlers, so that will get caught by the above if statement. But it is kind of fragile as it spans across versions making it hard to maintain.\n\nFor example, what if we ever want to add a new URL handler in the future that doesn\u0027t correspond to the manifest scope? We\u0027d probably decide this hack is worth refactoring into a different data model, but that would then require a data migration.\n\nI really think we should explicitly store the manifest scope as a separate field instead of assuming that the one URL handler is the manifest scope + \"*\".\n\nNOTE: The above doesn\u0027t apply if I\u0027m mistaken and this data is generated at runtime, not stored in prefs. (In which case it isn\u0027t dependent on old versions of Chrome and we can always change the model later without a data migration.)",
+      "parentUuid": "fd982b33_8ce4cd47",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
