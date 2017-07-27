@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7692ed_e389b351",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T08:29:18Z",
+      "side": 1,
+      "message": "moves",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "177af9e6b37c00ed3fafc1483742f47e59d2227e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7cb18d_d9f85ea4",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T08:29:18Z",
+      "side": 1,
+      "message": "Is \"ModuleResponseMapProxy\" a type? If not, remove \"Get\":\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Precede-setters-with-the-word-Set_use-bare-words-for-getters",
+      "revId": "177af9e6b37c00ed3fafc1483742f47e59d2227e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
