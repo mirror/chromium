@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da733870_56130d94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T17:13:23Z",
+      "side": 1,
+      "message": "Since this actually displays the notification, what about \"doDisplayNotification\" or \"displayNotificationInternal\"?",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64363728_1a8c0c48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T17:13:23Z",
+      "side": 1,
+      "message": "nit: hasQueriedWebApkPackage",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed523f03_2c4cb58d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T17:13:23Z",
+      "side": 1,
+      "message": "same as above; \"doCloseNotification\" or \"closeNotificationInternal\"",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7a64bb_e03e4fc4",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T17:13:23Z",
+      "side": 1,
+      "message": "nit: has_queried_web_apk_package? (C++ naming style)",
+      "revId": "73235b5e755e4f550fa2a7cdfe63fafbbcb50795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
