@@ -73,3 +73,10 @@ struct RendererContentSettingRules {
   array<ContentSettingPatternSource> autoplay_rules;
   array<ContentSettingPatternSource> client_hints_rules;
 };
+
+// Sent from renderer to browser process when the lifetime of the client hints
+// for an origin has changed.
+interface ContentSettings {
+  UpdateContentSetting(ContentSettingsPattern primary_pattern,
+                       mojo.common.mojom.DictionaryValue expiration_times);
+};
