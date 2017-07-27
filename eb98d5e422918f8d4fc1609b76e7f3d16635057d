@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f4242747_934c81b4",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "Ahh, I don\u0027t know anymore, both seem to be used (here\u0027s an internal link to some code that uses it: go/wam-parsing). \n\nPerhaps we should have a different \"platform\" block? In any case, to unblock yourself you can perhaps use URL, and we can revisit this.",
+      "parentUuid": "24c7edb3_7993f92a",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "303bf424_fc0b42d4",
         "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
         "patchSetId": 7
@@ -316,6 +340,30 @@
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5889d0_188c4b1f",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9fa270e_c25d216c",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -703,6 +751,24 @@
       "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557e01c0_1202ea0f",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "205324b3_91e01088",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

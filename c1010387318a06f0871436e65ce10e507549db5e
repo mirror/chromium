@@ -1,0 +1,472 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d55148_1e827daf",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "need? If so, can you fwd declare?",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3468e61_7f4fd4b7",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "download",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b13afd_faf6c9d5",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "Did you investigate OnceCallback?",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92838cf4_01aecf6f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem to reflect the behavior and the fact that you are now passing a list of queried PMIs. Please mention the new argument",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e9df78_edaa5b81",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "suggestion: why not return std::vector\u003cstd::string\u003e instead of an out_ param? In that case, the name could be FilterUnsupportedURLPaymentMethods\n\nThe calling code would be:\n\nstd::vector\u003cstd::string\u003e supported_payment_methods \u003d FilterUnsupportedURLPaymentMethods(merchant_specified_url_methods);\n\nNote that I\u0027m bad with naming but it doesn\u0027t stop me from making suggestions :) My general point is about the API which I think reads better like this.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 6
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbec3d6_09e9a98b",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "How about Get -\u003e Create? Feels like a stronger statement and will discourage people from calling this multiple times unnecessarily",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502149c7_474c9948",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "Can this be a static? It would be a little more versatile.",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a6df3f_2225b542",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "how about queried_url_payment_method_identifiers? Bit of a mouthful, but clear what\u0027s going on.",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 66
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d22f5db_703b381c",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "how about out_valid_url_payment_method_identifiers?",
+      "range": {
+        "startLine": 49,
+        "startChar": 30,
+        "endLine": 49,
+        "endChar": 64
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebae2462_0bc9c76a",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "I think we should move the code to verify that each input PMI is a valid GURL here.",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af37c2bc_fd65d0b2",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "How about \n// Ensure that the payment method is recognized by looking for an \"app-name://\" scheme to query for its presence.",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f33d74_acd112b6",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "bring outside the for loop?",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b6c338_65d5eb75",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "see if you can use base::ContainsKey",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d56e724_d20efa97",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "// If there is an app that can handle |scheme| on this device, this payment method is supported.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3a1895_1a0cbf63",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "no curlies needed",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19967ca2_d2d55c28",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "Can remove this comment if you accept my comment suggestion above, because this becomes obvious",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 48
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c2c224_72a0c219",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "Note that DCHECKs do not trigger in release builds. Shouldn\u0027t we return instead?",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c6c466_8c572935",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "if (methods.empty())",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd73684_3d52616b",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "should we return here?",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389e2f6f_e32da34f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "You could ask Rouslan but since the construction of PaymentManifestDownloader doesn\u0027t seem too expensive, you could move it to be a standard member (non-unique_ptr) and move its creation to the constructor.",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085eb2e6_aa9932b8",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "I slightly prefer the pattern:\n\nif (!Parse...) {\n  Decrease...;\n  return;\n}\n\ndownloader_-\u003e",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d664545a_501a7378",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "same comment about the initialization than the Downloader. If you apply this for both, you don\u0027t need to keep |context_getter_| around after the constructor.",
+      "range": {
+        "startLine": 319,
+        "startChar": 4,
+        "endLine": 319,
+        "endChar": 18
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9699cea6_3183bfb3",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "this is a good pattern but this function does more than Decrease, so I would suggest something like\nOnPaymentMethodProcessed",
+      "range": {
+        "startLine": 338,
+        "startChar": 33,
+        "endLine": 338,
+        "endChar": 67
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e5810c_148aa35d",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T14:01:24Z",
+      "side": 1,
+      "message": "would \"if (--num_payment_methods_remaining_)\" work?",
+      "range": {
+        "startLine": 342,
+        "startChar": 2,
+        "endLine": 342,
+        "endChar": 42
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
