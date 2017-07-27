@@ -2929,9 +2929,7 @@ RenderFrameImpl::CreateApplicationCacheHost(
     return nullptr;
 
   DocumentState* document_state =
-      frame_->ProvisionalDataSource()
-          ? DocumentState::FromDataSource(frame_->ProvisionalDataSource())
-          : DocumentState::FromDataSource(frame_->DataSource());
+      DocumentState::FromDataSource(frame_->GetNewerDataSource());
 
   NavigationStateImpl* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
@@ -4649,11 +4647,7 @@ blink::WebString RenderFrameImpl::UserAgentOverride() {
 
   // If we're in the middle of committing a load, the data source we need
   // will still be provisional.
-  WebDataSource* data_source = NULL;
-  if (main_frame->ProvisionalDataSource())
-    data_source = main_frame->ProvisionalDataSource();
-  else
-    data_source = main_frame->DataSource();
+  WebDataSource* data_source = main_frame->GetNewerDataSource();
 
   InternalDocumentStateData* internal_data = data_source ?
       InternalDocumentStateData::FromDataSource(data_source) : NULL;

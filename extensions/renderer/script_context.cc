@@ -281,9 +281,7 @@ GURL ScriptContext::GetDataSourceURLForFrame(
   // changes to match the parent document after Gmail document.writes into
   // it to create the editor.
   // http://code.google.com/p/chromium/issues/detail?id=86742
-  blink::WebDataSource* data_source = frame->ProvisionalDataSource()
-                                          ? frame->ProvisionalDataSource()
-                                          : frame->DataSource();
+  blink::WebDataSource* data_source = frame->GetNewerDataSource();
   return data_source ? GURL(data_source->GetRequest().Url()) : GURL();
 }
 
@@ -292,9 +290,7 @@ GURL ScriptContext::GetAccessCheckedFrameURL(
     const blink::WebLocalFrame* frame) {
   const blink::WebURL& weburl = frame->GetDocument().Url();
   if (weburl.IsEmpty()) {
-    blink::WebDataSource* data_source = frame->ProvisionalDataSource()
-                                            ? frame->ProvisionalDataSource()
-                                            : frame->DataSource();
+    blink::WebDataSource* data_source = frame->GetNewerDataSource();
     if (data_source &&
         frame->GetSecurityOrigin().CanAccess(blink::WebSecurityOrigin::Create(
             data_source->GetRequest().Url()))) {
