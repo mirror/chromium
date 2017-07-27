@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80f2b4b0_799b7d70",
+        "filename": "chrome/test/vr/perf/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-07-27T20:12:41Z",
+      "side": 1,
+      "message": "Yeah, I believe so\n\nAs a test I tried removing the `common_data +` and it formatted it basically how it was:\n\n  data \u003d [\n    \"./latency/__init__.py\",\n    ...\n    \"./latency/webrv_latency_test.py\",\n  ]\n\nI tried putting `+ common_data` at the end and it formatted it with yet a different style:\n\n  data \u003d [\n          \"./latency/__init__.py\",\n          ...\n          \"./latency/webvr_latency_test.py\",\n         ] + common_data",
+      "parentUuid": "a0dc53d8_17ddb97b",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 21
+      },
+      "revId": "489151de0dba2c6236c30565ef2771a560169c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fc6c798_be413ec7",
         "filename": "third_party/brotli/BUILD.gn",
         "patchSetId": 1
