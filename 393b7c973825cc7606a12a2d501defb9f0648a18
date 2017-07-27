@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63965b21_d74a8dd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2569,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-27T01:42:43Z",
+      "side": 1,
+      "message": "nit: this public method needs a JavaDoc",
+      "range": {
+        "startLine": 2569,
+        "startChar": 18,
+        "endLine": 2569,
+        "endChar": 27
+      },
+      "revId": "393b7c973825cc7606a12a2d501defb9f0648a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8e8510_17730037",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-27T01:42:43Z",
+      "side": 1,
+      "message": "You should be able to access mLocationBar without BottomToolbarPhone.this. in front",
+      "range": {
+        "startLine": 776,
+        "startChar": 40,
+        "endLine": 776,
+        "endChar": 52
+      },
+      "revId": "393b7c973825cc7606a12a2d501defb9f0648a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
