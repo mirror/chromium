@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99eafa47_b83f19f0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-27T01:11:44Z",
+      "side": 0,
+      "message": "Since each of the FirstFragment() calls is not yet correct, could you just leave this and have it forward to FirstFragment? A future patch will already need to update all of the callsites again to make them right (convert them to a for loop or something like that).",
+      "revId": "c2e00edd1a2375452007ce81ee593c7225a60936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
