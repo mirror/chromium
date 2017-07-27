@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa534802_2fa60b51",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T18:27:07Z",
+      "side": 1,
+      "message": "This is incorrect.\n\nif pending_store_updates_ \u003d\u003d false, database_update_successful_ is true; however\nif pending_store_updates_ \u003d\u003d true, database_update_successful_ is not necessarily false. It means that the DB update is in process.",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 56
+      },
+      "revId": "c7aac0890f1c825b1a48f4a5ac2ea9b9c4a11c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2376ae_72399531",
+        "filename": "components/safe_browsing_db/v4_database.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T18:27:07Z",
+      "side": 1,
+      "message": "let\u0027s call it last_database_update_successful_ and move above pending_store_updates_\n(last_ makes it consistent with the similar variable  in v4_store)\n\nAlos, I think the default value should be true i.e. until the first time we do an update, the update hasn\u0027t failed so this should probably be true. A value of false would raise an alarm.",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 239,
+        "endChar": 33
+      },
+      "revId": "c7aac0890f1c825b1a48f4a5ac2ea9b9c4a11c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4363db1_71806072",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-27T18:27:07Z",
+      "side": 1,
+      "message": "this should be exposed through a method.\nThe variable should end with a _.\n\nRecommendations: current_local_database_manager() and current_local_database_manager_",
+      "range": {
+        "startLine": 178,
+        "startChar": 28,
+        "endLine": 178,
+        "endChar": 59
+      },
+      "revId": "c7aac0890f1c825b1a48f4a5ac2ea9b9c4a11c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
