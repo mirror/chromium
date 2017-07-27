@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc5c1e1a_6b0f2dee",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-27T19:24:54Z",
+      "side": 0,
+      "message": "I don\u0027t understand what this group was for. Why are we removing it?",
+      "revId": "e8383ccc28a676b248ee23be496b6781c6f3dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
