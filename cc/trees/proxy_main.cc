@@ -149,24 +149,19 @@ void ProxyMain::BeginMainFrame(
     return;
   }
 
-  // If the commit finishes, LayerTreeHost will transfer its swap promises to
-  // LayerTreeImpl. The destructor of ScopedSwapPromiseChecker aborts the
-  // remaining swap promises.
-  ScopedAbortRemainingSwapPromises swap_promise_checker(
-      layer_tree_host_->GetSwapPromiseManager());
-
   final_pipeline_stage_ = max_requested_pipeline_stage_;
   max_requested_pipeline_stage_ = NO_PIPELINE_STAGE;
 
   if (!layer_tree_host_->IsVisible()) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_NotVisible", TRACE_EVENT_SCOPE_THREAD);
-    std::vector<std::unique_ptr<SwapPromise>> empty_swap_promises;
     ImplThreadTaskRunner()->PostTask(
-        FROM_HERE, base::BindOnce(&ProxyImpl::BeginMainFrameAbortedOnImpl,
-                                  base::Unretained(proxy_impl_.get()),
-                                  CommitEarlyOutReason::ABORTED_NOT_VISIBLE,
-                                  begin_main_frame_start_time,
-                                  base::Passed(&empty_swap_promises)));
+        FROM_HERE,
+        base::BindOnce(
+            &ProxyImpl::BeginMainFrameAbortedOnImpl,
+            base::Unretained(proxy_impl_.get()),
+            CommitEarlyOutReason::ABORTED_NOT_VISIBLE,
+            begin_main_frame_start_time,
+            layer_tree_host_->GetSwapPromiseManager()->TakeSwapPromises()));
     return;
   }
 
@@ -198,13 +193,14 @@ void ProxyMain::BeginMainFrame(
   if (defer_commits_) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_DeferCommit_InsideBeginMainFrame",
                          TRACE_EVENT_SCOPE_THREAD);
-    std::vector<std::unique_ptr<SwapPromise>> empty_swap_promises;
     ImplThreadTaskRunner()->PostTask(
-        FROM_HERE, base::BindOnce(&ProxyImpl::BeginMainFrameAbortedOnImpl,
-                                  base::Unretained(proxy_impl_.get()),
-                                  CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT,
-                                  begin_main_frame_start_time,
-                                  base::Passed(&empty_swap_promises)));
+        FROM_HERE,
+        base::BindOnce(
+            &ProxyImpl::BeginMainFrameAbortedOnImpl,
+            base::Unretained(proxy_impl_.get()),
+            CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT,
+            begin_main_frame_start_time,
+            layer_tree_host_->GetSwapPromiseManager()->TakeSwapPromises()));
     current_pipeline_stage_ = NO_PIPELINE_STAGE;
     // We intentionally don't report CommitComplete() here since it was aborted
     // prematurely and we're waiting to do another commit in the future.
@@ -232,14 +228,14 @@ void ProxyMain::BeginMainFrame(
   current_pipeline_stage_ = COMMIT_PIPELINE_STAGE;
   if (final_pipeline_stage_ < COMMIT_PIPELINE_STAGE) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_NoUpdates", TRACE_EVENT_SCOPE_THREAD);
-    std::vector<std::unique_ptr<SwapPromise>> swap_promises =
-        layer_tree_host_->GetSwapPromiseManager()->TakeSwapPromises();
     ImplThreadTaskRunner()->PostTask(
-        FROM_HERE, base::BindOnce(&ProxyImpl::BeginMainFrameAbortedOnImpl,
-                                  base::Unretained(proxy_impl_.get()),
-                                  CommitEarlyOutReason::FINISHED_NO_UPDATES,
-                                  begin_main_frame_start_time,
-                                  base::Passed(&swap_promises)));
+        FROM_HERE,
+        base::BindOnce(
+            &ProxyImpl::BeginMainFrameAbortedOnImpl,
+            base::Unretained(proxy_impl_.get()),
+            CommitEarlyOutReason::FINISHED_NO_UPDATES,
+            begin_main_frame_start_time,
+            layer_tree_host_->GetSwapPromiseManager()->TakeSwapPromises()));
 
     // Although the commit is internally aborted, this is because it has been
     // detected to be a no-op.  From the perspective of an embedder, this commit

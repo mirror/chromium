@@ -674,19 +674,16 @@ void SingleThreadProxy::BeginMainFrame(
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_DeferCommit",
                          TRACE_EVENT_SCOPE_THREAD);
     BeginMainFrameAbortedOnImplThread(
-        CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT);
+        CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT,
+        layer_tree_host_->GetSwapPromiseManager()->TakeSwapPromises());
     return;
   }
-
-  // This checker assumes NotifyReadyToCommit in this stack causes a synchronous
-  // commit.
-  ScopedAbortRemainingSwapPromises swap_promise_checker(
-      layer_tree_host_->GetSwapPromiseManager());
 
   if (!layer_tree_host_->IsVisible()) {
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_NotVisible", TRACE_EVENT_SCOPE_THREAD);
     BeginMainFrameAbortedOnImplThread(
-        CommitEarlyOutReason::ABORTED_NOT_VISIBLE);
+        CommitEarlyOutReason::ABORTED_NOT_VISIBLE,
+        layer_tree_host_->GetSwapPromiseManager()->TakeSwapPromises());
     return;
   }
 
@@ -706,7 +703,8 @@ void SingleThreadProxy::BeginMainFrame(
     TRACE_EVENT_INSTANT0("cc", "EarlyOut_DeferCommit_InsideBeginMainFrame",
                          TRACE_EVENT_SCOPE_THREAD);
     BeginMainFrameAbortedOnImplThread(
-        CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT);
+        CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT,
+        layer_tree_host_->GetSwapPromiseManager()->TakeSwapPromises());
     layer_tree_host_->DidBeginMainFrame();
     return;
   }
@@ -741,14 +739,14 @@ void SingleThreadProxy::DoPainting() {
 }
 
 void SingleThreadProxy::BeginMainFrameAbortedOnImplThread(
-    CommitEarlyOutReason reason) {
+    CommitEarlyOutReason reason,
+    std::vector<std::unique_ptr<SwapPromise>> swap_promises) {
   DebugScopedSetImplThread impl(task_runner_provider_);
   DCHECK(scheduler_on_impl_thread_->CommitPending());
   DCHECK(!layer_tree_host_impl_->pending_tree());
 
-  std::vector<std::unique_ptr<SwapPromise>> empty_swap_promises;
   layer_tree_host_impl_->BeginMainFrameAborted(reason,
-                                               std::move(empty_swap_promises));
+                                               std::move(swap_promises));
   scheduler_on_impl_thread_->BeginMainFrameAborted(reason);
 }
 

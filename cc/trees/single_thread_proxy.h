@@ -119,7 +119,9 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
 
  private:
   void BeginMainFrame(const viz::BeginFrameArgs& begin_frame_args);
-  void BeginMainFrameAbortedOnImplThread(CommitEarlyOutReason reason);
+  void BeginMainFrameAbortedOnImplThread(
+      CommitEarlyOutReason reason,
+      std::vector<std::unique_ptr<SwapPromise>> swap_promises);
   void DoBeginMainFrame(const viz::BeginFrameArgs& begin_frame_args);
   void DoPainting();
   void DoCommit();
