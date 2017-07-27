@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1852eac6_812a01c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-27T21:30:27Z",
+      "side": 1,
+      "message": "Ah that makes sense! Will also make the wait time 6000 ms, with a note to update this in practice if needed.",
+      "parentUuid": "a6976237_b322a32c",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "635bd6ff_33ccb01b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97da965_2f220d6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-27T21:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "635bd6ff_33ccb01b",
+      "range": {
+        "startLine": 179,
+        "startChar": 82,
+        "endLine": 179,
+        "endChar": 98
+      },
+      "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
