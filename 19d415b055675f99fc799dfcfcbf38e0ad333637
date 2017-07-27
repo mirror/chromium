@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71dd155f_767cb42b",
+        "filename": "components/sync/base/sync_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-27T16:31:23Z",
+      "side": 1,
+      "message": "Does this happen too early? Like, if you have a clean chrome install, and you launch chrome, sign into an account that enables local sync, does it time for your policy to get downloaded and set this preference? This only happens after you sign in, right? I don\u0027t know enough to know why  there is or isn\u0027t a race here.",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "19d415b055675f99fc799dfcfcbf38e0ad333637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
