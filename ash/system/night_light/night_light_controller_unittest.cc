@@ -127,8 +127,8 @@ class NightLightTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     CreateTestUserSessions();
-    Shell::RegisterPrefs(user1_pref_service_.registry());
-    Shell::RegisterPrefs(user2_pref_service_.registry());
+    Shell::RegisterProfilePrefs(user1_pref_service_.registry());
+    Shell::RegisterProfilePrefs(user2_pref_service_.registry());
 
     // Simulate user 1 login.
     InjectTestPrefService(&user1_pref_service_);
