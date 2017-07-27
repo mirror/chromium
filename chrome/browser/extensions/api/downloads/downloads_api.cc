@@ -52,6 +52,7 @@
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/renderer_host/chrome_render_message_filter.h"
+#include "chrome/browser/safe_browsing/download_protection_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -1434,6 +1435,8 @@ ExtensionFunction::ResponseAction DownloadsOpenFunction::Run() {
             errors::kOpenPermission, &error)) {
     return RespondNow(Error(error));
   }
+  safe_browsing::DownloadProtectionService::
+      MaybeSendDangerousDownloadExecutionReport(download_item);
   download_item->OpenDownload();
   RecordApiFunctions(DOWNLOADS_FUNCTION_OPEN);
   return RespondNow(NoArguments());

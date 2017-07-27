@@ -760,6 +760,9 @@ void DownloadItemView::OpenDownload() {
 
   UpdateAccessibleName();
 
+  safe_browsing::DownloadProtectionService::
+      MaybeSendDangerousDownloadExecutionReport(download());
+
   // Calling download()->OpenDownload may delete this, so this must be
   // the last thing we do.
   download()->OpenDownload();

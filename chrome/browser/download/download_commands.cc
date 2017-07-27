@@ -260,6 +260,8 @@ void DownloadCommands::ExecuteCommand(Command command) {
       download_item_->ShowDownloadInShell();
       break;
     case OPEN_WHEN_COMPLETE:
+      safe_browsing::DownloadProtectionService::
+          MaybeSendDangerousDownloadExecutionReport(download_item_);
       download_item_->OpenDownload();
       break;
     case ALWAYS_OPEN_TYPE: {

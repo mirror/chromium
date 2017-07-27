@@ -185,6 +185,9 @@ class DownloadProtectionService {
 
   static std::string GetDownloadPingToken(const content::DownloadItem* item);
 
+  static void MaybeSendDangerousDownloadExecutionReport(
+      const content::DownloadItem* item);
+
  protected:
   // Enum to keep track why a particular download verdict was chosen.
   // Used for UMA metrics. Do not reorder.

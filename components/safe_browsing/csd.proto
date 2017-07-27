@@ -929,6 +929,7 @@ message ClientSafeBrowsingReportRequest {
     DANGEROUS_DOWNLOAD_WARNING = 7;
     DANGEROUS_DOWNLOAD_BY_API = 10;
     URL_PASSWORD_PROTECTION_PHISHING = 12;
+    DANGEROUS_DOWNLOAD_EXECUTION = 13;
   }
 
   message HTTPHeader {
@@ -1011,8 +1012,8 @@ message ClientSafeBrowsingReportRequest {
 
   // The same token in ClientDownloadResponse or LoginReputationClientResponse.
   // This field is only set if its report type is DANGEROUS_DOWNLOAD_RECOVERY,
-  // DANGEROUS_DOWNLOAD_WARNING, DANGEROUS_DOWNLOAD_BY_API or
-  // PASSWORD_PROTECTION_PHISHING_URL.
+  // DANGEROUS_DOWNLOAD_WARNING, DANGEROUS_DOWNLOAD_BY_API,
+  // URL_PASSWORD_PROTECTION_PHISHING, or DANGEROUS_DOWNLOAD_EXECUTION.
   optional bytes token = 15;
 
   enum SafeBrowsingUrlApiType {

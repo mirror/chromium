@@ -14,6 +14,7 @@
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/download_shelf_context_menu.h"
 #include "chrome/browser/extensions/api/experience_sampling_private/experience_sampling.h"
+#include "chrome/browser/safe_browsing/download_protection_service.h"
 #import "chrome/browser/themes/theme_properties.h"
 #import "chrome/browser/themes/theme_service.h"
 #import "chrome/browser/ui/cocoa/download/download_item_button.h"
@@ -259,6 +260,8 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
     // Let cmd-click show the file in Finder, like e.g. in Safari and Spotlight.
     download->ShowDownloadInShell();
   } else {
+    safe_browsing::DownloadProtectionService::
+        MaybeSendDangerousDownloadExecutionReport(download);
     download->OpenDownload();
   }
 }
