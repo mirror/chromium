@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "560f8744_abd0ad7e",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-27T18:40:09Z",
+      "side": 1,
+      "message": "This suggestion needs to be visited less recently for the ordering to work.\n(The decreased weight on typed visits causes implicitly a bit more comparative weight to recency.  Thus, this suggestion needs to be a little order for the tests to pass, otherwise it will outside shorter URLs like. www.teamliquid.net.  Both of these have 10+ typed visited visits, and this one is more recent.  I\u0027d rather it be slightly less recent to make the tests make sense and suggest the shorter one.)",
+      "range": {
+        "startLine": 792,
+        "startChar": 14,
+        "endLine": 792,
+        "endChar": 0
+      },
+      "revId": "df4bcfa0cef32a5deec87351ee22b87843500348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db963fc4_fef5f2ba",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-27T18:40:09Z",
+      "side": 1,
+      "message": "This change in order is reasonable (in my opinion).",
+      "range": {
+        "startLine": 827,
+        "startChar": 52,
+        "endLine": 827,
+        "endChar": 0
+      },
+      "revId": "df4bcfa0cef32a5deec87351ee22b87843500348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
