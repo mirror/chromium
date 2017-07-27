@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1bf097e_b2461bee",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T07:04:47Z",
+      "side": 1,
+      "message": "Undo this?",
+      "range": {
+        "startLine": 198,
+        "startChar": 56,
+        "endLine": 198,
+        "endChar": 58
+      },
+      "revId": "55e578d7d7ece2507b42b075324b24949e00f7e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
