@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/fileapi/recent_model.h"
 #include "content/public/browser/browser_thread.h"
 #include "storage/browser/fileapi/file_stream_reader.h"
 #include "storage/browser/fileapi/file_stream_writer.h"
@@ -17,7 +18,9 @@ using content::BrowserThread;
 
 namespace chromeos {
 
-RecentBackendDelegate::RecentBackendDelegate() = default;
+RecentBackendDelegate::RecentBackendDelegate()
+    : model_(RecentModel::CreateWithDefaultSources()),
+      async_file_util_(model_.get()) {}
 
 RecentBackendDelegate::~RecentBackendDelegate() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);

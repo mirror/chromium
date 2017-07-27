@@ -14,12 +14,14 @@
 
 namespace chromeos {
 
+class RecentModel;
+
 // The implementation of storage::AsyncFileUtil for recent.
 //
 // All of the methods must be called on the IO thread.
 class RecentAsyncFileUtil : public storage::AsyncFileUtil {
  public:
-  RecentAsyncFileUtil();
+  explicit RecentAsyncFileUtil(RecentModel* model);
   ~RecentAsyncFileUtil() override;
 
   // storage::AsyncFileUtil overrides.
@@ -90,6 +92,9 @@ class RecentAsyncFileUtil : public storage::AsyncFileUtil {
       const CreateSnapshotFileCallback& callback) override;
 
  private:
+  // Owned by RecentBackendDelegate.
+  RecentModel* model_;
+
   base::WeakPtrFactory<RecentAsyncFileUtil> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RecentAsyncFileUtil);
