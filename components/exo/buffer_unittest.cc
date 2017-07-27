@@ -73,7 +73,7 @@ TEST_F(BufferTest, IsLost) {
   std::unique_ptr<Surface> surface(new Surface);
   LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder =
       surface->layer_tree_frame_sink_holder();
-  cc::ResourceId resource_id = 0;
+  viz::ResourceId resource_id = 0;
 
   buffer->OnAttach();
   // Acquire a texture transferable resource for the contents of the buffer.
