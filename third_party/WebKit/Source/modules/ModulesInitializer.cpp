@@ -15,7 +15,9 @@
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLMediaElement.h"
+#include "core/inspector/InspectorMemoryAgent.h"
 #include "core/inspector/InspectorSession.h"
+#include "core/inspector/LeakDetector.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/page/ChromeClient.h"
@@ -34,6 +36,7 @@
 #include "modules/audio_output_devices/HTMLMediaElementAudioOutputDevice.h"
 #include "modules/cachestorage/InspectorCacheStorageAgent.h"
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
+#include "modules/compositorworker/AbstractAnimationWorkletThread.h"
 #include "modules/compositorworker/CompositorWorkerThread.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
 #include "modules/device_orientation/DeviceMotionController.h"
@@ -98,6 +101,8 @@ void ModulesInitializer::Initialize() {
   DraggedIsolatedFileSystem::Init(
       DraggedIsolatedFileSystemImpl::PrepareForDataObject);
   CSSPaintImageGenerator::Init(CSSPaintImageGeneratorImpl::Create);
+  LeakDetector::InitAbstractAnimationWorkletThreadGC(
+      AbstractAnimationWorkletThread::CollectAllGarbage);
   // Some unit tests may have no message loop ready, so we can't initialize the
   // mojo stuff here. They can initialize those mojo stuff they're interested in
   // later after they got a message loop ready.
