@@ -22,6 +22,47 @@
       "revId": "2c0530383cc8f879fb216bd17bbae90c3afb7504",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5efe4da_ef030623",
+        "filename": "ash/system/palette/palette_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T00:22:42Z",
+      "side": 1,
+      "message": "please don\u0027t hardcode board names into chrome. if you aren\u0027t able to detect this at runtime, add a new command-line flag and set it for these boards in chromium_command_builder.cc in libchromeos-ui.\n\ni only see one other place where we\u0027re calling base::SysInfo::GetLsbReleaseBoard inappropriately (media/audio/cras/audio_manager_cras.cc), so i\u0027ll file a bug to update it and add a comment to GetLsbReleaseBoard.",
+      "parentUuid": "4a6e6dfe_b5582bd4",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "2c0530383cc8f879fb216bd17bbae90c3afb7504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc2bc8d_aaa90552",
+        "filename": "ash/system/palette/palette_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T00:22:42Z",
+      "side": 1,
+      "message": "i\u0027d recommend using different terminology here. i think this really means, \"does this device always have a stylus?\", right?\n\n\"IsStylusAttached\" seems confusing because it could also be interpreted as meaning \"is a stylus currently physically connected to the device?\".",
+      "revId": "2c0530383cc8f879fb216bd17bbae90c3afb7504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
