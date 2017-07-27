@@ -22,6 +22,30 @@
       "revId": "489151de0dba2c6236c30565ef2771a560169c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24436de9_095a55a6",
+        "filename": "third_party/brotli/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-27T18:59:12Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "1fc6c798_be413ec7",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 3
+      },
+      "revId": "489151de0dba2c6236c30565ef2771a560169c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
