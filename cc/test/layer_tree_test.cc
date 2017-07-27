@@ -109,6 +109,8 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
         std::move(image_worker_task_runner)));
   }
 
+  LayerTreeHostImplClient* client() const { return client_; }
+
  protected:
   LayerTreeHostImplForTesting(
       TestHooks* test_hooks,
@@ -922,6 +924,11 @@ LayerTreeHost* LayerTreeTest::layer_tree_host() {
 
 Proxy* LayerTreeTest::proxy() {
   return layer_tree_host() ? layer_tree_host()->proxy() : NULL;
+}
+
+LayerTreeHostImplClient* LayerTreeTest::GetImplClient(
+    LayerTreeHostImpl* impl) const {
+  return static_cast<LayerTreeHostImplForTesting*>(impl)->client();
 }
 
 }  // namespace cc

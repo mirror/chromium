@@ -2154,6 +2154,10 @@ class LayerTreeHostScrollTestImplSideInvalidation
   }
 
   void DidSendBeginMainFrameOnThread(LayerTreeHostImpl* host_impl) override {
+    // These tests rely on a main frame not merging with an impl-side pending
+    // tree after it was created.
+    bool needs_first_draw_on_activation = true;
+
     switch (++num_of_main_frames_) {
       case 1:
         // Do nothing for the first BeginMainFrame.
@@ -2168,12 +2172,14 @@ class LayerTreeHostScrollTestImplSideInvalidation
 
         // Request an impl-side invalidation to create an impl-side pending
         // tree.
-        host_impl->RequestImplSideInvalidationForCheckerImagedTiles();
+        GetImplClient(host_impl)->NeedsImplSideInvalidation(
+            needs_first_draw_on_activation);
         break;
       case 3:
         // Request another impl-side invalidation so the aborted commit comes
         // after this tree is activated.
-        host_impl->RequestImplSideInvalidationForCheckerImagedTiles();
+        GetImplClient(host_impl)->NeedsImplSideInvalidation(
+            needs_first_draw_on_activation);
         break;
       default:
         NOTREACHED();
