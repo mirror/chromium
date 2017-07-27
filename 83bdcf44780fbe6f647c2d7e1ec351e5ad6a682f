@@ -16,6 +16,25 @@
       "revId": "83bdcf44780fbe6f647c2d7e1ec351e5ad6a682f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a86e44_d54a77f0",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-27T22:11:43Z",
+      "side": 1,
+      "message": "text and text selection changed events. Done. Also, were you expecting value changes to be fired on content editables?",
+      "parentUuid": "397ec821_a2f8c1b2",
+      "tag": "mailMessageId\u003d\u003cCAP\u003daH9PDL8owbfmfD2_CdWQPt\u003d_G0yO8zy7UEmvo8Ck_GhAQQA@mail.gmail.com\u003e",
+      "revId": "83bdcf44780fbe6f647c2d7e1ec351e5ad6a682f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
