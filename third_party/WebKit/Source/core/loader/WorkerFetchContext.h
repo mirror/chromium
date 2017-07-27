@@ -47,7 +47,6 @@ class WorkerFetchContext final : public BaseFetchContext {
   bool ShouldBypassMainWorldCSP() const override;
   bool IsSVGImageChromeClient() const override;
   void CountUsage(WebFeature) const override;
-  void CountDeprecation(WebFeature) const override;
   bool ShouldBlockFetchByMixedContentCheck(
       const ResourceRequest&,
       const KURL&,
@@ -60,17 +59,17 @@ class WorkerFetchContext final : public BaseFetchContext {
   const SecurityOrigin* GetParentSecurityOrigin() const override;
   Optional<WebAddressSpace> GetAddressSpace() const override;
   const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
+
   void AddConsoleMessage(ConsoleMessage*) const override;
 
   // FetchContext implementation:
+  void AddAdditionalRequestHeaders(ResourceRequest&) const override;
   SecurityOrigin* GetSecurityOrigin() const override;
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&) override;
   void PrepareRequest(ResourceRequest&, RedirectType) override;
   bool IsControlledByServiceWorker() const override;
   int ApplicationCacheHostID() const override;
-  void AddAdditionalRequestHeaders(ResourceRequest&,
-                                   FetchResourceType) override;
   void DispatchWillSendRequest(unsigned long,
                                ResourceRequest&,
                                const ResourceResponse&,
@@ -104,6 +103,9 @@ class WorkerFetchContext final : public BaseFetchContext {
   DECLARE_VIRTUAL_TRACE();
 
  private:
+  // BaseFetchContext
+  void CountDeprecation(WebFeature) const override;
+
   WorkerFetchContext(WorkerOrWorkletGlobalScope&,
                      std::unique_ptr<WebWorkerFetchContext>);
 

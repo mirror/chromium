@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class BaseFetchContext;
+class FetchContext;
 class Document;
 class ExecutionContext;
 class ResourceFetcher;
@@ -34,7 +34,7 @@ class CORE_EXPORT ThreadableLoadingContext
 
   virtual ResourceFetcher* GetResourceFetcher() = 0;
   virtual ExecutionContext* GetExecutionContext() = 0;
-  BaseFetchContext* GetFetchContext();
+  FetchContext& GetFetchContext();
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };

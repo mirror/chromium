@@ -242,14 +242,8 @@ void WorkerFetchContext::PrepareRequest(ResourceRequest& request,
   web_context_->WillSendRequest(webreq);
 }
 
-void WorkerFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
-                                                     FetchResourceType type) {
-  BaseFetchContext::AddAdditionalRequestHeaders(request, type);
-
-  // The remaining modifications are only necessary for HTTP and HTTPS.
-  if (!request.Url().IsEmpty() && !request.Url().ProtocolIsInHTTPFamily())
-    return;
-
+void WorkerFetchContext::AddAdditionalRequestHeaders(
+    ResourceRequest& request) const {
   if (web_context_->IsDataSaverEnabled())
     request.SetHTTPHeaderField("Save-Data", "on");
 }

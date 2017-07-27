@@ -54,8 +54,7 @@ void FetchContext::DispatchDidChangeResourcePriority(unsigned long,
                                                      ResourceLoadPriority,
                                                      int) {}
 
-void FetchContext::AddAdditionalRequestHeaders(ResourceRequest&,
-                                               FetchResourceType) {}
+void FetchContext::AddAdditionalRequestHeaders(ResourceRequest&) const {}
 
 WebCachePolicy FetchContext::ResourceRequestCachePolicy(
     const ResourceRequest&,
@@ -111,8 +110,9 @@ void FetchContext::AddResourceTiming(const ResourceTimingInfo&) {}
 
 void FetchContext::SendImagePing(const KURL&) {}
 
-void FetchContext::AddConsoleMessage(const String&,
-                                     FetchContext::LogMessageType) const {}
+void FetchContext::AddWarningJSConsoleMessage(const String&) const {}
+
+void FetchContext::AddErrorJSConsoleMessage(const String&) const {}
 
 void FetchContext::PopulateResourceRequest(
     Resource::Type,

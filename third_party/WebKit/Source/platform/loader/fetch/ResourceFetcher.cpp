@@ -560,7 +560,9 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       resource_type, params.GetClientHintsPreferences(),
       params.GetResourceWidth(), resource_request);
 
-  if (!params.Url().IsValid())
+  const KURL& url = params.Url();
+
+  if (!url.IsValid())
     return kAbort;
 
   resource_request.SetPriority(ComputeLoadPriority(
@@ -580,10 +582,31 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (resource_type == Resource::kLinkPrefetch)
     resource_request.SetHTTPHeaderField(HTTPNames::Purpose, "prefetch");
 
-  Context().AddAdditionalRequestHeaders(
-      resource_request, (resource_type == Resource::kMainResource)
-                            ? kFetchMainResource
-                            : kFetchSubresource);
+  if (resource_type != Resource::kMainResource) {
+    if (resource_request.DidSetHTTPReferrer()) {
+      DCHECK_EQ(
+          SecurityPolicy::GenerateReferrer(resource_request.GetReferrerPolicy(),
+                                           url, resource_request.HttpReferrer())
+              .referrer,
+          resource_request.HttpReferrer());
+      resource_request.AddHTTPOriginIfNeeded(resource_request.HttpReferrer());
+    } else {
+      resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
+          Context().GetReferrerPolicy(), url, Context().GetOutgoingReferrer()));
+      resource_request.AddHTTPOriginIfNeeded(Context().GetSecurityOrigin());
+    }
+  }
+
+  auto address_space = Context().GetAddressSpace();
+  if (address_space) {
+    resource_request.SetExternalRequestStateFromRequestorAddressSpace(
+        *address_space);
+  }
+
+  // Only necessary for HTTP and HTTPS.
+  if (resource_request.Url().IsEmpty() ||
+      resource_request.Url().ProtocolIsInHTTPFamily())
+    Context().AddAdditionalRequestHeaders(resource_request);
 
   network_instrumentation::ResourcePrioritySet(identifier,
                                                resource_request.Priority());
@@ -1232,12 +1255,11 @@ void ResourceFetcher::WarnUnusedPreloads() {
   for (const auto& pair : preloads_) {
     Resource* resource = pair.value;
     if (resource && resource->IsLinkPreload() && resource->IsUnusedPreload()) {
-      Context().AddConsoleMessage(
+      Context().AddWarningJSConsoleMessage(
           "The resource " + resource->Url().GetString() +
-              " was preloaded using link preload but not used within a few "
-              "seconds from the window's load event. Please make sure it "
-              "wasn't preloaded for nothing.",
-          FetchContext::kLogWarningMessage);
+          " was preloaded using link preload but not used within a few "
+          "seconds from the window's load event. Please make sure it "
+          "wasn't preloaded for nothing.");
     }
   }
 }
@@ -1245,19 +1267,17 @@ void ResourceFetcher::WarnUnusedPreloads() {
 ArchiveResource* ResourceFetcher::CreateArchive(Resource* resource) {
   // Only the top-frame can load MHTML.
   if (!Context().IsMainFrame()) {
-    Context().AddConsoleMessage(
+    Context().AddErrorJSConsoleMessage(
         "Attempted to load a multipart archive into an subframe: " +
-            resource->Url().GetString(),
-        FetchContext::kLogErrorMessage);
+        resource->Url().GetString());
     return nullptr;
   }
 
   archive_ = MHTMLArchive::Create(resource->Url(), resource->ResourceBuffer());
   if (!archive_) {
     // Log if attempting to load an invalid archive resource.
-    Context().AddConsoleMessage(
-        "Malformed multipart archive: " + resource->Url().GetString(),
-        FetchContext::kLogErrorMessage);
+    Context().AddErrorJSConsoleMessage("Malformed multipart archive: " +
+                                       resource->Url().GetString());
     return nullptr;
   }
 
