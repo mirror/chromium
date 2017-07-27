@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2013f45b_b6bedeff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-07-27T18:06:28Z",
+      "side": 1,
+      "message": "I added scrolling to be safe, but I found that the sheet state is peek when the bug occurs.",
+      "revId": "56bc198c0c5ff7d1e36807097915f910307027ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
