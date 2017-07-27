@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48fa917f_ce1312ed",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-27T19:28:21Z",
+      "side": 1,
+      "message": "\u003e the main goal here is to actually clean up some of the stuff in CVC about focus, wire up containerView.onFocusChanged to host_-\u003eGotFocus, and then remove this here.\n\nOh, and onWindowFocusChanged. Not entirely sure how that works with in conjunction with onFocusChanged\n\n\u003e \n\u003e Need to be careful with the unfocusable container view though, so still need to shortcut that somewhere.",
+      "parentUuid": "0fec5cbd_07415ade",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b5c1cf0_4384fa8a",
         "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
         "patchSetId": 2
