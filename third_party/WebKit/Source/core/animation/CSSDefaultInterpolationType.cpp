@@ -26,7 +26,7 @@ class CSSDefaultNonInterpolableValue : public NonInterpolableValue {
  private:
   CSSDefaultNonInterpolableValue(const CSSValue* css_value)
       : css_value_(css_value) {
-    DCHECK(css_value_);
+    DCHECK(css_value_); // hit (3)
   }
 
   Persistent<const CSSValue> css_value_;
@@ -40,6 +40,7 @@ InterpolationValue CSSDefaultInterpolationType::MaybeConvertSingle(
     const InterpolationEnvironment&,
     const InterpolationValue&,
     ConversionCheckers&) const {
+  // DCHECK(ToCSSPropertySpecificKeyframe(keyframe).Value()); // hit (2)
   return InterpolationValue(
       InterpolableList::Create(0),
       CSSDefaultNonInterpolableValue::Create(
@@ -50,6 +51,7 @@ void CSSDefaultInterpolationType::Apply(
     const InterpolableValue&,
     const NonInterpolableValue* non_interpolable_value,
     InterpolationEnvironment& environment) const {
+  DCHECK(ToCSSDefaultNonInterpolableValue(non_interpolable_value)->CssValue());
   StyleBuilder::ApplyProperty(
       GetProperty().CssProperty(),
       ToCSSInterpolationEnvironment(environment).GetState(),
