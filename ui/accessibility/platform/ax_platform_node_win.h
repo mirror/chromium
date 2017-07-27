@@ -736,6 +736,12 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
   void RemoveTargetFromRelation(const base::string16& relation_type,
                                 int target_id);
 
+  // Helper method for returning selected indicies.
+  HRESULT AllocateSelectedResults(std::vector<long>& results,
+                                  long max,
+                                  long** selected,
+                                  long* n_selected);
+
   // Relationships between this node and other nodes.
   std::vector<ui::AXPlatformNodeRelationWin*> relations_;
 };
