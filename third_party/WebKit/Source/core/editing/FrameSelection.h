@@ -214,6 +214,9 @@ class CORE_EXPORT FrameSelection final
 #ifndef NDEBUG
   void ShowTreeForThis() const;
 #endif
+#if DCHECK_IS_ON()
+  bool IsLayoutObjectReferred(LayoutObject*) const;
+#endif
 
   void SetFocusedNodeIfNeeded();
   void NotifyTextControlOfSelectionChange(SetSelectionBy);

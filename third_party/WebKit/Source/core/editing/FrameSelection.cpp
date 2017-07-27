@@ -1027,7 +1027,11 @@ void FrameSelection::SetShouldShowBlockCursor(bool should_show_block_cursor) {
 void FrameSelection::ShowTreeForThis() const {
   ComputeVisibleSelectionInDOMTreeDeprecated().ShowTreeForThis();
 }
-
+#endif
+#if DCHECK_IS_ON()
+bool FrameSelection::IsLayoutObjectReferred(LayoutObject* layout_object) const {
+  return layout_selection_->IsLayoutObjectReferred(layout_object);
+}
 #endif
 
 DEFINE_TRACE(FrameSelection) {
