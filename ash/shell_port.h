@@ -108,6 +108,10 @@ class ASH_EXPORT ShellPort {
       base::Optional<ui::CursorData> cursor) = 0;
   virtual bool IsMouseEventsEnabled() = 0;
 
+  // Fat interface for just ShellPortMash so we can conditionally access it
+  // from within //ash/magnifier/.
+  virtual void SetMouseEventsEnabled(bool enabled) = 0;
+
   // Shows the context menu for the wallpaper or shelf at |location_in_screen|.
   void ShowContextMenu(const gfx::Point& location_in_screen,
                        ui::MenuSourceType source_type);

@@ -464,6 +464,10 @@ ui::mojom::EventResult WindowManager::OnAccelerator(
   return iter->second->OnAccelerator(id, event, properties);
 }
 
+void WindowManager::OnMouseEventsEnabledChanged(bool enabled) {
+  ShellPortMash::Get()->OnMouseEventsEnabledChanged(enabled);
+}
+
 void WindowManager::OnWmSetClientArea(
     aura::Window* window,
     const gfx::Insets& insets,

@@ -36,6 +36,11 @@ class CursorState::StateSnapshot {
     cursor_size_ = cursor_size;
   }
 
+  bool mouse_events_enabled() const { return mouse_events_enabled_; }
+  void set_mouse_events_enabled(bool enabled) {
+    mouse_events_enabled_ = enabled;
+  }
+
  private:
   // An optional cursor set by the window manager which overrides per-window
   // requests.
@@ -49,10 +54,17 @@ class CursorState::StateSnapshot {
 
   // Whether the cursor is visible.
   bool visible_ = true;
+
+  // Whether mouse events are enabled. This boolean is both an extra visibility
+  // check (the cursor is hidden when false) and a filter on synthesized
+  // non-exit mouse events.
+  bool mouse_events_enabled_ = true;
 };
 
-CursorState::CursorState(DisplayManager* display_manager)
+CursorState::CursorState(DisplayManager* display_manager,
+                         CursorStateDelegate* delegate)
     : display_manager_(display_manager),
+      delegate_(delegate),
       current_state_(base::MakeUnique<StateSnapshot>()),
       state_on_unlock_(base::MakeUnique<StateSnapshot>()) {}
 
@@ -78,6 +90,11 @@ void CursorState::UnlockCursor() {
   DCHECK_GE(cursor_lock_count_, 0);
   if (cursor_lock_count_ > 0)
     return;
+
+  if (current_state_->mouse_events_enabled() !=
+      state_on_unlock_->mouse_events_enabled()) {
+    NotifyMouseEventsEnabledChanged(state_on_unlock_->mouse_events_enabled());
+  }
 
   *current_state_ = *state_on_unlock_;
   SetPlatformCursorSize();
@@ -112,6 +129,20 @@ void CursorState::SetCursorSize(ui::CursorSize cursor_size) {
   }
 }
 
+void CursorState::SetMouseEventsEnabled(bool enabled) {
+  state_on_unlock_->set_mouse_events_enabled(enabled);
+  if (cursor_lock_count_ == 0 && current_state_->mouse_events_enabled() !=
+                                     state_on_unlock_->mouse_events_enabled()) {
+    current_state_->set_mouse_events_enabled(enabled);
+    NotifyMouseEventsEnabledChanged(enabled);
+    SetPlatformCursor();
+  }
+}
+
+void CursorState::NotifyMouseEventsEnabledChanged(bool enabled) {
+  delegate_->OnMouseEventsEnabledChanged(enabled);
+}
+
 void CursorState::SetPlatformCursorSize() {
   DisplayManager* manager = display_manager_;
   for (Display* display : manager->displays())
@@ -125,7 +156,7 @@ void CursorState::SetPlatformCursor() {
       display->SetNativeCursor(cursor);
   };
 
-  if (current_state_->visible()) {
+  if (current_state_->visible() && current_state_->mouse_events_enabled()) {
     if (current_state_->global_override_cursor().has_value())
       set_on_all(current_state_->global_override_cursor().value());
     else

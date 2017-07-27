@@ -243,6 +243,11 @@ ui::mojom::EventResult WindowServerTestBase::OnAccelerator(
                                   : ui::mojom::EventResult::UNHANDLED;
 }
 
+void WindowServerTestBase::OnMouseEventsEnabledChanged(bool enabled) {
+  if (window_manager_delegate_)
+    window_manager_delegate_->OnMouseEventsEnabledChanged(enabled);
+}
+
 void WindowServerTestBase::OnWmPerformMoveLoop(
     aura::Window* window,
     ui::mojom::MoveLoopSource source,
