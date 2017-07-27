@@ -275,6 +275,11 @@ class ContentSuggestionsService : public KeyedService,
 
   CategoryRanker* category_ranker() { return category_ranker_.get(); }
 
+  ContextualSuggestionsSource* contextual_suggestions_source() {
+    DCHECK(contextual_suggestions_source_);
+    return contextual_suggestions_source_.get();
+  }
+
  private:
   friend class ContentSuggestionsServiceTest;
 

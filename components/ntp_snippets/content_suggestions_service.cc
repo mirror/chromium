@@ -151,6 +151,16 @@ void ContentSuggestionsService::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
     const ImageFetchedCallback& callback) {
   if (!providers_by_category_.count(suggestion_id.category())) {
+    // TODO(gaschler,galinap): Remove this hack by making contextual UI directly
+    // call to FetchContextualSuggestionImage
+    if (suggestion_id.category() ==
+        Category::FromKnownCategory(KnownCategories::CONTEXTUAL)) {
+      if (contextual_suggestions_source_) {
+        contextual_suggestions_source_->FetchContextualSuggestionImage(
+            suggestion_id, callback);
+      }
+      return;
+    }
     LOG(WARNING) << "Requested image for suggestion " << suggestion_id
                  << " for unavailable category " << suggestion_id.category();
     base::ThreadTaskRunnerHandle::Get()->PostTask(
