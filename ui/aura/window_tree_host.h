@@ -15,6 +15,7 @@
 #include "ui/aura/aura_export.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/ime/input_method_delegate.h"
+#include "ui/compositor/compositor.h"
 #include "ui/display/display_observer.h"
 #include "ui/events/event_source.h"
 #include "ui/gfx/geometry/insets.h"
@@ -29,7 +30,6 @@ class Transform;
 }
 
 namespace ui {
-class Compositor;
 class EventSink;
 class InputMethod;
 class ViewProp;
@@ -193,8 +193,10 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   void DestroyDispatcher();
 
   // If frame_sink_id is not passed in, one will be grabbed from
-  // ContextFactoryPrivate.
+  // ContextFactoryPrivate. |settings.enable_surface_synchronization| is ignored
+  // and inferred from the environment.
   void CreateCompositor(
+      ui::CompositorSettings settings = ui::CompositorSettings(),
       const viz::FrameSinkId& frame_sink_id = viz::FrameSinkId());
 
   void InitCompositor();
