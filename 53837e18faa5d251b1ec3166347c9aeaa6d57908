@@ -52,6 +52,24 @@
       "revId": "53837e18faa5d251b1ec3166347c9aeaa6d57908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafff2dc_7a14b2e9",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T05:18:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6a2c5c2d_90e3ef52",
+      "revId": "53837e18faa5d251b1ec3166347c9aeaa6d57908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
