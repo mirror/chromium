@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "87e2e0b4_d78f8bd1",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-27T18:27:43Z",
+      "side": 1,
+      "message": "You\u0027re welcome to change the name in update_engine, but I\u0027m also OK with leaving the D-Bus interface with the existing name. Changing D-Bus interfaces is hard (I think you have to add the new interface, make sure both update_engine and chrome roll forward, then remove the old one). Renaming it everywhere would be best, but I\u0027m OK as long as we use UI-friendly names like OneTimePermission in the chrome code.",
+      "parentUuid": "887ddf41_a4ea78a9",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f52a57b3_f3c4a36a",
         "filename": "chrome/browser/upgrade_observer.h",
         "patchSetId": 6
