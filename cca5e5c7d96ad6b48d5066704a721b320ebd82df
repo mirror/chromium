@@ -117,6 +117,30 @@
       "revId": "cca5e5c7d96ad6b48d5066704a721b320ebd82df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59b33bc_c7a34e77",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T15:40:17Z",
+      "side": 1,
+      "message": "Please drop the subscription if you don\u0027t want to receive messages for it. Chrome will continue to be woken up for any received messages because of the way how GCM works[1]. The majority of the cost in receiving a message will have been imposed before it even reaches your feature, namely by scheduling a background task, launching the native library and starting the browser process + profile.\n\nAlternatively, have this switch on the server side.\n\n[1] For background, subscriptions created by any Android app have their \"category\" field set to the app\u0027s package name, which GMScore uses for routing the message to the designated intent receiver. We\u0027re way past that point before we can decide that a specific feature (which we indicate in a field called \"subtype\") is not interested in handling it.",
+      "parentUuid": "bc748dd3_cc0c83bb",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "cca5e5c7d96ad6b48d5066704a721b320ebd82df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
