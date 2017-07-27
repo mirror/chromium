@@ -16,6 +16,24 @@
       "revId": "b08f56281909687f7c539030fa3b4e9e2edc6b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771e28d4_6daadcac",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-27T04:36:52Z",
+      "side": 0,
+      "message": "Indeed, they should have been private. All these class functions are used within the class. Anyway, we\u0027re removing them soon. :)",
+      "parentUuid": "ef3c4f16_5b31365d",
+      "revId": "b08f56281909687f7c539030fa3b4e9e2edc6b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
