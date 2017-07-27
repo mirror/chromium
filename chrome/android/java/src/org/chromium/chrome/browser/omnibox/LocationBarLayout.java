@@ -2565,4 +2565,11 @@ public class LocationBarLayout extends FrameLayout
     public boolean mustQueryUrlBarLocationForSuggestions() {
         return DeviceFormFactor.isTablet();
     }
+
+    /**
+     * @return The {@link UrlBar} for the Omnibox.
+     */
+    public UrlBar getUrlBar() {
+        return mUrlBar;
+    }
 }
