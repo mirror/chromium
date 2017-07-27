@@ -16,6 +16,24 @@
       "revId": "70dbc8bd7ef6e04e4854733c99788af451dfaad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c07bad_b7126108",
+        "filename": "ios/chrome/browser/ui/reading_list/number_badge_view.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-27T20:54:43Z",
+      "side": 1,
+      "message": "I believe |finished| means the animation is *actually* finished. I was under the assumption that you needed to check |finished| or else the animation might not be complete yet (and thus the alpha not actually at 0.0), but I could be wrong.",
+      "parentUuid": "971f5b51_f6f96175",
+      "revId": "70dbc8bd7ef6e04e4854733c99788af451dfaad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
