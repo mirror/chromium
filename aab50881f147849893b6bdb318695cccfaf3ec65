@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978167ec_73dcf336",
+        "filename": "components/metrics/metrics_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-27T13:09:44Z",
+      "side": 1,
+      "message": "Can this be DelegatingProvider? Also, you should mark DelegatingProvider final so that compilers can make all the calls on it non-virtual since they know they can\u0027t be overridden.",
+      "range": {
+        "startLine": 271,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 19
+      },
+      "revId": "aab50881f147849893b6bdb318695cccfaf3ec65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
