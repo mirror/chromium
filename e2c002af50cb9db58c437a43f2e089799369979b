@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a366271_e123d6b4",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-27T04:34:39Z",
+      "side": 1,
+      "message": "Please add a brief description.",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "e2c002af50cb9db58c437a43f2e089799369979b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1dec0b8_e824d77b",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-27T04:34:39Z",
+      "side": 1,
+      "message": "How about s/Status/ProgressStatus/g ?",
+      "range": {
+        "startLine": 81,
+        "startChar": 21,
+        "endLine": 81,
+        "endChar": 27
+      },
+      "revId": "e2c002af50cb9db58c437a43f2e089799369979b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
