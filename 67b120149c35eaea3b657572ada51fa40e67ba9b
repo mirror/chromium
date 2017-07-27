@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17993759_7c2229d2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1230670
+      },
+      "writtenOn": "2017-07-27T16:42:57Z",
+      "side": 1,
+      "message": "not sure",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "67b120149c35eaea3b657572ada51fa40e67ba9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28eac855_f7cff883",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1230670
+      },
+      "writtenOn": "2017-07-27T16:42:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 114,
+        "endChar": 29
+      },
+      "revId": "67b120149c35eaea3b657572ada51fa40e67ba9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade7cc9a_f5b64964",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1230670
+      },
+      "writtenOn": "2017-07-27T16:42:57Z",
+      "side": 1,
+      "message": "Should be reverted?",
+      "revId": "67b120149c35eaea3b657572ada51fa40e67ba9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
