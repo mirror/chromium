@@ -16,6 +16,24 @@
       "revId": "240c1c38417af4f7dc97979e04503b8c4f079fdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdd859f_5d4c66a6",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T02:18:44Z",
+      "side": 0,
+      "message": "Same as ModifyExtendingRight()[1]:\n 1. |pos| isn\u0027t used for all cases \u003d\u003d on some cases, computation of |pos| is redundant.\n 2. SelectionModifier::ComputVisibleExten() can reduce source code and binary code size.\n\n\n\n[1] http://crrev.com/c/584560 Refactor SelectionModifier::ModifyExtendingRight()",
+      "parentUuid": "37e332ce_63cc6b3e",
+      "revId": "240c1c38417af4f7dc97979e04503b8c4f079fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
