@@ -34,6 +34,41 @@
       "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabd33b9_1ed3fac1",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T02:48:53Z",
+      "side": 1,
+      "message": "Are we handling the Promise rejection on the JS side in such cases? Or do we just ignore it?\nIt seems that we don\u0027t handle it at [1], which should thnow an \"Unhandled Promise error\" in the dev console.\n\nPerhaps we could put a boolean in loadTimeData about whether privet printing is enabled, and only call getPriveWPrinters() when that boolean is true.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination_store.js?l\u003d1099",
+      "parentUuid": "967eff84_3c8d6338",
+      "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb07e9d8_1535a9da",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T02:48:53Z",
+      "side": 1,
+      "message": "If privet-printer-added is always called with an array of length 1, can we simplify this as follows?\n\nif (!printers.empty()) {\n  if (printer_type \u003d\u003d PrinterType::kExtensionPrinter) {\n    FireWebUIListener(\"extension-printers-added\", printers);\n  } else {\n    base::Value printer;\n    printers.Get(0, \u0026printer);\n    FireWebUIListener(\"privet-printer-added\", printer);\n  }\n\n  ...\n}",
+      "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
