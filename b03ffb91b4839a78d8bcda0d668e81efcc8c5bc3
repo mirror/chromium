@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "384eb908_99ae3ca6",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:57:50Z",
+      "side": 1,
+      "message": "Good catch. Removing from this patch since it\u0027s unrelated now. For fix, see https://chromium-review.googlesource.com/587704",
+      "parentUuid": "69884f6a_f85e07b2",
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f131cf60_00be4a4a",
         "filename": "content/browser/appcache/appcache_manifest_parser.cc",
         "patchSetId": 9
@@ -70,6 +88,30 @@
       "writtenOn": "2017-07-27T01:01:00Z",
       "side": 1,
       "message": "I\u0027m confused as to why this doesn\u0027t use the manifest\u0027s scope attribute (falling back to manifest_url.GetWithoutFilename() as the default).",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 59
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134b30f7_c04b5dbe",
+        "filename": "content/browser/appcache/appcache_manifest_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:57:50Z",
+      "side": 1,
+      "message": "Note that this is appcache. I don\u0027t think AppCache manifest have a scope.",
+      "parentUuid": "f131cf60_00be4a4a",
       "range": {
         "startLine": 63,
         "startChar": 26,
@@ -102,6 +144,30 @@
       "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0e3b42_e2fab5bb",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:57:50Z",
+      "side": 1,
+      "message": "I think \"nonstandard\" is right https://www.merriam-webster.com/dictionary/nonstandard. It\u0027s also consistent with other uses of it throughout the file.",
+      "parentUuid": "357e381d_1200b456",
+      "range": {
+        "startLine": 378,
+        "startChar": 44,
+        "endLine": 378,
+        "endChar": 55
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +205,54 @@
       "writtenOn": "2017-07-27T01:01:00Z",
       "side": 1,
       "message": "This adds a new error case that wasn\u0027t there before. Is there an explicit reason to fail on non-standard URLs? It seems non-trivial what \"standard\" means in this context.",
+      "range": {
+        "startLine": 380,
+        "startChar": 21,
+        "endLine": 380,
+        "endChar": 33
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9877036a_0807aa98",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:57:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "02a1cac7_894e5f19",
+      "range": {
+        "startLine": 380,
+        "startChar": 7,
+        "endLine": 380,
+        "endChar": 16
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2477c9d7_e0594c50",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:57:50Z",
+      "side": 1,
+      "message": "If I understand correctly nonstandard URLs could be non-hierarchical in which case this wouldn\u0027t make sense e.g. about:blank, data:foobar, etc. Because we end up calling Resolve() the result will be the same either way: an empty URL. This way we are more explicit about it.\n\nAlso changed the function\u0027s comment to match other functions in the file with similar restriction.",
+      "parentUuid": "dbc2614b_1ca1c2bf",
       "range": {
         "startLine": 380,
         "startChar": 21,
