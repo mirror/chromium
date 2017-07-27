@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4919e5a_4ac5d163",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:48:28Z",
+      "side": 1,
+      "message": "nit: In the method on L99, you used this form:\n\n  if (connector_)\n    connector_-\u003eDoIt(std::move(callback));\n  else\n    std::move(callback).Run(0)\n\nLet\u0027s be consistent and do that here too.",
+      "range": {
+        "startLine": 399,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 62
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8748610b_47c20e7b",
+        "filename": "media/mojo/interfaces/mirror_service_remoting.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:48:28Z",
+      "side": 1,
+      "message": "The return type should probably be \"double? rate\". This let\u0027s us, in C++ code, return base::nullopt when there\u0027s no Remoter to query for this data.",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90639faf_c0f3fa19",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:48:28Z",
+      "side": 1,
+      "message": "There\u0027s no verb in this method name. :)",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 29
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
