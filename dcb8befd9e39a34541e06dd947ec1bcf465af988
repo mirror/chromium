@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df4dfa45_8d835d8d",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-27T02:54:42Z",
+      "side": 1,
+      "message": "Can you be more specific about this?\n\nDo you mean the caller cannot call other method  before the initialization results returned?",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
