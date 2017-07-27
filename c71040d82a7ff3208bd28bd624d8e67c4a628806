@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57086bde_a9e9d1ce",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T14:15:38Z",
+      "side": 1,
+      "message": "Declaration order should match definition order.",
+      "range": {
+        "startLine": 403,
+        "startChar": 22,
+        "endLine": 403,
+        "endChar": 40
+      },
+      "revId": "c71040d82a7ff3208bd28bd624d8e67c4a628806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff2f47d_0fe86aea",
+        "filename": "components/password_manager/core/browser/password_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T14:15:38Z",
+      "side": 1,
+      "message": "you can forward-declare the class.",
+      "range": {
+        "startLine": 21,
+        "startChar": 51,
+        "endLine": 21,
+        "endChar": 88
+      },
+      "revId": "c71040d82a7ff3208bd28bd624d8e67c4a628806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2957623_d34473ed",
+        "filename": "components/password_manager/core/browser/password_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T14:15:38Z",
+      "side": 1,
+      "message": "Update the comment. There is no |matched_manager_it|. Also it\u0027s unclear what \"|form| is saved\" mean. Provisionally saved?",
+      "range": {
+        "startLine": 211,
+        "startChar": 6,
+        "endLine": 211,
+        "endChar": 31
+      },
+      "revId": "c71040d82a7ff3208bd28bd624d8e67c4a628806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f7d593_37d01f8d",
+        "filename": "components/password_manager/core/browser/password_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T14:15:38Z",
+      "side": 1,
+      "message": "ProvisionallySaveManager?",
+      "range": {
+        "startLine": 212,
+        "startChar": 7,
+        "endLine": 212,
+        "endChar": 25
+      },
+      "revId": "c71040d82a7ff3208bd28bd624d8e67c4a628806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
