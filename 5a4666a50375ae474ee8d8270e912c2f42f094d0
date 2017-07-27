@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3f06e1e_71a6fd85",
+        "filename": "chrome/profiling/profiling_globals.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T16:57:44Z",
+      "side": 1,
+      "message": "Does this have to live on the heap, or could this be on the stack? Looks like we only allocate one of these objects.",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "5a4666a50375ae474ee8d8270e912c2f42f094d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
