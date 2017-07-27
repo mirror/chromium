@@ -26,6 +26,7 @@ MediaControlFullscreenButtonElement::MediaControlFullscreenButtonElement(
 void MediaControlFullscreenButtonElement::SetIsFullscreen(bool is_fullscreen) {
   SetDisplayType(is_fullscreen ? kMediaExitFullscreenButton
                                : kMediaEnterFullscreenButton);
+  ToggleClass(is_fullscreen, "fullscreen");
 }
 
 bool MediaControlFullscreenButtonElement::WillRespondToMouseClickEvents() {
