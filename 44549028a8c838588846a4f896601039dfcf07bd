@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4dc7226_a5338d5e",
+        "filename": "ios/chrome/browser/web/js_print_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-27T17:23:35Z",
+      "side": 1,
+      "message": "How about creating a function for this matcher?",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "44549028a8c838588846a4f896601039dfcf07bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
