@@ -16,6 +16,41 @@
       "revId": "6300b0395a87fbdd469cca85755561aa10549525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8121b76c_b725ce8e",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage_search.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:20:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "27380910_590e68bf",
+      "revId": "6300b0395a87fbdd469cca85755561aa10549525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9b7083d_ae62fcc8",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage_search.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:20:39Z",
+      "side": 1,
+      "message": "Can we used the non-prefixed version? There is no reason AFAIK to stick with the old prefixed version (see https://bugs.chromium.org/p/chromium/issues/detail?id\u003d461018).",
+      "revId": "6300b0395a87fbdd469cca85755561aa10549525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
