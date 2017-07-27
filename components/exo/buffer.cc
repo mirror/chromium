@@ -411,7 +411,7 @@ Buffer::~Buffer() {}
 
 bool Buffer::ProduceTransferableResource(
     LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder,
-    cc::ResourceId resource_id,
+    viz::ResourceId resource_id,
     bool secure_output_only,
     bool client_usage,
     cc::TransferableResource* resource) {
