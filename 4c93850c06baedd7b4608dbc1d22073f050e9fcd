@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "8a6442a2_f3c94694",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-27T22:10:38Z",
+      "side": 1,
+      "message": "InspectorResourceContentLoader only loads certain resources (namely Documents and CSS), does this mean we won\u0027t return content for other types of resources now?",
+      "revId": "4c93850c06baedd7b4608dbc1d22073f050e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c787219_466074cf",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 7
