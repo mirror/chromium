@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ec87d5cd_44bc55fd",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-27T02:42:57Z",
+      "side": 1,
+      "message": "OK.\n\nIn this case https://chromium-review.googlesource.com/c/584563/ should also have this change.",
+      "parentUuid": "e5cbf6f4_30254ffd",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 45
+      },
+      "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb9e64ed_a1be7ee5",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
         "patchSetId": 2
@@ -81,6 +105,24 @@
       "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcb2fd8_4b11bce9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-27T02:42:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "257778f3_069a8ab1",
+      "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
