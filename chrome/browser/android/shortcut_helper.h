@@ -29,12 +29,6 @@ class ShortcutHelper {
   using WebApkInfoCallback =
       base::Callback<void(const std::vector<WebApkInfo>&)>;
 
-  // Adds a shortcut to the launcher using a SkBitmap. The type of shortcut
-  // added depends on the properties in |info|.
-  static void AddToLauncherWithSkBitmap(content::WebContents* web_contents,
-                                        const ShortcutInfo& info,
-                                        const SkBitmap& icon_bitmap);
-
   // Installs WebAPK and adds shortcut to the launcher.
   static void InstallWebApkWithSkBitmap(
       content::WebContents* web_contents,
@@ -42,6 +36,15 @@ class ShortcutHelper {
       const SkBitmap& primary_icon_bitmap,
       const SkBitmap& badge_icon_bitmap,
       const WebApkInstallService::FinishCallback& callback);
+
+  // Adds a shortcut which opens in a fullscreen window to the launcher.
+  static void AddWebappWithSkBitmap(content::WebContents* web_contents,
+                                    const ShortcutInfo& info,
+                                    const SkBitmap& icon_bitmap);
+
+  // Adds a shortcut which opens in a browser tab to the launcher.
+  static void AddShortcutWithSkBitmap(const ShortcutInfo& info,
+                                      const SkBitmap& icon_bitmap);
 
   // Shows toast notifying user that a WebAPK install is already in progress
   // when user tries to queue a new install for the same WebAPK.

@@ -260,8 +260,8 @@ bool AppBannerInfoBarDelegateAndroid::AcceptWebApp(
   AppBannerSettingsHelper::RecordBannerInstallEvent(
       web_contents, shortcut_info_->url.spec(), AppBannerSettingsHelper::WEB);
 
-  ShortcutHelper::AddToLauncherWithSkBitmap(web_contents, *shortcut_info_,
-                                            primary_icon_);
+  ShortcutHelper::AddWebappWithSkBitmap(web_contents, *shortcut_info_,
+                                        primary_icon_);
 
   SendBannerAccepted();
   return true;
@@ -361,8 +361,8 @@ void AppBannerInfoBarDelegateAndroid::OnWebApkInstallFailed(
     content::WebContents* web_contents =
         InfoBarService::WebContentsFromInfoBar(infobar());
     // Add webapp shortcut to the homescreen.
-    ShortcutHelper::AddToLauncherWithSkBitmap(web_contents, *shortcut_info_,
-                                              primary_icon_);
+    ShortcutHelper::AddWebappWithSkBitmap(web_contents, *shortcut_info_,
+                                          primary_icon_);
   }
 
   infobar()->RemoveSelf();
