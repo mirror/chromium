@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2214bc7_c7283e85",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-27T15:07:30Z",
+      "side": 1,
+      "message": "What do we plan to use this for?",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 59
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26fc46a_f6fd79cf",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-27T15:07:30Z",
+      "side": 1,
+      "message": "Just use default.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372fc5f2_153d22d2",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-27T15:07:30Z",
+      "side": 1,
+      "message": "either use if and else if here, or use default here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e93df7_4a86f1c6",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-27T15:07:30Z",
+      "side": 1,
+      "message": "Can we reuse DISPATCH_TAB_SIGNAL?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee1c47e_0944fab5",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-27T15:07:30Z",
+      "side": 1,
+      "message": "default",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 12
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
