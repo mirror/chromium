@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1985d69d_69bedfce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T09:37:21Z",
+      "side": 1,
+      "message": "There should be a bug number.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bf80b4_9ea24479",
+        "filename": "components/password_manager/core/common/credential_manager_features.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T09:37:21Z",
+      "side": 1,
+      "message": "If all the iOS implementation is gonna live in ios/chrome/browser/passwords/ can we put the feature there?",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61103f9f_efe18b51",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T09:37:21Z",
+      "side": 1,
+      "message": "add {}",
+      "range": {
+        "startLine": 171,
+        "startChar": 59,
+        "endLine": 171,
+        "endChar": 60
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
