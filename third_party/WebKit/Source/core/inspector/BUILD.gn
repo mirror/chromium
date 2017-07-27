@@ -84,6 +84,8 @@ blink_core_sources("inspector") {
     "InspectorTracingAgent.h",
     "InspectorWorkerAgent.cpp",
     "InspectorWorkerAgent.h",
+    "LeakDetector.cpp",
+    "LeakDetector.h",
     "MainThreadDebugger.cpp",
     "MainThreadDebugger.h",
     "NetworkResourcesData.cpp",

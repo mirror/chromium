@@ -30,11 +30,26 @@
 
 #include "core/inspector/InspectorMemoryAgent.h"
 
+#include "bindings/core/v8/V8GCController.h"
+#include "core/editing/spellcheck/SpellChecker.h"
+#include "core/frame/LocalFrame.h"
+#include "core/inspector/InspectedFrames.h"
+#include "core/inspector/LeakDetector.h"
+#include "core/workers/WorkerThread.h"
 #include "platform/InstanceCounters.h"
+#include "platform/bindings/V8PerIsolateData.h"
+#include "platform/loader/fetch/MemoryCache.h"
 
 namespace blink {
 
+using PrepareAndGCForLeakDetectionCallback =
+    protocol::Memory::Backend::PrepareAndGCForLeakDetectionCallback;
 using protocol::Response;
+
+InspectorMemoryAgent::InspectorMemoryAgent(InspectedFrames* inspected_frames)
+    : inspected_frames_(inspected_frames),
+      detector_(this),
+      callback_(nullptr) {}
 
 InspectorMemoryAgent::~InspectorMemoryAgent() {}
 
@@ -49,6 +64,22 @@ Response InspectorMemoryAgent::getDOMCounters(int* documents,
   return Response::OK();
 }
 
-InspectorMemoryAgent::InspectorMemoryAgent() = default;
+void InspectorMemoryAgent::prepareAndGCForLeakDetection(
+    std::unique_ptr<PrepareAndGCForLeakDetectionCallback> callback) {
+  callback_ = std::move(callback);
+  LocalFrame* frame = inspected_frames_->Root();
+  detector_.PrepareForLeakDetection(frame);
+  detector_.CollectGarbage();
+}
+
+void InspectorMemoryAgent::OnLeakDetectionComplete() {
+  DCHECK(callback_);
+  callback_->sendSuccess();
+}
+
+DEFINE_TRACE(InspectorMemoryAgent) {
+  visitor->Trace(inspected_frames_);
+  InspectorBaseAgent::Trace(visitor);
+}
 
 }  // namespace blink
