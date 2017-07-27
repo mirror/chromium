@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ca60be7_1bcb34c2",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T18:51:31Z",
+      "side": 1,
+      "message": "Convention is to order like this:\"extern const\"",
+      "revId": "5f4777133c95f30abcb78771cc82b6067f33212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd8e089_a4653554",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T18:51:31Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t catch this before. Setting the values (e.g., \"\u003d0\") is not necessary and poor practice. Please remove here and elsewhere.",
+      "revId": "5f4777133c95f30abcb78771cc82b6067f33212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080a6c61_8a48c07b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T18:51:31Z",
+      "side": 1,
+      "message": "nit: Please remove this import, as it was imported in the header.",
+      "revId": "5f4777133c95f30abcb78771cc82b6067f33212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
