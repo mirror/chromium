@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39fca206_cd299a91",
+        "filename": "services/preferences/public/cpp/dictionary_value_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-27T22:06:23Z",
+      "side": 1,
+      "message": "This is the only non-trivial change in this CL. A wrapper around SetKey didn\u0027t exist in DictionaryValueUpdate yet, so I had to introduce it now.",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "4af0ed129e9f5cc342ca5cc0a8a9f72166d55705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
