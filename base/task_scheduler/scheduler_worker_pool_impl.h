@@ -88,10 +88,17 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 
   void GetHistograms(std::vector<const HistogramBase*>* histograms) const;
 
+  // Examine the list of SchedulerWorkers for blocked tasks to check for and
+  // carry out any necessary increases to |worker_capacity_|
+  void AdjustWorkerCapacity();
+
   // Returns the maximum number of tasks that can run concurrently in this pool.
   //
   // TODO(fdoray): Remove this method. https://crbug.com/687264
   int GetMaxConcurrentTasksDeprecated() const;
+
+  // Waits until at least |n| workers are idle.
+  void WaitForWorkersIdleForTesting(size_t n);
 
   // Waits until all workers are idle.
   void WaitForAllWorkersIdleForTesting();
@@ -111,12 +118,28 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // change if workers are woken up or cleaned up during this call.
   size_t NumberOfAliveWorkersForTesting();
 
+  // Returns |worker_capacity_|.
+  size_t WorkerCapacityForTesting();
+
+  // Returns the number of workers in the |idle_workers_stack_|.
+  size_t NumberOfIdleWorkersForTesting();
+
+  // After being called, workers will need to be blocked for TimeDelta::Max()
+  // before |worker_capacity_| can be increased.
+  void MaximizeBlockedThresholdForTesting() {
+    maximum_blocked_threshold_.Set();
+  }
+
  private:
   class SchedulerWorkerDelegateImpl;
 
   SchedulerWorkerPoolImpl(const SchedulerWorkerPoolParams& params,
                           TaskTracker* task_tracker,
                           DelayedTaskManager* delayed_task_manager);
+
+  // Waits until at least |n| workers are idle. |lock_| must be held to call
+  // this function.
+  void WaitForWorkersIdleAssertLockForTesting(size_t n);
 
   // Wakes up the last worker from this worker pool to go idle, if any.
   void WakeUpOneWorker();
@@ -147,6 +170,16 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // this also calls Start() on the worker.
   scoped_refptr<SchedulerWorker> CreateRegisterAndStartSchedulerWorker();
 
+  // Returns true if the |worker| is currently suspended.
+  bool WorkerIsSuspended(const SchedulerWorker* worker) const;
+
+  // Returns whether additional workers should be suspended.
+  bool ShouldSuspendWorkers() const;
+
+  // Returns the minimum amount of time a SchedulerWorker must be blocked before
+  // it is considered blocked by the SchedulerWorkerPoolImpl.
+  TimeDelta BlockedThreshold() const;
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -161,7 +194,7 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   SchedulerBackwardCompatibility backward_compatibility_;
 
   // Synchronizes accesses to |workers_|, |worker_capacity_|,
-  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_| and
+  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_|, and
   // |num_wake_ups_before_start_|. Has |shared_priority_queue_|'s lock as
   // its predecessor so that a worker can be pushed to |idle_workers_stack_|
   // within the scope of a Transaction (more details in GetWork()).
@@ -174,6 +207,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // workers.
   size_t worker_capacity_;
 
+  // Initial value of |worker_capacity_| as set in Start().
+  size_t initial_worker_capacity_;
+
   // Stack of idle workers. Initially, all workers are on this stack. A worker
   // is removed from the stack before its WakeUp() function is called and when
   // it receives work from GetWork() (a worker calls GetWork() when its sleep
@@ -181,13 +217,15 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // is pushed on this stack when it receives nullptr from GetWork().
   SchedulerWorkerStack idle_workers_stack_;
 
-  // Signaled when all workers become idle.
+  // Signaled when a worker is added to the idle workers stack.
   std::unique_ptr<ConditionVariable> idle_workers_stack_cv_for_testing_;
 
   // Number of wake ups that occurred before Start(). Never modified after
   // Start() (i.e. can be read without synchronization once
   // |workers_created_.IsSet()|).
   int num_wake_ups_before_start_ = 0;
+
+  AtomicFlag maximum_blocked_threshold_;
 
   // Signaled once JoinForTesting() has returned.
   WaitableEvent join_for_testing_returned_;
@@ -213,6 +251,8 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 
   TaskTracker* const task_tracker_;
   DelayedTaskManager* const delayed_task_manager_;
+
+  friend class TaskSchedulerWorkerPoolBlockedUnblockedTest;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolImpl);
 };
