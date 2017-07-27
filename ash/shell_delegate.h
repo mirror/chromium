@@ -119,6 +119,7 @@ class ASH_EXPORT ShellDelegate {
 
   // Get the product name.
   virtual base::string16 GetProductName() const = 0;
+  virtual base::string16 GetProductOSName() const = 0;
 
   virtual void OpenKeyboardShortcutHelpPage() const {}
 

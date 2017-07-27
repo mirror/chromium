@@ -43,6 +43,7 @@ class ShellDelegateMus : public ShellDelegate {
                                    const ShelfItem* item) override;
   GPUSupport* CreateGPUSupport() override;
   base::string16 GetProductName() const override;
+  base::string16 GetProductOSName() const override;
   gfx::Image GetDeprecatedAcceleratorImage() const override;
   PrefService* GetActiveUserPrefService() const override;
   PrefService* GetLocalStatePrefService() const override;

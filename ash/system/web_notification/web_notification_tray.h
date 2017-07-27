@@ -105,6 +105,7 @@ class ASH_EXPORT WebNotificationTray
   bool ShowNotifierSettings() override;
   bool IsContextMenuEnabled() const override;
   message_center::MessageCenterTray* GetMessageCenterTray() override;
+  base::string16 GetProductOSName() override;
 
   // Overridden from ui::SimpleMenuModel::Delegate.
   bool IsCommandIdChecked(int command_id) const override;

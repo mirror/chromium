@@ -943,6 +943,15 @@ void MessageCenterImpl::PausePopupTimers() {
     popup_timers_controller_->PauseAll();
 }
 
+base::string16 MessageCenterImpl::GetProductOSName() {
+  return product_os_name_;
+}
+
+void MessageCenterImpl::SetProductOSName(
+    const base::string16& product_os_name) {
+  product_os_name_ = product_os_name;
+}
+
 void MessageCenterImpl::DisableTimersForTest() {
   popup_timers_controller_.reset();
 }
