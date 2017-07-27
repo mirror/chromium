@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1019460d_ba548d35",
+        "filename": "build/compiler_version.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-27T02:39:36Z",
+      "side": 0,
+      "message": "https://cs.chromium.org/chromium/src/testing/buildbot/trybot_analyze_config.json?rcl\u003d5036eb22edac0a6a1d01bcd8f6701ebc393367fe\u0026l\u003d17 can be removed too.",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "60d3f7a4275923fb934550908dd3a9999061c1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
