@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cafa46cf_5e3eb3ec",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-27T14:56:29Z",
+      "side": 1,
+      "message": "Add a comment explaining this.",
+      "revId": "12921af695bacd945c430084c6af34bb4506091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcc49cd_78f7324f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-27T14:56:29Z",
+      "side": 1,
+      "message": "Also CSS clip of the paint_layer_",
+      "revId": "12921af695bacd945c430084c6af34bb4506091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
