@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a9f0578_391bc010",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T19:00:05Z",
+      "side": 1,
+      "message": "I think you can just remove the EXPECT statements. The subsequent SHELF_AUTO_HIDE* checks are sufficient.",
+      "parentUuid": "68dfaace_a46442b3",
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc30e95e_4e83da9d",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -183,6 +201,24 @@
       "side": 1,
       "message": "When shelf is auto-hidden and there is no visible window. Use generator.GestureScrollSequence(*) can dispatch the events to Shelf::AutoHideEventHandler. But the IsShelfWindow() will return false, I think since it didn\u0027t set the correct event target here. The reason I call ProcessGestureEventOnWindow directly here is because i want to set the target here. Then IsShelfWindow() will return true, so it can continue the following logic.",
       "parentUuid": "eaecd8f3_cef644af",
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36165f21_f7da3d45",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-27T19:00:05Z",
+      "side": 1,
+      "message": "What is the event\u0027s target, if it\u0027s not the shelf window? Does the generator set the shelf window as the event target in other cases above? I\u0027d like to find out why this particular case is different/problematic. If investigating takes too long, feel free to add a TODO and file a bug, but hopefully it\u0027s a quick fix.",
+      "parentUuid": "18b3e3a4_62539814",
       "revId": "53168a00214940d52373e0674ff8da0ba388feca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
