@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14011703_016a1395",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_pane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-27T17:30:04Z",
+      "side": 1,
+      "message": "merge lines?",
+      "revId": "d651b4836286d5d38a3ba302d6e6a760ae05a4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768bd51b_7d0e3f29",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_pane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-27T17:30:04Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this return url now? The preview might not be a default image.",
+      "revId": "d651b4836286d5d38a3ba302d6e6a760ae05a4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
