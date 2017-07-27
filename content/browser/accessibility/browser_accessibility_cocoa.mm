@@ -841,7 +841,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
     return nil;
 
   // Mac OS X wants static text exposed in AXValue.
-  if ([self shouldExposeNameInAXValue])
+  if (ui::IsNameExposedInAXValueForRole([self internalRole]))
     return @"";
 
   // If we're exposing the title in TitleUIElement, don't also redundantly
@@ -1288,20 +1288,6 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 // internal
 - (ui::AXRole)internalRole {
   return static_cast<ui::AXRole>(browserAccessibility_->GetRole());
-}
-
-// Returns true if this should expose its accessible name in AXValue.
-// internal
-- (BOOL)shouldExposeNameInAXValue {
-  switch ([self internalRole]) {
-    case ui::AX_ROLE_LIST_BOX_OPTION:
-    case ui::AX_ROLE_LIST_MARKER:
-    case ui::AX_ROLE_MENU_LIST_OPTION:
-    case ui::AX_ROLE_STATIC_TEXT:
-      return true;
-    default:
-      return false;
-  }
 }
 
 // Returns true if this object should expose its accessible name using
@@ -1797,7 +1783,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
   if (![self instanceActive])
     return nil;
   // Mac OS X wants static text exposed in AXValue.
-  if ([self shouldExposeNameInAXValue])
+  if (ui::IsNameExposedInAXValueForRole([self internalRole]))
     return @"";
 
   // If we're exposing the title in TitleUIElement, don't also redundantly
@@ -1859,11 +1845,12 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (id)value {
   if (![self instanceActive])
     return nil;
+
+  if (ui::IsNameExposedInAXValueForRole([self internalRole]))
+    return NSStringForStringAttribute(browserAccessibility_, ui::AX_ATTR_NAME);
+
   NSString* role = [self role];
-  if ([self shouldExposeNameInAXValue]) {
-    return NSStringForStringAttribute(
-        browserAccessibility_, ui::AX_ATTR_NAME);
-  } else if ([role isEqualToString:@"AXHeading"]) {
+  if ([role isEqualToString:@"AXHeading"]) {
     int level = 0;
     if (browserAccessibility_->GetIntAttribute(
             ui::AX_ATTR_HIERARCHICAL_LEVEL, &level)) {
