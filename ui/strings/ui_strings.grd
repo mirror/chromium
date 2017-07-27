@@ -708,6 +708,19 @@ need to be translated for each locale.-->
       <message name="IDS_SUGGESTED_APPS_INDICATOR" desc="Indicator text in app list on top of suggested apps.">
         SUGGESTED APPS
       </message>
+
+      <message name="IDS_SUGGESTED_APPS_INDICATOR1" desc="Indicator text in app list on top of suggested apps.">
+        FREQUENTLY USED
+      </message>
+      <message name="IDS_SUGGESTED_APPS_INDICATOR2" desc="Indicator text in app list on top of suggested apps.">
+        RECOMMENDED APPS
+      </message>
+      <message name="IDS_SUGGESTED_APPS_INDICATOR3" desc="Indicator text in app list on top of suggested apps.">
+        MOST LIKELY
+      </message>
+      <message name="IDS_SUGGESTED_APPS_INDICATOR4" desc="Indicator text in app list on top of suggested apps.">
+        APP SUGGESTIONS
+      </message>
       <message name="IDS_ALL_APPS_INDICATOR" desc="Indicator text in app list on top of all apps.">
         ALL APPS
       </message>
