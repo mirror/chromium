@@ -1,0 +1,24 @@
+static_library("util") {
+  sources = [
+    "geocoding_request.cpp",
+    "geocoding_request.h",
+  ]
+  deps = [
+    "//base",
+    "//google_apis",
+    "//net",
+    "//url",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "geocoding_request_unittest.cc",
+  ]
+  deps = [
+    ":util",
+    "//base",
+    "//testing/gtest",
+  ]
+}
