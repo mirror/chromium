@@ -255,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "1fb128e0_1c089586",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-27T17:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dee272d_24809f13",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04306ff7_6ffcb194",
         "filename": "ios/web/navigation/navigation_manager_impl.h",
         "patchSetId": 4
