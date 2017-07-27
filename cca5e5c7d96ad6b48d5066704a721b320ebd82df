@@ -45,6 +45,30 @@
       "revId": "cca5e5c7d96ad6b48d5066704a721b320ebd82df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc748dd3_cc0c83bb",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-27T15:20:30Z",
+      "side": 1,
+      "message": "you can say \"ignored by GCM without Chrome wakeup\"",
+      "parentUuid": "7c78120e_f6b141bf",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "cca5e5c7d96ad6b48d5066704a721b320ebd82df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

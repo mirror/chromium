@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "44d45ac2_b8ad6755",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-27T15:20:30Z",
+      "side": 1,
+      "message": "As per our offline discussion, this is intended. We want to get registrations, while completely blocking pushing.",
+      "parentUuid": "3a2585aa_3f0f3ef9",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 60
+      },
+      "revId": "2625016e54bb5412f01a367726a4da57b773b5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "113df9ad_e1caae00",
         "filename": "components/ntp_snippets/features.h",
         "patchSetId": 2
