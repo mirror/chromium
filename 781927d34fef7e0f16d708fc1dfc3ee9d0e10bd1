@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6814d2db_9b4ce0a1",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-27T09:07:29Z",
+      "side": 1,
+      "message": "As we\u0027re changing to call mojo functions instead of calling //device/serial functions directly, we do not need to do work on a background task runner now.\n\nDo you think setting UI as work task runner here is weird? Is it better that we just change SerialGetDevicesFunction to inherit UIThreadExtensionFunction instead? Because SerialGetDevicesFunction becomes to work only on UI now.",
+      "range": {
+        "startLine": 87,
+        "startChar": 21,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "781927d34fef7e0f16d708fc1dfc3ee9d0e10bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
