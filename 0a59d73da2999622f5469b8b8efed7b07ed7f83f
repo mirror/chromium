@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14bad7f2_b456968c",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-27T08:37:41Z",
+      "side": 1,
+      "message": "I think report_raw_headers_ is better. I also think removing this is preferable.",
+      "revId": "0a59d73da2999622f5469b8b8efed7b07ed7f83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b992b7a_eebbb429",
+        "filename": "content/child/web_url_loader_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-27T08:37:41Z",
+      "side": 1,
+      "message": "As talked offline, we may want to define RedirectInfo in public/ and platform/loader level in the future.",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 25
+      },
+      "revId": "0a59d73da2999622f5469b8b8efed7b07ed7f83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
