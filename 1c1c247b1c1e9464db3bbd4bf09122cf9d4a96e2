@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2050db42_19f438c1",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f41da39f_6ac739c0",
+      "range": {
+        "startLine": 1276,
+        "startChar": 31,
+        "endLine": 1276,
+        "endChar": 36
+      },
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61c725e_f5ad7a1f",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d32f0f00_9b6a7d99",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b61c725e_f5ad7a1f",
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d014021c_35692d00",
         "filename": "ash/shelf/shelf_layout_manager.h",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-27T17:08:36Z",
       "side": 1,
       "message": "is \"OnShelfOpacity\" important here? (just asking)",
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3bfe51_aa426aab",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Yes, app list\u0027s background opacity changes from shelf\u0027s opacity to its final opacity (0.8 currently). If shelf is black, the app list changes from dark to light, if shelf is transparent, the app list changes from light to dark.",
+      "parentUuid": "d014021c_35692d00",
       "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "a2693ea9_d7975a50",
+        "filename": "ui/app_list/presenter/app_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81cdb5e6_7cf83d95",
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a75e0d4_088e84e6",
         "filename": "ui/app_list/presenter/app_list_presenter_impl.cc",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf779db_20e4194d",
+        "filename": "ui/app_list/presenter/app_list_presenter_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a75e0d4_088e84e6",
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "6d76315c_69a5ffe6",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5825fdde_7947df5e",
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d96f930b_4cdf9462",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 4
@@ -124,6 +238,24 @@
       "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1da739d_fbfdb0e7",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96f930b_4cdf9462",
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "c8822662_9b28aeee",
+        "filename": "ui/app_list/views/indicator_chip_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf2dd121_e9dde239",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 11
+      },
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af259e4f_1b022652",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 4
@@ -164,6 +320,24 @@
       "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e396b924_4ab1fa67",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T18:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af259e4f_1b022652",
+      "revId": "1c1c247b1c1e9464db3bbd4bf09122cf9d4a96e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
