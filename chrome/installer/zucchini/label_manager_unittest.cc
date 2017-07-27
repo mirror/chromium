@@ -7,7 +7,8 @@
 #include <utility>
 #include <vector>
 
-#include "chrome/installer/zucchini/disassembler.h"
+#include "chrome/installer/zucchini/image_utils.h"
+#include "chrome/installer/zucchini/test_disassembler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace zucchini {
@@ -16,23 +17,6 @@ namespace {
 
 constexpr auto BAD = kUnusedIndex;
 using OffsetVector = std::vector<offset_t>;
-
-// A trivial ReferenceReader that only reads injected references.
-class TestReferenceReader : public ReferenceReader {
- public:
-  explicit TestReferenceReader(const std::vector<Reference>& refs)
-      : references_(refs) {}
-
-  base::Optional<Reference> GetNext() override {
-    if (index_ == references_.size())
-      return base::nullopt;
-    return references_[index_++];
-  }
-
- private:
-  std::vector<Reference> references_;
-  size_t index_ = 0;
-};
 
 }  // namespace
 
