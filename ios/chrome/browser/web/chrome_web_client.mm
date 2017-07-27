@@ -12,6 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/dom_distiller/core/url_constants.h"
+#include "components/password_manager/core/common/credential_manager_features.h"
 #include "components/payments/core/features.h"
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
@@ -164,11 +165,17 @@ void ChromeWebClient::PostBrowserURLRewriterCreation(
 NSString* ChromeWebClient::GetEarlyPageScript(
     web::BrowserState* browser_state) const {
   NSString* chrome_page_script = GetPageScript(@"chrome_bundle");
+  NSString* kScriptTemplate = @"%@; %@";
+
+  if (base::FeatureList::IsEnabled(
+          credential_manager::features::kCredentialManager))
+    chrome_page_script = [NSString
+        stringWithFormat:kScriptTemplate, GetPageScript(@"credential_manager"),
+                         chrome_page_script];
 
   if (!base::FeatureList::IsEnabled(payments::features::kWebPayments))
     return chrome_page_script;
 
-  NSString* kScriptTemplate = @"%@; %@";
   return [NSString stringWithFormat:kScriptTemplate,
                                     GetPageScript(@"payment_request"),
                                     chrome_page_script];
