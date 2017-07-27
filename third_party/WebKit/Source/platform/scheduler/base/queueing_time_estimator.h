@@ -46,8 +46,11 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
   class State {
    public:
     explicit State(int steps_per_window);
-    void OnTopLevelTaskStarted(base::TimeTicks task_start_time);
-    void OnTopLevelTaskCompleted(Client* client, base::TimeTicks task_end_time);
+    void OnTopLevelTaskStarted(base::TimeTicks task_start_time,
+                               bool renderer_backgrounded);
+    void OnTopLevelTaskCompleted(Client* client,
+                                 base::TimeTicks task_end_time,
+                                 bool renderer_backgrounded);
     void OnBeginNestedRunLoop();
 
     // |step_expected_queueing_time| is the expected queuing time of a
@@ -85,6 +88,9 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     int steps_per_window;
     base::TimeTicks window_start_time;
     base::TimeTicks current_task_start_time;
+    // If the current task is on a backgrounded renderer, filter it out of the
+    // expected queueing time calculation.
+    bool current_task_filtered;
     RunningAverage step_queueing_times;
 
    private:
@@ -97,8 +103,12 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
                         int steps_per_window);
   explicit QueueingTimeEstimator(const State& state);
 
-  void OnTopLevelTaskStarted(base::TimeTicks task_start_time);
-  void OnTopLevelTaskCompleted(base::TimeTicks task_end_time);
+  // |renderer_backgrounded| is true when all frames associated with the
+  // renderer are in the background.
+  void OnTopLevelTaskStarted(base::TimeTicks task_start_time,
+                             bool renderer_backgrounded);
+  void OnTopLevelTaskCompleted(base::TimeTicks task_end_time,
+                               bool renderer_backgrounded);
   void OnBeginNestedRunLoop();
 
   // Returns all state except for the current |client_|.
