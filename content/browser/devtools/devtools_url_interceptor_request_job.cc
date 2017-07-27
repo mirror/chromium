@@ -68,13 +68,15 @@ const char* ResourceTypeToString(ResourceType resource_type) {
 void SendRequestInterceptedEventOnUiThread(
     base::WeakPtr<protocol::NetworkHandler> network_handler,
     std::string interception_id,
+    GlobalRequestID global_request_id,
     std::unique_ptr<protocol::Network::Request> network_request,
     std::string resource_type) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!network_handler)
     return;
+  network_handler->MarkThrottleForRequest(global_request_id, interception_id);
   network_handler->frontend()->RequestIntercepted(
-      interception_id, std::move(network_request), resource_type);
+      interception_id, std::move(network_request), resource_type, false);
 }
 
 void SendRedirectInterceptedEventOnUiThread(
@@ -88,8 +90,8 @@ void SendRedirectInterceptedEventOnUiThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!network_handler)
     return;
-  return network_handler->frontend()->RequestIntercepted(
-      interception_id, std::move(network_request), resource_type,
+  network_handler->frontend()->RequestIntercepted(
+      interception_id, std::move(network_request), resource_type, false,
       std::move(headers_object), http_status_code, redirect_url);
 }
 
@@ -103,7 +105,7 @@ void SendAuthRequiredEventOnUiThread(
   if (!network_handler)
     return;
   network_handler->frontend()->RequestIntercepted(
-      interception_id, std::move(network_request), resource_type,
+      interception_id, std::move(network_request), resource_type, false,
       protocol::Maybe<protocol::Network::Headers>(), protocol::Maybe<int>(),
       protocol::Maybe<protocol::String>(), std::move(auth_challenge));
 }
@@ -190,6 +192,10 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
       resource_type_(resource_type),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (const ResourceRequestInfo* info =
+      ResourceRequestInfo::ForRequest(original_request)) {
+    global_request_id_ = info->GetGlobalRequestID();
+  }
 }
 
 DevToolsURLInterceptorRequestJob::~DevToolsURLInterceptorRequestJob() {
@@ -220,7 +226,8 @@ void DevToolsURLInterceptorRequestJob::Start() {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(SendRequestInterceptedEventOnUiThread, network_handler_,
-                   interception_id_, base::Passed(&network_request),
+                   interception_id_, global_request_id_,
+                   base::Passed(&network_request),
                    ResourceTypeToString(resource_type_)));
   }
 }

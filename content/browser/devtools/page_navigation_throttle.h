@@ -7,46 +7,48 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_throttle.h"
 
 namespace content {
 namespace protocol {
-class PageHandler;
+class NetworkHandler;
 }  // namespace protocol
 
 // Used to allow the DevTools client to optionally cancel navigations via the
 // Page.setControlNavigations and Page.processNavigation commands.
 class PageNavigationThrottle : public content::NavigationThrottle {
  public:
-  PageNavigationThrottle(base::WeakPtr<protocol::PageHandler> page_handler,
-                         int navigation_id,
-                         content::NavigationHandle* navigation_handle);
+  PageNavigationThrottle(
+      base::WeakPtr<protocol::NetworkHandler> network_handler,
+      content::NavigationHandle* navigation_handle);
   ~PageNavigationThrottle() override;
 
   // content::NavigationThrottle implementation:
   NavigationThrottle::ThrottleCheckResult WillStartRequest() override;
-  NavigationThrottle::ThrottleCheckResult WillRedirectRequest() override;
+  NavigationThrottle::ThrottleCheckResult WillProcessResponse() override;
   const char* GetNameForLogging() override;
   void Resume() override;
   void CancelDeferredNavigation(
       NavigationThrottle::ThrottleCheckResult result) override;
 
-  int navigation_id() const { return navigation_id_; }
-
   // Tells the PageNavigationThrottle to not throttle anything!
   void AlwaysProceed();
+  const std::string& interception_id() { return interception_id_; }
+  void MarkForRequest(const GlobalRequestID global_request_id,
+                      const std::string& interception_id);
 
  private:
-  // An opaque ID assigned by the PageHandler, used to allow the protocol client
-  // to refer to this navigation throttle.
-  const int navigation_id_;
-
   // The PageHandler that this navigation throttle is associated with.
-  base::WeakPtr<protocol::PageHandler> page_handler_;
+  base::WeakPtr<protocol::NetworkHandler> network_handler_;
 
   // Whether or not a navigation was deferred. If deferred we expect a
   // subsequent call to AlwaysProceed, Resume or CancelNavigationIfDeferred.
   bool navigation_deferred_;
+  // Interception id is not empty for cases when navigation does not produce
+  // a network request, but we would like to possible cancel it.
+  std::string interception_id_;
+  GlobalRequestID global_request_id_;
 
   DISALLOW_COPY_AND_ASSIGN(PageNavigationThrottle);
 };

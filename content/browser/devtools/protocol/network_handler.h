@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
@@ -24,9 +25,13 @@ class DevToolsAgentHostImpl;
 class RenderFrameHostImpl;
 struct BeginNavigationParams;
 struct CommonNavigationParams;
+struct GlobalRequestID;
+class NavigationHandle;
+class PageNavigationThrottle;
 struct ResourceRequest;
 struct ResourceRequestCompletionStatus;
 struct ResourceResponseHead;
+struct Referrer;
 
 namespace protocol {
 
@@ -73,6 +78,7 @@ class NetworkHandler : public DevToolsDomainHandler,
   DispatchResponse SetRequestInterceptionEnabled(bool enabled) override;
   void ContinueInterceptedRequest(
       const std::string& request_id,
+      Maybe<bool> cancel_navigation,
       Maybe<std::string> error_reason,
       Maybe<std::string> base64_raw_response,
       Maybe<std::string> url,
@@ -103,6 +109,15 @@ class NetworkHandler : public DevToolsDomainHandler,
 
   static std::unique_ptr<Network::Request> CreateRequestFromURLRequest(
       const net::URLRequest* request);
+  static std::unique_ptr<Network::Request> CreateRequestForThrottle(
+      const GURL& url, const std::string& method, const Referrer& referrer);
+
+  std::unique_ptr<PageNavigationThrottle> CreateThrottleForNavigation(
+      NavigationHandle* navigation_handle);
+  void OnPageNavigationThrottleDisposed(PageNavigationThrottle*);
+  int GetNextThrottleId();
+  void MarkThrottleForRequest(const GlobalRequestID& global_request_id,
+                              const std::string& interception_id);
 
  private:
   std::unique_ptr<Network::Frontend> frontend_;
@@ -110,6 +125,8 @@ class NetworkHandler : public DevToolsDomainHandler,
   bool enabled_;
   bool interception_enabled_;
   std::string user_agent_;
+  base::flat_set<PageNavigationThrottle*> navigation_throttles_;
+  int last_throttle_id_ = 0;
   base::WeakPtrFactory<NetworkHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkHandler);

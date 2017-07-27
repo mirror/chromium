@@ -17,6 +17,7 @@
 #include "base/time/time.h"
 #include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/devtools_url_interceptor_request_job.h"
+#include "content/browser/devtools/page_navigation_throttle.h"
 #include "content/browser/devtools/protocol/page.h"
 #include "content/browser/devtools/protocol/security.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -26,6 +27,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/global_request_id.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/site_instance.h"
@@ -33,6 +35,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/referrer.h"
 #include "content/public/common/resource_devtools_info.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_request_completion_status.h"
@@ -847,8 +850,14 @@ DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(bool enabled) {
   } else {
     devtools_url_request_interceptor->state()->StopInterceptingRequests(
         web_contents);
+    // We don't own the page PageNavigationThrottles so we can't delete them,
+    // but we can turn them into NOPs.
+    for (PageNavigationThrottle* throttle : navigation_throttles_)
+      throttle->AlwaysProceed();
+    navigation_throttles_.clear();
   }
   interception_enabled_ = enabled;
+  fprintf(stderr, "NetworkHandler::SetRequestInterceptionEnabled: %d\n", interception_enabled_);
   return Response::OK();
 }
 
@@ -879,6 +888,7 @@ bool GetPostData(const net::URLRequest* request, std::string* post_data) {
 // TODO(alexclarke): Support structured data as well as |base64_raw_response|.
 void NetworkHandler::ContinueInterceptedRequest(
     const std::string& interception_id,
+    Maybe<bool> cancel_navigation,
     Maybe<std::string> error_reason,
     Maybe<std::string> base64_raw_response,
     Maybe<std::string> url,
@@ -892,6 +902,25 @@ void NetworkHandler::ContinueInterceptedRequest(
           WebContents::FromRenderFrameHost(host_)->GetBrowserContext());
   if (!devtools_url_request_interceptor) {
     callback->sendFailure(Response::InternalError());
+    return;
+  }
+
+  for (PageNavigationThrottle* throttle : navigation_throttles_) {
+    if (throttle->interception_id() != interception_id)
+      continue;
+    if (cancel_navigation.fromMaybe(true)) {
+      throttle->CancelDeferredNavigation(
+          content::NavigationThrottle::CANCEL_AND_IGNORE);
+      callback->sendSuccess();
+      return;
+    } else {
+      throttle->Resume();
+    }
+  }
+
+  if (cancel_navigation.fromMaybe(true)) {
+    callback->sendFailure(Response::InvalidParams(
+        "No request for given interception id."));
     return;
   }
 
@@ -938,6 +967,46 @@ std::unique_ptr<Network::Request> NetworkHandler::CreateRequestFromURLRequest(
   if (GetPostData(request, &post_data))
     request_object->SetPostData(std::move(post_data));
   return request_object;
+}
+
+// static
+std::unique_ptr<Network::Request> NetworkHandler::CreateRequestForThrottle(
+    const GURL& url, const std::string& method, const Referrer& referrer) {
+  std::unique_ptr<DictionaryValue> headers(DictionaryValue::create());
+  return Network::Request::Create()
+            .SetUrl(url.spec())
+            .SetMethod(method)
+            .SetHeaders(Object::fromValue(headers.get(), nullptr))
+            .SetInitialPriority(Network::ResourcePriorityEnum::VeryHigh)
+            .SetReferrerPolicy(referrerPolicy(referrer.policy))
+            .Build();
+}
+
+std::unique_ptr<PageNavigationThrottle>
+NetworkHandler::CreateThrottleForNavigation(NavigationHandle* navigation_handle) {
+  fprintf(stderr, "NetworkHandler::CreateThrottleForNavigation: %d\n", interception_enabled_);
+  if (!interception_enabled_)
+    return nullptr;
+  std::unique_ptr<PageNavigationThrottle> throttle(new PageNavigationThrottle(
+      weak_factory_.GetWeakPtr(), navigation_handle));
+  navigation_throttles_.insert(throttle.get());
+  return throttle;
+}
+
+void NetworkHandler::OnPageNavigationThrottleDisposed(
+    PageNavigationThrottle* throttle) {
+  navigation_throttles_.erase(throttle);
+}
+
+int NetworkHandler::GetNextThrottleId() {
+  return ++last_throttle_id_;
+}
+
+void NetworkHandler::MarkThrottleForRequest(
+    const GlobalRequestID& global_request_id,
+    const std::string& interception_id) {
+  for (PageNavigationThrottle* throttle : navigation_throttles_)
+    throttle->MarkForRequest(global_request_id, interception_id);
 }
 
 }  // namespace protocol

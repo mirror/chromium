@@ -347,6 +347,7 @@ void RenderFrameDevToolsAgentHost::OnFailedNavigation(
 std::unique_ptr<NavigationThrottle>
 RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(
     NavigationHandle* navigation_handle) {
+  fprintf(stderr, "RenderFrameDevToolsAgentHost::CreateThrottleForNavigation\n");
   FrameTreeNode* frame_tree_node =
       static_cast<NavigationHandleImpl*>(navigation_handle)->frame_tree_node();
   while (frame_tree_node && frame_tree_node->parent()) {
@@ -358,9 +359,10 @@ RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(
   // main frame.
   if (!agent_host)
     return nullptr;
-  for (auto* page_handler : protocol::PageHandler::ForAgentHost(agent_host)) {
+  fprintf(stderr, "RenderFrameDevToolsAgentHost::CreateThrottleForNavigation.2\n");
+  for (auto* network_handler : protocol::NetworkHandler::ForAgentHost(agent_host)) {
     std::unique_ptr<NavigationThrottle> throttle =
-        page_handler->CreateThrottleForNavigation(navigation_handle);
+        network_handler->CreateThrottleForNavigation(navigation_handle);
     if (throttle)
       return throttle;
   }
