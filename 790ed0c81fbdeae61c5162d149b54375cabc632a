@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5f7d959_097d2967",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-27T00:12:51Z",
+      "side": 1,
+      "message": "TODO has been added.",
+      "parentUuid": "40b128e9_192e1a4e",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 30
+      },
+      "revId": "790ed0c81fbdeae61c5162d149b54375cabc632a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef01a569_6dd64f6f",
         "filename": "remoting/host/switches.h",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "790ed0c81fbdeae61c5162d149b54375cabc632a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38df53f_269c453e",
+        "filename": "remoting/host/switches.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-27T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef01a569_6dd64f6f",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "790ed0c81fbdeae61c5162d149b54375cabc632a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
