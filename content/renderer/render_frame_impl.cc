@@ -162,6 +162,7 @@
 #include "media/blink/webmediaplayer_util.h"
 #include "mojo/edk/js/core.h"
 #include "mojo/edk/js/support.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/data_url.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -1201,15 +1202,8 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
                      base::Bind(&RenderFrameImpl::RequestOverlayRoutingToken,
                                 base::Unretained(this))),
       weak_factory_(this) {
-  service_manager::mojom::InterfaceProviderPtr remote_interfaces;
-  pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
-  remote_interfaces_.reset(new service_manager::InterfaceProvider);
-  remote_interfaces_->Bind(std::move(remote_interfaces));
   blink_interface_registry_.reset(
       new BlinkInterfaceRegistryImpl(registry_.GetWeakPtr()));
-
-  // Must call after binding our own remote interfaces.
-  media_factory_.SetupMojo();
 
   std::pair<RoutingIDFrameMap::iterator, bool> result =
       g_routing_id_frame_map.Get().insert(std::make_pair(routing_id_, this));
@@ -1218,6 +1212,15 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
   RenderThread::Get()->AddRoute(routing_id_, this);
 
   render_view_->RegisterRenderFrame(this);
+
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  GetFrameHost()->BindInterfaceProviderForInitialEmptyDocument(
+      mojo::MakeRequest(&interface_provider));
+  remote_interfaces_ = base::MakeUnique<service_manager::InterfaceProvider>();
+  remote_interfaces_->Bind(std::move(interface_provider));
+
+  // Must call after binding our own remote interfaces.
+  media_factory_.SetupMojo();
 
   // Everything below subclasses RenderFrameObserver and is automatically
   // deleted when the RenderFrame gets deleted.
@@ -1235,10 +1238,10 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
          sizeof(RenderThreadImpl::RendererMemoryMetrics));
 }
 
-mojom::FrameHostAssociatedPtr RenderFrameImpl::GetFrameHost() {
-  mojom::FrameHostAssociatedPtr frame_host_ptr;
-  GetRemoteAssociatedInterfaces()->GetInterface(&frame_host_ptr);
-  return frame_host_ptr;
+mojom::FrameHost* RenderFrameImpl::GetFrameHost() {
+  if (!frame_host_)
+    GetRemoteAssociatedInterfaces()->GetInterface(&frame_host_);
+  return frame_host_.get();
 }
 
 RenderFrameImpl::~RenderFrameImpl() {
@@ -1729,13 +1732,9 @@ void RenderFrameImpl::BindEngagement(
 
 void RenderFrameImpl::BindFrame(
     const service_manager::BindSourceInfo& browser_info,
-    mojom::FrameRequest request,
-    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
+    mojom::FrameRequest request) {
   browser_info_ = browser_info;
   frame_binding_.Bind(std::move(request));
-  frame_host_interface_broker_ = std::move(frame_host_interface_broker);
-  frame_host_interface_broker_->GetInterfaceProvider(
-      std::move(pending_remote_interface_provider_request_));
 }
 
 void RenderFrameImpl::BindFrameBindingsControl(
@@ -3728,6 +3727,19 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
+  service_manager::mojom::InterfaceProviderRequest remote_interfaces_request;
+  if (!navigation_state->WasWithinSameDocument()) {
+    // If we're navigating to a new document, bind a new InterfaceProvider whose
+    // request end will be sent over just after the commit confirmation.
+    service_manager::mojom::InterfaceProviderPtr provider;
+    remote_interfaces_request = mojo::MakeRequest(&provider);
+
+    // Initialize the local InterfaceProviderImpl with a working pipe (the new
+    // one) *before* observers receive DidCommitProvisionalLoad.
+    remote_interfaces_->Close();
+    remote_interfaces_->Bind(std::move(provider));
+  }
+
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
   for (auto& observer : observers_) {
@@ -3758,7 +3770,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // new navigation.
   navigation_state->set_request_committed(true);
 
-  SendDidCommitProvisionalLoad(frame_, commit_type);
+  SendDidCommitProvisionalLoad(frame_, commit_type,
+                               std::move(remote_interfaces_request));
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
@@ -4839,7 +4852,9 @@ const RenderFrameImpl* RenderFrameImpl::GetLocalRoot() const {
 // Tell the embedding application that the URL of the active page has changed.
 void RenderFrameImpl::SendDidCommitProvisionalLoad(
     blink::WebLocalFrame* frame,
-    blink::WebHistoryCommitType commit_type) {
+    blink::WebHistoryCommitType commit_type,
+    service_manager::mojom::InterfaceProviderRequest
+        remote_interfaces_request) {
   DCHECK_EQ(frame_, frame);
   WebDataSource* ds = frame->DataSource();
   DCHECK(ds);
@@ -4860,16 +4875,17 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     engagement_level_.first = url::Origin();
   }
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.http_status_code = response.HttpStatusCode();
-  params.url_is_unreachable = ds->HasUnreachableURL();
-  params.method = "GET";
-  params.intended_as_new_entry =
+  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params =
+      base::MakeUnique<FrameHostMsg_DidCommitProvisionalLoad_Params>();
+  params->http_status_code = response.HttpStatusCode();
+  params->url_is_unreachable = ds->HasUnreachableURL();
+  params->method = "GET";
+  params->intended_as_new_entry =
       navigation_state->request_params().intended_as_new_entry;
-  params.did_create_new_entry = commit_type == blink::kWebStandardCommit;
-  params.should_replace_current_entry = ds->ReplacesCurrentHistoryItem();
-  params.post_id = -1;
-  params.nav_entry_id = navigation_state->request_params().nav_entry_id;
+  params->did_create_new_entry = commit_type == blink::kWebStandardCommit;
+  params->should_replace_current_entry = ds->ReplacesCurrentHistoryItem();
+  params->post_id = -1;
+  params->nav_entry_id = navigation_state->request_params().nav_entry_id;
   // We need to track the RenderViewHost routing_id because of downstream
   // dependencies (crbug.com/392171 DownloadRequestHandle, SaveFileManager,
   // ResourceDispatcherHostImpl, MediaStreamUIProxy,
@@ -4877,61 +4893,61 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // based on the ID stored in the resource requests. Once those dependencies
   // are unwound or moved to RenderFrameHost (crbug.com/304341) we can move the
   // client to be based on the routing_id of the RenderFrameHost.
-  params.render_view_routing_id = render_view_->routing_id();
-  params.socket_address.set_host(response.RemoteIPAddress().Utf8());
-  params.socket_address.set_port(response.RemotePort());
-  params.was_within_same_document = navigation_state->WasWithinSameDocument();
+  params->render_view_routing_id = render_view_->routing_id();
+  params->socket_address.set_host(response.RemoteIPAddress().Utf8());
+  params->socket_address.set_port(response.RemotePort());
+  params->was_within_same_document = navigation_state->WasWithinSameDocument();
 
   WebDocument frame_document = frame->GetDocument();
   // Set the origin of the frame.  This will be replicated to the corresponding
   // RenderFrameProxies in other processes.
   WebSecurityOrigin frame_origin = frame_document.GetSecurityOrigin();
-  params.origin = frame_origin;
+  params->origin = frame_origin;
 
-  params.insecure_request_policy = frame->GetInsecureRequestPolicy();
+  params->insecure_request_policy = frame->GetInsecureRequestPolicy();
 
-  params.has_potentially_trustworthy_unique_origin =
+  params->has_potentially_trustworthy_unique_origin =
       frame_origin.IsUnique() && frame_origin.IsPotentiallyTrustworthy();
 
   // Set the URL to be displayed in the browser UI to the user.
-  params.url = GetLoadingUrl();
-  if (GURL(frame_document.BaseURL()) != params.url)
-    params.base_url = frame_document.BaseURL();
+  params->url = GetLoadingUrl();
+  if (GURL(frame_document.BaseURL()) != params->url)
+    params->base_url = frame_document.BaseURL();
 
-  GetRedirectChain(ds, &params.redirects);
-  params.should_update_history =
+  GetRedirectChain(ds, &params->redirects);
+  params->should_update_history =
       !ds->HasUnreachableURL() && response.HttpStatusCode() != 404;
 
-  params.searchable_form_url = internal_data->searchable_form_url();
-  params.searchable_form_encoding = internal_data->searchable_form_encoding();
+  params->searchable_form_url = internal_data->searchable_form_url();
+  params->searchable_form_encoding = internal_data->searchable_form_encoding();
 
-  params.gesture = render_view_->navigation_gesture_;
+  params->gesture = render_view_->navigation_gesture_;
   render_view_->navigation_gesture_ = NavigationGestureUnknown;
 
   // Make navigation state a part of the DidCommitProvisionalLoad message so
   // that committed entry has it at all times.  Send a single HistoryItem for
   // this frame, rather than the whole tree.  It will be stored in the
   // corresponding FrameNavigationEntry.
-  params.page_state = SingleHistoryItemToPageState(current_history_item_);
+  params->page_state = SingleHistoryItemToPageState(current_history_item_);
 
-  params.content_source_id = GetRenderWidget()->GetContentSourceId();
+  params->content_source_id = GetRenderWidget()->GetContentSourceId();
 
-  params.method = request.HttpMethod().Latin1();
-  if (params.method == "POST")
-    params.post_id = ExtractPostId(current_history_item_);
+  params->method = request.HttpMethod().Latin1();
+  if (params->method == "POST")
+    params->post_id = ExtractPostId(current_history_item_);
 
-  params.frame_unique_name = current_history_item_.Target().Utf8();
-  params.item_sequence_number = current_history_item_.ItemSequenceNumber();
-  params.document_sequence_number =
+  params->frame_unique_name = current_history_item_.Target().Utf8();
+  params->item_sequence_number = current_history_item_.ItemSequenceNumber();
+  params->document_sequence_number =
       current_history_item_.DocumentSequenceNumber();
 
   // If the page contained a client redirect (meta refresh, document.loc...),
   // set the referrer appropriately.
   if (ds->IsClientRedirect()) {
-    params.referrer =
-        Referrer(params.redirects[0], ds->GetRequest().GetReferrerPolicy());
+    params->referrer =
+        Referrer(params->redirects[0], ds->GetRequest().GetReferrerPolicy());
   } else {
-    params.referrer =
+    params->referrer =
         RenderViewImpl::GetReferrerFromRequest(frame, ds->GetRequest());
   }
 
@@ -4972,47 +4988,48 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     }
 
     // Update contents MIME type for main frame.
-    params.contents_mime_type = ds->GetResponse().MimeType().Utf8();
+    params->contents_mime_type = ds->GetResponse().MimeType().Utf8();
 
-    params.transition = navigation_state->GetTransitionType();
-    DCHECK(ui::PageTransitionIsMainFrame(params.transition));
+    params->transition = navigation_state->GetTransitionType();
+    DCHECK(ui::PageTransitionIsMainFrame(params->transition));
 
     // If the page contained a client redirect (meta refresh, document.loc...),
     // set the transition appropriately.
     if (ds->IsClientRedirect()) {
-      params.transition = ui::PageTransitionFromInt(
-          params.transition | ui::PAGE_TRANSITION_CLIENT_REDIRECT);
+      params->transition = ui::PageTransitionFromInt(
+          params->transition | ui::PAGE_TRANSITION_CLIENT_REDIRECT);
     }
 
     // Send the user agent override back.
-    params.is_overriding_user_agent = internal_data->is_overriding_user_agent();
+    params->is_overriding_user_agent =
+        internal_data->is_overriding_user_agent();
 
     // Track the URL of the original request.  We use the first entry of the
     // redirect chain if it exists because the chain may have started in another
     // process.
-    params.original_request_url = GetOriginalRequestURL(ds);
+    params->original_request_url = GetOriginalRequestURL(ds);
 
-    params.history_list_was_cleared =
+    params->history_list_was_cleared =
         navigation_state->request_params().should_clear_history_list;
 
-    params.report_type = static_cast<FrameMsg_UILoadMetricsReportType::Value>(
+    params->report_type = static_cast<FrameMsg_UILoadMetricsReportType::Value>(
         frame->DataSource()->GetRequest().InputPerfMetricReportPolicy());
-    params.ui_timestamp = base::TimeTicks() +
-                          base::TimeDelta::FromSecondsD(
-                              frame->DataSource()->GetRequest().UiStartTime());
+    params->ui_timestamp = base::TimeTicks() +
+                           base::TimeDelta::FromSecondsD(
+                               frame->DataSource()->GetRequest().UiStartTime());
   } else {
     // Subframe navigation: the type depends on whether this navigation
     // generated a new session history entry. When they do generate a session
     // history entry, it means the user initiated the navigation and we should
     // mark it as such.
     if (commit_type == blink::kWebStandardCommit)
-      params.transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
+      params->transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
     else
-      params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+      params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
 
     DCHECK(!navigation_state->request_params().should_clear_history_list);
-    params.history_list_was_cleared = false;
-    params.report_type = FrameMsg_UILoadMetricsReportType::NO_REPORT;
+    params->history_list_was_cleared = false;
+    params->report_type = FrameMsg_UILoadMetricsReportType::NO_REPORT;
     // Subframes should match the zoom level of the main frame.
     render_view_->SetZoomLevel(render_view_->page_zoom_level());
   }
@@ -5020,14 +5037,14 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // Standard URLs must match the reported origin, when it is not unique.
   // This check is very similar to RenderFrameHostImpl::CanCommitOrigin, but
   // adapted to the renderer process side.
-  if (!params.origin.unique() && params.url.IsStandard() &&
+  if (!params->origin.unique() && params->url.IsStandard() &&
       render_view_->GetWebkitPreferences().web_security_enabled) {
     // Exclude file: URLs when settings allow them access any origin.
-    if (params.origin.scheme() != url::kFileScheme ||
+    if (params->origin.scheme() != url::kFileScheme ||
         !render_view_->GetWebkitPreferences()
              .allow_universal_access_from_file_urls) {
-      CHECK(params.origin.IsSamePhysicalOriginWith(url::Origin(params.url)))
-          << " url:" << params.url << " origin:" << params.origin;
+      CHECK(params->origin.IsSamePhysicalOriginWith(url::Origin(params->url)))
+          << " url:" << params->url << " origin:" << params->origin;
     }
   }
 
@@ -5035,7 +5052,8 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // allowImages(), allowPlugins() is called for the new page, so that when
   // these functions send a ViewHostMsg_ContentBlocked message, it arrives
   // after the FrameHostMsg_DidCommitProvisionalLoad message.
-  Send(new FrameHostMsg_DidCommitProvisionalLoad(routing_id_, params));
+  GetFrameHost()->DidCommitProvisionalLoad(
+      std::move(params), std::move(remote_interfaces_request));
 
   // If we end up reusing this WebRequest (for example, due to a #ref click),
   // we don't want the transition type to persist.  Just clear it.
