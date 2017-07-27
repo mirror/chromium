@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0909412_0ee5e76f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "const",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9f38d4_c61ce107",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "const",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df083241_75bcaadb",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "const",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ba5275_48b9410d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "nit: remove whiteline.",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7353ec46_70e216af",
+        "filename": "ios/showcase/bubble/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "Remove \":ui\". It is assumed.",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde5211c_fa592e38",
+        "filename": "ios/showcase/bubble/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "While there is no recommended ordering of items in BUILD.gn, \nyou should have consistent ordering as much as possible. \nJust double check if this is as consistent with related folders as possible.",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54ae91a_fee9c5cf",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "UIKit shouldn\u0027t be necessary. Please also remove from BUILD.gn, if appropriate.",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aca4840_8b3c3384",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "Consider whether this really adds value. It\u0027s used only in a single place, and it\u0027s not really a significant number.",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ce3090_07cbf23e",
+        "filename": "ios/showcase/bubble/sc_bubble_egtest.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T17:30:36Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "81e93742461bc52031d6b9393a5f1ba7989d98ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
