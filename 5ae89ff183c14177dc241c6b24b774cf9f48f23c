@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e08ac83c_a40a4c0a",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-27T20:25:37Z",
+      "side": 1,
+      "message": "Nit: Can you change this loop to iterate over the indices of the std::vector\u003c\u003e\nAssigning to a reference is not something I see often.",
+      "revId": "5ae89ff183c14177dc241c6b24b774cf9f48f23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91187812_2e73d21b",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-27T20:25:37Z",
+      "side": 1,
+      "message": "Don\u0027t use a 16x16 icon as there is special behavior for icons which are exactly 16x16. UpdateFaviconCandidate() returns false if the downloaded favicon original size is exactly 16x16",
+      "revId": "5ae89ff183c14177dc241c6b24b774cf9f48f23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9702435a_e8957f0b",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-27T20:25:37Z",
+      "side": 1,
+      "message": "Don\u0027t use a 16x16 icon as there is special behavior for icons which are exactly 16x16. UpdateFaviconCandidate() returns false if the downloaded favicon original size is exactly 16x16",
+      "revId": "5ae89ff183c14177dc241c6b24b774cf9f48f23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
