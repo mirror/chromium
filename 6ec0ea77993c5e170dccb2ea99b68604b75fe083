@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d52e480b_ae08a6a6",
+        "filename": "content/browser/memory/swap_metrics_delegate_uma.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T15:20:49Z",
+      "side": 1,
+      "message": "Do we have a reason why 10K is a sufficient upper bound here? Have we done lab work to confirm what reasonable values are?",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbf5b1d_e5dc502f",
+        "filename": "content/browser/memory/swap_metrics_driver_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T15:20:49Z",
+      "side": 1,
+      "message": "This should be const, no?",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ce9ac9_373116b5",
+        "filename": "content/browser/memory/swap_metrics_driver_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T15:20:49Z",
+      "side": 1,
+      "message": "ubernit: s/_swaps_/_swap_/, all over this file",
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0df56c_a7524855",
+        "filename": "content/browser/memory/swap_metrics_driver_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T15:20:49Z",
+      "side": 1,
+      "message": "Just use a constexpr base::TimeDelta directly, so you don\u0027t have to FromMilliseconds in the test itself?",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 32
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a01445_1d5fefe5",
+        "filename": "content/public/browser/swap_metrics_driver.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T15:20:49Z",
+      "side": 1,
+      "message": "Safe to call on any thread, I suppose?",
+      "range": {
+        "startLine": 68,
+        "startChar": 30,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383df840_5a630073",
+        "filename": "content/public/browser/swap_metrics_driver.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T15:20:49Z",
+      "side": 1,
+      "message": "If the timer isn\u0027t running is this safe to call from any thread? In which case will it notify the delegate on the thread that calls UpdateMetrics? Be explicit about the threading model.",
+      "range": {
+        "startLine": 89,
+        "startChar": 10,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
