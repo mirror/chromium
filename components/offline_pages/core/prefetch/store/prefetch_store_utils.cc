@@ -26,4 +26,25 @@ bool DeletePrefetchItemByOfflineIdSync(sql::Connection* db,
   return statement.Run();
 }
 
+void MakePrefetchItem(const sql::Statement& statement, PrefetchItem* item) {
+  item->offline_id = statement.ColumnInt64(0);
+  item->state = static_cast<PrefetchItemState>(statement.ColumnInt(1));
+  item->request_archive_attempt_count = statement.ColumnInt(2);
+  item->archive_body_length = statement.ColumnInt64(3);
+  item->creation_time = base::Time::FromInternalValue(statement.ColumnInt64(4));
+  item->freshness_time =
+      base::Time::FromInternalValue(statement.ColumnInt64(5));
+  item->error_code = static_cast<PrefetchItemErrorCode>(statement.ColumnInt(6));
+  item->guid = statement.ColumnString(7);
+  item->client_id =
+      ClientId(statement.ColumnString(8), statement.ColumnString(9));
+  item->url = GURL(statement.ColumnString(10));
+  item->final_archived_url = GURL(statement.ColumnString(11));
+  item->operation_name = statement.ColumnString(12);
+  item->archive_body_name = statement.ColumnString(13);
+  item->title = statement.ColumnString16(14);
+  item->file_path = base::FilePath::FromUTF8Unsafe(statement.ColumnString(15));
+  item->file_size = statement.ColumnInt64(16);
+}
+
 }  // namespace offline_pages

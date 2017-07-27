@@ -88,6 +88,9 @@ enum class PrefetchItemState {
   RECEIVED_BUNDLE,
   // This item's archive is currently being downloaded.
   DOWNLOADING,
+  // The archive has been downloaded, waiting to be imported into offline pages
+  // model.
+  DOWNLOADED,
   // Item has finished processing, successfully or otherwise, and is waiting to
   // be processed for stats reporting to UMA.
   FINISHED,
@@ -102,6 +105,8 @@ enum class PrefetchItemState {
 enum class PrefetchItemErrorCode {
   SUCCESS,
   EXPIRED,
+  DOWNLOAD_ERROR,
+  IMPORT_ERROR,
 };
 
 // Callback invoked upon completion of a prefetch request.
@@ -129,13 +134,13 @@ struct PrefetchDownloadResult {
   PrefetchDownloadResult();
   PrefetchDownloadResult(const std::string& download_id,
                          const base::FilePath& file_path,
-                         uint64_t file_size);
+                         int64_t file_size);
   PrefetchDownloadResult(const PrefetchDownloadResult& other);
 
   std::string download_id;
   bool success = false;
   base::FilePath file_path;
-  uint64_t file_size = 0u;
+  int64_t file_size = 0;
 };
 
 // Callback invoked upon completion of a download.
