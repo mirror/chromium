@@ -16,6 +16,24 @@
       "revId": "94cc0e7825f00bec8e76030f04cd80a50630d15b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7f4e0b_94e4d1b4",
+        "filename": "chrome/browser/page_load_metrics/observers/aborts_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-27T23:19:04Z",
+      "side": 1,
+      "message": "page_load_metrics_test_util is a separate chrome/common utility, that provides PopulateRequiredTimingFields (among other things).\n\nThis CL just stopped exposing that with the harness, so we need to include them here.",
+      "parentUuid": "b8a7b885_6564b521",
+      "revId": "94cc0e7825f00bec8e76030f04cd80a50630d15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
