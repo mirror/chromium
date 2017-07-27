@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4b62348e_75255c08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T02:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb73faa9_2c26f484",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "645f1e69_d2c4d275",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/DomDistillerTabUtils.java",
         "patchSetId": 3
@@ -187,6 +211,30 @@
       "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d6cf96_c0d1d362",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T02:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30a23ab_334b86d0",
+      "range": {
+        "startLine": 484,
+        "startChar": 15,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
