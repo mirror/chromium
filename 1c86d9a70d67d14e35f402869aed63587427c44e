@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94e47e15_44c38515",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-27T22:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f0e044e_2d7467ea",
+      "range": {
+        "startLine": 130,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 30
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01efcad8_1c2db679",
         "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9319cdb1_1a948611",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-27T22:15:30Z",
+      "side": 1,
+      "message": "This is covered in the multiple recorders test.",
+      "parentUuid": "01efcad8_1c2db679",
+      "range": {
+        "startLine": 408,
+        "startChar": 3,
+        "endLine": 408,
+        "endChar": 13
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1892c729_73468699",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-27T22:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "802cd9f3_3bf665c0",
+      "range": {
+        "startLine": 442,
+        "startChar": 76,
+        "endLine": 442,
+        "endChar": 77
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9fce2b_6e4bb829",
         "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5abdb9_cd3517f1",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-27T22:15:30Z",
+      "side": 1,
+      "message": "As we discussed offline, this case is different from the first test, as it is multiple recorders instead of one.",
+      "parentUuid": "9a9fce2b_6e4bb829",
+      "range": {
+        "startLine": 457,
+        "startChar": 3,
+        "endLine": 457,
+        "endChar": 8
+      },
+      "revId": "1c86d9a70d67d14e35f402869aed63587427c44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
