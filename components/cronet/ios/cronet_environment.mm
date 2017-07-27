@@ -52,7 +52,31 @@
 #include "url/scheme_host_port.h"
 #include "url/url_util.h"
 
+
+#include "mojo/public/cpp/bindings/strong_binding.h"
+
+
 namespace {
+
+  class CronetEngineImpl : public cronet::mojom::CronetEngine {
+    public:
+      // NOTE: A common pattern for interface implementations which have one
+      // instance per client is to take an InterfaceRequest in the constructor.
+
+      explicit CronetEngineImpl(cronet::mojom::CronetEngineRequest request)
+      : binding_(this, std::move(request)) {}
+      ~CronetEngineImpl() override {}
+
+      // sample::mojom::Logger:
+      void StartNetLogToFile(const std::string& message) override {
+        LOG(ERROR) << "[Logger] " << message;
+      }
+
+    private:
+      mojo::Binding<cronet::mojom::CronetEngine> binding_;
+      
+      DISALLOW_COPY_AND_ASSIGN(CronetEngineImpl);
+  };
 
 // Request context getter for Cronet.
 class CronetURLRequestContextGetter : public net::URLRequestContextGetter {
@@ -132,10 +156,24 @@ void CronetEnvironment::Initialize() {
 
   ios_global_state::BuildMessageLoop();
   ios_global_state::CreateNetworkChangeNotifier();
+
+  mojo::edk::Init();
 }
 
 bool CronetEnvironment::StartNetLog(base::FilePath::StringType file_name,
                                     bool log_bytes) {
+    cronet::mojom::CronetEnginePtr cronet_engine;
+    auto request = mojo::MakeRequest(&cronet_engine);
+
+  CronetEngineImpl impl(std::move(request));
+  cronet_engine->StartNetLogToFile(file_name);
+
+  cronet_engine.reset();
+
+  mojo::MakeStrongBinding(base::MakeUnique<CronetEngineImpl>(nullptr),
+                          mojo::MakeRequest(&cronet_engine));
+  cronet_engine->StartNetLogToFile("zzzzzz");
+
   if (file_name.empty())
     return false;
 
@@ -239,6 +277,15 @@ void CronetEnvironment::Start() {
 
   main_context_getter_ = new CronetURLRequestContextGetter(
       this, network_io_thread_->task_runner());
+
+  ipc_thread_ = base::MakeUnique<base::Thread>("Mojo IPC thread");
+  ipc_thread_->StartWithOptions(base::Thread::Options(
+                                                      base::MessageLoop::TYPE_IO, 0));
+  ipc_support_ = base::MakeUnique<mojo::edk::ScopedIPCSupport>(
+                                                               ipc_thread_->task_runner(),
+                                                               mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
+  cronet_engine_ = base::MakeUnique<CronetEngineImpl>(nullptr);
+
   base::subtle::MemoryBarrier();
   PostToNetworkThread(FROM_HERE,
                       base::Bind(&CronetEnvironment::InitializeOnNetworkThread,

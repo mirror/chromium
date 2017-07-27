@@ -1,0 +1,5 @@
+module cronet.mojom;
+
+interface CronetEngine {
+  StartNetLogToFile(string file);
+};

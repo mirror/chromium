@@ -21,6 +21,13 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
+#include "base/threading/thread.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/edk/embedder/scoped_ipc_support.h"
+
+#include "components/cronet/interfaces/cronet.mojom.h"
+
 namespace base {
 class WaitableEvent;
 }  // namespace base
@@ -170,6 +177,10 @@ class CronetEnvironment {
   std::unique_ptr<net::NetLog> net_log_;
   std::unique_ptr<net::FileNetLogObserver> file_net_log_observer_;
   bool enable_pkp_bypass_for_local_trust_anchors_;
+
+  std::unique_ptr<base::Thread> ipc_thread_;
+  std::unique_ptr<mojo::edk::ScopedIPCSupport> ipc_support_;
+  std::unique_ptr<cronet::mojom::CronetEngine> cronet_engine_;
 
   DISALLOW_COPY_AND_ASSIGN(CronetEnvironment);
 };
