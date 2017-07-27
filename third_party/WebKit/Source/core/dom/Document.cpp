@@ -628,6 +628,7 @@ Document::Document(const DocumentInit& initializer,
   // FIXME: Can/should we unify this behavior?
   if (initializer.ShouldSetURL())
     SetURL(initializer.Url());
+  LOG(WARNING) << "CREATED DOC: " << Url().GetString();
 
   InitSecurityContext(initializer);
 
@@ -2923,6 +2924,8 @@ DocumentParser* Document::ImplicitOpen(
   RemoveChildren();
   DCHECK(!focused_element_);
 
+  LOG(WARNING) << "ImplicitOpen uesh";
+
   SetCompatibilityMode(kNoQuirksMode);
 
   if (!ThreadedParsingEnabledForTesting()) {
@@ -2941,6 +2944,7 @@ DocumentParser* Document::ImplicitOpen(
   SetReadyState(kLoading);
   if (load_event_progress_ != kLoadEventInProgress &&
       PageDismissalEventBeingDispatched() == kNoDismissal) {
+    LOG(WARNING) << "ImplicitOpen inside loop for:" << Url().GetString();
     load_event_progress_ = kLoadEventNotRun;
   }
 
@@ -3093,7 +3097,8 @@ void Document::close() {
 void Document::ImplicitClose() {
   DCHECK(!InStyleRecalc());
   DCHECK(parser_);
-
+  LOG(WARNING) << "ImplicitClose uesh";
+  // base::debug::StackTrace().Print();
   load_event_progress_ = kLoadEventInProgress;
 
   // We have to clear the parser, in case someone document.write()s from the
@@ -3232,6 +3237,7 @@ void Document::CheckCompleted() {
 bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
                                          bool is_reload,
                                          bool& did_allow_navigation) {
+  LOG(WARNING) << "DispatchBeforeUnloadEvent for :" << Url().GetString();
   if (!dom_window_)
     return true;
 
@@ -3277,6 +3283,7 @@ bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
 }
 
 void Document::DispatchUnloadEvents() {
+  LOG(WARNING) << "DispatchUnloadEvents for :" << Url().GetString();
   PluginScriptForbiddenScope forbid_plugin_destructor_scripting;
   if (parser_)
     parser_->StopParsing();
@@ -6247,6 +6254,7 @@ Element* Document::PointerLockElement() const {
 }
 
 void Document::SuppressLoadEvent() {
+  LOG(WARNING) << "SuppressLoadEvent for :" << Url().GetString();
   if (!LoadEventFinished())
     load_event_progress_ = kLoadEventCompleted;
 }

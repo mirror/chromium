@@ -604,6 +604,7 @@ void FrameFetchContext::RecordLoadingActivity(
 }
 
 void FrameFetchContext::DidLoadResource(Resource* resource) {
+  LOG(WARNING) << "DidLoadResource";
   if (!document_)
     return;
   FirstMeaningfulPaintDetector::From(*document_).CheckNetworkStable();

@@ -430,6 +430,8 @@ void FrameLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
 }
 
 void FrameLoader::FinishedParsing() {
+  LOG(WARNING) << "FinishedParsing";
+
   if (state_machine_.CreatingInitialEmptyDocument())
     return;
 
@@ -470,6 +472,9 @@ void FrameLoader::DidFinishNavigation() {
   // We should have either finished the provisional or committed navigation if
   // this is called. Only delcare the whole frame finished if neither is in
   // progress.
+
+  LOG(WARNING) << "DidFinishNavigation";
+
   DCHECK(document_loader_->SentDidFinishLoad() || !HasProvisionalNavigation());
   if (!document_loader_->SentDidFinishLoad() || HasProvisionalNavigation())
     return;
@@ -563,6 +568,7 @@ void FrameLoader::LoadInSameDocument(
     Document* initiating_document) {
   // If we have a state object, we cannot also be a new navigation.
   DCHECK(!state_object || frame_load_type == kFrameLoadTypeBackForward);
+  LOG(WARNING) << "LoadInSameDocument";
 
   // If we have a provisional request for a different document, a fragment
   // scroll should cancel it.
@@ -837,6 +843,9 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
                        HistoryItem* history_item,
                        HistoryLoadType history_load_type) {
   DCHECK(frame_->GetDocument());
+
+  LOG(WARNING) << "FrameLoader::Load : "
+               << frame_->GetDocument()->Url().GetString();
 
   if (IsBackForwardLoadType(frame_load_type) && !frame_->IsNavigationAllowed())
     return;
@@ -1411,6 +1420,13 @@ NavigationPolicy FrameLoader::ShouldContinueForRedirectNavigationPolicy(
       substitute_data, loader, should_check_main_world_content_security_policy,
       type, policy, frame_load_type, is_client_redirect,
       WebTriggeringEventInfo::kNotFromEvent, form);
+}
+
+void FrameLoader::ClientDroppedNavigation() {
+  if (!provisional_document_loader_ || provisional_document_loader_->DidStart())
+    return;
+
+  DetachDocumentLoader(provisional_document_loader_);
 }
 
 NavigationPolicy FrameLoader::CheckLoadCanStart(

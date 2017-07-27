@@ -1592,6 +1592,7 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_SwapIn, OnSwapIn)
     IPC_MESSAGE_HANDLER(FrameMsg_Delete, OnDeleteFrame)
     IPC_MESSAGE_HANDLER(FrameMsg_Stop, OnStop)
+    IPC_MESSAGE_HANDLER(FrameMsg_DroppedNavigation, OnDroppedNavigation)
     IPC_MESSAGE_HANDLER(FrameMsg_Collapse, OnCollapse)
     IPC_MESSAGE_HANDLER(FrameMsg_ContextMenuClosed, OnContextMenuClosed)
     IPC_MESSAGE_HANDLER(FrameMsg_CustomContextMenuAction,
@@ -3943,6 +3944,7 @@ void RenderFrameImpl::RunScriptsAtDocumentIdle() {
 
 void RenderFrameImpl::DidHandleOnloadEvents() {
   if (!frame_->Parent()) {
+    LOG(WARNING) << "DidHandleOnloadEvents";
     FrameMsg_UILoadMetricsReportType::Value report_type =
         static_cast<FrameMsg_UILoadMetricsReportType::Value>(
             frame_->DataSource()->GetRequest().InputPerfMetricReportPolicy());
@@ -4777,6 +4779,12 @@ void RenderFrameImpl::OnStop() {
     observer.OnStop();
 }
 
+void RenderFrameImpl::OnDroppedNavigation() {
+  LOG(WARNING) << "ON DROPPED NAV";
+  browser_side_navigation_pending_ = false;
+  frame_->ClientDroppedNavigation();
+}
+
 void RenderFrameImpl::OnCollapse(bool collapsed) {
   frame_->Collapse(collapsed);
 }
@@ -5088,7 +5096,7 @@ void RenderFrameImpl::DidStartLoading(bool to_different_document) {
 void RenderFrameImpl::DidStopLoading() {
   TRACE_EVENT1("navigation,rail", "RenderFrameImpl::didStopLoading",
                "id", routing_id_);
-
+  LOG(WARNING) << "DidStopLoading : " << frame_->Parent();
   // Any subframes created after this point won't be considered part of the
   // current history navigation (if this was one), so we don't need to track
   // this state anymore.
@@ -5148,6 +5156,14 @@ void RenderFrameImpl::OnCommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
   CHECK(IsBrowserSideNavigationEnabled());
+
+  LOG(WARNING) << "OnCommitNavigation";
+
+  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  // Can be NULL in tests.
+  if (render_thread_impl &&
+      !FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type))
+    render_thread_impl->GetRendererScheduler()->OnNavigate();
 
   // This will override the url requested by the WebURLLoader, as well as
   // provide it with the response to the request.
@@ -5309,6 +5325,7 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
   // This is fine normally, except if we're showing UI from one security
   // context and they're trying to navigate to a different context.
   const GURL& url = info.url_request.Url();
+  LOG(WARNING) << "url: " << url;
 
   // With PlzNavigate, the redirect list is available for the first url. So
   // maintain the old behavior of not classifying the first URL in the chain as

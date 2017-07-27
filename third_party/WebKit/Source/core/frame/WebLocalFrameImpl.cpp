@@ -2132,6 +2132,11 @@ void WebLocalFrameImpl::MixedContentFound(
       was_allowed, had_redirect, std::move(source));
 }
 
+void WebLocalFrameImpl::ClientDroppedNavigation() {
+  DCHECK(GetFrame());
+  GetFrame()->Loader().ClientDroppedNavigation();
+}
+
 void WebLocalFrameImpl::SendOrientationChangeEvent() {
   if (!GetFrame())
     return;
