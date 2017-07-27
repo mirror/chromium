@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed652b37_d8aaab18",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T18:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d06b59_af74c1a0",
+      "range": {
+        "startLine": 241,
+        "startChar": 3,
+        "endLine": 241,
+        "endChar": 9
+      },
+      "revId": "17db618e940a445fd5b2843708b3616aa013149e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78dd3b48_74efbbbd",
         "filename": "components/safe_browsing/features.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "17db618e940a445fd5b2843708b3616aa013149e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d37efd_6204ae58",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T18:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78dd3b48_74efbbbd",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "17db618e940a445fd5b2843708b3616aa013149e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
