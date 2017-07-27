@@ -30,6 +30,7 @@ public class DeferredStartupHandler {
     }
 
     private boolean mDeferredStartupCompletedForApp;
+    private boolean mDeferredStartupStarted;
     private long mDeferredStartupDuration;
     private long mMaxTaskDuration;
     private final Context mAppContext;
@@ -63,6 +64,7 @@ public class DeferredStartupHandler {
      * tasks.
      */
     public void queueDeferredTasksOnIdleHandler() {
+        mDeferredStartupStarted = true;
         mMaxTaskDuration = 0;
         mDeferredStartupDuration = 0;
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
@@ -111,6 +113,7 @@ public class DeferredStartupHandler {
      */
     public void addDeferredTask(Runnable deferredTask) {
         ThreadUtils.assertOnUiThread();
+        assert !mDeferredStartupStarted;
         mDeferredTasks.add(deferredTask);
     }
 
