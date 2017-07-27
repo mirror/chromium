@@ -2064,6 +2064,8 @@ bool V4L2VideoDecodeAccelerator::GetFormatInfo(struct v4l2_format* format,
     }
   }
 
+  DequeueResolutionChangeEvent();
+
   // Make sure we are still getting the format we set on initialization.
   if (format->fmt.pix_mp.pixelformat != output_format_fourcc_) {
     LOGF(ERROR) << "Unexpected format from G_FMT on output";
