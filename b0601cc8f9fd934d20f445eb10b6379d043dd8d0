@@ -22,6 +22,30 @@
       "revId": "b0601cc8f9fd934d20f445eb10b6379d043dd8d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bade3ab_d4803aa6",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-27T22:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31d57a92_810a9cc5",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "b0601cc8f9fd934d20f445eb10b6379d043dd8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
