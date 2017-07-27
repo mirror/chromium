@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e0d4245_d182617b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T00:06:48Z",
+      "side": 1,
+      "message": "Writing down offline discussion:\nNeed a feature flag and whitelist check.",
+      "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38ac4a8_e9620cfa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T00:06:48Z",
+      "side": 1,
+      "message": "Just recording discussion we had offline:\n- How do we know OfflinePageBridge will always exist at the time a page is added?",
+      "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5485ebe_e91bff70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T00:06:48Z",
+      "side": 1,
+      "message": "nit: please add a comment in the catch about why we are doing nothing.",
+      "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a98d85b_f270927a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T00:06:48Z",
+      "side": 1,
+      "message": "nit: Note that the app name is not validated if constructed from JSON.",
+      "revId": "e2907ecaabca5d3f4e86f399e96da4115c25f3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
