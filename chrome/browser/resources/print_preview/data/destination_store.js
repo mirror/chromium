@@ -1542,11 +1542,11 @@ cr.define('print_preview', function() {
 
     /**
      * Called when a Privet printer is added to the local network.
-     * @param {!{serviceName: string,
-     *           name: string,
-     *           hasLocalPrinting: boolean,
-     *           isUnregistered: boolean,
-     *           cloudID: string}} printer Information about the added printer.
+     * @param {{serviceName: string,
+     *          name: string,
+     *          hasLocalPrinting: boolean,
+     *          isUnregistered: boolean,
+     *          cloudID: string}} printer Information about the added printer.
      * @private
      */
     onPrivetPrinterAdded_: function(printer) {
