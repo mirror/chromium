@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c42c50_07c908ab",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "Nit: Remove console logging",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f24b72_03e135bb",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "Can this JS snippet take a parameter (like kChooseSinkScript) to search for the matching element?\n\nThen the test could pass the description as a parameter via a format string.",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ce5bf7_f2c4e7eb",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "Prefer to take a copy here of the IssueInfo (versus using an lvalue reference to an object allocated elsewhere).",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac157b0_3881e875",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "Eventually we could theoretically have E2E tests for casting local media as well, so maybe the scoped_feature_list_ should go in MediaRouterBaseBrowserTest?",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d47c4e_96b5a0a5",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "Nit: extra newline here and below",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b883a42d_39dfe5a5",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "The following line will crash if media_router_ui is nullptr, so I don\u0027t think this ASSERT adds much value. Maybe convert into a DCHECK?",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3449c6_11c4c8bd",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "Similar comment as above",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8ca0ac_af5b2959",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T21:19:22Z",
+      "side": 1,
+      "message": "nit: typo in \"arise\"",
+      "revId": "3f6eae5fafaf22dfb48fdf1e38bb063106286ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
