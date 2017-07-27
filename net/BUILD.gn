@@ -2778,6 +2778,40 @@ if (!is_ios && !is_android) {
     }
   }
 
+  executable("cert_mapper") {
+    testonly = true
+    sources = [
+      "tools/cert_mapper/cert_mapper_main.cc",
+      "tools/cert_mapper/entry.cc",
+      "tools/cert_mapper/entry.h",
+      "tools/cert_mapper/entry_reader.cc",
+      "tools/cert_mapper/entry_reader.h",
+      "tools/cert_mapper/entry_reader_ct.cc",
+      "tools/cert_mapper/entry_reader_ct.h",
+      "tools/cert_mapper/entry_reader_pem.cc",
+      "tools/cert_mapper/entry_reader_pem.h",
+      "tools/cert_mapper/mapper.cc",
+      "tools/cert_mapper/mapper.h",
+      "tools/cert_mapper/metrics.cc",
+      "tools/cert_mapper/metrics.h",
+      "tools/cert_mapper/my_visitor.cc",
+      "tools/cert_mapper/my_visitor.h",
+      "tools/cert_mapper/visitor.h",
+      "tools/cert_mapper/write_results.cc",
+      "tools/cert_mapper/write_results.h",
+    ]
+
+    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
+    configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
+
+    deps = [
+      ":net",
+      "//base",
+      "//build/config:exe_and_shlib_deps",
+      "//build/win:default_exe_manifest",
+    ]
+  }
+
   executable("crash_cache") {
     testonly = true
     sources = [
