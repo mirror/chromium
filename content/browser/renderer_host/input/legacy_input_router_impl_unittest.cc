@@ -414,9 +414,10 @@ class LegacyInputRouterImplTest : public testing::Test {
         InputHostMsg_SetTouchAction(0, touch_action));
   }
 
-  void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action) {
-    input_router_->OnMessageReceived(
-        InputHostMsg_SetWhiteListedTouchAction(0, white_listed_touch_action));
+  void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action,
+                                   uint32_t unique_touch_event_id) {
+    input_router_->OnMessageReceived(InputHostMsg_SetWhiteListedTouchAction(
+        0, white_listed_touch_action, unique_touch_event_id));
   }
 
   size_t GetSentMessageCountAndResetSink() {
@@ -2051,9 +2052,14 @@ TEST_F(LegacyInputRouterImplAsyncWheelEventEnabledTest, OverscrollDispatch) {
 // Test proper routing of whitelisted touch action notifications received from
 // |SetWhiteListedTouchAction| IPC messages.
 TEST_F(LegacyInputRouterImplTest, OnSetWhiteListedTouchAction) {
+  // Touch sequence with touch handler.
+  OnHasTouchEventHandlers(true);
+  PressTouchPoint(1, 1);
+  uint32_t touch_press_event_id = SendTouchEvent();
+
   cc::TouchAction touch_action = cc::kTouchActionPanY;
-  input_router_->OnMessageReceived(
-      InputHostMsg_SetWhiteListedTouchAction(0, touch_action));
+  input_router_->OnMessageReceived(InputHostMsg_SetWhiteListedTouchAction(
+      0, touch_action, touch_press_event_id));
   cc::TouchAction white_listed_touch_action =
       client_->GetAndResetWhiteListedTouchAction();
   EXPECT_EQ(touch_action, white_listed_touch_action);
