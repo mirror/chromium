@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "124fc930_270f687d",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3273,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-27T14:08:47Z",
+      "side": 1,
+      "message": "#endif  // OS_ANDROID",
+      "range": {
+        "startLine": 3273,
+        "startChar": 0,
+        "endLine": 3273,
+        "endChar": 6
+      },
+      "revId": "87b82460d892ca5fb80084cf4a271793f91d9bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7233439_f487d5fc",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-27T14:08:47Z",
+      "side": 1,
+      "message": "where do we use that?",
+      "range": {
+        "startLine": 986,
+        "startChar": 18,
+        "endLine": 986,
+        "endChar": 60
+      },
+      "revId": "87b82460d892ca5fb80084cf4a271793f91d9bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
