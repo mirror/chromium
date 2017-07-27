@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b0f6540_8c6bf1d4",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoaderTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-27T11:37:58Z",
+      "side": 1,
+      "message": "Would you introduce a setter: MainThreadWorkletGlobalScope::SetProxyForTesting()?",
+      "revId": "e80288422b0e5f606753a55037a2eebd2df1761a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bfec79_d7b8e395",
+        "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletGlobalScope.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-27T11:37:58Z",
+      "side": 1,
+      "message": "No friend.",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "e80288422b0e5f606753a55037a2eebd2df1761a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
