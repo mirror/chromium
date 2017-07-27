@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb05922f_1dc7e7e7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T17:18:29Z",
+      "side": 1,
+      "message": "Is this a good opportunity to mirror the naming in web/ and put each of these classes into separate files, possibly inside a toolbar/test/ subdirectory?",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "b05418c892a786e02eeec398e4eaa91597f5afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
