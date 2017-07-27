@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de73bfdf_d65a45d3",
+        "filename": "chrome/browser/chromeos/printing/combining_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-27T22:18:19Z",
+      "side": 1,
+      "message": "const",
+      "revId": "64a32c1c41ad37f79f4a3ab73bf192bea948d2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf29ebb_1426dfa7",
+        "filename": "chrome/browser/chromeos/printing/combining_printer_detector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-27T22:18:19Z",
+      "side": 1,
+      "message": "const",
+      "revId": "64a32c1c41ad37f79f4a3ab73bf192bea948d2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4b3377_d9695f1d",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-27T22:18:19Z",
+      "side": 1,
+      "message": "may modify to *(data-\u003eprinter) to avoid confusion?\nOr would it be better if DetectedPrinter has a unique_ptr\u003cPrinter\u003e other than Printer to be consistent with SetUpPrinterData?",
+      "revId": "64a32c1c41ad37f79f4a3ab73bf192bea948d2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
