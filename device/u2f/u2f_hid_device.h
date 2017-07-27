@@ -28,9 +28,9 @@ class U2fHidDevice : public U2fDevice {
 
   // Send a U2f command to this device
   void DeviceTransact(std::unique_ptr<U2fApduCommand> command,
-                      const DeviceCallback& callback) final;
+                      DeviceCallback callback) final;
   // Send a wink command if supported
-  void TryWink(const WinkCallback& callback) final;
+  void TryWink(WinkCallback callback) final;
   // Use a string identifier to compare to other devices
   std::string GetId() final;
   // Command line flag to enable tests on actual U2f HID hardware
@@ -47,20 +47,20 @@ class U2fHidDevice : public U2fDevice {
       base::OnceCallback<void(bool, std::unique_ptr<U2fMessage>)>;
 
   // Open a connection to this device
-  void Connect(const HidService::ConnectCallback& callback);
+  void Connect(HidService::ConnectCallback callback);
   void OnConnect(std::unique_ptr<U2fApduCommand> command,
-                 const DeviceCallback& callback,
+                 DeviceCallback callback,
                  scoped_refptr<HidConnection> connection);
   // Ask device to allocate a unique channel id for this connection
   void AllocateChannel(std::unique_ptr<U2fApduCommand> command,
-                       const DeviceCallback& callback);
+                       DeviceCallback callback);
   void OnAllocateChannel(std::vector<uint8_t> nonce,
                          std::unique_ptr<U2fApduCommand> command,
-                         const DeviceCallback& callback,
+                         DeviceCallback callback,
                          bool success,
                          std::unique_ptr<U2fMessage> message);
   void Transition(std::unique_ptr<U2fApduCommand> command,
-                  const DeviceCallback& callback);
+                  DeviceCallback callback);
   // Write all message packets to device, and read response if expected
   void WriteMessage(std::unique_ptr<U2fMessage> message,
                     bool response_expected,
@@ -71,7 +71,7 @@ class U2fHidDevice : public U2fDevice {
                      bool success);
   // Read all response message packets from device
   void ReadMessage(U2fHidMessageCallback callback);
-  void MessageReceived(const DeviceCallback& callback,
+  void MessageReceived(DeviceCallback callback,
                        bool success,
                        std::unique_ptr<U2fMessage> message);
   void OnRead(U2fHidMessageCallback callback,
@@ -83,11 +83,11 @@ class U2fHidDevice : public U2fDevice {
                           bool success,
                           scoped_refptr<net::IOBuffer> buf,
                           size_t size);
-  void OnWink(const WinkCallback& callback,
+  void OnWink(WinkCallback callback,
               bool success,
               std::unique_ptr<U2fMessage> response);
-  void ArmTimeout(const DeviceCallback& callback);
-  void OnTimeout(const DeviceCallback& callback);
+  void ArmTimeout(DeviceCallback callback);
+  void OnTimeout(DeviceCallback callback);
   void OnDeviceTransact(bool success,
                         std::unique_ptr<U2fApduResponse> response);
   base::WeakPtr<U2fDevice> GetWeakPtr() override;

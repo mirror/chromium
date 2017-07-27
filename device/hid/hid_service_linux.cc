@@ -54,9 +54,9 @@ const char kSysfsReportDescriptorKey[] = "report_descriptor";
 
 struct HidServiceLinux::ConnectParams {
   ConnectParams(scoped_refptr<HidDeviceInfoLinux> device_info,
-                const ConnectCallback& callback)
+                ConnectCallback callback)
       : device_info(std::move(device_info)),
-        callback(callback),
+        callback(std::move(callback)),
         task_runner(base::ThreadTaskRunnerHandle::Get()),
         blocking_task_runner(
             base::CreateSequencedTaskRunnerWithTraits(kBlockingTaskTraits)) {}
@@ -201,37 +201,39 @@ HidServiceLinux::~HidServiceLinux() {
 }
 
 void HidServiceLinux::Connect(const std::string& device_guid,
-                              const ConnectCallback& callback) {
+                              ConnectCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const auto& map_entry = devices().find(device_guid);
   if (map_entry == devices().end()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, nullptr));
+        FROM_HERE, base::BindOnce(std::move(callback), nullptr));
     return;
   }
   scoped_refptr<HidDeviceInfoLinux> device_info =
       static_cast<HidDeviceInfoLinux*>(map_entry->second.get());
 
-  auto params = base::MakeUnique<ConnectParams>(device_info, callback);
-
 #if defined(OS_CHROMEOS)
+  auto copyable_callback = base::AdaptCallbackForRepeating(std::move(callback));
+  auto params = base::MakeUnique<ConnectParams>(device_info, copyable_callback);
   chromeos::PermissionBrokerClient* client =
       chromeos::DBusThreadManager::Get()->GetPermissionBrokerClient();
   DCHECK(client) << "Could not get permission broker client.";
   chromeos::PermissionBrokerClient::ErrorCallback error_callback =
-      base::Bind(&HidServiceLinux::OnPathOpenError,
-                 params->device_info->device_node(), params->callback);
+      base::BindOnce(&HidServiceLinux::OnPathOpenError,
+                     params->device_info->device_node(), copyable_callback);
   client->OpenPath(
       device_info->device_node(),
-      base::Bind(&HidServiceLinux::OnPathOpenComplete, base::Passed(&params)),
-      error_callback);
+      base::BindOnce(&HidServiceLinux::OnPathOpenComplete, std::move(params)),
+      std::move(error_callback));
 #else
+  auto params =
+      base::MakeUnique<ConnectParams>(device_info, std::move(callback));
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner =
       params->blocking_task_runner;
   blocking_task_runner->PostTask(
-      FROM_HERE, base::Bind(&HidServiceLinux::OpenOnBlockingThread,
-                            base::Passed(&params)));
+      FROM_HERE, base::BindOnce(&HidServiceLinux::OpenOnBlockingThread,
+                                std::move(params)));
 #endif  // defined(OS_CHROMEOS)
 }
 
@@ -250,12 +252,12 @@ void HidServiceLinux::OnPathOpenComplete(std::unique_ptr<ConnectParams> params,
 
 // static
 void HidServiceLinux::OnPathOpenError(const std::string& device_path,
-                                      const ConnectCallback& callback,
+                                      ConnectCallback callback,
                                       const std::string& error_name,
                                       const std::string& error_message) {
   HID_LOG(EVENT) << "Permission broker failed to open '" << device_path
                  << "': " << error_name << ": " << error_message;
-  callback.Run(nullptr);
+  std::move(callback).Run(nullptr);
 }
 
 #else
@@ -285,7 +287,8 @@ void HidServiceLinux::OpenOnBlockingThread(
     HID_LOG(EVENT) << "Failed to open '" << params->device_info->device_node()
                    << "': "
                    << base::File::ErrorToString(device_file.error_details());
-    task_runner->PostTask(FROM_HERE, base::Bind(params->callback, nullptr));
+    task_runner->PostTask(FROM_HERE,
+                          base::BindOnce(std::move(params->callback), nullptr));
     return;
   }
   params->fd.reset(device_file.TakePlatformFile());
@@ -301,21 +304,23 @@ void HidServiceLinux::FinishOpen(std::unique_ptr<ConnectParams> params) {
 
   if (!base::SetNonBlocking(params->fd.get())) {
     HID_PLOG(ERROR) << "Failed to set the non-blocking flag on the device fd";
-    task_runner->PostTask(FROM_HERE, base::Bind(params->callback, nullptr));
+    task_runner->PostTask(FROM_HERE,
+                          base::BindOnce(std::move(params->callback), nullptr));
     return;
   }
 
   task_runner->PostTask(
       FROM_HERE,
-      base::Bind(&HidServiceLinux::CreateConnection, base::Passed(&params)));
+      base::BindOnce(&HidServiceLinux::CreateConnection, std::move(params)));
 }
 
 // static
 void HidServiceLinux::CreateConnection(std::unique_ptr<ConnectParams> params) {
   DCHECK(params->fd.is_valid());
-  params->callback.Run(base::MakeRefCounted<HidConnectionLinux>(
-      std::move(params->device_info), std::move(params->fd),
-      std::move(params->blocking_task_runner)));
+  std::move(params->callback)
+      .Run(base::MakeRefCounted<HidConnectionLinux>(
+          std::move(params->device_info), std::move(params->fd),
+          std::move(params->blocking_task_runner)));
 }
 
 }  // namespace device
