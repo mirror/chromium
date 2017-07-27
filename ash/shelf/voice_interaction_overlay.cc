@@ -470,7 +470,7 @@ void VoiceInteractionOverlay::StartAnimation(bool show_icon) {
       kRippleCircleStartRadiusDip / kRippleCircleInitRadiusDip;
   gfx::Transform transform;
 
-  const gfx::Point center = host_view_->GetAppListButtonCenterPoint();
+  const gfx::Point center = host_view_->GetCircleCenterPoint();
   transform.Translate(center.x() - kRippleCircleStartRadiusDip,
                       center.y() - kRippleCircleStartRadiusDip);
   transform.Scale(scale_factor, scale_factor);
@@ -646,7 +646,7 @@ void VoiceInteractionOverlay::EndAnimation() {
       kRippleCircleStartRadiusDip / kRippleCircleInitRadiusDip;
   gfx::Transform transform;
 
-  const gfx::Point center = host_view_->GetAppListButtonCenterPoint();
+  const gfx::Point center = host_view_->GetCircleCenterPoint();
   transform.Translate(center.x() - kRippleCircleStartRadiusDip,
                       center.y() - kRippleCircleStartRadiusDip);
   transform.Scale(scale_factor, scale_factor);
