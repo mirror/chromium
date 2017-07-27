@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6976237_b322a32c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-27T21:06:29Z",
+      "side": 1,
+      "message": "Might be too short as loading native can take over 5 seconds IIRC.  Should we just reset the timer instead of adding to it?  We could do something like:\n\nRunnable mStopSelfRunnable \u003d new Runnable() {\n  @Override\n  public void run() {\n    stopSelf();\n  }\n}\n\nThen any time we get an intent we can do:\n\nmHandler.removeCallbacks(mStopSelfRunnable);\nmHandler.postDelayed(mStopSelfRunnable, WAIT_TIME_MS);\n\nWhat do you think?",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635bd6ff_33ccb01b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-27T21:06:29Z",
+      "side": 1,
+      "message": "Awesome thanks for filing! :)",
+      "range": {
+        "startLine": 179,
+        "startChar": 82,
+        "endLine": 179,
+        "endChar": 98
+      },
+      "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
