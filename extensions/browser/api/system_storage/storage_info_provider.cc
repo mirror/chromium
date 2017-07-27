@@ -88,9 +88,9 @@ void StorageInfoProvider::GetAllStoragesIntoInfoList() {
   }
 }
 
-double StorageInfoProvider::GetStorageFreeSpaceFromTransientIdOnFileThread(
-    const std::string& transient_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+void StorageInfoProvider::GetStorageFreeSpaceFromTransientIdAsync(
+    const std::string& transient_id,
+    double* result) {
   std::vector<StorageInfo> storage_list =
       StorageMonitor::GetInstance()->GetAllAvailableStorages();
 
@@ -102,11 +102,12 @@ double StorageInfoProvider::GetStorageFreeSpaceFromTransientIdOnFileThread(
        it != storage_list.end();
        ++it) {
     if (device_id == it->device_id())
-      return static_cast<double>(
+      *result = static_cast<double>(
           base::SysInfo::AmountOfFreeDiskSpace(base::FilePath(it->location())));
   }
 
-  return -1;
+  *result = -1;
+  return;
 }
 
 // static
