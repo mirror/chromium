@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4572f7_97e284c1",
+        "filename": "components/error_page/common/error.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-27T16:09:31Z",
+      "side": 1,
+      "message": "This should go last, to match order in the header.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "250db588dab949ad6bc5fcd1aa196ad10e57340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe1214a_507eba15",
+        "filename": "components/error_page/common/error.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-27T16:09:31Z",
+      "side": 1,
+      "message": "nit:  blank line between standard and google heaers.",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "250db588dab949ad6bc5fcd1aa196ad10e57340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a56a26e_994e79b9",
+        "filename": "components/error_page/common/error.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-27T16:09:31Z",
+      "side": 1,
+      "message": "Mention that these are copiable?  At least, assuming that\u0027s deliberate.",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "250db588dab949ad6bc5fcd1aa196ad10e57340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6703ccab_d8bc5ca1",
+        "filename": "components/error_page/common/error.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-27T16:09:31Z",
+      "side": 1,
+      "message": "Seems kinda weird that this class isn\u0027t used in this component, just its constants are.  Don\u0027t have a better suggestion (Seems silly to have a couple dangling strings, and making the constants part of LocalizedError seems a little weird).  So this is fine, just thought I\u0027d mention it.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "250db588dab949ad6bc5fcd1aa196ad10e57340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ac8514_5e5cd724",
+        "filename": "components/error_page/common/error.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-27T16:09:31Z",
+      "side": 1,
+      "message": "nit:  Google C++ style guide says to prefer putting constants first (Before factory functions, after structs).  Also, order in header should match order in cc file, but moving these up will fix that.",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "250db588dab949ad6bc5fcd1aa196ad10e57340d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
