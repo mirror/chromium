@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4807e2e5_1b02c30f",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-27T20:35:21Z",
+      "side": 1,
+      "message": "Also, this CSSMERR_TP_VERIFY_ACTION_FAILED hack seems to be no longer needed on current version of sierra/high sierra (at least according to net_unittest coverage). Is there any policy about expecting people to be up to date with their minor-level os updates that we could remove it? Or should we try to figure out what version it stopped being needed and put an upper version limit?",
+      "range": {
+        "startLine": 937,
+        "startChar": 32,
+        "endLine": 937,
+        "endChar": 48
+      },
+      "revId": "55d8278732571995f1d9262e27fb188e4de0b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
