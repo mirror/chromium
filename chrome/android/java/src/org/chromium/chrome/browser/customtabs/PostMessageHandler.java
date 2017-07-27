@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.customtabs;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsService;
 import android.support.customtabs.CustomTabsSessionToken;
@@ -22,11 +23,30 @@ import org.chromium.content_public.browser.MessagePort.MessageCallback;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * A class that handles postMessage communications with a designated {@link CustomTabsSessionToken}.
  */
 public class PostMessageHandler
         extends PostMessageServiceConnection implements OriginVerificationListener {
+    // TODO(yusufo): Remove these after the intdef is in support library.
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({RELATION_USE_AS_ORIGIN, RELATION_HANDLE_ALL_URLS})
+    public @interface Relation {}
+
+    /**
+     * For App -> Web transitions, requests the app to use the declared origin to be used as origin
+     * for the client app in the web APIs context.
+     */
+    public static final int RELATION_USE_AS_ORIGIN = 1;
+
+    /**
+     * Requests the ability to handle all URLs from a given origin.
+     */
+    public static final int RELATION_HANDLE_ALL_URLS = 2;
+
     private final MessageCallback mMessageCallback;
     private OriginVerifier mOriginVerifier;
     private WebContents mWebContents;
@@ -35,6 +55,7 @@ public class PostMessageHandler
     private AppWebMessagePort[] mChannel;
     private Uri mOrigin;
     private String mPackageName;
+    private @Relation int mRelation;
 
     /**
      * Basic constructor. Everytime the given {@link CustomTabsSessionToken} is associated with a
@@ -146,8 +167,9 @@ public class PostMessageHandler
      * will be overridden.
      * @param origin The origin to verify for.
      */
-    public void verifyAndInitializeWithOrigin(final Uri origin) {
-        if (mOriginVerifier == null) mOriginVerifier = new OriginVerifier(this, mPackageName);
+    public void verifyAndInitializeWithOrigin(final Uri origin, @Relation int relation) {
+        mRelation = relation;
+        mOriginVerifier = new OriginVerifier(this, mPackageName, mRelation);
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {

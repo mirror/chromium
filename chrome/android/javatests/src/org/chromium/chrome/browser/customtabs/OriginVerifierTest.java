@@ -4,13 +4,21 @@
 
 package org.chromium.chrome.browser.customtabs;
 
+import android.net.Uri;
 import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.chromium.chrome.browser.customtabs.OriginVerifier.OriginVerificationListener;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
+
+import java.util.concurrent.Callable;
 
 /** Tests for OriginVerifier. */
 @RunWith(BaseJUnit4ClassRunner.class)
@@ -23,6 +31,34 @@ public class OriginVerifierTest {
     private static final String SHA_256_FINGERPRINT =
             "32:A2:FC:74:D7:31:10:58:59:E5:A8:5D:F1:6D:95:F1:02:D8:5B"
             + ":22:09:9B:80:64:C5:D8:91:5C:61:DA:D1:E0";
+    private static final Uri TEST_HTTPS_ORIGIN_1 = Uri.parse("https://www.example.com");
+    private static final Uri TEST_HTTPS_ORIGIN_2 = Uri.parse("https://www.android.com");
+    private static final Uri TEST_HTTP_ORIGIN = Uri.parse("http://www.android.com");
+
+    private class TestOriginVerificationListener implements OriginVerificationListener {
+        @Override
+        public void onOriginVerified(String packageName, Uri origin, boolean verified) {
+            mLastPackageName = packageName;
+            mLastOrigin = origin;
+            mLastVerified = verified;
+            mVerificationResultCount++;
+        }
+    }
+
+    private OriginVerifier mUseAsOriginVerifier;
+    private OriginVerifier mHandleAllUrlsVerifier;
+    private String mLastPackageName;
+    private Uri mLastOrigin;
+    private boolean mLastVerified;
+    private int mVerificationResultCount;
+
+    @Before
+    public void setUp() throws Exception {
+        mHandleAllUrlsVerifier = new OriginVerifier(new TestOriginVerificationListener(),
+                PACKAGE_NAME, PostMessageHandler.RELATION_HANDLE_ALL_URLS);
+        mUseAsOriginVerifier = new OriginVerifier(new TestOriginVerificationListener(),
+                PACKAGE_NAME, PostMessageHandler.RELATION_USE_AS_ORIGIN);
+    }
 
     @Test
     @SmallTest
@@ -30,5 +66,79 @@ public class OriginVerifierTest {
         Assert.assertEquals(OriginVerifier.byteArrayToHexString(BYTE_ARRAY), STRING_ARRAY);
         Assert.assertEquals(OriginVerifier.getCertificateSHA256FingerprintForPackage(PACKAGE_NAME),
                 SHA_256_FINGERPRINT);
+    }
+
+    @Test
+    @SmallTest
+    public void testOnlyHttpsAllowed() {
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mHandleAllUrlsVerifier.start(Uri.parse("LOL"));
+            }
+        });
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return mVerificationResultCount == 1;
+            }
+        });
+        Assert.assertFalse(mLastVerified);
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mHandleAllUrlsVerifier.start(TEST_HTTP_ORIGIN);
+            }
+        });
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return mVerificationResultCount == 2;
+            }
+        });
+        Assert.assertFalse(mLastVerified);
+    }
+
+    @Test
+    @SmallTest
+    public void testMultipleRelationships() throws Exception {
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                OriginVerifier.addVerifiedOriginForPackage(PACKAGE_NAME, TEST_HTTPS_ORIGIN_1,
+                        PostMessageHandler.RELATION_USE_AS_ORIGIN);
+            }
+        });
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return OriginVerifier.isValidOrigin(PACKAGE_NAME, TEST_HTTPS_ORIGIN_1,
+                        PostMessageHandler.RELATION_USE_AS_ORIGIN);
+            }
+        });
+        Assert.assertFalse(ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return OriginVerifier.isValidOrigin(PACKAGE_NAME, TEST_HTTPS_ORIGIN_1,
+                        PostMessageHandler.RELATION_HANDLE_ALL_URLS);
+            }
+        }));
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUseAsOriginVerifier.start(TEST_HTTPS_ORIGIN_1);
+            }
+        });
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return mVerificationResultCount == 1;
+            }
+        });
+        Assert.assertTrue(mLastVerified);
+        Assert.assertEquals(mLastPackageName, PACKAGE_NAME);
+        Assert.assertEquals(mLastOrigin,
+                OriginVerifier.getPostMessageOriginFromVerifiedOrigin(
+                        PACKAGE_NAME, TEST_HTTPS_ORIGIN_1));
     }
 }
