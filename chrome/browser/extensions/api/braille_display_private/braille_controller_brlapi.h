@@ -55,8 +55,8 @@ class BrailleControllerImpl : public BrailleController {
   // Tries to connect and starts watching for new brlapi servers.
   // No-op if already called.
   void StartConnecting();
-  void StartWatchingSocketDirOnFileThread();
-  void OnSocketDirChangedOnFileThread(const base::FilePath& path, bool error);
+  void StartWatchingSocketDirOnTaskThread();
+  void OnSocketDirChangedOnTaskThread(const base::FilePath& path, bool error);
   void OnSocketDirChangedOnIOThread();
   void TryToConnect();
   void ResetRetryConnectHorizon();
