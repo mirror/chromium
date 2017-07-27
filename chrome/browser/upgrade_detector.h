@@ -127,6 +127,11 @@ class UpgradeDetector {
   // over cellular connection.
   void NotifyUpdateOverCellularAvailable();
 
+  // Notifies that the user permission on the target update has been set in
+  // Update Engine. |success| indicates whether the permission was set
+  // successfully.
+  void NotifyUpdateOverCellularTargetSet(bool success);
+
   // Triggers a critical update, which starts a timer that checks the machine
   // idle state. Protected and virtual so that it could be overridden by tests.
   virtual void TriggerCriticalUpdate();
