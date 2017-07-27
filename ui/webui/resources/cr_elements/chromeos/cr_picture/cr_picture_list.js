@@ -113,7 +113,7 @@ Polymer({
    */
   setSelectedImageUrl(imageUrl) {
     var image = this.$.selector.items.find(function(image) {
-      return image.src == imageUrl;
+      return image.dataset.url == imageUrl;
     });
     if (image) {
       this.setSelectedImage_(image);
@@ -229,5 +229,27 @@ Polymer({
    */
   getImgSrc2x_: function(url) {
     return url + '@2x 2x';
+  },
+
+  /**
+   * Returns the frozen (non-animated) image to use for 'src'.
+   * @param {string} url
+   * @return {string}
+   * @private
+   */
+  getFrozenImgSrc_: function(url) {
+    // TODO(reveman): Add support for frozen animated image URLs.
+    return url + '@2.125x';
+  },
+
+  /**
+   * Returns the frozen (non-animated) image to use for 'srcset'.
+   * @param {string} url
+   * @return {string}
+   * @private
+   */
+  getFrozenImgSrc2x_: function(url) {
+    // TODO(reveman): Add support for frozen animated image URLs.
+    return url + '@2.125x 2x';
   },
 });
