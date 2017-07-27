@@ -8,7 +8,9 @@
 #include "ash/screenshot_delegate.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/notifications/notification.h"
+#include "components/drive/chromeos/file_system_interface.h"
 #include "ui/snapshot/screenshot_grabber.h"
 
 class Profile;
@@ -48,9 +50,27 @@ class ChromeScreenshotGrabber : public ash::ScreenshotDelegate,
  private:
   friend class ash::ChromeScreenshotGrabberTest;
 
+  void ReadScreenshotFileForPreviewDrive(
+      ui::ScreenshotGrabberObserver::Result result,
+      const base::FilePath& screenshot_path,
+      drive::FileError error,
+      const base::FilePath& screenshot_cache_path,
+      std::unique_ptr<drive::ResourceEntry> entry);
+
+  void ReadScreenshotFileForPreviewLocal(
+      ui::ScreenshotGrabberObserver::Result result,
+      const base::FilePath& screenshot_path,
+      const base::FilePath& screenshot_cache_path);
+
+  void OnReadScreenshotFileForPreviewCompleted(
+      ui::ScreenshotGrabberObserver::Result result,
+      const base::FilePath& screenshot_path,
+      gfx::Image image);
+
   Notification* CreateNotification(
       ui::ScreenshotGrabberObserver::Result screenshot_result,
-      const base::FilePath& screenshot_path);
+      const base::FilePath& screenshot_path,
+      gfx::Image image);
 
   void SetProfileForTest(Profile* profile);
   Profile* GetProfile();
