@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ada33c26_88844e2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc49f4eb_092ab8c9",
+      "range": {
+        "startLine": 21,
+        "startChar": 73,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e11f7bb_2d0efd9f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "e541601f_aef8f022",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e11f7bb_2d0efd9f",
+      "range": {
+        "startLine": 23,
+        "startChar": 64,
+        "endLine": 23,
+        "endChar": 67
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4716dc27_71c418da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed89961_4cc96637",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 22
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c87b72a_b581add9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4e256ed8_4659cdc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c87b72a_b581add9",
+      "range": {
+        "startLine": 24,
+        "startChar": 52,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2858b921_ba334e73",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -108,6 +204,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5381b0ae_ff1f8d35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "In the current architecture, OnStopped during starting up is recognized as an error happens.\nFailure of loading a main script is definitely in the starting phase, so it\u0027ll be notified to services dispatching events as SERVICE_WORKER_ERROR_START_WORKER_FAILED instead of dying silently. \nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_version.cc?type\u003dcs\u0026q\u003dServiceWorkerVersion\u0026sq\u003dpackage:chromium\u0026l\u003d1862\n\nI agree that we can revisit the state management for more simpler error handling. I feel the mixture of sudden stop, timeout timer, restarting and Detach() is a bit too complex, but for now, I\u0027d like to avoid (perhaps) breaking the balance by adding another path.\n\nWhat do you think?",
+      "parentUuid": "2858b921_ba334e73",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "955b54d2_88081e77",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Hmm, yes, I agree that ignoring errors seems a bit scary. \nI tried to ask about it in chromium-mojo. \nhttps://groups.google.com/a/chromium.org/forum/#!topic/chromium-mojo/QenBFICqEZM",
+      "parentUuid": "d96f0694_fb14923e",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db86e847_58460227",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -169,6 +301,30 @@
     },
     {
       "key": {
+        "uuid": "a5432d8d_096a1732",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Forgot to set the resolved bit.",
+      "parentUuid": "db86e847_58460227",
+      "range": {
+        "startLine": 44,
+        "startChar": 60,
+        "endLine": 44,
+        "endChar": 74
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73f0c3b_1c04fabe",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -183,6 +339,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a820bff3_c54341d3",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "These return values are picked from a list in the header:\nhttps://cs.chromium.org/chromium/src/mojo/public/c/system/data_pipe.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d171\n\nI don\u0027t think we need to put all MojoResult here because it\u0027d be redundant and unfortunately there is no validation to confirm if all of params are listed here (MOJO_RESULT_* is not enum actually)...",
+      "parentUuid": "f73f0c3b_1c04fabe",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "f82f99ce_fdfaedc7",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b7072aa_8a1a0bf1",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f10370_73b1da4b",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -217,6 +409,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a17f73e_b5699c13",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f10370_73b1da4b",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +447,24 @@
     },
     {
       "key": {
+        "uuid": "b0271cd9_820a1d0e",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Changed to FinishedReason to clarify what the status is for.",
+      "parentUuid": "3026e401_cbdd5098",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b0c5032_2a2f600d",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 5
@@ -251,6 +479,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9a3f56_fe24dd6c",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b0c5032_2a2f600d",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -271,6 +517,24 @@
     },
     {
       "key": {
+        "uuid": "90b510d5_a8099e29",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b4cae35_8674f4a9",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba05cbf_6024a5f8",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 5
@@ -285,6 +549,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfc5195_211ad66f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba05cbf_6024a5f8",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +587,24 @@
     },
     {
       "key": {
+        "uuid": "14e10d26_3b9b9fd7",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Thanks, that seems right. Removed.",
+      "parentUuid": "bc666e37_67870f06",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c4f8f74_6f761f7a",
         "filename": "content/browser/service_worker/service_worker_metrics.h",
         "patchSetId": 5
@@ -319,6 +619,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564fe5fc_49dc95d6",
+        "filename": "content/browser/service_worker/service_worker_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Added description about |script_sender_status|. \nI slightly prefer having the param here because |script_sender_status| could be considered as a breakdown of the failure case. This would be a part of \"StartWorkerStatus\".",
+      "parentUuid": "6c4f8f74_6f761f7a",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -339,6 +657,24 @@
     },
     {
       "key": {
+        "uuid": "2507fd15_2f27b156",
+        "filename": "content/browser/service_worker/service_worker_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d4e7356_90c24612",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c9e59b_1b936928",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 5
@@ -350,6 +686,24 @@
       "writtenOn": "2017-07-27T01:32:24Z",
       "side": 1,
       "message": "instead can it just be\n\nif (installed_scripted_sender_ \u0026\u0026 is_finished) {\n  RecordInstalledScriptsSenderstatus(...)\n}",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4ed169_06a024f4",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Would it be better to split it into another function?",
+      "parentUuid": "a6c9e59b_1b936928",
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -370,6 +724,47 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d22223_2bf80bfb",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc10b4aa_84c55c64",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84226d0a_9cf6c18c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-27T05:40:07Z",
+      "side": 1,
+      "message": "According to nhiroki@, this is wrong in worklet cases. I\u0027d like to change it to (GlobalScope()-\u003eIsWorkerGlobalScope() \u0026\u0026 source_code.IsNull()) in this patch.\nI feel it\u0027s better to refactor around here in order to split script evaluation and threading infrastructure (and that\u0027s what nhiroki@ is now working on).",
+      "range": {
+        "startLine": 482,
+        "startChar": 51,
+        "endLine": 482,
+        "endChar": 72
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
