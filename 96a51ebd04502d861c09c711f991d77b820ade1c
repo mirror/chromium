@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e16fa88_a0ffb364",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T07:41:57Z",
+      "side": 1,
+      "message": "This name seems weird because WorkerScriptLaoded is called on the worker thread in Script streaming case right?\n\nSTART_WORKER_CONTEXT as a cop-out?",
+      "revId": "96a51ebd04502d861c09c711f991d77b820ade1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
