@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fff0f3a_2691171e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-27T09:24:02Z",
+      "side": 1,
+      "message": "Instead of using GetCurrentContext, would you pass in ScriptState* to V8ScriptRunner::CompileAndRunInternalScript?",
+      "revId": "4b8ff6324056151f33aff1f78f99afbf35191055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf376a89_d8bc8099",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-27T09:24:02Z",
+      "side": 1,
+      "message": "Would you make this change in a separate CL?",
+      "revId": "4b8ff6324056151f33aff1f78f99afbf35191055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
