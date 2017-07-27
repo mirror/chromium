@@ -68,6 +68,8 @@ void UIElement::ReorderChild(UIElement* child, int new_index) {
   delegate()->OnUIElementReordered(child->parent(), child);
 }
 
+void UIElement::FindElementWithId(UIElement* ui_element) {}
+
 UIElement::UIElement(const UIElementType type,
                      UIElementDelegate* delegate,
                      UIElement* parent)
