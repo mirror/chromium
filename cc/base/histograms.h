@@ -32,6 +32,13 @@ CC_BASE_EXPORT void SetClientNameForMetrics(const char* client_name);
 // values over the lifetime of the process.
 CC_BASE_EXPORT const char* GetClientNameForMetrics();
 
+// In non-single-process tests, there's a good chance that two tests running
+// in the same process need to set different client names. Whichever comes
+// second cannot set the client name correctly.
+//
+// This method should be called prior to SetClientNameForMetrics in tests.
+CC_BASE_EXPORT void ResetClientNameForMetricsForTesting();
+
 // Emits UMA histogram trackers for time spent as well as area (in pixels)
 // processed per unit time. Time is measured in microseconds, and work in
 // pixels per millisecond. Histogram name should include a %s to grab the client

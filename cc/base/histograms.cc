@@ -53,6 +53,12 @@ const char* GetClientNameForMetrics() {
   return g_client_name;
 }
 
+void ResetClientNameForMetricsForTesting() {
+  base::AutoLock auto_lock(g_client_name_lock.Get());
+  g_client_name = nullptr;
+  g_multiple_client_names_set = false;
+}
+
 // Minimum elapsed time of 1us to limit weighting of fast calls.
 static const int64_t kMinimumTimeMicroseconds = 1;
 
