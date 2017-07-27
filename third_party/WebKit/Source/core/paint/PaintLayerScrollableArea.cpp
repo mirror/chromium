@@ -51,6 +51,7 @@
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/markers/DocumentMarkerController.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
@@ -2035,6 +2036,11 @@ PaintLayerScrollableArea::GetCompositorAnimationTimeline() const {
   return layer_.GetLayoutObject()
       .GetFrameView()
       ->GetCompositorAnimationTimeline();
+}
+
+void PaintLayerScrollableArea::GetTickmarks(Vector<IntRect>& tickmarks) const {
+  if (layer_.IsRootLayer())
+    tickmarks = Box().GetDocument().Markers().LayoutRectsForTextMatchMarkers();
 }
 
 PaintLayerScrollableArea*
