@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 
+@protocol ApplicationCommands;
 class AudioSessionController;
 @protocol VoiceSearchBar;
 class VoiceSearchController;
@@ -41,7 +42,9 @@ class VoiceSearchProvider {
       ios::ChromeBrowserState* browser_state) const;
 
   // Creates a new VoiceSearchBar.  Returns an autoreleased view.
-  virtual UIView<VoiceSearchBar>* BuildVoiceSearchBar(CGRect frame) const;
+  virtual UIView<VoiceSearchBar>* BuildVoiceSearchBar(
+      CGRect frame,
+      id<ApplicationCommands> dispatcher) const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(VoiceSearchProvider);

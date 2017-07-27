@@ -137,7 +137,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 - (void)expectNewForegroundTab;
 
 // Shows the voice search UI.
-- (void)startVoiceSearch;
+- (void)startVoiceSearchWithOriginView:(UIView*)originView;
 
 // Shows the QR scanner UI.
 - (void)showQRScanner;

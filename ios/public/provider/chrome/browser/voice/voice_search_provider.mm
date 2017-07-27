@@ -29,6 +29,7 @@ VoiceSearchProvider::CreateVoiceSearchController(
 }
 
 UIView<VoiceSearchBar>* VoiceSearchProvider::BuildVoiceSearchBar(
-    CGRect frame) const {
+    CGRect frame,
+    id<ApplicationCommands> dispatcher) const {
   return nil;
 }

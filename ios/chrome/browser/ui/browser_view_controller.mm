@@ -1571,7 +1571,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   ProceduralBlock startVoiceSearchIfNecessaryBlock = ^void() {
     if (_startVoiceSearchAfterNewTabAnimation) {
       _startVoiceSearchAfterNewTabAnimation = NO;
-      [self startVoiceSearch];
+      [self startVoiceSearchWithOriginView:nil];
     }
   };
 
@@ -2354,7 +2354,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   CGRect frame = CGRectMake(0.0, y, width, kVoiceSearchBarHeight);
   _voiceSearchBar = ios::GetChromeBrowserProvider()
                         ->GetVoiceSearchProvider()
-                        ->BuildVoiceSearchBar(frame);
+                        ->BuildVoiceSearchBar(frame, self.dispatcher);
   [_voiceSearchBar setVoiceSearchBarDelegate:self];
   [_voiceSearchBar setHidden:YES];
   [_voiceSearchBar setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin |
@@ -4207,13 +4207,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     case IDC_SHOW_READING_LIST:
       [self showReadingList];
       break;
-    case IDC_VOICE_SEARCH:
-      // If the voice search command is coming from a UIView sender, store it
-      // before sending the command up the responder chain.
-      if ([sender isKindOfClass:[UIView class]])
-        _voiceSearchButton = sender;
-      [super chromeExecuteCommand:sender];
-      break;
     case IDC_SHOW_QR_SCANNER:
       [self showQRScanner];
       break;
@@ -4538,7 +4531,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 #endif  // !defined(NDEBUG)
 
-- (void)startVoiceSearch {
+- (void)startVoiceSearchWithOriginView:(UIView*)originView {
+  _voiceSearchButton = originView;
   // Delay Voice Search until new tab animations have finished.
   if (self.inNewTabAnimation) {
     _startVoiceSearchAfterNewTabAnimation = YES;
