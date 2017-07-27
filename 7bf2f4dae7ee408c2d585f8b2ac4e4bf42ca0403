@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75138bbf_d000c8d3",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-27T18:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf7eabef_38dd1906",
+      "revId": "7bf2f4dae7ee408c2d585f8b2ac4e4bf42ca0403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28cc965c_ef284f0c",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "7bf2f4dae7ee408c2d585f8b2ac4e4bf42ca0403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27350f95_f4a9c9d9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-27T18:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28cc965c_ef284f0c",
+      "revId": "7bf2f4dae7ee408c2d585f8b2ac4e4bf42ca0403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
