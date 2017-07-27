@@ -19,7 +19,10 @@
 #include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/favicon/large_icon_service_factory.h"
+#include "chrome/browser/history/history_service_factory.h"
+#include "chrome/browser/history/history_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -27,11 +30,14 @@
 #include "chrome/browser/ui/webui/favicon_source.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/features.h"
+#include "chrome/common/pref_names.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/favicon/core/fallback_url_util.h"
 #include "components/favicon/core/large_icon_service.h"
+#include "components/history/core/browser/browsing_history_service_handler.h"
+#include "components/prefs/pref_service.h"
 #include "components/query_parser/snippet.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/sync/device_info/device_info.h"
@@ -39,7 +45,6 @@
 #include "components/url_formatter/url_formatter.h"
 #include "content/public/browser/url_data_source.h"
 #include "content/public/browser/web_ui.h"
-#include "extensions/features/features.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/time_format.h"
 
@@ -51,6 +56,9 @@
 #endif
 
 using bookmarks::BookmarkModel;
+using history::HistoryService;
+using history::WebHistoryService;
+using syncer::SyncService;
 
 namespace {
 
@@ -241,15 +249,19 @@ BrowsingHistoryHandler::BrowsingHistoryHandler()
     : clock_(new base::DefaultClock()),
       browsing_history_service_(nullptr) {}
 
-BrowsingHistoryHandler::~BrowsingHistoryHandler() {
-}
+BrowsingHistoryHandler::~BrowsingHistoryHandler() {}
 
 void BrowsingHistoryHandler::RegisterMessages() {
+  Profile* profile = Profile::FromWebUI(web_ui());
+
+  HistoryService* local_history = HistoryServiceFactory::GetForProfile(
+      profile, ServiceAccessType::EXPLICIT_ACCESS);
+  SyncService* sync_service =
+      ProfileSyncServiceFactory::GetSyncServiceForBrowserContext(profile);
   browsing_history_service_ = base::MakeUnique<BrowsingHistoryService>(
-      Profile::FromWebUI(web_ui()), this);
+      this, local_history, sync_service);
 
   // Create our favicon data source.
-  Profile* profile = Profile::FromWebUI(web_ui());
   content::URLDataSource::Add(profile, new FaviconSource(profile));
 
   web_ui()->RegisterMessageCallback("queryHistory",
@@ -416,4 +428,8 @@ void BrowsingHistoryHandler::HasOtherFormsOfBrowsingHistory(
   web_ui()->CallJavascriptFunctionUnsafe("showNotification",
                                          base::Value(has_synced_results),
                                          base::Value(has_other_forms));
+}
+
+Profile* BrowsingHistoryHandler::GetProfile() {
+  return Profile::FromWebUI(web_ui());
 }
