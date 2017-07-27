@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82a0b98_12eccba0",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-27T05:47:34Z",
+      "side": 1,
+      "message": "I wonder if we could benefit from emplace_back here.\nI remember Justin requesting me to use in the past.\nThis is because the I suspect the object you are building might be copied, and it would be built in place otherwise. (I think)",
+      "range": {
+        "startLine": 63,
+        "startChar": 10,
+        "endLine": 63,
+        "endChar": 19
+      },
+      "revId": "c5bf44c0e510451d054cbb48d27f3a11512926e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73b55d4_1537a0cc",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-27T05:47:34Z",
+      "side": 1,
+      "message": "If or When.",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 7
+      },
+      "revId": "c5bf44c0e510451d054cbb48d27f3a11512926e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01defc8d_0f5e9bb2",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-27T05:47:34Z",
+      "side": 1,
+      "message": "A thing we should try here is:\nbase::BindOnce([\u0026count](int result) { count \u003d result; })\n\nWhich should capture count variable by reference and if I understand correctly should be equivalent.\n\nHere is where style allows it:\nhttps://chromium-cpp.appspot.com/\n\nHere is explanation (I also saw stack overflow explaining same thing):\nhttp://en.cppreference.com/w/cpp/language/lambda\n\nI think that could also sort out the item_alias problem below as well.\nCould be a separate CL.",
+      "range": {
+        "startLine": 176,
+        "startChar": 21,
+        "endLine": 176,
+        "endChar": 77
+      },
+      "revId": "c5bf44c0e510451d054cbb48d27f3a11512926e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
