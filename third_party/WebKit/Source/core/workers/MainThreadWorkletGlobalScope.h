@@ -62,6 +62,8 @@ class CORE_EXPORT MainThreadWorkletGlobalScope
   DECLARE_VIRTUAL_TRACE();
 
  private:
+  friend class ModuleScriptLoaderTest;
+
   Member<WorkletModuleResponsesMapProxy> module_responses_map_proxy_;
 };
 
