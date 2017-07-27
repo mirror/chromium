@@ -21,7 +21,7 @@ WebDatabaseTable::TypeKey GetKey() {
   static int table_key = 0;
   return reinterpret_cast<void*>(&table_key);
 }
-}
+}  // namespace
 
 PaymentMethodManifestTable::PaymentMethodManifestTable() {}
 
@@ -69,15 +69,21 @@ void PaymentMethodManifestTable::RemoveExpiredData() {
 bool PaymentMethodManifestTable::AddManifest(
     const std::string& payment_method,
     const std::vector<std::string>& web_app_ids) {
+  LOG(ERROR) << "Adding manifest with " << web_app_ids.size()
+             << " web app ids for '" << payment_method << "'";
   sql::Transaction transaction(db_);
-  if (!transaction.Begin())
+  if (!transaction.Begin()) {
+    LOG(ERROR) << "Can't begin a transaction";
     return false;
+  }
 
   sql::Statement s1(db_->GetUniqueStatement(
       "DELETE FROM payment_method_manifest WHERE method_name=? "));
   s1.BindString(0, payment_method);
-  if (!s1.Run())
+  if (!s1.Run()) {
+    LOG(ERROR) << "Can't delete existing ids.";
     return false;
+  }
 
   sql::Statement s2(
       db_->GetUniqueStatement("INSERT INTO payment_method_manifest "
@@ -86,17 +92,22 @@ bool PaymentMethodManifestTable::AddManifest(
   const time_t expire_date_in_seconds =
       base::Time::NowFromSystemTime().ToTimeT() + DATA_VALID_TIME_IN_SECONDS;
   for (const auto& id : web_app_ids) {
+    LOG(ERROR) << "Adding package id: '" << id << "'";
     int index = 0;
     s2.BindInt64(index++, expire_date_in_seconds);
     s2.BindString(index++, payment_method);
     s2.BindString(index, id);
-    if (!s2.Run())
+    if (!s2.Run()) {
+      LOG(ERROR) << "Can't add a new id.";
       return false;
+    }
     s2.Reset(true);
   }
 
-  if (!transaction.Commit())
+  if (!transaction.Commit()) {
+    LOG(ERROR) << "Can't commit a transaction.";
     return false;
+  }
 
   return true;
 }
@@ -113,6 +124,9 @@ std::vector<std::string> PaymentMethodManifestTable::GetManifest(
   while (s.Step()) {
     web_app_ids.emplace_back(s.ColumnString(0));
   }
+
+  LOG(ERROR) << "Found " << web_app_ids.size() << " web app ids for '"
+             << payment_method << "'";
 
   return web_app_ids;
 }
