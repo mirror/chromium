@@ -22,6 +22,30 @@
       "revId": "60d3f7a4275923fb934550908dd3a9999061c1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740a670b_1b5e6006",
+        "filename": "build/compiler_version.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T15:08:26Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1019460d_ba548d35",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "60d3f7a4275923fb934550908dd3a9999061c1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
