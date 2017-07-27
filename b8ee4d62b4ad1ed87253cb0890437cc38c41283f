@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33edcc05_f40f0533",
+        "filename": "components/offline_pages/core/offline_time_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T00:08:25Z",
+      "side": 1,
+      "message": "time_micros -\u003e serialized_time ?\nThe fact that it is micros is an implementation detail of this function...",
+      "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68690c02_1198ff1c",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T00:08:25Z",
+      "side": 1,
+      "message": "It looks like it\u0027s usually:\nconst char[] kFoo \u003d \"foo string\";\nThis requires zero initialization, while std::strings have to be built at load time.\nNot very important for test code, but could be good to be consistent.",
+      "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74dc6cf4_52de51e7",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T00:08:25Z",
+      "side": 1,
+      "message": "This one can be just base::GenerateGUID()...",
+      "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
