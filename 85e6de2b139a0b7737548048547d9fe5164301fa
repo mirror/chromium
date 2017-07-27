@@ -16,6 +16,24 @@
       "revId": "85e6de2b139a0b7737548048547d9fe5164301fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2dbed4_e6d1a940",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-27T03:46:01Z",
+      "side": 1,
+      "message": "Hmm. Ok. So upon further thought, you\u0027re right. It\u0027s going to be at least a task, and the clear here will immediately be added to the task queue. I\u0027m happy enough to go with this.",
+      "parentUuid": "cab92457_ed595b2e",
+      "revId": "85e6de2b139a0b7737548048547d9fe5164301fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
