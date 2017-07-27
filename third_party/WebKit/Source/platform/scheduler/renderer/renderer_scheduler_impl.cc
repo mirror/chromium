@@ -1929,7 +1929,8 @@ void RendererSchedulerImpl::WillProcessTask(double start_time) {
       MonotonicTimeInSecondsToTimeTicks(start_time);
   main_thread_only().current_task_start_time = start_time_ticks;
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
-  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start_time_ticks);
+  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(
+      start_time_ticks, main_thread_only().renderer_backgrounded);
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 }
 
@@ -1940,7 +1941,8 @@ void RendererSchedulerImpl::DidProcessTask(double start_time, double end_time) {
   base::TimeTicks end_time_ticks = MonotonicTimeInSecondsToTimeTicks(end_time);
 
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
-  seqlock_queueing_time_estimator_.data.OnTopLevelTaskCompleted(end_time_ticks);
+  seqlock_queueing_time_estimator_.data.OnTopLevelTaskCompleted(
+      end_time_ticks, main_thread_only().renderer_backgrounded);
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 }
 

@@ -71,13 +71,15 @@ QueueingTimeEstimator::QueueingTimeEstimator(const State& state)
     : client_(nullptr), state_(state) {}
 
 void QueueingTimeEstimator::OnTopLevelTaskStarted(
-    base::TimeTicks task_start_time) {
-  state_.OnTopLevelTaskStarted(task_start_time);
+    base::TimeTicks task_start_time,
+    bool renderer_backgrounded) {
+  state_.OnTopLevelTaskStarted(task_start_time, renderer_backgrounded);
 }
 
 void QueueingTimeEstimator::OnTopLevelTaskCompleted(
-    base::TimeTicks task_end_time) {
-  state_.OnTopLevelTaskCompleted(client_, task_end_time);
+    base::TimeTicks task_end_time,
+    bool renderer_backgrounded) {
+  state_.OnTopLevelTaskCompleted(client_, task_end_time, renderer_backgrounded);
 }
 
 void QueueingTimeEstimator::OnBeginNestedRunLoop() {
@@ -88,13 +90,17 @@ QueueingTimeEstimator::State::State(int steps_per_window)
     : step_queueing_times(steps_per_window) {}
 
 void QueueingTimeEstimator::State::OnTopLevelTaskStarted(
-    base::TimeTicks task_start_time) {
+    base::TimeTicks task_start_time,
+    bool renderer_backgrounded) {
   current_task_start_time = task_start_time;
+  current_task_filtered = renderer_backgrounded;
 }
 
 void QueueingTimeEstimator::State::OnTopLevelTaskCompleted(
     QueueingTimeEstimator::Client* client,
-    base::TimeTicks task_end_time) {
+    base::TimeTicks task_end_time,
+    bool renderer_backgrounded) {
+  current_task_filtered &= renderer_backgrounded;
   if (in_nested_message_loop_) {
     in_nested_message_loop_ = false;
     current_task_start_time = base::TimeTicks();
@@ -105,6 +111,12 @@ void QueueingTimeEstimator::State::OnTopLevelTaskCompleted(
   if (task_end_time - current_task_start_time > kInvalidTaskThreshold) {
     // This task took too long, so we'll pretend it never happened. This could
     // be because the user's machine went to sleep during a task.
+    current_task_start_time = base::TimeTicks();
+    return;
+  }
+  // Filter out the task if its renderer was backgrounded at the beginning and
+  // at the end of the task.
+  if (current_task_filtered) {
     current_task_start_time = base::TimeTicks();
     return;
   }
@@ -190,9 +202,9 @@ base::TimeDelta QueueingTimeEstimator::EstimateQueueingTimeIncludingCurrentTask(
   // computation. If there's no task in progress, add an empty task to flush any
   // stale windows.
   if (temporary_queueing_time_estimator_state.current_task_start_time.is_null())
-    temporary_queueing_time_estimator_state.OnTopLevelTaskStarted(now);
+    temporary_queueing_time_estimator_state.OnTopLevelTaskStarted(now, false);
   temporary_queueing_time_estimator_state.OnTopLevelTaskCompleted(
-      &record_queueing_time_client, now);
+      &record_queueing_time_client, now, false);
 
   // Report the max of the queueing time for the last window, or the on-going
   // window (tmp window in chart) which includes the current task.
