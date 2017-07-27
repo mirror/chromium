@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "92ae611f_eb8c6fb8",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-27T01:26:59Z",
+      "side": 1,
+      "message": "Why this flag differs from the original flag:\nvoid SetSelection(const SelectionInDOMTree\u0026,\n                    SetSelectionOptions \u003d kCloseTyping | kClearTypingStyle,\n                    CursorAlignOnScroll \u003d CursorAlignOnScroll::kIfNeeded,\n                    TextGranularity \u003d TextGranularity::kCharacter); ?",
+      "revId": "722a0483dfdbe1256f9abe3d6b9d56228cd155f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89d245f6_6e8b695f",
         "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
         "patchSetId": 6
