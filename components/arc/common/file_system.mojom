@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 5
+// Next MinVersion: 6
 
 module arc.mojom;
 
@@ -27,6 +27,11 @@ struct Document {
   // TODO(crbug.com/672737): Use mojo.common.mojom.Time once the type is
   // converted to a non-native type so that it can be used from Java.
   uint64 last_modified;
+
+  // Path to a file on the real file system corresponding to this document.
+  // This value is available in limited DocumentsProviders only. If the
+  // provider does not provide real paths, this field is always set to null.
+  [MinVersion=5] string? android_file_system_path;
 };
 
 // Describes the type of a change made to a document.
@@ -51,7 +56,7 @@ interface FileSystemHost {
   [MinVersion=3] OnDocumentChanged@0(int64 watcher_id, ChangeType type);
 };
 
-// Next method ID: 9
+// Next method ID: 10
 interface FileSystemInstance {
   // Notes about Android Documents Provider:
   //
@@ -108,6 +113,12 @@ interface FileSystemInstance {
   // Asks the ContentResolver to get the MIME type of the file specified by the
   // URL. When an error occurs, returns null value.
   [MinVersion=4] GetMimeType@8(string url) => (string? mime_type);
+
+  // Queries recent documents of a root specified by |authority| and |root_id|.
+  // If such a root does not exist or it does not support recent document
+  // queries, null is returned.
+  [MinVersion=5] GetRecentDocuments@9(string authority, string root_id) =>
+      (array<Document>? documents);
 
   // Establishes full-duplex communication with the host.
   [MinVersion=3] Init@5(FileSystemHost host_ptr);
