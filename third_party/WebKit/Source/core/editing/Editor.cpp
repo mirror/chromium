@@ -54,6 +54,7 @@
 #include "core/editing/commands/InsertListCommand.h"
 #include "core/editing/commands/RemoveFormatCommand.h"
 #include "core/editing/commands/ReplaceSelectionCommand.h"
+#include "core/editing/commands/SelectionInUndoStep.h"
 #include "core/editing/commands/SimplifyMarkupCommand.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/editing/commands/UndoStack.h"
@@ -916,7 +917,7 @@ static void DispatchEditableContentChangedEvents(Element* start_root,
 }
 
 static SelectionInDOMTree CorrectedSelectionAfterCommand(
-    const VisibleSelection& passed_selection,
+    const SelectionInUndoStep& passed_selection,
     Document* document) {
   if (!passed_selection.Base().IsConnected() ||
       !passed_selection.Extent().IsConnected() ||

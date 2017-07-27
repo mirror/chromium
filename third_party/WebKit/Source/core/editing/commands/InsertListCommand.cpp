@@ -174,7 +174,7 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
   if (EndingSelection().IsRange()) {
     bool force_list_creation = false;
     VisibleSelection selection =
-        SelectionForParagraphIteration(EndingSelection());
+        SelectionForParagraphIteration(EndingVisibleSelection());
     DCHECK(selection.IsRange());
 
     VisiblePosition visible_start_of_selection = selection.VisibleStart();
@@ -188,7 +188,7 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
             .DeepEquivalent();
 
     Range* current_selection =
-        CreateRange(FirstEphemeralRangeOf(EndingSelection()));
+        CreateRange(FirstEphemeralRangeOf(EndingVisibleSelection()));
     ContainerNode* scope_for_start_of_selection = nullptr;
     ContainerNode* scope_for_end_of_selection = nullptr;
     // FIXME: This is an inefficient way to keep selection alive because
@@ -304,7 +304,8 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
     return;
   }
 
-  Range* const range = CreateRange(FirstEphemeralRangeOf(EndingSelection()));
+  Range* const range =
+      CreateRange(FirstEphemeralRangeOf(EndingVisibleSelection()));
   DCHECK(range);
   DoApplyForSingleParagraph(false, list_tag, *range, editing_state);
 }
