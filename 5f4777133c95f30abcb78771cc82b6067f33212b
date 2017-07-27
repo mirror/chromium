@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b6bc55b_5685f38e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-27T20:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca60be7_1bcb34c2",
+      "revId": "5f4777133c95f30abcb78771cc82b6067f33212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd8e089_a4653554",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
         "patchSetId": 19
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4d5c9020_74e8a790",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-27T20:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd8e089_a4653554",
+      "revId": "5f4777133c95f30abcb78771cc82b6067f33212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "080a6c61_8a48c07b",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.h",
         "patchSetId": 19
@@ -50,6 +86,24 @@
       "revId": "5f4777133c95f30abcb78771cc82b6067f33212b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02435e5_abcb284c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-27T20:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "080a6c61_8a48c07b",
+      "revId": "5f4777133c95f30abcb78771cc82b6067f33212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
