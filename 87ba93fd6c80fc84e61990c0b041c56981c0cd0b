@@ -46,6 +46,30 @@
       "revId": "87ba93fd6c80fc84e61990c0b041c56981c0cd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d1c1c5_0b5ce644",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17003,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-27T01:07:21Z",
+      "side": 1,
+      "message": "No problem. But this fix is fragile as written. If this is the correct fix then internal_format should be passed to GLImage::CopyTexImage so that it can verify that the internal_format is supported, rather than having this code know details about the macOS implementation of that method. Could you please restructure it?",
+      "parentUuid": "8d0df0b8_5075a70a",
+      "range": {
+        "startLine": 17003,
+        "startChar": 15,
+        "endLine": 17003,
+        "endChar": 30
+      },
+      "revId": "87ba93fd6c80fc84e61990c0b041c56981c0cd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
