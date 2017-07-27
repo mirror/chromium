@@ -57,8 +57,8 @@ class NetworkServiceImpl::MojoNetLog : public net::NetLog {
 NetworkServiceImpl::NetworkServiceImpl(
     std::unique_ptr<service_manager::BinderRegistry> registry)
     : net_log_(new MojoNetLog), registry_(std::move(registry)), binding_(this) {
-  // |registry_| is nullptr in tests and when an in-process NetworkService is
-  // created directly. The latter is done in concert with using
+  // |registry_| is nullptr when an in-process NetworkService is created
+  // directly. The latter is done in concert with using
   // CreateNetworkContextWithBuilder to ease the transition to using the network
   // service.
   if (registry_) {
@@ -93,8 +93,9 @@ NetworkServiceImpl::CreateNetworkContextWithBuilder(
   return network_context;
 }
 
-std::unique_ptr<NetworkService> NetworkServiceImpl::CreateForTesting() {
-  return base::WrapUnique(new NetworkServiceImpl(nullptr));
+std::unique_ptr<NetworkServiceImpl> NetworkServiceImpl::CreateForTesting() {
+  return base::WrapUnique(new NetworkServiceImpl(
+      base::MakeUnique<service_manager::BinderRegistry>()));
 }
 
 void NetworkServiceImpl::RegisterNetworkContext(
