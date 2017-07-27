@@ -46,6 +46,30 @@
       "revId": "3cc08440b5bc251ac5a399c1cda03afb4ab68cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aeea8c9_26c0a0c9",
+        "filename": "chrome/browser/browser_about_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-27T19:16:28Z",
+      "side": 1,
+      "message": "oh, sorry, it\u0027s still mentioned in:\n\ntools/metrics/histograms/enums.xml:  \u003cint value\u003d\"-1998927516\" label\u003d\"enable-md-settings\"/\u003e\ntools/metrics/histograms/enums.xml:  \u003cint value\u003d\"1797107942\" label\u003d\"chrome://md-settings/\"/\u003e\ntools/metrics/histograms/histograms.xml:    and the render frame DocumentOnLoadCompleted event for the md-settings page.\ntools/metrics/histograms/histograms.xml:    DidFinishDocumentLoad events for the md-settings page\n\nin the past I\u0027ve been asked to leave stuff in those files, but maybe mark them deprecated?  that\u0027s why I haven\u0027t removed yet",
+      "parentUuid": "a0027205_69e9e59d",
+      "range": {
+        "startLine": 64,
+        "startChar": 13,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "3cc08440b5bc251ac5a399c1cda03afb4ab68cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
