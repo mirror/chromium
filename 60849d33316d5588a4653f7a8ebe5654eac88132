@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "3adf10ae_9f3c7ba3",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-27T00:28:40Z",
+      "side": 1,
+      "message": "we need to follow \"guard clause pattern:\". I am doing review based on current code. We will arrange code accordingly when need this. In this code, pattern above does apply..",
+      "parentUuid": "4e3c89a7_96d0ca8f",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 8
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d6b0b56_a079051f",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
         "patchSetId": 1
