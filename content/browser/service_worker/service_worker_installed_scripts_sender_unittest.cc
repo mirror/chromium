@@ -254,18 +254,25 @@ class ServiceWorkerInstalledScriptsSenderTest : public testing::Test {
   scoped_refptr<ServiceWorkerVersion> version_;
 };
 
+using SenderFinishedReason =
+    ServiceWorkerInstalledScriptsSender::FinishedReason;
+
 TEST_F(ServiceWorkerInstalledScriptsSenderTest, SendScripts) {
   const GURL kMainScriptURL = version()->script_url();
+  std::string long_body = "I'm the script body!";
+  std::string long_meta_data = "I'm the meta data!";
+  long_body.resize(1E6, '!');
+  long_meta_data.resize(1E6, '!');
   std::map<GURL, ExpectedScriptInfo> kExpectedScriptInfoMap = {
       {kMainScriptURL,
        {1,
         kMainScriptURL,
-        {{"Content-Length", "19"},
+        {{"Content-Length", "1000000"},
          {"Content-Type", "text/javascript; charset=utf-8"},
          {"TestHeader", "BlahBlah"}},
         "utf-8",
-        "I'm the script body!",
-        "I'm the meta data!"}},
+        std::move(long_body),
+        std::move(long_meta_data)}},
       {GURL("https://example.com/imported1"),
        {2,
         GURL("https://example.com/imported1"),
@@ -323,6 +330,130 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, SendScripts) {
     info.CheckIfIdentical(script_info);
     kExpectedScriptInfoMap.erase(script_info->script_url);
   }
+
+  EXPECT_TRUE(sender->IsFinished());
+  EXPECT_EQ(SenderFinishedReason::kSuccess, sender->finished_status());
+}
+
+TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendBody) {
+  const GURL kMainScriptURL = version()->script_url();
+  std::string long_body = "I'm the body";
+  long_body.resize(1E6, '!');
+  std::map<GURL, ExpectedScriptInfo> kExpectedScriptInfoMap = {
+      {kMainScriptURL,
+       {1,
+        kMainScriptURL,
+        {{"Content-Length", "1000000"},
+         {"Content-Type", "text/javascript; charset=utf-8"},
+         {"TestHeader", "BlahBlah"}},
+        "utf-8",
+        std::move(long_body),
+        "I'm the meta data!"}},
+  };
+
+  {
+    std::vector<ServiceWorkerDatabase::ResourceRecord> records;
+    for (const auto& info : kExpectedScriptInfoMap)
+      records.push_back(info.second.WriteToDiskCache(context()->storage()));
+    version()->script_cache_map()->SetResources(records);
+  }
+
+  auto sender = base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
+      version(), kMainScriptURL, context()->AsWeakPtr());
+
+  std::unique_ptr<MockServiceWorkerInstalledScriptsManager> renderer_manager;
+  {
+    mojom::ServiceWorkerInstalledScriptsInfoPtr scripts_info =
+        sender->CreateInfoAndBind();
+    ASSERT_TRUE(scripts_info);
+    ASSERT_EQ(kExpectedScriptInfoMap.size(),
+              scripts_info->installed_urls.size());
+    for (const auto& url : scripts_info->installed_urls)
+      EXPECT_TRUE(base::ContainsKey(kExpectedScriptInfoMap, url));
+    EXPECT_TRUE(scripts_info->manager_request.is_pending());
+    renderer_manager =
+        base::MakeUnique<MockServiceWorkerInstalledScriptsManager>(
+            std::move(scripts_info->installed_urls),
+            std::move(scripts_info->manager_request));
+  }
+  ASSERT_TRUE(renderer_manager);
+
+  sender->Start();
+
+  {
+    // Reset a data pipe during sending the body.
+    auto script_info = renderer_manager->WaitUntilTransferInstalledScript();
+    EXPECT_TRUE(
+        base::ContainsKey(kExpectedScriptInfoMap, script_info->script_url));
+    script_info->body.reset();
+    kExpectedScriptInfoMap.erase(script_info->script_url);
+    // Wait until the error is triggered on the sender side.
+    base::RunLoop().RunUntilIdle();
+  }
+
+  EXPECT_TRUE(sender->IsFinished());
+  EXPECT_EQ(SenderFinishedReason::kConnectionError, sender->finished_status());
+}
+
+TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendMetaData) {
+  const GURL kMainScriptURL = version()->script_url();
+  std::string long_meta_data = "I'm the meta data!";
+  long_meta_data.resize(1E6, '!');
+  std::map<GURL, ExpectedScriptInfo> kExpectedScriptInfoMap = {
+      {kMainScriptURL,
+       {1,
+        kMainScriptURL,
+        {{"Content-Length", "0"},
+         {"Content-Type", "text/javascript; charset=utf-8"},
+         {"TestHeader", "BlahBlah"}},
+        "utf-8",
+        "",
+        std::move(long_meta_data)}},
+  };
+
+  {
+    std::vector<ServiceWorkerDatabase::ResourceRecord> records;
+    for (const auto& info : kExpectedScriptInfoMap)
+      records.push_back(info.second.WriteToDiskCache(context()->storage()));
+    version()->script_cache_map()->SetResources(records);
+  }
+
+  auto sender = base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
+      version(), kMainScriptURL, context()->AsWeakPtr());
+
+  std::unique_ptr<MockServiceWorkerInstalledScriptsManager> renderer_manager;
+  {
+    mojom::ServiceWorkerInstalledScriptsInfoPtr scripts_info =
+        sender->CreateInfoAndBind();
+    ASSERT_TRUE(scripts_info);
+    ASSERT_EQ(kExpectedScriptInfoMap.size(),
+              scripts_info->installed_urls.size());
+    for (const auto& url : scripts_info->installed_urls)
+      EXPECT_TRUE(base::ContainsKey(kExpectedScriptInfoMap, url));
+    EXPECT_TRUE(scripts_info->manager_request.is_pending());
+    renderer_manager =
+        base::MakeUnique<MockServiceWorkerInstalledScriptsManager>(
+            std::move(scripts_info->installed_urls),
+            std::move(scripts_info->manager_request));
+  }
+  ASSERT_TRUE(renderer_manager);
+
+  sender->Start();
+
+  {
+    // Reset a data pipe during sending the meta data.
+    auto script_info = renderer_manager->WaitUntilTransferInstalledScript();
+    EXPECT_TRUE(
+        base::ContainsKey(kExpectedScriptInfoMap, script_info->script_url));
+    script_info->meta_data.reset();
+    kExpectedScriptInfoMap.erase(script_info->script_url);
+    // Wait until the error is triggered on the sender side.
+    base::RunLoop().RunUntilIdle();
+  }
+
+  EXPECT_TRUE(sender->IsFinished());
+  EXPECT_EQ(SenderFinishedReason::kMetaDataSenderError,
+            sender->finished_status());
 }
 
 }  // namespace content

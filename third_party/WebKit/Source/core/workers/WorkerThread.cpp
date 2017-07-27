@@ -417,24 +417,28 @@ void WorkerThread::InitializeOnWorkerThread(
       GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
     // GetScriptData blocks until the script is received from the browser.
     auto script_data = GetInstalledScriptsManager()->GetScriptData(script_url);
-    DCHECK(script_data);
-    DCHECK(source_code.IsEmpty());
-    DCHECK(!cached_meta_data);
-    source_code = script_data->TakeSourceText();
-    cached_meta_data = script_data->TakeMetaData();
 
-    String referrer_policy = script_data->GetReferrerPolicy();
-    ContentSecurityPolicyResponseHeaders
-        content_security_policy_response_headers =
-            script_data->GetContentSecurityPolicyResponseHeaders();
-    worker_reporting_proxy_.DidLoadInstalledScript(
-        content_security_policy_response_headers, referrer_policy);
+    // |script_data| could be null if reading the installed script from the disk
+    // cache failed.
+    if (script_data) {
+      DCHECK(source_code.IsEmpty());
+      DCHECK(!cached_meta_data);
+      source_code = script_data->TakeSourceText();
+      cached_meta_data = script_data->TakeMetaData();
 
-    global_scope_creation_params->content_security_policy_raw_headers =
-        std::move(content_security_policy_response_headers);
-    global_scope_creation_params->referrer_policy = referrer_policy;
-    global_scope_creation_params->origin_trial_tokens =
-        script_data->CreateOriginTrialTokens();
+      String referrer_policy = script_data->GetReferrerPolicy();
+      ContentSecurityPolicyResponseHeaders
+          content_security_policy_response_headers =
+              script_data->GetContentSecurityPolicyResponseHeaders();
+      worker_reporting_proxy_.DidLoadInstalledScript(
+          content_security_policy_response_headers, referrer_policy);
+
+      global_scope_creation_params->content_security_policy_raw_headers =
+          std::move(content_security_policy_response_headers);
+      global_scope_creation_params->referrer_policy = referrer_policy;
+      global_scope_creation_params->origin_trial_tokens =
+          script_data->CreateOriginTrialTokens();
+    }
   } else {
     source_code = std::move(global_scope_creation_params->source_code);
     cached_meta_data =
@@ -474,17 +478,18 @@ void WorkerThread::InitializeOnWorkerThread(
   if (start_mode == kPauseWorkerGlobalScopeOnStart)
     StartRunningDebuggerTasksOnPauseOnWorkerThread();
 
-  if (CheckRequestedToTerminateOnWorkerThread()) {
+  if (CheckRequestedToTerminateOnWorkerThread() ||
+      (GlobalScope()->IsWorkerGlobalScope() && source_code.IsNull())) {
     // Stop further worker tasks from running after this point. WorkerThread
     // was requested to terminate before initialization or during running
-    // debugger tasks. performShutdownOnWorkerThread() will be called soon.
+    // debugger tasks, or loading the installed main script
+    // failed. performShutdownOnWorkerThread() will be called soon.
     PrepareForShutdownOnWorkerThread();
     return;
   }
 
   if (!GlobalScope()->IsWorkerGlobalScope())
     return;
-  DCHECK(!source_code.IsNull());
 
   WorkerGlobalScope* worker_global_scope = ToWorkerGlobalScope(GlobalScope());
   CachedMetadataHandler* handler =
