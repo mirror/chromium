@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09af512d_26612c51",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-27T16:40:59Z",
+      "side": 1,
+      "message": "Oh I see. In C++, I thought that ASSERT was essentially a CHECK in a testing context, to be used whenever the test can\u0027t continue (such as null deref) and that EXPECT was used whenever continuing wouldn\u0027t crash. But with secondary/primary point of view, you would also prefer to ASSERT anything that is a prerequisite for what the test wants to EXPECT, even if it could continue without that crashing.\n\nAnyway, as far as I can tell we only have \"assert\" in testharness.js tests.\n\nI\u0027ve changed the tests to be more behavioral driven based on your offline suggestion, only \"asserting\" what the test is about. With this change, the name/description of the test is enough to describe what it means to test without an additional comment.",
+      "parentUuid": "d56a65f4_8c73b576",
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d0efe3f_29d1b714",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5f1916bd_23566fb3",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-27T16:40:59Z",
+      "side": 1,
+      "message": "Done, I changed up the tests a lot based on your suggestion about behavioral testing and made use of wiring ontrack directly.",
+      "parentUuid": "9d0efe3f_29d1b714",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86e45a04_852d6ed7",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b7a24724_ea801c62",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-27T16:40:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e45a04_852d6ed7",
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e63ab6e_6781e3fd",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5be4242_bd777ca0",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-07-27T16:40:59Z",
+      "side": 1,
+      "message": "This helper is no longer needed, removed.",
+      "parentUuid": "3e63ab6e_6781e3fd",
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
