@@ -8,6 +8,8 @@
 #include "cc/paint/decoded_draw_image.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/image_provider.h"
+#include "cc/paint/paint_op_reader.h"
+#include "cc/paint/paint_op_writer.h"
 #include "cc/test/skia_common.h"
 #include "cc/test/test_skcanvas.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -2334,6 +2336,103 @@ TEST(PaintOpBufferTest, ValidateSkBlendMode) {
 
     ++op_idx;
   }
+}
+
+// TODO(vmpstr): Move all serialization tests to a different file.
+class PaintShaderSerializationTest : public ::testing::Test {
+ public:
+  ~PaintShaderSerializationTest() override = default;
+  void SetUp() override {
+    reader_ = base::MakeUnique<PaintOpReader>(buffer_, sizeof(buffer_));
+    writer_ = base::MakeUnique<PaintOpWriter>(buffer_, sizeof(buffer_));
+  }
+
+  PaintOpReader* reader() const { return reader_.get(); }
+  PaintOpWriter* writer() const { return writer_.get(); }
+
+  void VerifyShadersEqual(PaintShader* one, PaintShader* two) {
+    if (!one) {
+      EXPECT_FALSE(two);
+      return;
+    }
+
+    ASSERT_TRUE(one);
+    ASSERT_TRUE(two);
+    EXPECT_EQ(one->shader_type_, two->shader_type_);
+    EXPECT_EQ(one->flags_, two->flags_);
+    EXPECT_EQ(one->end_radius_, two->end_radius_);
+    EXPECT_EQ(one->start_radius_, two->start_radius_);
+    EXPECT_EQ(one->tx_, two->tx_);
+    EXPECT_EQ(one->ty_, two->ty_);
+    EXPECT_EQ(one->fallback_color_, two->fallback_color_);
+    EXPECT_EQ(one->scaling_behavior_, two->scaling_behavior_);
+    if (one->local_matrix_) {
+      EXPECT_TRUE(two->local_matrix_.has_value());
+      EXPECT_TRUE(*one->local_matrix_ == *two->local_matrix_);
+    } else {
+      EXPECT_FALSE(two->local_matrix_.has_value());
+    }
+    EXPECT_EQ(one->center_, two->center_);
+    EXPECT_EQ(one->tile_, two->tile_);
+    EXPECT_EQ(one->start_point_, two->start_point_);
+    EXPECT_EQ(one->end_point_, two->end_point_);
+    EXPECT_THAT(one->colors_, testing::ElementsAreArray(two->colors_));
+    EXPECT_THAT(one->positions_, testing::ElementsAreArray(two->positions_));
+  }
+
+  void FillArbitraryValues(PaintShader* shader, bool use_matrix) {
+    shader->shader_type_ = PaintShader::Type::kTwoPointConicalGradient;
+    shader->flags_ = 12345;
+    shader->end_radius_ = 12.3;
+    shader->start_radius_ = 13.4;
+    shader->tx_ = SkShader::kRepeat_TileMode;
+    shader->ty_ = SkShader::kMirror_TileMode;
+    shader->fallback_color_ = SkColorSetARGB(254, 252, 250, 248);
+    shader->scaling_behavior_ = PaintShader::ScalingBehavior::kRasterAtScale;
+    if (use_matrix) {
+      shader->local_matrix_.emplace(SkMatrix::I());
+      shader->local_matrix_->setSkewX(10);
+      shader->local_matrix_->setSkewY(20);
+    }
+    shader->center_ = SkPoint::Make(50, 40);
+    shader->tile_ = SkRect::MakeXYWH(7, 77, 777, 7777);
+    shader->start_point_ = SkPoint::Make(-1, -5);
+    shader->end_point_ = SkPoint::Make(13, -13);
+    // TODO(vmpstr): Add PaintImage/PaintRecord.
+    shader->colors_ = {SkColorSetARGB(1, 2, 3, 4), SkColorSetARGB(5, 6, 7, 8),
+                       SkColorSetARGB(9, 0, 1, 2)};
+    shader->positions_ = {0.f, 0.4f, 1.f};
+  }
+
+ private:
+  char buffer_[1024];
+  std::unique_ptr<PaintOpReader> reader_;
+  std::unique_ptr<PaintOpWriter> writer_;
+};
+
+TEST_F(PaintShaderSerializationTest, NullShader) {
+  writer()->Write(static_cast<PaintShader*>(nullptr));
+  sk_sp<PaintShader> read_shader;
+  reader()->Read(&read_shader);
+  EXPECT_FALSE(read_shader);
+}
+
+TEST_F(PaintShaderSerializationTest, ArbitraryShaderWithMatrix) {
+  sk_sp<PaintShader> shader = PaintShader::MakeColor(SK_ColorTRANSPARENT);
+  FillArbitraryValues(shader.get(), true);
+  writer()->Write(shader.get());
+  sk_sp<PaintShader> read_shader;
+  reader()->Read(&read_shader);
+  VerifyShadersEqual(shader.get(), read_shader.get());
+}
+
+TEST_F(PaintShaderSerializationTest, ArbitraryShaderWithoutMatrix) {
+  sk_sp<PaintShader> shader = PaintShader::MakeColor(SK_ColorTRANSPARENT);
+  FillArbitraryValues(shader.get(), false);
+  writer()->Write(shader.get());
+  sk_sp<PaintShader> read_shader;
+  reader()->Read(&read_shader);
+  VerifyShadersEqual(shader.get(), read_shader.get());
 }
 
 TEST(PaintOpBufferTest, BoundingRect_DrawArcOp) {
