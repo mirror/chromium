@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "522ebe88_90c912ab",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T04:07:52Z",
+      "side": 1,
+      "message": "(asuming it works the same..) I\u0027d consider putting a call to RevealTabStripIfNeeded() after this line\n\nThe changes to browser_window_cocoa.mm, browser_window_cocoa.h, browser_window.h, browser_commands.cc, test_browser_window.h in this CL can all be reverted.\n\nRevealTabStripIfNeeded is only declared as a private method on BrowserView.",
+      "revId": "973c86fed02908aba1a166522777e197c2531980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
