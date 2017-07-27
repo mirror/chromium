@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39085817_66eeb558",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-27T18:18:45Z",
+      "side": 1,
+      "message": "Done - switched to a free comparison function, which should have less implicit baggage than an operator\u003c() which lies.",
+      "parentUuid": "679a7dfc_74f5717a",
+      "range": {
+        "startLine": 57,
+        "startChar": 59,
+        "endLine": 57,
+        "endChar": 61
+      },
+      "revId": "eee39faeeba221c70ab6f85c6bc6f88ae6923e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad2898b5_3dd58319",
         "filename": "base/debug/stack_trace_fuchsia.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "eee39faeeba221c70ab6f85c6bc6f88ae6923e81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d051d8de_2dd9c4fc",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-27T18:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2898b5_3dd58319",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 7
+      },
+      "revId": "eee39faeeba221c70ab6f85c6bc6f88ae6923e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
