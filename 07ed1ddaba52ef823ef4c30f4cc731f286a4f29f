@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f14976b2_6ad9cbb9",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-27T23:36:35Z",
+      "side": 1,
+      "message": "Looks like someone added this already. See line 121 new.",
+      "range": {
+        "startLine": 115,
+        "startChar": 22,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "07ed1ddaba52ef823ef4c30f4cc731f286a4f29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
