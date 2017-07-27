@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a25e7dfd_8896a9a9",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-27T15:25:00Z",
+      "side": 1,
+      "message": "delete this?",
+      "revId": "041293061e9ba6a4e68560c8f6508974b7a56c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
