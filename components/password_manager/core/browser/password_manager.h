@@ -37,6 +37,8 @@ class PasswordManagerClient;
 class PasswordManagerDriver;
 class PasswordFormManager;
 
+using FormManagersList = std::vector<std::unique_ptr<PasswordFormManager>>;
+
 // Per-tab password manager. Handles creation and management of UI elements,
 // receiving password form data from the renderer and managing the password
 // database through the PasswordStore. The PasswordManager is a LoginModel
@@ -128,6 +130,14 @@ class PasswordManager : public LoginModel {
   void ProvisionallySavePassword(
       const autofill::PasswordForm& form,
       const password_manager::PasswordManagerDriver* driver);
+
+  // Clones a form manager that |matched_manager_it| points to and keeps it as
+  // |provisional_save_manager_|. |form| is saved to
+  // |provisional_save_manager_|.
+  void SaveMatchedManager(
+      const PasswordForm& form,
+      const FormManagersList::const_iterator& matched_manager_it,
+      BrowserSavePasswordProgressLogger* logger);
 
   // Should be called when the user navigates the main frame. Not called for
   // in-page navigation.
