@@ -45,4 +45,8 @@ MessageCenterTray* FakeMessageCenterTrayDelegate::GetMessageCenterTray() {
   return tray_.get();
 }
 
+base::string16 FakeMessageCenterTrayDelegate::GetProductOSName() {
+  return base::string16();
+}
+
 }  // namespace message_center
