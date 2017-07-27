@@ -53,6 +53,10 @@ class FakeUpdateEngineClient : public UpdateEngineClient {
   void NotifyObserversThatStatusChanged(
       const UpdateEngineClient::Status& status);
 
+  // Notifies observers that the user permission on the target update is set in
+  // Update Engine.
+  void NotifyUpdateOverCellularTargetSet(bool success);
+
   // Sets the default UpdateEngineClient::Status. GetLastStatus() returns the
   // value set here if |status_queue_| is empty.
   void set_default_status(const UpdateEngineClient::Status& status);

@@ -468,10 +468,6 @@ void SystemTrayClient::HandleUpdateAvailable() {
                                update_type);
 }
 
-void SystemTrayClient::HandleUpdateOverCellularAvailable() {
-  system_tray_->ShowUpdateOverCellularAvailableIcon();
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // chromeos::system::SystemClockObserver:
 
@@ -483,7 +479,16 @@ void SystemTrayClient::OnSystemClockChanged(
 ////////////////////////////////////////////////////////////////////////////////
 // UpgradeDetector::UpgradeObserver:
 void SystemTrayClient::OnUpdateOverCellularAvailable() {
-  HandleUpdateOverCellularAvailable();
+  // Requests that ash show the update over cellular available icon.
+  system_tray_->ShowUpdateOverCellularAvailableIcon(true);
+}
+
+void SystemTrayClient::OnUpdateOverCellularTargetSet(bool success) {
+  if (!success)
+    return;
+  // Requests that ash hide the update over cellular available icon if |success|
+  // is true.
+  system_tray_->ShowUpdateOverCellularAvailableIcon(false);
 }
 
 void SystemTrayClient::OnUpgradeRecommended() {

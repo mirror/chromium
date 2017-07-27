@@ -27,6 +27,7 @@ class CHROMEOS_EXPORT UpdateEngineClient : public DBusClient {
   //    IDLE->CHECKING_FOR_UPDATE
   //    CHECKING_FOR_UPDATE->IDLE
   //    CHECKING_FOR_UPDATE->UPDATE_AVAILABLE
+  //    CHECKING_FOR_UPDATE->NEED_PERMISSION_TO_UPDATE
   //    ...
   //    FINALIZING->UPDATE_NEED_REBOOT
   // Any state can transition to REPORTING_ERROR_EVENT and then on to IDLE.
@@ -35,13 +36,14 @@ class CHROMEOS_EXPORT UpdateEngineClient : public DBusClient {
     UPDATE_STATUS_IDLE = 0,
     UPDATE_STATUS_CHECKING_FOR_UPDATE,
     UPDATE_STATUS_UPDATE_AVAILABLE,
+    // User permission is needed to download an update on a cellular connection.
+    UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE,
     UPDATE_STATUS_DOWNLOADING,
     UPDATE_STATUS_VERIFYING,
     UPDATE_STATUS_FINALIZING,
     UPDATE_STATUS_UPDATED_NEED_REBOOT,
     UPDATE_STATUS_REPORTING_ERROR_EVENT,
     UPDATE_STATUS_ATTEMPTING_ROLLBACK,
-    UPDATE_STATUS_NEED_PERMISSION_TO_UPDATE,
   };
 
   // The status of the ongoing update attempt.
@@ -74,7 +76,8 @@ class CHROMEOS_EXPORT UpdateEngineClient : public DBusClient {
     // Called when the status is updated.
     virtual void UpdateStatusChanged(const Status& status) {}
 
-    // Called when the update over cellular target is set.
+    // Called when the user permission on the target update has been set in
+    // Update Engine.
     virtual void OnUpdateOverCellularTargetSet(bool success) {}
   };
 
