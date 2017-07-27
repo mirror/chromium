@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.h"
 
 #include "base/feature_list.h"
 #include "base/metrics/field_trial.h"
@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
+#include "chrome/browser/feature_engagement_tracker/features/feature_tracker.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/common/pref_names.h"
 #include "components/feature_engagement_tracker/public/event_constants.h"
@@ -42,22 +43,24 @@ class MockFeatureEngagementTracker : public FeatureEngagementTracker {
 
 class FakeNewTabTracker : public NewTabTracker {
  public:
-  explicit FakeNewTabTracker(FeatureEngagementTracker* feature_tracker)
-      : feature_tracker_(feature_tracker),
+  explicit FakeNewTabTracker(
+      FeatureEngagementTracker* feature_engagement_tracker)
+      : feature_engagement_tracker_(feature_engagement_tracker),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
+    FeatureTracker::RegisterProfilePrefs(pref_service_->registry());
     NewTabTracker::RegisterProfilePrefs(pref_service_->registry());
   }
 
-  // feature_engagement_tracker::NewTabTracker::
-  FeatureEngagementTracker* GetFeatureTracker() override {
-    return feature_tracker_;
+  // feature_engagement_tracker::FeatureTracker::
+  FeatureEngagementTracker* GetFeatureEngagementTracker() override {
+    return feature_engagement_tracker_;
   }
 
   PrefService* GetPrefs() override { return pref_service_.get(); }
 
  private:
-  FeatureEngagementTracker* const feature_tracker_;
+  FeatureEngagementTracker* const feature_engagement_tracker_;
   const std::unique_ptr<sync_preferences::TestingPrefServiceSyncable>
       pref_service_;
 };
@@ -71,10 +74,10 @@ class NewTabTrackerEventTest : public testing::Test {
   void SetUp() override {
     // Start the DesktopSessionDurationTracker to track active session time.
     metrics::DesktopSessionDurationTracker::Initialize();
-    mock_feature_tracker_ =
+    mock_feature_engagement_tracker_ =
         base::MakeUnique<testing::StrictMock<MockFeatureEngagementTracker>>();
-    new_tab_tracker_ =
-        base::MakeUnique<FakeNewTabTracker>(mock_feature_tracker_.get());
+    new_tab_tracker_ = base::MakeUnique<FakeNewTabTracker>(
+        mock_feature_engagement_tracker_.get());
   }
 
   void TearDown() override {
@@ -85,7 +88,8 @@ class NewTabTrackerEventTest : public testing::Test {
 
  protected:
   std::unique_ptr<FakeNewTabTracker> new_tab_tracker_;
-  std::unique_ptr<MockFeatureEngagementTracker> mock_feature_tracker_;
+  std::unique_ptr<MockFeatureEngagementTracker>
+      mock_feature_engagement_tracker_;
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
@@ -100,21 +104,24 @@ class NewTabTrackerEventTest : public testing::Test {
 // If OnNewTabOpened() is called, the FeatureEngagementTracker
 // receives the kNewTabOpenedEvent.
 TEST_F(NewTabTrackerEventTest, TestOnNewTabOpened) {
-  EXPECT_CALL(*mock_feature_tracker_, NotifyEvent(events::kNewTabOpened));
+  EXPECT_CALL(*mock_feature_engagement_tracker_,
+              NotifyEvent(events::kNewTabOpened));
   new_tab_tracker_->OnNewTabOpened();
 }
 
 // If OnOmniboxNavigation() is called, the FeatureEngagementTracker
 // receives the kOmniboxInteraction event.
 TEST_F(NewTabTrackerEventTest, TestOnOmniboxNavigation) {
-  EXPECT_CALL(*mock_feature_tracker_, NotifyEvent(events::kOmniboxInteraction));
+  EXPECT_CALL(*mock_feature_engagement_tracker_,
+              NotifyEvent(events::kOmniboxInteraction));
   new_tab_tracker_->OnOmniboxNavigation();
 }
 
 // If OnSessionTimeMet() is called, the FeatureEngagementTracker
 // receives the kSessionTime event.
 TEST_F(NewTabTrackerEventTest, TestOnSessionTimeMet) {
-  EXPECT_CALL(*mock_feature_tracker_, NotifyEvent(events::kSessionTime));
+  EXPECT_CALL(*mock_feature_engagement_tracker_,
+              NotifyEvent(events::kSessionTime));
   new_tab_tracker_->OnSessionTimeMet();
 }
 
