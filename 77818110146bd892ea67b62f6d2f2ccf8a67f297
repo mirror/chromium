@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "983ac16e_f877e1d6",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T07:38:21Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t need to be initialized as nullptr",
+      "revId": "77818110146bd892ea67b62f6d2f2ccf8a67f297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3e1a8c_3aba6a01",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T07:38:21Z",
+      "side": 1,
+      "message": "existence of start_percent already checked on line 127, I believe it will always be true here",
+      "revId": "77818110146bd892ea67b62f6d2f2ccf8a67f297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5cca34_4b68839c",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T07:38:21Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "77818110146bd892ea67b62f6d2f2ccf8a67f297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
