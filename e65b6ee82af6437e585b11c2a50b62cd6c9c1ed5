@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab59387_d7b2e31c",
+        "filename": "components/guest_view/browser/guest_view_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-27T17:21:04Z",
+      "side": 1,
+      "message": "nit: make sure",
+      "range": {
+        "startLine": 422,
+        "startChar": 38,
+        "endLine": 422,
+        "endChar": 43
+      },
+      "revId": "e65b6ee82af6437e585b11c2a50b62cd6c9c1ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
