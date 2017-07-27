@@ -33,12 +33,12 @@
 #include "core/css/parser/CSSParserLocalContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/CSSVariableParser.h"
+#include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
 #include "core/css/properties/CSSPropertyAnimationTimingFunctionUtils.h"
 #include "core/css/properties/CSSPropertyBackgroundUtils.h"
 #include "core/css/properties/CSSPropertyBorderImageUtils.h"
 #include "core/css/properties/CSSPropertyBoxShadowUtils.h"
-#include "core/css/properties/CSSPropertyDescriptor.h"
 #include "core/css/properties/CSSPropertyFontUtils.h"
 #include "core/css/properties/CSSPropertyGridUtils.h"
 #include "core/css/properties/CSSPropertyLengthUtils.h"
@@ -1853,95 +1853,9 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
   DCHECK(context_);
   CSSPropertyID property = resolveCSSPropertyID(unresolved_property);
 
-  // Gets the parsing method for our current property from the property API.
-  // If it has been implemented, we call this method, otherwise we manually
-  // parse this value in the switch statement below. As we implement APIs for
-  // other properties, those properties will be taken out of the switch
-  // statement.
-  const CSSPropertyDescriptor& css_property_desc =
-      CSSPropertyDescriptor::Get(property);
-  if (css_property_desc.parseShorthand) {
-    return css_property_desc.parseShorthand(
-        important, range_, *context_, isPropertyAlias(unresolved_property),
-        *parsed_properties_);
-  }
-
-  switch (property) {
-    case CSSPropertyMarker: {
-      const CSSValue* marker = ParseSingleValue(CSSPropertyMarkerStart);
-      if (!marker || !range_.AtEnd())
-        return false;
-      AddParsedProperty(CSSPropertyMarkerStart, CSSPropertyMarker, *marker,
-                        important);
-      AddParsedProperty(CSSPropertyMarkerMid, CSSPropertyMarker, *marker,
-                        important);
-      AddParsedProperty(CSSPropertyMarkerEnd, CSSPropertyMarker, *marker,
-                        important);
-      return true;
-    }
-    case CSSPropertyBorder:
-      return ConsumeBorder(important);
-    case CSSPropertyPageBreakAfter:
-    case CSSPropertyPageBreakBefore:
-    case CSSPropertyPageBreakInside:
-    case CSSPropertyWebkitColumnBreakAfter:
-    case CSSPropertyWebkitColumnBreakBefore:
-    case CSSPropertyWebkitColumnBreakInside:
-      return ConsumeLegacyBreakProperty(property, important);
-    case CSSPropertyBackgroundRepeat:
-    case CSSPropertyWebkitMaskRepeat: {
-      CSSValue* result_x = nullptr;
-      CSSValue* result_y = nullptr;
-      bool implicit = false;
-      if (!ConsumeRepeatStyle(range_, result_x, result_y, implicit) ||
-          !range_.AtEnd())
-        return false;
-      AddParsedProperty(property == CSSPropertyBackgroundRepeat
-                            ? CSSPropertyBackgroundRepeatX
-                            : CSSPropertyWebkitMaskRepeatX,
-                        property, *result_x, important, implicit);
-      AddParsedProperty(property == CSSPropertyBackgroundRepeat
-                            ? CSSPropertyBackgroundRepeatY
-                            : CSSPropertyWebkitMaskRepeatY,
-                        property, *result_y, important, implicit);
-      return true;
-    }
-    case CSSPropertyBackground:
-      return ConsumeBackgroundShorthand(backgroundShorthand(), important);
-    case CSSPropertyWebkitMask:
-      return ConsumeBackgroundShorthand(webkitMaskShorthand(), important);
-    case CSSPropertyGridGap: {
-      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
-      DCHECK_EQ(shorthandForProperty(CSSPropertyGridGap).length(), 2u);
-      CSSValue* row_gap = ConsumeLengthOrPercent(range_, context_->Mode(),
-                                                 kValueRangeNonNegative);
-      CSSValue* column_gap = ConsumeLengthOrPercent(range_, context_->Mode(),
-                                                    kValueRangeNonNegative);
-      if (!row_gap || !range_.AtEnd())
-        return false;
-      if (!column_gap)
-        column_gap = row_gap;
-      AddParsedProperty(CSSPropertyGridRowGap, CSSPropertyGridGap, *row_gap,
-                        important);
-      AddParsedProperty(CSSPropertyGridColumnGap, CSSPropertyGridGap,
-                        *column_gap, important);
-      return true;
-    }
-    case CSSPropertyGridArea:
-      return ConsumeGridAreaShorthand(important);
-    case CSSPropertyGridTemplate:
-      return ConsumeGridTemplateShorthand(CSSPropertyGridTemplate, important);
-    case CSSPropertyGrid:
-      return ConsumeGridShorthand(important);
-    case CSSPropertyPlaceContent:
-      return ConsumePlaceContentShorthand(important);
-    case CSSPropertyPlaceItems:
-      return ConsumePlaceItemsShorthand(important);
-    case CSSPropertyPlaceSelf:
-      return ConsumePlaceSelfShorthand(important);
-    default:
-      return false;
-  }
+  return CSSPropertyAPI::Get(property).parserShorthand(
+      important, range_, *context_, isPropertyAlias(unresolved_property),
+      *parsed_properties_);
 }
 
 }  // namespace blink
