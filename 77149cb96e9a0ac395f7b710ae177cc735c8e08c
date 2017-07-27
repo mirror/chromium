@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "00ee84ce_fea3ad26",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-27T14:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dafa7cfe_b8e4fc20",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f836e48_c3ff212d",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
         "patchSetId": 2
