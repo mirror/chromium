@@ -124,15 +124,12 @@ WebUILoginView::WebUILoginView(const WebViewSettings& settings)
   else
     NOTIMPLEMENTED();
 
-  registrar_.Add(this,
-                 chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE,
+  registrar_.Add(this, chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE,
                  content::NotificationService::AllSources());
-  registrar_.Add(this,
-                 chrome::NOTIFICATION_LOGIN_NETWORK_ERROR_SHOWN,
+  registrar_.Add(this, chrome::NOTIFICATION_LOGIN_NETWORK_ERROR_SHOWN,
                  content::NotificationService::AllSources());
 
-  accel_map_[ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE)] =
-      kAccelNameCancel;
+  accel_map_[ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE)] = kAccelNameCancel;
   accel_map_[ui::Accelerator(ui::VKEY_E,
                              ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
       kAccelNameEnrollment;
@@ -141,8 +138,7 @@ WebUILoginView::WebUILoginView(const WebViewSettings& settings)
                                ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
         kAccelNameKioskEnable;
   }
-  accel_map_[ui::Accelerator(ui::VKEY_V, ui::EF_ALT_DOWN)] =
-      kAccelNameVersion;
+  accel_map_[ui::Accelerator(ui::VKEY_V, ui::EF_ALT_DOWN)] = kAccelNameVersion;
 
   // Devices with forced re-enrollment enabled shouldn't be able to powerwash.
   const AutoEnrollmentController::FRERequirement requirement =
@@ -154,8 +150,8 @@ WebUILoginView::WebUILoginView(const WebViewSettings& settings)
                                    ui::EF_SHIFT_DOWN)] = kAccelNameReset;
   }
 
-  accel_map_[ui::Accelerator(ui::VKEY_X,
-      ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
+  accel_map_[ui::Accelerator(
+      ui::VKEY_X, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
       kAccelNameEnableDebugging;
   accel_map_[ui::Accelerator(
       ui::VKEY_B, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
@@ -164,12 +160,11 @@ WebUILoginView::WebUILoginView(const WebViewSettings& settings)
   accel_map_[ui::Accelerator(
       ui::VKEY_D, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
       kAccelNameDeviceRequisition;
-  accel_map_[
-      ui::Accelerator(ui::VKEY_H, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
+  accel_map_[ui::Accelerator(ui::VKEY_H,
+                             ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN)] =
       kAccelNameDeviceRequisitionRemora;
-  accel_map_[
-      ui::Accelerator(ui::VKEY_H,
-          ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
+  accel_map_[ui::Accelerator(
+      ui::VKEY_H, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
       kAccelNameDeviceRequisitionShark;
 
   accel_map_[ui::Accelerator(ui::VKEY_S,
@@ -289,11 +284,12 @@ const char* WebUILoginView::GetClassName() const {
 }
 
 void WebUILoginView::RequestFocus() {
+  LOG(ERROR) << "!! WebUILoginView::RequestFocus";
   web_view()->RequestFocus();
 }
 
 web_modal::WebContentsModalDialogHost*
-    WebUILoginView::GetWebContentsModalDialogHost() {
+WebUILoginView::GetWebContentsModalDialogHost() {
   return this;
 }
 
@@ -312,8 +308,7 @@ gfx::Size WebUILoginView::GetMaximumDialogSize() {
   return GetWidget()->GetWindowBoundsInScreen().size();
 }
 
-void WebUILoginView::AddObserver(
-    web_modal::ModalDialogHostObserver* observer) {
+void WebUILoginView::AddObserver(web_modal::ModalDialogHostObserver* observer) {
   if (observer && !observer_list_.HasObserver(observer))
     observer_list_.AddObserver(observer);
 }
@@ -323,8 +318,7 @@ void WebUILoginView::RemoveObserver(
   observer_list_.RemoveObserver(observer);
 }
 
-bool WebUILoginView::AcceleratorPressed(
-    const ui::Accelerator& accelerator) {
+bool WebUILoginView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   AccelMap::const_iterator entry = accel_map_.find(accelerator);
   if (entry == accel_map_.end())
     return false;
@@ -378,9 +372,8 @@ void WebUILoginView::OpenProxySettings() {
     LOG(ERROR) << "No default network found!";
     return;
   }
-  ProxySettingsDialog* dialog =
-      new ProxySettingsDialog(ProfileHelper::GetSigninProfile(),
-                              *network, NULL, GetNativeWindow());
+  ProxySettingsDialog* dialog = new ProxySettingsDialog(
+      ProfileHelper::GetSigninProfile(), *network, NULL, GetNativeWindow());
   dialog->Show();
 }
 
@@ -409,8 +402,7 @@ void WebUILoginView::Layout() {
     observer.OnPositionRequiresUpdate();
 }
 
-void WebUILoginView::OnLocaleChanged() {
-}
+void WebUILoginView::OnLocaleChanged() {}
 
 void WebUILoginView::ChildPreferredSizeChanged(View* child) {
   Layout();
@@ -418,6 +410,10 @@ void WebUILoginView::ChildPreferredSizeChanged(View* child) {
 }
 
 void WebUILoginView::AboutToRequestFocusFromTabTraversal(bool reverse) {
+  LOG(ERROR)
+      << "!! WebUILoginView::AboutToRequestFocusFromTabTraversal reverse="
+      << reverse;
+
   // Return the focus to the web contents.
   web_view()->web_contents()->FocusThroughTabTraversal(reverse);
   GetWidget()->Activate();
@@ -517,6 +513,9 @@ bool WebUILoginView::IsPopupOrPanel(const WebContents* source) const {
 }
 
 bool WebUILoginView::TakeFocus(content::WebContents* source, bool reverse) {
+  LOG(ERROR) << "!! WebUILoginView::TakeFocus reverse=" << reverse
+             << ", forward_keyboard_event_=" << forward_keyboard_event_;
+
   // In case of blocked UI (ex.: sign in is in progress)
   // we should not process focus change events.
   if (!forward_keyboard_event_)
@@ -566,6 +565,7 @@ bool WebUILoginView::PreHandleGestureEvent(
 }
 
 void WebUILoginView::OnFocusOut(bool reverse) {
+  LOG(ERROR) << "!! WebUILoginView::OnFocusOut reverse=" << reverse;
   AboutToRequestFocusFromTabTraversal(reverse);
 }
 
@@ -578,8 +578,9 @@ void WebUILoginView::OnLoginPromptVisible() {
   TRACE_EVENT0("chromeos", "WebUILoginView::OnLoginPromptVisible");
   if (should_emit_login_prompt_visible_) {
     VLOG(1) << "Login WebUI >> login-prompt-visible";
-    chromeos::DBusThreadManager::Get()->GetSessionManagerClient()->
-        EmitLoginPromptVisible();
+    chromeos::DBusThreadManager::Get()
+        ->GetSessionManagerClient()
+        ->EmitLoginPromptVisible();
   }
 
   webui_visible_ = true;
