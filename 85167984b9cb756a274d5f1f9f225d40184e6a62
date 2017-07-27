@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d94fa711_58ed0c17",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4186,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-07-27T22:36:55Z",
+      "side": 1,
+      "message": "Sure, will work on this next.",
+      "parentUuid": "be3bcb81_6f0a1918",
+      "revId": "85167984b9cb756a274d5f1f9f225d40184e6a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45d6ec3c_1df5bc77",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T22:33:32Z",
       "side": 1,
       "message": "also this one, though it may be a bit trickier given the format of the argument",
+      "revId": "85167984b9cb756a274d5f1f9f225d40184e6a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1e487e9_d8bec0bf",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-07-27T22:36:55Z",
+      "side": 1,
+      "message": "Ack!",
+      "parentUuid": "45d6ec3c_1df5bc77",
       "revId": "85167984b9cb756a274d5f1f9f225d40184e6a62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
