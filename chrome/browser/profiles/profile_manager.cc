@@ -374,10 +374,7 @@ ProfileManager::ProfileManager(const base::FilePath& user_data_dir)
       this,
       chrome::NOTIFICATION_BROWSER_CLOSE_CANCELLED,
       content::NotificationService::AllSources());
-
-  if (ProfileShortcutManager::IsFeatureEnabled() && !user_data_dir_.empty())
-    profile_shortcut_manager_.reset(ProfileShortcutManager::Create(
-                                    this));
+  InitShortcutManager();
 }
 
 ProfileManager::~ProfileManager() {
@@ -490,6 +487,11 @@ Profile* ProfileManager::CreateInitialProfile() {
   ProfileManager* const profile_manager = g_browser_process->profile_manager();
   return profile_manager->GetProfile(profile_manager->user_data_dir().Append(
       profile_manager->GetInitialProfileDir()));
+}
+
+void ProfileManager::InitShortcutManager() {
+  if (ProfileShortcutManager::IsFeatureEnabled() && !user_data_dir_.empty())
+    profile_shortcut_manager_.reset(ProfileShortcutManager::Create(this));
 }
 
 Profile* ProfileManager::GetProfile(const base::FilePath& profile_dir) {
