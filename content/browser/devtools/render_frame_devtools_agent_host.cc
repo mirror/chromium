@@ -353,14 +353,14 @@ RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(
     frame_tree_node = frame_tree_node->parent();
   }
   RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(frame_tree_node);
-  // Note Page.setControlNavigations is intended to control navigations in the
-  // main frame and all child frames and |page_handler_| only exists for the
-  // main frame.
+  // Note Network.setRequestInterceptionEnabled is intended to control
+  // navigations in the main frame and all child frames.
   if (!agent_host)
     return nullptr;
-  for (auto* page_handler : protocol::PageHandler::ForAgentHost(agent_host)) {
+  for (auto* network_handler :
+       protocol::NetworkHandler::ForAgentHost(agent_host)) {
     std::unique_ptr<NavigationThrottle> throttle =
-        page_handler->CreateThrottleForNavigation(navigation_handle);
+        network_handler->CreateThrottleForNavigation(navigation_handle);
     if (throttle)
       return throttle;
   }

@@ -5,43 +5,33 @@
 #include "content/browser/devtools/page_navigation_throttle.h"
 
 #include "base/strings/stringprintf.h"
-#include "content/browser/devtools/protocol/page_handler.h"
+#include "content/browser/devtools/protocol/network_handler.h"
+#include "content/browser/devtools/protocol/page.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "url/url_constants.h"
 
 namespace content {
 
 PageNavigationThrottle::PageNavigationThrottle(
-    base::WeakPtr<protocol::PageHandler> page_handler,
-    int navigation_id,
+    base::WeakPtr<protocol::NetworkHandler> network_handler,
     content::NavigationHandle* navigation_handle)
     : content::NavigationThrottle(navigation_handle),
-      navigation_id_(navigation_id),
-      page_handler_(page_handler),
+      network_handler_(network_handler),
       navigation_deferred_(false) {}
 
 PageNavigationThrottle::~PageNavigationThrottle() {
-  if (page_handler_)
-    page_handler_->OnPageNavigationThrottleDisposed(navigation_id_);
+  if (network_handler_)
+    network_handler_->OnPageNavigationThrottleDisposed(this);
 }
 
 NavigationThrottle::ThrottleCheckResult
-PageNavigationThrottle::WillStartRequest() {
-  if (!page_handler_)
-    return ThrottleCheckResult::PROCEED;
-  navigation_deferred_ = true;
-  page_handler_->NavigationRequested(this);
-  return ThrottleCheckResult::DEFER;
-}
-
-NavigationThrottle::ThrottleCheckResult
-PageNavigationThrottle::WillRedirectRequest() {
-  if (!page_handler_)
-    return ThrottleCheckResult::PROCEED;
-  navigation_deferred_ = true;
-  page_handler_->NavigationRequested(this);
-  return ThrottleCheckResult::DEFER;
+PageNavigationThrottle::WillProcessResponse() {
+  if (network_handler_ && network_handler_->ShouldCancelNavigation(
+                              navigation_handle()->GetGlobalRequestID()))
+    return ThrottleCheckResult::CANCEL_AND_IGNORE;
+  return ThrottleCheckResult::PROCEED;
 }
 
 const char* PageNavigationThrottle::GetNameForLogging() {
@@ -51,7 +41,7 @@ const char* PageNavigationThrottle::GetNameForLogging() {
 void PageNavigationThrottle::AlwaysProceed() {
   // Makes WillStartRequest and WillRedirectRequest always return
   // ThrottleCheckResult::PROCEED.
-  page_handler_.reset();
+  network_handler_.reset();
   Resume();
 }
 

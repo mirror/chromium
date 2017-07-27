@@ -35,8 +35,6 @@ struct WebDeviceEmulationParams;
 namespace content {
 
 class DevToolsAgentHostImpl;
-class NavigationHandle;
-class PageNavigationThrottle;
 class RenderFrameHostImpl;
 class WebContentsImpl;
 
@@ -116,12 +114,6 @@ class PageHandler : public DevToolsDomainHandler,
                              int navigation_id) override;
   Response BringToFront() override;
 
-  std::unique_ptr<PageNavigationThrottle> CreateThrottleForNavigation(
-      NavigationHandle* navigation_handle);
-
-  void OnPageNavigationThrottleDisposed(int navigation_id);
-  void NavigationRequested(const PageNavigationThrottle* throttle);
-
  private:
   enum EncodingFormat { PNG, JPEG };
 
@@ -163,10 +155,6 @@ class PageHandler : public DevToolsDomainHandler,
   int session_id_;
   int frame_counter_;
   int frames_in_flight_;
-
-  bool navigation_throttle_enabled_;
-  int next_navigation_id_;
-  std::map<int, PageNavigationThrottle*> navigation_throttles_;
 
   RenderFrameHostImpl* host_;
   EmulationHandler* emulation_handler_;
