@@ -118,6 +118,9 @@ Polymer({
   /** @private {boolean} */
   hasMousemoveListener_: false,
 
+  /** @private {?PolymerDomApi.ObserveHandle} */
+  contentObserver_: null,
+
   hostAttributes: {
     tabindex: 0,
   },
@@ -137,6 +140,10 @@ Polymer({
   removeListeners_: function() {
     window.removeEventListener('resize', this.boundClose_);
     window.removeEventListener('popstate', this.boundClose_);
+    if (this.contentObserver_) {
+      Polymer.dom(this.$.contentNode).unobserveNodes(this.contentObserver_);
+      this.contentObserver_ = null;
+    }
   },
 
   /**
@@ -321,7 +328,7 @@ Polymer({
     // Restore the scroll position.
     doc.scrollTop = scrollTop;
     doc.scrollLeft = scrollLeft;
-    this.addCloseListeners_();
+    this.addListeners_();
   },
 
   /** @private */
@@ -369,13 +376,23 @@ Polymer({
   /**
    * @private
    */
-  addCloseListeners_: function() {
+  addListeners_: function() {
     this.boundClose_ = this.boundClose_ || function() {
       if (this.open)
         this.close();
     }.bind(this);
     window.addEventListener('resize', this.boundClose_);
     window.addEventListener('popstate', this.boundClose_);
+
+    this.contentObserver_ =
+        Polymer.dom(this.$.contentNode).observeNodes((info) => {
+          info.addedNodes.forEach((node) => {
+            if (node.classList && node.classList.contains('dropdown-item') &&
+                !node.getAttribute('role')) {
+              node.setAttribute('role', 'menuitem');
+            }
+          });
+        });
   },
 });
 })();
