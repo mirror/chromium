@@ -29,25 +29,6 @@
 @class NSArray;
 @class NSDate;
 
-#if !defined(MAC_OS_X_VERSION_10_13)
-
-// The 10.13 SDK deprecates the CBCentralManagerState enum. When building
-// against older SDKs, define the new enum in terms of the deprecated one.
-using CBManagerState = CBCentralManagerState;
-constexpr CBManagerState CBManagerStateUnknown = CBCentralManagerStateUnknown;
-constexpr CBManagerState CBManagerStateResetting =
-    CBCentralManagerStateResetting;
-constexpr CBManagerState CBManagerStateUnsupported =
-    CBCentralManagerStateUnsupported;
-constexpr CBManagerState CBManagerStateUnauthorized =
-    CBCentralManagerStateUnauthorized;
-constexpr CBManagerState CBManagerStatePoweredOff =
-    CBCentralManagerStatePoweredOff;
-constexpr CBManagerState CBManagerStatePoweredOn =
-    CBCentralManagerStatePoweredOn;
-
-#endif  // MAC_OS_X_VERSION_10_13
-
 namespace base {
 
 class SequencedTaskRunner;
@@ -57,6 +38,24 @@ class SequencedTaskRunner;
 @class BluetoothLowEnergyCentralManagerDelegate;
 
 namespace device {
+
+// The 10.13 SDK deprecates the CBCentralManagerState enum, but marks the
+// replacement enum with limited availability, making it unusable. API methods
+// now return the new enum, so to compare enum values the new enum must be cast.
+#if defined(MAC_OS_X_VERSION_10_13)
+// Suppress the warning to declare a function taking the enum with partial
+// availability.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+constexpr CBCentralManagerState FixSDKEnum(CBManagerState value) {
+  return static_cast<CBCentralManagerState>(value);
+}
+#pragma clang diagnostic pop
+#else
+constexpr CBCentralManagerState FixSDKEnum(CBCentralManagerState value) {
+  return value;
+}
+#endif  // MAC_OS_X_VERSION_10_13
 
 class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterMac
     : public BluetoothAdapter,
