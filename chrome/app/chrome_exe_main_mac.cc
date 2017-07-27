@@ -37,12 +37,12 @@ constexpr char v2_sandbox_arg[] = "--v2-sandbox";
 // The flag tells the sandbox initialization code inside Chrome that the sandbox
 // should already be enabled.
 // TODO(kerrnel): Remove this once the V2 sandbox migration is complete.
-constexpr char v2_sandbox_enabled_arg[] = "--v2-sandbox-enabled";
+//constexpr char v2_sandbox_enabled_arg[] = "--v2-sandbox-enabled";
 // The command line parameter for the file descriptor used to receive the
 // sandbox policy.
 constexpr char fd_mapping_arg[] = "--fd_mapping=";
 
-__attribute__((noreturn)) void SandboxExec(const char* exec_path,
+void SandboxExec(const char* exec_path,
                                            int argc,
                                            char* argv[],
                                            int fd_mapping) {
@@ -69,7 +69,7 @@ __attribute__((noreturn)) void SandboxExec(const char* exec_path,
     fprintf(stderr, "Failed to initialize sandbox.\n");
     abort();
   }
-
+  /*
   std::vector<char*> new_argv;
   for (int i = 0; i < argc; ++i) {
     if (strcmp(argv[i], v2_sandbox_arg) != 0 &&
@@ -86,7 +86,7 @@ __attribute__((noreturn)) void SandboxExec(const char* exec_path,
   // The helper executable re-executes itself under the sandbox.
   execv(exec_path, new_argv.data());
   perror("execve");
-  abort();
+  abort();*/
 }
 #endif  // defined(HELPER_EXECUTABLE)
 
