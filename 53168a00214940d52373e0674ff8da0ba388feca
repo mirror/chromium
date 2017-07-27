@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68dfaace_a46442b3",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T06:04:01Z",
+      "side": 1,
+      "message": "I found why I add this func here since HasVisibleWindow() is a private func in ShelfLayoutManager. How about just remove this EXPECT in test or make HasVisibleWindow() as public?",
+      "parentUuid": "d8839271_9e80c8a0",
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc30e95e_4e83da9d",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "53168a00214940d52373e0674ff8da0ba388feca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4ec615_eb843139",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T06:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc30e95e_4e83da9d",
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e411a8d6_058d0fb7",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T06:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d1f3be_4da7d666",
+      "range": {
+        "startLine": 404,
+        "startChar": 5,
+        "endLine": 404,
+        "endChar": 11
+      },
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc548676_0c6c647e",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "dfbbc7d2_8773fa51",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T06:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc548676_0c6c647e",
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaecd8f3_cef644af",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-27T02:47:02Z",
       "side": 1,
       "message": "Why can\u0027t we just use the same swipe code as above? ie: \n  generator.GestureScrollSequence(end, start, kTimeDelta, kNumScrollSteps);",
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b3e3a4_62539814",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T06:04:01Z",
+      "side": 1,
+      "message": "When shelf is auto-hidden and there is no visible window. Use generator.GestureScrollSequence(*) can dispatch the events to Shelf::AutoHideEventHandler. But the IsShelfWindow() will return false, I think since it didn\u0027t set the correct event target here. The reason I call ProcessGestureEventOnWindow directly here is because i want to set the target here. Then IsShelfWindow() will return true, so it can continue the following logic.",
+      "parentUuid": "eaecd8f3_cef644af",
       "revId": "53168a00214940d52373e0674ff8da0ba388feca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
