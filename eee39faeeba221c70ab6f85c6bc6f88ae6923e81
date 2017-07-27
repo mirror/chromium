@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "679a7dfc_74f5717a",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T17:59:26Z",
+      "side": 1,
+      "message": "I\u0027m reasonably sure that a valid operator\u003c needs to fulfill assert(!(a \u003c a))\n\n(See \"notes\" on http://en.cppreference.com/w/cpp/language/operator_comparison and https://en.wikipedia.org/wiki/Weak_ordering#Strict_weak_orderings)",
+      "range": {
+        "startLine": 57,
+        "startChar": 59,
+        "endLine": 57,
+        "endChar": 61
+      },
+      "revId": "eee39faeeba221c70ab6f85c6bc6f88ae6923e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2898b5_3dd58319",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T17:59:26Z",
+      "side": 1,
+      "message": "nit: no parens (in whole function; yes they predate this cl)",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 7
+      },
+      "revId": "eee39faeeba221c70ab6f85c6bc6f88ae6923e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acddccae_55ea2a82",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 10
