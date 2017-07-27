@@ -34,6 +34,24 @@
       "revId": "20d6fb4ce6e111eaff113807ee8cb1b054914ad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457997a2_edbcee84",
+        "filename": "content/renderer/p2p/ipc_network_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-27T17:48:09Z",
+      "side": 1,
+      "message": "The bug keeps occurring until the user restarts their browser, meaning it\u0027s not the interaction with webrtc and IpcNetworkManager that\u0027s the problem, but the interaction between IpcNetworkManager and the browser process (potentially). So I\u0027m adding these log statements to specifically target that interaction. If I see \"waiting for network list from browser process\" but don\u0027t see \"received network list from browser process\", then I know the issue is related to the IpcNetworkManager\u003c-\u003ebrowser process interaction.\n\nIn the past there were issues related to what you\u0027re describing. But they\u0027ve been fixed and should be covered by tests.",
+      "parentUuid": "b7dbce18_93a26834",
+      "revId": "20d6fb4ce6e111eaff113807ee8cb1b054914ad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
