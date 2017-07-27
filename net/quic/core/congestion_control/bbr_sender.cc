@@ -133,6 +133,10 @@ bool BbrSender::OnPacketSent(QuicTime sent_time,
     exiting_quiescence_ = true;
   }
 
+  if (!aggregation_epoch_start_time_.IsInitialized()) {
+    aggregation_epoch_start_time_ = sent_time;
+  }
+
   sampler_->OnPacketSent(sent_time, packet_number, bytes, bytes_in_flight,
                          is_retransmittable);
   return is_retransmittable == HAS_RETRANSMITTABLE_DATA;
