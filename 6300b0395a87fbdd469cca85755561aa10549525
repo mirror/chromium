@@ -87,6 +87,24 @@
       "revId": "6300b0395a87fbdd469cca85755561aa10549525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de1ef91_f55e6864",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage_search.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-27T22:20:02Z",
+      "side": 1,
+      "message": "Thanks for the LG and expressing your preference.\n\nDone",
+      "parentUuid": "ab86ef74_98bbf71c",
+      "revId": "6300b0395a87fbdd469cca85755561aa10549525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
