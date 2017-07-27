@@ -6,6 +6,7 @@
 #define ScrollPaintPropertyNode_h
 
 #include "platform/PlatformExport.h"
+#include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/FloatSize.h"
 #include "platform/graphics/paint/PaintPropertyNode.h"
 #include "platform/scroll/MainThreadScrollingReason.h"
@@ -38,6 +39,7 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
 
   static PassRefPtr<ScrollPaintPropertyNode> Create(
       PassRefPtr<const ScrollPaintPropertyNode> parent,
+      const FloatPoint& offset,
       const IntSize& container_bounds,
       const IntSize& bounds,
       bool user_scrollable_horizontal,
@@ -45,12 +47,13 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
       MainThreadScrollingReasons main_thread_scrolling_reasons,
       WebLayerScrollClient* scroll_client) {
     return AdoptRef(new ScrollPaintPropertyNode(
-        std::move(parent), container_bounds, bounds, user_scrollable_horizontal,
-        user_scrollable_vertical, main_thread_scrolling_reasons,
-        scroll_client));
+        std::move(parent), offset, container_bounds, bounds,
+        user_scrollable_horizontal, user_scrollable_vertical,
+        main_thread_scrolling_reasons, scroll_client));
   }
 
   bool Update(PassRefPtr<const ScrollPaintPropertyNode> parent,
+              const FloatPoint& offset,
               const IntSize& container_bounds,
               const IntSize& bounds,
               bool user_scrollable_horizontal,
@@ -59,7 +62,8 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
               WebLayerScrollClient* scroll_client) {
     bool parent_changed = PaintPropertyNode::Update(std::move(parent));
 
-    if (container_bounds == container_bounds_ && bounds == bounds_ &&
+    if (offset == offset_ && container_bounds == container_bounds_ &&
+        bounds == bounds_ &&
         user_scrollable_horizontal == user_scrollable_horizontal_ &&
         user_scrollable_vertical == user_scrollable_vertical_ &&
         main_thread_scrolling_reasons == main_thread_scrolling_reasons_ &&
@@ -67,6 +71,7 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
       return parent_changed;
 
     SetChanged();
+    offset_ = offset;
     container_bounds_ = container_bounds;
     bounds_ = bounds;
     user_scrollable_horizontal_ = user_scrollable_horizontal;
@@ -75,6 +80,9 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
     scroll_client_ = scroll_client;
     return true;
   }
+
+  // Paint offset for the bounds.
+  const FloatPoint& Offset() const { return offset_; }
 
   // Size of the container area that the contents scrolls in, not including
   // non-overlay scrollbars. Overlay scrollbars do not affect these bounds.
@@ -111,17 +119,17 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
   PassRefPtr<ScrollPaintPropertyNode> Clone() const {
     RefPtr<ScrollPaintPropertyNode> cloned =
         AdoptRef(new ScrollPaintPropertyNode(
-            Parent(), container_bounds_, bounds_, user_scrollable_horizontal_,
-            user_scrollable_vertical_, main_thread_scrolling_reasons_,
-            scroll_client_));
+            Parent(), offset_, container_bounds_, bounds_,
+            user_scrollable_horizontal_, user_scrollable_vertical_,
+            main_thread_scrolling_reasons_, scroll_client_));
     return cloned;
   }
 
   // The equality operator is used by FindPropertiesNeedingUpdate.h for checking
   // if a scroll node has changed.
   bool operator==(const ScrollPaintPropertyNode& o) const {
-    return Parent() == o.Parent() && container_bounds_ == o.container_bounds_ &&
-           bounds_ == o.bounds_ &&
+    return Parent() == o.Parent() && offset_ == o.offset_ &&
+           container_bounds_ == o.container_bounds_ && bounds_ == o.bounds_ &&
            user_scrollable_horizontal_ == o.user_scrollable_horizontal_ &&
            user_scrollable_vertical_ == o.user_scrollable_vertical_ &&
            main_thread_scrolling_reasons_ == o.main_thread_scrolling_reasons_ &&
@@ -136,6 +144,7 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
  private:
   ScrollPaintPropertyNode(
       PassRefPtr<const ScrollPaintPropertyNode> parent,
+      FloatPoint offset,
       IntSize container_bounds,
       IntSize bounds,
       bool user_scrollable_horizontal,
@@ -143,6 +152,7 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
       MainThreadScrollingReasons main_thread_scrolling_reasons,
       WebLayerScrollClient* scroll_client)
       : PaintPropertyNode(std::move(parent)),
+        offset_(offset),
         container_bounds_(container_bounds),
         bounds_(bounds),
         user_scrollable_horizontal_(user_scrollable_horizontal),
@@ -150,6 +160,7 @@ class PLATFORM_EXPORT ScrollPaintPropertyNode
         main_thread_scrolling_reasons_(main_thread_scrolling_reasons),
         scroll_client_(scroll_client) {}
 
+  FloatPoint offset_;
   IntSize container_bounds_;
   IntSize bounds_;
   bool user_scrollable_horizontal_ : 1;

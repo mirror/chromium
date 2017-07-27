@@ -73,6 +73,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   // placeholder layers required.
   struct ExtraDataForTesting {
     Vector<scoped_refptr<cc::Layer>> content_layers;
+    Vector<scoped_refptr<cc::Layer>> scroll_hit_test_layers;
   };
   void EnableExtraDataForTesting() { extra_data_for_testing_enabled_ = true; }
   ExtraDataForTesting* GetExtraDataForTesting() const {
@@ -91,7 +92,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   // A pending layer is a collection of paint chunks that will end up in
   // the same cc::Layer.
   struct PLATFORM_EXPORT PendingLayer {
-    PendingLayer(const PaintChunk& first_paint_chunk, bool chunk_is_foreign);
+    PendingLayer(const PaintChunk& first_paint_chunk, bool requires_own_layer);
     // Merge another pending layer after this one, appending all its paint
     // chunks after chunks in this layer, with appropriate space conversion
     // applied. The merged layer must have a property tree state that's deeper
@@ -110,7 +111,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
     bool known_to_be_opaque;
     bool backface_hidden;
     PropertyTreeState property_tree_state;
-    bool is_foreign;
+    bool requires_own_layer;
   };
 
   PaintArtifactCompositor();
@@ -156,6 +157,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
       gfx::Vector2dF& layer_offset,
       Vector<std::unique_ptr<ContentLayerClientImpl>>&
           new_content_layer_clients,
+      Vector<scoped_refptr<cc::Layer>>& new_scroll_hit_test_layers,
       bool store_debug_info);
 
   // Finds a client among the current vector of clients that matches the paint
@@ -163,11 +165,20 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   std::unique_ptr<ContentLayerClientImpl> ClientForPaintChunk(
       const PaintChunk&);
 
+  // Finds an existing or creates a new scroll hit test layer for the chunk,
+  // returning nullptr if the chunk is not a scroll hit test layer.
+  scoped_refptr<cc::Layer> ScrollHitTestLayerForPaintChunk(
+      const PaintArtifact&,
+      const PaintChunk&,
+      gfx::Vector2dF& layer_offset);
+
   bool tracks_raster_invalidations_;
 
   scoped_refptr<cc::Layer> root_layer_;
   std::unique_ptr<WebLayer> web_layer_;
   Vector<std::unique_ptr<ContentLayerClientImpl>> content_layer_clients_;
+
+  Vector<scoped_refptr<cc::Layer>> scroll_hit_test_layers_;
 
   bool extra_data_for_testing_enabled_ = false;
   std::unique_ptr<ExtraDataForTesting> extra_data_for_testing_;

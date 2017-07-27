@@ -40,6 +40,29 @@ bool IsAncestorOf(const PropertyNode* ancestor, const PropertyNode* child) {
 
 const CompositorElementId PropertyTreeState::GetCompositorElementId(
     const CompositorElementIdSet& element_ids) const {
+  static constexpr unsigned kMatchAllNamespaces = -1;
+  return GetCompositorElementIdMatching(element_ids, kMatchAllNamespaces);
+}
+
+const CompositorElementId
+PropertyTreeState::GetCompositorElementIdWithNamespace(
+    const CompositorElementIdSet& exclude_ids,
+    CompositorElementIdNamespace ns) const {
+  auto namespace_mask = 1 << static_cast<unsigned>(ns);
+  return GetCompositorElementIdMatching(exclude_ids, namespace_mask);
+}
+
+const CompositorElementId
+PropertyTreeState::GetCompositorElementIdWithoutNamespace(
+    const CompositorElementIdSet& exclude_ids,
+    CompositorElementIdNamespace ns) const {
+  auto namespace_mask = ~(1 << static_cast<unsigned>(ns));
+  return GetCompositorElementIdMatching(exclude_ids, namespace_mask);
+}
+
+const CompositorElementId PropertyTreeState::GetCompositorElementIdMatching(
+    const CompositorElementIdSet& exclude_ids,
+    unsigned namespace_mask) const {
   // The effect or transform nodes could have a compositor element id. The order
   // doesn't matter as the element id should be the same on all that have a
   // non-default CompositorElementId.
@@ -52,12 +75,18 @@ const CompositorElementId PropertyTreeState::GetCompositorElementId(
   // represents element ids already previously attached to a layer). This is an
   // interim step while we pursue broader rework of animation subsystem noted in
   // http://crbug.com/709137.
-  if (Effect()->GetCompositorElementId() &&
-      !element_ids.Contains(Effect()->GetCompositorElementId()))
-    return Effect()->GetCompositorElementId();
-  if (Transform()->GetCompositorElementId() &&
-      !element_ids.Contains(Transform()->GetCompositorElementId()))
-    return Transform()->GetCompositorElementId();
+  auto effect_id = Effect()->GetCompositorElementId();
+  auto effect_mask =
+      1 << static_cast<unsigned>(NamespaceFromCompositorElementId(effect_id));
+  if (effect_id && effect_mask & namespace_mask &&
+      !exclude_ids.Contains(effect_id))
+    return effect_id;
+  auto transform_id = Transform()->GetCompositorElementId();
+  auto transform_mask = 1 << static_cast<unsigned>(
+                            NamespaceFromCompositorElementId(transform_id));
+  if (transform_id && transform_mask & namespace_mask &&
+      !exclude_ids.Contains(transform_id))
+    return transform_id;
   return CompositorElementId();
 }
 

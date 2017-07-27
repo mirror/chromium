@@ -50,11 +50,16 @@ class PLATFORM_EXPORT PropertyTreeState {
 
   static const PropertyTreeState& Root();
 
-  // Returns the compositor element id, if any, for this property state. If
-  // neither the effect nor transform nodes have a compositor element id then a
-  // default instance is returned.
+  // Returns the compositor element id, if any, for this property state. See:
+  // |GetCompositorElementIdMatching|.
   const CompositorElementId GetCompositorElementId(
-      const CompositorElementIdSet& element_ids) const;
+      const CompositorElementIdSet& exclude_ids) const;
+  const CompositorElementId GetCompositorElementIdWithNamespace(
+      const CompositorElementIdSet& exclude_ids,
+      CompositorElementIdNamespace) const;
+  const CompositorElementId GetCompositorElementIdWithoutNamespace(
+      const CompositorElementIdSet& exclude_ids,
+      CompositorElementIdNamespace) const;
 
   enum InnermostNode {
     kNone,  // None means that all nodes are their root values
@@ -119,6 +124,14 @@ class PLATFORM_EXPORT PropertyTreeState {
 #endif
 
  private:
+  // Returns the compositor element id, if any, for this property state. If
+  // neither the effect nor transform nodes have a compositor element id then a
+  // default instance is returned. For an id to be returned it must not be in
+  // |exclude_ids| and the namespace must match |namespace_mask|.
+  const CompositorElementId GetCompositorElementIdMatching(
+      const CompositorElementIdSet& exclude_ids,
+      unsigned namespace_mask) const;
+
   RefPtr<const TransformPaintPropertyNode> transform_;
   RefPtr<const ClipPaintPropertyNode> clip_;
   RefPtr<const EffectPaintPropertyNode> effect_;

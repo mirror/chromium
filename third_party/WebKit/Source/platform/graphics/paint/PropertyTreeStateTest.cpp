@@ -266,4 +266,79 @@ TEST_F(PropertyTreeStateTest, CompositorElementIdWithDifferingElementIds) {
             state.GetCompositorElementId(composited_element_ids));
 }
 
+TEST_F(PropertyTreeStateTest, GetCompositorElementIdWithNamespace) {
+  CompositorElementId effect_element_id = CompositorElementIdFromLayoutObjectId(
+      1, CompositorElementIdNamespace::kEffectFilter);
+  RefPtr<EffectPaintPropertyNode> effect = EffectPaintPropertyNode::Create(
+      EffectPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
+      ClipPaintPropertyNode::Root(), kColorFilterNone,
+      CompositorFilterOperations(), 1.0, SkBlendMode::kSrcOver,
+      kCompositingReasonNone, effect_element_id);
+  CompositorElementId transform_element_id =
+      CompositorElementIdFromLayoutObjectId(
+          2, CompositorElementIdNamespace::kPrimary);
+  RefPtr<TransformPaintPropertyNode> transform =
+      TransformPaintPropertyNode::Create(TransformPaintPropertyNode::Root(),
+                                         TransformationMatrix(), FloatPoint3D(),
+                                         false, 0, kCompositingReasonNone,
+                                         transform_element_id);
+  PropertyTreeState state(transform.Get(), ClipPaintPropertyNode::Root(),
+                          effect.Get());
+
+  CompositorElementIdSet ids;
+  EXPECT_EQ(effect_element_id,
+            state.GetCompositorElementIdWithNamespace(
+                ids, CompositorElementIdNamespace::kEffectFilter));
+  ids.insert(effect_element_id);
+  EXPECT_EQ(CompositorElementId(),
+            state.GetCompositorElementIdWithNamespace(
+                ids, CompositorElementIdNamespace::kEffectFilter));
+
+  EXPECT_EQ(transform_element_id,
+            state.GetCompositorElementIdWithNamespace(
+                ids, CompositorElementIdNamespace::kPrimary));
+  EXPECT_EQ(CompositorElementId(), state.GetCompositorElementIdWithNamespace(
+                                       CompositorElementIdSet(),
+                                       CompositorElementIdNamespace::kScroll));
+}
+
+TEST_F(PropertyTreeStateTest, GetCompositorElementIdWithoutNamespace) {
+  CompositorElementId effect_element_id = CompositorElementIdFromLayoutObjectId(
+      1, CompositorElementIdNamespace::kEffectFilter);
+  RefPtr<EffectPaintPropertyNode> effect = EffectPaintPropertyNode::Create(
+      EffectPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
+      ClipPaintPropertyNode::Root(), kColorFilterNone,
+      CompositorFilterOperations(), 1.0, SkBlendMode::kSrcOver,
+      kCompositingReasonNone, effect_element_id);
+  CompositorElementId transform_element_id =
+      CompositorElementIdFromLayoutObjectId(
+          2, CompositorElementIdNamespace::kPrimary);
+  RefPtr<TransformPaintPropertyNode> transform =
+      TransformPaintPropertyNode::Create(TransformPaintPropertyNode::Root(),
+                                         TransformationMatrix(), FloatPoint3D(),
+                                         false, 0, kCompositingReasonNone,
+                                         transform_element_id);
+  PropertyTreeState state(transform.Get(), ClipPaintPropertyNode::Root(),
+                          effect.Get());
+
+  EXPECT_EQ(transform_element_id,
+            state.GetCompositorElementIdWithoutNamespace(
+                CompositorElementIdSet(),
+                CompositorElementIdNamespace::kEffectFilter));
+  EXPECT_EQ(effect_element_id, state.GetCompositorElementIdWithoutNamespace(
+                                   CompositorElementIdSet(),
+                                   CompositorElementIdNamespace::kPrimary));
+  CompositorElementIdSet ids;
+  EXPECT_EQ(effect_element_id, state.GetCompositorElementIdWithoutNamespace(
+                                   ids, CompositorElementIdNamespace::kScroll));
+  ids.insert(effect_element_id);
+  EXPECT_EQ(transform_element_id,
+            state.GetCompositorElementIdWithoutNamespace(
+                ids, CompositorElementIdNamespace::kScroll));
+  ids.insert(transform_element_id);
+  EXPECT_EQ(CompositorElementId(),
+            state.GetCompositorElementIdWithoutNamespace(
+                ids, CompositorElementIdNamespace::kScroll));
+}
+
 }  // namespace blink
