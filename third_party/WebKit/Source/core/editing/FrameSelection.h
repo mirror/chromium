@@ -172,8 +172,10 @@ class CORE_EXPORT FrameSelection final
   void DidChangeFocus();
 
   const SelectionInDOMTree& GetSelectionInDOMTree() const;
-  bool IsDirectional() const { return GetSelectionInDOMTree().IsDirectional(); }
-
+  bool IsDirectional() const { return is_directional_; }
+  void SetIsDirectional(bool is_directional) {
+    is_directional_ = is_directional;
+  }
   void DocumentAttached(Document*);
 
   void DidLayout();
@@ -306,6 +308,7 @@ class CORE_EXPORT FrameSelection final
 
   const Member<FrameCaret> frame_caret_;
   bool use_secure_keyboard_entry_when_active_ = false;
+  bool is_directional_ = false;
 };
 
 }  // namespace blink
