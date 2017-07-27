@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c705297_ef2ec355",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T20:58:29Z",
+      "side": 1,
+      "message": "So the difference between classic ash and mash is that on classic ash will have access to the login profile pref_service, while mash won\u0027t. Is that right?\n\nI hope this difference won\u0027t cause problems?",
+      "range": {
+        "startLine": 1251,
+        "startChar": 2,
+        "endLine": 1251,
+        "endChar": 72
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca1ae20_d5c85407",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T20:58:29Z",
+      "side": 1,
+      "message": "Maybe update this comment?\n\nBased on the documentation of OnActiveUserPrefServiceChanged(), on mash, this will be called with null first, then again when the pref_service connects, correct? So it\u0027s not specific to ash_unittests anymore.\n\nAlso do we need to do:\npref_change_registrar_-\u003eRemoveAll();\nin this case?",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 53
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fa5ceb_7e1e33e0",
+        "filename": "ash/system/night_light/night_light_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T20:58:29Z",
+      "side": 1,
+      "message": "Do this, and the rest of the tests, work now on mash?",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 66
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
