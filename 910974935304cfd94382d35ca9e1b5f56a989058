@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48aa669b_0187013f",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-27T16:12:57Z",
+      "side": 0,
+      "message": "Semantically this did something different - painting the image on a white background, but it\u0027s probably OK to not do that given that (a) download notifications are scoped to Chrome OS, where toasts always have a white background, and (b) white background on other platforms are likely to look out of place.",
+      "revId": "910974935304cfd94382d35ca9e1b5f56a989058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
