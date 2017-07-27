@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e6a05e5_aa330242",
+        "filename": "chrome/profiling/profiling_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-27T20:15:10Z",
+      "side": 1,
+      "message": "BTW the reason the data_decoder service does this is that it\u0027s common for browser code to send multiple staggered decode requests in not-quite-rapid-enough succession; if the service followed a strict ref-counted lifetime management policy with no delayed destruction, this would mean tearing down and spinning up the service process many times over a relatively short period, which is costly.",
+      "revId": "41c783d6126bd5996c5cd0e62abc5926389e1ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
