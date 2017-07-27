@@ -93,7 +93,7 @@ void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
   }
 
   VisibleSelection selection =
-      SelectionForParagraphIteration(EndingSelection());
+      SelectionForParagraphIteration(EndingVisibleSelection());
   VisiblePosition start_of_selection = selection.VisibleStart();
   VisiblePosition end_of_selection = selection.VisibleEnd();
   DCHECK(!start_of_selection.IsNull());
