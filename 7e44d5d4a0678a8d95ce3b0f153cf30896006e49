@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa3ad4f7_9cfe933d",
+        "filename": "components/browser_watcher/stability_report.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-07-27T17:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa393d2e_e4fdbf24",
+      "range": {
+        "startLine": 180,
+        "startChar": 18,
+        "endLine": 180,
+        "endChar": 29
+      },
+      "revId": "7e44d5d4a0678a8d95ce3b0f153cf30896006e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7748454a_db24c55e",
         "filename": "components/browser_watcher/stability_report_user_stream_data_source.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-27T16:40:44Z",
       "side": 1,
       "message": "Does this want a // NOLINT?",
+      "revId": "7e44d5d4a0678a8d95ce3b0f153cf30896006e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e9aab4_53a5ce95",
+        "filename": "components/browser_watcher/stability_report_user_stream_data_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-07-27T17:18:12Z",
+      "side": 1,
+      "message": "Sadly the git cl format script can only be thwarted by splitting non-conforming includes to a separate \"block\".",
+      "parentUuid": "7748454a_db24c55e",
       "revId": "7e44d5d4a0678a8d95ce3b0f153cf30896006e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
