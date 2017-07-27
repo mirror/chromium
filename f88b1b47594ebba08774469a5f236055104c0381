@@ -16,6 +16,24 @@
       "revId": "f88b1b47594ebba08774469a5f236055104c0381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42093149_e754a7f1",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-07-27T11:52:20Z",
+      "side": 0,
+      "message": "These deps are removed because these dependecies are not required for this target build.\nAs per my understanding, if this target do not have direct dependecies on these deps then these can be considered only when any config is inherited from them and compiler flags in configs are required here.",
+      "parentUuid": "e8458d42_c28cef7b",
+      "revId": "f88b1b47594ebba08774469a5f236055104c0381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
