@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "755280fe_7ac8435d",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-27T09:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51cba519_a191b3ab",
+      "range": {
+        "startLine": 446,
+        "startChar": 39,
+        "endLine": 446,
+        "endChar": 47
+      },
+      "revId": "62101e84b5131d781d9c68caf57b6c654a416e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cf473a2_6b0d286c",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-27T09:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f570dc_e2f10e93",
+      "range": {
+        "startLine": 446,
+        "startChar": 58,
+        "endLine": 446,
+        "endChar": 61
+      },
+      "revId": "62101e84b5131d781d9c68caf57b6c654a416e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9667e402_e60ec716",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "62101e84b5131d781d9c68caf57b6c654a416e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bccbe5_17e6bf97",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-27T09:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9667e402_e60ec716",
+      "range": {
+        "startLine": 485,
+        "startChar": 53,
+        "endLine": 485,
+        "endChar": 71
+      },
+      "revId": "62101e84b5131d781d9c68caf57b6c654a416e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
