@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f10d99b9_adc544d0",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-27T21:34:03Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t quite understand.\n\nNeither classic ash nor mash will have access to the temporary profile used at the login screen. Both will have access to the active user\u0027s profile, after OnActiveUserPrefServiceChanged() fires.\n\nI updated the comment, does that help? Or am I missing something?",
+      "parentUuid": "7c705297_ef2ec355",
+      "range": {
+        "startLine": 1251,
+        "startChar": 2,
+        "endLine": 1251,
+        "endChar": 72
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dca1ae20_d5c85407",
         "filename": "ash/system/night_light/night_light_controller.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T20:58:29Z",
       "side": 1,
       "message": "Maybe update this comment?\n\nBased on the documentation of OnActiveUserPrefServiceChanged(), on mash, this will be called with null first, then again when the pref_service connects, correct? So it\u0027s not specific to ash_unittests anymore.\n\nAlso do we need to do:\npref_change_registrar_-\u003eRemoveAll();\nin this case?",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 53
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a95b5e_15dcb751",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-27T21:34:03Z",
+      "side": 1,
+      "message": "I updated the comment.\n\nWe didn\u0027t need to do pref_change_registrar_-\u003eRemoveAll() because pref_change_registrar_ was reset in OnActiveUserPrefServiceChanged(). I moved the reset into this function. Is that clearer?",
+      "parentUuid": "dca1ae20_d5c85407",
       "range": {
         "startLine": 321,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5dd524e_b3ad4a62",
+        "filename": "ash/system/night_light/night_light_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-27T21:34:03Z",
+      "side": 1,
+      "message": "Yep, they do. I removed the if() checks.",
+      "parentUuid": "c4fa5ceb_7e1e33e0",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 66
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
