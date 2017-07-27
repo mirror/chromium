@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fc8db18_48fcb034",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-27T23:56:02Z",
+      "side": 1,
+      "message": "Please add documentation of what |sequence_number| is and how it relates to the returned value from SendMessage.",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "07ef1aa27389a3704f4a5d93c1e50e21643106c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
