@@ -47,6 +47,7 @@
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebSharedWorkerClient.h"
+#include "public/web/shared_worker_content_settings_proxy.mojom-blink.h"
 
 namespace blink {
 
@@ -94,7 +95,8 @@ class CORE_EXPORT WebSharedWorkerImpl final
                           const WebString& content_security_policy,
                           WebContentSecurityPolicyType,
                           WebAddressSpace,
-                          bool data_saver_enabled) override;
+                          bool data_saver_enabled,
+                          mojo::ScopedMessagePipeHandle) override;
   void Connect(std::unique_ptr<WebMessagePortChannel>) override;
   void TerminateWorkerContext() override;
 
@@ -154,6 +156,7 @@ class CORE_EXPORT WebSharedWorkerImpl final
   Persistent<SharedWorkerReportingProxy> reporting_proxy_;
   std::unique_ptr<WorkerThread> worker_thread_;
   service_manager::InterfaceProvider interface_provider_;
+  mojom::blink::SharedWorkerContentSettingsProxyPtrInfo content_settings_info_;
 
   WebSharedWorkerClient* client_;
 
