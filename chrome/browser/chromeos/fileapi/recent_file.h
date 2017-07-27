@@ -28,6 +28,7 @@ class RecentFile {
  public:
   using GetFileInfoCallback = storage::AsyncFileUtil::GetFileInfoCallback;
   enum class SourceType {
+    ARC_MEDIA,
     // Following types are used only in unit tests.
     TEST_1,
     TEST_2,

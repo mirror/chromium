@@ -13,6 +13,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/fileapi/recent_arc_media_source.h"
 #include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_source.h"
 #include "content/public/browser/browser_thread.h"
@@ -186,7 +187,7 @@ RecentModel::~RecentModel() {
 // static
 std::unique_ptr<RecentModel> RecentModel::CreateWithDefaultSources() {
   std::vector<std::unique_ptr<RecentSource>> sources;
-  // TODO(nya): Add source implementations.
+  sources.emplace_back(base::MakeUnique<RecentArcMediaSource>());
   return base::MakeUnique<RecentModel>(std::move(sources));
 }
 
