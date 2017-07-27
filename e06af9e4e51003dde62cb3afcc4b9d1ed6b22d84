@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74d2f890_adbbf86c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T07:13:51Z",
+      "side": 1,
+      "message": "Can this be GURL instead of url (be explicit that you are changing that specific class).",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "e06af9e4e51003dde62cb3afcc4b9d1ed6b22d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
