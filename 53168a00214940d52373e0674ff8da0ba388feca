@@ -222,6 +222,24 @@
       "revId": "53168a00214940d52373e0674ff8da0ba388feca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97be25ad_56cd8374",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-27T23:22:13Z",
+      "side": 1,
+      "message": "sorry for the confusing. I tried again to use generator.GestureScrollSequence(*) here. And it shows the event target is the shelf. I think it should because I didn\u0027t set the start and end point correct last time. Sorry for that, please check the latest ps.",
+      "parentUuid": "36165f21_f7da3d45",
+      "revId": "53168a00214940d52373e0674ff8da0ba388feca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
