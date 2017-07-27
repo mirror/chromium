@@ -4,12 +4,20 @@
 
 package org.chromium.net;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.impl.CronetUrlRequestContext;
 
 import java.io.BufferedReader;
@@ -20,7 +28,11 @@ import java.util.Arrays;
 /**
  * Tests Sdch support.
  */
-public class SdchTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class SdchTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private enum Sdch {
         ENABLED,
         DISABLED,
@@ -28,24 +40,25 @@ public class SdchTest extends CronetTestBase {
 
     private CronetEngine.Builder createCronetEngineBuilder(Sdch setting) throws JSONException {
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
         builder.enableSdch(setting == Sdch.ENABLED);
-        enableDiskCache(builder);
+        mTestRule.enableDiskCache(builder);
         JSONObject hostResolverParams = CronetTestUtil.generateHostResolverRules();
         JSONObject experimentalOptions =
                 new JSONObject().put("HostResolverRules", hostResolverParams);
         builder.setExperimentalOptions(experimentalOptions.toString());
         // Start NativeTestServer.
-        assertTrue(NativeTestServer.startNativeTestServer(getContext()));
+        Assert.assertTrue(
+                NativeTestServer.startNativeTestServer(InstrumentationRegistry.getTargetContext()));
         return builder;
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         NativeTestServer.shutdownNativeTestServer();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -59,24 +72,25 @@ public class SdchTest extends CronetTestBase {
         // Make a request to /sdch which advertises the dictionary.
         TestUrlRequestCallback callback1 = startAndWaitForComplete(
                 cronetEngine, NativeTestServer.getSdchURL() + "/sdch/index?q=LeQxM80O");
-        assertEquals(200, callback1.mResponseInfo.getHttpStatusCode());
-        assertEquals("This is an index page.\n", callback1.mResponseAsString);
-        assertEquals(Arrays.asList("/sdch/dict/LeQxM80O"),
+        Assert.assertEquals(200, callback1.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("This is an index page.\n", callback1.mResponseAsString);
+        Assert.assertEquals(Arrays.asList("/sdch/dict/LeQxM80O"),
                 callback1.mResponseInfo.getAllHeaders().get("Get-Dictionary"));
 
         observer.waitForDictionaryAdded();
 
         // Make a request to fetch encoded response at /sdch/test.
         TestUrlRequestCallback callback2 = startAndWaitForComplete(cronetEngine, targetUrl);
-        assertEquals(200, callback2.mResponseInfo.getHttpStatusCode());
-        assertEquals("The quick brown fox jumps over the lazy dog.\n", callback2.mResponseAsString);
+        Assert.assertEquals(200, callback2.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals(
+                "The quick brown fox jumps over the lazy dog.\n", callback2.mResponseAsString);
 
         cronetEngine.shutdown();
 
         // Shutting down the context will make JsonPrefStore to flush pending
         // writes to disk.
         String dictUrl = NativeTestServer.getSdchURL() + "/sdch/dict/LeQxM80O";
-        assertTrue(fileContainsString("local_prefs.json", dictUrl));
+        Assert.assertTrue(fileContainsString("local_prefs.json", dictUrl));
 
         // Test persistence.
         cronetEngine = cronetEngineBuilder.build();
@@ -87,10 +101,12 @@ public class SdchTest extends CronetTestBase {
 
         // Make a request to fetch encoded response at /sdch/test.
         TestUrlRequestCallback callback3 = startAndWaitForComplete(cronetEngine, targetUrl);
-        assertEquals(200, callback3.mResponseInfo.getHttpStatusCode());
-        assertEquals("The quick brown fox jumps over the lazy dog.\n", callback3.mResponseAsString);
+        Assert.assertEquals(200, callback3.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals(
+                "The quick brown fox jumps over the lazy dog.\n", callback3.mResponseAsString);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -100,11 +116,12 @@ public class SdchTest extends CronetTestBase {
         // Since Sdch is not enabled, no dictionary should be advertised.
         TestUrlRequestCallback callback = startAndWaitForComplete(
                 cronetEngine, NativeTestServer.getSdchURL() + "/sdch/index?q=LeQxM80O");
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("This is an index page.\n", callback.mResponseAsString);
-        assertEquals(null, callback.mResponseInfo.getAllHeaders().get("Get-Dictionary"));
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("This is an index page.\n", callback.mResponseAsString);
+        Assert.assertEquals(null, callback.mResponseInfo.getAllHeaders().get("Get-Dictionary"));
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -114,16 +131,16 @@ public class SdchTest extends CronetTestBase {
         // does not exist.
         TestUrlRequestCallback callback1 = startAndWaitForComplete(
                 cronetEngine, NativeTestServer.getSdchURL() + "/sdch/index?q=NotFound");
-        assertEquals(200, callback1.mResponseInfo.getHttpStatusCode());
-        assertEquals("This is an index page.\n", callback1.mResponseAsString);
-        assertEquals(Arrays.asList("/sdch/dict/NotFound"),
+        Assert.assertEquals(200, callback1.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("This is an index page.\n", callback1.mResponseAsString);
+        Assert.assertEquals(Arrays.asList("/sdch/dict/NotFound"),
                 callback1.mResponseInfo.getAllHeaders().get("Get-Dictionary"));
 
         // Make a request to fetch /sdch/test, and make sure Sdch encoding is not used.
         TestUrlRequestCallback callback2 =
                 startAndWaitForComplete(cronetEngine, NativeTestServer.getSdchURL() + "/sdch/test");
-        assertEquals(200, callback2.mResponseInfo.getHttpStatusCode());
-        assertEquals("Sdch is not used.\n", callback2.mResponseAsString);
+        Assert.assertEquals(200, callback2.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("Sdch is not used.\n", callback2.mResponseAsString);
     }
 
     private long getContextAdapter(CronetUrlRequestContext requestContext) {
@@ -142,8 +159,9 @@ public class SdchTest extends CronetTestBase {
 
     // Returns whether a file contains a particular string.
     private boolean fileContainsString(String filename, String content) throws IOException {
-        BufferedReader reader = new BufferedReader(
-                new FileReader(getTestStorage(getContext()) + "/prefs/" + filename));
+        BufferedReader reader = new BufferedReader(new FileReader(
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext())
+                + "/prefs/" + filename));
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.contains(content)) {

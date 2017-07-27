@@ -5,9 +5,20 @@
 package org.chromium.net;
 
 import android.os.ConditionVariable;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.net.CronetTestRule.CronetTestFramework;
+import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.TestUrlRequestCallback.ResponseStep;
 import org.chromium.net.UrlRequest.Status;
 import org.chromium.net.UrlRequest.StatusListener;
@@ -22,7 +33,11 @@ import java.util.concurrent.Executors;
  * Tests that {@link org.chromium.net.impl.CronetUrlRequest#getStatus(StatusListener)} works as
  * expected.
  */
-public class GetStatusTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class GetStatusTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private CronetTestFramework mTestFramework;
 
     private static class TestStatusListener extends StatusListener {
@@ -42,20 +57,20 @@ public class GetStatusTest extends CronetTestBase {
             mBlock.close();
         }
     }
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        mTestFramework = startCronetTestFramework();
-        assertTrue(NativeTestServer.startNativeTestServer(getContext()));
+    @Before
+    public void setUp() throws Exception {
+        mTestFramework = mTestRule.startCronetTestFramework();
+        Assert.assertTrue(
+                NativeTestServer.startNativeTestServer(InstrumentationRegistry.getTargetContext()));
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         NativeTestServer.shutdownNativeTestServer();
         mTestFramework.mCronetEngine.shutdown();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testSimpleGet() throws Exception {
@@ -70,8 +85,8 @@ public class GetStatusTest extends CronetTestBase {
         TestStatusListener statusListener0 = new TestStatusListener();
         urlRequest.getStatus(statusListener0);
         statusListener0.waitUntilOnStatusCalled();
-        assertTrue(statusListener0.mOnStatusCalled);
-        assertEquals(Status.INVALID, statusListener0.mStatus);
+        Assert.assertTrue(statusListener0.mOnStatusCalled);
+        Assert.assertEquals(Status.INVALID, statusListener0.mStatus);
 
         urlRequest.start();
 
@@ -79,25 +94,26 @@ public class GetStatusTest extends CronetTestBase {
         TestStatusListener statusListener1 = new TestStatusListener();
         urlRequest.getStatus(statusListener1);
         statusListener1.waitUntilOnStatusCalled();
-        assertTrue(statusListener1.mOnStatusCalled);
-        assertTrue("Status is :" + statusListener1.mStatus, statusListener1.mStatus >= Status.IDLE);
-        assertTrue("Status is :" + statusListener1.mStatus,
+        Assert.assertTrue(statusListener1.mOnStatusCalled);
+        Assert.assertTrue(
+                "Status is :" + statusListener1.mStatus, statusListener1.mStatus >= Status.IDLE);
+        Assert.assertTrue("Status is :" + statusListener1.mStatus,
                 statusListener1.mStatus <= Status.READING_RESPONSE);
 
         callback.waitForNextStep();
-        assertEquals(ResponseStep.ON_RESPONSE_STARTED, callback.mResponseStep);
+        Assert.assertEquals(ResponseStep.ON_RESPONSE_STARTED, callback.mResponseStep);
         callback.startNextRead(urlRequest);
 
         // Should receive a valid status.
         TestStatusListener statusListener2 = new TestStatusListener();
         urlRequest.getStatus(statusListener2);
         statusListener2.waitUntilOnStatusCalled();
-        assertTrue(statusListener2.mOnStatusCalled);
-        assertTrue(statusListener1.mStatus >= Status.IDLE);
-        assertTrue(statusListener1.mStatus <= Status.READING_RESPONSE);
+        Assert.assertTrue(statusListener2.mOnStatusCalled);
+        Assert.assertTrue(statusListener1.mStatus >= Status.IDLE);
+        Assert.assertTrue(statusListener1.mStatus <= Status.READING_RESPONSE);
 
         callback.waitForNextStep();
-        assertEquals(ResponseStep.ON_READ_COMPLETED, callback.mResponseStep);
+        Assert.assertEquals(ResponseStep.ON_READ_COMPLETED, callback.mResponseStep);
 
         callback.startNextRead(urlRequest);
         callback.blockForDone();
@@ -107,44 +123,46 @@ public class GetStatusTest extends CronetTestBase {
         TestStatusListener statusListener3 = new TestStatusListener();
         urlRequest.getStatus(statusListener3);
         statusListener3.waitUntilOnStatusCalled();
-        assertTrue(statusListener3.mOnStatusCalled);
-        assertEquals(Status.INVALID, statusListener3.mStatus);
+        Assert.assertTrue(statusListener3.mOnStatusCalled);
+        Assert.assertEquals(Status.INVALID, statusListener3.mStatus);
 
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("GET", callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("GET", callback.mResponseAsString);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testInvalidLoadState() throws Exception {
         try {
             UrlRequestBase.convertLoadState(LoadState.WAITING_FOR_APPCACHE);
-            fail();
+            Assert.fail();
         } catch (IllegalArgumentException e) {
             // Expected because LoadState.WAITING_FOR_APPCACHE is not mapped.
         }
 
         try {
             UrlRequestBase.convertLoadState(-1);
-            fail();
+            Assert.fail();
         } catch (AssertionError e) {
             // Expected.
         } catch (IllegalArgumentException e) {
             // If assertions are disabled, an IllegalArgumentException should be thrown.
-            assertEquals("No request status found.", e.getMessage());
+            Assert.assertEquals("No request status found.", e.getMessage());
         }
 
         try {
             UrlRequestBase.convertLoadState(16);
-            fail();
+            Assert.fail();
         } catch (AssertionError e) {
             // Expected.
         } catch (IllegalArgumentException e) {
             // If assertions are disabled, an IllegalArgumentException should be thrown.
-            assertEquals("No request status found.", e.getMessage());
+            Assert.assertEquals("No request status found.", e.getMessage());
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     // Regression test for crbug.com/606872.
@@ -180,10 +198,10 @@ public class GetStatusTest extends CronetTestBase {
         // executed, the |url_request_| is null.
         urlRequest.getStatus(statusListener);
         statusListener.waitUntilOnStatusCalled();
-        assertTrue(statusListener.mOnStatusCalled);
+        Assert.assertTrue(statusListener.mOnStatusCalled);
         // The request should be in IDLE state because GetStatusOnNetworkThread
         // is called before |url_request_| is initialized and started.
-        assertEquals(Status.IDLE, statusListener.mStatus);
+        Assert.assertEquals(Status.IDLE, statusListener.mStatus);
         // Resume the UploadDataProvider.
         block.open();
 
@@ -191,11 +209,11 @@ public class GetStatusTest extends CronetTestBase {
         callback.blockForDone();
         dataProvider.assertClosed();
 
-        assertEquals(4, dataProvider.getUploadedLength());
-        assertEquals(1, dataProvider.getNumReadCalls());
-        assertEquals(0, dataProvider.getNumRewindCalls());
+        Assert.assertEquals(4, dataProvider.getUploadedLength());
+        Assert.assertEquals(1, dataProvider.getNumReadCalls());
+        Assert.assertEquals(0, dataProvider.getNumRewindCalls());
 
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("test", callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals("test", callback.mResponseAsString);
     }
 }
