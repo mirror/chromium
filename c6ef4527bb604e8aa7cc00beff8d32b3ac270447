@@ -22,6 +22,30 @@
       "revId": "c6ef4527bb604e8aa7cc00beff8d32b3ac270447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab87cc5_3a34de02",
+        "filename": "ui/compositor/compositor_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-27T18:47:32Z",
+      "side": 1,
+      "message": "Thanks for catching this.",
+      "parentUuid": "de80550f_39a477a3",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "c6ef4527bb604e8aa7cc00beff8d32b3ac270447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
