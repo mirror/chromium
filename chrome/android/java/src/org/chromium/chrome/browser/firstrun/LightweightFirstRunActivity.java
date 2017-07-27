@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.firstrun;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,10 +57,29 @@ public class LightweightFirstRunActivity extends FirstRunActivity {
                                 getString(R.string.chrome_privacy_notice_url)));
             }
         };
+        final SpannableString tos_and_privacy_text;
+        if (mFreProperties.getBoolean(AccountFirstRunFragment.IS_CHILD_ACCOUNT)) {
+            NoUnderlineClickableSpan clickableFamilyLinkPrivacySpan =
+                    new NoUnderlineClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            CustomTabActivity.showInfoPage(LightweightFirstRunActivity.this,
+                                    getString(R.string.family_link_privacy_policy_url));
+                        }
+                    };
+            tos_and_privacy_text = SpanApplier.applySpans(
+                    getString(R.string.lightweight_fre_tos_and_privacy_child_account),
+                    new SpanInfo("<LINK1>", "</LINK1>", clickableTermsSpan),
+                    new SpanInfo("<LINK2>", "</LINK2>", clickablePrivacySpan),
+                    new SpanInfo("<LINK3>", "</LINK3>", clickableFamilyLinkPrivacySpan));
+        } else {
+            tos_and_privacy_text =
+                    SpanApplier.applySpans(getString(R.string.lightweight_fre_tos_and_privacy),
+                            new SpanInfo("<LINK1>", "</LINK1>", clickableTermsSpan),
+                            new SpanInfo("<LINK2>", "</LINK2>", clickablePrivacySpan));
+        }
         ((TextView) findViewById(R.id.lightweight_fre_tos_and_privacy))
-                .setText(SpanApplier.applySpans(getString(R.string.lightweight_fre_tos_and_privacy),
-                        new SpanInfo("<LINK1>", "</LINK1>", clickableTermsSpan),
-                        new SpanInfo("<LINK2>", "</LINK2>", clickablePrivacySpan)));
+                .setText(tos_and_privacy_text);
         ((TextView) findViewById(R.id.lightweight_fre_tos_and_privacy))
                 .setMovementMethod(LinkMovementMethod.getInstance());
 
