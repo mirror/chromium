@@ -16,6 +16,24 @@
       "revId": "c2e00edd1a2375452007ce81ee593c7225a60936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7208ce_7451c611",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-27T15:53:05Z",
+      "side": 0,
+      "message": "This defeats most of the purpose of this patch. This patch does a lot of the churning\nof code, but without any functional changes. Then when I send a functional change patch,\nit\u0027ll be easier to review for correctness.",
+      "parentUuid": "99eafa47_b83f19f0",
+      "revId": "c2e00edd1a2375452007ce81ee593c7225a60936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

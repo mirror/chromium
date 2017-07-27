@@ -52,6 +52,24 @@
       "revId": "922fa2979f10ad8d919d2cb8041b034bf7ed01f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8104060_10518a9d",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-27T15:53:05Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "dbd34855_99d53764",
+      "revId": "922fa2979f10ad8d919d2cb8041b034bf7ed01f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
