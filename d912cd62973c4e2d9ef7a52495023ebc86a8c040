@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bc384fc_df6f1ddf",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T17:43:22Z",
+      "side": 1,
+      "message": "This needs to be in an anonymous namespace.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 2
+      },
+      "revId": "d912cd62973c4e2d9ef7a52495023ebc86a8c040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a82cfe_80633eb4",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T17:43:22Z",
+      "side": 1,
+      "message": "You\u0027ll need to use WrapUnique() once you place the class in the anonymous namespace.",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "d912cd62973c4e2d9ef7a52495023ebc86a8c040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81145afa_24336024",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T17:43:22Z",
+      "side": 1,
+      "message": "nit: After this line,\n\nEXPECT_EQ(0, observer_-\u003eempty_cache_count());",
+      "range": {
+        "startLine": 57,
+        "startChar": 41,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "d912cd62973c4e2d9ef7a52495023ebc86a8c040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
