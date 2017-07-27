@@ -32,13 +32,7 @@ class PrefetchImporterImpl : public PrefetchImporter {
   ~PrefetchImporterImpl() override;
 
   // PrefetchImporter implementation.
-  void ImportFile(const GURL& url,
-                  const GURL& original_url,
-                  const base::string16& title,
-                  int64_t offline_id,
-                  const ClientId& client_id,
-                  const base::FilePath& file_path,
-                  int64_t file_size,
+  void ImportFile(const PrefetchItem& item,
                   const CompletedCallback& callback) override;
 
  private:

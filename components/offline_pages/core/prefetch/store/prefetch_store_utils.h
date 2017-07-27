@@ -9,9 +9,13 @@
 
 namespace sql {
 class Connection;
+class Statement;
 }  // namespace sql
 
 namespace offline_pages {
+
+struct PrefetchItem;
+
 // Useful helper functions to implement PrefetchStore related operations.
 class PrefetchStoreUtils {
  public:
@@ -22,6 +26,11 @@ class PrefetchStoreUtils {
   // was successfully deleted.
   static bool DeletePrefetchItemByOfflineIdSync(sql::Connection* db,
                                                 int64_t offline_id);
+
+  // Creates a prefetch item from a SQL result. Expects complete rows with all
+  // columns present.
+  static void MakePrefetchItem(const sql::Statement& statement,
+                               PrefetchItem* item);
 };
 }  // namespace offline_pages
 

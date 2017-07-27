@@ -74,6 +74,10 @@ class PrefetchDispatcher {
   virtual void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) = 0;
 
+  // Called when a download is completed successfully or fails.
+  virtual void DownloadCompleted(
+      const PrefetchDownloadResult& download_result) = 0;
+
   // Used by the test to signal the completion of the background task.
   virtual void RequestFinishBackgroundTaskForTest() = 0;
 };
