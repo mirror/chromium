@@ -12,12 +12,15 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/memlog_sender.h"
 #include "chrome/common/profiling/profiling_constants.h"
+#include "chrome/common/profiling/constants.mojom.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_manager_connection.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_POSIX)
 #include "base/files/scoped_file.h"
@@ -32,6 +35,17 @@ namespace profiling {
 namespace {
 
 ProfilingProcessHost* pph_singleton = nullptr;
+
+void BindToBrowserConnector(service_manager::mojom::ConnectorRequest request) {
+  if (!content::BrowserThread::CurrentlyOn(content::BrowserThread::UI)) {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&BindToBrowserConnector, base::Passed(&request)));
+    return;
+  }
+  content::ServiceManagerConnection::GetForProcess()->GetConnector()
+      ->BindConnectorRequest(std::move(request));
+}
 
 #if defined(OS_LINUX)
 bool IsRunningOnValgrind() {
@@ -70,7 +84,7 @@ base::CommandLine MakeProfilingCommandLine(const std::string& pipe_id) {
 
 ProfilingProcessHost::ProfilingProcessHost() {
   pph_singleton = this;
-  Launch();
+  LaunchAsService();
 }
 
 ProfilingProcessHost::~ProfilingProcessHost() {
@@ -98,7 +112,7 @@ void ProfilingProcessHost::AddSwitchesToChildCmdLine(
   }
 
   // Watch out: will be called on different threads.
-  ProfilingProcessHost* pph = ProfilingProcessHost::Get();
+  ProfilingProcessHost* pph = ProfilingProcessHost::EnsureStarted();
   if (!pph)
     return;
   pph->EnsureControlChannelExists();
@@ -127,7 +141,7 @@ void ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
     return;
   }
 
-  ProfilingProcessHost* pph = ProfilingProcessHost::Get();
+  ProfilingProcessHost* pph = ProfilingProcessHost::EnsureStarted();
   if (!pph)
     return;
 
@@ -184,6 +198,32 @@ void ProfilingProcessHost::Launch() {
   StartMemlogSender(std::move(local_pipe));
 }
 
+void ProfilingProcessHost::LaunchAsService() {
+  LOG(ERROR) << "PPH: Launching as service";
+  // May get called on different threads, we need to be on the IO thread to
+  // work.
+  //
+  // TODO(ajwong): This thread bouncing logic is dumb. The BindToBrowserConnector()
+  // ends up jumping to the UI thread also so this is at least 2 bounces.
+  // Simplify.
+  if (!content::BrowserThread::CurrentlyOn(content::BrowserThread::IO)) {
+    content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+        ->PostTask(
+            FROM_HERE,
+            base::BindOnce(&ProfilingProcessHost::LaunchAsService,
+                           base::Unretained(this)));
+    return;
+  }
+
+  service_manager::mojom::ConnectorRequest connector_request;
+  std::unique_ptr<service_manager::Connector> connector =
+      service_manager::Connector::Create(&connector_request);
+  BindToBrowserConnector(std::move(connector_request));
+
+  connector->BindInterface(mojom::kServiceName, &memlog_);
+  memlog_->DumpProcess(0);
+}
+
 void ProfilingProcessHost::EnsureControlChannelExists() {
   // May get called on different threads, we need to be on the IO thread to
   // work.
@@ -220,8 +260,11 @@ void ProfilingProcessHost::ConnectControlChannelOnIO() {
 void ProfilingProcessHost::AddNewSenderOnIO(
     mojo::edk::ScopedPlatformHandle handle,
     int child_process_id) {
+  memlog_->DumpProcess(child_process_id);
+  /*
   profiling_control_->AddNewSender(
       mojo::WrapPlatformFile(handle.release().handle), child_process_id);
+      */
 }
 
 }  // namespace profiling

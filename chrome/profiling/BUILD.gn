@@ -3,6 +3,9 @@
 # found in the LICENSE file.
 
 import("//chrome/common/features.gni")
+import("//services/service_manager/public/cpp/service.gni")
+import("//services/service_manager/public/service_manifest.gni")
+
 
 if (enable_oop_heap_profiling) {
   static_library("profiling") {
@@ -18,6 +21,8 @@ if (enable_oop_heap_profiling) {
       "backtrace_storage.h",
       "json_exporter.cc",
       "json_exporter.h",
+      "memlog_impl.cc",
+      "memlog_impl.h",
       "memlog_connection_manager.cc",
       "memlog_connection_manager.h",
       "memlog_receiver.h",
@@ -35,6 +40,8 @@ if (enable_oop_heap_profiling) {
       "profiling_main.h",
       "profiling_process.cc",
       "profiling_process.h",
+      "profiling_service.cc",
+      "profiling_service.h",
     ]
 
     deps = [
@@ -55,6 +62,11 @@ if (enable_oop_heap_profiling) {
       "//base",
       "//testing/gtest",
     ]
+  }
+
+  service_manifest("manifest") {
+    name = "profiling"
+    source = "profiling_manifest.json"
   }
 } else {
   # Dummy target so this can be unconditionally depended on and header checking
