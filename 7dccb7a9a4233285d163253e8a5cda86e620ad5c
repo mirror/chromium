@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fec5cbd_07415ade",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-27T19:15:07Z",
+      "side": 1,
+      "message": "the main goal here is to actually clean up some of the stuff in CVC about focus, wire up containerView.onFocusChanged to host_-\u003eGotFocus, and then remove this here.\n\nNeed to be careful with the unfocusable container view though, so still need to shortcut that somewhere.",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5c1cf0_4384fa8a",
+        "filename": "ui/android/java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-27T19:15:07Z",
+      "side": 1,
+      "message": "probably move this into ui and match behavior, ie unfocusable view is considered always confused (for whatever reason...): https://cs.chromium.org/chromium/src/content/public/android/java/src/org/chromium/content/browser/ViewUtils.java?rcl\u003d82c59e9ef97067e3db6853ef04509cd70d97ece1\u0026l\u003d19",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfb0a50_997f0ca1",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-27T19:15:07Z",
+      "side": 1,
+      "message": "call this RequestFocus",
+      "revId": "7dccb7a9a4233285d163253e8a5cda86e620ad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
