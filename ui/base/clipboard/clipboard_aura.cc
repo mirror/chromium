@@ -9,7 +9,9 @@
 #include <limits>
 #include <list>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/logging.h"
