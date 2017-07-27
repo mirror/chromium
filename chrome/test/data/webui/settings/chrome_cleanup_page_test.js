@@ -14,6 +14,8 @@ var TestChromeCleanupProxy = function() {
     'restartComputer',
     'setLogsUploadPermission',
     'startCleanup',
+    'notifyShowDetails',
+    'notifyLearnMoreClicked',
   ]);
 };
 
@@ -21,8 +23,8 @@ TestChromeCleanupProxy.prototype = {
   __proto__: TestBrowserProxy.prototype,
 
   /** @override */
-  dismissCleanupPage: function() {
-    this.methodCalled('dismissCleanupPage');
+  dismissCleanupPage: function(source) {
+    this.methodCalled('dismissCleanupPage', source);
   },
 
   /** @override */
@@ -43,6 +45,16 @@ TestChromeCleanupProxy.prototype = {
   /** @override */
   startCleanup: function(logsUploadEnabled) {
     this.methodCalled('startCleanup', logsUploadEnabled);
+  },
+
+  /** @override */
+  notifyShowDetails: function(enabled) {
+    this.methodCalled('notifyShowDetails', enabled);
+  },
+
+  /** @override */
+  notifyLearnMoreClicked: function() {
+    this.methodCalled('notifyLearnMoreClicked');
   }
 };
 
