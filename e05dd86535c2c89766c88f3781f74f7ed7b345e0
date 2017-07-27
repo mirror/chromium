@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4aaf345_1c14ed26",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T23:32:52Z",
+      "side": 1,
+      "message": "nit: you might not need this comment. This part of code is quite straight forward. \nUp to you. Feel free to ignore.",
+      "revId": "e05dd86535c2c89766c88f3781f74f7ed7b345e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff6f4e5_86b6440d",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T23:32:52Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e05dd86535c2c89766c88f3781f74f7ed7b345e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6a441e_45635bbc",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T23:32:52Z",
+      "side": 1,
+      "message": "Converting -\u003e Converts",
+      "revId": "e05dd86535c2c89766c88f3781f74f7ed7b345e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202f94ab_d6e38e4d",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T23:32:52Z",
+      "side": 1,
+      "message": "add an empty line below.",
+      "revId": "e05dd86535c2c89766c88f3781f74f7ed7b345e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7254e79_37a26d1c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T23:32:52Z",
+      "side": 1,
+      "message": "you need {...} here since the body of the if statement takes more than one line.",
+      "revId": "e05dd86535c2c89766c88f3781f74f7ed7b345e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91ed595_49397745",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T23:32:52Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "e05dd86535c2c89766c88f3781f74f7ed7b345e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ee0533_924e8986",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T23:32:52Z",
+      "side": 1,
+      "message": "remove  \"  // namespace safe_browsing\"",
+      "revId": "e05dd86535c2c89766c88f3781f74f7ed7b345e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
