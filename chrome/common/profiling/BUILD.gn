@@ -33,6 +33,8 @@ if (enable_oop_heap_profiling) {
 
   mojom("interfaces") {
     sources = [
+      "constants.mojom",
+      "memlog.mojom",
       "profiling_control.mojom",
     ]
   }

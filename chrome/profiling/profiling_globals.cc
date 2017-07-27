@@ -39,11 +39,11 @@ BacktraceStorage* ProfilingGlobals::GetBacktraceStorage() {
 
 void ProfilingGlobals::RunMainMessageLoop() {
   active_runloop_ = base::MakeUnique<base::RunLoop>();
-  run_loop->Run();
+  active_runloop_->Run();
 }
 
 void ProfilingGlobals::QuitWhenIdle() {
-  run_loop_->QuitWhenIdle();
+  active_runloop_->QuitWhenIdle();
 }
 
 }  // namespace profiling

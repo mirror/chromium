@@ -16,11 +16,17 @@ class CommandLine;
 
 }  // namespace base
 
+namespace content {
+
+class ServiceManagerConnection;
+
+}  // namespace content
+
 namespace profiling {
 
 // Starts the memlog sender pipe if the command line has requested it. The pipe
 // ID will be extracted from the CommandLine for the process.
-void InitMemlogSenderIfNecessary();
+void InitMemlogSenderIfNecessary(content::ServiceManagerConnection* connection);
 
 // Starts the memlog sender pipe with the given ID.
 void StartMemlogSender(mojo::edk::ScopedPlatformHandle fd);

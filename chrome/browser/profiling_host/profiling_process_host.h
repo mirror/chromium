@@ -9,6 +9,7 @@
 #include "base/process/process.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/common/profiling/profiling_control.mojom.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 
@@ -74,6 +75,7 @@ class ProfilingProcessHost {
   ~ProfilingProcessHost();
 
   void Launch();
+  void LaunchAsService();
 
   void EnsureControlChannelExists();
   void ConnectControlChannelOnIO();
@@ -95,6 +97,7 @@ class ProfilingProcessHost {
   mojo::edk::ScopedPlatformHandle pending_control_connection_;
 
   mojom::ProfilingControlPtr profiling_control_;
+  mojom::MemlogPtr memlog_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcessHost);
 };

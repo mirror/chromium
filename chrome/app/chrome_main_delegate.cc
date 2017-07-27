@@ -1210,14 +1210,6 @@ bool ChromeMainDelegate::ShouldTerminateServiceManagerOnInstanceQuit(
 void ChromeMainDelegate::OnServiceManagerInitialized(
     const base::Closure& quit_closure,
     service_manager::BackgroundServiceManager* service_manager) {
-#if defined(OS_POSIX)
-  // Quit the main process in response to shutdown signals (like SIGTERM).
-  // These signals are used by Linux distributions to request clean shutdown.
-  // On Chrome OS the SIGTERM signal is sent by session_manager.
-  InstallShutdownSignalHandlers(quit_closure,
-                                base::ThreadTaskRunnerHandle::Get());
-#endif
-
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
   // Start services that we know we want to launch on startup (UI service,
   // window manager, quick launch app).

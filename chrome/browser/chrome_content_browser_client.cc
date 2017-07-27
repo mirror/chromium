@@ -386,6 +386,7 @@
 
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
 #include "chrome/browser/profiling_host/profiling_process_host.h"
+#include "chrome/common/profiling/constants.mojom.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PRINTING)
@@ -3006,6 +3007,11 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
   (*services)[printing::mojom::kServiceName] = {
       base::ASCIIToUTF16("PDF Compositor Service"),
       content::SANDBOX_TYPE_UTILITY};
+#endif
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  (*services)[profiling::mojom::kServiceName] = {
+      base::ASCIIToUTF16("Profiling Service"), content::SANDBOX_TYPE_UTILITY};
 #endif
 }
 
