@@ -136,6 +136,8 @@ declare_args() {
   # Set to true when compiling with the Clang compiler. Typically this is used
   # to configure warnings.
   is_clang =
+      (current_os == "win" || current_os == "winrt_81" ||
+       current_os == "winrt_81_phone" || current_os == "winrt_10") ||
       current_os == "mac" || current_os == "ios" || current_os == "chromeos" ||
       current_os == "fuchsia" || current_os == "android" ||
       (current_os == "linux" && current_cpu != "s390x" &&
