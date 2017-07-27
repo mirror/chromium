@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "887ddf41_a4ea78a9",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-27T17:40:21Z",
+      "side": 1,
+      "message": "Yes, you are right, I was worried about the length of name. But I agree readability is more important. I changed \u0027Target\u0027 to \u0027OneTimePermission\u0027 in Chrome. But this also requires name change of dbus interface in Update Engine which I could not do in the same CL. So there would be some follow up CLs for this renaming.",
+      "parentUuid": "d043071d_d92fd9b3",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f52a57b3_f3c4a36a",
         "filename": "chrome/browser/upgrade_observer.h",
         "patchSetId": 6
