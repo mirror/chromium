@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h"
 #include "services/resource_coordinator/service_callbacks_impl.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -23,7 +24,9 @@ std::unique_ptr<service_manager::Service> ResourceCoordinatorService::Create() {
 ResourceCoordinatorService::ResourceCoordinatorService()
     : weak_factory_(this) {}
 
-ResourceCoordinatorService::~ResourceCoordinatorService() = default;
+ResourceCoordinatorService::~ResourceCoordinatorService() {
+  CoordinationUnitImpl::AssertNoActiveCoordinationUnits();
+}
 
 void ResourceCoordinatorService::OnStart() {
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(

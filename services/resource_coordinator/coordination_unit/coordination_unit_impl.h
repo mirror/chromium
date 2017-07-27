@@ -32,6 +32,8 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~CoordinationUnitImpl() override;
 
+  static void AssertNoActiveCoordinationUnits();
+
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
       const CoordinationUnitImpl* coordination_unit);
 

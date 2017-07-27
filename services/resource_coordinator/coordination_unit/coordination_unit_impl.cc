@@ -37,6 +37,10 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
 }
 
+void CoordinationUnitImpl::AssertNoActiveCoordinationUnits() {
+  CHECK(g_cu_map().empty());
+}
+
 CoordinationUnitImpl::CoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
