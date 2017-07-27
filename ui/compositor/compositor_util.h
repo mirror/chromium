@@ -12,9 +12,13 @@
 
 namespace viz {
 class RendererSettings;
+class ResourceSettings;
 }
 
 namespace ui {
+
+COMPOSITOR_EXPORT viz::ResourceSettings CreateResourceSettings(
+    const viz::BufferToTextureTargetMap& image_targets);
 
 COMPOSITOR_EXPORT viz::RendererSettings CreateRendererSettings(
     const viz::BufferToTextureTargetMap& image_targets);
