@@ -559,38 +559,47 @@ IntSize PaintLayerScrollableArea::MaximumScrollOffsetInt() const {
   return ToIntSize(-ScrollOrigin() + (content_size - visible_size));
 }
 
+void PaintLayerScrollableArea::VisibleSizeChanged() {
+  ShowOverlayScrollbars();
+}
+
 IntRect PaintLayerScrollableArea::VisibleContentRect(
     IncludeScrollbarsInRect scrollbar_inclusion) const {
-  int vertical_scrollbar_width = 0;
+  // TOOO(szager): Handle fractional scroll offsets correctly.
+  return IntRect(FlooredIntPoint(ScrollPosition()),
+                 IntSize(VisibleWidth(scrollbar_inclusion),
+                         VisibleHeight(scrollbar_inclusion)));
+}
+
+int PaintLayerScrollableArea::VisibleHeight(
+    IncludeScrollbarsInRect scrollbar_inclusion) const {
   int horizontal_scrollbar_height = 0;
   if (scrollbar_inclusion == kExcludeScrollbars) {
-    vertical_scrollbar_width =
-        (VerticalScrollbar() && !VerticalScrollbar()->IsOverlayScrollbar())
-            ? VerticalScrollbar()->ScrollbarThickness()
-            : 0;
     horizontal_scrollbar_height =
         (HorizontalScrollbar() && !HorizontalScrollbar()->IsOverlayScrollbar())
             ? HorizontalScrollbar()->ScrollbarThickness()
             : 0;
   }
 
+  int border_height = Box().BorderHeight().Round();
+  return max(0, Layer()->size().Height() - horizontal_scrollbar_height -
+                    border_height);
+}
+
+int PaintLayerScrollableArea::VisibleWidth(
+    IncludeScrollbarsInRect scrollbar_inclusion) const {
+  int vertical_scrollbar_width = 0;
+  if (scrollbar_inclusion == kExcludeScrollbars) {
+    vertical_scrollbar_width =
+        (VerticalScrollbar() && !VerticalScrollbar()->IsOverlayScrollbar())
+            ? VerticalScrollbar()->ScrollbarThickness()
+            : 0;
+  }
+
   // TODO(szager): Handle fractional scroll offsets correctly.
-  return IntRect(
-      FlooredIntPoint(ScrollPosition()),
-      IntSize(max(0, Layer()->size().Width() - vertical_scrollbar_width),
-              max(0, Layer()->size().Height() - horizontal_scrollbar_height)));
-}
-
-void PaintLayerScrollableArea::VisibleSizeChanged() {
-  ShowOverlayScrollbars();
-}
-
-int PaintLayerScrollableArea::VisibleHeight() const {
-  return Layer()->size().Height();
-}
-
-int PaintLayerScrollableArea::VisibleWidth() const {
-  return Layer()->size().Width();
+  int border_width = Box().BorderWidth().Round();
+  return max(0,
+             Layer()->size().Width() - vertical_scrollbar_width - border_width);
 }
 
 LayoutSize PaintLayerScrollableArea::ClientSize() const {
