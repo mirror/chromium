@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "98e25007_24c536f9",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T20:46:44Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t think it\u0027s worth trying to refactor this and change the behavior of this API, since we are actively trying to remove it entirely.  Thanks for giving it a shot though.",
+      "parentUuid": "d6fdf187_a01a1d9d",
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68d6211e_b9ccc7d0",
         "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
         "patchSetId": 4
@@ -116,6 +134,24 @@
       "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbede94_95481385",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-27T20:46:44Z",
+      "side": 1,
+      "message": "As long as case #2 is covered by the patch this SGTM.",
+      "parentUuid": "3a23a0b8_314a10ab",
+      "revId": "55afcc3bf20db4787bd41c84279c9693dcdd0c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
