@@ -20,6 +20,7 @@ namespace android_webview {
 // A passive data structure only used to carry request information. This
 // class should be copyable.
 struct AwWebResourceRequest final {
+  AwWebResourceRequest();
   explicit AwWebResourceRequest(const net::URLRequest& request);
 
   // Add default copy/move/assign operators. Adding explicit destructor
