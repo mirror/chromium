@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c88da8cd_dc07b619",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T16:37:24Z",
+      "side": 1,
+      "message": "nit: Observers are *notified* (they don\u0027t perform the check themselves), and this happens when the cache *becomes* empty (which means that they started at size \u003e 0 and transitioned to size \u003d\u003d 0).",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "1336f317d91d04f9e0b0db9bafb1f12e923d22c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf7adbe_a96dea8d",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T16:37:24Z",
+      "side": 1,
+      "message": "// HostScanCache::Observer:",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "1336f317d91d04f9e0b0db9bafb1f12e923d22c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b910fa_68f37185",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T16:37:24Z",
+      "side": 1,
+      "message": "uint32_t, since this value cannot be negative.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "1336f317d91d04f9e0b0db9bafb1f12e923d22c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46096d93_66a0b822",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T16:37:24Z",
+      "side": 1,
+      "message": "You\u0027ve introduced a memory leak since you never delete this pointer. Instead, please use a std::unique_ptr\u003c\u003e, and initialize this field in SetUp(). You\u0027ll also want to add it as an Observer in SetUp().",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "1336f317d91d04f9e0b0db9bafb1f12e923d22c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc47758c_6f9a4d12",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T16:37:24Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(host_scan_cache_.empty());\n\nand the reverse below.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "1336f317d91d04f9e0b0db9bafb1f12e923d22c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e96dad_a45d8421",
+        "filename": "chromeos/components/tether/host_scan_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T16:37:24Z",
+      "side": 1,
+      "message": "Please add an entry back and remove it again to test that an Observer can be notified multiple times.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 1
+      },
+      "revId": "1336f317d91d04f9e0b0db9bafb1f12e923d22c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
