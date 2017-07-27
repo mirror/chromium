@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0879d6f_094f057c",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Needed or the PaymentRequestUIDelegate but I am now forward declaring it!",
+      "parentUuid": "c9d55148_1e827daf",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3468e61_7f4fd4b7",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
         "patchSetId": 13
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d4eb7de3_87f5f7ee",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3468e61_7f4fd4b7",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3b13afd_faf6c9d5",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
         "patchSetId": 13
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-27T14:01:24Z",
       "side": 1,
       "message": "Did you investigate OnceCallback?",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62259785_27a7830b",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Ah sorry about that, I had started looking into this but I had forgotten to follow up. I\u0027ve changed it now to use OnceCallback.",
+      "parentUuid": "f3b13afd_faf6c9d5",
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f2db936d_c064d4e5",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92838cf4_01aecf6f",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96e9df78_edaa5b81",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
         "patchSetId": 13
@@ -87,6 +165,30 @@
       "writtenOn": "2017-07-27T14:01:24Z",
       "side": 1,
       "message": "suggestion: why not return std::vector\u003cstd::string\u003e instead of an out_ param? In that case, the name could be FilterUnsupportedURLPaymentMethods\n\nThe calling code would be:\n\nstd::vector\u003cstd::string\u003e supported_payment_methods \u003d FilterUnsupportedURLPaymentMethods(merchant_specified_url_methods);\n\nNote that I\u0027m bad with naming but it doesn\u0027t stop me from making suggestions :) My general point is about the API which I think reads better like this.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 6
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477e04ad_979875b1",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Makes sense! When I had talked to Moe about this we thought it would be a good idea to parallel the parse methods from payment_request_data_util. However we just talked about how adding this out param isn\u0027t necessary if it\u0027s only returning one thing and that instead of having this as a separate call to CreateIOSPaymentInstrumentsForMethods we will make a call to this function in CreateIOSPaymentInstrumentsForMethods which will in turn return the supported methods to the user.",
+      "parentUuid": "96e9df78_edaa5b81",
       "range": {
         "startLine": 84,
         "startChar": 2,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "c1cc4812_c4753525",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbec3d6_09e9a98b",
+      "range": {
+        "startLine": 95,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "502149c7_474c9948",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -136,6 +262,24 @@
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65a8e8b_d783f4e0",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done\n\nEDIT: Given that this will be private, it will only be called once (when we first try to get all the iOSPaymentInstruments), and it will need to overriden in the tests and thus must be virtual are you okay with keeping this as a non-static method?",
+      "parentUuid": "502149c7_474c9948",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "fe1da241_1a986f4f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a6df3f_2225b542",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 66
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d22f5db_703b381c",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "ee9823c6_52894de7",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Argument removed as per suggestion",
+      "parentUuid": "1d22f5db_703b381c",
+      "range": {
+        "startLine": 49,
+        "startChar": 30,
+        "endLine": 49,
+        "endChar": 64
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebae2462_0bc9c76a",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -196,6 +388,24 @@
       "writtenOn": "2017-07-27T14:01:24Z",
       "side": 1,
       "message": "I think we should move the code to verify that each input PMI is a valid GURL here.",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d753a4_11088e11",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Per offline discussion will be done in a follow-up CL given that validation is already occurring in a separate class (payment_request_data_util)",
+      "parentUuid": "ebae2462_0bc9c76a",
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "3808f91e_2f9d67c8",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af37c2bc_fd65d0b2",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4f33d74_acd112b6",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "6b8a2fcb_3958b629",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f33d74_acd112b6",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b6c338_65d5eb75",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -250,6 +496,24 @@
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44913c1e_b6aa6005",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b6c338_65d5eb75",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "7f07ea80_43d358fd",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d56e724_d20efa97",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3a1895_1a0cbf63",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -290,6 +578,24 @@
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac87493c_7e539ea1",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3a1895_1a0cbf63",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +622,30 @@
     },
     {
       "key": {
+        "uuid": "41b738a9_828fdf56",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19967ca2_d2d55c28",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 48
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8c2c224_72a0c219",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -330,6 +660,24 @@
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522776ea_fc925bdf",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c2c224_72a0c219",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -350,6 +698,24 @@
     },
     {
       "key": {
+        "uuid": "c5bd2612_3ccd68c3",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9c6c466_8c572935",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dd73684_3d52616b",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -364,6 +730,24 @@
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c37ced_f07e1015",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd73684_3d52616b",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -384,6 +768,24 @@
     },
     {
       "key": {
+        "uuid": "de418079_06aaae00",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "389e2f6f_e32da34f",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "085eb2e6_aa9932b8",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -398,6 +800,24 @@
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece6c2ef_cf784fca",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "085eb2e6_aa9932b8",
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -424,6 +844,30 @@
     },
     {
       "key": {
+        "uuid": "3bada398_d09acfd8",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d664545a_501a7378",
+      "range": {
+        "startLine": 319,
+        "startChar": 4,
+        "endLine": 319,
+        "endChar": 18
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9699cea6_3183bfb3",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -447,6 +891,30 @@
     },
     {
       "key": {
+        "uuid": "559f61b6_5eb83104",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9699cea6_3183bfb3",
+      "range": {
+        "startLine": 338,
+        "startChar": 33,
+        "endLine": 338,
+        "endChar": 67
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e5810c_148aa35d",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
         "patchSetId": 13
@@ -467,6 +935,30 @@
       "revId": "c1010387318a06f0871436e65ce10e507549db5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ddd932_0e0d2205",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-27T18:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e5810c_148aa35d",
+      "range": {
+        "startLine": 342,
+        "startChar": 2,
+        "endLine": 342,
+        "endChar": 42
+      },
+      "revId": "c1010387318a06f0871436e65ce10e507549db5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
