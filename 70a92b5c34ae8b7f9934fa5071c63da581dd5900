@@ -338,6 +338,24 @@
     },
     {
       "key": {
+        "uuid": "d357fc44_b08ff63b",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T20:47:51Z",
+      "side": 1,
+      "message": "Tangent, but can he please put himself back then?  It\u0027s desirable that people be repeated in lower-level owners files if they\u0027re appropriate reviewers for those specific areas.",
+      "parentUuid": "370cbd43_78e79005",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7abd767_18011564",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 7
