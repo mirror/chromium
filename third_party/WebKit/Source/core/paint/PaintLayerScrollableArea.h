@@ -276,8 +276,10 @@ class CORE_EXPORT PaintLayerScrollableArea final
   IntSize MaximumScrollOffsetInt() const override;
   IntRect VisibleContentRect(
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
-  int VisibleHeight() const override;
-  int VisibleWidth() const override;
+  int VisibleHeight(IncludeScrollbarsInRect scrollbar_inclusion =
+                        kExcludeScrollbars) const override;
+  int VisibleWidth(IncludeScrollbarsInRect scrollbar_inclusion =
+                       kExcludeScrollbars) const override;
   IntSize ContentsSize() const override;
   void ContentsResized() override;
   bool IsScrollable() const override;
@@ -296,16 +298,6 @@ class CORE_EXPORT PaintLayerScrollableArea final
   ScrollBehavior ScrollBehaviorStyle() const override;
   CompositorAnimationHost* GetCompositorAnimationHost() const override;
   CompositorAnimationTimeline* GetCompositorAnimationTimeline() const override;
-
-  // These are temporary convenience methods.  They delegate to Box() methods,
-  // which will be up-to-date when UpdateAfterLayout runs.  By contrast,
-  // VisibleContentRect() is based on layer_.Size(), which isn't updated
-  // until later, when UpdateLayerPosition runs.  A future patch will cause
-  // layer_.Size() to be updated effectively simultaneously with Box()
-  // sizing.  When that lands, these methods should be removed in favor of
-  // using VisibleContentRect() and/or layer_.Size() everywhere.
-  LayoutSize ClientSize() const;
-  IntSize PixelSnappedClientSize() const;
 
   void VisibleSizeChanged();
 
