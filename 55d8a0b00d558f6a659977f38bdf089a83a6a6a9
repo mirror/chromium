@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "099b31ba_5f6cb89f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-27T00:37:32Z",
+      "side": 1,
+      "message": "Yes they are. This improves the actual user voice-over a11y. The other CL changes the way Earlgray access/taps that button.",
+      "parentUuid": "7d75e045_b16e6d74",
+      "revId": "55d8a0b00d558f6a659977f38bdf089a83a6a6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3544a866_233cde72",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T10:29:37Z",
       "side": 1,
       "message": "Could you please explain (either in the CL description, in the bug, or as a comment somewhere) why this change is necessary?  Presumably this worked on iOS10 and earlier.  Did something change in iOS11?  Do we need to make this same change in all of our cells across the whole codebase?",
+      "revId": "55d8a0b00d558f6a659977f38bdf089a83a6a6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27eec6cf_195ededc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-27T00:37:32Z",
+      "side": 1,
+      "message": "You\u0027re right, I\u0027ll add a better explanation.\nEarlgray was able to access the text field Clear Text button programmatically, but an actual voice-over user was never able to access it. \nYes, we might need to change more cells if they have this problem. Though I think most of them only have one component inside the cell, so it shouldn\u0027t be a problem.",
+      "parentUuid": "3544a866_233cde72",
       "revId": "55d8a0b00d558f6a659977f38bdf089a83a6a6a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
