@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ac1ceaac_acf3feb7",
+        "filename": "components/cryptauth/cryptauth_device_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-27T22:14:00Z",
+      "side": 1,
+      "message": "Ok, does the latest change make this check?",
+      "parentUuid": "6cc876af_b7bbe359",
+      "range": {
+        "startLine": 481,
+        "startChar": 42,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959000d8_ca8e73e4",
         "filename": "components/cryptauth/cryptauth_device_manager.h",
         "patchSetId": 15
@@ -472,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "f875b092_c7c08f2b",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-27T22:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ef1719_c06673c1",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d0b8e41_65cbe1e8",
         "filename": "components/cryptauth/remote_device_provider_unittest.cc",
         "patchSetId": 15
@@ -543,6 +591,30 @@
     },
     {
       "key": {
+        "uuid": "e4d58290_09e30b22",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-27T22:14:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13f7d293_cb4995a4",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9a184f9_8f5ba9a0",
         "filename": "components/cryptauth/remote_device_provider_unittest.cc",
         "patchSetId": 15
@@ -554,6 +626,30 @@
       "writtenOn": "2017-07-27T18:03:43Z",
       "side": 1,
       "message": "This expected_size param seems unnecessary. You are injecting the mock_device_manager_sync_devices_ yourself in this test, so simply use its size as the expected size.",
+      "range": {
+        "startLine": 209,
+        "startChar": 43,
+        "endLine": 209,
+        "endChar": 63
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b50a80_aa862838",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-27T22:14:00Z",
+      "side": 1,
+      "message": "We added an extra parameter to VerifySyncedDevicesMatchExpectation in order for more clarity when reading the tests below.\nWhat do you think khorimoto@ ?",
+      "parentUuid": "f9a184f9_8f5ba9a0",
       "range": {
         "startLine": 209,
         "startChar": 43,
