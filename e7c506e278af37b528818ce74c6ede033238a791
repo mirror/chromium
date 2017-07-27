@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaf91c38_3ce0f0fb",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-27T02:43:01Z",
+      "side": 1,
+      "message": "It was in a previous patchset but isn\u0027t any more. Removed.",
+      "parentUuid": "87cacb3b_a00e8a7e",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42713cc8_22c8957f",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e7c506e278af37b528818ce74c6ede033238a791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28bc09c_b4516628",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-27T02:43:01Z",
+      "side": 1,
+      "message": "Added one for this call. The netcp call seems fairly self-explanatory so I didn\u0027t add one there in this patchset, but I can add one if you\u0027d like.",
+      "parentUuid": "42713cc8_22c8957f",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c89c3893_6f165b1a",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-27T02:43:01Z",
+      "side": 1,
+      "message": "That is intentional. The recipe currently passes --test_launcher_summary_output because that\u0027s the only flag that exists in the tree version, but everything else uses --test-launcher-summary-output so I\u0027d like to use that here. After this CL lands, I plan to flip the recipe and then remove the underscore version from here.",
+      "parentUuid": "1bd364cf_7c3a198e",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71065943_e728261d",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "79e83fa5_26e0d9b0",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-27T02:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71065943_e728261d",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51fda7f3_da82ce14",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "e7c506e278af37b528818ce74c6ede033238a791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7475c4d6_629ec9f7",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-27T02:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51fda7f3_da82ce14",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
