@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93064e43_696ae755",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-27T14:57:30Z",
+      "side": 1,
+      "message": "nit: You could construct the TouchActionRegion here instead of a temp var + move-cast",
+      "revId": "ed14fad3e6e104af8103f48d395057be39c01133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b8384c_4540d6a1",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-27T14:57:30Z",
+      "side": 1,
+      "message": "nit: whitespace above/below this",
+      "revId": "ed14fad3e6e104af8103f48d395057be39c01133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9db674e_89e4966c",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-27T14:57:30Z",
+      "side": 1,
+      "message": "Can you add a unit test for this constructor?",
+      "revId": "ed14fad3e6e104af8103f48d395057be39c01133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
