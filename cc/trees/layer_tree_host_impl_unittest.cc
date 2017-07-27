@@ -936,6 +936,7 @@ TEST_F(LayerTreeHostImplTest, ScrollerSizeOfCCScrollingHistogramRecordingTest) {
 
 TEST_F(LayerTreeHostImplTest, GPUMemoryForSmallLayerHistogramTest) {
   base::HistogramTester histogram_tester;
+  ResetClientNameForMetricsForTesting();
   SetClientNameForMetrics("Renderer");
   // With default tile size being set to 256 * 256, the following layer needs
   // one tile only which costs 256 * 256 * 4 / 1024 = 256KB memory.
@@ -948,6 +949,7 @@ TEST_F(LayerTreeHostImplTest, GPUMemoryForSmallLayerHistogramTest) {
 
 TEST_F(LayerTreeHostImplTest, GPUMemoryForLargeLayerHistogramTest) {
   base::HistogramTester histogram_tester;
+  ResetClientNameForMetricsForTesting();
   SetClientNameForMetrics("Browser");
   // With default tile size being set to 256 * 256, the following layer needs
   // 4 tiles which cost 256 * 256 * 4 * 4 / 1024 = 1024KB memory.
