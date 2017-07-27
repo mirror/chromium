@@ -147,7 +147,7 @@ IOSChromeContentSuggestionsServiceFactory::BuildServiceInstanceFor(
       base::MakeUnique<ContentSuggestionsService>(
           State::ENABLED, signin_manager, history_service, large_icon_service,
           prefs, std::move(category_ranker), std::move(user_classifier),
-          std::move(scheduler));
+          std::move(scheduler), /*contextual_suggestions_source=*/nullptr);
 
   // Create the ReadingListSuggestionsProvider.
   ReadingListModel* reading_list_model =

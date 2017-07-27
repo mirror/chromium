@@ -159,7 +159,8 @@ class ContentSuggestionsServiceTest : public testing::Test {
         enabled, /*signin_manager=*/nullptr, /*history_service=*/nullptr,
         /*large_icon_service=*/nullptr, pref_service_.get(),
         std::move(category_ranker_), std::move(user_classifier),
-        /*scheduler=*/nullptr);
+        /*scheduler=*/nullptr,
+        /*contextual_suggestions_source=*/nullptr);
   }
 
   void ResetService() {
