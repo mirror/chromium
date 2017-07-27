@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac1c8b55_fd25f7a4",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T23:18:30Z",
+      "side": 1,
+      "message": "if the rest of the test doesn\u0027t make sense if this fails, use ASSERT_EQ instead.",
+      "revId": "ddb40271602eac21026e407ea8011c01bf4fa0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ad06d7_8fd8ee05",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T23:18:30Z",
+      "side": 1,
+      "message": "can you remove this local and just call TestMouseEventParam() (which appears to be defined in the base class) here instead?",
+      "revId": "ddb40271602eac21026e407ea8011c01bf4fa0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
