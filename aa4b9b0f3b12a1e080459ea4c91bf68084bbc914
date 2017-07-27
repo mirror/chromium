@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06379b20_307c7227",
+        "filename": "third_party/WebKit/Source/core/inspector/LeakDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-27T10:05:43Z",
+      "side": 1,
+      "message": "I don\u0027t think core/inspector is a fit. And I don\u0027t see any other directory that would be a good home for this file.\n\nI would propose creating core/leak_detector.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "aa4b9b0f3b12a1e080459ea4c91bf68084bbc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea31ddc_563097b5",
+        "filename": "third_party/WebKit/Source/core/inspector/LeakDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-27T10:05:43Z",
+      "side": 1,
+      "message": "Looks like PrepareForLeakDetection() and CollectGarbage() are separated for a reason\nhttps://codereview.chromium.org/1472943004\n\nAlso hajimehoshi@ is thinking of making PrepareForLeakDetection asynchronous. So we will need to add another method here like OnPrepareForLeakDetectionComplete()\n\nHence I think we should name this method OnCollectGarbageComplete",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "aa4b9b0f3b12a1e080459ea4c91bf68084bbc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d26052_2cb7f4ac",
+        "filename": "third_party/WebKit/Source/core/inspector/LeakDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-27T10:05:43Z",
+      "side": 1,
+      "message": "I think we can refactor and make do with just one Timer?",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 53
+      },
+      "revId": "aa4b9b0f3b12a1e080459ea4c91bf68084bbc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3aa577f_97d5a1c1",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-27T10:05:43Z",
+      "side": 1,
+      "message": "Unused include",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "aa4b9b0f3b12a1e080459ea4c91bf68084bbc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789b08f6_d5f4b506",
+        "filename": "third_party/WebKit/Source/modules/exported/WebLeakDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-27T10:05:43Z",
+      "side": 1,
+      "message": "We should convert WebFrame to Frame here. And convert to LocalFrame inside LeakDetector",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "aa4b9b0f3b12a1e080459ea4c91bf68084bbc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2209758_e10e51bb",
+        "filename": "third_party/WebKit/Source/modules/exported/WebLeakDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-27T10:05:43Z",
+      "side": 1,
+      "message": "I don\u0027t see why we need to keep this a separate method. Just do this in OnLeakDetectionComplete?",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "aa4b9b0f3b12a1e080459ea4c91bf68084bbc914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
