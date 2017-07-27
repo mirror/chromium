@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4df9613d_8976e3ac",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9da487f5_cc3758f6",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df8c11e9_5d809b6e",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "885e94f3_eb8542e5",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "That seems much better :)",
+      "parentUuid": "df8c11e9_5d809b6e",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc892030_e268b57d",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-26T19:19:26Z",
       "side": 1,
       "message": "Nit: Can use a default arg to avoid the need for two copies of the function.",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f029f944_6cca9533",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "IMHO it\u0027s better to keep overloaded versions. That\u0027s because we have two default values here: disposition and expected title. Sometimes we just use only one of default values. And also it\u0027ll be easier to address your comments below \n\u003e   Why do we need to be able to pass an empty value here?.\n\ndefault args depend on the order of them, we might need at lease one overloading.\n\nSo I want to suggest two versions of this method\n\n // With alternative disposition\n WebContents* RunCheckTest(\n        Browser* browser,\n        const std::string\u0026 test_name,\n        WindowOpenDisposition disposition,\n        WhatToExpect what_to_expect,\n        ShouldCheckTitle check_title,\n        const base::string16\u0026 expected_title \u003d base::ASCIIToUTF16(\"PASS\")) {\n  ... Do checks ...\n}\n\n  // use default disposition.\n  WebContents* RunCheckTest(\n      Browser* browser,\n      const std::string\u0026 test_name,\n      WhatToExpect what_to_expect,\n      ShouldCheckTitle check_title,\n      const base::string16\u0026 expected_title \u003d base::ASCIIToUTF16(\"PASS\")) {\n    return RunCheckTest(browser, test_name, WindowOpenDisposition::CURRENT_TAB,\n                        what_to_expect, check_title, expected_title);\n  }",
+      "parentUuid": "cc892030_e268b57d",
       "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "540a2df0_7dece410",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "576d9f53_310da973",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e826fd_99e7a3ca",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-26T19:19:26Z",
       "side": 1,
       "message": "If we\u0027re passing DontCheckTitle, does it matter what title we pass?  Why do we need to be able to pass an empty value here?  (3 places)\n\nNit: Pass empty strings using std::string16(), not {} (since we don\u0027t use uniform variable init widely, the latter looks like an aggregate initializer)",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f292ec2_3d220e3e",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "Related to RunCheckTest overloading and default args. Please see above.",
+      "parentUuid": "80e826fd_99e7a3ca",
       "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,42 @@
     },
     {
       "key": {
+        "uuid": "e11de693_bbd1e1dd",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "The latter. window.open(\"http://someurl\", \"_blank\") will create background tab. Then I\u0027d better rename |open_as_popup_window| to |open_as_it_is|.",
+      "parentUuid": "56a0feec_1c170384",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278e03b1_e60e9c24",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "Humm.. The latter. Please try this: https://www.w3schools.com/code/tryit.asp?filename\u003dFHYD597980KV . This will open foreground tabs. And there\u0027re many more cases like this.\n\n\u003e this variable name may be misleading. \n\nYeah. I\u0027d better rename |open_as_popup_window| to |open_as_it_is|.\n\n\u003e SetWindowFeatures call below might be incorrect sometimes.\n\nThis is also true. Please see this.\nhttps://www.w3schools.com/code/tryit.asp?filename\u003dFHYDQT7IJWLQ\n\nEven we create new foreground tabs, WindowFeature.has_height can be true. It seems we were sending not the actual features, but the requested features. What do you think I\u0027v gotta do?",
+      "parentUuid": "56a0feec_1c170384",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7abd767_18011564",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 7
@@ -115,6 +241,24 @@
       "writtenOn": "2017-07-26T19:19:26Z",
       "side": 1,
       "message": "This is a really heavy-handed way of dealing with this.  Can we just update the portion that shows the list of popups instead of blowing away the whole dialog and recreating it?  This might involve refactoring Init() a bit since I imagine this would share some common code with that.",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33c466e_3eb39287",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "You\u0027re absolutely right. I just thought it can be done in bug 35097. Then.. I\u0027ll rebuild only grid layout instead of entire child views. Does it sounds okay?",
+      "parentUuid": "d7abd767_18011564",
       "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -135,6 +279,24 @@
       "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce18261_f033bd97",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T07:00:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb597864_4c8b33ae",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
