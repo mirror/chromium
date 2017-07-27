@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f12d5154_672626b5",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-27T22:26:22Z",
+      "side": 1,
+      "message": "Optional nit: Should this be a const reference per Style Guide?\n\n\"Parameters are either input to the function, output from the function, or both. Input parameters are usually values or const references, while output and input/output parameters will be pointers to non-const.\" \n\ngo/cppstyle?cl\u003dhead#Reference_Arguments",
+      "range": {
+        "startLine": 167,
+        "startChar": 24,
+        "endLine": 167,
+        "endChar": 42
+      },
+      "revId": "c5859289eaffee3989a96e1ef9736e4b0bcd54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
