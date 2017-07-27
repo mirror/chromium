@@ -1236,6 +1236,14 @@ void RenderFrameHostImpl::OnAudibleStateChanged(bool is_audible) {
   else
     GetProcess()->OnAudioStreamRemoved();
   is_audible_ = is_audible;
+
+  /*
+  if (auto* frame_resource_coordinator = GetFrameResourceCoordinator()) {
+    frame_resource_coordinator->SetProperty(
+        resource_coordinator::mojom::PropertyType::kAudible,
+        base::MakeUnique<base::Value>(is_audible_));
+  }
+  */
 }
 
 void RenderFrameHostImpl::OnDidAddMessageToConsole(

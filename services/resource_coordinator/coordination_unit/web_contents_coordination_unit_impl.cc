@@ -42,6 +42,20 @@ WebContentsCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
   }
 }
 
+void WebContentsCoordinationUnitImpl::RecalculateProperty(
+    const mojom::PropertyType property_type) {
+  if (property_type == mojom::PropertyType::kCPUUsage) {
+    double cpu_usage = CalculateCPUUsage();
+
+    SetProperty(mojom::PropertyType::kCPUUsage,
+                base::MakeUnique<base::Value>(cpu_usage));
+  }
+}
+
+bool WebContentsCoordinationUnitImpl::IsVisible() const {
+  return GetProperty(mojom::PropertyType::kVisible).GetBool();
+}
+
 double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
   double cpu_usage = 0.0;
 
@@ -63,16 +77,6 @@ double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
   }
 
   return cpu_usage;
-}
-
-void WebContentsCoordinationUnitImpl::RecalculateProperty(
-    const mojom::PropertyType property_type) {
-  if (property_type == mojom::PropertyType::kCPUUsage) {
-    double cpu_usage = CalculateCPUUsage();
-
-    SetProperty(mojom::PropertyType::kCPUUsage,
-                base::MakeUnique<base::Value>(cpu_usage));
-  }
 }
 
 }  // namespace resource_coordinator
