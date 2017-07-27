@@ -30824,22 +30824,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Media.Remoting.PosterDownloadDuration.Fail" units="ms">
-  <owner>miu@chromium.org</owner>
-  <summary>
-    Measures the amount of time it took to ultimately fail to download a poster
-    image for an HTML5 video while remoting content.
-  </summary>
-</histogram>
-
-<histogram name="Media.Remoting.PosterDownloadDuration.Success" units="ms">
-  <owner>miu@chromium.org</owner>
-  <summary>
-    Measures the amount of time it took to successfully download a poster image
-    for an HTML5 video while remoting content.
-  </summary>
-</histogram>
-
 <histogram name="Media.Remoting.SessionDuration" units="ms">
   <owner>miu@chromium.org</owner>
   <summary>Measures the duration of each remoting session.</summary>
@@ -30854,6 +30838,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Media.Remoting.SessionStopTrigger" enum="RemotingStopTrigger">
   <owner>miu@chromium.org</owner>
   <summary>Tracks the trigger for stopping a remoting session.</summary>
+</histogram>
+
+<histogram name="Media.Remoting.StartVideoBitrate" units="kByte/s">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    The estimated video content bitrate when starting a remoting session.
+  </summary>
 </histogram>
 
 <histogram name="Media.Remoting.TimeUntilFirstPlayout" units="ms">
@@ -30876,6 +30867,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="RemotingTrackConfiguration">
   <owner>miu@chromium.org</owner>
   <summary>Tracks whether audio or video or both are remoted.</summary>
+</histogram>
+
+<histogram name="Media.Remoting.TransmissionCapacity" units="kByte/s">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    The estimated transmission capacity when starting a remoting session.
+  </summary>
 </histogram>
 
 <histogram name="Media.Remoting.VideoAspectRatio" units="%">

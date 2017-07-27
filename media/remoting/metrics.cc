@@ -137,18 +137,13 @@ void SessionMetricsRecorder::OnRemotePlaybackDisabled(bool disabled) {
   remote_playback_is_disabled_ = disabled;
 }
 
-void SessionMetricsRecorder::OnPosterImageDownloaded(
-    base::TimeDelta download_duration,
-    bool success) {
-  const std::string name = success
-                               ? "Media.Remoting.PosterDownloadDuration.Success"
-                               : "Media.Remoting.PosterDownloadDuration.Fail";
-  // Note: Not using UMA_HISTOGRAM_CUSTOM_TIMES because |name| is a variable in
-  // in this instance; and so the "one histogram" static local should not be
-  // created.
-  base::UmaHistogramCustomTimes(name, download_duration,
-                                base::TimeDelta::FromMilliseconds(10),
-                                base::TimeDelta::FromSeconds(30), 50);
+void SessionMetricsRecorder::RecordVideoBitrateAndTransmissionCapacity(
+    double rate,
+    double capacity) {
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Media.Remoting.StartVideoBitrate", rate / 1000.0,
+                              1, 1250, 100);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Media.Remoting.TransmissionCapacity",
+                              capacity / 1000.0, 1, 1250, 100);
 }
 
 void SessionMetricsRecorder::RecordAudioConfiguration() {
