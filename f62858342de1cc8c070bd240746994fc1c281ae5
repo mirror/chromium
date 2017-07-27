@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b300a55a_c3e8be48",
+        "filename": "media/audio/android/audio_manager_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T22:30:42Z",
+      "side": 1,
+      "message": "Added comments. Done.",
+      "parentUuid": "703f3126_bb72057b",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 73
+      },
+      "revId": "f62858342de1cc8c070bd240746994fc1c281ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eeee4a57_96dd80c2",
         "filename": "media/audio/android/opensles_output.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T17:50:28Z",
       "side": 1,
       "message": "I have to pause and think about whether this includes 25. Make it \u003e\u003d?",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 21
+      },
+      "revId": "f62858342de1cc8c070bd240746994fc1c281ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3818ed68_952047f6",
+        "filename": "media/audio/android/opensles_output.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T22:30:42Z",
+      "side": 1,
+      "message": "I think x+ is a pretty common pattern :) E.g., see all of the Android documentation:\n\nhttps://developer.android.com/guide/topics/media/media-formats.html",
+      "parentUuid": "eeee4a57_96dd80c2",
       "range": {
         "startLine": 150,
         "startChar": 20,
