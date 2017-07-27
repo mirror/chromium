@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0416c098_4e1ff987",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T19:24:14Z",
+      "side": 1,
+      "message": "I\u0027d probably keep the targets unconditional like before and only make their internal contents conditional, so that users don\u0027t need to check for enable_message_center.",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 14
+      },
+      "revId": "60910b668643a1317d5144b2c5bb6d366a9b93dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
