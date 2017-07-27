@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5ce0644_a3e470b7",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-27T13:44:49Z",
+      "side": 1,
+      "message": "This method converts array of accounts to array of _names_. However, I completely agree that this list/array inconsistency is annoying. I\u0027ll fix it in one of my future CLs.",
+      "parentUuid": "b36b791b_c23cc332",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 32
+      },
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f04601f_29e5edf2",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4813ffeb_a53a4f65",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-27T13:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f04601f_29e5edf2",
+      "range": {
+        "startLine": 218,
+        "startChar": 52,
+        "endLine": 218,
+        "endChar": 61
+      },
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c2fc06_2c9c626e",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cc1f05_a7383484",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-27T13:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73c2fc06_2c9c626e",
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "5b9c9fc2_e308979b",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-27T13:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12227fe5_aef3e812",
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93308a21_946f3c18",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
         "patchSetId": 5
@@ -96,6 +180,24 @@
       "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d167428b_8609bf73",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-27T13:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93308a21_946f3c18",
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

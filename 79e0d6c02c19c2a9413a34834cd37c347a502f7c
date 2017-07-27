@@ -664,6 +664,30 @@
     },
     {
       "key": {
+        "uuid": "abb7f619_8cdbdc02",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-27T13:44:49Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "c163a0eb_c67392a2",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d85be74_b7af63fe",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
         "patchSetId": 1
