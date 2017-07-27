@@ -88,6 +88,29 @@
     },
     {
       "key": {
+        "uuid": "1744740f_667f69c0",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-27T15:38:23Z",
+      "side": 1,
+      "message": "We should ideally add a test here, but I understand that it will be challenging. Is there a way to adapt what\u0027s being done in serial_apitest.cc?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca5defd_d65d8ea9",
         "filename": "services/device/serial/BUILD.gn",
         "patchSetId": 11
