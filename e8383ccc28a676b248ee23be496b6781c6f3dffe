@@ -16,6 +16,24 @@
       "revId": "e8383ccc28a676b248ee23be496b6781c6f3dffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140dbab4_763eb34b",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T19:30:52Z",
+      "side": 0,
+      "message": "Afaict, a group defined by a template with a single dep just adds overhead for no reason. Thus, I changed the name of process_resources() to target_name and removed the group.",
+      "parentUuid": "dc5c1e1a_6b0f2dee",
+      "revId": "e8383ccc28a676b248ee23be496b6781c6f3dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
