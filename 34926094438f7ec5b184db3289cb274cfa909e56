@@ -68,6 +68,29 @@
       "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f67a9f0_af609cf7",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T09:43:29Z",
+      "side": 1,
+      "message": "Does WkWebView support window.isSecureContext that we could use to limit injection only for secure contexts?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
