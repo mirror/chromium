@@ -54,6 +54,13 @@ class TestLauncherDelegate {
   virtual bool ShouldRunTest(const std::string& test_case_name,
                              const std::string& test_name) = 0;
 
+  // Called before a test is considered for running to determine which contains
+  // this test. If returned index is equal to current shard index test will be
+  // run in the current shard.
+  // Default implementation uses hash from test_name to calculate index.
+  virtual size_t DetermineShardIndex(size_t shards_count,
+                                     const std::string& test_name);
+
   // Called to make the delegate run the specified tests. The delegate must
   // return the number of actual tests it's going to run (can be smaller,
   // equal to, or larger than size of |test_names|). It must also call

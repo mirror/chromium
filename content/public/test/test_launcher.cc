@@ -139,6 +139,8 @@ class WrapperTestLauncherDelegate : public base::TestLauncherDelegate {
   bool GetTests(std::vector<base::TestIdentifier>* output) override;
   bool ShouldRunTest(const std::string& test_case_name,
                      const std::string& test_name) override;
+  size_t DetermineShardIndex(size_t shards_count,
+                             const std::string& test_name) override;
   size_t RunTests(base::TestLauncher* test_launcher,
                   const std::vector<std::string>& test_names) override;
   size_t RetryTests(base::TestLauncher* test_launcher,
@@ -206,14 +208,14 @@ bool WrapperTestLauncherDelegate::ShouldRunTest(
     return false;
   }
 
-  if (base::StartsWith(test_name, kPreTestPrefix,
-                       base::CompareCase::SENSITIVE)) {
-    // We will actually run PRE_ tests, but to ensure they run on the same shard
-    // as dependent tests, handle all these details internally.
-    return false;
-  }
-
   return true;
+}
+
+size_t WrapperTestLauncherDelegate::DetermineShardIndex(
+    size_t shards_count,
+    const std::string& test_name) {
+  return base::TestLauncherDelegate::DetermineShardIndex(
+      shards_count, RemoveAnyPrePrefixes(test_name));
 }
 
 std::string GetPreTestName(const std::string& full_name) {
@@ -231,17 +233,15 @@ size_t WrapperTestLauncherDelegate::RunTests(
   reverse_dependent_test_map_.clear();
   user_data_dir_map_.clear();
 
-  // Number of additional tests to run because of dependencies.
-  size_t additional_tests_to_run_count = 0;
-
   // Compute dependencies of tests to be run.
   for (size_t i = 0; i < test_names.size(); i++) {
     std::string full_name(test_names[i]);
+    if (full_name.find(kPreTestPrefix) != std::string::npos)
+      continue;
+
     std::string pre_test_name(GetPreTestName(full_name));
 
     while (base::ContainsKey(all_test_names_, pre_test_name)) {
-      additional_tests_to_run_count++;
-
       DCHECK(!base::ContainsKey(dependent_test_map_, pre_test_name));
       dependent_test_map_[pre_test_name] = full_name;
 
@@ -256,8 +256,8 @@ size_t WrapperTestLauncherDelegate::RunTests(
   for (size_t i = 0; i < test_names.size(); i++) {
     std::string full_name(test_names[i]);
 
-    // Make sure no PRE_ tests were requested explicitly.
-    DCHECK_EQ(full_name, RemoveAnyPrePrefixes(full_name));
+    if (full_name.find(kPreTestPrefix) != std::string::npos)
+      continue;
 
     if (!base::ContainsKey(user_data_dir_map_, full_name)) {
       base::FilePath temp_dir;
@@ -275,7 +275,7 @@ size_t WrapperTestLauncherDelegate::RunTests(
     DoRunTests(test_launcher, test_list);
   }
 
-  return test_names.size() + additional_tests_to_run_count;
+  return test_names.size();
 }
 
 size_t WrapperTestLauncherDelegate::RetryTests(
