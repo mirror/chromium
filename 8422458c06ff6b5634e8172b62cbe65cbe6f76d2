@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec96406f_c8168295",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T23:55:00Z",
+      "side": 1,
+      "message": "floating-point equality makes me nervous. can you just use \"\u003e 0.0f\" instead?",
+      "revId": "8422458c06ff6b5634e8172b62cbe65cbe6f76d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506f8c15_3d94274e",
+        "filename": "ash/login/ui/login_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T23:55:00Z",
+      "side": 1,
+      "message": "you may want to consider introducing a sub-namespace named login_constants here. this is a pattern used in many places in chrome, and it makes it easier to tell where these constants come from. if you do that, you could probably drop \"Login\" from all of the constant names too.",
+      "revId": "8422458c06ff6b5634e8172b62cbe65cbe6f76d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
