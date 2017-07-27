@@ -16,6 +16,24 @@
       "revId": "1e096664608a9301b9de195302ae601aee7b2226",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cc6e61_1f785119",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-27T23:38:34Z",
+      "side": 1,
+      "message": "I think we\u0027ll definitely want to adopt the wpt command in Chromium (for wptserve etc). This will involve updating webkitpy/thirdparty/wpt and anything that depends on it.\n\nFiled https://crbug.com/749879.",
+      "parentUuid": "1dcd787d_1d96fee9",
+      "revId": "1e096664608a9301b9de195302ae601aee7b2226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
