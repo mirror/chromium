@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41e5eb93_4f467584",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-27T00:29:47Z",
+      "side": 1,
+      "message": "Based on what you said earlier, we should also consider putting this into M61 if it\u0027s easy.",
+      "revId": "18af5c147d3c1d42fa059a608628419b49673a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
