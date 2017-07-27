@@ -46,6 +46,30 @@
       "revId": "aca1d5a6852bb5e35a16a543eff94c3b14543780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93a1466_ad71510b",
+        "filename": "ios/chrome/browser/ui/authentication/authentication_ui_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-27T17:53:58Z",
+      "side": 1,
+      "message": "I added the 3 screenshots in the descriptions when I created the patch.",
+      "parentUuid": "d5e0d5fa_a0e95ebc",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "aca1d5a6852bb5e35a16a543eff94c3b14543780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
