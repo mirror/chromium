@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "122024df_99a5c9d5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "IIUC this is guard against version check failure.\nDo we have a policy to ignore possibility of version check failure if the method is sufficiently old?",
+      "parentUuid": "6ebe3b36_76dbb9d5",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eeb6b87c_aa5eff49",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "353a8c2c_01f83933",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeb6b87c_aa5eff49",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88c8bacf_c998e410",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9146697_3d094e8f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c8bacf_c998e410",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc69ef8_25a15e77",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4de4d01_904ffab9",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +201,54 @@
     },
     {
       "key": {
+        "uuid": "33155cbb_5ff5a7c1",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "034a48df_cc724d3d",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6e96668_3b61fb3d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f390583_68d38375",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51c516ae_b5b1f570",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
         "patchSetId": 2
@@ -134,6 +260,30 @@
       "writtenOn": "2017-07-27T03:53:12Z",
       "side": 1,
       "message": "I\u0027m wondering if it\u0027s intended to put cleanup logic in both Shutdown() and dtor. Can we move this to dtor, or can we move cleanups in dtor to here?",
+      "range": {
+        "startLine": 296,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 58
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d006a845_3a05eb6d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "This should be done in Shutdown() because trying to access other KeyedServices after Shutdown() results in a check failure.\nMoved the code in the dtor to this function.",
+      "parentUuid": "51c516ae_b5b1f570",
       "range": {
         "startLine": 296,
         "startChar": 0,
@@ -169,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "4e63591b_86dd039f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "d71148c6_5991706c",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 25
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52ea5a93_1b0ed294",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
         "patchSetId": 2
@@ -180,6 +354,30 @@
       "writtenOn": "2017-07-27T03:53:12Z",
       "side": 1,
       "message": "Could you initialize member variables in the same order as listed in the class so destruction is done in the reversed order?",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cab834_9192e514",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Changed to the same order as arc_documents_provider_root_unittest.cc",
+      "parentUuid": "52ea5a93_1b0ed294",
       "range": {
         "startLine": 41,
         "startChar": 4,
@@ -209,6 +407,24 @@
     },
     {
       "key": {
+        "uuid": "5e029a53_724d5b53",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72360411_ba680ef7",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a61815c_00ae6972",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
         "patchSetId": 2
@@ -220,6 +436,24 @@
       "writtenOn": "2017-07-27T07:46:32Z",
       "side": 1,
       "message": "Could you move this between L111 and L112, and add comments that the order is as same as instantiate order in real use case?\nIt should help to address nya@-san\u0027s comments above.",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795e56df_430a0783",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T08:35:39Z",
+      "side": 1,
+      "message": "Copied the comment from arc_documents_provider_unittest.cc.",
+      "parentUuid": "7a61815c_00ae6972",
       "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
