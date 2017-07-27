@@ -34,6 +34,24 @@
       "revId": "3d127089fb689dde8401ba9aee8ebe7a4004e933",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1325b7_0a5bb813",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-27T15:14:51Z",
+      "side": 1,
+      "message": "Right, loading slots limit can be exceeded when timeout or when a user selects a background tab.\n\nI added the comment inside CanLoadNextTab.",
+      "parentUuid": "638cb594_8275418d",
+      "revId": "3d127089fb689dde8401ba9aee8ebe7a4004e933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
