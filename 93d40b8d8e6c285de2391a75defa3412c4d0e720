@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a76553_fe69efe7",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T18:57:39Z",
+      "side": 1,
+      "message": "Should we test that filling line 2 saves it properly and that ADDRESS_HOME_STREET_ADDRESS is rightly constituted once saved?",
+      "revId": "93d40b8d8e6c285de2391a75defa3412c4d0e720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18aa2b71_a0a5202d",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-27T18:57:39Z",
+      "side": 1,
+      "message": "Let\u0027s be specific for translations e.g., \"this is the main part of the address such as the street number and street name\". Same for the other string.",
+      "revId": "93d40b8d8e6c285de2391a75defa3412c4d0e720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
