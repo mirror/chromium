@@ -30,8 +30,6 @@ bool RegisterJNI(JNIEnv* env) {
 }
 
 bool NativeInit() {
-  if (!content::android::OnJNIOnLoadInit())
-    return false;
   content::Compositor::Initialize();
   content::SetContentMainDelegate(new chromecast::shell::CastMainDelegate);
   return true;
