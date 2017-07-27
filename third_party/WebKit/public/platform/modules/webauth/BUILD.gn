@@ -1,6 +1,7 @@
 mojom("webauth") {
   sources = [
     "authenticator.mojom",
+    "web_crypto_algorithm.mojom",
   ]
 
   public_deps = [
