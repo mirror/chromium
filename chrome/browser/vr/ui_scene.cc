@@ -50,6 +50,9 @@ void UiScene::RemoveAnimation(int element_id, int animation_id) {
 }
 
 void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
+  for (auto& binding : bindings_) {
+    binding->Update();
+  }
   for (const auto& element : ui_elements_) {
     // Process all animations before calculating object transforms.
     element->Animate(current_time);
@@ -64,6 +67,14 @@ void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
 }
 
 void UiScene::PrepareToDraw() {
+  // We may have repositioned elements due to input (eg, we may have been
+  // dragging, we therefore have to bake elements.
+  for (auto& element : ui_elements_) {
+    element->set_dirty(true);
+  }
+  for (auto& element : ui_elements_) {
+    ApplyRecursiveTransforms(element.get());
+  }
   for (const auto& element : ui_elements_) {
     element->PrepareToDraw();
   }
@@ -144,7 +155,7 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
-  gfx::Transform inheritable = element->transform_operations().Apply();
+  gfx::Transform inheritable = element->LocalTransform();
 
   if (parent) {
     ApplyRecursiveTransforms(parent);
