@@ -351,6 +351,12 @@ public class WebappDataStorage {
         mPreferences.edit().putInt(KEY_SOURCE, source).apply();
     }
 
+    /** Returns whether the storage is for a WebAPK. */
+    public boolean isWebApk() {
+        return mId.startsWith(WebApkConstants.WEBAPK_ID_PREFIX)
+                || !TextUtils.isEmpty(mPreferences.getString(KEY_WEBAPK_PACKAGE_NAME, null));
+    }
+
     /**
      * Returns the last used time of this object, or -1 if it is not stored.
      */
