@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "10e1174d_d540efb3",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-27T19:31:38Z",
+      "side": 1,
+      "message": "Promise rejection is actually handled there (see line 1101 and below). Would it be better to put it in the load time data anyway?",
+      "parentUuid": "dabd33b9_1ed3fac1",
+      "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb07e9d8_1535a9da",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 16
@@ -69,6 +87,24 @@
       "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d03ffcb_3a15ed82",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-27T19:31:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb07e9d8_1535a9da",
+      "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
