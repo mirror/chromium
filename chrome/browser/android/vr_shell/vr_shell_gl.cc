@@ -39,6 +39,10 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
+#define USE_VSYNC_ALIGN 0
+#define HACK_REPORT_RENDERED_EARLY 0
+#define HACK_ADD_GLFINISH 0
+
 namespace vr_shell {
 
 namespace {
@@ -57,10 +61,11 @@ static constexpr int kFrameHeadlockedBuffer = 1;
 // Pixel dimensions and field of view for the head-locked content. This
 // is currently sized to fit the WebVR "insecure transport" warnings,
 // adjust it as needed if there is additional content.
-static constexpr gfx::Size kHeadlockedBufferDimensions = {1024, 1024};
+//static constexpr gfx::Size kHeadlockedBufferDimensions = {1024, 1024};
+static constexpr gfx::Size kHeadlockedBufferDimensions = {2048, 2048};
 // Represents the frame of view in degrees. 0 degrees is straight ahead, and the
 // rect represents bottom/left/right/top alway from the center line.
-static constexpr gvr::Rectf kHeadlockedBufferFov = {30.f, 20.f, 20.f, 20.f};
+static constexpr gvr::Rectf kHeadlockedBufferFov = {60.f, 40.f, 40.f, 40.f};
 
 // The GVR viewport list has two entries (left eye and right eye) for each
 // GVR buffer.
@@ -353,6 +358,15 @@ void VrShellGl::SubmitFrame(int16_t frame_index,
     // OnWebVRFrameAvailable where we'd normally report that.
     submit_client_->OnSubmitFrameRendered();
   }
+#if HACK_REPORT_RENDERED_EARLY
+  // Report rendering completion to WebVR so that it's permitted to submit
+  // a fresh frame. We could do this earlier, as soon as the frame got pulled
+  // off the transfer surface, but that appears to result in overstuffed
+  // buffers.
+  if (submit_client_) {
+    submit_client_->OnSubmitFrameRendered();
+  }
+#endif
 }
 
 void VrShellGl::ConnectPresentingService(
@@ -386,6 +400,11 @@ void VrShellGl::OnWebVRFrameAvailable() {
   browser_->OnWebVrFrameAvailable();
 
   DrawFrame(frame_index);
+
+#if HACK_ADD_GLFINISH
+  TRACE_EVENT0("gpu", "glFinish");
+  glFinish();
+#endif
 }
 
 void VrShellGl::GvrInit(gvr_context* gvr_api) {
@@ -945,6 +964,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(
     surface_->SwapBuffers();
   }
 
+#if !HACK_REPORT_RENDERED_EARLY
   // Report rendering completion to WebVR so that it's permitted to submit
   // a fresh frame. We could do this earlier, as soon as the frame got pulled
   // off the transfer surface, but that appears to result in overstuffed
@@ -952,6 +972,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(
   if (submit_client_) {
     submit_client_->OnSubmitFrameRendered();
   }
+#endif
 
   if (ShouldDrawWebVr()) {
     base::TimeTicks now = base::TimeTicks::Now();
@@ -1088,10 +1109,14 @@ void VrShellGl::OnVSync() {
 }
 
 void VrShellGl::GetVSync(GetVSyncCallback callback) {
+#if USE_VSYNC_ALIGN
   // In surfaceless (reprojecting) rendering, stay locked
   // to vsync intervals. Otherwise, for legacy Cardboard mode,
   // run requested animation frames now if it missed a vsync.
   if (surfaceless_rendering_ || !pending_vsync_) {
+#else
+  if (!pending_vsync_) {
+#endif
     if (!callback_.is_null()) {
       mojo::ReportBadMessage(
           "Requested VSync before waiting for response to previous request.");

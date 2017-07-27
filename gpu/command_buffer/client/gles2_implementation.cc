@@ -1478,6 +1478,7 @@ GLuint GLES2Implementation::GetLastFlushIdCHROMIUM() {
 }
 
 void GLES2Implementation::SwapBuffers() {
+  TRACE_EVENT0("gpu", "GLES2Implementation::SwapBuffers");
   GPU_CLIENT_SINGLE_THREAD_CHECK();
   GPU_CLIENT_LOG("[" << GetLogPrefix() << "] glSwapBuffers()");
   // TODO(piman): Strictly speaking we'd want to insert the token after the
@@ -1493,6 +1494,7 @@ void GLES2Implementation::SwapBuffers() {
   // Wait if we added too many swap buffers. Add 1 to kMaxSwapBuffers to
   // compensate for TODO above.
   if (swap_buffers_tokens_.size() > kMaxSwapBuffers + 1) {
+    TRACE_EVENT0("gpu", "WaitForToken");
     helper_->WaitForToken(swap_buffers_tokens_.front());
     swap_buffers_tokens_.pop();
   }
@@ -1500,6 +1502,7 @@ void GLES2Implementation::SwapBuffers() {
 
 void GLES2Implementation::SwapBuffersWithBoundsCHROMIUM(GLsizei count,
                                                         const GLint* rects) {
+  TRACE_EVENT0("gpu", "GLES2Implementation::SwapBuffersWithBoundsCHROMIUM");
   GPU_CLIENT_SINGLE_THREAD_CHECK();
   GPU_CLIENT_LOG("[" << GetLogPrefix() << "] glSwapBuffersWithBoundsCHROMIUM("
                      << count << ", " << static_cast<const void*>(rects)
@@ -1522,6 +1525,7 @@ void GLES2Implementation::SwapBuffersWithBoundsCHROMIUM(GLsizei count,
   helper_->SwapBuffersWithBoundsCHROMIUMImmediate(count, rects);
   helper_->CommandBufferHelper::Flush();
   if (swap_buffers_tokens_.size() > kMaxSwapBuffers + 1) {
+    TRACE_EVENT0("gpu", "WaitForToken");
     helper_->WaitForToken(swap_buffers_tokens_.front());
     swap_buffers_tokens_.pop();
   }

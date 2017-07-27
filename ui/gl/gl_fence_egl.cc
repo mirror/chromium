@@ -22,9 +22,11 @@ void GLFenceEGL::SetIgnoreFailures() {
 
 GLFenceEGL::GLFenceEGL() {
   display_ = eglGetCurrentDisplay();
+  //LOG(INFO) << __FUNCTION__ << ";;; this=" << this << " CONSTRUCTOR";
   sync_ = eglCreateSyncKHR(display_, EGL_SYNC_FENCE_KHR, NULL);
   DCHECK(sync_ != EGL_NO_SYNC_KHR);
   glFlush();
+  //LOG(INFO) << __FUNCTION__ << ";;; this=" << this << " flushed";
 }
 
 bool GLFenceEGL::HasCompleted() {
@@ -53,6 +55,7 @@ EGLint GLFenceEGL::ClientWaitWithTimeoutNanos(EGLTimeKHR timeout) {
                << ui::GetLastEGLErrorString();
     CHECK(g_ignore_egl_sync_failures);
   }
+  //LOG(INFO) << __FUNCTION__ << ";;; this=" << this << " result=0x" << std::hex << result;
   return result;
 }
 

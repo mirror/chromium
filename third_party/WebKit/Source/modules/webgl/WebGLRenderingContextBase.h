@@ -596,6 +596,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // For use by WebVR which doesn't use the normal compositing path.
   // This clears the backbuffer if preserveDrawingBuffer is false.
   void MarkCompositedAndClearBackbufferIfNeeded();
+  PassRefPtr<StaticBitmapImage> GetStaticBitmapImage();
 
  protected:
   friend class EXTDisjointTimerQuery;

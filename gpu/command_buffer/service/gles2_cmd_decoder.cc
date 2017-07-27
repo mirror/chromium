@@ -16177,6 +16177,7 @@ bool GLES2DecoderImpl::HasPendingQueries() const {
 }
 
 void GLES2DecoderImpl::ProcessPendingQueries(bool did_finish) {
+  TRACE_EVENT0("gpu", "ProcessPendingQueries");
   if (!query_manager_.get())
     return;
   query_manager_->ProcessPendingQueries(did_finish);

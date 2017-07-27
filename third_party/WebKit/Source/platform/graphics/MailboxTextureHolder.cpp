@@ -12,6 +12,8 @@
 #include "skia/ext/texture_handle.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 
+#include "platform/instrumentation/tracing/TraceEvent.h"
+
 namespace blink {
 
 namespace {
@@ -46,6 +48,7 @@ MailboxTextureHolder::MailboxTextureHolder(
 
 MailboxTextureHolder::MailboxTextureHolder(
     std::unique_ptr<TextureHolder> texture_holder) {
+  TRACE_EVENT0("gpu", "MailboxTextureHolder");
   DCHECK(texture_holder->IsSkiaTextureHolder());
   sk_sp<SkImage> image = texture_holder->GetSkImage();
   DCHECK(image);
@@ -65,8 +68,10 @@ MailboxTextureHolder::MailboxTextureHolder(
   shared_gl->GenMailboxCHROMIUM(mailbox_.name);
   shared_gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox_.name);
   const GLuint64 fence_sync = shared_gl->InsertFenceSyncCHROMIUM();
+  TRACE_EVENT0("gpu", "Flush");
   shared_gl->Flush();
   shared_gl->GenSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
+LOG(INFO) << __FUNCTION__ << ";;; sync_token relase=" << sync_token_.release_count();
 
   shared_gl->BindTexture(GL_TEXTURE_2D, 0);
   // We changed bound textures in this function, so reset the GrContext.
