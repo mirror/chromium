@@ -241,9 +241,9 @@ bool TodayMetricsLogger::CreateNewLog() {
                                  metrics_service_client_.get(),
                                  pref_service_.get()));
 
-  log_->RecordEnvironment(
-      std::vector<std::unique_ptr<metrics::MetricsProvider>>(),
-      [install_date longLongValue], [enabled_date longLongValue]);
+  DelegatingProvider delegating_provider;
+  log_->RecordEnvironment(&delegating_provider, [install_date longLongValue],
+                          [enabled_date longLongValue]);
 
   return true;
 }
