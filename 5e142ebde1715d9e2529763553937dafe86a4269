@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73c8fc4a_3e6323ee",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-27T08:35:12Z",
+      "side": 1,
+      "message": "In general, replacing:\n\nif (!X) {\nA\n} else {\nB\n}\n\nwith:\n\nif (X) {\nB\n} else {\nA\n}\n\nmakes the code slightly easier to read.",
+      "range": {
+        "startLine": 629,
+        "startChar": 2,
+        "endLine": 629,
+        "endChar": 23
+      },
+      "revId": "5e142ebde1715d9e2529763553937dafe86a4269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
