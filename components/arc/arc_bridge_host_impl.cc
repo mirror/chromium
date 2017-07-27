@@ -120,6 +120,12 @@ void ArcBridgeHostImpl::OnClipboardInstanceReady(
   OnInstanceReady(arc_bridge_service_->clipboard(), std::move(clipboard_ptr));
 }
 
+void ArcBridgeHostImpl::OnCastReceiverInstanceReady(
+    mojom::CastReceiverInstancePtr cast_receiver_ptr) {
+  OnInstanceReady(arc_bridge_service_->cast_receiver(),
+                  std::move(cast_receiver_ptr));
+}
+
 void ArcBridgeHostImpl::OnCrashCollectorInstanceReady(
     mojom::CrashCollectorInstancePtr crash_collector_ptr) {
   OnInstanceReady(arc_bridge_service_->crash_collector(),
