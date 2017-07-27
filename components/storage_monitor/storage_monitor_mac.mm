@@ -10,6 +10,9 @@
 #include "base/mac/mac_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/threading/thread_restrictions.h"
 #include "components/storage_monitor/image_capture_device_manager.h"
 #include "components/storage_monitor/media_storage_util.h"
 #include "components/storage_monitor/storage_info.h"
@@ -49,7 +52,7 @@ StorageInfo::Type GetDeviceType(bool is_removable, bool has_dcim) {
 
 StorageInfo BuildStorageInfo(
     CFDictionaryRef dict, std::string* bsd_name) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 
   CFStringRef device_bsd_name = base::mac::GetValueFromDictionary<CFStringRef>(
       dict, kDADiskDescriptionMediaBSDNameKey);
@@ -107,11 +110,11 @@ StorageInfo BuildStorageInfo(
                      size_in_bytes);
 }
 
-void GetDiskInfoAndUpdateOnFileThread(
+void GetDiskInfoAndUpdateOnBackgroundTaskRunner(
     const base::WeakPtr<StorageMonitorMac>& monitor,
     base::ScopedCFTypeRef<CFDictionaryRef> dict,
     StorageMonitorMac::UpdateType update_type) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 
   std::string bsd_name;
   StorageInfo info = BuildStorageInfo(dict, &bsd_name);
@@ -351,11 +354,10 @@ void StorageMonitorMac::GetDiskInfoAndUpdate(
   pending_disk_updates_++;
 
   base::ScopedCFTypeRef<CFDictionaryRef> dict(DADiskCopyDescription(disk));
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(GetDiskInfoAndUpdateOnFileThread,
-                 AsWeakPtr(), dict, update_type));
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      base::Bind(GetDiskInfoAndUpdateOnBackgroundTaskRunner, AsWeakPtr(), dict,
+                 update_type));
 }
 
 
