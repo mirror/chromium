@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62037bc_8b2d0e2d",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-27T03:27:56Z",
+      "side": 1,
+      "message": "It would be better to pass a url::Origin here if possible.\n\nMoreover, this will be forgeable by a compromised renderer. That means compromised renderers will be able to set client hints for any origins they want. Is that problematic from a security perspective? An alternative approach would be to explore hooking into the net/ stack to parse the headers when they are processed in the browser process. That would avoid the need for these kinds of IPCs and may even simplify the code.. you may want to touch base with the net/ team to see how hard that would be.",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1438bb78_a124f625",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-27T03:27:56Z",
+      "side": 1,
+      "message": "nit: can this happen?",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7922829_502b6140",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-27T03:27:56Z",
+      "side": 1,
+      "message": "Hmm, I think ContentSettingsUpdateObserver is too generic. Maybe we should name this something specific to ClientHints? I also think it could be nice to move this code into its own directory specific to ClientHints in chrome/browser. You could become an owner of that directory too.",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84987de1_d9bafad1",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-27T03:27:56Z",
+      "side": 1,
+      "message": "What does this TODO mean? The bug isn\u0027t very specific.",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2d11f9_27bfb746",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-27T03:27:56Z",
+      "side": 1,
+      "message": "Is this different to sending an empty dictionary over? Should existing hints be overwritten?",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4f9487_32dad35d",
+        "filename": "components/content_settings/core/browser/content_settings_pref.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-27T03:27:56Z",
+      "side": 1,
+      "message": "If you could pull these out of content_settings code and have them at the callsites of the HostContentSettingsMap, that would be better for modularity.",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
