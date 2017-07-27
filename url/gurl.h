@@ -181,6 +181,18 @@ class URL_EXPORT GURL {
   // will be the empty URL.
   GURL GetWithEmptyPath() const;
 
+  // A helper function to return a GURL without the filename, query values, and
+  // any username and password. For example,
+  // GURL("https://www.foo.com/index.html?q=test").GetWithoutFilename().spec()
+  // will return "https://www.foo.com/".
+  // GURL("https://www.foo.com/bar/").GetWithoutFilename().spec()
+  // will return "https://www.foo.com/bar/".
+  // If this URL is not a standard URL (it doesn't have the regular authority
+  // and path sections), then the result will be an empty, invalid GURL. Note
+  // that this *does* work for file: URLs, which some callers may want to filter
+  // out before calling this.
+  GURL GetWithoutFilename() const;
+
   // A helper function to return a GURL containing just the scheme, host,
   // and port from a URL. Equivalent to clearing any username and password,
   // replacing the path with a slash, and clearing everything after that. If
