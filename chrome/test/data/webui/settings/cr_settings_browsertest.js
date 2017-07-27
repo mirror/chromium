@@ -1711,6 +1711,65 @@ TEST_F('CrSettingsDateTimePageTest', 'All', function() {
   mocha.run();
 });
 
+/**
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsSearchPageVoiceInteractionTest() {}
+
+CrSettingsSearchPageVoiceInteractionTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://md-settings/search_page/search_page.html',
+
+  /** @override */
+  commandLineSwitches: [{
+    switchName: 'enable-voice-interaction',
+  }],
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
+    '../test_browser_proxy.js',
+    'search_page_voice_test.js',
+  ]),
+};
+
+TEST_F('CrSettingsSearchPageVoiceInteractionTest', 'All', function() {
+  mocha.run();
+});
+
+/**
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsGoogleAssistantPageTest() {}
+
+CrSettingsGoogleAssistantPageTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload:
+      'chrome://md-settings/google_assistant_page/google_assistant_page.html',
+
+  /** @override */
+  commandLineSwitches: [{
+    switchName: 'enable-voice-interaction',
+  }],
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
+    '../test_browser_proxy.js',
+    'google_assistant_page_test.js',
+  ]),
+};
+
+TEST_F('CrSettingsGoogleAssistantPageTest', 'All', function() {
+  mocha.run();
+});
+
 GEN('#endif');
 
 /**
