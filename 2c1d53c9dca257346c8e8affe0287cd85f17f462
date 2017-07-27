@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "b78377ee_2378c3ff",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-27T18:30:51Z",
+      "side": 1,
+      "message": "+1 on avoiding renaming D-Bus interfaces. There are a lot of potential compatibility issues. If you really want to do so you would need to:\na) Create an interface with the new name that implements the old interface (leaving the old interface intact)\nb) Change all existing code to use the new interface\nc) Mark the old interface as deprecated (but keep it a round for a release cycle)\nd) Remove the old interface",
+      "parentUuid": "87e2e0b4_d78f8bd1",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f52a57b3_f3c4a36a",
         "filename": "chrome/browser/upgrade_observer.h",
         "patchSetId": 6
