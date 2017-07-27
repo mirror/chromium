@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ded26df_540fcb72",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-07-27T22:09:31Z",
+      "side": 1,
+      "message": "ScriptState::From(context) is used here. By the comment in ScriptController::EvaluateScriptInMainWorld, using ScriptState for ExecuteScriptAndReturnValue seems not encouraged?",
+      "revId": "06c79f4082c5f2b4b3faf4522566b5b15b868587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4146d735_348e645d",
+        "filename": "third_party/WebKit/Source/core/inspector/ThreadDebugger.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-07-27T22:09:31Z",
+      "side": 1,
+      "message": "note that ScriptState::From(context) is used. It\u0027s relatively costly but I couldn\u0027t find another way to get script state for this function.",
+      "revId": "06c79f4082c5f2b4b3faf4522566b5b15b868587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
