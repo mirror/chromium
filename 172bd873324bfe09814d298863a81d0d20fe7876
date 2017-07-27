@@ -22,6 +22,30 @@
       "revId": "172bd873324bfe09814d298863a81d0d20fe7876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42193533_b557d869",
+        "filename": "media/blink/resource_multibuffer_data_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-27T21:41:13Z",
+      "side": 1,
+      "message": "Your suspicion was right - it does not work. I was hoping to reuse the url loader after calling WebAssociatedURLLoader::Cancel, but WebAssociatedURLLoaderImpl is not reusable :|\n\nAnyways, I have completely revamped the patch to remove the dependency on WebLocalFrame, but will let it pass CQ before asking for your review again.",
+      "parentUuid": "0afe8a13_32bcf849",
+      "range": {
+        "startLine": 440,
+        "startChar": 55,
+        "endLine": 440,
+        "endChar": 67
+      },
+      "revId": "172bd873324bfe09814d298863a81d0d20fe7876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
