@@ -18,6 +18,7 @@
 #include "build/build_config.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
+#include "components/password_manager/core/browser/browser_save_password_progress_logger.h"
 #include "components/password_manager/core/browser/login_model.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
 
@@ -36,6 +37,8 @@ namespace password_manager {
 class PasswordManagerClient;
 class PasswordManagerDriver;
 class PasswordFormManager;
+
+using FormManagersList = std::vector<std::unique_ptr<PasswordFormManager>>;
 
 // Per-tab password manager. Handles creation and management of UI elements,
 // receiving password form data from the renderer and managing the password
@@ -204,6 +207,13 @@ class PasswordManager : public LoginModel {
   // unwanted credentials, see http://crbug.com/571580 for details.
   bool ShouldBlockPasswordForSameOriginButDifferentScheme(
       const autofill::PasswordForm& form) const;
+
+  // Clones a form manager that |matched_manager_it| points to and keeps it as
+  // |provisional_save_manager_|. |form| is saved to
+  // |provisional_save_manager_|.
+  void SaveMatchedManager(const autofill::PasswordForm& form,
+                          FormManagersList::const_iterator& matched_manager_it,
+                          BrowserSavePasswordProgressLogger* logger);
 
   // Returns true if the user needs to be prompted before a password can be
   // saved (instead of automatically saving
