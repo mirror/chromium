@@ -562,6 +562,29 @@
     },
     {
       "key": {
+        "uuid": "40873c24_c54b7fe8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-27T09:28:42Z",
+      "side": 1,
+      "message": "bauerb@: Should we also cache the download suggestions thumbnails to disk? They will be as stable as the ones for the downloads UI, right?",
+      "range": {
+        "startLine": 368,
+        "startChar": 19,
+        "endLine": 368,
+        "endChar": 24
+      },
+      "revId": "2267f2bb74ebec1702722186145e6dd87946eca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23a60810_57067f9f",
         "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
         "patchSetId": 8
