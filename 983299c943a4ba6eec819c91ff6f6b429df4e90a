@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285b55e1_891dec47",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T18:33:11Z",
+      "side": 0,
+      "message": "Keep this, and the definition of IDC_VOICE_SEARCH, here until the downstream CL has also landed. You can change this implementation to call the extracted method, of course.",
+      "range": {
+        "startLine": 1419,
+        "startChar": 9,
+        "endLine": 1419,
+        "endChar": 25
+      },
+      "revId": "983299c943a4ba6eec819c91ff6f6b429df4e90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

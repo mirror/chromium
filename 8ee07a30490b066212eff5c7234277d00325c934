@@ -22,6 +22,52 @@
       "revId": "8ee07a30490b066212eff5c7234277d00325c934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49ba51b_01a1bed4",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T18:33:11Z",
+      "side": 1,
+      "message": "You can just delete these two methods and just @synthesize now that there\u0027s not a scoped_nsobject to dereference, right?",
+      "range": {
+        "startLine": 325,
+        "startChar": 6,
+        "endLine": 325,
+        "endChar": 25
+      },
+      "revId": "8ee07a30490b066212eff5c7234277d00325c934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d034d3e6_269bed46",
+        "filename": "ios/public/provider/chrome/browser/voice/voice_search_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-27T18:33:11Z",
+      "side": 1,
+      "message": "You probably need to keep the single-param version around, and provide a default implementation for the two-param version that just passes nil for the dispatcher, so that downstream doesn\u0027t break after this CL lands.",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 53
+      },
+      "revId": "8ee07a30490b066212eff5c7234277d00325c934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
