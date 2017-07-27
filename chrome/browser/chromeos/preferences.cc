@@ -121,6 +121,7 @@ void Preferences::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(
       prefs::kSystemTimezoneAutomaticDetectionPolicy,
       enterprise_management::SystemTimezoneProto::USERS_DECIDE);
+  registry->RegisterStringPref(prefs::kCastReceiverName, "");
 }
 
 // static
@@ -374,6 +375,8 @@ void Preferences::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kEolNotificationDismissed, false);
   registry->RegisterIntegerPref(prefs::kEolStatus,
                                 update_engine::EndOfLifeStatus::kSupported);
+
+  registry->RegisterBooleanPref(prefs::kCastReceiverEnabled, true);
 }
 
 void Preferences::InitUserPrefs(sync_preferences::PrefServiceSyncable* prefs) {

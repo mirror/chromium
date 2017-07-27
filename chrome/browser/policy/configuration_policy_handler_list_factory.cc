@@ -684,6 +684,15 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kBrowserNetworkTimeQueriesEnabled,
     network_time::prefs::kNetworkTimeQueriesEnabled,
     base::Value::Type::BOOLEAN },
+
+#if defined(OS_CHROMEOS)
+  { key::kCastReceiverEnabled,
+    prefs::kCastReceiverEnabled,
+    base::Value::Type::BOOLEAN },
+  { key::kCastReceiverName,
+    prefs::kCastReceiverName,
+    base::Value::Type::STRING },
+#endif
 };
 // clang-format on
 

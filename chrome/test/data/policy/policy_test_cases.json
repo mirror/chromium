@@ -3136,6 +3136,22 @@
     ]
   },
 
+  "CastReceiverEnabled": {
+    "os": ["chromeos"],
+    "test_policy": { "CastReceiverEnabled": true },
+    "pref_mappings": [
+      { "pref": "cast.receiver.enabled" }
+    ]
+  },
+
+  "CastReceiverName": {
+    "os": ["chromeos"],
+    "test_policy": { "CastReceiverName": "Hallway" },
+    "pref_mappings": [
+      { "pref": "cast.receiver.name" }
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
