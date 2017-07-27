@@ -71,6 +71,8 @@ class ExternalPrefLoader : public ExternalLoader,
  private:
   friend class base::RefCountedThreadSafe<ExternalLoader>;
 
+  static scoped_refptr<base::SequencedTaskRunner> GetTaskRunner();
+
   // sync_preferences::PrefServiceSyncableObserver:
   void OnIsSyncingChanged() override;
 
