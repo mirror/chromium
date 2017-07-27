@@ -21,6 +21,7 @@
 #include "components/favicon_base/fallback_icon_style.h"
 #include "components/favicon_base/favicon_types.h"
 #include "components/ntp_snippets/content_suggestions_metrics.h"
+#include "components/ntp_snippets/contextual_suggestions_source.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -59,7 +60,8 @@ ContentSuggestionsService::ContentSuggestionsService(
     PrefService* pref_service,
     std::unique_ptr<CategoryRanker> category_ranker,
     std::unique_ptr<UserClassifier> user_classifier,
-    std::unique_ptr<RemoteSuggestionsScheduler> remote_suggestions_scheduler)
+    std::unique_ptr<RemoteSuggestionsScheduler> remote_suggestions_scheduler,
+    std::unique_ptr<ContextualSuggestionsSource> contextual_suggestions_source)
     : state_(state),
       signin_observer_(this),
       history_service_observer_(this),
@@ -68,7 +70,8 @@ ContentSuggestionsService::ContentSuggestionsService(
       pref_service_(pref_service),
       remote_suggestions_scheduler_(std::move(remote_suggestions_scheduler)),
       user_classifier_(std::move(user_classifier)),
-      category_ranker_(std::move(category_ranker)) {
+      category_ranker_(std::move(category_ranker)),
+      contextual_suggestions_source_(std::move(contextual_suggestions_source)) {
   // Can be null in tests.
   if (signin_manager) {
     signin_observer_.Add(signin_manager);
