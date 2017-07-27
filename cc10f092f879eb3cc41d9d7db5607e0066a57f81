@@ -72,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "522f41cd_18c1072f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-27T21:34:04Z",
+      "side": 1,
+      "message": "This UI becomes hard to use when the password is long.\nSee: http://screen/iozzKkrXHmf\n\nShould we make it look more like an input?",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da26d12f_c1367ae7",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
         "patchSetId": 4
