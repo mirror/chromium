@@ -659,6 +659,30 @@
       "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3424170_bb630104",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T22:20:43Z",
+      "side": 1,
+      "message": "Yeah, we added this for readability and assurance that the test was doing what we expect. If we didn\u0027t have that parameter, it would be possible that the wrong number of expected devices existed, but VerifySyncedDevicesMatchExpectation() would still pass.",
+      "parentUuid": "83b50a80_aa862838",
+      "range": {
+        "startLine": 209,
+        "startChar": 43,
+        "endLine": 209,
+        "endChar": 63
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
