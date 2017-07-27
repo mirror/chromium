@@ -178,34 +178,29 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
   builder.SetIsHandleVisible(true);
   if (position.IsNotNull())
     builder.Collapse(position.ToPositionWithAffinity());
-  SetSelection(builder.Build(),
-               kCloseTyping | kClearTypingStyle | kUserTriggered);
+  SetSelection(builder.Build(), SetSelectionData::Builder()
+                                    .SetShouldCloseTyping(true)
+                                    .SetShouldClearTypingStyle(true)
+                                    .SetSetSelectionBy(SetSelectionBy::kUser)
+                                    .Build());
 }
 
 void FrameSelection::SetSelection(const SelectionInDOMTree& selection,
                                   const SetSelectionData& data) {
-  const SetSelectionOptions options =
-      (data.GetSetSelectionBy() == SetSelectionBy::kUser ? kUserTriggered : 0) |
-      (data.ShouldCloseTyping() ? kCloseTyping : 0) |
-      (data.ShouldClearTypingStyle() ? kClearTypingStyle : 0) |
-      (data.DoNotSetFocus() ? kDoNotSetFocus : 0) |
-      (data.DoNotClearStrategy() ? kDoNotClearStrategy : 0);
-  SetSelection(selection, options, data.GetCursorAlignOnScroll(),
-               data.Granularity());
+  if (SetSelectionDeprecated(selection, data))
+    DidSetSelectionDeprecated(data);
 }
 
-void FrameSelection::SetSelection(const SelectionInDOMTree& passed_selection,
-                                  SetSelectionOptions options,
-                                  CursorAlignOnScroll align,
-                                  TextGranularity granularity) {
-  if (SetSelectionDeprecated(passed_selection, options, granularity))
-    DidSetSelectionDeprecated(options, align);
+void FrameSelection::SetSelection(const SelectionInDOMTree& selection) {
+  SetSelection(selection, SetSelectionData::Builder()
+                              .SetShouldCloseTyping(true)
+                              .SetShouldClearTypingStyle(true)
+                              .Build());
 }
 
 bool FrameSelection::SetSelectionDeprecated(
     const SelectionInDOMTree& passed_selection,
-    SetSelectionOptions options,
-    TextGranularity granularity) {
+    const SetSelectionData& options) {
   DCHECK(IsAvailable());
   passed_selection.AssertValidFor(GetDocument());
 
@@ -213,19 +208,16 @@ bool FrameSelection::SetSelectionDeprecated(
   if (ShouldAlwaysUseDirectionalSelection(frame_))
     builder.SetIsDirectional(true);
   SelectionInDOMTree new_selection = builder.Build();
-  if (granularity_strategy_ &&
-      (options & FrameSelection::kDoNotClearStrategy) == 0)
+  if (granularity_strategy_ && !options.DoNotClearStrategy())
     granularity_strategy_->Clear();
-  bool close_typing = options & kCloseTyping;
-  bool should_clear_typing_style = options & kClearTypingStyle;
-  granularity_ = granularity;
+  granularity_ = options.Granularity();
 
   // TODO(yosin): We should move to call |TypingCommand::closeTyping()| to
   // |Editor| class.
-  if (close_typing)
+  if (options.ShouldCloseTyping())
     TypingCommand::CloseTyping(frame_);
 
-  if (should_clear_typing_style)
+  if (options.ShouldClearTypingStyle())
     frame_->GetEditor().ClearTypingStyle();
 
   const SelectionInDOMTree old_selection_in_dom_tree =
@@ -242,16 +234,16 @@ bool FrameSelection::SetSelectionDeprecated(
   // |oldSelection| before setting focus
   frame_->GetEditor().RespondToChangedSelection(
       old_selection_in_dom_tree.ComputeStartPosition(),
-      options & kCloseTyping ? TypingContinuation::kEnd
-                             : TypingContinuation::kContinue);
+      options.ShouldCloseTyping() ? TypingContinuation::kEnd
+                                  : TypingContinuation::kContinue);
   DCHECK_EQ(current_document, GetDocument());
   return true;
 }
 
-void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
-                                               CursorAlignOnScroll align) {
+void FrameSelection::DidSetSelectionDeprecated(
+    const SetSelectionData& options) {
   const Document& current_document = GetDocument();
-  if (!GetSelectionInDOMTree().IsNone() && !(options & kDoNotSetFocus)) {
+  if (!GetSelectionInDOMTree().IsNone() && !options.DoNotSetFocus()) {
     SetFocusedNodeIfNeeded();
     // |setFocusedNodeIfNeeded()| dispatches sync events "FocusOut" and
     // "FocusIn", |m_frame| may associate to another document.
@@ -272,7 +264,7 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
 
   // TODO(yosin): Can we move this to at end of this function?
   // This may dispatch a synchronous focus-related events.
-  if (!(options & kDoNotSetFocus)) {
+  if (!options.DoNotSetFocus()) {
     SelectFrameElementInParentIfFullySelected();
     if (!IsAvailable() || GetDocument() != current_document) {
       // editing/selection/selectallchildren-crash.html and
@@ -281,11 +273,10 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
       return;
     }
   }
-
-  SetSelectionBy set_selection_by =
-      ConvertSelectionOptionsToSetSelectionBy(options);
+  const SetSelectionBy set_selection_by = options.GetSetSelectionBy();
   NotifyTextControlOfSelectionChange(set_selection_by);
   if (set_selection_by == SetSelectionBy::kUser) {
+    const CursorAlignOnScroll align = options.GetCursorAlignOnScroll();
     ScrollAlignment alignment;
 
     if (frame_->GetEditor()
@@ -381,10 +372,12 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
     return true;
   }
 
-  const SetSelectionOptions options =
-      kCloseTyping | kClearTypingStyle |
-      ConvertSetSelectionByToSetSelectionOptions(set_selection_by);
-  SetSelection(selection_modifier.Selection().AsSelection(), options);
+  SetSelection(selection_modifier.Selection().AsSelection(),
+               SetSelectionData::Builder()
+                   .SetShouldCloseTyping(true)
+                   .SetShouldClearTypingStyle(true)
+                   .SetSetSelectionBy(set_selection_by)
+                   .Build());
 
   if (granularity == TextGranularity::kLine ||
       granularity == TextGranularity::kParagraph)
@@ -1063,8 +1056,11 @@ bool FrameSelection::SelectWordAroundPosition(const VisiblePosition& position) {
                        .Collapse(start.ToPositionWithAffinity())
                        .Extend(end.DeepEquivalent())
                        .Build(),
-                   kCloseTyping | kClearTypingStyle,
-                   CursorAlignOnScroll::kIfNeeded, TextGranularity::kWord);
+                   SetSelectionData::Builder()
+                       .SetShouldCloseTyping(true)
+                       .SetShouldClearTypingStyle(true)
+                       .SetGranularity(TextGranularity::kWord)
+                       .Build());
       return true;
     }
   }
@@ -1097,15 +1093,17 @@ void FrameSelection::MoveRangeSelectionExtent(const IntPoint& contents_point) {
   if (ComputeVisibleSelectionInDOMTree().IsNone())
     return;
 
-  const SetSelectionOptions kOptions =
-      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle |
-      FrameSelection::kDoNotClearStrategy | kUserTriggered;
   SetSelection(
       SelectionInDOMTree::Builder(
           GetGranularityStrategy()->UpdateExtent(contents_point, frame_))
           .SetIsHandleVisible(true)
           .Build(),
-      kOptions);
+      SetSelectionData::Builder()
+          .SetShouldCloseTyping(true)
+          .SetShouldClearTypingStyle(true)
+          .SetDoNotClearStrategy(true)
+          .SetSetSelectionBy(SetSelectionBy::kUser)
+          .Build());
 }
 
 // TODO(yosin): We should make |FrameSelection::moveRangeSelection()| to take
@@ -1140,8 +1138,11 @@ void FrameSelection::MoveRangeSelection(const VisiblePosition& base_position,
   }
   builder.SetAffinity(visible_selection.Affinity());
   builder.SetIsHandleVisible(IsHandleVisible());
-  SetSelection(builder.Build(), kCloseTyping | kClearTypingStyle,
-               CursorAlignOnScroll::kIfNeeded, granularity);
+  SetSelection(builder.Build(), SetSelectionData::Builder()
+                                    .SetShouldCloseTyping(true)
+                                    .SetShouldClearTypingStyle(true)
+                                    .SetGranularity(granularity)
+                                    .Build());
 }
 
 void FrameSelection::SetCaretVisible(bool caret_is_visible) {
