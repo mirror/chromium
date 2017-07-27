@@ -89,13 +89,13 @@ void EqualPowerPanner::Pan(double azimuth,
     desired_pan_position = (azimuth + 90) / 180;
   } else {               // For stereo source case.
     if (azimuth <= 0) {  // from -90 -> 0
-      // sourceL -> destL and "equal-power pan" sourceR as in mono case
-      // by transforming the "azimuth" value from -90 -> 0 degrees into the
+      // source_l -> destination_l and "equal-power pan" source_r as in mono
+      // case by transforming the "azimuth" value from -90 -> 0 degrees into the
       // range -90 -> +90.
       desired_pan_position = (azimuth + 90) / 90;
     } else {  // from 0 -> +90
-      // sourceR -> destR and "equal-power pan" sourceL as in mono case
-      // by transforming the "azimuth" value from 0 -> +90 degrees into the
+      // source_r -> destination_r and "equal-power pan" source_l as in mono
+      // case by transforming the "azimuth" value from 0 -> +90 degrees into the
       // range -90 -> +90.
       desired_pan_position = azimuth / 90;
     }
@@ -158,13 +158,13 @@ void EqualPowerPanner::CalculateDesiredGain(double& desired_gain_l,
     desired_pan_position = (azimuth + 90) / 180;
   } else {               // For stereo source case.
     if (azimuth <= 0) {  // from -90 -> 0
-      // sourceL -> destL and "equal-power pan" sourceR as in mono case
-      // by transforming the "azimuth" value from -90 -> 0 degrees into the
+      // source_l -> destination_l and "equal-power pan" source_r as in mono
+      // case by transforming the "azimuth" value from -90 -> 0 degrees into the
       // range -90 -> +90.
       desired_pan_position = (azimuth + 90) / 90;
     } else {  // from 0 -> +90
-      // sourceR -> destR and "equal-power pan" sourceL as in mono case
-      // by transforming the "azimuth" value from 0 -> +90 degrees into the
+      // source_r -> destination_r and "equal-power pan" source_l as in mono
+      // case by transforming the "azimuth" value from 0 -> +90 degrees into the
       // range -90 -> +90.
       desired_pan_position = azimuth / 90;
     }

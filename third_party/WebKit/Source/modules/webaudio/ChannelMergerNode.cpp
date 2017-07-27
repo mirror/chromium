@@ -99,7 +99,6 @@ void ChannelMergerHandler::SetChannelCount(unsigned long channel_count,
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channelCount must be 1.
   if (channel_count != 1) {
     exception_state.ThrowDOMException(
         kInvalidStateError,
@@ -113,11 +112,11 @@ void ChannelMergerHandler::SetChannelCountMode(
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channcelCountMode must be 'explicit'.
+  // ChannelCountMode must be 'explicit'.
   if (mode != "explicit") {
     exception_state.ThrowDOMException(
         kInvalidStateError,
-        "ChannelMerger: channelCountMode cannot be changed from 'explicit'");
+        "ChannelMerger: ChannelCountMode cannot be changed from 'explicit'");
   }
 }
 

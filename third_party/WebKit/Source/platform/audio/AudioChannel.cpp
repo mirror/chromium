@@ -64,7 +64,7 @@ void AudioChannel::CopyFrom(const AudioChannel* source_channel) {
 void AudioChannel::CopyFromRange(const AudioChannel* source_channel,
                                  unsigned start_frame,
                                  unsigned end_frame) {
-  // Check that range is safe for reading from sourceChannel.
+  // Check that range is safe for reading from source_channel.
   bool is_range_safe = source_channel && start_frame < end_frame &&
                        end_frame <= source_channel->length();
   DCHECK(is_range_safe);

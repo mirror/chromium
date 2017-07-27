@@ -21,7 +21,7 @@ TEST(DynamicsCompressorNodeTest, ProcessorLifetime) {
   EXPECT_TRUE(handler.dynamics_compressor_);
   BaseAudioContext::AutoLocker locker(context);
   handler.Dispose();
-  // m_dynamicsCompressor should live after dispose() because an audio thread
+  // dynamics_compressor_ should live after Dispose() because an audio thread
   // is using it.
   EXPECT_TRUE(handler.dynamics_compressor_);
 }

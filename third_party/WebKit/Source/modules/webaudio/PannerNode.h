@@ -199,7 +199,7 @@ class PannerHandler final : public AudioHandler {
   FloatPoint3D last_position_;
   FloatPoint3D last_orientation_;
 
-  // Synchronize process() with setting of the panning model, source's location
+  // Synchronize Process() with setting of the panning model, source's location
   // information, listener, distance parameters and sound cones.
   mutable Mutex process_lock_;
 };

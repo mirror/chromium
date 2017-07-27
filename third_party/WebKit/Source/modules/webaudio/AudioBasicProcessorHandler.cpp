@@ -53,7 +53,7 @@ PassRefPtr<AudioBasicProcessorHandler> AudioBasicProcessorHandler::Create(
 }
 
 AudioBasicProcessorHandler::~AudioBasicProcessorHandler() {
-  // Safe to call the uninitialize() because it's final.
+  // Safe to call the Uninitialize() because it's final.
   Uninitialize();
 }
 
@@ -87,7 +87,7 @@ void AudioBasicProcessorHandler::Process(size_t frames_to_process) {
     AudioBus* source_bus = Input(0).Bus();
 
     // FIXME: if we take "tail time" into account, then we can avoid calling
-    // processor()->process() once the tail dies down.
+    // Processor()->Process() once the tail dies down.
     if (!Input(0).IsConnected())
       source_bus->Zero();
 
@@ -106,7 +106,7 @@ void AudioBasicProcessorHandler::ProcessOnlyAudioParams(
 // Nice optimization in the very common case allowing for "in-place" processing
 void AudioBasicProcessorHandler::PullInputs(size_t frames_to_process) {
   // Render input stream - suggest to the input to render directly into output
-  // bus for in-place processing in process() if possible.
+  // bus for in-place processing in Process() if possible.
   Input(0).Pull(Output(0).Bus(), frames_to_process);
 }
 

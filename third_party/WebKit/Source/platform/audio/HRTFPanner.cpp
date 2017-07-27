@@ -34,7 +34,7 @@ namespace blink {
 
 // The value of 2 milliseconds is larger than the largest delay which exists in
 // any HRTFKernel from the default HRTFDatabase (0.0136 seconds).
-// We ASSERT the delay values used in process() with this value.
+// We ASSERT the delay values used in Process() with this value.
 const double kMaxDelayTimeSeconds = 0.002;
 
 const int kUninitializedAzimuth = -1;
@@ -352,16 +352,16 @@ void HRTFPanner::PanWithSampleAccurateValues(
 
 double HRTFPanner::TailTime() const {
   // Because HRTFPanner is implemented with a DelayKernel and a FFTConvolver,
-  // the tailTime of the HRTFPanner is the sum of the tailTime of the
-  // DelayKernel and the tailTime of the FFTConvolver, which is
-  // MaxDelayTimeSeconds and fftSize() / 2, respectively.
+  // the TailTime() of the HRTFPanner is the sum of the TailTime() of the
+  // DelayKernel and the TailTime() of the FFTConvolver, which is
+  // kMaxDelayTimeSeconds and FftSize() / 2, respectively.
   return kMaxDelayTimeSeconds +
          (FftSize() / 2) / static_cast<double>(SampleRate());
 }
 
 double HRTFPanner::LatencyTime() const {
-  // The latency of a FFTConvolver is also fftSize() / 2, and is in addition to
-  // its tailTime of the same value.
+  // The latency of a FFTConvolver is also FftSize() / 2, and is in addition to
+  // its TailTime() of the same value.
   return (FftSize() / 2) / static_cast<double>(SampleRate());
 }
 

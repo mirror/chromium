@@ -63,7 +63,7 @@ void AudioNodeInput::Disconnect(AudioNodeOutput& output) {
     outputs_.erase(&output);
     ChangedOutputs();
     output.RemoveInput(*this);
-    // Note: it's important to return immediately after removeInput() calls
+    // Note: it's important to return immediately after RemoveInput() calls
     // since the node may be deleted.
     return;
   }
@@ -72,7 +72,7 @@ void AudioNodeInput::Disconnect(AudioNodeOutput& output) {
   if (disabled_outputs_.Contains(&output)) {
     disabled_outputs_.erase(&output);
     output.RemoveInput(*this);
-    // Note: it's important to return immediately after all removeInput() calls
+    // Note: it's important to return immediately after all RemoveInput() calls
     // since the node may be deleted.
     return;
   }
@@ -134,9 +134,9 @@ unsigned AudioNodeInput::NumberOfChannels() const {
   unsigned max_channels = 1;  // one channel is the minimum allowed
 
   for (AudioNodeOutput* output : outputs_) {
-    // Use output()->numberOfChannels() instead of
-    // output->bus()->numberOfChannels(), because the calling of
-    // AudioNodeOutput::bus() is not safe here.
+    // Use output->NumberOfChannels() instead of
+    // output->Bus()->NumberOfChannels(), because the calling of
+    // AudioNodeOutput::Bus() is not safe here.
     max_channels = std::max(max_channels, output->NumberOfChannels());
   }
 
@@ -171,8 +171,8 @@ void AudioNodeInput::SumAllConnections(AudioBus* summing_bus,
 
   // We shouldn't be calling this method if there's only one connection, since
   // it's less efficient.
-  //    DCHECK(numberOfRenderingConnections() > 1 ||
-  //        handler().internalChannelCountMode() != AudioHandler::Max);
+  //    DCHECK(NumberOfRenderingConnections() > 1 ||
+  //        Handler().InternalChannelCountMode() != AudioHandler::Max);
 
   DCHECK(summing_bus);
   if (!summing_bus)
@@ -202,7 +202,7 @@ AudioBus* AudioNodeInput::Pull(AudioBus* in_place_bus,
   // Handle single connection case.
   if (NumberOfRenderingConnections() == 1 &&
       Handler().InternalChannelCountMode() == AudioHandler::kMax) {
-    // The output will optimize processing using inPlaceBus if it's able.
+    // The output will optimize processing using in_place_bus if it's able.
     AudioNodeOutput* output = this->RenderingOutput(0);
     return output->Pull(in_place_bus, frames_to_process);
   }

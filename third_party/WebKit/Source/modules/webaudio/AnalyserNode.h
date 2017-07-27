@@ -86,7 +86,7 @@ class AnalyserHandler final : public AudioBasicInspectorHandler {
   AnalyserHandler(AudioNode&, float sample_rate);
   bool PropagatesSilence() const {
     // An AnalyserNode does actually propogate silence, but to get the
-    // time and FFT data updated correctly, process() needs to be
+    // time and FFT data updated correctly, Process() needs to be
     // called even if all the inputs are silent.
     return false;
   }

@@ -44,16 +44,16 @@ class PLATFORM_EXPORT SincResampler {
   WTF_MAKE_NONCOPYABLE(SincResampler);
 
  public:
-  // scaleFactor == sourceSampleRate / destinationSampleRate
-  // kernelSize can be adjusted for quality (higher is better)
-  // numberOfKernelOffsets is used for interpolation and is the number of
+  // scale_factor == source_sample_rate / destination_sample_rate
+  // kernel_size can be adjusted for quality (higher is better)
+  // number_of_kernel_offsets is used for interpolation and is the number of
   // sub-sample kernel shifts.
   SincResampler(double scale_factor,
                 unsigned kernel_size = 32,
                 unsigned number_of_kernel_offsets = 32);
 
-  // Processes numberOfSourceFrames from source to produce numberOfSourceFrames
-  // / scaleFactor frames in destination.
+  // Processes number_of_source_frames from source to produce
+  // number_of_source_frames / scale_factor frames in destination.
   void Process(const float* source,
                float* destination,
                unsigned number_of_source_frames);
@@ -71,13 +71,13 @@ class PLATFORM_EXPORT SincResampler {
   unsigned kernel_size_;
   unsigned number_of_kernel_offsets_;
 
-  // m_kernelStorage has m_numberOfKernelOffsets kernels back-to-back, each of
-  // size m_kernelSize.  The kernel offsets are sub-sample shifts of a windowed
+  // kernel_storage_ has number_of_kernel_offsets_ kernels back-to-back, each of
+  // size kernel_size_.  The kernel offsets are sub-sample shifts of a windowed
   // sinc() shifted from 0.0 to 1.0 sample.
   AudioFloatArray kernel_storage_;
 
-  // m_virtualSourceIndex is an index on the source input buffer with sub-sample
-  // precision.  It must be double precision to avoid drift.
+  // virtual_source_index_ is an index on the source input buffer with
+  // sub-sample precision.  It must be double precision to avoid drift.
   double virtual_source_index_;
 
   // This is the number of destination frames we generate per processing pass on
@@ -90,7 +90,7 @@ class PLATFORM_EXPORT SincResampler {
   const float* source_;
   unsigned source_frames_available_;
 
-  // m_sourceProvider is used to provide the audio input stream to the
+  // source_provider_ is used to provide the audio input stream to the
   // resampler.
   AudioSourceProvider* source_provider_;
 

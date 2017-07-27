@@ -87,7 +87,7 @@ DelayNode* DelayNode::Create(BaseAudioContext& context,
 DelayNode* DelayNode::Create(BaseAudioContext* context,
                              const DelayOptions& options,
                              ExceptionState& exception_state) {
-  // maxDelayTime has a default value specified.
+  // max_delay_time has a default value specified.
   DelayNode* node = Create(*context, options.maxDelayTime(), exception_state);
 
   if (!node)

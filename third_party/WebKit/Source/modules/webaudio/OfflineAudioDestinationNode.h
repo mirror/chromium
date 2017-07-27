@@ -83,7 +83,7 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
   OfflineAudioDestinationHandler(AudioNode&, AudioBuffer* render_target);
 
   // Set up the rendering and start. After setting the context up, it will
-  // eventually call |doOfflineRendering|.
+  // eventually call |DoOfflineRendering()|.
   void StartOfflineRendering();
 
   // Suspend the rendering loop and notify the main thread to resolve the
@@ -124,8 +124,8 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
   size_t frames_to_process_;
 
   // This flag is necessary to distinguish the state of the context between
-  // 'created' and 'suspended'. If this flag is false and the current state
-  // is 'suspended', it means the context is created and have not started yet.
+  // 'kSuspended' and 'kClosed'. If this flag is false and the current state
+  // is 'kSuspended', it means the context is created and have not started yet.
   bool is_rendering_started_;
 };
 

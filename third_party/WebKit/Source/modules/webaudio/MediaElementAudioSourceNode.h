@@ -91,20 +91,20 @@ class MediaElementAudioSourceHandler final : public AudioHandler {
 
   std::unique_ptr<MultiChannelResampler> multi_channel_resampler_;
 
-  // |m_passesCurrentSrcCORSAccessCheck| holds the value of
-  // context()->getSecurityOrigin() &&
-  // context()->getSecurityOrigin()->canRequest(mediaElement()->currentSrc()),
-  // updated in the ctor and onCurrentSrcChanged() on the main thread and used
-  // in passesCORSAccessCheck() on the audio thread, protected by
-  // |m_processLock|.
+  // |passes_current_src_cors_access_check_| holds the value of
+  // Context()->GetSecurityOrigin() &&
+  // Context()->GetSecurityOrigin()->CanRequest(current_src),
+  // updated in the ctor and OnCurrentSrcChanged() on the main thread and used
+  // in PassesCORSAccessCheck() on the audio thread, protected by
+  // |process_lock_|.
   bool passes_current_src_cors_access_check_;
 
   // Indicates if we need to print a CORS message if the current source has
-  // changed and we have no access to it. Must be protected by |m_processLock|.
+  // changed and we have no access to it. Must be protected by |process_lock_|.
   bool maybe_print_cors_message_;
 
-  // The value of mediaElement()->currentSrc().string() in the ctor and
-  // onCurrentSrcChanged().  Protected by |m_processLock|.
+  // The value of media_element.currentSrc().GetString() in the ctor and
+  // OnCurrentSrcChanged().  Protected by |process_lock_|.
   String current_src_string_;
 };
 

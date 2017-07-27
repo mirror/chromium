@@ -41,16 +41,16 @@ class PLATFORM_EXPORT FFTConvolver {
   WTF_MAKE_NONCOPYABLE(FFTConvolver);
 
  public:
-  // fftSize must be a power of two
+  // fft_size must be a power of two
   FFTConvolver(size_t fft_size);
 
-  // For now, with multiple calls to Process(), framesToProcess MUST add up
-  // EXACTLY to fftSize / 2
+  // For now, with multiple calls to Process(), frames_to_process MUST add up
+  // EXACTLY to fft_size / 2
   //
   // FIXME: Later, we can do more sophisticated buffering to relax this
   // requirement...
   //
-  // The input to output latency is equal to fftSize / 2
+  // The input to output latency is equal to fft_size / 2
   //
   // Processing in-place is allowed...
   void Process(FFTFrame* fft_kernel,
@@ -65,7 +65,7 @@ class PLATFORM_EXPORT FFTConvolver {
  private:
   FFTFrame frame_;
 
-  // Buffer input until we get fftSize / 2 samples then do an FFT
+  // Buffer input until we get fft_size / 2 samples then do an FFT
   size_t read_write_index_;
   AudioFloatArray input_buffer_;
 

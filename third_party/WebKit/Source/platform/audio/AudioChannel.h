@@ -58,7 +58,7 @@ class PLATFORM_EXPORT AudioChannel {
     mem_buffer_ = WTF::WrapUnique(new AudioFloatArray(length));
   }
 
-  // A "blank" audio channel -- must call set() before it's useful...
+  // A "blank" audio channel -- must call Set() before it's useful...
   AudioChannel() : length_(0), raw_pointer_(nullptr), silent_(true) {}
 
   // Redefine the memory for this channel.
@@ -73,7 +73,7 @@ class PLATFORM_EXPORT AudioChannel {
   // How many sample-frames do we contain?
   size_t length() const { return length_; }
 
-  // resizeSmaller() can only be called with a new length <= the current length.
+  // ResizeSmaller() can only be called with a new length <= the current length.
   // The data stored in the bus will remain undisturbed.
   void ResizeSmaller(size_t new_length);
 

@@ -127,8 +127,8 @@ void WaveShaperNode::setOversample(const String& type) {
   DCHECK(IsMainThread());
 
   // This is to synchronize with the changes made in
-  // AudioBasicProcessorNode::checkNumberOfChannelsForInput() where we can
-  // initialize() and uninitialize().
+  // AudioBasicProcessorNode::CheckNumberOfChannelsForInput() where we can
+  // Initialize() and Uninitialize().
   BaseAudioContext::AutoLocker context_locker(context());
 
   if (type == "none") {

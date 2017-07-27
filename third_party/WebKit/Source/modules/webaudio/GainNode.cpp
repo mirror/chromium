@@ -77,9 +77,9 @@ void GainHandler::Process(size_t frames_to_process) {
         gain_->CalculateSampleAccurateValues(gain_values, frames_to_process);
         output_bus->CopyWithSampleAccurateGainValuesFrom(
             *input_bus, gain_values, frames_to_process);
-        // Update m_lastGain so if the timeline ever ends, we get
+        // Update last_gain_ so if the timeline ever ends, we get
         // consistent data for the smoothing below.  (Without this,
-        // m_lastGain was the last value before the timeline started
+        // last_gain_ was the last value before the timeline started
         // procesing.
         last_gain_ = gain_values[frames_to_process - 1];
       }

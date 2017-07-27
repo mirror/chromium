@@ -39,23 +39,23 @@ class PLATFORM_EXPORT IIRFilter final {
  private:
   // Filter memory
   //
-  // For simplicity, we assume |m_xBuffer| and |m_yBuffer| have the same length,
+  // For simplicity, we assume |x_buffer_| and |y_buffer_| have the same length,
   // and the length is a power of two.  Since the number of coefficients has a
-  // fixed upper length, the size of xBuffer and yBuffer is fixed. |m_xBuffer|
-  // holds the old input values and |m_yBuffer| holds the old output values
-  // needed to compute the new output value.
+  // fixed upper length, the size of x_buffer_ and y_buffer_ is fixed.
+  // |x_buffer_| holds the old input values and |y_buffer_| holds the old output
+  // values needed to compute the new output value.
   //
-  // m_yBuffer[m_bufferIndex] holds the most recent output value, say, y[n].
-  // Then m_yBuffer[m_bufferIndex - k] is y[n - k].  Similarly for m_xBuffer.
+  // y_buffer_[buffer_index_] holds the most recent output value, say, y[n].
+  // Then y_buffer_[buffer_index_ - k] is y[n - k].  Similarly for x_buffer_.
   //
   // To minimize roundoff, these arrays are double's instead of floats.
   AudioDoubleArray x_buffer_;
   AudioDoubleArray y_buffer_;
 
-  // Index into the xBuffer and yBuffer arrays where the most current x and y
-  // values should be stored.  xBuffer[bufferIndex] corresponds to x[n], the
-  // current x input value and yBuffer[bufferIndex] is where y[n], the current
-  // output value.
+  // Index into the x_buffer_ and y_buffer_ arrays where the most current x and
+  // y values should be stored.  x_buffer_[buffer_index_] corresponds to x[n],
+  // the current x input value and y_buffer_[buffer_index_] is where y[n], the
+  // current output value.
   int buffer_index_;
 
   // Coefficients of the IIR filter.  To minimize storage, these point to the

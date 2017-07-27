@@ -67,7 +67,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   // allocate indicates whether or not to initially have the AudioChannels
   // created with managed storage.  Normal usage is to pass true here, in which
   // case the AudioChannels will memory-manage their own storage.  If allocate
-  // is false then setChannelMemory() has to be called later on for each
+  // is false then SetChannelMemory() has to be called later on for each
   // channel before the AudioBus is useable...
   static PassRefPtr<AudioBus> Create(unsigned number_of_channels,
                                      size_t length,
@@ -89,7 +89,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   // Number of sample-frames
   size_t length() const { return length_; }
 
-  // resizeSmaller() can only be called with a new length <= the current length.
+  // ResizeSmaller() can only be called with a new length <= the current length.
   // The data stored in the bus will remain undisturbed.
   void ResizeSmaller(size_t new_length);
 
@@ -110,15 +110,15 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   bool TopologyMatches(const AudioBus& source_bus) const;
 
   // Creates a new buffer from a range in the source buffer.
-  // 0 may be returned if the range does not fit in the sourceBuffer
+  // 0 may be returned if the range does not fit in the source_buffer
   static PassRefPtr<AudioBus> CreateBufferFromRange(
       const AudioBus* source_buffer,
       unsigned start_frame,
       unsigned end_frame);
 
-  // Creates a new AudioBus by sample-rate converting sourceBus to the
-  // newSampleRate.
-  // setSampleRate() must have been previously called on sourceBus.
+  // Creates a new AudioBus by sample-rate converting source_bus to the
+  // new_sample_rate.
+  // SetSampleRate() must have been previously called on source_bus.
   // Note: sample-rate conversion is already handled in the file-reading code
   // for the mac port, so we don't need this.
   static PassRefPtr<AudioBus> CreateBySampleRateConverting(
@@ -127,7 +127,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
       double new_sample_rate);
 
   // Creates a new AudioBus by mixing all the channels down to mono.
-  // If sourceBus is already mono, then the returned AudioBus will simply be a
+  // If source_bus is already mono, then the returned AudioBus will simply be a
   // copy.
   static PassRefPtr<AudioBus> CreateByMixingToMono(const AudioBus* source_bus);
 
@@ -146,18 +146,18 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   // otherwise an up-mix or down-mix is done.
   void SumFrom(const AudioBus& source_bus, ChannelInterpretation = kSpeakers);
 
-  // Copy each channel from sourceBus into our corresponding channel.
-  // We scale by targetGain (and our own internal gain m_busGain), performing
-  // "de-zippering" to smoothly change from *lastMixGain to
-  // (targetGain*m_busGain).  The caller is responsible for setting up
-  // lastMixGain to point to storage which is unique for every "stream" which
+  // Copy each channel from source_bus into our corresponding channel.
+  // We scale by target_gain (and our own internal gain bus_gain_), performing
+  // "de-zippering" to smoothly change from *last_mix_gain to
+  // (target_gain*bus_gain_).  The caller is responsible for setting up
+  // last_mix_gain to point to storage which is unique for every "stream" which
   // will be applied to this bus.
   // This represents the dezippering memory.
   void CopyWithGainFrom(const AudioBus& source_bus,
                         float* last_mix_gain,
                         float target_gain);
 
-  // Copies the sourceBus by scaling with sample-accurate gain values.
+  // Copies the source_bus by scaling with sample-accurate gain values.
   void CopyWithSampleAccurateGainValuesFrom(const AudioBus& source_bus,
                                             float* gain_values,
                                             unsigned number_of_gain_values);

@@ -87,7 +87,7 @@ void ChannelSplitterHandler::SetChannelCount(unsigned long channel_count,
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channelCount cannot be changed from the number of outputs.
+  // channel_count cannot be changed from the number of outputs.
   if (channel_count != NumberOfOutputs()) {
     exception_state.ThrowDOMException(
         kInvalidStateError,
@@ -102,11 +102,11 @@ void ChannelSplitterHandler::SetChannelCountMode(
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channcelCountMode must be 'explicit'.
+  // ChanncelCountMode must be 'explicit'.
   if (mode != "explicit") {
     exception_state.ThrowDOMException(
         kInvalidStateError,
-        "ChannelSplitter: channelCountMode cannot be changed from 'explicit'");
+        "ChannelSplitter: ChannelCountMode cannot be changed from 'explicit'");
   }
 }
 

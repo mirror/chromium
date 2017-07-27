@@ -48,15 +48,15 @@ class PLATFORM_EXPORT ReverbAccumulationBuffer {
  public:
   ReverbAccumulationBuffer(size_t length);
 
-  // This will read from, then clear-out numberOfFrames
+  // This will read from, then clear-out number_of_frames
   void ReadAndClear(float* destination, size_t number_of_frames);
 
   // Each ReverbConvolverStage will accumulate its output at the appropriate
-  // delay from the read position.  We need to pass in and update readIndex
+  // delay from the read position.  We need to pass in and update read_index
   // here, since each ReverbConvolverStage may be running in a different thread
   // than the realtime thread calling ReadAndClear() and maintaining
-  // m_readIndex
-  // Returns the writeIndex where the accumulation took place
+  // read_index_
+  // Returns the write_index where the accumulation took place
   int Accumulate(float* source,
                  size_t number_of_frames,
                  int* read_index,

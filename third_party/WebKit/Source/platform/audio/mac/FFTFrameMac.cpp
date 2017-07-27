@@ -41,7 +41,7 @@ const int kMaxFFTPow2Size = 24;
 
 FFTSetup* FFTFrame::fft_setups_ = nullptr;
 
-// Normal constructor: allocates for a given fftSize
+// Normal constructor: allocates for a given fft_size
 FFTFrame::FFTFrame(unsigned fft_size)
     : real_data_(fft_size), imag_data_(fft_size) {
   fft_size_ = fft_size;
@@ -50,7 +50,7 @@ FFTFrame::FFTFrame(unsigned fft_size)
   // We only allow power of two
   DCHECK_EQ(1UL << log2fft_size_, fft_size_);
 
-  // Lazily create and share fftSetup with other frames
+  // Lazily create and share FFTSetup with other frames
   fft_setup_ = FftSetupForSize(fft_size);
 
   // Setup frame data
@@ -58,7 +58,7 @@ FFTFrame::FFTFrame(unsigned fft_size)
   frame_.imagp = imag_data_.Data();
 }
 
-// Creates a blank/empty frame (interpolate() must later be called)
+// Creates a blank/empty frame (Interpolate() must later be called)
 FFTFrame::FFTFrame() : real_data_(0), imag_data_(0) {
   // Later will be set to correct values when interpolate() is called
   frame_.realp = 0;

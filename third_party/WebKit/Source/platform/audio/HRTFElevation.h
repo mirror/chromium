@@ -77,8 +77,8 @@ class PLATFORM_EXPORT HRTFElevation {
   float SampleRate() const { return sample_rate_; }
 
   // Returns the left and right kernels for the given azimuth index.
-  // The interpolated delays based on azimuthBlend: 0 -> 1 are returned in
-  // frameDelayL and frameDelayR.
+  // The interpolated delays based on azimuth_blend: 0 -> 1 are returned in
+  // frame_delay_l and frame_delay_r.
   void GetKernelsFromAzimuth(double azimuth_blend,
                              unsigned azimuth_index,
                              HRTFKernel*& kernel_l,

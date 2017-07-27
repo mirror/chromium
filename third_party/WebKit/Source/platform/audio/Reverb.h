@@ -73,7 +73,7 @@ class PLATFORM_EXPORT Reverb {
 
   size_t impulse_response_length_;
   // The actual number of channels in the response.  This can be less
-  // than the number of ReverbConvolver's in |m_convolvers|.
+  // than the number of ReverbConvolver's in |convolvers_|.
   unsigned number_of_response_channels_;
 
   Vector<std::unique_ptr<ReverbConvolver>> convolvers_;

@@ -67,7 +67,7 @@ void ReverbAccumulationBuffer::ReadAndClear(float* destination,
 
 void ReverbAccumulationBuffer::UpdateReadIndex(int* read_index,
                                                size_t number_of_frames) const {
-  // Update caller's readIndex
+  // Update caller's read_index
   *read_index = (*read_index + number_of_frames) % buffer_.size();
 }
 
@@ -79,7 +79,7 @@ int ReverbAccumulationBuffer::Accumulate(float* source,
 
   size_t write_index = (*read_index + delay_frames) % buffer_length;
 
-  // Update caller's readIndex
+  // Update caller's read_index
   *read_index = (*read_index + number_of_frames) % buffer_length;
 
   size_t frames_available = buffer_length - write_index;

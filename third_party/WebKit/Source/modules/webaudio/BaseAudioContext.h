@@ -96,11 +96,12 @@ class MODULES_EXPORT BaseAudioContext
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  // The state of an audio context.  On creation, the state is Suspended. The
-  // state is Running if audio is being processed (audio graph is being pulled
-  // for data). The state is Closed if the audio context has been closed.  The
-  // valid transitions are from Suspended to either Running or Closed; Running
-  // to Suspended or Closed. Once Closed, there are no valid transitions.
+  // The state of an audio context.  On creation, the state is kSuspended. The
+  // state is kRunning if audio is being processed (audio graph is being pulled
+  // for data). The state is kClosed if the audio context has been closed.  The
+  // valid transitions are from kSuspended to either kRunning or kClosed;
+  // kRunning to kSuspended or kClosed. Once kClosed, there are no valid
+  // transitions.
   enum AudioContextState { kSuspended, kRunning, kClosed };
 
   // Create an AudioContext for rendering to the audio hardware.
@@ -185,7 +186,7 @@ class MODULES_EXPORT BaseAudioContext
                                 DecodeSuccessCallback*,
                                 ExceptionState&);
 
-  // Handles the promise and callbacks when |decodeAudioData| is finished
+  // Handles the promise and callbacks when |decodeAudioData()| is finished
   // decoding.
   void HandleDecodeAudioData(AudioBuffer*,
                              ScriptPromiseResolver*,
@@ -309,7 +310,7 @@ class MODULES_EXPORT BaseAudioContext
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(statechange);
 
-  // Start the AudioContext. `isAllowedToStart()` MUST be called
+  // Start the AudioContext. `IsAllowedToStart()` MUST be called
   // before.  This does NOT set the context state to running.  The
   // caller must set the state AFTER calling startRendering.
   void StartRendering();
@@ -355,7 +356,7 @@ class MODULES_EXPORT BaseAudioContext
 
   Member<AudioDestinationNode> destination_node_;
 
-  // FIXME(dominicc): Move m_resumeResolvers to AudioContext, because only
+  // FIXME(dominicc): Move resume_resolvers_ to AudioContext, because only
   // it creates these Promises.
   // Vector of promises created by resume(). It takes time to handle them, so we
   // collect all of the promises here until they can be resolved or rejected.
@@ -425,8 +426,8 @@ class MODULES_EXPORT BaseAudioContext
   // List of source nodes. This is either accessed when the graph lock is
   // held, or on the main thread when the audio thread has finished.
   // Oilpan: This Vector holds connection references. We must call
-  // AudioHandler::makeConnection when we add an AudioNode to this, and must
-  // call AudioHandler::breakConnection() when we remove an AudioNode from
+  // AudioHandler::MakeConnection when we add an AudioNode to this, and must
+  // call AudioHandler::BreakConnection() when we remove an AudioNode from
   // this.
   HeapVector<Member<AudioNode>> active_source_nodes_;
 
@@ -479,20 +480,21 @@ class MODULES_EXPORT BaseAudioContext
 
   AsyncAudioDecoder audio_decoder_;
 
-  // Hold references to the |decodeAudioData| callbacks so that they
-  // don't get prematurely GCed by v8 before |decodeAudioData| returns
+  // Hold references to the |decodeAudioData()| callbacks so that they
+  // don't get prematurely GCed by v8 before |decodeAudioData()| returns
   // and calls them.
   HeapVector<TraceWrapperMember<DecodeSuccessCallback>> success_callbacks_;
   HeapVector<TraceWrapperMember<DecodeErrorCallback>> error_callbacks_;
 
-  // When a context is closed, the sample rate is cleared.  But decodeAudioData
-  // can be called after the context has been closed and it needs the sample
-  // rate.  When the context is closed, the sample rate is saved here.
+  // When a context is closed, the sample rate is cleared.
+  // But decodeAudioData() can be called after the context has been closed and
+  // it needs the sample rate.  When the context is closed, the sample rate is
+  // saved here.
   float closed_context_sample_rate_;
 
-  // Vector of promises created by decodeAudioData.  This keeps the resolvers
-  // alive until decodeAudioData finishes decoding and can tell the main thread
-  // to resolve them.
+  // Vector of promises created by decodeAudioData().  This keeps the
+  // resolvers alive until decodeAudioData() finishes decoding and can tell
+  // the main thread to resolve them.
   HeapHashSet<Member<ScriptPromiseResolver>> decode_audio_resolvers_;
 
   // PeriodicWave's for the builtin oscillator types.  These only depend on the

@@ -251,7 +251,7 @@ void AudioListener::MarkPannersAsDirty(unsigned type) {
 void AudioListener::setPosition(const FloatPoint3D& position) {
   DCHECK(IsMainThread());
 
-  // This synchronizes with panner's process().
+  // This synchronizes with panner's Process().
   MutexLocker listener_locker(listener_lock_);
   position_x_->setValue(position.X());
   position_y_->setValue(position.Y());
@@ -263,7 +263,7 @@ void AudioListener::setPosition(const FloatPoint3D& position) {
 void AudioListener::setOrientation(const FloatPoint3D& orientation) {
   DCHECK(IsMainThread());
 
-  // This synchronizes with panner's process().
+  // This synchronizes with panner's Process().
   MutexLocker listener_locker(listener_lock_);
   forward_x_->setValue(orientation.X());
   forward_y_->setValue(orientation.Y());
@@ -274,7 +274,7 @@ void AudioListener::setOrientation(const FloatPoint3D& orientation) {
 void AudioListener::SetUpVector(const FloatPoint3D& up_vector) {
   DCHECK(IsMainThread());
 
-  // This synchronizes with panner's process().
+  // This synchronizes with panner's Process().
   MutexLocker listener_locker(listener_lock_);
   up_x_->setValue(up_vector.X());
   up_y_->setValue(up_vector.Y());

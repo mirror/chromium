@@ -124,12 +124,12 @@ AudioBus* AudioNodeOutput::Pull(AudioBus* in_place_bus,
   DCHECK(rendering_fan_out_count_ > 0 || rendering_param_fan_out_count_ > 0);
 
   // Causes our AudioNode to process if it hasn't already for this render
-  // quantum.  We try to do in-place processing (using inPlaceBus) if at all
+  // quantum.  We try to do in-place processing (using in_place_bus) if at all
   // possible, but we can't process in-place if we're connected to more than one
-  // input (fan-out > 1).  In this case pull() is called multiple times per
-  // rendering quantum, and the processIfNecessary() call below will cause our
-  // node to process() only the first time, caching the output in
-  // m_internalOutputBus for subsequent calls.
+  // input (fan-out > 1).  In this case Pull() is called multiple times per
+  // rendering quantum, and the ProcessIfNecessary() call below will cause our
+  // node to Process() only the first time, caching the output in
+  // internal_bus_ for subsequent calls.
 
   is_in_place_ =
       in_place_bus && in_place_bus->NumberOfChannels() == NumberOfChannels() &&
@@ -175,7 +175,7 @@ void AudioNodeOutput::RemoveInput(AudioNodeInput& input) {
 void AudioNodeOutput::DisconnectAllInputs() {
   DCHECK(GetDeferredTaskHandler().IsGraphOwner());
 
-  // AudioNodeInput::disconnect() changes m_inputs by calling removeInput().
+  // AudioNodeInput::Disconnect() changes inputs_ by calling RemoveInput().
   while (!inputs_.IsEmpty())
     (*inputs_.begin())->Disconnect(*this);
 }
@@ -205,7 +205,7 @@ void AudioNodeOutput::RemoveParam(AudioParamHandler& param) {
 void AudioNodeOutput::DisconnectAllParams() {
   DCHECK(GetDeferredTaskHandler().IsGraphOwner());
 
-  // AudioParam::disconnect() changes m_params by calling removeParam().
+  // AudioParam::Disconnect() changes params_ by calling RemoveParam().
   while (!params_.IsEmpty())
     (*params_.begin())->Disconnect(*this);
 }

@@ -22,7 +22,7 @@ TEST(ScriptProcessorNodeTest, BufferLifetime) {
   EXPECT_EQ(2u, handler.output_buffers_.size());
   BaseAudioContext::AutoLocker locker(context);
   handler.Dispose();
-  // Buffers should live after dispose() because an audio thread is using
+  // Buffers should live after Dispose() because an audio thread is using
   // them.
   EXPECT_EQ(2u, handler.input_buffers_.size());
   EXPECT_EQ(2u, handler.output_buffers_.size());

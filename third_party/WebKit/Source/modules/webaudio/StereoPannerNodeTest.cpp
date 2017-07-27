@@ -20,7 +20,7 @@ TEST(StereoPannerNodeTest, StereoPannerLifetime) {
   EXPECT_TRUE(handler.stereo_panner_);
   BaseAudioContext::AutoLocker locker(context);
   handler.Dispose();
-  // m_stereoPanner should live after dispose() because an audio thread is
+  // stereo_panner_ should live after Dispose() because an audio thread is
   // using it.
   EXPECT_TRUE(handler.stereo_panner_);
 }

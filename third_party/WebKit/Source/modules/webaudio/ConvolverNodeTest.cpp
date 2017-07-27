@@ -21,7 +21,7 @@ TEST(ConvolverNodeTest, ReverbLifetime) {
   EXPECT_TRUE(handler.reverb_);
   BaseAudioContext::AutoLocker locker(context);
   handler.Dispose();
-  // m_reverb should live after dispose() because an audio thread is using it.
+  // reverb_ should live after Dispose() because an audio thread is using it.
   EXPECT_TRUE(handler.reverb_);
 }
 

@@ -125,7 +125,7 @@ void AudioWorkletGlobalScope::registerProcessor(
                                   V8String(isolate, "parameterDescriptors"))
           .ToLocal(&parameter_descriptors_value_local);
 
-  // If parameterDescriptor() is parsed and has a valid value, create a vector
+  // If parameterDescriptors() is parsed and has a valid value, create a vector
   // of |AudioParamDescriptor| and pass it to the definition.
   if (did_get_parameter_descriptor &&
       !parameter_descriptors_value_local->IsNullOrUndefined()) {

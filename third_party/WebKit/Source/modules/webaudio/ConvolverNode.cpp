@@ -86,7 +86,7 @@ void ConvolverHandler::Process(size_t frames_to_process) {
       reverb_->Process(Input(0).Bus(), output_bus, frames_to_process);
     }
   } else {
-    // Too bad - the tryLock() failed.  We must be in the middle of setting a
+    // Too bad - can't get the lock.  We must be in the middle of setting a
     // new impulse response.
     output_bus->Zero();
   }
@@ -146,7 +146,7 @@ void ConvolverHandler::SetBuffer(AudioBuffer* buffer,
     // re-configure the number of channels that are output.
     BaseAudioContext::AutoLocker context_locker(Context());
 
-    // Synchronize with process().
+    // Synchronize with Process().
     MutexLocker locker(process_lock_);
     reverb_ = std::move(reverb);
     buffer_ = buffer;
@@ -200,7 +200,6 @@ void ConvolverHandler::SetChannelCount(unsigned long channel_count,
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channelCount must be 2.
   if (channel_count != 2) {
     exception_state.ThrowDOMException(
         kNotSupportedError,
@@ -213,7 +212,7 @@ void ConvolverHandler::SetChannelCountMode(const String& mode,
   DCHECK(IsMainThread());
   BaseAudioContext::AutoLocker locker(Context());
 
-  // channcelCountMode must be 'clamped-max'.
+  // ChanncelCountMode must be 'clamped-max'.
   if (mode != "clamped-max") {
     exception_state.ThrowDOMException(
         kNotSupportedError,

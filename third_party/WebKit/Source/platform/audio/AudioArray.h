@@ -50,12 +50,12 @@ class AudioArray {
 
   ~AudioArray() { WTF::Partitions::FastFree(allocation_); }
 
-  // It's OK to call allocate() multiple times, but data will *not* be copied
+  // It's OK to call Allocate() multiple times, but data will *not* be copied
   // from an initial allocation if re-allocated. Allocations are
   // zero-initialized.
   void Allocate(size_t n) {
     // Although n is a size_t, its true limit is max unsigned because we use
-    // unsigned in zeroRange() and copyToRange(). Also check for integer
+    // unsigned in ZeroRange() and CopyToRange(). Also check for integer
     // overflow.
     CHECK_LE(n, std::numeric_limits<unsigned>::max() / sizeof(T));
 
@@ -106,8 +106,8 @@ class AudioArray {
   size_t size() const { return size_; }
 
   T& at(size_t i) {
-    // Note that although it is a size_t, m_size is now guaranteed to be
-    // no greater than max unsigned. This guarantee is enforced in allocate().
+    // Note that although it is a size_t, size_ is now guaranteed to be
+    // no greater than max unsigned. This guarantee is enforced in Allocate().
     SECURITY_DCHECK(i < size());
     return Data()[i];
   }
@@ -115,7 +115,7 @@ class AudioArray {
   T& operator[](size_t i) { return at(i); }
 
   void Zero() {
-    // This multiplication is made safe by the check in allocate().
+    // This multiplication is made safe by the check in Allocate().
     memset(this->Data(), 0, sizeof(T) * this->size());
   }
 
@@ -126,7 +126,7 @@ class AudioArray {
       return;
 
     // This expression cannot overflow because end - start cannot be
-    // greater than m_size, which is safe due to the check in allocate().
+    // greater than size_, which is safe due to the check in Allocate().
     memset(this->Data() + start, 0, sizeof(T) * (end - start));
   }
 
@@ -137,7 +137,7 @@ class AudioArray {
       return;
 
     // This expression cannot overflow because end - start cannot be
-    // greater than m_size, which is safe due to the check in allocate().
+    // greater than size_, which is safe due to the check in Allocate().
     memcpy(this->Data() + start, source_data, sizeof(T) * (end - start));
   }
 

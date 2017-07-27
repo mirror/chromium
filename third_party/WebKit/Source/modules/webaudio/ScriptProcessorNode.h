@@ -101,7 +101,7 @@ class ScriptProcessorHandler final : public AudioHandler {
   unsigned number_of_output_channels_;
 
   RefPtr<AudioBus> internal_input_bus_;
-  // Synchronize process() with fireProcessEvent().
+  // Synchronize Process() with FireProcessEvent().
   mutable Mutex process_event_lock_;
 
   FRIEND_TEST_ALL_PREFIXES(ScriptProcessorNodeTest, BufferLifetime);
@@ -114,11 +114,11 @@ class ScriptProcessorNode final
   USING_GARBAGE_COLLECTED_MIXIN(ScriptProcessorNode);
 
  public:
-  // bufferSize must be one of the following values: 256, 512, 1024, 2048,
+  // buffer_size must be one of the following values: 256, 512, 1024, 2048,
   // 4096, 8192, 16384.
   // This value controls how frequently the onaudioprocess event handler is
   // called and how many sample-frames need to be processed each call.
-  // Lower numbers for bufferSize will result in a lower (better)
+  // Lower numbers for buffer_size will result in a lower (better)
   // latency. Higher numbers will be necessary to avoid audio breakup and
   // glitches.
   // The value chosen must carefully balance between latency and audio quality.

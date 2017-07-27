@@ -49,7 +49,7 @@ class PLATFORM_EXPORT ReverbConvolver {
   WTF_MAKE_NONCOPYABLE(ReverbConvolver);
 
  public:
-  // maxFFTSize can be adjusted (from say 2048 to 32768) depending on how much
+  // max_fft_size can be adjusted (from say 2048 to 32768) depending on how much
   // precision is necessary.  For certain tweaky de-convolving applications the
   // phase errors add up quickly and lead to non-sensical results with larger
   // FFT sizes and single-precision floats.  In these cases 2048 is a good
@@ -83,8 +83,8 @@ class PLATFORM_EXPORT ReverbConvolver {
   // from the realtime thread.
   ReverbInputBuffer input_buffer_;
 
-  // First stage will be of size m_minFFTSize.  Each next stage will be twice as
-  // big until we hit m_maxFFTSize.
+  // First stage will be of size min_fft_size_.  Each next stage will be twice
+  // as big until we hit max_fft_size_.
   size_t min_fft_size_;
   size_t max_fft_size_;
 

@@ -125,8 +125,8 @@ bool HRTFElevation::CalculateKernelsForAzimuthElevation(
   // Construct the resource name from the subject name, azimuth, and elevation,
   // for example:
   // "IRC_Composite_C_R0195_T015_P000"
-  // Note: the passed in subjectName is not a string passed in via JavaScript or
-  // the web.  It's passed in as an internal ASCII identifier and is an
+  // Note: the passed in subject_name is not a string passed in via JavaScript
+  // or the web.  It's passed in as an internal ASCII identifier and is an
   // implementation detail.
   int positive_elevation = elevation < 0 ? elevation + 360 : elevation;
 
@@ -177,7 +177,7 @@ bool HRTFElevation::CalculateKernelsForAzimuthElevation(
   AudioChannel* right_ear_impulse_response =
       response->Channel(AudioBus::kChannelRight);
 
-  // Note that depending on the fftSize returned by the panner, we may be
+  // Note that depending on the fft_size returned by the panner, we may be
   // truncating the impulse response we just loaded in.
   const size_t fft_size = HRTFPanner::FftSizeForSampleRate(sample_rate);
   kernel_l =

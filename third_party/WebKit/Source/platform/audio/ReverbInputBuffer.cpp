@@ -65,7 +65,7 @@ float* ReverbInputBuffer::DirectReadFrom(int* read_index,
   float* source_p = buffer_.Data();
   float* p = source_p + *read_index;
 
-  // Update readIndex
+  // Update read_index
   *read_index = (*read_index + number_of_frames) % buffer_length;
 
   return p;
