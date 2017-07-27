@@ -188,7 +188,7 @@ void SurfacesInstance::SetSolidColorRootFrame() {
   render_pass->SetNew(1, rect, rect, gfx::Transform());
   cc::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  quad_state->SetAll(gfx::Transform(), rect, rect, rect, false, 1.f,
+  quad_state->SetAll(gfx::Transform(), rect, rect, rect, false, true, 1.f,
                      SkBlendMode::kSrcOver, 0);
   cc::SolidColorDrawQuad* solid_quad =
       render_pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
