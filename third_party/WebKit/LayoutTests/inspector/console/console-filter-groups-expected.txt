@@ -1,0 +1,461 @@
+CONSOLE MESSAGE: line 6: Outer group-A
+CONSOLE MESSAGE: line 7: message-a1
+CONSOLE MESSAGE: line 8: message-a2
+CONSOLE MESSAGE: line 10: Inner group-B
+CONSOLE MESSAGE: line 11: message-b1
+CONSOLE MESSAGE: line 12: message-b2
+CONSOLE MESSAGE: line 13: console.groupEnd
+CONSOLE MESSAGE: line 15: Inner group-C
+CONSOLE MESSAGE: line 16: message-c1
+CONSOLE MESSAGE: line 17: message-c2
+CONSOLE MESSAGE: line 18: console.groupEnd
+CONSOLE MESSAGE: line 20: Collapsed inner group-D
+CONSOLE MESSAGE: line 21: message-d1
+CONSOLE MESSAGE: line 22: message-d2
+CONSOLE MESSAGE: line 24: Inner inner group-E
+CONSOLE MESSAGE: line 25: message-e1
+CONSOLE MESSAGE: line 26: message-e2
+CONSOLE MESSAGE: line 27: console.groupEnd
+CONSOLE MESSAGE: line 28: console.groupEnd
+CONSOLE MESSAGE: line 30: console.groupEnd
+CONSOLE MESSAGE: line 32: Collapsed outer group-F
+CONSOLE MESSAGE: line 33: message-f1
+CONSOLE MESSAGE: line 34: message-f2
+CONSOLE MESSAGE: line 35: console.groupEnd
+CONSOLE MESSAGE: line 37: message-z1
+CONSOLE MESSAGE: line 38: message-z2
+Tests that console can filter messages in groups appropriately.
+
+
+Filter set to: /message-a1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-b1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-c1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-d1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-e1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-f1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-z1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+console-filter-groups.html:37 message-z1
+
+Filter set to: /message-a1|message-b1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-a1|message-c1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-a1|message-d1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-a1|message-e1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-a1|message-z1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+console-filter-groups.html:37 message-z1
+
+Filter set to: /message-b1|message-c1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-b1|message-d1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-b1|message-z1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+console-filter-groups.html:37 message-z1
+
+Filter set to: /message-c1|message-z1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+console-filter-groups.html:37 message-z1
+
+Filter set to: /message-d1|message-e1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-A/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-B/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-C/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-D/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-E/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-F/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-A|group-B/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-A|group-E/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-B|group-C/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-B|group-D/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-B|group-E/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-D|group-E/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-A|message-b1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-A|message-d1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-A|message-e1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-A|message-z1/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+console-filter-groups.html:37 message-z1
+
+Filter set to: /group-B|message-c1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-B|message-d1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /group-B|message-z1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+console-filter-groups.html:37 message-z1
+
+Filter set to: /group-D|message-e1/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-a1|group-B/
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-b1|group-C/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: /message-d1|group-E/
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter set to: queryWithoutMatches
+
+>console-filter-groups.html:6 Outer group-A
+  >console-filter-groups.html:10 Inner group-B
+  >console-filter-groups.html:15 Inner group-C
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+
+Filter cleared
+
+>console-filter-groups.html:6 Outer group-A
+  console-filter-groups.html:7 message-a1
+  console-filter-groups.html:8 message-a2
+  >console-filter-groups.html:10 Inner group-B
+    console-filter-groups.html:11 message-b1
+    console-filter-groups.html:12 message-b2
+  >console-filter-groups.html:15 Inner group-C
+    console-filter-groups.html:16 message-c1
+    console-filter-groups.html:17 message-c2
+  >console-filter-groups.html:20 Collapsed inner group-D
+>console-filter-groups.html:32 Collapsed outer group-F
+console-filter-groups.html:37 message-z1
+console-filter-groups.html:38 message-z2
+

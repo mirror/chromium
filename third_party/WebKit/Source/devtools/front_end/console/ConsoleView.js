@@ -465,7 +465,8 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _appendMessageToEnd(viewMessage) {
-    if (!this._filter.shouldBeVisible(viewMessage)) {
+    var ignoreTextFilter = this._currentGroup.showAllChildren();
+    if (!this._filter.shouldBeVisible(viewMessage, ignoreTextFilter)) {
       this._hiddenByFilterCount++;
       return;
     }
@@ -489,8 +490,10 @@ Console.ConsoleView = class extends UI.VBox {
       this._searchMessage(this._visibleViewMessages.length - 1);
     }
 
-    if (viewMessage.consoleMessage().isGroupStartMessage())
-      this._currentGroup = new Console.ConsoleGroup(this._currentGroup, viewMessage);
+    if (viewMessage.consoleMessage().isGroupStartMessage()) {
+      var showAllChildren = ignoreTextFilter || this._filter.matchesTextOrRegex(viewMessage);
+      this._currentGroup = new Console.ConsoleGroup(this._currentGroup, viewMessage, showAllChildren);
+    }
 
     this._messageAppendedForTests();
   }
@@ -1136,9 +1139,10 @@ Console.ConsoleViewFilter = class {
 
   /**
    * @param {!Console.ConsoleViewMessage} viewMessage
+   * @param {boolean} ignoreTextFilter
    * @return {boolean}
    */
-  shouldBeVisible(viewMessage) {
+  shouldBeVisible(viewMessage, ignoreTextFilter) {
     var message = viewMessage.consoleMessage();
     var executionContext = UI.context.flavor(SDK.ExecutionContext);
 
@@ -1167,19 +1171,26 @@ Console.ConsoleViewFilter = class {
     if (!levels[message.level])
       return false;
 
-    if (this._filterRegex) {
-      if (!viewMessage.matchesFilterRegex(this._filterRegex))
-        return false;
-    } else if (this._filterText) {
-      if (!viewMessage.matchesFilterText(this._filterText))
-        return false;
-    }
+    if (!ignoreTextFilter && (this._filterRegex || this._filterText) && !this.matchesTextOrRegex(viewMessage))
+      return false;
 
     if (this._filterByConsoleAPISetting.get() &&
         message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
       return false;
 
     return true;
+  }
+
+  /**
+   * @param {!Console.ConsoleViewMessage} viewMessage
+   * @return {boolean}
+   */
+  matchesTextOrRegex(viewMessage) {
+    if (this._filterRegex)
+      return viewMessage.matchesFilterRegex(this._filterRegex);
+    if (this._filterText)
+      return viewMessage.matchesFilterText(this._filterText);
+    return false;
   }
 
   reset() {
@@ -1279,19 +1290,21 @@ Console.ConsoleGroup = class {
   /**
    * @param {?Console.ConsoleGroup} parentGroup
    * @param {?Console.ConsoleViewMessage} groupMessage
+   * @param {boolean} showAllChildren
    */
-  constructor(parentGroup, groupMessage) {
+  constructor(parentGroup, groupMessage, showAllChildren) {
     this._parentGroup = parentGroup;
     this._nestingLevel = parentGroup ? parentGroup.nestingLevel() + 1 : 0;
     this._messagesHidden =
         groupMessage && groupMessage.collapsed() || this._parentGroup && this._parentGroup.messagesHidden();
+    this._showAllChildren = showAllChildren;
   }
 
   /**
    * @return {!Console.ConsoleGroup}
    */
   static createTopGroup() {
-    return new Console.ConsoleGroup(null, null);
+    return new Console.ConsoleGroup(null, null, false);
   }
 
   /**
@@ -1299,6 +1312,13 @@ Console.ConsoleGroup = class {
    */
   messagesHidden() {
     return this._messagesHidden;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  showAllChildren() {
+    return this._showAllChildren;
   }
 
   /**

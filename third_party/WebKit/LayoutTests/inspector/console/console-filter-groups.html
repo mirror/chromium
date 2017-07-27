@@ -1,0 +1,129 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script src="../../http/tests/inspector/console-test.js"></script>
+<script>
+console.group('Outer group-A');
+    console.log('message-a1');
+    console.log('message-a2');
+
+    console.group('Inner group-B');
+        console.log('message-b1');
+        console.log('message-b2');
+    console.groupEnd();
+
+    console.group('Inner group-C');
+        console.log('message-c1');
+        console.log('message-c2');
+    console.groupEnd();
+
+    console.groupCollapsed('Collapsed inner group-D');
+        console.log('message-d1');
+        console.log('message-d2');
+
+        console.group('Inner inner group-E');
+            console.log('message-e1');
+            console.log('message-e2');
+        console.groupEnd();
+    console.groupEnd();
+
+console.groupEnd();
+
+console.groupCollapsed('Collapsed outer group-F');
+    console.log('message-f1');
+    console.log('message-f2');
+console.groupEnd();
+
+console.log('message-z1');
+console.log('message-z2');
+
+</script>
+<script>
+function test()
+{
+    var testcases = [
+        '/message-a1/',
+        '/message-b1/',
+        '/message-c1/',
+        '/message-d1/',
+        '/message-e1/',
+        '/message-f1/',
+        '/message-z1/',
+        '/message-a1|message-b1/',
+        '/message-a1|message-c1/',
+        '/message-a1|message-d1/',
+        '/message-a1|message-e1/',
+        '/message-a1|message-z1/',
+        '/message-b1|message-c1/',
+        '/message-b1|message-d1/',
+        '/message-b1|message-z1/',
+        '/message-c1|message-z1/',
+        '/message-d1|message-e1/',
+
+        '/group-A/',
+        '/group-B/',
+        '/group-C/',
+        '/group-D/',
+        '/group-E/',
+        '/group-F/',
+
+        '/group-A|group-B/',
+        '/group-A|group-E/',
+        '/group-B|group-C/',
+        '/group-B|group-D/',
+        '/group-B|group-E/',
+        '/group-D|group-E/',
+
+        '/group-A|message-b1/',
+        '/group-A|message-d1/',
+        '/group-A|message-e1/',
+        '/group-A|message-z1/',
+        '/group-B|message-c1/',
+        '/group-B|message-d1/',
+        '/group-B|message-z1/',
+        '/group-D|message-e1/',
+        '/message-a1|group-B/',
+        '/message-b1|group-C/',
+        '/message-d1|group-E/',
+
+        'queryWithoutMatches',
+        ''
+    ];
+
+    for (var testcase of testcases)
+        setFilterAndDumpMessages(testcase);
+    InspectorTest.completeTest();
+
+    /**
+     * @param {string} query
+     */
+    function setFilterAndDumpMessages(query) {
+        if (query)
+            InspectorTest.addResult("\nFilter set to: " + query + "\n");
+        else
+            InspectorTest.addResult("\nFilter cleared\n");
+
+        Console.ConsoleView.instance()._filter._textFilterUI.setValue(query);
+        Console.ConsoleView.instance()._filter._textFilterChanged();
+        var messages = Console.ConsoleView.instance()._visibleViewMessages;
+        if (messages.length < 1)
+            InspectorTest.addResult("No messages to show.");
+        for (var i = 0; i < messages.length; ++i) {
+            var viewMessage = messages[i];
+            var delimiter = viewMessage.consoleMessage().isGroupStartMessage() ? ">" : "";
+            var indent = "  ".repeat(viewMessage.nestingLevel());
+            InspectorTest.addResult(indent + delimiter + viewMessage.toMessageElement().deepTextContent());
+        }
+    }
+}
+
+</script>
+</head>
+
+<body onload="runTest()">
+<p>
+    Tests that console can filter messages in groups appropriately.
+</p>
+
+</body>
+</html>

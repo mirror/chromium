@@ -98,10 +98,16 @@ function test()
             dumpVisibleMessages();
             next();
         },
-        function checkTextFilter(next)
+        function addTextFilter(next)
         {
             Console.ConsoleView.instance()._filter._textFilterUI.setValue("outer");
             Console.ConsoleView.instance()._filter._textFilterChanged();
+            dumpVisibleMessages();
+            next();
+        },
+        function addURL1FilterOntoTextFilter(next)
+        {
+            Console.ConsoleView.instance()._filter.addMessageURLFilter(url1);
             dumpVisibleMessages();
             next();
         },
