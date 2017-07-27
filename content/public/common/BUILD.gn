@@ -280,7 +280,7 @@ source_set("common_sources") {
 
     # This looks needless as we have //content/common in public_deps, but it's
     # needed because of allow_circular_includes_from.
-    "//components/mime_util",
+    "//blink/common:blink_common",
     "//content/common:mojo_bindings",
     "//media",
     "//mojo/common",
