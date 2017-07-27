@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32bbf63e_8dc4f16a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-07-27T20:52:35Z",
+      "side": 1,
+      "message": "nit: Move the string in the next line up to this line.",
+      "revId": "d24010d5781913b3709a5cc5d1566c72f1a941f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
