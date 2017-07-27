@@ -20,6 +20,8 @@
 #include "chrome/browser/chromeos/printing/combining_printer_detector.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
+#include "chrome/browser/chromeos/printing/printer_event_tracker.h"
+#include "chrome/browser/chromeos/printing/printer_event_tracker_factory.h"
 #include "chrome/browser/chromeos/printing/printer_info.h"
 #include "chrome/browser/chromeos/printing/synced_printers_manager_factory.h"
 #include "chrome/browser/chromeos/printing/usb_printer_detector.h"
@@ -134,6 +136,8 @@ CupsPrintersHandler::CupsPrintersHandler(content::WebUI* webui)
       weak_factory_(this) {
   ppd_provider_ = CreatePpdProvider(profile_);
   printer_configurer_ = PrinterConfigurer::Create(profile_);
+  tracker_ =
+      chromeos::PrinterEventTrackerFactory::GetForBrowserContext(profile_);
 }
 
 CupsPrintersHandler::~CupsPrintersHandler() {}
@@ -223,7 +227,11 @@ void CupsPrintersHandler::HandleRemoveCupsPrinter(const base::ListValue* args) {
   if (!printer)
     return;
 
+  // Record removal before the printer is deleted.
+  tracker_->RecordPrinterRemoved(*printer);
+
   Printer::PrinterProtocol protocol = printer->GetProtocol();
+  // Printer is deleted here.  Do not access after this line.
   prefs->RemoveConfiguredPrinter(printer_id);
 
   DebugDaemonClient* client = DBusThreadManager::Get()->GetDebugDaemonClient();
