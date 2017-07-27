@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93bab848_ae70aa3d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1213334
+      },
+      "writtenOn": "2017-07-27T00:52:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f645a4e_60fdf9de",
+      "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7accf763_a9fbd36f",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
         "patchSetId": 7
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "2d51a6f9_3f607807",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1213334
+      },
+      "writtenOn": "2017-07-27T00:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db8dfbe8_0d272f21",
+      "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d41f2f87_186116e5",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsSeedFetchServiceTest.java",
         "patchSetId": 7
@@ -73,6 +109,24 @@
       "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa4d460_d5cf1586",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsSeedFetchServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1213334
+      },
+      "writtenOn": "2017-07-27T00:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d41f2f87_186116e5",
+      "revId": "8612515d561259e7ce0e41be8f80145374c1a1b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
