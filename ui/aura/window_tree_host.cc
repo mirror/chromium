@@ -255,22 +255,23 @@ void WindowTreeHost::DestroyDispatcher() {
   //window()->RemoveOrDestroyChildren();
 }
 
-void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id) {
+void WindowTreeHost::CreateCompositor(ui::CompositorSettings settings,
+                                      const viz::FrameSinkId& frame_sink_id) {
   DCHECK(Env::GetInstance());
   ui::ContextFactory* context_factory = Env::GetInstance()->context_factory();
   DCHECK(context_factory);
   ui::ContextFactoryPrivate* context_factory_private =
       Env::GetInstance()->context_factory_private();
-  bool enable_surface_synchronization =
+  settings.enable_surface_synchronization =
       aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS ||
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableSurfaceSynchronization);
-  compositor_.reset(new ui::Compositor(
-      (!context_factory_private || frame_sink_id.is_valid())
-          ? frame_sink_id
-          : context_factory_private->AllocateFrameSinkId(),
-      context_factory, context_factory_private,
-      base::ThreadTaskRunnerHandle::Get(), enable_surface_synchronization));
+  compositor_.reset(
+      new ui::Compositor((!context_factory_private || frame_sink_id.is_valid())
+                             ? frame_sink_id
+                             : context_factory_private->AllocateFrameSinkId(),
+                         context_factory, context_factory_private,
+                         base::ThreadTaskRunnerHandle::Get(), settings));
   if (!dispatcher()) {
     window()->Init(ui::LAYER_NOT_DRAWN);
     window()->set_host(this);

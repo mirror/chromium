@@ -43,6 +43,7 @@
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/compositor/dip_util.h"
+#include "ui/compositor/external_begin_frame_client.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animator_collection.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
@@ -58,8 +59,9 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
                        ui::ContextFactory* context_factory,
                        ui::ContextFactoryPrivate* context_factory_private,
                        scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                       bool enable_surface_synchronization)
-    : context_factory_(context_factory),
+                       const CompositorSettings& compositor_settings)
+    : settings_(compositor_settings),
+      context_factory_(context_factory),
       context_factory_private_(context_factory_private),
       frame_sink_id_(frame_sink_id),
       task_runner_(task_runner),
@@ -140,7 +142,8 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
 
   settings.initial_debug_state.SetRecordRenderingStats(
       command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking));
-  settings.enable_surface_synchronization = enable_surface_synchronization;
+  settings.enable_surface_synchronization =
+      settings_.enable_surface_synchronization;
 
   settings.use_zero_copy = IsUIZeroCopyEnabled();
 
@@ -164,6 +167,9 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
 
   settings.disallow_non_exact_resource_reuse =
       command_line->HasSwitch(cc::switches::kDisallowNonExactResourceReuse);
+
+  settings.wait_for_all_pipeline_stages_before_draw =
+      command_line->HasSwitch(cc::switches::kRunAllCompositorStagesBeforeDraw);
 
   base::TimeTicks before_create = base::TimeTicks::Now();
 
@@ -436,6 +442,34 @@ gfx::AcceleratedWidget Compositor::widget() const {
 
 scoped_refptr<CompositorVSyncManager> Compositor::vsync_manager() const {
   return vsync_manager_;
+}
+
+void Compositor::IssueExternalBeginFrame(const viz::BeginFrameArgs& args) {
+  DCHECK(settings_.enable_external_begin_frames);
+  if (context_factory_private_)
+    context_factory_private_->IssueExternalBeginFrame(this, args);
+}
+
+void Compositor::SetExternalBeginFrameClient(ExternalBeginFrameClient* client) {
+  DCHECK(settings_.enable_external_begin_frames);
+  external_begin_frame_client_ = client;
+  if (needs_external_begin_frames_)
+    external_begin_frame_client_->OnNeedsExternalBeginFrames(true);
+}
+
+void Compositor::OnDisplayDidFinishFrame(const viz::BeginFrameAck& ack) {
+  DCHECK(settings_.enable_external_begin_frames);
+  if (external_begin_frame_client_)
+    external_begin_frame_client_->OnDisplayDidFinishFrame(ack);
+}
+
+void Compositor::OnNeedsExternalBeginFrames(bool needs_begin_frames) {
+  DCHECK(settings_.enable_external_begin_frames);
+  if (external_begin_frame_client_) {
+    external_begin_frame_client_->OnNeedsExternalBeginFrames(
+        needs_begin_frames);
+  }
+  needs_external_begin_frames_ = needs_begin_frames;
 }
 
 void Compositor::AddObserver(CompositorObserver* observer) {
