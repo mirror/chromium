@@ -18,6 +18,7 @@
 #include "ui/message_center/views/message_center_controller.h"
 #include "ui/message_center/views/notification_header_view.h"
 #include "ui/message_center/views/proportional_image_view.h"
+#include "ui/views/border.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/test/views_test_base.h"
@@ -272,7 +273,6 @@ views::ImageButton* NotificationViewMDTest::GetCloseButton() {
 // TODO(tetsui): Following tests are not yet ported from NotificationViewTest.
 // * CreateOrUpdateTestSettingsButton
 // * TestLineLimits
-// * TestImageSizing
 // * SettingsButtonTest
 // * ViewOrderingTest
 // * FormatContextMessageTest
@@ -297,7 +297,8 @@ TEST_F(NotificationViewMDTest, CreateOrUpdateTest) {
   EXPECT_NE(nullptr, notification_view()->icon_view_);
 }
 
-TEST_F(NotificationViewMDTest, TestIconSizing) {
+// Tests ProportionalImageView::Type::CONTAIN, which is used for icons.
+TEST_F(NotificationViewMDTest, TestIconSizingContain) {
   // TODO(tetsui): Remove duplicated integer literal in CreateOrUpdateIconView.
   const int kNotificationIconSize = 30;
 
@@ -332,6 +333,139 @@ TEST_F(NotificationViewMDTest, TestIconSizing) {
   EXPECT_EQ(
       gfx::Size(kNotificationIconSize, kNotificationIconSize / 2).ToString(),
       GetImagePaintSize(view).ToString());
+
+  notification()->set_icon(
+      CreateTestImage(2 * kNotificationIconSize, 4 * kNotificationIconSize));
+  UpdateNotificationViews();
+  EXPECT_EQ(
+      gfx::Size(kNotificationIconSize / 2, kNotificationIconSize).ToString(),
+      GetImagePaintSize(view).ToString());
+}
+
+// Tests ProportionalImageView::Type::FIT_WIDTH, which is used for images.
+TEST_F(NotificationViewMDTest, TestImageSizingFitWidth) {
+  notification()->set_type(message_center::NOTIFICATION_TYPE_IMAGE);
+  notification()->set_image(CreateTestImage(2, 2));
+  views::View* container = notification_view()->image_container_;
+  ProportionalImageView* view = notification_view()->image_view_;
+
+  gfx::Insets border =
+      notification_view()->image_container_->border()->GetInsets();
+  const gfx::Size kMaxSize(GetNotificationImageMaxSize(border));
+
+  // First, sanity check kMaxSize calculated by GetNotificationImageMaxSize.
+  ASSERT_EQ(kNotificationWidth - border.left() - border.right(),
+            kMaxSize.width());
+  // Test that aspect ratio of GetNotificationImageMaxSize approximately matches
+  // that of Android N+ notifications.
+  ASSERT_LE(kMaxSize.height(), kMaxSize.width() / 3.16);
+  ASSERT_GE(kMaxSize.height() + 1, kMaxSize.width() / 3.16);
+
+  // Image is hidden by collapsed state.
+  if (notification_view()->expanded_)
+    notification_view()->ToggleExpanded();
+  EXPECT_FALSE(container->visible());
+  notification_view()->ToggleExpanded();
+  EXPECT_TRUE(container->visible());
+  EXPECT_TRUE(view->visible());
+
+  gfx::Size expected_size;
+  gfx::Rect crop_rect;
+  gfx::Size draw_size;
+
+  // 1.1 Downscaling large image with same aspect ratio.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width() * 2, kMaxSize.height() * 2));
+  UpdateNotificationViews();
+  EXPECT_EQ(kMaxSize, GetImagePaintSize(view));
+
+  // 1.2 Using equal size image unchanged.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width(), kMaxSize.height()));
+  UpdateNotificationViews();
+  EXPECT_EQ(kMaxSize, GetImagePaintSize(view));
+
+  // 1.3 Upscaling small image with same aspect ratio.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width() / 2, kMaxSize.height() / 2));
+  UpdateNotificationViews();
+  EXPECT_EQ(gfx::Size(kMaxSize.width(), (kMaxSize.height() / 2) * 2),
+            GetImagePaintSize(view));
+
+  // 2.1 Downscaling wide image. Notification height should shrink to fit.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width() * 2, kMaxSize.height()));
+  expected_size =
+      gfx::Size(kMaxSize.width(), std::lround(kMaxSize.height() / 2.0));
+  UpdateNotificationViews();
+  EXPECT_EQ(expected_size, view->GetPreferredSize());
+  view->CalculateCropRectAndDrawSize(container->GetPreferredSize(), &crop_rect,
+                                     &draw_size);
+  EXPECT_EQ(gfx::Rect(notification()->image().Size()), crop_rect);
+  EXPECT_EQ(expected_size, draw_size);
+  EXPECT_EQ(expected_size, GetImagePaintSize(view));
+
+  // 2.2 Using wide image unchanged. Notification height should shrink to fit.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width(), kMaxSize.height() / 2));
+  expected_size = gfx::Size(kMaxSize.width(), kMaxSize.height() / 2);
+  UpdateNotificationViews();
+  EXPECT_EQ(expected_size, view->GetPreferredSize());
+  view->CalculateCropRectAndDrawSize(container->GetPreferredSize(), &crop_rect,
+                                     &draw_size);
+  EXPECT_EQ(gfx::Rect(notification()->image().Size()), crop_rect);
+  EXPECT_EQ(expected_size, draw_size);
+  EXPECT_EQ(expected_size, GetImagePaintSize(view));
+
+  // 2.3 Upscaling wide image. Notification height should shrink to fit.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width() / 2, kMaxSize.height() / 4));
+  expected_size = gfx::Size(kMaxSize.width(), (kMaxSize.height() / 4) * 2);
+  UpdateNotificationViews();
+  EXPECT_EQ(expected_size, view->GetPreferredSize());
+  view->CalculateCropRectAndDrawSize(container->GetPreferredSize(), &crop_rect,
+                                     &draw_size);
+  EXPECT_EQ(gfx::Rect(notification()->image().Size()), crop_rect);
+  EXPECT_EQ(expected_size, draw_size);
+  EXPECT_EQ(expected_size, GetImagePaintSize(view));
+
+  // 3.1 Cropping and downscaling tall image.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width() * 2, kMaxSize.height() * 4));
+  UpdateNotificationViews();
+  view->CalculateCropRectAndDrawSize(container->GetPreferredSize(), &crop_rect,
+                                     &draw_size);
+  EXPECT_EQ(
+      gfx::Rect(0, kMaxSize.height() /* y */, kMaxSize.width() * 2 /* w */,
+                kMaxSize.height() * 2 /* h */),
+      crop_rect);
+  EXPECT_EQ(kMaxSize, draw_size);
+  EXPECT_EQ(draw_size, GetImagePaintSize(view));
+
+  // 3.2 Cropping but not scaling tall image.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width(), kMaxSize.height() * 2));
+  UpdateNotificationViews();
+  view->CalculateCropRectAndDrawSize(container->GetPreferredSize(), &crop_rect,
+                                     &draw_size);
+  EXPECT_EQ(gfx::Rect(0, kMaxSize.height() / 2 /* y */,
+                      kMaxSize.width() /* w */, kMaxSize.height() /* h */),
+            crop_rect);
+  EXPECT_EQ(kMaxSize, draw_size);
+  EXPECT_EQ(draw_size, GetImagePaintSize(view));
+
+  // 3.3 Cropping and upscaling tall image.
+  notification()->set_image(
+      CreateTestImage(kMaxSize.width() / 2, kMaxSize.height()));
+  UpdateNotificationViews();
+  view->CalculateCropRectAndDrawSize(container->GetPreferredSize(), &crop_rect,
+                                     &draw_size);
+  EXPECT_EQ(
+      gfx::Rect(0, std::lround(kMaxSize.height() / 2.0) / 2 /* y */,
+                kMaxSize.width() / 2 /* w */, kMaxSize.height() / 2 /* h */),
+      crop_rect);
+  EXPECT_EQ(kMaxSize, draw_size);
+  EXPECT_EQ(draw_size, GetImagePaintSize(view));
 }
 
 TEST_F(NotificationViewMDTest, UpdateButtonsStateTest) {

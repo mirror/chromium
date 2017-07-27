@@ -14,6 +14,7 @@
 
 namespace gfx {
 class ImageSkia;
+class Insets;
 }
 
 namespace message_center {
@@ -23,10 +24,6 @@ namespace message_center {
 // Square image sizes in DIPs.
 const int kNotificationButtonIconSize = 16;
 const int kNotificationIconSize = 80;
-// A border is applied to images that have a non-preferred aspect ratio.
-const int kNotificationImageBorderSize = 10;
-const int kNotificationPreferredImageWidth = 360;
-const int kNotificationPreferredImageHeight = 240;
 const int kSmallImageSize = 16;
 const int kSmallImagePadding = 4;
 
@@ -37,6 +34,8 @@ const size_t kMaxVisiblePopupNotifications = 3;
 // DIP dimension; H size of the whole card.
 const int kNotificationWidth = 360;
 const int kMinScrollViewHeight = 77;
+
+const int kNotificationImageBorderSize = 10;  // Border applied to all images.
 
 // Colors.
 const SkColor kMessageCenterBorderColor = SkColorSetRGB(0xC7, 0xCA, 0xCE);
@@ -102,11 +101,9 @@ const SkColor kControlButtonBackgroundColor =
 
 // Limits.
 
-// Given the size of an image, returns the size of the properly scaled-up image
-// which fits into |container_size|.
-MESSAGE_CENTER_EXPORT gfx::Size GetImageSizeForContainerSize(
-    const gfx::Size& container_size,
-    const gfx::Size& image_size);
+// Assumes a container width of |kNotificationWidth|, minus the |border|.
+MESSAGE_CENTER_EXPORT gfx::Size GetNotificationImageMaxSize(
+    const gfx::Insets& border);
 
 // For list notifications.
 // Not used when --enabled-new-style-notification is set.

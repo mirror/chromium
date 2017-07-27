@@ -286,30 +286,6 @@ TEST_F(NotificationControllerTest, Buttons) {
   EXPECT_EQ(1, message_center.last_clicked_index());
 }
 
-TEST_F(NotificationControllerTest, Image) {
-  std::unique_ptr<message_center::Notification> notification(
-      new message_center::Notification(
-          message_center::NOTIFICATION_TYPE_BASE_FORMAT, "an_id",
-          base::string16(), base::string16(), gfx::Image(), base::string16(),
-          GURL(), DummyNotifierId(), message_center::RichNotificationData(),
-          NULL));
-  NSImage* image = [NSImage imageNamed:NSImageNameFolder];
-  notification->set_image(gfx::Image([image retain]));
-
-  MockMessageCenter message_center;
-
-  base::scoped_nsobject<MCNotificationController> controller(
-      [[MCNotificationController alloc] initWithNotification:notification.get()
-                                               messageCenter:&message_center]);
-  [controller view];
-
-  ASSERT_EQ(1u, [[controller bottomSubviews] count]);
-  ASSERT_TRUE([[[[controller bottomSubviews] lastObject] contentView]
-      isKindOfClass:[NSImageView class]]);
-  EXPECT_EQ(image,
-      [[[[controller bottomSubviews] lastObject] contentView] image]);
-}
-
 TEST_F(NotificationControllerTest, List) {
   message_center::RichNotificationData optional;
   message_center::NotificationItem item1(

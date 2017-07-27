@@ -65,7 +65,8 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
 
  private:
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, CreateOrUpdateTest);
-  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestIconSizing);
+  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestIconSizingContain);
+  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestImageSizingFitWidth);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, UpdateButtonsStateTest);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, UpdateButtonCountTest);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, ExpandLongMessage);

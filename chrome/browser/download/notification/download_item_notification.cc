@@ -57,9 +57,6 @@ namespace {
 const char kDownloadNotificationNotifierId[] =
     "chrome://downloads/notification/id-notifier";
 
-// Background color of the preview images
-const SkColor kImageBackgroundColor = SK_ColorWHITE;
-
 // Maximum size of preview image. If the image exceeds this size, don't show the
 // preview image.
 const int64_t kMaxImagePreviewSize = 10 * 1024 * 1024;  // 10 MB
@@ -73,48 +70,6 @@ std::string ReadNotificationImage(const base::FilePath& file_path) {
   DCHECK_LE(data.size(), static_cast<size_t>(kMaxImagePreviewSize));
 
   return data;
-}
-
-SkBitmap CropImage(const SkBitmap& original_bitmap) {
-  DCHECK_NE(0, original_bitmap.width());
-  DCHECK_NE(0, original_bitmap.height());
-
-  const SkSize container_size = SkSize::Make(
-      message_center::kNotificationPreferredImageWidth,
-      message_center::kNotificationPreferredImageHeight);
-  const float container_aspect_ratio =
-      static_cast<float>(message_center::kNotificationPreferredImageWidth) /
-      message_center::kNotificationPreferredImageHeight;
-  const float image_aspect_ratio =
-      static_cast<float>(original_bitmap.width()) / original_bitmap.height();
-
-  SkRect source_rect;
-  if (image_aspect_ratio > container_aspect_ratio) {
-    float width = original_bitmap.height() * container_aspect_ratio;
-    source_rect = SkRect::MakeXYWH((original_bitmap.width() - width) / 2,
-                                   0,
-                                   width,
-                                   original_bitmap.height());
-  } else {
-    float height = original_bitmap.width() / container_aspect_ratio;
-    source_rect = SkRect::MakeXYWH(0,
-                                   (original_bitmap.height() - height) / 2,
-                                   original_bitmap.width(),
-                                   height);
-
-  }
-
-  SkBitmap container_bitmap;
-  container_bitmap.allocN32Pixels(container_size.width(),
-                                  container_size.height());
-  SkPaint paint;
-  paint.setFilterQuality(kHigh_SkFilterQuality);
-  SkCanvas container_image(container_bitmap);
-  container_image.drawColor(kImageBackgroundColor);
-  container_image.drawBitmapRect(
-      original_bitmap, source_rect, SkRect::MakeSize(container_size), &paint);
-
-  return container_bitmap;
 }
 
 void RecordButtonClickAction(DownloadCommands::Command command) {
@@ -591,16 +546,7 @@ void DownloadItemNotification::OnImageDecoded(const SkBitmap& decoded_bitmap) {
     return;
   }
 
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&CropImage, decoded_bitmap),
-      base::Bind(&DownloadItemNotification::OnImageCropped,
-                 weak_factory_.GetWeakPtr()));
-}
-
-void DownloadItemNotification::OnImageCropped(const SkBitmap& bitmap) {
-  gfx::Image image = gfx::Image::CreateFrom1xBitmap(bitmap);
-  notification_->set_image(image);
+  notification_->set_image(gfx::Image::CreateFrom1xBitmap(decoded_bitmap));
   image_decode_status_ = DONE;
   UpdateNotificationData(UPDATE);
 }

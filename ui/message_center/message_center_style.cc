@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/vector_icons.h"
@@ -17,25 +18,16 @@ namespace message_center {
 
 // Limits.
 
-gfx::Size GetImageSizeForContainerSize(const gfx::Size& container_size,
-                                       const gfx::Size& image_size) {
-  if (container_size.IsEmpty() || image_size.IsEmpty())
-    return gfx::Size();
+gfx::Size GetNotificationImageMaxSize(const gfx::Insets& border) {
+  int max_image_width = kNotificationWidth - border.left() - border.right();
 
-  gfx::Size scaled_size = image_size;
-  double proportion =
-      scaled_size.height() / static_cast<double>(scaled_size.width());
-  // We never want to return an empty image given a non-empty container and
-  // image, so round the height to 1.
-  scaled_size.SetSize(container_size.width(),
-                      std::max(0.5 + container_size.width() * proportion, 1.0));
-  if (scaled_size.height() > container_size.height()) {
-    scaled_size.SetSize(
-        std::max(0.5 + container_size.height() / proportion, 1.0),
-        container_size.height());
-  }
+  // This 3.16:1 aspect ratio is chosen to approximately match common Android
+  // devices running Nougat or above.
+  constexpr double kMinImageAspectRatio = 3.16;
+  int max_image_height =
+      static_cast<int>(max_image_width / kMinImageAspectRatio);
 
-  return scaled_size;
+  return gfx::Size(max_image_width, max_image_height);
 }
 
 // Icons.

@@ -255,10 +255,6 @@
 // Initializes the icon_ ivar and returns the view to insert into the hierarchy.
 - (NSView*)createIconView;
 
-// Creates a box that shows a border when the icon is not big enough to fill the
-// space.
-- (NSBox*)createImageBox:(const gfx::Image&)notificationImage;
-
 // Initializes the closeButton_ ivar with the configured button.
 - (void)configureCloseButtonInFrame:(NSRect)rootFrame;
 
@@ -319,9 +315,8 @@
 
 - (void)loadView {
   // Create the root view of the notification.
-  NSRect rootFrame = NSMakeRect(0, 0,
-      message_center::kNotificationPreferredImageWidth,
-      message_center::kNotificationIconSize);
+  NSRect rootFrame = NSMakeRect(0, 0, message_center::kNotificationWidth,
+                                message_center::kNotificationIconSize);
   base::scoped_nsobject<MCNotificationView> rootView(
       [[MCNotificationView alloc] initWithController:self frame:rootFrame]);
   [self configureCustomBox:rootView];
@@ -368,9 +363,8 @@
   notification_ = notification;
 
   message_center::NotificationLayoutParams layoutParams;
-  layoutParams.rootFrame =
-      NSMakeRect(0, 0, message_center::kNotificationPreferredImageWidth,
-                 message_center::kNotificationIconSize);
+  layoutParams.rootFrame = NSMakeRect(0, 0, message_center::kNotificationWidth,
+                                      message_center::kNotificationIconSize);
 
   [smallImage_ setImage:notification_->small_image().AsNSImage()];
 
@@ -645,20 +639,7 @@
     [bottomView_ addSubview:separator];
   }
 
-  // Create the image view if appropriate.
-  gfx::Image notificationImage = notification->image();
-  if (!notificationImage.IsEmpty()) {
-    NSBox* imageBox = [self createImageBox:notificationImage];
-    NSRect outerFrame = frame;
-    outerFrame.origin = NSMakePoint(0, y);
-    outerFrame.size = [imageBox frame].size;
-    [imageBox setFrame:outerFrame];
-
-    y += NSHeight(outerFrame);
-    frame.size.height += NSHeight(outerFrame);
-
-    [bottomView_ addSubview:imageBox];
-  }
+  // Images are no longer supported on Mac.
 
   [bottomView_ setFrame:frame];
   [[self view] addSubview:bottomView_];
@@ -745,41 +726,6 @@
   // Inside the image box put the actual icon view.
   icon_.reset([[NSImageView alloc] initWithFrame:imageFrame]);
   [imageBox setContentView:icon_];
-
-  return imageBox.autorelease();
-}
-
-- (NSBox*)createImageBox:(const gfx::Image&)notificationImage {
-  using message_center::kNotificationImageBorderSize;
-  using message_center::kNotificationPreferredImageWidth;
-  using message_center::kNotificationPreferredImageHeight;
-
-  NSRect imageFrame = NSMakeRect(0, 0,
-       kNotificationPreferredImageWidth,
-       kNotificationPreferredImageHeight);
-  base::scoped_nsobject<NSBox> imageBox(
-      [[AccessibilityIgnoredBox alloc] initWithFrame:imageFrame]);
-  [self configureCustomBox:imageBox];
-  [imageBox setFillColor:skia::SkColorToCalibratedNSColor(
-      message_center::kImageBackgroundColor)];
-
-  // Images with non-preferred aspect ratios get a border on all sides.
-  gfx::Size idealSize = gfx::Size(
-      kNotificationPreferredImageWidth, kNotificationPreferredImageHeight);
-  gfx::Size scaledSize = message_center::GetImageSizeForContainerSize(
-      idealSize, notificationImage.Size());
-  if (scaledSize != idealSize) {
-    NSSize borderSize =
-        NSMakeSize(kNotificationImageBorderSize, kNotificationImageBorderSize);
-    [imageBox setContentViewMargins:borderSize];
-  }
-
-  NSImage* image = notificationImage.AsNSImage();
-  base::scoped_nsobject<NSImageView> imageView(
-      [[NSImageView alloc] initWithFrame:imageFrame]);
-  [imageView setImage:image];
-  [imageView setImageScaling:NSImageScaleProportionallyUpOrDown];
-  [imageBox setContentView:imageView];
 
   return imageBox.autorelease();
 }

@@ -65,8 +65,8 @@ class MESSAGE_CENTER_EXPORT NotificationView
   FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, FormatContextMessageTest);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, SettingsButtonTest);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, TestLineLimits);
-  FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, TestIconSizing);
-  FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, TestImageSizing);
+  FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, TestIconSizingContain);
+  FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, TestImageSizingFitWidth);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, UpdateButtonsStateTest);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewTest, UpdateButtonCountTest);
 
@@ -111,8 +111,10 @@ class MESSAGE_CENTER_EXPORT NotificationView
   views::ProgressBar* progress_bar_view_ = nullptr;
   std::vector<NotificationButton*> action_buttons_;
   std::vector<views::View*> separators_;
-  std::unique_ptr<views::ImageView> small_image_view_;
   NotificationControlButtonsView* control_buttons_view_;
+
+  // Owned NotificationView descendants.
+  std::unique_ptr<views::ImageView> small_image_view_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationView);
 };
