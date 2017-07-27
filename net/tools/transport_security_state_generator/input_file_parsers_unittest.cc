@@ -28,32 +28,39 @@ TEST(InputFileParsersTest, ParseJSON) {
       "  \"entries\": ["
       "    {"
       "      \"name\": \"hsts.example.com\","
+      "      \"type\": \"bulk\","
       "      \"mode\": \"force-https\", "
       "      \"include_subdomains\": true"
       "    }, {"
       "      \"name\": \"hsts-no-subdomains.example.com\","
+      "      \"type\": \"bulk\","
       "      \"mode\": \"force-https\", "
       "      \"include_subdomains\": false"
       "    }, {"
       "      \"name\": \"hpkp.example.com\","
+      "      \"type\": \"custom\","
       "      \"pins\": \"thepinset\","
       "      \"include_subdomains_for_pinning\": true"
       "    }, {"
       "      \"name\": \"hpkp-no-subdomains.example.com\","
+      "      \"type\": \"custom\","
       "      \"pins\": \"thepinset2\", "
       "      \"include_subdomains_for_pinning\": false"
       "    }, {"
       "      \"name\": \"expect-ct.example.com\","
+      "      \"type\": \"custom\","
       "      \"expect_ct\": true,"
       "      \"expect_ct_report_uri\": \"https://expect-ct-log.example.com\""
       "    }, {"
       "      \"name\": \"expect-staple.example.com\","
+      "      \"type\": \"custom\","
       "      \"expect_staple\": true,"
       "      \"expect_staple_report_uri\": "
       "\"https://expect-staple-log.example.com\","
       "      \"include_subdomains_for_expect_staple\": true"
       "    }, {"
       "      \"name\": \"expect-staple-no-subdomains.example.com\","
+      "      \"type\": \"custom\","
       "      \"expect_staple\": true,"
       "      \"include_subdomains_for_expect_staple\": false"
       "    }"
@@ -188,12 +195,38 @@ TEST(InputFileParsersTest, ParseJSONInvalid) {
       "  \"pinsets\": [],"
       "  \"entries\": ["
       "    {"
-      "      \"mode\": \"force-https\""
+      "      \"mode\": \"force-https\","
+      "      \"type\": \"bulk\""
       "    }"
       "  ]"
       "}";
 
   EXPECT_FALSE(ParseJSON(missing_hostname, &entries, &pinsets));
+
+  std::string missing_type =
+      "{"
+      "  \"pinsets\": [],"
+      "  \"entries\": ["
+      "    {"
+      "      \"name\": \"example.com\","
+      "    }"
+      "  ]"
+      "}";
+
+  EXPECT_FALSE(ParseJSON(missing_type, &entries, &pinsets));
+
+  std::string invalid_type =
+      "{"
+      "  \"pinsets\": [],"
+      "  \"entries\": ["
+      "    {"
+      "      \"name\": \"example.com\","
+      "      \"type\": \"invalid\""
+      "    }"
+      "  ]"
+      "}";
+
+  EXPECT_FALSE(ParseJSON(invalid_type, &entries, &pinsets));
 }
 
 // Test that parsing valid JSON with an invalid (HPKP) pinset fails.

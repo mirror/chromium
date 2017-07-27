@@ -27,6 +27,7 @@
     {
       "name": "hsts.example.com",
       "mode": "force-https",
+      "type": "bulk",
       "include_subdomains": true,
       "pins": "test1"
     }

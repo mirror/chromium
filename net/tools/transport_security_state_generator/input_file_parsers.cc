@@ -330,6 +330,18 @@ bool ParseJSON(base::StringPiece json,
     parsed->GetString("expect_staple_report_uri",
                       &entry->expect_staple_report_uri);
 
+    std::string type;
+    parsed->GetString("type", &type);
+    if (type == "bulk") {
+      entry->type = Type::Bulk;
+    } else if (type == "custom") {
+      entry->type = Type::Custom;
+    } else {
+      LOG(ERROR) << "The type for entry " << base::SizeTToString(i)
+                 << " is missing or invalid.";
+      return false;
+    }
+
     entries->push_back(std::move(entry));
   }
 
