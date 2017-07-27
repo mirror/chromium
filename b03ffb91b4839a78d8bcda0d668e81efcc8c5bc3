@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41e1201b_ae0448c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5047c32d_9e37df48",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 4
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d8ea163_542aade5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377e7d45_7e24dd89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:59:27Z",
+      "side": 1,
+      "message": "Removed links.",
+      "parentUuid": "7d8ea163_542aade5",
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
