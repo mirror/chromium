@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48f92cb6_eff53edf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-27T10:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1985d69d_69bedfce",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9bf80b4_9ea24479",
         "filename": "components/password_manager/core/common/credential_manager_features.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382bc51e_a75181d4",
+        "filename": "components/password_manager/core/common/credential_manager_features.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-27T10:31:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9bf80b4_9ea24479",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b396329b_957a8d1d",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-27T10:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61103f9f_efe18b51",
+      "range": {
+        "startLine": 171,
+        "startChar": 59,
+        "endLine": 171,
+        "endChar": 60
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f67a9f0_af609cf7",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-27T09:43:29Z",
       "side": 1,
       "message": "Does WkWebView support window.isSecureContext that we could use to limit injection only for secure contexts?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "34926094438f7ec5b184db3289cb274cfa909e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2592e61f_efafec85",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-27T10:31:37Z",
+      "side": 1,
+      "message": "Apparently not, I checked under simulator and \u0027window.isSecureContext\u0027 was undefined. Search for \"isSecureContext\" or \"SecureContext\" at developer.apple.com had no results.",
+      "parentUuid": "6f67a9f0_af609cf7",
       "range": {
         "startLine": 79,
         "startChar": 7,
