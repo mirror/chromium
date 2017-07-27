@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83f01add_5cd505af",
+        "filename": "content/browser/cache_storage/cache_storage_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-27T03:12:09Z",
+      "side": 1,
+      "message": "I think it\u0027d be good to use our familiar infrastructure for this. This is a well very worn pattern.\n\nIn this case, generally there are 0 StorageHandlers. When an inspector window is open, there is 1 StorageHandler. In the rare cases where there are multiple inspector windows open, there are 2 or 3 (or 4) StorageHandlers. I don\u0027t think we need to be too concerned about a couple of virtual method calls per cache storage mutation. If/when the number of clients grows, we could have per-origin ObserverLists if needed but until then, I vote for less, for simpler.\n\nclass Observer {\n public:\n  virtual void OnCacheListChange(origin);\n  virtual void OnCacheContentsChanged(origin, name);\n};\n\nbase::ObserverList\u003cObserver\u003e observers_;",
+      "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323d9afa_42e9e999",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-27T03:12:09Z",
+      "side": 1,
+      "message": "if (cache_storage_observer_)\n  BrowserThread::DeleteSoon(IO, cache_storage_observer_.release());",
+      "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0e4360_f010498b",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-27T03:12:09Z",
+      "side": 1,
+      "message": "GetCacheStorageObserver()-\u003eTrackOrigin(url::Origin);",
+      "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f363c1a8_5b2fa4a5",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-27T03:12:09Z",
+      "side": 1,
+      "message": "GetCacheStorageObserver()-\u003eUntrackOrigin(url::Origin);",
+      "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f97d12d_1bc09115",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-27T03:12:09Z",
+      "side": 1,
+      "message": "CacheStorageObserver StorageHandler::GetCacheStorageObserver() {\n  if (!cache_storage_observer_) {\n    cache_storage_observer_ \u003d new CacheStorageOberver(\n        weak_factory_.GetWeakPtr(),\n        host_-\u003eGetProcess()-\u003eGetStoragePartition()-\u003eGetCacheStorageContext());\n  }\n  return cache_storage_observer_;\n}",
+      "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdae8f4_8f653a89",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-27T03:12:09Z",
+      "side": 1,
+      "message": "// Observer that listens on the IO thread for cache storage notifications\n// and informs the StorageHandler on the UI for origins of interest.\n// Created on the UI thread but predominantly used and deleted on the IO thread.\nclass CacheStorageObserver : CacheStorageContextImpl::Observer {\n public:\n  CacheStorageObserver(owning_storage_handler, cache_storage_context) {\n    owner_ \u003d owning_storage_handler;\n    context_ \u003d cache_storage_context;\n    BrowserThread::PostTask(\n        BrowserThread::IO, FROM_HERE,\n        Bind(CacheStorageContextImpl::AddObserver,\n            context_ , this));\n  }\n\n  ~CacheStorageObserver() {\n    DCHECK_ON(BrowserThread::IO);\n    context_-\u003eRemoveObserver(this);\n  }\n\n  // We only care about some origins, maintain the collection on\n  // the IO thread to avoid mutex contention.\n\n  void TrackOrigin(url::Origin) {\n    BrowserThread::PostTask(\n        BrowserThread::IO, FROM_HERE,\n        Bind(CacheStorageContextImpl::TrackOriginOnIOThread,\n             context_ , base::Unretained(this)));\n  }\n\n  void UntrackOrigin(url::Origin) {\n    BrowserThread::PostTask(\n        BrowserThread::IO, FROM_HERE,\n        Bind(CacheStorageContextImpl::UntrackOriginOnIOThread,\n             context_ , base::Unretained(this)));\n  }\n\n private:\n  void TrackOriginOnIOThread(origin) {\n    origins_.insert(origin);\n  }\n\n  void UntrackOriginOnIOThread(origin) {\n    origins_.remove(origin);\n  }\n\n  // CacheStorageContextImpl::Observer impl\n  // Plumb observer notifications to the UI thread.\n\n  void OnCacheListChanged(url::Origin) override {\n    if (!origins_-\u003econtains(origin))\n      return\n    BrowserThread::PostTask(\n        BrowserThread::UI, FROM_HERE,\n        base::Bind(StorageHandler::OnCacheListChanged,\n                   owner_, origin));\n  }\n\n  void OnCacheContentsChanged(url:Origin, cache_name) override {\n    if (!origins_-\u003econtains(origin))\n      return\n    BrowserThread::PostTask(\n        BrowserThread::UI, FROM_HERE,\n        base::Bind(StorageHandler::OnCacheContentsChanged,\n                   owner_, origin, cache_name));\n  }\n\n  flat_set\u003curl::Origin\u003e origins_;\n  WeakPtr\u003cStorageHandler\u003e owner_;\n  scoped_refptr\u003cCacheStorageContextImpl\u003e context_ ;\n}",
+      "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
