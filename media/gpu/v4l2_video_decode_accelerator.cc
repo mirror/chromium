@@ -1190,8 +1190,9 @@ void V4L2VideoDecodeAccelerator::ServiceDeviceTask(bool event_pending) {
   }
 
   bool resolution_change_pending = false;
-  if (event_pending)
+  if (event_pending && decoder_state_ != kInitialized)
     resolution_change_pending = DequeueResolutionChangeEvent();
+
   Dequeue();
   Enqueue();
 
@@ -2063,6 +2064,8 @@ bool V4L2VideoDecodeAccelerator::GetFormatInfo(struct v4l2_format* format,
       return false;
     }
   }
+
+  DequeueResolutionChangeEvent();
 
   // Make sure we are still getting the format we set on initialization.
   if (format->fmt.pix_mp.pixelformat != output_format_fourcc_) {
