@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a409d9f7_49d11553",
+        "filename": "ash/system/palette/palette_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-27T02:13:15Z",
+      "side": 1,
+      "message": "Added a command line flag.",
+      "parentUuid": "f5efe4da_ef030623",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "2c0530383cc8f879fb216bd17bbae90c3afb7504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc2bc8d_aaa90552",
         "filename": "ash/system/palette/palette_utils.h",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "2c0530383cc8f879fb216bd17bbae90c3afb7504",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c3ce0f_e9f441b2",
+        "filename": "ash/system/palette/palette_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-27T02:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc2bc8d_aaa90552",
+      "revId": "2c0530383cc8f879fb216bd17bbae90c3afb7504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
