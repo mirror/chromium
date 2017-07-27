@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "655501cd_3874cc4f",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T10:44:16Z",
+      "side": 1,
+      "message": "Here and below you can just use PasswordFormManager*",
+      "range": {
+        "startLine": 140,
+        "startChar": 18,
+        "endLine": 140,
+        "endChar": 32
+      },
+      "revId": "4c7fb82656a4bd75c9640cb56aa0546a2a17c410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99f293e_2a240db8",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T10:44:16Z",
+      "side": 1,
+      "message": "Is there any legitimate reason to call it for every form which partially matches?\n\nWithout that call the function does exactly what I expect. That is, just looks for the best match and returns it.\n\nWe should either remove it from here or rename the function and change the comment.",
+      "range": {
+        "startLine": 159,
+        "startChar": 13,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "4c7fb82656a4bd75c9640cb56aa0546a2a17c410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6bdc07_345ea330",
+        "filename": "components/password_manager/core/browser/password_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T10:44:16Z",
+      "side": 1,
+      "message": "Move the declaration to the private section of the class if it\u0027s still needed.",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "4c7fb82656a4bd75c9640cb56aa0546a2a17c410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
