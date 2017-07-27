@@ -123,6 +123,24 @@
       "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5462d07_9d1dee3a",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-27T07:39:45Z",
+      "side": 1,
+      "message": "I\u0027ve changed that in PS 19.",
+      "parentUuid": "fe695683_8acd4b18",
+      "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
