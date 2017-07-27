@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb3c5a23_1485a511",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-27T20:47:51Z",
+      "side": 1,
+      "message": "nit: to",
+      "range": {
+        "startLine": 10,
+        "startChar": 64,
+        "endLine": 10,
+        "endChar": 67
+      },
+      "revId": "4c93850c06baedd7b4608dbc1d22073f050e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c787219_466074cf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-27T20:47:51Z",
+      "side": 1,
+      "message": "I think this CHECK is worth keeping in stable, because revalidating RawResource after this CL is considered highly vulnerable, possibly causing security errors again that we\u0027ve encountered before and we want to resolve by this CL.",
+      "revId": "4c93850c06baedd7b4608dbc1d22073f050e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
