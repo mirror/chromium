@@ -16,6 +16,24 @@
       "revId": "b4345893e3cf57afe24057b1b0e928dc0e1af22f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a3aba0_b0b86082",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T01:44:39Z",
+      "side": 1,
+      "message": "Moved to root_build_dir. Hopefully this will be reverted in the near future anyways /w a GN fix.",
+      "parentUuid": "8d8dee63_3e314646",
+      "revId": "b4345893e3cf57afe24057b1b0e928dc0e1af22f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
