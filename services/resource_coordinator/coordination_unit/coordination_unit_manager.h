@@ -38,8 +38,6 @@ class CoordinationUnitManager {
     ukm_recorder_ = ukm_recorder;
   }
 
-  void OnStart(service_manager::BinderRegistry* registry,
-               service_manager::ServiceContextRefFactory* service_ref_factory);
   void RegisterObserver(
       std::unique_ptr<CoordinationUnitGraphObserver> observer);
   void OnCoordinationUnitCreated(CoordinationUnitImpl* coordination_unit);
