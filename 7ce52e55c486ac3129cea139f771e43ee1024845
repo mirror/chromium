@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dbbfd5f_75fb2292",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridgeTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-27T19:56:16Z",
+      "side": 0,
+      "message": "Removing this line is bad.  This test was actually telling you that you had a resource leak.",
+      "range": {
+        "startLine": 1324,
+        "startChar": 19,
+        "endLine": 1324,
+        "endChar": 36
+      },
+      "revId": "7ce52e55c486ac3129cea139f771e43ee1024845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
