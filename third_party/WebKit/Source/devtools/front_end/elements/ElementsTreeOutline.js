@@ -84,6 +84,11 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     /** @type {!Set<!Elements.ElementsTreeElement>} */
     this._treeElementsBeingUpdated = new Set();
 
+    /** @type {!Map<string, !Map<*, !Set<!SDK.DOMNode>>>} */
+    this._flagDependencies = new Map();
+    /** @type {!Map<!SDK.DOMNode, !Map<string, *>>} */
+    this._nodeAttributeMap = new Map();
+
     this._domModel.addEventListener(SDK.DOMModel.Events.MarkersChanged, this._markersChanged, this);
     this._showHTMLCommentsSetting = Common.moduleSetting('showHTMLComments');
     this._showHTMLCommentsSetting.addChangeListener(this._onShowHTMLCommentsChange.bind(this));
@@ -386,8 +391,183 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       }
     }
 
+    this._updateFlagsForNode(this.rootDOMNode, true);
+
     if (selectedNode)
       this._revealAndSelectNode(selectedNode, true);
+  }
+
+  /**
+   * Updates the flags associated with a node and propagates them to the AnalysisModel and the respective
+   * ElementsTreeElements.
+   * @param {?SDK.DOMNode} node
+   * @param {boolean=} flagChildren
+   * @param {!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>=} flags Pre-existing flag assignments.
+   * @return {!Promise}
+   */
+  async _updateFlagsForNode(node, flagChildren, flags) {
+    if (!node)
+      return Promise.resolve();
+    var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
+    if (node.nodeType() === Node.ELEMENT_NODE && analysisModel) {
+      flags = mergeFlagMaps(await this._flagsForNode(node, analysisModel, flagChildren), flags || []);
+      analysisModel.nodeFlagged(/** @type {!SDK.DOMNode} */ (node), flags.get(node));
+      flags.delete(node);
+    }
+    if (flagChildren) {
+      // Recursively update the flags for all of the node's children before resolving.
+      var children = await node.getChildNodesPromise();
+      if (children)
+        await Promise.all(children.map(child => this._updateFlagsForNode(child, true, flags)));
+    }
+
+    /**
+     * @param {...!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>} maps
+     */
+    function mergeFlagMaps(maps) {
+      var acc = new Map();
+      for (var map of Array.from(arguments)) {
+        for (var pair of map)
+          acc.set(pair[0], (acc.get(pair[0]) || []).concat(pair[1]));
+      }
+      return acc;
+    }
+  }
+
+  /**
+   * Identifies common issues with a DOM node, such as sharing an id with another, in order to flag them.
+   * @param {!SDK.DOMNode} node
+   * @param {!SDK.AnalysisModel} analysisModel
+   * @param {boolean=} preventPropagation
+   * @return {!Promise<!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>>}
+   */
+  async _flagsForNode(node, analysisModel, preventPropagation) {
+    var nodeFlags = [];
+    var flags = new Map([[node, nodeFlags]]);
+    var name = node.nodeName().toLowerCase();
+
+    // Conflicting/duplicate id attribute.
+    var id = node.getAttribute('id');
+    if (id !== undefined) {
+      var doc = await node.domModel().requestDocumentPromise();
+      var nodes = await node.domModel().querySelectorAll(doc.id, `#${id}`);
+      if (nodes.length > 1)
+        nodeFlags.push(new SDK.AnalysisModel.Flag('error', 'The `id` attribute must be unique'));
+      this._updateFlagDependency(node, 'id', id, !!preventPropagation);
+    }
+
+    // No parent form for input.
+    if (name === 'input') {
+      var parent = node.parentNode;
+      while (parent !== null) {
+        if (parent.nodeName().toLowerCase() === 'form')
+          break;
+        parent = parent.parentNode;
+      }
+      if (parent === null)
+        nodeFlags.push(new SDK.AnalysisModel.Flag('warning', '`input` elements should have an associated `form`'));
+    }
+
+    // Missing autocomplete attributes.
+    if (name === 'form')
+      await inferAutocompleteValuesForForm();
+
+    return flags;
+
+    /**
+     * Attempt to deduce the intended usage of the input elements within the form and provide a sensible autocomplete
+     * attribute value for each of them.
+     */
+    async function inferAutocompleteValuesForForm() {
+      var passwordFields = await node.querySelectorAll('input[type="password"]:not([autocomplete])');
+      if (passwordFields.length >= 1 && passwordFields.length <= 3) {
+        var textTypes = ['text', 'email', 'tel'];
+        var selectors = textTypes.map(type => `input[type="${type}"]:not([autocomplete])`).join();
+        // Find the first text field preceding the first password field in the form.
+        var textFields = (await node.querySelectorAll(selectors)).filter(node => nodePrecedes(node, passwordFields[0]));
+        var textField = textFields[textFields.length - 1];
+        if (textField)
+          inferAutocompleteValuesForInput(textField, 'username');
+        switch (passwordFields.length) {
+          case 3:
+            inferAutocompleteValuesForInput(passwordFields[0], 'current-password');
+          // Fall-through here to match the last two password fields.
+          case 2:
+            inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 2], 'new-password');
+            inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 1], 'new-password');
+            break;
+          case 1:
+            inferAutocompleteValuesForInput(passwordFields[0], textField ? 'current-password' : 'new-password');
+            break;
+        }
+      }
+
+      /**
+       * @param {!SDK.DOMNode} descendant
+       * @param {string} autocompleteValue
+       */
+      function inferAutocompleteValuesForInput(descendant, autocompleteValue) {
+        if (!flags.has(descendant))
+          flags.set(descendant, []);
+        var annotation = new SDK.AnalysisModel.Annotation(
+            SDK.AnalysisModel.Annotation.Types.Attribute, {text: `autocomplete="${autocompleteValue}"`});
+        var flag = new SDK.AnalysisModel.Flag(
+            'warning', 'Adding an `autocomplete` attribute enhances the user experience', [annotation]);
+        flags.get(descendant).push(flag);
+      }
+
+      /**
+       * @param {!SDK.DOMNode} first
+       * @param {!SDK.DOMNode} second
+       * @return {boolean}
+       */
+      function nodePrecedes(first, second) {
+        // Assumes that both first and second are children of the current node.
+        return nodeAncestorChildIndex(first, node) < nodeAncestorChildIndex(second, node);
+
+        /**
+         * @param {!SDK.DOMNode} node
+         * @param {!SDK.DOMNode} parent
+         * @return {number}
+         */
+        function nodeAncestorChildIndex(node, parent) {
+          while (node.parentNode !== parent)
+            node = node.parentNode;
+          return parent.children().indexOf(node);
+        }
+      }
+    }
+  }
+
+  /**
+   * Updates a constraint associated with a node attribute and resolves the modified dependencies from the old and new
+   * values of the attribute.
+   * @param {!SDK.DOMNode} node
+   * @param {string} attribute
+   * @param {*} newValue
+   * @param {boolean} preventPropagation
+   */
+  _updateFlagDependency(node, attribute, newValue, preventPropagation) {
+    if (!this._nodeAttributeMap.has(node))
+      this._nodeAttributeMap.set(node, new Map());
+    var attributes = this._nodeAttributeMap.get(node);
+    var oldValue = attributes.get(attribute);
+    attributes.set(attribute, newValue);
+    if (oldValue === newValue)
+      return;
+    var map = this._flagDependencies.get(attribute);
+    if (map)
+      (map.get(oldValue) || []).forEach(dependant => dependant !== node ? this._updateFlagsForNode(dependant) : null);
+    else
+      this._flagDependencies.set(attribute, map = new Map());
+    if (!map.has(newValue))
+      map.set(newValue, new Set());
+    var set = map.get(newValue);
+    if (!preventPropagation) {
+      for (var dependant of set)
+        this._updateFlagsForNode(dependant);
+    }
+    set.add(node);
   }
 
   /**
