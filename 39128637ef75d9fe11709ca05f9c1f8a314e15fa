@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "858cc4ea_9475d2d0",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-27T16:58:16Z",
+      "side": 1,
+      "message": "Since this is not set before line 114, it shouldn\u0027t bet declared before line 114.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8d2d6f_40a82b08",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-27T16:58:16Z",
+      "side": 1,
+      "message": "I would get rid of DetachThreadObject() and replace this with:\n\n// Break the ownership circle between SchedulerWorker and Thread.\nouter_ \u003d nullptr;\n\nBenefits:\n- Less code.\n- SchedulerWorker::JoinForTesting works as long as the SchedulerWorker exists (currently, SchedulerWorker::JoinForTesting doesn\u0027t work after this line has run).",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ca4a1fe_d330a6c2",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 12
@@ -64,6 +110,75 @@
         "startChar": 2,
         "endLine": 240,
         "endChar": 14
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512078a9_f5377df0",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-27T16:58:16Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e067e110_7740b575",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-27T16:58:16Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 18
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b9543d_24045deb",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-27T16:58:16Z",
+      "side": 1,
+      "message": "Called to determine",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 38
       },
       "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
