@@ -18808,13 +18808,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Event.Scroll.ScrollerSize.OnLoad" units="pixels">
+<histogram name="Event.Scroll.ScrollerSize.CompositedSmallScrollerPercentage"
+    units="%">
   <owner>yigu@chromium.org</owner>
   <summary>
-    Record the area of a scroller upon page load. This is intended to help us
-    measure the distribution of scrollers with different sizes. Combined with
-    the other two metrics which measure the size of scrollers on scroll, we may
-    have a better idea of not compositing small scrollers.
+    Record the ratio of area of composited small scrollers to that of all
+    composited scrollers during the first lifecycle phase update. This is
+    intended to help us to estimate how much memory we could save by not
+    compositing small scrollers.
+
+    Team: input-dev@chromium.org, threaded-rendering-dev@chromium.org.
+  </summary>
+</histogram>
+
+<histogram name="Event.Scroll.ScrollerSize.OnPage" units="pixels">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    Record the area of a scroller during the first lifecycle phase update. This
+    is intended to help us measure the distribution of scrollers with different
+    sizes. Combined with the two metrics which measure the size of scrollers on
+    scroll, we could know what size of scrollers that users are more likely to
+    scroll.
 
     Team: input-dev@chromium.org, threaded-rendering-dev@chromium.org.
   </summary>
