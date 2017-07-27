@@ -241,9 +241,8 @@ class LastDownloadFinderTest : public testing::Test {
   // the originating thread. The PostTaskAndReplyRelay holds a reference to the
   // backend until its RunReplyAndSelfDestruct is called on the originating
   // thread. This reference MUST be released (on the originating thread,
-  // remember) _before_ calling DestroyHistoryService in TearDown(). See the
-  // giant comment in HistoryService::Cleanup explaining where the backend's
-  // dtor must be run.
+  // remember) _before_ the HistoryService in shutdown. See the giant comment in
+  // HistoryService::Cleanup explaining where the backend's dtor must be run.
   void FlushHistoryBackend(Profile* profile) {
     base::RunLoop run_loop;
     HistoryServiceFactory::GetForProfile(profile,
