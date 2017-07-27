@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a8d2e47_3a8b0d32",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-27T16:21:21Z",
+      "side": 1,
+      "message": "If we don\u0027t save Local State then we won\u0027t clear the \"unclean shutdown\" bit so I\u0027m pretty sure this would show up on our stability dashboards (at least it would on Windows).",
+      "parentUuid": "5a9214ed_f62f7dee",
+      "range": {
+        "startLine": 1012,
+        "startChar": 27,
+        "endLine": 1012,
+        "endChar": 31
+      },
+      "revId": "b1af7ffb1f92f8ca46c32e330a6f715fc1bed0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1dcd3b0_f53f1878",
         "filename": "chrome/browser/chromeos/login/chrome_restart_request.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "b1af7ffb1f92f8ca46c32e330a6f715fc1bed0a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d078266_a60941c5",
+        "filename": "chrome/browser/chromeos/login/chrome_restart_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-27T16:21:21Z",
+      "side": 1,
+      "message": "Correct (I think so), meant to add a CrOS reviewer, will do so now post-commit..",
+      "parentUuid": "d1dcd3b0_f53f1878",
+      "range": {
+        "startLine": 294,
+        "startChar": 17,
+        "endLine": 294,
+        "endChar": 47
+      },
+      "revId": "b1af7ffb1f92f8ca46c32e330a6f715fc1bed0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
