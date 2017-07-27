@@ -11,17 +11,17 @@
 #include "chrome/profiling/allocation_tracker.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
 #include "chrome/profiling/memlog_stream_parser.h"
-#include "chrome/profiling/profiling_globals.h"
 
 namespace profiling {
 
 struct MemlogConnectionManager::Connection {
   Connection(AllocationTracker::CompleteCallback complete_cb,
+             BacktraceStorage* backtrace_storage,
              int process_id,
              scoped_refptr<MemlogReceiverPipe> p)
       : thread(base::StringPrintf("Proc %d thread", process_id)),
         pipe(p),
-        tracker(std::move(complete_cb)) {}
+        tracker(std::move(complete_cb), backtrace_storage) {}
 
   ~Connection() {
     // The parser may outlive this class because it's refcounted, make sure no
@@ -36,17 +36,13 @@ struct MemlogConnectionManager::Connection {
   AllocationTracker tracker;
 };
 
-MemlogConnectionManager::MemlogConnectionManager() {}
-
-MemlogConnectionManager::~MemlogConnectionManager() {
+MemlogConnectionManager::MemlogConnectionManager(base::TaskRunner* io_runner,
+                                                 BacktraceStorage* backtrace_storage)
+  : io_runner_(io_runner),
+    backtrace_storage_(backtrace_storage) {
 }
 
-void MemlogConnectionManager::OnStartMojoControl() {
-  ProfilingGlobals::Get()->GetIORunner()->PostTask(
-      FROM_HERE,
-      base::Bind(
-          &ProfilingProcess::EnsureMojoStarted,
-          base::Unretained(ProfilingGlobals::Get()->GetProfilingProcess())));
+MemlogConnectionManager::~MemlogConnectionManager() {
 }
 
 void MemlogConnectionManager::OnNewConnection(
@@ -60,7 +56,7 @@ void MemlogConnectionManager::OnNewConnection(
                      base::MessageLoop::current()->task_runner(), sender_pid);
 
   std::unique_ptr<Connection> connection = base::MakeUnique<Connection>(
-      std::move(complete_cb), sender_pid, new_pipe);
+      std::move(complete_cb), backtrace_storage_, sender_pid, new_pipe);
   connection->thread.Start();
 
   connection->parser = new MemlogStreamParser(this, &connection->tracker);
@@ -68,7 +64,7 @@ void MemlogConnectionManager::OnNewConnection(
 
   connections_[sender_pid] = std::move(connection);
 
-  ProfilingGlobals::Get()->GetIORunner()->PostTask(
+  io_runner_->PostTask(
       FROM_HERE,
       base::Bind(&MemlogReceiverPipe::StartReadingOnIOThread, new_pipe));
 }
@@ -77,10 +73,6 @@ void MemlogConnectionManager::OnConnectionComplete(int process_id) {
   auto found = connections_.find(process_id);
   CHECK(found != connections_.end());
   connections_.erase(found);
-
-  // When all connections are closed, exit.
-  if (connections_.empty())
-    ProfilingGlobals::Get()->QuitWhenIdle();
 }
 
 // Posts back to the given thread the connection complete message.

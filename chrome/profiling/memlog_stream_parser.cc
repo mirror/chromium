@@ -11,7 +11,6 @@
 #include "chrome/common/profiling/memlog_stream.h"
 #include "chrome/profiling/address.h"
 #include "chrome/profiling/backtrace.h"
-#include "chrome/profiling/profiling_globals.h"
 
 namespace profiling {
 

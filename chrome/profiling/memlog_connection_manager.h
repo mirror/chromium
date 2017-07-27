@@ -15,6 +15,7 @@
 
 namespace base {
 class SingleThreadTaskRunner;
+class TaskRunner;
 }
 
 namespace profiling {
@@ -25,16 +26,14 @@ class MemlogReceiverPipe;
 // the pipe server and this class will connect them to a parser and logger.
 class MemlogConnectionManager : public MemlogControlReceiver {
  public:
-  MemlogConnectionManager();
+  MemlogConnectionManager(base::TaskRunner* io_runner,
+                          BacktraceStorage* backtrace_storage);
   ~MemlogConnectionManager() override;
 
   void OnNewConnection(scoped_refptr<MemlogReceiverPipe> new_pipe, int pid);
 
  private:
   struct Connection;
-
-  // MemlogControlReceiver implementation.
-  void OnStartMojoControl() override;
 
   // Notification that a connection is complete. Unlike OnNewConnection which
   // is signaled by the pipe server, this is signaled by the allocation tracker
@@ -45,6 +44,9 @@ class MemlogConnectionManager : public MemlogControlReceiver {
   void OnConnectionCompleteThunk(
       scoped_refptr<base::SingleThreadTaskRunner> main_loop,
       int process_id);
+
+  base::TaskRunner* io_runner_;  // Now owned.
+  BacktraceStorage* backtrace_storage_;  // Now owned.
 
   // Maps process ID to the connection information for it.
   base::flat_map<int, std::unique_ptr<Connection>> connections_;

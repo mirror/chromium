@@ -11,7 +11,7 @@ class MemlogControlReceiver {
  public:
   virtual ~MemlogControlReceiver() {}
 
-  virtual void OnStartMojoControl() = 0;
+  virtual void OnStartMojoControl() {}
 };
 
 }  // namespace profiling
