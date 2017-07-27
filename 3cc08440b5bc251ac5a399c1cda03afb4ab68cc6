@@ -22,6 +22,30 @@
       "revId": "3cc08440b5bc251ac5a399c1cda03afb4ab68cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0027205_69e9e59d",
+        "filename": "chrome/browser/browser_about_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-27T19:13:53Z",
+      "side": 1,
+      "message": "it is now.\n\n$ git grep md-settings | grep -v WATCHLISTS  # +watch-md-settings in emails\nchrome/browser/browser_about_handler.cc:  const char kLegacyMaterialDesignSettingsHost[] \u003d \"md-settings\";",
+      "parentUuid": "8126b968_154b2f23",
+      "range": {
+        "startLine": 64,
+        "startChar": 13,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "3cc08440b5bc251ac5a399c1cda03afb4ab68cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
