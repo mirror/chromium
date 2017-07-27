@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351c8be3_160108fa",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-27T17:35:07Z",
+      "side": 1,
+      "message": "You probably don\u0027t want this dependency here if the goal is to inject script conditionally.",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be33385_ffd3e0c6",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-27T17:35:07Z",
+      "side": 1,
+      "message": "Since we adding more script here, how about doing this?:\n\nNSMutableArray* scripts \u003d [NSMutableArray array];\n[scripts addObject:GetPageScript(@\"chrome_bundle\")];\nif (feature) {\n  [scripts addObject:GetPageScript(@\"credential_manager\")];\n}\n...\nreturn [scripts componentsJoinedByString:@\";\"];",
+      "range": {
+        "startLine": 170,
+        "startChar": 25,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
