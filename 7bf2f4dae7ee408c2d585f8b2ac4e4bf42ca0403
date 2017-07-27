@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf7eabef_38dd1906",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T01:48:17Z",
+      "side": 1,
+      "message": "nit: make this be a reference",
+      "revId": "7bf2f4dae7ee408c2d585f8b2ac4e4bf42ca0403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cc965c_ef284f0c",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T01:48:17Z",
+      "side": 1,
+      "message": "nit: this too",
+      "revId": "7bf2f4dae7ee408c2d585f8b2ac4e4bf42ca0403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
