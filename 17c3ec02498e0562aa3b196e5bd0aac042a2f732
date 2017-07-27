@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c7dfaf3a_eb78097c",
+        "filename": "extensions/common/api/declarative_net_request/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "baad207f_1afe5a2d",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64e78183_824fa2c8",
         "filename": "extensions/common/api/declarative_net_request/constants.h",
         "patchSetId": 5
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "abc1cfbb_b0aa330e",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95c46ab6_f0a149f9",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b7fc83_c71ce5e0",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 5
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Removed from ParseLeftAnchor.",
       "parentUuid": "99b7fc83_c71ce5e0",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24ce6faf_f791d2b6",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "53209f33_f4045367",
       "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -241,6 +295,24 @@
       "side": 1,
       "message": "No. This is just to make it clear that indexed_rule_-\u003eurl_pattern can be empty. Rephrased it slightly.",
       "parentUuid": "9310e78d_58a637e9",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bddb3344_0b0f4e70",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c07d9ce1_29d9edd0",
       "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -365,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "4ba1ca26_aed8dc11",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "22154de2_50776647",
+      "range": {
+        "startLine": 209,
+        "startChar": 25,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba90148_949d7f1f",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 5
@@ -394,6 +490,24 @@
       "side": 1,
       "message": "\"return *domains.release()\" will lead to a memory leak (I think). The vector will never be released. (Though a copy constructor will be invoked on it). \n\nYeah I wasn\u0027t also sure about this. I checked and it seems it won\u0027t be copy elided. I am now explicitly moving it now. Also added a comment clarifying this.",
       "parentUuid": "aba90148_949d7f1f",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb09d4c4_5620c9e7",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "Ah, my bad, agreed that *domains.release() was a wrong idea. Explicitly moving sounds good.",
+      "parentUuid": "fb4f76ba_fd02c5b6",
       "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -435,6 +549,24 @@
     },
     {
       "key": {
+        "uuid": "6169ff9d_e68fdb58",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "460615e2_fc54e7e3",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b65448b9_2f8369fe",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 5
@@ -464,6 +596,24 @@
       "side": 1,
       "message": "Done. Think not validating domains is fine because they are just used for matching and hence an invalid domain would just not match anything.",
       "parentUuid": "b65448b9_2f8369fe",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3b49954_1b5a9441",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "Agreed that validating domains is unnecessary.",
+      "parentUuid": "8130e29e_5d680d35",
       "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9792518_12db94ea",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "nit: How about just \"unsigned\" or even just \"int\"?\noptional: This could also be a template to be type agnostic.",
+      "revId": "2594dec551fcdcc901341827e60563d9830ac320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ae759a_8480f72a",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-27T09:56:05Z",
+      "side": 1,
+      "message": "nit: Could we group this clause with the 2 below and 1 above into \"if (is_redirect_rule) {}\" with multiple nested clauses?",
+      "revId": "2594dec551fcdcc901341827e60563d9830ac320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
