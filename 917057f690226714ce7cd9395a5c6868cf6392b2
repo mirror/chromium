@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed1e4394_879c8415",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T03:35:07Z",
+      "side": 1,
+      "message": "nit: guard this with !defined(OS_CHROMEOS)",
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa4bd75_4ea43884",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T03:35:07Z",
+      "side": 1,
+      "message": "remove commented code",
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e5028e_ff56ba20",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T03:35:07Z",
+      "side": 1,
+      "message": "this should move into ShowBubbleImpl(..) and only be called when anchor_view is null (non-Mac platforms will DCHECK if you try to call GetPageInfoAnchorRect() when the anchor view should be used instead)\n\nedit: see later comment",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 70
+      },
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb99b0c7_4dc3c8f4",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T03:35:07Z",
+      "side": 1,
+      "message": "in fact, I think we can just drop the |anchor_point| to the constructor and call GetPageInfoAnchorRect() here directly",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 55
+      },
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc3101c_91dc9071",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T03:35:07Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895f6a7a_a75a5841",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-27T03:35:07Z",
+      "side": 1,
+      "message": "gfx::Point -\u003e gfx::Rect will make the API more future-proof\n\nedit: see later comment",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "917057f690226714ce7cd9395a5c6868cf6392b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
