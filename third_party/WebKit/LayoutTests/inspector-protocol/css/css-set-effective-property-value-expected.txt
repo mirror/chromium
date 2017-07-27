@@ -1,5 +1,4 @@
 The test verifies functionality of protocol method CSS.setStyleText.
-
 Dumping inline style: 
 {
     padding-top: 55px;
