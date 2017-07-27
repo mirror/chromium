@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "3f7a7f5f_46b036c6",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-27T02:03:00Z",
+      "side": 1,
+      "message": "Done; many thanks to both reviewers!",
+      "parentUuid": "55b7b5d7_2d8925ea",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 8
+      },
+      "revId": "60849d33316d5588a4653f7a8ebe5654eac88132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d6b0b56_a079051f",
         "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
         "patchSetId": 1
