@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09faa0b9_4c649eae",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T14:22:14Z",
+      "side": 1,
+      "message": "nit: blank line below",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 10
+      },
+      "revId": "98a275d553ea049cc25c995a5e43e3961a4ece4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae972be_95ec3c44",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T14:22:14Z",
+      "side": 1,
+      "message": "nit: add a comment",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 26
+      },
+      "revId": "98a275d553ea049cc25c995a5e43e3961a4ece4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be9c3a5_40074b63",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T14:22:14Z",
+      "side": 1,
+      "message": "Might be worth commenting that SHOWN counts the number of warnings, since it\u0027s not really an action.\n\nalso nit: comments above each enum instead of inline.",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 9
+      },
+      "revId": "98a275d553ea049cc25c995a5e43e3961a4ece4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
