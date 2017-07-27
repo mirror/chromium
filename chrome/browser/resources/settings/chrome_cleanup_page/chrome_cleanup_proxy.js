@@ -24,14 +24,27 @@ cr.define('settings', function() {
 
     /**
      * Hides the Cleanup page from the settings menu.
+     * @param {integer} source
      */
-    dismissCleanupPage() {}
+    dismissCleanupPage(source) {}
 
     /**
      * Updates the cleanup logs upload permission status.
      * @param {boolean} enabled
      */
     setLogsUploadPermission(enabled) {}
+
+    /**
+     * Notfies Chrome that the state of the details section changed.
+     * @param {boolean} enabled
+     */
+    showDetails(enabled) {}
+
+    /**
+     * Notfies Chrome that the "learn more" link was clicked.
+     * @param {boolean} enabled
+     */
+    learnMore() {}
   }
 
   /**
@@ -54,13 +67,23 @@ cr.define('settings', function() {
     }
 
     /** @override */
-    dismissCleanupPage() {
-      chrome.send('dismissCleanupPage');
+    dismissCleanupPage(source) {
+      chrome.send('dismissCleanupPage', [source]);
     }
 
     /** @override */
     setLogsUploadPermission(enabled) {
       chrome.send('setLogsUploadPermission', [enabled]);
+    }
+
+    /** @override */
+    showDetails(enabled) {
+      chrome.send('showDetails', [enabled]);
+    }
+
+    /** @override */
+    learnMore() {
+      chrome.send('chromeCleanupLearnMore');
     }
   }
 
