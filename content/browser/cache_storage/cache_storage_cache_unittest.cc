@@ -1413,6 +1413,8 @@ TEST_P(CacheStorageCacheTestP, PutResponseType) {
   EXPECT_TRUE(TestResponseType(blink::mojom::FetchResponseType::kDefault));
   EXPECT_TRUE(TestResponseType(blink::mojom::FetchResponseType::kError));
   EXPECT_TRUE(TestResponseType(blink::mojom::FetchResponseType::kOpaque));
+  EXPECT_TRUE(
+      TestResponseType(blink::mojom::FetchResponseType::kOpaqueRedirect));
 }
 
 TEST_P(CacheStorageCacheTestP, WriteSideData) {
