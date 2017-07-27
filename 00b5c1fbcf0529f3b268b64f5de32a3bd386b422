@@ -16,6 +16,24 @@
       "revId": "00b5c1fbcf0529f3b268b64f5de32a3bd386b422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577112fa_fc4f1ae4",
+        "filename": "ios/chrome/browser/suggestions/suggestions_service_factory.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T15:18:42Z",
+      "side": 1,
+      "message": "Because I copied from here: https://cs.chromium.org/chromium/src/ios/chrome/browser/ntp_tiles/ios_most_visited_sites_factory.cc?rcl\u003db945c02d9fe37965bb4ce0029ba9ef325a6b5f26\u0026l\u003d26\n:)\n\nCONTINUE_ON_SHUTDOWN is IMO somewhat misnamed, it\u0027s actually the least-shutdown-blocking option. (During shutdown, already-started tasks will just be abandoned, while with SKIP_ON_SHUTDOWN we still wait for them to complete. Posted-but-not-yet-started tasks are skipped either way.) The downside is that it\u0027s not always safe to use, but since we already have another instance, I\u0027m assuming it\u0027s okay here.",
+      "parentUuid": "754bfa6a_a86a441d",
+      "revId": "00b5c1fbcf0529f3b268b64f5de32a3bd386b422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
