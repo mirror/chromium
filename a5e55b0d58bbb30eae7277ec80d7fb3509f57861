@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b84c9570_ea98cab8",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-07-27T17:57:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e60aec64_306abeb7",
+      "range": {
+        "startLine": 8,
+        "startChar": 31,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56964569_236dfbbf",
         "filename": "remoting/proto/file_transfer.proto",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T00:14:42Z",
       "side": 1,
       "message": "I think you\u0027ll want an id field here (and in FileTransferResponse) so that the client can disambiguate FileTransferResponse messages sent for concurrent uploads.",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3640059f_3ff2d446",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-07-27T17:57:53Z",
+      "side": 1,
+      "message": "If we were to implement concurrent uploads, they would each have their own data channel, which would disambiguate the messages.",
+      "parentUuid": "56964569_236dfbbf",
       "range": {
         "startLine": 9,
         "startChar": 31,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a33a6b43_ff0ea3ba",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-07-27T17:57:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78501bb0_845d908f",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25d281f6_67887aa3",
         "filename": "remoting/proto/file_transfer.proto",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f40b16da_85c1c867",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-07-27T17:57:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25d281f6_67887aa3",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e00bad7_97c306d6",
         "filename": "remoting/proto/file_transfer.proto",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-27T00:14:42Z",
       "side": 1,
       "message": "Why do you need to know the filename at the client?",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebeb45c_3466eb08",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-07-27T17:57:53Z",
+      "side": 1,
+      "message": "The client won\u0027t know the full filepath at the time that it makes the request. In this implementation, the client will just send the host a filename, and the host will decide which directory to put it in. In order for the client to at least display where the file actually went, it would show this destination_filepath string to the user. This will only be set in the final response message after the file transfer is done and the file has been moved from a temp location to the final destination.",
+      "parentUuid": "0e00bad7_97c306d6",
       "range": {
         "startLine": 27,
         "startChar": 43,
