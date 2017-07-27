@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03bee10_d1594163",
+        "filename": "content/browser/android/app_web_message_port.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-27T18:12:06Z",
+      "side": 1,
+      "message": "it\u0027s troubling to me that we have raw JNI calls in our code. I thought we removed them all. :(",
+      "range": {
+        "startLine": 78,
+        "startChar": 15,
+        "endLine": 78,
+        "endChar": 67
+      },
+      "revId": "da606f4186da86bd9750cfb22192a496655a41db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
