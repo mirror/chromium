@@ -102,9 +102,10 @@ TextDirection SelectionModifier::DirectionOfSelection() const {
   return DirectionOf(selection_);
 }
 
-static bool IsBaseStart(const VisibleSelection& visible_selection,
+static bool IsBaseStart(const LocalFrame& frame,
+                        const VisibleSelection& visible_selection,
                         SelectionModifyDirection direction) {
-  if (visible_selection.IsDirectional()) {
+  if (frame.Selection().IsDirectional()) {
     // Make base and extent match start and end so we extend the user-visible
     // selection. This only matters for cases where base and extend point to
     // different positions than start and end (e.g. after a double-click to
@@ -131,11 +132,12 @@ static bool IsBaseStart(const VisibleSelection& visible_selection,
 // and start/end adjustment in |visibleSelection::validate()| for range
 // selection.
 static SelectionInDOMTree PrepareToExtendSeelction(
+    const LocalFrame& frame,
     const VisibleSelection& visible_selection,
     SelectionModifyDirection direction) {
   if (visible_selection.Start().IsNull())
     return visible_selection.AsSelection();
-  const bool base_is_start = IsBaseStart(visible_selection, direction);
+  const bool base_is_start = IsBaseStart(frame, visible_selection, direction);
   return SelectionInDOMTree::Builder(visible_selection.AsSelection())
       .Collapse(base_is_start ? visible_selection.Start()
                               : visible_selection.End())
@@ -567,8 +569,8 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
       GetFrame()->GetDocument()->Lifecycle());
 
   if (alter == SelectionModifyAlteration::kExtend) {
-    selection_ =
-        CreateVisibleSelection(PrepareToExtendSeelction(selection_, direction));
+    selection_ = CreateVisibleSelection(
+        PrepareToExtendSeelction(*GetFrame(), selection_, direction));
   }
 
   bool was_range = selection_.IsRange();
@@ -724,9 +726,10 @@ bool SelectionModifier::ModifyWithPageGranularity(
 
   if (alter == SelectionModifyAlteration::kExtend) {
     selection_ = CreateVisibleSelection(PrepareToExtendSeelction(
-        selection_, direction == SelectionModifyVerticalDirection::kUp
-                        ? SelectionModifyDirection::kBackward
-                        : SelectionModifyDirection::kForward));
+        *GetFrame(), selection_,
+        direction == SelectionModifyVerticalDirection::kUp
+            ? SelectionModifyDirection::kBackward
+            : SelectionModifyDirection::kForward));
   }
 
   VisiblePosition pos;

@@ -174,7 +174,7 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
   const VisiblePosition position =
       VisiblePositionForContentsPoint(point, GetFrame());
   SelectionInDOMTree::Builder builder;
-  builder.SetIsDirectional(GetSelectionInDOMTree().IsDirectional());
+  builder.SetIsDirectional(IsDirectional());
   builder.SetIsHandleVisible(true);
   if (position.IsNotNull())
     builder.Collapse(position.ToPositionWithAffinity());
@@ -233,6 +233,7 @@ bool FrameSelection::SetSelectionDeprecated(
   if (old_selection_in_dom_tree == new_selection)
     return false;
   selection_editor_->SetSelection(new_selection);
+  SetIsDirectional(new_selection.IsDirectional());
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 
   const Document& current_document = GetDocument();
