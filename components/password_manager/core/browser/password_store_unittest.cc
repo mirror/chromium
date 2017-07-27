@@ -877,8 +877,8 @@ TEST_F(PasswordStoreTest, GetLoginsWithAffiliationAndBrandingInformation) {
     }
 
     // Since GetAutofillableLoginsWithAffiliationAndBrandingInformation
-    // schedules a request for affiliation information to UI thread, don't
-    // shutdown UI thread until there are no tasks in the UI queue.
+    // schedules a request for affiliation information to the UI sequence, don't
+    // shutdown the UI sequence until there are no tasks in the UI queue.
     base::RunLoop().RunUntilIdle();
     store->ShutdownOnUIThread();
     base::RunLoop().RunUntilIdle();

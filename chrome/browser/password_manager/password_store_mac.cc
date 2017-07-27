@@ -11,10 +11,10 @@
 using password_manager::MigrationStatus;
 
 PasswordStoreMac::PasswordStoreMac(
-    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> main_task_runner,
     std::unique_ptr<password_manager::LoginDatabase> login_db,
     PrefService* prefs)
-    : PasswordStoreDefault(main_thread_runner, nullptr, std::move(login_db)) {
+    : PasswordStoreDefault(main_task_runner, nullptr, std::move(login_db)) {
   migration_status_.Init(password_manager::prefs::kKeychainMigrationStatus,
                          prefs);
 }
@@ -66,7 +66,7 @@ void PasswordStoreMac::InitOnBackgroundThread(MigrationStatus status) {
     // drop the entries in the DB because they don't have passwords anyway.
     login_db()->RemoveLoginsCreatedBetween(base::Time(), base::Time());
     status = MigrationStatus::MIGRATION_STOPPED;
-    main_thread_runner_->PostTask(
+    main_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&PasswordStoreMac::UpdateStatusPref, this, status));
   }

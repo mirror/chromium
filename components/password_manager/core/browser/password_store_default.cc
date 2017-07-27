@@ -17,10 +17,10 @@ using autofill::PasswordForm;
 namespace password_manager {
 
 PasswordStoreDefault::PasswordStoreDefault(
-    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
-    scoped_refptr<base::SequencedTaskRunner> db_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+    scoped_refptr<base::SequencedTaskRunner> db_task_runner,
     std::unique_ptr<LoginDatabase> login_db)
-    : PasswordStore(main_thread_runner, db_thread_runner),
+    : PasswordStore(main_task_runner, db_task_runner),
       login_db_(std::move(login_db)) {}
 
 PasswordStoreDefault::~PasswordStoreDefault() {
@@ -29,7 +29,7 @@ PasswordStoreDefault::~PasswordStoreDefault() {
 bool PasswordStoreDefault::Init(
     const syncer::SyncableService::StartSyncFlare& flare,
     PrefService* prefs) {
-  ScheduleTask(base::Bind(&PasswordStoreDefault::InitOnDBThread, this));
+  ScheduleTask(base::Bind(&PasswordStoreDefault::InitOnDBSequence, this));
   return PasswordStore::Init(flare, prefs);
 }
 
@@ -38,7 +38,7 @@ void PasswordStoreDefault::ShutdownOnUIThread() {
   ScheduleTask(base::Bind(&PasswordStoreDefault::ResetLoginDB, this));
 }
 
-void PasswordStoreDefault::InitOnDBThread() {
+void PasswordStoreDefault::InitOnDBSequence() {
   DCHECK(GetBackgroundTaskRunner()->RunsTasksInCurrentSequence());
   DCHECK(login_db_);
   if (!login_db_->Init()) {
