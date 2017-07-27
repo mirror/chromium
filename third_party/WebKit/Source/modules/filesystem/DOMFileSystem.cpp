@@ -55,13 +55,13 @@ namespace blink {
 
 namespace {
 
-void RunCallback(ExecutionContext* execution_context,
-                 std::unique_ptr<WTF::Closure> task) {
+void RunCallback(ExecutionContext* execution_context, WTF::Closure task) {
   if (!execution_context)
     return;
   DCHECK(execution_context->IsContextThread());
-  probe::AsyncTask async_task(execution_context, task.get());
-  (*task)();
+  probe::AsyncTask async_task(execution_context,
+                              reinterpret_cast<void*>(task.Identifier()));
+  task();
 }
 
 }  // namespace
@@ -205,10 +205,10 @@ void DOMFileSystem::CreateFile(const FileEntry* file_entry,
 }
 
 void DOMFileSystem::ScheduleCallback(ExecutionContext* execution_context,
-                                     std::unique_ptr<WTF::Closure> task) {
+                                     WTF::Closure task) {
   DCHECK(execution_context->IsContextThread());
   probe::AsyncTaskScheduled(execution_context, TaskNameForInstrumentation(),
-                            task.get());
+                            reinterpret_cast<void*>(task.Identifier()));
   TaskRunnerHelper::Get(TaskType::kFileReading, execution_context)
       ->PostTask(BLINK_FROM_HERE,
                  WTF::Bind(&RunCallback, WrapWeakPersistent(execution_context),
