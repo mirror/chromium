@@ -37,6 +37,7 @@
 #include "content/public/common/url_constants.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
 
@@ -111,6 +112,7 @@ NavigationHandleImpl::NavigationHandleImpl(
       request_context_type_(REQUEST_CONTEXT_TYPE_UNSPECIFIED),
       mixed_content_context_type_(
           blink::WebMixedContentContextType::kBlockable),
+      ukm_source_id_(ukm::UkmRecorder::GetNewSourceID()),
       should_replace_current_entry_(false),
       redirect_chain_(redirect_chain),
       is_download_(false),
@@ -503,6 +505,10 @@ const GlobalRequestID& NavigationHandleImpl::GetGlobalRequestID() {
   return request_id_;
 }
 
+ukm::SourceId NavigationHandleImpl::GetUkmSourceId() const {
+  return ukm_source_id_;
+}
+
 void NavigationHandleImpl::InitServiceWorkerHandle(
     ServiceWorkerContextWrapper* service_worker_context) {
   DCHECK(IsBrowserSideNavigationEnabled());
@@ -755,6 +761,12 @@ void NavigationHandleImpl::DidCommitNavigation(
       << "Only subframe navigations can get here without changing the "
       << "NavigationEntry";
   subframe_entry_committed_ = navigation_entry_committed;
+
+  if (IsInMainFrame()) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    if (ukm_recorder)
+      ukm_recorder->UpdateSourceURL(ukm_source_id_, url_);
+  }
 
   // If an error page reloads, net_error_code might be 200 but we still want to
   // count it as an error page.

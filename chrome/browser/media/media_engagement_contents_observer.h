@@ -7,6 +7,8 @@
 
 #include "content/public/browser/web_contents_observer.h"
 
+#include "services/metrics/public/cpp/ukm_recorder.h"
+
 namespace gfx {
 class Size;
 }  // namespace gfx
@@ -171,6 +173,7 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   void RecordEngagementScoreToHistogramAtPlayback(const MediaPlayerId& id);
 
   url::Origin committed_origin_;
+  ukm::SourceId committed_source_id_;
 
   static const base::TimeDelta kSignificantMediaPlaybackTime;
 
