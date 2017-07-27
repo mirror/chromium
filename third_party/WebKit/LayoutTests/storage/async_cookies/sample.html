@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookes: Sample Test</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+// This is all a hack. Add your polyfill to the directory instead, and import it
+// via a <script> tag.
+const cookies = {};
+const CookieStore = {
+  get: name => {
+    return Promise.resolve(cookies[name]);
+  },
+  set: (name, value) => {
+    cookies[name] = value;
+    return Promise.resolve();
+  },
+};
+
+// Feel free to use async here. I'm rusty on the syntax, so I went with what I
+// know in the interest of getting you unblocked quickly.
+promise_test(testCase => {
+  return CookieStore.set('answer', '42').then(() => {
+    return CookieStore.get('answer').then(value => {
+      assert_equals(value, '42');
+    });
+  });
+}, 'get returns the value passed to set');
+
+</script>
