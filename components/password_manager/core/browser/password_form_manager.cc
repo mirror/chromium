@@ -830,10 +830,10 @@ bool PasswordFormManager::UploadPasswordVote(
   }
 
   autofill::ServerFieldTypeSet available_field_types;
+  // A map from field names to field types.
+  FieldTypeMap field_types;
   if (password_type != autofill::USERNAME) {
     if (has_autofill_vote) {
-      // A map from field names to field types.
-      FieldTypeMap field_types;
       DCHECK(submitted_form_);
       bool is_update = password_type == autofill::NEW_PASSWORD ||
                        password_type == autofill::PROBABLY_NEW_PASSWORD ||
@@ -847,21 +847,27 @@ bool PasswordFormManager::UploadPasswordVote(
       }
       field_types[submitted_form_->confirmation_password_element] =
           autofill::CONFIRMATION_PASSWORD;
-      LabelFields(field_types, &form_structure, &available_field_types);
     }
     if (password_type != autofill::ACCOUNT_CREATION_PASSWORD) {
       if (generation_popup_was_shown_)
         AddGeneratedVote(&form_structure);
       if (form_classifier_outcome_ != kNoOutcome)
         AddFormClassifierVote(&form_structure);
+    } else { // User reuses credentials.
+        field_types[form_to_upload.username_element] = autofill::USERNAME;
+        username_vote_element_ = form_to_upload.username_element;
+        AddUsernameVote(&form_structure,
+          autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED);
     }
-  } else {  // Username correction vote.
-    FieldTypeMap field_types;
+  } else {  // User overwrites username.
     field_types[form_to_upload.username_element] = autofill::USERNAME;
     field_types[form_to_upload.password_element] =
         autofill::ACCOUNT_CREATION_PASSWORD;
-    LabelFields(field_types, &form_structure, &available_field_types);
+    username_vote_element_ = form_to_upload.username_element;
+    AddUsernameVote(&form_structure,
+      autofill::AutofillUploadContents::Field::USERNAME_OVERWRITTEN);
   }
+  LabelFields(field_types, &form_structure, &available_field_types);
 
   // Force uploading as these events are relatively rare and we want to make
   // sure to receive them.
@@ -934,6 +940,23 @@ void PasswordFormManager::AddFormClassifierVote(
           autofill::AutofillUploadContents::Field::NON_GENERATION_ELEMENT);
     }
   }
+}
+
+void PasswordFormManager::AddUsernameVote(
+      autofill::FormStructure* form_structure,
+      autofill::AutofillUploadContents::Field::UsernameVoteType type) {
+    DCHECK(form_structure);
+
+    if (username_vote_element_.empty())
+      return;
+
+    for (size_t i = 0; i < form_structure->field_count(); ++i) {
+      autofill::AutofillField* field = form_structure->field(i);
+      if (field->name == username_vote_element_) {
+          field->set_username_vote_type(type);
+          break;
+      }
+    }
 }
 
 void PasswordFormManager::CreatePendingCredentials() {
