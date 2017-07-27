@@ -714,6 +714,8 @@ source_set("chromeos") {
     "fileapi/recent_context.h",
     "fileapi/recent_file.cc",
     "fileapi/recent_file.h",
+    "fileapi/recent_file_stream_reader.cc",
+    "fileapi/recent_file_stream_reader.h",
     "fileapi/recent_model.cc",
     "fileapi/recent_model.h",
     "fileapi/recent_source.cc",
