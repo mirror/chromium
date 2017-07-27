@@ -324,12 +324,19 @@ class MEDIA_GPU_EXPORT V4L2VideoDecodeAccelerator
   void StartResolutionChange();
   void FinishResolutionChange();
 
+  // Create output buffers with the format GetFormatInfo() returns.
+  // This should be called if the resolution change event is caught
+  // and it is not dynamic resolution.
+  // change
+  void StartInitialResolutionChange();
+
   // Try to get output format and visible size, detected after parsing the
   // beginning of the stream. Sets |again| to true if more parsing is needed.
   // |visible_size| could be nullptr and ignored.
   bool GetFormatInfo(struct v4l2_format* format,
                      gfx::Size* visible_size,
                      bool* again);
+
   // Create output buffers for the given |format| and |visible_size|.
   bool CreateBuffersForFormat(const struct v4l2_format& format,
                               const gfx::Size& visible_size);
@@ -469,6 +476,10 @@ class MEDIA_GPU_EXPORT V4L2VideoDecodeAccelerator
   // not be sent. After an output buffer that has the flag V4L2_BUF_FLAG_LAST is
   // received, this is set to false.
   bool flush_awaiting_last_output_buffer_;
+
+  // True if a resolution change is not done yet.
+  // This can be set true if Reset() is called.
+  bool initial_resolution_change_done_;
 
   // Got a reset request while we were performing resolution change or waiting
   // picture buffers.
