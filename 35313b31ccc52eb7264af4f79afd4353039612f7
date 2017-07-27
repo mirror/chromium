@@ -22,6 +22,30 @@
       "revId": "35313b31ccc52eb7264af4f79afd4353039612f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f278fd_f2ed6eef",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T09:57:39Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f8723f51_9f9bfdce",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "35313b31ccc52eb7264af4f79afd4353039612f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

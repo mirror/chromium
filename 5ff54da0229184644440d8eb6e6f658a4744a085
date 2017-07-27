@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b27137c_6df6c0af",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T09:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ddb4e4_c3979ace",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 7
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21bd7058_9071bcd4",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7433147_749625e2",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T09:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21bd7058_9071bcd4",
+      "range": {
+        "startLine": 142,
+        "startChar": 56,
+        "endLine": 142,
+        "endChar": 57
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee350bf6_7043bbd5",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T09:57:39Z",
+      "side": 1,
+      "message": "I can\u0027t speak to the original intention of this code, but this CL was a refactor so I was trying to keep the original behaviour, which only removed the observer in that one case.\n\nUltimately this will all be replaced with calls to the DownloadService so I\u0027m not sure how much of this will survive the next few iterations anyway. The current approach shouldn\u0027t leak memory since everything is cleared up in OnDownloadDestroyed so I will leave it as it is until these other cases are actually implemented.",
+      "parentUuid": "73baf84d_0bb4eb05",
+      "range": {
+        "startLine": 178,
+        "startChar": 10,
+        "endLine": 178,
+        "endChar": 23
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1ceed73_33b13194",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "89605f84_de39834b",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T09:57:39Z",
+      "side": 1,
+      "message": "There\u0027s definitely room for improvement here, but I agree this can wait till another change.",
+      "parentUuid": "f1ceed73_33b13194",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 266,
+        "endChar": 20
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0c5413f_2268608c",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d45463_5a0a9ecc",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T09:57:39Z",
+      "side": 1,
+      "message": "I did your second option.",
+      "parentUuid": "d0c5413f_2268608c",
+      "range": {
+        "startLine": 302,
+        "startChar": 17,
+        "endLine": 302,
+        "endChar": 31
+      },
+      "revId": "5ff54da0229184644440d8eb6e6f658a4744a085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
