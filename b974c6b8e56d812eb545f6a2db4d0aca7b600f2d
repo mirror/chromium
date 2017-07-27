@@ -46,6 +46,30 @@
       "revId": "b974c6b8e56d812eb545f6a2db4d0aca7b600f2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d1f23a_c010ec4e",
+        "filename": "third_party/WebKit/public/platform/linux/WebFallbackFont.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-27T17:44:36Z",
+      "side": 1,
+      "message": "Thanks, LGTM -- but you\u0027ll need more owners.",
+      "parentUuid": "5a33a149_0787a716",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "b974c6b8e56d812eb545f6a2db4d0aca7b600f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
