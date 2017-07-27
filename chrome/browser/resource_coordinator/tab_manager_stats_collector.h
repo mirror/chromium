@@ -5,6 +5,12 @@
 #ifndef CHROME_BROWSER_RESOURCE_COORDINATOR_TAB_MANAGER_STATS_COLLECTOR_H_
 #define CHROME_BROWSER_RESOURCE_COORDINATOR_TAB_MANAGER_STATS_COLLECTOR_H_
 
+#include <memory>
+
+namespace base {
+class Value;
+}
+
 namespace content {
 class WebContents;
 }  // namespace content
@@ -23,6 +29,10 @@ class TabManagerStatsCollector {
   // Records UMA histograms for the tab state when switching to a different tab
   // during session restore.
   void RecordSwitchToTab(content::WebContents* contents) const;
+
+  void RecordExpectedTaskQueueingDuration(
+      content::WebContents* web_contents,
+      std::unique_ptr<base::Value> queueing_time_millis) const;
 
  private:
   TabManager* tab_manager_;
