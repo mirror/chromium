@@ -432,6 +432,75 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
             controller.GetLastCommittedEntry()->GetURL().spec());
 }
 
+class CancelThrottle : public NavigationThrottle {
+ public:
+  CancelThrottle(NavigationHandle* navigation_handle)
+      : NavigationThrottle(navigation_handle) {}
+
+  const char* GetNameForLogging() override { return "AbortThrottle"; }
+
+  ThrottleCheckResult WillStartRequest() override {
+    return ThrottleCheckResult::CANCEL;
+  }
+};
+
+class CancelThrottleObserver : public WebContentsObserver {
+ public:
+  CancelThrottleObserver(WebContents* web_contents, const GURL& url)
+      : WebContentsObserver(web_contents), cancel_url_(url) {}
+
+  ~CancelThrottleObserver() override {}
+
+  void DidStartNavigation(NavigationHandle* navigation_handle) override {
+    if (navigation_handle->GetURL() != cancel_url_) {
+      return;
+    }
+
+    std::unique_ptr<NavigationThrottle> cancel_throttle(
+        new CancelThrottle(navigation_handle));
+    navigation_handle->RegisterThrottleForTesting(std::move(cancel_throttle));
+  }
+
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override {
+    if (navigation_handle->GetURL() == cancel_url_)
+      waiter_.Quit();
+  }
+
+  void WaitForCancel() { waiter_.Run(); }
+
+ private:
+  const GURL cancel_url_;
+  base::RunLoop waiter_;
+};
+
+IN_PROC_BROWSER_TEST_F(
+    BrowserSideNavigationBrowserTest,
+    VerifyCancellationOfProvisionalLoadUsingDroppedNavigation) {
+  // The main page
+  GURL a(embedded_test_server()->GetURL("/dropped_loading_main.html"));
+  // The subframe
+  GURL b(embedded_test_server()->GetURL("/dropped_loading_subframe.html"));
+  // The .location=
+  GURL c(embedded_test_server()->GetURL("/title1.html"));
+
+  TitleWatcher a_loader(shell()->web_contents(),
+                        base::ASCIIToUTF16("Navigation Finished"));
+
+  TestNavigationManager b_deferer(shell()->web_contents(), b);
+
+  CancelThrottleObserver c_canceler(shell()->web_contents(), c);
+
+  shell()->LoadURL(a);
+  EXPECT_TRUE(b_deferer.WaitForRequestStart());
+
+  EXPECT_TRUE(ExecuteScript(shell(), "clickSameSiteLink()"));
+  c_canceler.WaitForCancel();
+
+  b_deferer.WaitForNavigationFinished();
+  EXPECT_EQ(base::ASCIIToUTF16("Navigation Finished"),
+            a_loader.WaitAndGetTitle());
+}
+
 class BrowserSideNavigationBrowserDisableWebSecurityTest
     : public BrowserSideNavigationBrowserTest {
  public:
