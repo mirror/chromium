@@ -104,6 +104,24 @@
       "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcecb7a5_a96537ab",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T00:59:30Z",
+      "side": 1,
+      "message": "i don\u0027t understand how you can change what you\u0027re using as a cache ID without invalidating/orphaning everything that was previously cached. preserving the old member name seems like the least of the concerns if that\u0027s done in the future.\n\nyes, i feel strongly that more-specific member names with descriptive comments are important. :-)",
+      "parentUuid": "42b2921a_ac2442f0",
+      "revId": "a0024a30f2b483d9877428ee9f40e983fdd43928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

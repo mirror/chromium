@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb65a93_2848c204",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T00:59:30Z",
+      "side": 1,
+      "message": "instead of passing an optional arg that makes this a no-op, just pass the id directly and move the check to the caller.",
+      "range": {
+        "startLine": 55,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "d8dc4ab2ad983c4f9ab57f70c058f57f7104e21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d28324_a2130e19",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-27T00:59:30Z",
+      "side": 1,
+      "message": "same comment here: require the caller to check that the id is set before passing it, and pass the id directly instead of wrapping it in base::Optional.",
+      "revId": "d8dc4ab2ad983c4f9ab57f70c058f57f7104e21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
