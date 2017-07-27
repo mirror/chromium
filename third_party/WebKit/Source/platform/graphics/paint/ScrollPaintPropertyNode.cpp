@@ -11,8 +11,8 @@ namespace blink {
 ScrollPaintPropertyNode* ScrollPaintPropertyNode::Root() {
   DEFINE_STATIC_REF(
       ScrollPaintPropertyNode, root,
-      (ScrollPaintPropertyNode::Create(nullptr, IntSize(), IntSize(), false,
-                                       false, 0, nullptr)));
+      (ScrollPaintPropertyNode::Create(nullptr, FloatPoint(), IntSize(),
+                                       IntSize(), false, false, 0, nullptr)));
   return root;
 }
 
@@ -20,6 +20,8 @@ String ScrollPaintPropertyNode::ToString() const {
   StringBuilder text;
   text.Append("parent=");
   text.Append(String::Format("%p", Parent()));
+  text.Append(" offset=");
+  text.Append(offset_.ToString());
   text.Append(" container_bounds=");
   text.Append(container_bounds_.ToString());
   text.Append(" bounds=");
