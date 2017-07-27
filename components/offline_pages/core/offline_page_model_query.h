@@ -39,6 +39,7 @@ class OfflinePageModelQuery {
   std::pair<Requirement, std::set<int64_t>> GetRestrictedToOfflineIds() const;
   std::pair<Requirement, std::set<ClientId>> GetRestrictedToClientIds() const;
   std::pair<Requirement, std::set<GURL>> GetRestrictedToUrls() const;
+  bool GetSearchByFinalURLOnly() const;
 
   // This is the workhorse function that is used by the in-memory offline page
   // model, given a page it will find out whether that page matches the query.
@@ -52,6 +53,7 @@ class OfflinePageModelQuery {
   std::pair<Requirement, std::set<int64_t>> offline_ids_;
   std::pair<Requirement, std::set<ClientId>> client_ids_;
   std::pair<Requirement, std::set<GURL>> urls_;
+  bool search_by_final_url_only_;
 
   DISALLOW_COPY_AND_ASSIGN(OfflinePageModelQuery);
 };
@@ -116,6 +118,11 @@ class OfflinePageModelQueryBuilder {
   // Only include results from a single namespace.
   OfflinePageModelQueryBuilder& RequireNamespace(const std::string& name_space);
 
+  // If |search_by_final_url_only| is true, only the final committed url will be
+  // considered when matching pages.
+  OfflinePageModelQueryBuilder& SetSearchByFinalURLOnly(
+      bool search_by_final_url_only);
+
   // Builds the query using the namespace policies provided by |controller|
   // This resets the internal state.  |controller| should not be |nullptr|.
   std::unique_ptr<OfflinePageModelQuery> Build(
@@ -139,6 +146,7 @@ class OfflinePageModelQueryBuilder {
   Requirement restricted_to_original_tab_ = Requirement::UNSET;
 
   std::unique_ptr<std::string> name_space_;
+  bool search_by_final_url_only_;
 
   DISALLOW_COPY_AND_ASSIGN(OfflinePageModelQueryBuilder);
 };

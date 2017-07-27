@@ -26,6 +26,7 @@ const GURL kUrl2 = GURL("https://ktestitem2.com");
 const OfflinePageItem kTestItem2(kUrl2, 2, kClientId2, base::FilePath(), 2);
 
 const char kTestNamespace[] = "test_namespace";
+const GURL tempUrl = GURL("https://temp.temp");
 }  // namespace
 
 class OfflinePageModelQueryTest : public testing::Test {
@@ -59,6 +60,14 @@ class OfflinePageModelQueryTest : public testing::Test {
   const OfflinePageItem recent_page() {
     return OfflinePageItem(GURL("https://download.com"), 7,
                            {kLastNNamespace, "id1"}, base::FilePath(), 7);
+  }
+
+  const OfflinePageItem CreatePageWithUrls(const GURL& url,
+                                           const GURL& original_url) {
+    OfflinePageItem page = kTestItem1;
+    page.url = url;
+    page.original_url = original_url;
+    return page;
   }
 };
 
@@ -224,6 +233,7 @@ TEST_F(OfflinePageModelQueryTest, UrlsSet) {
   const std::set<GURL>& urls_out = restriction.second;
 
   EXPECT_EQ(Requirement::INCLUDE_MATCHING, requirement);
+  EXPECT_FALSE(query->GetSearchByFinalURLOnly());
 
   ASSERT_EQ(urls.size(), urls_out.size());
   for (auto url : urls) {
@@ -233,6 +243,11 @@ TEST_F(OfflinePageModelQueryTest, UrlsSet) {
 
   EXPECT_TRUE(query->Matches(kTestItem1));
   EXPECT_FALSE(query->Matches(kTestItem2));
+  EXPECT_TRUE(query->Matches(CreatePageWithUrls(kUrl1, tempUrl)));
+  EXPECT_TRUE(query->Matches(CreatePageWithUrls(tempUrl, kUrl1)));
+  EXPECT_TRUE(
+      query->Matches(CreatePageWithUrls(GURL(""), GURL("https://abc.def"))));
+  EXPECT_FALSE(query->Matches(CreatePageWithUrls(tempUrl, GURL(""))));
 }
 
 TEST_F(OfflinePageModelQueryTest, UrlsSet_Exclude) {
@@ -246,6 +261,7 @@ TEST_F(OfflinePageModelQueryTest, UrlsSet_Exclude) {
   const std::set<GURL>& urls_out = restriction.second;
 
   EXPECT_EQ(Requirement::EXCLUDE_MATCHING, requirement);
+  EXPECT_FALSE(query->GetSearchByFinalURLOnly());
 
   ASSERT_EQ(urls.size(), urls_out.size());
   for (auto url : urls) {
@@ -255,6 +271,11 @@ TEST_F(OfflinePageModelQueryTest, UrlsSet_Exclude) {
 
   EXPECT_FALSE(query->Matches(kTestItem1));
   EXPECT_TRUE(query->Matches(kTestItem2));
+  EXPECT_FALSE(query->Matches(CreatePageWithUrls(kUrl1, tempUrl)));
+  EXPECT_FALSE(query->Matches(CreatePageWithUrls(tempUrl, kUrl1)));
+  EXPECT_FALSE(
+      query->Matches(CreatePageWithUrls(GURL(""), GURL("https://abc.def"))));
+  EXPECT_TRUE(query->Matches(CreatePageWithUrls(tempUrl, GURL(""))));
 }
 
 TEST_F(OfflinePageModelQueryTest, UrlsReplace) {
@@ -452,4 +473,57 @@ TEST_F(OfflinePageModelQueryTest, RequireNamespace) {
   EXPECT_FALSE(query->Matches(test_namespace_page()));
 }
 
+TEST_F(OfflinePageModelQueryTest, UrlsSet_FinalOnly) {
+  std::vector<GURL> urls = {kUrl1};
+  builder_.SetUrls(Requirement::INCLUDE_MATCHING, urls)
+      .SetSearchByFinalURLOnly(true);
+
+  std::unique_ptr<OfflinePageModelQuery> query = builder_.Build(&policy_);
+
+  auto restriction = query->GetRestrictedToUrls();
+  const Requirement& requirement = restriction.first;
+  const std::set<GURL>& urls_out = restriction.second;
+
+  EXPECT_EQ(Requirement::INCLUDE_MATCHING, requirement);
+  EXPECT_TRUE(query->GetSearchByFinalURLOnly());
+
+  ASSERT_EQ(urls.size(), urls_out.size());
+  for (auto url : urls) {
+    EXPECT_EQ(1U, urls_out.count(url))
+        << "Did not find " << url << "in query restrictions.";
+  }
+
+  EXPECT_TRUE(query->Matches(CreatePageWithUrls(kUrl1, tempUrl)));
+  EXPECT_FALSE(query->Matches(CreatePageWithUrls(tempUrl, kUrl1)));
+  EXPECT_TRUE(query->Matches(CreatePageWithUrls(kUrl1, GURL(""))));
+  EXPECT_FALSE(query->Matches(CreatePageWithUrls(tempUrl, GURL(""))));
+}
+
+TEST_F(OfflinePageModelQueryTest, UrlsSet_Exclude_FinalOnly) {
+  std::vector<GURL> urls = {kUrl1, GURL("https://abc.def")};
+  builder_.SetUrls(Requirement::EXCLUDE_MATCHING, urls)
+      .SetSearchByFinalURLOnly(true);
+
+  std::unique_ptr<OfflinePageModelQuery> query = builder_.Build(&policy_);
+
+  auto restriction = query->GetRestrictedToUrls();
+  const Requirement& requirement = restriction.first;
+  const std::set<GURL>& urls_out = restriction.second;
+
+  EXPECT_EQ(Requirement::EXCLUDE_MATCHING, requirement);
+  EXPECT_TRUE(query->GetSearchByFinalURLOnly());
+
+  ASSERT_EQ(urls.size(), urls_out.size());
+  for (auto url : urls) {
+    EXPECT_EQ(1U, urls_out.count(url))
+        << "Did not find " << url << "in query restrictions.";
+  }
+
+  EXPECT_FALSE(query->Matches(kTestItem1));
+  EXPECT_TRUE(query->Matches(kTestItem2));
+  EXPECT_FALSE(query->Matches(CreatePageWithUrls(kUrl1, tempUrl)));
+  EXPECT_TRUE(query->Matches(CreatePageWithUrls(tempUrl, kUrl1)));
+  EXPECT_FALSE(query->Matches(CreatePageWithUrls(kUrl1, GURL(""))));
+  EXPECT_TRUE(query->Matches(CreatePageWithUrls(tempUrl, GURL(""))));
+}
 }  // namespace offline_pages

@@ -14,8 +14,8 @@ namespace offline_pages {
 using Requirement = OfflinePageModelQuery::Requirement;
 
 OfflinePageModelQueryBuilder::OfflinePageModelQueryBuilder()
-    : offline_ids_(std::make_pair(Requirement::UNSET, std::vector<int64_t>())) {
-}
+    : offline_ids_(std::make_pair(Requirement::UNSET, std::vector<int64_t>())),
+      search_by_final_url_only_(false) {}
 
 OfflinePageModelQueryBuilder::~OfflinePageModelQueryBuilder() = default;
 
@@ -74,6 +74,13 @@ OfflinePageModelQueryBuilder& OfflinePageModelQueryBuilder::RequireNamespace(
   return *this;
 }
 
+OfflinePageModelQueryBuilder&
+OfflinePageModelQueryBuilder::SetSearchByFinalURLOnly(
+    bool search_by_final_url_only) {
+  search_by_final_url_only_ = search_by_final_url_only;
+  return *this;
+}
+
 std::unique_ptr<OfflinePageModelQuery> OfflinePageModelQueryBuilder::Build(
     ClientPolicyController* controller) {
   DCHECK(controller);
@@ -82,7 +89,9 @@ std::unique_ptr<OfflinePageModelQuery> OfflinePageModelQueryBuilder::Build(
 
   query->urls_ = std::make_pair(
       urls_.first, std::set<GURL>(urls_.second.begin(), urls_.second.end()));
+  query->search_by_final_url_only_ = search_by_final_url_only_;
   urls_ = std::make_pair(Requirement::UNSET, std::vector<GURL>());
+  search_by_final_url_only_ = false;
   query->offline_ids_ = std::make_pair(
       offline_ids_.first, std::set<int64_t>(offline_ids_.second.begin(),
                                             offline_ids_.second.end()));
@@ -184,6 +193,10 @@ OfflinePageModelQuery::GetRestrictedToUrls() const {
   return urls_;
 }
 
+bool OfflinePageModelQuery::GetSearchByFinalURLOnly() const {
+  return search_by_final_url_only_;
+}
+
 bool OfflinePageModelQuery::Matches(const OfflinePageItem& item) const {
   switch (offline_ids_.first) {
     case Requirement::UNSET:
@@ -198,15 +211,34 @@ bool OfflinePageModelQuery::Matches(const OfflinePageItem& item) const {
       break;
   }
 
+  int count = 0;
   switch (urls_.first) {
     case Requirement::UNSET:
       break;
     case Requirement::INCLUDE_MATCHING:
-      if (urls_.second.count(item.url) == 0)
+      // First, search by last committed URL with fragment stripped, and record
+      // the matching count.
+      for (const auto& url : urls_.second) {
+        GURL::Replacements remove_params;
+        remove_params.ClearRef();
+        GURL url_without_fragment = url.ReplaceComponents(remove_params);
+        if (url_without_fragment == item.url.ReplaceComponents(remove_params))
+          count++;
+      }
+      // Then, search by original request URL if |url_search_mode| wants it.
+      // Note that we want to do the exact match with fragment included. This is
+      // because original URL is used for redirect purpose and it is always
+      // safer to support the exact redirect.
+      // If there's no matching for either last committed URL or original url,
+      // the item doesn't match with query and return false.
+      if (count == 0 && (urls_.second.count(item.original_url) == 0 ||
+                         search_by_final_url_only_))
         return false;
       break;
     case Requirement::EXCLUDE_MATCHING:
-      if (urls_.second.count(item.url) > 0)
+      if (urls_.second.count(item.url) > 0 ||
+          (urls_.second.count(item.original_url) > 0 &&
+           !search_by_final_url_only_))
         return false;
       break;
   }
