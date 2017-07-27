@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29325c49_746decb4",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe94224_57752b86",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db0a1489_661554d1",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I just want to align with other Rect struct on other mojom interface, such as:\nhttps://cs.chromium.org/chromium/src/components/arc/common/ime.mojom?type\u003dcs\u0026l\u003d29\n\nBut yes, uint32 is enough for our usage.\nMaybe it is better to add typemap from gfx::Rect and change to uint32",
       "parentUuid": "db0a1489_661554d1",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dec7822_5f2fe809",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Changed back to uint32 and typemap is added.",
+      "parentUuid": "7d340ede_71fcad50",
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -125,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "077e7911_5ac273ca",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Changed the comment",
+      "parentUuid": "1ce2571e_62734a48",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f968b3f0_82f3219d",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -142,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "0398212d_bd19501d",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f968b3f0_82f3219d",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d51d2b48_23e1726e",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -156,6 +228,24 @@
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672a3409_125ed796",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51d2b48_23e1726e",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -182,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "6e66e1d9_b4d95a16",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b70388d_47763828",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ae1fb8d_a3bd1711",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -196,6 +310,24 @@
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7cef57_4e8483c7",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae1fb8d_a3bd1711",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -216,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "ded5d989_194a7c2b",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Removed the part.",
+      "parentUuid": "59bd3bcb_86809f6e",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3c5c06_5a030d59",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -230,6 +380,24 @@
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4683a9de_324910e8",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3c5c06_5a030d59",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -250,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "89346aeb_01f240e3",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "057bc1c9_52a0322d",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e70acc60_c8857f32",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -267,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "5be9ed55_5e74701c",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e70acc60_c8857f32",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04999d2d_09970bbb",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -281,6 +485,24 @@
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85aa664_f66cd819",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T07:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04999d2d_09970bbb",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
