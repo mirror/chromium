@@ -16,6 +16,24 @@
       "revId": "25f21568d58708fd5a1b873517ce7c87ce906540",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6164cf7_0e97ad2e",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-07-27T04:15:45Z",
+      "side": 1,
+      "message": "Done. Also changed the function name to IsTextTooLongAt().",
+      "parentUuid": "931344e0_2f4e459d",
+      "revId": "25f21568d58708fd5a1b873517ce7c87ce906540",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
