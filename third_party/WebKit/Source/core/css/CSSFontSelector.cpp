@@ -87,40 +87,6 @@ void CSSFontSelector::FontCacheInvalidated() {
   DispatchInvalidationCallbacks();
 }
 
-static AtomicString FamilyNameFromSettings(
-    const GenericFontFamilySettings& settings,
-    const FontDescription& font_description,
-    const AtomicString& generic_family_name) {
-#if defined(OS_ANDROID)
-  if (font_description.GenericFamily() == FontDescription::kStandardFamily)
-    return FontCache::GetGenericFamilyNameForScript(
-        FontFamilyNames::webkit_standard, font_description);
-
-  if (generic_family_name.StartsWith("-webkit-"))
-    return FontCache::GetGenericFamilyNameForScript(generic_family_name,
-                                                    font_description);
-#else
-  UScriptCode script = font_description.GetScript();
-  if (font_description.GenericFamily() == FontDescription::kStandardFamily)
-    return settings.Standard(script);
-  if (generic_family_name == FontFamilyNames::webkit_serif)
-    return settings.Serif(script);
-  if (generic_family_name == FontFamilyNames::webkit_sans_serif)
-    return settings.SansSerif(script);
-  if (generic_family_name == FontFamilyNames::webkit_cursive)
-    return settings.Cursive(script);
-  if (generic_family_name == FontFamilyNames::webkit_fantasy)
-    return settings.Fantasy(script);
-  if (generic_family_name == FontFamilyNames::webkit_monospace)
-    return settings.Fixed(script);
-  if (generic_family_name == FontFamilyNames::webkit_pictograph)
-    return settings.Pictograph(script);
-  if (generic_family_name == FontFamilyNames::webkit_standard)
-    return settings.Standard(script);
-#endif
-  return g_empty_atom;
-}
-
 PassRefPtr<FontData> CSSFontSelector::GetFontData(
     const FontDescription& font_description,
     const AtomicString& family_name) {
@@ -130,7 +96,7 @@ PassRefPtr<FontData> CSSFontSelector::GetFontData(
 
   // Try to return the correct font based off our settings, in case we were
   // handed the generic font family name.
-  AtomicString settings_family_name = FamilyNameFromSettings(
+  AtomicString settings_family_name = FontCache::FamilyNameFromSettings(
       generic_font_family_settings_, font_description, family_name);
   if (settings_family_name.IsEmpty())
     return nullptr;
@@ -158,8 +124,8 @@ void CSSFontSelector::WillUseRange(const FontDescription& font_description,
 bool CSSFontSelector::IsPlatformFamilyMatchAvailable(
     const FontDescription& font_description,
     const AtomicString& passed_family) {
-  AtomicString family = FamilyNameFromSettings(generic_font_family_settings_,
-                                               font_description, passed_family);
+  AtomicString family = FontCache::FamilyNameFromSettings(
+      generic_font_family_settings_, font_description, passed_family);
   if (family.IsEmpty())
     family = passed_family;
   return FontCache::GetFontCache()->IsPlatformFamilyMatchAvailable(

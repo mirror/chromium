@@ -71,6 +71,8 @@ namespace blink {
 class FontFaceCreationParams;
 class FontGlobalContext;
 class FontDescription;
+class GenericFontFamilySettings;
+
 class OpenTypeVerticalData;
 class SimpleFontData;
 
@@ -144,6 +146,11 @@ class PLATFORM_EXPORT FontCache {
       const AtomicString& unique_font_name);
 
   static String FirstAvailableOrFirst(const String&);
+
+  static AtomicString FamilyNameFromSettings(
+      const GenericFontFamilySettings&,
+      const FontDescription&,
+      const AtomicString& generic_family_name);
 
   // Returns the ShapeCache instance associated with the given cache key.
   // Creates a new instance as needed and as such is guaranteed not to return
