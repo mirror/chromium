@@ -34,6 +34,24 @@
       "revId": "306cb1283080693050a1018736219b7642b12803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd43e2bf_b560e390",
+        "filename": "chrome/browser/chromeos/login/bluetooth_host_pairing_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-27T01:27:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "96a98c12_8d3c37ea",
+      "revId": "306cb1283080693050a1018736219b7642b12803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
