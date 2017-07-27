@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0769a3ef_46560495",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-27T17:40:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is really necessary or if we can just pass 0 as the unique touch event id for OnMessageReceived. I\u0027m thinking the latter is more appropriate for the current context and additional testing will be added with the OnWhiteListedTouchAction changes. Let me know what you think.",
+      "range": {
+        "startLine": 2055,
+        "startChar": 0,
+        "endLine": 2058,
+        "endChar": 51
+      },
+      "revId": "eac254d921d1b62ba90806ea4e840081c0cef685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
