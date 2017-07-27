@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f4d43703_a8061ae2",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T07:12:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d0e3b42_e2fab5bb",
+      "range": {
+        "startLine": 378,
+        "startChar": 44,
+        "endLine": 378,
+        "endChar": 55
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02a1cac7_894e5f19",
         "filename": "url/gurl.cc",
         "patchSetId": 9
@@ -295,6 +319,30 @@
       "side": 1,
       "message": "If I understand correctly nonstandard URLs could be non-hierarchical in which case this wouldn\u0027t make sense e.g. about:blank, data:foobar, etc. Because we end up calling Resolve() the result will be the same either way: an empty URL. This way we are more explicit about it.\n\nAlso changed the function\u0027s comment to match other functions in the file with similar restriction.",
       "parentUuid": "dbc2614b_1ca1c2bf",
+      "range": {
+        "startLine": 380,
+        "startChar": 21,
+        "endLine": 380,
+        "endChar": 33
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981fa32a_307ec95f",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T07:12:52Z",
+      "side": 1,
+      "message": "Does Resolve() return GURL() on nonstandard URLs? That isn\u0027t quite clear from the code or documentation (\"If the input is not \"standard\" (IsStandard() \u003d\u003d false) and the input looks relative, we can\u0027t resolve it. In these cases, the result will be an empty, invalid GURL.\") --- i.e., there are cases where a nonstandard URL will not return empty when resolved, though maybe it always will for \".\" (\"the input looks relative\")?\n\nIf you are sure this is the same either way, then lgtm, but please change the comment from \"doesn\u0027t make sense\" to some explanation that it\u0027s a shortcut for optimization that doesn\u0027t actually change the behaviour of Resolve.",
+      "parentUuid": "2477c9d7_e0594c50",
       "range": {
         "startLine": 380,
         "startChar": 21,
