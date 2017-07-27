@@ -16,6 +16,24 @@
       "revId": "56750193466fcaf79c8b74994d2b9e653b8a59d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13051aa3_986c5ef0",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-27T03:04:13Z",
+      "side": 1,
+      "message": "Done - was trying to obey the comment on line 235.",
+      "parentUuid": "63d4d9f1_5499c929",
+      "revId": "56750193466fcaf79c8b74994d2b9e653b8a59d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
