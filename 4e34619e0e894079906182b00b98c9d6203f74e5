@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3043b44_152d8c49",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T23:21:10Z",
+      "side": 1,
+      "message": "It\u0027s more common to format these as follows\n\n    return browserProxy.whenCalled(\u0027setGoogleAssistantEnabled\u0027).then(                                                                                                                                               \n        function(arg) {\n          assertTrue(arg);\n        }); \n\nYou could also run\ngit cl format --js \nchrome/test/data/webui/settings/google_assistant_page_test.js\nand accept whatever output is returned.",
+      "revId": "4e34619e0e894079906182b00b98c9d6203f74e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185257a2_a9633498",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T23:21:10Z",
+      "side": 1,
+      "message": "Fits in previous line?",
+      "revId": "4e34619e0e894079906182b00b98c9d6203f74e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
