@@ -27,6 +27,8 @@
            file="images/open_in_new.svg" type="BINDATA" />
   <include name="IDR_WEBUI_IMAGES_ICON_MORE_VERT"
            file="images/icon_more_vert.svg" type="BINDATA" />
+  <include name="IDR_WEBUI_IMAGES_ICON_REFRESH"
+           file="images/icon_refresh.svg" type="BINDATA" />
   <include name="IDR_WEBUI_IMAGES_ICON_SETTINGS"
            file="images/icon_settings.svg" type="BINDATA" />
   <include name="IDR_WEBUI_IMAGES_ICON_SEARCH"
