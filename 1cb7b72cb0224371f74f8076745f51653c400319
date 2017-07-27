@@ -16,6 +16,24 @@
       "revId": "1cb7b72cb0224371f74f8076745f51653c400319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c45e8d_d4043ef7",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-27T10:59:42Z",
+      "side": 1,
+      "message": "Yes, this design is much better. Please see my latest patch.",
+      "parentUuid": "0037c6b5_c1c97ff4",
+      "revId": "1cb7b72cb0224371f74f8076745f51653c400319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
