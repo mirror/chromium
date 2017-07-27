@@ -34,6 +34,29 @@
       "revId": "54763f695d39a3e8e33c94be7b7942d5274bf762",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7454a169_f5070152",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 30827,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-27T05:57:48Z",
+      "side": 1,
+      "message": "Even better than a boolean, let\u0027s record the media bitrate and the estimated capacity in the UMAs. This would be very useful data.\n\nHmm...What we\u0027d really like is a 2-dimensional histogram, but I don\u0027t think we can do that with the UMA infrastructure. Meaning, the buckets would be in 2D space: One dimension would be the media bitrate, the other dimension would be the estimated capacity.\n\nMaybe the UMA buckets could just record the fractional difference: required bitrate divided by estimated capacity? But, then we lose some critical information...\n\nI\u0027m not sure what to do here...This needs some thought and investigation.",
+      "range": {
+        "startLine": 30827,
+        "startChar": 1,
+        "endLine": 30827,
+        "endChar": 80
+      },
+      "revId": "54763f695d39a3e8e33c94be7b7942d5274bf762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
