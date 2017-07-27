@@ -79,7 +79,12 @@ ViewAndroid::ScopedAnchorView::view() const {
 ViewAndroid::ViewAndroid(ViewClient* view_client)
     : parent_(nullptr),
       client_(view_client),
-      layout_params_(LayoutParams::MatchParent()) {}
+      layout_params_(LayoutParams::MatchParent()),
+      width_(0),
+      height_(0),
+      top_controls_height_(0),
+      bottom_controls_height_(0),
+      shrink_blink_size_(false) {}
 
 ViewAndroid::ViewAndroid() : ViewAndroid(nullptr) {}
 
@@ -136,6 +141,10 @@ void ViewAndroid::AddChild(ViewAndroid* child) {
   // accidentally overwrite the valid ones in the children.
   if (!physical_size_.IsEmpty())
     child->OnPhysicalBackingSizeChanged(physical_size_);
+  if (width_ != 0 || height_ != 0) {
+    float scale = GetDipScale();
+    child->OnSizeChanged(width_ * scale, height_ * scale);
+  }
 }
 
 // static
@@ -306,6 +315,62 @@ int ViewAndroid::GetSystemWindowInsetBottom() {
     return 0;
   JNIEnv* env = base::android::AttachCurrentThread();
   return Java_ViewAndroidDelegate_getSystemWindowInsetBottom(env, delegate);
+}
+
+void ViewAndroid::OnSizeChanged(int width, int height) {
+  OnSizeChangedInternal(width, height);
+  Resized();
+}
+
+void ViewAndroid::OnSizeChangedInternal(int width, int height) {
+  // TODO(jinsukkim): Make use of |layout_params_| to store and provide size
+  //                  information.
+  float scale = GetDipScale();
+  width_ = width / scale;
+  height_ = height / scale;
+
+  for (auto* child : children_)
+    child->OnSizeChangedInternal(width, height);
+}
+
+gfx::Size ViewAndroid::GetSize() const {
+  int width = width_;
+  int height = height_;
+  if (shrink_blink_size_)
+    height -= top_controls_height_ + bottom_controls_height_;
+  return gfx::Size(width, height);
+}
+
+void ViewAndroid::SetTopControlsHeight(int height, bool shrink_blink_size) {
+  SetTopControlsHeightInternal(height, shrink_blink_size);
+  Resized();
+}
+
+void ViewAndroid::SetTopControlsHeightInternal(int height,
+                                               bool shrink_blink_size) {
+  top_controls_height_ = height / GetDipScale();
+  shrink_blink_size_ = shrink_blink_size;
+
+  for (auto* child : children_)
+    child->SetTopControlsHeightInternal(height, shrink_blink_size);
+}
+
+void ViewAndroid::SetBottomControlsHeight(int height) {
+  SetBottomControlsHeightInternal(height);
+  Resized();
+}
+
+void ViewAndroid::SetBottomControlsHeightInternal(int height) {
+  bottom_controls_height_ = height / GetDipScale();
+
+  for (auto* child : children_)
+    child->SetBottomControlsHeightInternal(height);
+}
+
+void ViewAndroid::Resized() {
+  client_->OnSizeChanged();
+  for (auto* child : children_)
+    child->Resized();
 }
 
 void ViewAndroid::OnPhysicalBackingSizeChanged(const gfx::Size& size) {
