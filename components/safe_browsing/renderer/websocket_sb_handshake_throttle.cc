@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
@@ -23,7 +24,7 @@ WebSocketSBHandshakeThrottle::WebSocketSBHandshakeThrottle(
     mojom::SafeBrowsing* safe_browsing)
     : callbacks_(nullptr),
       safe_browsing_(safe_browsing),
-      result_(Result::UNKNOWN),
+      result_(UNKNOWN),
       weak_factory_(this) {}
 
 WebSocketSBHandshakeThrottle::~WebSocketSBHandshakeThrottle() {
@@ -32,13 +33,13 @@ WebSocketSBHandshakeThrottle::~WebSocketSBHandshakeThrottle() {
   // DCHECK()ing.
   if (start_time_.is_null())
     return;
-  if (result_ == Result::UNKNOWN) {
-    result_ = Result::ABANDONED;
+  if (result_ == UNKNOWN) {
+    result_ = ABANDONED;
     UMA_HISTOGRAM_TIMES("SafeBrowsing.WebSocket.Elapsed.Abandoned",
                         base::TimeTicks::Now() - start_time_);
   }
   UMA_HISTOGRAM_ENUMERATION("SafeBrowsing.WebSocket.Result", result_,
-                            Result::RESULT_COUNT);
+                            RESULT_MAX);
 }
 
 void WebSocketSBHandshakeThrottle::ThrottleHandshake(
@@ -61,24 +62,41 @@ void WebSocketSBHandshakeThrottle::ThrottleHandshake(
       content::RESOURCE_TYPE_SUB_RESOURCE,
       base::BindOnce(&WebSocketSBHandshakeThrottle::OnCheckResult,
                      weak_factory_.GetWeakPtr()));
+
+  // This use of base::Unretained() is safe because the handler will not be
+  // called after |url_checker_| is destroyed, and it is owned by this object.
+  url_checker_.set_connection_error_handler(
+      base::BindOnce(&WebSocketSBHandshakeThrottle::OnConnectionError,
+                     base::Unretained(this)));
 }
 
 void WebSocketSBHandshakeThrottle::OnCheckResult(bool safe) {
   DCHECK(!start_time_.is_null());
   base::TimeDelta elapsed = base::TimeTicks::Now() - start_time_;
   if (safe) {
-    result_ = Result::SAFE;
+    result_ = SAFE;
     UMA_HISTOGRAM_TIMES("SafeBrowsing.WebSocket.Elapsed.Safe", elapsed);
     callbacks_->OnSuccess();
   } else {
     // When the insterstitial is dismissed the page is navigated and this object
     // is destroyed before reaching here.
-    result_ = Result::BLOCKED;
+    result_ = BLOCKED;
     UMA_HISTOGRAM_TIMES("SafeBrowsing.WebSocket.Elapsed.Blocked", elapsed);
     callbacks_->OnError(blink::WebString::FromUTF8(base::StringPrintf(
         "WebSocket connection to %s failed safe browsing check",
         url_.spec().c_str())));
   }
+  // |this| is destroyed here.
+}
+
+void WebSocketSBHandshakeThrottle::OnConnectionError() {
+  DCHECK_EQ(result_, UNKNOWN);
+
+  url_checker_.reset();
+  // Make the destructor record NOT_SUPPORTED in the result histogram.
+  result_ = NOT_SUPPORTED;
+  // Don't record the time elapsed because it's unlikely to be meaningful.
+  callbacks_->OnSuccess();
   // |this| is destroyed here.
 }
 

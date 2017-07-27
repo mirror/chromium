@@ -32,14 +32,16 @@ class WebSocketSBHandshakeThrottle : public blink::WebSocketHandshakeThrottle {
 
  private:
   // These values are logged to UMA so do not renumber or reuse.
-  enum class Result {
+  enum Result {
     UNKNOWN = 0,
     SAFE = 1,
     BLOCKED = 2,
     ABANDONED = 3,
-    RESULT_COUNT
+    NOT_SUPPORTED = 4,
+    RESULT_MAX
   };
   void OnCheckResult(bool safe);
+  void OnConnectionError();
 
   GURL url_;
   blink::WebCallbacks<void, const blink::WebString&>* callbacks_;

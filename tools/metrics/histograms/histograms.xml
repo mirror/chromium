@@ -64975,7 +64975,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="SafeBrowsing.WebSocket.Elapsed" units="ms">
+<histogram name="SafeBrowsing.WebSocket.Elapsed" units="ms">
   <owner>ricea@chromium.org</owner>
   <summary>
     Time spent on SafeBrowsing lookup. Since this includes any time spent on the
@@ -97461,13 +97461,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="SafeBrowsingWebSocketElapsed" separator=".">
-  <suffix name="Safe"
-      label="Passed SafeBrowsing check, or blocked and interstitial clicked
-             through"/>
-  <suffix name="Blocked" label="Failed SafeBrowsing check and blocked"/>
-  <suffix name="Abandoned"
-      label="Connection abandoned, or interstitial displayed and user did not
-             proceed to site"/>
+  <suffix name="Safe"/>
+  <suffix name="Blocked"/>
+  <suffix name="Abandoned"/>
   <affected-histogram name="SafeBrowsing.WebSocket.Elapsed"/>
 </histogram_suffixes>
 
