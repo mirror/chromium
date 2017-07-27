@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e796d9_71dc9a4b",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-27T13:34:20Z",
+      "side": 1,
+      "message": "Can you update order in .cc file to match new .h order as well?",
+      "range": {
+        "startLine": 238,
+        "startChar": 42,
+        "endLine": 238,
+        "endChar": 0
+      },
+      "revId": "b5472810ba42cf54ee84133bf322c4943c794ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
