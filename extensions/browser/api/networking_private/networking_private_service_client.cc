@@ -10,9 +10,9 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/onc/onc_constants.h"
-#include "content/public/browser/browser_thread.h"
 #include "extensions/browser/api/networking_private/networking_private_api.h"
 #include "extensions/browser/api/networking_private/networking_private_delegate_observer.h"
 
@@ -22,8 +22,6 @@ using wifi::WiFiService;
 namespace extensions {
 
 namespace {
-
-const char kNetworkingPrivateSequenceTokenName[] = "NetworkingPrivate";
 
 // Deletes WiFiService object on the worker thread.
 void ShutdownWifiServiceOnWorkerThread(
@@ -42,12 +40,9 @@ NetworkingPrivateServiceClient::ServiceCallbacks::~ServiceCallbacks() {
 NetworkingPrivateServiceClient::NetworkingPrivateServiceClient(
     std::unique_ptr<WiFiService> wifi_service)
     : wifi_service_(std::move(wifi_service)), weak_factory_(this) {
-  sequence_token_ = BrowserThread::GetBlockingPool()->GetNamedSequenceToken(
-      kNetworkingPrivateSequenceTokenName);
-  task_runner_ =
-      BrowserThread::GetBlockingPool()
-          ->GetSequencedTaskRunnerWithShutdownBehavior(
-              sequence_token_, base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
+  task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
+      {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
   task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&WiFiService::Initialize,
