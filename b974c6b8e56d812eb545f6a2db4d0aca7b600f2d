@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f648f95_6968a1f6",
+        "filename": "third_party/WebKit/public/platform/linux/WebFallbackFont.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-27T14:40:07Z",
+      "side": 1,
+      "message": "Since WebData no longer offers a contiguous view, maybe WebVector\u003cchar\u003e?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "b974c6b8e56d812eb545f6a2db4d0aca7b600f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
