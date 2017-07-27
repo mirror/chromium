@@ -167,6 +167,7 @@ V4L2VideoDecodeAccelerator::V4L2VideoDecodeAccelerator(
       decoder_flushing_(false),
       decoder_cmd_supported_(false),
       flush_awaiting_last_output_buffer_(false),
+      initial_resolution_change_done_(false),
       reset_pending_(false),
       decoder_partial_frame_pending_(false),
       input_streamon_(false),
@@ -1030,29 +1031,17 @@ bool V4L2VideoDecodeAccelerator::DecodeBufferInitial(const void* data,
   // Recycle buffers.
   Dequeue();
 
-  // Check and see if we have format info yet.
-  struct v4l2_format format;
-  gfx::Size visible_size;
-  bool again = false;
-  if (!GetFormatInfo(&format, &visible_size, &again))
-    return false;
-
-  *endpos = size;
-
-  if (again) {
-    // Need more stream to decode format, return true and schedule next buffer.
+  // If an initial resolution change event is not done yet, a driver probably
+  // needs more stream to decode format. Return true and schedule next buffer.
+  if (!initial_resolution_change_done_) {
     return true;
   }
 
-  // Run this initialization only on first startup.
-  if (output_buffer_map_.empty()) {
-    DVLOGF(4) << "running initialization";
-    // Success! Setup our parameters.
-    if (!CreateBuffersForFormat(format, visible_size))
-      return false;
-    // We are waiting for AssignPictureBuffers. Do not set the state to
-    // kDecoding.
-  } else {
+  *endpos = size;
+
+  // We have to wait for AssignPictureBuffers and actually output buffers
+  // are allocated, even if an initial resolution change is done.
+  if (!output_buffer_map_.empty()) {
     decoder_state_ = kDecoding;
     ScheduleDecodeBufferTaskIfNeeded();
   }
@@ -1172,6 +1161,27 @@ bool V4L2VideoDecodeAccelerator::FlushInputFrame() {
   return (decoder_state_ != kError);
 }
 
+void V4L2VideoDecodeAccelerator::StartInitialResolutionChange() {
+  DCHECK(!initial_resolution_change_done_);
+  DCHECK(decoder_thread_.task_runner()->BelongsToCurrentThread());
+  struct v4l2_format format;
+  gfx::Size visible_size;
+  bool again = false;
+  // GetFormatInfo() should return true, because a resolution change
+  // event is dequeued, which indicates a river has enough data
+  // for allocation Output buffer.
+  if (!GetFormatInfo(&format, &visible_size, &again)) {
+    VLOGF(1) << "GetFormatInfo is failed";
+    return;
+  }
+  DCHECK(output_buffer_map_.empty());
+  if (!CreateBuffersForFormat(format, visible_size)) {
+    VLOGF(1) << "CreateBuffersForFormat is failed";
+    return;
+  }
+  initial_resolution_change_done_ = true;
+}
+
 void V4L2VideoDecodeAccelerator::ServiceDeviceTask(bool event_pending) {
   DVLOGF(3);
   DCHECK(decoder_thread_.task_runner()->BelongsToCurrentThread());
@@ -1192,6 +1202,15 @@ void V4L2VideoDecodeAccelerator::ServiceDeviceTask(bool event_pending) {
   bool resolution_change_pending = false;
   if (event_pending)
     resolution_change_pending = DequeueResolutionChangeEvent();
+
+  if (resolution_change_pending && !initial_resolution_change_done_) {
+    // The resolution change event is not a dynamic resolution change.
+    // It should be processed by StartInitialResolutionChange(),
+    // not StartResolutionChange().
+    StartInitialResolutionChange();
+    resolution_change_pending = false;
+  }
+
   Dequeue();
   Enqueue();
 
@@ -1745,9 +1764,12 @@ void V4L2VideoDecodeAccelerator::FinishReset() {
   if (!(StopDevicePoll() && StopOutputStream()))
     return;
 
+  // If a resolution change event is dequeued, output buffers have to
+  // be allocated again with a new format by StartInitialResolutionChange().
   if (DequeueResolutionChangeEvent()) {
     reset_pending_ = true;
-    StartResolutionChange();
+    initial_resolution_change_done_ = false;
+    StartInitialResolutionChange();
     return;
   }
 
