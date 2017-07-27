@@ -2557,6 +2557,10 @@ const char kForceEnableStylusToolsDescription[] =
     "Forces display of the stylus tools menu in the shelf and the stylus "
     "section in settings, even if there is no attached stylus device.";
 
+const char kForceStylusInternalName[] = "Force stylus internal";
+const char kForceStylusInternalDescription[] =
+    "Forces the system to behave as if the stylus were part of the device.";
+
 const char kEnableLockScreenAppsName[] = "Enable lock screen note taking";
 
 const char kEnableLockScreenAppsDescription[] =

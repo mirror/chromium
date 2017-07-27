@@ -100,6 +100,9 @@ const char kAshShelfColorSchemeNormalVibrant[] = "normal_vibrant";
 const char kAshShelfColorSchemeDarkMuted[] = "dark_muted";
 const char kAshShelfColorSchemeDarkVibrant[] = "dark_vibrant";
 
+// Whether this device has a internal stylus.
+const char kAshStylusIsInternal[] = "ash-stylus-is-internal";
+
 // Enables the heads-up display for tracking touch points.
 const char kAshTouchHud[] = "ash-touch-hud";
 

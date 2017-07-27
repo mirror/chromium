@@ -43,6 +43,18 @@ Polymer({
       }
     },
 
+    /*
+     * True if the device has an internal stylus.
+     * @private
+     */
+    isStylusInternal_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('isStylusInternal');
+      },
+      readOnly: true,
+    },
+
     /**
      * Currently selected note taking app.
      * @private {?settings.NoteAppInfo}

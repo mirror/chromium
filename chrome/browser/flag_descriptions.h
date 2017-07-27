@@ -1339,6 +1339,9 @@ extern const char kFloatingVirtualKeyboardDescription[];
 extern const char kForceEnableStylusToolsName[];
 extern const char kForceEnableStylusToolsDescription[];
 
+extern const char kForceStylusInternalName[];
+extern const char kForceStylusInternalDescription[];
+
 extern const char kGestureEditingName[];
 extern const char kGestureEditingDescription[];
 
