@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "841ec01b_0a1825ad",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T14:23:53Z",
+      "side": 1,
+      "message": "File a bug for this? Otherwise it\u0027s bound to get lost.",
+      "parentUuid": "3cedd890_34121f1b",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1893f651_0602ffb7",
         "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
         "patchSetId": 5
@@ -221,6 +239,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a0fca91_6c6f4eb5",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T14:23:53Z",
+      "side": 1,
+      "message": "Any reason for not doing it in this CL?",
+      "parentUuid": "d55971d2_368fdb14",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -513,6 +549,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31886da8_ed17a5b8",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T14:23:53Z",
+      "side": 1,
+      "message": "So how are the images cleaned up? Will the database just grow continuously?",
+      "parentUuid": "262e0f39_0f7e8777",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
