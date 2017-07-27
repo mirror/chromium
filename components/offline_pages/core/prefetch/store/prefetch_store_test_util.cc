@@ -23,9 +23,10 @@ int64_t InsertPrefetchItemSync(const PrefetchItem& item, sql::Connection* db) {
       " (offline_id, state, request_archive_attempt_count,"
       "  archive_body_length, creation_time, freshness_time,"
       "  error_code, guid, client_namespace, client_id, requested_url,"
-      "  final_archived_url, operation_name, archive_body_name)"
+      "  final_archived_url, operation_name, archive_body_name, title,"
+      "  file_path, file_size)"
       " VALUES"
-      " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
   statement.BindInt64(0, item.offline_id);
@@ -42,6 +43,9 @@ int64_t InsertPrefetchItemSync(const PrefetchItem& item, sql::Connection* db) {
   statement.BindString(11, item.final_archived_url.spec());
   statement.BindString(12, item.operation_name);
   statement.BindString(13, item.archive_body_name);
+  statement.BindString16(14, item.title);
+  statement.BindString(15, item.file_path.AsUTF8Unsafe());
+  statement.BindInt64(16, item.file_size);
 
   if (!statement.Run())
     return PrefetchStoreTestUtil::kStoreCommandFailed;
@@ -85,7 +89,8 @@ std::unique_ptr<PrefetchItem> GetPrefetchItemSync(int64_t offline_id,
       "  offline_id, state, request_archive_attempt_count,"
       "  archive_body_length, creation_time, freshness_time,"
       "  error_code, guid, client_namespace, client_id, requested_url,"
-      "  final_archived_url, operation_name, archive_body_name"
+      "  final_archived_url, operation_name, archive_body_name, title, "
+      "  file_path, file_size"
       " FROM prefetch_items WHERE offline_id = ?";
 
   sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
@@ -110,6 +115,9 @@ std::unique_ptr<PrefetchItem> GetPrefetchItemSync(int64_t offline_id,
   item->final_archived_url = GURL(statement.ColumnString(11));
   item->operation_name = statement.ColumnString(12);
   item->archive_body_name = statement.ColumnString(13);
+  item->title = statement.ColumnString16(14);
+  item->file_path = base::FilePath::FromUTF8Unsafe(statement.ColumnString(15));
+  item->file_size = statement.ColumnInt64(16);
 
   return item;
 }

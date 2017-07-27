@@ -14,6 +14,7 @@
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/offline_pages/core/offline_page_model.h"
+#include "components/offline_pages/core/prefetch/prefetch_item.h"
 #include "content/public/browser/browser_context.h"
 #include "url/gurl.h"
 
@@ -42,14 +43,8 @@ PrefetchImporterImpl::PrefetchImporterImpl(
 
 PrefetchImporterImpl::~PrefetchImporterImpl() = default;
 
-void PrefetchImporterImpl::ImportFile(const GURL& url,
-                                      const GURL& original_url,
-                                      const base::string16& title,
-                                      int64_t offline_id,
-                                      const ClientId& client_id,
-                                      const base::FilePath& file_path,
-                                      int64_t file_size,
-                                      const CompletedCallback& callback) {
+void PrefetchImporterImpl::ImportArchive(const ArchiveInfo& params,
+                                         const CompletedCallback& callback) {
   // The target file name will be auto generated based on GUID to prevent any
   // name collision.
   base::FilePath archives_dir =
@@ -57,17 +52,25 @@ void PrefetchImporterImpl::ImportFile(const GURL& url,
   base::FilePath dest_path =
       archives_dir.Append(base::GenerateGUID()).AddExtension(kMHTMLExtension);
 
-  OfflinePageItem offline_page(url, offline_id, client_id, dest_path, file_size,
-                               base::Time::Now());
+  GURL url, original_url;
+  if (params.url != params.final_archived_url) {
+    url = params.final_archived_url;
+    original_url = params.url;
+  } else {
+    url = params.url;
+    original_url = params.url;
+  }
+  OfflinePageItem offline_page(url, params.offline_id, params.client_id,
+                               dest_path, params.file_size, base::Time::Now());
   offline_page.original_url = original_url;
-  offline_page.title = title;
+  offline_page.title = params.title;
 
   // Moves the file from download directory to offline archive directory. The
   // file move operation should be done on background thread.
   background_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(
-          &MoveFile, file_path, dest_path,
+          &MoveFile, params.file_path, dest_path,
           base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
           base::Bind(&PrefetchImporterImpl::OnMoveFileDone,
                      weak_ptr_factory_.GetWeakPtr(), offline_page, callback)));
@@ -86,13 +89,13 @@ void PrefetchImporterImpl::OnMoveFileDone(const OfflinePageItem& offline_page,
   DCHECK(offline_page_model);
 
   offline_page_model->AddPage(
-      offline_page, base::Bind(&PrefetchImporterImpl::OnFileImported,
+      offline_page, base::Bind(&PrefetchImporterImpl::OnPageAdded,
                                weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
-void PrefetchImporterImpl::OnFileImported(const CompletedCallback& callback,
-                                          AddPageResult result,
-                                          int64_t offline_id) {
+void PrefetchImporterImpl::OnPageAdded(const CompletedCallback& callback,
+                                       AddPageResult result,
+                                       int64_t offline_id) {
   callback.Run(result == AddPageResult::SUCCESS, offline_id);
 }
 

@@ -15,10 +15,12 @@
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
+#include "components/offline_pages/core/prefetch/download_completed_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
+#include "components/offline_pages/core/prefetch/prefetch_importer.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
@@ -125,6 +127,20 @@ void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
       operation_name, service_->GetPrefetchNetworkRequestFactory(),
       base::Bind(&PrefetchDispatcherImpl::DidPrefetchRequest,
                  weak_factory_.GetWeakPtr(), "GetOperation")));
+}
+
+void PrefetchDispatcherImpl::DownloadCompleted(
+    const PrefetchDownloadResult& download_result) {
+  if (!IsPrefetchingOfflinePagesEnabled())
+    return;
+
+  service_->GetLogger()->RecordActivity(
+      "Download " + download_result.download_id +
+      (download_result.success ? "succeeded" : "failed"));
+
+  PrefetchStore* prefetch_store = service_->GetPrefetchStore();
+  task_queue_.AddTask(
+      base::MakeUnique<DownloadCompletedTask>(prefetch_store, download_result));
 }
 
 void PrefetchDispatcherImpl::DidPrefetchRequest(

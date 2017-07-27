@@ -44,5 +44,8 @@ void TestPrefetchDispatcher::GCMOperationCompletedMessageReceived(
   operation_list.push_back(operation_name);
 }
 
+void TestPrefetchDispatcher::DownloadCompleted(
+    const PrefetchDownloadResult& download_result) {}
+
 void TestPrefetchDispatcher::RequestFinishBackgroundTaskForTest() {}
 }  // namespace offline_pages

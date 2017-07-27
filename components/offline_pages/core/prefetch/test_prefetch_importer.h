@@ -15,14 +15,8 @@ class TestPrefetchImporter : public PrefetchImporter {
   TestPrefetchImporter() {}
   ~TestPrefetchImporter() override = default;
 
-  void ImportFile(const GURL& url,
-                  const GURL& original_url,
-                  const base::string16& title,
-                  int64_t offline_id,
-                  const ClientId& client_id,
-                  const base::FilePath& file_path,
-                  int64_t file_size,
-                  const CompletedCallback& callback) override {}
+  void ImportArchive(const ArchiveInfo& info,
+                     const CompletedCallback& callback) override {}
 };
 
 }  // namespace offline_pages

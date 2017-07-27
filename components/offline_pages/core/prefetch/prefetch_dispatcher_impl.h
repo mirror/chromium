@@ -36,6 +36,8 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher {
   void StopBackgroundTask() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
+  void DownloadCompleted(
+      const PrefetchDownloadResult& download_result) override;
   void RequestFinishBackgroundTaskForTest() override;
 
  private:
