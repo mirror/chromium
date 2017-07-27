@@ -210,6 +210,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void PurgeAndSuspend() override;
   void Resume() override;
   mojom::Renderer* GetRendererInterface() override;
+  // Returns nullptr when resource coordinator service is not enabled, or
+  // service manager connection is not available.
   resource_coordinator::ResourceCoordinatorInterface*
   GetProcessResourceCoordinator() override;
 
