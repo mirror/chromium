@@ -242,9 +242,9 @@ bool ResourceLoader::WillFollowRedirect(
 
       String cors_error_msg;
       if (!CrossOriginAccessControl::HandleRedirect(
-              source_origin, new_request, redirect_response,
-              request.GetFetchCredentialsMode(), resource_->MutableOptions(),
-              cors_error_msg)) {
+              source_origin, new_url, new_request.GetRequestContext(),
+              redirect_response, request.GetFetchCredentialsMode(),
+              resource_->MutableOptions(), cors_error_msg)) {
         resource_->SetCORSStatus(CORSStatus::kFailed);
 
         if (!unused_preload)
@@ -456,7 +456,7 @@ void ResourceLoader::DidReceiveResponse(
           resource_type, request, original_url, options,
           SecurityViolationReportingPolicy::kReport,
           FetchParameters::kUseDefaultOriginRestrictionForType,
-          ResourceRequest::RedirectStatus::kFollowedRedirect);
+          request.GetRedirectStatus());
       if (blocked_reason != ResourceRequestBlockedReason::kNone) {
         HandleError(ResourceError::CancelledDueToAccessCheckError(
             original_url, blocked_reason));
@@ -478,7 +478,7 @@ void ResourceLoader::DidReceiveResponse(
         (unused_preload ? SecurityViolationReportingPolicy::kSuppressReporting
                         : SecurityViolationReportingPolicy::kReport),
         FetchParameters::kUseDefaultOriginRestrictionForType,
-        request.GetRedirectStatus());
+        ResourceRequest::RedirectStatus::kFollowedRedirect);
     if (blocked_reason != ResourceRequestBlockedReason::kNone) {
       HandleError(ResourceError::CancelledDueToAccessCheckError(
           response_url, blocked_reason));
