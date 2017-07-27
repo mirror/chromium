@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de0e2e36_8b9b6333",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-27T20:52:27Z",
+      "side": 1,
+      "message": "(as discussed, but writing a comment for reference later)\n\nAs the current check is actually just checking if the stores updated successfully, (hence\ncould be done by just checking the final result for each store in the webui) I\u0027m currently removing this variable, and checking in a future cl for \"database_update_in_progress\" instead.",
+      "parentUuid": "fa534802_2fa60b51",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 56
+      },
+      "revId": "c7aac0890f1c825b1a48f4a5ac2ea9b9c4a11c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b2376ae_72399531",
         "filename": "components/safe_browsing_db/v4_database.h",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "256c13e1_89e886d5",
+        "filename": "components/safe_browsing_db/v4_database.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-27T20:52:27Z",
+      "side": 1,
+      "message": "Removing the variable for reasons mentioned in this comment: https://chromium-review.googlesource.com/c/585412/10/components%252Fsafe_browsing_db%252Fv4_database.cc#190",
+      "parentUuid": "0b2376ae_72399531",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 239,
+        "endChar": 33
+      },
+      "revId": "c7aac0890f1c825b1a48f4a5ac2ea9b9c4a11c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4363db1_71806072",
         "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-27T18:27:07Z",
       "side": 1,
       "message": "this should be exposed through a method.\nThe variable should end with a _.\n\nRecommendations: current_local_database_manager() and current_local_database_manager_",
+      "range": {
+        "startLine": 178,
+        "startChar": 28,
+        "endLine": 178,
+        "endChar": 59
+      },
+      "revId": "c7aac0890f1c825b1a48f4a5ac2ea9b9c4a11c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786b1236_ed4f8ce5",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-27T20:52:27Z",
+      "side": 1,
+      "message": "Figured this needs to be static and for some reason it\u0027s not in this patch. Made it static in the latest patch.",
+      "parentUuid": "b4363db1_71806072",
       "range": {
         "startLine": 178,
         "startChar": 28,
