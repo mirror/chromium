@@ -114,6 +114,10 @@ bool ContentSettingsPref::SetWebsiteSetting(
     const ResourceIdentifier& resource_identifier,
     base::Time modified_time,
     base::Value* in_value) {
+  if (content_type_ == CONTENT_SETTINGS_TYPE_CLIENT_HINTS) {
+    UMA_HISTOGRAM_COUNTS("ContentSettings.ClientHints.PrefsSettingsWritten", 1);
+  }
+
   DCHECK(!in_value || IsValueAllowedForType(in_value, content_type_));
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(prefs_);
@@ -246,6 +250,11 @@ void ContentSettingsPref::ReadContentSettingsFromPref() {
     // ReadContentSettingsFromPref() occurs, the non-incognito call will have
     // canonicalized the stored pref data.
     settings = all_settings_dictionary;
+  }
+
+  if (content_type_ == CONTENT_SETTINGS_TYPE_CLIENT_HINTS) {
+    UMA_HISTOGRAM_COUNTS("ContentSettings.ClientHints.PrefsSettingsRead",
+                         settings->size());
   }
 
   size_t cookies_block_exception_count = 0;
