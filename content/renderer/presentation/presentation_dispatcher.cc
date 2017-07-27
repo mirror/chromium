@@ -152,29 +152,6 @@ void PresentationDispatcher::ReconnectPresentation(
                  base::Unretained(this), base::Passed(&callback)));
 }
 
-void PresentationDispatcher::TerminatePresentation(
-    const blink::WebURL& presentationUrl,
-    const blink::WebString& presentationId) {
-  if (receiver_) {
-    receiver_->TerminateConnection();
-    return;
-  }
-
-  ConnectToPresentationServiceIfNeeded();
-  presentation_service_->Terminate(presentationUrl, presentationId.Utf8());
-}
-
-void PresentationDispatcher::CloseConnection(
-    const blink::WebURL& presentationUrl,
-    const blink::WebString& presentationId,
-    const blink::WebPresentationConnectionProxy* connection_proxy) {
-  connection_proxy->Close();
-
-  ConnectToPresentationServiceIfNeeded();
-  presentation_service_->CloseConnection(presentationUrl,
-                                         presentationId.Utf8());
-}
-
 void PresentationDispatcher::SetControllerConnection(
     const PresentationInfo& presentation_info,
     blink::WebPresentationConnection* connection) {

@@ -81,12 +81,6 @@ class CONTENT_EXPORT PresentationDispatcher
       const blink::WebString& presentationId,
       std::unique_ptr<blink::WebPresentationConnectionCallbacks> callback)
       override;
-  void TerminatePresentation(const blink::WebURL& presentationUrl,
-                             const blink::WebString& presentationId) override;
-  void CloseConnection(
-      const blink::WebURL& presentationUrl,
-      const blink::WebString& presentationId,
-      const blink::WebPresentationConnectionProxy* connection_proxy) override;
   void GetAvailability(
       const blink::WebVector<blink::WebURL>& availabilityUrls,
       std::unique_ptr<blink::WebPresentationAvailabilityCallbacks> callbacks)

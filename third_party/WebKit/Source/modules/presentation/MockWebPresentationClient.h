@@ -10,6 +10,8 @@
 
 namespace blink {
 
+class WebPresentationConnectionProxy;
+
 class MockWebPresentationClient : public WebPresentationClient {
   void StartPresentation(
       const WebVector<WebURL>& presentation_urls,
@@ -63,15 +65,6 @@ class MockWebPresentationClient : public WebPresentationClient {
                     const uint8_t* data,
                     size_t length,
                     const WebPresentationConnectionProxy* proxy));
-
-  MOCK_METHOD3(CloseConnection,
-               void(const WebURL& presentationUrl,
-                    const WebString& presentationId,
-                    const WebPresentationConnectionProxy*));
-
-  MOCK_METHOD2(TerminatePresentation,
-               void(const WebURL& presentationUrl,
-                    const WebString& presentationId));
 
   MOCK_METHOD2(getAvailability_,
                void(const WebVector<WebURL>& availabilityUrls,

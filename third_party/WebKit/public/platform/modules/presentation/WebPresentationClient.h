@@ -16,7 +16,6 @@ class WebPresentationAvailabilityObserver;
 class WebPresentationController;
 struct WebPresentationError;
 class WebPresentationConnectionCallbacks;
-class WebPresentationConnectionProxy;
 class WebPresentationReceiver;
 class WebString;
 class WebURL;
@@ -49,15 +48,6 @@ class WebPresentationClient {
       const WebVector<WebURL>& presentation_urls,
       const WebString& presentation_id,
       std::unique_ptr<WebPresentationConnectionCallbacks>) = 0;
-
-  // Called when the frame requests to terminate a presentation.
-  virtual void TerminatePresentation(const WebURL& presentation_url,
-                                     const WebString& presentation_id) = 0;
-
-  // Called when the frame requests to close its connection to the presentation.
-  virtual void CloseConnection(const WebURL& presentation_url,
-                               const WebString& presentation_id,
-                               const WebPresentationConnectionProxy*) = 0;
 
   // Called when the frame wants to know the availability of a presentation
   // display for |availabilityUrl|.
