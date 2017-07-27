@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db7362b0_99cabe41",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-27T17:29:23Z",
+      "side": 1,
+      "message": "newline",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "4fdcc73350e1849576e765a2c2bcfe8a4281aef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bab251_20f77962",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-27T17:29:23Z",
+      "side": 1,
+      "message": "why - ticks?",
+      "range": {
+        "startLine": 170,
+        "startChar": 46,
+        "endLine": 170,
+        "endChar": 47
+      },
+      "revId": "4fdcc73350e1849576e765a2c2bcfe8a4281aef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
