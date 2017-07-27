@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8ed0ec9_59694de1",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-27T17:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4919e5a_4ac5d163",
+      "range": {
+        "startLine": 399,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 62
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8748610b_47c20e7b",
         "filename": "media/mojo/interfaces/mirror_service_remoting.mojom",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T05:48:28Z",
       "side": 1,
       "message": "The return type should probably be \"double? rate\". This let\u0027s us, in C++ code, return base::nullopt when there\u0027s no Remoter to query for this data.",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2249c22_5c98ae77",
+        "filename": "media/mojo/interfaces/mirror_service_remoting.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-27T17:39:52Z",
+      "side": 1,
+      "message": "I don\u0027t think a double type can be made nullable. If we really like it, we might need to make the return value a struct. For our use case, it seems returning a zero value works, since remoting should not be started in those cases. WDYT?",
+      "parentUuid": "8748610b_47c20e7b",
       "range": {
         "startLine": 35,
         "startChar": 37,
@@ -68,6 +116,30 @@
       "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092714e4_dfa1e956",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-27T17:39:52Z",
+      "side": 1,
+      "message": "Done. Renamed it as OnReceivedTransmissionCapacity.",
+      "parentUuid": "90639faf_c0f3fa19",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 29
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
