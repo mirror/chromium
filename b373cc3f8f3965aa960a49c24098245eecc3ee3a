@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b4653dc_0ad06c03",
+        "filename": "components/offline_pages/content/renovations/render_frame_script_injector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "How do you guarantee that |render_frame_host| has not been destroyed at this point?",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e947064_0dbf5871",
+        "filename": "components/offline_pages/content/renovations/render_frame_script_injector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "This include can be moved to the .cc file and replaced with a forward declaration.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636c8717_ee32eb94",
+        "filename": "components/offline_pages/content/renovations/render_frame_script_injector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "nit: add comment like:\n// ScriptInjector implementation.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42efff9e_ea672f07",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "Seems unused.\n\nPlease double-check all your includes",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d20f24_a1b722b2",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "This might benefit from Raw string literal (new in C++11):  http://en.cppreference.com/w/cpp/language/string_literal",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e00822_90b6b01f",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "Better names for Foo and Bar would be good.  I had to read quite a bit of code to understand that in the test harness below, Foo should run and Bar should not.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9673c0c_f370e5be",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique\u003cFooRenovation\u003e()\n\nsame for all unique_ptr construction.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5185e2b6_9e54f736",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "This could use some more tests.  For example, some URLs run no renovations, so should check that.  Also should probably test a page where the renovation throws an exception.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bedc02_999ccf78",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "Browser tests don\u0027t run on Android, our target platform.  How will you test this there?",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743e4e5c_a95739ea",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3312c2_b4ac1ab3",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "Why do you need this?  It seems like a backup timeout, but Browser Tests have their own timeout.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62e8df4_249f72ce",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "Typically ForTest methods are public, so that friend class isn\u0027t necessary.  There are presubmits that help prevent calling ForTest in production code.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad69aca9_cb71790b",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3d923a_4bacabca",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "I think this is better left as just an empty string16.  Then later you could check for empty script before injecting the renovations, and the utf_string_conversions header can go away.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc6715c_95a921cd",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "I don\u0027t think this if statement is necessary.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7f0676_c03531d5",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "nit: |_ptr| is somewhat redundant in the variable name here.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e30baa_01e9797c",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "you are not going to be here to fix this TODO, can you file a bug and say TODO(https://crbug.com/$NUM): handle this",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0b3830_034cc495",
+        "filename": "components/offline_pages/core/renovations/page_renovator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "nit: this is unused.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3ceb7d_860f3983",
+        "filename": "components/offline_pages/core/renovations/page_renovator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "Needs comment about lifetime.  How do you ensure that |renovation_loader_| outlives this PageRenovator?",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421babec_91d41c2e",
+        "filename": "components/offline_pages/core/renovations/page_renovator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfb3efb_1d367391",
+        "filename": "components/offline_pages/core/renovations/page_renovator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "I think you need ~FakeScriptInjector() override \u003d default;",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a75460_bff6c432",
+        "filename": "components/offline_pages/core/renovations/page_renovator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "could say inject_called_ \u003d false;\nthen you could use the default constructor FakeScriptInjector() \u003d default;\n\nand cut a few lines of code out.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871c5aa3_2c77ba70",
+        "filename": "components/offline_pages/core/renovations/page_renovator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "These two lines are at the beginning of all your tests, consider adding it to setup",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187c274f_3ac4b0a7",
+        "filename": "components/offline_pages/core/renovations/script_injector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "needs virtual destructor:\n\nvirtual ~ScriptInjector() \u003d default;",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0a3f56_96334762",
+        "filename": "components/offline_pages/core/renovations/script_injector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T22:59:24Z",
+      "side": 1,
+      "message": "why Value* instead of some owned value, or a const reference?  (if nullptr is expected, please document the conditions that it will be so)",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
