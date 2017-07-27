@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3d884b3_946b0f21",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T07:50:13Z",
+      "side": 1,
+      "message": "this point on is duplicated between here and the change made to ConsumeFontStretch in https://chromium-review.googlesource.com/c/582862/, perhaps pull this out into a common method?",
+      "revId": "c097dc1f97bfe79f49547e2dbcc616195a7db63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
