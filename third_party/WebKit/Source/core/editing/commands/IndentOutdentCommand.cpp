@@ -199,7 +199,7 @@ void IndentOutdentCommand::IndentIntoBlockquote(const Position& start,
 
 void IndentOutdentCommand::OutdentParagraph(EditingState* editing_state) {
   VisiblePosition visible_start_of_paragraph =
-      StartOfParagraph(EndingSelection().VisibleStart());
+      StartOfParagraph(EndingVisibleSelection().VisibleStart());
   VisiblePosition visible_end_of_paragraph =
       EndOfParagraph(visible_start_of_paragraph);
 

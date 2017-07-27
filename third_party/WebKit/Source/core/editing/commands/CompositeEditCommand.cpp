@@ -85,16 +85,24 @@ CompositeEditCommand::CompositeEditCommand(Document& document)
   SetStartingSelection(document.GetFrame()
                            ->Selection()
                            .ComputeVisibleSelectionInDOMTreeDeprecated());
-  SetEndingVisibleSelection(starting_selection_);
+  SetEndingSelection(starting_selection_);
 }
 
 CompositeEditCommand::~CompositeEditCommand() {
   DCHECK(IsTopLevelCommand() || !undo_step_);
 }
 
+VisibleSelection CompositeEditCommand::EndingVisibleSelection() const {
+  // TODO(editing-dev): The use of
+  // |Document::UpdateStyleAndLayoutIgnorePendingStylesheets()|
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  return CreateVisibleSelection(ending_selection_);
+}
+
 bool CompositeEditCommand::Apply() {
   DCHECK(!IsCommandGroupWrapper());
-  if (!EndingSelection().IsContentRichlyEditable()) {
+  if (!EndingVisibleSelection().IsContentRichlyEditable()) {
     switch (GetInputType()) {
       case InputEvent::InputType::kInsertText:
       case InputEvent::InputType::kInsertLineBreak:
@@ -204,7 +212,7 @@ void CompositeEditCommand::ApplyCommandToComposite(
     const VisibleSelection& selection,
     EditingState* editing_state) {
   command->SetParent(this);
-  if (selection != command->EndingSelection()) {
+  if (selection != command->EndingVisibleSelection()) {
     command->SetStartingSelection(selection);
     command->SetEndingVisibleSelection(selection);
   }
@@ -774,7 +782,7 @@ void CompositeEditCommand::
 }
 
 void CompositeEditCommand::RebalanceWhitespace() {
-  VisibleSelection selection = EndingSelection();
+  VisibleSelection selection = EndingVisibleSelection();
   if (selection.IsNone())
     return;
 
@@ -1207,7 +1215,7 @@ void CompositeEditCommand::CleanupAfterDeletion(EditingState* editing_state,
                                                 VisiblePosition destination) {
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  VisiblePosition caret_after_delete = EndingSelection().VisibleStart();
+  VisiblePosition caret_after_delete = EndingVisibleSelection().VisibleStart();
   Node* destination_node = destination.DeepEquivalent().AnchorNode();
   if (caret_after_delete.DeepEquivalent() != destination.DeepEquivalent() &&
       IsStartOfParagraph(caret_after_delete) &&
@@ -1377,8 +1385,8 @@ void CompositeEditCommand::MoveParagraphs(
   bool original_is_directional = EndingSelection().IsDirectional();
   if (should_preserve_selection == kPreserveSelection &&
       !EndingSelection().IsNone()) {
-    VisiblePosition visible_start = EndingSelection().VisibleStart();
-    VisiblePosition visible_end = EndingSelection().VisibleEnd();
+    VisiblePosition visible_start = EndingVisibleSelection().VisibleStart();
+    VisiblePosition visible_end = EndingVisibleSelection().VisibleEnd();
 
     bool start_after_paragraph =
         ComparePositions(visible_start, end_of_paragraph_to_move) > 0;
@@ -1536,14 +1544,14 @@ void CompositeEditCommand::MoveParagraphs(
   GetDocument()
       .GetFrame()
       ->GetSpellChecker()
-      .MarkMisspellingsForMovingParagraphs(EndingSelection());
+      .MarkMisspellingsForMovingParagraphs(EndingVisibleSelection());
 
   // If the selection is in an empty paragraph, restore styles from the old
   // empty paragraph to the new empty paragraph.
   bool selection_is_empty_paragraph =
       EndingSelection().IsCaret() &&
-      IsStartOfParagraph(EndingSelection().VisibleStart()) &&
-      IsEndOfParagraph(EndingSelection().VisibleStart());
+      IsStartOfParagraph(EndingVisibleSelection().VisibleStart()) &&
+      IsEndOfParagraph(EndingVisibleSelection().VisibleStart());
   if (style_in_empty_paragraph && selection_is_empty_paragraph) {
     ApplyStyle(style_in_empty_paragraph, editing_state);
     if (editing_state->IsAborted())
@@ -1584,7 +1592,7 @@ bool CompositeEditCommand::BreakOutOfEmptyListItem(
     EditingState* editing_state) {
   DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
   Node* empty_list_item =
-      EnclosingEmptyListItem(EndingSelection().VisibleStart());
+      EnclosingEmptyListItem(EndingVisibleSelection().VisibleStart());
   if (!empty_list_item)
     return false;
 
@@ -1703,7 +1711,7 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  VisiblePosition caret = EndingSelection().VisibleStart();
+  VisiblePosition caret = EndingVisibleSelection().VisibleStart();
   HTMLQuoteElement* highest_blockquote =
       ToHTMLQuoteElement(HighestEnclosingNodeOfType(
           caret.DeepEquivalent(), &IsMailHTMLBlockquoteElement));
@@ -1895,7 +1903,7 @@ Node* CompositeEditCommand::SplitTreeToNode(Node* start,
 }
 
 void CompositeEditCommand::SetStartingSelection(
-    const VisibleSelection& selection) {
+    const SelectionForUndoStep& selection) {
   for (CompositeEditCommand* command = this;; command = command->Parent()) {
     if (UndoStep* undo_step = command->GetUndoStep()) {
       DCHECK(command->IsTopLevelCommand());
@@ -1905,6 +1913,12 @@ void CompositeEditCommand::SetStartingSelection(
     if (!command->Parent() || command->Parent()->IsFirstCommand(command))
       break;
   }
+}
+
+void CompositeEditCommand::SetStartingSelection(
+    const VisibleSelection& visible_selection) {
+  SetStartingSelection(
+      SelectionForUndoStep::From(visible_selection.AsSelection()));
 }
 
 // TODO(yosin): We will make |SelectionInDOMTree| version of
@@ -1922,7 +1936,13 @@ void CompositeEditCommand::SetEndingSelection(
 // TODO(yosin): We will make |SelectionInDOMTree| version of
 // |setEndingSelection()| as primary function instead of wrapper.
 void CompositeEditCommand::SetEndingVisibleSelection(
-    const VisibleSelection& selection) {
+    const VisibleSelection& visible_selection) {
+  SetEndingSelection(
+      SelectionForUndoStep::From(visible_selection.AsSelection()));
+}
+
+void CompositeEditCommand::SetEndingSelection(
+    const SelectionForUndoStep& selection) {
   for (CompositeEditCommand* command = this; command;
        command = command->Parent()) {
     if (UndoStep* undo_step = command->GetUndoStep()) {
