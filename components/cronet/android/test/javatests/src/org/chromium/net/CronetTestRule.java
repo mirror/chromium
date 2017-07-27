@@ -1,16 +1,18 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 package org.chromium.net;
 
 import android.content.Context;
-import android.test.AndroidTestCase;
+import android.support.test.InstrumentationRegistry;
+
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 import org.chromium.base.Log;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.net.CronetTestCommon.CronetTestCommonCallback;
-import org.chromium.net.CronetTestRule.CronetTestFramework;
 import org.chromium.net.impl.CronetEngineBase;
 import org.chromium.net.impl.JavaCronetEngine;
 import org.chromium.net.impl.UserAgent;
@@ -20,69 +22,60 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.AnnotatedElement;
 import java.net.URL;
-import java.net.URLStreamHandlerFactory;
 
 /**
- * Base test class for all CronetTest based tests.
+ * Custom TestRule for Cronet instrumentation tests.
+ *
+ * TODO(yolandyan): refactor this to three TestRules, one for setUp and tearDown,
+ * one for tests under org.chromium.net.urlconnection, one for test under
+ * org.chromium.net
  */
-public class CronetTestBase extends AndroidTestCase implements CronetTestCommonCallback {
-    private static final String TAG = "CronetTestBase";
-    private CronetTestCommon mTestCommon;
+public class CronetTestRule implements CronetTestCommonCallback, TestRule {
+    /**
+     * Name of the file that contains the test server certificate in PEM format.
+     */
+    static final String SERVER_CERT_PEM = "quic_test.example.com.crt";
 
-    public CronetTestBase() {
+    /**
+     * Name of the file that contains the test server private key in PKCS8 PEM format.
+     */
+    static final String SERVER_KEY_PKCS8_PEM = "quic_test.example.com.key.pkcs8.pem";
+
+    private static final String TAG = "CronetTestRule";
+
+    private final CronetTestCommon mTestCommon;
+
+    public CronetTestRule() {
         mTestCommon = new CronetTestCommon(this);
     }
 
     @Override
-    protected void setUp() throws Exception {
-        mTestCommon.setUp();
+    public Statement apply(final Statement base, final Description desc) {
+        return new Statement() {
+            @Override
+            public void evaluate() throws Throwable {
+                setUp();
+                runBase(base, desc);
+                tearDown();
+            }
+        };
     }
 
-    @SuppressFBWarnings("DM_GC") // Used to trigger strictmode detecting leaked closeables
-    @Override
-    protected void tearDown() throws Exception {
-        mTestCommon.tearDown();
-    }
-
-    /**
-     * Starts the CronetTest framework.
-     */
-    protected CronetTestFramework startCronetTestFramework() {
-        return mTestCommon.startCronetTestFramework();
-    }
-
-    /**
-     * Returns {@code true} when test is being run against system HttpURLConnection implementation.
-     */
-    protected boolean testingSystemHttpURLConnection() {
-        return mTestCommon.testingSystemHttpURLConnection();
-    }
-
-    /**
-     * Returns {@code true} when test is being run against the java implementation of CronetEngine.
-     */
-    protected boolean testingJavaImpl() {
-        return mTestCommon.testingJavaImpl();
-    }
-
-
-    @Override
-    protected void runTest() throws Throwable {
+    // TODO(yolandyan): refactor this using parameterize framework
+    private void runBase(Statement base, Description desc) throws Throwable {
         mTestCommon.setTestingSystemHttpURLConnection(false);
         mTestCommon.setTestingJavaImpl(false);
-        String packageName = getClass().getPackage().getName();
+        String packageName = desc.getTestClass().getPackage().getName();
 
         // Find the API version required by the test.
         int requiredApiVersion = mTestCommon.getMaximumAvailableApiLevel();
-        for (Annotation a : getClass().getAnnotations()) {
+        for (Annotation a : desc.getAnnotations()) {
             if (a instanceof RequiresMinApi) {
                 requiredApiVersion = ((RequiresMinApi) a).value();
             }
         }
-        AnnotatedElement method = getClass().getMethod(getName(), (Class[]) null);
-        for (Annotation a : method.getAnnotations()) {
+        for (Annotation a : desc.getAnnotations()) {
             if (a instanceof RequiresMinApi) {
                 // Method scoped requirements take precedence over class scoped
                 // requirements.
@@ -92,37 +85,38 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
 
         if (requiredApiVersion > mTestCommon.getMaximumAvailableApiLevel()) {
             Log.i(TAG,
-                    getName() + " skipped because it requires API " + requiredApiVersion
+                    desc.getMethodName() + " skipped because it requires API " + requiredApiVersion
                             + " but only API " + mTestCommon.getMaximumAvailableApiLevel()
                             + " is present.");
         } else if (packageName.equals("org.chromium.net.urlconnection")) {
             try {
-                if (method.isAnnotationPresent(CompareDefaultWithCronet.class)) {
+                if (desc.getAnnotation(CompareDefaultWithCronet.class) != null) {
                     // Run with the default HttpURLConnection implementation first.
                     mTestCommon.setTestingSystemHttpURLConnection(true);
-                    super.runTest();
+                    base.evaluate();
                     // Use Cronet's implementation, and run the same test.
                     mTestCommon.setTestingSystemHttpURLConnection(false);
                     URL.setURLStreamHandlerFactory(mTestCommon.getSteamHandlerFactory());
-                    super.runTest();
-                } else if (method.isAnnotationPresent(OnlyRunCronetHttpURLConnection.class)) {
+                    base.evaluate();
+                } else if (desc.getAnnotation(OnlyRunCronetHttpURLConnection.class) != null) {
                     // Run only with Cronet's implementation.
                     URL.setURLStreamHandlerFactory(mTestCommon.getSteamHandlerFactory());
-                    super.runTest();
+                    base.evaluate();
                 } else {
                     // For all other tests.
-                    super.runTest();
+                    base.evaluate();
                 }
             } catch (Throwable e) {
-                throw new Throwable("CronetTestBase#runTest failed.", e);
+                throw new Throwable("Cronet Test failed.", e);
             }
         } else if (packageName.equals("org.chromium.net")) {
             try {
-                super.runTest();
-                if (!method.isAnnotationPresent(OnlyRunNativeCronet.class)) {
+                base.evaluate();
+                if (desc.getAnnotation(OnlyRunNativeCronet.class) == null) {
                     if (mTestCommon.getCronetTestFramework() != null) {
                         ExperimentalCronetEngine.Builder builder = createJavaEngineBuilder();
-                        builder.setUserAgent(UserAgent.from(getContext()));
+                        builder.setUserAgent(
+                                UserAgent.from(InstrumentationRegistry.getTargetContext()));
                         mTestCommon.getCronetTestFramework().mCronetEngine =
                                 (CronetEngineBase) builder.build();
                         // Make sure that the instantiated engine is JavaCronetEngine.
@@ -130,14 +124,26 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
                                 == JavaCronetEngine.class;
                     }
                     mTestCommon.setTestingJavaImpl(true);
-                    super.runTest();
+                    base.evaluate();
                 }
             } catch (Throwable e) {
                 throw new Throwable("CronetTestBase#runTest failed.", e);
             }
         } else {
-            super.runTest();
+            base.evaluate();
         }
+    }
+
+    void setUp() throws Exception {
+        mTestCommon.setUp();
+    }
+
+    void tearDown() throws Exception {
+        mTestCommon.tearDown();
+    }
+
+    public CronetTestFramework startCronetTestFramework() {
+        return mTestCommon.startCronetTestFramework();
     }
 
     /**
@@ -146,8 +152,16 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
      *
      * @return the {@code CronetEngine.Builder} that builds Java-based {@code Cronet engine}.
      */
-    ExperimentalCronetEngine.Builder createJavaEngineBuilder() {
+    public ExperimentalCronetEngine.Builder createJavaEngineBuilder() {
         return mTestCommon.createJavaEngineBuilder();
+    }
+
+    public boolean testingSystemHttpURLConnection() {
+        return mTestCommon.testingSystemHttpURLConnection();
+    }
+
+    public boolean testingJavaImpl() {
+        return mTestCommon.testingJavaImpl();
     }
 
     public void assertResponseEquals(UrlResponseInfo expected, UrlResponseInfo actual) {
@@ -164,15 +178,10 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
 
     /**
      * Sets the {@link URLStreamHandlerFactory} from {@code cronetEngine}.  This should be called
-     * during setUp() and is installed by runTest() as the default when Cronet is tested.
+     * during setUp() and is installed by {@link runTest()} as the default when Cronet is tested.
      */
     public void setStreamHandlerFactory(CronetEngine cronetEngine) {
         mTestCommon.setStreamHandlerFactory(cronetEngine);
-    }
-
-    @Override
-    public Context getContextForTestCommon() {
-        return getContext();
     }
 
     /**
@@ -182,8 +191,7 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
      */
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface CompareDefaultWithCronet {
-    }
+    public @interface CompareDefaultWithCronet {}
 
     /**
      * Annotation for test methods in org.chromium.net.urlconnection pacakage that runs them
@@ -192,8 +200,7 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
      */
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface OnlyRunCronetHttpURLConnection {
-    }
+    public @interface OnlyRunCronetHttpURLConnection {}
 
     /**
      * Annotation for test methods in org.chromium.net package that disables rerunning the test
@@ -216,7 +223,6 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
     public @interface RequiresMinApi {
         int value();
     }
-
     /**
      * Prepares the path for the test storage (http cache, QUIC server info).
      */
@@ -224,11 +230,31 @@ public class CronetTestBase extends AndroidTestCase implements CronetTestCommonC
         CronetTestCommon.prepareTestStorage(context);
     }
 
+    @Override
+    public Context getContextForTestCommon() {
+        return InstrumentationRegistry.getTargetContext();
+    }
+
     /**
      * Returns the path for the test storage (http cache, QUIC server info).
      * Also ensures it exists.
      */
-    static String getTestStorage(Context context) {
+    public static String getTestStorage(Context context) {
         return CronetTestCommon.getTestStorage();
+    }
+
+    /**
+     * Creates and holds pointer to CronetEngine.
+     */
+    public static class CronetTestFramework {
+        public CronetEngineBase mCronetEngine;
+
+        public CronetTestFramework(Context context) {
+            mCronetEngine = (CronetEngineBase) new ExperimentalCronetEngine.Builder(context)
+                                    .enableQuic(true)
+                                    .build();
+            // Start collecting metrics.
+            mCronetEngine.getGlobalMetricsDeltas();
+        }
     }
 }

@@ -4,10 +4,20 @@
 
 package org.chromium.net.urlconnection;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
-import org.chromium.net.CronetTestBase;
+import org.chromium.net.CronetTestRule;
+import org.chromium.net.CronetTestRule.CronetTestFramework;
 import org.chromium.net.NativeTestServer;
 
 import java.net.HttpURLConnection;
@@ -18,22 +28,26 @@ import java.net.URL;
 /**
  * Tests for CronetHttpURLStreamHandler class.
  */
-public class CronetHttpURLStreamHandlerTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class CronetHttpURLStreamHandlerTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private CronetTestFramework mTestFramework;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        mTestFramework = startCronetTestFramework();
-        assertTrue(NativeTestServer.startNativeTestServer(getContext()));
+    @Before
+    public void setUp() throws Exception {
+        mTestFramework = mTestRule.startCronetTestFramework();
+        Assert.assertTrue(
+                NativeTestServer.startNativeTestServer(InstrumentationRegistry.getTargetContext()));
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         NativeTestServer.shutdownNativeTestServer();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testOpenConnectionHttp() throws Exception {
@@ -42,12 +56,13 @@ public class CronetHttpURLStreamHandlerTest extends CronetTestBase {
                 new CronetHttpURLStreamHandler(mTestFramework.mCronetEngine);
         HttpURLConnection connection =
                 (HttpURLConnection) streamHandler.openConnection(url);
-        assertEquals(200, connection.getResponseCode());
-        assertEquals("OK", connection.getResponseMessage());
-        assertEquals("GET", TestUtil.getResponseAsString(connection));
+        Assert.assertEquals(200, connection.getResponseCode());
+        Assert.assertEquals("OK", connection.getResponseMessage());
+        Assert.assertEquals("GET", TestUtil.getResponseAsString(connection));
         connection.disconnect();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testOpenConnectionHttps() throws Exception {
@@ -56,9 +71,10 @@ public class CronetHttpURLStreamHandlerTest extends CronetTestBase {
                 new CronetHttpURLStreamHandler(mTestFramework.mCronetEngine);
         HttpURLConnection connection =
                 (HttpURLConnection) streamHandler.openConnection(url);
-        assertNotNull(connection);
+        Assert.assertNotNull(connection);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testOpenConnectionProtocolNotSupported() throws Exception {
@@ -67,12 +83,13 @@ public class CronetHttpURLStreamHandlerTest extends CronetTestBase {
                 new CronetHttpURLStreamHandler(mTestFramework.mCronetEngine);
         try {
             streamHandler.openConnection(url);
-            fail();
+            Assert.fail();
         } catch (UnsupportedOperationException e) {
-            assertEquals("Unexpected protocol:ftp", e.getMessage());
+            Assert.assertEquals("Unexpected protocol:ftp", e.getMessage());
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testOpenConnectionWithProxy() throws Exception {
@@ -83,7 +100,7 @@ public class CronetHttpURLStreamHandlerTest extends CronetTestBase {
                 new InetSocketAddress("127.0.0.1", 8080));
         try {
             streamHandler.openConnection(url, proxy);
-            fail();
+            Assert.fail();
         } catch (UnsupportedOperationException e) {
             // Expected.
         }

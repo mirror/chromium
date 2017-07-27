@@ -12,7 +12,15 @@ import android.os.Build;
 import android.support.test.filters.SmallTest;
 import android.system.Os;
 
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.net.CronetTestRule.CronetTestFramework;
+import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.impl.CronetLibraryLoader;
 
 import java.io.FileDescriptor;
@@ -23,18 +31,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Test NetworkChangeNotifier.
  */
-public class NetworkChangeNotifierTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class NetworkChangeNotifierTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     /**
      * Verify NetworkChangeNotifier signals trigger appropriate action, like
      * aborting pending connect() jobs.
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void testNetworkChangeNotifier() throws Exception {
-        CronetTestFramework testFramework = startCronetTestFramework();
-        assertNotNull(testFramework);
+        CronetTestFramework testFramework = mTestRule.startCronetTestFramework();
+        Assert.assertNotNull(testFramework);
 
         // Os and OsConstants aren't exposed until Lollipop so we cannot run this test.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -87,11 +100,11 @@ public class NetworkChangeNotifierTest extends CronetTestBase {
 
         // Wait for ERR_NETWORK_CHANGED
         callback.blockForDone();
-        assertNotNull(callback.mError);
-        assertTrue(callback.mOnErrorCalled);
-        assertEquals(NetError.ERR_NETWORK_CHANGED,
+        Assert.assertNotNull(callback.mError);
+        Assert.assertTrue(callback.mOnErrorCalled);
+        Assert.assertEquals(NetError.ERR_NETWORK_CHANGED,
                 ((NetworkException) callback.mError).getCronetInternalErrorCode());
-        assertContains("Exception in CronetUrlRequest: net::ERR_NETWORK_CHANGED",
+        mTestRule.assertContains("Exception in CronetUrlRequest: net::ERR_NETWORK_CHANGED",
                 callback.mError.getMessage());
     }
 }
