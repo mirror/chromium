@@ -16,61 +16,50 @@ class PrefRegistrySyncable;
 
 namespace feature_engagement_tracker {
 
-// The NewTabTracker provides a backend for displaying
-// in-product help for the new tab button.
-class NewTabTracker : public metrics::DesktopSessionDurationTracker::Observer,
-                      public KeyedService {
+// The FeatureTracker provides a backend for displaying
+// in-product help for the various features.
+class FeatureTracker : public metrics::DesktopSessionDurationTracker::Observer,
+                       public KeyedService {
  public:
-  explicit NewTabTracker(Profile* profile);
+  explicit FeatureTracker(Profile* profile);
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
-  // Clears the flag for whether there is any in-product help being displayed.
-  void DismissNewTabTracker();
-  // Alerts the new tab tracker that a new tab was opened.
-  void OnNewTabOpened();
-  // Alerts the new tab tracker that the omnibox has been used.
-  void OnOmniboxNavigation();
   // Alerts the new tab tracker that the session time is up.
   void OnSessionTimeMet();
-  // Checks if the promo should be displayed since the omnibox is on focus.
-  void OnOmniboxFocused();
   // Returns whether or not the promo should be displayed.
-  bool ShouldShowPromo();
+  virtual bool ShouldShowPromo() = 0;
 
  protected:
-  NewTabTracker();
-  ~NewTabTracker() override;
+  FeatureTracker();
+  ~FeatureTracker() override;
 
- private:
-  // Returns whether the active session time of a user has elapsed
-  // more than two hours.
-  bool HasEnoughSessionTimeElapsed();
+  // Returns whether the active session time of a user has elapsed more than the
+  // required active sessiom time for the feature.
+  virtual bool HasEnoughSessionTimeElapsed() = 0;
 
-  // Returns whether the NewTabInProductHelp field trial is enabled.
-  bool IsIPHNewTabEnabled();
-
-  // Sets the NewTabInProductHelp pref to true and calls the New Tab Promo.
-  void ShowPromo();
+  // Sets the feature's InProductHelp pref to true and calls the feature .
+  virtual void ShowPromo() = 0;
 
   // Virtual to support mocking by unit tests.
-  virtual FeatureEngagementTracker* GetFeatureTracker();
-
+  virtual FeatureEngagementTracker* GetFeatureEngagementTracker();
   virtual PrefService* GetPrefs();
 
   // Updates the pref that stores active session time per user unless the
   // new tab in-product help has been displayed already.
-  virtual void UpdateSessionTime(base::TimeDelta elapsed);
+  void UpdateSessionTime(base::TimeDelta elapsed);
 
   // metrics::DesktopSessionDurationtracker::Observer::
   void OnSessionEnded(base::TimeDelta delta) override;
 
-  // These pointers are owned by NewTabTracker.
-  metrics::DesktopSessionDurationTracker* const duration_tracker_;
+  // Assists in keeping a running total of active time for the Profile. Owned by
+  // the browser.
+  metrics::DesktopSessionDurationTracker* duration_tracker_;
 
+  // Owned by Profile manager.
   Profile* const profile_;
 
-  DISALLOW_COPY_AND_ASSIGN(NewTabTracker);
+  DISALLOW_COPY_AND_ASSIGN(FeatureTracker);
 };
 
 }  // namespace feature_engagement_tracker
