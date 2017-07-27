@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16b9bce2_7fcf22c2",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T19:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3fa80cd_4b716f9b",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dddfeb3e_b2331075",
         "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fcde9f_be72fc83",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T19:54:35Z",
+      "side": 1,
+      "message": "I\u0027m actually not sure why we need to re-assign request_context_getter_ at all, since ThreatDetails does that already. Tests all pass without this. Added a TODO to see if we even need this wrapper anymore. Let me know if you know of a reason to keep it.",
+      "parentUuid": "dddfeb3e_b2331075",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d8b4293e_5a6629dc",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T19:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ccf06a_aed81b7e",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "291dec00_6a8ac712",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5fcfd794_8fd8ce0b",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T19:54:35Z",
+      "side": 1,
+      "message": "oops, done.",
+      "parentUuid": "291dec00_6a8ac712",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e16fe5_2fbf8031",
         "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c816aac5_d320f531",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-27T19:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e16fe5_2fbf8031",
+      "revId": "3b74b78ca59ac97f0b2ad9c997a628b57ff52de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
