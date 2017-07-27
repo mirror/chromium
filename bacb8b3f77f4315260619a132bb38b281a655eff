@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "ec691278_299667d5",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-27T05:47:00Z",
+      "side": 1,
+      "message": "Thanks! It will be great if we follow up and ensure the rest of the GRC objects are consistently named.",
+      "parentUuid": "cbc11a62_e5916d58",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "bacb8b3f77f4315260619a132bb38b281a655eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0be01c7e_ef554d0a",
         "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
         "patchSetId": 12
