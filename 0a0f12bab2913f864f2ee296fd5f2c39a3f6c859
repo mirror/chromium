@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e765a8c1_e422ceba",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-27T13:18:52Z",
+      "side": 1,
+      "message": "I thought we decided we\u0027d filter it out if it was backgrounded at the beginning AND end, such that we\u0027re always overestimating the EQT.",
+      "range": {
+        "startLine": 117,
+        "startChar": 72,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "0a0f12bab2913f864f2ee296fd5f2c39a3f6c859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b0108a9_d3893030",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
         "patchSetId": 1
@@ -18,6 +41,99 @@
         "startChar": 2,
         "endLine": 206,
         "endChar": 48
+      },
+      "revId": "0a0f12bab2913f864f2ee296fd5f2c39a3f6c859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15c617b_15007978",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-27T13:18:52Z",
+      "side": 1,
+      "message": "We don\u0027t care what the result of MainThreadSeemsUnresponsive is for backgrounded renderers. It\u0027s used for making decisions about input handling.\n\nI think this is fine.",
+      "parentUuid": "9b0108a9_d3893030",
+      "range": {
+        "startLine": 203,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 48
+      },
+      "revId": "0a0f12bab2913f864f2ee296fd5f2c39a3f6c859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97768665_325385c7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-27T13:18:52Z",
+      "side": 1,
+      "message": "Add a comment indicating that this is true if ALL frames associated with the renderer are in the background.\n\nAlso, maybe rename this (and below) renderer_backgrounded?\nstart/end is implied by the method name.",
+      "range": {
+        "startLine": 50,
+        "startChar": 36,
+        "endLine": 50,
+        "endChar": 54
+      },
+      "revId": "0a0f12bab2913f864f2ee296fd5f2c39a3f6c859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733b878d_a48a7a61",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-27T13:18:52Z",
+      "side": 1,
+      "message": "Hmmm, tasks aren\u0027t really backgrounded.\n\nMaybe \"If the current task is scheduled on a backgrounded renderer\" or something like that?",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 42
+      },
+      "revId": "0a0f12bab2913f864f2ee296fd5f2c39a3f6c859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc4ac5c_6e220507",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-27T13:18:52Z",
+      "side": 1,
+      "message": "Can you add some comments making it a bit clearer where this number comes from?\n\nIs this expectation adequate, or should we expect on client.expected_queueing_times() ?",
+      "range": {
+        "startLine": 496,
+        "startChar": 71,
+        "endLine": 496,
+        "endChar": 73
       },
       "revId": "0a0f12bab2913f864f2ee296fd5f2c39a3f6c859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
