@@ -320,7 +320,8 @@ void CounterNode::InsertAfter(CounterNode* new_child,
   new_child->last_child_ = nullptr;
   new_child->count_in_parent_ = new_child->ComputeCountInParent();
   new_child->ResetLayoutObjects();
-  first->Recount();
+  if (first)
+    first->Recount();
 }
 
 void CounterNode::RemoveChild(CounterNode* old_child) {
