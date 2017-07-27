@@ -87,6 +87,24 @@
       "revId": "7740adf7e9fcb29ad17f1f3aba804a8a2d953351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4d2cc3_8c26b211",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-27T05:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "642718c9_6b944b93",
+      "revId": "7740adf7e9fcb29ad17f1f3aba804a8a2d953351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
