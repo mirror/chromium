@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2fe0600_cd801b9c",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:05:23Z",
+      "side": 1,
+      "message": "How about passing the |enabled| parameter forward, so that you can use it when asserting?\n\nthis.methodCalled(\u0027setGoogleAssistantContextEnabled\u0027, enabled);\n\nThen later in the test code\n\nreturn proxy.whenCalled(..).then(function(arg) {\n  // Ensure that the expected value was passed to setGoogleAssistantContextEnabled.\n  assertTrue(arg);\n});",
+      "revId": "21cf970ae7ab01bf100018b775431319ba83f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a319f0e_1716b38a",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:05:23Z",
+      "side": 1,
+      "message": "Let\u0027s move lines 37-40 within the suite(.., function() {...}) block, since they are only used in that scope. Also maybe rename this to just |page|?",
+      "revId": "21cf970ae7ab01bf100018b775431319ba83f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0216bb6c_f1e74bb4",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:05:23Z",
+      "side": 1,
+      "message": "Instance names should start with lower case. Upper case is only for type names (clasess, enums). Also given that there is no ambiguity in this file, let\u0027s just rename to |browserProxy|.",
+      "revId": "21cf970ae7ab01bf100018b775431319ba83f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17b3166_15f3ed96",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:05:23Z",
+      "side": 1,
+      "message": "\u0027var\u0027 missing.",
+      "revId": "21cf970ae7ab01bf100018b775431319ba83f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b087091_531ef243",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:05:23Z",
+      "side": 1,
+      "message": "indentation off by 2?",
+      "revId": "21cf970ae7ab01bf100018b775431319ba83f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf52945_5605eb6d",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:05:23Z",
+      "side": 1,
+      "message": "Prefer single quotes in JS.",
+      "revId": "21cf970ae7ab01bf100018b775431319ba83f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3c5070_c4873114",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:05:23Z",
+      "side": 1,
+      "message": "Single quotes.",
+      "revId": "21cf970ae7ab01bf100018b775431319ba83f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
