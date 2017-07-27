@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "497f2b81_cc7477cc",
+        "filename": "components/browser_watcher/stability_report_user_stream_data_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-07-27T15:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d1f12b9_21280696",
+      "range": {
+        "startLine": 142,
+        "startChar": 19,
+        "endLine": 142,
+        "endChar": 20
+      },
+      "revId": "ca76cc82299f3442057cdf5b8cc3f28b2c7147f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "409ba78c_96bc4736",
         "filename": "components/browser_watcher/stability_report_user_stream_data_source.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ca76cc82299f3442057cdf5b8cc3f28b2c7147f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b1b7c4_02485db8",
+        "filename": "components/browser_watcher/stability_report_user_stream_data_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-07-27T15:15:02Z",
+      "side": 1,
+      "message": "Yups - I noticed once I tried to run the code :). Thanks!",
+      "parentUuid": "409ba78c_96bc4736",
+      "range": {
+        "startLine": 195,
+        "startChar": 21,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "ca76cc82299f3442057cdf5b8cc3f28b2c7147f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
