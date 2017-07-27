@@ -1169,10 +1169,6 @@ void WebContentsAccessibilityAndroid::CollectStats() {
   CAPABILITY_TYPE_HISTOGRAM(capabilities_mask, CAN_PERFORM_GESTURES);
 }
 
-bool RegisterWebContentsAccessibilityAndroid(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& jweb_contents,

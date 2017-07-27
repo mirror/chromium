@@ -17,9 +17,6 @@
 #include "base/trace_event/trace_event.h"
 #include "base/tracked_objects.h"
 #include "components/tracing/common/trace_startup.h"
-#include "content/app/android/app_jni_registrar.h"
-#include "content/browser/android/browser_jni_registrar.h"
-#include "content/common/android/common_jni_registrar.h"
 #include "content/common/content_constants_internal.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/result_codes.h"
@@ -59,18 +56,6 @@ bool EnsureJniRegistered(JNIEnv* env) {
       return false;
 
     if (!ui::shell_dialogs::RegisterJni(env))
-      return false;
-
-    if (!content::android::RegisterCommonJni(env))
-      return false;
-
-    if (base::android::GetLibraryProcessType(env) ==
-        base::android::PROCESS_BROWSER) {
-      if (!content::android::RegisterBrowserJni(env))
-        return false;
-    }
-
-    if (!content::android::RegisterAppJni(env))
       return false;
 
     if (!device::android::RegisterBluetoothJni(env))

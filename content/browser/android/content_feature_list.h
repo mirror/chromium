@@ -15,8 +15,6 @@ namespace android {
 // Alphabetical:
 extern const base::Feature kRequestUnbufferedDispatch;
 
-bool RegisterContentFeatureListJni(JNIEnv* env);
-
 }  // namespace android
 }  // namespace content
 
