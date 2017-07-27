@@ -22,6 +22,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.CallbackHelper;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.download.DownloadItem;
 import org.chromium.chrome.browser.download.ui.StubbedProvider.StubbedDownloadDelegate;
 import org.chromium.chrome.browser.download.ui.StubbedProvider.StubbedOfflinePageDelegate;
@@ -40,10 +41,11 @@ public class DownloadHistoryAdapterTest {
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();
 
     private static class Observer extends RecyclerView.AdapterDataObserver
-            implements DownloadHistoryAdapter.TestObserver {
+            implements DownloadHistoryAdapter.TestObserver, SpaceDisplay.Observer {
         public CallbackHelper onChangedCallback = new CallbackHelper();
         public CallbackHelper onDownloadItemCreatedCallback = new CallbackHelper();
         public CallbackHelper onDownloadItemUpdatedCallback = new CallbackHelper();
+        public CallbackHelper onSpaceDisplayUpdatedCallback = new CallbackHelper();
 
         public DownloadItem createdItem;
         public DownloadItem updatedItem;
@@ -63,6 +65,12 @@ public class DownloadHistoryAdapterTest {
         public void onDownloadItemUpdated(DownloadItem item) {
             updatedItem = item;
             onDownloadItemUpdatedCallback.notifyCalled();
+        }
+
+        @Override
+        public void onSpaceDisplayUpdated(SpaceDisplay spaceDisplay) {
+            android.util.Log.d("DownloadAdapterTest", "space display updated");
+            onSpaceDisplayUpdatedCallback.notifyCalled();
         }
     }
 
@@ -98,6 +106,7 @@ public class DownloadHistoryAdapterTest {
 
         // Initialize the Adapter with all the DownloadItems and OfflinePageDownloadItems.
         int callCount = mObserver.onChangedCallback.getCallCount();
+        int onSpaceDisplayUpdatedCallCount = mObserver.onSpaceDisplayUpdatedCallback.getCallCount();
         Assert.assertEquals(0, callCount);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
@@ -105,11 +114,13 @@ public class DownloadHistoryAdapterTest {
                 mAdapter.initialize(mBackendProvider, null);
             }
         });
+        mAdapter.getSpaceDisplayForTests().addObserverForTests(mObserver);
         mDownloadDelegate.addCallback.waitForCallback(0);
         // If header should be added, onChanged() will be called twice because both setHeaders()
         // and loadMoreItems() will call notifyDataSetChanged(). Otherwise, setHeaders() will not
         // be called and onChanged() will only be called once.
         mObserver.onChangedCallback.waitForCallback(callCount, hasHeader ? 2 : 1);
+        mObserver.onSpaceDisplayUpdatedCallback.waitForCallback(onSpaceDisplayUpdatedCallCount);
     }
 
     /** Nothing downloaded, nothing shown. */
@@ -253,6 +264,7 @@ public class DownloadHistoryAdapterTest {
     }
 
     /** Adding and updating new items should bucket them into the proper dates. */
+    @RetryOnFailure
     @Test
     @SmallTest
     public void testUpdate_UpdateItems() throws Exception {
@@ -596,12 +608,14 @@ public class DownloadHistoryAdapterTest {
                 HEADER, null, item5, item4, item6, null, item3, item2, null, item1, item0);
 
         // Perform a search that matches the file name for a few downloads.
+        int onSpaceDisplayUpdatedCallCount = mObserver.onSpaceDisplayUpdatedCallback.getCallCount();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
                 mAdapter.search("FiLe");
             }
         });
+        mObserver.onSpaceDisplayUpdatedCallback.waitForCallback(onSpaceDisplayUpdatedCallCount);
 
         // Only items matching the query should be shown.
         checkAdapterContents(null, item2, null, item1, item0);
