@@ -493,6 +493,7 @@ class TabManager : public TabStripModelObserver,
   bool is_session_restore_loading_tabs_;
 
   class TabManagerSessionRestoreObserver;
+  friend class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
 
   // When the timer fires, it forces loading the next background tab if needed.
@@ -512,6 +513,8 @@ class TabManager : public TabStripModelObserver,
   // Records UMAs for tab and system-related events and properties during
   // session restore.
   std::unique_ptr<TabManagerStatsCollector> tab_manager_stats_collector_;
+
+  std::unordered_set<content::WebContents*> tabs_restoring_;
 
   // Weak pointer factory used for posting delayed tasks.
   base::WeakPtrFactory<TabManager> weak_ptr_factory_;

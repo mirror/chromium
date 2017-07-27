@@ -112,6 +112,7 @@ class SessionRestore {
   // Get called when the tab loader finishes loading tabs in tab restore even
   // without session restore started.
   static void OnTabLoaderFinishedLoadingTabs();
+  static void OnTabLoaderStopRestoringTab(content::WebContents* web_contents);
 
  private:
   friend class SessionRestoreImpl;
@@ -151,6 +152,8 @@ class SessionRestore {
   // multiple concurrent session restores, observers get notified only once in
   // the first session restore.
   static void NotifySessionRestoreStartedLoadingTabs();
+
+  static void OnWillRestoreTab(content::WebContents* web_contents);
 
   // Contains all registered observers for session restore events.
   static SessionRestoreObserverList* observers_;
