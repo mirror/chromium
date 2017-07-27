@@ -1395,6 +1395,10 @@ const char kAndroidSigninPromosDescription[] =
     "New signin promos for Android which will be displayed in content "
     "suggestions, Settings, Bookmarks and Recent Tabs.";
 
+const char kAndroidViewPasswordsName[] = "Copy and view passwords for Android";
+const char kAndroidViewPasswordsDescription[] =
+    "Enables copying and viewing passwords in settings.";
+
 const char kAutofillAccessoryViewName[] =
     "Autofill suggestions as keyboard accessory view";
 const char kAutofillAccessoryViewDescription[] =
