@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5648da8c_d562f2cc",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-27T15:13:57Z",
+      "side": 0,
+      "message": "Just to clarify this is only about skipping reauthentication forms, not all GAIA forms. \n\n1.In order to check that the form is reauthentication we need to have information about form structure (namely presence of hidden fields with proper names), that\u0027s not sent to the browser anyway and this information is not needed in the browser. So the renderer is a correct place for detecting such forms. If we want to implement some metric, it\u0027s ok to send this information, but this todo says only about moving logic.\n\n2.In the browser we have skipping of saving of sync credentials. Here it\u0027s only about ignoring reauthentication forms.",
+      "parentUuid": "5d72178a_63cc0606",
+      "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e147821e_bd87daa4",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 2
