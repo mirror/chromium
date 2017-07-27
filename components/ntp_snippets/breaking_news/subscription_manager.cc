@@ -22,7 +22,7 @@ const char kPushUnsubscriptionBackendParam[] = "push_unsubscription_backend";
 
 GURL GetPushUpdatesSubscriptionEndpoint(version_info::Channel channel) {
   std::string endpoint = base::GetFieldTrialParamValueByFeature(
-      kBreakingNewsPushFeature, kPushSubscriptionBackendParam);
+      kBreakingNewsPushRegistrationFeature, kPushSubscriptionBackendParam);
   if (!endpoint.empty()) {
     return GURL{endpoint};
   }
@@ -43,7 +43,7 @@ GURL GetPushUpdatesSubscriptionEndpoint(version_info::Channel channel) {
 
 GURL GetPushUpdatesUnsubscriptionEndpoint(version_info::Channel channel) {
   std::string endpoint = base::GetFieldTrialParamValueByFeature(
-      kBreakingNewsPushFeature, kPushUnsubscriptionBackendParam);
+      kBreakingNewsPushRegistrationFeature, kPushUnsubscriptionBackendParam);
   if (!endpoint.empty()) {
     return GURL{endpoint};
   }
