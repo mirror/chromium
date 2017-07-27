@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "30493e5a_0277143c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:58:33Z",
+      "side": 1,
+      "message": "can you plz clarify that this is 1-2 ms in total per process, not per OnMemoryDump call?",
+      "range": {
+        "startLine": 14,
+        "startChar": 44,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10e46b55_5a1cf503",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 9
@@ -49,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "1187c0a9_6465e6b8",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:58:33Z",
+      "side": 1,
+      "message": "not sure if that is easily possible but would be nice if, in the case when COUNT_RESIDENT_BYTES_SUPPORTED is defined, we also emit a \"virtual_size\" column, mostly to double check the results in the trace. \nI know that other columns won\u0027t be propagate across edges, but I think that is fine, it wuold at least show up in the shared_memory column right?",
+      "range": {
+        "startLine": 87,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece37921_94865e92",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 9
@@ -84,6 +130,30 @@
       "side": 1,
       "message": "Hmm, so is this a kind of TODO? I\u0027m still not sure what to do about the issue.",
       "parentUuid": "ece37921_94865e92",
+      "range": {
+        "startLine": 88,
+        "startChar": 73,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985e1f9e_110c8f22",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-27T14:58:33Z",
+      "side": 1,
+      "message": "I think we just have to file bugs and try to fix them if that happens. IIRC (ssid to confirm) we back-propagate a zero effective-size in the case that ssid mentioned (as in: you can\u0027t declare more memory than what it\u0027s actually reported by the owned dump).\nAt the end we are after actual (resident) memory usage, so this seems sort of WAI. ssid do you agree?",
+      "parentUuid": "37496058_a3aacf35",
       "range": {
         "startLine": 88,
         "startChar": 73,
