@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf7dbb6_b317bdd4",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-27T11:20:28Z",
+      "side": 1,
+      "message": "vasilii@: Side question. Did you consider to declare Clone() as const method? Seems it should be.",
+      "range": {
+        "startLine": 408,
+        "startChar": 49,
+        "endLine": 408,
+        "endChar": 73
+      },
+      "revId": "94c5b362221e8e8117da783c4b190e31076f27b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
