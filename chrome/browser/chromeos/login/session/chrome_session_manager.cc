@@ -141,9 +141,8 @@ void StartUserSession(Profile* user_profile, const std::string& login_user_id) {
     UserSessionManager::GetInstance()->RestoreAuthenticationSession(
         user_profile);
 
-    TetherService* tether_service = TetherService::Get(user_profile);
     if (tether_service)
-      tether_service->StartTetherIfEnabled();
+      tether_service->StartTetherIfPossible();
   }
 }
 
