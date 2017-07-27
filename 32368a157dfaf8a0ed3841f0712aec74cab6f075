@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8170e408_0fcb19ea",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-27T01:20:16Z",
+      "side": 1,
+      "message": "Don\u0027t think you need .spec() anymore? GetLasCommittedURL already returns GURL.",
+      "range": {
+        "startLine": 460,
+        "startChar": 45,
+        "endLine": 460,
+        "endChar": 64
+      },
+      "revId": "32368a157dfaf8a0ed3841f0712aec74cab6f075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
