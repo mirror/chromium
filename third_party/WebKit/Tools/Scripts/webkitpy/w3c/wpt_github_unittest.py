@@ -6,6 +6,7 @@ import base64
 import unittest
 
 from webkitpy.common.host_mock import MockHost
+from webkitpy.common.net.web_mock import MockInfo
 from webkitpy.w3c.chromium_commit_mock import MockChromiumCommit
 from webkitpy.w3c.wpt_github import GitHubError, MergeError, PullRequest, WPTGitHub
 
@@ -23,6 +24,20 @@ class WPTGitHubTest(unittest.TestCase):
         self.assertEqual(
             self.wpt_github.auth_token(),
             base64.encodestring('rutabaga:decafbad').strip())
+
+    def test_extract_link_next(self):
+        info = MockInfo({'Link': '<https://api.github.com/user/repos?page=1&per_page=100>; rel="first", '
+                                 '<https://api.github.com/user/repos?page=2&per_page=100>; rel="prev", '
+                                 '<https://api.github.com/user/repos?page=4&per_page=100>; rel="next", '
+                                 '<https://api.github.com/user/repos?page=50&per_page=100>; rel="last"'})
+        self.assertEqual(
+            self.wpt_github.extract_link_next(info),
+            '/user/repos?page=4&per_page=100'
+        )
+
+    def test_extract_link_next_not_found(self):
+        info = MockInfo({})
+        self.assertIsNone(self.wpt_github.extract_link_next(info))
 
     def test_merge_pull_request_throws_merge_error_on_405(self):
         self.wpt_github.host.web.responses = [
