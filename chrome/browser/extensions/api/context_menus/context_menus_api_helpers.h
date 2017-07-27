@@ -206,7 +206,11 @@ bool UpdateMenuItem(const PropertyWithEnumT& update_properties,
       *error = kCheckedError;
       return false;
     }
-    if (checked != item->checked()) {
+    // If the item is not checked and it was updated to be checked, set it to be
+    // checked. If the radio item was unchecked, nothing should happen. The
+    // radio item should remain checked because there should always be one item
+    // checked in the radio list.
+    if (!item->checked() && checked != item->checked()) {
       if (!item->SetChecked(checked)) {
         *error = kCheckedError;
         return false;
@@ -254,7 +258,7 @@ bool UpdateMenuItem(const PropertyWithEnumT& update_properties,
     return false;
   }
 
-  // There is no need to call ItemUpdated if ChangeParent is called because
+  // There is no need to call RadioItemUpdated if ChangeParent is called because
   // all sanitation is taken care of in ChangeParent.
   if (!parent && radio_item_updated && !menu_manager->ItemUpdated(item->id()))
     return false;
