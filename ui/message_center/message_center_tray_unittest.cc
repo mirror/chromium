@@ -35,6 +35,7 @@ class MockDelegate : public MessageCenterTrayDelegate {
   bool IsContextMenuEnabled() const override { return enable_context_menu_; }
 
   MessageCenterTray* GetMessageCenterTray() override { return NULL; }
+  base::string16 GetProductOSName() override { return base::string16(); }
 
   bool show_popups_success_;
   bool show_message_center_success_;

@@ -31,6 +31,7 @@ class FakeMessageCenterTrayDelegate : public MessageCenterTrayDelegate {
   bool ShowNotifierSettings() override;
   bool IsContextMenuEnabled() const override;
   MessageCenterTray* GetMessageCenterTray() override;
+  base::string16 GetProductOSName() override;
 
  private:
   std::unique_ptr<MessageCenterTray> tray_;
