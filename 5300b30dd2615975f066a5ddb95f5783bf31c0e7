@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf03fa3e_a1882ea6",
+        "filename": "media/formats/mp4/box_definitions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-27T21:27:47Z",
+      "side": 1,
+      "message": "Correct. In particular, see BoxReader::ScanChildren(...), which the containing AudioSampleEntry did first. Since we got here, that ScanChildren found a full \u0027dfLa\u0027 (at least w.r.t. what the \u0027dfLa\u0027 framing said its length was) within the known (already appended) AudioSampleEntry box reader\u0027s buffer.\n\nThis will get hit if reading 4 bytes from current |reader| position would exceed the reader\u0027s buf_size (HasBytes(4) failing causes this to fail...)",
+      "parentUuid": "1a446935_c65b2f42",
+      "range": {
+        "startLine": 909,
+        "startChar": 2,
+        "endLine": 909,
+        "endChar": 21
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "687df1b4_ec585212",
         "filename": "media/formats/mp4/box_definitions.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T19:24:39Z",
       "side": 1,
       "message": "This comment is referring to already read bytes in stream_info, right? Not bytes that are still sitting in the reader?",
+      "range": {
+        "startLine": 942,
+        "startChar": 5,
+        "endLine": 942,
+        "endChar": 8
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5daf5ab6_03dccd6b",
+        "filename": "media/formats/mp4/box_definitions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-27T21:27:47Z",
+      "side": 1,
+      "message": "Correct. kFlacMetadataBlockStreaminfoSize is 34. All bits in those 34 bytes are accounted for in this method: in addition to being read into |stream_info|, they\u0027re also either parsed out into fields or not. The \"ignored here\" comments refer to various bits of |stream_info| that aren\u0027t needed directly here (other than in |stream_info| for use later in extradata in an AudioDecoderConfig).",
+      "parentUuid": "687df1b4_ec585212",
       "range": {
         "startLine": 942,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "831e098a_6460c9b8",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-27T21:27:47Z",
+      "side": 1,
+      "message": "My guess for FLAC is that they hadn\u0027t (nor haven\u0027t yet) registered FLAC-in-MP4 codec type \u0027flac\u0027 even at mp4ra.org, so any arbitrary choice of object type for flac-in-mp4 without that registration could conflict with another type later. No idea about AC3/EAC3.\nAlso, maybe ESDS (e.g. used for AAC config and object type indication) came with other legacy baggage (or codec-specific specs excluding FLAC, or harder to extend to use to signal FLAC). Note that I don\u0027t see ESDS mentioned in 14496-12. Similarly, no mention of audio object types.",
+      "parentUuid": "a6b5144a_bb3a2571",
+      "range": {
+        "startLine": 281,
+        "startChar": 26,
+        "endLine": 281,
+        "endChar": 37
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17ff9507_e8b7f1b3",
         "filename": "media/formats/mp4/mp4_stream_parser_unittest.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0bcd9075_e294dbaa",
+        "filename": "media/formats/mp4/mp4_stream_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-27T21:27:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17ff9507_e8b7f1b3",
+      "range": {
+        "startLine": 474,
+        "startChar": 32,
+        "endLine": 474,
+        "endChar": 35
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbd6ab7_7ed13f51",
         "filename": "media/test/pipeline_integration_test.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700dfde9_55b5b792",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-27T21:27:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dbd6ab7_7ed13f51",
+      "range": {
+        "startLine": 1427,
+        "startChar": 32,
+        "endLine": 1427,
+        "endChar": 35
+      },
+      "revId": "5300b30dd2615975f066a5ddb95f5783bf31c0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
