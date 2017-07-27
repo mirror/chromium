@@ -646,6 +646,7 @@ void InlineTextBoxPainter::PaintDocumentMarkers(
       case DocumentMarker::kTextMatch:
       case DocumentMarker::kComposition:
       case DocumentMarker::kActiveSuggestion:
+      case DocumentMarker::kSuggestion:
         break;
     }
 
