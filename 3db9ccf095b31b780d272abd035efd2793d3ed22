@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08f83f45_93286ab2",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-27T14:13:25Z",
+      "side": 1,
+      "message": "I feel like this DCHECK would make more sense in property_tree_builder.cc. The scroll node shouldn\u0027t change otherwise.",
+      "revId": "3db9ccf095b31b780d272abd035efd2793d3ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
