@@ -33,6 +33,24 @@
       "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf30abf_ce863bf2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-27T17:01:30Z",
+      "side": 1,
+      "message": "OK. This originates from https://codereview.chromium.org/960833003/diff/400001/Source/core/fetch/ResourceFetcher.cpp\n\nSeems canAccessResponse() accidentally included the logic.\n\nCurrently used in StripURLForUseInReport() and CSPSource::Matches().",
+      "parentUuid": "90b4dade_d9a89242",
+      "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
