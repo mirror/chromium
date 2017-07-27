@@ -956,7 +956,10 @@ void QueryManager::Query::MarkAsCompleted(uint64_t result) {
 void QueryManager::ProcessPendingQueries(bool did_finish) {
   while (!pending_queries_.empty()) {
     Query* query = pending_queries_.front().get();
-    query->Process(did_finish);
+    {
+      //TRACE_EVENT0("gpu", "Process");
+      query->Process(did_finish);
+    }
     if (query->IsPending()) {
       break;
     }

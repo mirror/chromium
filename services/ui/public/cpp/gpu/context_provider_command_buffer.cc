@@ -176,6 +176,7 @@ ContextProviderCommandBuffer::ContextProviderCommandBuffer(
       channel_(std::move(channel)) {
   DCHECK(main_thread_checker_.CalledOnValidThread());
   DCHECK(channel_);
+  LOG(INFO) << __FUNCTION__ << ";;; active_url=" << active_url << " stream_priority=" << gpu::SchedulingPriorityToString(stream_priority);
   context_thread_checker_.DetachFromThread();
 }
 

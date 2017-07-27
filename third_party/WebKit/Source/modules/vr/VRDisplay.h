@@ -16,6 +16,7 @@
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Time.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
 
@@ -197,6 +198,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   // Used to keep the image alive until the next frame if using
   // waitForPreviousTransferToFinish.
   RefPtr<Image> previous_image_;
+  WTF::Time previous_submit_time_;
 
   Member<ScriptedAnimationController> scripted_animation_controller_;
   bool pending_vrdisplay_raf_ = false;

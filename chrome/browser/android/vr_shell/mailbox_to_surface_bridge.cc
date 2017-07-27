@@ -125,11 +125,37 @@ GLuint CreateAndLinkProgram(gpu::gles2::GLES2Interface* gl,
   return program_handle;
 }
 
+#if 0
+#define CHECK_ERR(gl) do { \
+    GLint err; \
+    while ((err = gl->GetError()) != GL_NO_ERROR) { \
+      LOG(INFO) << __FUNCTION__ << ";;; GL ERROR " << err; \
+    } \
+  } while(0)
+#else
+#define CHECK_ERR(gl) do {} while(0)
+#endif
+
 GLuint ConsumeTexture(gpu::gles2::GLES2Interface* gl,
                       const gpu::MailboxHolder& mailbox) {
   TRACE_EVENT0("gpu", "MailboxToSurfaceBridge::ConsumeTexture");
-  gl->WaitSyncTokenCHROMIUM(mailbox.sync_token.GetConstData());
 
+    CHECK_ERR(gl);
+  //LOG(INFO) << __FUNCTION__ << ";;; sync_token release=" << mailbox.sync_token.release_count();
+  {
+    TRACE_EVENT0("gpu", "VerifySyncTokensCHROMIUM");
+    GLbyte* tokens[] = { const_cast<GLbyte*>(mailbox.sync_token.GetConstData()) };
+    gl->VerifySyncTokensCHROMIUM(tokens, 1);
+    CHECK_ERR(gl);
+  }
+
+  {
+    TRACE_EVENT0("gpu", "WaitSyncTokenCHROMIUM");
+    gl->WaitSyncTokenCHROMIUM(mailbox.sync_token.GetConstData());
+    CHECK_ERR(gl);
+  }
+
+  TRACE_EVENT0("gpu", "CreateAndConsumeTextureCHROMIUM");
   return gl->CreateAndConsumeTextureCHROMIUM(GL_TEXTURE_2D,
                                              mailbox.mailbox.name);
 }

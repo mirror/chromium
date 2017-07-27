@@ -47,6 +47,7 @@ gl::GLContextAttribs GenerateGLContextAttribs(
     attribs.client_minor_es_version = 0;
   }
 
+  //attribs.context_priority = gl::ContextPriorityLow;
   return attribs;
 }
 

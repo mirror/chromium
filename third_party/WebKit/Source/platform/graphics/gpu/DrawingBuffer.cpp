@@ -386,9 +386,15 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
 #if defined(OS_MACOSX)
     gl_->DescheduleUntilFinishedCHROMIUM();
 #endif
+#if 0
     gl_->Flush();
     gl_->GenSyncTokenCHROMIUM(
         fence_sync, color_buffer_for_mailbox->produce_sync_token.GetData());
+#else
+    gl_->ShallowFlushCHROMIUM();
+    gl_->GenSyncTokenCHROMIUM(
+        fence_sync, color_buffer_for_mailbox->produce_sync_token.GetData());
+#endif
   }
 
   // Populate the output mailbox and callback.

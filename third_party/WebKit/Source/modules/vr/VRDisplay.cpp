@@ -38,6 +38,8 @@
 #include <array>
 #include "core/dom/ExecutionContext.h"
 
+#define EARLY_RENDER_WAIT 0
+
 namespace blink {
 
 namespace {
@@ -644,9 +646,50 @@ void VRDisplay::submitFrame() {
     return;
   }
 
+#if EARLY_RENDER_WAIT
+  // Wait for the previous render to finish, to avoid losing frames in the
+  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
+  // Other devices may have different preferences. Do this step as late
+  // as possible before SubmitFrame to ensure we can do as much work as
+  // possible in parallel with the previous frame's rendering.
+  {
+    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+#endif
+
+  WTF::Time now = WTF::Time::Now();
+  WTF::TimeDelta min_delay = WTF::TimeDelta::FromMilliseconds(14);
+  WTF::TimeDelta interval = now - previous_submit_time_;
+  if (interval < min_delay) {
+    //LOG(INFO) << __FUNCTION__ << ";;; DELAY for " << (min_delay - interval).InMillisecondsF() << "ms";
+#if 0
+    // Sigh, can't reschedule since it's not legal to leave the current context until done submitting.
+    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostDelayedTask(
+        BLINK_FROM_HERE, WTF::Bind(&VRDisplay::submitFrame, WrapWeakPersistent(this)),
+        min_delay - interval);
+
+    return;
+#else
+    TRACE_EVENT0("gpu", "usleep");
+    usleep((min_delay - interval).InMicroseconds());
+#endif
+  }
+  previous_submit_time_ = WTF::Time::Now();
+
+  //context_gl_->DescheduleUntilFinishedCHROMIUM();
+
+#if 0
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::Flush_1");
+  //context_gl_->ShallowFlushCHROMIUM();
   context_gl_->Flush();
   TRACE_EVENT_END0("gpu", "VRDisplay::Flush_1");
+#endif
 
   // Check if the canvas got resized, if yes send a bounds update.
   int current_width = rendering_context_->drawingBufferWidth();
@@ -679,6 +722,7 @@ void VRDisplay::submitFrame() {
     }
   }
 
+#if 0
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetImage");
   RefPtr<Image> image_ref = rendering_context_->GetImage(
       kPreferAcceleration, kSnapshotReasonCreateImageBitmap);
@@ -699,9 +743,23 @@ void VRDisplay::submitFrame() {
   // image until the mailbox was consumed.
   StaticBitmapImage* static_image =
       static_cast<StaticBitmapImage*>(image_ref.Get());
+#else
+  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
+  RefPtr<StaticBitmapImage> image_ref = rendering_context_->GetStaticBitmapImage();
+
+  // The AcceleratedStaticBitmapImage must be kept alive until the
+  // mailbox is used via createAndConsumeTextureCHROMIUM, the mailbox
+  // itself does not keep it alive. We must keep a reference to the
+  // image until the mailbox was consumed.
+  StaticBitmapImage* static_image = image_ref.Get();
+  TRACE_EVENT_END0("gpu", "VRDisplay::GetStaticBitmapImage");
+#endif
+
+#if 1
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::EnsureMailbox");
   static_image->EnsureMailbox();
   TRACE_EVENT_END0("gpu", "VRDisplay::EnsureMailbox");
+#endif
 
   // Save a reference to the image to keep it alive until next frame,
   // where we'll wait for the transfer to finish before overwriting
@@ -714,11 +772,15 @@ void VRDisplay::submitFrame() {
   TRACE_EVENT_END0("gpu", "VRDisplay::GetMailbox");
   // Flush to avoid black screen flashes which appear to be related to
   // "fence sync must be flushed before generating sync token" GL errors.
+#if 0
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::Flush_2");
-  context_gl_->Flush();
+  context_gl_->ShallowFlushCHROMIUM();
+  //context_gl_->Flush();
   TRACE_EVENT_END0("gpu", "VRDisplay::Flush_2");
+#endif
   auto sync_token = static_image->GetSyncToken();
 
+#if !EARLY_RENDER_WAIT
   // Wait for the previous render to finish, to avoid losing frames in the
   // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
   // Other devices may have different preferences. Do this step as late
@@ -733,6 +795,7 @@ void VRDisplay::submitFrame() {
       }
     }
   }
+#endif
 
   pending_previous_frame_render_ = true;
   pending_submit_frame_ = true;
@@ -741,6 +804,7 @@ void VRDisplay::submitFrame() {
   vr_presentation_provider_->SubmitFrame(
       vr_frame_id_, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D));
   TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
+  previous_submit_time_ = WTF::Time::Now();
 
   did_submit_this_frame_ = true;
   // Reset our frame id, since anything we'd want to do (resizing/etc) can
