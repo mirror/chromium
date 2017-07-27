@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import android.text.TextUtils;
 
+import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.util.UrlUtilities;
@@ -29,16 +30,17 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
 
     @Override
     public boolean canAutoHideBrowserControls() {
-        return false;
+        // Allow auto-hiding browser controls unless they are shown because of low security level.
+        return !shouldShowBrowserControlsForSecurityLevel(mTab.getSecurityLevel());
     }
 
     /**
      * Returns whether the browser controls should be shown when a webapp is navigated to
-     * {@link url} given the page's security level.
+     * {@code url} given the page's security level.
      * @param info
      * @param url The webapp's current URL
      * @param securityLevel The security level for the webapp's current URL.
-     * @return Whether the browser controls should be shown for {@link url}.
+     * @return Whether the browser controls should be shown for {@code url}.
      */
     public boolean shouldShowBrowserControls(
             WebappInfo info, String url, int securityLevel) {
@@ -46,15 +48,24 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
         if (TextUtils.isEmpty(url)) return false;
 
         return shouldShowBrowserControlsForUrl(info, url)
-                || securityLevel == ConnectionSecurityLevel.DANGEROUS
-                || securityLevel == ConnectionSecurityLevel.SECURITY_WARNING;
+                || shouldShowBrowserControlsForWebappType(info)
+                || shouldShowBrowserControlsForSecurityLevel(securityLevel);
     }
 
     /**
      * Returns whether the browser controls should be shown when a webapp is navigated to
-     * {@link url}.
+     * {@code url}.
      */
     protected boolean shouldShowBrowserControlsForUrl(WebappInfo info, String url) {
         return !UrlUtilities.sameDomainOrHost(info.uri().toString(), url, true);
+    }
+
+    private boolean shouldShowBrowserControlsForSecurityLevel(int securityLevel) {
+        return securityLevel == ConnectionSecurityLevel.DANGEROUS
+                || securityLevel == ConnectionSecurityLevel.SECURITY_WARNING;
+    }
+
+    private boolean shouldShowBrowserControlsForWebappType(WebappInfo info) {
+        return info.displayMode() == WebDisplayMode.MINIMAL_UI;
     }
 }
