@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73246fb8_2ce4487d",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito_common.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-27T02:22:36Z",
+      "side": 1,
+      "message": "Remove this trailing whitespace",
+      "range": {
+        "startLine": 7,
+        "startChar": 59,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "703adffa8de52ebb4f71bc27160c300a57fa48a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e58733_0791bc39",
+        "filename": "chrome/android/java/res/layout/new_tab_page_incognito_md_common.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-27T02:22:36Z",
+      "side": 1,
+      "message": "And this whitespace",
+      "range": {
+        "startLine": 7,
+        "startChar": 59,
+        "endLine": 8,
+        "endChar": 3
+      },
+      "revId": "703adffa8de52ebb4f71bc27160c300a57fa48a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
