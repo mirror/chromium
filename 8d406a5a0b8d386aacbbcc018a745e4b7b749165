@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4703787_f83917de",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 53705,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-27T18:30:09Z",
+      "side": 1,
+      "message": "I don\u0027t see an enum value that directly matches \"reset password\", does this correspond to \"Change password\"? Maybe change the summary to reflect that if it does.",
+      "range": {
+        "startLine": 53705,
+        "startChar": 58,
+        "endLine": 53705,
+        "endChar": 72
+      },
+      "revId": "8d406a5a0b8d386aacbbcc018a745e4b7b749165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685159cf_966820dd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 53705,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-27T18:30:09Z",
+      "side": 1,
+      "message": "Is reset password the only non \"Shown\" value that\u0027s recorded in this histogram?",
+      "revId": "8d406a5a0b8d386aacbbcc018a745e4b7b749165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8093c378_00a5a824",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 53706,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-27T18:30:09Z",
+      "side": 1,
+      "message": "These summaries are a bit confusing to me. First of all, the usual form a histogram summary is to describe what the histogram means and what conditions cause it to be logged.\n\nMaybe something like:\nRecords how a user interacts with the chrome://settings page that displays the password protection warning. Logged when the page is shown and when the user chooses to reset their password on the page.\n\nAnd something similar for the other histograms.",
+      "range": {
+        "startLine": 53704,
+        "startChar": 4,
+        "endLine": 53706,
+        "endChar": 27
+      },
+      "revId": "8d406a5a0b8d386aacbbcc018a745e4b7b749165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
