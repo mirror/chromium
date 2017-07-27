@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5047c32d_9e37df48",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:01:00Z",
+      "side": 1,
+      "message": "s/base/GURL",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 4
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8ea163_542aade5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:01:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the relevance of [1] and [3] are, since those don\u0027t use GURL and you aren\u0027t correcting for those cases.\n\nI would just remove these links (it\u0027s not great to link to code search from a commit message anyway). If someone wants examples of where this improves the code, they can read the diff of the CL.",
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69884f6a_f85e07b2",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:01:00Z",
+      "side": 1,
+      "message": "Actually, this can just be:\n\nconst GURL target \u003d result-\u003emanifest_url().Resolve(url_template_filled);\n\nI think...\n\nProbably handles more edge cases than Resolve(\".\") followed by concatenation.",
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f131cf60_00be4a4a",
+        "filename": "content/browser/appcache/appcache_manifest_parser.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:01:00Z",
+      "side": 1,
+      "message": "I\u0027m confused as to why this doesn\u0027t use the manifest\u0027s scope attribute (falling back to manifest_url.GetWithoutFilename() as the default).",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 59
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357e381d_1200b456",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:01:00Z",
+      "side": 1,
+      "message": "non-standard",
+      "range": {
+        "startLine": 378,
+        "startChar": 44,
+        "endLine": 378,
+        "endChar": 55
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a1cac7_894e5f19",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:01:00Z",
+      "side": 1,
+      "message": "The is_valid_ check is already in Resolve() so this is redundant.",
+      "range": {
+        "startLine": 380,
+        "startChar": 7,
+        "endLine": 380,
+        "endChar": 16
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc2614b_1ca1c2bf",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T01:01:00Z",
+      "side": 1,
+      "message": "This adds a new error case that wasn\u0027t there before. Is there an explicit reason to fail on non-standard URLs? It seems non-trivial what \"standard\" means in this context.",
+      "range": {
+        "startLine": 380,
+        "startChar": 21,
+        "endLine": 380,
+        "endChar": 33
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
