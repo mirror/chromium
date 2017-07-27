@@ -151,7 +151,6 @@ void ClientUsageTracker::UpdateUsageCache(const GURL& origin, int64_t delta) {
     UpdateGlobalUsageValue(IsStorageUnlimited(origin) ? &global_unlimited_usage_
                                                       : &global_limited_usage_,
                            delta);
-
     // Notify the usage monitor that usage has changed. The storage monitor may
     // be NULL during tests.
     if (storage_monitor_) {
