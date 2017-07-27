@@ -530,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "4af54053_b49b17c4",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-27T17:58:24Z",
+      "side": 1,
+      "message": "I wrote Done by mistake, but actually, I didn\u0027t change it. That is because pool_count is the number of target pool to read in patch, but each pool is identified by a pool_tag. A patch adding targets for pool 0 and 2 would be legal, with pool_count \u003d 2.",
+      "parentUuid": "b501ea40_4436cb8e",
+      "range": {
+        "startLine": 200,
+        "startChar": 27,
+        "endLine": 200,
+        "endChar": 35
+      },
+      "revId": "02de9312d58f5d1e536b742926b720308f9ecc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e644b6a4_9f6869fc",
         "filename": "chrome/installer/zucchini/patch_reader.cc",
         "patchSetId": 20
