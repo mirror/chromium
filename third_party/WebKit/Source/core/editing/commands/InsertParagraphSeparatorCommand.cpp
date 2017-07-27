@@ -130,7 +130,7 @@ bool InsertParagraphSeparatorCommand::ShouldUseDefaultParagraphElement(
     return true;
 
   // Assumes that if there was a range selection, it was already deleted.
-  if (!IsEndOfBlock(EndingSelection().VisibleStart()))
+  if (!IsEndOfBlock(EndingVisibleSelection().VisibleStart()))
     return false;
 
   return enclosing_block->HasTagName(h1Tag) ||
@@ -176,7 +176,7 @@ Element* InsertParagraphSeparatorCommand::CloneHierarchyUnderNewBlock(
 }
 
 void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
-  if (!EndingSelection().IsNonOrphanedCaretOrRange())
+  if (!EndingVisibleSelection().IsNonOrphanedCaretOrRange())
     return;
 
   Position insertion_position = EndingSelection().Start();
@@ -184,7 +184,7 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   TextAffinity affinity = EndingSelection().Affinity();
 
   // Delete the current selection.
-  if (EndingSelection().IsRange()) {
+  if (EndingVisibleSelection().IsRange()) {
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
     CalculateStyleBeforeInsertion(insertion_position);
     DeleteSelection(editing_state, false, true);

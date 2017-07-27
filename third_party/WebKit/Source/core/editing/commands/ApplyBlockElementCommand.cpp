@@ -55,15 +55,15 @@ ApplyBlockElementCommand::ApplyBlockElementCommand(
     : CompositeEditCommand(document), tag_name_(tag_name) {}
 
 void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
-  if (!EndingSelection().RootEditableElement())
+  if (!EndingVisibleSelection().RootEditableElement())
     return;
 
   // ApplyBlockElementCommands are only created directly by editor commands'
   // execution, which updates layout before entering doApply().
   DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
 
-  VisiblePosition visible_end = EndingSelection().VisibleEnd();
-  VisiblePosition visible_start = EndingSelection().VisibleStart();
+  VisiblePosition visible_end = EndingVisibleSelection().VisibleEnd();
+  VisiblePosition visible_start = EndingVisibleSelection().VisibleStart();
   if (visible_start.IsNull() || visible_start.IsOrphan() ||
       visible_end.IsNull() || visible_end.IsOrphan())
     return;
@@ -93,7 +93,7 @@ void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
   }
 
   VisibleSelection selection =
-      SelectionForParagraphIteration(EndingSelection());
+      SelectionForParagraphIteration(EndingVisibleSelection());
   VisiblePosition start_of_selection = selection.VisibleStart();
   VisiblePosition end_of_selection = selection.VisibleEnd();
   DCHECK(!start_of_selection.IsNull());
