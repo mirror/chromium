@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0593999d_1c6ea833",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "46b973a5_9096845d",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "2b74b51d9144b90bde6e8eb57bc029b14765be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cce6c82_e4e3f85b",
         "filename": "extensions/common/permissions/extensions_api_permissions.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2b74b51d9144b90bde6e8eb57bc029b14765be67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c5a25f_699fc9b9",
+        "filename": "extensions/common/permissions/extensions_api_permissions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "3cce6c82_e4e3f85b",
+      "range": {
+        "startLine": 107,
+        "startChar": 32,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "2b74b51d9144b90bde6e8eb57bc029b14765be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

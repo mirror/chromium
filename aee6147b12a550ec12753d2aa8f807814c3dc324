@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "227dce45_26ee42d0",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "But isn\u0027t a DCHECK more appropriate then? CHECK should be used only when the failure would cause a security vulnerability. It has runtime cost in release builds.",
+      "parentUuid": "66190bfa_a7155722",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efbe9056_c4eb3380",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
         "patchSetId": 6
@@ -438,6 +462,30 @@
       "side": 1,
       "message": "DCHECK isn\u0027t bad, but here I don\u0027t see any reason why IsAPIAvailable can return false.\n::Parse getting called when IsAPIAvailable is false would be just odd. I don\u0027t think there should be any security vulnerability.",
       "parentUuid": "74d2b092_405cf6e3",
+      "range": {
+        "startLine": 59,
+        "startChar": 9,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47920eec_554abc0d",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "Yeah I agree, but again CHECK has runtime cost for release builds. Hence unless the test failure is a security vulnerability, I think DCHECK should be preferred. See the CHECK, DCHECK section in https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md",
+      "parentUuid": "a82288e3_f4f16d07",
       "range": {
         "startLine": 59,
         "startChar": 9,
@@ -709,6 +757,30 @@
     },
     {
       "key": {
+        "uuid": "70e3fa92_c701a3bc",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "442d0431_2a717bea",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 11
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1256bd_9453806b",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
         "patchSetId": 6
@@ -753,6 +825,30 @@
       "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4377ddeb_b241ae2d",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "43d8069a_84395b2f",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -921,6 +1017,30 @@
     },
     {
       "key": {
+        "uuid": "7375e5a5_816bc61c",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd4739eb_a66fb298",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0968acbf_2317c9e9",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.h",
         "patchSetId": 6
@@ -989,6 +1109,30 @@
       "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44047262_8868b830",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T03:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5920d9c3_609aac90",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
