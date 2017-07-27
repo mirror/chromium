@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3bf24fe_8010109d",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "Nit: Add \u0027environment\u0027 to make it clearer",
+      "range": {
+        "startLine": 39,
+        "startChar": 24,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "63a92882f3588403a38936e57be5d8f6f4515be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f1cb86_0168433d",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "Nit: Kerberos",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "63a92882f3588403a38936e57be5d8f6f4515be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44bbfe4_3437e1c8",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "Use \"Kerberos\" instead of krb5 in comments for consistency.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 1
+      },
+      "revId": "63a92882f3588403a38936e57be5d8f6f4515be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5635f5_ef092fad",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "Needs { } (or, define an int size before the if block)",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 11
+      },
+      "revId": "63a92882f3588403a38936e57be5d8f6f4515be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2a9569_ef428365",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "DisableOperationDelay.\nAlso: If this is used in tests only, consider adding ForTesting.",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "63a92882f3588403a38936e57be5d8f6f4515be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8a236e_ed8570d8",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "Nit: Kerberos",
+      "range": {
+        "startLine": 72,
+        "startChar": 48,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "63a92882f3588403a38936e57be5d8f6f4515be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353f137d_afcb8b49",
+        "filename": "chromeos/dbus/auth_policy_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "It was renamed to GetUserKerberosFiles for consistency and clarity (there\u0027s also the machine Kerberos files).",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "63a92882f3588403a38936e57be5d8f6f4515be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

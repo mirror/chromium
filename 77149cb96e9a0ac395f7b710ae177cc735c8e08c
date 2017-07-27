@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dafa7cfe_b8e4fc20",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-27T13:42:00Z",
+      "side": 1,
+      "message": "I checked how others are doing it and except in unit tests adding context is the standard. Otherwise, the log will just say e.g. FILE_ERROR_ACCESS_DENIED, it won\u0027t even say that it tried to create a directory or give the directory name.",
+      "parentUuid": "3f52d701_2102f23f",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f836e48_c3ff212d",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
         "patchSetId": 2
