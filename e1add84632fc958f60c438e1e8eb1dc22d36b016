@@ -16,6 +16,23 @@
       "revId": "e1add84632fc958f60c438e1e8eb1dc22d36b016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd5637c_df4b839b",
+        "filename": "components/guest_view/browser/guest_view_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-27T17:12:05Z",
+      "side": 1,
+      "message": "Please document this (and include a blank line between it and the previous one, to be consistent with the others).",
+      "revId": "e1add84632fc958f60c438e1e8eb1dc22d36b016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
