@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "936ed40b_27ed4c50",
+        "filename": "content/browser/memory/swap_metrics_delegate_uma.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-27T21:16:23Z",
+      "side": 1,
+      "message": "These metrics have been out for some time and we are just keeping them consistent in this change. I can say that from looking at the histogram data for all 4 of these metrics, they look reasonable with a 10K upper bound.",
+      "parentUuid": "d52e480b_ae08a6a6",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccbf5b1d_e5dc502f",
         "filename": "content/browser/memory/swap_metrics_driver_impl.h",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T15:20:49Z",
       "side": 1,
       "message": "This should be const, no?",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9af734_3d48b9b4",
+        "filename": "content/browser/memory/swap_metrics_driver_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-27T21:16:23Z",
+      "side": 1,
+      "message": "Yes and no? :). I was following http://www.chromium.org/developers/content-module/content-api and the second bullet from the bottom says not to add const to interfaces in content/public, which this overrides. I changed it though, because I see const used in plenty of other interfaces in content/public.",
+      "parentUuid": "ccbf5b1d_e5dc502f",
       "range": {
         "startLine": 26,
         "startChar": 7,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "f110b211_52331265",
+        "filename": "content/browser/memory/swap_metrics_driver_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-27T21:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ce9ac9_373116b5",
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a0df56c_a7524855",
         "filename": "content/browser/memory/swap_metrics_driver_impl_unittest.cc",
         "patchSetId": 13
@@ -85,6 +151,30 @@
       "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0785fa_e6cf0fe1",
+        "filename": "content/browser/memory/swap_metrics_driver_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-27T21:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a0df56c_a7524855",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 32
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "41296365_dff2031a",
+        "filename": "content/public/browser/swap_metrics_driver.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-27T21:16:23Z",
+      "side": 1,
+      "message": "Actually no because the timer does sequence checking here. Added comments in latest patch set.",
+      "parentUuid": "16a01445_1d5fefe5",
+      "range": {
+        "startLine": 68,
+        "startChar": 30,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "383df840_5a630073",
         "filename": "content/public/browser/swap_metrics_driver.h",
         "patchSetId": 13
@@ -131,6 +245,30 @@
       "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82644302_454c5041",
+        "filename": "content/public/browser/swap_metrics_driver.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-27T21:16:23Z",
+      "side": 1,
+      "message": "Fixed comments in latest patch set.",
+      "parentUuid": "383df840_5a630073",
+      "range": {
+        "startLine": 89,
+        "startChar": 10,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "6ec0ea77993c5e170dccb2ea99b68604b75fe083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
