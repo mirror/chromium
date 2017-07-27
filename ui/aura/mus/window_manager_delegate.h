@@ -80,6 +80,12 @@ class AURA_EXPORT WindowManagerClient {
   virtual void SetGlobalOverrideCursor(
       base::Optional<ui::CursorData> cursor) = 0;
 
+  // Sets whether the cursor is visible because the user pressed a key or
+  // touched the screen. This bit is separate from SetCursorVisible(), as it
+  // implicitly is set in the window server when a key or touch event occurs,
+  // and is implicitly cleared when the mouse moves.
+  virtual void SetMouseEventsEnabled(bool enabled) = 0;
+
   // Sets the list of keys which don't hide the cursor.
   virtual void SetKeyEventsThatDontHideCursor(
       std::vector<ui::mojom::EventMatcherPtr> cursor_key_list) = 0;
@@ -216,6 +222,8 @@ class AURA_EXPORT WindowManagerDelegate {
       uint32_t id,
       const ui::Event& event,
       std::unordered_map<std::string, std::vector<uint8_t>>* properties);
+
+  virtual void OnMouseEventsEnabledChanged(bool enabled) = 0;
 
   virtual void OnWmPerformMoveLoop(
       Window* window,

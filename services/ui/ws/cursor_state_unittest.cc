@@ -20,7 +20,7 @@ const UserId kTestId1 = "2";
 
 }  // namespace
 
-class CursorStateTest : public testing::Test {
+class CursorStateTest : public testing::Test, public CursorStateDelegate {
  public:
   CursorStateTest() {}
   ~CursorStateTest() override {}
@@ -38,12 +38,17 @@ class CursorStateTest : public testing::Test {
   void SetUp() override {
     screen_manager_.Init(window_server()->display_manager());
     window_server()->user_id_tracker()->AddUserId(kTestId1);
-    cursor_state_ = base::MakeUnique<CursorState>(display_manager());
+    cursor_state_ = base::MakeUnique<CursorState>(display_manager(), this);
 
     AddWindowManager(window_server(), kTestId1);
     screen_manager().AddDisplay(MakeDisplay(0, 0, 1024, 768, 1.0f));
     ASSERT_EQ(1u, display_manager()->displays().size());
   }
+
+  // TODO(erg): Here's a testing opportunity!
+
+  // CursorStateDelegate:
+  void OnMouseEventsEnabledChanged(bool enabled) override {}
 
  private:
   WindowServerTestHelper ws_test_helper_;
