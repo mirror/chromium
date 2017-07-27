@@ -31,6 +31,14 @@ Polymer({
       value: '',
     },
 
+    /** @private */
+    enableSiteSettings_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('enableSiteSettings');
+      },
+    },
+
     /**
      * The type of storage for the origin.
      * @private
@@ -64,7 +72,8 @@ Polymer({
    * @private
    */
   onOriginChanged_: function() {
-    this.$.usageApi.fetchUsageTotal(this.toUrl(this.origin).hostname);
+    if (this.enableSiteSettings_)
+      this.$.usageApi.fetchUsageTotal(this.toUrl(this.origin).hostname);
 
     var siteDetailsPermissions =
         /** @type{!NodeList<!SiteDetailsPermissionElement>} */
@@ -101,7 +110,9 @@ Polymer({
    * @private
    */
   onClearStorage_: function() {
-    this.$.usageApi.clearUsage(this.toUrl(this.origin).href, this.storageType_);
+    if (this.enableSiteSettings_)
+      this.$.usageApi.clearUsage(
+          this.toUrl(this.origin).href, this.storageType_);
   },
 
   /**
@@ -122,6 +133,11 @@ Polymer({
     this.browserProxy.setOriginPermissions(
         this.origin, this.getCategoryList_(), settings.ContentSetting.DEFAULT);
 
+    // Since usage is only shown when "Site Settings" is enabled, don't clear it
+    // when it's not shown.
+    if (!this.enableSiteSettings_)
+      return;
+
     if (this.storedData_ != '')
       this.onClearStorage_();
 
@@ -139,4 +155,21 @@ Polymer({
           return element.category;
         });
   },
+
+  /**
+   * Checks whether the permission list is standalone or has a heading.
+   * @private
+   */
+  permissionListClass_: function(hasHeading) {
+    return hasHeading ? '' : 'without-heading';
+  },
+
+  /**
+   * Checks whether this site has any usage information to show.
+   * @private
+   */
+  hasUsage: function(storage) {
+    return storage != '';
+  },
+
 });
