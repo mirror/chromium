@@ -448,30 +448,33 @@ css_properties("make_core_generated_computed_style_base") {
 
 css_properties("make_core_generated_css_value_id_mappings") {
   script = "../build/scripts/make_css_value_id_mappings.py"
-  in_files = [
-        "css/CSSValueKeywords.json5"
-  ]
+  in_files = [ "css/CSSValueKeywords.json5" ]
   other_inputs = [
-        "../build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
-        "../build/scripts/keyword_utils.py",
+    "../build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+    "../build/scripts/keyword_utils.py",
   ]
   outputs = [
     "$blink_core_output_dir/CSSValueIDMappingsGenerated.h",
   ]
 }
 
+css_properties("make_core_generated_css_property_api_baseclass") {
+  script = "../build/scripts/core/css/properties/make_css_property_api.py"
+  other_inputs = [ "../build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl" ]
+  outputs = [
+    "$blink_core_output_dir/css/properties/CSSPropertyAPI.cpp",
+  ]
+}
+
 # TODO(shend): Need a better way to specify generated output files
 code_generator("make_core_generated_css_property_apis") {
-  script = "../build/scripts/core/css/properties/make_css_property_apis.py"
+  script =
+      "../build/scripts/core/css/properties/make_css_property_api_headers.py"
   json_inputs = [
     "css/CSSProperties.json5",
     "css/properties/CSSPropertyAPIMethods.json5",
   ]
-  templates = [
-    "../build/scripts/core/css/properties/templates/CSSPropertyDescriptor.cpp.tmpl",
-    "../build/scripts/core/css/properties/templates/CSSPropertyDescriptor.h.tmpl",
-    "../build/scripts/core/css/properties/templates/CSSPropertyAPIFiles.h.tmpl",
-  ]
+  templates = [ "../build/scripts/core/css/properties/templates/CSSPropertyAPIFiles.h.tmpl" ]
   outputs = [
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignItems.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignOrJustifyContent.h",
@@ -602,8 +605,6 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWillChange.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIZIndex.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIZoom.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyDescriptor.cpp",
-    "$blink_core_output_dir/css/properties/CSSPropertyDescriptor.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIAnimation.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBackgroundPosition.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderBottom.h",
@@ -1087,6 +1088,7 @@ targets_generating_sources = [
   ":make_core_generated_css_property_metadata",
   ":make_core_generated_computed_style_base",
   ":make_core_generated_css_value_id_mappings",
+  ":make_core_generated_css_property_api_baseclass",
   ":make_core_generated_css_property_apis",
   ":make_core_generated_css_property_names",
   ":make_core_generated_cssom_types",
