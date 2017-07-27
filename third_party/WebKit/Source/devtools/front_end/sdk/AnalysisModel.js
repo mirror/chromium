@@ -45,6 +45,22 @@ SDK.AnalysisModel = class extends SDK.SDKModel {
   }
 
   /**
+   * Formats the content of the flag label and appends it to the node.
+   * @param {!SDK.AnalysisModel.Flag} flag
+   * @param {!Element} node
+   */
+  static appendFlagContentToNode(flag, node) {
+    var icon = UI.Icon.create(`smallicon-${flag.level}`, 'element-icon force-color');
+    node.appendChild(icon);
+
+    var code = false;
+    for (var segment of flag.label.split('`')) {
+      (!code ? node : node.createChild('code')).createTextChild(segment);
+      code = !code;
+    }
+  }
+
+  /**
    * @return {!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>}
    */
   flags() {

@@ -420,6 +420,9 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       if (children)
         await Promise.all(children.map(child => this._updateFlagsForNode(child, true, flags)));
     }
+    var treeElement = this.findTreeElement(/** @type {!SDK.DOMNode} */ (node));
+    if (treeElement)
+      treeElement.updateInlineFlags();
 
     /**
      * @param {...!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>} maps
@@ -484,14 +487,15 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
         var textTypes = ['text', 'email', 'tel'];
         var selectors = textTypes.map(type => `input[type="${type}"]:not([autocomplete])`).join();
         // Find the first text field preceding the first password field in the form.
-        var textFields = (await node.querySelectorAll(selectors)).filter(node => nodePrecedes(node, passwordFields[0]));
+        var textFields = (await node.querySelectorAll(selectors))
+          .filter(node => nodePrecedes(node, passwordFields[0]));
         var textField = textFields[textFields.length - 1];
         if (textField)
           inferAutocompleteValuesForInput(textField, 'username');
         switch (passwordFields.length) {
           case 3:
             inferAutocompleteValuesForInput(passwordFields[0], 'current-password');
-          // Fall-through here to match the last two password fields.
+            // Fall-through here to match the last two password fields.
           case 2:
             inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 2], 'new-password');
             inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 1], 'new-password');
@@ -509,8 +513,8 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       function inferAutocompleteValuesForInput(descendant, autocompleteValue) {
         if (!flags.has(descendant))
           flags.set(descendant, []);
-        var annotation = new SDK.AnalysisModel.Annotation(
-            SDK.AnalysisModel.Annotation.Types.Attribute, {text: `autocomplete="${autocompleteValue}"`});
+        var annotation = new SDK.AnalysisModel.Annotation(SDK.AnalysisModel.Annotation.Types.Attribute,
+          {text: `autocomplete="${autocompleteValue}"`});
         var flag = new SDK.AnalysisModel.Flag(
             'warning', 'Adding an `autocomplete` attribute enhances the user experience', [annotation]);
         flags.get(descendant).push(flag);

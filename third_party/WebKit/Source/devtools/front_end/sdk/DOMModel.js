@@ -500,8 +500,8 @@ SDK.DOMNode = class {
   querySelectorAll(selectors) {
     if (this._domModel) {
       var domModel = this._domModel;
-      return this._domModel.querySelectorAll(this.id, selectors)
-          .then(nodeIds => (nodeIds || []).map(domModel.nodeForId.bind(domModel)));
+      return this._domModel.querySelectorAll(this.id, selectors).then(nodeIds => (nodeIds || [])
+        .map(domModel.nodeForId.bind(domModel)));
     }
     return Promise.resolve([]);
   }
