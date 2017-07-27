@@ -1,0 +1,373 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87df32d8_ff65b1d5",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Also contextual_suggestions_source.h?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d91ac68_4a1a9cb1",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Also here, ContextualSuggestionsSource?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02813257_7696f2ac",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Should this just be profile-\u003eGetURLRequestContext()?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199ba9f4_2ced8844",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "FYI, the preferred style now is to create the task runner where it\u0027s needed rather than passing it in (that\u0027s where the required traits will be known best!). Since that\u0027s a problem with the DB class rather than your CL, mind adding a TODO?",
+      "range": {
+        "startLine": 546,
+        "startChar": 64,
+        "endLine": 546,
+        "endChar": 0
+      },
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca13f0f_9930bbb1",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Adding a new DB instance has quite a big cost in terms of memory use. For breaking news, we\u0027re going to some length to avoid a separate DB. It doesn\u0027t have to happen now, but before this can launch, we\u0027ll probably have to figure out a way to avoid the extra DB.",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1893f651_0602ffb7",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Maybe make a CreateContextualSuggestionsSource helper function, similar to the Register* ones?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4dc86a_8ac96567",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Is this required?",
+      "range": {
+        "startLine": 27,
+        "startChar": 76,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9145d1c4_5df3ab80",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Hm. Any reason this lives in the ContentSuggestionsService? Are there any plans to share/reuse any of the logic here? If not, should it maybe just be a separate, independent KeyedService?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591bc35e_f9450871",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "const\u0026 ?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b424da38_eef9d405",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "nit: By using .find(), this can be done with only one lookup rather than two.",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5c2771_3e1d689a",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab0cdf8_7f567da9",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Can you just pass the callback directly, rather than binding it to a member method that does nothing?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217410b7_d7360fb4",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Should |callback| still be called in this case?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c28479_0e31636b",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Hm, so the images get persisted in the DB, but the suggestions themselves and this mapping are lost on a Chrome restart, so there\u0027s no way to access the images again? Am I missing something?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c28e86_82744821",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "So how is it different from the Fetcher?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1711ddf_3e416189",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "DidFetchContextualSuggestions? (The On* style is typically used for observer methods.)",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6835c187_a0dd7f75",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30026d87_163b2f79",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Only images, not the suggestions themselves?\nAlso, it\u0027s not actually used here - add a comment that it\u0027s needed by the image fetcher?",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0bcfd32_a8f75d9e",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "s/Json/network/? The fact that the response comes in json form doesn\u0027t really matter here.",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4215a71_690d1936",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "Remove comment? IMO this is more confusing than helpful, and this doesn\u0027t really need a comment.",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49a1d17_19e71322",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-27T09:09:38Z",
+      "side": 1,
+      "message": "ContentSuggestion::ID or std::string?!",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
