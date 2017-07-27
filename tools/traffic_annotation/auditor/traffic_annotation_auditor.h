@@ -39,7 +39,7 @@ struct AuditorException {
 // Holds the auditor processing results on one unit of annotation or function.
 class AuditorResult {
  public:
-  enum class ResultType {
+  enum class Type {
     RESULT_OK,            // No error
     RESULT_IGNORE,        // The item does not require furthure processing.
     ERROR_FATAL,          // A fatal error that should stop process.
@@ -53,20 +53,28 @@ class AuditorResult {
     ERROR_UNIQUE_ID_INVALID_CHARACTER,    // A unique id contanins a characer
                                           // which is not alphanumeric or
                                           // underline.
-    ERROR_MISSING_ANNOTATION  // A function that requires annotation is not
-                              // annotated.
+    ERROR_MISSING_ANNOTATION,     // A function that requires annotation is not
+                                  // annotated.
+    ERROR_MISSING_EXTRA_ID,       // Annotation does not have a valid extra id.
+    ERROR_INCOMPLETE_ANNOTATION,  // Annotation has some missing fields.
+    ERROR_INCONSISTENT_ANNOTATION,  // Annotation has some inconsistent fields.
+    ERROR_MERGE_FAILED,            // Two annotations that are supposed to merge
+                                   // cannot merge.
+    ERROR_INCOMPLETED_ANNOTATION,  // A partial or [branched_] completing
+                                   // annotation is not paired with any other
+                                   // annotation to be completed.
   };
 
   static const int kNoCodeLineSpecified;
 
-  AuditorResult(ResultType type,
+  AuditorResult(Type type,
                 const std::string& message,
                 const std::string& file_path,
                 int line);
 
-  AuditorResult(ResultType type, const std::string& message);
+  AuditorResult(Type type, const std::string& message);
 
-  AuditorResult(ResultType type);
+  AuditorResult(Type type);
 
   ~AuditorResult();
 
@@ -74,15 +82,22 @@ class AuditorResult {
 
   void AddDetail(const std::string& message);
 
-  ResultType type() const { return type_; };
+  Type type() const { return type_; };
 
   std::string file_path() const { return file_path_; }
 
   // Formats the error message into one line of text.
   std::string ToText() const;
 
+  // Formats the error message into one line of text that just includes the
+  // error reason and not the annotations and files invloved. It can be used to
+  // create a new error based on another one.
+  std::string ToShortText() const;
+
+  bool OK() { return type_ == Type::RESULT_OK; }
+
  private:
-  ResultType type_;
+  Type type_;
   std::vector<std::string> details_;
   std::string file_path_;
   int line_;
@@ -104,11 +119,12 @@ class InstanceBase {
 class AnnotationInstance : public InstanceBase {
  public:
   // Annotation Type.
-  enum class AnnotationType {
+  enum class Type {
     ANNOTATION_COMPLETE,
     ANNOTATION_PARTIAL,
-    ANNOTATION_COMPLETENG,
-    ANNOTATION_BRANCHED_COMPLETING
+    ANNOTATION_COMPLETING,
+    ANNOTATION_BRANCHED_COMPLETING,
+    ANNOTATION_INSTANCE_TYPE_LAST = ANNOTATION_BRANCHED_COMPLETING
   };
 
   AnnotationInstance();
@@ -133,11 +149,29 @@ class AnnotationInstance : public InstanceBase {
                             int start_line,
                             int end_line) override;
 
+  // Checks if an annotation has all required fields.
+  AuditorResult IsComplete() const;
+
+  // Checks if annotation fields are consistent.
+  AuditorResult IsConsistent() const;
+
+  // Checks to see if this annotation can be completed with the |other|
+  // annotation, based on their unique ids, types, and extra ids. |*this| should
+  // be of partial type and the |other| either completing or branched_completing
+  // type.
+  bool IsCompletableWith(const AnnotationInstance& other) const;
+
+  // Combines |*this| partial annotation with a completing/branched_completing
+  // annotation and returns the combined complete annotation.
+  AuditorResult CreateCompleteAnnotation(
+      AnnotationInstance& completing_annotation,
+      AnnotationInstance* combination) const;
+
   // Protobuf of the annotation.
   traffic_annotation::NetworkTrafficAnnotation proto;
 
   // Type of the annotation.
-  AnnotationType annotation_type;
+  Type type;
 
   // Extra id of the annotation (if available).
   std::string extra_id;
@@ -145,6 +179,8 @@ class AnnotationInstance : public InstanceBase {
   // Hash codes of unique id and extra id (if available).
   int unique_id_hash_code;
   int extra_id_hash_code;
+
+  std::string comments;
 };
 
 // Holds an instance of calling a function that might have a network traffic
@@ -210,12 +246,22 @@ class TrafficAnnotationAuditor {
   bool IsWhitelisted(const std::string& file_path,
                      AuditorException::ExceptionType whitelist_type);
 
-  // Checks to see if any unique id or its hash code is duplicated.
+  // Checks to see if any unique id or extra id or their hash code are
+  // duplicated. Adds errors to |errors_| and purges annotations with duplicate
+  // ids.
   void CheckDuplicateHashes();
 
   // Checks to see if unique ids only include alphanumeric characters and
-  // underline.
+  // underline. Adds errors to |errors_| and purges annotations with
+  // incorrect ids.
   void CheckUniqueIDsFormat();
+
+  // Checks to see if annotation contents are valid. Complete annotations should
+  // have all required fields and be consistent, and incomplete annotations
+  // should be completed with each other. Merges all matching incomplete
+  // annotations and adds them to |extracted_annotations_|, adds errors
+  // to |errors| and purges all incomplete annotations.
+  void CheckAnnotationsContents();
 
   // Checks to see if all functions that need annotations have one.
   void CheckAllRequiredFunctionsAreAnnotated();
@@ -223,8 +269,7 @@ class TrafficAnnotationAuditor {
   // Checks if a call instance can stay not annotated.
   bool CheckIfCallCanBeUnannotated(const CallInstance& call);
 
-  // Preforms all checks on extracted annotations and calls, and adds the
-  // results to |errors_|.
+  // Preforms all checks on extracted annotations and calls.
   void RunAllChecks();
 
   // Returns a mapping of reserved unique ids' hash codes to the unique ids'
@@ -232,6 +277,9 @@ class TrafficAnnotationAuditor {
   // net/traffic_annotation/network_traffic_annotation.h and
   // net/traffic_annotation/network_traffic_annotation_test_helper.h
   static const std::map<int, std::string>& GetReservedUniqueIDs();
+
+  // Removes annotations whose unique id hash code are given.
+  void PurgeAnnotations(const std::set<int>& hash_codes);
 
   std::string clang_tool_raw_output() const { return clang_tool_raw_output_; };
 
