@@ -24,7 +24,7 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/video_frame.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
-#include "media/gpu/ipc/client/gpu_video_encode_accelerator_host.h"
+#include "media/mojo/clients/mojo_video_encode_accelerator.h"
 #include "media/renderers/gpu_video_accelerator_factories.h"
 #include "media/video/video_encode_accelerator.h"
 #include "ppapi/c/pp_codecs.h"
@@ -553,9 +553,12 @@ bool PepperVideoEncoderHost::InitializeHardware(
 
   if (!EnsureGpuChannel())
     return false;
+  if (!RenderThreadImpl::current()->GetGpuFactories())
+    return false;
 
-  encoder_.reset(
-      new media::GpuVideoEncodeAcceleratorHost(command_buffer_.get()));
+  encoder_ = RenderThreadImpl::current()
+                 ->GetGpuFactories()
+                 ->CreateVideoEncodeAccelerator();
   return encoder_->Initialize(input_format, input_visible_size, output_profile,
                               initial_bitrate, this);
 }
