@@ -24,6 +24,8 @@ class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
       CoordinationUnitType type) override;
   void RecalculateProperty(const mojom::PropertyType property_type) override;
 
+  bool IsVisible() const;
+
  private:
   double CalculateCPUUsage();
 

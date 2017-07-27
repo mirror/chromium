@@ -288,8 +288,10 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
 void CreateResourceCoordinatorFrameInterface(
     RenderFrameHostImpl* render_frame_host,
     resource_coordinator::mojom::CoordinationUnitRequest request) {
-  render_frame_host->GetFrameResourceCoordinator()->service()->AddBinding(
-      std::move(request));
+  if (auto* frame_resource_coordinator =
+          render_frame_host->GetFrameResourceCoordinator()) {
+    frame_resource_coordinator->service()->AddBinding(std::move(request));
+  }
 }
 
 template <typename Interface>
@@ -1236,6 +1238,12 @@ void RenderFrameHostImpl::OnAudibleStateChanged(bool is_audible) {
   else
     GetProcess()->OnAudioStreamRemoved();
   is_audible_ = is_audible;
+
+  if (auto* frame_resource_coordinator = GetFrameResourceCoordinator()) {
+    frame_resource_coordinator->SetProperty(
+        resource_coordinator::mojom::PropertyType::kAudible,
+        base::MakeUnique<base::Value>(is_audible_));
+  }
 }
 
 void RenderFrameHostImpl::OnDidAddMessageToConsole(
@@ -3494,10 +3502,15 @@ RenderFrameHostImpl::GetMojoImageDownloader() {
 
 resource_coordinator::ResourceCoordinatorInterface*
 RenderFrameHostImpl::GetFrameResourceCoordinator() {
+  if (!resource_coordinator::IsResourceCoordinatorEnabled())
+    return nullptr;
   if (!frame_resource_coordinator_) {
+    auto* connection = ServiceManagerConnection::GetForProcess();
+    if (!connection)
+      return nullptr;
     frame_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            ServiceManagerConnection::GetForProcess()->GetConnector(),
+            connection->GetConnector(),
             resource_coordinator::CoordinationUnitType::kFrame);
     if (parent_) {
       parent_->GetFrameResourceCoordinator()->AddChild(

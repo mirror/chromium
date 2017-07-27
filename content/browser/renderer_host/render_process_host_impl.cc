@@ -685,8 +685,10 @@ void CreateMemoryCoordinatorHandle(
 void CreateResourceCoordinatorProcessInterface(
     RenderProcessHostImpl* render_process_host,
     resource_coordinator::mojom::CoordinationUnitRequest request) {
-  render_process_host->GetProcessResourceCoordinator()->service()->AddBinding(
-      std::move(request));
+  if (auto* process_resource_coordinator =
+          render_process_host->GetProcessResourceCoordinator()) {
+    process_resource_coordinator->service()->AddBinding(std::move(request));
+  }
 }
 
 // Forwards service requests to Service Manager since the renderer cannot launch
@@ -2113,10 +2115,15 @@ mojom::Renderer* RenderProcessHostImpl::GetRendererInterface() {
 
 resource_coordinator::ResourceCoordinatorInterface*
 RenderProcessHostImpl::GetProcessResourceCoordinator() {
+  if (!resource_coordinator::IsResourceCoordinatorEnabled())
+    return nullptr;
   if (!process_resource_coordinator_) {
+    auto* connection = ServiceManagerConnection::GetForProcess();
+    if (!connection)
+      return nullptr;
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            ServiceManagerConnection::GetForProcess()->GetConnector(),
+            connection->GetConnector(),
             resource_coordinator::CoordinationUnitType::kProcess);
   }
   return process_resource_coordinator_.get();

@@ -24,6 +24,7 @@ namespace resource_coordinator {
 
 class CoordinationUnitGraphObserver;
 class FrameCoordinationUnitImpl;
+class WebContentsCoordinationUnitImpl;
 
 class CoordinationUnitImpl : public mojom::CoordinationUnit {
  public:
@@ -33,6 +34,8 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   ~CoordinationUnitImpl() override;
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
+      const CoordinationUnitImpl* coordination_unit);
+  static const WebContentsCoordinationUnitImpl* ToWebContentsCoordinationUnit(
       const CoordinationUnitImpl* coordination_unit);
 
   // Overridden from mojom::CoordinationUnit:
