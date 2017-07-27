@@ -13,6 +13,8 @@
 
 namespace chromeos {
 
+class RecentModel;
+
 // Implements recent file system.
 class RecentBackendDelegate : public FileSystemBackendDelegate {
  public:
@@ -38,6 +40,8 @@ class RecentBackendDelegate : public FileSystemBackendDelegate {
                                  const storage::URLCallback& callback) override;
 
  private:
+  std::unique_ptr<RecentModel> model_;
+
   RecentAsyncFileUtil async_file_util_;
 
   DISALLOW_COPY_AND_ASSIGN(RecentBackendDelegate);
