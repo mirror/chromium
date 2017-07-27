@@ -117,7 +117,7 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(
   }
 
   compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
-                                                std::move(frame));
+                                                std::move(frame), nullptr);
 }
 
 void ClientLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {
