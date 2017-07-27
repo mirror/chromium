@@ -81,8 +81,14 @@ class GFX_EXPORT Image {
   explicit Image(NSImage* image);
 #endif
 
+  // Initializes a new Image by moving the storage from |other|.
+  Image(Image&& other);
+
   // Initializes a new Image by AddRef()ing |other|'s internal storage.
   Image(const Image& other);
+
+  // Moves |other|'s storage into this image.
+  Image& operator=(Image&& other);
 
   // Copies a reference to |other|'s storage.
   Image& operator=(const Image& other);

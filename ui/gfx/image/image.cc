@@ -521,7 +521,14 @@ Image::Image(NSImage* image) {
 }
 #endif
 
+Image::Image(Image&& other) : storage_(std::move(other.storage_)) {}
+
 Image::Image(const Image& other) : storage_(other.storage_) {
+}
+
+Image& Image::operator=(Image&& other) {
+  storage_ = std::move(other.storage_);
+  return *this;
 }
 
 Image& Image::operator=(const Image& other) {
