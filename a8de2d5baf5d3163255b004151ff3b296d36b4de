@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f1e29d8_779c735c",
+        "filename": "extensions/browser/api/system_storage/system_storage_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-27T19:41:24Z",
+      "side": 1,
+      "message": "#include \"base/task_runner_util.h\"\n\nbase::PostTaskAndReplyWithResult(\n    query_runner_.get(),\n    FROM_HERE, ...\n);\n\nthis will avoid managing the reply yourself.",
+      "revId": "a8de2d5baf5d3163255b004151ff3b296d36b4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
