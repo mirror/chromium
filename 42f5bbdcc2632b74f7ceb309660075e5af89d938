@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab541a1_92ee1ee6",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T08:48:43Z",
+      "side": 1,
+      "message": "nit: maybe just use url_ throughout",
+      "revId": "42f5bbdcc2632b74f7ceb309660075e5af89d938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbe2e1a_a1766507",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T08:48:43Z",
+      "side": 1,
+      "message": "Do we want to have RedirectInfo equivalent struct in blink?",
+      "revId": "42f5bbdcc2632b74f7ceb309660075e5af89d938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
