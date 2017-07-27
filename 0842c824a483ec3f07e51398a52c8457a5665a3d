@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ebf864a_7cfac8ed",
+        "filename": "components/viz/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-27T17:37:37Z",
+      "side": 1,
+      "message": "Sounds reasonable. In case it wasn\u0027t clear, this was an FYI and not a comment on your CL.",
+      "parentUuid": "becfb765_1f9b8962",
+      "revId": "0842c824a483ec3f07e51398a52c8457a5665a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
