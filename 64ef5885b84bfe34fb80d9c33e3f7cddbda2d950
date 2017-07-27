@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7454a987_6799328e",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T05:42:53Z",
+      "side": 1,
+      "message": "\u003e We should cache |dispatcher| if we need to reuse it for\n\u003e several messages (I think we do).\n\nMy initial thought was to do the caching. But since we might have a different dispatcher for a different frame id, I decided not to do that. If we still want to do that, then I think we need to cache all the different dispatchers, may be in a map with frame_id as the key. WDYT?\n\n\u003e Also, since this is bound to UI and the action comes from\n\u003e IO (l.41), we\u0027re going to be thread hopping a lot. Instead\n\u003e we can bind |dispatcher_| on UI, unbind it and rebind it\n\u003e on IO, by using PassInterface(), like it\u0027s done in e.g.\n\u003e https://cs.chromium.org/chromium/src/content/renderer/media/video_capture_impl.cc?dr\u003dCSs\u0026l\u003d432\n\u003e and then we don\u0027t need the base::Unretained(this).\n\u003e \n\u003e Make sure to comment on the member variables on which\n\u003e thread they are supposed to be used:\n\u003e https://cs.chromium.org/chromium/src/content/renderer/media/video_capture_impl.h?dr\u003dCSs\u0026l\u003d128",
+      "parentUuid": "fecebbbc_6d05931d",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 70
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f1ed799_badef8d7",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
         "patchSetId": 3
@@ -128,6 +152,30 @@
       "writtenOn": "2017-07-27T03:23:58Z",
       "side": 1,
       "message": "TryBindInterface() returns bool, I think we should handle\nthe fail case.",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 28
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3cd998_3fe0c97c",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T05:42:53Z",
+      "side": 1,
+      "message": "Sure. What do you suggest we should do here in case of a failure?",
+      "parentUuid": "f4c9a455_ca0cca88",
       "range": {
         "startLine": 198,
         "startChar": 12,
