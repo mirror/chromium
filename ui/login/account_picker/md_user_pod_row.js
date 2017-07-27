@@ -1540,6 +1540,14 @@ cr.define('login', function() {
      * Focuses on input element.
      */
     focusInput: function() {
+      console.error('!! md_user_pod_row focusInput');
+      var getStackTrace = function() {
+        var obj = {};
+        Error.captureStackTrace(obj, getStackTrace);
+        return obj.stack;
+      };
+      console.error(getStackTrace());
+
       // Move tabIndex from the whole pod to the main input.
       // Note: the |mainInput| can be the pod itself.
       this.tabIndex = -1;
@@ -4608,11 +4616,19 @@ cr.define('login', function() {
      * Called right after the pod row is shown.
      */
     handleAfterShow: function() {
+      console.error('!! handleAfterShow focusedPod=' + this.focusedPod_ + ', this.pods.length=' + this.pods.length);
+      if (!this.focusedPod_ && this.pods.length > 0) {
+        console.error('!! handleAfterShow HACK PRE auto-focusing pod');
+        this.focusPod(
+            this.pods[0], true /* force */, false /* opt_skipInputFocus */);
+        console.error('!! handleAfterShow HACK POST auto-focusing pod focusedPod=' + this.focusedPod_);
+      }
       var focusedPod = this.focusedPod_;
 
       // Without timeout changes in pods positions will be animated even though
       // it happened when 'flying-pods' class was disabled.
       setTimeout(function() {
+        console.error('!! handleAfterShow SetTimeout invocation for flying-pods, focusedPod=' + focusedPod);
         Oobe.getInstance().toggleClass('flying-pods', true);
         if (focusedPod)
           ensureTransitionEndEvent(focusedPod);
@@ -4622,8 +4638,11 @@ cr.define('login', function() {
       if (focusedPod) {
         var screen = this.parentNode;
         var self = this;
+
+        console.error('!! handleAfterShow register transitionend event handler for ' + focusedPod);
         focusedPod.addEventListener('transitionend', function f(e) {
           focusedPod.removeEventListener('transitionend', f);
+          console.error('!! handleAfterShow transitionend handler fired; resetting focusedPod');
           focusedPod.reset(true);
           // Notify screen that it is ready.
           screen.onShow();
