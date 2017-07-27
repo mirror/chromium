@@ -22,6 +22,30 @@
       "revId": "3ce763dd1625cd5cf7e1dc843a06b626a788ab42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a93e50a_54a39642",
+        "filename": "ui/gfx/vector_icon_util_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-27T14:53:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7760d60b_e80480d4",
+      "range": {
+        "startLine": 20,
+        "startChar": 39,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "3ce763dd1625cd5cf7e1dc843a06b626a788ab42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
