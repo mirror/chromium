@@ -224,7 +224,8 @@ class CheckedNumeric {
   template <template <typename, typename, typename> class M,
             typename L,
             typename R>
-  static CheckedNumeric MathOp(const L lhs, const R rhs) {
+  BASE_NUMERICS_ALWAYS_INLINE static CheckedNumeric MathOp(const L lhs,
+                                                           const R rhs) {
     using Math = typename MathWrapper<M, L, R>::math;
     T result = 0;
     bool is_valid =
@@ -235,7 +236,7 @@ class CheckedNumeric {
 
   // Assignment arithmetic operations.
   template <template <typename, typename, typename> class M, typename R>
-  CheckedNumeric& MathOp(const R rhs) {
+  BASE_NUMERICS_ALWAYS_INLINE CheckedNumeric& MathOp(const R rhs) {
     using Math = typename MathWrapper<M, T, R>::math;
     T result = 0;  // Using T as the destination saves a range check.
     bool is_valid = state_.is_valid() && Wrapper<R>::is_valid(rhs) &&
@@ -247,7 +248,7 @@ class CheckedNumeric {
  private:
   CheckedNumericState<T> state_;
 
-  CheckedNumeric FastRuntimeNegate() const {
+  BASE_NUMERICS_ALWAYS_INLINE CheckedNumeric FastRuntimeNegate() const {
     T result;
     bool success = CheckedSubOp<T, T>::Do(T(0), state_.value(), &result);
     return CheckedNumeric<T>(result, IsValid() && success);
@@ -315,8 +316,8 @@ constexpr CheckedNumeric<typename UnderlyingType<T>::type> MakeCheckedNum(
 template <template <typename, typename, typename> class M,
           typename L,
           typename R>
-CheckedNumeric<typename MathWrapper<M, L, R>::type> CheckMathOp(const L lhs,
-                                                                const R rhs) {
+BASE_NUMERICS_ALWAYS_INLINE CheckedNumeric<typename MathWrapper<M, L, R>::type>
+CheckMathOp(const L lhs, const R rhs) {
   using Math = typename MathWrapper<M, L, R>::math;
   return CheckedNumeric<typename Math::result_type>::template MathOp<M>(lhs,
                                                                         rhs);
@@ -327,8 +328,9 @@ template <template <typename, typename, typename> class M,
           typename L,
           typename R,
           typename... Args>
-CheckedNumeric<typename ResultType<M, L, R, Args...>::type>
-CheckMathOp(const L lhs, const R rhs, const Args... args) {
+BASE_NUMERICS_ALWAYS_INLINE
+    CheckedNumeric<typename ResultType<M, L, R, Args...>::type>
+    CheckMathOp(const L lhs, const R rhs, const Args... args) {
   auto tmp = CheckMathOp<M>(lhs, rhs);
   return tmp.IsValid() ? CheckMathOp<M>(tmp, args...)
                        : decltype(CheckMathOp<M>(tmp, args...))(tmp);

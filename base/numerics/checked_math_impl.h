@@ -21,7 +21,7 @@ namespace base {
 namespace internal {
 
 template <typename T>
-bool CheckedAddImpl(T x, T y, T* result) {
+BASE_NUMERICS_ALWAYS_INLINE bool CheckedAddImpl(T x, T y, T* result) {
   static_assert(std::is_integral<T>::value, "Type must be integral");
   // Since the value of x+y is undefined if we have a signed type, we compute
   // it using the unsigned type of the same size.
@@ -48,7 +48,7 @@ struct CheckedAddOp<T,
                                             std::is_integral<U>::value>::type> {
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     // TODO(jschuh) Make this "constexpr if" once we're C++17.
     if (CheckedAddFastOp<T, U>::is_supported)
       return CheckedAddFastOp<T, U>::Do(x, y, result);
@@ -72,7 +72,7 @@ struct CheckedAddOp<T,
 };
 
 template <typename T>
-bool CheckedSubImpl(T x, T y, T* result) {
+BASE_NUMERICS_ALWAYS_INLINE bool CheckedSubImpl(T x, T y, T* result) {
   static_assert(std::is_integral<T>::value, "Type must be integral");
   // Since the value of x+y is undefined if we have a signed type, we compute
   // it using the unsigned type of the same size.
@@ -99,7 +99,7 @@ struct CheckedSubOp<T,
                                             std::is_integral<U>::value>::type> {
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     // TODO(jschuh) Make this "constexpr if" once we're C++17.
     if (CheckedSubFastOp<T, U>::is_supported)
       return CheckedSubFastOp<T, U>::Do(x, y, result);
@@ -123,7 +123,7 @@ struct CheckedSubOp<T,
 };
 
 template <typename T>
-bool CheckedMulImpl(T x, T y, T* result) {
+BASE_NUMERICS_ALWAYS_INLINE bool CheckedMulImpl(T x, T y, T* result) {
   static_assert(std::is_integral<T>::value, "Type must be integral");
   // Since the value of x*y is potentially undefined if we have a signed type,
   // we compute it using the unsigned type of the same size.
@@ -152,7 +152,7 @@ struct CheckedMulOp<T,
                                             std::is_integral<U>::value>::type> {
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     // TODO(jschuh) Make this "constexpr if" once we're C++17.
     if (CheckedMulFastOp<T, U>::is_supported)
       return CheckedMulFastOp<T, U>::Do(x, y, result);
@@ -180,7 +180,7 @@ struct CheckedMulOp<T,
 // Division just requires a check for a zero denominator or an invalid negation
 // on signed min/-1.
 template <typename T>
-bool CheckedDivImpl(T x, T y, T* result) {
+BASE_NUMERICS_ALWAYS_INLINE bool CheckedDivImpl(T x, T y, T* result) {
   static_assert(std::is_integral<T>::value, "Type must be integral");
   if (y && (!std::is_signed<T>::value ||
             x != std::numeric_limits<T>::lowest() || y != static_cast<T>(-1))) {
@@ -200,7 +200,7 @@ struct CheckedDivOp<T,
                                             std::is_integral<U>::value>::type> {
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     using Promotion = typename BigEnoughPromotion<T, U>::type;
     Promotion presult;
     // Fail if either operand is out of range for the promoted type.
@@ -215,7 +215,7 @@ struct CheckedDivOp<T,
 };
 
 template <typename T>
-bool CheckedModImpl(T x, T y, T* result) {
+BASE_NUMERICS_ALWAYS_INLINE bool CheckedModImpl(T x, T y, T* result) {
   static_assert(std::is_integral<T>::value, "Type must be integral");
   if (y) {
     *result = static_cast<T>(x % y);
@@ -234,7 +234,7 @@ struct CheckedModOp<T,
                                             std::is_integral<U>::value>::type> {
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     using Promotion = typename BigEnoughPromotion<T, U>::type;
     Promotion presult;
     bool is_valid = CheckedModImpl(static_cast<Promotion>(x),
@@ -257,7 +257,7 @@ struct CheckedLshOp<T,
                                             std::is_integral<U>::value>::type> {
   using result_type = T;
   template <typename V>
-  static bool Do(T x, U shift, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U shift, V* result) {
     // Signed shift is not legal on negative values.
     if (!IsValueNegative(x) &&
         as_unsigned(shift) < IntegerBitsPlusSign<T>::value) {
@@ -286,7 +286,7 @@ struct CheckedRshOp<T,
                                             std::is_integral<U>::value>::type> {
   using result_type = T;
   template <typename V>
-  static bool Do(T x, U shift, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U shift, V* result) {
     // Use the type conversion push negative values out of range.
     if (as_unsigned(shift) < IntegerBitsPlusSign<T>::value) {
       T tmp = x >> shift;
@@ -309,7 +309,7 @@ struct CheckedAndOp<T,
   using result_type = typename std::make_unsigned<
       typename MaxExponentPromotion<T, U>::type>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     result_type tmp = static_cast<result_type>(x) & static_cast<result_type>(y);
     *result = static_cast<V>(tmp);
     return IsValueInRangeForNumericType<V>(tmp);
@@ -328,7 +328,7 @@ struct CheckedOrOp<T,
   using result_type = typename std::make_unsigned<
       typename MaxExponentPromotion<T, U>::type>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     result_type tmp = static_cast<result_type>(x) | static_cast<result_type>(y);
     *result = static_cast<V>(tmp);
     return IsValueInRangeForNumericType<V>(tmp);
@@ -347,7 +347,7 @@ struct CheckedXorOp<T,
   using result_type = typename std::make_unsigned<
       typename MaxExponentPromotion<T, U>::type>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     result_type tmp = static_cast<result_type>(x) ^ static_cast<result_type>(y);
     *result = static_cast<V>(tmp);
     return IsValueInRangeForNumericType<V>(tmp);
@@ -367,7 +367,7 @@ struct CheckedMaxOp<
                             std::is_arithmetic<U>::value>::type> {
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     result_type tmp = IsGreater<T, U>::Test(x, y) ? static_cast<result_type>(x)
                                                   : static_cast<result_type>(y);
     *result = static_cast<V>(tmp);
@@ -388,7 +388,7 @@ struct CheckedMinOp<
                             std::is_arithmetic<U>::value>::type> {
   using result_type = typename LowestValuePromotion<T, U>::type;
   template <typename V>
-  static bool Do(T x, U y, V* result) {
+  BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {
     result_type tmp = IsLess<T, U>::Test(x, y) ? static_cast<result_type>(x)
                                                : static_cast<result_type>(y);
     *result = static_cast<V>(tmp);
@@ -406,7 +406,7 @@ struct CheckedMinOp<
                               std::is_floating_point<U>::value>::type> { \
     using result_type = typename MaxExponentPromotion<T, U>::type;       \
     template <typename V>                                                \
-    static bool Do(T x, U y, V* result) {                                \
+    BASE_NUMERICS_ALWAYS_INLINE static bool Do(T x, U y, V* result) {    \
       using Promotion = typename MaxExponentPromotion<T, U>::type;       \
       Promotion presult = x OP y;                                        \
       *result = static_cast<V>(presult);                                 \

@@ -13,6 +13,14 @@
 namespace base {
 namespace internal {
 
+#if (defined(__GNUC__) || defined(__clang__)) && defined(NDEBUG)
+#define BASE_NUMERICS_ALWAYS_INLINE inline __attribute__((__always_inline__))
+#elif defined(_MSC_VER) && defined(NDEBUG)
+#define BASE_NUMERICS_ALWAYS_INLINE __forceinline
+#else
+#define BASE_NUMERICS_ALWAYS_INLINE inline
+#endif
+
 // The std library doesn't provide a binary max_exponent for integers, however
 // we can compute an analog using std::numeric_limits<>::digits.
 template <typename NumericType>
