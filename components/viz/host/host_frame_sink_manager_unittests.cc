@@ -8,10 +8,10 @@
 #include <utility>
 
 #include "base/macros.h"
-#include "cc/ipc/frame_sink_manager.mojom.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -28,14 +28,14 @@ class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
   MockFrameSinkManagerImpl() = default;
   ~MockFrameSinkManagerImpl() override = default;
 
-  // cc::mojom::FrameSinkManager:
+  // mojom::FrameSinkManager:
   MOCK_METHOD1(RegisterFrameSinkId, void(const FrameSinkId& frame_sink_id));
   MOCK_METHOD1(InvalidateFrameSinkId, void(const FrameSinkId& frame_sink_id));
   // Work around for gmock not supporting move-only types.
   void CreateCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
-      cc::mojom::CompositorFrameSinkRequest request,
-      cc::mojom::CompositorFrameSinkClientPtr client) override {
+      mojom::CompositorFrameSinkRequest request,
+      mojom::CompositorFrameSinkClientPtr client) override {
     MockCreateCompositorFrameSink(frame_sink_id);
   }
   MOCK_METHOD1(MockCreateCompositorFrameSink,
