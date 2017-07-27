@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "69ca4c39_bd68787a",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T22:40:35Z",
+      "side": 1,
+      "message": "I\u0027m kinda with Trent here.  I think the code without the conditional is less confusing.",
+      "parentUuid": "fc44a2a5_001afd20",
+      "range": {
+        "startLine": 254,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 40
+      },
+      "revId": "99d8e0e7521a673392162d25b0dcd27db7c04616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b48f1ae_ce74f3a0",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 6

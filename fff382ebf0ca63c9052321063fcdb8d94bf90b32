@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a3fb57_ccc92a4b",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T22:40:35Z",
+      "side": 1,
+      "message": "Nit: enabled",
+      "range": {
+        "startLine": 257,
+        "startChar": 58,
+        "endLine": 257,
+        "endChar": 66
+      },
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc50985c_e7b266b3",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T22:40:35Z",
+      "side": 1,
+      "message": "Nit: It was hard for me to understand from this phrasing that the first numbers you stated were the Harmony numbers.",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d32125_9c2dcc36",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T22:40:35Z",
+      "side": 1,
+      "message": "Are you sure this comment is accurate?  It\u0027s hard to see how the same alpha value of 0x43 turns two different input colors both into 000000 @ 0.1.\n\nSee also my final comment below.",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e52021_20a241a9",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T22:40:35Z",
+      "side": 1,
+      "message": "Nit: and",
+      "range": {
+        "startLine": 301,
+        "startChar": 43,
+        "endLine": 301,
+        "endChar": 47
+      },
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92f327c_32832372",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T22:40:35Z",
+      "side": 1,
+      "message": "Nit: This comment doesn\u0027t really feel accurate, since the net result is that the stroke color _isn\u0027t_ the same.\n\nI would just remove this comment.  It doesn\u0027t seem to be adding anything.",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68912f7_f3666e97",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-27T22:40:35Z",
+      "side": 1,
+      "message": "In the conference call this week I argued for simply returning the right, hardcoded value in Harmony, and not using alpha-blending with the text color at all.  Is there a reason you chose not to do that?  I think this code is still confusing as a result, especially when the math doesn\u0027t work as noted above.",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
