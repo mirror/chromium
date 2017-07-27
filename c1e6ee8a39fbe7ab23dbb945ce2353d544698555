@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a24df396_77e5d9b3",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "i\u0027d like to either fix the comment grammar or change the code to make the comment unnecessary (in case we don\u0027t get any replies on the thread soon)",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f56881a_379bd7dc",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "hmm maybe do this then?\n\nMOJO_RESULT_OK:\n break;\ndefault:\n// WriteDataRaw() should not return any other values\nOnCompleted(Status::kFailed);\n\nAlternatively, NOTREACHED() instead of OnCompleted, but it seems brittle because if WriteDataRaw\u0027s contract chagnes, there\u0027s no way to catch it.",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa53d8a_88561dce",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "finished_reason() would be more consistent",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4587352a_42465a97",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "could we also test body and meta data of 0 bytes?",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d71c18_511d3641",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "\"data reached\" sounds unnatural. maybe just received_all_data() or has_received_all_data(0",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35c9b30_65ab8a7b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "Say something about \"+1 for null terminator\"",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e92fe9_04f3098e",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "returned?",
+      "range": {
+        "startLine": 281,
+        "startChar": 10,
+        "endLine": 281,
+        "endChar": 16
+      },
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7812b5cb_ffb31747",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 327,
+        "startChar": 10,
+        "endLine": 327,
+        "endChar": 16
+      },
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa99f82_e13b3e08",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "bad rebase?",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89aca4bc_c58ead7f",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "Is this an error case: you know an installed script exists but you failed to read due to IO error, or the database was corrupted or something?\n\nIf so how is the error handled? It looks like we silently ignore it here.\n\nBTW we don\u0027t really talk about \"disk cache\" inside Blink. \"disk cache\" usually means the HTTP cache in Chromium land. Maybe tweak the comment to say \"an error occurred in the browser process while trying to read the installed script\" or something?\n\nIt seems the docu for GetScriptData should also be updated, it currently says it\u0027s only nullptr when you\u0027re trying to read the same script twice.",
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa4b0f4_b22eb07e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 70631,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "Installed",
+      "range": {
+        "startLine": 70631,
+        "startChar": 21,
+        "endLine": 70631,
+        "endChar": 56
+      },
+      "revId": "c1e6ee8a39fbe7ab23dbb945ce2353d544698555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

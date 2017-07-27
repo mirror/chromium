@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "34aa3af4_10eddccf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "I meant for the imported scripts. Can importScripts() just fail with a net error instead of falling back to ResourceLoader?",
+      "parentUuid": "5381b0ae_ff1f8d35",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e33ae6d_cc44c49a",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -275,6 +293,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5498bf76_190341f2",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "955b54d2_88081e77",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -704,6 +740,24 @@
       "side": 1,
       "message": "Would it be better to split it into another function?",
       "parentUuid": "a6c9e59b_1b936928",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f1ee49_cf57d703",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T06:55:03Z",
+      "side": 1,
+      "message": "I feel it\u0027s clearer to split it, you don\u0027t need to use Optional and document the param etc etc.\n\nAlso why would is_sender_finished() not be true here? Is that an error case?",
+      "parentUuid": "dc4ed169_06a024f4",
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
