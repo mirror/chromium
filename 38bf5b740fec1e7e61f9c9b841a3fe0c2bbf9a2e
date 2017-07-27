@@ -16,6 +16,24 @@
       "revId": "38bf5b740fec1e7e61f9c9b841a3fe0c2bbf9a2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd91386_db7bc263",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-27T15:56:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81292b14_41c49fb1",
+      "revId": "38bf5b740fec1e7e61f9c9b841a3fe0c2bbf9a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

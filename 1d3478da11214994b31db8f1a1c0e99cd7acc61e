@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d046c23d_f5ff4390",
+        "filename": "services/viz/hit_test/public/interfaces/hit_test_region_list.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-27T15:56:57Z",
+      "side": 1,
+      "message": "Yes, we\u0027ll chat offline.",
+      "parentUuid": "e29f20f2_6b541952",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b61fed9_81180306",
         "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
         "patchSetId": 14
@@ -175,6 +193,24 @@
       "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a11930_41b4a7b4",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-27T15:56:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31409e98_5114525a",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
