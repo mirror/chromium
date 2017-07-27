@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d9159ff_358f961f",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIFilter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T07:19:22Z",
+      "side": 1,
+      "message": "this should be wrapped inside an unnamed namespace since it\u0027s only used within this file as per https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Unnamed-namespaces",
+      "revId": "700a0a6b85dcc47928f53824d119d3ed37cc4922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
