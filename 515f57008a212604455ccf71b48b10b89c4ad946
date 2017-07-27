@@ -34,6 +34,24 @@
       "revId": "515f57008a212604455ccf71b48b10b89c4ad946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df97f1c_9740de16",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T01:41:35Z",
+      "side": 1,
+      "message": "Or do we want to go back to this, but check |local_state_| instead of local_state()?",
+      "parentUuid": "61dea0a6_7b66fb5d",
+      "revId": "515f57008a212604455ccf71b48b10b89c4ad946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
