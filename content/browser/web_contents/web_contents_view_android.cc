@@ -177,8 +177,7 @@ void WebContentsViewAndroid::GetScreenInfo(ScreenInfo* result) const {
 }
 
 void WebContentsViewAndroid::GetContainerBounds(gfx::Rect* out) const {
-  *out = content_view_core_ ? gfx::Rect(content_view_core_->GetViewSize())
-                            : gfx::Rect();
+  *out = GetViewBounds();
 }
 
 void WebContentsViewAndroid::SetPageTitle(const base::string16& title) {
@@ -222,10 +221,7 @@ DropData* WebContentsViewAndroid::GetDropData() const {
 }
 
 gfx::Rect WebContentsViewAndroid::GetViewBounds() const {
-  if (content_view_core_)
-    return gfx::Rect(content_view_core_->GetViewSize());
-
-  return gfx::Rect();
+  return gfx::Rect(view_.GetSize());
 }
 
 void WebContentsViewAndroid::CreateView(
@@ -480,6 +476,30 @@ bool WebContentsViewAndroid::OnMouseEvent(const ui::MotionEventAndroid& event) {
   auto* manager = static_cast<BrowserAccessibilityManagerAndroid*>(
       web_contents_->GetRootBrowserAccessibilityManager());
   return manager && manager->OnHoverEvent(event);
+}
+
+RenderWidgetHostViewAndroid* GetRenderWidgetHostViewAndroid(
+    WebContents* web_contents_) {
+  RenderWidgetHostView* rwhv = NULL;
+  if (web_contents_) {
+    rwhv = web_contents_->GetRenderWidgetHostView();
+    if (web_contents_->ShowingInterstitialPage()) {
+      rwhv = web_contents_->GetInterstitialPage()
+                 ->GetMainFrame()
+                 ->GetRenderViewHost()
+                 ->GetWidget()
+                 ->GetView();
+    }
+  }
+  return static_cast<RenderWidgetHostViewAndroid*>(rwhv);
+}
+
+void WebContentsViewAndroid::OnSizeChanged() {
+  auto* rwhv = ::content::GetRenderWidgetHostViewAndroid(web_contents_);
+  if (rwhv) {
+    web_contents_->SendScreenRects();
+    rwhv->WasResized();
+  }
 }
 
 void WebContentsViewAndroid::OnPhysicalBackingSizeChanged() {

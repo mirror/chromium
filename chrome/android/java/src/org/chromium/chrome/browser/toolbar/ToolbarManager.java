@@ -1156,6 +1156,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
      */
     private void refreshSelectedTab() {
         Tab tab = null;
+
         if (mPreselectedTabId != Tab.INVALID_TAB_ID) {
             tab = mTabModelSelector.getTabById(mPreselectedTabId);
         }

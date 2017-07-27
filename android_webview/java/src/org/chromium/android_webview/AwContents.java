@@ -3409,7 +3409,6 @@ public class AwContents implements SmartClipProvider {
             // update.
             mLayoutSizer.onSizeChanged(w, h, ow, oh);
             nativeOnSizeChanged(mNativeAwContents, w, h, ow, oh);
-            mContentViewCore.onSizeChanged(w, h, ow, oh);
         }
 
         @Override

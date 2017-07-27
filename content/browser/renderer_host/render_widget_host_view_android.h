@@ -51,6 +51,7 @@ namespace content {
 class ContentViewCore;
 class ImeAdapterAndroid;
 class OverscrollControllerAndroid;
+class PopupZoomer;
 class RenderWidgetHost;
 class RenderWidgetHostImpl;
 class SelectionPopupController;
@@ -193,6 +194,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                     bool for_touch_handle) override;
   bool OnMouseEvent(const ui::MotionEventAndroid& m) override;
   bool OnMouseWheelEvent(const ui::MotionEventAndroid& event) override;
+  void OnSizeChanged() override;
   void OnPhysicalBackingSizeChanged() override;
 
   // ui::GestureProviderClient implementation.
@@ -253,8 +255,12 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void ResolveTapDisambiguation(double timestamp_seconds,
                                 gfx::Point tap_viewport_offset,
                                 bool is_long_press);
+
   void set_ime_adapter(ImeAdapterAndroid* ime_adapter) {
     ime_adapter_android_ = ime_adapter;
+  }
+  void set_popup_zoomer(PopupZoomer* popup_zoomer) {
+    popup_zoomer_ = popup_zoomer;
   }
   void set_selection_popup_controller(SelectionPopupController* controller) {
     selection_popup_controller_ = controller;
@@ -404,6 +410,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   ContentViewCore* content_view_core_;
 
   ImeAdapterAndroid* ime_adapter_android_;
+  PopupZoomer* popup_zoomer_;
   SelectionPopupController* selection_popup_controller_;
   TextSuggestionHostAndroid* text_suggestion_host_;
 
