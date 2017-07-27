@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7d340ede_71fcad50",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T05:52:00Z",
+      "side": 1,
+      "message": "I just want to align with other Rect struct on other mojom interface, such as:\nhttps://cs.chromium.org/chromium/src/components/arc/common/ime.mojom?type\u003dcs\u0026l\u003d29\n\nBut yes, uint32 is enough for our usage.\nMaybe it is better to add typemap from gfx::Rect and change to uint32",
+      "parentUuid": "db0a1489_661554d1",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df4dfa45_8d835d8d",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "Should we be adding [Sync] for synchronous methods?\n\nBut I\u0027m wondering if we could avoid this. From my limited knowledge of mojo, I\u0027m seeing two possible options:\n- add an InitializeCallback that the client could wait for\n- make the impl on Chrome side destroy the binding when initialization fails\n\nMojo guarantees that all calls will be executed in order, so if only impl\u0027s Initialize is synchronous, nothing will execute if it fails closing the binding.",
       "parentUuid": "77b16549_8fff8a54",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce2571e_62734a48",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T05:52:00Z",
+      "side": 1,
+      "message": "Actually what I thought about is the first one: \"InitializeCallback\" method.\nMaybe my comment is misleading...",
+      "parentUuid": "bed44702_37214147",
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
