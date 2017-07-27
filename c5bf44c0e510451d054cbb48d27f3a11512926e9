@@ -140,6 +140,30 @@
       "revId": "c5bf44c0e510451d054cbb48d27f3a11512926e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83fe180_ee68c177",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-27T06:28:23Z",
+      "side": 1,
+      "message": "OK. Good to know and thanks for confirming that.",
+      "parentUuid": "9a4ff138_4840e296",
+      "range": {
+        "startLine": 176,
+        "startChar": 21,
+        "endLine": 176,
+        "endChar": 77
+      },
+      "revId": "c5bf44c0e510451d054cbb48d27f3a11512926e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
