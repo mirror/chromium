@@ -203,6 +203,30 @@
     },
     {
       "key": {
+        "uuid": "5f80e173_22d991e1",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-27T07:00:45Z",
+      "side": 1,
+      "message": "As discussed offline: OK I didn\u0027t realise this was actually a dict. (Really, it\u0027s a vector where the elements have an \"id\" field corresponding to a dict key.)\n\nIt\u0027s fine then, if we declare that the \"scope\" key is special (for bookmark apps) and represents the manifest scope + \"*\". I don\u0027t particularly care about the downgrade case, as long as we are open to adding new fields in the future (so don\u0027t check that there is exactly 1 handler, or assume that handler[0] is the scope handler).\n\nAction items:\n1. Don\u0027t DCHECK the size of the vector.\n2. Add a for loop over all handlers (typically there will be 0 or 1, but future proof). Explicitly look for a handler called \"scope\".\n3. Add a comment explaining that \"scope\" is a special handler with that format (derived from the manifest).\n4. Possibly move this function down into the file where it is written, so the two functions that depend on each other\u0027s behaviour live together.\n\nThanks Gio, I\u0027m glad we sorted this out.",
+      "parentUuid": "30eb3ec7_48b22ca4",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6f13bdb_1ad143ee",
         "filename": "chrome/browser/extensions/convert_web_app.cc",
         "patchSetId": 22
