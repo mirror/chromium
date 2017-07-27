@@ -96,7 +96,7 @@ class DiscardableImageGenerator {
         PaintOpType op_type = static_cast<PaintOpType>(op->type);
         if (op_type == PaintOpType::DrawImage) {
           auto* image_op = static_cast<DrawImageOp*>(op);
-          auto* sk_image = image_op->image.sk_image().get();
+          auto* sk_image = image_op->image.GetSkImage().get();
           AddImage(image_op->image,
                    SkRect::MakeIWH(sk_image->width(), sk_image->height()),
                    SkRect::MakeXYWH(image_op->left, image_op->top,
@@ -136,7 +136,7 @@ class DiscardableImageGenerator {
     const PaintImage& paint_image = flags.getShader()->paint_image();
     SkMatrix local_matrix = flags.getShader()->GetLocalMatrix();
     AddImage(paint_image,
-             SkRect::MakeFromIRect(paint_image.sk_image()->bounds()), rect,
+             SkRect::MakeWH(paint_image.width(), paint_image.height()), rect,
              &local_matrix, flags);
   }
 
@@ -145,7 +145,7 @@ class DiscardableImageGenerator {
                 const SkRect& rect,
                 const SkMatrix* local_matrix,
                 const PaintFlags& flags) {
-    if (!paint_image.sk_image()->isLazyGenerated())
+    if (!paint_image.IsLazyGenerated())
       return;
 
     const SkRect& clip_rect = SkRect::Make(canvas_.getDeviceClipBounds());

@@ -65,8 +65,6 @@ class TestImage : public Image {
     return IntSize(image_->width(), image_->height());
   }
 
-  sk_sp<SkImage> ImageForCurrentFrame() override { return image_; }
-
   bool CurrentFrameKnownToBeOpaque(
       MetadataMode = kUseCurrentMetadata) override {
     return false;
@@ -86,6 +84,10 @@ class TestImage : public Image {
   }
 
  private:
+  void PopulateImageForCurrentFrame(PaintImageBuilder& builder) override {
+    builder.set_image(image_);
+  }
+
   explicit TestImage(sk_sp<SkImage> image) : image_(image) {}
 
   explicit TestImage(IntSize size) : image_(nullptr) {
