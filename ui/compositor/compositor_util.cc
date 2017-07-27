@@ -13,6 +13,13 @@
 
 namespace ui {
 
+viz::ResourceSettings CreateResourceSettings(
+    const viz::BufferToTextureTargetMap& image_targets) {
+  viz::ResourceSettings resource_settings;
+  resource_settings.buffer_to_texture_target_map = image_targets;
+  return resource_settings;
+}
+
 viz::RendererSettings CreateRendererSettings(
     const viz::BufferToTextureTargetMap& image_targets) {
   viz::RendererSettings renderer_settings;
