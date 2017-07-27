@@ -395,6 +395,7 @@ void DocumentLoader::NotifyFinished(Resource* resource) {
 }
 
 void DocumentLoader::LoadFailed(const ResourceError& error) {
+  LOG(WARNING) << "LoadFailed";
   if (!error.IsCancellation() && frame_->Owner()) {
     // FIXME: For now, fallback content doesn't work cross process.
     if (frame_->Owner()->IsLocal())
