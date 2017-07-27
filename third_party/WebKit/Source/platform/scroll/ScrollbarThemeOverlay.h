@@ -88,6 +88,9 @@ class PLATFORM_EXPORT ScrollbarThemeOverlay : public ScrollbarTheme {
 
   static ScrollbarThemeOverlay& MobileTheme();
 
+ protected:
+  void EnableHitTest();
+
  private:
   int thumb_thickness_;
   int scrollbar_margin_;
