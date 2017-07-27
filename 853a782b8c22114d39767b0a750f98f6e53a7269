@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf0fca22_2353fb8b",
+        "filename": "base/bind.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-27T22:29:19Z",
+      "side": 1,
+      "message": "Nit: let\u0027s phrase this as \"more readable\", since a positive sentence is easier to parse than a double negative one. Ditto below.",
+      "range": {
+        "startLine": 136,
+        "startChar": 29,
+        "endLine": 136,
+        "endChar": 44
+      },
+      "revId": "853a782b8c22114d39767b0a750f98f6e53a7269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d07218_72ea73f7",
+        "filename": "base/bind.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-27T22:29:19Z",
+      "side": 1,
+      "message": "I\u0027m wondering why we can\u0027t static_assert() this instead of ALLOW_UNUSED_LOCAL.\n\nWhile the compiler should optimize this out, there have been instances in the past where it failed to happen.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 51
+      },
+      "revId": "853a782b8c22114d39767b0a750f98f6e53a7269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
