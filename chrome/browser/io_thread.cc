@@ -881,8 +881,6 @@ void IOThread::ConstructSystemRequestContext() {
   builder->set_ftp_enabled(true);
 #endif
 
-  builder->DisableHttpCache();
-
   globals_->network_service = content::NetworkService::Create();
   globals_->system_network_context =
       globals_->network_service->CreateNetworkContextWithBuilder(
