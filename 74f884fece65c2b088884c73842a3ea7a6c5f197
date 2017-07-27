@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbfa3bb4_a8b659ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T00:07:01Z",
+      "side": 1,
+      "message": "Done. It would be enabled for most of the users though, since this is fully launched.",
+      "parentUuid": "8b7a4cde_071a2870",
+      "range": {
+        "startLine": 1890,
+        "startChar": 41,
+        "endLine": 1890,
+        "endChar": 50
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4519f22a_6ceab61b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb96657_37a6cf50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T00:07:01Z",
+      "side": 1,
+      "message": "Wow. Good catch. Yeah, this is a bad bug. Thanks for catching this. This is no longer needed, so removed.",
+      "parentUuid": "4519f22a_6ceab61b",
+      "range": {
+        "startLine": 369,
+        "startChar": 81,
+        "endLine": 369,
+        "endChar": 82
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4055c291_218e2529",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de540a99_2642b632",
+      "range": {
+        "startLine": 567,
+        "startChar": 22,
+        "endLine": 567,
+        "endChar": 23
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34eeacd8_b1deea98",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
         "patchSetId": 7
@@ -188,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "23810afa_1e59869b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34eeacd8_b1deea98",
+      "range": {
+        "startLine": 569,
+        "startChar": 52,
+        "endLine": 569,
+        "endChar": 58
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffcc3a4d_4bedbb95",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
         "patchSetId": 7
@@ -208,6 +304,30 @@
       "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa903e3c_07688756",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T00:07:01Z",
+      "side": 1,
+      "message": "Good suggestion!",
+      "parentUuid": "ffcc3a4d_4bedbb95",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 86
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
