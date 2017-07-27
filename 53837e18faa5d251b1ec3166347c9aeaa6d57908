@@ -16,6 +16,24 @@
       "revId": "53837e18faa5d251b1ec3166347c9aeaa6d57908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ca9138_d2ad7c1f",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-27T03:58:38Z",
+      "side": 1,
+      "message": "The singular versions (Open in new window) match the bookmarks bar. Not gonna change them unless explicitly told to.\n\nFor the multiple one, there are three options:\n\nCurrent (matches the old bookmark bar): Open all bookmarks in new window\nSuggested by Alan in the overview slides: Open all bookmarks in a new window\nOriginal mocks: Open all in new window\n\nMy preference is for shorter than longer, but Alan did say he\u0027d think about it and get back to us.\n\nI\u0027m happy for you to pick whichever version you want and then you can follow up with Alan about it.",
+      "parentUuid": "b4635611_fa790b65",
+      "revId": "53837e18faa5d251b1ec3166347c9aeaa6d57908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
