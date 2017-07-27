@@ -61,7 +61,7 @@ class VIZ_SERVICE_EXPORT BufferQueue {
                const gfx::ColorSpace& color_space,
                bool use_stencil);
   void RecreateBuffers();
-  uint32_t GetCurrentTextureId();
+  uint32_t GetCurrentTextureId() const;
 
   uint32_t fbo() const { return fbo_; }
   uint32_t internal_format() const { return internal_format_; }
@@ -123,7 +123,9 @@ class VIZ_SERVICE_EXPORT BufferQueue {
   std::vector<std::unique_ptr<AllocatedSurface>> available_surfaces_;
   // These have been swapped but are not displayed yet. Entries of this deque
   // may be nullptr, if they represent frames that have been destroyed.
-  std::deque<std::unique_ptr<AllocatedSurface>> in_flight_surfaces_;
+  std::deque<
+      std::pair<std::unique_ptr<AllocatedSurface>, bool /* empty_swap */>>
+      in_flight_surfaces_;
   GLHelper* gl_helper_;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
   gpu::SurfaceHandle surface_handle_;
