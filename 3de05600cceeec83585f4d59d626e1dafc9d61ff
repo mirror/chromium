@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63fbb84a_ea3fb213",
+        "filename": "components/viz/host/frame_sink_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-27T11:57:55Z",
+      "side": 1,
+      "message": "drop the viz.",
+      "revId": "3de05600cceeec83585f4d59d626e1dafc9d61ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
