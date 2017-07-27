@@ -11,6 +11,7 @@
 #include "extensions/browser/api/api_resource_manager.h"
 #include "extensions/browser/api/async_api_function.h"
 #include "extensions/common/api/serial.h"
+#include "services/device/public/interfaces/serial.mojom.h"
 
 namespace extensions {
 
@@ -44,11 +45,17 @@ class SerialGetDevicesFunction : public SerialAsyncApiFunction {
   SerialGetDevicesFunction();
 
  protected:
-  ~SerialGetDevicesFunction() override {}
+  ~SerialGetDevicesFunction() override;
 
   // AsyncApiFunction:
   bool Prepare() override;
-  void Work() override;
+  void AsyncWorkStart() override;
+
+ private:
+  void OnGetDevicesComplete(
+      std::vector<device::mojom::SerialDeviceInfoPtr> devices);
+
+  device::mojom::SerialDeviceEnumeratorPtr enumerator_;
 };
 
 class SerialConnectFunction : public SerialAsyncApiFunction {
