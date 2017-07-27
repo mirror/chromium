@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "7cd746e3_9d44a152",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T05:49:55Z",
+      "side": 1,
+      "message": "Good idea! Done.",
+      "parentUuid": "d6404679_860a9fc6",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8117fbaa_e9d8ec33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
         "patchSetId": 7
@@ -235,6 +259,30 @@
       "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecf03f3_f4e7d3da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-27T05:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f703e7e_7537a65f",
+      "range": {
+        "startLine": 486,
+        "startChar": 44,
+        "endLine": 486,
+        "endChar": 45
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
