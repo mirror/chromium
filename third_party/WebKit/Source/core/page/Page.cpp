@@ -59,6 +59,7 @@
 #include "core/paint/PaintLayer.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/WebFrameScheduler.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/plugins/PluginData.h"
@@ -509,6 +510,8 @@ void Page::SettingsChanged(SettingsDelegate::ChangeType change_type) {
               ->GetStyleEngine()
               .UpdateGenericFontFamilySettings();
       }
+      FontGlobalContext::UpdateGlobalGenericFontFamilySettings(
+          settings_->GetGenericFontFamilySettings());
       break;
     case SettingsDelegate::kAcceleratedCompositingChange:
       UpdateAcceleratedCompositingSettings();
