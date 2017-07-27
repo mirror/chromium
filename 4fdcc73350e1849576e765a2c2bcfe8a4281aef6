@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "364a1058_a271c968",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-07-27T23:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db7362b0_99cabe41",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "4fdcc73350e1849576e765a2c2bcfe8a4281aef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82bab251_20f77962",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "What can I use? I just looked around and picked something looks ok. :) I need a monotonic increasing time in milliseconds.",
       "parentUuid": "82bab251_20f77962",
+      "range": {
+        "startLine": 170,
+        "startChar": 46,
+        "endLine": 170,
+        "endChar": 47
+      },
+      "revId": "4fdcc73350e1849576e765a2c2bcfe8a4281aef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ad2eaf_ef5f6ee4",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-07-27T23:49:00Z",
+      "side": 1,
+      "message": "Done, using the since_origin()",
+      "parentUuid": "c2051750_df7aa7a5",
       "range": {
         "startLine": 170,
         "startChar": 46,
