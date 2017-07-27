@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
-#include "content/browser/renderer_host/input/input_ack_handler.h"
+#include "content/browser/renderer_host/input/input_disposition_handler.h"
 #include "content/browser/renderer_host/input/input_router_client.h"
 #include "content/browser/renderer_host/input/legacy_input_router_impl.h"
 #include "content/common/input_messages.h"
