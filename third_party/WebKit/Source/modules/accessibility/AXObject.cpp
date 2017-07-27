@@ -1419,7 +1419,9 @@ bool AXObject::ContainerLiveRegionAtomic() const {
 
 bool AXObject::ContainerLiveRegionBusy() const {
   UpdateCachedAttributeValuesIfNeeded();
-  return cached_live_region_root_ && cached_live_region_root_->LiveRegionBusy();
+  return cached_live_region_root_ &&
+         cached_live_region_root_->AOMPropertyOrARIAAttributeIsTrue(
+             AOMBooleanProperty::kBusy);
 }
 
 AXObject* AXObject::ElementAccessibilityHitTest(const IntPoint& point) const {

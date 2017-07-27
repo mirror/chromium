@@ -141,7 +141,6 @@ STATIC_ASSERT_ENUM(kWebAXRoleVideo, kVideoRole);
 STATIC_ASSERT_ENUM(kWebAXRoleWebArea, kWebAreaRole);
 STATIC_ASSERT_ENUM(kWebAXRoleWindow, kWindowRole);
 
-STATIC_ASSERT_ENUM(kWebAXStateBusy, kAXBusyState);
 STATIC_ASSERT_ENUM(kWebAXStateExpanded, kAXExpandedState);
 STATIC_ASSERT_ENUM(kWebAXStateFocusable, kAXFocusableState);
 STATIC_ASSERT_ENUM(kWebAXStateFocused, kAXFocusedState);

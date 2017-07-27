@@ -139,7 +139,6 @@ enum AccessibilityRole {
 };
 
 enum AccessibilityState {
-  kAXBusyState,
   kAXExpandedState,
   kAXFocusableState,
   kAXFocusedState,
@@ -242,6 +241,10 @@ enum TextStyle {
   kTextStyleItalic = 1 << 1,
   kTextStyleUnderline = 1 << 2,
   kTextStyleLineThrough = 1 << 3
+};
+
+enum class AXBoolAttribute {
+  kAriaBusy,
 };
 
 enum class AXStringAttribute {
