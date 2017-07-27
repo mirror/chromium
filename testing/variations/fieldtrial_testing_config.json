@@ -2168,26 +2168,6 @@
             ]
         }
     ],
-    "PasswordMetadataFilling": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "PasswordMetadataFilling"
-                    ]
-                }
-            ]
-        }
-    ],
     "PasswordProtectionPasswordFieldOnFocusPing": [
         {
             "platforms": [
