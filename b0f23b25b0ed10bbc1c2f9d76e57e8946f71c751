@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f42db21_78f5ecf6",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-27T14:14:35Z",
+      "side": 1,
+      "message": "Just wondering whether this would benefit from being split into a helper function in an unnamed namespace, so it\u0027s clearer what\u0027s stat-recording logic and what\u0027s functional behaviour.",
+      "revId": "b0f23b25b0ed10bbc1c2f9d76e57e8946f71c751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9736f0_e1397742",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-27T14:14:35Z",
+      "side": 1,
+      "message": "Just noting that CanonicalCookie has a ctor that doesn\u0027t set CreationDate, so it gets default-initialized (to ::Min(), IIRC). CodeSearch says this only happens in tests, so as long as we trust that :)",
+      "revId": "b0f23b25b0ed10bbc1c2f9d76e57e8946f71c751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eced22d8_1aaa484e",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-27T14:14:35Z",
+      "side": 1,
+      "message": "Had to double check that this is the same policy in StaticCookiePolicy. I notice you used SameSite/CrossSite, versus FirstParty/ThirdParty. Was that an intentional distinction (e.g. is the latter definition likely to change?)",
+      "revId": "b0f23b25b0ed10bbc1c2f9d76e57e8946f71c751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
