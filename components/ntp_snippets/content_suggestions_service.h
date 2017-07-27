@@ -25,6 +25,7 @@
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
 #include "components/ntp_snippets/category_status.h"
 #include "components/ntp_snippets/content_suggestions_provider.h"
+#include "components/ntp_snippets/contextual_suggestions_service.h"
 #include "components/ntp_snippets/remote/remote_suggestions_scheduler.h"
 #include "components/ntp_snippets/user_classifier.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -105,8 +106,9 @@ class ContentSuggestionsService : public KeyedService,
       std::unique_ptr<CategoryRanker> category_ranker,
       std::unique_ptr<UserClassifier> user_classifier,
       std::unique_ptr<RemoteSuggestionsScheduler>
-          remote_suggestions_scheduler  // Can be nullptr in unittests.
-      );
+          remote_suggestions_scheduler,  // Can be nullptr in unittests.
+      std::unique_ptr<ContextualSuggestionsService>
+          contextual_suggestions_service);  // Can be nullptr in unittests.
   ~ContentSuggestionsService() override;
 
   // Inherited from KeyedService.
@@ -417,6 +419,9 @@ class ContentSuggestionsService : public KeyedService,
 
   // Provides order for categories.
   std::unique_ptr<CategoryRanker> category_ranker_;
+
+  // Fetches and caches contextual suggestions for a given URL.
+  std::unique_ptr<ContextualSuggestionsService> contextual_suggestions_service_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSuggestionsService);
 };
