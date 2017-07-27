@@ -20,7 +20,6 @@ module.exports = {
           'document.getElementById(\'id\')',
       },
     ],
-    'semi': ['error', 'always'],
 
     // TODO(dpapad): Add more checks according to our styleguide.
   },
