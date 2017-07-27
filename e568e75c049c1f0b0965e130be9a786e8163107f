@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb1ff8c_f2ca50e4",
+        "filename": "device/serial/serial_device_enumerator_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-27T15:34:10Z",
+      "side": 1,
+      "message": "nit: unless I\u0027m missing some relationship, these various cleanups to use auto seem like they belong in a separate cleanup CL.",
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb966fa_3e381ae2",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-27T15:34:10Z",
+      "side": 1,
+      "message": "Yes, this seems like it could just be UIThreadExtensionFunction.",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 19
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d076f7_f58e3da0",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-27T15:34:10Z",
+      "side": 1,
+      "message": "nit: maybe just OnGotDevices()?",
+      "range": {
+        "startLine": 101,
+        "startChar": 48,
+        "endLine": 101,
+        "endChar": 68
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63c4899_34aecb65",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-27T15:34:10Z",
+      "side": 1,
+      "message": "Nit: This interface and method need comments.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca5defd_d65d8ea9",
+        "filename": "services/device/serial/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-27T15:34:10Z",
+      "side": 1,
+      "message": "nit: Can you add a TODO to merge this class with SerialDeviceEnumerator if/once SerialDeviceEnumerator is exposed only via the Device Service?",
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
