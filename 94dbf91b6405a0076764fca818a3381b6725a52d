@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "4fd18e43_67e9c85d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-27T10:15:18Z",
+      "side": 1,
+      "message": "Hmm, I think this is unfortunate and basically we should not do this kind of special casing for unit tests (I know I did it above but it\u0027s not ideal...) Is it difficult to make ArcFileSystemBridge work in unit tests?",
+      "parentUuid": "b6e96668_3b61fb3d",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51c516ae_b5b1f570",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
         "patchSetId": 2
@@ -293,6 +317,30 @@
       "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b72961_e3df3104",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-27T10:15:18Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "d006a845_3a05eb6d",
+      "range": {
+        "startLine": 296,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 58
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
