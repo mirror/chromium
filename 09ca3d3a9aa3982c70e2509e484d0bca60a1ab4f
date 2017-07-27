@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf05c543_e61ab305",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-27T23:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f026bf24_679ee5a4",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "09ca3d3a9aa3982c70e2509e484d0bca60a1ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7300ff81_7ecf6d07",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "09ca3d3a9aa3982c70e2509e484d0bca60a1ab4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a5649d_83b9eac5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-27T23:08:06Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "7300ff81_7ecf6d07",
+      "range": {
+        "startLine": 123,
+        "startChar": 18,
+        "endLine": 123,
+        "endChar": 47
+      },
+      "revId": "09ca3d3a9aa3982c70e2509e484d0bca60a1ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "89add8ab_d4f601d2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-27T23:08:06Z",
+      "side": 1,
+      "message": "Hm... looks like it should, and also the onChangedCallback below. I totally missed changing them:/",
+      "parentUuid": "5aa98e7c_f7cb46d8",
+      "range": {
+        "startLine": 280,
+        "startChar": 36,
+        "endLine": 280,
+        "endChar": 51
+      },
+      "revId": "09ca3d3a9aa3982c70e2509e484d0bca60a1ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e98ede90_09c32800",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-27T18:50:28Z",
       "side": 1,
       "message": "I would expect that the concurrent modification exception is actually be thrown on the line below mAdapter.onDownloadItemRemoved(). I think that call should be run on the UI thread.\n\nWe may also want to wait for onChangedCallback to be called X number of times after searching and after removing a downloaded item before checking adapter contents.\n\nLooking at testUpdate_UpdateItems() -- we call mAdapter#onDownloadItemCreated() on the test thread; this should like be called on the UI thread as well. Also, we need to wait for 2x callbacks since a header is added after the first item is created.\n\n\nThere are a number of places we call mAdapter.onDownloadItemRemoved, mAdapter.onDownloadItemUpdated, mAdapter.onDownloadItemCreated,  that should be called on the UI thread. It\u0027d be great to create helper methods inside this test class to reduce duplicate code.",
+      "range": {
+        "startLine": 621,
+        "startChar": 8,
+        "endLine": 621,
+        "endChar": 28
+      },
+      "revId": "09ca3d3a9aa3982c70e2509e484d0bca60a1ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d6e0d1_23f0a228",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-27T23:08:06Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "e98ede90_09c32800",
       "range": {
         "startLine": 621,
         "startChar": 8,
