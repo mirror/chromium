@@ -88,6 +88,7 @@ public class WebappLauncherActivity extends Activity {
             if (validWebApk && (webappSource == ShortcutSource.UNKNOWN)) {
                 source = getWebApkSource(webappInfo);
             }
+            WebappActivity.addWebappInfoToCache(WebappInfo.getIdFromIntent(intent), webappInfo);
             LaunchMetrics.recordHomeScreenLaunchIntoStandaloneActivity(webappUrl, source);
             Intent launchIntent = createWebappLaunchIntent(webappInfo, webappSource, validWebApk);
             startActivity(launchIntent);
