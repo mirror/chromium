@@ -69,6 +69,7 @@ ResultExpr RendererProcessPolicy::EvaluateSyscall(int sysno) const {
 #if defined(__i386__) || defined(__x86_64__) || defined(__mips__) || \
     defined(__aarch64__)
     case __NR_getrlimit:
+    case __NR_setrlimit:
 #endif
 #if defined(__i386__) || defined(__arm__)
     case __NR_ugetrlimit:
