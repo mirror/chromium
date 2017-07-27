@@ -5,10 +5,12 @@
 // The entry point for all Mac Chromium processes, including the outer app
 // bundle (browser) and helper app (renderer, plugin, and friends).
 
+#include <crt_externs.h>
 #include <dlfcn.h>
 #include <errno.h>
 #include <libgen.h>
 #include <mach-o/dyld.h>
+#include <spawn.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -84,8 +86,16 @@ __attribute__((noreturn)) void SandboxExec(const char* exec_path,
   new_argv.push_back(nullptr);
 
   // The helper executable re-executes itself under the sandbox.
-  execv(exec_path, new_argv.data());
-  perror("execve");
+  posix_spawnattr_t attr;
+  int ret = posix_spawnattr_init(&attr);
+  if (ret != 0)
+    abort();
+  ret = posix_spawnattr_setflags(&attr, POSIX_SPAWN_SETEXEC);
+  if (ret != 0)
+    abort();
+  posix_spawn(NULL, exec_path, NULL, &attr, new_argv.data(), *_NSGetEnviron());
+  // should not be reached
+  perror("posix_spawn");
   abort();
 }
 #endif  // defined(HELPER_EXECUTABLE)
