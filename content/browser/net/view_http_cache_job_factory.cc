@@ -55,9 +55,9 @@ class ViewHttpCacheJob : public net::URLRequestJob {
  private:
   class Core : public base::RefCounted<Core> {
    public:
-    Core()
-        : data_offset_(0),
-          callback_(base::Bind(&Core::OnIOComplete, base::Unretained(this))) {}
+    Core() : data_offset_(0), weak_factory_(this) {
+      callback_ = base::Bind(&Core::OnIOComplete, weak_factory_.GetWeakPtr());
+    }
 
     int Start(const net::URLRequest& request, const base::Closure& callback);
 
@@ -82,6 +82,8 @@ class ViewHttpCacheJob : public net::URLRequestJob {
     size_t data_offset_;
     net::ViewCacheHelper cache_helper_;
     net::CompletionCallback callback_;
+
+    base::WeakPtrFactory<Core> weak_factory_;
     base::Closure user_callback_;
 
     DISALLOW_COPY_AND_ASSIGN(Core);
