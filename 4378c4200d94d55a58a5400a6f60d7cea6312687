@@ -46,6 +46,30 @@
       "revId": "4378c4200d94d55a58a5400a6f60d7cea6312687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcc8392_af43377b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-27T13:41:35Z",
+      "side": 1,
+      "message": "Hm, there is a method webContentsCreated() in TabObserver, so maybe we can use that. If you don\u0027t want to do that in this CL, can you add a TODO?",
+      "parentUuid": "c6f76822_effa29fc",
+      "range": {
+        "startLine": 144,
+        "startChar": 34,
+        "endLine": 144,
+        "endChar": 69
+      },
+      "revId": "4378c4200d94d55a58a5400a6f60d7cea6312687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
