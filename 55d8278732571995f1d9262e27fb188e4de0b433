@@ -46,6 +46,30 @@
       "revId": "55d8278732571995f1d9262e27fb188e4de0b433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bacb0c5_ae411cec",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T20:43:26Z",
+      "side": 1,
+      "message": "chrome-mac-dev for all mac questions.\n\nBut to answer the question, I don\u0027t think we can assume that people are up-to-date. Else we wouldn\u0027t support 10.9 still :-)",
+      "parentUuid": "de44cb31_248f6f7d",
+      "range": {
+        "startLine": 937,
+        "startChar": 32,
+        "endLine": 937,
+        "endChar": 48
+      },
+      "revId": "55d8278732571995f1d9262e27fb188e4de0b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
