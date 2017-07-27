@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65dd6567_d0be4b44",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-27T04:29:55Z",
+      "side": 0,
+      "message": "It\u0027s not needed on this CL, but is needed on a following CL.\nReverted it from this CL.",
+      "parentUuid": "d46ad9d1_5276635f",
+      "revId": "624c11ca026d33fc65e072b4fa638614ddd0ee82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fecce0a_47f1bb0d",
         "filename": "third_party/WebKit/Source/core/loader/WorkerThreadableLoader.cpp",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "624c11ca026d33fc65e072b4fa638614ddd0ee82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dab727c_d0414f97",
+        "filename": "third_party/WebKit/Source/core/loader/WorkerThreadableLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-27T04:29:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2fecce0a_47f1bb0d",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 266,
+        "endChar": 12
+      },
+      "revId": "624c11ca026d33fc65e072b4fa638614ddd0ee82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

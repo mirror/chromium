@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b012177_fb677fd4",
+        "filename": "base/callback_internal.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-27T04:29:55Z",
+      "side": 1,
+      "message": "Hmm, can I keep it\u0027s not a pointer? void* implies that the resulting value points something opaque, and may imply that it\u0027s casted back somewhere.",
+      "parentUuid": "89b0a5a3_3722736a",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 11
+      },
+      "revId": "105c0281cdd6fd00cbf82da724e01cd9f5d2ecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab873471_27a37458",
         "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-26T09:57:47Z",
       "side": 1,
       "message": "Just curious: doesn\u0027t DCHECK_CALLED_ON_VALID_THREAD check the existence of thread_checker_ on non-debug builds, unlike normal DCHECK()?\n\n(I\u0027m not saying you should change the semantics here.)",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 45
+      },
+      "revId": "105c0281cdd6fd00cbf82da724e01cd9f5d2ecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd4f8f9_e42edd5b",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-27T04:29:55Z",
+      "side": 1,
+      "message": "Right, this is needed to remove ThreadChecker on DCHECK-disabled build.",
+      "parentUuid": "ab873471_27a37458",
       "range": {
         "startLine": 218,
         "startChar": 16,
