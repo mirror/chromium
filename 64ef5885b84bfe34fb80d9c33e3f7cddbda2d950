@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d5131d38_881d4a11",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f1ed799_badef8d7",
+      "range": {
+        "startLine": 210,
+        "startChar": 44,
+        "endLine": 210,
+        "endChar": 62
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15c5937e_9e29255e",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.h",
         "patchSetId": 3
@@ -83,6 +107,30 @@
       "writtenOn": "2017-07-27T03:23:58Z",
       "side": 1,
       "message": "You shouldn\u0027t access this fella directly from the test \nclass, remove the friendship and add instead a method:\n \n  void AddMediaStreamDispatcherForTesting(\n      int render_id, mojom::MediaStreamDispatcherPtr dispatcher) {\n    dispatchers_for_testing_[render_id] \u003d std::move(dispatcher);\n  }\n\nand use it in l.281 of the _unittest.cc file. (ForTesting suffix \nis enforced on presubmit).\n\nFinally, sandwich this variable in a \n#if defined(UNIT_TEST)\n#endif\n\nhttps://chromium.googlesource.com/chromium/src/+/a29f146f3ddb4555b1c33f4d42afdc59f263314c/styleguide/c%2B%2B/c%2B%2B.md#Naming",
+      "range": {
+        "startLine": 97,
+        "startChar": 55,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847efa8e_b5540a3e",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "Used this friendship thing here to keep it consistent with the earlier CLs(based on emircan@\u0027s suggestion to use friend class rather than adding a separate method). Anyway, I have added a new method for unittests in ps4.",
+      "parentUuid": "15c5937e_9e29255e",
       "range": {
         "startLine": 97,
         "startChar": 55,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1d6fc028_00f3a235",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "723e737c_d60dfa06",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "906fbe48_3678d291",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 3
@@ -138,6 +210,30 @@
       "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea31004a_0bd47953",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "906fbe48_3678d291",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "cc3ca45b_82bf6f60",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc7adb6_97088015",
+      "range": {
+        "startLine": 334,
+        "startChar": 7,
+        "endLine": 334,
+        "endChar": 28
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd336a8_f3664464",
         "filename": "content/renderer/media/media_stream_dispatcher.cc",
         "patchSetId": 3
@@ -231,6 +351,30 @@
       "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2e2e25_1e1f6029",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd336a8_f3664464",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 44
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

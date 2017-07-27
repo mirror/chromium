@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb0554dd_d6a74daa",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "|render_frame_host| can be accessed only on the UI thread and to fetch it we have to hop onto UI and then hop back onto IO to continue with further processing. Can we still avoid these hops?",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "a9cf06792b568cbd4fdee19a9b0332d07acb8882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b732bd_d01ce7d9",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-27T13:26:57Z",
+      "side": 1,
+      "message": "I am not really sure what has to be done here if TryBindInterface fails. Please suggest.",
+      "range": {
+        "startLine": 197,
+        "startChar": 61,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "a9cf06792b568cbd4fdee19a9b0332d07acb8882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
