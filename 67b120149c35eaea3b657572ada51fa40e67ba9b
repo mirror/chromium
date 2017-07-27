@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5ce569c_b938dbcb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Good question. I asked Hongchan, and he suggest it should be wrapped with |.",
+      "parentUuid": "17993759_7c2229d2",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 28
+      },
+      "revId": "67b120149c35eaea3b657572ada51fa40e67ba9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28eac855_f7cff883",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioContext.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "28dafd2f_b7c1a5d1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Good question.  Since it\u0027s supposed to be variable name, but not necessarily in the code, we should follow the naming conventions anyway.",
+      "parentUuid": "28eac855_f7cff883",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 114,
+        "endChar": 29
+      },
+      "revId": "67b120149c35eaea3b657572ada51fa40e67ba9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ade7cc9a_f5b64964",
         "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-07-27T16:42:57Z",
       "side": 1,
       "message": "Should be reverted?",
+      "revId": "67b120149c35eaea3b657572ada51fa40e67ba9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e52a90_61e7d2e1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Oh, I missed this.  Yeah, this should be reverted because this changes the actual meaning of the comment.\n\nNice catch!",
+      "parentUuid": "ade7cc9a_f5b64964",
       "revId": "67b120149c35eaea3b657572ada51fa40e67ba9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

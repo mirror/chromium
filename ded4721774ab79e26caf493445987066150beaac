@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "86a112c7_03ba0d31",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Or maybe just \"the try lock failed\" or something. I\u0027ll leave to your best judgement.",
+      "parentUuid": "57f65a79_d9cf1825",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a31e305_3c17e561",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
         "patchSetId": 1
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "is on line 208.",
       "parentUuid": "6a31e305_3c17e561",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dc210f_8839b2d3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioBufferSourceNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Good point.  The comment is then kind of wrong because we\u0027re also checking that bus\u003d\u003elength() is sensible.  Maybe update comment to\n\nSanity check destination_frame_offset, number_of_frames, and bus-\u003elength().",
+      "parentUuid": "8c10daad_0f3d4f9f",
       "revId": "ded4721774ab79e26caf493445987066150beaac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -340,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "495cd7bc_4b8bf6e0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Let\u0027s not do that now.  I think blink style required one space, but my decades of motor memory always makes me put two.  And I think chromium style allows either.",
+      "parentUuid": "8131add6_0916f778",
+      "range": {
+        "startLine": 235,
+        "startChar": 26,
+        "endLine": 235,
+        "endChar": 27
+      },
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b3bf24_923cab08",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.h",
         "patchSetId": 1
@@ -369,6 +429,24 @@
       "side": 1,
       "message": "I took \"PannerNodes\" instead of \"PannerNode\u0027s\". IMO, it means the plural, not the possessive case here.",
       "parentUuid": "f8b3bf24_923cab08",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b0eaaca_a1da62cf",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Tricky.  \"foo\u0027s\" isn\u0027t necessarily a possessive in English if you want to distinguish the thing named \"foo\" versus many of them versus the thing named \"foos\".\n\nI think there\u0027s no confusion here, so PannerNodes is fine.",
+      "parentUuid": "3cede850_79e80d5a",
       "revId": "ded4721774ab79e26caf493445987066150beaac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -620,6 +698,24 @@
     },
     {
       "key": {
+        "uuid": "770a5be4_a9257757",
+        "filename": "third_party/WebKit/Source/modules/webaudio/IIRFilterNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Yeah, typo on my part.  Sorry about that.",
+      "parentUuid": "ff15698e_d1b3ef05",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "284e3930_09edf3ab",
         "filename": "third_party/WebKit/Source/modules/webaudio/MediaStreamAudioDestinationNode.cpp",
         "patchSetId": 1
@@ -725,6 +821,24 @@
     },
     {
       "key": {
+        "uuid": "70233c4a_a22eeb6f",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioBus.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "I have no clue on really how to do this.  I\u0027ll leave it up to your best judgement here.",
+      "parentUuid": "28b3330e_d0cd8f5d",
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7964e722_bcea47fa",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 1
@@ -736,6 +850,30 @@
       "writtenOn": "2017-07-27T16:42:57Z",
       "side": 1,
       "message": "How about this? Should enums be put \"|\" around, too? If yes, I will do in the final patch.",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 28
+      },
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964d6b73_90f714f5",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Yeah, we probably should, here and everywhere else.",
+      "parentUuid": "7964e722_bcea47fa",
       "range": {
         "startLine": 165,
         "startChar": 8,
@@ -841,6 +979,30 @@
     },
     {
       "key": {
+        "uuid": "3a9451c6_2e27dc9b",
+        "filename": "third_party/WebKit/Source/platform/audio/HRTFPanner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "I\u0027ll leave this to you.  Be sure to update tailTime here twice and on the next line too.",
+      "parentUuid": "31ead0a5_919001e7",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 17
+      },
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11e7fe36_06443298",
         "filename": "third_party/WebKit/Source/platform/audio/HRTFPanner.cpp",
         "patchSetId": 1
@@ -852,6 +1014,30 @@
       "writtenOn": "2017-07-27T16:42:57Z",
       "side": 1,
       "message": "FftSize() should be FFTSize(), no?",
+      "range": {
+        "startLine": 359,
+        "startChar": 10,
+        "endLine": 359,
+        "endChar": 17
+      },
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352e3652_71a4a10b",
+        "filename": "third_party/WebKit/Source/platform/audio/HRTFPanner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "The function is FftSize, right?  Looks like we are wildly inconsistent on how we spell FFT.  Let\u0027s not change that now.",
+      "parentUuid": "11e7fe36_06443298",
       "range": {
         "startLine": 359,
         "startChar": 10,
@@ -892,6 +1078,30 @@
       "writtenOn": "2017-07-27T16:42:57Z",
       "side": 1,
       "message": "which is correct? \"Interpolate\" or \"interpolate\".",
+      "range": {
+        "startLine": 61,
+        "startChar": 32,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "ded4721774ab79e26caf493445987066150beaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b0428a_3cf961a3",
+        "filename": "third_party/WebKit/Source/platform/audio/mac/FFTFrameMac.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-27T18:39:38Z",
+      "side": 1,
+      "message": "Actually, I think neither. I can\u0027t find such a function anywhere.  I think this is probably Interpolatefrequencycomponents (in FFTFrame.cpp).",
+      "parentUuid": "2364e001_25209e6c",
       "range": {
         "startLine": 61,
         "startChar": 32,
