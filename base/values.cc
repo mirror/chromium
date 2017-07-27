@@ -317,6 +317,85 @@ Value::dict_iterator Value::SetKey(std::string&& key, Value value) {
           .first);
 }
 
+Value* Value::FindPath(std::initializer_list<const char*> path) {
+  Value* cur = this;
+  for (const char* component : path) {
+    if (!cur->is_dict())
+      return nullptr;
+
+    auto found = cur->FindKey(component);
+    if (found == cur->DictEnd())
+      return nullptr;
+    cur = &found->second;
+  }
+  return cur;
+}
+
+const Value* Value::FindPath(std::initializer_list<const char*> path) const {
+  const Value* cur = this;
+  for (const char* component : path) {
+    if (cur->is_dict())
+      return nullptr;
+
+    auto found = cur->FindKey(component);
+    if (found == cur->DictEnd())
+      return nullptr;
+    cur = &found->second;
+  }
+  return cur;
+}
+
+Value* Value::FindPathOfType(std::initializer_list<const char*> path,
+                             Type type) {
+  Value* result = FindPath(path);
+  if (!result)
+    return nullptr;
+  if (!result->IsType(type))
+    return nullptr;
+  return result;
+}
+
+const Value* Value::FindPathOfType(std::initializer_list<const char*> path,
+                                   Type type) const {
+  const Value* result = FindPath(path);
+  if (!result)
+    return nullptr;
+  if (!result->IsType(type))
+    return nullptr;
+  return result;
+}
+
+Value* Value::SetPath(std::initializer_list<const char*> path, Value value) {
+  DCHECK_NE(path.begin(), path.end());  // Can't be empty path.
+
+  // Walk/construct intermediate dictionaries. Want special handling for the
+  // last element and we can't subscript an initializer_list.
+  Value* cur = this;
+  auto* const* path_iter = path.begin();
+  for (size_t i = 0; i < path.size() - 1; i++, path_iter++) {
+    if (!cur->is_dict())
+      return nullptr;
+
+    // Use lower_bound to avoid doing the search twice for missing keys.
+    const char* path_component = *path_iter;
+    auto found = cur->dict_->lower_bound(path_component);
+    if (found == cur->dict_->end() || found->first != path_component) {
+      // No key found, insert one.
+      auto inserted = cur->dict_->emplace_hint(
+          found, path_component,
+          std::unique_ptr<Value>(new Value(Type::DICTIONARY)));
+      cur = inserted->second.get();
+    } else {
+      cur = found->second.get();
+    }
+  }
+
+  // "cur" will now contain the last dictionary to insert or replace into.
+  if (!cur->is_dict())
+    return nullptr;
+  return &cur->SetKey(*path_iter, std::move(value))->second;
+}
+
 Value::dict_iterator Value::DictEnd() {
   CHECK(is_dict());
   return dict_iterator(dict_->end());
