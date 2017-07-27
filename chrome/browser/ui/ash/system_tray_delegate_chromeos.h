@@ -58,10 +58,6 @@ class SystemTrayDelegateChromeOS
 
   bool UnsetProfile(Profile* profile);
 
-  void UpdateShowLogoutButtonInTray();
-
-  void UpdateLogoutDialogDuration();
-
   void UpdateSessionStartTime();
 
   void UpdateSessionLengthLimit();
