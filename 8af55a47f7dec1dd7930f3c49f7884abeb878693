@@ -22,6 +22,30 @@
       "revId": "8af55a47f7dec1dd7930f3c49f7884abeb878693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c921ea20_f0670233",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-07-27T05:16:52Z",
+      "side": 1,
+      "message": "The destructor records this value in the \"SafeBrowsing.WebSocket.Result\" histogram. I will change the comment to make this clear.",
+      "parentUuid": "1cb38b19_b5fa88f2",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 26
+      },
+      "revId": "8af55a47f7dec1dd7930f3c49f7884abeb878693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
