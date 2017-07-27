@@ -22,6 +22,30 @@
       "revId": "b974c6b8e56d812eb545f6a2db4d0aca7b600f2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a33a149_0787a716",
+        "filename": "third_party/WebKit/public/platform/linux/WebFallbackFont.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-27T17:35:25Z",
+      "side": 1,
+      "message": "Agreed, that\u0027s probably the best fit here.\n\nChanged.",
+      "parentUuid": "4f648f95_6968a1f6",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "b974c6b8e56d812eb545f6a2db4d0aca7b600f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
