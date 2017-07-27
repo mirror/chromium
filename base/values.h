@@ -315,7 +315,6 @@ class BASE_EXPORT DictionaryValue : public Value {
                                  std::unique_ptr<Value> in_value);
 
   // Convenience forms of SetWithoutPathExpansion().
-  Value* SetBooleanWithoutPathExpansion(StringPiece path, bool in_value);
   Value* SetIntegerWithoutPathExpansion(StringPiece path, int in_value);
   Value* SetDoubleWithoutPathExpansion(StringPiece path, double in_value);
   Value* SetStringWithoutPathExpansion(StringPiece path, StringPiece in_value);
