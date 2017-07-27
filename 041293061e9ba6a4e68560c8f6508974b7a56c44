@@ -16,6 +16,29 @@
       "revId": "041293061e9ba6a4e68560c8f6508974b7a56c44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c245e5db_43ab7237",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-27T18:16:45Z",
+      "side": 1,
+      "message": "This test seems to be unconverted. Is that expected?\n\nI\u0027m also curious whether it could make sense to convert CronetTestBase to JUnit 4 and keep the rest of tests extending CronetTestBase. Probably not, but I just want to bring it up.",
+      "range": {
+        "startLine": 40,
+        "startChar": 13,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "041293061e9ba6a4e68560c8f6508974b7a56c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
