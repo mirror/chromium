@@ -43,6 +43,7 @@
 #include "content/browser/installedapp/installed_app_provider_impl_default.h"
 #include "content/browser/keyboard_lock/keyboard_lock_service_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
+#include "content/browser/loader/resource_scheduler_filter.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
@@ -210,7 +211,7 @@ base::i18n::TextDirection WebTextDirectionToChromeTextDirection(
   }
 }
 
-// Ensure that we reset nav_entry_id_ in OnDidCommitProvisionalLoad if any of
+// Ensure that we reset nav_entry_id_ in DidCommitProvisionalLoad if any of
 // the validations fail and lead to an early return.  Call disable() once we
 // know the commit will be successful.  Resetting nav_entry_id_ avoids acting on
 // any UpdateState or UpdateTitle messages after an ignored commit.
@@ -368,6 +369,23 @@ void CreatePaymentManager(RenderFrameHostImpl* rfh,
       std::move(request));
 }
 
+void NotifyResourceSchedulerOfNavigation(
+    int render_process_id,
+    const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
+  // TODO(csharrison): This isn't quite right for OOPIF, as we *do* want to
+  // propagate OnNavigate to the client associated with the OOPIF's RVH. This
+  // should not result in show-stopping bugs, just poorer loading performance.
+  if (!ui::PageTransitionIsMainFrame(params.transition) ||
+      params.was_within_same_document) {
+    return;
+  }
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&ResourceSchedulerFilter::OnDidCommitMainframeNavigation,
+                 render_process_id, params.render_view_routing_id));
+}
+
 }  // namespace
 
 // static
@@ -483,10 +501,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       has_selection_(false),
       is_audible_(false),
       last_navigation_previews_state_(PREVIEWS_UNSPECIFIED),
-      frame_host_interface_broker_binding_(this),
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      document_scoped_interface_provider_binding_(this),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -841,8 +859,6 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidFailProvisionalLoadWithError)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFailLoadWithError,
                         OnDidFailLoadWithError)
-    IPC_MESSAGE_HANDLER_GENERIC(FrameHostMsg_DidCommitProvisionalLoad,
-                                OnDidCommitProvisionalLoad(msg))
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateState, OnUpdateState)
     IPC_MESSAGE_HANDLER(FrameHostMsg_OpenURL, OnOpenURL)
     IPC_MESSAGE_HANDLER(FrameHostMsg_CancelInitialHistoryLoad,
@@ -1432,21 +1448,23 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
 
 // Called when the renderer navigates.  For every frame loaded, we'll get this
 // notification containing parameters identifying the navigation.
-void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
+void RenderFrameHostImpl::DidCommitProvisionalLoad(
+    std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params,
+    service_manager::mojom::InterfaceProviderRequest request) {
+  // TODO(engedy): Can we somehow tell if the pipe was closed because validation
+  // failed, so that we can kill the process only then? Or should we just kill
+  // the renderer regardless of why the pipe was closed?
+  FrameHostMsg_DidCommitProvisionalLoad_Params& validated_params = *params;
+
+  if (did_commit_provisional_load_interceptor_for_testing_)
+    did_commit_provisional_load_interceptor_for_testing_.Run(validated_params);
+
   ScopedCommitStateResetter commit_state_resetter(this);
   RenderProcessHost* process = GetProcess();
 
   // Read the parameters out of the IPC message directly to avoid making another
   // copy when we filter the URLs.
-  base::PickleIterator iter(msg);
-  FrameHostMsg_DidCommitProvisionalLoad_Params validated_params;
-  if (!IPC::ParamTraits<FrameHostMsg_DidCommitProvisionalLoad_Params>::
-      Read(&msg, &iter, &validated_params)) {
-    bad_message::ReceivedBadMessage(
-        process, bad_message::RFH_COMMIT_DESERIALIZATION_FAILED);
-    return;
-  }
-  TRACE_EVENT2("navigation", "RenderFrameHostImpl::OnDidCommitProvisionalLoad",
+  TRACE_EVENT2("navigation", "RenderFrameHostImpl::DidCommitProvisionalLoad",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                validated_params.url.possibly_invalid_spec());
 
@@ -1454,16 +1472,25 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   DCHECK_EQ(ui::PageTransitionIsMainFrame(validated_params.transition),
             !GetParent());
 
+  // Notify the resource scheduler of the navigation committing.
+  NotifyResourceSchedulerOfNavigation(process->GetID(), validated_params);
+
   // If we're waiting for a cross-site beforeunload ack from this renderer and
   // we receive a Navigate message from the main frame, then the renderer was
   // navigating already and sent it before hearing the FrameMsg_Stop message.
   // Treat this as an implicit beforeunload ack to allow the pending navigation
   // to continue.
-  if (is_waiting_for_beforeunload_ack_ &&
-      unload_ack_is_for_navigation_ &&
+  if (is_waiting_for_beforeunload_ack_ && unload_ack_is_for_navigation_ &&
       !GetParent()) {
     base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
     OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
+  }
+
+  if (request.is_pending()) {
+    // Replace the old binding if present, to ensure that no pending interface
+    // requests originating from the previous document be dispatched.
+    document_scoped_interface_provider_binding_.Close();
+    BindInterfaceProviderForNewDocument(std::move(request));
   }
 
   // If we're waiting for an unload ack from this renderer and we receive a
@@ -1697,12 +1724,12 @@ void RenderFrameHostImpl::OnBeforeUnloadACK(
                          "FrameTreeNode id",
                          frame_tree_node_->frame_tree_node_id());
   // If this renderer navigated while the beforeunload request was in flight, we
-  // may have cleared this state in OnDidCommitProvisionalLoad, in which case we
+  // may have cleared this state in DidCommitProvisionalLoad, in which case we
   // can ignore this message.
   // However renderer might also be swapped out but we still want to proceed
   // with navigation, otherwise it would block future navigations. This can
   // happen when pending cross-site navigation is canceled by a second one just
-  // before OnDidCommitProvisionalLoad while current RVH is waiting for commit
+  // before DidCommitProvisionalLoad while current RVH is waiting for commit
   // but second navigation is started from the beginning.
   if (!is_waiting_for_beforeunload_ack_) {
     return;
@@ -2826,6 +2853,32 @@ void RenderFrameHostImpl::CreateNewWindow(
       main_frame_route_id, main_frame_widget_route_id, cloned_namespace->id());
 }
 
+void RenderFrameHostImpl::BindInterfaceProviderForInitialEmptyDocument(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  BindInterfaceProviderForNewDocument(std::move(request));
+}
+
+void RenderFrameHostImpl::BindInterfaceProviderForNewDocument(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  service_manager::mojom::InterfaceProviderPtr provider;
+  document_scoped_interface_provider_binding_.Bind(
+      mojo::MakeRequest(&provider));
+
+  // Have the InterfaceProvider filtered through the Service Manager to apply
+  // service manifest capability-based filtering before any requests reach the
+  // browser.
+  //
+  // TODO(rockot): Re-evaluate whether this layer of defense is really
+  // worthwhile. Perhaps it would be better replaced by a similarly declarative
+  // but browser-defined spec exclusively for context-bound interface policy,
+  // leaving the Service Manager out of these decisions entirely.
+  service_manager::Identity child_identity = GetProcess()->GetChildIdentity();
+  service_manager::Connector* connector =
+      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
+  connector->FilterInterfaces(mojom::kNavigation_FrameSpec, child_identity,
+                              std::move(request), std::move(provider));
+}
+
 void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
     CreateNewWindowCallback callback,
     mojom::CreateNewWindowReplyPtr reply,
@@ -2986,7 +3039,7 @@ void RenderFrameHostImpl::ResetWaitingState() {
 
   // Whenever we reset the RFH state, we should not be waiting for beforeunload
   // or close acks.  We clear them here to be safe, since they can cause
-  // navigations to be ignored in OnDidCommitProvisionalLoad.
+  // navigations to be ignored in DidCommitProvisionalLoad.
   if (is_waiting_for_beforeunload_ack_) {
     is_waiting_for_beforeunload_ack_ = false;
     if (beforeunload_timeout_)
@@ -3352,11 +3405,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   RegisterMojoInterfaces();
   mojom::FrameFactoryPtr frame_factory;
   BindInterface(GetProcess(), &frame_factory);
-
-  mojom::FrameHostInterfaceBrokerPtr broker_proxy;
-  frame_host_interface_broker_binding_.Bind(mojo::MakeRequest(&broker_proxy));
-  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_),
-                             std::move(broker_proxy));
+  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_));
 
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   frame_->GetInterfaceProvider(mojo::MakeRequest(&remote_interfaces));
@@ -3374,8 +3423,8 @@ void RenderFrameHostImpl::InvalidateMojoConnection() {
   registry_.reset();
 
   frame_.reset();
-  frame_host_interface_broker_binding_.Close();
   frame_bindings_control_.reset();
+  document_scoped_interface_provider_binding_.Close();
 
   // Disconnect with ImageDownloader Mojo service in RenderFrame.
   mojo_image_downloader_.reset();
@@ -3669,17 +3718,6 @@ void RenderFrameHostImpl::FilesSelectedInChooser(
 
 bool RenderFrameHostImpl::HasSelection() {
   return has_selection_;
-}
-
-void RenderFrameHostImpl::GetInterfaceProvider(
-    service_manager::mojom::InterfaceProviderRequest interfaces) {
-  service_manager::Identity child_identity = GetProcess()->GetChildIdentity();
-  service_manager::Connector* connector =
-      BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
-  service_manager::mojom::InterfaceProviderPtr provider;
-  interface_provider_bindings_.AddBinding(this, mojo::MakeRequest(&provider));
-  connector->FilterInterfaces(mojom::kNavigation_FrameSpec, child_identity,
-                              std::move(interfaces), std::move(provider));
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -4005,6 +4043,10 @@ void RenderFrameHostImpl::BindNFCRequest(device::mojom::NFCRequest request) {
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  // NOTE: This method services requests on
+  // |document_scoped_interface_provider_binding_|. It is therefore safe to
+  // assume that every incoming interface request is coming from the currently
+  // committed navigation's document in the renderer.
   if (!registry_ ||
       !registry_->TryBindInterface(interface_name, &interface_pipe)) {
     delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
