@@ -1706,8 +1706,16 @@ void ServiceWorkerVersion::RecordStartWorkerResult(
   if (context_ && IsInstalled(prestart_status))
     context_->UpdateVersionFailureCount(version_id_, status);
 
-  ServiceWorkerMetrics::RecordStartWorkerStatus(status, purpose,
-                                                IsInstalled(prestart_status));
+  base::Optional<ServiceWorkerInstalledScriptsSender::FinishedReason>
+      installed_scripts_sender_status;
+  if (installed_scripts_sender_ && installed_scripts_sender_->IsFinished()) {
+    installed_scripts_sender_status =
+        installed_scripts_sender_->finished_status();
+  }
+
+  ServiceWorkerMetrics::RecordStartWorkerStatus(
+      status, purpose, IsInstalled(prestart_status),
+      installed_scripts_sender_status);
 
   if (status == SERVICE_WORKER_OK && !start_time.is_null() &&
       !skip_recording_startup_time_) {

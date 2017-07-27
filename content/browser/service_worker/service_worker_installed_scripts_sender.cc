@@ -24,7 +24,7 @@ class MetaDataSender {
   MetaDataSender(scoped_refptr<net::IOBufferWithSize> meta_data,
                  mojo::ScopedDataPipeProducerHandle handle)
       : meta_data_(std::move(meta_data)),
-        remaining_bytes_(meta_data_->size()),
+        bytes_sent_(0),
         handle_(std::move(handle)),
         watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::AUTOMATIC),
         weak_factory_(this) {}
@@ -36,11 +36,13 @@ class MetaDataSender {
         base::Bind(&MetaDataSender::OnWritable, weak_factory_.GetWeakPtr()));
   }
 
-  void OnWritable(MojoResult result) {
-    DCHECK_EQ(MOJO_RESULT_OK, result);
-    uint32_t size = remaining_bytes_;
-    MojoResult rv = mojo::WriteDataRaw(handle_.get(), meta_data_->data(), &size,
-                                       MOJO_WRITE_DATA_FLAG_NONE);
+  void OnWritable(MojoResult) {
+    // MojoResult isn't necessary to be handled here since WriteDataRaw()
+    // returns the equivalent error.
+    uint32_t size = meta_data_->size() - bytes_sent_;
+    MojoResult rv =
+        mojo::WriteDataRaw(handle_.get(), meta_data_->data() + bytes_sent_,
+                           &size, MOJO_WRITE_DATA_FLAG_NONE);
     switch (rv) {
       case MOJO_RESULT_INVALID_ARGUMENT:
       case MOJO_RESULT_OUT_OF_RANGE:
@@ -53,8 +55,8 @@ class MetaDataSender {
       case MOJO_RESULT_SHOULD_WAIT:
         return;
     }
-    remaining_bytes_ -= size;
-    if (remaining_bytes_ == 0)
+    bytes_sent_ += size;
+    if (meta_data_->size() == bytes_sent_)
       OnCompleted(Status::kSuccess);
   }
 
@@ -68,7 +70,7 @@ class MetaDataSender {
   base::OnceCallback<void(Status)> callback_;
 
   scoped_refptr<net::IOBufferWithSize> meta_data_;
-  size_t remaining_bytes_;
+  int64_t bytes_sent_;
   mojo::ScopedDataPipeProducerHandle handle_;
   mojo::SimpleWatcher watcher_;
 
@@ -102,15 +104,17 @@ class ServiceWorkerInstalledScriptsSender::Sender {
     DCHECK(http_info);
     DCHECK_GT(result, 0);
     if (!http_info->http_info) {
-      CompleteSendIfNeeded(Status::kNoHttpInfoError);
+      CompleteSendIfNeeded(FinishedReason::kNoHttpInfoError);
       return;
     }
 
     mojo::ScopedDataPipeConsumerHandle meta_data_consumer;
     mojo::ScopedDataPipeConsumerHandle body_consumer;
+    size_t body_size = http_info->response_data_size;
+    size_t meta_data_size = 0;
     if (mojo::CreateDataPipe(nullptr, &body_handle_, &body_consumer) !=
         MOJO_RESULT_OK) {
-      CompleteSendIfNeeded(Status::kCreateDataPipeError);
+      CompleteSendIfNeeded(FinishedReason::kCreateDataPipeError);
       return;
     }
     // Start sending meta data (V8 code cache data).
@@ -118,13 +122,14 @@ class ServiceWorkerInstalledScriptsSender::Sender {
       mojo::ScopedDataPipeProducerHandle meta_data_producer;
       if (mojo::CreateDataPipe(nullptr, &meta_data_producer,
                                &meta_data_consumer) != MOJO_RESULT_OK) {
-        CompleteSendIfNeeded(Status::kCreateDataPipeError);
+        CompleteSendIfNeeded(FinishedReason::kCreateDataPipeError);
         return;
       }
       meta_data_sender_ = base::MakeUnique<MetaDataSender>(
           http_info->http_info->metadata, std::move(meta_data_producer));
       meta_data_sender_->Start(
           base::BindOnce(&Sender::OnMetaDataSent, AsWeakPtr()));
+      meta_data_size = http_info->http_info->metadata->size();
     }
 
     // Start sending body.
@@ -153,14 +158,15 @@ class ServiceWorkerInstalledScriptsSender::Sender {
       }
     }
 
-    owner_->SendScriptInfoToRenderer(charset, std::move(header_strings),
-                                     std::move(meta_data_consumer),
-                                     std::move(body_consumer));
+    owner_->SendScriptInfoToRenderer(
+        charset, std::move(header_strings), std::move(body_consumer), body_size,
+        std::move(meta_data_consumer), meta_data_size);
     owner_->OnHttpInfoRead(http_info);
   }
 
-  void OnWritableBody(MojoResult result) {
-    DCHECK_EQ(MOJO_RESULT_OK, result);
+  void OnWritableBody(MojoResult) {
+    // MojoResult isn't necessary to be handled here since BeginWrite() returns
+    // the equivalent error.
     DCHECK(!pending_write_);
     uint32_t num_bytes = 0;
     MojoResult rv = NetToMojoPendingBuffer::BeginWrite(
@@ -171,7 +177,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
         NOTREACHED();
         return;
       case MOJO_RESULT_FAILED_PRECONDITION:
-        CompleteSendIfNeeded(Status::kConnectionError);
+        CompleteSendIfNeeded(FinishedReason::kConnectionError);
         return;
       case MOJO_RESULT_SHOULD_WAIT:
         watcher_.ArmOrNotify();
@@ -188,7 +194,9 @@ class ServiceWorkerInstalledScriptsSender::Sender {
 
   void OnResponseDataRead(int read_bytes) {
     if (read_bytes < 0) {
-      CompleteSendIfNeeded(Status::kResponseReaderError);
+      watcher_.Cancel();
+      body_handle_.reset();
+      CompleteSendIfNeeded(FinishedReason::kResponseReaderError);
       return;
     }
     body_handle_ = pending_write_->Complete(read_bytes);
@@ -198,7 +206,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
       // All data has been read.
       watcher_.Cancel();
       body_handle_.reset();
-      CompleteSendIfNeeded(Status::kSuccess);
+      CompleteSendIfNeeded(FinishedReason::kSuccess);
       return;
     }
     watcher_.ArmOrNotify();
@@ -209,19 +217,19 @@ class ServiceWorkerInstalledScriptsSender::Sender {
     if (status != MetaDataSender::Status::kSuccess) {
       watcher_.Cancel();
       body_handle_.reset();
-      CompleteSendIfNeeded(Status::kMetaDataSenderError);
+      CompleteSendIfNeeded(FinishedReason::kMetaDataSenderError);
       return;
     }
 
-    CompleteSendIfNeeded(Status::kSuccess);
+    CompleteSendIfNeeded(FinishedReason::kSuccess);
   }
 
   // CompleteSendIfNeeded notifies the end of data transfer to |owner_|, and
   // |this| will be removed by |owner_| as a result. Errors are notified
   // immediately, but when the transfer has been succeeded, it's notified when
   // sending both of body and meta data is finished.
-  void CompleteSendIfNeeded(Status status) {
-    if (status != Status::kSuccess) {
+  void CompleteSendIfNeeded(FinishedReason status) {
+    if (status != FinishedReason::kSuccess) {
       owner_->OnAbortSendingScript(status);
       return;
     }
@@ -256,6 +264,7 @@ ServiceWorkerInstalledScriptsSender::ServiceWorkerInstalledScriptsSender(
       main_script_url_(main_script_url),
       main_script_id_(kInvalidServiceWorkerResourceId),
       state_(State::kNotStarted),
+      finished_reason_(FinishedReason::kNotFinished),
       context_(std::move(context)) {}
 
 ServiceWorkerInstalledScriptsSender::~ServiceWorkerInstalledScriptsSender() {}
@@ -282,6 +291,10 @@ ServiceWorkerInstalledScriptsSender::CreateInfoAndBind() {
   info->manager_request = mojo::MakeRequest(&manager_);
   info->installed_urls = std::move(installed_urls);
   return info;
+}
+
+bool ServiceWorkerInstalledScriptsSender::IsFinished() const {
+  return state_ == State::kFinished;
 }
 
 void ServiceWorkerInstalledScriptsSender::Start() {
@@ -313,19 +326,24 @@ void ServiceWorkerInstalledScriptsSender::StartSendingScript(
 void ServiceWorkerInstalledScriptsSender::SendScriptInfoToRenderer(
     std::string encoding,
     std::unordered_map<std::string, std::string> headers,
+    mojo::ScopedDataPipeConsumerHandle body_handle,
+    size_t body_size,
     mojo::ScopedDataPipeConsumerHandle meta_data_handle,
-    mojo::ScopedDataPipeConsumerHandle body_handle) {
+    size_t meta_data_size) {
   DCHECK(running_sender_);
   DCHECK(state_ == State::kSendingMainScript ||
          state_ == State::kSendingImportedScript);
-  TRACE_EVENT_NESTABLE_ASYNC_INSTANT0("ServiceWorker",
-                                      "SendScriptInfoToRenderer", this);
+  TRACE_EVENT_NESTABLE_ASYNC_INSTANT2(
+      "ServiceWorker", "SendScriptInfoToRenderer", this, "body_size", body_size,
+      "meta_data_size", meta_data_size);
   auto script_info = mojom::ServiceWorkerScriptInfo::New();
   script_info->script_url = CurrentSendingURL();
   script_info->headers = std::move(headers);
   script_info->encoding = std::move(encoding);
   script_info->body = std::move(body_handle);
+  script_info->body_size = body_size;
   script_info->meta_data = std::move(meta_data_handle);
+  script_info->meta_data_size = meta_data_size;
   manager_->TransferInstalledScript(std::move(script_info));
 }
 
@@ -355,7 +373,9 @@ void ServiceWorkerInstalledScriptsSender::OnFinishSendingScript() {
     // All scripts have been sent to the renderer.
     // ServiceWorkerInstalledScriptsSender's work is done now.
     DCHECK_EQ(State::kSendingImportedScript, state_);
+    DCHECK(!IsFinished());
     state_ = State::kFinished;
+    finished_reason_ = FinishedReason::kSuccess;
     TRACE_EVENT_NESTABLE_ASYNC_END0(
         "ServiceWorker", "ServiceWorkerInstalledScriptsSender", this);
     return;
@@ -364,14 +384,22 @@ void ServiceWorkerInstalledScriptsSender::OnFinishSendingScript() {
   StartSendingScript(imported_script_iter_->first);
 }
 
-void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(Status status) {
+void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(
+    FinishedReason status) {
   DCHECK(running_sender_);
   DCHECK(state_ == State::kSendingMainScript ||
          state_ == State::kSendingImportedScript);
-  DCHECK_NE(Status::kSuccess, status);
-  // TODO(shimazu): Report the error to ServiceWorkerVersion and record its
-  // metrics.
-  NOTIMPLEMENTED();
+  DCHECK_NE(FinishedReason::kSuccess, status);
+  DCHECK(!IsFinished());
+  TRACE_EVENT_NESTABLE_ASYNC_END1("ServiceWorker",
+                                  "ServiceWorkerInstalledScriptsSender", this,
+                                  "FinishedReason", static_cast<int>(status));
+  state_ = State::kFinished;
+  finished_reason_ = status;
+
+  // Notify the error by resetting the Mojo pipe. This triggers failure of
+  // script loading on the renderer, and it ends up with worker shutdown.
+  manager_.reset();
 }
 
 const GURL& ServiceWorkerInstalledScriptsSender::CurrentSendingURL() {

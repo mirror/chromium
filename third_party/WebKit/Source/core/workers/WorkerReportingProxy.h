@@ -74,8 +74,7 @@ class CORE_EXPORT WorkerReportingProxy {
   // via ResourceLoader. ContentSecurityPolicy and ReferrerPolicy are read from
   // the response header of the main script.
   // This may block until CSP/ReferrerPolicy are set on the main thread
-  // since they are required for script evaluation, which happens soon after
-  // this function is called.
+  // since they are required on succeeding script evaluation.
   // Called before WillEvaluateWorkerScript().
   virtual void DidLoadInstalledScript(
       const ContentSecurityPolicyResponseHeaders&,

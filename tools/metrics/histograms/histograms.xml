@@ -70622,6 +70622,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ServiceWorker.StartWorker.InstalledScriptsSender.Status"
+    enum="ServiceWorkerInstalledScriptsManager.FinishedReason">
+  <owner>shimazu@chromium.org</owner>
+  <summary>
+    The result of sending installed scripts over
+    ServiceWorkerInstalledScriptsSender. This is recorded only when the scripts
+    are sent through ServiceWorkerInstaleldScriptsSender.
+  </summary>
+</histogram>
+
 <histogram name="ServiceWorker.StartWorker.Purpose"
     enum="ServiceWorkerMetrics.EventType">
   <owner>falken@chromium.org</owner>
