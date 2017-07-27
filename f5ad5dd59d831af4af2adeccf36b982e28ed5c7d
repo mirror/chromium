@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "8cdb3ade_20d31e95",
+        "filename": "chrome/android/java/res/layout/find_in_page.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-27T02:14:32Z",
+      "side": 1,
+      "message": "Let\u0027s see if Hannah has a good recommendation. Perhaps the names could be more geared around the style e.g. Text_Medium_Black_Alpha38 or something like that.\n\nI have a preference for using BlackDisbledText1, even though this isn\u0027t really \"disabled\", while we think of a better name so that we can start enforcing all text using one of the pre-defined styles.",
+      "parentUuid": "c77d9792_56c3d91b",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0cb369_30bf565e",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-27T02:14:32Z",
+      "side": 1,
+      "message": "Yay! I am very happy to see all of these custom text sizes removed.",
+      "range": {
+        "startLine": 180,
+        "startChar": 51,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6b938f6_880f2c84",
         "filename": "ui/android/java/res/layout/dropdown_item.xml",
         "patchSetId": 2
@@ -131,6 +178,30 @@
       "side": 1,
       "message": "It seems that the lint check only checks the usage in ui/android. I am able to remove tools:ignore\u003d\"UnusedResources\" at BlackTitle2 because it has a parent in this style.xml and somehow the lint check doesn\u0027t consider this as unused.",
       "parentUuid": "4fb9986f_86a16fe8",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "f5ad5dd59d831af4af2adeccf36b982e28ed5c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7226f21_0b3847bc",
+        "filename": "ui/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-27T02:14:32Z",
+      "side": 1,
+      "message": "Ah, I see, that makes sense.",
+      "parentUuid": "e922e7fa_3c74025d",
       "range": {
         "startLine": 49,
         "startChar": 47,
