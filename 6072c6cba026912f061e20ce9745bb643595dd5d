@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ae1a925_a43a87ac",
+        "filename": "base/unguessable_token_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-27T21:21:58Z",
+      "side": 1,
+      "message": "Do we need the test to run 100 times?",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "6072c6cba026912f061e20ce9745bb643595dd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
