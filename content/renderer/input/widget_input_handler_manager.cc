@@ -35,6 +35,8 @@ InputEventAckState InputEventDispositionToAck(
       return INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
     case ui::InputHandlerProxy::DID_HANDLE_NON_BLOCKING:
       return INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING;
+    case ui::InputHandlerProxy::DID_HANDLE_MUST_BUBBLE_IF_NEEDED:
+      return INPUT_EVENT_ACK_STATE_CONSUMED_MIGHT_NEED_BUBBLING;
   }
   NOTREACHED();
   return INPUT_EVENT_ACK_STATE_UNKNOWN;

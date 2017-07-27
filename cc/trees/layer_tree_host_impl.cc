@@ -2869,6 +2869,19 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollBeginImpl(
     return scroll_status;
   }
 
+  // If the viewport is scrolling and it cannot consume any delta hints, the
+  // scroll event will need to get bubbled if the viewport is for a guest or
+  // oopif.
+  ScrollNode* viewport_scroll_node =
+      viewport()->MainScrollLayer()
+          ? active_tree_->property_trees()->scroll_tree.Node(
+                viewport()->MainScrollLayer()->scroll_tree_index())
+          : nullptr;
+  if (active_tree_->CurrentlyScrollingNode() == viewport_scroll_node &&
+      !viewport()->CanConsumeDelta(*scroll_state)) {
+    scroll_status.must_get_bubbled_if_needed = true;
+  }
+
   client_->RenewTreePriority();
   RecordCompositorSlowScrollMetric(type, CC_THREAD);
 
