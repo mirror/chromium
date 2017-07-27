@@ -1,0 +1,23 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Async Cookies API
+// https://github.com/WICG/async-cookies-api
+//
+// OWP launch tracking bug
+// https://crbug.com/729800
+
+// Monitoring: Single execution context
+// https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#single-execution-context
+
+callback CookieObserverCallback = void (CookieChanges changes, CookieObserver observer);
+
+[
+   Exposed=(Window,ServiceWorker),
+   CustomConstructor(CookieObserverCallback callback),
+   RuntimeEnabled=AsyncCookiesAPI
+] interface CookieObserver {
+    void observe(CookieStore cookieStore, optional CookieChangeInterests interests);
+    void disconnect();
+};

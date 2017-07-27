@@ -84,6 +84,10 @@
       status: "experimental",
     },
     {
+      name: "AsyncCookiesAPI",
+      status: "test",
+    },
+    {
       name: "AudioOutputDevices",
       status: "stable",
     },

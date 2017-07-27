@@ -1,0 +1,28 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Async Cookies API
+// https://github.com/WICG/async-cookies-api
+//
+// OWP launch tracking bug
+// https://crbug.com/729800
+
+interface CookieStore {
+  // Reading
+  // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#reading
+  Promise<CookieList?> getAll(DOMString name, optional CookieStoreGetParameters options);
+  Promise<CookieList?> getAll(optional CookieStoreGetParameters options, optional CookieStoreGetParameters moreOptions);
+  Promise<CookieListItem?> get(DOMString name, optional CookieStoreGetParameters options);
+  Promise<CookieListItem?> get(optional CookieStoreGetParameters options, optional CookieStoreGetParameters moreOptions);
+  Promise<boolean> has(DOMString name, optional CookieStoreGetParameters options);
+  Promise<boolean> has(optional CookieStoreGetParameters options, optional CookieStoreGetParameters moreOptions);
+
+  // Writing
+  // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#writing
+  Promise<void> set(optional DOMString name = "", optional DOMString value = null, optional CookieStoreSetParameters options);
+
+  // Clearing
+  // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#clearing
+  Promise<void> delete(optional DOMString name = "", optional CookieStoreSetParameters options);
+};

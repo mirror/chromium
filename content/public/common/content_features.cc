@@ -21,6 +21,14 @@ const base::Feature kAllowContentInitiatedDataUrlNavigations{
 const base::Feature kAsmJsToWebAssembly{"AsmJsToWebAssembly",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Exposes Async Cookies API
+// https://github.com/WICG/async-cookies-api
+//
+// OWP launch tracking bug
+// https://crbug.com/729800
+const base::Feature kAsyncCookiesAPI{"AsyncCookiesAPI",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables async wheel events.
 const base::Feature kAsyncWheelEvents{"AsyncWheelEvents",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
