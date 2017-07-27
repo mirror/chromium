@@ -45,6 +45,7 @@
 #include "components/data_reduction_proxy/core/browser/data_store_impl.h"
 #include "components/domain_reliability/monitor.h"
 #include "components/net_log/chrome_net_log.h"
+#include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/offline_pages/features/features.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_filter.h"
@@ -80,45 +81,12 @@
 
 namespace {
 
-// Returns the URLRequestContextBuilder::HttpCacheParams::Type that the disk
-// cache should use.
-net::URLRequestContextBuilder::HttpCacheParams::Type ChooseCacheType() {
-#if !defined(OS_ANDROID)
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  if (command_line.HasSwitch(switches::kUseSimpleCacheBackend)) {
-    const std::string opt_value =
-        command_line.GetSwitchValueASCII(switches::kUseSimpleCacheBackend);
-    if (base::LowerCaseEqualsASCII(opt_value, "off"))
-      return net::URLRequestContextBuilder::HttpCacheParams::DISK_BLOCKFILE;
-    if (opt_value.empty() || base::LowerCaseEqualsASCII(opt_value, "on"))
-      return net::URLRequestContextBuilder::HttpCacheParams::DISK_SIMPLE;
-  }
-  const std::string experiment_name =
-      base::FieldTrialList::FindFullName("SimpleCacheTrial");
-  if (base::StartsWith(experiment_name, "Disable",
-                       base::CompareCase::INSENSITIVE_ASCII)) {
-    return net::URLRequestContextBuilder::HttpCacheParams::DISK_BLOCKFILE;
-  }
-  if (base::StartsWith(experiment_name, "ExperimentYes",
-                       base::CompareCase::INSENSITIVE_ASCII)) {
-    return net::URLRequestContextBuilder::HttpCacheParams::DISK_SIMPLE;
-  }
-#endif  // #if !defined(OS_ANDROID)
-
-#if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_CHROMEOS)
-  return net::URLRequestContextBuilder::HttpCacheParams::DISK_SIMPLE;
-#else
-  return net::URLRequestContextBuilder::HttpCacheParams::DISK_BLOCKFILE;
-#endif
-}
-
 // Returns the BackendType that the disk cache should use.
 // TODO(mmenke): Once all URLRequestContexts are set up using
 // URLRequestContextBuilders, and the media URLRequestContext is take care of
 // (In one way or another), this should be removed.
-net::BackendType ChooseCacheBackendType() {
-  switch (ChooseCacheType()) {
+net::BackendType ChooseCacheBackendType(const base::CommandLine& command_line) {
+  switch (network_session_configurator::ChooseCacheType(command_line)) {
     case net::URLRequestContextBuilder::HttpCacheParams::DISK_BLOCKFILE:
       return net::CACHE_BACKEND_BLOCKFILE;
     case net::URLRequestContextBuilder::HttpCacheParams::DISK_SIMPLE:
@@ -532,7 +500,8 @@ void ProfileImplIOData::InitializeInternal(
                                        std::move(channel_id_service));
 
   net::URLRequestContextBuilder::HttpCacheParams cache_params;
-  cache_params.type = ChooseCacheType();
+  cache_params.type = network_session_configurator::ChooseCacheType(
+      base::CommandLine::ForCurrentProcess());
   cache_params.path = lazy_params_->cache_path;
   cache_params.max_size = lazy_params_->cache_max_size;
   builder->EnableHttpCache(cache_params);
@@ -619,8 +588,9 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
     app_backend = net::HttpCache::DefaultBackend::InMemory(0);
   } else {
     app_backend.reset(new net::HttpCache::DefaultBackend(
-        net::DISK_CACHE, ChooseCacheBackendType(), cache_path,
-        app_cache_max_size_));
+        net::DISK_CACHE,
+        ChooseCacheBackendType(base::CommandLine::ForCurrentProcess()),
+        cache_path, app_cache_max_size_));
   }
 
   std::unique_ptr<net::CookieStore> cookie_store;
