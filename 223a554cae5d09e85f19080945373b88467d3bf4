@@ -16,6 +16,24 @@
       "revId": "223a554cae5d09e85f19080945373b88467d3bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e685cc6_fa5677d5",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-27T08:11:25Z",
+      "side": 1,
+      "message": "Done. Removed the IsNull() check.",
+      "parentUuid": "57723ddf_7a97476a",
+      "revId": "223a554cae5d09e85f19080945373b88467d3bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
