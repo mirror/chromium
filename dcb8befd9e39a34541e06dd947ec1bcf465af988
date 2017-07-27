@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "abe94224_57752b86",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED() perhaps?",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0a1489_661554d1",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "Could you explain the change from uint32 to int32 please?",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df4dfa45_8d835d8d",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -31,6 +65,200 @@
       "side": 1,
       "message": "Yes, the caller should be blocked on waiting the callback of initialization result.",
       "parentUuid": "df4dfa45_8d835d8d",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed44702_37214147",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "Should we be adding [Sync] for synchronous methods?\n\nBut I\u0027m wondering if we could avoid this. From my limited knowledge of mojo, I\u0027m seeing two possible options:\n- add an InitializeCallback that the client could wait for\n- make the impl on Chrome side destroy the binding when initialization fails\n\nMojo guarantees that all calls will be executed in order, so if only impl\u0027s Initialize is synchronous, nothing will execute if it fails closing the binding.",
+      "parentUuid": "77b16549_8fff8a54",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f968b3f0_82f3219d",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "s/info/bitstream_buffer/",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51d2b48_23e1726e",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "s/number/count/",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b70388d_47763828",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "VDA uses int, even though I\u0027d prefer uint, I wonder if we should also use int to avoid checked casts... Same for bitstream_id actually...",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae1fb8d_a3bd1711",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "s/Sends/Returns/",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bd3bcb_86809f6e",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "We should note that this only applies to input buffers, but do we need to specify that? The accelerator will keep handles, so the client could just drop its own handles.",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3c5c06_5a030d59",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "Should we s/Client/VideoDecodeClient/ everywhere in this file?",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057bc1c9_52a0322d",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "Called to notify the client that the PictureBuffer with specified |picture_id| contains a decoded frame ready to be displayed. The calls to PictureReady are in display order and PictureBuffers should be displayed in that order.",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70acc60_c8857f32",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "s/bitstram/bitstream/",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04999d2d_09970bbb",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "s/bitstream/BitstreamBuffer/",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01baa4a9_69670e71",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-27T05:06:53Z",
+      "side": 1,
+      "message": "I\u0027m wondering if there is a way to just monitor dropping the shmem handle on the other side?",
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
