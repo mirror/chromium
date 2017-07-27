@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc3f2d55_10989140",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-27T12:43:46Z",
+      "side": 1,
+      "message": "Hmm. In the previous version, I had left integrity_disposition_ unset in this case (which means it remained at kNotChecked). That was inconsistent, because.. well, we did try to check it, so kNotChecked wasn\u0027t really appropriate. But kPassed is sort of inapproriate, too, and I wonder if someone might fall into the trap of doing  if (resource-\u003eIntegrityDisposition() \u003d\u003d kPassed), and then running the \u0027pass\u0027 code despite the resource having not actually been valid (because it had a loading error)...\n\nMaybe we could add a kUncheckable to the ResourceIntegrityDisposition enum? That way, kPassed would have a strong guarantee of, \"resource content exists; was checked; and definitely matches the SRI constraints\".\n\n\nThe only potential problem I\u0027m seeing is the check against kFailed in  LinkStyle::SetCSSStyleSheet, but that explicitly checks for the error case beforehand, and hence should be fine.",
+      "range": {
+        "startLine": 332,
+        "startChar": 59,
+        "endLine": 332,
+        "endChar": 66
+      },
+      "revId": "d1d24e6d4f2b0b28b8d6c87d39c0be5d40194915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86c38f5_56735136",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-27T12:43:46Z",
+      "side": 1,
+      "message": "I wonder if we can remove this from the public interface, or at least restrict its use?\n\nCurrently, ScriptResource and CSSStyleSheetResource call this; but both cases could be handled instead in ResourceFetcher::RequestResource. (I think this option now becomes available, because you\u0027re moving everything into the Resource superclass. We\u0027d also make Kouhei happy, because he has a TODO in CSSS*S*Resource to de-dupe that logic.)\n\nI can\u0027t quite tell if those are the only uses, though, because PreloadRequest and ResourceParam have a method with the same name. :)",
+      "range": {
+        "startLine": 246,
+        "startChar": 7,
+        "endLine": 246,
+        "endChar": 27
+      },
+      "revId": "d1d24e6d4f2b0b28b8d6c87d39c0be5d40194915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
