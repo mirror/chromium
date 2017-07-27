@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870be86f_2faa86bb",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T18:32:44Z",
+      "side": 1,
+      "message": "You don\u0027t need to create your own - use these: https://cs.chromium.org/chromium/src/components/cryptauth/mock_cryptauth_client.h.\n\nYou should make DeviceCapabilityManagerTest a MockCryptAuthClientFactory::Observer and set your expectations of the mock in OnCryptAuthClientCreated(). Look to similar tests for examples:\n\nhttps://cs.chromium.org/search/?q\u003dOnCryptAuthClientCreated",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 58
+      },
+      "revId": "2296566723ae3e074dc435eda71a9f3dd96582b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbb5d3e_f06316e3",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-27T18:32:44Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 66
+      },
+      "revId": "2296566723ae3e074dc435eda71a9f3dd96582b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
