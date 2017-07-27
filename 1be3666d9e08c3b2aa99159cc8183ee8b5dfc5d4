@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c5ea11_1e5cbc55",
+        "filename": "android_webview/browser/aw_form_database_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-27T23:27:11Z",
+      "side": 1,
+      "message": "I\u0027m less comfortable with this change as we still have a hard notion of a UI thread, but that might just a change aversion thing.\n\nAt the same time, I still see this hanging around (e.g. PasswordStore::ShutdownOnUIThread). What was criteria on whether or not to use sequence/thread?",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "1be3666d9e08c3b2aa99159cc8183ee8b5dfc5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
