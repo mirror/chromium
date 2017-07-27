@@ -22,6 +22,30 @@
       "revId": "6072c6cba026912f061e20ce9745bb643595dd5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76443e27_b641b219",
+        "filename": "base/unguessable_token_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-27T21:24:01Z",
+      "side": 1,
+      "message": "Just want to test enough cases, since token is random generated.",
+      "parentUuid": "8ae1a925_a43a87ac",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "6072c6cba026912f061e20ce9745bb643595dd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
