@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "023db958_6d8c4dfb",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T08:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8cef16_ade1c93e",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 564,
+        "endChar": 0
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adc0b286_f2597c03",
         "filename": "components/ntp_snippets/contextual_suggestions_service.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19457672_7defaa2d",
+        "filename": "components/ntp_snippets/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T08:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc0b286_f2597c03",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "89910828_5ee7888e",
+        "filename": "components/ntp_snippets/contextual_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T08:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d4598ee_60bebbb7",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aa72a28_da8044ae",
         "filename": "components/ntp_snippets/contextual_suggestions_service.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663663d7_1311d956",
+        "filename": "components/ntp_snippets/contextual_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-27T08:14:41Z",
+      "side": 1,
+      "message": "Done, I renamed it to ContextualSuggestionsSource.",
+      "parentUuid": "9aa72a28_da8044ae",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "f46ca6eb6924e97a04aeacc24b73729633fcf533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
