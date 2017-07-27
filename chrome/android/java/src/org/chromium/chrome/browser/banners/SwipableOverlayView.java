@@ -18,6 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
+import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureStateListener;
@@ -60,6 +61,9 @@ public abstract class SwipableOverlayView extends FrameLayout {
     /** Interpolator used for the animation. */
     private final Interpolator mInterpolator;
 
+    /** A {@link ChromeFullscreenManager} for information about the browser controls. */
+    private final ChromeFullscreenManager mFullscreenManager;
+
     /** Tracks whether the user is scrolling or flinging. */
     private int mGestureState;
 
@@ -85,9 +89,12 @@ public abstract class SwipableOverlayView extends FrameLayout {
      * Creates a SwipableOverlayView.
      * @param context Context for acquiring resources.
      * @param attrs Attributes from the XML layout inflation.
+     * @param manager A {@link ChromeFullscreenManager} for information about the browser controls.
      */
-    public SwipableOverlayView(Context context, AttributeSet attrs) {
+    public SwipableOverlayView(
+            Context context, AttributeSet attrs, ChromeFullscreenManager manager) {
         super(context, attrs);
+        mFullscreenManager = manager;
         mGestureStateListener = createGestureStateListener();
         mGestureState = GESTURE_NONE;
         mLayoutChangeListener = createLayoutChangeListener();
@@ -249,6 +256,22 @@ public abstract class SwipableOverlayView extends FrameLayout {
 
             @Override
             public void onScrollOffsetOrExtentChanged(int scrollOffsetY, int scrollExtentY) {
+                // If the browser controls are at the bottom of the screen, the infobar container
+                // should not move until the controls are completely shown or completely hidden.
+                if (mFullscreenManager.areBrowserControlsAtBottom()) {
+                    boolean isScrollingDownward = scrollOffsetY > mLastScrollOffsetY;
+                    boolean areControlsCompletelyShown =
+                            mFullscreenManager.getBottomControlOffset() > 0;
+                    boolean areControlsCompletelyHidden =
+                            mFullscreenManager.areBrowserControlsOffScreen();
+
+                    if ((!isScrollingDownward && areControlsCompletelyShown)
+                            || (isScrollingDownward && !areControlsCompletelyHidden)) {
+                        resetInitialOffsets(scrollOffsetY, scrollExtentY);
+                        return;
+                    }
+                }
+
                 // This function is called for both fling and scrolls.
                 if (mGestureState == GESTURE_NONE || !cancelCurrentAnimation()) return;
                 mLastScrollOffsetY = scrollOffsetY;

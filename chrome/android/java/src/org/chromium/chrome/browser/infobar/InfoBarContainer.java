@@ -174,7 +174,7 @@ public class InfoBarContainer extends SwipableOverlayView {
     private Tab mTab;
 
     public InfoBarContainer(Context context, final ViewGroup parentView, Tab tab) {
-        super(context, null);
+        super(context, null, tab.getActivity().getFullscreenManager());
         tab.addObserver(mTabObserver);
         mTabView = tab.getView();
         mTab = tab;
