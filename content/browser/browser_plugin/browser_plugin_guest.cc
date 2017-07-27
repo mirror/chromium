@@ -8,6 +8,7 @@
 
 #include <algorithm>
 
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -49,6 +50,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/drop_data.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/gfx/geometry/size_conversions.h"
@@ -214,7 +216,10 @@ void BrowserPluginGuest::Init() {
 
   WebContentsImpl* owner_web_contents = static_cast<WebContentsImpl*>(
       delegate_->GetOwnerWebContents());
-  owner_web_contents->CreateBrowserPluginEmbedderIfNecessary();
+  if (!can_use_cross_process_frames() ||
+      base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames)) {
+    owner_web_contents->CreateBrowserPluginEmbedderIfNecessary();
+  }
   InitInternal(BrowserPluginHostMsg_Attach_Params(), owner_web_contents);
 }
 
