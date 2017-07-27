@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2e7c885e_65727908",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-27T09:25:43Z",
+      "side": 1,
+      "message": "I would prefer to use int32_t for consistency. Just like they do in\n\nhttps://cs.chromium.org/chromium/src/ui/gfx/geometry/mojo/geometry.mojom\n\nAccording to the coding style, use unsigned if it is not something like flags or id. We should not use unsigned to indicate a value cannot be negative.\n\nhttps://google.github.io/styleguide/cppguide.html#Integer_Types",
+      "parentUuid": "0dec7822_5f2fe809",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df4dfa45_8d835d8d",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 8
@@ -173,6 +191,24 @@
       "side": 1,
       "message": "Changed the comment",
       "parentUuid": "1ce2571e_62734a48",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad7bdb5_e936790d",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-27T09:25:43Z",
+      "side": 1,
+      "message": "I would suggest to replace the last sentence to:\n\nThe caller needs to wait for the initialization result (returned by callback) before calling any other methods.\n\nI mean the client doesn\u0027t have to be blocked. It can still handle some request from Android side.",
+      "parentUuid": "077e7911_5ac273ca",
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
