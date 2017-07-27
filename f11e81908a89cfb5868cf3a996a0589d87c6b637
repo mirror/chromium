@@ -16,6 +16,24 @@
       "revId": "f11e81908a89cfb5868cf3a996a0589d87c6b637",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd0868a_ed8ee0b9",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-27T23:45:50Z",
+      "side": 1,
+      "message": "change_count will be used to determine whether Dispatcher should reschedule Actions.\n\nSo I think it\u0027s reasonable to leave it here.\n\nStoreResult is currently only used in tests, but I could see it being useful for UMA or other error handling. WDYT?",
+      "parentUuid": "98298fe5_514b255a",
+      "revId": "f11e81908a89cfb5868cf3a996a0589d87c6b637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
