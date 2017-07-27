@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b8fe9e0_4330b75e",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:31:15Z",
+      "side": 1,
+      "message": "Should we re-introduce the \"!\"? From the code below it seems that we are never expecting an undefined value.",
+      "revId": "418a4afd4d922f406b92327ec9c60a52a0a600ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a18047_799649c2",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-27T21:31:15Z",
+      "side": 1,
+      "message": "Do we have to use new and delete here? I thought that Chromium C++ is slowly moving away from using/managing raw pointers lifetime.\n\nWould this work without new, similar to https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/search_engines_handler.cc?l\u003d273-276 ?",
+      "revId": "418a4afd4d922f406b92327ec9c60a52a0a600ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
