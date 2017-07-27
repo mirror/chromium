@@ -916,7 +916,7 @@ static void DispatchEditableContentChangedEvents(Element* start_root,
 }
 
 static SelectionInDOMTree CorrectedSelectionAfterCommand(
-    const VisibleSelection& passed_selection,
+    const SelectionForUndoStep& passed_selection,
     Document* document) {
   if (!passed_selection.Base().IsConnected() ||
       !passed_selection.Extent().IsConnected() ||

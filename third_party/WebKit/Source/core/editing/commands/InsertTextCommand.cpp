@@ -144,7 +144,7 @@ bool InsertTextCommand::PerformOverwrite(const String& text,
 void InsertTextCommand::DoApply(EditingState* editing_state) {
   DCHECK_EQ(text_.find('\n'), kNotFound);
 
-  if (!EndingSelection().IsNonOrphanedCaretOrRange())
+  if (!EndingVisibleSelection().IsNonOrphanedCaretOrRange())
     return;
 
   // Delete the current selection.
@@ -154,7 +154,7 @@ void InsertTextCommand::DoApply(EditingState* editing_state) {
       return;
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
     bool end_of_selection_was_at_start_of_block =
-        IsStartOfBlock(EndingSelection().VisibleEnd());
+        IsStartOfBlock(EndingVisibleSelection().VisibleEnd());
     DeleteSelection(editing_state, false, true, false, false);
     if (editing_state->IsAborted())
       return;
