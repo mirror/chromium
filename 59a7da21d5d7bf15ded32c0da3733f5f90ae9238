@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6925006b_48dc7a04",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wpt",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-27T16:17:59Z",
+      "side": 1,
+      "message": "This new script is pretty cool, but if tools/ is skipped then this should probably be skipped too... will make a follow-up.",
+      "revId": "59a7da21d5d7bf15ded32c0da3733f5f90ae9238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
