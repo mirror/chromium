@@ -725,6 +725,25 @@ void URLRequestHttpJob::AddCookieHeaderAndStart() {
 
 void URLRequestHttpJob::SetCookieHeaderAndStart(const CookieList& cookie_list) {
   if (!cookie_list.empty() && CanGetCookies(cookie_list)) {
+    // For non-secure requests, track the age of the oldest cookie in
+    // |cookie_list|.
+    if (!request_info_.url.SchemeIsCryptographic()) {
+      base::Time oldest = base::Time::Max();
+      for (const auto& cookie : cookie_list)
+        oldest = std::min(cookie.CreationDate(), oldest);
+      base::TimeDelta delta = base::Time::Now() - oldest;
+
+      if (registry_controlled_domains::SameDomainOrHost(
+              request_->url(), request_->first_party_for_cookies(),
+              registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+        UMA_HISTOGRAM_COUNTS_1000("Cookie.AgeForNonSecureSameSiteRequest",
+                                  delta.InDays());
+      } else {
+        UMA_HISTOGRAM_COUNTS_1000("Cookie.AgeForNonSecureCrossSiteRequest",
+                                  delta.InDays());
+      }
+    }
+
     request_info_.extra_headers.SetHeader(
         HttpRequestHeaders::kCookie, CookieStore::BuildCookieLine(cookie_list));
     // Disable privacy mode as we are sending cookies anyway.
