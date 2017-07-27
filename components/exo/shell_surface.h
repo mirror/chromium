@@ -18,6 +18,7 @@
 #include "components/exo/wm_helper.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/hit_test.h"
+#include "ui/display/display_observer.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -36,8 +37,16 @@ class TracedValue;
 }
 }
 
+namespace ui {
+class CompositorLock;
+class CompositorLockClient;
+}  // namespace ui
+
 namespace exo {
 class Surface;
+class CompositorRotationLock;
+
+enum class Orientation { PORTRAIT, LANDSCAPE };
 
 // This class provides functions for treating a surfaces like toplevel,
 // fullscreen or popup widgets, move, resize or maximize them, associate
@@ -46,10 +55,12 @@ class ShellSurface : public SurfaceTreeHost,
                      public SurfaceObserver,
                      public views::WidgetDelegate,
                      public views::View,
+                     public display::DisplayObserver,
                      public ash::wm::WindowStateObserver,
                      public aura::WindowObserver,
                      public WMHelper::ActivationObserver,
-                     public WMHelper::DisplayConfigurationObserver {
+                     public WMHelper::DisplayConfigurationObserver,
+                     NON_EXPORTED_BASE(public ui::CompositorLockClient) {
  public:
   enum class BoundsMode { SHELL, CLIENT, FIXED };
 
@@ -173,6 +184,9 @@ class ShellSurface : public SurfaceTreeHost,
   // for the surface from the user's perspective.
   void SetGeometry(const gfx::Rect& geometry);
 
+  // Set orientation for surface.
+  void SetOrientation(Orientation orientation);
+
   // Enable/disable rectangular shadow that uses the widget bounds as a content
   // bounds.
   void SetRectangularShadowEnabled(bool enabled);
@@ -276,6 +290,10 @@ class ShellSurface : public SurfaceTreeHost,
   // Overridden from ui::AcceleratorTarget:
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
 
+  // Overridden from display::DisplayObserver:
+  void OnDisplayMetricsChanged(const display::Display& display,
+                               uint32_t changed_metrics) override;
+
   aura::Window* shadow_overlay() { return shadow_overlay_.get(); }
   aura::Window* shadow_underlay() { return shadow_underlay_.get(); }
 
@@ -335,6 +353,13 @@ class ShellSurface : public SurfaceTreeHost,
   // In the coordinate system of the parent root window.
   gfx::Point GetMouseLocation() const;
 
+  // Unlock compositor if the new_size matches the expected orientation.
+  bool UnlockIfOrientationMatches(Orientation orientation);
+  void LockCompositor();
+  void UnlockCompositor();
+  // ui::CompositorLockClient implementation.
+  void CompositorLockTimedOut() override;
+
   views::Widget* widget_ = nullptr;
   aura::Window* parent_;
   const BoundsMode bounds_mode_;
@@ -375,6 +400,10 @@ class ShellSurface : public SurfaceTreeHost,
   int pending_top_inset_height_ = 0;
   bool shadow_underlay_in_surface_ = true;
   bool pending_shadow_underlay_in_surface_ = true;
+  Orientation pending_orientation_ = Orientation::LANDSCAPE;
+  Orientation orientation_ = Orientation::LANDSCAPE;
+  Orientation expected_orientation_ = Orientation::LANDSCAPE;
+  std::unique_ptr<ui::CompositorLock> compositor_lock_;
   bool system_modal_ = false;
   gfx::ImageSkia icon_;
 
