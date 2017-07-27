@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4442f8d_5b61d19e",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-27T21:59:05Z",
+      "side": 1,
+      "message": "Aren\u0027t \"\" and \"undefined\" falsey?",
+      "revId": "61f6473a239c0d963a91ddac78e34d14e682a573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c1b84f_0ee308de",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-27T21:59:05Z",
+      "side": 1,
+      "message": "What about \"undefined\", should we map that to the\nempty string too?",
+      "revId": "61f6473a239c0d963a91ddac78e34d14e682a573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
