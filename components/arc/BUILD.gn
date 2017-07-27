@@ -163,6 +163,7 @@ mojom("arc_bindings") {
     "common/video.mojom",
     "common/video_common.mojom",
     "common/video_decode_accelerator.mojom",
+    "common/video_decode_accelerator_new.mojom",
     "common/video_encode_accelerator.mojom",
     "common/voice_interaction_arc_home.mojom",
     "common/voice_interaction_framework.mojom",
