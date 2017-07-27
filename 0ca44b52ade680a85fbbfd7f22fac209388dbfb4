@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "747fa2fb_b9ef8799",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_function_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-27T17:09:44Z",
+      "side": 1,
+      "message": "Q: Why it\u0027s USER_VISIBLE not USER_BLOCKING? I\u0027m not sure which one is more appropriate here.",
+      "revId": "0ca44b52ade680a85fbbfd7f22fac209388dbfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
