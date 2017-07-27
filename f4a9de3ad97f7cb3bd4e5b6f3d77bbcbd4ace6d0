@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d9b519_cb09ae6b",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameSerializerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-27T14:43:36Z",
+      "side": 1,
+      "message": "To avoid the unnecessary WebData segmented access, would a WebVector work instead?",
+      "range": {
+        "startLine": 274,
+        "startChar": 6,
+        "endLine": 274,
+        "endChar": 13
+      },
+      "revId": "f4a9de3ad97f7cb3bd4e5b6f3d77bbcbd4ace6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
