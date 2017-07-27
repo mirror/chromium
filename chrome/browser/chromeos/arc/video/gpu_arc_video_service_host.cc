@@ -28,8 +28,8 @@ namespace arc {
 
 namespace {
 
-void ConnectToVideoDecodeAcceleratorOnIOThread(
-    mojom::VideoDecodeAcceleratorRequest request) {
+void ConnectToVideoDecodeAcceleratorDeprecatedOnIOThread(
+    mojom::VideoDecodeAcceleratorDeprecatedRequest request) {
   content::BindInterfaceInGpuProcess(std::move(request));
 }
 
@@ -63,12 +63,18 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
  public:
   VideoAcceleratorFactoryService() = default;
 
-  void CreateDecodeAccelerator(
-      mojom::VideoDecodeAcceleratorRequest request) override {
+  void CreateDecodeAcceleratorDeprecated(
+      mojom::VideoDecodeAcceleratorDeprecatedRequest request) override {
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ConnectToVideoDecodeAcceleratorOnIOThread,
+        base::BindOnce(&ConnectToVideoDecodeAcceleratorDeprecatedOnIOThread,
                        base::Passed(&request)));
+  }
+
+  void CreateDecodeAccelerator(
+      mojom::VideoDecodeAcceleratorRequest request) override {
+    // TODO(hiroh): Implement this function.
+    NOTIMPLEMENTED();
   }
 
   void CreateEncodeAccelerator(

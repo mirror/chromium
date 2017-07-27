@@ -12,7 +12,7 @@
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "chrome/gpu/arc_video_decode_accelerator.h"
-#include "components/arc/common/video_decode_accelerator.mojom.h"
+#include "components/arc/common/video_decode_accelerator_deprecated.mojom.h"
 #include "components/arc/video_accelerator/video_accelerator.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 
@@ -25,7 +25,7 @@ namespace arc {
 // For each creation request from GpuArcVideoDecodeAcceleratorHost,
 // GpuArcVideoDecodeAccelerator will create a new IPC channel.
 class GpuArcVideoDecodeAccelerator
-    : public ::arc::mojom::VideoDecodeAccelerator,
+    : public ::arc::mojom::VideoDecodeAcceleratorDeprecated,
       public ArcVideoDecodeAccelerator::Client {
  public:
   explicit GpuArcVideoDecodeAccelerator(
@@ -42,9 +42,9 @@ class GpuArcVideoDecodeAccelerator
   void OnResetDone() override;
   void OnOutputFormatChanged(const VideoFormat& format) override;
 
-  // ::arc::mojom::VideoDecodeAccelerator implementation.
+  // ::arc::mojom::VideoDecodeAcceleratorDeprecated implementation.
   void Initialize(::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
-                  ::arc::mojom::VideoDecodeClientPtr client,
+                  ::arc::mojom::VideoDecodeClientDeprecatedPtr client,
                   const InitializeCallback& callback) override;
   void BindSharedMemory(::arc::mojom::PortType port,
                         uint32_t index,
@@ -68,7 +68,7 @@ class GpuArcVideoDecodeAccelerator
 
   gpu::GpuPreferences gpu_preferences_;
   std::unique_ptr<ArcVideoDecodeAccelerator> accelerator_;
-  ::arc::mojom::VideoDecodeClientPtr client_;
+  ::arc::mojom::VideoDecodeClientDeprecatedPtr client_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuArcVideoDecodeAccelerator);
 };

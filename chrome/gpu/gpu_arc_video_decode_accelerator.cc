@@ -15,34 +15,33 @@
 #include "mojo/public/cpp/bindings/type_converter.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
-// Make sure arc::mojom::VideoDecodeAccelerator::Result and
+// Make sure arc::mojom::VideoDecodeAcceleratorDeprecated::Result and
 // chromeos::arc::ArcVideoDecodeAccelerator::Result match.
 static_assert(
-    static_cast<int>(arc::mojom::VideoDecodeAccelerator::Result::SUCCESS) ==
+    static_cast<int>(
+        arc::mojom::VideoDecodeAcceleratorDeprecated::Result::SUCCESS) ==
         chromeos::arc::ArcVideoDecodeAccelerator::SUCCESS,
     "enum mismatch");
-static_assert(static_cast<int>(
-                  arc::mojom::VideoDecodeAccelerator::Result::ILLEGAL_STATE) ==
-                  chromeos::arc::ArcVideoDecodeAccelerator::ILLEGAL_STATE,
+static_assert(
+    static_cast<int>(
+        arc::mojom::VideoDecodeAcceleratorDeprecated::Result::ILLEGAL_STATE) ==
+        chromeos::arc::ArcVideoDecodeAccelerator::ILLEGAL_STATE,
+    "enum mismatch");
+static_assert(static_cast<int>(arc::mojom::VideoDecodeAcceleratorDeprecated::
+                                   Result::INVALID_ARGUMENT) ==
+                  chromeos::arc::ArcVideoDecodeAccelerator::INVALID_ARGUMENT,
+              "enum mismatch");
+static_assert(static_cast<int>(arc::mojom::VideoDecodeAcceleratorDeprecated::
+                                   Result::UNREADABLE_INPUT) ==
+                  chromeos::arc::ArcVideoDecodeAccelerator::UNREADABLE_INPUT,
+              "enum mismatch");
+static_assert(static_cast<int>(arc::mojom::VideoDecodeAcceleratorDeprecated::
+                                   Result::PLATFORM_FAILURE) ==
+                  chromeos::arc::ArcVideoDecodeAccelerator::PLATFORM_FAILURE,
               "enum mismatch");
 static_assert(
-    static_cast<int>(
-        arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT) ==
-        chromeos::arc::ArcVideoDecodeAccelerator::INVALID_ARGUMENT,
-    "enum mismatch");
-static_assert(
-    static_cast<int>(
-        arc::mojom::VideoDecodeAccelerator::Result::UNREADABLE_INPUT) ==
-        chromeos::arc::ArcVideoDecodeAccelerator::UNREADABLE_INPUT,
-    "enum mismatch");
-static_assert(
-    static_cast<int>(
-        arc::mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE) ==
-        chromeos::arc::ArcVideoDecodeAccelerator::PLATFORM_FAILURE,
-    "enum mismatch");
-static_assert(
-    static_cast<int>(
-        arc::mojom::VideoDecodeAccelerator::Result::INSUFFICIENT_RESOURCES) ==
+    static_cast<int>(arc::mojom::VideoDecodeAcceleratorDeprecated::Result::
+                         INSUFFICIENT_RESOURCES) ==
         chromeos::arc::ArcVideoDecodeAccelerator::INSUFFICIENT_RESOURCES,
     "enum mismatch");
 
@@ -122,7 +121,8 @@ void GpuArcVideoDecodeAccelerator::OnError(
   DCHECK_NE(error, ArcVideoDecodeAccelerator::SUCCESS);
   DCHECK(client_);
   client_->OnError(
-      static_cast<::arc::mojom::VideoDecodeAccelerator::Result>(error));
+      static_cast<::arc::mojom::VideoDecodeAcceleratorDeprecated::Result>(
+          error));
 }
 
 void GpuArcVideoDecodeAccelerator::OnBufferDone(
@@ -156,7 +156,7 @@ void GpuArcVideoDecodeAccelerator::OnOutputFormatChanged(
 
 void GpuArcVideoDecodeAccelerator::Initialize(
     ::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
-    ::arc::mojom::VideoDecodeClientPtr client,
+    ::arc::mojom::VideoDecodeClientDeprecatedPtr client,
     const InitializeCallback& callback) {
   DVLOG(2) << "Initialize";
   DCHECK(!client_);
@@ -164,14 +164,15 @@ void GpuArcVideoDecodeAccelerator::Initialize(
       ::arc::mojom::VideoDecodeAcceleratorConfig::DeviceTypeDeprecated::
           DEVICE_DECODER) {
     LOG(ERROR) << "only decoder is supported";
-    callback.Run(
-        ::arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
+    callback.Run(::arc::mojom::VideoDecodeAcceleratorDeprecated::Result::
+                     INVALID_ARGUMENT);
   }
   client_ = std::move(client);
   ArcVideoDecodeAccelerator::Result result = accelerator_->Initialize(
       config.To<ArcVideoDecodeAccelerator::Config>(), this);
   callback.Run(
-      static_cast<::arc::mojom::VideoDecodeAccelerator::Result>(result));
+      static_cast<::arc::mojom::VideoDecodeAcceleratorDeprecated::Result>(
+          result));
 }
 
 base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
@@ -179,8 +180,8 @@ base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
   DCHECK(client_);
   if (!handle.is_valid()) {
     LOG(ERROR) << "handle is invalid";
-    client_->OnError(
-        ::arc::mojom::VideoDecodeAccelerator::Result::INVALID_ARGUMENT);
+    client_->OnError(::arc::mojom::VideoDecodeAcceleratorDeprecated::Result::
+                         INVALID_ARGUMENT);
     return base::ScopedFD();
   }
 
@@ -189,8 +190,8 @@ base::ScopedFD GpuArcVideoDecodeAccelerator::UnwrapFdFromMojoHandle(
       mojo::UnwrapPlatformFile(std::move(handle), &platform_file);
   if (mojo_result != MOJO_RESULT_OK) {
     LOG(ERROR) << "UnwrapPlatformFile failed: " << mojo_result;
-    client_->OnError(
-        ::arc::mojom::VideoDecodeAccelerator::Result::PLATFORM_FAILURE);
+    client_->OnError(::arc::mojom::VideoDecodeAcceleratorDeprecated::Result::
+                         PLATFORM_FAILURE);
     return base::ScopedFD();
   }
 

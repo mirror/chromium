@@ -54,8 +54,9 @@ void ChromeContentGpuClient::Initialize(
     service_manager::BinderRegistry* registry) {
 #if defined(OS_CHROMEOS)
   registry->AddInterface(
-      base::Bind(&ChromeContentGpuClient::CreateArcVideoDecodeAccelerator,
-                 base::Unretained(this)),
+      base::Bind(
+          &ChromeContentGpuClient::CreateArcVideoDecodeAcceleratorDeprecated,
+          base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface(
       base::Bind(&ChromeContentGpuClient::CreateArcVideoEncodeAccelerator,
@@ -79,8 +80,8 @@ void ChromeContentGpuClient::GpuServiceInitialized(
 
 #if defined(OS_CHROMEOS)
 
-void ChromeContentGpuClient::CreateArcVideoDecodeAccelerator(
-    ::arc::mojom::VideoDecodeAcceleratorRequest request) {
+void ChromeContentGpuClient::CreateArcVideoDecodeAcceleratorDeprecated(
+    ::arc::mojom::VideoDecodeAcceleratorDeprecatedRequest request) {
   mojo::MakeStrongBinding(
       base::MakeUnique<chromeos::arc::GpuArcVideoDecodeAccelerator>(
           gpu_preferences_),
