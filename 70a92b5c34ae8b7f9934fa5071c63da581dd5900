@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "54c9f005_0cb7f733",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T08:13:14Z",
+      "side": 1,
+      "message": "\u003e It doesn\u0027t seem like it\u0027s valuable to have callers not need to specify the disposition.\n\nI see where you\u0027re coming from. Okay. I\u0027ll leave single verison with \"PASS\" as default arg. And change others to specify disposition explicitly. Thank you so much ;)",
+      "parentUuid": "87eace99_0c3f7696",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "576d9f53_310da973",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
         "patchSetId": 7
@@ -192,6 +210,24 @@
       "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252189b2_b199d6b6",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T08:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f292ec2_3d220e3e",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "5bca1d45_5509eae3",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T08:13:14Z",
+      "side": 1,
+      "message": "@bauerb Could you tell us about this please?",
+      "parentUuid": "feec7973_e680b73f",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7abd767_18011564",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 7
@@ -316,6 +370,24 @@
       "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2022b7_db753431",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-27T08:13:14Z",
+      "side": 1,
+      "message": "Got it. Thanks :)",
+      "parentUuid": "07dd296c_22bd7aa1",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
