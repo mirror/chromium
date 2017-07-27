@@ -16,6 +16,24 @@
       "revId": "12bad2c5f5047a44e505d85f83f16da5b1fe043d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51b82bb_7f294603",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-27T18:34:02Z",
+      "side": 0,
+      "message": "I added it back. In the latest patch set, we will only remove the shadow_underlay_ if the opacity is 0. And android N\nwill set the opacity to 0.",
+      "parentUuid": "e213777c_72c274cc",
+      "revId": "12bad2c5f5047a44e505d85f83f16da5b1fe043d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
