@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6cc876af_b7bbe359",
+        "filename": "components/cryptauth/cryptauth_device_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-27T18:03:43Z",
+      "side": 1,
+      "message": "You are relying on this behaviour in remote_device_provider.cc (line 67). Right now, only unlock keys trigger the CHANGED sync result. You would want to refactor this to trigger for all changes.",
+      "parentUuid": "f25d665b_3e55da91",
+      "range": {
+        "startLine": 481,
+        "startChar": 42,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "959000d8_ca8e73e4",
         "filename": "components/cryptauth/cryptauth_device_manager.h",
         "patchSetId": 15
@@ -425,6 +449,29 @@
     },
     {
       "key": {
+        "uuid": "e3ef1719_c06673c1",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-27T18:03:43Z",
+      "side": 1,
+      "message": "This seems unnecessary to verify.",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d0b8e41_65cbe1e8",
         "filename": "components/cryptauth/remote_device_provider_unittest.cc",
         "patchSetId": 15
@@ -465,6 +512,53 @@
         "startChar": 6,
         "endLine": 70,
         "endChar": 22
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f7d293_cb4995a4",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-27T18:03:43Z",
+      "side": 1,
+      "message": "In that case, this code can be made much simpler by making this class a Fake instead of a mock, and moving all the proxying logic from the factory to here. Excessive mocking makes tests very hard to read.",
+      "parentUuid": "ee809a91_e9157bec",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a184f9_8f5ba9a0",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-27T18:03:43Z",
+      "side": 1,
+      "message": "This expected_size param seems unnecessary. You are injecting the mock_device_manager_sync_devices_ yourself in this test, so simply use its size as the expected size.",
+      "range": {
+        "startLine": 209,
+        "startChar": 43,
+        "endLine": 209,
+        "endChar": 63
       },
       "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
