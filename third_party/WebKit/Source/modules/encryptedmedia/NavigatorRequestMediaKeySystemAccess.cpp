@@ -21,6 +21,7 @@
 #include "modules/encryptedmedia/MediaKeysController.h"
 #include "platform/EncryptedMediaRequest.h"
 #include "platform/Histogram.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/network/ParsedContentType.h"
@@ -270,6 +271,21 @@ ScriptPromise NavigatorRequestMediaKeySystemAccess::requestMediaKeySystemAccess(
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
   Document* document = ToDocument(execution_context);
 
+  Deprecation::CountDeprecationFeaturePolicy(*document,
+                                             WebFeaturePolicyFeature::kEme);
+
+  if (RuntimeEnabledFeatures::
+          FeaturePolicyForEncryptedMediaExtensionsEnabled()) {
+    if (!document->GetFrame() || !document->GetFrame()->IsFeatureEnabled(
+                                     WebFeaturePolicyFeature::kEme)) {
+      return ScriptPromise::RejectWithDOMException(
+          script_state,
+          DOMException::Create(
+              kSecurityError,
+              "requestMediaKeySystemAccess is disabled by feature policy."));
+    }
+  }
+
   // From https://w3c.github.io/encrypted-media/#common-key-systems
   // All user agents MUST support the common key systems described in this
   // section.
@@ -331,8 +347,6 @@ ScriptPromise NavigatorRequestMediaKeySystemAccess::requestMediaKeySystemAccess(
   UseCounter::Count(*document, WebFeature::kEncryptedMediaSecureOrigin);
   UseCounter::CountCrossOriginIframe(
       *document, WebFeature::kEncryptedMediaCrossOriginIframe);
-  Deprecation::CountDeprecationFeaturePolicy(*document,
-                                             WebFeaturePolicyFeature::kEme);
 
   // 4. Let origin be the origin of document.
   //    (Passed with the execution context.)
@@ -341,6 +355,7 @@ ScriptPromise NavigatorRequestMediaKeySystemAccess::requestMediaKeySystemAccess(
   MediaKeySystemAccessInitializer* initializer =
       new MediaKeySystemAccessInitializer(script_state, key_system,
                                           supported_configurations);
+
   ScriptPromise promise = initializer->Promise();
 
   // 6. Asynchronously determine support, and if allowed, create and
