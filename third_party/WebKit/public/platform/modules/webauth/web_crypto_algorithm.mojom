@@ -1,0 +1,26 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+[JavaPackage="org.chromium.webauth.mojom"]
+module webauth.mojom;
+
+enum WebCryptoAlgorithmId {
+  NONE,
+  SHA_256,
+  ECDSA,
+};
+
+enum WebCryptoNamedCurve {
+  NONE,
+  P256,
+};
+
+struct WebCryptoAlgorithmParams {
+  WebCryptoNamedCurve named_curve;
+};
+
+struct WebCryptoAlgorithm {
+  WebCryptoAlgorithmId id;
+  WebCryptoAlgorithmParams param;
+};

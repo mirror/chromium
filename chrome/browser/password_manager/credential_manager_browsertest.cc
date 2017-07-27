@@ -86,7 +86,8 @@ class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
         "    name: 'avery.a.jones@example.com',"
         "    displayName: 'Avery A. Jones', "
         "    icon: 'https://pics.acme.com/00/p/aBjjjpqPb.png'},"
-        "  parameters: [{ type: 'public-key', algorithm: 'ES256',}],"
+        "  parameters: [{ type: 'public-key', algorithm: { "
+        "      name: 'ECDSA', namedCurve: 'P-256'}}],"
         "  timeout: 60000,"
         "  excludeList: [], }"
         "}).catch(c => window.domAutomationController.send(c.toString()));";

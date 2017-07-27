@@ -740,6 +740,7 @@ mojom("mojo_bindings") {
     "platform/modules/serviceworker/service_worker_event_status.mojom",
     "platform/modules/serviceworker/service_worker_stream_handle.mojom",
     "platform/modules/webauth/authenticator.mojom",
+    "platform/modules/webauth/web_crypto_algorithm.mojom",
     "platform/modules/websockets/websocket.mojom",
     "platform/referrer.mojom",
     "platform/reporting.mojom",
