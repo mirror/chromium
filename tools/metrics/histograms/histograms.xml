@@ -28268,6 +28268,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="LocalNetworkRequests.PrivatePage" units="requests">
   <owner>uthakore@chromium.org</owner>
+  <owner>invernizzi@chromium.org</owner>
   <summary>
     Number of requests made by a private page to resources besides itself.
   </summary>
@@ -28275,6 +28276,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="LocalNetworkRequests.PublicPage" units="requests">
   <owner>uthakore@chromium.org</owner>
+  <owner>invernizzi@chromium.org</owner>
   <summary>
     Number of requests made by a public page to resources with reserved IP
     addresses.
