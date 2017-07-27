@@ -43,6 +43,8 @@
 #include "core/editing/markers/GrammarMarkerListImpl.h"
 #include "core/editing/markers/SpellingMarker.h"
 #include "core/editing/markers/SpellingMarkerListImpl.h"
+#include "core/editing/markers/SuggestionMarker.h"
+#include "core/editing/markers/SuggestionMarkerListImpl.h"
 #include "core/editing/markers/TextMatchMarker.h"
 #include "core/editing/markers/TextMatchMarkerListImpl.h"
 #include "core/frame/LocalFrameView.h"
@@ -69,6 +71,8 @@ DocumentMarker::MarkerTypeIndex MarkerTypeToMarkerIndex(
       return DocumentMarker::kCompositionMarkerIndex;
     case DocumentMarker::kActiveSuggestion:
       return DocumentMarker::kActiveSuggestionMarkerIndex;
+    case DocumentMarker::kSuggestion:
+      return DocumentMarker::kSuggestionMarkerIndex;
   }
 
   NOTREACHED();
@@ -85,6 +89,8 @@ DocumentMarkerList* CreateListForType(DocumentMarker::MarkerType type) {
       return new SpellingMarkerListImpl();
     case DocumentMarker::kGrammar:
       return new GrammarMarkerListImpl();
+    case DocumentMarker::kSuggestion:
+      return new SuggestionMarkerListImpl();
     case DocumentMarker::kTextMatch:
       return new TextMatchMarkerListImpl();
   }
@@ -122,13 +128,17 @@ inline bool DocumentMarkerController::PossiblyHasMarkers(
 }
 
 DocumentMarkerController::DocumentMarkerController(Document& document)
-    : possibly_existing_marker_types_(0), document_(&document) {
+    : possibly_existing_marker_types_(0),
+      document_(&document),
+      next_suggestion_marker_tag_(0) {
   SetContext(&document);
 }
 
 void DocumentMarkerController::Clear() {
   markers_.clear();
   possibly_existing_marker_types_ = 0;
+  // Don't reset next_suggestion_marker_tag_ to avoid old IDs accidentally
+  // being used to fetch markers that have been cleared.
 }
 
 void DocumentMarkerController::AddSpellingMarker(const EphemeralRange& range,
@@ -180,6 +190,27 @@ void DocumentMarkerController::AddActiveSuggestionMarker(
     return new ActiveSuggestionMarker(start_offset, end_offset, underline_color,
                                       thickness, background_color);
   });
+}
+
+void DocumentMarkerController::AddSuggestionMarker(
+    const EphemeralRange& range,
+    const Vector<String>& suggestions,
+    SuggestionMarker::RemoveUponReplace remove_upon_suggestion_replacement,
+    Color suggestion_highlight_color,
+    Color underline_color,
+    StyleableMarker::Thickness thickness,
+    Color background_color) {
+  DCHECK(!document_->NeedsLayoutTreeUpdate());
+  AddMarkerInternal(
+      range, [this, &suggestions, remove_upon_suggestion_replacement,
+              suggestion_highlight_color, underline_color, thickness,
+              background_color](int start_offset, int end_offset) {
+        return new SuggestionMarker(start_offset, end_offset,
+                                    next_suggestion_marker_tag_++, suggestions,
+                                    remove_upon_suggestion_replacement,
+                                    suggestion_highlight_color, underline_color,
+                                    thickness, background_color);
+      });
 }
 
 void DocumentMarkerController::PrepareForDestruction() {
