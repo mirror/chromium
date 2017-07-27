@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca6e3467_1c1b5f97",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-27T19:35:59Z",
+      "side": 1,
+      "message": "Profile inherits from SupportsUserData. Given this data is very specific to a particular place it would be better to use SupportsUserData for storing it rather than extending Profile. Doing this helps keep the amount of fields in Profile at a minimum.",
+      "range": {
+        "startLine": 295,
+        "startChar": 7,
+        "endLine": 295,
+        "endChar": 28
+      },
+      "revId": "e3cd0e2da29624bcd71d8bbd56bed93ba9ee5257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
