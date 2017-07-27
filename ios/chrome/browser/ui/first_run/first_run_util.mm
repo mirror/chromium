@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -77,8 +78,8 @@ NSString* InsertNewlineBeforeNthToLastWord(NSString* text, int index) {
 }
 
 // Trampoline method for Bind to create the sentinel file.
-bool CreateSentinel() {
-  return FirstRun::CreateSentinel();
+void CreateSentinel(bool* success) {
+  *success = FirstRun::CreateSentinel();
 }
 
 // Helper function for recording first run metrics. Takes an additional
@@ -151,12 +152,12 @@ void WriteFirstRunSentinelAndRecordMetrics(
     BOOL sign_in_attempted,
     BOOL has_sso_account) {
   // Call CreateSentinel() and pass the result into RecordFirstRunMetrics().
-  base::Callback<bool(void)> task = base::Bind(&CreateSentinel);
-  base::Callback<void(bool)> reply =
-      base::Bind(&RecordFirstRunMetricsInternal, browserState,
-                 sign_in_attempted, has_sso_account);
-  base::PostTaskAndReplyWithResult(web::WebThread::GetBlockingPool(), FROM_HERE,
-                                   task, reply);
+  bool success = false;
+  web::WebThread::GetTaskRunnerForThread(web::WebThread::FILE)
+      ->PostTaskAndReply(
+          FROM_HERE, base::Bind(&CreateSentinel, &success),
+          base::Bind(&RecordFirstRunMetricsInternal, browserState,
+                     sign_in_attempted, has_sso_account, success));
 }
 
 void FinishFirstRun(ios::ChromeBrowserState* browserState,
