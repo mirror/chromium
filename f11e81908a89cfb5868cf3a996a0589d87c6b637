@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98298fe5_514b255a",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-27T23:26:44Z",
+      "side": 1,
+      "message": "Are these two methods only needed for testing? If so, it might be better to test by directly examining the DB after task operated on it, and not exposing more publics than needed.\n\nMaybe we should expose a result of db-\u003eGetLastChangeCount() from PrefetchStoreTestUtil so it\u0027s easy to check in tests.",
+      "revId": "f11e81908a89cfb5868cf3a996a0589d87c6b637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
