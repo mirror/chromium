@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82b95805_a0d7c3b5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T16:06:13Z",
+      "side": 1,
+      "message": "I will use this for recording EQT in TabManagerStatsCollector. We need WebContents to determine whether it is loading for session restore and in foreground or not. \n\nI originally include this to this CL in previous patch sets, but I want this CL to do plumbing EQT from GRC to TabManager only, and there might be a change on the API to determine a WebContents is in session restore or not.",
+      "parentUuid": "e2214bc7_c7283e85",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 59
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a26fc46a_f6fd79cf",
         "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "994ed4974654847347a330166731d591d5d07cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c503bc1_3f2b4135",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T16:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26fc46a_f6fd79cf",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "695b5044_a2761faf",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T16:06:13Z",
+      "side": 1,
+      "message": "Done. I will use default.",
+      "parentUuid": "372fc5f2_153d22d2",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15e93df7_4a86f1c6",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-27T15:07:30Z",
       "side": 1,
       "message": "Can we reuse DISPATCH_TAB_SIGNAL?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bce7936_68f29b5a",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T16:06:13Z",
+      "side": 1,
+      "message": "Ack. I will change DISPATH_TAB_SIGNAL macro to capture all variables by reference.\nPreviously, I tried to reuse DISPATCH_TAB_SIGNAL but there was a error \"variable \u0027value\u0027 cannot be implicitly captured in a lambda with no capture-default specified\".",
+      "parentUuid": "15e93df7_4a86f1c6",
       "range": {
         "startLine": 92,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "994ed4974654847347a330166731d591d5d07cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455c7107_941bbbd3",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-27T16:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aee1c47e_0944fab5",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 12
+      },
+      "revId": "994ed4974654847347a330166731d591d5d07cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
