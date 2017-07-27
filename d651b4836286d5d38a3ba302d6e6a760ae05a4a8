@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d412c2e_14c7d92d",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_pane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-27T19:00:06Z",
+      "side": 1,
+      "message": "Done and fixed comment as \"for chrome://theme\" was incorrect.",
+      "parentUuid": "14011703_016a1395",
+      "revId": "d651b4836286d5d38a3ba302d6e6a760ae05a4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768bd51b_7d0e3f29",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_pane.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T17:30:04Z",
       "side": 1,
       "message": "Shouldn\u0027t this return url now? The preview might not be a default image.",
+      "revId": "d651b4836286d5d38a3ba302d6e6a760ae05a4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0b5410_4e4de9cb",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_pane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-27T19:00:06Z",
+      "side": 1,
+      "message": "Good call. Done.",
+      "parentUuid": "768bd51b_7d0e3f29",
       "revId": "d651b4836286d5d38a3ba302d6e6a760ae05a4a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
