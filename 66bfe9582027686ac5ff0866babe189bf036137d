@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae1fcad5_ccd3f541",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-27T15:53:52Z",
+      "side": 1,
+      "message": "nit: Since we use this like a boolean, let\u0027s make this a boolean, e.g. \u0027forwards\u0027",
+      "revId": "66bfe9582027686ac5ff0866babe189bf036137d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
