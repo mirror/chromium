@@ -11,11 +11,14 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
-#include "services/service_manager/public/cpp/connector.h"
 
 namespace base {
 class DictionaryValue;
-}
+}  // namespace base
+
+namespace service_manager {
+class Connector;
+}  // namespace service_manager
 
 namespace tracing {
 
@@ -27,7 +30,7 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ChromeTraceEventAgent
 
   static ChromeTraceEventAgent* GetInstance();
 
-  explicit ChromeTraceEventAgent(mojom::AgentRegistryPtr agent_registry);
+  explicit ChromeTraceEventAgent(service_manager::Connector* connector);
 
   void AddMetadataGeneratorFunction(MetadataGeneratorFunction generator);
 
@@ -39,6 +42,7 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ChromeTraceEventAgent
 
   // mojom::Agent
   void StartTracing(const std::string& config,
+                    base::TimeTicks coordinator_time,
                     const StartTracingCallback& callback) override;
   void StopAndFlush(mojom::RecorderPtr recorder) override;
   void RequestClockSyncMarker(
@@ -52,6 +56,7 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ChromeTraceEventAgent
                        bool has_more_events);
 
   mojo::Binding<mojom::Agent> binding_;
+  uint8_t enabled_tracing_modes_;
   mojom::RecorderPtr recorder_;
   std::vector<MetadataGeneratorFunction> metadata_generator_functions_;
   bool trace_log_needs_me_ = false;
