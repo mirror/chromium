@@ -16,6 +16,24 @@
       "revId": "a5cbdd3bdcf10a2204724e51854b05344584836a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e39259d_c0a7e4c8",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-27T16:09:56Z",
+      "side": 1,
+      "message": "Nice catch, I missed the code few lines below :)",
+      "parentUuid": "1cfc5c69_0165cc3e",
+      "revId": "a5cbdd3bdcf10a2204724e51854b05344584836a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
