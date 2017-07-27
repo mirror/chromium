@@ -11,7 +11,6 @@ class Browser;
 class ContentSettingBubbleModel;
 class GURL;
 class LocationBarDecoration;
-class Profile;
 
 namespace bookmarks {
 class BookmarkBubbleObserver;
@@ -31,9 +30,8 @@ struct SecurityInfo;
 
 namespace chrome {
 
-// Shows a Views page info bubble on the given |browser_window|.
-void ShowPageInfoBubbleViews(gfx::NativeWindow browser_window,
-                             Profile* profile,
+// Shows a Views page info bubble on the given |browser|.
+void ShowPageInfoBubbleViews(Browser* browser,
                              content::WebContents* web_contents,
                              const GURL& virtual_url,
                              const security_state::SecurityInfo& security_info);
