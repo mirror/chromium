@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1217ffbc_4b3c01a2",
+        "filename": "ui/compositor/compositor_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-27T16:09:18Z",
+      "side": 1,
+      "message": "Should you use CreateResourceSettings() here? It\u0027s simple now, but is it possible there will be more things added to resource_settings later?",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "3cc854d1ec921ce087672aa95767d2b9f1c80968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91715803_cc1fa2cb",
+        "filename": "ui/compositor/compositor_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-27T16:09:18Z",
+      "side": 1,
+      "message": "Can you add a comment for what is |image_targets| exactly?",
+      "range": {
+        "startLine": 20,
+        "startChar": 40,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "3cc854d1ec921ce087672aa95767d2b9f1c80968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
