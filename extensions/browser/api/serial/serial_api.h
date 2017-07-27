@@ -48,7 +48,11 @@ class SerialGetDevicesFunction : public SerialAsyncApiFunction {
 
   // AsyncApiFunction:
   bool Prepare() override;
-  void Work() override;
+  void AsyncWorkStart() override;
+
+ private:
+  void OnGetDevicesComplete(
+      std::vector<device::mojom::SerialDeviceInfoPtr> devices);
 };
 
 class SerialConnectFunction : public SerialAsyncApiFunction {
