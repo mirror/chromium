@@ -45,6 +45,30 @@
       "revId": "6ba05fe456d13b863a476892eaa8e04f1cf1d904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778820d0_bcf5b102",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-27T19:59:22Z",
+      "side": 1,
+      "message": "The reason that I removed that line in the test is that when I ran the test, |weak_ptr| is null when it reaches this function. So moving the code from MailboxReleased() to here probably won\u0027t solve that problem.",
+      "parentUuid": "c5223aff_582d0d4a",
+      "range": {
+        "startLine": 954,
+        "startChar": 2,
+        "endLine": 954,
+        "endChar": 3
+      },
+      "revId": "6ba05fe456d13b863a476892eaa8e04f1cf1d904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
