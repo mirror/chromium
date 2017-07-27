@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a342c92_4a922848",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-27T21:01:21Z",
+      "side": 1,
+      "message": "Fixed. Sorry I thought it wrong, id is actually set.",
+      "parentUuid": "5c45ed88_5f03b101",
+      "revId": "0737971215b176fc01f1592e4a5ca98272bf4c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5176072_3550b6c0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
         "patchSetId": 4
