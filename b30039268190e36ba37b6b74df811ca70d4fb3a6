@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58d651fc_c8556025",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-27T13:58:55Z",
+      "side": 1,
+      "message": "Did you run into cases where this.browserProxy_ was not defined?",
+      "range": {
+        "startLine": 202,
+        "startChar": 27,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "b30039268190e36ba37b6b74df811ca70d4fb3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d511f413_8ac6890f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-27T13:58:55Z",
+      "side": 1,
+      "message": "The name of these methods make it sound like some action will be taken.\nPerhaps we could rename them to notifyDetailsShown and notifyLearnMoreClicked?",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "b30039268190e36ba37b6b74df811ca70d4fb3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54727c63_07efcda8",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-27T13:58:55Z",
+      "side": 1,
+      "message": "about whether the user expanded or closed the details section of the page.",
+      "range": {
+        "startLine": 64,
+        "startChar": 54,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "b30039268190e36ba37b6b74df811ca70d4fb3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
