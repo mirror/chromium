@@ -227,7 +227,7 @@ bool ResourceLoader::WillFollowRedirect(
     ResourceRequestBlockedReason blocked_reason = Context().CanRequest(
         resource_type, new_request, new_url, options, reporting_policy,
         FetchParameters::kUseDefaultOriginRestrictionForType,
-        new_request.GetRedirectStatus());
+        ResourceRequest::RedirectStatus::kFollowedRedirect);
     if (blocked_reason != ResourceRequestBlockedReason::kNone) {
       CancelForRedirectAccessCheckError(new_url, blocked_reason);
       return false;
@@ -242,9 +242,9 @@ bool ResourceLoader::WillFollowRedirect(
 
       String cors_error_msg;
       if (!CrossOriginAccessControl::HandleRedirect(
-              source_origin, new_request, redirect_response,
-              request.GetFetchCredentialsMode(), resource_->MutableOptions(),
-              cors_error_msg)) {
+              source_origin, new_url, request.GetRequestContext(),
+              redirect_response, request.GetFetchCredentialsMode(),
+              resource_->MutableOptions(), cors_error_msg)) {
         resource_->SetCORSStatus(CORSStatus::kFailed);
 
         if (!unused_preload)
@@ -272,7 +272,7 @@ bool ResourceLoader::WillFollowRedirect(
           kEnableCORSHandlingByResourceFetcher &&
       request.GetFetchRequestMode() == WebURLRequest::kFetchRequestModeCORS) {
     bool allow_stored_credentials = false;
-    switch (new_request.GetFetchCredentialsMode()) {
+    switch (request.GetFetchCredentialsMode()) {
       case WebURLRequest::kFetchCredentialsModeOmit:
         break;
       case WebURLRequest::kFetchCredentialsModeSameOrigin:
@@ -456,7 +456,7 @@ void ResourceLoader::DidReceiveResponse(
           resource_type, request, original_url, options,
           SecurityViolationReportingPolicy::kReport,
           FetchParameters::kUseDefaultOriginRestrictionForType,
-          ResourceRequest::RedirectStatus::kFollowedRedirect);
+          request.GetRedirectStatus());
       if (blocked_reason != ResourceRequestBlockedReason::kNone) {
         HandleError(ResourceError::CancelledDueToAccessCheckError(
             original_url, blocked_reason));
