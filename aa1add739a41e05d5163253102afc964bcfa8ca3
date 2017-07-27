@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd9b9707_2f9c4f03",
+        "filename": "content/shell/test_runner/mock_webrtc_peer_connection_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-27T18:22:00Z",
+      "side": 1,
+      "message": "Can you add a comment saying that this is to ensure the SRD promise resolves before the remote stream event is fired, which may change in the future?",
+      "revId": "aa1add739a41e05d5163253102afc964bcfa8ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d19e072_8f98eff9",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-27T18:22:00Z",
+      "side": 1,
+      "message": "nit: \"streams match\"",
+      "range": {
+        "startLine": 164,
+        "startChar": 27,
+        "endLine": 164,
+        "endChar": 28
+      },
+      "revId": "aa1add739a41e05d5163253102afc964bcfa8ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f4788e_6aea891b",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-27T18:22:00Z",
+      "side": 1,
+      "message": "I didn\u0027t expect you to actually rewrite all these tests, but these are great! It will be very valuable to have a test fail if we accidentally end up changing the relative order of events or promise resolving.\n\nI think there should still be a test for \"track event fires twice if stream contains two tracks\", but otherwise this looks good.",
+      "revId": "aa1add739a41e05d5163253102afc964bcfa8ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

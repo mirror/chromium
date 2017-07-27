@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "977ea2ab_bbfb8540",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-07-27T18:22:00Z",
+      "side": 1,
+      "message": "\u003e ASSERT was essentially a CHECK in a testing context\n\nIt is. But it\u0027s not exclusively for \"test can\u0027t continue\", it may also be \"shouldn\u0027t continue, because the test\u0027s assumptions are not met\". For example, suppose I\u0027m testing that if a remote description contains a bitrate limit, video frames are still capable of being encoded/decoded end-to-end. I may have an \"EXPECT\" for \"video frames received\", but an ASSERT that ensures that the bitrate limit is actually taking effect. Because if it isn\u0027t, then the test isn\u0027t testing what it was intended to be testing.\n\nOf course, there should be still be some other test that verifies that a bitrate limit in SDP is respected. But that should be an independent test, and it probably would have more granular \"EXPECT\"s than the \"ASSERT\"s in the other test.\n\nAt least, that\u0027s been my interpretation of the gtest guidelines, and what I\u0027ve noticed existing tests doing.",
+      "parentUuid": "09af512d_26612c51",
+      "revId": "2fdf4deadad9967860392e659d673610c732e6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d0efe3f_29d1b714",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 4
