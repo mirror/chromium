@@ -52,6 +52,24 @@
       "revId": "56750193466fcaf79c8b74994d2b9e653b8a59d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7ee87ec_a1d3ba5a",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-27T04:33:19Z",
+      "side": 1,
+      "message": "Oh okay - reverted.",
+      "parentUuid": "0bac6b78_62622bbc",
+      "revId": "56750193466fcaf79c8b74994d2b9e653b8a59d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
