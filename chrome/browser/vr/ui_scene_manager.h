@@ -11,12 +11,14 @@
 #include "base/values.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/simple_textured_element.h"
+#include "chrome/browser/vr/model/tabset_model.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
 namespace vr {
 
+class ContentInputDelegate;
 class ExclusiveScreenToast;
 class LoadingIndicator;
 class SplashScreenIcon;
@@ -26,11 +28,13 @@ class UiElement;
 class UiScene;
 class UrlBar;
 class ExitPrompt;
+class PagedGridView;
 
 class UiSceneManager {
  public:
   UiSceneManager(UiBrowserInterface* browser,
                  UiScene* scene,
+                 ContentInputDelegate* content_input_delegate,
                  bool in_cct,
                  bool in_web_vr,
                  bool web_vr_autopresentation_expected);
@@ -66,11 +70,13 @@ class UiSceneManager {
   void OnSecurityIconClickedForTesting();
   void OnExitPromptChoiceForTesting(bool chose_exit);
 
+  int AllocateId();
+
  private:
   void CreateScreenDimmer();
   void CreateSecurityWarnings();
   void CreateSystemIndicators();
-  void CreateContentQuad();
+  void CreateContentQuad(ContentInputDelegate* delegate);
   void CreateSplashScreen();
   void CreateBackground();
   void CreateUrlBar();
@@ -78,6 +84,8 @@ class UiSceneManager {
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
+  void CreateModel();
+  void CreatePagedGrid();
 
   void ConfigureScene();
   void ConfigureSecurityWarnings();
@@ -90,7 +98,6 @@ class UiSceneManager {
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
-  int AllocateId();
   ColorScheme::Mode mode() const;
   const ColorScheme& color_scheme() const;
 
@@ -118,6 +125,7 @@ class UiSceneManager {
   UrlBar* url_bar_ = nullptr;
   TransientUrlBar* transient_url_bar_ = nullptr;
   LoadingIndicator* loading_indicator_ = nullptr;
+  PagedGridView* page_grid_view_ = nullptr;
 
   std::vector<UiElement*> system_indicators_;
 
@@ -147,6 +155,8 @@ class UiSceneManager {
   std::vector<UiElement*> background_panels_;
   std::vector<UiElement*> content_elements_;
   std::vector<UiElement*> control_elements_;
+
+  std::vector<TabSetModel> tab_sets_;
 
   base::WeakPtrFactory<UiSceneManager> weak_ptr_factory_;
 

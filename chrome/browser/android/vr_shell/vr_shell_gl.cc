@@ -272,7 +272,7 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
                    task_runner_));
   }
 
-  input_manager_ = base::MakeUnique<vr::UiInputManager>(scene_, this);
+  input_manager_ = base::MakeUnique<vr::UiInputManager>(scene_);
   ui_renderer_ = base::MakeUnique<vr::UiRenderer>(scene_, content_texture_id_,
                                                   vr_shell_renderer_.get());
 }

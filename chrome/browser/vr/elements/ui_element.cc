@@ -7,6 +7,7 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/stl_util.h"
 #include "base/time/time.h"
 #include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
@@ -60,6 +61,17 @@ void UiElement::OnMove(const gfx::PointF& position) {}
 void UiElement::OnButtonDown(const gfx::PointF& position) {}
 
 void UiElement::OnButtonUp(const gfx::PointF& position) {}
+
+void UiElement::OnFlingBegin(std::unique_ptr<blink::WebGestureEvent> gesture,
+                             const gfx::PointF& position) {}
+void UiElement::OnFlingCancel(std::unique_ptr<blink::WebGestureEvent> gesture,
+                              const gfx::PointF& position) {}
+void UiElement::OnScrollBegin(std::unique_ptr<blink::WebGestureEvent> gesture,
+                              const gfx::PointF& position) {}
+void UiElement::OnScrollUpdate(std::unique_ptr<blink::WebGestureEvent> gesture,
+                               const gfx::PointF& position) {}
+void UiElement::OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
+                            const gfx::PointF& position) {}
 
 void UiElement::PrepareToDraw() {}
 
@@ -160,6 +172,12 @@ void UiElement::OnSetMode() {}
 void UiElement::AddChild(UiElement* child) {
   child->parent_ = this;
   children_.push_back(child);
+}
+
+void UiElement::RemoveChild(UiElement* to_remove) {
+  to_remove->parent_ = nullptr;
+  base::EraseIf(children_,
+                [to_remove](UiElement* child) { return to_remove == child; });
 }
 
 gfx::Point3F UiElement::GetCenter() const {

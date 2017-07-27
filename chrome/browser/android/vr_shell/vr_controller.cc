@@ -269,6 +269,23 @@ void VrController::UpdateTouchInfo() {
       gvr::GvrApi::GetTimePointNow().monotonic_system_time_nanos;
 }
 
+// TODO(vollick): gestures are a function of raw input and the semantics of the
+// target element. The controller should be repsonsible for producing raw input
+// events and they should be converted into gestures by per-element recognizers.
+// Put another way: if an element wants to detect gestures, it should
+// instantiate a recognizer that can detect the relevant gestures. Pseudocode
+// would be as follows.
+//
+// (in VrShellGl)
+//  - update element geometry (i.e., on begin frame).
+//  - event, controller state = get raw, non-gvr, data from controller
+//  - input_handler_->ProcessRawInput(event)
+//
+// UiInputHandler::ProcessRawInput(event, controller state)
+//  - elements = hit test(scene, controller state)
+//  - for each element : elements
+//    - if element is not hit testable, then continue
+//    - element.ProcessRawInput(event)
 std::unique_ptr<GestureList> VrController::DetectGestures() {
   std::unique_ptr<GestureList> gesture_list = base::MakeUnique<GestureList>();
   std::unique_ptr<blink::WebGestureEvent> gesture(new blink::WebGestureEvent());

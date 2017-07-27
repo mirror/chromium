@@ -6,14 +6,19 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/stringprintf.h"
 #include "cc/base/math_util.h"
+#include "chrome/browser/vr/databinding/one_way_binding.h"
+#include "chrome/browser/vr/databinding/vector_binding.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/close_button_texture.h"
+#include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/exclusive_screen_toast.h"
 #include "chrome/browser/vr/elements/exit_prompt.h"
 #include "chrome/browser/vr/elements/exit_prompt_backplane.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/loading_indicator.h"
+#include "chrome/browser/vr/elements/paged_grid_view.h"
 #include "chrome/browser/vr/elements/screen_dimmer.h"
 #include "chrome/browser/vr/elements/splash_screen_icon.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
@@ -23,6 +28,7 @@
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
 #include "chrome/browser/vr/elements/url_bar.h"
+#include "chrome/browser/vr/model/tabset_model.h"
 #include "chrome/browser/vr/target_property.h"
 #include "chrome/browser/vr/ui_browser_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
@@ -30,9 +36,12 @@
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/transform_util.h"
 
+#define HACKERY 1
+
 namespace vr {
 
 using TargetProperty::BOUNDS;
+using TargetProperty::SCROLL_OFFSET;
 using TargetProperty::TRANSFORM;
 
 namespace {
@@ -137,10 +146,39 @@ enum DrawPhase : int {
   kPhaseForeground,
 };
 
+/* clang-format off */
+
+// XXX totaly hack.
+static constexpr SkColor kTabColors[] = {
+    static_cast<SkColor>(0xFF5CBF60),
+    static_cast<SkColor>(0xFF83FDAD),
+    static_cast<SkColor>(0xFF293086),
+    static_cast<SkColor>(0xFF3F4A43),
+    static_cast<SkColor>(0xFFD113D6),
+    static_cast<SkColor>(0xFFD65F29),
+
+    static_cast<SkColor>(0xFF6013BF),
+    static_cast<SkColor>(0xFF9655FD),
+    static_cast<SkColor>(0xFF362C86),
+    static_cast<SkColor>(0xFFFFDE2E),
+    static_cast<SkColor>(0xFFE31972),
+    static_cast<SkColor>(0xFF6013BF),
+
+    static_cast<SkColor>(0xFF3D372A),
+    static_cast<SkColor>(0xFFFD7C46),
+    static_cast<SkColor>(0xFF16862E),
+    static_cast<SkColor>(0xFF76FF55),
+    static_cast<SkColor>(0xFF86E3C5),
+    static_cast<SkColor>(0xFF3D372A),
+};
+
+/* clang-format on */
+
 }  // namespace
 
 UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
                                UiScene* scene,
+                               ContentInputDelegate* content_input_delegate,
                                bool in_cct,
                                bool in_web_vr,
                                bool web_vr_autopresentation_expected)
@@ -152,7 +190,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
       showing_web_vr_splash_screen_(web_vr_autopresentation_expected),
       weak_ptr_factory_(this) {
   CreateBackground();
-  CreateContentQuad();
+  CreateContentQuad(content_input_delegate);
   CreateSecurityWarnings();
   CreateSystemIndicators();
   CreateUrlBar();
@@ -162,6 +200,12 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateExitPrompt();
   CreateToasts();
   CreateSplashScreen();
+
+#if HACKERY
+  CreateModel();
+
+  CreatePagedGrid();
+#endif
 
   ConfigureScene();
 }
@@ -283,10 +327,10 @@ void UiSceneManager::CreateSystemIndicators() {
   ConfigureIndicators();
 }
 
-void UiSceneManager::CreateContentQuad() {
+void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   std::unique_ptr<UiElement> element;
 
-  element = base::MakeUnique<UiElement>();
+  element = base::MakeUnique<ContentElement>(delegate);
   element->set_debug_id(kContentQuad);
   element->set_id(AllocateId());
   element->set_draw_phase(kPhaseForeground);
@@ -519,6 +563,128 @@ void UiSceneManager::CreateToasts() {
   scene_->AddUiElement(std::move(element));
 }
 
+// XXX: the fact that this all lives here is hackery for the demo.
+typedef VectorBinding<TabModel, UiElement> TabSetBinding;
+typedef typename TabSetBinding::ElementBinding TabBinding;
+
+SkColor GetColor(TabBinding* element) {
+  return element->model()->color;
+}
+
+void SetColor(TabBinding* element, const SkColor& color) {
+  element->view()->set_center_color(color);
+  element->view()->set_edge_color(color);
+}
+
+// XXX: it's unfortunate to pass the scene manager here. We only do it to get
+// access to the AllocateId function. This could, perhaps, be made static since
+// we never have to deal with threads contending for the function.
+void OnModelAdded(UiSceneManager* mgr,
+                  UiScene* scene,
+                  PagedGridView* view,
+                  TabBinding* tab_binding) {
+  std::unique_ptr<UiElement> element = base::MakeUnique<UiElement>();
+  element->set_id(mgr->AllocateId());
+  element->set_draw_phase(kPhaseForeground);
+  element->SetSize(kContentWidth / 4.1f, kContentHeight / 3.5f);
+  element->set_fill(vr::Fill::OPAQUE_GRADIENT);
+  element->set_center_color(SK_ColorWHITE);
+  element->set_edge_color(SK_ColorWHITE);
+  element->SetVisible(true);
+  element->animation_player().SetTransitionedProperties({OPACITY});
+  tab_binding->set_view(element.get());
+  view->AddChild(element.get());
+
+  std::unique_ptr<Binding> color_binding(new OneWayBinding<SkColor>(
+      base::Bind(&GetColor, base::Unretained(tab_binding)),
+      base::Bind(&SetColor, base::Unretained(tab_binding))));
+
+  tab_binding->bindings().push_back(std::move(color_binding));
+
+  scene->AddUiElement(std::move(element));
+}
+
+void OnModelRemoved(UiScene* scene, TabBinding* binding) {
+  scene->RemoveUiElement(binding->view()->id());
+}
+
+void UiSceneManager::CreateModel() {
+  // TODO(vollick,tiborg): connect this to real values.
+  TabSetModel current;
+  for (size_t i = 0; i < arraysize(kTabColors); ++i) {
+    std::string name = base::StringPrintf("current_%zu", i);
+    current.tabs.push_back(TabModel(name, i, kTabColors[i]));
+  }
+
+  TabSetModel incognito;
+  incognito.incognito = true;
+  for (size_t i = 0; i < arraysize(kTabColors); ++i) {
+    std::string name = base::StringPrintf("incognito_%zu", i);
+    incognito.tabs.push_back(TabModel(name, i, kTabColors[i]));
+  }
+
+  tab_sets_.push_back(current);
+  tab_sets_.push_back(incognito);
+}
+
+void UiSceneManager::CreatePagedGrid() {
+  // XXX: magic numbers ahoy.
+  std::unique_ptr<PagedGridView> view =
+      base::MakeUnique<PagedGridView>(2lu, 3lu, 0.08 * kContentHeight);
+
+  // view->set_debug_id(kContentQuad);
+  view->set_id(AllocateId());
+  view->set_draw_phase(kPhaseForeground);
+  view->SetVisible(true);
+  view->set_scrollable(true);
+  view->SetSize(kContentWidth, kContentHeight);
+  Transition transition;
+  transition.target_properties = {SCROLL_OFFSET};
+  transition.duration = base::TimeDelta::FromMilliseconds(350);
+  view->animation_player().set_transition(transition);
+
+  // XXX: this shouldn't be part of the model setup. Again, just part of the
+  // demo.
+  TabSetBinding::ModelAddedCallback added_callback =
+      base::Bind(&OnModelAdded, base::Unretained(this),
+                 base::Unretained(scene_), base::Unretained(view.get()));
+
+  TabSetBinding::ModelRemovedCallback removed_callback =
+      base::Bind(&OnModelRemoved, base::Unretained(scene_));
+
+  // Only binding the current tabs for now.
+  std::unique_ptr<TabSetBinding> binding = base::MakeUnique<TabSetBinding>(
+      &tab_sets_[0].tabs, added_callback, removed_callback);
+
+  scene_->bindings().push_back(std::move(binding));
+
+  page_grid_view_ = view.get();
+  scene_->AddUiElement(std::move(view));
+
+  std::unique_ptr<LinearLayout> page_grid_layout =
+      base::MakeUnique<LinearLayout>(LinearLayout::kVertical);
+  page_grid_layout->set_id(AllocateId());
+  page_grid_layout->SetTranslate(0, kContentVerticalOffset,
+                                 -kContentDistance + 0.01f);
+  page_grid_layout->set_margin(kIndicatorGap);
+  page_grid_layout->AddChild(page_grid_view_);
+
+  // This will eventually be replaced with the progress bar.
+  auto rect = base::MakeUnique<UiElement>();
+  rect->set_id(AllocateId());
+  rect->SetSize(kUrlBarHeight, kUrlBarHeight);
+  rect->set_fill(Fill::OPAQUE_GRADIENT);
+  rect->set_draw_phase(kPhaseForeground);
+  rect->set_center_color(SK_ColorGREEN);
+  rect->set_edge_color(SK_ColorGREEN);
+  rect->SetVisible(true);
+
+  page_grid_layout->AddChild(rect.get());
+
+  scene_->AddUiElement(std::move(page_grid_layout));
+  scene_->AddUiElement(std::move(rect));
+}
+
 base::WeakPtr<UiSceneManager> UiSceneManager::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
@@ -579,7 +745,11 @@ void UiSceneManager::ConfigureScene() {
 
   // Content elements.
   for (UiElement* element : content_elements_) {
+#if HACKERY
+    element->SetEnabled(false);
+#else
     element->SetEnabled(browsing_mode && !prompting_to_exit_);
+#endif
   }
 
   // Background elements.
@@ -698,9 +868,16 @@ void UiSceneManager::OnGLInitialized() {
 }
 
 void UiSceneManager::OnAppButtonClicked() {
+#if HACKERY
+  size_t next_page = page_grid_view_->CurrentPage() + 1;
+  if (next_page >= page_grid_view_->NumPages())
+    next_page = 0;
+  page_grid_view_->SetCurrentPage(next_page);
+#else
   // App button click exits the WebVR presentation and fullscreen.
   browser_->ExitPresent();
   browser_->ExitFullscreen();
+#endif
 }
 
 void UiSceneManager::OnAppButtonGesturePerformed(
