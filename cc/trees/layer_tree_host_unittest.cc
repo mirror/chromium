@@ -2793,9 +2793,7 @@ class LayerTreeHostTestSetVisible : public LayerTreeHostTest {
  public:
   LayerTreeHostTestSetVisible() : num_draws_(0) {}
 
-  void BeginTest() override {
-    PostSetNeedsCommitToMainThread();
-  }
+  void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
   void WillCommit() override {
     PostSetVisibleToMainThread(false);
@@ -4847,32 +4845,20 @@ class LayerTreeHostTestElasticOverscroll : public LayerTreeHostTest {
 MULTI_THREAD_TEST_F(LayerTreeHostTestElasticOverscroll);
 
 struct TestSwapPromiseResult {
-  TestSwapPromiseResult()
-      : did_activate_called(false),
-        did_swap_called(false),
-        did_not_swap_called(false),
-        dtor_called(false),
-        reason(SwapPromise::COMMIT_FAILS) {}
-
-  bool did_activate_called;
-  bool did_swap_called;
-  bool did_not_swap_called;
-  bool dtor_called;
-  SwapPromise::DidNotSwapReason reason;
-  base::Lock lock;
+  bool did_activate_called = false;
+  bool did_swap_called = false;
+  bool did_not_swap_called = false;
+  bool destroyed = false;
+  SwapPromise::DidNotSwapReason reason = SwapPromise::COMMIT_FAILS;
 };
 
 class TestSwapPromise : public SwapPromise {
  public:
   explicit TestSwapPromise(TestSwapPromiseResult* result) : result_(result) {}
 
-  ~TestSwapPromise() override {
-    base::AutoLock lock(result_->lock);
-    result_->dtor_called = true;
-  }
+  ~TestSwapPromise() override { result_->destroyed = true; }
 
   void DidActivate() override {
-    base::AutoLock lock(result_->lock);
     EXPECT_FALSE(result_->did_activate_called);
     EXPECT_FALSE(result_->did_swap_called);
     EXPECT_FALSE(result_->did_not_swap_called);
@@ -4880,7 +4866,6 @@ class TestSwapPromise : public SwapPromise {
   }
 
   void WillSwap(CompositorFrameMetadata* metadata) override {
-    base::AutoLock lock(result_->lock);
     EXPECT_FALSE(result_->did_swap_called);
     EXPECT_FALSE(result_->did_not_swap_called);
     result_->did_swap_called = true;
@@ -4889,7 +4874,6 @@ class TestSwapPromise : public SwapPromise {
   void DidSwap() override {}
 
   DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
-    base::AutoLock lock(result_->lock);
     EXPECT_FALSE(result_->did_swap_called);
     EXPECT_FALSE(result_->did_not_swap_called);
     EXPECT_FALSE(result_->did_activate_called &&
@@ -4951,106 +4935,151 @@ class PinnedLayerTreeSwapPromise : public LayerTreeHostTest {
 
 MULTI_THREAD_TEST_F(PinnedLayerTreeSwapPromise);
 
-class LayerTreeHostTestBreakSwapPromise : public LayerTreeHostTest {
+class LayerTreeHostTestBreakSwapPromiseCommon : public LayerTreeHostTest {
  protected:
-  LayerTreeHostTestBreakSwapPromise()
-      : commit_count_(0), commit_complete_count_(0) {}
+  explicit LayerTreeHostTestBreakSwapPromiseCommon(
+      bool main_frame_before_activation_enabled)
+      : main_frame_before_activation_enabled_(
+            main_frame_before_activation_enabled) {}
+
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->main_frame_before_activation_enabled =
+        main_frame_before_activation_enabled_;
+  }
 
   void WillBeginMainFrame() override {
-    ASSERT_LE(commit_count_, 2);
-    std::unique_ptr<SwapPromise> swap_promise(
-        new TestSwapPromise(&swap_promise_result_[commit_count_]));
+    begin_main_frame_count_++;
+    ASSERT_LE(begin_main_frame_count_, 4);
+    // SetDeferCommits is called as late as possible otherwise the scheduler
+    // won't call BeginMainFrame.
+    if (begin_main_frame_count_ == 2)
+      layer_tree_host()->SetDeferCommits(true);
     layer_tree_host()->GetSwapPromiseManager()->QueueSwapPromise(
-        std::move(swap_promise));
+        base::MakeUnique<TestSwapPromise>(
+            &swap_promise_result_[begin_main_frame_count_ - 1]));
   }
 
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
-  void DidCommit() override {
+  void ReadyToCommitOnThread(LayerTreeHostImpl* host_impl) override {
     commit_count_++;
-    if (commit_count_ == 2) {
-      // This commit will finish.
-      layer_tree_host()->SetNeedsCommit();
+    ASSERT_LE(commit_count_, 2);
+    if (commit_count_ == 1) {
+      PostSetNeedsCommitToMainThread();
+      if (main_frame_before_activation_enabled_)
+        host_impl->BlockNotifyReadyToActivateForTesting(true);
+    } else if (commit_count_ == 2) {
+      if (main_frame_before_activation_enabled_)
+        host_impl->BlockNotifyReadyToActivateForTesting(false);
     }
   }
 
-  void WillActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    if (host_impl->pending_tree()) {
-      int frame = host_impl->pending_tree()->source_frame_number();
-      base::AutoLock lock(swap_promise_result_[frame].lock);
-      EXPECT_FALSE(swap_promise_result_[frame].did_activate_called);
-      EXPECT_FALSE(swap_promise_result_[frame].did_swap_called);
-    }
-  }
+  void BeginMainFrameAbortedOnThread(LayerTreeHostImpl* host_impl,
+                                     CommitEarlyOutReason reason) override {
+    begin_main_frame_aborted_count_++;
+    ASSERT_LE(begin_main_frame_aborted_count_, 2);
 
-  void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    int frame = host_impl->active_tree()->source_frame_number();
-    base::AutoLock lock(swap_promise_result_[frame].lock);
-    EXPECT_TRUE(swap_promise_result_[frame].did_activate_called);
-    EXPECT_FALSE(swap_promise_result_[frame].did_swap_called);
-  }
-
-  void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
-    commit_complete_count_++;
-    if (commit_complete_count_ == 1) {
-      // This commit will be aborted because no actual update.
+    if (begin_main_frame_aborted_count_ == 1) {
+      EXPECT_EQ(reason, CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT);
+      // Next commit will be aborted because no actual update.
       PostSetNeedsUpdateLayersToMainThread();
+      // Stop deferring commits.
+      PostSetDeferCommitsToMainThread(false);
+    } else if (begin_main_frame_aborted_count_ == 2) {
+      EXPECT_EQ(reason, CommitEarlyOutReason::FINISHED_NO_UPDATES);
+      // Next commit will complete but draw won't have any damage.
+      PostSetNeedsCommitToMainThread();
     }
   }
 
   void DrawLayersOnThread(LayerTreeHostImpl* host_impl) override {
-    int frame = host_impl->active_tree()->source_frame_number();
-    if (frame == 2) {
+    draw_count_++;
+    ASSERT_LE(draw_count_, 2);
+    if (draw_count_ == 2)
       EndTest();
-    }
   }
 
   void AfterTest() override {
-    // 3 commits are scheduled. 2 completes. 1 is aborted.
-    EXPECT_EQ(commit_count_, 3);
-    EXPECT_EQ(commit_complete_count_, 2);
+    // 4 begin main frames are scheduled. 2 commit. 2 are aborted.
+    EXPECT_EQ(begin_main_frame_count_, 4);
+    EXPECT_EQ(begin_main_frame_aborted_count_, 2);
+    EXPECT_EQ(commit_count_, 2);
+    EXPECT_EQ(draw_count_, 2);
 
     {
-      // The first commit completes and causes swap buffer which finishes
-      // the promise.
-      base::AutoLock lock(swap_promise_result_[0].lock);
+      // The first commit completes and causes swap buffer which finishes the
+      // promise.
       EXPECT_TRUE(swap_promise_result_[0].did_swap_called);
       EXPECT_FALSE(swap_promise_result_[0].did_not_swap_called);
-      EXPECT_TRUE(swap_promise_result_[0].dtor_called);
+      EXPECT_TRUE(swap_promise_result_[0].destroyed);
     }
 
     {
-      // The second commit is aborted since it contains no updates.
-      base::AutoLock lock(swap_promise_result_[1].lock);
+      // The second commit is aborted because of defer commits.
       EXPECT_FALSE(swap_promise_result_[1].did_activate_called);
       EXPECT_FALSE(swap_promise_result_[1].did_swap_called);
       EXPECT_TRUE(swap_promise_result_[1].did_not_swap_called);
-      EXPECT_EQ(SwapPromise::COMMIT_NO_UPDATE, swap_promise_result_[1].reason);
-      EXPECT_TRUE(swap_promise_result_[1].dtor_called);
+      EXPECT_EQ(SwapPromise::COMMIT_FAILS, swap_promise_result_[1].reason);
+      EXPECT_TRUE(swap_promise_result_[1].destroyed);
     }
 
     {
-      // The last commit completes but it does not cause swap buffer because
-      // there is no damage in the frame data.
-      base::AutoLock lock(swap_promise_result_[2].lock);
-      EXPECT_TRUE(swap_promise_result_[2].did_activate_called);
+      // The third commit is aborted since it contains no updates.
+      EXPECT_FALSE(swap_promise_result_[2].did_activate_called);
       EXPECT_FALSE(swap_promise_result_[2].did_swap_called);
       EXPECT_TRUE(swap_promise_result_[2].did_not_swap_called);
-      EXPECT_EQ(SwapPromise::SWAP_FAILS, swap_promise_result_[2].reason);
-      EXPECT_TRUE(swap_promise_result_[2].dtor_called);
+      EXPECT_EQ(SwapPromise::COMMIT_NO_UPDATE, swap_promise_result_[2].reason);
+      EXPECT_TRUE(swap_promise_result_[2].destroyed);
+    }
+
+    {
+      // The fourth commit completes but it does not cause swap buffers because
+      // there is no damage in the frame data.
+      EXPECT_TRUE(swap_promise_result_[3].did_activate_called);
+      EXPECT_FALSE(swap_promise_result_[3].did_swap_called);
+      EXPECT_TRUE(swap_promise_result_[3].did_not_swap_called);
+      EXPECT_EQ(SwapPromise::SWAP_FAILS, swap_promise_result_[3].reason);
+      EXPECT_TRUE(swap_promise_result_[3].destroyed);
     }
   }
 
-  int commit_count_;
-  int commit_complete_count_;
-  TestSwapPromiseResult swap_promise_result_[3];
+  bool main_frame_before_activation_enabled_ = false;
+  int begin_main_frame_count_ = 0;
+  int begin_main_frame_aborted_count_ = 0;
+  int commit_count_ = 0;
+  int draw_count_ = 0;
+  TestSwapPromiseResult swap_promise_result_[5];
+};
+
+class LayerTreeHostTestBreakSwapPromise
+    : public LayerTreeHostTestBreakSwapPromiseCommon {
+ public:
+  LayerTreeHostTestBreakSwapPromise()
+      : LayerTreeHostTestBreakSwapPromiseCommon(false) {}
 };
 
 MULTI_THREAD_TEST_F(LayerTreeHostTestBreakSwapPromise);
 
-class LayerTreeHostTestKeepSwapPromise : public LayerTreeHostTest {
+class LayerTreeHostTestBreakSwapPromiseMFBA
+    : public LayerTreeHostTestBreakSwapPromiseCommon {
  public:
-  LayerTreeHostTestKeepSwapPromise() {}
+  LayerTreeHostTestBreakSwapPromiseMFBA()
+      : LayerTreeHostTestBreakSwapPromiseCommon(true) {}
+};
+
+MULTI_THREAD_TEST_F(LayerTreeHostTestBreakSwapPromiseMFBA);
+
+class LayerTreeHostTestKeepSwapPromiseCommon : public LayerTreeHostTest {
+ protected:
+  explicit LayerTreeHostTestKeepSwapPromiseCommon(
+      bool main_frame_before_activation_enabled)
+      : main_frame_before_activation_enabled_(
+            main_frame_before_activation_enabled) {}
+
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->main_frame_before_activation_enabled =
+        main_frame_before_activation_enabled_;
+  }
 
   void BeginTest() override {
     layer_ = SolidColorLayer::Create();
@@ -5062,32 +5091,36 @@ class LayerTreeHostTestKeepSwapPromise : public LayerTreeHostTest {
     PostSetNeedsCommitToMainThread();
   }
 
-  void DidCommit() override {
+  void ReadyToCommitOnThread(LayerTreeHostImpl* host_impl) override {
+    // Safe to check frame number here because main thread is blocked.
+    int frame_num = layer_tree_host()->SourceFrameNumber();
+    ASSERT_LE(frame_num, 2);
+    if (main_frame_before_activation_enabled_) {
+      if (frame_num == 0) {
+        host_impl->BlockNotifyReadyToActivateForTesting(true);
+      } else if (frame_num == 1) {
+        host_impl->BlockNotifyReadyToActivateForTesting(false);
+      }
+    }
     MainThreadTaskRunner()->PostTask(
         FROM_HERE,
-        base::BindOnce(&LayerTreeHostTestKeepSwapPromise::ChangeFrame,
+        base::BindOnce(&LayerTreeHostTestKeepSwapPromiseCommon::ChangeFrame,
                        base::Unretained(this)));
   }
 
   void ChangeFrame() {
-    switch (layer_tree_host()->SourceFrameNumber()) {
-      case 1:
-        layer_->SetBounds(gfx::Size(10, 11));
-        layer_tree_host()->GetSwapPromiseManager()->QueueSwapPromise(
-            base::MakeUnique<TestSwapPromise>(&swap_promise_result_));
-        break;
-      case 2:
-        break;
-      default:
-        NOTREACHED();
-        break;
+    int frame_num = layer_tree_host()->SourceFrameNumber();
+    ASSERT_LE(frame_num, 2);
+    if (frame_num == 1) {
+      layer_->SetBounds(gfx::Size(10, 11));
+      layer_tree_host()->GetSwapPromiseManager()->QueueSwapPromise(
+          base::MakeUnique<TestSwapPromise>(&swap_promise_result_));
     }
   }
 
   void WillActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
     if (host_impl->pending_tree()) {
       if (host_impl->pending_tree()->source_frame_number() == 1) {
-        base::AutoLock lock(swap_promise_result_.lock);
         EXPECT_FALSE(swap_promise_result_.did_activate_called);
         EXPECT_FALSE(swap_promise_result_.did_swap_called);
         SetCallback(host_impl, true);
@@ -5099,7 +5132,6 @@ class LayerTreeHostTestKeepSwapPromise : public LayerTreeHostTest {
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
     if (host_impl->active_tree()->source_frame_number() == 1) {
-      base::AutoLock lock(swap_promise_result_.lock);
       EXPECT_TRUE(swap_promise_result_.did_activate_called);
       EXPECT_FALSE(swap_promise_result_.did_swap_called);
     }
@@ -5107,149 +5139,50 @@ class LayerTreeHostTestKeepSwapPromise : public LayerTreeHostTest {
 
   void ActivationCallback() {
     // DidActivate needs to happen before the tree activation callback.
-    base::AutoLock lock(swap_promise_result_.lock);
     EXPECT_TRUE(swap_promise_result_.did_activate_called);
   }
 
   void SetCallback(LayerTreeHostImpl* host_impl, bool enable) {
     host_impl->SetTreeActivationCallback(
         enable
-            ? base::Bind(&LayerTreeHostTestKeepSwapPromise::ActivationCallback,
-                         base::Unretained(this))
+            ? base::Bind(
+                  &LayerTreeHostTestKeepSwapPromiseCommon::ActivationCallback,
+                  base::Unretained(this))
             : base::Closure());
   }
 
-  void DisplayDidDrawAndSwapOnThread() override {
+  void DrawLayersOnThread(LayerTreeHostImpl* host_impl) override {
     if (num_swaps_++ >= 1) {
       // The commit changes layers so it should cause a swap.
-      base::AutoLock lock(swap_promise_result_.lock);
       EXPECT_TRUE(swap_promise_result_.did_swap_called);
       EXPECT_FALSE(swap_promise_result_.did_not_swap_called);
-      EXPECT_TRUE(swap_promise_result_.dtor_called);
+      EXPECT_TRUE(swap_promise_result_.destroyed);
       EndTest();
     }
   }
 
-  void AfterTest() override {}
+  void AfterTest() override { EXPECT_EQ(2, num_swaps_); }
 
- private:
+  bool main_frame_before_activation_enabled_ = false;
   int num_swaps_ = 0;
   scoped_refptr<Layer> layer_;
   TestSwapPromiseResult swap_promise_result_;
 };
 
+class LayerTreeHostTestKeepSwapPromise
+    : public LayerTreeHostTestKeepSwapPromiseCommon {
+ public:
+  LayerTreeHostTestKeepSwapPromise()
+      : LayerTreeHostTestKeepSwapPromiseCommon(false) {}
+};
+
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestKeepSwapPromise);
 
-class LayerTreeHostTestKeepSwapPromiseMFBA : public LayerTreeHostTest {
+class LayerTreeHostTestKeepSwapPromiseMFBA
+    : public LayerTreeHostTestKeepSwapPromiseCommon {
  public:
-  LayerTreeHostTestKeepSwapPromiseMFBA() {}
-
-  void InitializeSettings(LayerTreeSettings* settings) override {
-    settings->main_frame_before_activation_enabled = true;
-  }
-
-  void BeginTest() override {
-    layer_ = SolidColorLayer::Create();
-    layer_->SetIsDrawable(true);
-    layer_->SetBounds(gfx::Size(10, 10));
-    layer_tree_host()->SetRootLayer(layer_);
-    gfx::Size bounds(100, 100);
-    layer_tree_host()->SetViewportSize(bounds);
-    PostSetNeedsCommitToMainThread();
-  }
-
-  void BeginCommitOnThread(LayerTreeHostImpl* host_impl) override {
-    // Safe to check frame number here because main thread is blocked.
-    if (layer_tree_host()->SourceFrameNumber() == 0) {
-      host_impl->BlockNotifyReadyToActivateForTesting(true);
-    } else {
-      NOTREACHED();
-    }
-  }
-
-  void DidCommit() override {
-    MainThreadTaskRunner()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&LayerTreeHostTestKeepSwapPromiseMFBA::ChangeFrame,
-                       base::Unretained(this)));
-  }
-
-  void BeginMainFrameAbortedOnThread(LayerTreeHostImpl* host_impl,
-                                     CommitEarlyOutReason reason) override {
-    base::AutoLock lock(swap_promise_result_.lock);
-    EXPECT_FALSE(swap_promise_result_.did_not_swap_called);
-    EXPECT_FALSE(swap_promise_result_.did_activate_called);
-    EXPECT_FALSE(swap_promise_result_.did_swap_called);
-    host_impl->BlockNotifyReadyToActivateForTesting(false);
-  }
-
-  void ChangeFrame() {
-    switch (layer_tree_host()->SourceFrameNumber()) {
-      case 1:
-        // Make no changes so that we abort the next commit caused by queuing
-        // the swap promise.
-        layer_tree_host()->GetSwapPromiseManager()->QueueSwapPromise(
-            base::MakeUnique<TestSwapPromise>(&swap_promise_result_));
-        layer_tree_host()->SetNeedsUpdateLayers();
-        break;
-      case 2:
-        break;
-      default:
-        NOTREACHED();
-        break;
-    }
-  }
-
-  void WillActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    if (host_impl->pending_tree()) {
-      if (host_impl->pending_tree()->source_frame_number() == 1) {
-        base::AutoLock lock(swap_promise_result_.lock);
-        EXPECT_FALSE(swap_promise_result_.did_activate_called);
-        EXPECT_FALSE(swap_promise_result_.did_swap_called);
-        SetCallback(host_impl, true);
-      } else {
-        SetCallback(host_impl, false);
-      }
-    }
-  }
-
-  void DidActivateTreeOnThread(LayerTreeHostImpl* host_impl) override {
-    if (host_impl->active_tree()->source_frame_number() == 1) {
-      base::AutoLock lock(swap_promise_result_.lock);
-      EXPECT_TRUE(swap_promise_result_.did_activate_called);
-      EXPECT_FALSE(swap_promise_result_.did_swap_called);
-    }
-  }
-
-  void ActivationCallback() {
-    // DidActivate needs to happen before the tree activation callback.
-    base::AutoLock lock(swap_promise_result_.lock);
-    EXPECT_TRUE(swap_promise_result_.did_activate_called);
-  }
-
-  void SetCallback(LayerTreeHostImpl* host_impl, bool enable) {
-    host_impl->SetTreeActivationCallback(
-        enable ? base::Bind(
-                     &LayerTreeHostTestKeepSwapPromiseMFBA::ActivationCallback,
-                     base::Unretained(this))
-               : base::Closure());
-  }
-
-  void DisplayDidDrawAndSwapOnThread() override {
-    num_swaps_++;
-    base::AutoLock lock(swap_promise_result_.lock);
-    EXPECT_TRUE(swap_promise_result_.did_swap_called);
-    EXPECT_FALSE(swap_promise_result_.did_not_swap_called);
-    EXPECT_TRUE(swap_promise_result_.dtor_called);
-    EndTest();
-  }
-
-  void AfterTest() override { EXPECT_EQ(1, num_swaps_); }
-
- private:
-  int num_swaps_ = 0;
-  scoped_refptr<Layer> layer_;
-  TestSwapPromiseResult swap_promise_result_;
+  LayerTreeHostTestKeepSwapPromiseMFBA()
+      : LayerTreeHostTestKeepSwapPromiseCommon(true) {}
 };
 
 MULTI_THREAD_TEST_F(LayerTreeHostTestKeepSwapPromiseMFBA);
@@ -5283,12 +5216,11 @@ class LayerTreeHostTestBreakSwapPromiseForVisibility
 
   void AfterTest() override {
     {
-      base::AutoLock lock(swap_promise_result_.lock);
       EXPECT_FALSE(swap_promise_result_.did_activate_called);
       EXPECT_FALSE(swap_promise_result_.did_swap_called);
       EXPECT_TRUE(swap_promise_result_.did_not_swap_called);
       EXPECT_EQ(SwapPromise::COMMIT_FAILS, swap_promise_result_.reason);
-      EXPECT_TRUE(swap_promise_result_.dtor_called);
+      EXPECT_TRUE(swap_promise_result_.destroyed);
     }
   }
 
@@ -6118,30 +6050,27 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
 
     // Initial swap promise should have succeded.
     {
-      base::AutoLock lock(swap_promise_result_[0].lock);
       EXPECT_TRUE(swap_promise_result_[0].did_swap_called);
       EXPECT_FALSE(swap_promise_result_[0].did_not_swap_called);
-      EXPECT_TRUE(swap_promise_result_[0].dtor_called);
+      EXPECT_TRUE(swap_promise_result_[0].destroyed);
     }
 
     // Second swap promise fails to swap.
     {
-      base::AutoLock lock(swap_promise_result_[1].lock);
       EXPECT_TRUE(swap_promise_result_[1].did_activate_called);
       EXPECT_FALSE(swap_promise_result_[1].did_swap_called);
       EXPECT_TRUE(swap_promise_result_[1].did_not_swap_called);
       EXPECT_EQ(SwapPromise::SWAP_FAILS, swap_promise_result_[1].reason);
-      EXPECT_TRUE(swap_promise_result_[1].dtor_called);
+      EXPECT_TRUE(swap_promise_result_[1].destroyed);
     }
 
     // Third swap promises also fails to swap (and draw).
     {
-      base::AutoLock lock(swap_promise_result_[2].lock);
       EXPECT_TRUE(swap_promise_result_[2].did_activate_called);
       EXPECT_FALSE(swap_promise_result_[2].did_swap_called);
       EXPECT_TRUE(swap_promise_result_[2].did_not_swap_called);
       EXPECT_EQ(SwapPromise::SWAP_FAILS, swap_promise_result_[2].reason);
-      EXPECT_TRUE(swap_promise_result_[2].dtor_called);
+      EXPECT_TRUE(swap_promise_result_[2].destroyed);
     }
   }
 

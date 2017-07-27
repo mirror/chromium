@@ -35,13 +35,8 @@ namespace cc {
 //   DidActivate() ; DidNotSwap()
 //
 // Clients that wish to use SwapPromise should have a subclass that defines
-// the behavior of DidActivate(), WillSwap(), DidSwap() and DidNotSwap(). Notice
-// that the promise can be broken at either main or impl thread, e.g. commit
-// fails on main thread, new frame data has no actual damage so
-// LayerTreeHostImpl::SwapBuffers() bails out early on impl thread, so don't
-// assume that Did*() methods are called at a particular thread. It is better
-// to let the subclass carry thread-safe member data and operate on that
-// member data in Did*().
+// the behavior of DidActivate(), WillSwap(), DidSwap() and DidNotSwap(). These
+// methods are always called on the impl thread.
 class CC_EXPORT SwapPromise {
  public:
   enum DidNotSwapReason {

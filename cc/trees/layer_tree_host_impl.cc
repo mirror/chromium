@@ -311,18 +311,16 @@ LayerTreeHostImpl::~LayerTreeHostImpl() {
 void LayerTreeHostImpl::BeginMainFrameAborted(
     CommitEarlyOutReason reason,
     std::vector<std::unique_ptr<SwapPromise>> swap_promises) {
+  auto break_swap_promise_reason = SwapPromise::COMMIT_FAILS;
   // If the begin frame data was handled, then scroll and scale set was applied
   // by the main thread, so the active tree needs to be updated as if these sent
   // values were applied and committed.
   if (CommitEarlyOutHandledCommit(reason)) {
     active_tree_->ApplySentScrollAndScaleDeltasFromAbortedCommit();
-    if (pending_tree_) {
-      pending_tree_->AppendSwapPromises(std::move(swap_promises));
-    } else {
-      for (const auto& swap_promise : swap_promises)
-        swap_promise->DidNotSwap(SwapPromise::COMMIT_NO_UPDATE);
-    }
+    break_swap_promise_reason = SwapPromise::COMMIT_NO_UPDATE;
   }
+  for (const auto& swap_promise : swap_promises)
+    swap_promise->DidNotSwap(break_swap_promise_reason);
 }
 
 void LayerTreeHostImpl::BeginCommit() {
