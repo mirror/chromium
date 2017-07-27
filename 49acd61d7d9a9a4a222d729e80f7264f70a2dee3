@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "30eb3ec7_48b22ca4",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-27T05:10:48Z",
+      "side": 1,
+      "message": "There are two pieces of data: scope and the url_handlers. \"scope\" is never stored, though it is sent out when syncing. \"url_handlers\" is stored but not in prefs; it\u0027s part of the extension manifest.\n\nI see. Does the following case match what you had in mind?\n\n1. Assume Chrome V65 added support for \"scope2\", a hypothetical new manifest field that results in a new url_handler that has a different pattern than our current url_handler.\n2. User on Chrome V65, with support for \"scope2\", has a PWA with \"scope2\".\n3. User downgrades to Chrome V64 without support for \"scope2\".\n4. Chrome V64 tries to execute the code in this function and returns a nonsensical scope2.\n\nNote that url_handlers isn\u0027t an array, but rather a dictionary. So, a solution could be to commit to never changing the format of the url_handler with the \"scope\" key (the current key we use for scope). If we wanted to change the format, or add new patterns, then we would do so under a new url_handler key. And in this function, we would do what you suggests: instead of assuming the only url_handler is the scope handler, we would retrieve it by its key and return an empty GURL if we don\u0027t find it.\n\nIf we decide to go this route, I\u0027ll move this function to convert_web_app.h so that both the function to generate url_handler for the scope and the function to generate the scope from the url_handler are both in the same place.\n\nI think this is pretty similar to adding a new scope field, with the added benefit that we won\u0027t have to re-implement a NavigationThrottle and mess with the manifest fields for extensions.",
+      "parentUuid": "e698d972_d7407a4f",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6f13bdb_1ad143ee",
         "filename": "chrome/browser/extensions/convert_web_app.cc",
         "patchSetId": 22
