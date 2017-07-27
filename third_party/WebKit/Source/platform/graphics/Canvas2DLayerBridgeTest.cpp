@@ -1321,7 +1321,6 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_DeleteIOSurfaceAfterTeardown)
   release_callback->Run(gpu::SyncToken(), lost_resource);
 
   EXPECT_EQ(1u, gl.CreateImageCount());
-  EXPECT_EQ(1u, gl.DestroyImageCount());
 }
 
 class FlushMockGLES2Interface : public gpu::gles2::GLES2InterfaceStub {
