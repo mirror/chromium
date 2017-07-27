@@ -89,7 +89,6 @@ source_set("chromeos") {
     "//components/login",
     "//components/metrics:serialization",
     "//components/metrics/leak_detector",
-    "//components/mime_util",
     "//components/onc",
     "//components/ownership",
     "//components/pairing",
