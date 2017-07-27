@@ -17,6 +17,7 @@
 #include "base/time/time.h"
 #include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/devtools_url_interceptor_request_job.h"
+#include "content/browser/devtools/page_navigation_throttle.h"
 #include "content/browser/devtools/protocol/page.h"
 #include "content/browser/devtools/protocol/security.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -26,6 +27,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/global_request_id.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/site_instance.h"
@@ -376,7 +378,8 @@ String securityState(const GURL& url, const net::CertStatus& cert_status) {
   return Security::SecurityStateEnum::Secure;
 }
 
-net::Error NetErrorFromString(const std::string& error) {
+net::Error NetErrorFromString(const std::string& error, bool* ok) {
+  *ok = true;
   if (error == Network::ErrorReasonEnum::Failed)
     return net::ERR_FAILED;
   if (error == Network::ErrorReasonEnum::Aborted)
@@ -401,6 +404,7 @@ net::Error NetErrorFromString(const std::string& error) {
     return net::ERR_INTERNET_DISCONNECTED;
   if (error == Network::ErrorReasonEnum::AddressUnreachable)
     return net::ERR_ADDRESS_UNREACHABLE;
+  *ok = false;
   return net::ERR_FAILED;
 }
 
@@ -847,6 +851,13 @@ DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(bool enabled) {
   } else {
     devtools_url_request_interceptor->state()->StopInterceptingRequests(
         web_contents);
+    // We don't own the page PageNavigationThrottles so we can't delete them,
+    // but we can turn them into NOPs.
+    for (PageNavigationThrottle* throttle : navigation_throttles_)
+      throttle->AlwaysProceed();
+    navigation_throttles_.clear();
+    navigation_requests_.clear();
+    canceled_navigation_requests_.clear();
   }
   interception_enabled_ = enabled;
   return Response::OK();
@@ -895,10 +906,6 @@ void NetworkHandler::ContinueInterceptedRequest(
     return;
   }
 
-  base::Optional<net::Error> error;
-  if (error_reason.isJust())
-    error = NetErrorFromString(error_reason.fromJust());
-
   base::Optional<std::string> raw_response;
   if (base64_raw_response.isJust()) {
     std::string decoded;
@@ -907,6 +914,25 @@ void NetworkHandler::ContinueInterceptedRequest(
       return;
     }
     raw_response = decoded;
+  }
+
+  base::Optional<net::Error> error;
+  if (error_reason.isJust()) {
+    bool ok;
+    error = NetErrorFromString(error_reason.fromJust(), &ok);
+    if (!ok) {
+      callback->sendFailure(Response::InvalidParams("Invalid errorReason."));
+      return;
+    }
+
+    if (error_reason.fromJust() == Network::ErrorReasonEnum::Aborted) {
+      auto it = navigation_requests_.find(interception_id);
+      if (it != navigation_requests_.end()) {
+        canceled_navigation_requests_.insert(it->second);
+        error.reset();
+        raw_response = std::string("HTTP/1.1 200 OK\r\n\r\n");
+      }
+    }
   }
 
   devtools_url_request_interceptor->state()->ContinueInterceptedRequest(
@@ -938,6 +964,42 @@ std::unique_ptr<Network::Request> NetworkHandler::CreateRequestFromURLRequest(
   if (GetPostData(request, &post_data))
     request_object->SetPostData(std::move(post_data));
   return request_object;
+}
+
+std::unique_ptr<PageNavigationThrottle>
+NetworkHandler::CreateThrottleForNavigation(
+    NavigationHandle* navigation_handle) {
+  if (!interception_enabled_)
+    return nullptr;
+  std::unique_ptr<PageNavigationThrottle> throttle(new PageNavigationThrottle(
+      weak_factory_.GetWeakPtr(), navigation_handle));
+  navigation_throttles_.insert(throttle.get());
+  return throttle;
+}
+
+void NetworkHandler::OnPageNavigationThrottleDisposed(
+    PageNavigationThrottle* throttle) {
+  navigation_throttles_.erase(throttle);
+}
+
+void NetworkHandler::InterceptedNavigationRequest(
+    const GlobalRequestID& global_request_id,
+    const std::string& interception_id) {
+  navigation_requests_[interception_id] = global_request_id;
+}
+
+void NetworkHandler::InterceptedNavigationRequestFinished(
+    const std::string& interception_id) {
+  navigation_requests_.erase(interception_id);
+}
+
+bool NetworkHandler::ShouldCancelNavigation(
+    const GlobalRequestID& global_request_id) {
+  auto it = canceled_navigation_requests_.find(global_request_id);
+  if (it == canceled_navigation_requests_.end())
+    return false;
+  canceled_navigation_requests_.erase(it);
+  return true;
 }
 
 }  // namespace protocol
