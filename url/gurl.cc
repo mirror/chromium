@@ -374,6 +374,14 @@ GURL GURL::GetWithEmptyPath() const {
   return other;
 }
 
+GURL GURL::GetWithoutFilename() const {
+  // This doesn't make sense for nonstandard URLs, so return the empty URL.
+  if (!IsStandard())
+    return GURL();
+
+  return Resolve(".");
+}
+
 bool GURL::IsStandard() const {
   return url::IsStandard(spec_.data(), parsed_.scheme);
 }
