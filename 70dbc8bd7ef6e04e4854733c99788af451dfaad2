@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "971f5b51_f6f96175",
+        "filename": "ios/chrome/browser/ui/reading_list/number_badge_view.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-27T20:51:54Z",
+      "side": 1,
+      "message": "Is finished important here? If alpha is zero, I think we want self to be hidden.",
+      "revId": "70dbc8bd7ef6e04e4854733c99788af451dfaad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
