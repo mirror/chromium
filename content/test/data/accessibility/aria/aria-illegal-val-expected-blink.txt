@@ -1,0 +1,25 @@
+rootWebArea
+++genericContainer name='Atomic illegal'
+++textField name='Autocomplete illegal'
+++log busy containerLiveRelevant='additions text' containerLiveStatus='polite' name='Busy illegal' liveRelevant='additions text' liveStatus='polite' containerLiveAtomic=false containerLiveBusy=true liveAtomic=false liveBusy=true
+++treeItem selectable name='Checked illegal' checkedState=true
+++genericContainer name='Current illegal' ariaCurrentState=true
+++genericContainer name='Disabled illegal' restriction=disabled
+++genericContainer name='Dropeffect illegal'
+++treeItem expanded selectable name='Expanded illegal'
+++genericContainer name='Grabbed illegal'
+++popUpButton haspopup name='Haspopup illegal'
+++genericContainer ariaInvalidValue='X-ILLEGAL' name='Invalid illegal' invalidState=other
+++genericContainer name='Live illegal'
+++dialog name='Modal illegal' modal=true
+++textField multiline name='Multiline illegal'
+++grid multiselectable name='Multiselectable illegal'
+++++tableHeaderContainer
+++scrollBar vertical name='Orientation illegal'
+++toggleButton name='Pressed illegal' checkedState=true
+++textField name='Readonly illegal' restriction=readOnly
+++genericContainer name='Relevant illegal'
+++textField required name='Required illegal'
+++tree multiselectable vertical
+++++treeItem selectable selected name='Selected illegal'
+++columnHeader selectable name='Sort illegal' sortDirection=other
