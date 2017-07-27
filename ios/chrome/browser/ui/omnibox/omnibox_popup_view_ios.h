@@ -12,18 +12,21 @@
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/string16.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
+#include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_suggestions_delegate.h"
 
-struct AutocompleteMatch;
+namespace ios {
+class ChromeBrowserState;
+}  // namespace ios
 class OmniboxEditModel;
 @class OmniboxPopupMaterialViewController;
 class OmniboxPopupModel;
 @protocol OmniboxPopupPositioner;
-class OmniboxViewIOS;
 
 // iOS implementation of AutocompletePopupView.
 class OmniboxPopupViewIOS : public OmniboxPopupView {
  public:
-  OmniboxPopupViewIOS(OmniboxViewIOS* edit_view,
+  OmniboxPopupViewIOS(ios::ChromeBrowserState* browser_state,
+                      OmniboxPopupViewSuggestionsDelegate* delegate,
                       OmniboxEditModel* edit_model,
                       id<OmniboxPopupPositioner> positioner);
   ~OmniboxPopupViewIOS() override;
@@ -47,7 +50,7 @@ class OmniboxPopupViewIOS : public OmniboxPopupView {
 
  private:
   std::unique_ptr<OmniboxPopupModel> model_;
-  OmniboxViewIOS* edit_view_;  // weak, owns this instance
+  OmniboxPopupViewSuggestionsDelegate* delegate_;  // weak
   __weak id<OmniboxPopupPositioner> positioner_;
   // View that contains the omnibox popup table view and shadow.
   base::scoped_nsobject<UIView> popupView_;

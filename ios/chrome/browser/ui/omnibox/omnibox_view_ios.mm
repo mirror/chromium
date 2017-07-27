@@ -174,7 +174,8 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
       ignore_popup_updates_(false),
       attributing_display_string_(nil) {
   DCHECK(field_);
-  popup_view_.reset(new OmniboxPopupViewIOS(this, model(), positioner));
+  popup_view_ = base::MakeUnique<OmniboxPopupViewIOS>(
+      this->browser_state(), this, model(), positioner);
   field_delegate_.reset(
       [[AutocompleteTextFieldDelegate alloc] initWithEditView:this]);
   [field_ setDelegate:field_delegate_];
@@ -792,7 +793,7 @@ void OmniboxViewIOS::FocusOmnibox() {
 
 // Called whenever the popup results change.  May trigger the URLs of
 // autocomplete results to be prerendered or prefetched.
-void OmniboxViewIOS::OnPopupResultsChanged(const AutocompleteResult& result) {
+void OmniboxViewIOS::OnPopupOnResultsChanged(const AutocompleteResult& result) {
   if (!ignore_popup_updates_ && !result.empty()) {
     const AutocompleteMatch& match = result.match_at(0);
     bool is_inline_autocomplete = !match.inline_autocompletion.empty();
@@ -861,4 +862,34 @@ void OmniboxViewIOS::EmphasizeURLComponents() {
   if (!IsEditingOrEmpty())
     SetText(GetText());
 #endif
+}
+
+#pragma mark - OmniboxPopupViewSuggestionsDelegate
+
+void OmniboxViewIOS::OnTopmostSuggestionImageChanged(int imageId) {
+  this->SetLeftImage(imageId);
+}
+
+void OmniboxViewIOS::OnResultsChanged(const AutocompleteResult& result) {
+  this->OnPopupOnResultsChanged(result);
+}
+
+void OmniboxViewIOS::OnPopupDidScroll() {
+  if (!IsIPadIdiom()) {
+    this->HideKeyboard();
+  }
+}
+
+void OmniboxViewIOS::OnSelectedMatchForAppending(const base::string16& str) {
+  this->SetUserText(str);
+  this->FocusOmnibox();
+}
+
+void OmniboxViewIOS::OnSelectedMatchForOpening(
+    AutocompleteMatch match,
+    WindowOpenDisposition disposition,
+    const GURL& alternate_nav_url,
+    const base::string16& pasted_text,
+    size_t index) {
+  this->OpenMatch(match, disposition, alternate_nav_url, pasted_text, index);
 }
