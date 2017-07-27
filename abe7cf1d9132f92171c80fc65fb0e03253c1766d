@@ -22,6 +22,30 @@
       "revId": "abe7cf1d9132f92171c80fc65fb0e03253c1766d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaafc2cb_7e4a9fbb",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-27T18:42:11Z",
+      "side": 1,
+      "message": "Done -- thank you for pointing me to this. It was very easy to do.",
+      "parentUuid": "0c0249f2_d370f35b",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 52
+      },
+      "revId": "abe7cf1d9132f92171c80fc65fb0e03253c1766d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
