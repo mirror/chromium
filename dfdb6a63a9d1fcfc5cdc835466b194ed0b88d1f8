@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f79cc954_b42bd441",
+        "filename": "ios/chrome/browser/web/browsing_prevent_default_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-27T18:35:02Z",
+      "side": 1,
+      "message": "After looking into this test more carefully, I think we can delete this line and |printDone()| call in JavaScript. But we need to return bool value from chrome_test_util::TapWebViewElementWithId and assert that result is true.",
+      "range": {
+        "startLine": 146,
+        "startChar": 18,
+        "endLine": 146,
+        "endChar": 41
+      },
+      "revId": "dfdb6a63a9d1fcfc5cdc835466b194ed0b88d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
