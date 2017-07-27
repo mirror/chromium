@@ -82,8 +82,9 @@
           <img role="radio"
               data-type$="[[selectionTypesEnum_.DEFAULT]]"
               data-index$="[[index]]" data-image-index$="[[item.index]]"
-              src="[[item.url]]"
-              srcset="[[getImgSrc2x_(item.url)]]" title="[[item.title]]">
+              data-url$="[[item.url]]"
+              src="[[getFrozenImgSrc_(item.url)]]"
+              srcset="[[getFrozenImgSrc2x_(item.url)]]" title="[[item.title]]">
         </template>
       </iron-selector>
     </div>
