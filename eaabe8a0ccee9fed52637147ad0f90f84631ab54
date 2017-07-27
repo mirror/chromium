@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05c67ad2_8e1e80fc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-27T17:46:28Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 59
+      },
+      "revId": "eaabe8a0ccee9fed52637147ad0f90f84631ab54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
