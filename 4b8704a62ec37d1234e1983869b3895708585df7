@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e384e63_8aea79d1",
+        "filename": "ui/gfx/vector_icon_util_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-27T15:37:12Z",
+      "side": 1,
+      "message": "this is all wizardry to me. Is this going to be called every time the image is painted or is the output cached? If we use the same icon in 10 places in the UI is there a separate NSImage for each of them? (Note how CreateVectorIcon creates a cache so no matter how many browser windows want a back button, they all use the same ImageSkia, or more accurately the same ImageSkiaRep backing store.)",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "4b8704a62ec37d1234e1983869b3895708585df7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
