@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "e2a44edd_2012e7d5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-27T12:59:37Z",
+      "side": 1,
+      "message": "I\u0027ve realized that this check was only needed for ArcFileSystemOperationRunnerTest which instantiates this class without factory, but it no longer needs this check as it explicitly sets test factory of ArcFileSystemBridge.\nRemoved the check.",
+      "parentUuid": "4fd18e43_67e9c85d",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51c516ae_b5b1f570",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
         "patchSetId": 2
