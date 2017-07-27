@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfc5c69_0165cc3e",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:42:59Z",
+      "side": 1,
+      "message": "This is no longer used (except in tests). Could you remove, and fix tests?",
+      "revId": "a5cbdd3bdcf10a2204724e51854b05344584836a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
