@@ -254,9 +254,6 @@ class ServiceWorkerInstalledScriptsSenderTest : public testing::Test {
   scoped_refptr<ServiceWorkerVersion> version_;
 };
 
-using SenderFinishedReason =
-    ServiceWorkerInstalledScriptsSender::FinishedReason;
-
 TEST_F(ServiceWorkerInstalledScriptsSenderTest, SendScripts) {
   const GURL kMainScriptURL = version()->script_url();
   std::string long_body = "I'm the script body!";
@@ -331,8 +328,9 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, SendScripts) {
     kExpectedScriptInfoMap.erase(script_info->script_url);
   }
 
-  EXPECT_TRUE(sender->IsFinished());
-  EXPECT_EQ(SenderFinishedReason::kSuccess, sender->finished_status());
+  EXPECT_TRUE(sender->is_sender_finished());
+  EXPECT_EQ(ServiceWorkerInstalledScriptsSender::Status::kSuccess,
+            sender->finished_status());
 }
 
 TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendBody) {
@@ -391,8 +389,9 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendBody) {
     base::RunLoop().RunUntilIdle();
   }
 
-  EXPECT_TRUE(sender->IsFinished());
-  EXPECT_EQ(SenderFinishedReason::kConnectionError, sender->finished_status());
+  EXPECT_TRUE(sender->is_sender_finished());
+  EXPECT_EQ(ServiceWorkerInstalledScriptsSender::Status::kConnectionError,
+            sender->finished_status());
 }
 
 TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendMetaData) {
@@ -451,8 +450,8 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendMetaData) {
     base::RunLoop().RunUntilIdle();
   }
 
-  EXPECT_TRUE(sender->IsFinished());
-  EXPECT_EQ(SenderFinishedReason::kMetaDataSenderError,
+  EXPECT_TRUE(sender->is_sender_finished());
+  EXPECT_EQ(ServiceWorkerInstalledScriptsSender::Status::kMetaDataSenderError,
             sender->finished_status());
 }
 

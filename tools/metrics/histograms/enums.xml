@@ -33621,7 +33621,7 @@ from previous Chrome versions.
   <int value="2" label="All"/>
 </enum>
 
-<enum name="ServiceWorkerInstalledScriptsManager.FinishedReason">
+<enum name="ServiceWorkerInstalledScriptsManager.Status">
   <int value="0" label="NOT_FINISHED"/>
   <int value="1" label="SUCCESS"/>
   <int value="2" label="NO_HTTP_INFO_ERROR"/>

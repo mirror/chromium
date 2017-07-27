@@ -421,6 +421,7 @@ void WorkerThread::InitializeOnWorkerThread(
     // |script_data| could be null if reading the installed script from the disk
     // cache failed.
     if (script_data) {
+      DCHECK(script_data);
       DCHECK(source_code.IsEmpty());
       DCHECK(!cached_meta_data);
       source_code = script_data->TakeSourceText();
@@ -478,8 +479,7 @@ void WorkerThread::InitializeOnWorkerThread(
   if (start_mode == kPauseWorkerGlobalScopeOnStart)
     StartRunningDebuggerTasksOnPauseOnWorkerThread();
 
-  if (CheckRequestedToTerminateOnWorkerThread() ||
-      (GlobalScope()->IsWorkerGlobalScope() && source_code.IsNull())) {
+  if (CheckRequestedToTerminateOnWorkerThread() || source_code.IsNull()) {
     // Stop further worker tasks from running after this point. WorkerThread
     // was requested to terminate before initialization or during running
     // debugger tasks, or loading the installed main script
@@ -490,6 +490,7 @@ void WorkerThread::InitializeOnWorkerThread(
 
   if (!GlobalScope()->IsWorkerGlobalScope())
     return;
+  DCHECK(!source_code.IsNull());
 
   WorkerGlobalScope* worker_global_scope = ToWorkerGlobalScope(GlobalScope());
   CachedMetadataHandler* handler =

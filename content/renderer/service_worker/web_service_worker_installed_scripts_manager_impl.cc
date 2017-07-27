@@ -22,7 +22,7 @@ class Receiver {
  public:
   using BytesChunk = blink::WebVector<char>;
 
-  Receiver(mojo::ScopedDataPipeConsumerHandle handle, int64_t total_bytes)
+  Receiver(mojo::ScopedDataPipeConsumerHandle handle, size_t total_bytes)
       : handle_(std::move(handle)),
         watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
         remaining_bytes_(total_bytes) {}
@@ -91,7 +91,7 @@ class Receiver {
   // std::vector is internally used because blink::WebVector is immutable and
   // cannot append data.
   std::vector<BytesChunk> chunks_;
-  int64_t remaining_bytes_;
+  size_t remaining_bytes_;
 };
 
 // BundledReceivers is a helper class to wait for the end of reading body and
@@ -99,9 +99,9 @@ class Receiver {
 class BundledReceivers {
  public:
   BundledReceivers(mojo::ScopedDataPipeConsumerHandle meta_data_handle,
-                   int64_t meta_data_size,
+                   size_t meta_data_size,
                    mojo::ScopedDataPipeConsumerHandle body_handle,
-                   int64_t body_size)
+                   size_t body_size)
       : meta_data_(std::move(meta_data_handle), meta_data_size),
         body_(std::move(body_handle), body_size) {}
 

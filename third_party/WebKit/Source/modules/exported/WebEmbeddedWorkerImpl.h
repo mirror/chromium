@@ -86,12 +86,6 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   void AddMessageToConsole(const WebConsoleMessage&) override;
 
   void PostMessageToPageInspector(int session_id, const WTF::String&);
-
-  // Applies the specified CSP and referrer policy to the worker, so that
-  // fetches initiated by the worker (other than for the main worker script
-  // itself) are affected by these policies. The WaitableEvent is signaled when
-  // the policies are set. This enables the caller to ensure that policies are
-  // set before starting script execution on the worker thread.
   void SetContentSecurityPolicyAndReferrerPolicy(
       ContentSecurityPolicyResponseHeaders,
       WTF::String referrer_policy,

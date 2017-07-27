@@ -1706,9 +1706,10 @@ void ServiceWorkerVersion::RecordStartWorkerResult(
   if (context_ && IsInstalled(prestart_status))
     context_->UpdateVersionFailureCount(version_id_, status);
 
-  base::Optional<ServiceWorkerInstalledScriptsSender::FinishedReason>
+  base::Optional<ServiceWorkerInstalledScriptsSender::Status>
       installed_scripts_sender_status;
-  if (installed_scripts_sender_ && installed_scripts_sender_->IsFinished()) {
+  if (installed_scripts_sender_ &&
+      installed_scripts_sender_->is_sender_finished()) {
     installed_scripts_sender_status =
         installed_scripts_sender_->finished_status();
   }

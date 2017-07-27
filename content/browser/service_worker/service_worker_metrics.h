@@ -265,15 +265,13 @@ class ServiceWorkerMetrics {
                                       size_t redirect_chain_length);
 
   // Records the result of trying to start a worker. |is_installed| indicates
-  // whether the version has been installed. |script_sender_status| is the
-  // result of sending installed scripts to the worker. base::nullopt is set
-  // when script streaming is not used for starting worker.
+  // whether the version has been installed.
   static void RecordStartWorkerStatus(
       ServiceWorkerStatusCode status,
       EventType purpose,
       bool is_installed,
-      base::Optional<ServiceWorkerInstalledScriptsSender::FinishedReason>
-          script_sender_reason);
+      base::Optional<ServiceWorkerInstalledScriptsSender::Status>
+          sender_status);
 
   // Records the time taken to successfully start a worker. |is_installed|
   // indicates whether the version has been installed.

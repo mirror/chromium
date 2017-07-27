@@ -20,7 +20,7 @@ class ServiceWorkerVersion;
 class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
  public:
   // Do not change the order. This is used for UMA.
-  enum class FinishedReason {
+  enum class Status {
     kNotFinished = 0,
     kSuccess = 1,
     kNoHttpInfoError = 2,
@@ -28,7 +28,6 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
     kConnectionError = 4,
     kResponseReaderError = 5,
     kMetaDataSenderError = 6,
-    // Add a new type here, then update kMaxValue and enums.xml.
     kMaxValue = kMetaDataSenderError,
   };
 
@@ -46,11 +45,11 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
   // Starts sending installed scripts to the worker.
   void Start();
 
-  bool IsFinished() const;
+  bool is_sender_finished() const { return state_ == State::kFinished; }
 
-  FinishedReason finished_status() const {
-    DCHECK(IsFinished());
-    return finished_reason_;
+  Status finished_status() {
+    DCHECK(is_sender_finished());
+    return finished_status_;
   }
 
  private:
@@ -75,7 +74,7 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
       size_t meta_data_size);
   void OnHttpInfoRead(scoped_refptr<HttpResponseInfoIOBuffer> http_info);
   void OnFinishSendingScript();
-  void OnAbortSendingScript(FinishedReason status);
+  void OnAbortSendingScript(Status status);
 
   const GURL& CurrentSendingURL();
 
@@ -86,7 +85,7 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
   mojom::ServiceWorkerInstalledScriptsManagerPtr manager_;
   std::unique_ptr<Sender> running_sender_;
   State state_;
-  FinishedReason finished_reason_;
+  Status finished_status_;
   std::map<int64_t /* resource_id */, GURL> imported_scripts_;
   std::map<int64_t /* resource_id */, GURL>::iterator imported_script_iter_;
   base::WeakPtr<ServiceWorkerContextCore> context_;

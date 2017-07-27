@@ -552,9 +552,11 @@ void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
     const String& referrer_policy_on_worker_thread) {
   DCHECK(embedded_worker_);
 
-  // Post a task to the main thread to set CSP and ReferrerPolicy on the shadow
-  // page.
-  WaitableEvent waitable_event;
+  // WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy() should
+  // be executed before all of loading tasks issued during the script
+  // evaluation. |set_params_on_main_thread_event| is to ensure the ordering of
+  // tasks.
+  WaitableEvent set_params_on_main_thread_event;
   parent_frame_task_runners_->Get(TaskType::kUnthrottled)
       ->PostTask(
           BLINK_FROM_HERE,
@@ -562,13 +564,9 @@ void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
               &WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy,
               CrossThreadUnretained(embedded_worker_),
               csp_headers_on_worker_thread, referrer_policy_on_worker_thread,
-              CrossThreadUnretained(&waitable_event)));
+              CrossThreadUnretained(&set_params_on_main_thread_event)));
   Client().WorkerScriptLoaded();
-
-  // Wait for the task to complete before returning. This ensures that worker
-  // script evaluation can't start and issue any fetches until CSP and
-  // ReferrerPolicy are set.
-  waitable_event.Wait();
+  set_params_on_main_thread_event.Wait();
 }
 
 void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
