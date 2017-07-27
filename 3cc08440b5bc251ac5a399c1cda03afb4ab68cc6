@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8126b968_154b2f23",
+        "filename": "chrome/browser/browser_about_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-27T18:54:17Z",
+      "side": 1,
+      "message": "Is this really the only place that has this string?",
+      "range": {
+        "startLine": 64,
+        "startChar": 13,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "3cc08440b5bc251ac5a399c1cda03afb4ab68cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
