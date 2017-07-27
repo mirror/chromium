@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e09470a_694246e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-27T20:03:59Z",
+      "side": 1,
+      "message": "On second look, I don\u0027t actually need this. I\u0027m able to get Java Tab in most cases, and therefore able to use Tab#getAppAssociatedWith(), which should be enough? I will update according to your comment in a different CL if the necessity changes.",
+      "parentUuid": "5fd46a05_2aa19697",
+      "range": {
+        "startLine": 684,
+        "startChar": 56,
+        "endLine": 684,
+        "endChar": 75
+      },
+      "revId": "cc4a75bbecc06a80e1380a5c5b165c73351030c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aded2975_d76b5bff",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 21
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a3250bd3_febafa55",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-27T20:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aded2975_d76b5bff",
+      "revId": "cc4a75bbecc06a80e1380a5c5b165c73351030c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ab4b747_33d830ae",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 21
@@ -56,6 +98,24 @@
       "revId": "cc4a75bbecc06a80e1380a5c5b165c73351030c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e47772c_a953068c",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-27T20:03:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ab4b747_33d830ae",
+      "revId": "cc4a75bbecc06a80e1380a5c5b165c73351030c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
