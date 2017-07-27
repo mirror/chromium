@@ -16,6 +16,8 @@
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_context_impl.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_mediator.h"
@@ -137,23 +139,26 @@
   [dispatcher startDispatchingToTarget:self
                            forSelector:@selector(closeSettings)];
   SettingsCoordinator* settingsCoordinator = [[SettingsCoordinator alloc] init];
-  [self addOverlayCoordinator:settingsCoordinator];
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->ShowOverlayForBrowser(settingsCoordinator, self, self.browser);
   self.settingsCoordinator = settingsCoordinator;
-  [settingsCoordinator start];
 }
 
 - (void)closeSettings {
   CommandDispatcher* dispatcher = self.browser->dispatcher();
   [dispatcher stopDispatchingForSelector:@selector(closeSettings)];
   [self.settingsCoordinator stop];
-  [self.settingsCoordinator.parentCoordinator
-      removeChildCoordinator:self.settingsCoordinator];
-  // self.settingsCoordinator should be presumed to be nil after this point.
+  // Stopping an overlay added to the OverlayService removes it from the
+  // overlay queue and schedules the next overlay to be shown.  Since
+  // self.settingsCoordinator is weak, it is presumed nil after this point.
 }
 
 #pragma mark - TabGridCommands
 
 - (void)showTabGridTabAtIndex:(int)index {
+  if (index == self.webStateList.active_index())
+    return;
   self.webStateList.ActivateWebStateAt(index);
   // PLACEHOLDER: The tab coordinator should be able to get the active webState
   // on its own.
@@ -220,8 +225,9 @@
   if (self.webStateList.active_index() == WebStateList::kInvalidIndex) {
     return;
   }
-  [self.overlayCoordinator stop];
-  [self removeOverlayCoordinator];
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->CancelOverlays();
   web::WebState* activeWebState = self.webStateList.GetActiveWebState();
   web::NavigationManager::WebLoadParams params(net::GURLWithNSURL(URL));
   params.transition_type = ui::PAGE_TRANSITION_LINK;
@@ -252,17 +258,9 @@
 }
 
 - (void)registerForTabGridCommands {
-  [self.browser->dispatcher() startDispatchingToTarget:self
-                                           forSelector:@selector(showTabGrid)];
   [self.browser->dispatcher()
       startDispatchingToTarget:self
-                   forSelector:@selector(showTabGridTabAtIndex:)];
-  [self.browser->dispatcher()
-      startDispatchingToTarget:self
-                   forSelector:@selector(closeTabGridTabAtIndex:)];
-  [self.browser->dispatcher()
-      startDispatchingToTarget:self
-                   forSelector:@selector(createAndShowNewTabInTabGrid)];
+                   forProtocol:@protocol(TabGridCommands)];
 }
 
 - (void)registerForToolsMenuCommands {

@@ -92,7 +92,9 @@ void OverlayServiceImpl::CancelOverlays() {
 }
 
 void OverlayServiceImpl::CancelOverlayForWebState(web::WebState* web_state) {
-  WebStateOverlayQueue::FromWebState(web_state)->CancelOverlays();
+  OverlayQueue* queue = WebStateOverlayQueue::FromWebState(web_state);
+  if (queue)
+    queue->CancelOverlays();
 }
 
 void OverlayServiceImpl::StartServiceForBrowser(Browser* browser) {

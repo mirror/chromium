@@ -169,11 +169,6 @@
   }
 }
 
-- (BOOL)canAddOverlayCoordinator:(BrowserCoordinator*)overlayCoordinator {
-  // This coordinator will always accept overlay coordinators.
-  return YES;
-}
-
 #pragma mark - Experiment support
 
 - (BOOL)usesBottomToolbar {
