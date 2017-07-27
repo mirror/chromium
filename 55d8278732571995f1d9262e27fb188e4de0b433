@@ -22,6 +22,30 @@
       "revId": "55d8278732571995f1d9262e27fb188e4de0b433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de44cb31_248f6f7d",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-27T20:41:14Z",
+      "side": 1,
+      "message": "Good question - I\u0027m also not sure who to ask re: macOS policies. I\u0027m cc\u0027ing Nico in case he knows where to redirect/who to ask about macOS support.",
+      "parentUuid": "4807e2e5_1b02c30f",
+      "range": {
+        "startLine": 937,
+        "startChar": 32,
+        "endLine": 937,
+        "endChar": 48
+      },
+      "revId": "55d8278732571995f1d9262e27fb188e4de0b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
