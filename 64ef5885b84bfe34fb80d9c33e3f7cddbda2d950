@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fecebbbc_6d05931d",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "We should cache |dispatcher| if we need to reuse it for\nseveral messages (I think we do).\n\nAlso, since this is bound to UI and the action comes from\nIO (l.41), we\u0027re going to be thread hopping a lot. Instead\nwe can bind |dispatcher_| on UI, unbind it and rebind it\non IO, by using PassInterface(), like it\u0027s done in e.g.\nhttps://cs.chromium.org/chromium/src/content/renderer/media/video_capture_impl.cc?dr\u003dCSs\u0026l\u003d432\nand then we don\u0027t need the base::Unretained(this).\n\nMake sure to comment on the member variables on which\nthread they are supposed to be used:\nhttps://cs.chromium.org/chromium/src/content/renderer/media/video_capture_impl.h?dr\u003dCSs\u0026l\u003d128",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 70
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1ed799_badef8d7",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "We probably don\u0027t need a method just for this.",
+      "range": {
+        "startLine": 210,
+        "startChar": 44,
+        "endLine": 210,
+        "endChar": 62
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c5937e_9e29255e",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "You shouldn\u0027t access this fella directly from the test \nclass, remove the friendship and add instead a method:\n \n  void AddMediaStreamDispatcherForTesting(\n      int render_id, mojom::MediaStreamDispatcherPtr dispatcher) {\n    dispatchers_for_testing_[render_id] \u003d std::move(dispatcher);\n  }\n\nand use it in l.281 of the _unittest.cc file. (ForTesting suffix \nis enforced on presubmit).\n\nFinally, sandwich this variable in a \n#if defined(UNIT_TEST)\n#endif\n\nhttps://chromium.googlesource.com/chromium/src/+/a29f146f3ddb4555b1c33f4d42afdc59f263314c/styleguide/c%2B%2B/c%2B%2B.md#Naming",
+      "range": {
+        "startLine": 97,
+        "startChar": 55,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723e737c_d60dfa06",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "Since mojo enums are automatically enum classes, I don\u0027t\nthink we need the MEDIA_DEVICE_ prefix everywhere.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906fbe48_3678d291",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "This is used for enumeration Histograms, since we\u0027re\nkeeping the non-Mojo enumeration, we don\u0027t need it, just\nmake it fall to NOTREACHED().",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c9a455_ca0cca88",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "TryBindInterface() returns bool, I think we should handle\nthe fail case.",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 28
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc7adb6_97088015",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "s/RequestList::iterator/auto/",
+      "range": {
+        "startLine": 334,
+        "startChar": 7,
+        "endLine": 334,
+        "endChar": 28
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd336a8_f3664464",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-27T03:23:58Z",
+      "side": 1,
+      "message": "if (request.ipc_request !\u003d request_id)\n  continue;",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 44
+      },
+      "revId": "64ef5885b84bfe34fb80d9c33e3f7cddbda2d950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
