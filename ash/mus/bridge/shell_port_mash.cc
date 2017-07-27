@@ -178,9 +178,20 @@ bool ShellPortMash::IsMouseEventsEnabled() {
   if (GetAshConfig() == Config::MUS)
     return Shell::Get()->cursor_manager()->IsMouseEventsEnabled();
 
-  // TODO: http://crbug.com/637853
-  NOTIMPLEMENTED();
-  return true;
+  return mouse_events_enabled_;
+}
+
+void ShellPortMash::SetMouseEventsEnabled(bool enabled) {
+  DCHECK_EQ(GetAshConfig(), Config::MASH);
+  window_manager_->window_manager_client()->SetMouseEventsEnabled(enabled);
+}
+
+void ShellPortMash::OnMouseEventsEnabledChanged(bool enabled) {
+  // We have to make all this work in mus, not just mash, don't we? We can't
+  // reliably separate the two of these. This interacts with the event loop at
+  // too low a level, doesn't it?
+
+  mouse_events_enabled_ = enabled;
 }
 
 std::unique_ptr<WindowResizer> ShellPortMash::CreateDragWindowResizer(
