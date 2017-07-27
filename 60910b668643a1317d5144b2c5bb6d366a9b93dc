@@ -46,6 +46,30 @@
       "revId": "60910b668643a1317d5144b2c5bb6d366a9b93dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cb23f2_7132fd68",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-27T20:20:32Z",
+      "side": 1,
+      "message": "imho empty message_center_unittests targets are kind of nice, because then you can add them to testing/buildbot/*.json files independently of toggling the feature.\n\nI\u0027m not sure I understand where in this file you want to put the assert. Like so:\n\ntest(\"m_c_unitt\") {\n  if (enable_message_center) {\n    assert(enable_message_center)  # trivially true\n    ...\n  }\n}\n\nor like so\n\ntest(\"m_c_unitt\") {\n  # defeats purpose of unconditionally defining target since people\n  # depending on it now still need to check for enable_message_center\n  assert(enable_message_center)\n  if (enable_message_center) {\n    ...\n  }\n}\n\n?",
+      "parentUuid": "edef4f85_958a8df5",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 14
+      },
+      "revId": "60910b668643a1317d5144b2c5bb6d366a9b93dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
