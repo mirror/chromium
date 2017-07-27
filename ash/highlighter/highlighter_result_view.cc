@@ -183,7 +183,8 @@ HighlighterResultView::HighlighterResultView(aura::Window* root_window) {
 HighlighterResultView::~HighlighterResultView() {}
 
 void HighlighterResultView::AnimateInPlace(const gfx::Rect& bounds,
-                                           SkColor color) {
+                                           SkColor color,
+                                           const base::Closure& done) {
   ui::Layer* layer = widget_->GetLayer();
 
   // A solid transparent rectangle.
@@ -198,10 +199,11 @@ void HighlighterResultView::AnimateInPlace(const gfx::Rect& bounds,
 
   ScheduleFadeIn(
       base::TimeDelta::FromMilliseconds(kResultInPlaceFadeinDelayMs),
-      base::TimeDelta::FromMilliseconds(kResultInPlaceFadeinDurationMs));
+      base::TimeDelta::FromMilliseconds(kResultInPlaceFadeinDurationMs), done);
 }
 
-void HighlighterResultView::AnimateDeflate(const gfx::Rect& bounds) {
+void HighlighterResultView::AnimateDeflate(const gfx::Rect& bounds,
+                                           const base::Closure& done) {
   ui::Layer* layer = widget_->GetLayer();
 
   result_layer_ = base::MakeUnique<ResultLayer>(bounds);
@@ -215,24 +217,23 @@ void HighlighterResultView::AnimateDeflate(const gfx::Rect& bounds) {
   layer->SetTransform(transform);
 
   ScheduleFadeIn(base::TimeDelta::FromMilliseconds(kResultFadeinDelayMs),
-                 base::TimeDelta::FromMilliseconds(kResultFadeinDurationMs));
+                 base::TimeDelta::FromMilliseconds(kResultFadeinDurationMs),
+                 done);
 }
 
 void HighlighterResultView::ScheduleFadeIn(const base::TimeDelta& delay,
-                                           const base::TimeDelta& duration) {
+                                           const base::TimeDelta& duration,
+                                           const base::Closure& done) {
   ui::Layer* layer = widget_->GetLayer();
 
   layer->SetOpacity(0);
 
-  animation_timer_.reset(
-      new base::Timer(FROM_HERE, delay,
-                      base::Bind(&HighlighterResultView::FadeIn,
-                                 base::Unretained(this), duration),
-                      false));
-  animation_timer_->Reset();
+  Schedule(delay, base::Bind(&HighlighterResultView::FadeIn,
+                             base::Unretained(this), duration, done));
 }
 
-void HighlighterResultView::FadeIn(const base::TimeDelta& duration) {
+void HighlighterResultView::FadeIn(const base::TimeDelta& duration,
+                                   const base::Closure& done) {
   ui::Layer* layer = widget_->GetLayer();
 
   {
@@ -247,16 +248,13 @@ void HighlighterResultView::FadeIn(const base::TimeDelta& duration) {
     layer->SetTransform(transform);
   }
 
-  animation_timer_.reset(new base::Timer(
-      FROM_HERE,
-      base::TimeDelta::FromMilliseconds(kResultFadeinDurationMs +
-                                        kResultFadeoutDelayMs),
-      base::Bind(&HighlighterResultView::FadeOut, base::Unretained(this)),
-      false));
-  animation_timer_->Reset();
+  Schedule(base::TimeDelta::FromMilliseconds(kResultFadeinDurationMs +
+                                             kResultFadeoutDelayMs),
+           base::Bind(&HighlighterResultView::FadeOut, base::Unretained(this),
+                      done));
 }
 
-void HighlighterResultView::FadeOut() {
+void HighlighterResultView::FadeOut(const base::Closure& done) {
   ui::Layer* layer = widget_->GetLayer();
 
   ui::ScopedLayerAnimationSettings settings(layer->GetAnimator());
@@ -264,6 +262,14 @@ void HighlighterResultView::FadeOut() {
       base::TimeDelta::FromMilliseconds(kResultFadeoutDurationMs));
   settings.SetTweenType(gfx::Tween::LINEAR_OUT_SLOW_IN);
   layer->SetOpacity(0);
+
+  Schedule(base::TimeDelta::FromMilliseconds(kResultFadeoutDurationMs), done);
+}
+
+void HighlighterResultView::Schedule(base::TimeDelta delay,
+                                     const base::Closure& action) {
+  animation_timer_.reset(new base::Timer(FROM_HERE, delay, action, false));
+  animation_timer_->Reset();
 }
 
 }  // namespace ash

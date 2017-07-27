@@ -7,12 +7,7 @@
 
 #include <memory>
 
-#include "ash/ash_export.h"
-#include "base/macros.h"
-#include "base/time/time.h"
-#include "ui/aura/window_observer.h"
-#include "ui/events/event_handler.h"
-#include "ui/gfx/geometry/point_f.h"
+#include "ash/fast_ink/fast_ink_pointer_controller.h"
 
 namespace ash {
 
@@ -23,46 +18,34 @@ class HighlighterView;
 // Controller for the highlighter functionality.
 // Enables/disables highlighter as well as receives points
 // and passes them off to be rendered.
-class ASH_EXPORT HighlighterController : public ui::EventHandler,
-                                         public aura::WindowObserver {
+class ASH_EXPORT HighlighterController : public FastInkPointerController {
  public:
   HighlighterController();
   ~HighlighterController() override;
 
-  // Turns the highlighter feature on. The user still has to press and
-  // drag to see the highlighter.
-  void EnableHighlighter(HighlighterSelectionObserver* observer);
-
-  void DisableHighlighter();
+  // Sets the observer. The controller does not own |observer|.
+  void SetObserver(HighlighterSelectionObserver* observer);
 
  private:
-  // ui::EventHandler:
-  void OnTouchEvent(ui::TouchEvent* event) override;
+  // FastInkPointerController:
+  views::View* GetPointerView() const override;
+  void CreatePointerView(base::TimeDelta presentation_delay,
+                         aura::Window* root_window) override;
+  void UpdatePointerView(ui::TouchEvent* event) override;
+  void DestroyPointerView() override;
 
-  // aura::WindowObserver:
-  void OnWindowDestroying(aura::Window* window) override;
-
-  // Handles monitor disconnect/swap primary.
-  void SwitchTargetRootWindowIfNeeded(aura::Window* root_window);
-
-  // Updates |highlighter_view_| by changing its root window or creating it if
-  // needed. Also adds the latest point at |event_location| and stops
-  // propagation of |event|.
-  void UpdateHighlighterView(aura::Window* current_window,
-                             const gfx::PointF& event_location,
-                             ui::Event* event);
-
-  // Destroys |highlighter_view_|, if it exists.
   void DestroyHighlighterView();
+  void DestroyResultView();
 
   // |highlighter_view_| will only hold an instance when the highlighter is
-  // enabled and activated (pressed or dragged).
+  // enabled and activated (pressed or dragged) and until the fade out
+  // animation is done.
   std::unique_ptr<HighlighterView> highlighter_view_;
 
+  // |result_view_| will only hold an instance when the selection result
+  // animation is in progress.
   std::unique_ptr<HighlighterResultView> result_view_;
 
-  // |observer_| in non-null when the highlighter is enabled,
-  // null when disabled.
   HighlighterSelectionObserver* observer_;
 
   DISALLOW_COPY_AND_ASSIGN(HighlighterController);
