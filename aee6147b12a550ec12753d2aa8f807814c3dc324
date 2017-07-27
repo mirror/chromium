@@ -403,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "6a45b5c5_0548af89",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T20:10:02Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "227dce45_26ee42d0",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efbe9056_c4eb3380",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
         "patchSetId": 6
@@ -920,6 +944,30 @@
       "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d96477e_9a1fad9d",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-27T20:10:02Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "bd8f0336_42547e53",
+      "range": {
+        "startLine": 114,
+        "startChar": 9,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
