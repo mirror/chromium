@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de73a58f_f000b8f6",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T22:32:06Z",
+      "side": 1,
+      "message": "If this is optional, I\u0027m going to hold off it. I\u0027d rather be consistent with the rest of the other tests in the file here, which use the FilePath approach.",
+      "parentUuid": "3413cff1_97b833c7",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b568847_2f7b3949",
         "filename": "chrome/browser/extensions/extension_service_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8786aa0a_73304261",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T22:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b568847_2f7b3949",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fc15cc41_40c3d505",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T22:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65b6bd84_e6779589",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "177d48b9_80941c4b",
         "filename": "extensions/common/file_util_unittest.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5c3ea7fa_8db3ae04",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T22:32:06Z",
+      "side": 1,
+      "message": "I moved this to the anonymous namespace above. I don\u0027t think we need to add a comment explaining the expected failure; the existing code and comments make it clear what is happening / expected.",
+      "parentUuid": "177d48b9_80941c4b",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1102ce52_b8b42c81",
         "filename": "extensions/common/file_util_unittest.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999548b4_6f63ee99",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-27T22:32:06Z",
+      "side": 1,
+      "message": "Since we are only defining the manifest constant once instead of duplicating it multiple times like before, I\u0027m going to keep it with the escape quotes. With the one constant, it doesn\u0027t seem to be a major gain to move to string literals.",
+      "parentUuid": "1102ce52_b8b42c81",
+      "revId": "3d749ba5d711652adc74d193427811c8a96fda3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
