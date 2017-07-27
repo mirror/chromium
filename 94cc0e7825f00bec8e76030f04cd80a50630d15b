@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8a7b885_6564b521",
+        "filename": "chrome/browser/page_load_metrics/observers/aborts_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-27T15:19:51Z",
+      "side": 1,
+      "message": "looks like these need to be updated to reflect the file name change",
+      "revId": "94cc0e7825f00bec8e76030f04cd80a50630d15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
