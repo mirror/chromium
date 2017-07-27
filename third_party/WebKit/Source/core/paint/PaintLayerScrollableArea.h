@@ -383,6 +383,8 @@ class CORE_EXPORT PaintLayerScrollableArea final
                               ResizerHitTestType) const;
   bool HitTestOverflowControls(HitTestResult&, const IntPoint& local_point);
 
+  Scrollbar* ScrollbarAtFramePoint(const IntPoint& point_in_frame);
+
   bool HitTestResizerInFragments(const PaintLayerFragments&,
                                  const HitTestLocation&) const;
 
