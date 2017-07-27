@@ -86,7 +86,7 @@ OffscreenCanvasFrameDispatcherImpl::createOrRecycleFrameResource() {
 }
 
 void OffscreenCanvasFrameDispatcherImpl::SetTransferableResourceToSharedBitmap(
-    cc::TransferableResource& resource,
+    viz::TransferableResource& resource,
     RefPtr<StaticBitmapImage> image) {
   std::unique_ptr<FrameResource> frame_resource =
       createOrRecycleFrameResource();
@@ -115,7 +115,7 @@ void OffscreenCanvasFrameDispatcherImpl::SetTransferableResourceToSharedBitmap(
 
 void OffscreenCanvasFrameDispatcherImpl::
     SetTransferableResourceToSharedGPUContext(
-        cc::TransferableResource& resource,
+        viz::TransferableResource& resource,
         RefPtr<StaticBitmapImage> image) {
   // TODO(crbug.com/652707): When committing the first frame, there is no
   // instance of SharedGpuContext yet, calling SharedGpuContext::gl() will
@@ -177,7 +177,7 @@ void OffscreenCanvasFrameDispatcherImpl::
 
 void OffscreenCanvasFrameDispatcherImpl::
     SetTransferableResourceToStaticBitmapImage(
-        cc::TransferableResource& resource,
+        viz::TransferableResource& resource,
         RefPtr<StaticBitmapImage> image) {
   image->EnsureMailbox();
   resource.mailbox_holder = gpu::MailboxHolder(
@@ -270,7 +270,7 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   sqs->SetAll(gfx::Transform(), bounds, bounds, bounds, false, 1.f,
               SkBlendMode::kSrcOver, 0);
 
-  cc::TransferableResource resource;
+  viz::TransferableResource resource;
   resource.id = next_resource_id_;
   resource.format = viz::ResourceFormat::RGBA_8888;
   resource.size = gfx::Size(width_, height_);
@@ -441,7 +441,7 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DidReceiveCompositorFrameAck(
-    const WTF::Vector<cc::ReturnedResource>& resources) {
+    const WTF::Vector<viz::ReturnedResource>& resources) {
   ReclaimResources(resources);
   pending_compositor_frames_--;
   DCHECK_GE(pending_compositor_frames_, 0);
@@ -500,7 +500,7 @@ OffscreenCanvasFrameDispatcherImpl::FrameResource::~FrameResource() {
 }
 
 void OffscreenCanvasFrameDispatcherImpl::ReclaimResources(
-    const WTF::Vector<cc::ReturnedResource>& resources) {
+    const WTF::Vector<viz::ReturnedResource>& resources) {
   for (const auto& resource : resources) {
     auto it = resources_.find(resource.id);
 

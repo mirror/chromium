@@ -441,7 +441,7 @@ void RenderWidgetHostViewChildFrame::GestureEventAck(
 }
 
 void RenderWidgetHostViewChildFrame::DidReceiveCompositorFrameAck(
-    const std::vector<cc::ReturnedResource>& resources) {
+    const std::vector<viz::ReturnedResource>& resources) {
   renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources);
 }
 
@@ -749,7 +749,7 @@ bool RenderWidgetHostViewChildFrame::HasAcceleratedSurface(
 }
 
 void RenderWidgetHostViewChildFrame::ReclaimResources(
-    const std::vector<cc::ReturnedResource>& resources) {
+    const std::vector<viz::ReturnedResource>& resources) {
   renderer_compositor_frame_sink_->ReclaimResources(resources);
 }
 

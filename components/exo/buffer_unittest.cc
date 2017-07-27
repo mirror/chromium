@@ -42,18 +42,18 @@ TEST_F(BufferTest, ReleaseCallback) {
       base::Bind(&Release, base::Unretained(&release_call_count)));
 
   buffer->OnAttach();
-  cc::TransferableResource resource;
+  viz::TransferableResource resource;
   // Produce a transferable resource for the contents of the buffer.
   bool rv = buffer->ProduceTransferableResource(layer_tree_frame_sink_holder, 0,
                                                 false, true, &resource);
   ASSERT_TRUE(rv);
 
   // Release buffer.
-  cc::ReturnedResource returned_resource;
+  viz::ReturnedResource returned_resource;
   returned_resource.id = resource.id;
   returned_resource.sync_token = resource.mailbox_holder.sync_token;
   returned_resource.lost = false;
-  std::vector<cc::ReturnedResource> resources = {returned_resource};
+  std::vector<viz::ReturnedResource> resources = {returned_resource};
   layer_tree_frame_sink_holder->ReclaimResources(resources);
 
   RunAllPendingInMessageLoop();
@@ -77,7 +77,7 @@ TEST_F(BufferTest, IsLost) {
 
   buffer->OnAttach();
   // Acquire a texture transferable resource for the contents of the buffer.
-  cc::TransferableResource resource;
+  viz::TransferableResource resource;
   bool rv = buffer->ProduceTransferableResource(
       layer_tree_frame_sink_holder, resource_id, false, true, &resource);
   ASSERT_TRUE(rv);
@@ -94,28 +94,28 @@ TEST_F(BufferTest, IsLost) {
 
   // Release buffer.
   bool is_lost = true;
-  cc::ReturnedResource returned_resource;
+  viz::ReturnedResource returned_resource;
   returned_resource.id = resource_id;
   returned_resource.sync_token = gpu::SyncToken();
   returned_resource.lost = is_lost;
-  std::vector<cc::ReturnedResource> resources = {returned_resource};
+  std::vector<viz::ReturnedResource> resources = {returned_resource};
   layer_tree_frame_sink_holder->ReclaimResources(resources);
   RunAllPendingInMessageLoop();
 
   // Producing a new texture transferable resource for the contents of the
   // buffer.
   ++resource_id;
-  cc::TransferableResource new_resource;
+  viz::TransferableResource new_resource;
   rv = buffer->ProduceTransferableResource(
       layer_tree_frame_sink_holder, resource_id, false, false, &new_resource);
   ASSERT_TRUE(rv);
   buffer->OnDetach();
 
-  cc::ReturnedResource returned_resource2;
+  viz::ReturnedResource returned_resource2;
   returned_resource2.id = resource_id;
   returned_resource2.sync_token = gpu::SyncToken();
   returned_resource2.lost = false;
-  std::vector<cc::ReturnedResource> resources2 = {returned_resource2};
+  std::vector<viz::ReturnedResource> resources2 = {returned_resource2};
   layer_tree_frame_sink_holder->ReclaimResources(resources2);
   RunAllPendingInMessageLoop();
 }
