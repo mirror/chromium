@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06ecbce0_4dd33654",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-27T00:38:37Z",
+      "side": 1,
+      "message": "This should be strictly greater (\u003e), right?",
+      "range": {
+        "startLine": 99,
+        "startChar": 19,
+        "endLine": 99,
+        "endChar": 21
+      },
+      "revId": "45e64f385ce7d9d101e37a98afe55c218bb6551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdeeb9c_efcaab88",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-27T00:38:37Z",
+      "side": 1,
+      "message": "I think these logs should not be here... :)",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 5
+      },
+      "revId": "45e64f385ce7d9d101e37a98afe55c218bb6551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b652b96f_c2508cf3",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-27T00:38:37Z",
+      "side": 1,
+      "message": "Thanks for adding these comments, they are useful!\nnit: having the 100 value specifically mentioned makes it so that if it ever changes we have to remember to update both the constant and this comment. I\u0027d rephrase to leave the number out or point to the constant storing the value.",
+      "range": {
+        "startLine": 105,
+        "startChar": 35,
+        "endLine": 105,
+        "endChar": 38
+      },
+      "revId": "45e64f385ce7d9d101e37a98afe55c218bb6551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
