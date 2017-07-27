@@ -101,6 +101,24 @@
       "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59b5f88_8b62efbb",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-27T19:01:59Z",
+      "side": 1,
+      "message": "We can\u0027t store the WeakPtr in here if we\u0027re deleting on the IO thread. Instead let\u0027s store the repeating callbacks, which can be bound to a weakptr.\n\nbase::RepeatingCallback\u003cvoid(url::Origin)\u003e cache_list_changed_callback_;\nbase::RepeatingCallback\u003cvoid(url::Origin, cache_name)\u003e cache_contents_changed_callback_;\n\nAlso, let\u0027s comment that origins_ can only be accessed on IO thread.",
+      "parentUuid": "ecdae8f4_8f653a89",
+      "revId": "f42f83ce2904d03eb760aa08d94113b73f72c404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
