@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "95daa878_8dfd8490",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 53705,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T18:47:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4703787_f83917de",
+      "range": {
+        "startLine": 53705,
+        "startChar": 58,
+        "endLine": 53705,
+        "endChar": 72
+      },
+      "revId": "8d406a5a0b8d386aacbbcc018a745e4b7b749165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19b1b1d2_cdc10e07",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 53705,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T18:47:42Z",
+      "side": 1,
+      "message": "Yes, we will only track SHOWN and CHANGE_PASSWORD for chrome settings WebUI.",
+      "parentUuid": "685159cf_966820dd",
+      "revId": "8d406a5a0b8d386aacbbcc018a745e4b7b749165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8093c378_00a5a824",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 12
@@ -62,6 +104,30 @@
       "revId": "8d406a5a0b8d386aacbbcc018a745e4b7b749165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1842cf4d_12579abe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 53706,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-27T18:47:42Z",
+      "side": 1,
+      "message": "Sounds much better. Thanks!\nI updated the other 2 desctiptions too.",
+      "parentUuid": "8093c378_00a5a824",
+      "range": {
+        "startLine": 53704,
+        "startChar": 4,
+        "endLine": 53706,
+        "endChar": 27
+      },
+      "revId": "8d406a5a0b8d386aacbbcc018a745e4b7b749165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
