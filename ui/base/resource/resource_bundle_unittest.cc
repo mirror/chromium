@@ -416,8 +416,8 @@ TEST_F(ResourceBundleImageTest, GetRawDataResource) {
       dir_path().Append(FILE_PATH_LITERAL("sample_2x.pak"));
 
   // Dump contents into the pak files.
-  ASSERT_EQ(base::WriteFile(data_path, kSamplePakContents,
-      kSamplePakSize), static_cast<int>(kSamplePakSize));
+  ASSERT_EQ(base::WriteFile(data_path, kSamplePakContents, kSamplePakSize),
+            static_cast<int>(kSamplePakSize));
   ASSERT_EQ(base::WriteFile(data_2x_path, kSamplePakContents2x,
       kSamplePakSize2x), static_cast<int>(kSamplePakSize2x));
 
