@@ -5,9 +5,13 @@
 #include "chrome/browser/net/profile_network_context_service.h"
 
 #include "base/feature_list.h"
+#include "base/files/file_path.h"
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_constants.h"
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/network_service_instance.h"
@@ -18,10 +22,27 @@
 
 namespace {
 
-content::mojom::NetworkContextParamsPtr CreateMainNetworkContextParams() {
+content::mojom::NetworkContextParamsPtr CreateMainNetworkContextParams(
+    Profile* profile) {
   // TODO(mmenke): Set up parameters here.
   content::mojom::NetworkContextParamsPtr network_context_params =
       content::mojom::NetworkContextParams::New();
+  PrefService* prefs = profile->GetPrefs();
+
+  network_context_params->http_cache_enabled = true;
+  if (!profile->IsOffTheRecord()) {
+    network_context_params->http_cache_path =
+        base::FilePath(profile->GetPath());
+    base::FilePath cache_subdir = prefs->GetFilePath(prefs::kDiskCacheDir);
+    if (!cache_subdir.empty()) {
+      network_context_params->http_cache_path =
+          network_context_params->http_cache_path->Append(cache_subdir);
+    }
+    network_context_params->http_cache_path =
+        network_context_params->http_cache_path->Append(chrome::kCacheDirname);
+    network_context_params->http_cache_max_size =
+        prefs->GetInteger(prefs::kDiskCacheSize);
+  }
 
   // NOTE(mmenke): Keep these protocol handlers and
   // ProfileIOData::SetUpJobFactoryDefaultsForBuilder in sync with
@@ -50,7 +71,7 @@ void ProfileNetworkContextService::SetUpProfileIODataMainContext(
   *network_context_request =
       mojo::MakeRequest(&profile_io_data_main_network_context_);
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
-    *network_context_params = CreateMainNetworkContextParams();
+    *network_context_params = CreateMainNetworkContextParams(profile_);
   } else {
     // Just use default if network service is enabled, to avoid the legacy
     // in-process URLRequestContext from fighting with the NetworkService over
@@ -75,6 +96,6 @@ ProfileNetworkContextService::CreateMainNetworkContext() {
 
   content::mojom::NetworkContextPtr network_context;
   content::GetNetworkService()->CreateNetworkContext(
-      MakeRequest(&network_context), CreateMainNetworkContextParams());
+      MakeRequest(&network_context), CreateMainNetworkContextParams(profile_));
   return network_context;
 }

@@ -21,6 +21,8 @@ content::mojom::NetworkContextParamsPtr CreateNetworkContextParams() {
   content::mojom::NetworkContextParamsPtr network_context_params =
       content::mojom::NetworkContextParams::New();
 
+  network_context_params->http_cache_enabled = false;
+
   // These are needed for PAC scripts that use file or data URLs (Or FTP URLs?).
   network_context_params->enable_data_url_support = true;
   network_context_params->enable_file_url_support = true;
