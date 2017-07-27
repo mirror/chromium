@@ -8,6 +8,8 @@
 #include <utility>
 
 #include "base/base_switches.h"
+#include "base/files/file_path.h"
+#include "base/path_service.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -26,6 +28,7 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/extension_paths.h"
 #include "extensions/common/extension_set.h"
 #include "extensions/common/switches.h"
 #include "extensions/test/result_catcher.h"
@@ -162,62 +165,63 @@ void ExtensionApiTest::SetUpOnMainThread() {
 
 void ExtensionApiTest::TearDownOnMainThread() {
   ExtensionBrowserTest::TearDownOnMainThread();
-  extensions::TestGetConfigFunction::set_test_config_state(NULL);
-  test_config_.reset(NULL);
+  extensions::TestGetConfigFunction::set_test_config_state(nullptr);
+  test_config_.reset(nullptr);
 }
 
 bool ExtensionApiTest::RunExtensionTest(const std::string& extension_name) {
-  return RunExtensionTestImpl(
-      extension_name, std::string(), NULL, kFlagEnableFileAccess);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                kFlagEnableFileAccess);
 }
 
 bool ExtensionApiTest::RunExtensionTestWithArg(
     const std::string& extension_name,
     const char* custom_arg) {
-  return RunExtensionTestImpl(extension_name, std::string(), custom_arg,
-                              kFlagEnableFileAccess);
+  return RunExtensionTestByName(extension_name, std::string(), custom_arg,
+                                kFlagEnableFileAccess);
 }
 
 bool ExtensionApiTest::RunExtensionTestIncognito(
     const std::string& extension_name) {
-  return RunExtensionTestImpl(extension_name,
-                              std::string(),
-                              NULL,
-                              kFlagEnableIncognito | kFlagEnableFileAccess);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                kFlagEnableIncognito | kFlagEnableFileAccess);
 }
 
 bool ExtensionApiTest::RunExtensionTestIgnoreManifestWarnings(
     const std::string& extension_name) {
-  return RunExtensionTestImpl(
-      extension_name, std::string(), NULL, kFlagIgnoreManifestWarnings);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                kFlagIgnoreManifestWarnings);
 }
 
 bool ExtensionApiTest::RunExtensionTestAllowOldManifestVersion(
     const std::string& extension_name) {
-  return RunExtensionTestImpl(
-      extension_name,
-      std::string(),
-      NULL,
+  return RunExtensionTestByName(
+      extension_name, std::string(), nullptr,
       kFlagEnableFileAccess | kFlagAllowOldManifestVersions);
 }
 
 bool ExtensionApiTest::RunComponentExtensionTest(
     const std::string& extension_name) {
-  return RunExtensionTestImpl(extension_name,
-                              std::string(),
-                              NULL,
-                              kFlagEnableFileAccess | kFlagLoadAsComponent);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                kFlagEnableFileAccess | kFlagLoadAsComponent);
 }
 
 bool ExtensionApiTest::RunExtensionTestNoFileAccess(
     const std::string& extension_name) {
-  return RunExtensionTestImpl(extension_name, std::string(), NULL, kFlagNone);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                kFlagNone);
 }
 
 bool ExtensionApiTest::RunExtensionTestIncognitoNoFileAccess(
     const std::string& extension_name) {
-  return RunExtensionTestImpl(
-      extension_name, std::string(), NULL, kFlagEnableIncognito);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                kFlagEnableIncognito);
+}
+
+bool ExtensionApiTest::RunExtensionTestFromExtensionsData(
+    const std::string& extension_name) {
+  return RunExtensionTestImpl(shared_test_data_dir_.AppendASCII(extension_name),
+                              std::string(), nullptr, kFlagEnableFileAccess);
 }
 
 bool ExtensionApiTest::ExtensionSubtestsAreSkipped() {
@@ -241,7 +245,7 @@ bool ExtensionApiTest::RunExtensionSubtest(const std::string& extension_name,
   DCHECK(!page_url.empty()) << "Argument page_url is required.";
   if (ExtensionSubtestsAreSkipped())
     return true;
-  return RunExtensionTestImpl(extension_name, page_url, NULL, flags);
+  return RunExtensionTestByName(extension_name, page_url, nullptr, flags);
 }
 
 bool ExtensionApiTest::RunPageTest(const std::string& page_url) {
@@ -254,8 +258,8 @@ bool ExtensionApiTest::RunPageTest(const std::string& page_url,
 }
 
 bool ExtensionApiTest::RunPlatformAppTest(const std::string& extension_name) {
-  return RunExtensionTestImpl(
-      extension_name, std::string(), NULL, kFlagLaunchPlatformApp);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                kFlagLaunchPlatformApp);
 }
 
 bool ExtensionApiTest::RunPlatformAppTestWithArg(
@@ -265,25 +269,33 @@ bool ExtensionApiTest::RunPlatformAppTestWithArg(
 
 bool ExtensionApiTest::RunPlatformAppTestWithFlags(
     const std::string& extension_name, int flags) {
-  return RunExtensionTestImpl(
-      extension_name, std::string(), NULL, flags | kFlagLaunchPlatformApp);
+  return RunExtensionTestByName(extension_name, std::string(), nullptr,
+                                flags | kFlagLaunchPlatformApp);
 }
 
 bool ExtensionApiTest::RunPlatformAppTestWithFlags(
     const std::string& extension_name,
     const char* custom_arg,
     int flags) {
-  return RunExtensionTestImpl(extension_name, std::string(), custom_arg,
-                              flags | kFlagLaunchPlatformApp);
+  return RunExtensionTestByName(extension_name, std::string(), custom_arg,
+                                flags | kFlagLaunchPlatformApp);
 }
 
+bool ExtensionApiTest::RunExtensionTestByName(const std::string& extension_name,
+                                              const std::string& page_url,
+                                              const char* custom_arg,
+                                              int flags) {
+  base::FilePath extension_path;
+  if (extension_name.size())
+    extension_path = test_data_dir_.Append(extension_name);
+  return RunExtensionTestImpl(extension_path, page_url, custom_arg, flags);
+}
 
-// Load |extension_name| extension and/or |page_url| and wait for
-// PASSED or FAILED notification.
-bool ExtensionApiTest::RunExtensionTestImpl(const std::string& extension_name,
-                                            const std::string& page_url,
-                                            const char* custom_arg,
-                                            int flags) {
+bool ExtensionApiTest::RunExtensionTestImpl(
+    const base::FilePath& extension_path,
+    const std::string& page_url,
+    const char* custom_arg,
+    int flags) {
   bool load_as_component = (flags & kFlagLoadAsComponent) != 0;
   bool launch_platform_app = (flags & kFlagLaunchPlatformApp) != 0;
   bool use_incognito = (flags & kFlagUseIncognito) != 0;
@@ -292,12 +304,11 @@ bool ExtensionApiTest::RunExtensionTestImpl(const std::string& extension_name,
     test_config_->SetString(kTestCustomArg, custom_arg);
 
   extensions::ResultCatcher catcher;
-  DCHECK(!extension_name.empty() || !page_url.empty()) <<
-      "extension_name and page_url cannot both be empty";
+  DCHECK(!extension_path.empty() || !page_url.empty())
+      << "extension_path and page_url cannot both be empty";
 
-  const extensions::Extension* extension = NULL;
-  if (!extension_name.empty()) {
-    base::FilePath extension_path = test_data_dir_.AppendASCII(extension_name);
+  const extensions::Extension* extension = nullptr;
+  if (!extension_path.empty()) {
     if (load_as_component) {
       extension = LoadExtensionAsComponent(extension_path);
     } else {
@@ -328,8 +339,8 @@ bool ExtensionApiTest::RunExtensionTestImpl(const std::string& extension_name,
     // may lack a scheme & host and thus be a relative url within the loaded
     // extension.
     if (!url.is_valid()) {
-      DCHECK(!extension_name.empty()) <<
-          "Relative page_url given with no extension_name";
+      DCHECK(!extension_path.empty())
+          << "Relative page_url given with no extension_path";
 
       url = extension->GetResourceURL(page_url);
     }
@@ -359,7 +370,7 @@ const extensions::Extension* ExtensionApiTest::GetSingleLoadedExtension() {
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(browser()->profile());
 
-  const extensions::Extension* result = NULL;
+  const extensions::Extension* result = nullptr;
   for (const scoped_refptr<const extensions::Extension>& extension :
        registry->enabled_extensions()) {
     // Ignore any component extensions. They are automatically loaded into all
@@ -367,20 +378,20 @@ const extensions::Extension* ExtensionApiTest::GetSingleLoadedExtension() {
     if (extension->location() == extensions::Manifest::COMPONENT)
       continue;
 
-    if (result != NULL) {
+    if (result != nullptr) {
       // TODO(yoz): this is misleading; it counts component extensions.
       message_ = base::StringPrintf(
           "Expected only one extension to be present.  Found %u.",
           static_cast<unsigned>(registry->enabled_extensions().size()));
-      return NULL;
+      return nullptr;
     }
 
     result = extension.get();
   }
 
   if (!result) {
-    message_ = "extension pointer is NULL.";
-    return NULL;
+    message_ = "extension pointer is null.";
+    return nullptr;
   }
   return result;
 }
@@ -445,7 +456,12 @@ bool ExtensionApiTest::StartFTPServer(const base::FilePath& root_directory) {
 
 void ExtensionApiTest::SetUpCommandLine(base::CommandLine* command_line) {
   ExtensionBrowserTest::SetUpCommandLine(command_line);
+
   test_data_dir_ = test_data_dir_.AppendASCII("api_test");
+
+  extensions::RegisterPathProvider();
+  PathService::Get(extensions::DIR_TEST_DATA, &shared_test_data_dir_);
+
   // Backgrounded renderer processes run at a lower priority, causing the
   // tests to take more time to complete. Disable backgrounding so that the
   // tests don't time out.

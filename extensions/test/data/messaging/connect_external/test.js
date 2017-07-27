@@ -4,8 +4,7 @@
 
 var testId = "bjafgdebaacbbbecmhlhpofkepfkgcpa";
 
-// Call with |api| as either chrome.runtime or chrome.extension, so that both
-// get tested (extension is aliased to runtime).
+// Call with |api| as either chrome.runtime or chrome.extension.
 function connectExternalTest(api) {
   var port = api.connect(testId, {name: "extern"});
   port.postMessage({testConnectExternal: true});
@@ -16,11 +15,20 @@ function connectExternalTest(api) {
   }));
 }
 
-chrome.test.runTests([
-  function connectExternal_extension() {
-    connectExternalTest(chrome.extension);
-  },
-  function connectExternal_runtime() {
+// Generates the list of test functions.
+function generateTests() {
+  let tests = [function connectExternal_runtime() {
     connectExternalTest(chrome.runtime);
+  }];
+
+  // In Chrome, also test chrome.extension, which is aliased to chrome.runtime.
+  if (chrome.extension) {
+    tests.push(function connectExternal_extension() {
+      connectExternalTest(chrome.extension);
+    });
   }
-]);
+
+  return tests;
+}
+
+chrome.test.runTests(generateTests());
