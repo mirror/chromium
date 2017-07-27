@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d043071d_d92fd9b3",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-27T14:11:03Z",
+      "side": 1,
+      "message": "You\u0027ve now had two reviewers mention that this name is confusing. In fact, Mike\u0027s proposal (\"PermissionNeeded\") suggests that he thought this function meant the user needed to be asked, not that permission was already granted.\n\nPlease either find a clearer name or a clearer way to document this. NotifyUpdateOverCellularOneTimePermission(bool granted)? NotifyOneTimeUpdateOverCellular(bool permission_granted)?\n\n\"Target\" doesn\u0027t really mean anything in UI land.",
+      "parentUuid": "ccfd12d5_736191b4",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 40
+      },
+      "revId": "2c1d53c9dca257346c8e8affe0287cd85f17f462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f52a57b3_f3c4a36a",
         "filename": "chrome/browser/upgrade_observer.h",
         "patchSetId": 6
