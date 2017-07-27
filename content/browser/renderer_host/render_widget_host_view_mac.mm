@@ -761,7 +761,12 @@ void RenderWidgetHostViewMac::Show() {
 
 void RenderWidgetHostViewMac::Hide() {
   ScopedCAActionDisabler disabler;
-  [cocoa_view_ setHidden:YES];
+  // When the content is in the SeparateFullscreenWindow,
+  // RenderWidgetHostViewCocoa should always be visible because it's not in the
+  // FramedBrowserWindow anymore.
+  if (!GetWebContents()->IsFullscreenForCurrentTab()) {
+    [cocoa_view_ setHidden:YES];
+  }
 
   render_widget_host_->WasHidden();
   browser_compositor_->SetRenderWidgetHostIsHidden(true);

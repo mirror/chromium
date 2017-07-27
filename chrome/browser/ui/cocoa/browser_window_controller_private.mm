@@ -671,7 +671,6 @@ willPositionSheet:(NSWindow*)sheet
 
   [self invalidateTouchBar];
 
-  [self showFullscreenExitBubbleIfNecessary];
   browser_->WindowFullscreenStateChanged();
 
   if (fullscreenLowPowerCoordinator_)

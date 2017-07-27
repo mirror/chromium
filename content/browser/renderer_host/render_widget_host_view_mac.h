@@ -223,6 +223,7 @@ struct TextInputState;
 - (void)showLookUpDictionaryOverlayAtPoint:(NSPoint)point;
 - (void)showLookUpDictionaryOverlayFromRange:(NSRange)range
                                   targetView:(NSView*)targetView;
+
 @end
 
 namespace content {

@@ -169,7 +169,7 @@ ui::AcceleratorProvider* ExclusiveAccessController::GetAcceleratorProvider() {
 }
 
 gfx::NativeView ExclusiveAccessController::GetBubbleParentView() const {
-  return [[controller_ window] contentView];
+  return [[controller_ getActiveWebContentsSeparateWindow] contentView];
 }
 
 gfx::Point ExclusiveAccessController::GetCursorPointInParent() const {
