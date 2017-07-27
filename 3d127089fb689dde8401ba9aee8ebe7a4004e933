@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55472cb5_166104b0",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-27T14:55:36Z",
+      "side": 1,
+      "message": "Due to timeouts, can we end up exceeding the loading slots limit? If so, worth noting in this comment.",
+      "revId": "3d127089fb689dde8401ba9aee8ebe7a4004e933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
