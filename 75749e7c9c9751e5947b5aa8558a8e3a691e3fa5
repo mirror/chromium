@@ -16,6 +16,24 @@
       "revId": "75749e7c9c9751e5947b5aa8558a8e3a691e3fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61536443_473a92b5",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-27T08:28:49Z",
+      "side": 1,
+      "message": "Sure that makes sense.",
+      "parentUuid": "eef4fbdf_cd41ce02",
+      "revId": "75749e7c9c9751e5947b5aa8558a8e3a691e3fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
