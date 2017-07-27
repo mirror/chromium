@@ -107,6 +107,11 @@ void UpgradeDetectorChromeos::UpdateStatusChanged(
   }
 }
 
+void UpgradeDetectorChromeos::OnUpdateOverCellularOneTimePermissionSet(
+    bool success) {
+  NotifyUpdateOverCellularOneTimePermissionSet(success);
+}
+
 void UpgradeDetectorChromeos::NotifyOnUpgrade() {
   base::TimeDelta delta = base::Time::Now() - upgrade_detected_time_;
   int64_t time_passed = delta.InDays();
