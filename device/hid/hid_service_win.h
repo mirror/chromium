@@ -34,8 +34,7 @@ class HidServiceWin : public HidService, public DeviceMonitorWin::Observer {
   HidServiceWin();
   ~HidServiceWin() override;
 
-  void Connect(const std::string& device_id,
-               const ConnectCallback& callback) override;
+  void Connect(const std::string& device_id, ConnectCallback callback) override;
 
  private:
   static void EnumerateBlocking(

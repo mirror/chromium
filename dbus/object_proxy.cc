@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
@@ -356,7 +357,7 @@ void ObjectProxy::RunCallMethodInternalCallback(
     // thread, not from the current thread here, which is likely UI thread.
     bus_->GetDBusTaskRunner()->PostTask(
         FROM_HERE,
-        base::Bind(&base::DeletePointer<Response>, response.release()));
+        base::BindOnce(&base::DeletePointer<Response>, response.release()));
 
     method_call_successful = true;
     // Record time spent for the method call. Don't include failures.

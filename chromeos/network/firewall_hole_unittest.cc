@@ -23,7 +23,7 @@ namespace {
 ACTION_TEMPLATE(InvokeCallback,
                 HAS_1_TEMPLATE_PARAMS(int, k),
                 AND_1_VALUE_PARAMS(p1)) {
-  ::std::tr1::get<k>(args).Run(p1);
+  std::move(std::get<k>(args)).Run(p1);
 }
 
 }  // namespace
@@ -63,9 +63,10 @@ class FirewallHoleTest : public testing::Test {
 
 TEST_F(FirewallHoleTest, GrantTcpPortAccess) {
   EXPECT_CALL(*mock_permission_broker_client_,
-              RequestTcpPortAccess(1234, "foo0", _, _))
+              RequestTcpPortAccessInternal(1234, "foo0", _, _))
       .WillOnce(InvokeCallback<3>(true));
-  EXPECT_CALL(*mock_permission_broker_client_, ReleaseTcpPort(1234, "foo0", _))
+  EXPECT_CALL(*mock_permission_broker_client_,
+              ReleaseTcpPortInternal(1234, "foo0", _))
       .WillOnce(InvokeCallback<2>(true));
 
   FirewallHole::Open(
@@ -76,7 +77,7 @@ TEST_F(FirewallHoleTest, GrantTcpPortAccess) {
 
 TEST_F(FirewallHoleTest, DenyTcpPortAccess) {
   EXPECT_CALL(*mock_permission_broker_client_,
-              RequestTcpPortAccess(1234, "foo0", _, _))
+              RequestTcpPortAccessInternal(1234, "foo0", _, _))
       .WillOnce(InvokeCallback<3>(false));
 
   FirewallHole::Open(
@@ -87,9 +88,10 @@ TEST_F(FirewallHoleTest, DenyTcpPortAccess) {
 
 TEST_F(FirewallHoleTest, GrantUdpPortAccess) {
   EXPECT_CALL(*mock_permission_broker_client_,
-              RequestUdpPortAccess(1234, "foo0", _, _))
+              RequestUdpPortAccessInternal(1234, "foo0", _, _))
       .WillOnce(InvokeCallback<3>(true));
-  EXPECT_CALL(*mock_permission_broker_client_, ReleaseUdpPort(1234, "foo0", _))
+  EXPECT_CALL(*mock_permission_broker_client_,
+              ReleaseUdpPortInternal(1234, "foo0", _))
       .WillOnce(InvokeCallback<2>(true));
 
   FirewallHole::Open(
@@ -100,11 +102,11 @@ TEST_F(FirewallHoleTest, GrantUdpPortAccess) {
 
 TEST_F(FirewallHoleTest, DenyUdpPortAccess) {
   EXPECT_CALL(*mock_permission_broker_client_,
-              RequestUdpPortAccess(1234, "foo0", _, _))
+              RequestUdpPortAccessInternal(1234, "foo0", _, _))
       .WillOnce(InvokeCallback<3>(false));
 
-  FirewallHole::Open(
-      FirewallHole::PortType::UDP, 1234, "foo0",
-      base::Bind(&FirewallHoleTest::AssertOpenFailure, base::Unretained(this)));
+  FirewallHole::Open(FirewallHole::PortType::UDP, 1234, "foo0",
+                     base::BindOnce(&FirewallHoleTest::AssertOpenFailure,
+                                    base::Unretained(this)));
   run_loop_.Run();
 }
