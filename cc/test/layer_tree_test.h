@@ -160,6 +160,8 @@ class LayerTreeTest : public testing::Test, public TestHooks {
     return image_worker_->task_runner().get();
   }
 
+  LayerTreeHostImplClient* GetImplClient(LayerTreeHostImpl* impl) const;
+
  private:
   virtual void DispatchAddAnimationToPlayer(
       AnimationPlayer* player_to_receive_animation,
