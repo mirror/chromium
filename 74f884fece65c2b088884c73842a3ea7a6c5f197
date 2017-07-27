@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d6404679_860a9fc6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-27T05:20:21Z",
+      "side": 1,
+      "message": "then instead of making it an exception here,  should we add it as a case to isHerbIntent and return false there?",
+      "parentUuid": "29dbd046_66bfc5d5",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8117fbaa_e9d8ec33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
         "patchSetId": 7
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Hmm. I thought directly sending it to the final destination is the prefered way since it\u0027s faster.",
       "parentUuid": "8117fbaa_e9d8ec33",
+      "range": {
+        "startLine": 486,
+        "startChar": 44,
+        "endLine": 486,
+        "endChar": 45
+      },
+      "revId": "74f884fece65c2b088884c73842a3ea7a6c5f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f703e7e_7537a65f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-27T05:20:21Z",
+      "side": 1,
+      "message": "that works too. My question was mostly related with your change in Launher, but your comments there clarified that for me. Thanks.",
+      "parentUuid": "9533dc31_ce4b73c2",
       "range": {
         "startLine": 486,
         "startChar": 44,
