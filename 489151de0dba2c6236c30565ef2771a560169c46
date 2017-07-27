@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0dc53d8_17ddb97b",
+        "filename": "chrome/test/vr/perf/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-27T20:07:31Z",
+      "side": 1,
+      "message": "This looks like really odd indentation.  Is the formatter choking on the \u0027+\u0027 operator?",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 21
+      },
+      "revId": "489151de0dba2c6236c30565ef2771a560169c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fc6c798_be413ec7",
         "filename": "third_party/brotli/BUILD.gn",
         "patchSetId": 1
