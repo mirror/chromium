@@ -191,25 +191,19 @@ void ShareServiceImpl::OnPickerClosed(const std::string& title,
     return;
   }
 
-  const GURL& chosen_target = result->manifest_url();
-
   std::string url_template_filled;
   if (!ReplacePlaceholders(result->url_template(), title, text, share_url,
                            &url_template_filled)) {
     // TODO(mgiuca): This error should not be possible at share time, because
-    // targets with invalid templates should not be chooseable. Fix
+    // targets with invalid templates should not be chooesable. Fix
     // https://crbug.com/694380 and replace this with a DCHECK.
     std::move(callback).Run(blink::mojom::ShareError::INTERNAL_ERROR);
     return;
   }
 
   // The template is relative to the manifest URL (minus the filename).
-  // Concatenate to make an absolute URL.
-  const std::string& chosen_target_spec = chosen_target.spec();
-  base::StringPiece url_base(
-      chosen_target_spec.data(),
-      chosen_target_spec.size() - chosen_target.ExtractFileName().size());
-  const GURL target(url_base.as_string() + url_template_filled);
+  // Resolve it based on the manifest URL to make an absolute URL.
+  const GURL target = result->manifest_url().Resolve(url_template_filled);
   // User should not be able to cause an invalid target URL. Possibilities are:
   // - The base URL: can't be invalid since it's derived from the manifest URL.
   // - The template: can only be invalid if it contains a NUL character or
