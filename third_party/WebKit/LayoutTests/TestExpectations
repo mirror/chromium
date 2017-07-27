@@ -81,7 +81,7 @@ crbug.com/309675 compositing/gestures/gesture-tapHighlight-simple-longPress.html
 # The failure in the next line is due to virtual/gpu bots using osmesa
 # Under osmesa, skia's filter quality doesn't work correctly. This test is expected to pass
 # when we swith to swiftshader.
-crbug.com/549742 [ Linux Mac Win ] virtual/gpu/fast/canvas/canvas-drawImage-video-imageSmoothingEnabled.html [ Failure ]
+crbug.com/549742 [ Linux Mac ] virtual/gpu/fast/canvas/canvas-drawImage-video-imageSmoothingEnabled.html [ Failure ]
 
 crbug.com/602110 hittesting/border-hittest-with-image-fallback.html [ Failure ]
 
@@ -3103,3 +3103,9 @@ crbug.com/746926 [ Win Debug ] virtual/outofblink-cors/webexposed/global-interfa
 
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-applyConstraints.html [ Pass Crash ]
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-getSettings.html [ Pass Crash ]
+
+# SwiftShader ref test failures
+crbug.com/726075 [ Win ] compositing/3d-cube.html [ Failure ]
+crbug.com/726075 [ Win ] virtual/gpu/fast/canvas/canvas-filter-fill-paint-gradient.html [ Failure ]
+crbug.com/726075 [ Win ] virtual/gpu/fast/canvas/canvas-filter-stroke-paint-gradient.html [ Failure ]
+
