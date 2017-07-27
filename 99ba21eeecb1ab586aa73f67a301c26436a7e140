@@ -383,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "f524e12d_f822ddb0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_misc_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-27T14:02:50Z",
+      "side": 1,
+      "message": "I agree. \"misc\" isn\u0027t ideal. I\u0027ll keep it until I write all the tests I have in mind. Maybe a common theme emerges and inspires a better name :)",
+      "parentUuid": "205686b8_778cf03b",
+      "revId": "99ba21eeecb1ab586aa73f67a301c26436a7e140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31b06e24_2341ab7a",
         "filename": "ios/chrome/browser/ui/payments/payment_request_misc_egtest.mm",
         "patchSetId": 5
