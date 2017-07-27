@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6ef9048a_ba475ab5",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T22:08:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f10d99b9_adc544d0",
+      "range": {
+        "startLine": 1251,
+        "startChar": 2,
+        "endLine": 1251,
+        "endChar": 72
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca1ae20_d5c85407",
         "filename": "ash/system/night_light/night_light_controller.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "df831d03_42f41d2d",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T22:08:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92a95b5e_15dcb751",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 53
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4fa5ceb_7e1e33e0",
         "filename": "ash/system/night_light/night_light_controller_unittest.cc",
         "patchSetId": 1
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Yep, they do. I removed the if() checks.",
       "parentUuid": "c4fa5ceb_7e1e33e0",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 66
+      },
+      "revId": "6194d0809669ff88faddc9a9f5b7e38c1a9eda2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d600e942_4550bbfc",
+        "filename": "ash/system/night_light/night_light_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-27T22:08:40Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "c5dd524e_b3ad4a62",
       "range": {
         "startLine": 175,
         "startChar": 0,
