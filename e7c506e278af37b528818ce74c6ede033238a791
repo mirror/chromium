@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87cacb3b_a00e8a7e",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-27T01:09:05Z",
+      "side": 1,
+      "message": "Is null_output used?",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42713cc8_22c8957f",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-27T01:09:05Z",
+      "side": 1,
+      "message": "nit: Can you add a brief comment or two to explain what these calls are doing?",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd364cf_7c3a198e",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-27T01:09:05Z",
+      "side": 1,
+      "message": "Looks like the arg name line got duplicated?",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71065943_e728261d",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-27T01:09:05Z",
+      "side": 1,
+      "message": "nit: Comment above, to clarify what the intended network configuration is, would be helpful (e.g. \"Set up local-only network between Guest and Host to allow test result to be fetched.\" or something)",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51fda7f3_da82ce14",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-27T01:09:05Z",
+      "side": 1,
+      "message": "nit: Presumably if we match that line then we can\u0027t match anything below, so we can continue here?",
+      "revId": "e7c506e278af37b528818ce74c6ede033238a791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
