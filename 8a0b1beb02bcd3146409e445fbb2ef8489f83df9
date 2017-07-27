@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb429d2f_fe8446d4",
+        "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-27T21:02:03Z",
+      "side": 1,
+      "message": "So, is this TODO obsolete then? Since not all junit4 tests can use the new way of listing tests?",
+      "revId": "8a0b1beb02bcd3146409e445fbb2ef8489f83df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
