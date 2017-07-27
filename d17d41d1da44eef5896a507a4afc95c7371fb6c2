@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "003676dd_14e3a120",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "@dgozman I think this \u0026 L484 should do the trick for handling reloads in the new world.",
+      "revId": "d17d41d1da44eef5896a507a4afc95c7371fb6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

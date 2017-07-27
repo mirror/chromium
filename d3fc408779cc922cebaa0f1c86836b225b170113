@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91ef9c80_f5fc2fd0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "hah, I was wondering why we had these",
+      "parentUuid": "84fa0ab8_dc935324",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c056610a_ff45d031",
         "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7e8a903c_7ae55105",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c056610a_ff45d031",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68af1676_26e380f1",
         "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-26T00:52:26Z",
       "side": 1,
       "message": "You\u0027ve got new spelling for the nick? Looks cool! ;)",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2154bdd3_2794e294",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "whoops - I used my github username :)",
+      "parentUuid": "68af1676_26e380f1",
       "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "05041acf_f2eb31d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "I moved these UISourceCode methods to Sources since that\u0027s its primary use case. Technically they should probably be in a WorkspaceTestRunner, but I think this leads us down the road with too many test modules.",
+      "parentUuid": "83a94f35_cbfb38f2",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8325098e_f9183552",
         "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-26T20:24:00Z",
       "side": 1,
       "message": "I think all the navigate/reload stuff should work differently in the new test runner,",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e267a6_d4d270cc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ve updated it to add \u0026 remove event listeners to watch for reloads and it seems to work.\n\n```\n  TestRunner.resourceTreeModel.addEventListener(\n    SDK.ResourceTreeModel.Events.Load, TestRunner.pageLoaded);\n```",
+      "parentUuid": "8325098e_f9183552",
       "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "def6303e_7b0ed0f9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "Don\u0027t think so since it\u0027s instantiated in Main.js: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/main/Main.js?type\u003dcs\u0026q\u003d%22NetworkLog.networkLog+%3D%22\u0026sq\u003dpackage:chromium\u0026l\u003d195",
+      "parentUuid": "49db6d19_9627eb57",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41eed426_a85364a6",
         "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/module.json",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-26T00:52:26Z",
       "side": 1,
       "message": "I think this is somewhat unfortunate.",
+      "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bec82f_0894980e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/module.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-27T21:47:34Z",
+      "side": 1,
+      "message": "I can remove this now",
+      "parentUuid": "41eed426_a85364a6",
       "revId": "d3fc408779cc922cebaa0f1c86836b225b170113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
