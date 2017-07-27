@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eadfd6af_39047333",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-27T13:23:15Z",
+      "side": 1,
+      "message": "nit: simply \"it\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 69,
+        "endLine": 70,
+        "endChar": 77
+      },
+      "revId": "87448e628e76b0b2ecee4a8f6e31cd511c100c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a97734_62d67bcd",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-27T13:23:15Z",
+      "side": 1,
+      "message": "it",
+      "range": {
+        "startLine": 76,
+        "startChar": 67,
+        "endLine": 76,
+        "endChar": 75
+      },
+      "revId": "87448e628e76b0b2ecee4a8f6e31cd511c100c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7e872c_81d5a819",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-27T13:23:15Z",
+      "side": 1,
+      "message": "immediately?",
+      "range": {
+        "startLine": 78,
+        "startChar": 3,
+        "endLine": 78,
+        "endChar": 17
+      },
+      "revId": "87448e628e76b0b2ecee4a8f6e31cd511c100c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
