@@ -46,6 +46,30 @@
       "revId": "aa40185734f5c6687c266ca2dcf5a4d7681067ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c9a10e_01f5d8bd",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-27T20:23:03Z",
+      "side": 1,
+      "message": "OK, lets try to make it similar to the one in the current setup (the server CL).",
+      "parentUuid": "b8088ec4_6ec95b6c",
+      "range": {
+        "startLine": 1574,
+        "startChar": 25,
+        "endLine": 1574,
+        "endChar": 37
+      },
+      "revId": "aa40185734f5c6687c266ca2dcf5a4d7681067ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
