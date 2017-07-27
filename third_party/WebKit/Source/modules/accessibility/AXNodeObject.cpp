@@ -1494,11 +1494,9 @@ String AXNodeObject::AriaAutoComplete() const {
       GetAOMPropertyOrARIAAttribute(AOMStringProperty::kAutocomplete)
           .DeprecatedLower();
 
-  if (aria_auto_complete == "inline" || aria_auto_complete == "list" ||
-      aria_auto_complete == "both")
-    return aria_auto_complete;
-
-  return String();
+  // Do not validate values, as illegal values must be passed through,
+  // according to CORE-AAM.
+  return aria_auto_complete;
 }
 
 void AXNodeObject::Markers(Vector<DocumentMarker::MarkerType>& marker_types,
