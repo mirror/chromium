@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b36b791b_c23cc332",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-27T08:05:43Z",
+      "side": 1,
+      "message": "My reading of this method is that is takes a AccountManagerResult\u003cArray\u003e and converts it to a AccountManagerResult\u003cList\u003e. I find that very strange. Can\u0027t we use List or Array everywhere? Why do we need to do the conversion here?\n\nIf we avoid this conversion, then we can pass the callback directly to get accounts and remove the need for this intermediary onResult method.",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 32
+      },
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f04601f_29e5edf2",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-27T08:05:43Z",
+      "side": 1,
+      "message": "Nit: Prefer passing the capacity of a list on the constructor when it is known:\nList\u003cString\u003e accountNames \u003d new ArrayList\u003c\u003e(accounts.getValue().length);",
+      "range": {
+        "startLine": 218,
+        "startChar": 52,
+        "endLine": 218,
+        "endChar": 61
+      },
+      "revId": "799dd6794b51e44be5b2d917599b53afc38773f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
