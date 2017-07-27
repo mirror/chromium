@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e53bb185_c198721d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-27T19:57:27Z",
+      "side": 1,
+      "message": "It might be to name this function similarly to MoveDownBelowFloats, (see comment below), and update comment, i.e.\n\nUpdateLayoutOpportunity() ?\n\nUpdateLayoutOpportunityWhichJustSearchesForFirstOne (obv. bad name).\n\nOr is it possible to use function below with an optional argument?\n\nI.e.\n\nUpdateLayoutOpportunity(Optional\u003cLayoutUnit\u003e minimum_inline_size \u003d nullopt) {\n\n}",
+      "range": {
+        "startLine": 198,
+        "startChar": 20,
+        "endLine": 198,
+        "endChar": 40
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca68b3d_23604dd8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-27T19:57:27Z",
+      "side": 1,
+      "message": "A better comment here might be:\n\n/*\nIf the current line has floats or intruding floats we need to search for the next largest layout opportunity which will fit line_.position.\n\nThis may *recurse* as after finding this layout opportunity we try and break the line into the new available width; this may then trigger overflow which we need to find another wider layout opportunity again.\n*/\n\n?\n\nCan you add a unit test for this case where we need to recurse through multiple break lines and layout opps?",
+      "range": {
+        "startLine": 649,
+        "startChar": 12,
+        "endLine": 649,
+        "endChar": 22
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498be54d_fa036c92",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-27T19:57:27Z",
+      "side": 1,
+      "message": "instead of this bool, can we check here the position of the line, and the last float? E.g.\n\nWTF::Optional\u003cLayoutUnit\u003e float_end_offset\u003d GetClearanceOffset(ConstraintSpace().Exclusions(), EClear::kBoth);\n\nif (float_end_offset \u0026\u0026 content_offset_ \u003c float_end_offset.value()) \n\nThoughts?",
+      "range": {
+        "startLine": 650,
+        "startChar": 12,
+        "endLine": 650,
+        "endChar": 36
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3b44d4_01fa6650",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-27T19:57:27Z",
+      "side": 1,
+      "message": "So I interpreted this function to mean, move down below *all* floats. Is there a better name for this, e.g.\n\nFindNextLayoutOpportunityWithMinimumInlineSize()\n?\n\nUpdateLayoutOpportunityWithMinimumInlineSize()\n?",
+      "range": {
+        "startLine": 651,
+        "startChar": 4,
+        "endLine": 651,
+        "endChar": 23
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7256fd9_4fdb77b4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-27T19:57:27Z",
+      "side": 1,
+      "message": "Ok, can we rename this to:\nhas_floats_or_intruding_floats ?\n\n(just something that indicates that this includes intruding floats, i got confused).",
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
