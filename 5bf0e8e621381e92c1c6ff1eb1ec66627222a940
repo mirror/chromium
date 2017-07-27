@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a1ec7f_9fa20c4d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_features.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T10:51:51Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "5bf0e8e621381e92c1c6ff1eb1ec66627222a940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e0c492_4919042b",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-27T10:51:51Z",
+      "side": 1,
+      "message": "That\u0027s not needed and also incorrect.",
+      "range": {
+        "startLine": 209,
+        "startChar": 40,
+        "endLine": 209,
+        "endChar": 46
+      },
+      "revId": "5bf0e8e621381e92c1c6ff1eb1ec66627222a940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
