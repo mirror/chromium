@@ -498,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "a732c2ef_ec2d39a9",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-27T18:31:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "47920eec_554abc0d",
+      "range": {
+        "startLine": 59,
+        "startChar": 9,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "aee6147b12a550ec12753d2aa8f807814c3dc324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84919ff1_abecf46c",
         "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
         "patchSetId": 6

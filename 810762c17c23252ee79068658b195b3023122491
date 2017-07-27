@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e065863_3c5e7467",
+        "filename": "extensions/common/api/declarative_net_request/dnr_manifest_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-27T18:31:23Z",
+      "side": 1,
+      "message": "nit: Call the function so? e.g. WriteManifestAndRuleset(), then you can remove this comment.",
+      "range": {
+        "startLine": 104,
+        "startChar": 14,
+        "endLine": 104,
+        "endChar": 15
+      },
+      "revId": "810762c17c23252ee79068658b195b3023122491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2900b29a_f20f589e",
+        "filename": "extensions/common/manifest_constants.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-27T18:31:23Z",
+      "side": 1,
+      "message": "Since this is an array, we should name this ?_files. Maybe \"rule_resources\", i.e. resource instead of file is a stronger indication that these are extension resources (similar to web_accessible_resources key)",
+      "range": {
+        "startLine": 36,
+        "startChar": 41,
+        "endLine": 36,
+        "endChar": 51
+      },
+      "revId": "810762c17c23252ee79068658b195b3023122491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

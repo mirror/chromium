@@ -140,6 +140,30 @@
       "revId": "48f0e19c5d9bc5fc6d7a9b001baa8090c46df11c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca040a1_dc310cba",
+        "filename": "extensions/common/api/declarative_net_request/utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-27T18:31:23Z",
+      "side": 1,
+      "message": "Thanks.\n\nTODO(crbug) is not common, at least in extensions/ codebase though:\nall TODO count: ~900\nhttps://cs.chromium.org/search/?q\u003dTODO.*%5C(+file:extensions\u0026sq\u003dpackage:chromium\u0026type\u003dcs\nTODO(crbug) count: ~24\nhttps://cs.chromium.org/search/?q\u003dTODO.*crbug.*%5C):+file:extensions\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nBut that\u0027s simply because we didn\u0027t start using the crbug alternative. This SGTM.\nalso, prepend \"http://\" before the link.",
+      "parentUuid": "69bf4144_3400bce7",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "48f0e19c5d9bc5fc6d7a9b001baa8090c46df11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
