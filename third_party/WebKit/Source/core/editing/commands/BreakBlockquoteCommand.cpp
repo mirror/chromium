@@ -107,7 +107,7 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
 
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  VisiblePosition visible_pos = EndingSelection().VisibleStart();
+  VisiblePosition visible_pos = EndingVisibleSelection().VisibleStart();
 
   // pos is a position equivalent to the caret.  We use downstream() so that pos
   // will be in the first node that we need to move (there are a few exceptions
