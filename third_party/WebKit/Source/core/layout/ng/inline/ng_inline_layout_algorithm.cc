@@ -175,6 +175,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
           text_builder.ToTextFragment(item_result.item_index,
                                       item_result.start_offset,
                                       item_result.end_offset);
+      text_fragment->UpdateVisualRect();
       line_box.AddChild(std::move(text_fragment), {position, box->text_top});
     } else if (item.Type() == NGInlineItem::kOpenTag) {
       box = box_states_.OnOpenTag(item, item_result, &line_box, position);
@@ -265,7 +266,9 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
                  &offset.inline_offset, inline_size, available_width);
 
   line_box.SetInlineSize(inline_size);
-  container_builder_.AddChild(line_box.ToLineBoxFragment(), offset);
+  RefPtr<NGPhysicalLineBoxFragment> fragment = line_box.ToLineBoxFragment();
+  fragment->UpdateVisualRect();
+  container_builder_.AddChild(std::move(fragment), offset);
 
   max_inline_size_ = std::max(max_inline_size_, inline_size);
   content_size_ = ComputeContentSize(*line_info, line_bottom);

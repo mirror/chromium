@@ -35,6 +35,8 @@ class CORE_EXPORT NGPhysicalBoxFragment final : public NGPhysicalFragment {
 
   const NGBaseline* Baseline(const NGBaselineRequest&) const;
 
+  void UpdateVisualRect() override;
+
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
 
  private:

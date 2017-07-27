@@ -80,6 +80,10 @@ RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
   return nullptr;
 }
 
+void NGPhysicalFragment::UpdateVisualRect() {
+  SetVisualRect({LayoutPoint(), LayoutSize(Size().width, Size().height)});
+}
+
 String NGPhysicalFragment::ToString() const {
   return String::Format("Type: '%d' Size: '%s' Offset: '%s' Placed: '%d'",
                         Type(), Size().ToString().Ascii().data(),

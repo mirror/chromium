@@ -26,4 +26,15 @@ LayoutUnit NGPhysicalLineBoxFragment::BaselinePosition(FontBaseline) const {
   return metrics_.ascent;
 }
 
+void NGPhysicalLineBoxFragment::UpdateVisualRect() {
+  // Make a common class with NGPhysicalBoxFragment and share the code?
+  LayoutRect visual_rect;
+  for (const auto& child : children_) {
+    LayoutRect child_visual_rect = child->VisualRect();
+    child_visual_rect.Move(child->Offset().left, child->Offset().top);
+    visual_rect.Unite(child_visual_rect);
+  }
+  SetVisualRect(visual_rect);
+}
+
 }  // namespace blink

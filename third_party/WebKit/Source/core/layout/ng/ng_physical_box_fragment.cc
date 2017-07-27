@@ -37,6 +37,18 @@ const NGBaseline* NGPhysicalBoxFragment::Baseline(
   return nullptr;
 }
 
+void NGPhysicalBoxFragment::UpdateVisualRect() {
+  // Make a common class with NGPhysicalLineBoxFragment and share the code?
+  LayoutRect visual_rect;
+  for (const auto& child : children_) {
+    LayoutRect child_visual_rect = child->VisualRect();
+    child_visual_rect.Move(child->Offset().left, child->Offset().top);
+    visual_rect.Unite(child_visual_rect);
+  }
+  // TODO(kojii): Add its own visual overflow (e.g., box-shadow)
+  SetVisualRect(visual_rect);
+}
+
 RefPtr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset() const {
   Vector<RefPtr<NGPhysicalFragment>> children_copy(children_);
   Vector<NGBaseline> baselines_copy(baselines_);

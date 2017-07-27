@@ -72,6 +72,7 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
   // The character start/end index of a range shape result.
   unsigned StartIndexForResult() const;
   unsigned EndIndexForResult() const;
+  const SimpleFontData* PrimaryFont() const { return primary_font_.Get(); }
   void FallbackFonts(HashSet<const SimpleFontData*>*) const;
   TextDirection Direction() const {
     return static_cast<TextDirection>(direction_);

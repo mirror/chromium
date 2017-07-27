@@ -36,6 +36,9 @@ class CORE_EXPORT NGPhysicalLineBoxFragment final : public NGPhysicalFragment {
   // Compute baseline for the specified baseline type.
   LayoutUnit BaselinePosition(FontBaseline) const;
 
+  // Update visual rect for this fragment.
+  void UpdateVisualRect() override;
+
  private:
   Vector<RefPtr<NGPhysicalFragment>> children_;
 

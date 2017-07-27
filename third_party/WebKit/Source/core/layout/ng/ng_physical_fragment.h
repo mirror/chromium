@@ -12,6 +12,7 @@
 #include "core/layout/ng/geometry/ng_physical_size.h"
 #include "core/layout/ng/ng_break_token.h"
 #include "platform/LayoutUnit.h"
+#include "platform/geometry/LayoutRect.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
@@ -73,6 +74,13 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
   // with LegacyLayout.
   LayoutObject* GetLayoutObject() const { return layout_object_; }
 
+  const LayoutRect& VisualRect() const { return visual_rect_; }
+
+  // Update visual rect for this fragment.
+  // This is called after layout, and when transform changes, which changes
+  // visual overflow due to font hinting.
+  virtual void UpdateVisualRect();
+
   // Should only be used by the parent fragment's layout.
   void SetOffset(NGPhysicalOffset offset) {
     DCHECK(!is_placed_);
@@ -97,10 +105,13 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
                      NGFragmentType type,
                      RefPtr<NGBreakToken> break_token = nullptr);
 
+  void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
+
   LayoutObject* layout_object_;
   NGPhysicalSize size_;
   NGPhysicalOffset offset_;
   RefPtr<NGBreakToken> break_token_;
+  LayoutRect visual_rect_;
 
   unsigned type_ : 2;  // NGFragmentType
   unsigned is_placed_ : 1;

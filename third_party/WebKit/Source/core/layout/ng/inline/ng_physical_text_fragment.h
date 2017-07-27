@@ -68,6 +68,12 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
   bool IsHorizontal() const {
     return LineOrientation() == NGLineOrientation::kHorizontal;
   }
+  FontBaseline BaselineType() const {
+    return IsHorizontal() ? kAlphabeticBaseline : kIdeographicBaseline;
+  }
+
+  // Update visual rect for this fragment.
+  void UpdateVisualRect() override;
 
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const {
     return AdoptRef(new NGPhysicalTextFragment(
