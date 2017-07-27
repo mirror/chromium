@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e5ba347_3c194557",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T03:50:53Z",
+      "side": 1,
+      "message": "nit: commit message goes over the 72 character width",
+      "revId": "02138103537d94d99bd774d2cb0c786eebbdd231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5284604_6047b82b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyLegacyBreakUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T03:50:53Z",
+      "side": 1,
+      "message": "I think this should be called Consume instead of Get",
+      "revId": "02138103537d94d99bd774d2cb0c786eebbdd231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d55179_85a204d7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyLegacyBreakUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T03:50:53Z",
+      "side": 1,
+      "message": "why not return the CSSValue and return CSSValueInvalid in the failure case? (this comment applies to all the methods in this file)",
+      "revId": "02138103537d94d99bd774d2cb0c786eebbdd231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8929ae3_00c9f852",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIPageBreakAfter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T03:50:53Z",
+      "side": 1,
+      "message": "I think that the name of this bool should remain even though it is not used because it is not clear what it is for otherwise",
+      "revId": "02138103537d94d99bd774d2cb0c786eebbdd231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

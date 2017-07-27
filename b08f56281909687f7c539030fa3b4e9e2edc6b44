@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef3c4f16_5b31365d",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-27T03:50:53Z",
+      "side": 0,
+      "message": ":/ I wonder why this was public",
+      "revId": "b08f56281909687f7c539030fa3b4e9e2edc6b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
