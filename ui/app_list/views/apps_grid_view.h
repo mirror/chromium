@@ -434,7 +434,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Gets height on top of the all apps tiles. For the first page, that includes
   // suggested apps indicator, suggested apps tiles, all apps indicator
   // views; For the non-first pages, that include all apps indicator view only.
-  int GetHeightOnTopOfAllAppsTiles() const;
+  int GetHeightOnTopOfAllAppsTiles(int page) const;
 
   // Gets the bounds of the tile located at |slot| on the current page.
   gfx::Rect GetExpectedTileBounds(int slot) const;
