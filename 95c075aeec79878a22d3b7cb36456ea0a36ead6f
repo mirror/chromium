@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5d463e6_d58a307e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resources/chromium/webusb-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-07-27T23:06:21Z",
+      "side": 1,
+      "message": "I\u0027m skeptical of defining a class as a closure. Can you define it at module scope and have its constructor take |deviceFilters| and |resolve|?",
+      "range": {
+        "startLine": 378,
+        "startChar": 6,
+        "endLine": 378,
+        "endChar": 33
+      },
+      "revId": "95c075aeec79878a22d3b7cb36456ea0a36ead6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f659cd_2725c57a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resources/chromium/webusb-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-07-27T23:06:21Z",
+      "side": 1,
+      "message": "Comment if not-returning this Promise is intentional.",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 18
+      },
+      "revId": "95c075aeec79878a22d3b7cb36456ea0a36ead6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24448ccb_0ca55ccd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resources/chromium/webusb-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-07-27T23:06:21Z",
+      "side": 1,
+      "message": "Nit:\n\n let result \u003d null;\n if (device) {\n   result \u003d fakeDeviceInitToDeviceInfo(device.guid, device.info)\n }\n resolve({result});",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 25
+      },
+      "revId": "95c075aeec79878a22d3b7cb36456ea0a36ead6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42dbc5c6_226ece52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/usb-manual.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-07-27T23:06:21Z",
+      "side": 1,
+      "message": "An API that needs everyone to remember to include this line isn\u0027t great, although there may not be any good alternatives. I\u0027d rather use addEventListener(...{once:true}) from https://dom.spec.whatwg.org/#interface-eventtarget if possible.",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 53
+      },
+      "revId": "95c075aeec79878a22d3b7cb36456ea0a36ead6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d52093_5ef9714c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/usb-manual.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-07-27T23:06:21Z",
+      "side": 1,
+      "message": "I prefer braces around `for` bodies. Does our style guide say not to?",
+      "range": {
+        "startLine": 93,
+        "startChar": 50,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "95c075aeec79878a22d3b7cb36456ea0a36ead6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
