@@ -46,14 +46,25 @@ AlertCoordinator* ErrorCoordinatorNoItem(NSError* error,
       error.code == kCFURLErrorCannotConnectToHost) {
     errorMessage =
         l10n_util::GetNSString(IDS_IOS_SYNC_ERROR_INTERNET_DISCONNECTED);
-  } else if ([error.userInfo objectForKey:NSLocalizedDescriptionKey]) {
-    errorMessage = [NSString stringWithFormat:@"%@ (%@ %" PRIdNS ")",
-                                              error.localizedDescription,
-                                              error.domain, error.code];
   } else {
-    // If the error has no NSLocalizedDescriptionKey in its user info, then
-    // |error.localizedDescription| contains the error domain and code.
-    errorMessage = error.localizedDescription;
+    NSMutableString* buildErrorMessage = [[NSMutableString alloc] init];
+    if (error.userInfo[NSLocalizedDescriptionKey]) {
+      [buildErrorMessage appendString:error.localizedDescription];
+    } else {
+      [buildErrorMessage appendString:@"--"];
+    }
+    [buildErrorMessage appendString:@" ("];
+    NSError* errorCursor = error;
+    for (int errorDepth = 0; errorDepth < 3 && errorCursor; ++errorDepth) {
+      if (errorDepth > 0) {
+        [buildErrorMessage appendString:@", "];
+      }
+      [buildErrorMessage
+          appendFormat:@"%@: %" PRIdNS, error.domain, error.code];
+      errorCursor = errorCursor.userInfo[NSUnderlyingErrorKey];
+    }
+    [buildErrorMessage appendString:@")"];
+    errorMessage = [buildErrorMessage copy];
   }
   AlertCoordinator* alertCoordinator =
       [[AlertCoordinator alloc] initWithBaseViewController:viewController
