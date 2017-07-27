@@ -33,6 +33,14 @@ class GURL;
 // made current.
 - (BOOL)shouldOpenNTPTabOnActivationOfTabModel:(TabModel*)tabModel;
 
+// Returns a block that can be executed on the new tab to trigger one of the
+// commands. This block can be passed to
+// |dismissModalsAndOpenSelectedTabInMode:withURL:transition:completion:|.
+// This block must only be executed if new tab opened on NTP.
+- (ProceduralBlock)completionBlockForTrigerringVoiceSearch:(BOOL)voiceSearch
+                                              QRCodeSearch:(BOOL)QRCodeSearch
+                                              omniboxFocus:(BOOL)omniboxFocus;
+
 @end
 
 #endif  // IOS_CHROME_APP_APPLICATION_DELEGATE_TAB_OPENING_H_

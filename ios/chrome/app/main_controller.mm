@@ -216,11 +216,6 @@ void RegisterComponentsForUpdate() {
   GetApplicationContext()->GetCRLSetFetcher()->StartInitialLoad(cus, path);
 }
 
-// Returns YES if |url| matches chrome://newtab.
-BOOL IsURLNtp(const GURL& url) {
-  return UrlHasChromeScheme(url) && url.host() == kChromeUINewTabHost;
-}
-
 // Used to update the current BVC mode if a new tab is added while the stack
 // view is being dimissed.  This is different than ApplicationMode in that it
 // can be set to |NONE| when not in use.
@@ -2169,6 +2164,31 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   return newTab;
 }
 
+- (ProceduralBlock)completionBlockForTrigerringVoiceSearch:(BOOL)voiceSearch
+                                              QRCodeSearch:(BOOL)QRCodeSearch
+                                              omniboxFocus:(BOOL)omniboxFocus {
+  ProceduralBlock tabOpenedCompletion;
+  if (voiceSearch) {
+    DCHECK(!QRCodeSearch && !omniboxFocus);
+    tabOpenedCompletion = ^{
+      [self startVoiceSearch];
+    };
+  }
+  if (QRCodeSearch) {
+    DCHECK(!voiceSearch && !omniboxFocus);
+    tabOpenedCompletion = ^{
+      [self.currentBVC showQRScanner];
+    };
+  }
+  if (omniboxFocus) {
+    DCHECK(!voiceSearch && !QRCodeSearch);
+    tabOpenedCompletion = ^{
+      [self.currentBVC focusOmnibox];
+    };
+  }
+  return tabOpenedCompletion;
+}
+
 - (Tab*)openSelectedTabInMode:(ApplicationMode)targetMode
                       withURL:(const GURL&)url
                    transition:(ui::PageTransition)transition {
@@ -2176,33 +2196,15 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       targetMode == ApplicationMode::NORMAL ? self.mainBVC : self.otrBVC;
   NSUInteger tabIndex = NSNotFound;
 
-  // Commands are only allowed on NTP and there must be at most one command.
-  DCHECK_GE(
-      1,
-      (IsURLNtp(url) ? 0 : 1) +  // Not NTP URL
-          ([_startupParameters launchVoiceSearch] ? 1
-                                                  : 0) +  // Open Voice Search
-          ([_startupParameters launchQRScanner] ? 1
-                                                : 0) +  // Launch QR Code search
-          ([_startupParameters launchFocusOmnibox] ? 1 : 0)  // Focus Omnibox
-      );
-
-  ProceduralBlock tabOpenedCompletion;
-  if ([_startupParameters launchVoiceSearch]) {
-    tabOpenedCompletion = ^{
-      [self startVoiceSearch];
-    };
-  }
-  if ([_startupParameters launchQRScanner]) {
-    tabOpenedCompletion = ^{
-      [targetBVC showQRScanner];
-    };
-  }
-  if ([_startupParameters launchFocusOmnibox]) {
-    tabOpenedCompletion = ^{
-      [targetBVC focusOmnibox];
-    };
-  }
+  ProceduralBlock tabOpenedCompletion =
+      [self completionBlockForTrigerringVoiceSearch:[_startupParameters
+                                                        launchVoiceSearch]
+                                       QRCodeSearch:[_startupParameters
+                                                        launchQRScanner]
+                                       omniboxFocus:[_startupParameters
+                                                        launchFocusOmnibox]];
+  // Commands are only allowed on NTP.
+  DCHECK(IsURLNtp(url) || !tabOpenedCompletion);
 
   Tab* tab = nil;
   if (_tabSwitcherIsActive) {
