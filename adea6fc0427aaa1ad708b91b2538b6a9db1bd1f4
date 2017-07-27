@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da64e611_8476a91f",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5662,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-27T22:23:18Z",
+      "side": 1,
+      "message": "I think we should guard this with the if on line 5616: if dispatching DOMContentLoaded detaches the frame, then this will crash. However, if Document::frame(), then we should be able to assume frame-\u003eClient() is non null.",
+      "revId": "adea6fc0427aaa1ad708b91b2538b6a9db1bd1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
