@@ -85,6 +85,9 @@ class ProfileManager : public content::NotificationObserver,
   // platforms, this returns the default profile.
   static Profile* CreateInitialProfile();
 
+  // Creates the ProfileShortcutManager if needed.
+  virtual void InitShortcutManager();
+
   // Returns a profile for a specific profile directory within the user data
   // dir. This will return an existing profile it had already been created,
   // otherwise it will create and manage it.
@@ -452,6 +455,7 @@ class ProfileManagerWithoutInit : public ProfileManager {
   explicit ProfileManagerWithoutInit(const base::FilePath& user_data_dir);
 
  protected:
+  void InitShortcutManager() override {}
   void DoFinalInitForServices(Profile*, bool) override {}
   void DoFinalInitLogging(Profile*) override {}
 };

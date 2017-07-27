@@ -544,6 +544,9 @@ void TestingProfile::FinishInit() {
 }
 
 TestingProfile::~TestingProfile() {
+  // Clear the TaskScheduler queue.
+  content::RunAllBlockingPoolTasksUntilIdle();
+
   // Revert to non-incognito mode before shutdown.
   force_incognito_ = false;
 
