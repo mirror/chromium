@@ -16,6 +16,24 @@
       "revId": "56bc198c0c5ff7d1e36807097915f910307027ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77df5eea_beda437a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-27T18:55:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2013f45b_b6bedeff",
+      "revId": "56bc198c0c5ff7d1e36807097915f910307027ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
