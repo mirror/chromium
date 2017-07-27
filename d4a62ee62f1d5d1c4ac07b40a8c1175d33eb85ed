@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ef9a2b_d1f3a50a",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-27T00:01:13Z",
+      "side": 1,
+      "message": "This is where you call metrics::DesktopSessionDurationTracker::Get()",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "d4a62ee62f1d5d1c4ac07b40a8c1175d33eb85ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c360b7_c876bdae",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-27T00:01:13Z",
+      "side": 1,
+      "message": "And there is where you remove metrics::DesktopSessionDurationTracker::Get()",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 43
+      },
+      "revId": "d4a62ee62f1d5d1c4ac07b40a8c1175d33eb85ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaeccb8c_2bc6043c",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-27T00:01:13Z",
+      "side": 1,
+      "message": "Remove this line. NewTabTracker isn\u0027t a DesktopSessionDurationTracker and DesktopSessionDurationTracker doesn\u0027t provide any overrides.",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 68
+      },
+      "revId": "d4a62ee62f1d5d1c4ac07b40a8c1175d33eb85ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8965dfe_0731f681",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-27T00:01:13Z",
+      "side": 1,
+      "message": "The source of this should be the DesktopSessionDurationTracker.",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "d4a62ee62f1d5d1c4ac07b40a8c1175d33eb85ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
