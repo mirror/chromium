@@ -1,0 +1,394 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c3acc5_c88fc70e",
+        "filename": "chrome/installer/zucchini/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Add image_index_unittests.cc",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c872eb3_3c903541",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Are these needed?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695bbdfd_983ca484",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Should be explicit for readability: base::Optional\u003cReference\u003e",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787860b6_29fbf282",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "// Check for overlap with existing reference. If found, then invalidate.\n\nShould be print a warning when this happens? Or maybe the caller does it?",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa573c5_7b056e1a",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "DCHECK_LE(upper, size());\n\nCan |type_tags_[upper] !\u003d type| be used for quick rejection? Or if FindRefernce() is only used by IsToken(), then it should be private, and with comment stating that checking type_tags_ is redundant.",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fae72e_ac34b603",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "git cl format",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 80
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a1ad2f_d85e69ae",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Omit {}",
+      "range": {
+        "startLine": 66,
+        "startChar": 26,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe53534_4ee54422",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a1917c_aea4c292",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "|raw_image[location]|",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53db4e1_338893ae",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "const ConstBufferView ?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 17
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f303bdf8_0cdcdb67",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "... for each byte in |raw_image_|.",
+      "range": {
+        "startLine": 89,
+        "startChar": 52,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37e4b98_760d7d2b",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Maybe these can be std::map\u003cTypeTag, ...\u003e? Though in this case TypeCount and PoolCount need to be smarter (return 0 if empty, else return rbegin()-\u003efirst + 1).",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01904b73_ef66248e",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "std::iota()?",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0647b36b_07414169",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "git cl format",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7288ee3a_0609edff",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Can omit {}, same below.",
+      "range": {
+        "startLine": 111,
+        "startChar": 53,
+        "endLine": 111,
+        "endChar": 54
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a489a1_b2283a79",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Weird \"|\".",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 6
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876072dd_cbb62b0e",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "How about extract ReferenceReader from disassembler.h into reference_reader.h, then move TestReferenceReader there, and all files that depend on ReferenceReader won\u0027t need to include disassembler.h?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b9eca5_1d04a6e8",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-27T22:05:41Z",
+      "side": 1,
+      "message": "Override destructor?",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
