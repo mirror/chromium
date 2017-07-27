@@ -49,6 +49,7 @@
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h"
 #include "components/ntp_snippets/remote/remote_suggestions_scheduler.h"
 #include "components/ntp_snippets/remote/test_utils.h"
+#include "components/ntp_snippets/time_serialization.h"
 #include "components/ntp_snippets/user_classifier.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
@@ -64,6 +65,10 @@
 
 using image_fetcher::ImageFetcher;
 using image_fetcher::ImageFetcherDelegate;
+using ntp_snippets::test::FetchedCategoryBuilder;
+using ntp_snippets::test::GetDefaultSuggestionCreationTime;
+using ntp_snippets::test::GetDefaultSuggestionExpirationTime;
+using ntp_snippets::test::RemoteSuggestionBuilder;
 using testing::_;
 using testing::Contains;
 using testing::CreateFunctor;
@@ -101,8 +106,6 @@ ACTION_P(MoveSecondArgumentPointeeTo, ptr) {
 
 const int kMaxExcludedDismissedIds = 100;
 
-const base::Time::Exploded kDefaultCreationTime = {2015, 11, 4, 25, 13, 46, 45};
-
 const char kSuggestionUrl[] = "http://localhost/foobar";
 const char kSuggestionTitle[] = "Title";
 const char kSuggestionText[] = "Suggestion";
@@ -120,16 +123,6 @@ const int kMaxAdditionalPrefetchedSuggestions = 7;
 const base::TimeDelta kMaxAgeForAdditionalPrefetchedSuggestion =
     base::TimeDelta::FromHours(48);
 
-base::Time GetDefaultCreationTime() {
-  base::Time out_time;
-  EXPECT_TRUE(base::Time::FromUTCExploded(kDefaultCreationTime, &out_time));
-  return out_time;
-}
-
-base::Time GetDefaultExpirationTime() {
-  return base::Time::Now() + base::TimeDelta::FromHours(1);
-}
-
 // TODO(vitaliii): Remove this and use RemoteSuggestionBuilder instead.
 std::unique_ptr<RemoteSuggestion> CreateTestRemoteSuggestion(
     const std::string& url) {
@@ -138,8 +131,10 @@ std::unique_ptr<RemoteSuggestion> CreateTestRemoteSuggestion(
   snippet_proto.set_title("title");
   snippet_proto.set_snippet("snippet");
   snippet_proto.set_salient_image_url(url + "p.jpg");
-  snippet_proto.set_publish_date(GetDefaultCreationTime().ToTimeT());
-  snippet_proto.set_expiry_date(GetDefaultExpirationTime().ToTimeT());
+  snippet_proto.set_publish_date(
+      SerializeTime(GetDefaultSuggestionCreationTime()));
+  snippet_proto.set_expiry_date(
+      SerializeTime(GetDefaultSuggestionExpirationTime()));
   snippet_proto.set_remote_category_id(1);
   auto* source = snippet_proto.add_sources();
   source->set_url(url);
@@ -147,177 +142,6 @@ std::unique_ptr<RemoteSuggestion> CreateTestRemoteSuggestion(
   source->set_amp_url(url + "amp");
   return RemoteSuggestion::CreateFromProto(snippet_proto);
 }
-
-class RemoteSuggestionBuilder {
- public:
-  RemoteSuggestionBuilder() = default;
-
-  RemoteSuggestionBuilder& AddId(const std::string& id) {
-    if (!ids_) {
-      ids_ = std::vector<std::string>();
-    }
-    ids_->push_back(id);
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetTitle(const std::string& title) {
-    title_ = title;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetSnippet(const std::string& snippet) {
-    snippet_ = snippet;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetImageUrl(const std::string& image_url) {
-    salient_image_url_ = image_url;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetPublishDate(const base::Time& publish_date) {
-    publish_date_ = publish_date;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetExpiryDate(const base::Time& expiry_date) {
-    expiry_date_ = expiry_date;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetScore(double score) {
-    score_ = score;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetIsDismissed(bool is_dismissed) {
-    is_dismissed_ = is_dismissed;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetRemoteCategoryId(int remote_category_id) {
-    remote_category_id_ = remote_category_id;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetUrl(const std::string& url) {
-    url_ = url;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetPublisher(const std::string& publisher) {
-    publisher_name_ = publisher;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetAmpUrl(const std::string& amp_url) {
-    amp_url_ = amp_url;
-    return *this;
-  }
-  RemoteSuggestionBuilder& SetFetchDate(const base::Time& fetch_date) {
-    fetch_date_ = fetch_date;
-    return *this;
-  }
-
-  std::unique_ptr<RemoteSuggestion> Build() const {
-    SnippetProto proto;
-    proto.set_title(title_.value_or("Title"));
-    proto.set_snippet(snippet_.value_or("Snippet"));
-    proto.set_salient_image_url(
-        salient_image_url_.value_or("http://image_url.com/"));
-    proto.set_publish_date(
-        publish_date_.value_or(GetDefaultCreationTime()).ToInternalValue());
-    proto.set_expiry_date(
-        expiry_date_.value_or(GetDefaultExpirationTime()).ToInternalValue());
-    proto.set_score(score_.value_or(1));
-    proto.set_dismissed(is_dismissed_.value_or(false));
-    proto.set_remote_category_id(remote_category_id_.value_or(1));
-    auto* source = proto.add_sources();
-    source->set_url(url_.value_or("http://url.com/"));
-    source->set_publisher_name(publisher_name_.value_or("Publisher"));
-    source->set_amp_url(amp_url_.value_or("http://amp_url.com/"));
-    proto.set_fetch_date(
-        fetch_date_.value_or(base::Time::Now()).ToInternalValue());
-    for (const auto& id :
-         ids_.value_or(std::vector<std::string>{source->url()})) {
-      proto.add_ids(id);
-    }
-    return RemoteSuggestion::CreateFromProto(proto);
-  }
-
- private:
-  base::Optional<std::vector<std::string>> ids_;
-  base::Optional<std::string> title_;
-  base::Optional<std::string> snippet_;
-  base::Optional<std::string> salient_image_url_;
-  base::Optional<base::Time> publish_date_;
-  base::Optional<base::Time> expiry_date_;
-  base::Optional<double> score_;
-  base::Optional<bool> is_dismissed_;
-  base::Optional<int> remote_category_id_;
-  base::Optional<std::string> url_;
-  base::Optional<std::string> publisher_name_;
-  base::Optional<std::string> amp_url_;
-  base::Optional<base::Time> fetch_date_;
-};
-
-class FetchedCategoryBuilder {
- public:
-  FetchedCategoryBuilder() = default;
-
-  FetchedCategoryBuilder& SetCategory(Category category) {
-    category_ = category;
-    return *this;
-  }
-  FetchedCategoryBuilder& SetTitle(const std::string& title) {
-    title_ = base::UTF8ToUTF16(title);
-    return *this;
-  }
-  FetchedCategoryBuilder& SetCardLayout(
-      ContentSuggestionsCardLayout card_layout) {
-    card_layout_ = card_layout;
-    return *this;
-  }
-  FetchedCategoryBuilder& SetAdditionalAction(
-      ContentSuggestionsAdditionalAction additional_action) {
-    additional_action_ = additional_action;
-    return *this;
-  }
-  FetchedCategoryBuilder& SetShowIfEmpty(bool show_if_empty) {
-    show_if_empty_ = show_if_empty;
-    return *this;
-  }
-  FetchedCategoryBuilder& SetNoSuggestionsMessage(
-      const std::string& no_suggestions_message) {
-    no_suggestions_message_ = base::UTF8ToUTF16(no_suggestions_message);
-    return *this;
-  }
-  FetchedCategoryBuilder& AddSuggestionViaBuilder(
-      const RemoteSuggestionBuilder& builder) {
-    if (!suggestion_builders_) {
-      suggestion_builders_ = std::vector<RemoteSuggestionBuilder>();
-    }
-    suggestion_builders_->push_back(builder);
-    return *this;
-  }
-
-  FetchedCategory Build() const {
-    FetchedCategory result = FetchedCategory(
-        category_.value_or(Category::FromRemoteCategory(1)),
-        CategoryInfo(
-            title_.value_or(base::UTF8ToUTF16("Category title")),
-            card_layout_.value_or(ContentSuggestionsCardLayout::FULL_CARD),
-            additional_action_.value_or(
-                ContentSuggestionsAdditionalAction::FETCH),
-            show_if_empty_.value_or(false),
-            no_suggestions_message_.value_or(
-                base::UTF8ToUTF16("No suggestions message"))));
-
-    if (suggestion_builders_) {
-      for (const auto& suggestion_builder : *suggestion_builders_)
-        result.suggestions.push_back(suggestion_builder.Build());
-    }
-    return result;
-  }
-
- private:
-  base::Optional<Category> category_;
-  base::Optional<base::string16> title_;
-  base::Optional<ContentSuggestionsCardLayout> card_layout_;
-  base::Optional<ContentSuggestionsAdditionalAction> additional_action_;
-  base::Optional<bool> show_if_empty_;
-  base::Optional<base::string16> no_suggestions_message_;
-  base::Optional<std::vector<RemoteSuggestionBuilder>> suggestion_builders_;
-};
 
 using ServeImageCallback = base::Callback<void(
     const std::string&,
@@ -666,12 +490,13 @@ TEST_F(RemoteSuggestionsProviderImplTest, Full) {
   fetched_categories.push_back(
       FetchedCategoryBuilder()
           .SetCategory(articles_category())
-          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
-                                       .AddId(kSuggestionUrl)
-                                       .SetTitle(kSuggestionTitle)
-                                       .SetSnippet(kSuggestionText)
-                                       .SetPublishDate(GetDefaultCreationTime())
-                                       .SetPublisher(kSuggestionPublisherName))
+          .AddSuggestionViaBuilder(
+              RemoteSuggestionBuilder()
+                  .AddId(kSuggestionUrl)
+                  .SetTitle(kSuggestionTitle)
+                  .SetSnippet(kSuggestionText)
+                  .SetPublishDate(GetDefaultSuggestionCreationTime())
+                  .SetPublisher(kSuggestionPublisherName))
           .Build());
   FetchTheseSuggestions(provider.get(), /*interactive_request=*/true,
                         Status(StatusCode::SUCCESS, "message"),
@@ -688,7 +513,7 @@ TEST_F(RemoteSuggestionsProviderImplTest, Full) {
   EXPECT_EQ(MakeArticleID(kSuggestionUrl), suggestion.id());
   EXPECT_EQ(kSuggestionTitle, base::UTF16ToUTF8(suggestion.title()));
   EXPECT_EQ(kSuggestionText, base::UTF16ToUTF8(suggestion.snippet_text()));
-  EXPECT_EQ(GetDefaultCreationTime(), suggestion.publish_date());
+  EXPECT_EQ(GetDefaultSuggestionCreationTime(), suggestion.publish_date());
   EXPECT_EQ(kSuggestionPublisherName,
             base::UTF16ToUTF8(suggestion.publisher_name()));
 }
@@ -746,7 +571,7 @@ TEST_F(RemoteSuggestionsProviderImplTest, MultipleCategories) {
                   .AddId(base::StringPrintf("%s/%d", kSuggestionUrl, 0))
                   .SetTitle(kSuggestionTitle)
                   .SetSnippet(kSuggestionText)
-                  .SetPublishDate(GetDefaultCreationTime())
+                  .SetPublishDate(GetDefaultSuggestionCreationTime())
                   .SetPublisher(kSuggestionPublisherName))
           .Build());
   fetched_categories.push_back(
@@ -757,7 +582,7 @@ TEST_F(RemoteSuggestionsProviderImplTest, MultipleCategories) {
                   .AddId(base::StringPrintf("%s/%d", kSuggestionUrl, 1))
                   .SetTitle(kSuggestionTitle)
                   .SetSnippet(kSuggestionText)
-                  .SetPublishDate(GetDefaultCreationTime())
+                  .SetPublishDate(GetDefaultSuggestionCreationTime())
                   .SetPublisher(kSuggestionPublisherName))
           .Build());
   FetchTheseSuggestions(provider.get(), /*interactive_request=*/true,
@@ -786,7 +611,7 @@ TEST_F(RemoteSuggestionsProviderImplTest, MultipleCategories) {
               suggestion.id());
     EXPECT_EQ(kSuggestionTitle, base::UTF16ToUTF8(suggestion.title()));
     EXPECT_EQ(kSuggestionText, base::UTF16ToUTF8(suggestion.snippet_text()));
-    EXPECT_EQ(GetDefaultCreationTime(), suggestion.publish_date());
+    EXPECT_EQ(GetDefaultSuggestionCreationTime(), suggestion.publish_date());
     EXPECT_EQ(kSuggestionPublisherName,
               base::UTF16ToUTF8(suggestion.publisher_name()));
   }
@@ -797,7 +622,7 @@ TEST_F(RemoteSuggestionsProviderImplTest, MultipleCategories) {
     EXPECT_EQ(MakeOtherID(std::string(kSuggestionUrl) + "/1"), suggestion.id());
     EXPECT_EQ(kSuggestionTitle, base::UTF16ToUTF8(suggestion.title()));
     EXPECT_EQ(kSuggestionText, base::UTF16ToUTF8(suggestion.snippet_text()));
-    EXPECT_EQ(GetDefaultCreationTime(), suggestion.publish_date());
+    EXPECT_EQ(GetDefaultSuggestionCreationTime(), suggestion.publish_date());
     EXPECT_EQ(kSuggestionPublisherName,
               base::UTF16ToUTF8(suggestion.publisher_name()));
   }
@@ -2196,7 +2021,8 @@ TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenHistoryCleared) {
 
   // The scheduler should be notified of clearing the history.
   EXPECT_CALL(*scheduler(), OnHistoryCleared());
-  provider->ClearHistory(GetDefaultCreationTime(), GetDefaultExpirationTime(),
+  provider->ClearHistory(GetDefaultSuggestionCreationTime(),
+                         GetDefaultSuggestionExpirationTime(),
                          base::Callback<bool(const GURL& url)>());
 }
 
@@ -2801,7 +2627,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
   base::SimpleTestClock* provider_clock = wrapped_provider_clock.get();
   provider->SetClockForTesting(std::move(wrapped_provider_clock));
 
-  provider_clock->SetNow(GetDefaultCreationTime() +
+  provider_clock->SetNow(GetDefaultSuggestionCreationTime() +
                          base::TimeDelta::FromHours(10));
 
   WaitForSuggestionsProviderInitialization(provider.get());
@@ -2815,7 +2641,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
                   .SetUrl("http://prefetched.com")
                   .SetAmpUrl("http://amp.prefetched.com")
                   .SetFetchDate(provider_clock->Now())
-                  .SetPublishDate(GetDefaultCreationTime()))
+                  .SetPublishDate(GetDefaultSuggestionCreationTime()))
           .Build());
   EXPECT_CALL(*mock_tracker, IsInitialized()).WillRepeatedly(Return(true));
   FetchTheseSuggestions(provider.get(), /*interactive_request=*/true,
@@ -2837,7 +2663,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
                   .SetUrl("http://other.com")
                   .SetAmpUrl("http://amp.other.com")
                   .SetFetchDate(provider_clock->Now())
-                  .SetPublishDate(GetDefaultCreationTime()))
+                  .SetPublishDate(GetDefaultSuggestionCreationTime()))
           .Build());
   EXPECT_CALL(*mock_tracker, IsInitialized()).WillRepeatedly(Return(true));
   EXPECT_CALL(*mock_tracker,
@@ -2862,7 +2688,7 @@ TEST_F(RemoteSuggestionsProviderImplTest,
                   .SetUrl("http://other.com")
                   .SetAmpUrl("http://amp.other.com")
                   .SetFetchDate(provider_clock->Now())
-                  .SetPublishDate(GetDefaultCreationTime()))
+                  .SetPublishDate(GetDefaultSuggestionCreationTime()))
           .Build());
   EXPECT_CALL(*mock_tracker, IsInitialized()).WillRepeatedly(Return(true));
   EXPECT_CALL(*mock_tracker,
