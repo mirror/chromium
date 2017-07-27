@@ -16,6 +16,24 @@
       "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967eff84_3c8d6338",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-27T02:21:59Z",
+      "side": 1,
+      "message": "Can also happen if print preview requests privet printers but privet printing is not enabled. By default print preview tries to load all destination types whenever the user signs in (see https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination_store.js?l\u003d1158)",
+      "parentUuid": "8d43c4af_982903d1",
+      "revId": "a686b688f9ad0ffde0e545d9f5b63f921f7ce5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

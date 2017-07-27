@@ -488,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "94325ece_fc178b3b",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-27T02:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd8297f_0a1dd93a",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13082a0c_6a3b8a6d",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 12
@@ -605,6 +623,24 @@
       "side": 1,
       "message": "Just: privet_lister_timer_ \u003d base::MakeUnique\u003cbase::OneShotTimer\u003e();",
       "parentUuid": "d1e1c0fe_75978f5e",
+      "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9c897ee_6993fa83",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-27T02:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b24ee8_46d3067a",
       "revId": "f44f60c25985ceecfe4fa8b2eb908434777cfeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
