@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d907e93c_6d61e9fe",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "Think you can signal Chrome when this happens instead of using an arbitrary timeout? If you can\u0027t, can you mention what the consequences are of sending a message while it\u0027s being torn down?",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b39869a_4d885fe1",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1997,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "nit: Use the guard clause pattern:\n\n if (local_power_changes_.empty() || powered !\u003d local_power_changes_.front())\n   return;\n // rest",
+      "range": {
+        "startLine": 1996,
+        "startChar": 0,
+        "endLine": 1997,
+        "endChar": 48
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5356f7_7e6e1b5d",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2006,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "nit:\n\n std::queue\u003cbool\u003e compressed_power_change{current_change};",
+      "range": {
+        "startLine": 2006,
+        "startChar": 4,
+        "endLine": 2006,
+        "endChar": 49
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd7688b_ae0f8213",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "nit: declare it here instead of in L2001",
+      "range": {
+        "startLine": 2012,
+        "startChar": 4,
+        "endLine": 2012,
+        "endChar": 15
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ddb987_bacbdd4e",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2014,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "nit: More guard clause pattern:\n\n if (local_power_changes.empty())\n   return;\n // rest",
+      "range": {
+        "startLine": 2014,
+        "startChar": 4,
+        "endLine": 2014,
+        "endChar": 40
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f6b065_095583c9",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "the IntentHelperService",
+      "range": {
+        "startLine": 349,
+        "startChar": 28,
+        "endLine": 349,
+        "endChar": 33
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebbfd30_b1425089",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "const. Also mention that ArcBluetoothBridge owns IntentHelperObserver, so it will always outlive it.",
+      "range": {
+        "startLine": 361,
+        "startChar": 22,
+        "endLine": 361,
+        "endChar": 23
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2c7e49_fad73642",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-27T14:58:53Z",
+      "side": 1,
+      "message": "Initial",
+      "range": {
+        "startLine": 369,
+        "startChar": 11,
+        "endLine": 369,
+        "endChar": 15
+      },
+      "revId": "f29453f47c12972a35f828395096b5274f63ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
