@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+FAIL A device can be opened twice and have the same device ID assert_equals: expected "81eb6e42-93ea-4039-94df-3b39d69aa344" but got "3a27fb5d-5b2f-4b15-8afa-4710fe5ccfd2"
+FAIL A device can be opened twice with different resolutions assert_equals: expected "13cc79f9-769a-4f6a-97d0-7794306926d4" but got "cd75ae25-aa37-4c3a-b429-4220acd30104"
+Harness: the test ran to completion.
+
