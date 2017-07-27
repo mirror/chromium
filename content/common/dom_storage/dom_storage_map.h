@@ -9,6 +9,7 @@
 
 #include <map>
 
+#include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string16.h"
@@ -23,20 +24,25 @@ namespace content {
 class CONTENT_EXPORT DOMStorageMap
     : public base::RefCountedThreadSafe<DOMStorageMap> {
  public:
-  explicit DOMStorageMap(size_t quota);
+  explicit DOMStorageMap(size_t quota, bool only_keys);
+  DOMStorageMap(size_t quota);
 
   unsigned Length() const;
   base::NullableString16 Key(unsigned index);
-  base::NullableString16 GetItem(const base::string16& key) const;
+
+  // Modifiers when |only_keys| is true:
+  bool SetItem(const base::string16& key, const base::string16& value);
+  bool RemoveItem(const base::string16& key);
+
+  // Modifiers when |only_keys| is false:
   bool SetItem(const base::string16& key, const base::string16& value,
                base::NullableString16* old_value);
   bool RemoveItem(const base::string16& key, base::string16* old_value);
-
-  // Swaps this instances values_ with |map|.
+  base::NullableString16 GetItem(const base::string16& key) const;
+  // Takes the values from |map| to |values_| in this instances.
   // Note: to grandfather in pre-existing files that are overbudget,
   // this method does not do quota checking.
-  void SwapValues(DOMStorageValuesMap* map);
-
+  void TakeValuesFrom(DOMStorageValuesMap* map);
   // Writes a copy of the current set of values_ to the |map|.
   void ExtractValues(DOMStorageValuesMap* map) const { *map = values_; }
 
@@ -47,20 +53,31 @@ class CONTENT_EXPORT DOMStorageMap
   size_t bytes_used() const { return bytes_used_; }
   size_t quota() const { return quota_; }
   void set_quota(size_t quota) { quota_ = quota; }
+  bool has_only_keys() const { return has_only_keys_; }
 
-  static size_t CountBytes(const DOMStorageValuesMap& values);
+  static size_t CountBytes(const DOMStorageValuesMap& values,
+                           bool has_only_keys);
 
  private:
   friend class base::RefCountedThreadSafe<DOMStorageMap>;
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageMapParamTest, EnforcesQuota);
   ~DOMStorageMap();
 
+  bool SetItemInternal(const base::string16& key,
+                       const base::string16& value,
+                       base::NullableString16* old_value);
+  bool RemoveItemInternal(const base::string16& key, base::string16* old_value);
+
   void ResetKeyIterator();
+
+  size_t SizeofItem(const base::string16& key, const base::string16& value);
 
   DOMStorageValuesMap values_;
   DOMStorageValuesMap::const_iterator key_iterator_;
   unsigned last_key_index_;
   size_t bytes_used_;
   size_t quota_;
+  const bool has_only_keys_;
 };
 
 }  // namespace content
