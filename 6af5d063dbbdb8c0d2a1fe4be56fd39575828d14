@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26aba996_f67eb9ef",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-07-27T14:29:44Z",
+      "side": 1,
+      "message": "It appears that FreeType does this on purpose https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/6b41954e1845f6f3d898b27c77c602dbfb5d5544%5E%21/#F1 (though that was some time ago).\n\nWe don\u0027t have any customization to ftconfig.h, and it\u0027s unlikely that we will.",
+      "parentUuid": "fd6e7e4f_c47926e5",
+      "revId": "6af5d063dbbdb8c0d2a1fe4be56fd39575828d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bed5b02_ab25d779",
         "filename": "third_party/freetype/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T13:44:06Z",
       "side": 1,
       "message": "Is this necessary when \":freetype_config\" is already in public_configs?",
+      "revId": "6af5d063dbbdb8c0d2a1fe4be56fd39575828d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514168ee_7e563b89",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-07-27T14:29:44Z",
+      "side": 1,
+      "message": "Probably not, this is probably left over from experimenting while trying to figure out what was going on. (In fact, removing this after building with it, ninja says there\u0027s nothing to do after regenerating.)",
+      "parentUuid": "8bed5b02_ab25d779",
       "revId": "6af5d063dbbdb8c0d2a1fe4be56fd39575828d14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
