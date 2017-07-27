@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57723ddf_7a97476a",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-27T07:51:22Z",
+      "side": 1,
+      "message": "Fyi, IsEmpty covers IsNull, while maybe it\u0027s ok to have both...",
+      "revId": "223a554cae5d09e85f19080945373b88467d3bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
