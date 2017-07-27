@@ -19,8 +19,11 @@
 #include "content/browser/renderer_host/pepper/pepper_socket_utils.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/browser/site_instance.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/common/socket_permission_request.h"
 #include "net/base/address_family.h"
 #include "net/base/host_port_pair.h"
@@ -33,6 +36,8 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "ppapi/host/dispatch_host_message.h"
 #include "ppapi/host/error_conversion.h"
 #include "ppapi/host/ppapi_host.h"
@@ -79,7 +84,6 @@ PepperTCPSocketMessageFilter::PepperTCPSocketMessageFilter(
       sndbuf_size_(0),
       address_index_(0),
       socket_(new net::TCPSocket(NULL, NULL, net::NetLogSource())),
-      ssl_context_helper_(host->ssl_context_helper()),
       pending_accept_(false),
       pending_read_on_unthrottle_(false),
       pending_read_net_result_(0),
@@ -116,7 +120,6 @@ PepperTCPSocketMessageFilter::PepperTCPSocketMessageFilter(
       sndbuf_size_(0),
       address_index_(0),
       socket_(std::move(socket)),
-      ssl_context_helper_(host->ssl_context_helper()),
       pending_accept_(false),
       pending_read_on_unthrottle_(false),
       pending_read_net_result_(0),
@@ -158,8 +161,8 @@ PepperTCPSocketMessageFilter::OverrideTaskRunnerForMessage(
     case PpapiHostMsg_TCPSocket_Connect::ID:
     case PpapiHostMsg_TCPSocket_ConnectWithNetAddress::ID:
     case PpapiHostMsg_TCPSocket_Listen::ID:
-      return BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
     case PpapiHostMsg_TCPSocket_SSLHandshake::ID:
+      return BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
     case PpapiHostMsg_TCPSocket_Read::ID:
     case PpapiHostMsg_TCPSocket_Write::ID:
     case PpapiHostMsg_TCPSocket_Accept::ID:
@@ -313,55 +316,31 @@ int32_t PepperTCPSocketMessageFilter::OnMsgSSLHandshake(
     const ppapi::host::HostMessageContext* context,
     const std::string& server_name,
     uint16_t server_port,
-    const std::vector<std::vector<char> >& trusted_certs,
-    const std::vector<std::vector<char> >& untrusted_certs) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    const std::vector<std::vector<char>>& trusted_certs,
+    const std::vector<std::vector<char>>& untrusted_certs) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // Allow to do SSL handshake only if currently the socket has been connected
-  // and there isn't pending read or write.
-  if (!state_.IsValidTransition(TCPSocketState::SSL_CONNECT) ||
-      read_buffer_.get() || write_buffer_base_.get() || write_buffer_.get()) {
+  RenderFrameHost* render_frame_host =
+      content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
+  if (!render_frame_host)
     return PP_ERROR_FAILED;
-  }
-
-  // TODO(raymes,rsleevi): Use trusted/untrusted certificates when connecting.
-  net::IPEndPoint peer_address;
-  if (socket_->GetPeerAddress(&peer_address) != net::OK)
+  SiteInstance* site_instance = render_frame_host->GetSiteInstance();
+  if (!site_instance || !site_instance->GetBrowserContext())
+    return PP_ERROR_FAILED;
+  StoragePartition* storage_partition = BrowserContext::GetStoragePartition(
+      site_instance->GetBrowserContext(), site_instance);
+  if (!storage_partition)
+    return PP_ERROR_FAILED;
+  scoped_refptr<net::URLRequestContextGetter> request_context_getter(
+      storage_partition->GetURLRequestContext());
+  if (!request_context_getter)
     return PP_ERROR_FAILED;
 
-  std::unique_ptr<net::ClientSocketHandle> handle(
-      new net::ClientSocketHandle());
-  handle->SetSocket(base::WrapUnique<net::StreamSocket>(
-      new net::TCPClientSocket(std::move(socket_), peer_address)));
-  net::ClientSocketFactory* factory =
-      net::ClientSocketFactory::GetDefaultFactory();
-  net::HostPortPair host_port_pair(server_name, server_port);
-  net::SSLClientSocketContext ssl_context;
-  ssl_context.cert_verifier = ssl_context_helper_->GetCertVerifier();
-  ssl_context.transport_security_state =
-      ssl_context_helper_->GetTransportSecurityState();
-  ssl_context.cert_transparency_verifier =
-      ssl_context_helper_->GetCertTransparencyVerifier();
-  ssl_context.ct_policy_enforcer = ssl_context_helper_->GetCTPolicyEnforcer();
-  ssl_socket_ = factory->CreateSSLClientSocket(
-      std::move(handle), host_port_pair, ssl_context_helper_->ssl_config(),
-      ssl_context);
-  if (!ssl_socket_) {
-    LOG(WARNING) << "Failed to create an SSL client socket.";
-    state_.CompletePendingTransition(false);
-    return PP_ERROR_FAILED;
-  }
-
-  state_.SetPendingTransition(TCPSocketState::SSL_CONNECT);
-
-  const ppapi::host::ReplyMessageContext reply_context(
-      context->MakeReplyMessageContext());
-  int net_result = ssl_socket_->Connect(
-      base::Bind(&PepperTCPSocketMessageFilter::OnSSLHandshakeCompleted,
-                 base::Unretained(this),
-                 reply_context));
-  if (net_result != net::ERR_IO_PENDING)
-    OnSSLHandshakeCompleted(reply_context, net_result);
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&PepperTCPSocketMessageFilter::DoSSLHandshake, this,
+                 context->MakeReplyMessageContext(), request_context_getter,
+                 server_name, server_port, trusted_certs, untrusted_certs));
   return PP_OK_COMPLETIONPENDING;
 }
 
@@ -684,6 +663,81 @@ void PepperTCPSocketMessageFilter::DoConnectWithNetAddress(
   address_list_.clear();
   address_list_.push_back(net::IPEndPoint(net::IPAddress(address), port));
   StartConnect(context);
+}
+
+void PepperTCPSocketMessageFilter::DoSSLHandshake(
+    const ppapi::host::ReplyMessageContext& context,
+    const scoped_refptr<net::URLRequestContextGetter>& request_context_getter,
+    const std::string& server_name,
+    uint16_t server_port,
+    const std::vector<std::vector<char>>& trusted_certs,
+    const std::vector<std::vector<char>>& untrusted_certs) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  // Allow to do SSL handshake only if currently the socket has been connected
+  // and there isn't pending read or write.
+  if (!state_.IsValidTransition(TCPSocketState::SSL_CONNECT) ||
+      read_buffer_.get() || write_buffer_base_.get() || write_buffer_.get()) {
+    state_.CompletePendingTransition(false);
+    SendSSLHandshakeReply(context, PP_ERROR_FAILED);
+    return;
+  }
+
+  net::URLRequestContext* request_context =
+      request_context_getter->GetURLRequestContext();
+  if (!request_context) {
+    state_.CompletePendingTransition(false);
+    SendSSLHandshakeReply(context, PP_ERROR_FAILED);
+    return;
+  }
+
+  // TODO(raymes,rsleevi): Use trusted/untrusted certificates when connecting.
+  net::IPEndPoint peer_address;
+  if (socket_->GetPeerAddress(&peer_address) != net::OK) {
+    state_.CompletePendingTransition(false);
+    SendSSLHandshakeReply(context, PP_ERROR_FAILED);
+    return;
+  }
+
+  std::unique_ptr<net::ClientSocketHandle> handle(
+      new net::ClientSocketHandle());
+  handle->SetSocket(base::WrapUnique<net::StreamSocket>(
+      new net::TCPClientSocket(std::move(socket_), peer_address)));
+  net::ClientSocketFactory* factory =
+      net::ClientSocketFactory::GetDefaultFactory();
+  net::HostPortPair host_port_pair(server_name, server_port);
+
+  net::SSLClientSocketContext ssl_context;
+  ssl_context.cert_verifier = request_context->cert_verifier();
+  // ChannelID intentionally not exposed.
+  ssl_context.transport_security_state =
+      request_context->transport_security_state();
+  ssl_context.cert_transparency_verifier =
+      request_context->cert_transparency_verifier();
+  ssl_context.ct_policy_enforcer = request_context->ct_policy_enforcer();
+  // TODO(rsleevi): Determine the appropriate SSL session cache shard.
+  // Presently, all plugin instances will share the same TLS session cache,
+  // but this will be distinct from the BrowserContexts'/SiteInstances'.
+
+  net::SSLConfig config;
+  request_context->ssl_config_service()->GetSSLConfig(&config);
+
+  ssl_socket_ = factory->CreateSSLClientSocket(
+      std::move(handle), host_port_pair, config, ssl_context);
+  if (!ssl_socket_) {
+    LOG(WARNING) << "Failed to create an SSL client socket.";
+    state_.CompletePendingTransition(false);
+    SendSSLHandshakeReply(context, PP_ERROR_FAILED);
+    return;
+  }
+
+  state_.SetPendingTransition(TCPSocketState::SSL_CONNECT);
+
+  int net_result = ssl_socket_->Connect(
+      base::Bind(&PepperTCPSocketMessageFilter::OnSSLHandshakeCompleted,
+                 base::Unretained(this), context));
+  if (net_result != net::ERR_IO_PENDING)
+    OnSSLHandshakeCompleted(context, net_result);
 }
 
 void PepperTCPSocketMessageFilter::DoWrite(

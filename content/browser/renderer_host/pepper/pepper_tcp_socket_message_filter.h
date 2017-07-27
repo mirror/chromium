@@ -17,7 +17,6 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "content/browser/renderer_host/pepper/browser_ppapi_host_impl.h"
-#include "content/browser/renderer_host/pepper/ssl_context_helper.h"
 #include "content/common/content_export.h"
 #include "net/base/address_list.h"
 #include "net/base/ip_endpoint.h"
@@ -38,6 +37,7 @@ namespace net {
 class DrainableIOBuffer;
 class IOBuffer;
 class SSLClientSocket;
+class URLRequestContextGetter;
 }
 
 namespace ppapi {
@@ -103,8 +103,8 @@ class CONTENT_EXPORT PepperTCPSocketMessageFilter
       const ppapi::host::HostMessageContext* context,
       const std::string& server_name,
       uint16_t server_port,
-      const std::vector<std::vector<char> >& trusted_certs,
-      const std::vector<std::vector<char> >& untrusted_certs);
+      const std::vector<std::vector<char>>& trusted_certs,
+      const std::vector<std::vector<char>>& untrusted_certs);
   int32_t OnMsgRead(const ppapi::host::HostMessageContext* context,
                     int32_t bytes_to_read);
   int32_t OnMsgWrite(const ppapi::host::HostMessageContext* context,
@@ -125,6 +125,13 @@ class CONTENT_EXPORT PepperTCPSocketMessageFilter
                  ResourceContext* resource_context);
   void DoConnectWithNetAddress(const ppapi::host::ReplyMessageContext& context,
                                const PP_NetAddress_Private& net_addr);
+  void DoSSLHandshake(
+      const ppapi::host::ReplyMessageContext& context,
+      const scoped_refptr<net::URLRequestContextGetter>& request_context_getter,
+      const std::string& server_name,
+      uint16_t server_port,
+      const std::vector<std::vector<char>>& trusted_certs,
+      const std::vector<std::vector<char>>& untrusted_certs);
   void DoWrite(const ppapi::host::ReplyMessageContext& context);
   void DoListen(const ppapi::host::ReplyMessageContext& context,
                 int32_t backlog);
@@ -250,7 +257,6 @@ class CONTENT_EXPORT PepperTCPSocketMessageFilter
   // using a DrainableIOBuffer, which requires an underlying base IOBuffer.
   scoped_refptr<net::IOBuffer> write_buffer_base_;
   scoped_refptr<net::DrainableIOBuffer> write_buffer_;
-  scoped_refptr<SSLContextHelper> ssl_context_helper_;
 
   bool pending_accept_;
   std::unique_ptr<net::TCPSocket> accepted_socket_;
