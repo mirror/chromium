@@ -33,6 +33,7 @@
 #include "storage/common/database/database_identifier.h"
 #include "storage/common/quota/quota_status_code.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -175,6 +176,19 @@ std::unique_ptr<CacheStorageManager> CacheStorageManager::Create(
 
 CacheStorageManager::~CacheStorageManager() = default;
 
+CacheStorageManager::ObserverData::ObserverData(
+    int64_t id,
+    base::RepeatingCallback<void(CacheStorageContext::ObservationType,
+                                 const GURL&)> callback)
+    : id(id), callback(callback) {}
+
+CacheStorageManager::ObserverData::~ObserverData() {}
+
+CacheStorageManager::ObserverData::ObserverData(ObserverData&& other) = default;
+
+CacheStorageManager::ObserverData& CacheStorageManager::ObserverData::operator=(
+    ObserverData&& other) = default;
+
 void CacheStorageManager::OpenCache(
     const GURL& origin,
     const std::string& cache_name,
@@ -249,6 +263,44 @@ void CacheStorageManager::SetBlobParametersForCache(
   DCHECK(!blob_context_ || blob_context_.get() == blob_storage_context.get());
   request_context_getter_ = std::move(request_context_getter);
   blob_context_ = blob_storage_context;
+}
+
+void CacheStorageManager::AddObserver(
+    const GURL& origin,
+    int64_t id,
+    base::RepeatingCallback<void(CacheStorageContext::ObservationType,
+                                 const GURL&)> callback) {
+  std::vector<ObserverData>& observer_list = observers_[origin];
+  observer_list.push_back(ObserverData(id, std::move(callback)));
+}
+
+void CacheStorageManager::RemoveObserver(const GURL& origin, int64_t id) {
+  if (observers_.empty())
+    return;
+
+  std::vector<ObserverData>& observer_list = observers_[origin];
+  std::remove_if(observer_list.begin(), observer_list.end(),
+                 [id](const ObserverData& data) { return data.id == id; });
+}
+
+void CacheStorageManager::NotifyCacheListChanged(const GURL& origin) {
+  if (observers_.empty())
+    return;
+
+  std::vector<ObserverData>& observer_list = observers_[origin];
+  for (const ObserverData& data : observer_list)
+    data.callback.Run(CacheStorageContext::ObservationType::CACHE_LIST_CHANGED,
+                      origin);
+}
+
+void CacheStorageManager::NotifyCacheDataChanged(const GURL& origin) {
+  if (observers_.empty())
+    return;
+
+  std::vector<ObserverData>& observer_list = observers_[origin];
+  for (const ObserverData& data : observer_list)
+    data.callback.Run(CacheStorageContext::ObservationType::CACHE_DATA_CHANGED,
+                      origin);
 }
 
 void CacheStorageManager::GetAllOriginsUsage(
@@ -434,7 +486,7 @@ CacheStorage* CacheStorageManager::FindOrCreateCacheStorage(
     CacheStorage* cache_storage = new CacheStorage(
         ConstructOriginPath(root_path_, origin), IsMemoryBacked(),
         cache_task_runner_.get(), request_context_getter_, quota_manager_proxy_,
-        blob_context_, origin);
+        blob_context_, this, origin);
     cache_storage_map_.insert(
         std::make_pair(origin, base::WrapUnique(cache_storage)));
     return cache_storage;

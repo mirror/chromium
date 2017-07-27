@@ -9,8 +9,10 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/storage.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -33,9 +35,21 @@ class StorageHandler : public DevToolsDomainHandler,
   void GetUsageAndQuota(
       const String& origin,
       std::unique_ptr<GetUsageAndQuotaCallback> callback) override;
+  // Ignore all double calls to track an origin.
+  void TrackOrigin(const String& origin,
+                   std::unique_ptr<TrackOriginCallback> callback) override;
+  void UntrackOrigin(const String& origin,
+                     std::unique_ptr<UntrackOriginCallback> callback) override;
+
+  void NotifyCacheStorageListChanged(const String& origin);
 
  private:
+  std::unique_ptr<Storage::Frontend> frontend_;
   RenderFrameHostImpl* host_;
+  // Will never have multiple of the same origin.
+  std::vector<std::pair<url::Origin, int64_t>> observers_;
+
+  base::WeakPtrFactory<StorageHandler> ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(StorageHandler);
 };

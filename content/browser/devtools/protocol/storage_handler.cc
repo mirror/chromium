@@ -9,12 +9,15 @@
 #include <vector>
 
 #include "base/strings/string_split.h"
+#include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "storage/browser/quota/quota_client.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/common/quota/quota_status_code.h"
+#include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 namespace protocol {
@@ -87,16 +90,72 @@ void GetUsageAndQuotaOnIOThread(
       base::Bind(&GotUsageAndQuotaDataCallback,
                  base::Passed(std::move(callback))));
 }
+
+void ReportCacheStorageListChangedOnUIThread(
+    CacheStorageContext::ObservationType type,
+    const GURL& origin,
+    base::Callback<void(const String&)> callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (type != CacheStorageContext::ObservationType::CACHE_LIST_CHANGED)
+    return;
+  callback.Run(origin.spec());
+}
+
+void GotCacheStorageListChanged(base::Callback<void(const String&)> callback,
+                                CacheStorageContext::ObservationType type,
+                                const GURL& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(ReportCacheStorageListChangedOnUIThread, type, origin,
+                 base::Passed(std::move(callback))));
+}
+
+void AddObserverOnIOThread(CacheStorageContext* context,
+                           const GURL& origin,
+                           int64_t id,
+                           base::Callback<void(const String&)> callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  context->AddObserver(origin, id,
+                       base::Bind(&GotCacheStorageListChanged,
+                                  base::Passed(std::move(callback))));
+}
+
+void RemoveObserverOnIOThread(CacheStorageContext* context,
+                              const GURL& origin,
+                              int64_t id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  context->RemoveObserver(origin, id);
+}
+
+void RemoveAllObserversOnIOThread(
+    CacheStorageContext* context,
+    std::vector<std::pair<url::Origin, int64_t>> to_remove) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  for (std::pair<url::Origin, int64_t>& observer : to_remove)
+    context->RemoveObserver(observer.first.GetURL(), observer.second);
+}
 }  // namespace
 
 StorageHandler::StorageHandler()
     : DevToolsDomainHandler(Storage::Metainfo::domainName),
-      host_(nullptr) {
+      host_(nullptr),
+      ptr_factory_(this) {}
+
+StorageHandler::~StorageHandler() {
+  if (!observers_.empty()) {
+    CacheStorageContext* context =
+        host_->GetProcess()->GetStoragePartition()->GetCacheStorageContext();
+
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&RemoveAllObserversOnIOThread, base::RetainedRef(context),
+                   std::move(observers_)));
+  }
 }
 
-StorageHandler::~StorageHandler() = default;
-
 void StorageHandler::Wire(UberDispatcher* dispatcher) {
+  frontend_.reset(new Storage::Frontend(dispatcher->channel()));
   Storage::Dispatcher::wire(dispatcher, this);
 }
 
@@ -166,6 +225,82 @@ void StorageHandler::GetUsageAndQuota(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&GetUsageAndQuotaOnIOThread, base::RetainedRef(manager),
                  origin_url, base::Passed(std::move(callback))));
+}
+
+void StorageHandler::TrackOrigin(
+    const String& origin,
+    std::unique_ptr<TrackOriginCallback> callback) {
+  if (!host_)
+    return callback->sendFailure(Response::InternalError());
+
+  GURL origin_url(origin);
+  if (!origin_url.is_valid()) {
+    return callback->sendFailure(
+        Response::Error(origin + " is not a valid URL"));
+  }
+
+  auto already_tracking =
+      std::find_if(observers_.begin(), observers_.end(),
+                   [origin_url](const std::pair<url::Origin, int64_t>& origin) {
+                     return origin.first.GetURL() == origin_url;
+                   });
+  if (already_tracking != observers_.end())
+    return callback->sendFailure(Response::Error("Already tracking origin."));
+
+  CacheStorageContext* context =
+      host_->GetProcess()->GetStoragePartition()->GetCacheStorageContext();
+
+  int64_t id = CacheStorageContextImpl::GenerateObserverID();
+  observers_.push_back(std::make_pair(url::Origin(origin_url), id));
+
+  base::Callback<void(const String&)> notify_callback =
+      base::Bind(&StorageHandler::NotifyCacheStorageListChanged,
+                 ptr_factory_.GetWeakPtr());
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&AddObserverOnIOThread, base::RetainedRef(context), origin_url,
+                 id, base::Passed(std::move(notify_callback))));
+  callback->sendSuccess();
+}
+
+void StorageHandler::UntrackOrigin(
+    const String& origin,
+    std::unique_ptr<UntrackOriginCallback> callback) {
+  if (!host_)
+    return callback->sendFailure(Response::InternalError());
+
+  GURL origin_url(origin);
+  if (!origin_url.is_valid()) {
+    return callback->sendFailure(
+        Response::Error(origin + " is not a valid URL"));
+  }
+
+  auto observer =
+      std::find_if(observers_.begin(), observers_.end(),
+                   [origin_url](const std::pair<url::Origin, int64_t>& origin) {
+                     return origin.first.GetURL() == origin_url;
+                   });
+  if (observer == observers_.end())
+    return callback->sendFailure(
+        Response::Error("Origin is not being tracked."));
+  int64_t id = observer->second;
+  observers_.erase(observer);
+
+  CacheStorageContext* context =
+      host_->GetProcess()->GetStoragePartition()->GetCacheStorageContext();
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&RemoveObserverOnIOThread, base::RetainedRef(context),
+                 origin_url, id));
+  callback->sendSuccess();
+}
+
+void StorageHandler::NotifyCacheStorageListChanged(const String& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!frontend_)
+    frontend_->CacheStorageListUpdate(origin);
 }
 
 }  // namespace protocol

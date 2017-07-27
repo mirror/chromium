@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -83,6 +84,16 @@ class CONTENT_EXPORT CacheStorageManager {
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
       base::WeakPtr<storage::BlobStorageContext> blob_storage_context);
 
+  void AddObserver(
+      const GURL& origin,
+      int64_t id,
+      base::RepeatingCallback<void(CacheStorageContext::ObservationType,
+                                   const GURL&)> callback);
+  void RemoveObserver(const GURL& origin, int64_t id);
+
+  void NotifyCacheListChanged(const GURL& origin);
+  void NotifyCacheDataChanged(const GURL& origin);
+
   base::WeakPtr<CacheStorageManager> AsWeakPtr() {
     return weak_ptr_factory_.GetWeakPtr();
   }
@@ -95,6 +106,24 @@ class CONTENT_EXPORT CacheStorageManager {
   friend class CacheStorageQuotaClient;
 
   typedef std::map<GURL, std::unique_ptr<CacheStorage>> CacheStorageMap;
+
+  struct ObserverData {
+    ObserverData(
+        int64_t id,
+        base::RepeatingCallback<void(CacheStorageContext::ObservationType,
+                                     const GURL&)> callback);
+    ObserverData(ObserverData&& other);
+    ~ObserverData();
+    ObserverData& operator=(ObserverData&& other);
+
+    int64_t id;
+    base::RepeatingCallback<void(CacheStorageContext::ObservationType,
+                                 const GURL&)>
+        callback;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(ObserverData);
+  };
 
   CacheStorageManager(
       const base::FilePath& path,
@@ -149,6 +178,8 @@ class CONTENT_EXPORT CacheStorageManager {
   // The map owns the CacheStorages and the CacheStorages are only accessed on
   // |cache_task_runner_|.
   CacheStorageMap cache_storage_map_;
+
+  base::flat_map<GURL, std::vector<ObserverData>> observers_;
 
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
   base::WeakPtr<storage::BlobStorageContext> blob_context_;
