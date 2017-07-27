@@ -35,6 +35,7 @@ class TabStripModel;
 
 namespace base {
 class TickClock;
+class Value;
 }
 
 namespace content {
@@ -197,6 +198,10 @@ class TabManager : public TabStripModelObserver,
   bool IsSessionRestoreLoadingTabs() const {
     return is_session_restore_loading_tabs_;
   }
+
+  void OnExpectedTaskQueueingDurationUpdated(
+      content::WebContents* web_contents,
+      std::unique_ptr<base::Value> queueing_time_millis) {}
 
  private:
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
