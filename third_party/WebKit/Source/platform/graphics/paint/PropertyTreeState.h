@@ -55,6 +55,12 @@ class PLATFORM_EXPORT PropertyTreeState {
   // default instance is returned.
   const CompositorElementId GetCompositorElementId(
       const CompositorElementIdSet& element_ids) const;
+  const CompositorElementId GetCompositorElementIdMatchingNamespace(
+      const CompositorElementIdSet& element_ids,
+      CompositorElementIdNamespace) const;
+  const CompositorElementId GetCompositorElementIdExcludingNamespace(
+      const CompositorElementIdSet& element_ids,
+      CompositorElementIdNamespace) const;
 
   enum InnermostNode {
     kNone,  // None means that all nodes are their root values

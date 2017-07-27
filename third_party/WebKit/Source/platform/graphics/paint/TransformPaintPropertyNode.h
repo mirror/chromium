@@ -58,6 +58,7 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
       CompositingReasons direct_compositing_reasons,
       const CompositorElementId& compositor_element_id,
       PassRefPtr<const ScrollPaintPropertyNode> parent_scroll,
+      const FloatPoint& offset,
       const IntSize& scroll_container_bounds,
       const IntSize& bounds,
       bool user_scrollable_horizontal,
@@ -70,7 +71,7 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
         std::move(parent), matrix, origin, flattens_inherited_transform,
         rendering_context_id, direct_compositing_reasons, compositor_element_id,
         ScrollPaintPropertyNode::Create(
-            std::move(parent_scroll), scroll_container_bounds, bounds,
+            std::move(parent_scroll), offset, scroll_container_bounds, bounds,
             user_scrollable_horizontal, user_scrollable_vertical,
             main_thread_scrolling_reasons, scroll_client)));
   }
@@ -111,6 +112,7 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
       CompositingReasons direct_compositing_reasons,
       CompositorElementId compositor_element_id,
       PassRefPtr<const ScrollPaintPropertyNode> parent_scroll,
+      const FloatPoint& offset,
       const IntSize& scroll_container_bounds,
       const IntSize& bounds,
       bool user_scrollable_horizontal,
@@ -123,7 +125,7 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
     DCHECK(scroll_);
     DCHECK(matrix.IsIdentityOr2DTranslation());
     changed |= scroll_->Update(
-        std::move(parent_scroll), scroll_container_bounds, bounds,
+        std::move(parent_scroll), offset, scroll_container_bounds, bounds,
         user_scrollable_horizontal, user_scrollable_vertical,
         main_thread_scrolling_reasons, scroll_client);
     return changed;
@@ -141,7 +143,13 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
   // Returns the scroll node this transform scrolls with respect to. If this
   // is a scroll translation, scrollNode() can be returned. Otherwise, a full
   // ancestor traversal can be required.
-  const ScrollPaintPropertyNode* FindEnclosingScrollNode() const;
+  const ScrollPaintPropertyNode* FindEnclosingScrollNode() const {
+    return NearestScrollTranslationNode()->ScrollNode();
+  }
+
+  // If this is a scroll translation, returns this node. Otherwise, returns the
+  // transform node that this scrolls with respect to.
+  const TransformPaintPropertyNode* NearestScrollTranslationNode() const;
 
   // If true, content with this transform node (or its descendant) appears in
   // the plane of its parent. This is implemented by flattening the total
