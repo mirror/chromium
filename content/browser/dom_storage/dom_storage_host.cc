@@ -84,29 +84,42 @@ base::NullableString16 DOMStorageHost::GetAreaItem(int connection_id,
   return area->GetItem(key);
 }
 
-bool DOMStorageHost::SetAreaItem(
-    int connection_id, const base::string16& key,
-    const base::string16& value, const GURL& page_url,
-    base::NullableString16* old_value) {
+bool DOMStorageHost::SetAreaItem(int connection_id,
+                                 const base::string16& key,
+                                 const base::string16& value,
+                                 const base::NullableString16& client_old_value,
+                                 const GURL& page_url) {
   DOMStorageArea* area = GetOpenArea(connection_id);
   if (!area)
     return false;
-  if (!area->SetItem(key, value, old_value))
+  base::NullableString16 old_value;
+  if (!area->SetItem(key, value, &old_value))
     return false;
-  if (old_value->is_null() || old_value->string() != value)
-    context_->NotifyItemSet(area, key, value, *old_value, page_url);
+  // If only one connection opened the area, then the value given by the client
+  // is always up-to-date.
+  if (GetAreaOpenCount(area) <= 1)
+    old_value = client_old_value;
+  if (old_value.is_null() || old_value.string() != value)
+    context_->NotifyItemSet(area, key, value, old_value, page_url);
   return true;
 }
 
 bool DOMStorageHost::RemoveAreaItem(
-    int connection_id, const base::string16& key, const GURL& page_url,
-    base::string16* old_value) {
+    int connection_id,
+    const base::string16& key,
+    const base::NullableString16& client_old_value,
+    const GURL& page_url) {
   DOMStorageArea* area = GetOpenArea(connection_id);
   if (!area)
     return false;
-  if (!area->RemoveItem(key, old_value))
+  base::string16 old_value;
+  if (!area->RemoveItem(key, &old_value))
     return false;
-  context_->NotifyItemRemoved(area, key, *old_value, page_url);
+  // If only one connection opened the area, then the value given by the client
+  // is always up-to-date.
+  if (GetAreaOpenCount(area) <= 1)
+    old_value = client_old_value.string();
+  context_->NotifyItemRemoved(area, key, old_value, page_url);
   return true;
 }
 
@@ -143,6 +156,15 @@ DOMStorageNamespace* DOMStorageHost::GetNamespace(int connection_id) const {
   if (found == connections_.end())
     return NULL;
   return found->second.namespace_.get();
+}
+
+int DOMStorageHost::GetAreaOpenCount(DOMStorageArea* area) const {
+  int count = 0;
+  for (const auto& it : connections_) {
+    DOMStorageNamespace* ns = it.second.namespace_.get();
+    count += ns->GetAreaOpenCount(area);
+  }
+  return count;
 }
 
 // NamespaceAndArea
