@@ -112,7 +112,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   void AddChild(LayoutObject* child,
                 LayoutObject* before_child = nullptr) override;
 
-  int FirstLineBoxBaseline() const override;
+  LayoutUnit FirstLineBoxBaseline() const override;
 
   void AddCell(LayoutTableCell*, LayoutTableRow*);
 
@@ -208,7 +208,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   bool NeedsCellRecalc() const { return needs_cell_recalc_; }
   void SetNeedsCellRecalc();
 
-  int RowBaseline(unsigned row) { return grid_[row].baseline; }
+  LayoutUnit RowBaseline(unsigned row) { return grid_[row].baseline; }
 
   void RowLogicalHeightChanged(LayoutTableRow*);
 
@@ -344,7 +344,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
 
   void UpdateBaselineForCell(LayoutTableCell*,
                              unsigned row,
-                             int& baseline_descent);
+                             LayoutUnit& baseline_descent);
 
   // These two functions take a rectangle as input that has been flipped by
   // logicalRectForWritingModeAndDirection.
@@ -378,7 +378,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
     // The index is effective column index.
     Vector<TableGridCell> grid_cells;
     LayoutTableRow* row = nullptr;
-    int baseline = -1;
+    LayoutUnit baseline = LayoutUnit(-1);
     Length logical_height;
   };
 
