@@ -332,6 +332,32 @@ def ParseConfigFile(filename, variable_expander):
   return config
 
 
+def ConfigureTemp():
+  """Ensures that TEMP is set to the same volume on which Chrome will be
+     installed.
+
+     This is a workaround for https://crbug.com/700809.
+  """
+  drive = os.path.splitdrive(os.getenv('ProgramFiles(x86)'))[0]
+  if os.path.splitdrive(os.getenv('TMP'))[0] == drive:
+    return
+  # Try to use one of the standard Temp dir locations.
+  candidates = [ os.getenv('LOCALAPPDATA'), os.getenv('windir') ]
+  for candidate in candidates:
+    if candidate and os.path.splitdrive(candidate)[0] == drive:
+      temp = os.path.join(candidate, 'Temp')
+      if os.path.isdir(temp):
+        os.putenv('TMP', temp)
+        return
+  # Otherwise make a Temp dir at the root of the volume.
+  temp = os.path.join(drive, os.sep, 'Temp')
+  if not os.path.exists(temp):
+    os.mkdir(temp)
+  elif not os.path.isdir(temp):
+    raise Exception('Cannot create %s without clobbering something' % temp)
+  os.putenv('TMP', temp)
+
+
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('--build-dir', default='out',
@@ -352,6 +378,8 @@ def main():
   args = parser.parse_args()
   if not args.config:
     parser.error('missing mandatory --config FILENAME argument')
+
+  ConfigureTemp()
 
   mini_installer_path = os.path.join(args.build_dir, args.target,
                                      'mini_installer.exe')
