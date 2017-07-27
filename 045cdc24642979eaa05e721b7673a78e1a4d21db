@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3bced65c_0c2e3407",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-27T03:35:33Z",
+      "side": 1,
+      "message": "Yes, we need to do same thing for MoveExtendingLeft().\nThanks for pointing this out!",
+      "parentUuid": "ec87d5cd_44bc55fd",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 45
+      },
+      "revId": "045cdc24642979eaa05e721b7673a78e1a4d21db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb9e64ed_a1be7ee5",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
         "patchSetId": 2
