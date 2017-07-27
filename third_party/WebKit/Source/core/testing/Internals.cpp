@@ -2748,7 +2748,7 @@ bool Internals::fakeMouseMovePending() const {
 }
 
 DOMArrayBuffer* Internals::serializeObject(
-    PassRefPtr<SerializedScriptValue> value) const {
+    RefPtr<SerializedScriptValue> value) const {
   StringView view = value->GetWireData();
   DCHECK(view.Is8Bit());
   DOMArrayBuffer* buffer =
@@ -2758,7 +2758,7 @@ DOMArrayBuffer* Internals::serializeObject(
   return buffer;
 }
 
-PassRefPtr<SerializedScriptValue> Internals::deserializeBuffer(
+RefPtr<SerializedScriptValue> Internals::deserializeBuffer(
     DOMArrayBuffer* buffer) const {
   String value(static_cast<const UChar*>(buffer->Data()),
                buffer->ByteLength() / sizeof(UChar));
