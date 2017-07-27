@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a82eb4a_d53e021d",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T00:51:04Z",
+      "side": 1,
+      "message": "Done. Moved to CreateMediaPlayer() where we create other globals needed for WMPI.",
+      "parentUuid": "d7e0bb03_fe7a4267",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2e5c6a7_7fd32b1d",
         "filename": "media/base/ipc/media_param_traits_macros.h",
         "patchSetId": 16
@@ -65,6 +83,24 @@
       "writtenOn": "2017-07-25T05:51:59Z",
       "side": 1,
       "message": "nit: Add a brief comment about what this is. Actually, is there a good doc/link to know what this exactly means? I tracked it all the ways down to TabAndroid::EnableEmbeddedMediaExperience() can still couldn\u0027t find a good comment/description about this feature. We should at least document it in media interfaces.",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b05fe9_6cfb5732",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T00:51:04Z",
+      "side": 1,
+      "message": "Oof, didn\u0027t realize this isn\u0027t documented anywhere. Done.",
+      "parentUuid": "9513f1d9_f80233e9",
       "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -129,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "aa6e9a9d_5b8d3d08",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T00:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3e8613_7c5fac1d",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8bb3820_5e846165",
         "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
         "patchSetId": 16
@@ -140,6 +200,24 @@
       "writtenOn": "2017-07-25T05:51:59Z",
       "side": 1,
       "message": "nit: Is |watch_time| based on media time or wall time?",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37764fa6_3ca4b7c2",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T00:51:04Z",
+      "side": 1,
+      "message": "Done. But also said added comment directly such questions to WatchTimeReporter.",
+      "parentUuid": "a8bb3820_5e846165",
       "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -216,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "21521854_94abebf1",
+        "filename": "media/mojo/services/watch_time_recorder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T00:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e9e47dc_a6fdc317",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a020973_3f9bbf22",
         "filename": "media/mojo/services/watch_time_recorder.h",
         "patchSetId": 16
@@ -233,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "ab12abb0_80d3558c",
+        "filename": "media/mojo/services/watch_time_recorder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T00:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a020973_3f9bbf22",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "984cbed6_32dd9d44",
         "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
         "patchSetId": 16
@@ -244,6 +358,24 @@
       "writtenOn": "2017-07-25T05:51:59Z",
       "side": 1,
       "message": "nit: no need for \"static\" here",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3be31a_88fdae4f",
+        "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-27T00:51:04Z",
+      "side": 1,
+      "message": "This isn\u0027t an anonymous namespace, so I thought it is needed?",
+      "parentUuid": "984cbed6_32dd9d44",
       "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
