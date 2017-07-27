@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28050a3_2a1b151a",
+        "filename": "components/exo/data_event_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:51:41Z",
+      "side": 1,
+      "message": "nit: valid_operation |\u003d device-\u003eOnDragUpdated(event);",
+      "revId": "e4d305f1dfd3d47d8beabdfbaf4fb4dce3bf372e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3b7721_a43a6733",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-27T07:51:41Z",
+      "side": 1,
+      "message": "nit: DataEventDispatcher* const data_event_dispatcher_;",
+      "revId": "e4d305f1dfd3d47d8beabdfbaf4fb4dce3bf372e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
