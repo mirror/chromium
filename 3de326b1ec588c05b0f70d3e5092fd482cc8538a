@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "dc49f4eb_092ab8c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "amount",
+      "range": {
+        "startLine": 21,
+        "startChar": 73,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e11f7bb_2d0efd9f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "that",
+      "range": {
+        "startLine": 23,
+        "startChar": 64,
+        "endLine": 23,
+        "endChar": 67
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed89961_4cc96637",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "happened",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 22
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c87b72a_b581add9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "\"results in fallback\"",
+      "range": {
+        "startLine": 24,
+        "startChar": 52,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2858b921_ba334e73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "would it be simpler and easier to detect the error if we just fail with a net error? Falling back silently can mask failures I feel.",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e33ae6d_cc44c49a",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -13,6 +122,24 @@
       "writtenOn": "2017-07-26T09:32:24Z",
       "side": 1,
       "message": "\"It is not necessary to handle MojoResult here since...\" ?\n\n(deferring to falken@)",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96f0694_fb14923e",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "Yes \"X isn\u0027t necessary to be handled\" doesn\u0027t seem grammatical for some reason.\n\nHowever... if it had to be commented, is it worth it? It seems a bit odd to rely on this implementation detail that WriteDataRaw will return the same error. \n\nCan just do this?\n\nvoid OnWritable(MojoResult result) {\n  if (rv \u003d\u003d MOJO_RESULT_OK) {\n    uint32_t size \u003d meta_data_-\u003esize() - bytes_sent_;\n    rv \u003d mojo::WriteDataRaw(handle_.get(), meta_data_-\u003edata() + bytes_sent_,\n  }\n  switch (rv)\n...",
+      "parentUuid": "0e33ae6d_cc44c49a",
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -42,6 +169,40 @@
     },
     {
       "key": {
+        "uuid": "f73f0c3b_1c04fabe",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "There are a lot of other MOJO_RESULT types here:\nhttps://cs.chromium.org/chromium/src/mojo/public/c/system/types.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d88\n\nWhy don\u0027t they need to be handled?",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7072aa_8a1a0bf1",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "ditto as above, would prefer to just handle it.",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f10370_73b1da4b",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -53,6 +214,40 @@
       "writtenOn": "2017-07-26T09:32:24Z",
       "side": 1,
       "message": "DCHECK(!IsFinished()) ?\n\nhere and below",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3026e401_cbdd5098",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "Since there is both State and Status can we have comments describing the difference, or more detailed names?",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0c5032_2a2f600d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "Lately I like adding:\n// Add a new type here, then update kMaxValue and enums.xml.\n\nSince I see values being added and the steps forgotten often.",
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +282,74 @@
       "writtenOn": "2017-07-26T09:32:24Z",
       "side": 1,
       "message": "nit: const",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc666e37_67870f06",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the static_casts anymore, something changed.",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4f8f74_6f761f7a",
+        "filename": "content/browser/service_worker/service_worker_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "docu the new param and why it\u0027s optional\n\nwould it be better to just make a new RecordInstalledScriptsSenderStatus function though?",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4e7356_90c24612",
+        "filename": "content/browser/service_worker/service_worker_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "script_sender_status",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c9e59b_1b936928",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-27T01:32:24Z",
+      "side": 1,
+      "message": "instead can it just be\n\nif (installed_scripted_sender_ \u0026\u0026 is_finished) {\n  RecordInstalledScriptsSenderstatus(...)\n}",
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
