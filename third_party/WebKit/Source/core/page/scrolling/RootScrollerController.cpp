@@ -202,7 +202,15 @@ void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
 
   LocalFrameView* view =
       ToLocalFrameView(frame_owner.OwnedEmbeddedContentView());
-  view->UpdateGeometry();
+
+  // We can get here as a result of the "post layout resize" on the main
+  // thread. That actually happens while we're in PerformLayout. UpdateGeometry
+  // will cause a Layout that'll call UpdateStyleAndLayout in Document but that
+  // tries to recurse up the hierarchy, reentering Layout on our parent. Thus,
+  // we avoid calling this now - it'll get called when our parent finishes
+  // laying out.
+  if (!document_->GetFrame()->View()->IsInPerformLayout())
+    view->UpdateGeometry();
 
   if (&EffectiveRootScroller() == frame_owner)
     view->SetLayoutSize(document_->GetFrame()->View()->GetLayoutSize());
