@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "011a1def_7cd4a06e",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-add-rule.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "async function addRuleAndUndo(options) {",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed05da0b_8e79a225",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-coverage-poll.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "remove :)",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9852d325_ff898e29",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-fonts-updated-event.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "remove :)",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08043764_f01b060f",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-get-background-colors.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "nit: extra ()",
+      "range": {
+        "startLine": 2,
+        "startChar": 54,
+        "endLine": 2,
+        "endChar": 55
+      },
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1af2fe_0ce7ee1e",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-set-effective-property-value.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "CSS.setEffectivePropertyValueForNode",
+      "range": {
+        "startLine": 6,
+        "startChar": 61,
+        "endLine": 6,
+        "endChar": 73
+      },
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba1b251_25fc925b",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-set-effective-property-value.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "async function updateProperty(...) {",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5a5c0a_03d1e8c8",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-set-inline-style-text.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4b54d8_714343a2",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-set-inline-style-text.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57be5c0_4e9c09a7",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/cssom-matching-rules.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "Can remove this probably?",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948bb0aa_cd2a79c3",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/resources/css-helper.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-27T18:32:54Z",
+      "side": 1,
+      "message": "We don\u0027t usually do one-liners.",
+      "revId": "d652d5f8db56b225f496ad7046b0abdd286875c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
