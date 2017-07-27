@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e122e87_f43bd0bd",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/characteristic-is-removed.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-27T00:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58925dae_f4977d7a",
+      "revId": "26d7ae0807fb2548c5162ccddcbce0cf1f3a3d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb349d57_375d505a",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/characteristic-is-removed.js",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bd4460ea_8de5183b",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/characteristic-is-removed.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-27T00:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb349d57_375d505a",
+      "revId": "26d7ae0807fb2548c5162ccddcbce0cf1f3a3d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163f4e8f_67388b81",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "26d7ae0807fb2548c5162ccddcbce0cf1f3a3d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c19911_9a33aeb8",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-27T00:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163f4e8f_67388b81",
+      "revId": "26d7ae0807fb2548c5162ccddcbce0cf1f3a3d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

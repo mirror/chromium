@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "677383ba_bfdb8fb9",
+        "filename": "device/bluetooth/test/fake_remote_gatt_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-27T00:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18504dcb_e9921164",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 65
+      },
+      "revId": "74e115239ef86b7d0593cf16df0218e72d45f838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09f5dcd0_fb7ebb50",
         "filename": "device/bluetooth/test/fake_remote_gatt_service.h",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "74e115239ef86b7d0593cf16df0218e72d45f838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9310faa_773beb09",
+        "filename": "device/bluetooth/test/fake_remote_gatt_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-27T00:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7915a15_437a05c1",
+      "range": {
+        "startLine": 41,
+        "startChar": 41,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "74e115239ef86b7d0593cf16df0218e72d45f838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
