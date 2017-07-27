@@ -34,6 +34,24 @@
       "revId": "7d77a838b484eb72f7a497c11d8453240716e28a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcdf935_30708754",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-27T22:02:00Z",
+      "side": 0,
+      "message": "I only found one: PaintLayerClipperTest.CSSClip\nI expect a few layout test would fail if it\u0027s actually needed though.",
+      "parentUuid": "28c381cf_5a6b104b",
+      "revId": "7d77a838b484eb72f7a497c11d8453240716e28a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

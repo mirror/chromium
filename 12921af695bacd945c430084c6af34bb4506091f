@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97b29ab8_9f83ea44",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-27T22:02:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cafa46cf_5e3eb3ec",
+      "revId": "12921af695bacd945c430084c6af34bb4506091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bcc49cd_78f7324f",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "12921af695bacd945c430084c6af34bb4506091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e36dfb_c982feac",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-27T22:02:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bcc49cd_78f7324f",
+      "revId": "12921af695bacd945c430084c6af34bb4506091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
