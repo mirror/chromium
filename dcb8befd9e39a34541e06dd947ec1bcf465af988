@@ -16,6 +16,24 @@
       "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b16549_8fff8a54",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-27T03:29:17Z",
+      "side": 1,
+      "message": "Yes, the caller should be blocked on waiting the callback of initialization result.",
+      "parentUuid": "df4dfa45_8d835d8d",
+      "revId": "dcb8befd9e39a34541e06dd947ec1bcf465af988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
