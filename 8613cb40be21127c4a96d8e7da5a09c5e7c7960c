@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6014cd73_ec63d2fa",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-27T01:27:31Z",
+      "side": 1,
+      "message": "Maybe add description to say \"the instructions are shown below the title as bullet points\"?\n\nTranslator may get confused seeing a string ended with \"To get started,\"",
+      "range": {
+        "startLine": 765,
+        "startChar": 21,
+        "endLine": 765,
+        "endChar": 78
+      },
+      "revId": "8613cb40be21127c4a96d8e7da5a09c5e7c7960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
