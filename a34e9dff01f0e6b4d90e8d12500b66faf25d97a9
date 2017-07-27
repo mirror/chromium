@@ -22,6 +22,30 @@
       "revId": "a34e9dff01f0e6b4d90e8d12500b66faf25d97a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7ed686_d1126b1a",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-27T17:16:12Z",
+      "side": 1,
+      "message": "well then... much nicer...",
+      "parentUuid": "988337fe_3cb0693a",
+      "range": {
+        "startLine": 417,
+        "startChar": 34,
+        "endLine": 417,
+        "endChar": 52
+      },
+      "revId": "a34e9dff01f0e6b4d90e8d12500b66faf25d97a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
