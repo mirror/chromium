@@ -31,5 +31,13 @@ void ChooserBubbleUi::CreateAndShow(views::BubbleDialogDelegateView* delegate) {
   // Set |parent_window_| because some valid anchors can become hidden.
   delegate->set_parent_window(parent);
   views::BubbleDialogDelegateView::CreateBubble(delegate)->Show();
+
+  // If the browser is full screen do not update anchor position.
+  if (browser_->exclusive_access_manager()->context()->IsFullscreen() ||
+      browser->exclusive_access_manager()
+          ->fullscreen_controller()
+          ->IsFullscreenForBrowser()) {
+    return;
+  }
   KeepBubbleAnchored(delegate, GetPageInfoDecoration(parent_window));
 }
