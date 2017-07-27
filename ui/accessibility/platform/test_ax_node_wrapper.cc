@@ -166,6 +166,8 @@ AXPlatformNode* TestAXNodeWrapper::GetFromNodeID(int32_t id) {
   return nullptr;
 }
 
+void TestAXNodeWrapper::EnableAccessibilityMode(ui::AXMode mode_flags) {}
+
 gfx::AcceleratedWidget
 TestAXNodeWrapper::GetTargetForNativeAccessibilityEvent() {
   return gfx::kNullAcceleratedWidget;
