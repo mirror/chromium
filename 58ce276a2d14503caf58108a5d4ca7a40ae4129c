@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebe68744_3be07fec",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-27T05:52:12Z",
+      "side": 1,
+      "message": "I don\u0027t think it is feasible. Actually most of SharedMemory objects are in browser process whichever they are mmap-ed or not, but we\u0027d need to mmap all SharedMemory to get resident size.",
+      "parentUuid": "10e46b55_5a1cf503",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 74
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece37921_94865e92",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-26T20:11:41Z",
       "side": 1,
       "message": "Now, if the resident size is less than the allocated size, and the dump providers report a size that they allocated instead of the resident size, we will have an error in UI saying the owner of this dump is smaller in size.",
+      "range": {
+        "startLine": 88,
+        "startChar": 73,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37496058_a3aacf35",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-27T05:52:12Z",
+      "side": 1,
+      "message": "Hmm, so is this a kind of TODO? I\u0027m still not sure what to do about the issue.",
+      "parentUuid": "ece37921_94865e92",
       "range": {
         "startLine": 88,
         "startChar": 73,
