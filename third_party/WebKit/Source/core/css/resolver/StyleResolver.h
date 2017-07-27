@@ -143,6 +143,8 @@ class CORE_EXPORT StyleResolver final
                                           CSSVariableResolver&,
                                           const PropertyHandle&);
 
+  static bool HasAuthorBackground(const StyleResolverState&);
+
   DECLARE_TRACE();
 
  private:
@@ -282,7 +284,7 @@ class CORE_EXPORT StyleResolver final
                                      const PseudoStyleRequest&,
                                      const ComputedStyle* parent_style,
                                      StyleResolverState&);
-  bool HasAuthorBackground(const StyleResolverState&);
+
   bool HasAuthorBorder(const StyleResolverState&);
 
   PseudoElement* CreatePseudoElement(Element* parent, PseudoId);
