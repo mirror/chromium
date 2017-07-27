@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6484bfb0_01131b7e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-27T22:09:19Z",
+      "side": 1,
+      "message": "Yeah I agree. And Quinten also pointed out the same problem. I\u0027m refactoring the request method to make it easier for callers to extract various information, which involves a re-encapsulation of the response from urllib2.",
+      "parentUuid": "ed7de7c6_331c6789",
+      "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc09e43b_c9bc4f66",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T21:49:27Z",
       "side": 1,
       "message": "I think it\u0027d be preferable to hard fail here if we can\u0027t collect all the data. Going forward with an incomplete list of PRs could result in creating duplicate PRs.",
+      "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d4b19d_66ab4933",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-27T22:09:19Z",
+      "side": 1,
+      "message": "If that\u0027s the case, there\u0027s another perspective to consider here:\n\nGitHub search APIs have a slight chance of returning incomplete results, which will be marked by incomplete_results: true in the response. Shall we also fail loudly in this case? (Based on my personal experience, it wouldn\u0027t happen often.)",
+      "parentUuid": "fc09e43b_c9bc4f66",
       "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61379a33_c9377edf",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-27T22:09:19Z",
+      "side": 1,
+      "message": "You mean the assertEqual call, if put in one single line? No, it does not. (It did in an early iteration when full URLs were returned.) I\u0027ll reformat it. Thx.\n\nBTW, isn\u0027t the line limit 132 characters?",
+      "parentUuid": "c0771481_836d26b9",
+      "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
