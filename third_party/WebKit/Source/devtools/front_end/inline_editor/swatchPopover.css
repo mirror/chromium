@@ -11,5 +11,5 @@
     border-radius: 2px;
     overflow: auto;
     -webkit-user-select: text;
-    line-height: 11px;
+    /* line-height: 11px; */
 }

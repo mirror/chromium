@@ -192,7 +192,10 @@ class CORE_EXPORT InspectorCSSAgent final
       const String& value) override;
   protocol::Response getBackgroundColors(
       int node_id,
-      protocol::Maybe<protocol::Array<String>>* background_colors) override;
+      protocol::Maybe<protocol::Array<String>>* backgroundColors,
+      protocol::Maybe<String>* computedFontSize,
+      protocol::Maybe<String>* computedFontWeight,
+      protocol::Maybe<String>* computedBodyFontSize) override;
 
   protocol::Response startRuleUsageTracking() override;
   protocol::Response takeCoverageDelta(
