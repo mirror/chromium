@@ -1790,6 +1790,12 @@ void CompareTranslateOp(const TranslateOp* original,
 
 class PaintOpSerializationTest : public ::testing::TestWithParam<uint8_t> {
  public:
+  PaintOpSerializationTest() {
+    // Verify test data.
+    for (size_t i = 0; i < test_rrects.size(); ++i)
+      EXPECT_TRUE(test_rrects[i].isValid());
+  }
+
   PaintOpType GetParamType() const {
     return static_cast<PaintOpType>(GetParam());
   }
