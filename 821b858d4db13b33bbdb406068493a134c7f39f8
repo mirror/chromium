@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94232f8b_ea4f3353",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-27T19:54:54Z",
+      "side": 1,
+      "message": "Please use \"launcher\" instead of app list (where app list means launcher).",
+      "range": {
+        "startLine": 711,
+        "startChar": 76,
+        "endLine": 711,
+        "endChar": 83
+      },
+      "revId": "821b858d4db13b33bbdb406068493a134c7f39f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
