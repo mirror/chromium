@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf4d1e12_ef0ed69f",
+        "filename": "components/storage_monitor/storage_monitor_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-27T20:43:03Z",
+      "side": 1,
+      "message": "Do we want to PostTaskAndReplyWithResult() while we are here? GetDiskInfoAndUpdateOnBackgroundTaskRunner() only takes |monitor| and |update_type| to pass it back.",
+      "revId": "e80d3e303814501cfe84bdef465cdbcb16206d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
