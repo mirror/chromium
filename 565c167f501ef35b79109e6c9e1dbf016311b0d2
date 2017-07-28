@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce84d3b8_fc04838e",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 5647,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T03:44:06Z",
+      "side": 1,
+      "message": "Let\u0027s use frame since it\u0027s what we captured into the local. We could change everything to frame_, but that would be a bit dangerous as frame_ will become null if the document is detached.",
+      "range": {
+        "startLine": 5647,
+        "startChar": 6,
+        "endLine": 5647,
+        "endChar": 12
+      },
+      "revId": "565c167f501ef35b79109e6c9e1dbf016311b0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
