@@ -55,6 +55,9 @@ class ASH_EXPORT HighlighterController : public ui::EventHandler,
   // Destroys |highlighter_view_|, if it exists.
   void DestroyHighlighterView();
 
+  // The presentation delay used for prediction by the laser pointer view.
+  base::TimeDelta presentation_delay_;
+
   // |highlighter_view_| will only hold an instance when the highlighter is
   // enabled and activated (pressed or dragged).
   std::unique_ptr<HighlighterView> highlighter_view_;
