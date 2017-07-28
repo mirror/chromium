@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "768c9d32_758efc1a",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-28T06:56:08Z",
+      "side": 1,
+      "message": "nit: do we want/need to make this 62?",
+      "revId": "5560de5b19193a16c67093a2bcc2d6fd2cee3c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
