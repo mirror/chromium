@@ -262,6 +262,24 @@
     },
     {
       "key": {
+        "uuid": "46237b40_6fe1dc3c",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T03:59:37Z",
+      "side": 1,
+      "message": "Or how about using if-statement?\nWe don\u0027t want to update this switch-statement when we introduce new marker.\nMaintaining this case list is cost.",
+      "parentUuid": "75912b54_23d83194",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54c0c819_3925bf1c",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 2
