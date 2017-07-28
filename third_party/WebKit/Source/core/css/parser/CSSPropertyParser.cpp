@@ -819,6 +819,7 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
       return ConsumeLengthOrPercent(range_, context_->Mode(),
                                     kValueRangeNonNegative);
     case CSSPropertyTextDecoration:
+      NOTREACHED();
       DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return CSSPropertyTextDecorationLineUtils::ConsumeTextDecorationLine(
           range_);
