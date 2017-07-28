@@ -452,4 +452,15 @@ TEST_F(AwSafeBrowsingWhitelistManagerTest,
   EXPECT_FALSE(wm_->IsURLWhitelisted(GURL("http://com/")));
 }
 
+TEST_F(AwSafeBrowsingWhitelistManagerTest,
+       VerifyNonWsNonHttpSchemeInUrlsAreNotWhitelisted) {
+  std::vector<std::string> whitelist;
+  whitelist.push_back("example.com");
+  wm_->SetWhitelistOnUIThread(std::move(whitelist));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(wm_->IsURLWhitelisted(GURL("file://a/b/test")));
+  EXPECT_FALSE(wm_->IsURLWhitelisted(GURL("mailto:google.com/")));
+  EXPECT_FALSE(wm_->IsURLWhitelisted(GURL("data:google.com/")));
+}
+
 }  // namespace android_webview
