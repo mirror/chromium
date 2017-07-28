@@ -9,9 +9,10 @@
 namespace resource_coordinator {
 
 ProcessCoordinationUnitImpl::ProcessCoordinationUnitImpl(
+    mojom::CoordinationUnitRequest request,
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitImpl(id, std::move(service_ref)) {}
+    : CoordinationUnitImpl(std::move(request), id, std::move(service_ref)) {}
 
 ProcessCoordinationUnitImpl::~ProcessCoordinationUnitImpl() = default;
 

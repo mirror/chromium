@@ -15,6 +15,7 @@ namespace resource_coordinator {
 class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   WebContentsCoordinationUnitImpl(
+      mojom::CoordinationUnitRequest request,
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~WebContentsCoordinationUnitImpl() override;
