@@ -61,7 +61,10 @@ static const NamedCodec kCodecStrings[] = {
     {"vp9.0", EME_CODEC_WEBM_VP9},      // VP9.
     {"vp09", EME_CODEC_COMMON_VP9},     // New multi-part VP9 for WebM and MP4.
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
-    {"mp4a", EME_CODEC_MP4_AAC},  // AAC.
+    {"mp4a", EME_CODEC_MP4_AAC},   // AAC.
+    {"flac", EME_CODEC_MP4_FLAC},  // FLAC. BIG TODO: this may become fLaC
+                                   // pending
+                                   // https://github.com/xiph/flac/issues/38
 #if BUILDFLAG(ENABLE_AC3_EAC3_AUDIO_DEMUXING)
     {"ac-3", EME_CODEC_MP4_AC3},   // AC3.
     {"ec-3", EME_CODEC_MP4_EAC3},  // EAC3.

@@ -32,6 +32,7 @@ namespace {
 
 #if defined(PLAYREADY_CDM_AVAILABLE) || \
     (BUILDFLAG(IS_CAST_USING_CMA_BACKEND) && defined(WIDEVINE_CDM_AVAILABLE))
+// BIG TODO: include FLAC here, too?
 SupportedCodecs GetCastEmeSupportedCodecs() {
   SupportedCodecs codecs =
       ::media::EME_CODEC_MP4_AAC | ::media::EME_CODEC_MP4_AVC1 |

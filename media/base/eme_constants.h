@@ -39,29 +39,25 @@ enum EmeCodec {
   EME_CODEC_MP4_DV_HEVC = 1 << 9,
   EME_CODEC_MP4_AC3 = 1 << 10,
   EME_CODEC_MP4_EAC3 = 1 << 11,
+  EME_CODEC_MP4_FLAC = 1 << 12,
   EME_CODEC_WEBM_AUDIO_ALL = EME_CODEC_WEBM_OPUS | EME_CODEC_WEBM_VORBIS,
   EME_CODEC_WEBM_VIDEO_ALL =
       (EME_CODEC_WEBM_VP8 | EME_CODEC_WEBM_VP9 | EME_CODEC_COMMON_VP9),
   EME_CODEC_WEBM_ALL = (EME_CODEC_WEBM_AUDIO_ALL | EME_CODEC_WEBM_VIDEO_ALL),
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
-  EME_CODEC_MP4_AUDIO_ALL = (EME_CODEC_MP4_AAC
+  EME_CODEC_MP4_AUDIO_ALL = (EME_CODEC_MP4_AAC | EME_CODEC_MP4_FLAC
 #if BUILDFLAG(ENABLE_AC3_EAC3_AUDIO_DEMUXING)
-                             |
-                             EME_CODEC_MP4_AC3 |
-                             EME_CODEC_MP4_EAC3
+                             | EME_CODEC_MP4_AC3 | EME_CODEC_MP4_EAC3
 #endif  // BUILDFLAG(ENABLE_AC3_EAC3_AUDIO_DEMUXING)
                              ),
   EME_CODEC_MP4_VIDEO_ALL = (EME_CODEC_MP4_AVC1 | EME_CODEC_COMMON_VP9
 #if BUILDFLAG(ENABLE_HEVC_DEMUXING)
-                             |
-                             EME_CODEC_MP4_HEVC
+                             | EME_CODEC_MP4_HEVC
 #endif  // BUILDFLAG(ENABLE_HEVC_DEMUXING)
 #if BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
-                             |
-                             EME_CODEC_MP4_DV_AVC
+                             | EME_CODEC_MP4_DV_AVC
 #if BUILDFLAG(ENABLE_HEVC_DEMUXING)
-                             |
-                             EME_CODEC_MP4_DV_HEVC
+                             | EME_CODEC_MP4_DV_HEVC
 #endif  // BUILDFLAG(ENABLE_HEVC_DEMUXING)
 #endif  // BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
                              ),

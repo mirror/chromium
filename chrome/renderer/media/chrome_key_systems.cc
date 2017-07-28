@@ -196,6 +196,7 @@ static void AddPepperBasedWidevine(
   supported_codecs |= media::EME_CODEC_WEBM_VORBIS;
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   supported_codecs |= media::EME_CODEC_MP4_AAC;
+  supported_codecs |= media::EME_CODEC_MP4_FLAC;  // BIG TODO: is this correct?
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
 
   for (size_t i = 0; i < codecs.size(); ++i) {
