@@ -265,6 +265,7 @@ void UkmService::BuildAndStoreLog() {
 
   std::string serialized_log;
   report.SerializeToString(&serialized_log);
+  LOG(ERROR) << serialized_log;
   reporting_service_.ukm_log_store()->StoreLog(serialized_log);
 }
 

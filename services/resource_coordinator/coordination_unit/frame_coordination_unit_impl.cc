@@ -15,7 +15,7 @@ FrameCoordinationUnitImpl::~FrameCoordinationUnitImpl() = default;
 
 std::set<CoordinationUnitImpl*>
 FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
-    CoordinationUnitType type) {
+    CoordinationUnitType type) const {
   switch (type) {
     case CoordinationUnitType::kProcess:
     case CoordinationUnitType::kWebContents:
