@@ -114,6 +114,8 @@ class NET_EXPORT CertErrors {
   // Returns true if this contains any errors of the given severity level.
   bool ContainsAnyErrorWithSeverity(CertError::Severity severity) const;
 
+  const std::vector<CertError>& nodes() const { return nodes_; }
+
  private:
   std::vector<CertError> nodes_;
 };

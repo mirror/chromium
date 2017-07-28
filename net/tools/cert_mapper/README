@@ -1,0 +1,53 @@
+h
+==================
+One time setup
+===================
+
+---------------------------
+1. Apply this patch
+---------------------------
+
+$ git new-branch CERT_MAPPER
+$ git cl patch 1238413004
+
+---------------------------
+2. Download CT database
+---------------------------
+
+If you haven't already, you need to download the full CT database. This takes a
+long time (order of hours), and will save a file about 22GB large. (If you know
+someone that has already downloaded this, you may want to copy it from them
+instead of fetching it yourself.)
+
+$ cd src
+$ ./net/tools/cert_mapper/sync-ct-database.sh  CT.db
+
+---------------------------
+3. Dump all the certificates from CT database
+---------------------------
+
+Rather than operate directly on the CT database, the cert mapper iterates over
+a simpler (and smaller) file, which just contains the DER for each certificate.
+This file is about half the size of the CT.db (making it around 11GB).
+
+$ cd src
+$ ./net/tools/cert_mapper/dump-ct.sh  CT.db   CERTS_DUMP_PATH
+
+This will take about 20 minutes to run, after which CERTS.bin will have been
+written. This is the input file that you pass to the cert_mapper.
+
+======================================================
+How to run code over the certificates in CT database (or a PEM file)
+======================================================
+
+Add your code into:
+  net/tools/cert_mapper/my_visitor.cc
+
+And then execute:
+
+ $ cd src
+ $ ninja -C out/Release cert_mapper
+ $ ./out/Release/cert_mapper CERTS_DUMP_PATH
+
+NOTE: If you get "ninja: error: unknown target 'cert_mapper'" then you need to
+re-generate the ninja files with "gn gen out/Release"
