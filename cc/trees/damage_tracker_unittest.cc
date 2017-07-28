@@ -610,6 +610,19 @@ TEST_F(DamageTrackerTest, VerifyDamageForImageFilter) {
 
   // gfx::Rect(0, 0, 1, 1), expanded by 6px for the 2px blur filter.
   EXPECT_EQ(gfx::Rect(-6, -6, 13, 13), child_damage_rect);
+
+  // CASE 2: No changes, so should not damage the surface.
+  ClearDamageForAllSurfaces(root);
+  EmulateDrawingOneFrame(root);
+
+  EXPECT_TRUE(GetRenderSurface(root)->damage_tracker()->GetDamageRectIfValid(
+      &root_damage_rect));
+  EXPECT_TRUE(GetRenderSurface(child)->damage_tracker()->GetDamageRectIfValid(
+      &child_damage_rect));
+
+  // Should not be expanded by the blur filter.
+  EXPECT_EQ(gfx::Rect(), root_damage_rect);
+  EXPECT_EQ(gfx::Rect(), child_damage_rect);
 }
 
 TEST_F(DamageTrackerTest, VerifyDamageForTransformedImageFilter) {
@@ -847,6 +860,25 @@ TEST_F(DamageTrackerTest, VerifyDamageForBackgroundBlurredChild) {
   // 100,100.
   expected_damage_rect = gfx::Rect(100, 100, 7, 7);
   EXPECT_EQ(expected_damage_rect.ToString(), root_damage_rect.ToString());
+
+  // CASE 7: No changes, so should not damage the surface.
+  ClearDamageForAllSurfaces(root);
+  // To make the surface_rect_in_target_space can be interacted with
+  // (-6,-6 6x6), the expanded empty rect by 6px. So we can test we should not
+  // expand empty rect.
+  child1->SetPosition(gfx::PointF());
+  root->layer_tree_impl()->property_trees()->needs_rebuild = true;
+  EmulateDrawingOneFrame(root);
+
+  gfx::Rect child_damage_rect;
+  EXPECT_TRUE(GetRenderSurface(root)->damage_tracker()->GetDamageRectIfValid(
+      &root_damage_rect));
+  EXPECT_TRUE(GetRenderSurface(child1)->damage_tracker()->GetDamageRectIfValid(
+      &child_damage_rect));
+
+  // Should not be expanded by the blur filter.
+  EXPECT_EQ(gfx::Rect(), root_damage_rect);
+  EXPECT_EQ(gfx::Rect(), child_damage_rect);
 }
 
 TEST_F(DamageTrackerTest, VerifyDamageForAddingAndRemovingLayer) {
