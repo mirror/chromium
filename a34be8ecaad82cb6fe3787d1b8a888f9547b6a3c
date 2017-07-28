@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8650edd7_39d3870e",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-07-28T18:29:23Z",
+      "side": 1,
+      "message": "Nit: variable names should either be snake_case or kCamelCase if const. https://google.github.io/styleguide/cppguide.html#Variable_Names\n \nSuper Nit: prefer a more descriptive variable name.",
+      "range": {
+        "startLine": 1055,
+        "startChar": 6,
+        "endLine": 1055,
+        "endChar": 14
+      },
+      "revId": "a34be8ecaad82cb6fe3787d1b8a888f9547b6a3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
