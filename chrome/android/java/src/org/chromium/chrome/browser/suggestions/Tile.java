@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.suggestions;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
@@ -15,6 +16,9 @@ public class Tile implements OfflinableSuggestion {
     private final String mUrl;
     private final String mWhitelistIconPath;
     private final int mIndex;
+
+    @TileGroup.TileSection
+    private final int mSection;
 
     @TileSource
     private final int mSource;
@@ -45,6 +49,7 @@ public class Tile implements OfflinableSuggestion {
         mUrl = url;
         mWhitelistIconPath = whitelistIconPath;
         mIndex = index;
+        mSection = TileGroup.TileSection.PERSONAL; // TODO(dgn): rebase and use real data.
         mSource = source;
     }
 
@@ -62,11 +67,12 @@ public class Tile implements OfflinableSuggestion {
      * difference between the two that would require a redraw.
      * Assumes that the current tile and the old tile (if provided) both describe the same site,
      * so the URLs have to be the same.
+     *
+     * @return Whether non-transient data is different and the tile should be redrawn.
      */
-    public boolean importData(@Nullable Tile tile) {
-        if (tile == null) return true;
-
+    public boolean importData(@NonNull Tile tile) {
         assert tile.getUrl().equals(mUrl);
+        assert tile.getSection() == mSection;
 
         mType = tile.getType();
         mIcon = tile.getIcon();
@@ -169,5 +175,10 @@ public class Tile implements OfflinableSuggestion {
      */
     public void setIcon(@Nullable Drawable icon) {
         mIcon = icon;
+    }
+
+    @TileGroup.TileSection
+    public int getSection() {
+        return mSection;
     }
 }
