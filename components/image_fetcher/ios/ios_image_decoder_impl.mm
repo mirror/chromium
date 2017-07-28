@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
+#include "base/task_scheduler/post_task.h"
 #import "components/image_fetcher/ios/webp_decoder.h"
 #include "ios/web/public/web_thread.h"
 #include "ui/gfx/geometry/size.h"
@@ -102,8 +103,16 @@ void IOSImageDecoderImpl::CreateUIImageAndRunCallback(
   callback.Run(empty_image);
 }
 
-std::unique_ptr<ImageDecoder> CreateIOSImageDecoder(
+std::unique_ptr<ImageDecoder> CreateIOSImageDecoderWithTaskRunner(
     scoped_refptr<base::TaskRunner> task_runner) {
+  return base::MakeUnique<IOSImageDecoderImpl>(std::move(task_runner));
+}
+
+std::unique_ptr<ImageDecoder> CreateIOSImageDecoder() {
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
   return base::MakeUnique<IOSImageDecoderImpl>(std::move(task_runner));
 }
 

@@ -15,8 +15,9 @@ class TaskRunner;
 namespace image_fetcher {
 
 // Factory for iOS specific implementation of ImageDecoder.
-std::unique_ptr<ImageDecoder> CreateIOSImageDecoder(
+std::unique_ptr<ImageDecoder> CreateIOSImageDecoderWithTaskRunner(
     scoped_refptr<base::TaskRunner> task_runner);
+std::unique_ptr<ImageDecoder> CreateIOSImageDecoder();
 
 }  // namespace image_fetcher
 

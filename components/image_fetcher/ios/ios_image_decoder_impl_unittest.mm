@@ -66,7 +66,7 @@ class IOSImageDecoderImplTest : public PlatformTest {
       : pool_(new base::SequencedWorkerPool(2,
                                             "TestPool",
                                             base::TaskPriority::USER_VISIBLE)) {
-    ios_image_decoder_impl_ = CreateIOSImageDecoder(pool_);
+    ios_image_decoder_impl_ = CreateIOSImageDecoderWithTaskRunner(pool_);
   }
 
   ~IOSImageDecoderImplTest() override { pool_->Shutdown(); }
