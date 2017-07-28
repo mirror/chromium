@@ -744,7 +744,7 @@ void GuestViewBase::DispatchEventToGuestProxy(
 }
 
 void GuestViewBase::DispatchEventToView(std::unique_ptr<GuestViewEvent> event) {
-  if (attached() || can_owner_receive_events()) {
+  if (attached()) {
     event->Dispatch(this, view_instance_id_);
     return;
   }

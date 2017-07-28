@@ -167,8 +167,6 @@ class GuestViewBase : public content::BrowserPluginGuestDelegate,
   // Returns the instance ID of the GuestViewBase's element.
   int element_instance_id() const { return element_instance_id_; }
 
-  bool can_owner_receive_events() const { return !!view_instance_id_; }
-
   gfx::Size size() const { return guest_size_; }
 
   // Returns the user browser context of the embedder.
