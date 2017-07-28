@@ -941,20 +941,14 @@ LayoutRect FrameSelection::UnclippedBounds() const {
 IntRect FrameSelection::ComputeRectToScroll(
     RevealExtentOption reveal_extent_option) {
   const VisibleSelection& selection = ComputeVisibleSelectionInDOMTree();
+  if (selection.IsCaret())
+    return AbsoluteCaretBounds();
+  DCHECK(selection.IsRange());
   LayoutRect rect;
-  switch (selection.GetSelectionType()) {
-    case kCaretSelection:
-      return AbsoluteCaretBounds();
-    case kRangeSelection: {
-      if (reveal_extent_option == kRevealExtent)
-        return AbsoluteCaretBoundsOf(CreateVisiblePosition(selection.Extent()));
-      layout_selection_->SetHasPendingSelection();
-      return layout_selection_->SelectionBounds();
-    }
-    default:
-      NOTREACHED();
-      return {};
-  }
+  if (reveal_extent_option == kRevealExtent)
+    return AbsoluteCaretBoundsOf(CreateVisiblePosition(selection.Extent()));
+  layout_selection_->SetHasPendingSelection();
+  return layout_selection_->SelectionBounds();
 }
 
 // TODO(editing-dev): This should be done in FlatTree world.
