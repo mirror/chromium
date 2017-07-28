@@ -70,6 +70,30 @@
       "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1541cfbf_4de537dd",
+        "filename": "net/cert/x509_util_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-28T19:22:20Z",
+      "side": 0,
+      "message": "Apple changed the behavior of their pki code in 10.12. This block accounts for that. So it is intentional that it is only on 10.12+.\n\nAt the time I added it, I got some compiler error/warning about SecPolicyCreateRevocation that required me to add the availability pragma. I don\u0027t know why that is, if we require 10.9 anyway.\n\nIf the code compiles successfully now just by removing the pragma (but leaving the version check), that would be fine too. (I\u0027m not sure if there is a preference for using the base::mac version check when availability isn\u0027t a problem? Could/should __builtin_available be used for all version checks now?)",
+      "parentUuid": "0164f8ff_140f575e",
+      "range": {
+        "startLine": 209,
+        "startChar": 18,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
