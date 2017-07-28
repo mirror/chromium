@@ -16,6 +16,24 @@
       "revId": "809da861072baa4fbda6ddcf873e3bf9b6631b74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95896272_edee1580",
+        "filename": "chrome/browser/google/google_update_win_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T09:09:51Z",
+      "side": 1,
+      "message": "This resolves a post-commit comment on the previous CL. It\u0027s to clear global state when the test exits.",
+      "parentUuid": "2ed568a9_c54097d2",
+      "revId": "809da861072baa4fbda6ddcf873e3bf9b6631b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
