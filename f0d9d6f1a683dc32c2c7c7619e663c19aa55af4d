@@ -16,6 +16,24 @@
       "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5917917_d0ca1c40",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T21:03:58Z",
+      "side": 1,
+      "message": "Yes, MR pass sinks to MRP. No, MRP does not need port. We only pass opened socket which has a channel_id to MRP, and MRP will use channel_id to communicate with cast channel.",
+      "parentUuid": "1e9ede3a_0dfeadd4",
+      "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
