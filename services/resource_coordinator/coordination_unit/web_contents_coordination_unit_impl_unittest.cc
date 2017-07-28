@@ -40,7 +40,7 @@ TEST_F(WebContentsCoordinationUnitImplTest,
   EXPECT_EQ(base::Value(20.0),
             cu_graph.tab->GetProperty(mojom::PropertyType::kCPUUsage));
   EXPECT_EQ(base::Value(20.0),
-            cu_graph.tab->GetProperty(mojom::PropertyType::kCPUUsage));
+            cu_graph.other_tab->GetProperty(mojom::PropertyType::kCPUUsage));
 }
 
 TEST_F(WebContentsCoordinationUnitImplTest,
