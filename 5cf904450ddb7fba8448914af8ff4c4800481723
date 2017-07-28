@@ -22,6 +22,30 @@
       "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6371e0c5_5a8743ae",
+        "filename": "net/cert/x509_util_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-28T19:09:55Z",
+      "side": 0,
+      "message": "This block is only needed on 10.12+. The function it uses is only available on 10.9+, at least according to https://developer.apple.com/documentation/security/1400026-secpolicycreaterevocation?language\u003dobjc. What I don\u0027t understand is why I needed the availability pragma at all if 10.9 is the oldest version we support.",
+      "parentUuid": "95fb5645_028db06f",
+      "range": {
+        "startLine": 209,
+        "startChar": 18,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
