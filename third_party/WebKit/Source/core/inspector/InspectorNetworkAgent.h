@@ -81,7 +81,10 @@ class CORE_EXPORT InspectorNetworkAgent final
 
   // Probes.
   void DidBlockRequest(ExecutionContext*,
-                       const ResourceRequest&,
+                       const KURL&,
+                       WebURLRequest::RequestContext,
+                       WebURLRequest::FrameType,
+                       ReferrerPolicy,
                        DocumentLoader*,
                        const FetchInitiatorInfo&,
                        ResourceRequestBlockedReason);
@@ -240,7 +243,10 @@ class CORE_EXPORT InspectorNetworkAgent final
   void WillSendRequestInternal(ExecutionContext*,
                                unsigned long identifier,
                                DocumentLoader*,
-                               const ResourceRequest&,
+                               const KURL&,
+                               WebURLRequest::RequestContext,
+                               WebURLRequest::FrameType,
+                               ReferrerPolicy,
                                const ResourceResponse& redirect_response,
                                const FetchInitiatorInfo&);
   void DelayedRemoveReplayXHR(XMLHttpRequest*);

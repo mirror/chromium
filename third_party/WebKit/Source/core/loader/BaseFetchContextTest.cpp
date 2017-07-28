@@ -50,7 +50,10 @@ class MockBaseFetchContext final : public BaseFetchContext {
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override {
     return false;
   }
-  void DispatchDidBlockRequest(const ResourceRequest&,
+  void DispatchDidBlockRequest(const KURL&,
+                               WebURLRequest::RequestContext,
+                               WebURLRequest::FrameType,
+                               ReferrerPolicy,
                                const FetchInitiatorInfo&,
                                ResourceRequestBlockedReason) const override {}
   bool ShouldBypassMainWorldCSP() const override { return false; }

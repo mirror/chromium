@@ -143,11 +143,23 @@ const char* RequestContextName(WebURLRequest::RequestContext context) {
   return "resource";
 }
 
-}  // namespace
+// Returns the frame that should be considered the effective frame
+// for a mixed content check for the given frame type.
+Frame* EffectiveFrameForFrameType(LocalFrame* frame,
+                                  WebURLRequest::FrameType frame_type) {
+  // If we're loading the main resource of a subframe, ensure that we check
+  // against the parent of the active frame, rather than the frame itself.
+  if (frame_type != WebURLRequest::kFrameTypeNested)
+    return frame;
 
-static void MeasureStricterVersionOfIsMixedContent(Frame& frame,
-                                                   const KURL& url,
-                                                   const LocalFrame* source) {
+  Frame* parent_frame = frame->Tree().Parent();
+  DCHECK(parent_frame);
+  return parent_frame;
+}
+
+void MeasureStricterVersionOfIsMixedContent(Frame& frame,
+                                            const KURL& url,
+                                            const LocalFrame* source) {
   // We're currently only checking for mixed content in `https://*` contexts.
   // What about other "secure" contexts the SchemeRegistry knows about? We'll
   // use this method to measure the occurrence of non-webby mixed content to
@@ -172,6 +184,8 @@ bool RequestIsSubframeSubresource(Frame* frame,
   return (frame && frame != frame->Tree().Top() &&
           frame_type != WebURLRequest::kFrameTypeNested);
 }
+
+}  // namespace
 
 // static
 bool MixedContentChecker::IsMixedContent(SecurityOrigin* security_origin,
@@ -206,6 +220,30 @@ Frame* MixedContentChecker::InWhichFrameIsContentMixed(
   // We only care about subresource loads; top-level navigations cannot be mixed
   // content. Neither can frameless requests.
   if (frame_type == WebURLRequest::kFrameTypeTopLevel || !frame)
+    return nullptr;
+
+  // Check the top frame first.
+  Frame& top = frame->Tree().Top();
+  MeasureStricterVersionOfIsMixedContent(top, url, source);
+  if (IsMixedContent(top.GetSecurityContext()->GetSecurityOrigin(), url))
+    return &top;
+
+  MeasureStricterVersionOfIsMixedContent(*frame, url, source);
+  if (IsMixedContent(frame->GetSecurityContext()->GetSecurityOrigin(), url))
+    return frame;
+
+  // No mixed content, no problem.
+  return nullptr;
+}
+
+// static
+Frame* MixedContentChecker::InWhichFrameIsContentMixedSimple(
+    Frame* frame,
+    const KURL& url,
+    const LocalFrame* source) {
+  // We only care about subresource loads; top-level navigations cannot be mixed
+  // content. Neither can frameless requests.
+  if (!frame)
     return nullptr;
 
   // Check the top frame first.
@@ -310,6 +348,8 @@ bool MixedContentChecker::ShouldBlockFetch(
     ResourceRequest::RedirectStatus redirect_status,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) {
+  DCHECK(frame);
+
   // Frame-level loads are checked by the browser if PlzNavigate is enabled. No
   // need to check them again here.
   if (frame->GetSettings()->GetBrowserSideNavigationEnabled() &&
@@ -508,8 +548,10 @@ bool MixedContentChecker::ShouldBlockWebSocket(
     LocalFrame* frame,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) {
-  Frame* mixed_frame = InWhichFrameIsContentMixed(
-      frame, WebURLRequest::kFrameTypeNone, url, frame);
+  if (!frame)
+    return false;
+
+  Frame* mixed_frame = InWhichFrameIsContentMixedSimple(frame, url, frame);
   if (!mixed_frame)
     return false;
 
@@ -566,8 +608,7 @@ bool MixedContentChecker::IsMixedFormAction(
   if (url.ProtocolIs("javascript"))
     return false;
 
-  Frame* mixed_frame = InWhichFrameIsContentMixed(
-      frame, WebURLRequest::kFrameTypeNone, url, frame);
+  Frame* mixed_frame = InWhichFrameIsContentMixedSimple(frame, url, frame);
   if (!mixed_frame)
     return false;
 
@@ -615,26 +656,16 @@ void MixedContentChecker::CheckMixedPrivatePublic(
   }
 }
 
-Frame* MixedContentChecker::EffectiveFrameForFrameType(
-    LocalFrame* frame,
-    WebURLRequest::FrameType frame_type) {
-  // If we're loading the main resource of a subframe, ensure that we check
-  // against the parent of the active frame, rather than the frame itself.
-  if (frame_type != WebURLRequest::kFrameTypeNested)
-    return frame;
-
-  Frame* parent_frame = frame->Tree().Parent();
-  DCHECK(parent_frame);
-  return parent_frame;
-}
-
 void MixedContentChecker::HandleCertificateError(
     LocalFrame* frame,
     const ResourceResponse& response,
     WebURLRequest::FrameType frame_type,
     WebURLRequest::RequestContext request_context) {
+  DCHECK(frame);
+
   Frame* effective_frame = EffectiveFrameForFrameType(frame, frame_type);
-  if (frame_type == WebURLRequest::kFrameTypeTopLevel || !effective_frame)
+  DCHECK(effective_frame);
+  if (frame_type == WebURLRequest::kFrameTypeTopLevel)
     return;
 
   // Use the current local frame's client; the embedder doesn't distinguish
@@ -682,20 +713,20 @@ void MixedContentChecker::MixedContentFound(
 
 WebMixedContentContextType MixedContentChecker::ContextTypeForInspector(
     LocalFrame* frame,
-    const ResourceRequest& request) {
-  Frame* effective_frame =
-      EffectiveFrameForFrameType(frame, request.GetFrameType());
+    const KURL& url,
+    WebURLRequest::RequestContext request_context,
+    WebURLRequest::FrameType frame_type) {
+  Frame* effective_frame = EffectiveFrameForFrameType(frame, frame_type);
 
-  Frame* mixed_frame = InWhichFrameIsContentMixed(
-      effective_frame, request.GetFrameType(), request.Url(), frame);
+  Frame* mixed_frame =
+      InWhichFrameIsContentMixed(effective_frame, frame_type, url, frame);
   if (!mixed_frame)
     return WebMixedContentContextType::kNotMixedContent;
 
   // See comment in shouldBlockFetch() about loading the main resource of a
   // subframe.
-  if (request.GetFrameType() == WebURLRequest::kFrameTypeNested &&
-      !SchemeRegistry::ShouldTreatURLSchemeAsCORSEnabled(
-          request.Url().Protocol())) {
+  if (frame_type == WebURLRequest::kFrameTypeNested &&
+      !SchemeRegistry::ShouldTreatURLSchemeAsCORSEnabled(url.Protocol())) {
     return WebMixedContentContextType::kOptionallyBlockable;
   }
 
@@ -703,7 +734,7 @@ WebMixedContentContextType MixedContentChecker::ContextTypeForInspector(
       mixed_frame->GetSettings() &&
       mixed_frame->GetSettings()->GetStrictMixedContentCheckingForPlugin();
   return WebMixedContent::ContextTypeFromRequestContext(
-      request.GetRequestContext(), strict_mixed_content_checking_for_plugin);
+      request_context, strict_mixed_content_checking_for_plugin);
 }
 
 }  // namespace blink

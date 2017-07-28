@@ -41,7 +41,10 @@ class WorkerFetchContext final : public BaseFetchContext {
   bool AllowScriptFromSource(const KURL&) const override;
   SubresourceFilter* GetSubresourceFilter() const override;
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override;
-  void DispatchDidBlockRequest(const ResourceRequest&,
+  void DispatchDidBlockRequest(const KURL&,
+                               WebURLRequest::RequestContext,
+                               WebURLRequest::FrameType,
+                               ReferrerPolicy,
                                const FetchInitiatorInfo&,
                                ResourceRequestBlockedReason) const override;
   bool ShouldBypassMainWorldCSP() const override;
