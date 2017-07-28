@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd2009d_1755aab4",
+        "filename": "chrome/browser/extensions/api/automation_internal/automation_internal_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-28T20:51:42Z",
+      "side": 1,
+      "message": "Can we change the API as well, since it\u0027s internal?",
+      "revId": "df8de6c5629cd14c812c4f9b3759bbfb18fe6294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
