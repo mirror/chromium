@@ -156,6 +156,38 @@ TEST_P(WaitableEventWatcherTest, StartWatchingInCallback) {
   RunLoop().Run();
 }
 
+// Tests that only one async waiter gets signaled at a time.
+TEST_P(WaitableEventWatcherTest, MultipleAsyncWaiters) {
+  MessageLoop message_loop(GetParam());
+
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+
+  int counter1 = 0;
+  int counter2 = 0;
+
+  auto callback = [](int* counter, WaitableEvent* event) {
+    ++(*counter);
+  };
+
+  WaitableEventWatcher watcher1;
+  watcher1.StartWatching(&event, BindOnce(callback, Unretained(&counter1)));
+
+  WaitableEventWatcher watcher2;
+  watcher2.StartWatching(&event, BindOnce(callback, Unretained(&counter2)));
+
+  event.Signal();
+  RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE((counter1 == 1) ^ (counter2 == 1));
+
+  event.Signal();
+  RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(counter1, 1);
+  EXPECT_EQ(counter2, 1);
+}
+
 // To help detect errors around deleting WaitableEventWatcher, an additional
 // bool parameter is used to test sleeping between watching and deletion.
 class WaitableEventWatcherDeletionTest
