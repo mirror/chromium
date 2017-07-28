@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "93e641ea_85bda8fc",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T19:40:14Z",
+      "side": 1,
+      "message": "Can we use unsigned in C++ code, and add sign checking at some glue layer?\n\nUsing int for index in C++ code makes us panic about the sign.",
+      "parentUuid": "698e7fb3_4cb4a05d",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a10806c_2e14e291",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 2
