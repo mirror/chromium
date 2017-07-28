@@ -17,7 +17,6 @@
 #include "components/translate/core/common/translate_switches.h"
 #include "components/translate/ios/browser/ios_translate_driver.h"
 #import "components/translate/ios/browser/js_translate_manager.h"
-#import "components/translate/ios/browser/language_detection_controller.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/translate/chrome_ios_translate_client.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
