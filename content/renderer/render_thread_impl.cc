@@ -1549,6 +1549,10 @@ RenderThreadImpl::GetLoadingTaskRunner() {
   return renderer_scheduler_->LoadingTaskRunner();
 }
 
+void RenderThreadImpl::SetRendererProcessType(const std::string& process_type) {
+  renderer_scheduler_->SetRendererProcessType(process_type);
+}
+
 void RenderThreadImpl::OnAssociatedInterfaceRequest(
     const std::string& name,
     mojo::ScopedInterfaceEndpointHandle handle) {

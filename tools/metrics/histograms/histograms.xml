@@ -62994,6 +62994,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="RendererScheduler.RendererMainThreadLoad3" units="%">
+  <obsolete>
+    Replaced with RendererScheduler.RendererMainThreadLoad4 as of July 2017.
+  </obsolete>
+  <owner>altimin@chromium.org</owner>
+  <summary>
+    Renderer main thread load (percentage of time spent in tasks), reported in
+    one second chunks.
+
+    See http://bit.ly/chromium-renderer-main-thread-load-metric for details.
+
+    This metric is emitted when the renderer main thread task is completed or
+    renderer is backgrounded or foregrounded, at most once per second per
+    renderer amortized.
+  </summary>
+</histogram>
+
+<histogram base="true" name="RendererScheduler.RendererMainThreadLoad4"
+    units="%">
   <owner>altimin@chromium.org</owner>
   <summary>
     Renderer main thread load (percentage of time spent in tasks), reported in
@@ -97611,7 +97629,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Main thread load when the renderer is foregrounded for longer
              than one minute. Most of loading tasks are expected to complete
              by then."/>
-  <affected-histogram name="RendererScheduler.RendererMainThreadLoad3"/>
+  <affected-histogram name="RendererScheduler.RendererMainThreadLoad3">
+    <obsolete>
+      Obsolete as of July 2017
+    </obsolete>
+  </affected-histogram>
+  <affected-histogram
+      name="RendererScheduler.RendererMainThreadLoad4.ExtensionRenderer"/>
+  <affected-histogram
+      name="RendererScheduler.RendererMainThreadLoad4.Renderer"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="RendererScheduler.ProcessSplit" separator=".">
+  <suffix name="Renderer" label="This does not include extension renderers."/>
+  <suffix name="ExtensionRenderer"
+      label="This is logged only for extension renderers."/>
+  <affected-histogram name="RendererScheduler.RendererMainThreadLoad4"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="RendererScheduler.TaskCountPerTaskLength"

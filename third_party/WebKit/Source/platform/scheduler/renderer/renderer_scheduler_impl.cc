@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
@@ -1854,6 +1855,12 @@ bool RendererSchedulerImpl::MainThreadSeemsUnresponsive(
   return main_thread_seems_unresponsive;
 }
 
+void RendererSchedulerImpl::SetRendererProcessType(
+    const std::string& process_type) {
+  DCHECK(!main_thread_only().process_type);
+  main_thread_only().process_type = process_type;
+}
+
 void RendererSchedulerImpl::RegisterTimeDomain(TimeDomain* time_domain) {
   helper_.RegisterTimeDomain(time_domain);
 }
@@ -2143,11 +2150,17 @@ void RendererSchedulerImpl::RecordTaskMetrics(
 
 void RendererSchedulerImpl::RecordMainThreadTaskLoad(base::TimeTicks time,
                                                      double load) {
+  if (!main_thread_only().process_type)
+    return;
+
   int load_percentage = static_cast<int>(load * 100);
   DCHECK_LE(load_percentage, 100);
 
-  UMA_HISTOGRAM_PERCENTAGE("RendererScheduler.RendererMainThreadLoad3",
-                           load_percentage);
+  UMA_HISTOGRAM_PERCENTAGE(
+      base::StringPrintf("RendererScheduler.RendererMainThreadLoad3.%s",
+                         main_thread_only().process_type->c_str()),
+      load_percentage);
+
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "RendererScheduler.RendererMainThreadLoad", load_percentage);
 }
@@ -2155,16 +2168,24 @@ void RendererSchedulerImpl::RecordMainThreadTaskLoad(base::TimeTicks time,
 void RendererSchedulerImpl::RecordForegroundMainThreadTaskLoad(
     base::TimeTicks time,
     double load) {
+  if (!main_thread_only().process_type)
+    return;
+
   int load_percentage = static_cast<int>(load * 100);
   DCHECK_LE(load_percentage, 100);
 
   UMA_HISTOGRAM_PERCENTAGE(
-      "RendererScheduler.RendererMainThreadLoad3.Foreground", load_percentage);
+      base::StringPrintf(
+          "RendererScheduler.RendererMainThreadLoad3.%s.Foreground",
+          main_thread_only().process_type->c_str()),
+      load_percentage);
 
   if (time - main_thread_only().background_status_changed_at >
       base::TimeDelta::FromMinutes(1)) {
     UMA_HISTOGRAM_PERCENTAGE(
-        "RendererScheduler.RendererMainThreadLoad3.Foreground.AfterFirstMinute",
+        base::StringPrintf("RendererScheduler.RendererMainThreadLoad3.%s."
+                           "Foreground.AfterFirstMinute",
+                           main_thread_only().process_type->c_str()),
         load_percentage);
   }
 
@@ -2176,16 +2197,24 @@ void RendererSchedulerImpl::RecordForegroundMainThreadTaskLoad(
 void RendererSchedulerImpl::RecordBackgroundMainThreadTaskLoad(
     base::TimeTicks time,
     double load) {
+  if (!main_thread_only().process_type)
+    return;
+
   int load_percentage = static_cast<int>(load * 100);
   DCHECK_LE(load_percentage, 100);
 
   UMA_HISTOGRAM_PERCENTAGE(
-      "RendererScheduler.RendererMainThreadLoad3.Background", load_percentage);
+      base::StringPrintf(
+          "RendererScheduler.RendererMainThreadLoad3.%s.Background",
+          main_thread_only().process_type->c_str()),
+      load_percentage);
 
   if (time - main_thread_only().background_status_changed_at >
       base::TimeDelta::FromMinutes(1)) {
     UMA_HISTOGRAM_PERCENTAGE(
-        "RendererScheduler.RendererMainThreadLoad3.Background.AfterFirstMinute",
+        base::StringPrintf("RendererScheduler.RendererMainThreadLoad3.%s."
+                           "Background.AfterFirstMinute",
+                           main_thread_only().process_type->c_str()),
         load_percentage);
   }
 
