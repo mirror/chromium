@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d38f099c_eefcbe27",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3043,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-28T13:11:31Z",
+      "side": 1,
+      "message": "Isn\u0027t it just every Google login page? What makes it a special reauthentication form on passwords.google.com?\n\nHow do we ensure that we still work correctly on a normal Google sign-in form?",
+      "range": {
+        "startLine": 3043,
+        "startChar": 8,
+        "endLine": 3043,
+        "endChar": 9
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5373212_c587200c",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-28T13:11:31Z",
+      "side": 1,
+      "message": "What\u0027s the point to have \"if (!is_gaia_reauthentication_page_)\" here while you are returning early in SendPasswordForms?",
+      "range": {
+        "startLine": 933,
+        "startChar": 8,
+        "endLine": 933,
+        "endChar": 25
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df53466_58cf4fa2",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-28T13:11:31Z",
+      "side": 1,
+      "message": "is it called on every navigation?",
+      "range": {
+        "startLine": 1762,
+        "startChar": 2,
+        "endLine": 1762,
+        "endChar": 32
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc39441_5175b448",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-28T13:11:31Z",
+      "side": 1,
+      "message": "Can we take something nicer, e.g. StringPiece?",
+      "range": {
+        "startLine": 244,
+        "startChar": 33,
+        "endLine": 244,
+        "endChar": 37
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

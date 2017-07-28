@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "95e9aa47_4000a9a1",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-28T13:11:31Z",
+      "side": 0,
+      "message": "Why deleting this block?",
+      "range": {
+        "startLine": 404,
+        "startChar": 3,
+        "endLine": 404,
+        "endChar": 0
+      },
+      "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1b80c9e_c7a5d613",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
         "patchSetId": 2
@@ -69,6 +92,29 @@
       "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6bffaf0_6cd3f67c",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-28T13:11:31Z",
+      "side": 0,
+      "message": "Why don\u0027t we need this test anymore?",
+      "range": {
+        "startLine": 1362,
+        "startChar": 7,
+        "endLine": 1362,
+        "endChar": 11
+      },
+      "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
