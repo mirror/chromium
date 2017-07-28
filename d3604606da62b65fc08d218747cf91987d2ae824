@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c01f4044_c377ce34",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-28T22:17:28Z",
+      "side": 1,
+      "message": "Could you please start your comment with explaining what problem does this code solve. Things which we should not mention in this comments are: web controller, b/5310177, \"this worked in old iOS versions and was removed\", \"# of solutions have been investigated\".\n\nWe are not aware about any alternative working solutions. Right?",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "d3604606da62b65fc08d218747cf91987d2ae824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f16b2c9_4b90c5e3",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-28T22:17:28Z",
+      "side": 1,
+      "message": "This method looks a little bit odd. How about doing this:\n\nUIGestureRecognizer* systemContextMenuRecognizer \u003d\n    [self gestureRecognizerContainingDescription:@\"action\u003d_longPressRecognized:\"];\n[recognizer requireGestureRecognizerToFail:contextMenuRecognizer];",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 33
+      },
+      "revId": "d3604606da62b65fc08d218747cf91987d2ae824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
