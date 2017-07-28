@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4453f68_e46bc2dc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T19:53:05Z",
+      "side": 1,
+      "message": "What is the relationship with tab_loading_state above? If this is true, is it guaranteed that tab_loading_state is TAB_IS_LOADING? I doubt it because this seems to be set before tab_loading_state is set to TAB_IS_LOADING. Can you double check?",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 38
+      },
+      "revId": "ca83cfb12010dd7229b5994f37a2d7f865f5f74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a75e9ff_f5b55cc3",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T19:53:05Z",
+      "side": 1,
+      "message": "You can use ContainsKey from base/stl_util.h",
+      "revId": "ca83cfb12010dd7229b5994f37a2d7f865f5f74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
