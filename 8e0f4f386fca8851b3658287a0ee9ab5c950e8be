@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52a0e725_345ed4e8",
+        "filename": "chromeos/components/tether/notification_remover.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-28T19:15:21Z",
+      "side": 1,
+      "message": "nit: Add the active host part to the description.",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "8e0f4f386fca8851b3658287a0ee9ab5c950e8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
