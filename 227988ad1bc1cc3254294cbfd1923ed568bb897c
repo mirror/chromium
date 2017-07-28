@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c5d3220e_92ff30d4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-28T18:51:25Z",
+      "side": 1,
+      "message": "Some refactoring in the new patchset!",
+      "parentUuid": "6484bfb0_01131b7e",
+      "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc09e43b_c9bc4f66",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
         "patchSetId": 2
@@ -87,6 +105,24 @@
       "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ec1b75_fe90e665",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-28T18:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca145d28_5d1bb0d6",
+      "revId": "227988ad1bc1cc3254294cbfd1923ed568bb897c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
