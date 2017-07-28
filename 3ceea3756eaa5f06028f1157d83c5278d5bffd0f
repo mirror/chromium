@@ -1,0 +1,256 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c39be8fd_f7509c8b",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "nit: \u0026 in front of the function names since CommandFunction is a function pointer.",
+      "range": {
+        "startLine": 55,
+        "startChar": 33,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829c15aa_53869ed1",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "this name seems like a misnomer. when i think of a buffered reader/writer, i imagine something that reads/writes in chunks in a buffer. that\u0027s not what this does.\n\nare zucchini reads typically single-pass full-file scans (as is the case for the crc)?\n\nhow much address space will these mappings typically require?",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20894869_b2a79ab7",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "include the filename in the output?\nalso, why not use LOG(ERROR) for these?",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e52dcc_db83c264",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "since the file is mapped read-only, shouldn\u0027t this be:\n  const uint8_t* data() const",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2b17cb_728a6d71",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "const method?",
+      "range": {
+        "startLine": 33,
+        "startChar": 36,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc69fb4_7fb3964c",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7f4e53_ab7ff86b",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "CHECK that length is within range of int64_t",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0616c074_dbe84b5c",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "while this is concise, i find that i need to consult memory_mapped_file.h to know what these args are. i think it would improve readability to name the types being created here (e.g., File(file_name, base::File::...)). feel free to ignore if the rest of chromium is doing this as you have it here.",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fea9d6_302a4689",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "please use static/reinterpret_cast",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813b7aae_0bffbccd",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "include the file name in the output?",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77df755f_6cb7a49c",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961dbc15_675d92b3",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:51:31Z",
+      "side": 1,
+      "message": "RunZucchiniCommand takes cerr as an in param. why should it not use cerr directly if individual commands use cout/cerr directly? i propose either making everything in the .exe use cout/cerr directly, or passing cout+cerr into the runner for use by it and all commands.",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
