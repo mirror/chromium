@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "270cb150_d1db4b47",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-28T21:14:12Z",
+      "side": 1,
+      "message": "This if-statement may be avoidable if line 100 were removed (so that showFilesToRemove_ doesn\u0027t get a value prior to this.browserProxy_ being set). If that doesn\u0027t work or if you\u0027d rather keep it as is, it\u0027s fine as is.",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796e2e48_e9848a40",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-28T21:14:12Z",
+      "side": 1,
+      "message": "How about CHECK_EQ here?",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96dd72fb_1dc33ff2",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-28T21:14:12Z",
+      "side": 1,
+      "message": "I like that line 65 includes \"Notify\" in the function name. Would you consider \nHandleNotifyCleanupLearnMoreClicked if this is also for notification.",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3354d08_18460425",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16111,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-28T21:14:12Z",
+      "side": 1,
+      "message": "Just a suggestion: sometimes UI changes and labels like \"card\" become outdated. Maybe drop \"card\" from these descriptions since \"Chrome Cleaner webui\" seems specific enough. Your call.",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
