@@ -46,6 +46,30 @@
       "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0164f8ff_140f575e",
+        "filename": "net/cert/x509_util_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T19:15:45Z",
+      "side": 0,
+      "message": "Yup, that\u0027s exactly what I don\u0027t understand either :-) But this if block was like this when you landed it, so I was hoping you could tell me why it looks like way it looks. Is the intention to only call SecPolicyCreateRevocation() on 10.12+? That\u0027s what happened on both the lhs and rhs.\n\nI believe (but haven\u0027t checked) that things should build without the pragma _and_ without the availability check, but that\u0027d be a behavior change.",
+      "parentUuid": "6371e0c5_5a8743ae",
+      "range": {
+        "startLine": 209,
+        "startChar": 18,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
