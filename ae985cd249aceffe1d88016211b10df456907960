@@ -22,6 +22,30 @@
       "revId": "ae985cd249aceffe1d88016211b10df456907960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a917cdac_e51c0154",
+        "filename": "gpu/ipc/service/image_transport_surface_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-28T18:02:44Z",
+      "side": 0,
+      "message": "Yeah, removing this line seems best.",
+      "parentUuid": "2873c17b_40ec0154",
+      "range": {
+        "startLine": 53,
+        "startChar": 56,
+        "endLine": 54,
+        "endChar": 66
+      },
+      "revId": "ae985cd249aceffe1d88016211b10df456907960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
