@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ac732a19_ce322d07",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-28T01:13:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3640059f_3ff2d446",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78501bb0_845d908f",
         "filename": "remoting/proto/file_transfer.proto",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "The client won\u0027t know the full filepath at the time that it makes the request. In this implementation, the client will just send the host a filename, and the host will decide which directory to put it in. In order for the client to at least display where the file actually went, it would show this destination_filepath string to the user. This will only be set in the final response message after the file transfer is done and the file has been moved from a temp location to the final destination.",
       "parentUuid": "0e00bad7_97c306d6",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48338faa_1f9085a3",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-28T01:13:42Z",
+      "side": 1,
+      "message": "As discussed offline, I don\u0027t think it\u0027s great UX for the client to print the download location explicitly, and if it will provide a button to open the folder on the host, then it should do so without referring to the location (which the host should know) since I don\u0027t think we want to build a mechanism by which the client can arbitrarily instruct the host to access specific folders.\n\nIf we later decide we need this, we can add it as part of a CL where it\u0027s clear what it will be used for, but proto fields are difficult to remove once added, so let\u0027s not add anything speculative.",
+      "parentUuid": "6ebeb45c_3466eb08",
       "range": {
         "startLine": 27,
         "startChar": 43,
