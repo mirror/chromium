@@ -22,6 +22,30 @@
       "revId": "8a4cfabd2f65c295c82dd50980749ec038a8bf48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c965bb_74726c5b",
+        "filename": "chromeos/components/tether/notification_remover_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-07-28T19:08:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e848ef1_c2629761",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 3
+      },
+      "revId": "8a4cfabd2f65c295c82dd50980749ec038a8bf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
