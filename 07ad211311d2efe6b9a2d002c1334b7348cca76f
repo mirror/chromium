@@ -46,6 +46,30 @@
       "revId": "07ad211311d2efe6b9a2d002c1334b7348cca76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71099770_21f2d119",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-28T23:50:01Z",
+      "side": 1,
+      "message": "Yea, nobody calls this. public can be dropped with adding @visiblefortesting?\n\nThe other thing to mention is that this cache (5MB) will not be collected at memory pressure with this CL. If we want to do that, we can use a DiscardableReference\u003cLruCache...\u003e instead, which is called at onTrimMemory() of ChromeActivity. \nHowever we would need an instance of ChromeActivity and DownloadActivity is not a ChromeActivity",
+      "parentUuid": "e53feede_49a7b1b6",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 26
+      },
+      "revId": "07ad211311d2efe6b9a2d002c1334b7348cca76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
