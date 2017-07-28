@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa62094e_d9cb4df7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2022,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-28T22:17:59Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be a VBox either.",
+      "revId": "12d2ed5b72b16eb9bf913000d77ef31a7b00a09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
