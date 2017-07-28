@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "a5652b6d_b53e5175",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T16:00:27Z",
+      "side": 1,
+      "message": "I find this style easier to read, so i\u0027m going to keep it :-P, unless you have a strong preference.",
+      "parentUuid": "79a37999_1b6e8557",
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6240e87_d85383e3",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 2
@@ -264,6 +282,30 @@
       "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2c3bc2_f1629f61",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T16:00:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d0a844d_6dbb5195",
+      "range": {
+        "startLine": 1506,
+        "startChar": 6,
+        "endLine": 1506,
+        "endChar": 7
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -385,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "a5039993_616e707a",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T16:00:27Z",
+      "side": 1,
+      "message": "Yup, ill file a bug or two.",
+      "parentUuid": "67c7e9fe_443323f9",
+      "range": {
+        "startLine": 109,
+        "startChar": 17,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10692b5b_2585dac1",
         "filename": "ash/shelf/shelf_view.h",
         "patchSetId": 2
@@ -448,6 +514,30 @@
         "startChar": 1,
         "endLine": 184,
         "endChar": 2
+      },
+      "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85a4626e_fc091cad",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T16:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e883a878_e200b53f",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 40
       },
       "revId": "3b125513b25bcbfd1006a984123929af64196b2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
