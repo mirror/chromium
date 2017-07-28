@@ -297,10 +297,6 @@ void CrasInputStream::ReadAudio(size_t frames,
   double latency_usec =
       latency_ts.tv_sec * base::Time::kMicrosecondsPerSecond +
       latency_ts.tv_nsec / base::Time::kNanosecondsPerMicrosecond;
-  double frames_latency =
-      latency_usec * params_.sample_rate() / base::Time::kMicrosecondsPerSecond;
-  unsigned int bytes_latency =
-      static_cast<unsigned int>(frames_latency * bytes_per_frame_);
 
   // Update the AGC volume level once every second. Note that, |volume| is
   // also updated each time SetVolume() is called through IPC by the
@@ -310,7 +306,9 @@ void CrasInputStream::ReadAudio(size_t frames,
 
   audio_bus_->FromInterleaved(
       buffer, audio_bus_->frames(), params_.bits_per_sample() / 8);
-  callback_->OnData(this, audio_bus_.get(), bytes_latency, normalized_volume);
+  callback_->OnData(this, audio_bus_.get(),
+                    base::TimeDelta::FromMicroseconds(latency_usec),
+                    base::TimeTicks::Now(), normalized_volume);
 }
 
 void CrasInputStream::NotifyStreamError(int err) {

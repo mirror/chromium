@@ -168,10 +168,11 @@ class MockAudioInputCallback : public AudioInputStream::AudioInputCallback {
  public:
   MockAudioInputCallback() {}
 
-  MOCK_METHOD4(OnData,
+  MOCK_METHOD5(OnData,
                void(AudioInputStream* stream,
                     const media::AudioBus* src,
-                    uint32_t hardware_delay_bytes,
+                    base::TimeDelta delay,
+                    base::TimeTicks delay_timestamp,
                     double volume));
   MOCK_METHOD1(OnError, void(AudioInputStream* stream));
 
@@ -254,7 +255,7 @@ class WebContentsAudioInputStreamTest : public testing::TestWithParam<bool> {
             static_cast<AudioMirroringManager::MirroringDestination*>(NULL)))
         .RetiresOnSaturation();
 
-    EXPECT_CALL(mock_input_callback_, OnData(NotNull(), NotNull(), _, _))
+    EXPECT_CALL(mock_input_callback_, OnData(NotNull(), NotNull(), _, _, _))
         .WillRepeatedly(
             InvokeWithoutArgs(&on_data_event_, &base::WaitableEvent::Signal));
 

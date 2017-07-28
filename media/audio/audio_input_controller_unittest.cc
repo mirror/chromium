@@ -78,11 +78,12 @@ class MockSyncWriter : public AudioInputController::SyncWriter {
  public:
   MockSyncWriter() {}
 
-  MOCK_METHOD4(Write,
+  MOCK_METHOD5(Write,
                void(const AudioBus* data,
                     double volume,
                     bool key_pressed,
-                    uint32_t hardware_delay_bytes));
+                    base::TimeDelta delay,
+                    base::TimeTicks delay_timestamp));
   MOCK_METHOD0(Close, void());
 };
 
@@ -156,7 +157,7 @@ TEST_F(AudioInputControllerTest, RecordAndClose) {
       .Times(Exactly(1));
 
   // Write() should be called ten times.
-  EXPECT_CALL(sync_writer, Write(NotNull(), _, _, _))
+  EXPECT_CALL(sync_writer, Write(NotNull(), _, _, _, _))
       .Times(AtLeast(10))
       .WillRepeatedly(
           CheckCountAndPostQuitTask(&count, 10, message_loop_.task_runner()));

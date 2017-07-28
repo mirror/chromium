@@ -371,7 +371,6 @@ void WASAPIAudioInputStream::Run() {
 
   DVLOG(1) << "AudioBlockFifo buffer count: " << buffers_required;
 
-  LARGE_INTEGER now_count = {};
   bool recording = true;
   bool error = false;
   double volume = GetVolume();
@@ -439,8 +438,21 @@ void WASAPIAudioInputStream::Run() {
         // The value contains two parts (A+B), where A is the delay of the
         // first audio frame in the packet and B is the extra delay
         // contained in any stored data. Unit is in audio frames.
-        QueryPerformanceCounter(&now_count);
         // first_audio_frame_timestamp will be 0 if we didn't get a timestamp.
+
+        base::TimeTicks delay_timestamp =
+            base::TimeTicks::FromQPCValue(first_audio_frame_timestamp);
+
+        // TODO(dalecurtis): This is all wrong and brain is mush, fix tomorrow.
+        // Needs to compensate for input buffers from past cycles.
+        base::TimeDelta delay =
+            first_audio_frame_timestamp
+                ? base::TimeTicks::Now() - delay_timestamp
+                : base::TimeDelta::FromSecondsD(
+                      num_frames_to_read /
+                      static_cast<double>(format_.nSamplesPerSec));
+
+#if 0
         double audio_delay_frames =
             first_audio_frame_timestamp == 0
                 ? num_frames_to_read
@@ -449,7 +461,7 @@ void WASAPIAudioInputStream::Run() {
                    10000.0) *
                           ms_to_frame_count_ +
                       fifo_->GetAvailableFrames() - num_frames_to_read;
-
+#endif
         // Get a cached AGC volume level which is updated once every second
         // on the audio manager thread. Note that, |volume| is also updated
         // each time SetVolume() is called through IPC by the render-side AGC.
@@ -457,7 +469,6 @@ void WASAPIAudioInputStream::Run() {
 
         // Deliver captured data to the registered consumer using a packet
         // size which was specified at construction.
-        uint32_t delay_frames = static_cast<uint32_t>(audio_delay_frames + 0.5);
         while (fifo_->available_blocks()) {
           if (converter_) {
             if (imperfect_buffer_size_conversion_ &&

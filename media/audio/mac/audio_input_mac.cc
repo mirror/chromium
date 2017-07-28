@@ -264,7 +264,11 @@ void PCMQueueInAudioInputStream::HandleInputBuffer(
     audio_bus_->FromInterleaved(
         audio_data, audio_bus_->frames(), format_.mBitsPerChannel / 8);
     callback_->OnData(
-        this, audio_bus_.get(), audio_buffer->mAudioDataByteSize, 0.0);
+        this, audio_bus_.get(),
+        base::TimeDelta::FromSecondsD(
+            audio_buffer->mAudioDataByteSize /
+            static_cast<double>(format_.mBytesPerFrame * format_.mSampleRate)),
+        base::TimeTicks::Now(), 0.0);
 
     last_fill_ = base::TimeTicks::Now();
   }

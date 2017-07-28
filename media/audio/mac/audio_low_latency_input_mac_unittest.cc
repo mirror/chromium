@@ -40,10 +40,11 @@ ACTION_P4(CheckCountAndPostQuitTask, count, limit, loop, closure) {
 
 class MockAudioInputCallback : public AudioInputStream::AudioInputCallback {
  public:
-  MOCK_METHOD4(OnData,
+  MOCK_METHOD5(OnData,
                void(AudioInputStream* stream,
                     const AudioBus* src,
-                    uint32_t hardware_delay_bytes,
+                    base::TimeDelta delay,
+                    base::TimeTicks delay_timestamp,
                     double volume));
   MOCK_METHOD1(OnError, void(AudioInputStream* stream));
 };
@@ -86,7 +87,8 @@ class WriteToFileAudioSink : public AudioInputStream::AudioInputCallback {
   // AudioInputStream::AudioInputCallback implementation.
   void OnData(AudioInputStream* stream,
               const AudioBus* src,
-              uint32_t hardware_delay_bytes,
+              base::TimeDelta delay,
+              base::TimeTicks delay_timestamp,
               double volume) override {
     const int num_samples = src->frames() * src->channels();
     std::unique_ptr<int16_t> interleaved(new int16_t[num_samples]);
@@ -215,10 +217,10 @@ TEST_F(MacAudioInputTest, AUAudioInputStreamVerifyMonoRecording) {
   // All should contain valid packets of the same size and a valid delay
   // estimate.
   base::RunLoop run_loop;
-  EXPECT_CALL(sink, OnData(ais, NotNull(), _, _))
+  EXPECT_CALL(sink, OnData(ais, NotNull(), _, _, _))
       .Times(AtLeast(10))
-      .WillRepeatedly(CheckCountAndPostQuitTask(
-          &count, 10, &message_loop_, run_loop.QuitClosure()));
+      .WillRepeatedly(CheckCountAndPostQuitTask(&count, 10, &message_loop_,
+                                                run_loop.QuitClosure()));
   ais->Start(&sink);
   run_loop.Run();
   ais->Stop();
@@ -250,10 +252,10 @@ TEST_F(MacAudioInputTest, AUAudioInputStreamVerifyStereoRecording) {
   // ensure that we can land the patch but will revisit this test again when
   // more analysis of the delay estimates are done.
   base::RunLoop run_loop;
-  EXPECT_CALL(sink, OnData(ais, NotNull(), _, _))
+  EXPECT_CALL(sink, OnData(ais, NotNull(), _, _, _))
       .Times(AtLeast(10))
-      .WillRepeatedly(CheckCountAndPostQuitTask(
-          &count, 10, &message_loop_, run_loop.QuitClosure()));
+      .WillRepeatedly(CheckCountAndPostQuitTask(&count, 10, &message_loop_,
+                                                run_loop.QuitClosure()));
   ais->Start(&sink);
   run_loop.Run();
   ais->Stop();

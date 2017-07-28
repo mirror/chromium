@@ -10,6 +10,7 @@
 #include "media/audio/audio_device_description.h"
 #include "media/audio/pulse/audio_manager_pulse.h"
 #include "media/audio/pulse/pulse_util.h"
+#include "media/base/audio_timestamp_helper.h"
 
 namespace media {
 
@@ -270,9 +271,6 @@ void PulseAudioInputStream::StreamNotifyCallback(pa_stream* s,
 }
 
 void PulseAudioInputStream::ReadData() {
-  uint32_t hardware_delay = pulse::GetHardwareLatencyInBytes(
-      handle_, params_.sample_rate(), params_.GetBytesPerFrame());
-
   // Update the AGC volume level once every second. Note that,
   // |volume| is also updated each time SetVolume() is called
   // through IPC by the render-side AGC.
@@ -309,8 +307,13 @@ void PulseAudioInputStream::ReadData() {
     const AudioBus* audio_bus = fifo_.Consume();
 
     // Compensate the audio delay caused by the FIFO.
-    hardware_delay += fifo_.GetAvailableFrames() * params_.GetBytesPerFrame();
-    callback_->OnData(this, audio_bus, hardware_delay, normalized_volume);
+    base::TimeDelta delay =
+        pulse::GetHardwareLatency(handle_) +
+        AudioTimestampHelper::FramesToTime(fifo_.GetAvailableFrames(),
+                                           params_.sample_rate());
+    base::TimeTicks delay_timestamp = base::TimeTicks::Now();
+    callback_->OnData(this, audio_bus, delay, delay_timestamp,
+                      normalized_volume);
 
     // Sleep 5ms to wait until render consumes the data in order to avoid
     // back to back OnData() method.
