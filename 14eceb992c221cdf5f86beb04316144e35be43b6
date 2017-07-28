@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7db731c8_8918790a",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-28T11:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9deafa7_a7872152",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74eb44e_9b7e4441",
         "filename": "media/midi/midi_manager_mac.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ac7be85b_a8f94a4f",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-28T11:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74eb44e_9b7e4441",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 10
+      },
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "988c7d0a_a6669ff0",
         "filename": "media/midi/midi_manager_mac.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa04f30_f49b0c17",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-28T11:00:00Z",
+      "side": 1,
+      "message": "Sorry, I could not understand what you meant here. But code around here is a little simplified after allowing to access sources_ and destinations_ without taking a lock. So, PTAL new code.",
+      "parentUuid": "988c7d0a_a6669ff0",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "936ea194_9fe504c4",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-28T11:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75f23c05_7c5a2662",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0ed9521_ed3ff6b2",
         "filename": "media/midi/midi_manager_mac.cc",
         "patchSetId": 4
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "028e8463_63451dbc",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-28T11:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ed9521_ed3ff6b2",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a828ef5e_683b6b60",
         "filename": "media/midi/midi_manager_mac.cc",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb802a1_51089153",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-28T11:00:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a828ef5e_683b6b60",
+      "revId": "14eceb992c221cdf5f86beb04316144e35be43b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
