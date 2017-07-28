@@ -63,7 +63,6 @@ bool TextureLayerImpl::IsSnapped() {
 
 void TextureLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   LayerImpl::PushPropertiesTo(layer);
-
   TextureLayerImpl* texture_layer = static_cast<TextureLayerImpl*>(layer);
   texture_layer->SetFlipped(flipped_);
   texture_layer->SetUVTopLeft(uv_top_left_);
@@ -155,9 +154,7 @@ void TextureLayerImpl::AppendQuads(RenderPass* render_pass,
   AppendDebugBorderQuad(render_pass, bounds(), shared_quad_state,
                         append_quads_data);
 
-  SkColor bg_color = blend_background_color_ ?
-      background_color() : SK_ColorTRANSPARENT;
-  bool opaque = contents_opaque() || (SkColorGetA(bg_color) == 0xFF);
+  bool opaque = contents_opaque();
 
   gfx::Rect quad_rect(bounds());
   gfx::Rect opaque_rect = opaque ? quad_rect : gfx::Rect();
@@ -175,6 +172,8 @@ void TextureLayerImpl::AppendQuads(RenderPass* render_pass,
       render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
   viz::ResourceId id =
       valid_texture_copy_ ? texture_copy_->id() : external_texture_resource_;
+  SkColor bg_color =
+      blend_background_color_ ? background_color() : SK_ColorTRANSPARENT;
   quad->SetNew(shared_quad_state, quad_rect, opaque_rect, visible_quad_rect, id,
                premultiplied_alpha_, uv_top_left_, uv_bottom_right_, bg_color,
                vertex_opacity_, flipped_, nearest_neighbor_,
@@ -185,11 +184,12 @@ void TextureLayerImpl::AppendQuads(RenderPass* render_pass,
   ValidateQuadResources(quad);
 }
 
-SimpleEnclosedRegion TextureLayerImpl::VisibleOpaqueRegion() const {
-  if (contents_opaque())
-    return SimpleEnclosedRegion(visible_layer_rect());
+bool TextureLayerImpl::IsLayerOpaque() const {
+  return blend_background_color_ && (SkColorGetA(background_color()) == 0xFF);
+}
 
-  if (blend_background_color_ && (SkColorGetA(background_color()) == 0xFF))
+SimpleEnclosedRegion TextureLayerImpl::VisibleOpaqueRegion() const {
+  if (contents_opaque() || IsLayerOpaque())
     return SimpleEnclosedRegion(visible_layer_rect());
 
   return SimpleEnclosedRegion();

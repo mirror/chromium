@@ -32,6 +32,10 @@ std::unique_ptr<LayerImpl> UIResourceLayerImpl::CreateLayerImpl(
   return UIResourceLayerImpl::Create(tree_impl, id());
 }
 
+bool UIResourceLayerImpl::IsLayerOpaque() const {
+  return layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_);
+}
+
 void UIResourceLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   LayerImpl::PushPropertiesTo(layer);
   UIResourceLayerImpl* layer_impl = static_cast<UIResourceLayerImpl*>(layer);
@@ -116,8 +120,7 @@ void UIResourceLayerImpl::AppendQuads(
 
   DCHECK(!bounds().IsEmpty());
 
-  bool opaque = layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_) ||
-                contents_opaque();
+  bool opaque = contents_opaque() || IsLayerOpaque();
 
   gfx::Rect quad_rect(bounds());
   gfx::Rect opaque_rect(opaque ? quad_rect : gfx::Rect());

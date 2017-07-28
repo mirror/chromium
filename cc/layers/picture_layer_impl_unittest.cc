@@ -1518,6 +1518,7 @@ TEST_F(PictureLayerImplTest, DisallowTileDrawQuads) {
             render_pass->quad_list.front()->material);
   EXPECT_EQ(render_pass->quad_list.front()->rect, layer_rect);
   EXPECT_EQ(render_pass->quad_list.front()->opaque_rect, layer_rect);
+  EXPECT_TRUE(render_pass->quad_list.front()->shared_quad_state->is_opaque);
   EXPECT_EQ(render_pass->quad_list.front()->visible_rect, layer_rect);
 }
 
@@ -1555,6 +1556,7 @@ TEST_F(PictureLayerImplTest, ResourcelessPartialRecording) {
   const DrawQuad* quad = render_pass->quad_list.front();
   EXPECT_EQ(quad_visible, quad->rect);
   EXPECT_EQ(quad_visible, quad->opaque_rect);
+  EXPECT_TRUE(quad->shared_quad_state->is_opaque);
   EXPECT_EQ(quad_visible, quad->visible_rect);
 }
 
