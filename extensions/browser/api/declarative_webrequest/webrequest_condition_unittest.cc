@@ -121,7 +121,7 @@ TEST(WebRequestConditionTest, CreateCondition) {
   EXPECT_FALSE(result->IsFulfilled(request_data));
 }
 
-TEST(WebRequestConditionTest, CreateConditionFirstPartyForCookies) {
+TEST(WebRequestConditionTest, CreateConditionSiteForCookies) {
   // Necessary for TestURLRequest.
   base::MessageLoopForIO message_loop;
   URLMatcher matcher;

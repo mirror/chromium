@@ -48,7 +48,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   bool IsControlledByServiceWorker() const override;
   void SetDataSaverEnabled(bool) override;
   bool IsDataSaverEnabled() const override;
-  blink::WebURL FirstPartyForCookies() const override;
+  blink::WebURL SiteForCookies() const override;
   void DidRunContentWithCertificateErrors(const blink::WebURL& url) override;
   void DidDisplayContentWithCertificateErrors(
       const blink::WebURL& url) override;
@@ -67,8 +67,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   void set_service_worker_provider_id(int id);
   void set_is_controlled_by_service_worker(bool flag);
   void set_parent_frame_id(int id);
-  void set_first_party_for_cookies(
-      const blink::WebURL& first_party_for_cookies);
+  void set_site_for_cookies(const blink::WebURL& site_for_cookies);
   // Sets whether the worker context is a secure context.
   // https://w3c.github.io/webappsec-secure-contexts/
   void set_is_secure_context(bool flag);
@@ -96,7 +95,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
       subresource_filter_builder_;
   bool is_data_saver_enabled_ = false;
   int parent_frame_id_ = MSG_ROUTING_NONE;
-  GURL first_party_for_cookies_;
+  GURL site_for_cookies_;
   bool is_secure_context_ = false;
   int appcache_host_id_ = blink::WebApplicationCacheHost::kAppCacheNoHostId;
 };

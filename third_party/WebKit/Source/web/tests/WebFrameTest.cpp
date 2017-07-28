@@ -7146,7 +7146,7 @@ TEST_P(ParameterizedWebFrameTest, CompositorScrollIsUserScrollLongPage) {
   client.Reset();
 }
 
-TEST_P(ParameterizedWebFrameTest, FirstPartyForCookiesForRedirect) {
+TEST_P(ParameterizedWebFrameTest, SiteForCookiesForRedirect) {
   String file_path = testing::CoreTestDataPath("first_party.html");
 
   WebURL test_url(ToKURL("http://internal.test/first_party_redirect.html"));
@@ -7169,7 +7169,7 @@ TEST_P(ParameterizedWebFrameTest, FirstPartyForCookiesForRedirect) {
   EXPECT_TRUE(web_view_helper.WebView()
                   ->MainFrameImpl()
                   ->GetDocument()
-                  .FirstPartyForCookies() == redirect_url);
+                  .SiteForCookies() == redirect_url);
 }
 
 class TestNavigationPolicyWebFrameClient
@@ -9797,8 +9797,7 @@ TEST_P(ParameterizedWebFrameTest, SendBeaconFromChildWithRemoteMainFrame) {
   FrameTestHelpers::LoadFrame(local_frame, base_url_ + "send_beacon.html");
 }
 
-TEST_P(ParameterizedWebFrameTest,
-       FirstPartyForCookiesFromChildWithRemoteMainFrame) {
+TEST_P(ParameterizedWebFrameTest, SiteForCookiesFromChildWithRemoteMainFrame) {
   FrameTestHelpers::WebViewHelper helper;
   helper.InitializeRemote(nullptr,
                           SecurityOrigin::Create(ToKURL(not_base_url_)));
@@ -9809,11 +9808,11 @@ TEST_P(ParameterizedWebFrameTest,
   RegisterMockedHttpURLLoad("foo.html");
   FrameTestHelpers::LoadFrame(local_frame, base_url_ + "foo.html");
   EXPECT_EQ(WebURL(SecurityOrigin::UrlWithUniqueSecurityOrigin()),
-            local_frame->GetDocument().FirstPartyForCookies());
+            local_frame->GetDocument().SiteForCookies());
 
   SchemeRegistry::RegisterURLSchemeAsFirstPartyWhenTopLevel("http");
   EXPECT_EQ(WebURL(ToKURL(not_base_url_)),
-            local_frame->GetDocument().FirstPartyForCookies());
+            local_frame->GetDocument().SiteForCookies());
   SchemeRegistry::RemoveURLSchemeAsFirstPartyWhenTopLevel("http");
 }
 

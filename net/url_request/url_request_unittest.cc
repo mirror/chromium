@@ -2974,7 +2974,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(test_server.GetURL(kHost, "/"));
+    req->set_site_for_cookies(test_server.GetURL(kHost, "/"));
     req->set_initiator(url::Origin(test_server.GetURL(kHost, "/")));
     req->Start();
     base::RunLoop().Run();
@@ -2993,7 +2993,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(test_server.GetURL(kHost, "/"));
+    req->set_site_for_cookies(test_server.GetURL(kHost, "/"));
     req->Start();
     base::RunLoop().Run();
 
@@ -3010,7 +3010,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(test_server.GetURL(kSubHost, "/"));
+    req->set_site_for_cookies(test_server.GetURL(kSubHost, "/"));
     req->set_initiator(url::Origin(test_server.GetURL(kSubHost, "/")));
     req->Start();
     base::RunLoop().Run();
@@ -3028,7 +3028,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(test_server.GetURL(kCrossHost, "/"));
+    req->set_site_for_cookies(test_server.GetURL(kCrossHost, "/"));
     req->set_initiator(url::Origin(test_server.GetURL(kCrossHost, "/")));
     req->Start();
     base::RunLoop().Run();
@@ -3047,7 +3047,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(test_server.GetURL(kHost, "/"));
+    req->set_site_for_cookies(test_server.GetURL(kHost, "/"));
     req->set_initiator(url::Origin(test_server.GetURL(kCrossHost, "/")));
     req->set_method("GET");
     req->Start();
@@ -3067,7 +3067,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(test_server.GetURL(kHost, "/"));
+    req->set_site_for_cookies(test_server.GetURL(kHost, "/"));
     req->set_initiator(url::Origin(test_server.GetURL(kCrossHost, "/")));
     req->set_method("POST");
     req->Start();
@@ -3331,7 +3331,7 @@ TEST_F(URLRequestTest, CookieAgeMetrics) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         http_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(http_server.GetURL(kHost, "/"));
+    req->set_site_for_cookies(http_server.GetURL(kHost, "/"));
     req->set_initiator(url::Origin(http_server.GetURL(kHost, "/")));
     req->Start();
     base::RunLoop().Run();
@@ -3345,7 +3345,7 @@ TEST_F(URLRequestTest, CookieAgeMetrics) {
     std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
         http_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
-    req->set_first_party_for_cookies(http_server.GetURL(kCrossHost, "/"));
+    req->set_site_for_cookies(http_server.GetURL(kCrossHost, "/"));
     req->set_initiator(url::Origin(http_server.GetURL(kCrossHost, "/")));
     req->Start();
     base::RunLoop().Run();
@@ -7943,14 +7943,14 @@ TEST_F(URLRequestTestHTTP, RedirectPreserveFirstPartyURL) {
   {
     std::unique_ptr<URLRequest> r(default_context_.CreateRequest(
         url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
-    r->set_first_party_for_cookies(first_party_url);
+    r->set_site_for_cookies(first_party_url);
 
     r->Start();
     base::RunLoop().Run();
 
     EXPECT_EQ(2U, r->url_chain().size());
     EXPECT_EQ(OK, d.request_status());
-    EXPECT_EQ(first_party_url, r->first_party_for_cookies());
+    EXPECT_EQ(first_party_url, r->site_for_cookies());
   }
 }
 
@@ -7965,7 +7965,7 @@ TEST_F(URLRequestTestHTTP, RedirectUpdateFirstPartyURL) {
   {
     std::unique_ptr<URLRequest> r(default_context_.CreateRequest(
         url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
-    r->set_first_party_for_cookies(original_first_party_url);
+    r->set_site_for_cookies(original_first_party_url);
     r->set_first_party_url_policy(
         URLRequest::UPDATE_FIRST_PARTY_URL_ON_REDIRECT);
 
@@ -7974,7 +7974,7 @@ TEST_F(URLRequestTestHTTP, RedirectUpdateFirstPartyURL) {
 
     EXPECT_EQ(2U, r->url_chain().size());
     EXPECT_EQ(OK, d.request_status());
-    EXPECT_EQ(expected_first_party_url, r->first_party_for_cookies());
+    EXPECT_EQ(expected_first_party_url, r->site_for_cookies());
   }
 }
 

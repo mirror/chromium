@@ -26,7 +26,7 @@ extern const char kExcludeRequestHeadersKey[];
 extern const char kExcludeResponseHeadersKey[];
 extern const char kExpiresKey[];
 extern const char kFilterKey[];
-extern const char kFirstPartyForCookiesUrlKey[];
+extern const char kSiteForCookiesUrlKey[];
 extern const char kFromKey[];
 extern const char kHttpOnlyKey[];
 extern const char kHasTagKey[];

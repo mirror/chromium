@@ -75,8 +75,8 @@ bool WorkerFetchContextImpl::IsDataSaverEnabled() const {
   return is_data_saver_enabled_;
 }
 
-blink::WebURL WorkerFetchContextImpl::FirstPartyForCookies() const {
-  return first_party_for_cookies_;
+blink::WebURL WorkerFetchContextImpl::SiteForCookies() const {
+  return site_for_cookies_;
 }
 
 void WorkerFetchContextImpl::DidRunContentWithCertificateErrors(
@@ -116,9 +116,9 @@ void WorkerFetchContextImpl::set_parent_frame_id(int id) {
   parent_frame_id_ = id;
 }
 
-void WorkerFetchContextImpl::set_first_party_for_cookies(
-    const blink::WebURL& first_party_for_cookies) {
-  first_party_for_cookies_ = first_party_for_cookies;
+void WorkerFetchContextImpl::set_site_for_cookies(
+    const blink::WebURL& site_for_cookies) {
+  site_for_cookies_ = site_for_cookies;
 }
 
 void WorkerFetchContextImpl::set_is_secure_context(bool flag) {

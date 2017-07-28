@@ -37,7 +37,7 @@ class WorkerFetchContext final : public BaseFetchContext {
   RefPtr<WebTaskRunner> GetTaskRunner() { return loading_task_runner_; }
 
   // BaseFetchContext implementation:
-  KURL GetFirstPartyForCookies() const override;
+  KURL GetSiteForCookies() const override;
   bool AllowScriptFromSource(const KURL&) const override;
   SubresourceFilter* GetSubresourceFilter() const override;
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override;

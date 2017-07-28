@@ -59,7 +59,7 @@ void GenericURLRequestJob::SetExtraRequestHeaders(
 
 void GenericURLRequestJob::Start() {
   PrepareCookies(request_->url(), request_->method(),
-                 url::Origin(request_->first_party_for_cookies()),
+                 url::Origin(request_->site_for_cookies()),
                  base::Bind(&Delegate::OnPendingRequest,
                             base::Unretained(delegate_), this));
 }
@@ -327,7 +327,7 @@ void GenericURLRequestJob::ModifyRequest(
   extra_request_headers_ = request_headers;
   PrepareCookies(
       request_->url(), request_->method(),
-      url::Origin(request_->first_party_for_cookies()),
+      url::Origin(request_->site_for_cookies()),
       base::Bind(&URLFetcher::StartFetch, base::Unretained(url_fetcher_.get()),
                  url, method, post_data, request_headers, this));
 }
