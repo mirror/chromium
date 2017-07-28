@@ -1078,7 +1078,7 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
 
 IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest, MAYBE_VerticalOverscroll) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kScrollEndEffect, "1");
+      switches::kPullToRefresh, "1");
 
   ASSERT_NO_FATAL_FAILURE(StartTestWithPage("about:blank"));
   WebContentsImpl* web_contents =

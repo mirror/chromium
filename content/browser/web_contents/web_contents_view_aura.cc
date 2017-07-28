@@ -94,9 +94,9 @@ namespace {
 WebContentsViewAura::RenderWidgetHostViewCreateFunction
     g_create_render_widget_host_view = nullptr;
 
-bool IsScrollEndEffectEnabled() {
+bool IsPullToRefreshEnabled() {
   return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-      switches::kScrollEndEffect) == "1";
+             switches::kPullToRefresh) == "1";
 }
 
 RenderWidgetHostViewAura* ToRenderWidgetHostViewAura(
@@ -650,7 +650,7 @@ void WebContentsViewAura::CompleteOverscrollNavigation(OverscrollMode mode) {
 
 void WebContentsViewAura::OverscrollUpdateForWebContentsDelegate(
     float delta_y) {
-  if (web_contents_->GetDelegate() && IsScrollEndEffectEnabled())
+  if (web_contents_->GetDelegate() && IsPullToRefreshEnabled())
     web_contents_->GetDelegate()->OverscrollUpdate(delta_y);
 }
 
@@ -1061,8 +1061,7 @@ bool WebContentsViewAura::OnOverscrollUpdate(float delta_x, float delta_y) {
 }
 
 void WebContentsViewAura::OnOverscrollComplete(OverscrollMode mode) {
-  if (web_contents_->GetDelegate() &&
-      IsScrollEndEffectEnabled() &&
+  if (web_contents_->GetDelegate() && IsPullToRefreshEnabled() &&
       (mode == OVERSCROLL_NORTH || mode == OVERSCROLL_SOUTH)) {
     web_contents_->GetDelegate()->OverscrollComplete();
   }
