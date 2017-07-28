@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7645fa54_823c4663",
+        "filename": "components/offline_pages/content/renovations/render_frame_script_injector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-28T00:15:47Z",
+      "side": 1,
+      "message": "i think you need to have the full path here",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e947064_0dbf5871",
         "filename": "components/offline_pages/content/renovations/render_frame_script_injector.h",
         "patchSetId": 4
@@ -223,6 +240,24 @@
     },
     {
       "key": {
+        "uuid": "f7821579_38ca8bb3",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-28T00:15:47Z",
+      "side": 1,
+      "message": "i thought the same and then realized DCHECK is defined in logging.h. but in most cases it must have been included by some other headers...",
+      "parentUuid": "ad69aca9_cb71790b",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff3d923a_4bacabca",
         "filename": "components/offline_pages/core/renovations/page_renovator.cc",
         "patchSetId": 4
@@ -251,6 +286,23 @@
       "writtenOn": "2017-07-27T22:59:24Z",
       "side": 1,
       "message": "I don\u0027t think this if statement is necessary.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4a5920_db51f79f",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-28T00:15:47Z",
+      "side": 1,
+      "message": "how likely will this ptr be null? do we need to check for it?",
       "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -370,6 +422,29 @@
       "writtenOn": "2017-07-27T22:59:24Z",
       "side": 1,
       "message": "could say inject_called_ \u003d false;\nthen you could use the default constructor FakeScriptInjector() \u003d default;\n\nand cut a few lines of code out.",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709c2501_607b8674",
+        "filename": "components/offline_pages/core/renovations/page_renovator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-28T00:15:47Z",
+      "side": 1,
+      "message": "will it be better to have these lines in SetUp as well?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 66
+      },
       "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
