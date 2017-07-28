@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f4e912e_2e86209a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3283,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-28T17:44:46Z",
+      "side": 1,
+      "message": "Does it also work on iOS and Android? If not, I would recommend kOsDesktop",
+      "range": {
+        "startLine": 3283,
+        "startChar": 66,
+        "endLine": 3283,
+        "endChar": 72
+      },
+      "revId": "faa642ac92d29bef73f5d035285902bc657394b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
