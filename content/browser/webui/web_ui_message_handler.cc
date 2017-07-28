@@ -11,6 +11,13 @@
 
 namespace content {
 
+WebUIMessageHandler::WebUIMessageHandler()
+    : javascript_allowed_(false),
+      web_ui_(nullptr),
+      javascript_weak_ptr_factory_(this) {}
+
+WebUIMessageHandler::~WebUIMessageHandler() {}
+
 void WebUIMessageHandler::AllowJavascriptForTesting() {
   AllowJavascript();
 }
@@ -31,6 +38,8 @@ void WebUIMessageHandler::DisallowJavascript() {
 
   javascript_allowed_ = false;
   DCHECK(!IsJavascriptAllowed());
+
+  javascript_weak_ptr_factory_.InvalidateWeakPtrs();
 
   OnJavascriptDisallowed();
 }
@@ -87,6 +96,13 @@ void WebUIMessageHandler::RejectJavascriptCallback(
   // cr.webUIResponse is a global JS function exposed from cr.js.
   CallJavascriptFunction("cr.webUIResponse", callback_id, base::Value(false),
                          response);
+}
+
+base::WeakPtr<WebUIMessageHandler>
+WebUIMessageHandler::GetJavascriptCallbackWeakPtr() {
+  DCHECK(IsJavascriptAllowed()) << "There should be no JavaScript callbacks "
+                                   "before JavaScript is allowed.";
+  return javascript_weak_ptr_factory_.GetWeakPtr();
 }
 
 }  // namespace content

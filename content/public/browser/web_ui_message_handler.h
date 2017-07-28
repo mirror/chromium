@@ -9,6 +9,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/logging.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "content/common/content_export.h"
@@ -30,8 +31,8 @@ class WebUIImpl;
 // host is destroyed.
 class CONTENT_EXPORT WebUIMessageHandler {
  public:
-  WebUIMessageHandler() : javascript_allowed_(false), web_ui_(nullptr) {}
-  virtual ~WebUIMessageHandler() {}
+  WebUIMessageHandler();
+  virtual ~WebUIMessageHandler();
 
   // Call this when a page should not receive JavaScript messages.
   void DisallowJavascript();
@@ -91,6 +92,11 @@ class CONTENT_EXPORT WebUIMessageHandler {
   void RejectJavascriptCallback(const base::Value& callback_id,
                                 const base::Value& response);
 
+  // Gets a weak pointer meant to be used with ResolveJavascriptCallback and
+  // RejectJavascriptCallback. These weak pointers are automatically invalidated
+  // when JavaScript is disallowed.
+  base::WeakPtr<WebUIMessageHandler> GetJavascriptCallbackWeakPtr();
+
   // Helper method for notifying Javascript listeners added with
   // cr.addWebUIListener() (defined in cr.js).
   template <typename... Values>
@@ -136,6 +142,10 @@ class CONTENT_EXPORT WebUIMessageHandler {
   bool javascript_allowed_;
 
   WebUI* web_ui_;
+
+  // Pointers issued by this factory are invalidated whenever JavaScript
+  // is disallowed. We do this to cancel outstanding JavaScript callbacks.
+  base::WeakPtrFactory<WebUIMessageHandler> javascript_weak_ptr_factory_;
 };
 
 }  // namespace content
