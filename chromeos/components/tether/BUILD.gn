@@ -64,6 +64,8 @@ static_library("tether") {
     "network_host_scan_cache.cc",
     "network_host_scan_cache.h",
     "notification_presenter.h",
+    "notification_remover.cc",
+    "notification_remover.h",
     "persistent_host_scan_cache.h",
     "persistent_host_scan_cache_impl.cc",
     "persistent_host_scan_cache_impl.h",

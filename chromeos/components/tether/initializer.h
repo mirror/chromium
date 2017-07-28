@@ -49,6 +49,7 @@ class MasterHostScanCache;
 class NetworkConfigurationRemover;
 class NetworkHostScanCache;
 class NotificationPresenter;
+class NotificationRemover;
 class PersistentHostScanCache;
 class TetherConnector;
 class TetherDisconnector;
@@ -148,6 +149,7 @@ class Initializer : public OAuth2TokenService::Observer {
   std::unique_ptr<TetherNetworkDisconnectionHandler>
       tether_network_disconnection_handler_;
   std::unique_ptr<CrashRecoveryManager> crash_recovery_manager_;
+  std::unique_ptr<NotificationRemover> notification_remover_;
 
   base::WeakPtrFactory<Initializer> weak_ptr_factory_;
 
