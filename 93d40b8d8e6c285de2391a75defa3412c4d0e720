@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a89f46b1_d459182e",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-28T14:43:12Z",
+      "side": 1,
+      "message": "I don\u0027t think testing the internals of AutofillProfile in PaymentRequest UI tests is particularly useful/relevant/a good idea. Isn\u0027t this behavior tested in AutofillProfile tests?",
+      "parentUuid": "77a76553_fe69efe7",
+      "revId": "93d40b8d8e6c285de2391a75defa3412c4d0e720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18aa2b71_a0a5202d",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T18:57:39Z",
       "side": 1,
       "message": "Let\u0027s be specific for translations e.g., \"this is the main part of the address such as the street number and street name\". Same for the other string.",
+      "revId": "93d40b8d8e6c285de2391a75defa3412c4d0e720",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd567bd1_e929be2c",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-28T14:43:12Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "18aa2b71_a0a5202d",
       "revId": "93d40b8d8e6c285de2391a75defa3412c4d0e720",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
