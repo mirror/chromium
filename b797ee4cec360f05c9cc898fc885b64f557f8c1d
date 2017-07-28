@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82248a1b_30a7f4d0",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T00:26:13Z",
+      "side": 1,
+      "message": "(see note in web-bluetooth-test.js), copy here",
+      "revId": "b797ee4cec360f05c9cc898fc885b64f557f8c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a047d4c7_5b1d7cae",
+        "filename": "device/bluetooth/test/fake_remote_gatt_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T00:26:13Z",
+      "side": 1,
+      "message": ":) This doesn\u0027t match the header Make the .mojom, .h, .cc consistent across this method and RemoveFakeCharacteristic.",
+      "range": {
+        "startLine": 97,
+        "startChar": 23,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "b797ee4cec360f05c9cc898fc885b64f557f8c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb560bc_3af07320",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T00:26:13Z",
+      "side": 1,
+      "message": "The cross browser test API should be specified with as much precision as possible. That will allow us to be very clear in what we need to implement and help the tests be portable to other future implementations. Hence all the references to bluetooth specification sections.\n\nService Changed is defined in \nBT 4.2 Vol 3 Part G 7.1\n(all other comments here use BT 4.2, I think because that\u0027s what web bluetooth specification is based on https://webbluetoothcg.github.io/web-bluetooth/#biblio-bluetooth42 ).",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 240,
+        "endChar": 28
+      },
+      "revId": "b797ee4cec360f05c9cc898fc885b64f557f8c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
