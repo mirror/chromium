@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "27918534_5be00157",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "Done.\n\nAlso, wanted to mention that moving this code to \\\\net is almost impossible since the spec specifies that the client hints can be set using the http-equiv header. Handling that in \\\\net would require HTML parsing in the browser process.",
+      "parentUuid": "c8a8e93f_712a0c6d",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1438bb78_a124f625",
         "filename": "chrome/browser/content_settings/content_settings_update_observer.cc",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5000af_0304264b",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1438bb78_a124f625",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c1ccc6a4_5a049f8f",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7922829_502b6140",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84987de1_d9bafad1",
         "filename": "chrome/renderer/content_settings_observer.cc",
         "patchSetId": 4
@@ -82,6 +136,24 @@
       "writtenOn": "2017-07-27T03:27:56Z",
       "side": 1,
       "message": "What does this TODO mean? The bug isn\u0027t very specific.",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e011ae9_65f0c929",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "I have updated the text in the comment.",
+      "parentUuid": "84987de1_d9bafad1",
       "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "0c23daaa_88303211",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "To be decided. The above TODO covers this. This CL is already big/substantial enough. I would prefer to handle this in the next CL unless you feel strongly against that.",
+      "parentUuid": "ed2d11f9_27bfb746",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a4f9487_32dad35d",
         "filename": "components/content_settings/core/browser/content_settings_pref.cc",
         "patchSetId": 4
@@ -119,6 +209,24 @@
       "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6b212c_a5b3c755",
+        "filename": "components/content_settings/core/browser/content_settings_pref.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a4f9487_32dad35d",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
