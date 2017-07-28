@@ -336,6 +336,25 @@ CryptAuthDeviceManager::~CryptAuthDeviceManager() {
   }
 }
 
+void CryptAuthDeviceManager::SetSyncSchedulerForTest(
+    std::unique_ptr<SyncScheduler> sync_scheduler) {
+  scheduler_ = std::move(sync_scheduler);
+}
+
+void CryptAuthDeviceManager::NotifySyncStarted() {
+  for (auto& observer : observers_) {
+    observer.OnSyncStarted();
+  }
+}
+
+void CryptAuthDeviceManager::NotifySyncFinished(
+    SyncResult sync_result,
+    DeviceChangeResult device_change_result) {
+  for (auto& observer : observers_) {
+    observer.OnSyncFinished(sync_result, device_change_result);
+  }
+}
+
 // static
 void CryptAuthDeviceManager::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterDoublePref(prefs::kCryptAuthDeviceSyncLastSyncTimeSeconds,
@@ -432,7 +451,17 @@ void CryptAuthDeviceManager::OnGetMyDevicesSuccess(
   if (!response.devices().empty())
     PA_LOG(INFO) << "Devices were successfully synced.";
 
-  for (const auto& device : response.devices()) {
+  bool device_list_changed = false;
+  std::unordered_set<std::string> currently_synced_device_public_keys;
+  for (auto device : synced_devices_) {
+    currently_synced_device_public_keys.insert(device.public_key());
+  }
+  for (auto device : response.devices()) {
+    if (currently_synced_device_public_keys.find(device.public_key()) ==
+        currently_synced_device_public_keys.end()) {
+      device_list_changed = true;
+    }
+
     std::unique_ptr<base::DictionaryValue> device_dictionary =
         UnlockKeyToDictionary(device);
 
@@ -444,9 +473,6 @@ void CryptAuthDeviceManager::OnGetMyDevicesSuccess(
 
     devices_as_list->Append(std::move(device_dictionary));
   }
-
-  bool unlock_keys_changed = !devices_as_list->Equals(
-      pref_service_->GetList(prefs::kCryptAuthDeviceSyncUnlockKeys));
   {
     ListPrefUpdate update(pref_service_, prefs::kCryptAuthDeviceSyncUnlockKeys);
     update.Get()->Swap(devices_as_list.get());
@@ -464,12 +490,9 @@ void CryptAuthDeviceManager::OnGetMyDevicesSuccess(
   sync_request_->OnDidComplete(true);
   cryptauth_client_.reset();
   sync_request_.reset();
-  for (auto& observer : observers_) {
-    observer.OnSyncFinished(SyncResult::SUCCESS,
-                            unlock_keys_changed
-                                ? DeviceChangeResult::CHANGED
-                                : DeviceChangeResult::UNCHANGED);
-  }
+  NotifySyncFinished(SyncResult::SUCCESS, device_list_changed
+                                              ? DeviceChangeResult::CHANGED
+                                              : DeviceChangeResult::UNCHANGED);
 }
 
 void CryptAuthDeviceManager::OnGetMyDevicesFailure(const std::string& error) {
@@ -479,8 +502,7 @@ void CryptAuthDeviceManager::OnGetMyDevicesFailure(const std::string& error) {
   sync_request_->OnDidComplete(false);
   cryptauth_client_.reset();
   sync_request_.reset();
-  for (auto& observer : observers_)
-    observer.OnSyncFinished(SyncResult::FAILURE, DeviceChangeResult::UNCHANGED);
+  NotifySyncFinished(SyncResult::FAILURE, DeviceChangeResult::UNCHANGED);
 }
 
 void CryptAuthDeviceManager::OnResyncMessage() {
@@ -510,8 +532,7 @@ void CryptAuthDeviceManager::UpdateUnlockKeysFromPrefs() {
 
 void CryptAuthDeviceManager::OnSyncRequested(
     std::unique_ptr<SyncScheduler::SyncRequest> sync_request) {
-  for (auto& observer : observers_)
-    observer.OnSyncStarted();
+  NotifySyncStarted();
 
   sync_request_ = std::move(sync_request);
   cryptauth_client_ = client_factory_->CreateInstance();
