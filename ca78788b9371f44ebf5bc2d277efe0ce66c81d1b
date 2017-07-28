@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014dea7d_4feffff8",
+        "filename": "components/feature_engagement/internal/android/java/src/org/chromium/components/feature_engagement/internal/TrackerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T20:25:41Z",
+      "side": 1,
+      "message": "Does it make sense to put @TriggerState on this int as well?",
+      "range": {
+        "startLine": 83,
+        "startChar": 19,
+        "endLine": 83,
+        "endChar": 22
+      },
+      "revId": "ca78788b9371f44ebf5bc2d277efe0ce66c81d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963a1495_dd3a14c1",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T20:25:41Z",
+      "side": 1,
+      "message": "Do you still need this?",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 25
+      },
+      "revId": "ca78788b9371f44ebf5bc2d277efe0ce66c81d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
