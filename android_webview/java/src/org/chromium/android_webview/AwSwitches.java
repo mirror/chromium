@@ -18,6 +18,10 @@ public final class AwSwitches {
     public static final String WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT =
             "webview-enable-safebrowsing-support";
 
+    // Enables finch AB testing experiments in webview.
+    // Native switch kEnableWebViewFinch.
+    public static final String WEBVIEW_ENABLE_FINCH = "enable-webview-finch";
+
     // Do not instantiate this class.
     private AwSwitches() {}
 }
