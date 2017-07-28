@@ -28,6 +28,7 @@
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/aura/client/aura_constants.h"
+#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_targeter.h"
 #include "ui/base/class_property.h"
@@ -192,6 +193,8 @@ Surface::Surface() : window_(new aura::Window(new CustomWindowDelegate(this))) {
   window_->Init(ui::LAYER_NOT_DRAWN);
   window_->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter));
   window_->set_owned_by_parent(false);
+  aura::client::SetDragDropDelegate(
+      window_.get(), WMHelper::GetInstance()->drag_drop_delegate());
 }
 
 Surface::~Surface() {
@@ -207,6 +210,8 @@ Surface::~Surface() {
   // that they have been cancelled.
   for (const auto& presentation_callback : pending_presentation_callbacks_)
     presentation_callback.Run(base::TimeTicks(), base::TimeDelta());
+
+  aura::client::SetDragDropDelegate(window_.get(), nullptr);
 }
 
 // static
