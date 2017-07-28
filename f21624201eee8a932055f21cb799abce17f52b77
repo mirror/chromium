@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d39bac0_e7505a68",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-28T21:32:45Z",
+      "side": 1,
+      "message": "Is |url| always the same as currentTab.lastCommittedURL?  If not, why this change?",
+      "revId": "f21624201eee8a932055f21cb799abce17f52b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fe05b8_67ed7175",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-28T21:32:45Z",
+      "side": 1,
+      "message": "Does this feel a little wonky?  Optional nit, functionally the same.\nweb::NavigationItem* lastCommittedItem \u003d manager-\u003eGetLastCommittedItem();\nweb::NavigationItem* transientItem \u003d manager-\u003eGetTransientItem();\nif (lastCommittedItem) {\n  currentTabURL \u003d lastCommittedItem-\u003eGetURL();\n} else if (transientItem) {\n  currentTabURL \u003d lastCommittedItem-\u003eGetURL();\n}",
+      "revId": "f21624201eee8a932055f21cb799abce17f52b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
