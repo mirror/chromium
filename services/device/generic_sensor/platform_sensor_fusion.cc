@@ -97,7 +97,8 @@ void PlatformSensorFusion::OnSensorReadingChanged() {
       return;
   }
 
-  fusion_algorithm_->GetFusedData(sensor_readings, &reading);
+  if (!fusion_algorithm_->GetFusedData(sensor_readings, &reading))
+    return;
 
   if (GetReportingMode() == mojom::ReportingMode::ON_CHANGE &&
       !fusion_algorithm_->IsReadingSignificantlyDifferent(reading_, reading)) {

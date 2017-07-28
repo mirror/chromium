@@ -40,7 +40,7 @@ OrientationQuaternionFusionAlgorithmUsingEulerAngles::
 OrientationQuaternionFusionAlgorithmUsingEulerAngles::
     ~OrientationQuaternionFusionAlgorithmUsingEulerAngles() = default;
 
-void OrientationQuaternionFusionAlgorithmUsingEulerAngles::GetFusedData(
+bool OrientationQuaternionFusionAlgorithmUsingEulerAngles::GetFusedData(
     const std::vector<SensorReading>& readings,
     SensorReading* fused_reading) {
   // Transform the *_ORIENTATION_EULER_ANGLES values to
@@ -56,6 +56,8 @@ void OrientationQuaternionFusionAlgorithmUsingEulerAngles::GetFusedData(
   fused_reading->values[1].value() = y;
   fused_reading->values[2].value() = z;
   fused_reading->values[3].value() = w;
+
+  return true;
 }
 
 }  // namespace device

@@ -17,7 +17,7 @@ RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
     ~RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer() =
         default;
 
-void RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
+bool RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
     GetFusedData(const std::vector<SensorReading>& readings,
                  SensorReading* fused_reading) {
   // Transform the accelerometer values to W3C draft angles.
@@ -54,6 +54,8 @@ void RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
   fused_reading->values[1].value() = gamma;
   fused_reading->values[2].value() = alpha;
   fused_reading->values[3].value() = 0.0;
+
+  return true;
 }
 
 }  // namespace device

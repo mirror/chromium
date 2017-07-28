@@ -23,7 +23,7 @@ class PlatformSensorFusionAlgorithm {
   bool IsReadingSignificantlyDifferent(const SensorReading& reading1,
                                        const SensorReading& reading2);
 
-  virtual void GetFusedData(const std::vector<SensorReading>& readings,
+  virtual bool GetFusedData(const std::vector<SensorReading>& readings,
                             SensorReading* fused_reading) = 0;
 
  private:
