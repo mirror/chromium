@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a06395_8b028b3e",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-28T07:35:01Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "ad9f8063656df09cdaef2805b7905ba5ea203a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b135b6_935fca15",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-28T07:35:01Z",
+      "side": 1,
+      "message": "Huh. I first read this wrongly :)",
+      "revId": "ad9f8063656df09cdaef2805b7905ba5ea203a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aff7423_4b7b74e2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-28T07:35:01Z",
+      "side": 1,
+      "message": "Not from this CL, but could we add a comment here to note that this may block?  (It\u0027s getting deep inside nested if\u0027s, making me worry that we\u0027ll totally forget that there\u0027s such code)\n\nAlso I prefer calling this after setting global_scope_creation_params if there\u0027s no strong ordering issue.",
+      "revId": "ad9f8063656df09cdaef2805b7905ba5ea203a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
