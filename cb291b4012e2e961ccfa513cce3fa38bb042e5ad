@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bc729e4_864ed01c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T22:15:49Z",
+      "side": 1,
+      "message": "This seems to have the same issue.",
+      "range": {
+        "startLine": 213,
+        "startChar": 14,
+        "endLine": 213,
+        "endChar": 45
+      },
+      "revId": "cb291b4012e2e961ccfa513cce3fa38bb042e5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
