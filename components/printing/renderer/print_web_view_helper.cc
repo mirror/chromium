@@ -992,7 +992,7 @@ bool PrintWebViewHelper::IsScriptInitiatedPrintAllowed(
 }
 
 void PrintWebViewHelper::DidStartProvisionalLoad(
-    blink::WebDataSource* data_source) {
+    blink::WebDocumentLoader* loader) {
   is_loading_ = true;
 }
 
