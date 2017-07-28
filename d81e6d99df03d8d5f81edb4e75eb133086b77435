@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4142e5c_e4290ad4",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:06:04Z",
+      "side": 1,
+      "message": "Nit: initialization of the fields can be inlined into New, i.e.\n\nNew(webauth::mojom::WebCryptoAlgorithmId::ECDSA,\n    webauth::mojom::WebCryptoAlgorithmParams::New(...));\n\n(this is a bit of a personal preference, hence nit, but it\u0027s probably slightly more efficient as well. Though the difference is likely marginal... and of course this is just a test)",
+      "range": {
+        "startLine": 62,
+        "startChar": 42,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2e9eb1_8b19bd15",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:06:04Z",
+      "side": 1,
+      "message": "What about SHA256, which is defined in the mojom?\n\n(I\u0027m not sure if this is a copy paste error, since it mentions P256 but this is about the algorithm not the curve being used)",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bb1a17_008bc83a",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:06:04Z",
+      "side": 1,
+      "message": "I suggest simplifying this to:\n\nreturn WebCryptoAlgorithmParams::New(\n  ConvertWebCryptoNamedCurved(params-\u003eNamedCurve());",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 76
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3d0df6_478124dc",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:06:04Z",
+      "side": 1,
+      "message": "Same here: I\u0027d suggest moving the field initialization into New(), though it will require restructuring the code a bit.",
+      "range": {
+        "startLine": 112,
+        "startChar": 39,
+        "endLine": 112,
+        "endChar": 44
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5197fe0_23e2e059",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:06:04Z",
+      "side": 1,
+      "message": "Any chance of addressing this TODO while we\u0027re changing this one anyway? \u003d)\n\nSimilarly, same for the newly added ones above.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cb764c_5ec14403",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:06:04Z",
+      "side": 1,
+      "message": "Nit: trailing whitespace \u003d)",
+      "range": {
+        "startLine": 88,
+        "startChar": 31,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
