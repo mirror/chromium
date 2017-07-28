@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaae785e_33a2c234",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "This file is not available for Android so you would need a #if SAFE_BROWSING_DB_LOCAL",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe1ba18_cd9acb0a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "database_info_list",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ca6e5f_71832ee6",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "check store_info.has_file_name() first\n\nhas_file_size_bytes \u0026\u0026 has_file_name",
+      "range": {
+        "startLine": 35,
+        "startChar": 54,
+        "endLine": 35,
+        "endChar": 76
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b3c107_1ca1bedf",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "Each store can have a different last_updated_time.. We should show that too.\nLet\u0027s do that as a separate CL.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b65c681_3970ace8",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "nit: alphabetical order would be preferable.\n\nSo:\nAddDatabaseInfo\nAddStoreInfo\nAddUpdateInfo",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 20
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07d8d24_4d6fd97c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "Why do we need to \u0026\u0026 network_status_code() ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21a711f_befce323",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "Comment not useful over code.",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 41
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e5c3eb_7029c569",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "nit: newline after this",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 15
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838da024_5a20e4bb",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "SafeBrowsingUIHandler::~SafeBrowsingUIHandler() \u003d default;",
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3dca5e0_43f366c9",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "Drop the comment",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 67
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba49b46_adca4d8e",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "DatabaseManagerInfo database_manager_info_proto;\n\nshould be inside the if (local_db_manager_instance)",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b54f1f7_4c19adb9",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T22:46:33Z",
+      "side": 1,
+      "message": "Forgot to mention this earlier: inputs then outputs\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering",
+      "range": {
+        "startLine": 150,
+        "startChar": 21,
+        "endLine": 150,
+        "endChar": 42
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
