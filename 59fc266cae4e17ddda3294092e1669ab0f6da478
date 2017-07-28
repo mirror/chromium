@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4bc91ff_14ef5a57",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:15:02Z",
+      "side": 1,
+      "message": "could you please also set |generated_password_changed_| to false? I forgot it in my CL (https://codereview.chromium.org/2937033002)",
+      "range": {
+        "startLine": 546,
+        "startChar": 73,
+        "endLine": 546,
+        "endChar": 74
+      },
+      "revId": "59fc266cae4e17ddda3294092e1669ab0f6da478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e1b196_0154ff3f",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:15:02Z",
+      "side": 1,
+      "message": "nit: remove empty line",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "59fc266cae4e17ddda3294092e1669ab0f6da478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef9876e_7f6d7fad",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:15:02Z",
+      "side": 1,
+      "message": "Nit: Remove curly brackets here.",
+      "range": {
+        "startLine": 1097,
+        "startChar": 40,
+        "endLine": 1097,
+        "endChar": 0
+      },
+      "revId": "59fc266cae4e17ddda3294092e1669ab0f6da478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4eace7a_262b32ce",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:15:02Z",
+      "side": 1,
+      "message": "Remove this field. You don\u0027t need anywhere except this function. \n\nLet\u0027s pass the username vote type to LabelFields and set the type to all fields which autofill type is USERANME.",
+      "range": {
+        "startLine": 866,
+        "startChar": 4,
+        "endLine": 866,
+        "endChar": 26
+      },
+      "revId": "59fc266cae4e17ddda3294092e1669ab0f6da478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b0ae88_90cb3cbf",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:15:02Z",
+      "side": 1,
+      "message": "Let\u0027s do this work in another loop below.",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "59fc266cae4e17ddda3294092e1669ab0f6da478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6317082_721e65fc",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:15:02Z",
+      "side": 1,
+      "message": "It doesn\u0027t check whether autofill type is USERNAME or not. So, any field could have username_vote_type.",
+      "range": {
+        "startLine": 149,
+        "startChar": 6,
+        "endLine": 149,
+        "endChar": 71
+      },
+      "revId": "59fc266cae4e17ddda3294092e1669ab0f6da478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
