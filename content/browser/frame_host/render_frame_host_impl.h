@@ -590,7 +590,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Returns the Mojo ImageDownloader service.
   const content::mojom::ImageDownloaderPtr& GetMojoImageDownloader();
 
-  // Returns the interface to the Global Resource Coordinator
+  // Returns nullptr when resource coordinator service is not enabled, or
+  // service manager connection is not available.
   resource_coordinator::ResourceCoordinatorInterface*
   GetFrameResourceCoordinator() override;
 

@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
+
 #include <string>
 
 #include "base/memory/ptr_util.h"
 #include "base/process/process_handle.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_factory.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest_util.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_manager.h"

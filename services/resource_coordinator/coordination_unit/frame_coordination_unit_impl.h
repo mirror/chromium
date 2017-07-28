@@ -14,6 +14,7 @@ namespace resource_coordinator {
 
 // Frame Coordination Units form a tree structure, each FrameCoordinationUnit at
 // most has one parent that is a FrameCoordinationUnit.
+// A Frame Coordination Unit will have parents only if navigation committed.
 class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   FrameCoordinationUnitImpl(
@@ -25,7 +26,13 @@ class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
   std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) override;
 
+  const WebContentsCoordinationUnitImpl* GetWebContentsCoordinationUnit() const;
+
   bool IsMainFrame() const;
+  // Returns false when |this| frame coordination unit doesn't have a parent web
+  // contents coordination unit or the parent web contents coordination unit is
+  // not visible.
+  bool IsVisible() const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FrameCoordinationUnitImpl);
