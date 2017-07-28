@@ -126,6 +126,10 @@ class BrowserView : public BrowserWindow,
                                      const gfx::Rect& bounds,
                                      bool at_bottom);
 
+  // For tests, use |disable| set to true to turn off the delay used to unreveal
+  // the tabstrip after it has been revealed by RevealTabStripIfNeeded().
+  static void SetDisableRevealerDelayForTesting(bool disable);
+
   // Returns a Browser instance of this view.
   Browser* browser() { return browser_.get(); }
   const Browser* browser() const { return browser_.get(); }
@@ -483,6 +487,12 @@ class BrowserView : public BrowserWindow,
   // interface to keep these two classes decoupled and testable.
   friend class BrowserViewLayoutDelegateImpl;
   FRIEND_TEST_ALL_PREFIXES(BrowserViewTest, BrowserView);
+
+  // If the browser is in immersive full screen mode, it will reveal the
+  // tabstrip for a short duration. This is useful for shortcuts that perform
+  // tab navigations and need to give users a visual clue as to what tabs are
+  // affected.
+  void RevealTabStripIfNeeded();
 
   // Appends to |toolbars| a pointer to each AccessiblePaneView that
   // can be traversed using F6, in the order they should be traversed.
