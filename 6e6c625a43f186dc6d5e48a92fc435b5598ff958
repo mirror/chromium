@@ -70,6 +70,30 @@
       "revId": "6e6c625a43f186dc6d5e48a92fc435b5598ff958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5568d8d7_ee125032",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-28T18:01:33Z",
+      "side": 1,
+      "message": "No problem. Thanks for the comments.\n\n\n\u003e\"I think my only concern is that the \u0027Mac\u0027 fix looks a but \u0027hacky\u0027 here. I didn\u0027t go through\n\u003ethe details of your explanation yet, but having a DidStart() guarded by CanStart() inside\n\u003ethe SendStartMessage() looks somewhat complicated\"\n\nCanStart() checks if at least one of the sensors have been fully initialized and ready to use (its shared memory is ready). I don\u0027t think it is \u0027hacky\u0027 here since it is necessary to make sure that the sensor and its related memory are ready before starting to collect data from the sensor.\n\n\u003e\"Is this \u0027fix\u0027 needed for Mac only? or also other platforms?\"\n\nThe issue that was reported:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d735420\nis reported on Mac. But I don\u0027t think this issue is Mac only, it can happen on other platforms. The fix is for all platforms. To clarify that, I also updated this CL\u0027s description to make it more clear.\n\n\nI really would like to validate its stability in the Canary as early as possible, since the next branch date is Aug 31st. Thanks!",
+      "parentUuid": "d141e139_560566a3",
+      "range": {
+        "startLine": 121,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "6e6c625a43f186dc6d5e48a92fc435b5598ff958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
