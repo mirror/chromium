@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1c09d55_1044d631",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-28T16:18:24Z",
+      "side": 1,
+      "message": "Good point. The callers checked this, but we should bake it in.",
+      "parentUuid": "e4442f8d_5b61d19e",
+      "revId": "61f6473a239c0d963a91ddac78e34d14e682a573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20c1b84f_0ee308de",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "61f6473a239c0d963a91ddac78e34d14e682a573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6356f7b8_c26a360b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-28T16:18:24Z",
+      "side": 1,
+      "message": "That already happens because of kAutocomplete being a token property. It will get returned by GetAOMPropertyOrARIAAttribute as a null atom. The tests check it too.",
+      "parentUuid": "20c1b84f_0ee308de",
+      "revId": "61f6473a239c0d963a91ddac78e34d14e682a573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
