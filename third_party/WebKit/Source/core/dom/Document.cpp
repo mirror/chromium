@@ -3617,18 +3617,15 @@ void Document::SetBaseURLOverride(const KURL& url) {
 void Document::ProcessBaseElement() {
   UseCounter::Count(*this, WebFeature::kBaseElement);
 
-  // Find the first href attribute in a base element and the first target
+  // Find the first base element with href attribute and the first target
   // attribute in a base element.
-  const AtomicString* href = 0;
+  const HTMLBaseElement* href_base = nullptr;
   const AtomicString* target = 0;
   for (HTMLBaseElement* base = Traversal<HTMLBaseElement>::FirstWithin(*this);
-       base && (!href || !target);
+       base && (!href_base || !target);
        base = Traversal<HTMLBaseElement>::Next(*base)) {
-    if (!href) {
-      const AtomicString& value = base->FastGetAttribute(hrefAttr);
-      if (!value.IsNull())
-        href = &value;
-    }
+    if (!href_base && base->FastHasAttribute(hrefAttr))
+      href_base = base;
     if (!target) {
       const AtomicString& value = base->FastGetAttribute(targetAttr);
       if (!value.IsNull())
@@ -3640,16 +3637,9 @@ void Document::ProcessBaseElement() {
     }
   }
 
-  // FIXME: Since this doesn't share code with completeURL it may not handle
-  // encodings correctly.
   KURL base_element_url;
-  if (href) {
-    String stripped_href = StripLeadingAndTrailingHTMLSpaces(*href);
-    if (!stripped_href.IsEmpty()) {
-      // TODO(tkent): Use FallbackBaseURL(). crbug.com/739504.
-      base_element_url = KURL(Url(), stripped_href);
-    }
-  }
+  if (href_base)
+    base_element_url = href_base->href();
 
   if (!base_element_url.IsEmpty()) {
     if (base_element_url.ProtocolIsData()) {
