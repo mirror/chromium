@@ -22,6 +22,30 @@
       "revId": "673d4504e0933fcade702d2453dac3bb8997f023",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8d0b70_79cc69c2",
+        "filename": "components/arc/common/video_decode_accelerator_new.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-28T09:23:35Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d5bb4ad5_afd16276",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "673d4504e0933fcade702d2453dac3bb8997f023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
