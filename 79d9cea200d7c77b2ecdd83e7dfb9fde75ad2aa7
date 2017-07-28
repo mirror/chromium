@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0dc8d12_97328907",
+        "filename": "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-28T16:52:20Z",
+      "side": 1,
+      "message": "nit: Maybe this is more readable if the trait struct isn\u0027t created inline. I also prefer to use contructors (either defined by the struct or free functions) for structs rather than just plugging values into { .. }; I don\u0027t know if that\u0027s an option here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "79d9cea200d7c77b2ecdd83e7dfb9fde75ad2aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
