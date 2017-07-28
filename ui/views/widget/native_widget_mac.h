@@ -37,6 +37,9 @@ class VIEWS_EXPORT NativeWidgetMac : public internal::NativeWidgetPrivate {
   // a native window "sheet", and have a different lifetime to regular windows.
   bool IsWindowModalSheet() const;
 
+  // Called before browser is closed.
+  bool CanClose();
+
   // Deletes |bridge_| and informs |delegate_| that the native widget is
   // destroyed. BridgedNativeWidget::OnWindowWillClose() calls this when the
   // NSWindowDelegate informs the bridge that the window is being closed.

@@ -486,6 +486,9 @@ class VIEWS_EXPORT Widget : public internal::NativeWidgetDelegate,
   // be rectangular.
   void SetShape(std::unique_ptr<SkRegion> shape);
 
+  // Called before browser is closed.
+  bool CanClose();
+
   // Hides the widget then closes it after a return to the message loop.
   virtual void Close();
 
