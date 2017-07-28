@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d6220cc_9a82dbe2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-28T21:21:55Z",
+      "side": 1,
+      "message": "I thought the Timer should be added in the native side when InstallableManager::getData() is timeout. Is there any special reason that you add a Timer on the Java side?",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "459cb752ba07e39215a01278fc8f7c0b1d7d621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71f13000_8d449479",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
         "patchSetId": 2
