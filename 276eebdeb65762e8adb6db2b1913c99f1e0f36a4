@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "017da97a_bf957f2c",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T18:44:22Z",
+      "side": 1,
+      "message": "Can we move this to the start of the function since if this function is invoked due to dev tools input, then we should not do anything?",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b2c186_985b379d",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T18:44:22Z",
+      "side": 1,
+      "message": "Mostly out of curiosity, what is the usecase for having this as a histogram?\n\nAlso can remove the additional old_forced variable:\nif (!forcing_activation_ \u0026\u0026 force_activation)\n  LogAction(kActionForcedActivationEnabled);\nforcing_activation_ \u003d force_activation;",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6ff5e3_db945641",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T18:44:22Z",
+      "side": 1,
+      "message": "const and inline?",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb7b4b9_07906147",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T18:44:22Z",
+      "side": 1,
+      "message": "Initialize both the above pointers to nullptr here. From one of the mail threads about allowing in-line initializations, there was a point that either all members should be initialized in the header or all in the constructor\u0027s initialization list. If initialized  in the header, some of them can of course be overridden in the constructor.",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a622ecc_35170ef6",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T18:44:22Z",
+      "side": 1,
+      "message": "nit: Rename to activated_via_devtools_?",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1750d3_b1807c69",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T18:44:22Z",
+      "side": 1,
+      "message": "EXPECT_EQ(nullptr, GetSettingsManager()-\u003eGetSiteMetadata(url));",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
