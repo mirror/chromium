@@ -196,6 +196,7 @@ const char kChromeUIDNSHost[] = "dns";
 const char kChromeUIDomainReliabilityInternalsHost[] =
     "domain-reliability-internals";
 const char kChromeUIDownloadsHost[] = "downloads";
+const char kChromeUIDownloadInternalsHost[] = "download-internals";
 const char kChromeUIDriveInternalsHost[] = "drive-internals";
 const char kChromeUIExtensionIconHost[] = "extension-icon";
 const char kChromeUIExtensionsFrameHost[] = "extensions-frame";
@@ -662,6 +663,7 @@ const char* const kChromeHostURLs[] = {
     kChromeUIDeviceEmulatorHost,
 #endif
     kChromeUIDeviceLogHost,
+    kChromeUIDownloadInternalsHost,
     kChromeUIFlagsHost,
     kChromeUIGCMInternalsHost,
     kChromeUIHistoryHost,
