@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c78a678_f6effb21",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-28T23:54:44Z",
+      "side": 1,
+      "message": "You actually mean posix:runtime_library, right?\n\nIt looks like this config is the only user of :c++flags; does\nit make sense to make c++flags a nested config of posix:runtime_library\ninstead of this target? It doesn\u0027t look like we need it elsewhere\nand that\u0027s actually closer to what I had in mind (which was that\nwe\u0027d actually merge the c++flags definitions *into* the posix:runtime_library\ntarget.",
+      "revId": "3ce948ad929f4598ac00f0164f6a2c744c0ab15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
