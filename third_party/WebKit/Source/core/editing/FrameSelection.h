@@ -250,6 +250,7 @@ class CORE_EXPORT FrameSelection final
   base::Optional<int> LayoutSelectionStart() const;
   base::Optional<int> LayoutSelectionEnd() const;
   void ClearLayoutSelection();
+  bool IsLayoutObjectReferred(LayoutObject*) const;
 
   DECLARE_TRACE();
 
