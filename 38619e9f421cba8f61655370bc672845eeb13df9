@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a691e185_335ac73a",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T20:36:42Z",
+      "side": 1,
+      "message": "I\u0027m aware of those points, but it doesn\u0027t seem like a huge issue. It looks clearer to me, but I\u0027m not wedded to it.",
+      "parentUuid": "326cae94_47333dc8",
+      "revId": "38619e9f421cba8f61655370bc672845eeb13df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b6f1e10_2425dd37",
         "filename": "android_webview/browser/aw_browser_terminator.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-28T19:04:19Z",
       "side": 1,
       "message": "this else is really hard to read. Is that intended? OnChildExitAsync already has a null pipe check, so can we just use that and make this a bit simpler",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 8
+      },
+      "revId": "38619e9f421cba8f61655370bc672845eeb13df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8395dc5_6afc7835",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T20:36:42Z",
+      "side": 1,
+      "message": "I figured it was worth saving the posted task if there was definitely no work to do, but I\u0027m happy to remove it.",
+      "parentUuid": "5b6f1e10_2425dd37",
       "range": {
         "startLine": 178,
         "startChar": 4,

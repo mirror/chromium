@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "86ac6e95_e3d86d48",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T20:36:42Z",
+      "side": 1,
+      "message": "Because it mentions both creating the CrashDumpObserver, and registering the ChildProcessCrashObserver, I think it belongs here, above the block that does all of that.",
+      "parentUuid": "0609b22b_3d8290fe",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "562336aa_18423a63",
         "filename": "components/crash/content/browser/BUILD.gn",
         "patchSetId": 1
@@ -348,6 +372,24 @@
       "side": 1,
       "message": "\u003e assert breakpad::IsCrashReporterEnabled?\n\nnot done yet?",
       "parentUuid": "1995edc5_7a4dba15",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18afb45_c075f265",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T20:36:42Z",
+      "side": 1,
+      "message": "I don\u0027t think that really needs to form part of the contract of this class, so I\u0027d prefer to not add that assert. The check has been moved to ChildPRocessCrashObserver.",
+      "parentUuid": "4005d15a_e9cc4a10",
       "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
