@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "9d898a32_7e820030",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T03:31:45Z",
+      "side": 1,
+      "message": "Please submit once this CL is landed.\nThis is simple technique to reduce load of paint team reviewers.\n\nThey might want to read editing changes and search core/paint changes\nfrom list.\n\nAgain, please consider how reviewers work.",
+      "parentUuid": "89c6dc3c_b0f91064",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54c0c819_3925bf1c",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 2
