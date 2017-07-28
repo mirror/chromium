@@ -41,7 +41,7 @@
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/markers/SpellCheckMarker.h"
 #include "core/editing/spellcheck/SpellChecker.h"
-#include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
@@ -93,7 +93,7 @@ static WebURL UrlFromFrame(LocalFrame* frame) {
   if (frame) {
     DocumentLoader* dl = frame->Loader().GetDocumentLoader();
     if (dl) {
-      WebDataSource* ds = WebDataSourceImpl::FromDocumentLoader(dl);
+      WebDocumentLoader* ds = WebDocumentLoaderImpl::FromDocumentLoader(dl);
       if (ds) {
         return ds->HasUnreachableURL() ? ds->UnreachableURL()
                                        : ds->GetRequest().Url();

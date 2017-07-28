@@ -6,7 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "content/public/renderer/document_state.h"
-#include "third_party/WebKit/public/web/WebDataSource.h"
+#include "third_party/WebKit/public/web/WebDocumentLoader.h"
 
 namespace content {
 

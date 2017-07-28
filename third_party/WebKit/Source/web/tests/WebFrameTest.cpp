@@ -141,9 +141,9 @@
 #include "public/platform/WebURLResponse.h"
 #include "public/web/WebConsoleMessage.h"
 #include "public/web/WebContextMenuData.h"
-#include "public/web/WebDataSource.h"
 #include "public/web/WebDeviceEmulationParams.h"
 #include "public/web/WebDocument.h"
+#include "public/web/WebDocumentLoader.h"
 #include "public/web/WebFindOptions.h"
 #include "public/web/WebFormElement.h"
 #include "public/web/WebFrameClient.h"
@@ -4268,7 +4268,8 @@ TEST_P(ParameterizedWebFrameTest, ReloadWhileProvisional) {
   FrameTestHelpers::ReloadFrameBypassingCache(
       web_view_helper.WebView()->MainFrameImpl());
 
-  WebDataSource* data_source = web_view_helper.LocalMainFrame()->DataSource();
+  WebDocumentLoader* data_source =
+      web_view_helper.LocalMainFrame()->DataSource();
   ASSERT_TRUE(data_source);
   EXPECT_EQ(ToKURL(base_url_ + "fixed_layout.html"),
             KURL(data_source->GetRequest().Url()));
@@ -4281,7 +4282,8 @@ TEST_P(ParameterizedWebFrameTest, AppendRedirects) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(first_url);
 
-  WebDataSource* data_source = web_view_helper.LocalMainFrame()->DataSource();
+  WebDocumentLoader* data_source =
+      web_view_helper.LocalMainFrame()->DataSource();
   ASSERT_TRUE(data_source);
   data_source->AppendRedirect(ToKURL(second_url));
 
@@ -4306,7 +4308,8 @@ TEST_P(ParameterizedWebFrameTest, IframeRedirect) {
   WebFrame* iframe = web_view_helper.LocalMainFrame()->FindFrameByName(
       WebString::FromUTF8("ifr"));
   ASSERT_TRUE(iframe && iframe->IsWebLocalFrame());
-  WebDataSource* iframe_data_source = iframe->ToWebLocalFrame()->DataSource();
+  WebDocumentLoader* iframe_data_source =
+      iframe->ToWebLocalFrame()->DataSource();
   ASSERT_TRUE(iframe_data_source);
   WebVector<WebURL> redirects;
   iframe_data_source->RedirectChain(redirects);
@@ -7651,7 +7654,7 @@ TEST_P(ParameterizedWebFrameTest, SameDocumentHistoryNavigationCommitType) {
 class TestHistoryChildWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
-  void DidStartProvisionalLoad(WebDataSource* data_source,
+  void DidStartProvisionalLoad(WebDocumentLoader* data_source,
                                WebURLRequest& request) {
     replaces_current_history_item_ = data_source->ReplacesCurrentHistoryItem();
   }
@@ -10257,7 +10260,7 @@ class CallbackOrderingWebFrameClient
     FrameTestHelpers::TestWebFrameClient::DidStartLoading(
         to_different_document);
   }
-  void DidStartProvisionalLoad(WebDataSource*, WebURLRequest&) override {
+  void DidStartProvisionalLoad(WebDocumentLoader*, WebURLRequest&) override {
     EXPECT_EQ(1, callback_count_++);
   }
   void DidCommitProvisionalLoad(const WebHistoryItem&,

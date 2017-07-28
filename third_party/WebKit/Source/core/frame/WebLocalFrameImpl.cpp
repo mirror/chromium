@@ -127,8 +127,8 @@
 #include "core/exported/LocalFrameClientImpl.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebAssociatedURLLoaderImpl.h"
-#include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebDevToolsAgentImpl.h"
+#include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -481,8 +481,8 @@ class ChromePluginPrintContext final : public ChromePrintContext {
   WebPrintParams print_params_;
 };
 
-static WebDataSource* DataSourceForDocLoader(DocumentLoader* loader) {
-  return loader ? WebDataSourceImpl::FromDocumentLoader(loader) : nullptr;
+static WebDocumentLoader* DataSourceForDocLoader(DocumentLoader* loader) {
+  return loader ? WebDocumentLoaderImpl::FromDocumentLoader(loader) : nullptr;
 }
 
 // WebFrame -------------------------------------------------------------------
@@ -905,13 +905,13 @@ void WebLocalFrameImpl::StopLoading() {
   GetFrame()->Loader().StopAllLoaders();
 }
 
-WebDataSource* WebLocalFrameImpl::ProvisionalDataSource() const {
+WebDocumentLoader* WebLocalFrameImpl::ProvisionalDataSource() const {
   DCHECK(GetFrame());
   return DataSourceForDocLoader(
       GetFrame()->Loader().ProvisionalDocumentLoader());
 }
 
-WebDataSource* WebLocalFrameImpl::DataSource() const {
+WebDocumentLoader* WebLocalFrameImpl::DataSource() const {
   DCHECK(GetFrame());
   return DataSourceForDocLoader(GetFrame()->Loader().GetDocumentLoader());
 }

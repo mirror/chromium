@@ -14,7 +14,7 @@
 #include "url/gurl.h"
 
 namespace blink {
-class WebDataSource;
+class WebDocumentLoader;
 }
 
 namespace content {
@@ -27,7 +27,8 @@ class InternalDocumentStateData : public base::SupportsUserData::Data {
   InternalDocumentStateData();
   ~InternalDocumentStateData() override;
 
-  static InternalDocumentStateData* FromDataSource(blink::WebDataSource* ds);
+  static InternalDocumentStateData* FromDocumentLoader(
+      blink::WebDocumentLoader* loader);
   static InternalDocumentStateData* FromDocumentState(DocumentState* ds);
 
   int http_status_code() const { return http_status_code_; }

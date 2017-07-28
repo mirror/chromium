@@ -36,7 +36,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
-#include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebFactory.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/WebLocalFrameBase.h"

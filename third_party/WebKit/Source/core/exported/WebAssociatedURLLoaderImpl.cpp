@@ -55,7 +55,7 @@
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/web/WebAssociatedURLLoaderClient.h"
-#include "public/web/WebDataSource.h"
+#include "public/web/WebDocumentLoader.h"
 
 namespace blink {
 
