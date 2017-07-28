@@ -188,7 +188,7 @@ class TabHelper : public content::WebContentsObserver,
 
   const Extension* GetExtension(const ExtensionId& extension_app_id);
 
-  void OnImageLoaded(const gfx::Image& image);
+  void OnImageLoaded(gfx::Image image);
 
   // WebstoreStandaloneInstaller::Callback.
   void OnInlineInstallComplete(const ExtensionId& extension_id,

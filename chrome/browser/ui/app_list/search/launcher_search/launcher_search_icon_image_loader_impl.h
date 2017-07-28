@@ -34,7 +34,7 @@ class LauncherSearchIconImageLoaderImpl : public LauncherSearchIconImageLoader,
   void OnExtensionIconImageChanged(extensions::IconImage* image) override;
 
   // ImageLoaderImageCallback.
-  void OnCustomIconImageLoaded(const gfx::Image& image);
+  void OnCustomIconImageLoaded(gfx::Image image);
 
  private:
   std::unique_ptr<extensions::IconImage> extension_icon_image_;

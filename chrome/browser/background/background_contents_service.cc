@@ -160,36 +160,28 @@ class CrashNotificationDelegate : public NotificationDelegate {
   DISALLOW_COPY_AND_ASSIGN(CrashNotificationDelegate);
 };
 
-void NotificationImageReady(
-    const std::string extension_name,
-    const base::string16 message,
-    scoped_refptr<CrashNotificationDelegate> delegate,
-    Profile* profile,
-    const gfx::Image& icon) {
+void NotificationImageReady(const std::string extension_name,
+                            const base::string16 message,
+                            scoped_refptr<CrashNotificationDelegate> delegate,
+                            Profile* profile,
+                            gfx::Image icon) {
   if (g_browser_process->IsShuttingDown())
     return;
 
-  gfx::Image notification_icon(icon);
-  if (notification_icon.IsEmpty()) {
+  if (icon.IsEmpty()) {
     ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-    notification_icon = rb.GetImageNamed(IDR_EXTENSION_DEFAULT_ICON);
+    icon = rb.GetImageNamed(IDR_EXTENSION_DEFAULT_ICON);
   }
 
   // Origin URL must be different from the crashed extension to avoid the
   // conflict. NotificationSystemObserver will cancel all notifications from
   // the same origin when OnExtensionUnloaded() is called.
-  Notification notification(message_center::NOTIFICATION_TYPE_SIMPLE,
-                            base::string16(),
-                            message,
-                            notification_icon,
-                            message_center::NotifierId(
-                                message_center::NotifierId::SYSTEM_COMPONENT,
-                                kNotifierId),
-                            base::string16(),
-                            GURL("chrome://extension-crash"),
-                            delegate->id(),
-                            message_center::RichNotificationData(),
-                            delegate.get());
+  Notification notification(
+      message_center::NOTIFICATION_TYPE_SIMPLE, base::string16(), message, icon,
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 kNotifierId),
+      base::string16(), GURL("chrome://extension-crash"), delegate->id(),
+      message_center::RichNotificationData(), delegate.get());
 
   g_browser_process->notification_ui_manager()->Add(notification, profile);
 }

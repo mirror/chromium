@@ -403,7 +403,7 @@ void ExtensionStorageMonitor::OnStorageThresholdExceeded(
 
 void ExtensionStorageMonitor::OnImageLoaded(const std::string& extension_id,
                                             int64_t current_usage,
-                                            const gfx::Image& image) {
+                                            gfx::Image image) {
   const Extension* extension = GetExtensionById(context_, extension_id);
   if (!extension)
     return;
@@ -423,11 +423,9 @@ void ExtensionStorageMonitor::OnImageLoaded(const std::string& extension_id,
           IDS_EXTENSION_STORAGE_MONITOR_BUTTON_UNINSTALL_APP :
           IDS_EXTENSION_STORAGE_MONITOR_BUTTON_UNINSTALL_EXTENSION)));
 
-  gfx::Image notification_image(image);
-  if (notification_image.IsEmpty()) {
-    notification_image =
-        extension->is_app() ? gfx::Image(util::GetDefaultAppIcon())
-                            : gfx::Image(util::GetDefaultExtensionIcon());
+  if (image.IsEmpty()) {
+    image = extension->is_app() ? gfx::Image(util::GetDefaultAppIcon())
+                                : gfx::Image(util::GetDefaultExtensionIcon());
   }
 
   std::unique_ptr<message_center::Notification> notification;
@@ -438,7 +436,7 @@ void ExtensionStorageMonitor::OnImageLoaded(const std::string& extension_id,
           IDS_EXTENSION_STORAGE_MONITOR_TEXT,
           base::UTF8ToUTF16(extension->name()),
           base::Int64ToString16(current_usage / kMBytes)),
-      notification_image, base::string16() /* display source */, GURL(),
+      image, base::string16() /* display source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kSystemNotifierId),
       notification_data,

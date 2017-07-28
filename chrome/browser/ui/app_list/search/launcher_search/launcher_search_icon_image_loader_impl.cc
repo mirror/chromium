@@ -64,7 +64,7 @@ void LauncherSearchIconImageLoaderImpl::OnExtensionIconImageChanged(
 }
 
 void LauncherSearchIconImageLoaderImpl::OnCustomIconImageLoaded(
-    const gfx::Image& image) {
+    gfx::Image image) {
   OnCustomIconLoaded(image.AsImageSkia());
 }
 

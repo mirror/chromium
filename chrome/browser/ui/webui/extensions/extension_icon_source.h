@@ -110,7 +110,7 @@ class ExtensionIconSource : public content::URLDataSource,
       const favicon_base::FaviconRawBitmapResult& bitmap_result);
 
   // ImageLoader callback
-  void OnImageLoaded(int request_id, const gfx::Image& image);
+  void OnImageLoaded(int request_id, gfx::Image image);
 
   // Called when the extension doesn't have an icon. We fall back to multiple
   // sources, using the following order:

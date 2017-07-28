@@ -69,7 +69,7 @@ class ExtensionDisabledGlobalError : public GlobalErrorWithStandardBubble,
   ExtensionDisabledGlobalError(ExtensionService* service,
                                const Extension* extension,
                                bool is_remote_install,
-                               const gfx::Image& icon);
+                               gfx::Image icon);
   ~ExtensionDisabledGlobalError() override;
 
   // GlobalError:
@@ -136,11 +136,11 @@ ExtensionDisabledGlobalError::ExtensionDisabledGlobalError(
     ExtensionService* service,
     const Extension* extension,
     bool is_remote_install,
-    const gfx::Image& icon)
+    gfx::Image icon)
     : service_(service),
       extension_(extension),
       is_remote_install_(is_remote_install),
-      icon_(icon),
+      icon_(std::move(icon)),
       user_response_(IGNORED),
       registry_observer_(this) {
   if (icon_.IsEmpty()) {
@@ -368,14 +368,14 @@ void ExtensionDisabledGlobalError::RemoveGlobalError() {
 void AddExtensionDisabledErrorWithIcon(base::WeakPtr<ExtensionService> service,
                                        const std::string& extension_id,
                                        bool is_remote_install,
-                                       const gfx::Image& icon) {
+                                       gfx::Image icon) {
   if (!service.get())
     return;
   const Extension* extension = service->GetInstalledExtension(extension_id);
   if (extension) {
     GlobalErrorServiceFactory::GetForProfile(service->profile())
         ->AddGlobalError(base::MakeUnique<ExtensionDisabledGlobalError>(
-            service.get(), extension, is_remote_install, icon));
+            service.get(), extension, is_remote_install, std::move(icon)));
   }
 }
 
