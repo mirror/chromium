@@ -37,4 +37,7 @@ proto_library("webui_proto") {
   sources = [
     "webui.proto",
   ]
+  deps = [
+    "//components/safe_browsing_db:safebrowsing_proto",
+  ]
 }
