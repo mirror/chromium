@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea5d497_14108ae2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-28T16:58:36Z",
+      "side": 1,
+      "message": "Does that mean the number of activations may not always be the same either? Could this test be more deterministic in whether pending trees are merged?",
+      "revId": "7cd8e9cf6d5ea04b7d61bd3a5e7ff713a6859092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
