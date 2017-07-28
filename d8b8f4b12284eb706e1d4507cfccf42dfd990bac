@@ -226,6 +226,24 @@
     },
     {
       "key": {
+        "uuid": "5246e633_8b25efd5",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-28T03:39:17Z",
+      "side": 1,
+      "message": "Can you please clarify? If I add a marker type, I have to update every switch statement that doesn\u0027t have a \"default\" case or the code won\u0027t compile. I can\u0027t land a CL that causes a compile error, so I don\u0027t understand what you\u0027re suggesting.\n\nI don\u0027t think it\u0027s possible to completely separate the editing and paint CLs since the enum value is in editing code (so adding a value requires touching editing code), and updating it requires touching this switch statement in paint code.",
+      "parentUuid": "9d898a32_7e820030",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54c0c819_3925bf1c",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 2
