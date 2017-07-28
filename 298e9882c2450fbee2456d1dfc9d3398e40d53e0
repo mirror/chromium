@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ba7295_9e3cf89b",
+        "filename": "chrome/browser/chromeos/fileapi/recent_async_file_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:38:45Z",
+      "side": 1,
+      "message": "Do we need make_scoped_refptr here?",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "298e9882c2450fbee2456d1dfc9d3398e40d53e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa51f4fa_88fda1eb",
+        "filename": "chrome/browser/chromeos/fileapi/recent_async_file_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:38:45Z",
+      "side": 1,
+      "message": "Why are we passing it by value?",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "298e9882c2450fbee2456d1dfc9d3398e40d53e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
