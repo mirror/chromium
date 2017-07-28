@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a582baf_3c70e90a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "Chromium also uses chrome/. I think you mean s/Chromium/content_shell",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f5eae5_98c1f68c",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "Add a unittest?",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b50e82_9dc625f5",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "OOC, why do we need to hex-encode the string?",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3687629_0bd6d019",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "For the cases that should not happen in normal cases, add a LOG(ERROR)?",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3dca0c_b92eb5a8",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "OOC, when do we need to reset this salt?",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d135d9a1_b4c2f89f",
+        "filename": "chrome/browser/media/storage_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "cdm_storage_id.h?",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58705ddc_96826522",
+        "filename": "chrome/browser/media/storage_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "No need to have a class since it\u0027s stateless?",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c478cc03_1ab19039",
+        "filename": "chrome/browser/media/storage_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "The storage ID should be a vector\u003cuint8_t\u003e, not a string",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4a6573_e47b17be",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "How about add a helper function to GetSalt(), then this function will be much cleaner.",
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9d3667_fdb8ad44",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 1,
+      "message": "We are still working on the plan on offline in incognito mode. I am not sure whether we should check IsOffTheRecord() here. Let\u0027s discuss.",
+      "range": {
+        "startLine": 130,
+        "startChar": 17,
+        "endLine": 130,
+        "endChar": 43
+      },
+      "revId": "ab46feb379735952bc6c0944dc744f537bb3961a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

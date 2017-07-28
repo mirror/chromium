@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "179d127a_5f31b2dd",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T17:25:08Z",
+      "side": 0,
+      "message": "Why removing the log?",
+      "revId": "70ca2546ecb5718196a3f939442e4ef87a7c02f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
