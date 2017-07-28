@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a24c955_eb8bab6a",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-28T00:07:41Z",
+      "side": 1,
+      "message": "Remind me, does Config::MUS have the CursorClient too?",
+      "range": {
+        "startLine": 540,
+        "startChar": 18,
+        "endLine": 540,
+        "endChar": 43
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dca5cfb_469e6f18",
+        "filename": "ash/shell_port.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-28T00:07:41Z",
+      "side": 1,
+      "message": "Please also add a description as to what this does.",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe5da82_6ecd7b86",
+        "filename": "services/ui/ws/cursor_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-28T00:07:41Z",
+      "side": 1,
+      "message": "remove explicit",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26a89ae_f57d806b",
+        "filename": "services/ui/ws/cursor_state_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-28T00:07:41Z",
+      "side": 1,
+      "message": "EXPECT_FALSE (similar comment for 160 and 174).",
+      "range": {
+        "startLine": 157,
+        "startChar": 9,
+        "endLine": 157,
+        "endChar": 16
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec50584f_17150f5c",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-28T00:07:41Z",
+      "side": 1,
+      "message": "pointer-\u003e touch (using \u0027pointer\u0027 here is confusing as we use \u0027pointer\u0027 to refer to mouse or touch events, as you can see by the name of the function).",
+      "range": {
+        "startLine": 443,
+        "startChar": 23,
+        "endLine": 443,
+        "endChar": 34
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9e3265_2cbdf17b",
+        "filename": "ui/aura/mus/window_manager_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-28T00:07:41Z",
+      "side": 1,
+      "message": "I realize you are just propagating the existing name, but given the confusion you had over the name and I think SetMouseEventsEnabled is rather confusing too did you consider renaming?",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
