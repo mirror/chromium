@@ -1184,6 +1184,10 @@ void FrameSelection::ClearLayoutSelection() {
   layout_selection_->ClearSelection();
 }
 
+bool FrameSelection::IsLayoutObjectReferred(LayoutObject* layout_object) const {
+  return layout_selection_->IsLayoutObjectReferred(layout_object);
+}
+
 }  // namespace blink
 
 #ifndef NDEBUG
