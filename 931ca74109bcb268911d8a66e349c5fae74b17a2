@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f3eb98b_480c6a19",
+        "filename": "ash/magnifier/magnification_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-28T19:13:58Z",
+      "side": 1,
+      "message": "Config::MUS has a CursorClient.",
+      "parentUuid": "1a24c955_eb8bab6a",
+      "range": {
+        "startLine": 540,
+        "startChar": 18,
+        "endLine": 540,
+        "endChar": 43
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dca5cfb_469e6f18",
         "filename": "ash/shell_port.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdf8698_820e4a4a",
+        "filename": "ash/shell_port.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-28T19:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dca5cfb_469e6f18",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7a9d1e63_e7c922fa",
+        "filename": "services/ui/ws/cursor_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-28T19:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe5da82_6ecd7b86",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a26a89ae_f57d806b",
         "filename": "services/ui/ws/cursor_state_unittest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9688f28_e4c10e21",
+        "filename": "services/ui/ws/cursor_state_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-28T19:13:58Z",
+      "side": 1,
+      "message": "EXPECT_FALSE() resolves to !(), which is not what we want since base::optional\u003c\u003e has an operator bool() of its own which returns whether it contains a value. Performing a compare checks that it\u0027s contains\u003cfalse\u003e instead of contains\u003ctrue\u003e or \u003cno value\u003e.",
+      "parentUuid": "a26a89ae_f57d806b",
+      "range": {
+        "startLine": 157,
+        "startChar": 9,
+        "endLine": 157,
+        "endChar": 16
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6c7c0c0a_18fa7645",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-28T19:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec50584f_17150f5c",
+      "range": {
+        "startLine": 443,
+        "startChar": 23,
+        "endLine": 443,
+        "endChar": 34
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef9e3265_2cbdf17b",
         "filename": "ui/aura/mus/window_manager_delegate.h",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-28T00:07:41Z",
       "side": 1,
       "message": "I realize you are just propagating the existing name, but given the confusion you had over the name and I think SetMouseEventsEnabled is rather confusing too did you consider renaming?",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "931ca74109bcb268911d8a66e349c5fae74b17a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d244b8d5_8c15fcbb",
+        "filename": "ui/aura/mus/window_manager_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-28T19:13:58Z",
+      "side": 1,
+      "message": "I\u0027ve renamed this in all new code and all code in //services/ui/. I haven\u0027t propagated this through users of the CursorClient interface.",
+      "parentUuid": "ef9e3265_2cbdf17b",
       "range": {
         "startLine": 87,
         "startChar": 18,
