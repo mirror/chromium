@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a43c63fc_57a46fd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "nit: I think export or dump are better wording here. This is ratehr nitpicky of mine but the output of this is rather for debugging purposes than for backing up/saving for other time purpose.",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c262d74_f0f1afe1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "One followup question here - is this json file the same format as the json format used to set policies on Linux or not?",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb1c61d_240507d3",
+        "filename": "chrome/browser/resources/policy.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "This should end at -button so maybe save-policies-button, or if you agree with my comment on the commit msg replace save with export/dump everywhere too.\n\nSince this class is the same as reload-policies-button you can actually rename the one above to something more generic e.g. left-aligned-button and use it in both divs.",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab536eaf_768a9b27",
+        "filename": "chrome/browser/resources/policy.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "s/JSON/Json/ we don\u0027t capitalize abbreviations completely.",
+      "range": {
+        "startLine": 38,
+        "startChar": 54,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474feacb_816305ab",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "rather than static fields/method of the class you can make those part of the anonymous namespace above.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 40
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83eec7c_a1c2892f",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "I would suggest VerifySavedPolicies instead.",
+      "range": {
+        "startLine": 263,
+        "startChar": 19,
+        "endLine": 263,
+        "endChar": 37
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32f2de1_c66280ad",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "A hard  learned truth is that ASSERT_XXX is really just a LOG + return so having an assert that is in a function called by the test will not stop the further execution of the test. Therefore either make all of those EXPECTs or write custom logic to return a bool from the Verify function and assert its invocation instead.",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff00bdf4_564591a4",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "use ReadFileToString from base instead.",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 3
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd26057_2f75c611",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "Don\u0027t remember the cppjson lib by heart but doesn\u0027t this have to be a unique_ptr too?",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 51
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc97b2ee_68e23305",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "rename to CopyAndMaybeConvert.",
+      "range": {
+        "startLine": 189,
+        "startChar": 29,
+        "endLine": 189,
+        "endChar": 43
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4309155c_04e6c536",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "It seems like an equivalent but cleaner logic will be:\n\n{\n  if (!need_converting)\n    return value-\u003eCreateDeepCopy();\n\n  ...old function code follows here....\n}",
+      "range": {
+        "startLine": 192,
+        "startChar": 35,
+        "endLine": 192,
+        "endChar": 54
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1090262b_91de0e08",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "A better name here is DoWritePoliciesToJsonFile this is not really a callback as it is not called back from anywhere simply executed on another thread.",
+      "range": {
+        "startLine": 834,
+        "startChar": 5,
+        "endLine": 834,
+        "endChar": 24
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7893dd63_ea64ae50",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "Replace this with WriteFile from base. https://cs.chromium.org/chromium/src/base/files/file_util.h?rcl\u003d54afe29f866e4c3878242de7a78941fc363791e9\u0026l\u003d337",
+      "range": {
+        "startLine": 835,
+        "startChar": 2,
+        "endLine": 836,
+        "endChar": 51
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8a054b_3481fa16",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "I think you don\u0027t have to do this. Rather leave the default location (Documents on windows, ~/ on linux). And only set the proposed filename.",
+      "range": {
+        "startLine": 869,
+        "startChar": 0,
+        "endLine": 872,
+        "endChar": 27
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28859406_94d08e3f",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:06:45Z",
+      "side": 1,
+      "message": "move this to the top.",
+      "range": {
+        "startLine": 876,
+        "startChar": 0,
+        "endLine": 879,
+        "endChar": 11
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
