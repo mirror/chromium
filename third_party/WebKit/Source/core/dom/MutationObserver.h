@@ -84,7 +84,21 @@ class CORE_EXPORT MutationObserver final
     kCharacterDataOldValue = 1 << 6,
   };
 
-  static MutationObserver* Create(MutationCallback*);
+  class CORE_EXPORT Delegate : public GarbageCollectedFinalized<Delegate>,
+                               public TraceWrapperBase {
+   public:
+    virtual ~Delegate() = default;
+    virtual ExecutionContext* GetExecutionContext() const = 0;
+    virtual void Deliver(const MutationRecordVector& records,
+                         MutationObserver&) = 0;
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
+  };
+
+  class CORE_EXPORT V8DelegateImpl;
+
+  static MutationObserver* Create(Delegate*);
+  static MutationObserver* Create(ScriptState*, MutationCallback*);
   static void ResumeSuspendedObservers();
   static void DeliverMutations();
   static void EnqueueSlotChange(HTMLSlotElement&);
@@ -114,12 +128,12 @@ class CORE_EXPORT MutationObserver final
  private:
   struct ObserverLessThan;
 
-  explicit MutationObserver(MutationCallback*);
+  explicit MutationObserver(Delegate*);
   void Deliver();
   bool ShouldBeSuspended() const;
   void CancelInspectorAsyncTasks();
 
-  TraceWrapperMember<MutationCallback> callback_;
+  TraceWrapperMember<Delegate> delegate_;
   HeapVector<TraceWrapperMember<MutationRecord>> records_;
   MutationObserverRegistrationSet registrations_;
   unsigned priority_;
