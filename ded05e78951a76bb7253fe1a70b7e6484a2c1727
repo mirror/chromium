@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fda4c3ad_e6e72e44",
+        "filename": "ash/palette_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "s/styluses/styli",
+      "range": {
+        "startLine": 79,
+        "startChar": 19,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e8f12f_24c3fbaa",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "check HasStylusInput somewhere so watcher_ is never started for devices that will never see a stylus",
+      "range": {
+        "startLine": 485,
+        "startChar": 18,
+        "endLine": 485,
+        "endChar": 41
+      },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec22a0e_325e9344",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T18:37:00Z",
+      "side": 1,
+      "message": "\u003d nullptr",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 17
+      },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
