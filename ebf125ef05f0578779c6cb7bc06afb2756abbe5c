@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05c7e134_1d0be4ea",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-28T10:27:30Z",
+      "side": 1,
+      "message": "_LONG_ seems to be tuned for duration up to 1h. I\u0027d go for _MEDIUM_TIMES at most (max 3 min). I\u0027d be seriously worried we get any close to that.",
+      "range": {
+        "startLine": 456,
+        "startChar": 16,
+        "endLine": 456,
+        "endChar": 26
+      },
+      "revId": "ebf125ef05f0578779c6cb7bc06afb2756abbe5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
