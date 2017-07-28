@@ -13,7 +13,7 @@
 
 namespace profiling {
 
-MemlogSenderPipe::MemlogSenderPipe(mojo::edk::ScopedPlatformHandle fd)
+MemlogSenderPipe::MemlogSenderPipe(base::ScopedFD fd)
     : handle_(std::move(fd)) {}
 
 MemlogSenderPipe::~MemlogSenderPipe() {

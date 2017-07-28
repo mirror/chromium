@@ -6,6 +6,7 @@
 #define MOJO_EDK_EMBEDDER_SCOPED_PLATFORM_HANDLE_H_
 
 #include "base/compiler_specific.h"
+#include "base/files/platform_file.h"
 #include "base/macros.h"
 #include "mojo/edk/embedder/platform_handle.h"
 #include "mojo/edk/system/system_impl_export.h"
@@ -24,9 +25,17 @@ class MOJO_SYSTEM_IMPL_EXPORT ScopedPlatformHandle {
   ScopedPlatformHandle(ScopedPlatformHandle&& other)
       : handle_(other.release()) {}
 
+  ScopedPlatformHandle(base::ScopedPlatformFile&& other)
+      : handle_(other.release()) {}
+
   ScopedPlatformHandle& operator=(ScopedPlatformHandle&& other) {
     if (this != &other)
       handle_ = other.release();
+    return *this;
+  }
+
+  ScopedPlatformHandle& operator=(base::ScopedPlatformFile&& other) {
+    handle_ = PlatformHandle(other.release());
     return *this;
   }
 
@@ -50,6 +59,10 @@ class MOJO_SYSTEM_IMPL_EXPORT ScopedPlatformHandle {
   }
 
   bool is_valid() const { return handle_.is_valid(); }
+
+  base::ScopedPlatformFile ToScopedPlatformFile() {
+    return base::ScopedPlatformFile(release().handle);
+  }
 
  private:
   PlatformHandle handle_;

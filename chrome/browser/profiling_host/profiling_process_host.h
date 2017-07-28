@@ -9,6 +9,7 @@
 #include "base/process/process.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/common/profiling/profiling_control.mojom.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 
@@ -44,6 +45,9 @@ namespace profiling {
 // to support starting the profiling process very early in the startup
 // process (to get most memory events) before other infrastructure like the
 // I/O thread has been started.
+//
+// TODO(ajwong): This host class seems over kill at this point. Can this be
+// fully subsumed by the ProfiingService class?
 class ProfilingProcessHost {
  public:
   // Launches the profiling process if necessary and returns a pointer to it.
@@ -58,13 +62,6 @@ class ProfilingProcessHost {
   // same mode (either profiling or not) as the browser process.
   static void AddSwitchesToChildCmdLine(base::CommandLine* child_cmd_line);
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
-  static void GetAdditionalMappedFilesForChildProcess(
-      const base::CommandLine& command_line,
-      int child_process_id,
-      content::PosixFileDescriptorInfo* mappings);
-#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
-
   // Sends a message to the profiling process that it dump the given process'
   // memory data.
   void RequestProcessDump(base::ProcessId pid);
@@ -73,28 +70,10 @@ class ProfilingProcessHost {
   ProfilingProcessHost();
   ~ProfilingProcessHost();
 
-  void Launch();
+  void LaunchAsService();
 
-  void EnsureControlChannelExists();
-  void ConnectControlChannelOnIO();
   void AddNewSenderOnIO(mojo::edk::ScopedPlatformHandle handle,
                         int child_process_id);
-
-  // Use process_.IsValid() to determine if the child process has been launched.
-  base::Process process_;
-  std::string pipe_id_;
-
-  // IO thread only -----------------------------------------------------------
-  //
-  // Once the constructor is finished, the following variables must only be
-  // accessed on the IO thread.
-
-  // Holds the pending server handle for the Mojo control channel during
-  // the period between the profiling process launching and the Mojo channel
-  // being created. Will be invalid otherwise.
-  mojo::edk::ScopedPlatformHandle pending_control_connection_;
-
-  mojom::ProfilingControlPtr profiling_control_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcessHost);
 };

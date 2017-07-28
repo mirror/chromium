@@ -11,9 +11,9 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/profiling/backtrace_storage.h"
-#include "chrome/profiling/memlog_control_receiver.h"
 
 namespace base {
+class SequencedTaskRunner;
 class SingleThreadTaskRunner;
 }
 
@@ -23,18 +23,16 @@ class MemlogReceiverPipe;
 
 // Manages all connections and logging for each process. Pipes are supplied by
 // the pipe server and this class will connect them to a parser and logger.
-class MemlogConnectionManager : public MemlogControlReceiver {
+class MemlogConnectionManager {
  public:
-  MemlogConnectionManager();
-  ~MemlogConnectionManager() override;
+  MemlogConnectionManager(scoped_refptr<base::SequencedTaskRunner> io_runner,
+                          BacktraceStorage* backtrace_storage);
+  ~MemlogConnectionManager();
 
   void OnNewConnection(scoped_refptr<MemlogReceiverPipe> new_pipe, int pid);
 
  private:
   struct Connection;
-
-  // MemlogControlReceiver implementation.
-  void OnStartMojoControl() override;
 
   // Notification that a connection is complete. Unlike OnNewConnection which
   // is signaled by the pipe server, this is signaled by the allocation tracker
@@ -45,6 +43,9 @@ class MemlogConnectionManager : public MemlogControlReceiver {
   void OnConnectionCompleteThunk(
       scoped_refptr<base::SingleThreadTaskRunner> main_loop,
       int process_id);
+
+  scoped_refptr<base::SequencedTaskRunner> io_runner_;
+  BacktraceStorage* backtrace_storage_;  // Now owned.
 
   // Maps process ID to the connection information for it.
   base::flat_map<int, std::unique_ptr<Connection>> connections_;
