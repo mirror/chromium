@@ -70,6 +70,24 @@
       "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57895803_28589247",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190898
+      },
+      "writtenOn": "2017-07-28T02:50:13Z",
+      "side": 1,
+      "message": "Well.. interestingly changing the mentioned library to use cast_loadable_module causes linking errors. Not sure why that\u0027s happening -- are there any other differences between shared_library and loadable_module in terms of symbol visibility? (I looked around and couldn\u0027t see any...)",
+      "parentUuid": "e400900c_a0208404",
+      "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
