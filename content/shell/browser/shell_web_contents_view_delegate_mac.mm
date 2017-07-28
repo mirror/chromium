@@ -100,7 +100,9 @@ void ShellWebContentsViewDelegate::ShowContextMenu(
 
   params_ = params;
   bool has_link = !params_.unfiltered_link_url.is_empty();
-  bool has_selection = ! params_.selection_text.empty();
+  bool has_selection = !params_.selection_text.empty();
+  bool is_password =
+      params_.input_field_type == WebContextMenuData::kInputFieldTypePassword;
 
   NSMenu* menu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
   ShellContextMenuDelegate* delegate =
@@ -182,7 +184,7 @@ void ShellWebContentsViewDelegate::ShowContextMenu(
 
     NSMenuItem* separator = [NSMenuItem separatorItem];
     [menu addItem:separator];
-  } else if (has_selection) {
+  } else if (has_selection && !is_password) {
     MakeContextMenuItem(@"Copy",
                         ShellContextMenuItemCopyTag,
                         menu,
