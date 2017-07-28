@@ -97,6 +97,9 @@ CONTENT_EXPORT extern const base::Feature kWebRtcUseEchoCanceller3;
 CONTENT_EXPORT extern const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames;
 CONTENT_EXPORT extern const base::Feature kWebUsb;
 CONTENT_EXPORT extern const base::Feature kWebVRExperimentalRendering;
+#if defined(OS_ANDROID)
+CONTENT_EXPORT extern const base::Feature kWebVrVsyncAlign;
+#endif  // defined(OS_ANDROID)
 CONTENT_EXPORT
 extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 
