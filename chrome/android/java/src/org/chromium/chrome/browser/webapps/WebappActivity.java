@@ -27,6 +27,7 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.SingleTabActivity;
 import org.chromium.chrome.browser.TabState;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerDocument;
@@ -38,6 +39,7 @@ import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.content.browser.ContentViewCore;
@@ -49,6 +51,7 @@ import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -87,6 +90,10 @@ public class WebappActivity extends SingleTabActivity {
 
     private Runnable mSetImmersiveRunnable;
 
+    // We load WebappInfo from sWebInfoMap to mWebappInfo, and use mWebappInfo after that.
+    private static final HashMap<String, WebappInfo> sWebInfoMap =
+            new HashMap<String, WebappInfo>();
+
     /**
      * Construct all the variables that shouldn't change.  We do it here both to clarify when the
      * objects are created and to ensure that they exist throughout the parallelized initialization
@@ -107,7 +114,9 @@ public class WebappActivity extends SingleTabActivity {
         if (intent == null) return;
         super.onNewIntent(intent);
 
-        WebappInfo newWebappInfo = createWebappInfo(intent);
+        WebappInfo newWebappInfo = retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+        if (newWebappInfo == null) newWebappInfo = createWebappInfo(intent);
+
         if (newWebappInfo == null) {
             Log.e(TAG, "Failed to parse new Intent: " + intent);
             ApiCompatibilityUtils.finishAndRemoveTask(this);
@@ -143,7 +152,28 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     public void preInflationStartup() {
-        WebappInfo info = createWebappInfo(getIntent());
+        Intent intent = getIntent();
+        WebappInfo info = retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+        // Here is something tricky. When open an app from recent, Android will use the intent that
+        // start the app to launch the app. We want to navigate the app to the last closed state,
+        // in this case use getSavedInstanceState(). When open app from notification, we want to
+        // navigate the app using the notification intent.
+        // In order to tell whether it is launched from notification or recent, we check the
+        // sWebInfoMap. If it's launched from notification, chrome will start first so the
+        // WebappInfo will be loaded into sWebInfoMap.
+        boolean launchActivityFromNotification = false;
+        if (info == null) {
+            info = createWebappInfo(intent);
+        } else {
+            launchActivityFromNotification = true;
+        }
+
+        boolean isForceNavigation = IntentUtils.safeGetBooleanExtra(
+                intent, ShortcutHelper.EXTRA_FORCE_NAVIGATION, false);
+        if (isForceNavigation && launchActivityFromNotification) {
+            // Don't restore to previous page.
+            resetSavedInstanceState();
+        }
 
         String id = "";
         if (info != null) {
@@ -361,6 +391,17 @@ public class WebappActivity extends SingleTabActivity {
      */
     public String getWebappScope() {
         return mWebappInfo.scopeUri().toString();
+    }
+
+    public static void addWebappInfoToCache(String id, WebappInfo info) {
+        sWebInfoMap.put(id, info);
+    }
+
+    public static WebappInfo retrieveWebappInfoFromCache(String id) {
+        WebappInfo webappInfo = sWebInfoMap.get(id);
+        if (webappInfo == null) return null;
+        sWebInfoMap.remove(id);
+        return webappInfo;
     }
 
     private void initializeWebappData() {
