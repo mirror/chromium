@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9ff0bd5_38ca15c1",
+        "filename": "components/offline_pages/content/renovations/render_frame_script_injector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-28T21:36:17Z",
+      "side": 1,
+      "message": "nit: seems typo?",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "582813c7f948773f0b05932e49c6f9f58fe25668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5445d73d_37bf785a",
+        "filename": "components/offline_pages/core/renovations/page_renovator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-28T21:36:17Z",
+      "side": 1,
+      "message": "nit: outlive?",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "582813c7f948773f0b05932e49c6f9f58fe25668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
