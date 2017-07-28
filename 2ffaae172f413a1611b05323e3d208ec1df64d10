@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e40a8d72_b8f40f3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-28T18:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dd3926a_c6fa5e1b",
+      "revId": "2ffaae172f413a1611b05323e3d208ec1df64d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f5ef9e_67079282",
         "filename": "ui/chromeos/resources/default_100_percent/default_user_images/avatar_anonymous.png",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T17:44:14Z",
       "side": 1,
       "message": "This looks darker now :( Original source is here:\nhttps://icons.googleplex.com/#icon\u003dlogo_avatar_anonymous\u0026search\u003davatar",
+      "revId": "2ffaae172f413a1611b05323e3d208ec1df64d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d45141_571d5829",
+        "filename": "ui/chromeos/resources/default_100_percent/default_user_images/avatar_anonymous.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-28T18:35:46Z",
+      "side": 1,
+      "message": "hm, I used \u0027convert\u0027 to scale it and it looks like it changed the encoding from colormap to gray+alpha. used gimp in latest patch as that avoids the change to encoding.",
+      "parentUuid": "17f5ef9e_67079282",
       "revId": "2ffaae172f413a1611b05323e3d208ec1df64d10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
