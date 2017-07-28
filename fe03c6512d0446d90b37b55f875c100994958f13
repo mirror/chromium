@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55f7215_00483eac",
+        "filename": "chrome/browser/ui/webui/chromeos/user_image_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T17:37:01Z",
+      "side": 1,
+      "message": "nit: I would parse the frame here and DCHECK(frame \u003c\u003d 0) with the TODO comment below.",
+      "revId": "fe03c6512d0446d90b37b55f875c100994958f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
