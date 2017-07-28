@@ -34,6 +34,24 @@
       "revId": "705e7dd46d85f38fd1e4adaade2e6503ace3c9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8242851c_b1738573",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T20:16:44Z",
+      "side": 1,
+      "message": "i\u0027m aware that it\u0027s used by a static method, but why can\u0027t it live in some existing singleton class, for example? SessionControllerClient looks like it\u0027s a singleton, for instance. why don\u0027t you put it there?",
+      "parentUuid": "51d4c6e2_7b9bb663",
+      "revId": "705e7dd46d85f38fd1e4adaade2e6503ace3c9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
