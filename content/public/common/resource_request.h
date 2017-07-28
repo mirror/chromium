@@ -133,6 +133,10 @@ struct CONTENT_EXPORT ResourceRequest {
   // to that file will be provided in ResponseInfo::download_file_path.
   bool download_to_file = false;
 
+  // If true, then the response body will be downloaded to a blob and the uuid
+  // for that blob will be provided in ResponseInfo::blob_uuid
+  bool download_to_blob = false;
+
   // True if the request was user initiated.
   bool has_user_gesture = false;
 

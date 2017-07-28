@@ -852,6 +852,8 @@ bool ResourceDispatcherHostImpl::OnMessageReceived(
                                                OnSyncLoad)
     IPC_MESSAGE_HANDLER(ResourceHostMsg_ReleaseDownloadedFile,
                         OnReleaseDownloadedFile)
+    IPC_MESSAGE_HANDLER(ResourceHostMsg_ReleaseDownloadedBlob,
+                        OnReleaseDownloadedBlob)
     IPC_MESSAGE_HANDLER(ResourceHostMsg_CancelRequest, OnCancelRequest)
     IPC_MESSAGE_HANDLER(ResourceHostMsg_DidChangePriority, OnDidChangePriority)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -1451,9 +1453,12 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     // PlzNavigate: do not add ResourceThrottles for main resource requests from
     // the renderer.  Decisions about the navigation should have been done in
     // the initial request.
+    scoped_refptr<ChromeBlobStorageContext> chrome_blob_context(
+        GetChromeBlobStorageContextForResourceContext(resource_context));
     handler = CreateBaseResourceHandler(
         new_request.get(), std::move(mojo_request),
-        std::move(url_loader_client), request_data.resource_type);
+        std::move(url_loader_client), request_data.resource_type,
+        std::move(chrome_blob_context));
   } else {
     // Initialize the service worker handler for the request. We don't use
     // ServiceWorker for synchronous loads to avoid renderer deadlocks.
@@ -1523,9 +1528,11 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     DCHECK(!url_loader_client);
     handler.reset(new SyncResourceHandler(request, sync_result_handler, this));
   } else {
-    handler = CreateBaseResourceHandler(request, std::move(mojo_request),
-                                        std::move(url_loader_client),
-                                        request_data.resource_type);
+    scoped_refptr<ChromeBlobStorageContext> chrome_blob_context(
+        GetChromeBlobStorageContextForResourceContext(resource_context));
+    handler = CreateBaseResourceHandler(
+        request, std::move(mojo_request), std::move(url_loader_client),
+        request_data.resource_type, std::move(chrome_blob_context));
 
     // The RedirectToFileResourceHandler depends on being next in the chain.
     if (request_data.download_to_file) {
@@ -1571,14 +1578,16 @@ ResourceDispatcherHostImpl::CreateBaseResourceHandler(
     net::URLRequest* request,
     mojom::URLLoaderAssociatedRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
-    ResourceType resource_type) {
+    ResourceType resource_type,
+    scoped_refptr<ChromeBlobStorageContext> blob_context) {
   std::unique_ptr<ResourceHandler> handler;
   if (mojo_request.is_pending()) {
     handler.reset(new MojoAsyncResourceHandler(
         request, this, std::move(mojo_request), std::move(url_loader_client),
         resource_type));
   } else {
-    handler.reset(new AsyncResourceHandler(request, this));
+    handler.reset(
+        new AsyncResourceHandler(request, this, std::move(blob_context)));
   }
   return handler;
 }
@@ -1695,6 +1704,12 @@ void ResourceDispatcherHostImpl::OnReleaseDownloadedFile(
   UnregisterDownloadedTempFile(requester_info->child_id(), request_id);
 }
 
+void ResourceDispatcherHostImpl::OnReleaseDownloadedBlob(
+    ResourceRequesterInfo* requester_info,
+    int request_id) {
+  UnregisterDownloadedTempBlob(requester_info->child_id(), request_id);
+}
+
 void ResourceDispatcherHostImpl::OnDidChangePriority(
     ResourceRequesterInfo* requester_info,
     int request_id,
@@ -1744,6 +1759,23 @@ void ResourceDispatcherHostImpl::UnregisterDownloadedTempFile(
 
   // Note that we don't remove the security bits here. This will be done
   // when all file refs are deleted (see RegisterDownloadedTempFile).
+}
+
+void ResourceDispatcherHostImpl::RegisterDownloadedTempBlob(
+    int child_id,
+    int request_id,
+    std::unique_ptr<storage::BlobDataHandle> blob_data_handle) {
+  registered_temp_blobs_[child_id].insert(
+      std::make_pair(request_id, std::move(*blob_data_handle.release())));
+}
+
+void ResourceDispatcherHostImpl::UnregisterDownloadedTempBlob(int child_id,
+                                                              int request_id) {
+  TemporaryBlobMap& map = registered_temp_blobs_[child_id];
+  TemporaryBlobMap::iterator found = map.find(request_id);
+  if (found == map.end())
+    return;
+  map.erase(found);
 }
 
 bool ResourceDispatcherHostImpl::Send(IPC::Message* message) {
@@ -1827,6 +1859,7 @@ void ResourceDispatcherHostImpl::CancelRequestsForProcess(int child_id) {
   CancelRequestsForRoute(
       GlobalFrameRoutingId(child_id, MSG_ROUTING_NONE /* cancel all */));
   registered_temp_files_.erase(child_id);
+  registered_temp_blobs_.erase(child_id);
 }
 
 void ResourceDispatcherHostImpl::CancelRequestsForRoute(

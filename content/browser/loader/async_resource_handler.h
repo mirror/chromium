@@ -24,6 +24,7 @@ class UploadProgress;
 }
 
 namespace content {
+class ChromeBlobStorageContext;
 class ResourceBuffer;
 class ResourceController;
 class ResourceDispatcherHostImpl;
@@ -34,8 +35,10 @@ class UploadProgressTracker;
 class CONTENT_EXPORT AsyncResourceHandler : public ResourceHandler,
                                             public ResourceMessageDelegate {
  public:
-  AsyncResourceHandler(net::URLRequest* request,
-                       ResourceDispatcherHostImpl* rdh);
+  AsyncResourceHandler(
+      net::URLRequest* request,
+      ResourceDispatcherHostImpl* rdh,
+      scoped_refptr<ChromeBlobStorageContext> blob_storage_context);
   ~AsyncResourceHandler() override;
 
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -77,6 +80,7 @@ class CONTENT_EXPORT AsyncResourceHandler : public ResourceHandler,
 
   scoped_refptr<ResourceBuffer> buffer_;
   ResourceDispatcherHostImpl* rdh_;
+  scoped_refptr<ChromeBlobStorageContext> blob_storage_context_;
 
   // Number of messages we've sent to the renderer that we haven't gotten an
   // ACK for. This allows us to avoid having too many messages in flight.

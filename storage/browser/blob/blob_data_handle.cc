@@ -106,6 +106,7 @@ BlobDataHandle::BlobDataHandle(const std::string& uuid,
 }
 
 BlobDataHandle::BlobDataHandle(const BlobDataHandle& other) = default;
+BlobDataHandle::BlobDataHandle(BlobDataHandle&& other) = default;
 
 BlobDataHandle::~BlobDataHandle() {
   if (!io_task_runner_->RunsTasksInCurrentSequence()) {
@@ -118,6 +119,7 @@ BlobDataHandle::~BlobDataHandle() {
 
 BlobDataHandle& BlobDataHandle::operator=(
     const BlobDataHandle& other) = default;
+BlobDataHandle& BlobDataHandle::operator=(BlobDataHandle&& other) = default;
 
 bool BlobDataHandle::IsBeingBuilt() const {
   DCHECK(io_task_runner_->RunsTasksInCurrentSequence());

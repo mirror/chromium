@@ -410,6 +410,10 @@ IPC_MESSAGE_CONTROL1(ResourceHostMsg_UploadProgress_ACK,
 IPC_MESSAGE_CONTROL1(ResourceHostMsg_ReleaseDownloadedFile,
                      int /* request_id */)
 
+// Sent when the renderer process deletes a resource loader.
+IPC_MESSAGE_CONTROL1(ResourceHostMsg_ReleaseDownloadedBlob,
+                     int /* request_id */)
+
 // Sent by the renderer when a resource request changes priority.
 IPC_MESSAGE_CONTROL3(ResourceHostMsg_DidChangePriority,
                      int /* request_id */,
