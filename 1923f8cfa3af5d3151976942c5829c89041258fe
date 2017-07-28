@@ -69,6 +69,24 @@
       "revId": "1923f8cfa3af5d3151976942c5829c89041258fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40a0686_0f635c00",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T10:29:48Z",
+      "side": 1,
+      "message": "This code is copied from VisibleSelection::AsSelection().\nBut, new version seems better.\n\nBTW, actually, we may return empty selection but I would like to keep\nis_directiona_ for empty selection as existing.",
+      "parentUuid": "b63f11ca_b2dd644a",
+      "revId": "1923f8cfa3af5d3151976942c5829c89041258fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
