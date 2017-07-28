@@ -101,6 +101,16 @@ LayoutTestDevToolsBindings* LayoutTestDevToolsBindings::LoadDevTools(
   return bindings;
 }
 
+// static.
+GURL LayoutTestDevToolsBindings::GetInspectedPageURL(const GURL& test_url) {
+  std::string spec = test_url.spec();
+  std::string test_query_param = "&test=";
+  size_t start_position = spec.find(test_query_param);
+  std::string url = spec.substr(start_position + test_query_param.length());
+  std::string origin = GURL(url).GetOrigin().spec();
+  return GURL(origin + "devtools/resources/inspected-page.html");
+}
+
 void LayoutTestDevToolsBindings::EvaluateInFrontend(int call_id,
                                                     const std::string& script) {
   if (!ready_for_test_) {
