@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "addf12b0_892b28a5",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-28T16:45:58Z",
+      "side": 1,
+      "message": "Could we avoid doing this? In other words, could we unpack the resources directly from WebKit?",
+      "revId": "2e22b9b16c713e9f1e46f949ebe1f52a8b030ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
