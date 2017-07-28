@@ -209,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "a3de1be3_49fc0dd0",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T08:35:32Z",
+      "side": 1,
+      "message": "Now this class will cache base::File::Info. Thanks!",
+      "parentUuid": "84eded66_6cace21c",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac9a4c9d_124dec86",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
@@ -277,6 +295,30 @@
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e327c7_f393aea7",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T08:35:32Z",
+      "side": 1,
+      "message": "Thanks, renamed to file_name.",
+      "parentUuid": "2175df30_2ff5b72d",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -688,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "9583d68f_cc6d8b58",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T08:35:32Z",
+      "side": 1,
+      "message": "Implemented the limit.",
+      "parentUuid": "7d83d01e_1bba4f46",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 53
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "267af922_5217be1c",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -783,6 +849,30 @@
     },
     {
       "key": {
+        "uuid": "8f355661_35476498",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T08:35:32Z",
+      "side": 1,
+      "message": "Anyway deleting State is not very difficult so I implemented it.",
+      "parentUuid": "cdf2a0cb_6fbc08b9",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c15eb200_c090909e",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
         "patchSetId": 4
@@ -830,6 +920,30 @@
     },
     {
       "key": {
+        "uuid": "995cfe75_165fd755",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T08:35:32Z",
+      "side": 1,
+      "message": "Implemented the limit.",
+      "parentUuid": "3279fa97_cc530c2e",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0efcf588_0b7357b0",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
         "patchSetId": 4
@@ -874,6 +988,30 @@
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fff5944_951df662",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T08:35:32Z",
+      "side": 1,
+      "message": "I think it\u0027s safe to cache only by profile. I updated the code.",
+      "parentUuid": "12164efa_7b1551d4",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
