@@ -6,8 +6,11 @@
 
 namespace vr {
 
-TabModel::TabModel(const std::string& title, int id, SkColor color)
-    : title(title), id(id), color(color) {}
+TabModel::TabModel(const base::string16& title,
+                   int id,
+                   SkColor color,
+                   int image_id)
+    : title(title), id(id), color(color), image_id(image_id) {}
 TabModel::TabModel(const TabModel& other) = default;
 TabModel::~TabModel() {}
 

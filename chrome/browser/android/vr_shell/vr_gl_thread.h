@@ -88,6 +88,10 @@ class VrGLThread : public base::Thread,
   void SetSplashScreenIcon(const SkBitmap& bitmap) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
+  void AddOrUpdateTab(bool incognito,
+                      int id,
+                      const base::string16& title) override;
+  void RemoveTab(bool incognito, int id) override;
 
  protected:
   void Init() override;

@@ -53,7 +53,7 @@ class PagedGridView : public UiElement {
   float margin_;
   size_t current_page_ = 0;
 
-  float non_current_element_opacity_ = 0.2;
+  float non_current_element_opacity_ = 0.1;
   float current_element_opacity_ = 1.0;
 
   float scroll_offset_ = 0.0f;
