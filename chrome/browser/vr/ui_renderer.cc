@@ -86,7 +86,12 @@ void UiRenderer::DrawWorldElements(const RenderInfo& render_info,
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
 
-    glClear(GL_DEPTH_BUFFER_BIT);
+    const SkColor backgroundColor = SK_ColorBLACK;
+    glClearColor(SkColorGetR(backgroundColor) / 255.0,
+                 SkColorGetG(backgroundColor) / 255.0,
+                 SkColorGetB(backgroundColor) / 255.0,
+                 SkColorGetA(backgroundColor) / 255.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
   std::vector<const UiElement*> elements = scene_->GetWorldElements();
   DrawUiView(render_info, controller_info, elements,
@@ -122,7 +127,7 @@ void UiRenderer::DrawUiView(const RenderInfo& render_info,
                eye_info.viewport.width(), eye_info.viewport.height());
 
     DrawElements(eye_info.view_proj_matrix, sorted_elements, render_info,
-                 controller_info, draw_reticle);
+                 controller_info, draw_reticle, eye_info.right_eye);
     if (draw_reticle) {
       DrawController(eye_info.view_proj_matrix, render_info, controller_info);
       DrawLaser(eye_info.view_proj_matrix, render_info, controller_info);
@@ -134,7 +139,8 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
                               const std::vector<const UiElement*>& elements,
                               const RenderInfo& render_info,
                               const ControllerInfo& controller_info,
-                              bool draw_reticle) {
+                              bool draw_reticle,
+                              bool right_eye) {
   if (elements.empty()) {
     return;
   }
@@ -149,7 +155,8 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
       drawn_reticle = true;
     }
 
-    DrawElement(view_proj_matrix, *element, render_info.content_texture_size);
+    DrawElement(view_proj_matrix, *element, right_eye,
+                render_info.content_texture_size);
 
     if (draw_reticle && (controller_info.reticle_render_target == element)) {
       DrawReticle(view_proj_matrix, render_info, controller_info);
@@ -160,6 +167,7 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
 
 void UiRenderer::DrawElement(const gfx::Transform& view_proj_matrix,
                              const UiElement& element,
+                             bool right_eye,
                              const gfx::Size& content_texture_size) {
   DCHECK_GE(element.draw_phase(), 0);
   gfx::Transform transform =
@@ -187,7 +195,7 @@ void UiRenderer::DrawElement(const gfx::Transform& view_proj_matrix,
       break;
     }
     case Fill::SELF: {
-      element.Render(vr_shell_renderer_, transform);
+      element.Render(vr_shell_renderer_, transform, right_eye);
       break;
     }
     default:

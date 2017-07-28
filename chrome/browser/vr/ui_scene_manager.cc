@@ -16,6 +16,7 @@
 #include "chrome/browser/vr/elements/loading_indicator.h"
 #include "chrome/browser/vr/elements/screen_dimmer.h"
 #include "chrome/browser/vr/elements/splash_screen_icon.h"
+#include "chrome/browser/vr/elements/stereo_background.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
 #include "chrome/browser/vr/elements/transient_url_bar.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -124,9 +125,11 @@ static constexpr float kLoadingIndicatorVerticalOffset =
 static constexpr float kLoadingIndicatorDepthOffset =
     (kUrlBarDistance - kContentDistance) / 2;
 
+#if !defined(STEREO_BACKGROUND)
 static constexpr float kSceneSize = 25.0;
 static constexpr float kSceneHeight = 4.0;
 static constexpr int kFloorGridlineCount = 40;
+#endif
 
 // Tiny distance to offset textures that should appear in the same plane.
 static constexpr float kTextureOffset = 0.01;
@@ -337,6 +340,18 @@ void UiSceneManager::CreateSplashScreen() {
 void UiSceneManager::CreateBackground() {
   std::unique_ptr<UiElement> element;
 
+#if defined(STEREO_BACKGROUND)
+
+  // Stereo background.
+  element = base::MakeUnique<StereoBackground>();
+  element->set_debug_id(kStereoBackground);
+  element->set_id(AllocateId());
+  element->set_draw_phase(kPhaseBackground);
+  background_panels_.push_back(element.get());
+  scene_->AddUiElement(std::move(element));
+
+#else
+
   // Background solid-color panels.
   struct Panel {
     UiElementDebugId debug_id;
@@ -397,6 +412,8 @@ void UiSceneManager::CreateBackground() {
   element->set_fill(vr::Fill::OPAQUE_GRADIENT);
   ceiling_ = element.get();
   scene_->AddUiElement(std::move(element));
+
+#endif
 
   scene_->set_first_foreground_draw_phase(kPhaseForeground);
 }
@@ -586,8 +603,10 @@ void UiSceneManager::ConfigureScene() {
   for (UiElement* element : background_panels_) {
     element->SetEnabled(!showing_web_vr_content);
   }
+#if !defined(STEREO_BACKGROUND)
   floor_->SetEnabled(browsing_mode);
   ceiling_->SetEnabled(browsing_mode);
+#endif
 
   // Exit prompt.
   bool showExitPrompt = browsing_mode && prompting_to_exit_;
@@ -636,6 +655,7 @@ void UiSceneManager::ConfigureScene() {
 void UiSceneManager::ConfigureBackgroundColor() {
   // TODO(vollick): it would be nice if ceiling, floor and the grid were
   // UiElement subclasses and could respond to the OnSetMode signal.
+#if !defined(STEREO_BACKGROUND)
   for (UiElement* panel : background_panels_) {
     panel->set_center_color(color_scheme().world_background);
     panel->set_edge_color(color_scheme().world_background);
@@ -645,6 +665,11 @@ void UiSceneManager::ConfigureBackgroundColor() {
   floor_->set_center_color(color_scheme().floor);
   floor_->set_edge_color(color_scheme().world_background);
   floor_->set_grid_color(color_scheme().floor_grid);
+#endif
+
+  scene_->set_background_color(showing_web_vr_splash_screen_
+                                   ? color_scheme().splash_screen_background
+                                   : color_scheme().world_background);
 }
 
 void UiSceneManager::SetSplashScreenIcon(const SkBitmap& bitmap) {

@@ -193,6 +193,28 @@ const char* GetShaderSource(vr::ShaderID shader) {
             gl_Position = u_ModelViewProjMatrix * a_Position;
           }
           /* clang-format on */);
+    case vr::ShaderID::STEREO_BACKGROUND_VERTEX_SHADER:
+      return SHADER(
+          /* clang-format off */
+          precision mediump float;
+          uniform mat4 u_ModelViewProjMatrix;
+          attribute vec2 a_TexCoordinate;
+          varying vec2 v_TexCoordinate;
+
+          void main() {
+            vec4 sphereVertex;
+            {
+              float theta = a_TexCoordinate.x * 6.28319;
+              float phi = a_TexCoordinate.y * 3.14159;
+              sphereVertex.x = 10. * -cos(theta) * sin(phi);
+              sphereVertex.y = 10. * cos(phi);
+              sphereVertex.z = 10. * -sin(theta) * sin(phi);
+              sphereVertex.w = 1.0;
+            }
+            v_TexCoordinate = a_TexCoordinate * vec2(1, .5) + vec2(0, .5);
+            gl_Position = u_ModelViewProjMatrix * sphereVertex;
+          }
+          /* clang-format on */);
     case vr::ShaderID::GRADIENT_QUAD_VERTEX_SHADER:
     case vr::ShaderID::GRADIENT_GRID_VERTEX_SHADER:
       return SHADER(
@@ -403,6 +425,7 @@ const char* GetShaderSource(vr::ShaderID shader) {
           }
           /* clang-format on */);
     case vr::ShaderID::CONTROLLER_FRAGMENT_SHADER:
+    case vr::ShaderID::STEREO_BACKGROUND_FRAGMENT_SHADER:
       return SHADER(
           /* clang-format off */
           precision mediump float;
@@ -954,6 +977,97 @@ GradientGridRenderer::GradientGridRenderer()
   lines_count_handle_ = glGetUniformLocation(program_handle_, "u_LinesCount");
 }
 
+GLuint StereoBackgroundRenderer::vertex_buffer_ = 0;
+GLuint StereoBackgroundRenderer::index_buffer_ = 0;
+GLuint StereoBackgroundRenderer::index_count_ = 0;
+
+StereoBackgroundRenderer::StereoBackgroundRenderer()
+    : BaseQuadRenderer(STEREO_BACKGROUND_VERTEX_SHADER,
+                       STEREO_BACKGROUND_FRAGMENT_SHADER) {
+  model_view_proj_matrix_handle_ =
+      glGetUniformLocation(program_handle_, "u_ModelViewProjMatrix");
+  opacity_handle_ = glGetUniformLocation(program_handle_, "u_Opacity");
+  right_eye_handle_ = glGetUniformLocation(program_handle_, "u_Opacity");
+  position_handle_ = glGetAttribLocation(program_handle_, "a_TexCoordinate");
+  sampler_handle_ = glGetUniformLocation(program_handle_, "u_Texture");
+}
+
+void StereoBackgroundRenderer::SetVertexBuffer() {
+  int kSteps = 20;
+
+  // Build the set of texture points.
+  std::vector<float> vertices;
+  for (int x = 0; x <= 2 * kSteps; x++) {
+    for (int y = 0; y <= kSteps; y++) {
+      vertices.push_back(float(x) / (kSteps * 2));
+      vertices.push_back(float(y) / kSteps);
+    }
+  }
+  std::vector<GLushort> indices;
+  int y_stride = kSteps + 1;
+  for (int x = 0; x < 2 * kSteps; x++) {
+    for (int y = 0; y < kSteps; y++) {
+      GLushort p0 = x * y_stride + y;
+      GLushort p1 = x * y_stride + y + 1;
+      GLushort p2 = (x + 1) * y_stride + y;
+      GLushort p3 = (x + 1) * y_stride + y + 1;
+      indices.push_back(p0);
+      indices.push_back(p1);
+      indices.push_back(p3);
+      indices.push_back(p3);
+      indices.push_back(p2);
+      indices.push_back(p0);
+    }
+  }
+
+  GLuint buffers[2];
+  glGenBuffersARB(2, buffers);
+  vertex_buffer_ = buffers[0];
+  index_buffer_ = buffers[1];
+  index_count_ = indices.size();
+
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float),
+               vertices.data(), GL_STATIC_DRAW);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLushort),
+               indices.data(), GL_STATIC_DRAW);
+}
+
+StereoBackgroundRenderer::~StereoBackgroundRenderer() = default;
+
+void StereoBackgroundRenderer::Draw(int texture_data_handle,
+                                    const gfx::Transform& view_proj_matrix,
+                                    bool right_eye,
+                                    float opacity) {
+  glUseProgram(program_handle_);
+  // glEnable(GL_BLEND);
+  // glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+  // Pass in model view project matrix.
+  glUniformMatrix4fv(model_view_proj_matrix_handle_, 1, false,
+                     MatrixToGLArray(view_proj_matrix).data());
+
+  // Set up vertex attributes.
+  glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
+  glVertexAttribPointer(position_handle_, kRRectPositionDataSize, GL_FLOAT,
+                        false, 2 * sizeof(float), VOID_OFFSET(0));
+  glEnableVertexAttribArray(position_handle_);
+
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, texture_data_handle);
+
+  // Set up uniforms.
+  glUniform1i(sampler_handle_, 0);
+  glUniform1f(opacity_handle_, opacity);
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_);
+  glDrawElements(GL_TRIANGLES, index_count_, GL_UNSIGNED_SHORT, 0);
+
+  glDisableVertexAttribArray(position_handle_);
+}
+
 void GradientGridRenderer::Draw(const gfx::Transform& view_proj_matrix,
                                 SkColor edge_color,
                                 SkColor center_color,
@@ -990,9 +1104,12 @@ VrShellRenderer::VrShellRenderer()
       laser_renderer_(base::MakeUnique<LaserRenderer>()),
       controller_renderer_(base::MakeUnique<ControllerRenderer>()),
       gradient_quad_renderer_(base::MakeUnique<GradientQuadRenderer>()),
-      gradient_grid_renderer_(base::MakeUnique<GradientGridRenderer>()) {
+      gradient_grid_renderer_(base::MakeUnique<GradientGridRenderer>()),
+      stereo_background_renderer_(
+          base::MakeUnique<StereoBackgroundRenderer>()) {
   BaseQuadRenderer::SetVertexBuffer();
   ExternalTexturedQuadRenderer::SetVertexBuffer();
+  StereoBackgroundRenderer::SetVertexBuffer();
 }
 
 VrShellRenderer::~VrShellRenderer() = default;
@@ -1011,6 +1128,15 @@ void VrShellRenderer::DrawGradientQuad(const gfx::Transform& view_proj_matrix,
                                        float opacity) {
   GetGradientQuadRenderer()->Draw(view_proj_matrix, edge_color, center_color,
                                   opacity);
+}
+
+void VrShellRenderer::DrawStereoBackground(
+    int texture_data_handle,
+    const gfx::Transform& view_proj_matrix,
+    bool right_eye,
+    float opacity) {
+  GetStereoBackgroundRenderer()->Draw(texture_data_handle, view_proj_matrix,
+                                      right_eye, opacity);
 }
 
 ExternalTexturedQuadRenderer*
@@ -1051,6 +1177,11 @@ GradientQuadRenderer* VrShellRenderer::GetGradientQuadRenderer() {
 GradientGridRenderer* VrShellRenderer::GetGradientGridRenderer() {
   Flush();
   return gradient_grid_renderer_.get();
+}
+
+StereoBackgroundRenderer* VrShellRenderer::GetStereoBackgroundRenderer() {
+  Flush();
+  return stereo_background_renderer_.get();
 }
 
 void VrShellRenderer::Flush() {

@@ -910,6 +910,7 @@ void VrShellGl::UpdateEyeInfos(const gfx::Transform& head_pose,
     eye_info.proj_matrix = PerspectiveMatrixFromView(
         buffer_viewport_->GetSourceFov(), kZNear, kZFar);
     eye_info.view_proj_matrix = eye_info.proj_matrix * eye_info.view_matrix;
+    eye_info.right_eye = (eye == GVR_RIGHT_EYE);
   }
 }
 
