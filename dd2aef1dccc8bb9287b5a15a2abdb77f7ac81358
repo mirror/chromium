@@ -70,6 +70,30 @@
       "revId": "dd2aef1dccc8bb9287b5a15a2abdb77f7ac81358",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f994c0_fb6e7cc5",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-28T20:02:51Z",
+      "side": 1,
+      "message": "Maybe I just don\u0027t have a ton of trust in comments.  I think the deserializing function is a good place to validate (since it can fail), and kind of serves the same purpose.  Do you feel like a separate \"ValidateThisOp\" function provides more value than \"Deserialize(if valid)\".  I think new ops added later could be forgotten in either case.\n\nI added dchecks here for rrects only because it\u0027s hard to produce a \"bad\" rrect without poking at memory internals.  SkBlendMode and SkClipOp don\u0027t have these dchecks, only unit tests.",
+      "parentUuid": "40d38356_7d623682",
+      "range": {
+        "startLine": 781,
+        "startChar": 15,
+        "endLine": 781,
+        "endChar": 30
+      },
+      "revId": "dd2aef1dccc8bb9287b5a15a2abdb77f7ac81358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
