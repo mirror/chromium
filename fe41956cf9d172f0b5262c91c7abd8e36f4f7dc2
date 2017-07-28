@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80e5fc63_2aa43c6d",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-28T14:51:09Z",
+      "side": 1,
+      "message": "Code would be cleaner if only this line remained in MailboxReleased.  everything else can be factored out.",
+      "range": {
+        "startLine": 1049,
+        "startChar": 6,
+        "endLine": 1049,
+        "endChar": 23
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185b49b2_af4857d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-28T14:51:09Z",
+      "side": 1,
+      "message": "Not sure about \"Associated\". How about ReleaseFrameResources?",
+      "range": {
+        "startLine": 192,
+        "startChar": 14,
+        "endLine": 192,
+        "endChar": 40
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
