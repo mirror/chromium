@@ -23,6 +23,8 @@
 
 @synthesize delegate = _delegate;
 
+@synthesize inputView = _inputView;
+
 // TODO(nicholss): For physical keyboard, look at UIKeyCommand
 // https://developer.apple.com/reference/uikit/uikeycommand?language=objc
 

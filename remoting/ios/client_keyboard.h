@@ -24,6 +24,8 @@
 // This delegate is used to call back to handler key entry.
 @property(weak, nonatomic) id<ClientKeyboardDelegate> delegate;
 
+@property(nonatomic, readwrite) UIView* inputView;
+
 @end
 
 #endif  //  REMOTING_CLIENT_IOS_CLIENT_KEYBOARD_H_
