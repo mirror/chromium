@@ -398,6 +398,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
     DVLOG(2) << "Starting SafeBrowsing download check for: "
              << item_->DebugString(true);
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    LOG(ERROR) << "starting analysis, item_ better be non-null: " << item_;
     if (item_->GetBrowserContext()) {
       Profile* profile =
           Profile::FromBrowserContext(item_->GetBrowserContext());
@@ -405,7 +406,25 @@ class DownloadProtectionService::CheckClientDownloadRequest
           profile && IsExtendedReportingEnabled(*profile->GetPrefs());
       is_incognito_ = item_->GetBrowserContext()->IsOffTheRecord();
     }
+    LOG(ERROR) << "item is non-null";
 
+    // If whitelist check passes, PostFinishTask() will be called to avoid
+    // analyzing file. Otherwise, AnalyzeFile() will be called to continue with
+    // analysis.
+    auto task_runner = BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+    cancelable_task_tracker_.PostTask(
+        task_runner.get(), FROM_HERE,
+        base::BindOnce(&CheckClientDownloadRequest::CheckUrlAgainstWhitelists,
+                       this));
+  }
+
+  void AnalyzeFile() {
+    LOG(ERROR) << "analyzing file 1";
+    // TODO: instead of this, use CancelableTaskTracker
+    if (item_ == nullptr) {
+      PostFinishTask(UNKNOWN, REASON_EMPTY_URL_CHAIN);
+      return;
+    }
     DownloadCheckResultReason reason = REASON_MAX;
     if (!IsSupportedDownload(
         *item_, item_->GetTargetFilePath(), &reason, &type_)) {
@@ -443,6 +462,8 @@ class DownloadProtectionService::CheckClientDownloadRequest
     }
     RecordFileExtensionType(kDownloadExtensionUmaName,
                             item_->GetTargetFilePath());
+
+    LOG(ERROR) << "analyzing file 2";
 
     // Compute features from the file contents. Note that we record histograms
     // based on the result, so this runs regardless of whether the pingbacks
@@ -533,6 +554,8 @@ class DownloadProtectionService::CheckClientDownloadRequest
     // reference to this object.  We'll eventually wind up in some method on
     // the UI thread that will call FinishRequest() again.  If FinishRequest()
     // is called a second time, it will be a no-op.
+    LOG(ERROR) << "finishing request";
+    cancelable_task_tracker_.TryCancelAll();
     FinishRequest(UNKNOWN, REASON_REQUEST_CANCELED);
     // Calling FinishRequest might delete this object, we may be deleted by
     // this point.
@@ -540,6 +563,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
 
   // content::DownloadItem::Observer implementation.
   void OnDownloadDestroyed(content::DownloadItem* download) override {
+    LOG(ERROR) << "download is being destroyed";
     Cancel();
     DCHECK(item_ == NULL);
   }
@@ -682,7 +706,9 @@ class DownloadProtectionService::CheckClientDownloadRequest
     // download URL is hosted on the internal network.
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&CheckClientDownloadRequest::CheckWhitelists, this));
+        base::BindOnce(
+            &CheckClientDownloadRequest::CheckCertificateChainAgainstWhitelists,
+            this));
 
     // We wait until after the file checks finish to start the timeout, as
     // windows can cause permissions errors if the timeout fired while we were
@@ -693,6 +719,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
   }
 
   void StartExtractFileFeatures() {
+    LOG(ERROR) << "start extract file features";
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK(item_);  // Called directly from Start(), item should still exist.
     // Since we do blocking I/O, offload this to a worker thread.
@@ -897,28 +924,12 @@ class DownloadProtectionService::CheckClientDownloadRequest
            base::RandDouble() < service_->whitelist_sample_rate();
   }
 
-  void CheckWhitelists() {
+  void CheckCertificateChainAgainstWhitelists() {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
     if (!database_manager_.get()) {
       PostFinishTask(UNKNOWN, REASON_SB_DISABLED);
       return;
-    }
-
-    const GURL& url = url_chain_.back();
-    // TODO(asanka): This may acquire a lock on the SB DB on the IO thread.
-    if (url.is_valid() && database_manager_->MatchDownloadWhitelistUrl(url)) {
-      DVLOG(2) << url << " is on the download whitelist.";
-      RecordCountOfWhitelistedDownload(URL_WHITELIST);
-      if (ShouldSampleWhitelistedDownload()) {
-        skipped_url_whitelist_ = true;
-      } else {
-        // TODO(grt): Continue processing without uploading so that
-        // ClientDownloadRequest callbacks can be run even for this type of safe
-        // download.
-        PostFinishTask(SAFE, REASON_WHITELISTED_URL);
-        return;
-      }
     }
 
     if (!skipped_url_whitelist_ && signature_info_.trusted()) {
@@ -952,6 +963,39 @@ class DownloadProtectionService::CheckClientDownloadRequest
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&CheckClientDownloadRequest::GetTabRedirects, this));
+  }
+
+  void CheckUrlAgainstWhitelists() {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+    LOG(ERROR) << "checking url against whitelist";
+
+    if (!database_manager_.get()) {
+      PostFinishTask(UNKNOWN, REASON_SB_DISABLED);
+      return;
+    }
+
+    const GURL& url = url_chain_.back();
+    // TODO(asanka): This may acquire a lock on the SB DB on the IO thread.
+    if (url.is_valid() && database_manager_->MatchDownloadWhitelistUrl(url)) {
+      DVLOG(2) << url << " is on the download whitelist.";
+      RecordCountOfWhitelistedDownload(URL_WHITELIST);
+      if (ShouldSampleWhitelistedDownload()) {
+        skipped_url_whitelist_ = true;
+      } else {
+        // TODO(grt): Continue processing without uploading so that
+        // ClientDownloadRequest callbacks can be run even for this type of safe
+        // download.
+        PostFinishTask(SAFE, REASON_WHITELISTED_URL);
+        return;
+      }
+    }
+
+    LOG(ERROR) << "gonna go ahead and analyze file";
+    // Posts task to continue with analysis.
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&CheckClientDownloadRequest::AnalyzeFile, this));
   }
 
   void GetTabRedirects() {
@@ -1330,6 +1374,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
   bool skipped_certificate_whitelist_;
   bool is_extended_reporting_;
   bool is_incognito_;
+  base::CancelableTaskTracker cancelable_task_tracker_;
   base::WeakPtrFactory<CheckClientDownloadRequest> weakptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CheckClientDownloadRequest);
@@ -1792,6 +1837,7 @@ void DownloadProtectionService::CheckClientDownload(
                                      database_manager_,
                                      binary_feature_extractor_.get()));
   download_requests_.insert(request);
+  LOG(ERROR) << "about to start";
   request->Start();
 }
 

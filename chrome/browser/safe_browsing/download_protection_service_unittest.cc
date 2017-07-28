@@ -2082,6 +2082,8 @@ TEST_F(DownloadProtectionServiceTest, TestDownloadItemDestroyed) {
                 MatchDownloadWhitelistUrl(_))
         .WillRepeatedly(Return(false));
 
+    LOG(ERROR) << "here1";
+
 #if defined(OS_MACOSX)
     // Expects that MockDownloadItem will go out of scope while asynchronous
     // processing is parsing file metadata, and thus ExtractFileOrDmgFeatures()
@@ -2101,6 +2103,7 @@ TEST_F(DownloadProtectionServiceTest, TestDownloadItemDestroyed) {
                     tmp_path_, BinaryFeatureExtractor::kDefaultOptions, _, _));
 #endif
 
+    LOG(ERROR) << "about to check download";
     download_service_->CheckClientDownload(
         &item,
         base::Bind(&DownloadProtectionServiceTest::SyncCheckDoneCallback,
