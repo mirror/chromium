@@ -17,6 +17,7 @@ namespace resource_coordinator {
 class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   FrameCoordinationUnitImpl(
+      mojom::CoordinationUnitRequest request,
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~FrameCoordinationUnitImpl() override;

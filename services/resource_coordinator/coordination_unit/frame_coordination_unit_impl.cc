@@ -7,9 +7,10 @@
 namespace resource_coordinator {
 
 FrameCoordinationUnitImpl::FrameCoordinationUnitImpl(
+    mojom::CoordinationUnitRequest request,
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitImpl(id, std::move(service_ref)) {}
+    : CoordinationUnitImpl(std::move(request), id, std::move(service_ref)) {}
 
 FrameCoordinationUnitImpl::~FrameCoordinationUnitImpl() = default;
 
