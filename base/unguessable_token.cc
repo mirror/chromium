@@ -9,7 +9,6 @@
 #include "base/strings/stringprintf.h"
 
 namespace base {
-
 UnguessableToken::UnguessableToken(uint64_t high, uint64_t low)
     : high_(high), low_(low) {}
 
