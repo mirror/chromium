@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "119eca03_d6556a03",
+        "filename": "cc/raster/raster_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-28T21:46:07Z",
+      "side": 1,
+      "message": "An API to consider:\n\ncaller: if transform/clip {\n  caller: canvas-\u003esave();\n  caller: source-\u003eRecordCanvasTransformAndClipForPlayback(PaintCanvas) {\n    records xform/clip/etc\n  }\n  caller: play PaintCanvas into SkCanvas (or it wrapped it as so)\n}\ncaller: if (!playback_to_shared_canvas) {\n  caller: source-\u003eRecordCanvasClearForPlayback(PaintCanvas) {\n    records a discard-if-not-clipped op.\n    records various clears.\n  }\n  caller: play PaintCanvas into SkCanvas (or it wrapped it as so)\n}\ncaller: source-\u003ePlaybackToCanvas(SkCanvas) {\n  wraps in/records a colorspace change if needed\n}\ncaller: if transform/clip {\n  caller: canvas-\u003erestore();\n}\n\nHere we\u0027re moving the usage of the settings out to the caller which is nice. It can branch itself where possible.\n\nWe now only have 1 PlaybackToCanvas() instead of overloads.\n\nThis is very similar to what you have here, but branching and the overloaded method move out to the caller consistently.",
+      "revId": "88a06ed95600eea6909857e6a69ba8e6960cc6af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
