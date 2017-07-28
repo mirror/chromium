@@ -330,6 +330,24 @@
       "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de93e80_5c4e44d7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T04:26:57Z",
+      "side": 1,
+      "message": "To avoid updating this list when we introduce new marker, could you\nintroduce new function, e.g. ShouldConvertMarker(const DOcumentMarker\u0026)?\n\ne.g.\n\nbool ShouldConvertMarkre(const DocumentMarker\u0026 marker) {\n  return marker.IsSpellingMarker() || marker.XXX....\n}",
+      "parentUuid": "c5c32322_3b0468f5",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
