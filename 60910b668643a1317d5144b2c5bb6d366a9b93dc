@@ -70,6 +70,30 @@
       "revId": "60910b668643a1317d5144b2c5bb6d366a9b93dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b310ad_80e71c94",
+        "filename": "ui/message_center/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-28T16:41:05Z",
+      "side": 1,
+      "message": "Good point on the asserts - agreed.\n\nIn this case we\u0027re heading in the other direction, we\u0027re reducing platform support. (I.e. the target has already been removed from the Mac buildbots.) There\u0027s a whole bunch of other messy dependencies, notably that even Android depends on some Message Center code, that I\u0027d love to get rid of. Stricter dependencies and gn checks will help there, imo.\n\nPer our discussion - let\u0027s land this, and go from there.",
+      "parentUuid": "d5cb23f2_7132fd68",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 14
+      },
+      "revId": "60910b668643a1317d5144b2c5bb6d366a9b93dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
