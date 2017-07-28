@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f6e2e5_5bbddf0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-28T17:23:28Z",
+      "side": 1,
+      "message": "nit: is there a bug number for this CL? If not, add \"Bug: None\"?",
+      "revId": "e2c4d6ed9c1a372aca08edf5dca4630095435592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
