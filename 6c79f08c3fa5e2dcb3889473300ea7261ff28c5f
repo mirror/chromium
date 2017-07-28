@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6768a4d2_acc9fe6e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-parentiframe.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-07-28T21:16:33Z",
+      "side": 1,
+      "message": "By \"onload post-messages\", do you mean posting a message after everything in child iframe?\n\nI am concerned there will be race condition for the two event listeners in the parent listening to both messages.\n\nInstead of doing that, it might be more straight forwards to use iframe.onload \u003d function() {//long task}? Then the two messages are naturally separate so there won\u0027t be racing condition issue.",
+      "parentUuid": "fdde6a64_98c9f96b",
+      "range": {
+        "startLine": 12,
+        "startChar": 67,
+        "endLine": 12,
+        "endChar": 68
+      },
+      "revId": "6c79f08c3fa5e2dcb3889473300ea7261ff28c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d038bac0_da438d94",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-parentiframe.html",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-28T18:50:01Z",
       "side": 1,
       "message": "Which Frame context will this execute in?",
+      "revId": "6c79f08c3fa5e2dcb3889473300ea7261ff28c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b358653e_bc87c042",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-parentiframe.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-07-28T21:16:33Z",
+      "side": 1,
+      "message": "It has access to \"var t\" in parent and no access to anything in child iframe, so i think it should be in the parent\u0027s context.",
+      "parentUuid": "d038bac0_da438d94",
       "revId": "6c79f08c3fa5e2dcb3889473300ea7261ff28c5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
