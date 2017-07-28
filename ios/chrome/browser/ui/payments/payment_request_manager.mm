@@ -69,6 +69,12 @@
 #error "This file requires ARC support."
 #endif
 
+NSString* const kAbortErrorName = @"AbortError";
+NSString* const kInvalidStateError = @"InvalidStateError";
+NSString* const kNotAllowedErrorName = @"NotAllowedError";
+NSString* const kNotSupportedErrorName = @"NotSupportedErrorName";
+NSString* const kSecurityError = @"SecurityError";
+
 namespace {
 
 // Command prefix for injected JavaScript.
@@ -81,8 +87,9 @@ const NSTimeInterval kNoopInterval = 0.1;
 // PaymentResponse.complete().
 const NSTimeInterval kTimeoutInterval = 60.0;
 
-NSString* kAbortMessage = @"The payment request was aborted.";
-NSString* kCancelMessage = @"The payment request was canceled.";
+// Error messages used in Payment Request API.
+NSString* const kCancelErrorMessage = @"Request cancelled";
+NSString* const kSecureContextErrorMessage = @"Must be in a secure context";
 
 struct PendingPaymentResponse {
   std::string methodName;
@@ -306,7 +313,8 @@ struct PendingPaymentResponse {
   _pendingPaymentRequest->journey_logger().SetAborted(
       payments::JourneyLogger::ABORT_REASON_MERCHANT_NAVIGATION);
 
-  [self terminatePendingRequestWithErrorMessage:kCancelMessage callback:nil];
+  [self terminatePendingRequestWithErrorMessage:kCancelErrorMessage
+                                       callback:nil];
 }
 
 - (void)terminatePendingRequestWithErrorMessage:(NSString*)errorMessage
@@ -315,8 +323,9 @@ struct PendingPaymentResponse {
   DCHECK(_pendingPaymentRequest);
   _pendingPaymentRequest = nullptr;
   [self dismissUI];
-  [_paymentRequestJsManager rejectRequestPromiseWithErrorMessage:errorMessage
-                                               completionHandler:callback];
+  [_paymentRequestJsManager rejectRequestPromiseWithErrorName:kAbortErrorName
+                                                 errorMessage:errorMessage
+                                            completionHandler:callback];
 }
 
 - (void)close {
@@ -368,10 +377,6 @@ struct PendingPaymentResponse {
 }
 
 - (BOOL)handleScriptCommand:(const base::DictionaryValue&)JSONCommand {
-  if (![self webStateContentIsSecureHTML]) {
-    return NO;
-  }
-
   std::string command;
   if (!JSONCommand.GetString("command", &command)) {
     DLOG(ERROR) << "RECEIVED BAD JSON - NO 'command' field";
@@ -447,35 +452,40 @@ struct PendingPaymentResponse {
   payments::PaymentRequest* paymentRequest =
       [self newPaymentRequestFromMessage:message];
   if (!paymentRequest) {
-    // TODO(crbug.com/602666): Reject the promise with an error of
-    // "InvalidStateError" type.
     [_paymentRequestJsManager
-        rejectCanMakePaymentPromiseWithErrorMessage:@"Invalid state error"
-                                  completionHandler:nil];
+        throwDOMExceptionWithErrorName:kInvalidStateError
+                          errorMessage:@"Cannot create payment request"
+                     completionHandler:nil];
   }
   return YES;
 }
 
 - (BOOL)handleRequestShow:(const base::DictionaryValue&)message {
+  if (![self webStateContentIsSecureHTML]) {
+    [_paymentRequestJsManager
+        rejectRequestPromiseWithErrorName:kSecurityError
+                             errorMessage:kSecureContextErrorMessage
+                        completionHandler:nil];
+    return YES;
+  }
+
   payments::PaymentRequest* paymentRequest =
       [self paymentRequestFromMessage:message];
   if (!paymentRequest) {
-    // TODO(crbug.com/602666): Reject the promise with an error of
-    // "InvalidStateError" type.
     [_paymentRequestJsManager
-        rejectRequestPromiseWithErrorMessage:@"Invalid state error"
-                           completionHandler:nil];
+        rejectRequestPromiseWithErrorName:kInvalidStateError
+                             errorMessage:@"Cannot show the payment request"
+                        completionHandler:nil];
     return YES;
   }
 
   if (_pendingPaymentRequest) {
     paymentRequest->journey_logger().SetNotShown(
         payments::JourneyLogger::NOT_SHOWN_REASON_CONCURRENT_REQUESTS);
-    // TODO(crbug.com/602666): Reject the promise with an error of
-    // "InvalidStateError" type.
     [_paymentRequestJsManager
-        rejectRequestPromiseWithErrorMessage:@"Invalid state error"
-                           completionHandler:nil];
+        rejectRequestPromiseWithErrorName:kInvalidStateError
+                             errorMessage:@"Already called show() once"
+                        completionHandler:nil];
     return YES;
   }
 
@@ -483,11 +493,10 @@ struct PendingPaymentResponse {
       paymentRequest->url_payment_method_identifiers().empty()) {
     paymentRequest->journey_logger().SetNotShown(
         payments::JourneyLogger::NOT_SHOWN_REASON_NO_SUPPORTED_PAYMENT_METHOD);
-    // TODO(crbug.com/602666): Reject the promise with an error of
-    // "InvalidStateError" type.
     [_paymentRequestJsManager
-        rejectRequestPromiseWithErrorMessage:@"Invalid state error"
-                           completionHandler:nil];
+        rejectRequestPromiseWithErrorName:kNotSupportedErrorName
+                             errorMessage:@"The payment method is not supported"
+                        completionHandler:nil];
     return YES;
   }
 
@@ -547,7 +556,8 @@ struct PendingPaymentResponse {
   };
 
   ProceduralBlock callback = ^{
-    [weakSelf terminatePendingRequestWithErrorMessage:kAbortMessage
+    [weakSelf terminatePendingRequestWithErrorMessage:
+                  @"The website has aborted the payment"
                                              callback:cancellationCallback];
   };
 
@@ -557,14 +567,21 @@ struct PendingPaymentResponse {
 }
 
 - (BOOL)handleCanMakePayment:(const base::DictionaryValue&)message {
+  if (![self webStateContentIsSecureHTML]) {
+    [_paymentRequestJsManager
+        rejectCanMakePaymentPromiseWithErrorName:kSecurityError
+                                    errorMessage:kSecureContextErrorMessage
+                               completionHandler:nil];
+    return YES;
+  }
+
   payments::PaymentRequest* paymentRequest =
       [self paymentRequestFromMessage:message];
   if (!paymentRequest) {
-    // TODO(crbug.com/602666): Reject the promise with an error of
-    // "InvalidStateError" type.
     [_paymentRequestJsManager
-        rejectCanMakePaymentPromiseWithErrorMessage:@"Invalid state error"
-                                  completionHandler:nil];
+        rejectCanMakePaymentPromiseWithErrorName:kInvalidStateError
+                                    errorMessage:@"Cannot query payment request"
+                               completionHandler:nil];
     return YES;
   }
 
@@ -591,9 +608,11 @@ struct PendingPaymentResponse {
     // TODO(crbug.com/602666): Warn on console if origin is localhost or file.
   } else {
     [_paymentRequestJsManager
-        rejectCanMakePaymentPromiseWithErrorMessage:
-            @"Not allowed to check whether can make payment"
-                                  completionHandler:nil];
+        rejectCanMakePaymentPromiseWithErrorName:kNotAllowedErrorName
+                                    errorMessage:
+                                        @"Not allowed to check whether can "
+                                        @"make payment"
+                               completionHandler:nil];
   }
   return YES;
 }
@@ -609,7 +628,7 @@ struct PendingPaymentResponse {
 
   __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlock callback = ^{
-    [weakSelf terminatePendingRequestWithErrorMessage:kCancelMessage
+    [weakSelf terminatePendingRequestWithErrorMessage:kCancelErrorMessage
                                              callback:nil];
   };
 
@@ -793,7 +812,8 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
   coordinator.paymentRequest->journey_logger().SetAborted(
       payments::JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
 
-  [self terminatePendingRequestWithErrorMessage:kCancelMessage callback:nil];
+  [self terminatePendingRequestWithErrorMessage:kCancelErrorMessage
+                                       callback:nil];
 }
 
 - (void)paymentRequestCoordinatorDidSelectSettings:
@@ -809,7 +829,7 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
     [mainWindow chromeExecuteCommand:command];
   };
 
-  [self terminatePendingRequestWithErrorMessage:kCancelMessage
+  [self terminatePendingRequestWithErrorMessage:kCancelErrorMessage
                                        callback:callback];
 }
 
