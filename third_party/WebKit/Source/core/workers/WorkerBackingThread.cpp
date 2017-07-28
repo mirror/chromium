@@ -15,6 +15,7 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebThreadSupportingGC.h"
 #include "platform/bindings/V8PerIsolateData.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebTraceLocation.h"
@@ -64,35 +65,57 @@ void WorkerBackingThread::InitializeOnBackingThread(
   backing_thread_->InitializeOnThread();
 
   DCHECK(!isolate_);
-  isolate_ = V8PerIsolateData::Initialize(
-      backing_thread_->PlatformThread().GetWebTaskRunner());
-  AddWorkerIsolate(isolate_);
-  V8Initializer::InitializeWorker(isolate_);
-
-  ThreadState::Current()->RegisterTraceDOMWrappers(
-      isolate_, V8GCController::TraceDOMWrappers,
-      ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque,
-      ScriptWrappableVisitor::PerformCleanup);
-  if (RuntimeEnabledFeatures::V8IdleTasksEnabled())
-    V8PerIsolateData::EnableIdleTasks(
-        isolate_, WTF::WrapUnique(new V8IdleTaskRunner(
-                      BackingThread().PlatformThread().Scheduler())));
-  if (is_owning_thread_)
-    Platform::Current()->DidStartWorkerThread();
-
-  V8PerIsolateData::From(isolate_)->SetThreadDebugger(
-      WTF::MakeUnique<WorkerThreadDebugger>(isolate_));
-
-  // Optimize for memory usage instead of latency for the worker isolate.
-  isolate_->IsolateInBackgroundNotification();
-
-  if (startup_data.heap_limit_mode ==
-      WorkerBackingThreadStartupData::HeapLimitMode::kIncreasedForDebugging) {
-    isolate_->IncreaseHeapLimitForDebugging();
+  {
+    TRACE_EVENT0("ServiceWorker", "V8PerIsolateData::Initialize");
+    isolate_ = V8PerIsolateData::Initialize(
+        backing_thread_->PlatformThread().GetWebTaskRunner());
+    AddWorkerIsolate(isolate_);
   }
-  isolate_->SetAllowAtomicsWait(
-      startup_data.atomics_wait_mode ==
-      WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow);
+  {
+    TRACE_EVENT0("ServiceWorker", "V8Initializer::InitializeWorker");
+    V8Initializer::InitializeWorker(isolate_);
+  }
+
+  {
+    TRACE_EVENT0("ServiceWorker", "NotifiesToOtherObjects");
+    ThreadState::Current()->RegisterTraceDOMWrappers(
+        isolate_, V8GCController::TraceDOMWrappers,
+        ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque,
+        ScriptWrappableVisitor::PerformCleanup);
+    if (RuntimeEnabledFeatures::V8IdleTasksEnabled()) {
+      V8PerIsolateData::EnableIdleTasks(
+          isolate_, WTF::WrapUnique(new V8IdleTaskRunner(
+                        BackingThread().PlatformThread().Scheduler())));
+    }
+    if (is_owning_thread_)
+      Platform::Current()->DidStartWorkerThread();
+  }
+
+  {
+    TRACE_EVENT0("ServiceWorker", "V8PerIsolateData::SetThreadDebugger");
+    V8PerIsolateData::From(isolate_)->SetThreadDebugger(
+        WTF::MakeUnique<WorkerThreadDebugger>(isolate_));
+  }
+
+  {
+    TRACE_EVENT0("ServiceWorker", "IsolateInBackgroundNotification");
+    // Optimize for memory usage instead of latency for the worker isolate.
+    isolate_->IsolateInBackgroundNotification();
+  }
+
+  {
+    TRACE_EVENT0("ServiceWorker", "IncreaseHeapLimitForDebugging");
+    if (startup_data.heap_limit_mode ==
+        WorkerBackingThreadStartupData::HeapLimitMode::kIncreasedForDebugging) {
+      isolate_->IncreaseHeapLimitForDebugging();
+    }
+  }
+  {
+    TRACE_EVENT0("ServiceWorker", "SetAllowAtomicsWait");
+    isolate_->SetAllowAtomicsWait(
+        startup_data.atomics_wait_mode ==
+        WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow);
+  }
 }
 
 void WorkerBackingThread::ShutdownOnBackingThread() {

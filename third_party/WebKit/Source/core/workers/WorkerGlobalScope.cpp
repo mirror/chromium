@@ -44,6 +44,7 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/loader/WorkerThreadableLoader.h"
 #include "core/probe/CoreProbes.h"
+#include "core/workers/InstalledScriptsManager.h"
 #include "core/workers/WorkerLocation.h"
 #include "core/workers/WorkerNavigator.h"
 #include "core/workers/WorkerReportingProxy.h"
@@ -51,6 +52,8 @@
 #include "core/workers/WorkerThread.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/InstanceCounters.h"
+#include "platform/RuntimeEnabledFeatures.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/scheduler/child/web_scheduler.h"
@@ -191,35 +194,58 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
   }
 
   for (const KURL& complete_url : completed_urls) {
-    RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
-    script_loader->LoadSynchronously(
-        execution_context, complete_url, WebURLRequest::kRequestContextScript,
-        execution_context.GetSecurityContext().AddressSpace());
+    KURL response_url;
+    String source_code;
+    std::unique_ptr<Vector<char>> cached_meta_data;
+    if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
+        GetThread()->GetInstalledScriptsManager() &&
+        GetThread()->GetInstalledScriptsManager()->IsScriptInstalled(
+            complete_url)) {
+      auto script_data =
+          GetThread()->GetInstalledScriptsManager()->GetScriptData(
+              complete_url);
+      // If the fetching attempt failed, throw a NetworkError exception and
+      // abort all these steps.
+      if (!script_data) {
+        exception_state.ThrowDOMException(
+            kNetworkError, "The script at '" + complete_url.ElidedString() +
+                               "' failed to load.");
+        return;
+      }
+      response_url = complete_url;
+      source_code = script_data->TakeSourceText();
+      cached_meta_data = script_data->TakeMetaData();
+      TRACE_EVENT2("ServiceWorker", "importScripts", "body_size",
+                   source_code.length(), "meta_data_size",
+                   cached_meta_data->size());
+    } else {
+      RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
+      script_loader->LoadSynchronously(
+          execution_context, complete_url, WebURLRequest::kRequestContextScript,
+          execution_context.GetSecurityContext().AddressSpace());
 
-    // If the fetching attempt failed, throw a NetworkError exception and
-    // abort all these steps.
-    if (script_loader->Failed()) {
-      exception_state.ThrowDOMException(
-          kNetworkError, "The script at '" + complete_url.ElidedString() +
-                             "' failed to load.");
-      return;
+      // If the fetching attempt failed, throw a NetworkError exception and
+      // abort all these steps.
+      if (script_loader->Failed()) {
+        exception_state.ThrowDOMException(
+            kNetworkError, "The script at '" + complete_url.ElidedString() +
+                               "' failed to load.");
+        return;
+      }
+      response_url = script_loader->ResponseURL();
+      source_code = script_loader->SourceText();
+      cached_meta_data = script_loader->ReleaseCachedMetadata();
+      probe::scriptImported(&execution_context, script_loader->Identifier(),
+                            script_loader->SourceText());
     }
 
-    probe::scriptImported(&execution_context, script_loader->Identifier(),
-                          script_loader->SourceText());
 
     ErrorEvent* error_event = nullptr;
-    std::unique_ptr<Vector<char>> cached_meta_data(
-        script_loader->ReleaseCachedMetadata());
     CachedMetadataHandler* handler(CreateWorkerScriptCachedMetadataHandler(
         complete_url, cached_meta_data.get()));
     GetThread()->GetWorkerReportingProxy().WillEvaluateImportedScript(
-        script_loader->SourceText().length(),
-        script_loader->CachedMetadata()
-            ? script_loader->CachedMetadata()->size()
-            : 0);
-    ScriptController()->Evaluate(ScriptSourceCode(script_loader->SourceText(),
-                                                  script_loader->ResponseURL()),
+        source_code.length(), cached_meta_data ? cached_meta_data->size() : 0);
+    ScriptController()->Evaluate(ScriptSourceCode(source_code, response_url),
                                  &error_event, handler, v8_cache_options_);
     if (error_event) {
       ScriptController()->RethrowExceptionFromImportedScript(error_event,

@@ -52,6 +52,7 @@
 #include "platform/bindings/Microtask.h"
 #include "platform/heap/SafePoint.h"
 #include "platform/heap/ThreadState.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/scheduler/child/webthread_impl_for_worker_scheduler.h"
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
 #include "platform/weborigin/KURL.h"
@@ -453,16 +454,22 @@ void WorkerThread::InitializeOnWorkerThread(
     MutexLocker lock(thread_state_mutex_);
 
     if (IsOwningBackingThread()) {
+      TRACE_EVENT0("ServiceWorker", "InitializeOnBackingThread");
       DCHECK(thread_startup_data.has_value());
       GetWorkerBackingThread().InitializeOnBackingThread(*thread_startup_data);
     } else {
       DCHECK(!thread_startup_data.has_value());
     }
     GetWorkerBackingThread().BackingThread().AddTaskObserver(this);
-
-    console_message_storage_ = new ConsoleMessageStorage();
-    global_scope_ =
-        CreateWorkerGlobalScope(std::move(global_scope_creation_params));
+    {
+      TRACE_EVENT0("ServiceWorker", "ConsoleMessageStorage");
+      console_message_storage_ = new ConsoleMessageStorage();
+    }
+    {
+      TRACE_EVENT0("ServiceWorker", "CreateWorkerGlobalScope");
+      global_scope_ =
+          CreateWorkerGlobalScope(std::move(global_scope_creation_params));
+    }
     worker_reporting_proxy_.DidCreateWorkerGlobalScope(GlobalScope());
     worker_inspector_controller_ = WorkerInspectorController::Create(this);
 

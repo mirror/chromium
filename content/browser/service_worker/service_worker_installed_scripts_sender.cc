@@ -131,6 +131,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
         CompleteSendIfNeeded(FinishedReason::kCreateDataPipeError);
         return;
       }
+      meta_data_size = http_info->http_info->metadata->size();
       meta_data_sender_ = base::MakeUnique<MetaDataSender>(
           http_info->http_info->metadata, std::move(meta_data_producer));
       meta_data_sender_->Start(

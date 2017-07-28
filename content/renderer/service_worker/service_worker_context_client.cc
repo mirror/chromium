@@ -601,13 +601,9 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker",
                                     "ServiceWorkerContextClient", this,
                                     "script_url", script_url_.spec());
-  if (is_script_streaming_) {
-    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "START_WORKER_THREAD",
-                                      this);
-  } else {
-    TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker", "LOAD_SCRIPT", this,
-                                      "Type", "ResourceLoader");
-  }
+  TRACE_EVENT_NESTABLE_ASYNC_BEGIN1(
+      "ServiceWorker", "LOAD_SCRIPT", this, "Type",
+      (is_script_streaming ? "InstalledScriptsManager" : "ResourceLoader"));
 }
 
 ServiceWorkerContextClient::~ServiceWorkerContextClient() {}
@@ -713,12 +709,8 @@ void ServiceWorkerContextClient::WorkerContextFailedToStart() {
 void ServiceWorkerContextClient::WorkerScriptLoaded() {
   (*instance_host_)->OnScriptLoaded();
   TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "LOAD_SCRIPT", this);
-  if (is_script_streaming_) {
-    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "EVALUATE_SCRIPT", this);
-  } else {
-    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "START_WORKER_THREAD",
-                                      this);
-  }
+  TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "START_WORKER_CONTEXT",
+                                    this);
 }
 
 bool ServiceWorkerContextClient::HasAssociatedRegistration() {
@@ -758,13 +750,9 @@ void ServiceWorkerContextClient::WorkerContextStarted(
 
   (*instance_host_)->OnThreadStarted(WorkerThread::GetCurrentId());
 
-  TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "START_WORKER_THREAD", this);
-  if (is_script_streaming_) {
-    TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker", "LOAD_SCRIPT", this,
-                                      "Type", "InstalledScriptsManager");
-  } else {
-    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "EVALUATE_SCRIPT", this);
-  }
+  TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "START_WORKER_CONTEXT",
+                                  this);
+  TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "EVALUATE_SCRIPT", this);
 }
 
 void ServiceWorkerContextClient::DidEvaluateWorkerScript(bool success) {

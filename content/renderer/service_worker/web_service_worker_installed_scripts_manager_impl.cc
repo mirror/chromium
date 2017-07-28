@@ -73,8 +73,9 @@ class Receiver {
       chunks_.emplace_back(static_cast<const char*>(buffer), bytes_read);
 
     rv = mojo::EndReadDataRaw(handle_.get(), bytes_read);
-    remaining_bytes_ -= bytes_read;
     DCHECK_EQ(rv, MOJO_RESULT_OK);
+    remaining_bytes_ -= bytes_read;
+    DCHECK_GE(remaining_bytes_, 0);
     watcher_.ArmOrNotify();
   }
 

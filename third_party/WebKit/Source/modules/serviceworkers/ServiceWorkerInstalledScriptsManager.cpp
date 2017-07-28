@@ -6,6 +6,7 @@
 
 #include "core/html/parser/TextResourceDecoder.h"
 #include "modules/serviceworkers/ServiceWorkerThread.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -23,6 +24,8 @@ bool ServiceWorkerInstalledScriptsManager::IsScriptInstalled(
 
 Optional<InstalledScriptsManager::ScriptData>
 ServiceWorkerInstalledScriptsManager::GetScriptData(const KURL& script_url) {
+  TRACE_EVENT1("ServiceWorker", "GetScriptData", "script_url",
+               TRACE_STR_COPY(script_url.GetString().Utf8().data()));
   DCHECK(!IsMainThread());
   // This blocks until the script is received from the browser.
   std::unique_ptr<WebServiceWorkerInstalledScriptsManager::RawScriptData>
