@@ -469,6 +469,25 @@ bool LayoutTableCell::ShouldClipOverflow() const {
   return false;
 }
 
+LayoutRect LayoutTableCell::OverflowClipRect(
+    const LayoutPoint& location,
+    OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior) const {
+  unsigned row_span = RowSpan();
+  LayoutRect original_clip_rect =
+      LayoutBox::OverflowClipRect(location, overlay_scrollbar_clip_behavior);
+  if (row_span == 1)
+    return original_clip_rect;
+  unsigned row_index = RowIndex();
+  for (unsigned r = row_index; r < row_index + row_span; r++) {
+    if (Section()->RowHasVisibilityCollapse(r)) {
+      LayoutRect new_clip_rect = original_clip_rect;
+      new_clip_rect.SetWidth(LayoutBox::ContentsVisualOverflowRect().Width());
+      return new_clip_rect;
+    }
+  }
+  return original_clip_rect;
+}
+
 LayoutUnit LayoutTableCell::CellBaselinePosition() const {
   // <http://www.w3.org/TR/2007/CR-CSS21-20070719/tables.html#height-layout>:
   // The baseline of a cell is the baseline of the first in-flow line box in the

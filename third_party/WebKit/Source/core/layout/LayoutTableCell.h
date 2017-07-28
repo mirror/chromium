@@ -363,6 +363,12 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
 
   bool ShouldClipOverflow() const override;
 
+  // A collapsed row-spanning cell's overflow clip takes the height of the
+  // border box and the width of the contents including overflow. This way,
+  // content is not unexpectedly horizontally clipped.
+  LayoutRect OverflowClipRect(const LayoutPoint& location,
+                              OverlayScrollbarClipBehavior) const override;
+
   using CollapsedBorderValuesMethod =
       const CollapsedBorderValue& (CollapsedBorderValues::*)() const;
   LogicalToPhysical<CollapsedBorderValuesMethod>
