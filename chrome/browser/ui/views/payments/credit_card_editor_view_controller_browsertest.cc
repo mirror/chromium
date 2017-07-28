@@ -810,7 +810,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestCreditCardEditorTest,
   // Set valid address values.
   SetEditorTextfieldValue(base::ASCIIToUTF16("Bob"), autofill::NAME_FULL);
   SetEditorTextfieldValue(base::ASCIIToUTF16("42 BobStreet"),
-                          autofill::ADDRESS_HOME_STREET_ADDRESS);
+                          autofill::ADDRESS_HOME_LINE1);
   SetEditorTextfieldValue(base::ASCIIToUTF16("BobCity"),
                           autofill::ADDRESS_HOME_CITY);
   SetComboboxValue(base::UTF8ToUTF16("California"),
