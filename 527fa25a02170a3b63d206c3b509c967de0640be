@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51416a24_2beb251a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-28T01:52:25Z",
+      "side": 1,
+      "message": "This isn\u0027t a byte array now.",
+      "revId": "527fa25a02170a3b63d206c3b509c967de0640be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be79e28_c23a3d33",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-28T01:52:25Z",
+      "side": 1,
+      "message": "This fails if the directory isn\u0027t empty, yes? So if the temp file writing or renaming failed, there will still be temp files, and this will fail.",
+      "revId": "527fa25a02170a3b63d206c3b509c967de0640be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
