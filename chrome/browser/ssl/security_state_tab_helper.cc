@@ -19,6 +19,7 @@
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/ssl_status.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/origin_util.h"
 #include "net/base/net_errors.h"
@@ -34,6 +35,29 @@
 #endif  // defined(OS_CHROMEOS)
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(SecurityStateTabHelper);
+
+namespace {
+
+class ChromeSSLStatusData : public content::SSLStatus::UserData {
+ public:
+  ChromeSSLStatusData() {}
+  ~ChromeSSLStatusData() override {}
+
+  std::unique_ptr<content::SSLStatus::UserData> Clone() override {
+    std::unique_ptr<ChromeSSLStatusData> data =
+        base::MakeUnique<ChromeSSLStatusData>();
+    data->some_flag_ = some_flag_;
+    return std::move(data);
+  }
+
+  void SetSomeFlag() { some_flag_ = true; }
+
+ private:
+  bool some_flag_ = false;
+  DISALLOW_COPY_AND_ASSIGN(ChromeSSLStatusData);
+};
+
+}  // namespace
 
 using safe_browsing::SafeBrowsingUIManager;
 
@@ -131,6 +155,17 @@ void SecurityStateTabHelper::DidFinishNavigation(
 
   logged_http_warning_on_current_navigation_ = false;
 
+  content::NavigationEntry* entry =
+      web_contents()->GetController().GetLastCommittedEntry();
+  if (entry) {
+    // In real life, we would create the data and set flags on it based on
+    // messages received from InsecureSensitiveInputDriver.
+    std::unique_ptr<ChromeSSLStatusData> data =
+        base::MakeUnique<ChromeSSLStatusData>();
+    data->SetSomeFlag();
+    entry->GetSSL().SetUserData(std::move(data));
+  }
+
   security_state::SecurityInfo security_info;
   GetSecurityInfo(&security_info);
   if (security_info.incognito_downgraded_security_level) {
@@ -214,6 +249,11 @@ SecurityStateTabHelper::GetMaliciousContentStatus() const {
 std::unique_ptr<security_state::VisibleSecurityState>
 SecurityStateTabHelper::GetVisibleSecurityState() const {
   auto state = security_state::GetVisibleSecurityState(web_contents());
+
+  // Read ChromeSSLStatusData from the navigation entry here and use it to set
+  // fields appropriately on VisibleSecurityState; those fields will be passed
+  // into components/security_state to calculate the security level for the
+  // page.
 
   // Malware status might already be known even if connection security
   // information is still being initialized, thus no need to check for that.
