@@ -291,8 +291,9 @@ class SequencedWorkerPoolTest
   void DeletePool() { pool_owner_.reset(); }
 
   // Destroys and unregisters the registered TaskScheduler, if any.
-  void DeleteTaskScheduler() {
+  virtual void DeleteTaskScheduler() {
     if (TaskScheduler::GetInstance()) {
+      TaskScheduler::GetInstance()->FlushForTesting();
       TaskScheduler::GetInstance()->JoinForTesting();
       TaskScheduler::SetInstance(nullptr);
     }
