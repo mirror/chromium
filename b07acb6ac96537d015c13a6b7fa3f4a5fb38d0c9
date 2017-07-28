@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72749e59_6e91c639",
+        "filename": "third_party/WebKit/Source/core/animation/CSSColorInterpolationType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-28T00:07:43Z",
+      "side": 1,
+      "message": "yassss to reorder. nit: blank line between c++ library and .h files",
+      "revId": "b07acb6ac96537d015c13a6b7fa3f4a5fb38d0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30d06d1_7df4ff7f",
+        "filename": "third_party/WebKit/Source/core/paint/TextPainterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-28T00:07:43Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "b07acb6ac96537d015c13a6b7fa3f4a5fb38d0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
