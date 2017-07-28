@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ca1c05_d004d043",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T21:30:07Z",
+      "side": 1,
+      "message": "In this particular case it seems simpler to just implement it\non the base class, though. Sooner or later we\u0027re going to want\nit for another platform.",
+      "revId": "433f6f98f2af46c8e47ba6a54580b62da573b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1294d852_1e0c3120",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T21:30:07Z",
+      "side": 1,
+      "message": "In this particular case it seems simpler to just implement it\non the base class, though. Sooner or later we\u0027re going to want\nit for another platform.",
+      "revId": "433f6f98f2af46c8e47ba6a54580b62da573b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9dd792a_2f592d54",
+        "filename": "ui/accessibility/platform/ax_system_caret_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T21:30:07Z",
+      "side": 1,
+      "message": "The fact that everyone who implements AXPlatformNodeDelegate\nhas to provide an implementation of this feels wrong to me.\n\nI think I was imagining something more like a base::ObserverList\nin ui/accessibility so that something like BrowserAccessibilityState\ncould directly register itself as an observer of mode change\nrequests.",
+      "revId": "433f6f98f2af46c8e47ba6a54580b62da573b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
