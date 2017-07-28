@@ -271,8 +271,10 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
       std::unique_ptr<CdmAllocator> allocator(new SimpleCdmAllocator());
       CdmAdapter::Create(
           helper_->KeySystemName(), helper_->LibraryPath(), cdm_config,
-          std::move(allocator), base::Bind(&AesDecryptorTest::CreateCdmFileIO,
-                                           base::Unretained(this)),
+          std::move(allocator),
+          base::Bind(&AesDecryptorTest::CreateCdmFileIO,
+                     base::Unretained(this)),
+          CreateCdmPlatformVerificationCB(), CreateCdmOutputProtectionCB(),
           base::Bind(&MockCdmClient::OnSessionMessage,
                      base::Unretained(&cdm_client_)),
           base::Bind(&MockCdmClient::OnSessionClosed,

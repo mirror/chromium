@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "base/strings/string_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "media/base/cdm_callback_promise.h"
@@ -35,6 +36,11 @@ MATCHER(IsNotEmpty, "") {
 
 MATCHER(IsNullTime, "") {
   return arg.is_null();
+}
+
+MATCHER(LooksLikeJSON, "") {
+  return base::StartsWith(std::string(arg.begin(), arg.end()),
+                          "{\"kids\":", base::CompareCase::INSENSITIVE_ASCII);
 }
 
 // TODO(jrummell): These tests are a subset of those in aes_decryptor_unittest.
@@ -100,13 +106,15 @@ class CdmAdapterTest : public testing::Test {
 
   // Initializes the adapter. |expected_result| tests that the call succeeds
   // or generates an error.
-  void InitializeAndExpect(base::FilePath library_path,
+  void InitializeAndExpect(const std::string& key_system_name,
+                           base::FilePath library_path,
                            ExpectedResult expected_result) {
     CdmConfig cdm_config;  // default settings of false are sufficient.
     std::unique_ptr<CdmAllocator> allocator(new SimpleCdmAllocator());
     CdmAdapter::Create(
-        helper_.KeySystemName(), library_path, cdm_config, std::move(allocator),
+        key_system_name, library_path, cdm_config, std::move(allocator),
         base::Bind(&CdmAdapterTest::CreateCdmFileIO, base::Unretained(this)),
+        CreateCdmPlatformVerificationCB(), CreateCdmOutputProtectionCB(),
         base::Bind(&MockCdmClient::OnSessionMessage,
                    base::Unretained(&cdm_client_)),
         base::Bind(&MockCdmClient::OnSessionClosed,
@@ -129,13 +137,28 @@ class CdmAdapterTest : public testing::Test {
     DCHECK(!key_id.empty());
 
     if (expected_result == SUCCESS) {
-      EXPECT_CALL(cdm_client_, OnSessionMessage(IsNotEmpty(), _, _));
+      EXPECT_CALL(cdm_client_, OnSessionMessage(IsNotEmpty(),
+                                                CdmMessageType::LICENSE_REQUEST,
+                                                LooksLikeJSON()));
     }
 
     adapter_->CreateSessionAndGenerateRequest(
         CdmSessionType::TEMPORARY_SESSION, data_type, key_id,
         CreateSessionPromise(expected_result));
     RunUntilIdle();
+  }
+
+  // For variations of External Clear Key, creating a session also triggers
+  // other calls and they report their success/failure as a second session
+  // message. |expected_result| indicates if the message should indicate
+  // success/failure.
+  void ExpectUnitTestResultMessage(ExpectedResult expected_result) {
+    std::string message("UNIT_TEST_RESULT");
+    message += (expected_result == SUCCESS) ? "1" : "0";
+    EXPECT_CALL(
+        cdm_client_,
+        OnSessionMessage(IsNotEmpty(), CdmMessageType::LICENSE_REQUEST,
+                         std::vector<uint8_t>(message.begin(), message.end())));
   }
 
   // Loads the session specified by |session_id|. |expected_result| tests
@@ -174,6 +197,8 @@ class CdmAdapterTest : public testing::Test {
                             CreatePromise(expected_result));
     RunUntilIdle();
   }
+
+  std::string ExternalClearKeyName() { return helper_.KeySystemName(); }
 
   base::FilePath ExternalClearKeyLibrary() { return helper_.LibraryPath(); }
 
@@ -259,23 +284,27 @@ class CdmAdapterTest : public testing::Test {
 };
 
 TEST_F(CdmAdapterTest, Initialize) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 }
 
 TEST_F(CdmAdapterTest, BadLibraryPath) {
-  InitializeAndExpect(base::FilePath(FILE_PATH_LITERAL("no_library_here")),
+  InitializeAndExpect(ExternalClearKeyName(),
+                      base::FilePath(FILE_PATH_LITERAL("no_library_here")),
                       FAILURE);
 }
 
 TEST_F(CdmAdapterTest, CreateWebmSession) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
   CreateSessionAndExpect(EmeInitDataType::WEBM, key_id, SUCCESS);
 }
 
 TEST_F(CdmAdapterTest, CreateKeyIdsSession) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 
   // Don't include the trailing /0 from the string in the data passed in.
   std::vector<uint8_t> key_id(kKeyIdAsJWK,
@@ -284,7 +313,8 @@ TEST_F(CdmAdapterTest, CreateKeyIdsSession) {
 }
 
 TEST_F(CdmAdapterTest, CreateCencSession) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyIdAsPssh,
                               kKeyIdAsPssh + arraysize(kKeyIdAsPssh));
@@ -296,7 +326,8 @@ TEST_F(CdmAdapterTest, CreateCencSession) {
 }
 
 TEST_F(CdmAdapterTest, CreateSessionWithBadData) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 
   // Use |kKeyId| but specify KEYIDS format.
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
@@ -304,7 +335,8 @@ TEST_F(CdmAdapterTest, CreateSessionWithBadData) {
 }
 
 TEST_F(CdmAdapterTest, LoadSession) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 
   // LoadSession() is not supported by AesDecryptor.
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
@@ -312,7 +344,8 @@ TEST_F(CdmAdapterTest, LoadSession) {
 }
 
 TEST_F(CdmAdapterTest, UpdateSession) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
   CreateSessionAndExpect(EmeInitDataType::WEBM, key_id, SUCCESS);
@@ -321,12 +354,53 @@ TEST_F(CdmAdapterTest, UpdateSession) {
 }
 
 TEST_F(CdmAdapterTest, UpdateSessionWithBadData) {
-  InitializeAndExpect(ExternalClearKeyLibrary(), SUCCESS);
+  InitializeAndExpect(ExternalClearKeyName(), ExternalClearKeyLibrary(),
+                      SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
   CreateSessionAndExpect(EmeInitDataType::WEBM, key_id, SUCCESS);
 
   UpdateSessionAndExpect(SessionId(), "random data", FAILURE, true);
+}
+
+TEST_F(CdmAdapterTest, OutputProtection) {
+  InitializeAndExpect(ExternalClearKeyName() + ".outputprotectiontest",
+                      ExternalClearKeyLibrary(), SUCCESS);
+
+  // Because of the key system name, CreateSession() will call
+  // QueryOutputProtectionStatus() as well as creating a session. When a
+  // response happens, a second message event is generated indicating that the
+  // unit test finished. As an empty CreateCdmOutputProtectionCB is provided,
+  // it appears as a failure.
+  std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
+  ExpectUnitTestResultMessage(FAILURE);
+  CreateSessionAndExpect(EmeInitDataType::WEBM, key_id, SUCCESS);
+}
+
+TEST_F(CdmAdapterTest, PlatformVerification) {
+  InitializeAndExpect(ExternalClearKeyName() + ".platformverificationtest",
+                      ExternalClearKeyLibrary(), SUCCESS);
+
+  // Because of the key system name, CreateSession() will call
+  // SendPlatformChallenge() as well as creating a session. When any response
+  // happens, a second message event is generated indicating that the unit
+  // test succeeded.
+  std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
+  ExpectUnitTestResultMessage(SUCCESS);
+  CreateSessionAndExpect(EmeInitDataType::WEBM, key_id, SUCCESS);
+}
+
+TEST_F(CdmAdapterTest, StorageId) {
+  InitializeAndExpect(ExternalClearKeyName() + ".storageidtest",
+                      ExternalClearKeyLibrary(), SUCCESS);
+
+  // Because of the key system name, CreateSession() will call
+  // GetStorageId() as well as creating a session. When a response
+  // happens, a second message event is generated indicating that the unit
+  // test succeeded.
+  std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
+  ExpectUnitTestResultMessage(SUCCESS);
+  CreateSessionAndExpect(EmeInitDataType::WEBM, key_id, SUCCESS);
 }
 
 }  // namespace media

@@ -381,6 +381,8 @@ void CdmAdapter::Create(
     const CdmConfig& cdm_config,
     std::unique_ptr<CdmAllocator> allocator,
     const CreateCdmFileIOCB& create_cdm_file_io_cb,
+    CreateCdmPlatformVerificationCB create_cdm_platform_verification_cb,
+    CreateCdmOutputProtectionCB create_cdm_output_protection_cb,
     const SessionMessageCB& session_message_cb,
     const SessionClosedCB& session_closed_cb,
     const SessionKeysChangeCB& session_keys_change_cb,
@@ -394,8 +396,9 @@ void CdmAdapter::Create(
 
   scoped_refptr<CdmAdapter> cdm = new CdmAdapter(
       key_system, cdm_config, std::move(allocator), create_cdm_file_io_cb,
-      session_message_cb, session_closed_cb, session_keys_change_cb,
-      session_expiration_update_cb);
+      std::move(create_cdm_platform_verification_cb),
+      std::move(create_cdm_output_protection_cb), session_message_cb,
+      session_closed_cb, session_keys_change_cb, session_expiration_update_cb);
 
   // |cdm| ownership passed to the promise.
   std::unique_ptr<CdmInitializedPromise> cdm_created_promise(
@@ -409,6 +412,8 @@ CdmAdapter::CdmAdapter(
     const CdmConfig& cdm_config,
     std::unique_ptr<CdmAllocator> allocator,
     const CreateCdmFileIOCB& create_cdm_file_io_cb,
+    CreateCdmPlatformVerificationCB create_cdm_platform_verification_cb,
+    CreateCdmOutputProtectionCB create_cdm_output_protection_cb,
     const SessionMessageCB& session_message_cb,
     const SessionClosedCB& session_closed_cb,
     const SessionKeysChangeCB& session_keys_change_cb,
@@ -423,6 +428,10 @@ CdmAdapter::CdmAdapter(
       audio_channel_layout_(CHANNEL_LAYOUT_NONE),
       allocator_(std::move(allocator)),
       create_cdm_file_io_cb_(create_cdm_file_io_cb),
+      create_cdm_platform_verification_cb_(
+          std::move(create_cdm_platform_verification_cb)),
+      create_cdm_output_protection_cb_(
+          std::move(create_cdm_output_protection_cb)),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       pool_(new AudioBufferMemoryPool()),
       weak_factory_(this) {
@@ -925,8 +934,23 @@ void CdmAdapter::SendPlatformChallenge(const char* service_id,
                                        uint32_t challenge_size) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
-  // TODO(jrummell): If platform verification is available, use it.
-  NOTIMPLEMENTED();
+  if (!IsPlatformVerificationAvailable()) {
+    ChallengePlatformDone(false, "", "", "");
+    return;
+  }
+
+  cdm_platform_verification_->ChallengePlatform(
+      std::string(service_id, service_id_size),
+      std::string(challenge, challenge_size),
+      base::Bind(&CdmAdapter::ChallengePlatformDone,
+                 weak_factory_.GetWeakPtr()));
+}
+
+void CdmAdapter::ChallengePlatformDone(
+    bool success,
+    const std::string& signed_data,
+    const std::string& signed_data_signature,
+    const std::string& platform_key_certificate) {
   cdm::PlatformChallengeResponse platform_challenge_response = {};
   cdm_->OnPlatformChallengeResponse(platform_challenge_response);
 }
@@ -934,16 +958,40 @@ void CdmAdapter::SendPlatformChallenge(const char* service_id,
 void CdmAdapter::EnableOutputProtection(uint32_t desired_protection_mask) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
-  // TODO(jrummell): If output protection is available, use it.
-  NOTIMPLEMENTED();
+  if (!IsOutputProtectionAvailable()) {
+    OutputProtectionRequestMade(false);
+    return;
+  }
+
+  cdm_output_protection_->EnableProtection(
+      desired_protection_mask,
+      base::BindOnce(&CdmAdapter::OutputProtectionRequestMade,
+                     weak_factory_.GetWeakPtr()));
+}
+
+void CdmAdapter::OutputProtectionRequestMade(bool /* success */) {
+  // CDM needs to call QueryOutputProtectionStatus() to see if it took effect
+  // or not.
 }
 
 void CdmAdapter::QueryOutputProtectionStatus() {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
-  // TODO(jrummell): If output protection is available, use it.
-  NOTIMPLEMENTED();
-  cdm_->OnQueryOutputProtectionStatus(cdm::kQueryFailed, 0, 0);
+  if (!IsOutputProtectionAvailable()) {
+    OutputProtectionStatus(false, 0, 0);
+    return;
+  }
+
+  cdm_output_protection_->QueryStatus(base::Bind(
+      &CdmAdapter::OutputProtectionStatus, weak_factory_.GetWeakPtr()));
+}
+
+void CdmAdapter::OutputProtectionStatus(bool success,
+                                        uint32_t link_mask,
+                                        uint32_t protection_mask) {
+  cdm_->OnQueryOutputProtectionStatus(
+      success ? cdm::kQuerySucceeded : cdm::kQueryFailed, link_mask,
+      protection_mask);
 }
 
 void CdmAdapter::OnDeferredInitializationDone(cdm::StreamType stream_type,
@@ -977,9 +1025,17 @@ cdm::FileIO* CdmAdapter::CreateFileIO(cdm::FileIOClient* client) {
 }
 
 void CdmAdapter::RequestStorageId() {
-  // TODO(jrummell): Implement Storage Id. https://crbug.com/478960.
-  NOTIMPLEMENTED();
-  cdm_->OnStorageId(nullptr, 0);
+  if (!IsPlatformVerificationAvailable()) {
+    StorageIdObtained(std::vector<uint8_t>());
+    return;
+  }
+
+  cdm_platform_verification_->GetStorageId(
+      base::Bind(&CdmAdapter::StorageIdObtained, weak_factory_.GetWeakPtr()));
+}
+
+void CdmAdapter::StorageIdObtained(const std::vector<uint8_t>& storage_id) {
+  cdm_->OnStorageId(storage_id.data(), storage_id.size());
 }
 
 bool CdmAdapter::AudioFramesDataToAudioFrames(
@@ -1039,6 +1095,22 @@ bool CdmAdapter::AudioFramesDataToAudioFrames(
   } while (bytes_left > 0);
 
   return true;
+}
+
+bool CdmAdapter::IsPlatformVerificationAvailable() {
+  if (!cdm_platform_verification_ && create_cdm_platform_verification_cb_) {
+    cdm_platform_verification_ =
+        std::move(create_cdm_platform_verification_cb_).Run();
+  }
+
+  return cdm_platform_verification_.get() != nullptr;
+}
+
+bool CdmAdapter::IsOutputProtectionAvailable() {
+  if (!cdm_output_protection_ && create_cdm_output_protection_cb_)
+    cdm_output_protection_ = std::move(create_cdm_output_protection_cb_).Run();
+
+  return cdm_output_protection_.get() != nullptr;
 }
 
 }  // namespace media

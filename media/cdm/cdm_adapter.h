@@ -23,6 +23,8 @@
 #include "media/base/cdm_config.h"
 #include "media/base/cdm_context.h"
 #include "media/base/cdm_factory.h"
+#include "media/base/cdm_output_protection.h"
+#include "media/base/cdm_platform_verification.h"
 #include "media/base/cdm_promise_adapter.h"
 #include "media/base/content_decryption_module.h"
 #include "media/base/decryptor.h"
@@ -42,8 +44,18 @@ class CdmWrapper;
 // valid FileIO object is returned, |client| must be valid until
 // FileIO::Close() is called. The CDM can call this method multiple times
 // to operate on different files.
-using CreateCdmFileIOCB =
-    base::Callback<std::unique_ptr<CdmFileIO>(cdm::FileIOClient* client)>;
+using CreateCdmFileIOCB = base::RepeatingCallback<std::unique_ptr<CdmFileIO>(
+    cdm::FileIOClient* client)>;
+
+// Called when the CDM needs to do platform verification. Returns NULL if not
+// available.
+using CreateCdmPlatformVerificationCB =
+    base::OnceCallback<std::unique_ptr<CdmPlatformVerification>()>;
+
+// Called when the CDM needs to do output protection. Returns NULL if not
+// available.
+using CreateCdmOutputProtectionCB =
+    base::OnceCallback<std::unique_ptr<CdmOutputProtection>()>;
 
 class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
                                 public CdmContext,
@@ -63,6 +75,8 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
       const CdmConfig& cdm_config,
       std::unique_ptr<CdmAllocator> allocator,
       const CreateCdmFileIOCB& create_cdm_file_io_cb,
+      CreateCdmPlatformVerificationCB create_cdm_platform_verification_cb,
+      CreateCdmOutputProtectionCB create_cdm_output_protection_cb,
       const SessionMessageCB& session_message_cb,
       const SessionClosedCB& session_closed_cb,
       const SessionKeysChangeCB& session_keys_change_cb,
@@ -175,14 +189,17 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
                             uint32_t error_message_size) override;
 
  private:
-  CdmAdapter(const std::string& key_system,
-             const CdmConfig& cdm_config,
-             std::unique_ptr<CdmAllocator> allocator,
-             const CreateCdmFileIOCB& create_cdm_file_io_cb,
-             const SessionMessageCB& session_message_cb,
-             const SessionClosedCB& session_closed_cb,
-             const SessionKeysChangeCB& session_keys_change_cb,
-             const SessionExpirationUpdateCB& session_expiration_update_cb);
+  CdmAdapter(
+      const std::string& key_system,
+      const CdmConfig& cdm_config,
+      std::unique_ptr<CdmAllocator> allocator,
+      const CreateCdmFileIOCB& create_cdm_file_io_cb,
+      CreateCdmPlatformVerificationCB create_cdm_platform_verification_cb,
+      CreateCdmOutputProtectionCB create_cdm_output_protection_cb,
+      const SessionMessageCB& session_message_cb,
+      const SessionClosedCB& session_closed_cb,
+      const SessionKeysChangeCB& session_keys_change_cb,
+      const SessionExpirationUpdateCB& session_expiration_update_cb);
   ~CdmAdapter() final;
 
   // Load the CDM using |cdm_path| and initialize it. |promise| is resolved if
@@ -205,6 +222,26 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
   bool AudioFramesDataToAudioFrames(
       std::unique_ptr<AudioFramesImpl> audio_frames,
       Decryptor::AudioFrames* result_frames);
+
+  // Callbacks for Platform Verification.
+  void ChallengePlatformDone(bool success,
+                             const std::string& signed_data,
+                             const std::string& signed_data_signature,
+                             const std::string& platform_key_certificate);
+  void StorageIdObtained(const std::vector<uint8_t>& storage_id);
+
+  // Callbacks for OutputProtection.
+  void OutputProtectionRequestMade(bool success);
+  void OutputProtectionStatus(bool success,
+                              uint32_t link_mask,
+                              uint32_t protection_mask);
+
+  // Lazily create Platform Verification and Output Protection. If
+  // |cdm_platform_verification_|/|cdm_output_protection_| don't exist, try
+  // to create them using the appropriate callback (if it exists). Returns
+  // true if the object exists, false if it does not (or can't be created).
+  bool IsPlatformVerificationAvailable();
+  bool IsOutputProtectionAvailable();
 
   // Keep a reference to the CDM.
   base::ScopedNativeLibrary library_;
@@ -240,6 +277,13 @@ class MEDIA_EXPORT CdmAdapter : public ContentDecryptionModule,
 
   std::unique_ptr<CdmAllocator> allocator_;
   CreateCdmFileIOCB create_cdm_file_io_cb_;
+  CreateCdmPlatformVerificationCB create_cdm_platform_verification_cb_;
+  CreateCdmOutputProtectionCB create_cdm_output_protection_cb_;
+
+  // The following are lazily created using the appropriate callback in case
+  // they are not needed by the CDM.
+  std::unique_ptr<CdmPlatformVerification> cdm_platform_verification_;
+  std::unique_ptr<CdmOutputProtection> cdm_output_protection_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 

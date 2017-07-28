@@ -108,9 +108,10 @@ void CdmAdapterFactory::Create(
   // TODO(xhwang): Hook up auxiliary services, e.g. File IO, output protection,
   // and platform verification.
   CdmAdapter::Create(key_system, cdm_path, cdm_config, std::move(cdm_allocator),
-                     CreateCdmFileIOCB(), session_message_cb, session_closed_cb,
-                     session_keys_change_cb, session_expiration_update_cb,
-                     cdm_created_cb);
+                     CreateCdmFileIOCB(), CreateCdmPlatformVerificationCB(),
+                     CreateCdmOutputProtectionCB(), session_message_cb,
+                     session_closed_cb, session_keys_change_cb,
+                     session_expiration_update_cb, cdm_created_cb);
 }
 
 }  // namespace media
