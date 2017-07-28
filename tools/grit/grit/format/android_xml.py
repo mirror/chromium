@@ -86,8 +86,10 @@ _STRING_TEMPLATE = u'<string name="%s">"%s"</string>\n'
 # Some strings are output as a <plurals> element.
 _PLURALS_TEMPLATE = '<plurals name="%s">\n%s</plurals>\n'
 _PLURALS_ITEM_TEMPLATE = '  <item quantity="%s">%s</item>\n'
-_PLURALS_PATTERN = lazy_re.compile(r'\{[A-Z_]+,\s*plural,(?P<items>.*)\}$', flags=re.S)
-_PLURALS_ITEM_PATTERN = lazy_re.compile(r'(?P<quantity>\S+)\s*\{(?P<value>.*?)\}')
+_PLURALS_PATTERN = lazy_re.compile(r'\{[A-Z_]+,\s*plural,(?P<items>.*)\}$',
+                                   flags=re.S)
+_PLURALS_ITEM_PATTERN = lazy_re.compile(r'(?P<quantity>\S+?)\s*'
+                                        '\{(?P<value>.*?)\}')
 _PLURALS_QUANTITY_MAP = {
   '=0': 'zero',
   'zero': 'zero',
