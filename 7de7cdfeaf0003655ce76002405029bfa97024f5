@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "12d1dc98_9c983c90",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-28T21:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f03b16_30accbb4",
+      "revId": "7de7cdfeaf0003655ce76002405029bfa97024f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47ae09b1_1569b864",
         "filename": "chrome/browser/ui/ash/session_controller_client.h",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-28T21:21:39Z",
       "side": 1,
       "message": "Why static?",
+      "revId": "7de7cdfeaf0003655ce76002405029bfa97024f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84a25ae_74fb147b",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-28T21:52:32Z",
+      "side": 1,
+      "message": "Since we need to use it in the static method CanLockScreen().",
+      "parentUuid": "47ae09b1_1569b864",
       "revId": "7de7cdfeaf0003655ce76002405029bfa97024f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
