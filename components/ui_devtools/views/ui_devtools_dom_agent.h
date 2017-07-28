@@ -85,6 +85,10 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
                                   const cc::PaintFlags& flags,
                                   gfx::Canvas* canvas_);
 
+  void DrawR1TopFullLeftR2(const gfx::RectF& pinned_rectF,
+                           const gfx::RectF& hovered_rectF,
+                           const cc::PaintFlags& flags,
+                           gfx::Canvas* canvas_);
   // ui::LayerDelegate:
   void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
   void OnDeviceScaleFactorChanged(float device_scale_factor) override {}
