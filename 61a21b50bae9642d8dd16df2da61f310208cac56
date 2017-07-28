@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50fecae7_0b62875a",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T03:37:54Z",
+      "side": 1,
+      "message": "Is it \"has been\" as in \"has been set to disallow updates over cellular\"? Or is this statement supposed to be \"has not been\"? I\u0027m having trouble parsing this and understanding what |show| really means. It\u0027s a bit confusing (to me) to have a function named |Show| with a parameter named |show|. Maybe there\u0027s a different name we can pick for the parameter...?",
+      "range": {
+        "startLine": 45,
+        "startChar": 67,
+        "endLine": 45,
+        "endChar": 75
+      },
+      "revId": "61a21b50bae9642d8dd16df2da61f310208cac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
