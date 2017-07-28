@@ -110,6 +110,23 @@ AudioBuffer* AudioBuffer::Create(const AudioBufferOptions& options,
                 options.sampleRate(), exception_state);
 }
 
+AudioBuffer* AudioBuffer::CreateUninitialized(unsigned number_of_channels,
+                                              size_t number_of_frames,
+                                              float sample_rate) {
+  if (!AudioUtilities::IsValidAudioBufferSampleRate(sample_rate) ||
+      number_of_channels > BaseAudioContext::MaxNumberOfChannels() ||
+      !number_of_channels || !number_of_frames)
+    return nullptr;
+
+  AudioBuffer* buffer =
+      new AudioBuffer(number_of_channels, number_of_frames, sample_rate,
+                      WTF::ArrayBufferContents::kDontInitialize);
+
+  if (!buffer->CreatedSuccessfully(number_of_channels))
+    return nullptr;
+  return buffer;
+}
+
 AudioBuffer* AudioBuffer::CreateFromAudioFileData(const void* data,
                                                   size_t data_size,
                                                   bool mix_to_mono,
@@ -139,22 +156,39 @@ bool AudioBuffer::CreatedSuccessfully(
   return numberOfChannels() == desired_number_of_channels;
 }
 
-DOMFloat32Array* AudioBuffer::CreateFloat32ArrayOrNull(size_t length) {
-  RefPtr<WTF::Float32Array> buffer_view =
-      WTF::Float32Array::CreateOrNull(length);
-  if (!buffer_view)
+DOMFloat32Array* AudioBuffer::CreateFloat32ArrayOrNull(
+    size_t length,
+    WTF::ArrayBufferContents::InitializationPolicy policy) {
+  DOMArrayBuffer* buffer = nullptr;
+
+  switch (policy) {
+    case WTF::ArrayBufferContents::kZeroInitialize:
+      buffer = DOMArrayBuffer::Create(length, sizeof(float));
+      break;
+    case WTF::ArrayBufferContents::kDontInitialize:
+      buffer = DOMArrayBuffer::CreateUninitializedOrNull(length, sizeof(float));
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
+
+  if (!buffer) {
     return nullptr;
-  return DOMFloat32Array::Create(std::move(buffer_view));
+  }
+  return DOMFloat32Array::Create(buffer, 0, length);
 }
 
 AudioBuffer::AudioBuffer(unsigned number_of_channels,
                          size_t number_of_frames,
-                         float sample_rate)
+                         float sample_rate,
+                         WTF::ArrayBufferContents::InitializationPolicy policy)
     : sample_rate_(sample_rate), length_(number_of_frames) {
   channels_.ReserveCapacity(number_of_channels);
 
   for (unsigned i = 0; i < number_of_channels; ++i) {
-    DOMFloat32Array* channel_data_array = CreateFloat32ArrayOrNull(length_);
+    DOMFloat32Array* channel_data_array =
+        CreateFloat32ArrayOrNull(length_, policy);
     // If the channel data array could not be created, just return. The caller
     // will need to check that the desired number of channels were created.
     if (!channel_data_array)
@@ -171,7 +205,8 @@ AudioBuffer::AudioBuffer(AudioBus* bus)
   unsigned number_of_channels = bus->NumberOfChannels();
   channels_.ReserveCapacity(number_of_channels);
   for (unsigned i = 0; i < number_of_channels; ++i) {
-    DOMFloat32Array* channel_data_array = CreateFloat32ArrayOrNull(length_);
+    DOMFloat32Array* channel_data_array = CreateFloat32ArrayOrNull(
+        length_, WTF::ArrayBufferContents::kDontInitialize);
     // If the channel data array could not be created, just return. The caller
     // will need to check that the desired number of channels were created.
     if (!channel_data_array)
