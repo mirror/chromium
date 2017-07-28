@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c98c3cf9_e3e9cdd6",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-28T21:58:36Z",
+      "side": 1,
+      "message": "Oh I missed this comment, have uploaded a new patchset for this.",
+      "parentUuid": "706707e3_d71625ff",
+      "revId": "7de7cdfeaf0003655ce76002405029bfa97024f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20f03b16_30accbb4",
         "filename": "chrome/browser/ui/ash/session_controller_client.h",
         "patchSetId": 3
