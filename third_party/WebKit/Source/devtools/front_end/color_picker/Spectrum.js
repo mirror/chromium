@@ -63,14 +63,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
         UI.ToolbarButton.Events.Click, this._toggleColorPicker.bind(this, undefined));
     toolbar.appendToolbarItem(this._colorPickerButton);
 
-    var swatchElement = this.contentElement.createChild('span', 'swatch');
-    this._swatchInnerElement = swatchElement.createChild('span', 'swatch-inner');
-    this._swatchOverlayElement = swatchElement.createChild('span', 'swatch-overlay');
-    this._swatchOverlayElement.addEventListener('click', this._onCopyIconClick.bind(this));
-    this._swatchOverlayElement.addEventListener('mouseout', this._onCopyIconMouseout.bind(this));
-    this._swatchCopyIcon = UI.Icon.create('largeicon-copy', 'copy-color-icon');
-    this._swatchCopyIcon.title = Common.UIString('Copy color to clipboard');
-    this._swatchOverlayElement.appendChild(this._swatchCopyIcon);
+    this._swatch = new ColorPicker.Spectrum.Swatch(this.contentElement);
 
     this._hueElement = this.contentElement.createChild('div', 'spectrum-hue');
     this._hueSlider = this._hueElement.createChild('div', 'spectrum-slider');
@@ -210,15 +203,6 @@ ColorPicker.Spectrum = class extends UI.VBox {
       else
         info.classList.toggle('contrast-info-left');
     }
-  }
-
-  _onCopyIconClick() {
-    this._swatchCopyIcon.setIconType('largeicon-checkmark');
-    InspectorFrontendHost.copyText(this.colorString());
-  }
-
-  _onCopyIconMouseout() {
-    this._swatchCopyIcon.setIconType('largeicon-copy');
   }
 
   _updatePalettePanel() {
@@ -625,10 +609,99 @@ ColorPicker.Spectrum = class extends UI.VBox {
   }
 
   /**
-   * @param {!Common.Color} color
+   * @param {string} fontSize
+   * @param {string} fontWeight
+   * @param {?string} bodyFontSize
+   * @return {boolean}
    */
-  setContrastColor(color) {
-    this._contrastColor = color;
+  static computeIsLargeFont(fontSize, fontWeight, bodyFontSize) {
+    const boldWeights = ['bold', 'bolder', '600', '700', '800', '900'];
+
+    var fontSizePx = parseFloat(fontSize.replace('px', ''));
+    var isBold = (boldWeights.indexOf(fontWeight) !== -1);
+
+    if (bodyFontSize) {
+      var bodyFontSizePx = parseFloat(bodyFontSize.replace('px', ''));
+      if (isBold) {
+        if (fontSizePx >= (bodyFontSizePx * 1.2))
+          return true;
+      } else if (fontSizePx >= (bodyFontSizePx * 1.5)) {
+        return true;
+      }
+      return false;
+    }
+
+    var fontSizePt = Math.ceil(fontSizePx * 72 / 96);
+    if (isBold)
+      return fontSizePt >= 14;
+    else
+      return fontSizePt >= 18;
+  }
+
+
+  /**
+   * @param {boolean} isLargeFont
+   * @return {!Object<string, number>}
+   */
+  static contrastThresholds(isLargeFont) {
+    const thresholds = {largeFont: {AA: 3.0, AAA: 4.5}, normalFont: {AA: 4.5, AAA: 7.0}};
+    return thresholds[isLargeFont ? 'largeFont' : 'normalFont'];
+  }
+
+  /**
+   * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
+   */
+  setContrastInfo(contrastInfo) {
+    delete this._bgColor;
+    delete this._contrastRatio;
+    delete this._contrastRatioThresholds;
+
+    var isLargeFont = ColorPicker.Spectrum.computeIsLargeFont(
+        contrastInfo.computedFontSize, contrastInfo.computedFontSize, contrastInfo.computedBodyFontSize);
+    this._contrastRatioThresholds = ColorPicker.Spectrum.contrastThresholds(isLargeFont);
+
+    // TODO(aboxhall): distinguish between !backgroundColors (no text) and
+    // !backgroundColors.length (no computed bg color)
+    if (!contrastInfo.backgroundColors || !contrastInfo.backgroundColors.length)
+      return;
+    // TODO(aboxhall): figure out what to do in the case of multiple background colors (i.e. gradients)
+    var bgColorText = contrastInfo.backgroundColors[0];
+    var bgColor = Common.Color.parse(bgColorText);
+    if (!bgColor)
+      return;
+
+    this._setBgColor(bgColor);
+  }
+
+  /**
+   * @param {!Common.Color} bgColor
+   */
+  _setBgColor(bgColor) {
+    // If we have a semi-transparent background color over an unknown
+    // background, draw the line for the "worst case" scenario: where
+    // the unknown background is the same color as the text.
+    if (bgColor.hasAlpha) {
+      var blendedRGBA = [];
+      Common.Color.blendColors(bgColor.rgba(), this._color().rgba(), blendedRGBA);
+      bgColor = new Common.Color(blendedRGBA, Common.Color.Format.RGBA);
+    }
+
+    this._bgColor = bgColor;
+    this._bgColorSwatch.setColor(this._bgColor);
+    this._contrastValueBubble.style.background = this._bgColor.asString(Common.Color.Format.RGBA);
+
+    var isWhite = (bgColor.hsla()[2] > 0.9);
+    this._contrastValueBubble.classList.toggle('contrast-color-white', isWhite);
+
+    if (isWhite)
+      this._contrastValueBubble.style.removeProperty('border-color');
+    else
+      this._contrastValueBubble.style.borderColor = this._bgColor.asString(Common.Color.Format.RGBA);
+    var fgRGBA = [];
+    Common.Color.hsva2rgba(this._hsv, fgRGBA);
+    var bgRGBA = this._bgColor.rgba();
+    this._contrastRatio = Common.Color.calculateContrastRatio(fgRGBA, bgRGBA);
+
     this._updateUI();
   }
 
@@ -720,11 +793,11 @@ ColorPicker.Spectrum = class extends UI.VBox {
 
   /**
    * @param {number} requiredContrast
-   * @param {!Array<number>} bgRGBA
-   * @param {!Array<number>} fgRGBA
    */
-  _drawContrastRatioLine(requiredContrast, bgRGBA, fgRGBA) {
-    if (!this._contrastColor || !this.dragWidth || !this.dragHeight)
+  _drawContrastRatioLine(requiredContrast) {
+    // TODO(aboxhall): throttle this to avoid being called in rapid succession when using eyedropper
+
+    if (!this._bgColor || !this.dragWidth || !this.dragHeight)
       return;
 
     /** const */ var width = this.dragWidth;
@@ -736,6 +809,9 @@ ColorPicker.Spectrum = class extends UI.VBox {
     /** const */ var V = 2;
     /** const */ var A = 3;
 
+    var fgRGBA = [];
+    Common.Color.hsva2rgba(this._hsv, fgRGBA);
+    var bgRGBA = this._bgColor.rgba();
     var bgLuminance = Common.Color.luminance(bgRGBA);
     var blendedRGBA = [];
     Common.Color.blendColors(fgRGBA, bgRGBA, blendedRGBA);
@@ -810,10 +886,30 @@ ColorPicker.Spectrum = class extends UI.VBox {
     this._contrastInfo = this._colorElement.createChild('div', 'spectrum-contrast-info');
     this._contrastInfo.classList.add('force-white-icons');
     this._contrastInfo.createChild('span', 'low-contrast').textContent = Common.UIString('Low contrast');
-    this._contrastInfo.createChild('span', 'value');
+    this._contrastInfoValue = this._contrastInfo.createChild('span', 'value');
     this._contrastInfo.appendChild(UI.Icon.create('smallicon-contrast-ratio'));
-  }
+    this._contrastInfo.addEventListener('mousedown', this._toggleContrastDetails.bind(this), true);
 
+    this._contrastDetails = this.contentElement.createChild('div', 'spectrum-contrast-details');
+    var contrastValueRow = this._contrastDetails.createChild('div');
+    contrastValueRow.createTextChild(Common.UIString('Contrast Ratio'));
+    this._contrastValueBubble = contrastValueRow.createChild('span', 'contrast-details-value force-white-icons');
+    this._contrastValue = this._contrastValueBubble.createChild('span');
+    this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-checkmark-square'));
+    this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-checkmark-behind'));
+    this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-no'));
+    this._contrastPassFail = this._contrastDetails.createChild('div', 'contrast-pass-fail');
+    this._contrastPassFail.createTextChild(Common.UIString('Fails AA (3.0) and AAA level (4.5) WCAG 2.0 Standard'));
+
+    var bgColorRow = this._contrastDetails.createChild('div');
+    bgColorRow.createTextChild(Common.UIString('Background color:'));
+    this._bgColorSwatch = new ColorPicker.Spectrum.Swatch(bgColorRow, 'contrast');
+
+    this._bgColorPicker = bgColorRow.createChild('button', 'background-color-picker');
+    this._bgColorPicker.appendChild(UI.Icon.create('largeicon-eyedropper'));
+    this._bgColorPicker.addEventListener('click', this._toggleBackgroundColorPicker.bind(this, undefined));
+    this._bgColorPickedBound = this._bgColorPicked.bind(this);
+  }
 
   /**
    * @param {boolean} show
@@ -829,21 +925,46 @@ ColorPicker.Spectrum = class extends UI.VBox {
 
     var fgRGBA = [];
     Common.Color.hsva2rgba(this._hsv, fgRGBA);
-    var bgRGBA = this._contrastColor.rgba();
-    var contrastRatio = Common.Color.calculateContrastRatio(fgRGBA, bgRGBA);
+    var bgRGBA = this._bgColor.rgba();
+    this._contrastRatio = Common.Color.calculateContrastRatio(fgRGBA, bgRGBA);
+    this._contrastInfoValue.textContent = this._contrastRatio.toFixed(2);
+    this._contrastValue.textContent = this._contrastRatio.toFixed(2);
 
-    // TODO(aboxhall): Determine size of text and switch between AA/AAA ratings.
-    var requiredContrast = 4.5;
+    var AA = this._contrastRatioThresholds['AA'];
+    var AAA = this._contrastRatioThresholds['AAA'];
+    var passesAA = this._contrastRatio >= AA;
+    var passesAAA = this._contrastRatio >= AAA;
 
-    this._contrastInfo.querySelector('.value').textContent = contrastRatio.toFixed(2);
-    this._contrastInfo.classList.toggle('contrast-fail', (contrastRatio < requiredContrast));
-    this._drawContrastRatioLine(requiredContrast, bgRGBA, fgRGBA);
+    this._contrastValueBubble.classList.toggle('contrast-fail', !passesAA);
+    this._contrastValueBubble.classList.toggle('contrast-aa', passesAA);
+    this._contrastValueBubble.classList.toggle('contrast-aaa', passesAAA);
+    this._contrastValueBubble.style.color = this.colorString();
+    var icons = this._contrastValueBubble.querySelectorAll('[is=ui-icon]');
+    for (var i = 0; i < icons.length; i++)
+      icons[i].style.setProperty('background', this.colorString(), 'important');
+
+    this._contrastInfo.classList.toggle('contrast-fail', !passesAA);
+    this._drawContrastRatioLine(AA);
+
+    if (passesAA && passesAAA) {
+      this._contrastPassFail.innerHTML = Common.UIString(
+          'Passes <strong>AA (%s)</strong> and <strong>AAA (%s)</strong> WCAG 2.0 Standard', AA.toFixed(1),
+          AAA.toFixed(1));
+    } else if (passesAA && !passesAAA) {
+      this._contrastPassFail.innerHTML = Common.UIString(
+          'Passes <strong>AA (%s)</strong> but fails <strong>AAA (%s)</strong> WCAG 2.0 Standard', AA.toFixed(1),
+          AAA.toFixed(1));
+    } else {
+      this._contrastPassFail.innerHTML = Common.UIString(
+          'Fails <strong>AA (%s)</strong> and <strong>AAA (%s)</strong> WCAG 2.0 Standard', AA.toFixed(1),
+          AAA.toFixed(1));
+    }
 
     var draggerBox = this._colorDragElement.boxInWindow();
     var dragX = draggerBox.x + (draggerBox.width / 2);
     var dragY = draggerBox.y + (draggerBox.height / 2);
     var infoBox = info.boxInWindow();
-    if (infoBox.contains(dragX, dragY)) {
+    if (infoBox.contains(dragX, dragY) && info.offsetParent) {
       if (info.offsetWidth > ((info.offsetParent.offsetWidth / 2) - 10))
         info.classList.toggle('contrast-info-top');
       else
@@ -851,21 +972,30 @@ ColorPicker.Spectrum = class extends UI.VBox {
     }
   }
 
+  /**
+   * @param {!Event} event
+   */
+  _toggleContrastDetails(event) {
+    event.consume();
+    var details = this._contrastDetails;
+    details.classList.toggle('visible');
+    if (details.classList.contains('visible'))
+      this._toggleColorPicker(false);
+    else
+      this._toggleBackgroundColorPicker(false);
+  }
 
   _updateUI() {
     var h = Common.Color.fromHSVA([this._hsv[0], 1, 1, 1]);
     this._colorElement.style.backgroundColor = /** @type {string} */ (h.asString(Common.Color.Format.RGB));
     if (Runtime.experiments.isEnabled('colorContrastRatio')) {
-      if (this.dragWidth && this._contrastColor)
+      if (this.dragWidth && this._bgColor)
         this._setContrastInfoVisible(true);
       else
         this._setContrastInfoVisible(false);
     }
 
-    this._swatchInnerElement.style.backgroundColor =
-        /** @type {string} */ (this._color().asString(Common.Color.Format.RGBA));
-    // Show border if the swatch is white.
-    this._swatchInnerElement.classList.toggle('swatch-inner-white', this._color().hsla()[2] > 0.9);
+    this._swatch.setColor(this._color(), this.colorString());
     this._colorDragElement.style.backgroundColor =
         /** @type {string} */ (this._color().asString(Common.Color.Format.RGBA));
     var noAlpha = Common.Color.fromHSVA(this._hsv.slice(0, 3).concat(1));
@@ -970,6 +1100,39 @@ ColorPicker.Spectrum = class extends UI.VBox {
     var rgba = [rgbColor.r, rgbColor.g, rgbColor.b, (rgbColor.a / 2.55 | 0) / 100];
     var color = Common.Color.fromRGBA(rgba);
     this._innerSetColor(color.hsva(), '', undefined, ColorPicker.Spectrum._ChangeSource.Other);
+    InspectorFrontendHost.bringToFront();
+  }
+
+  /**
+   * @param {boolean=} enabled
+   */
+  _toggleBackgroundColorPicker(enabled) {
+    if (enabled === undefined) {
+      this._bgColorPicker.classList.toggle('active');
+      enabled = this._bgColorPicker.classList.contains('active');
+    } else {
+      this._bgColorPicker.classList.toggle('active', enabled);
+    }
+    UI.ARIAUtils.setPressed(this._bgColorPicker, enabled);
+
+    InspectorFrontendHost.setEyeDropperActive(enabled);
+    if (enabled) {
+      InspectorFrontendHost.events.addEventListener(
+          InspectorFrontendHostAPI.Events.EyeDropperPickedColor, this._bgColorPickedBound);
+    } else {
+      InspectorFrontendHost.events.removeEventListener(
+          InspectorFrontendHostAPI.Events.EyeDropperPickedColor, this._bgColorPickedBound);
+    }
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _bgColorPicked(event) {
+    var rgbColor = /** @type {!{r: number, g: number, b: number, a: number}} */ (event.data);
+    var rgba = [rgbColor.r, rgbColor.g, rgbColor.b, (rgbColor.a / 2.55 | 0) / 100];
+    var color = Common.Color.fromRGBA(rgba);
+    this._setBgColor(color);
     InspectorFrontendHost.bringToFront();
   }
 };
@@ -1124,4 +1287,52 @@ ColorPicker.Spectrum.MaterialPalette = {
   mutable: false,
   matchUserFormat: true,
   colors: Object.keys(ColorPicker.Spectrum.MaterialPaletteShades)
+};
+
+ColorPicker.Spectrum.Swatch = class {
+  /**
+   * @param {!Element} parentElement
+   * @param {string=} className
+   */
+  constructor(parentElement, className) {
+    /** @type {?string} */
+    this._colorString;
+
+    var swatchElement = parentElement.createChild('span', 'swatch');
+    if (className)
+      swatchElement.classList.add(className);
+    this._swatchInnerElement = swatchElement.createChild('span', 'swatch-inner');
+
+    this._swatchOverlayElement = swatchElement.createChild('span', 'swatch-overlay');
+    this._swatchOverlayElement.addEventListener('click', this._onCopyIconClick.bind(this));
+    this._swatchOverlayElement.addEventListener('mouseout', this._onCopyIconMouseout.bind(this));
+    this._swatchCopyIcon = UI.Icon.create('largeicon-copy', 'copy-color-icon');
+    this._swatchCopyIcon.title = Common.UIString('Copy color to clipboard');
+    this._swatchOverlayElement.appendChild(this._swatchCopyIcon);
+  }
+
+  /**
+   * @param {!Common.Color} color
+   * @param {string=} colorString
+   */
+  setColor(color, colorString) {
+    this._swatchInnerElement.style.backgroundColor =
+        /** @type {string} */ (color.asString(Common.Color.Format.RGBA));
+    // Show border if the swatch is white.
+    this._swatchInnerElement.classList.toggle('swatch-inner-white', color.hsla()[2] > 0.9);
+    this._colorString = colorString || null;
+    if (colorString)
+      this._swatchOverlayElement.hidden = false;
+    else
+      this._swatchOverlayElement.hidden = true;
+  }
+
+  _onCopyIconClick() {
+    this._swatchCopyIcon.setIconType('largeicon-checkmark');
+    InspectorFrontendHost.copyText(this._colorString);
+  }
+
+  _onCopyIconMouseout() {
+    this._swatchCopyIcon.setIconType('largeicon-copy');
+  }
 };

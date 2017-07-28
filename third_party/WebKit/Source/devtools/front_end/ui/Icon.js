@@ -119,6 +119,8 @@ UI.Icon.SpriteSheets = {
 UI.Icon.Descriptors = {
   'smallicon-bezier': {position: 'a5', spritesheet: 'smallicons', isMask: true},
   'smallicon-checkmark': {position: 'b5', spritesheet: 'smallicons'},
+  'smallicon-checkmark-square': {position: 'b6', spritesheet: 'smallicons'},
+  'smallicon-checkmark-behind': {position: 'd6', spritesheet: 'smallicons'},
   'smallicon-command-result': {position: 'a4', spritesheet: 'smallicons'},
   'smallicon-contrast-ratio': {position: 'a6', spritesheet: 'smallicons', isMask: true},
   'smallicon-cross': {position: 'b4', spritesheet: 'smallicons'},
@@ -129,6 +131,7 @@ UI.Icon.Descriptors = {
   'smallicon-info': {position: 'c3', spritesheet: 'smallicons'},
   'smallicon-inline-breakpoint-conditional': {position: 'd5', spritesheet: 'smallicons'},
   'smallicon-inline-breakpoint': {position: 'd4', spritesheet: 'smallicons'},
+  'smallicon-no': {position: 'c6', spritesheet: 'smallicons'},
   'smallicon-orange-ball': {position: 'd3', spritesheet: 'smallicons'},
   'smallicon-red-ball': {position: 'a2', spritesheet: 'smallicons'},
   'smallicon-shadow': {position: 'b2', spritesheet: 'smallicons', isMask: true},
