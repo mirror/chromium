@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61e647f4_3b78f428",
+        "filename": "chrome/browser/vr/vr_shell_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-28T14:23:06Z",
+      "side": 1,
+      "message": "This is broken but not hooked up yet.",
+      "range": {
+        "startLine": 990,
+        "startChar": 2,
+        "endLine": 990,
+        "endChar": 19
+      },
+      "revId": "6071a0a27ef52e956775b43eeeaf6e8690a1c46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
