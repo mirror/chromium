@@ -41,20 +41,8 @@
       /* Info button and dropdown. */
 
       #info-button {
-        /* Additional styles for unresolved <button>. */
-        background: none;
-        border: none;
         color: inherit;
-        height: 32px;
-        margin: 6px;
-        outline: none;
-        padding: 0;
-        width: 32px;
-      }
-
-      #info-button-icon {
-        height: 20px;
-        width: 20px;
+        margin: 4px;
       }
 
       #sync-notice {
@@ -92,7 +80,7 @@
           <button is="paper-icon-button-light" id="info-button"
               on-click="onInfoButtonTap_"
               aria-label="$i18n{hasSyncedResultsDescription}">
-            <iron-icon icon="history:info-outline" id="info-button-icon">
+            <iron-icon icon="history:info-outline">
             </iron-icon>
           </button>
         </template>
