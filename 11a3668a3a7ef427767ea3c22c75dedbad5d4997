@@ -22,6 +22,30 @@
       "revId": "11a3668a3a7ef427767ea3c22c75dedbad5d4997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c9a54b_8cd5d7d8",
+        "filename": "base/memory/discardable_shared_memory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-28T04:23:14Z",
+      "side": 1,
+      "message": "As I indicated in an earlier comment:\n\n\"\"\"\nHm. So the only edge case to think about is: What happens if one consumer of the shared memory unmaps without unlocking, but another consumer still wants to use the shared memory? The current code [not bothering to unlock] is probably a speed-optimization, at the cost of potential compatibility [the aforementioned case]. Since Chrome seems to not rely on this potential compatibility, I\u0027d just call this out explicitly in the header file [e.g. that unmapping won\u0027t unlock].\n\"\"\"",
+      "parentUuid": "b65ad726_aa6eb3db",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 52
+      },
+      "revId": "11a3668a3a7ef427767ea3c22c75dedbad5d4997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
