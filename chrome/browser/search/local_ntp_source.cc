@@ -15,12 +15,14 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/instant_io_context.h"
 #include "chrome/browser/search/local_files_ntp_source.h"
 #include "chrome/browser/search/local_ntp_js_integrity.h"
+#include "chrome/browser/search/local_ntp_voice_js_integrity.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_data.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_service.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_service_factory.h"
@@ -64,6 +66,11 @@ const char kOneGoogleBarEndOfBodyScriptFilename[] = "one-google/end-of-body.js";
 
 const char kIntegrityFormat[] = "integrity=\"sha256-%s\"";
 
+const char kVoiceSearchHelpLinkOpenTag[] =
+    "<a href=\"https://support.google.com/chrome/?p=ui_voice_search\" "
+    "target=\"_blank\">";
+const char kVoiceSearchHelpLinkCloseTag[] = "</a>";
+
 const struct Resource{
   const char* filename;
   int identifier;
@@ -71,9 +78,11 @@ const struct Resource{
 } kResources[] = {
     {kMainHtmlFilename, kLocalResource, "text/html"},
     {"local-ntp.js", IDR_LOCAL_NTP_JS, "application/javascript"},
+    {"voice-search.js", IDR_LOCAL_NTP_VOICE_JS, "application/javascript"},
     {kConfigDataFilename, kLocalResource, "application/javascript"},
     {kThemeCSSFilename, kLocalResource, "text/css"},
     {"local-ntp.css", IDR_LOCAL_NTP_CSS, "text/css"},
+    {"voice-search.css", IDR_LOCAL_NTP_VOICE_CSS, "text/css"},
     {"images/close_3_mask.png", IDR_CLOSE_3_MASK, "image/png"},
     {"images/ntp_default_favicon.png", IDR_NTP_DEFAULT_FAVICON, "image/png"},
     {kOneGoogleBarScriptFilename, kLocalResource, "text/javascript"},
@@ -95,6 +104,16 @@ void AddString(base::DictionaryValue* dictionary,
   dictionary->SetString(key, l10n_util::GetStringUTF16(resource_id));
 }
 
+// Adds a localized string keyed by resource id to the dictionary.
+void AddStringWithLink(base::DictionaryValue* dictionary,
+                       const std::string& key,
+                       int resource_id,
+                       const base::string16& openTag,
+                       const base::string16& closeTag) {
+  dictionary->SetString(
+      key, l10n_util::GetStringFUTF16(resource_id, openTag, closeTag));
+}
+
 // Populates |translated_strings| dictionary for the local NTP. |is_google|
 // indicates that this page is the Google local NTP.
 std::unique_ptr<base::DictionaryValue> GetTranslatedStrings(bool is_google) {
@@ -114,6 +133,34 @@ std::unique_ptr<base::DictionaryValue> GetTranslatedStrings(bool is_google) {
   if (is_google) {
     AddString(translated_strings.get(), "searchboxPlaceholder",
               IDS_GOOGLE_SEARCH_BOX_EMPTY_HINT);
+
+    // Voice Search
+    base::string16 voiceSearchHelpLinkOpenTag =
+        base::ASCIIToUTF16(kVoiceSearchHelpLinkOpenTag);
+    base::string16 voiceSearchHelpLinkCloseTag =
+        base::ASCIIToUTF16(kVoiceSearchHelpLinkCloseTag);
+    AddString(translated_strings.get(), "listening", IDS_NTP_VOICE_LISTENING);
+    AddString(translated_strings.get(), "ready", IDS_NTP_VOICE_READY);
+    AddString(translated_strings.get(), "noTranslation",
+              IDS_NTP_VOICE_NO_TRANSLATION);
+    AddString(translated_strings.get(), "waiting", IDS_NTP_VOICE_WAITING);
+    AddStringWithLink(translated_strings.get(), "audioError",
+                      IDS_NTP_VOICE_AUDIO_ERROR, voiceSearchHelpLinkOpenTag,
+                      voiceSearchHelpLinkCloseTag);
+    AddString(translated_strings.get(), "networkError",
+              IDS_NTP_VOICE_NETWORK_ERROR);
+    AddString(translated_strings.get(), "languageError",
+              IDS_NTP_VOICE_LANGUAGE_ERROR);
+    AddStringWithLink(translated_strings.get(), "permissionError",
+                      IDS_NTP_VOICE_PERMISSION_ERROR,
+                      voiceSearchHelpLinkOpenTag, voiceSearchHelpLinkCloseTag);
+    AddStringWithLink(translated_strings.get(), "noVoice",
+                      IDS_NTP_VOICE_NO_VOICE, voiceSearchHelpLinkOpenTag,
+                      voiceSearchHelpLinkCloseTag);
+    AddString(translated_strings.get(), "hotwordTooltip",
+              IDS_NTP_VOICE_HOTWORD_TOOLTIP);
+    AddString(translated_strings.get(), "fakeboxSpeechTooltip",
+              IDS_TOOLTIP_MIC_SEARCH);
   }
 
   return translated_strings;
@@ -124,6 +171,13 @@ std::string GetConfigData(bool is_google) {
   base::DictionaryValue config_data;
   config_data.Set("translatedStrings", GetTranslatedStrings(is_google));
   config_data.SetBoolean("isGooglePage", is_google);
+
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  bool isVoiceSearchEnabled =
+      command_line->HasSwitch(switches::kLocalNtpVoiceSearch);
+  config_data.SetBoolean("isVoiceSearchEnabled", isVoiceSearchEnabled);
+  // TODO(oskopek): isHotwordEnabled should be set appropriately.
+  config_data.SetBoolean("isHotwordEnabled", false);
 
   // Serialize the dictionary.
   std::string js_text;
@@ -322,7 +376,9 @@ void LocalNtpSource::StartDataRequest(
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kLocalNtpReload)) {
     if (stripped_path == "local-ntp.html" || stripped_path == "local-ntp.js" ||
-        stripped_path == "local-ntp.css") {
+        stripped_path == "local-ntp.css" ||
+        stripped_path == "voice-search.js" ||
+        stripped_path == "voice-search.css") {
       base::ReplaceChars(stripped_path, "-", "_", &stripped_path);
       local_ntp::SendLocalFileResource(stripped_path, callback);
       return;
@@ -344,6 +400,11 @@ void LocalNtpSource::StartDataRequest(
         base::StringPrintf(kIntegrityFormat, LOCAL_NTP_JS_INTEGRITY);
     base::ReplaceFirstSubstringAfterOffset(&html, 0, "{{LOCAL_NTP_INTEGRITY}}",
                                            local_ntp_integrity);
+
+    std::string local_ntp_voice_integrity =
+        base::StringPrintf(kIntegrityFormat, VOICE_SEARCH_JS_INTEGRITY);
+    base::ReplaceFirstSubstringAfterOffset(
+        &html, 0, "{{LOCAL_NTP_VOICE_INTEGRITY}}", local_ntp_voice_integrity);
     callback.Run(base::RefCountedString::TakeString(&html));
     return;
   }
@@ -419,11 +480,11 @@ std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
 #endif  // !defined(GOOGLE_CHROME_BUILD)
 
   return base::StringPrintf(
-      "script-src 'strict-dynamic' 'sha256-%s' 'sha256-%s';",
+      "script-src 'strict-dynamic' 'sha256-%s' 'sha256-%s' 'sha256-%s';",
       GetIntegritySha256Value(
           GetConfigData(default_search_provider_is_google_io_thread_))
           .c_str(),
-      LOCAL_NTP_JS_INTEGRITY);
+      LOCAL_NTP_JS_INTEGRITY, VOICE_SEARCH_JS_INTEGRITY);
 }
 
 std::string LocalNtpSource::GetContentSecurityPolicyChildSrc() const {

@@ -2,11 +2,31 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-input_path = "//chrome/browser/resources/local_ntp/local_ntp.js"
-header_path = "$target_gen_dir/local_ntp_js_integrity.h"
+local_ntp_resources = "//chrome/browser/resources/local_ntp"
 
 action("local_ntp_code_generate") {
   script = "tools/generate_integrity_header.py"
+  input_path = local_ntp_resources + "/local_ntp.js"
+  header_path = "$target_gen_dir/local_ntp_js_integrity.h"
+
+  inputs = [
+    input_path,
+  ]
+
+  outputs = [
+    header_path,
+  ]
+
+  args = [
+    rebase_path(input_path, root_build_dir),
+    rebase_path(header_path, root_build_dir),
+  ]
+}
+
+action("local_ntp_voice_code_generate") {
+  script = "tools/generate_integrity_header.py"
+  input_path = local_ntp_resources + "/voice_search.js"
+  header_path = "$target_gen_dir/local_ntp_voice_js_integrity.h"
 
   inputs = [
     input_path,
@@ -23,9 +43,11 @@ action("local_ntp_code_generate") {
 }
 
 source_set("generated") {
-  sources = get_target_outputs(":local_ntp_code_generate")
+  sources = get_target_outputs(":local_ntp_code_generate") +
+            get_target_outputs(":local_ntp_voice_code_generate")
 
   public_deps = [
     ":local_ntp_code_generate",
+    ":local_ntp_voice_code_generate",
   ]
 }
