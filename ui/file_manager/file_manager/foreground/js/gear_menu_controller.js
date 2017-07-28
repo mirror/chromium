@@ -104,7 +104,8 @@ GearMenuController.prototype.refreshRemainingSpace_ =
   // file systems.
   if (currentVolumeInfo.volumeType == VolumeManagerCommon.VolumeType.PROVIDED ||
       currentVolumeInfo.volumeType ==
-          VolumeManagerCommon.VolumeType.MEDIA_VIEW) {
+          VolumeManagerCommon.VolumeType.MEDIA_VIEW ||
+      currentVolumeInfo.volumeType == VolumeManagerCommon.VolumeType.RECENT) {
     this.gearMenu_.setSpaceInfo(null, false);
     return;
   }

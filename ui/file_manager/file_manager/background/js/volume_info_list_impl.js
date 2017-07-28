@@ -37,6 +37,7 @@ VolumeInfoListImpl.VOLUME_LIST_ORDER_ = [
   VolumeManagerCommon.VolumeType.REMOVABLE,
   VolumeManagerCommon.VolumeType.MTP,
   VolumeManagerCommon.VolumeType.PROVIDED,
+  VolumeManagerCommon.VolumeType.RECENT,
   VolumeManagerCommon.VolumeType.MEDIA_VIEW,
 ];
 
