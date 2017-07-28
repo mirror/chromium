@@ -289,6 +289,7 @@ const char* WebUILoginView::GetClassName() const {
 }
 
 void WebUILoginView::RequestFocus() {
+  LOG(ERROR) << "!! WebUILoginView::RequestFocus";
   web_view()->RequestFocus();
 }
 
@@ -418,6 +419,10 @@ void WebUILoginView::ChildPreferredSizeChanged(View* child) {
 }
 
 void WebUILoginView::AboutToRequestFocusFromTabTraversal(bool reverse) {
+  LOG(ERROR)
+      << "!! WebUILoginView::AboutToRequestFocusFromTabTraversal reverse="
+      << reverse;
+
   // Return the focus to the web contents.
   web_view()->web_contents()->FocusThroughTabTraversal(reverse);
   GetWidget()->Activate();
@@ -517,6 +522,9 @@ bool WebUILoginView::IsPopupOrPanel(const WebContents* source) const {
 }
 
 bool WebUILoginView::TakeFocus(content::WebContents* source, bool reverse) {
+  LOG(ERROR) << "!! WebUILoginView::TakeFocus reverse=" << reverse
+             << ", forward_keyboard_event_=" << forward_keyboard_event_;
+
   // In case of blocked UI (ex.: sign in is in progress)
   // we should not process focus change events.
   if (!forward_keyboard_event_)
@@ -566,6 +574,7 @@ bool WebUILoginView::PreHandleGestureEvent(
 }
 
 void WebUILoginView::OnFocusOut(bool reverse) {
+  LOG(ERROR) << "!! WebUILoginView::OnFocusOut reverse=" << reverse;
   AboutToRequestFocusFromTabTraversal(reverse);
 }
 

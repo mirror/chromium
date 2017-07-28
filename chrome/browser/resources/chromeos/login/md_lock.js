@@ -8,6 +8,24 @@
 
 // <include src="md_login_shared.js">
 
+
+
+function attachEvents() {
+  function detectFocus() {
+    console.error(
+        '!!!! detectFocus document.activeElement=' + document.activeElement,
+        document.activeElement);
+    var getStackTrace = function() {
+      var obj = {};
+      Error.captureStackTrace(obj, getStackTrace);
+      return obj.stack;
+    };
+    console.error(getStackTrace());
+  }
+  window.addEventListener('focus', detectFocus, true);
+}
+attachEvents();
+
 /**
  * Ensures that the pin keyboard is loaded.
  * @param {function()} onLoaded Callback run when the pin keyboard is loaded.
