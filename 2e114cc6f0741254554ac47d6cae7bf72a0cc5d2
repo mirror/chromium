@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eee52949_789079f5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-28T16:03:56Z",
+      "side": 1,
+      "message": "Does it make sense to also this OnContentScrollStart to be consistent with OnContentFlingStart?",
+      "revId": "2e114cc6f0741254554ac47d6cae7bf72a0cc5d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
