@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90aa078c_90e7c84d",
+        "filename": "services/device/serial/serial_device_enumerator_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-28T13:13:26Z",
+      "side": 1,
+      "message": "You\u0027re not using |runner_|, unless I\u0027m missing something?",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "5fb94bf7156a88cbfa72e5b734edd17e27545c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

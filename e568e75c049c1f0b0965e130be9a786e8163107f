@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "56fcea9a_56d17361",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-28T13:13:26Z",
+      "side": 1,
+      "message": "That definitely seems like a good change. That will test the extension API impl but not the Device Service itself. To start off, could we add a unittest of the Device Service that simply tests that on Linux/Mac/Windows you can connect to the serial interface (i.e., a test that requests the interface and then calls FlushForTesting() on the interface ptr to make sure that the connection was bound on the other side)? Then we\u0027ll have something in place to build on if/when we figure out how to add more robust tests.",
+      "parentUuid": "30e0ea6b_86617611",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca5defd_d65d8ea9",
         "filename": "services/device/serial/BUILD.gn",
         "patchSetId": 11
