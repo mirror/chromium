@@ -94,6 +94,9 @@ Output = function() {
    * @private
    */
   this.outputContextFirst_ = false;
+
+  /** @private {!Object<string, boolean>} */
+  this.suppressions_ = {};
 };
 
 /**
@@ -341,6 +344,7 @@ Output.RULES = {
     },
     inlineTextBox: {speak: '$name='},
     inputTime: {enter: '$nameFromNode $role $state $restriction $description'},
+    lineBreak: {speak: '$name='},
     link: {
       enter: '$nameFromNode= $role $state $restriction',
       speak: '$name $value $state $restriction ' +
@@ -596,6 +600,11 @@ Output.prototype = {
     return false;
   },
 
+  /** @return {Spannable} */
+  get braille() {
+    return this.mergeBraille_(this.brailleBuffer_);
+  },
+
   /**
    * Specify ranges for speech.
    * @param {!cursors.Range} range
@@ -712,6 +721,16 @@ Output.prototype = {
    */
   withContextFirst: function() {
     this.outputContextFirst_ = true;
+    return this;
+  },
+
+  /**
+   * Suppresses processing of a token for subsequent formatting commands.
+   * @param {string} token
+   * @return {Output}
+   */
+  suppress: function(token) {
+    this.suppressions_[token] = true;
     return this;
   },
 
@@ -925,6 +944,9 @@ Output.prototype = {
 
       // All possible tokens based on prefix.
       if (prefix == '$') {
+        if (this.suppressions_[token])
+          return;
+
         if (token == 'value') {
           var text = node.value || '';
           if (!node.state[StateType.EDITABLE] && node.name == text)
@@ -1393,11 +1415,16 @@ Output.prototype = {
         if (enterRole[formatNode.role])
           continue;
 
-        if (this.formatOptions_.braille)
+        var enterBlock = roleBlock.enter;
+        var enterFormat = enterBlock.speak ? enterBlock.speak : enterBlock;
+        if (this.formatOptions_.braille) {
           buff = [];
+          if (enterBlock.braille)
+            enterFormat = roleBlock.enter.braille;
+        }
 
         enterRole[formatNode.role] = true;
-        this.format_(formatNode, roleBlock.enter, buff, prevNode);
+        this.format_(formatNode, enterFormat, buff, prevNode);
 
         if (this.formatOptions_.braille && buff.length) {
           var nodeSpan = this.mergeBraille_(buff);
@@ -1426,10 +1453,13 @@ Output.prototype = {
     var roleBlock = eventBlock[node.role] || {};
     var parentRole = (Output.ROLE_INFO_[node.role] || {}).inherits;
     var parentRoleBlock = eventBlock[parentRole || ''] || {};
-    var speakFormat =
-        roleBlock.speak || parentRoleBlock.speak || eventBlock['default'].speak;
 
-    this.format_(node, speakFormat, buff, prevNode);
+    var format =
+        roleBlock.speak || parentRoleBlock.speak || eventBlock['default'].speak;
+    if (this.formatOptions_.braille)
+      format = roleBlock.braille || parentRoleBlock.braille || format;
+
+    this.format_(node, format, buff, prevNode);
 
     // Restore braille and add an annotation for this node.
     if (this.formatOptions_.braille) {
