@@ -40,6 +40,8 @@ public class TileView extends FrameLayout {
     private ImageView mIconView;
     private ImageView mBadgeView;
 
+    private @TileSource int mSource;
+
     /**
      * Constructor for inflating from XML.
      */
@@ -67,6 +69,7 @@ public class TileView extends FrameLayout {
     public void initialize(Tile tile, int titleLines, @Style int tileStyle) {
         mTitleView.setLines(titleLines);
         mUrl = tile.getUrl();
+        mSource = tile.getSource();
 
         Resources res = getResources();
 
@@ -108,6 +111,11 @@ public class TileView extends FrameLayout {
     /** @return The url associated with this view. */
     public String getUrl() {
         return mUrl;
+    }
+
+    /** @return The {@link TileSource} of the tile represented by this TileView */
+    public int getTileSource() {
+        return mSource;
     }
 
     /**
