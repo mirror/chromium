@@ -62,6 +62,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
     auto* context = new FrameFetchContext(loader, nullptr);
     return ResourceFetcher::Create(context, context->GetTaskRunner());
   }
+  // Used for creating a FrameFetchContext for an imported Document.
+  // |document_loader_| will be set to nullptr.
   static ResourceFetcher* CreateFetcherFromDocument(Document* document) {
     auto* context = new FrameFetchContext(nullptr, document);
     return ResourceFetcher::Create(context, context->GetTaskRunner());
@@ -166,10 +168,9 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   FrameFetchContext(DocumentLoader*, Document*);
 
-  // m_documentLoader is null when loading resources from an HTML import
-  // and in such cases we use the document loader of the importing frame.
   // Convenient accessors below can be used to transparently access the
   // relevant document loader or frame in either cases without null-checks.
+  //
   // TODO(kinuko): Remove constness, these return non-const members.
   DocumentLoader* MasterDocumentLoader() const;
   LocalFrame* GetFrame() const;
@@ -185,8 +186,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   bool AllowScriptFromSource(const KURL&) const override;
   SubresourceFilter* GetSubresourceFilter() const override;
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override;
-  void DispatchDidBlockRequest(const ResourceRequest&,
-                               const FetchInitiatorInfo&,
+  void DispatchDidBlockRequest(const ResourceRequest& const FetchInitiatorInfo&,
                                ResourceRequestBlockedReason) const override;
   bool ShouldBypassMainWorldCSP() const override;
   bool IsSVGImageChromeClient() const override;
