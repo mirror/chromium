@@ -176,7 +176,10 @@ class CC_EXPORT GLRenderer : public DirectRenderer {
       const FilterOperations& background_filters,
       ScopedResource* background_texture,
       const gfx::RectF& rect,
-      const gfx::RectF& unclipped_rect);
+      const gfx::RectF& unclipped_rect,
+      SkIPoint* offset,
+      SkIRect* subset,
+      bool flip_texture);
 
   const TileDrawQuad* CanPassBeDrawnDirectly(const RenderPass* pass) override;
 

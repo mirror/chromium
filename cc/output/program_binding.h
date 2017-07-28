@@ -243,6 +243,9 @@ class Program : public ProgramBindingBase {
   int backdrop_rect_location() const {
     return fragment_shader_.backdrop_rect_location_;
   }
+  int original_backdrop_rect_location() const {
+    return fragment_shader_.original_backdrop_rect_location_;
+  }
   int original_backdrop_location() const {
     return fragment_shader_.original_backdrop_location_;
   }
