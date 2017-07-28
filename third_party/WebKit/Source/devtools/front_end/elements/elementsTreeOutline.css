@@ -67,12 +67,56 @@
     z-index: -1;
 }
 
-.elements-disclosure li.hovered:not(.selected) .selection {
+.elements-disclosure li.hovered:not(.selected) .selection,
+.elements-disclosure li.expanded.has-flagged-children.hovered:not(.selected) .selection {
     display: block;
     left: 3px;
     right: 3px;
     background-color: rgba(56, 121, 217, 0.1);
+    opacity: 1;
     border-radius: 5px;
+}
+
+.elements-disclosure li.expanded.has-flagged-children:not(.selected) .selection {
+  display: none;
+}
+
+.elements-disclosure li.has-flagged-children:not(.selected) .selection {
+  opacity: 0.5;
+}
+
+.elements-disclosure li.error:not(.selected) .selection {
+  display: block;
+  background-color: hsl(0, 100%, 97%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.error:not(.selected) .selection {
+  background-color: hsl(0, 100%, 24%);
+}
+
+.elements-disclosure li.hovered.error:not(.selected) .selection {
+  background-color: hsl(0, 100%, 92%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.hovered.error:not(.selected) .selection {
+  background-color: hsl(0, 100%, 27%);
+}
+
+.elements-disclosure li.warning:not(.selected) .selection {
+  display: block;
+  background-color: hsl(50, 100%, 95%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.warning:not(.selected) .selection {
+  background-color: hsl(50, 100%, 25%);
+}
+
+.elements-disclosure li.hovered.warning:not(.selected) .selection {
+  background-color: hsl(50, 100%, 85%);
+}
+
+:host-context(.-theme-with-dark-background) .elements-disclosure li.hovered.warning:not(.selected) .selection {
+  background-color: hsl(50, 100%, 28%);
 }
 
 .elements-disclosure li.parent.expanded::before {
@@ -224,6 +268,125 @@ button, input, select {
     opacity: 0.5;
 }
 
+.elements-disclosure ol li .element-flag {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  min-height: 14px;
+  padding: 1px 4px 0 20px;
+  color: #222 !important;
+  font-family: sans-serif;
+}
+
+.elements-disclosure ol li.selected .element-flag {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.error .element-flag, .element-flag-additional.error {
+  background-color: hsl(0, 100%, 92%);
+}
+
+.warning .element-flag, .element-flag-additional.warning {
+  background-color: hsl(50, 100%, 85%);
+}
+
+.elements-disclosure ol li .element-flag::before {
+  content: "";
+  display: block;
+  position: absolute;
+  margin-top: -1px;
+  right: 100%;
+  border: 7px solid transparent;
+  border-left: none;
+}
+
+.elements-disclosure ol li.error .element-flag::before {
+  border-right-color: hsl(0, 100%, 92%);
+}
+
+.elements-disclosure ol li.warning .element-flag::before {
+  border-right-color: hsl(50, 100%, 85%);
+}
+
+.element-flag .element-icon {
+  position: absolute;
+  top: 1.5px;
+  left: 4px;
+}
+
+.element-flag-additional .element-icon {
+  top: 2.5px;
+}
+
+.elements-disclosure ol li .element-flag .element-icon-count {
+  position: relative;
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 14px;
+  background-color: hsla(0, 0%, 0%, 0.3);
+  cursor: pointer;
+  color: #fff;
+  pointer-events: auto;
+  float: right;
+}
+
+.elements-disclosure ol li .element-flag .element-icon-count:hover {
+  background-color: hsla(0, 0%, 0%, 0.4);
+}
+
+.elements-disclosure ol li.selected .element-flag .element-icon-count.open {
+  color: transparent !important;
+}
+
+.elements-disclosure ol li.selected .element-flag .element-icon-count.open::before {
+  display: block;
+  position: absolute;
+  content: "\25B2";
+  width: 100%;
+  top: 0;
+  left: 0;
+  line-height: 12px;
+  text-align: center;
+  color: #fff;
+  font-size: 9px;
+}
+
+.elements-disclosure ol li .element-flag .element-flags-additional {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.elements-disclosure ol li .element-flag .element-flag-additional:last-of-type {
+  border-bottom-left-radius: 4px;
+}
+
+.elements-disclosure ol li.selected .element-flag .element-icon-count.open + .element-flags-additional {
+  height: auto;
+}
+
+.elements-disclosure ol li .element-flag .element-flags-additional .element-flag-additional {
+  position: relative;
+  padding: 2px 4px;
+  text-indent: 16px;
+}
+
+.placeholder-attribute {
+  position: relative;
+  padding: 0 4px;
+  top: 0.5px;
+  border: 1px solid hsla(205, 75%, 80%, 1);
+  border-radius: 4px;
+  background-color: hsla(205, 75%, 90%, 1);
+  color: #222 !important;
+  font-family: sans-serif;
+}
+
 .add-attribute {
     margin-left: 1px;
     margin-right: 1px;
@@ -331,10 +494,6 @@ ol li.selected:focus .webkit-html-attribute-name {
 }
 
 /** Guide line */
-li.selected {
-    z-index: 0;
-}
-
 li.hovered:not(.always-parent) + ol.children, .elements-tree-outline ol.shadow-root, li.selected:not(.always-parent) + ol.children {
     margin-left: 5px;
     -webkit-padding-start: 6px;
