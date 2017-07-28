@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1b48502_dd90b9c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-28T17:54:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aaf12bf_561aa4e6",
+      "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4bb1b77_4e11dc1b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a4e492e6_7791328f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-28T17:54:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4bb1b77_4e11dc1b",
+      "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d568bc7d_16f31746",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe69de14_df4871ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-28T17:54:32Z",
+      "side": 1,
+      "message": "We also used it in WebappActivity.java, for now it shouldn\u0027t be null, but it\u0027s a static function and we may use it somewhere later.",
+      "parentUuid": "d568bc7d_16f31746",
+      "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
