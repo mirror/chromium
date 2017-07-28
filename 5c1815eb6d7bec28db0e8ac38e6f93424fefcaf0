@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "a4cc38c2_1c54fb82",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-28T13:37:48Z",
+      "side": 1,
+      "message": "Don\u0027t we need logic to reset first_Title_updated_after_backgrounded_reported back to false once a window is made visible? Each time the tab spends in the background is a separate period of observation.",
+      "revId": "5c1815eb6d7bec28db0e8ac38e6f93424fefcaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ae9901_195d0b96",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-28T13:37:48Z",
+      "side": 1,
+      "message": "Send another update and don\u0027t expect another observation?",
+      "range": {
+        "startLine": 132,
+        "startChar": 39,
+        "endLine": 132,
+        "endChar": 40
+      },
+      "revId": "5c1815eb6d7bec28db0e8ac38e6f93424fefcaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8deabec5_76a3b6e0",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 1
