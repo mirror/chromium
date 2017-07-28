@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "362c86a8_33dd5b91",
+        "filename": "chrome/browser/profiles/off_the_record_profile_io_data.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T15:02:20Z",
+      "side": 0,
+      "message": "This isn\u0027t the default (no cache seems to be), so is this being changed because you no longer expect things to go through here but rather through the service?",
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
