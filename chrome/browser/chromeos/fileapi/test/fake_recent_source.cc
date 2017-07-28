@@ -17,14 +17,17 @@ namespace chromeos {
 class FakeRecentSource::FakeRecentFile : public RecentFile {
  public:
   FakeRecentFile(SourceType source_type,
-                 const std::string& file_name,
+                 const std::string& original_file_name,
                  const std::string& unique_id,
-                 const base::File::Info& file_info);
+                 int64_t size);
   ~FakeRecentFile() override;
 
   std::unique_ptr<FakeRecentFile> Clone() const;
 
   // RecentFile overrides:
+  void GetFileInfo(int fields,
+                   storage::FileSystemContext* file_system_context,
+                   const GetFileInfoCallback& callback) override;
   std::unique_ptr<storage::FileStreamReader> CreateFileStreamReader(
       int64_t offset,
       int64_t max_bytes_to_read,
@@ -32,22 +35,37 @@ class FakeRecentSource::FakeRecentFile : public RecentFile {
       storage::FileSystemContext* file_system_context) override;
 
  private:
+  int64_t size_;
+
   DISALLOW_COPY_AND_ASSIGN(FakeRecentFile);
 };
 
 FakeRecentSource::FakeRecentFile::FakeRecentFile(
     SourceType source_type,
-    const std::string& file_name,
+    const std::string& original_file_name,
     const std::string& unique_id,
-    const base::File::Info& file_info)
-    : RecentFile(source_type, file_name, unique_id, file_info) {}
+    int64_t size)
+    : RecentFile(source_type, original_file_name, unique_id), size_(size) {}
 
 FakeRecentSource::FakeRecentFile::~FakeRecentFile() = default;
 
 std::unique_ptr<FakeRecentSource::FakeRecentFile>
 FakeRecentSource::FakeRecentFile::Clone() const {
-  return base::MakeUnique<FakeRecentFile>(source_type(), file_name(),
-                                          unique_id(), file_info());
+  return base::MakeUnique<FakeRecentFile>(source_type(), original_file_name(),
+                                          unique_id(), size_);
+}
+
+void FakeRecentSource::FakeRecentFile::GetFileInfo(
+    int fields,
+    storage::FileSystemContext* file_system_context,
+    const GetFileInfoCallback& callback) {
+  base::File::Info info;
+  if ((fields & storage::FileSystemOperation::GET_METADATA_FIELD_SIZE) != 0)
+    info.size = size_;
+  if ((fields &
+       storage::FileSystemOperation::GET_METADATA_FIELD_IS_DIRECTORY) != 0)
+    info.is_directory = false;
+  callback.Run(base::File::FILE_OK, info);
 }
 
 std::unique_ptr<storage::FileStreamReader>
@@ -65,17 +83,11 @@ FakeRecentSource::FakeRecentSource(RecentFile::SourceType source_type)
 
 FakeRecentSource::~FakeRecentSource() = default;
 
-void FakeRecentSource::AddFile(const std::string& file_name,
+void FakeRecentSource::AddFile(const std::string& original_file_name,
                                const std::string& unique_id,
-                               int64_t size,
-                               const base::Time& last_modified_time) {
-  base::File::Info file_info;
-  file_info.size = size;
-  file_info.is_directory = false;
-  file_info.last_modified = file_info.last_accessed = file_info.creation_time =
-      last_modified_time;
+                               int64_t size) {
   canned_files_.emplace_back(base::MakeUnique<FakeRecentFile>(
-      source_type_, file_name, unique_id, file_info));
+      source_type_, original_file_name, unique_id, size));
 }
 
 void FakeRecentSource::GetRecentFiles(RecentContext context,

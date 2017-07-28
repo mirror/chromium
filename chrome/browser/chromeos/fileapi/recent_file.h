@@ -10,7 +10,6 @@
 #include <memory>
 #include <string>
 
-#include "base/files/file.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "storage/browser/fileapi/async_file_util.h"
@@ -36,6 +35,12 @@ class RecentFile {
 
   virtual ~RecentFile();
 
+  // Returns a file metadata.
+  // See AsyncFileUtil::GetFileInfo() for details.
+  virtual void GetFileInfo(int fields,
+                           storage::FileSystemContext* file_system_context,
+                           const GetFileInfoCallback& callback) = 0;
+
   // Returns a FileStreamReader for this file.
   // See FileSystemBackend::CreateFileStreamReader() for details.
   virtual std::unique_ptr<storage::FileStreamReader> CreateFileStreamReader(
@@ -47,33 +52,25 @@ class RecentFile {
   // Returns the source type of this file.
   SourceType source_type() const { return source_type_; }
 
-  // Returns the file name in the source file system.
+  // Returns the original file name in the source file system.
   // This name must conform to Chrome OS file name restrictions, e.g. must not
   // contain slashes.
-  // Note that this might not be a file name appearing in Recent file system
-  // due to file name conflicts. In such cases, this will differ from the
-  // corresponding base::FilePath key in RecentModel::FilesMap.
-  const std::string& file_name() const { return file_name_; }
+  const std::string& original_file_name() const { return original_file_name_; }
 
   // Returns the unique ID of this file.
   // This value should be unique within the source file system. This value will
   // be used to track files across multiple queries to sources.
   const std::string& unique_id() const { return unique_id_; }
 
-  // Metadata of this file.
-  const base::File::Info& file_info() const { return file_info_; }
-
  protected:
   RecentFile(SourceType source_type,
-             const std::string& file_name,
-             const std::string& unique_id,
-             const base::File::Info& file_info);
+             const std::string& original_file_name,
+             const std::string& unique_id);
 
  private:
   const SourceType source_type_;
-  const std::string file_name_;
+  const std::string original_file_name_;
   const std::string unique_id_;
-  const base::File::Info file_info_;
 
   DISALLOW_COPY_AND_ASSIGN(RecentFile);
 };

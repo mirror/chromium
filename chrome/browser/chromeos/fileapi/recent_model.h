@@ -16,15 +16,16 @@
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/fileapi/recent_file.h"
 
-class Profile;
+namespace base {
+
+class TimeTicks;
+
+}  // namespace base
 
 namespace chromeos {
 
 class RecentContext;
 class RecentSource;
-
-// The maximum number of files from single source.
-extern const size_t kMaxFilesFromSingleSource;
 
 // Provides the logical list of files in Recent file system.
 //
@@ -37,8 +38,7 @@ class RecentModel {
   using GetFilesMapCallback =
       base::OnceCallback<void(const FilesMap& files_map)>;
 
-  RecentModel(std::vector<std::unique_ptr<RecentSource>> sources,
-              size_t max_files_from_single_source);
+  explicit RecentModel(std::vector<std::unique_ptr<RecentSource>> sources);
   ~RecentModel();
 
   // Creates a model with default sources.
@@ -53,22 +53,19 @@ class RecentModel {
                    GetFilesMapCallback callback);
 
  private:
-  struct PerProfileState;
+  struct Identity;
+  struct State;
   class FilesMapBuilder;
 
   void OnFilesMapBuilderDone(std::unique_ptr<FilesMapBuilder> builder,
-                             Profile* profile,
+                             const Identity& identity,
+                             base::TimeTicks build_time,
                              FilesMap files_map);
-
-  void ClearCache(Profile* profile);
 
   const std::vector<std::unique_ptr<RecentSource>> sources_;
 
-  // This should be kMaxFilesFromSingleSource except for unit tests.
-  const size_t max_files_from_single_source_;
-
-  // Per-profile states. See comments at definitions of PerProfileState.
-  std::map<Profile*, PerProfileState> states_;
+  // Per-identity states. See comments at definitions of Identity and State.
+  std::map<Identity, State> states_;
 
   base::WeakPtrFactory<RecentModel> weak_ptr_factory_;
 

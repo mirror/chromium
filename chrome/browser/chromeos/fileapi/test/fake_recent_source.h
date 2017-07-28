@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/time/time.h"
 #include "chrome/browser/chromeos/fileapi/recent_file.h"
 #include "chrome/browser/chromeos/fileapi/recent_source.h"
 #include "storage/browser/fileapi/file_system_url.h"
@@ -28,10 +27,9 @@ class FakeRecentSource : public RecentSource {
   ~FakeRecentSource() override;
 
   // Add a file to the canned set.
-  void AddFile(const std::string& file_name,
+  void AddFile(const std::string& original_file_name,
                const std::string& unique_id,
-               int64_t size,
-               const base::Time& last_modified_time);
+               int64_t size);
 
   // RecentSource overrides:
   void GetRecentFiles(RecentContext context,

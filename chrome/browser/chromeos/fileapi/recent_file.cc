@@ -11,13 +11,11 @@ using content::BrowserThread;
 namespace chromeos {
 
 RecentFile::RecentFile(SourceType source_type,
-                       const std::string& file_name,
-                       const std::string& unique_id,
-                       const base::File::Info& file_info)
+                       const std::string& original_file_name,
+                       const std::string& unique_id)
     : source_type_(source_type),
-      file_name_(file_name),
-      unique_id_(unique_id),
-      file_info_(file_info) {}
+      original_file_name_(original_file_name),
+      unique_id_(unique_id) {}
 
 RecentFile::~RecentFile() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
