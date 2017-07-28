@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57847db_b5dba6cf",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-28T15:18:26Z",
+      "side": 1,
+      "message": "prefer COUNT_1M instead of this macro. Although may want to give a different max, depending on what you expect to be a reasonable cap/overflow.",
+      "revId": "ad3b6c2b4d8ec1e688e0a6d537470acbaf9d0322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd16c00_fabee3b2",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-28T15:18:26Z",
+      "side": 1,
+      "message": "similar - does this need to measure up to 1M?",
+      "range": {
+        "startLine": 458,
+        "startChar": 2,
+        "endLine": 458,
+        "endChar": 22
+      },
+      "revId": "ad3b6c2b4d8ec1e688e0a6d537470acbaf9d0322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
