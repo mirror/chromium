@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06222628_dc3b3265",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-28T00:59:49Z",
+      "side": 1,
+      "message": "nit: the cast shouldn\u0027t be necessary.",
+      "range": {
+        "startLine": 184,
+        "startChar": 66,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "09711325374f828b62bc15b4687d262d325cbbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db003d6f_21dd0fe9",
+        "filename": "components/cast_channel/cast_socket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-28T00:59:49Z",
+      "side": 1,
+      "message": "The behavior is slightly different than before; we are now changing |error_state_| in these cases. Could you verify that this change won\u0027t result in regression?",
+      "range": {
+        "startLine": 234,
+        "startChar": 40,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "09711325374f828b62bc15b4687d262d325cbbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
