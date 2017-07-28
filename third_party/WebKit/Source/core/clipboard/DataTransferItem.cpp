@@ -82,7 +82,7 @@ void DataTransferItem::getAsString(ScriptState* script_state,
   TaskRunnerHelper::Get(TaskType::kUserInteraction, script_state)
       ->PostTask(BLINK_FROM_HERE,
                  WTF::Bind(&DataTransferItem::RunGetAsStringTask,
-                           WrapPersistent(this), WrapPersistent(context),
+                           WrapPersistent(this), WrapWeakPersistent(context),
                            WrapPersistent(callback), item_->GetAsString()));
 }
 
