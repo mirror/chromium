@@ -52,6 +52,24 @@
       "revId": "44e052aad58e4bc8d87e8db2ed3beae3f8aa7c69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e514fb7_80f4125b",
+        "filename": "ios/testing/earl_grey/matchers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-28T00:07:56Z",
+      "side": 1,
+      "message": "You\u0027re right Mike, thanks for catching it! I tried grey_kindOfClass(UIButton) and it didn\u0027t work, so I was assuming ButtonWithAccessibilityLabel won\u0027t work, I didnt realize ButtonWithAccessibilityLabel is not implemented on grey_kindOfClass(UIButton).",
+      "parentUuid": "2285717e_41f5ae5f",
+      "revId": "44e052aad58e4bc8d87e8db2ed3beae3f8aa7c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
