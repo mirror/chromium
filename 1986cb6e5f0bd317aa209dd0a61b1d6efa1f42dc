@@ -16,6 +16,24 @@
       "revId": "1986cb6e5f0bd317aa209dd0a61b1d6efa1f42dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3e4ab6_5318294b",
+        "filename": "chrome/browser/ui/search/instant_search_prerenderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-28T15:43:33Z",
+      "side": 1,
+      "message": "It was not required to make the tests pass when I ran them locally, but since tests may run in the same process with other tests and they modify a static variable, I thought it is safer to restore this state. Still not sure it will help this hypothetical scenario because I am not sure whether we always run fixture destructors.\n\nMakeUnique/reset in SetUp()/TearDown() would be more reliable. I can change to that, and even remove it if you think it does not make sense. WDYT?",
+      "parentUuid": "5952c24e_022e99e7",
+      "revId": "1986cb6e5f0bd317aa209dd0a61b1d6efa1f42dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
