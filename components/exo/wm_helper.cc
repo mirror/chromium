@@ -5,6 +5,8 @@
 #include "components/exo/wm_helper.h"
 
 #include "base/memory/ptr_util.h"
+#include "ui/aura/client/drag_drop_delegate.h"
+#include "ui/base/dragdrop/drag_drop_types.h"
 
 namespace exo {
 namespace {
@@ -14,7 +16,24 @@ WMHelper* g_instance = nullptr;
 ////////////////////////////////////////////////////////////////////////////////
 // WMHelper, public:
 
-WMHelper::WMHelper() {}
+class WMHelper::ExoDragDropDelegate : public aura::client::DragDropDelegate {
+ public:
+  void OnDragEntered(const ui::DropTargetEvent& event) override {
+    WMHelper::GetInstance()->NotifyDragEntered(event);
+  }
+
+  int OnDragUpdated(const ui::DropTargetEvent& event) override {
+    return WMHelper::GetInstance()->NotifyDragUpdated(event);
+  }
+
+  void OnDragExited() override { WMHelper::GetInstance()->NotifyDragExited(); }
+
+  int OnPerformDrop(const ui::DropTargetEvent& event) override {
+    return WMHelper::GetInstance()->NotifyPerformDrop(event);
+  }
+};
+
+WMHelper::WMHelper() : drag_drop_delegate_(new ExoDragDropDelegate()) {}
 
 WMHelper::~WMHelper() {}
 
@@ -86,6 +105,18 @@ void WMHelper::RemoveDisplayConfigurationObserver(
   display_config_observers_.RemoveObserver(observer);
 }
 
+void WMHelper::AddDragDropObserver(DragDropObserver* observer) {
+  drag_drop_observers_.AddObserver(observer);
+}
+
+void WMHelper::RemoveDragDropObserver(DragDropObserver* observer) {
+  drag_drop_observers_.RemoveObserver(observer);
+}
+
+aura::client::DragDropDelegate* WMHelper::drag_drop_delegate() const {
+  return drag_drop_delegate_.get();
+}
+
 void WMHelper::NotifyWindowActivated(aura::Window* gained_active,
                                      aura::Window* lost_active) {
   for (ActivationObserver& observer : activation_observers_)
@@ -138,4 +169,28 @@ void WMHelper::NotifyDisplayConfigurationChanged() {
     observer.OnDisplayConfigurationChanged();
 }
 
+void WMHelper::NotifyDragEntered(const ui::DropTargetEvent& event) {
+  for (DragDropObserver& observer : drag_drop_observers_)
+    observer.OnDragEntered(event);
+}
+
+int WMHelper::NotifyDragUpdated(const ui::DropTargetEvent& event) {
+  int valid_operation = ui::DragDropTypes::DRAG_NONE;
+  for (DragDropObserver& observer : drag_drop_observers_)
+    valid_operation = valid_operation | observer.OnDragUpdated(event);
+  return valid_operation;
+}
+
+void WMHelper::NotifyDragExited() {
+  for (DragDropObserver& observer : drag_drop_observers_)
+    observer.OnDragExited();
+}
+
+int WMHelper::NotifyPerformDrop(const ui::DropTargetEvent& event) {
+  for (DragDropObserver& observer : drag_drop_observers_)
+    observer.OnPerformDrop(event);
+  // TODO(hirono): Return the correct result instead of always returning
+  // DRAG_MOVE.
+  return ui::DragDropTypes::DRAG_MOVE;
+}
 }  // namespace exo

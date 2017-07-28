@@ -27,6 +27,7 @@
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/aura/client/aura_constants.h"
+#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_targeter.h"
@@ -196,6 +197,8 @@ Surface::Surface() : window_(new aura::Window(new CustomWindowDelegate(this))) {
   aura::Env::GetInstance()->context_factory()->AddObserver(this);
   layer_tree_frame_sink_holder_ = base::MakeUnique<LayerTreeFrameSinkHolder>(
       this, window_->CreateLayerTreeFrameSink());
+  aura::client::SetDragDropDelegate(
+      window_.get(), WMHelper::GetInstance()->drag_drop_delegate());
 }
 
 Surface::~Surface() {
@@ -226,6 +229,8 @@ Surface::~Surface() {
   // that they have been cancelled.
   for (const auto& presentation_callback : swapped_presentation_callbacks_)
     presentation_callback.Run(base::TimeTicks(), base::TimeDelta());
+
+  aura::client::SetDragDropDelegate(window_.get(), nullptr);
 }
 
 // static
