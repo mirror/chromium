@@ -17,6 +17,8 @@
 #include "components/omnibox/browser/autocomplete_match_type.h"
 #include "components/omnibox/browser/vector_icons.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_features.h"
+#include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "url/gurl.h"
 #include "url/url_canon.h"
@@ -144,8 +146,7 @@ OmniboxResult::OmniboxResult(Profile* profile,
   }
 }
 
-OmniboxResult::~OmniboxResult() {
-}
+OmniboxResult::~OmniboxResult() = default;
 
 void OmniboxResult::Open(int event_flags) {
   RecordHistogram(OMNIBOX_SEARCH_RESULT);
@@ -173,6 +174,11 @@ void OmniboxResult::UpdateIcon() {
       is_bookmarked ? omnibox::kStarIcon
                     : AutocompleteMatch::TypeToVectorIcon(match_.type);
   SetIcon(gfx::CreateVectorIcon(icon, 16, app_list::kIconColor));
+  if (AutocompleteMatch::IsDomainIconType(match_.type)) {
+    SetIcon(gfx::CreateVectorIcon(kIcDomainIcon, 18, app_list::kIconColor));
+  } else if (AutocompleteMatch::IsSearchIconType(match_.type)) {
+    SetIcon(gfx::CreateVectorIcon(kIcSearchIcon, 18, app_list::kIconColor));
+  }
 }
 
 void OmniboxResult::UpdateTitleAndDetails() {
