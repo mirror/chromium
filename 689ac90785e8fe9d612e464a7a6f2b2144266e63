@@ -123,6 +123,30 @@
       "revId": "689ac90785e8fe9d612e464a7a6f2b2144266e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f0f1ef_a528c7d9",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T21:14:00Z",
+      "side": 1,
+      "message": "\u003e I share your concern on consistency. Although, IMHO in general we should try to avoid runtime overhead when possible since, well, it\u0027s resource coordination :)\n\u003e \n\u003e My bikeshed suggestion would be, if we indeed need to combine information from multiple CUs, then let\u0027s have a method like CalculateEQT or something like that; if we will always use same value the process cu has, then just add an argument.\n\u003e \n\u003e I will leave it to you to decide.\n\nThe reason I don\u0027t care much about the perf overhead here is that GRC input/output path are mojo IPCs, which is much longer than doing a traversal.\n\nI thought more about this. I think I will insist on removing the passed-in value and have a CalculateEQT function. Think about the following case:\n- a tab has two frames, one main frame and one child frame\n- main frame belongs to process 1\n- child frame belongs to process 2\n\nNow both processes want to set EQT. Which process\u0027s EQT should be used? Maybe the max of the two? I don\u0027t have the answer here. But the question shows that it is not as simple as just using the same value. Forcing the TabCU to traverse the CU graph can also help people think about the relationship deeper.",
+      "parentUuid": "d72de860_2b6d264b",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "689ac90785e8fe9d612e464a7a6f2b2144266e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
