@@ -623,10 +623,29 @@ Console.ConsoleView = class extends UI.VBox {
    */
   _tryToCollapseMessages(lastMessage, viewMessage) {
     var timestampsShown = this._timestampsSetting.get();
-    if (!timestampsShown && viewMessage && !lastMessage.consoleMessage().isGroupMessage() &&
-        lastMessage.consoleMessage().isEqual(viewMessage.consoleMessage())) {
-      viewMessage.incrementRepeatCount();
-      return true;
+    if (!timestampsShown && viewMessage && !lastMessage.consoleMessage().isGroupMessage()) {
+      var a = lastMessage.consoleMessage();
+      var b = viewMessage.consoleMessage();
+      if (a.messageText === 'Message' && b.messageText === 'Message') {
+        this.debug = this.debug || [];
+        var entry = ['#Found Message'];
+        entry.push('#stacks equal? ' + a._isEqualStackTraces(a.stackTrace, b.stackTrace));
+        entry.push('#has params? ' + !!a.parameters);
+        if (a.parameters) {
+          entry.push('#param.length? ' + a.parameters.length === b.parameters.length);
+          for (var i = 0; i < a.parameters.length; ++i) {
+            entry.push('#param i' + i + '? ' + a.parameters[i].type + ', sub ' + a.parameters[i].subtype);
+            entry.push('#paramtype i' + i + '? ' + a.parameters[i].type + ' !== ' + b.parameters[i].type + '||' +
+            a.parameters[i].value + '!==' + b.parameters[i].value + '||' +
+            a.parameters[i].description + '!==' + b.parameters[i].description);
+          }
+        }
+        this.debug.push(entry);
+      }
+      if (a.isEqual(b)) {
+        viewMessage.incrementRepeatCount();
+        return true;
+      }
     }
 
     return false;
