@@ -62,6 +62,48 @@ void WaitForSignalTask(WorkerThread* worker_thread,
   waitable_event->Wait();
 }
 
+void DidCreateNestedWorkerThread(
+    std::unique_ptr<WorkerThreadForTest> child_worker_thread,
+    std::unique_ptr<MockWorkerReportingProxy> reporting_proxy) {
+  DCHECK(IsMainThread());
+  child_worker_thread->Terminate();
+  child_worker_thread->WaitForShutdownForTesting();
+  EXPECT_EQ(ExitCode::kGracefullyTerminated,
+            child_worker_thread->GetExitCodeForTesting());
+  testing::ExitRunLoop();
+}
+
+void CreateNestedWorkerThreadTask(WorkerThread* parent_worker_thread) {
+  DCHECK(parent_worker_thread->IsCurrentThread());
+
+  auto reporting_proxy = WTF::MakeUnique<MockWorkerReportingProxy>();
+  EXPECT_CALL(*reporting_proxy, DidCreateWorkerGlobalScope(_)).Times(1);
+  EXPECT_CALL(*reporting_proxy, DidInitializeWorkerContext()).Times(1);
+  EXPECT_CALL(*reporting_proxy, WillEvaluateWorkerScriptMock(_, _)).Times(1);
+  EXPECT_CALL(*reporting_proxy, DidEvaluateWorkerScript(true)).Times(1);
+  EXPECT_CALL(*reporting_proxy, WillDestroyWorkerGlobalScope()).Times(1);
+  EXPECT_CALL(*reporting_proxy, DidTerminateWorkerThread()).Times(1);
+
+  // Start a new WorkerThread on non-main thread.
+  auto child_worker_thread =
+      WTF::MakeUnique<WorkerThreadForTest>(nullptr, *reporting_proxy);
+  RefPtr<SecurityOrigin> security_origin =
+      SecurityOrigin::Create(KURL(kParsedURLString, "http://fake.url/"));
+  child_worker_thread->StartWithSourceCode(security_origin.Get(),
+                                           "//fake source code",
+                                           ParentFrameTaskRunners::Create());
+  child_worker_thread->WaitForInit();
+
+  // Pass the child worker thread to the main thread because thread termination
+  // needs to be started on the main thread.
+  parent_worker_thread->GetParentFrameTaskRunners()
+      ->Get(TaskType::kUnspecedTimer)
+      ->PostTask(BLINK_FROM_HERE,
+                 CrossThreadBind(&DidCreateNestedWorkerThread,
+                                 WTF::Passed(std::move(child_worker_thread)),
+                                 WTF::Passed(std::move(reporting_proxy))));
+}
+
 }  // namespace
 
 class WorkerThreadTest : public ::testing::Test {
@@ -383,6 +425,28 @@ TEST_F(WorkerThreadTest, Terminate_WhileDebuggerTaskIsRunning) {
 
   // Resume the debugger task. Shutdown starts after that.
   waitable_event.Signal();
+  worker_thread_->WaitForShutdownForTesting();
+  EXPECT_EQ(ExitCode::kGracefullyTerminated, GetExitCode());
+}
+
+TEST_F(WorkerThreadTest, NestedWorkerThread) {
+  ExpectReportingCalls();
+  Start();
+
+  // Wait until the initialization completes and the worker thread becomes
+  // idle.
+  worker_thread_->WaitForInit();
+
+  TaskRunnerHelper::Get(TaskType::kUnspecedTimer, worker_thread_.get())
+      ->PostTask(BLINK_FROM_HERE,
+                 CrossThreadBind(&CreateNestedWorkerThreadTask,
+                                 CrossThreadUnretained(worker_thread_.get())));
+  testing::EnterRunLoop();
+
+  // The worker thread is not being blocked, so the worker thread should be
+  // gracefully shut down.
+  worker_thread_->Terminate();
+  EXPECT_TRUE(IsForcibleTerminationTaskScheduled());
   worker_thread_->WaitForShutdownForTesting();
   EXPECT_EQ(ExitCode::kGracefullyTerminated, GetExitCode());
 }

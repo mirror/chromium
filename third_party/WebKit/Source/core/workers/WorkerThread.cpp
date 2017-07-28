@@ -55,6 +55,7 @@
 #include "platform/scheduler/child/webthread_impl_for_worker_scheduler.h"
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/Atomics.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/PtrUtil.h"
@@ -68,6 +69,8 @@ namespace blink {
 using ExitCode = WorkerThread::ExitCode;
 
 namespace {
+
+static int g_next_worker_thread_id = 0;
 
 // TODO(nhiroki): Adjust the delay based on UMA.
 constexpr TimeDelta kForcibleTerminationDelay = TimeDelta::FromSeconds(2);
@@ -86,10 +89,9 @@ static Mutex& ThreadSetMutex() {
 }
 
 static int GetNextWorkerThreadId() {
-  DCHECK(IsMainThread());
-  static int next_worker_thread_id = 1;
-  CHECK_LT(next_worker_thread_id, std::numeric_limits<int>::max());
-  return next_worker_thread_id++;
+  int worker_thread_id = AtomicIncrement(&g_next_worker_thread_id);
+  CHECK_LT(worker_thread_id, std::numeric_limits<int>::max());
+  return worker_thread_id;
 }
 
 WorkerThread::~WorkerThread() {
@@ -278,7 +280,7 @@ unsigned WorkerThread::WorkerThreadCount() {
 }
 
 HashSet<WorkerThread*>& WorkerThread::WorkerThreads() {
-  DCHECK(IsMainThread());
+  // TODO(nhiroki): Make this thread-safe.
   DEFINE_STATIC_LOCAL(HashSet<WorkerThread*>, threads, ());
   return threads;
 }
@@ -328,7 +330,6 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
           new WaitableEvent(WaitableEvent::ResetPolicy::kManual,
                             WaitableEvent::InitialState::kNonSignaled))),
       worker_thread_lifecycle_context_(new WorkerThreadLifecycleContext) {
-  DCHECK(IsMainThread());
   MutexLocker lock(ThreadSetMutex());
   WorkerThreads().insert(this);
   interface_provider_.Forward(

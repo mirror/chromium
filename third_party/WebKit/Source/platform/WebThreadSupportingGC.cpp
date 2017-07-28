@@ -38,7 +38,9 @@ WebThreadSupportingGC::WebThreadSupportingGC(const char* name,
     owning_thread_ = Platform::Current()->CreateThread(name);
     thread_ = owning_thread_.get();
   }
-  MemoryCoordinator::RegisterThread(thread_);
+  // TODO(nhiroki): Post a task to register the thread if we're not on the main
+  // thread. RegisterThread() needs to be called on the main thread.
+  //  MemoryCoordinator::RegisterThread(thread_);
 }
 
 WebThreadSupportingGC::~WebThreadSupportingGC() {
