@@ -62,6 +62,7 @@ QuickViewUma.VolumeType = [
   VolumeManagerCommon.VolumeType.PROVIDED,
   VolumeManagerCommon.VolumeType.MTP,
   VolumeManagerCommon.VolumeType.MEDIA_VIEW,
+  VolumeManagerCommon.VolumeType.RECENT,
 ];
 
 /**
