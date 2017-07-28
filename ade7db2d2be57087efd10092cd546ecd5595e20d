@@ -565,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "d4f31c61_079a7a67",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T09:41:14Z",
+      "side": 1,
+      "message": "So, IIUC we could still deduplicate without source, but after a refresh the order of deduplication could be different, and that\u0027s the problem, right?\n\nActually this problem will still exist even with source_type. If after refresh a new duplicated file appears on the first source, then files with the same name from another source will change name. Also, opening a duplicated file will likely cause reordering in recents, so the duplicated file names will keep changing suffixes. Is my understanding right?",
+      "parentUuid": "a41217f7_d45d2dcd",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b789658_fa97951f",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -861,6 +885,30 @@
       "side": 1,
       "message": "Anyway deleting State is not very difficult so I implemented it.",
       "parentUuid": "cdf2a0cb_6fbc08b9",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd12dc61_b2a4d140",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T09:41:14Z",
+      "side": 1,
+      "message": "SGTM, thx.",
+      "parentUuid": "8f355661_35476498",
       "range": {
         "startLine": 235,
         "startChar": 25,
