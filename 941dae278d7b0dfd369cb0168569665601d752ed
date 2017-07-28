@@ -34,6 +34,24 @@
       "revId": "941dae278d7b0dfd369cb0168569665601d752ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797c95c3_a75c7978",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3485,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-28T14:48:32Z",
+      "side": 0,
+      "message": "if the relevant tests just don\u0027t fail / don\u0027t exist, that\u0027s cool.  but, i\u0027m curious to know why it was added, and what tests (used to) fail without it.  maybe they\u0027re disabled for unrelated reasons, which would make it harder to re-enable them.\n\nthe blame layer isn\u0027t helping me to figure that out, though, since the line has been re-indented since it was originally added.  will need to use actual git (tm).",
+      "parentUuid": "518d84e2_b9ca2f0a",
+      "revId": "941dae278d7b0dfd369cb0168569665601d752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
