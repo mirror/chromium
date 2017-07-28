@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d93b102f_9d655c53",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-28T20:56:41Z",
+      "side": 1,
+      "message": "In the Java implementation we only generate a new sensor value when the accelerometer reading changes while this code will generate a new value for each update from either sensor. I think this change is undesirable.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 55
+      },
+      "revId": "ac711fe0be1bb199dcb2527b88bb29b569467736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c55962_ebbcc040",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-28T20:56:41Z",
+      "side": 1,
+      "message": "This with be a bit less verbose if we put the list of source sensor types into the fusion algorithm class. Does this make sense?",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 94
+      },
+      "revId": "ac711fe0be1bb199dcb2527b88bb29b569467736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e773af2_9efdbdfe",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-28T20:56:41Z",
+      "side": 1,
+      "message": "This branch discards |sensor| only to recreate it when fetching the source sensor type. Can we reuse it?",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "ac711fe0be1bb199dcb2527b88bb29b569467736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
