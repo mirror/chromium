@@ -31,8 +31,8 @@ source_set("network_sources") {
   sources = [
     "cache_url_loader.cc",
     "cache_url_loader.h",
-    "network_context.cc",
-    "network_context.h",
+    "network_context_impl.cc",
+    "network_context_impl.h",
     "network_service_impl.cc",
     "network_service_impl.h",
     "network_service_url_loader_factory_impl.cc",

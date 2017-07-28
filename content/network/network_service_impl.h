@@ -23,6 +23,7 @@ class URLRequestContextBuilder;
 namespace content {
 
 class NetworkContext;
+class NetworkContextImpl;
 
 class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                                           public NetworkService {
@@ -42,8 +43,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
 
   // These are called by NetworkContexts as they are being created and
   // destroyed.
-  void RegisterNetworkContext(NetworkContext* network_context);
-  void DeregisterNetworkContext(NetworkContext* network_context);
+  void RegisterNetworkContext(NetworkContextImpl* network_context);
+  void DeregisterNetworkContext(NetworkContextImpl* network_context);
 
   // mojom::NetworkService implementation:
   void CreateNetworkContext(mojom::NetworkContextRequest request,
@@ -69,7 +70,7 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   // can be cleaned up when the NetworkService goes away. This is needed as
   // NetworkContexts share global state with the NetworkService, so must be
   // destroyed first.
-  std::set<NetworkContext*> network_contexts_;
+  std::set<NetworkContextImpl*> network_contexts_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkServiceImpl);
 };
