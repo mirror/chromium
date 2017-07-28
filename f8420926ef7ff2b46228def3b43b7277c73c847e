@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c14dfecc_a08d16af",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-28T01:04:52Z",
+      "side": 1,
+      "message": "FYI, from test HTTPSOCSPTest.Revoked:\n\n10.12:\ntrust_result\u003dkSecTrustResultRecoverableTrustFailure\nSecTrustGetCssmResultCode\u003d-2147409652 (CSSMERR_TP_CERT_REVOKED)\nchain_info[0].NumStatusCodes is 1, chain_info[0].StatusBits is 4\nchain_info[0].StatusCodes[0] is -2147409652 (CSSMERR_TP_CERT_REVOKED)\nchain_info[1].NumStatusCodes is 0, chain_info[1].StatusBits is 24\n\n\n10.9:\ntrust_result\u003dkSecTrustResultRecoverableTrustFailure\nSecTrustGetCssmResultCode\u003d-2147408861 (revocation check not successful for each cert)\nchain_info[0].NumStatusCodes is 1, chain_info[0].StatusBits is 4\nchain_info[0].StatusCodes[0] is -2147409652 (CSSMERR_TP_CERT_REVOKED)\nchain_info[1].NumStatusCodes is 0, chain_info[1].StatusBits is 24",
+      "range": {
+        "startLine": 102,
+        "startChar": 31,
+        "endLine": 102,
+        "endChar": 39
+      },
+      "revId": "f8420926ef7ff2b46228def3b43b7277c73c847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

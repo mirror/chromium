@@ -70,6 +70,30 @@
       "revId": "55d8278732571995f1d9262e27fb188e4de0b433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0c677b_a516bd18",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-28T01:04:52Z",
+      "side": 1,
+      "message": "Figured as much. It was nice to dream about being able to remove it :)\n\nI changed the test from IsAtLeastOS10_12 to IsOS10_12, there don\u0027t seem to be functions for more precise os version testing that that.",
+      "parentUuid": "1bacb0c5_ae411cec",
+      "range": {
+        "startLine": 937,
+        "startChar": 32,
+        "endLine": 937,
+        "endChar": 48
+      },
+      "revId": "55d8278732571995f1d9262e27fb188e4de0b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
