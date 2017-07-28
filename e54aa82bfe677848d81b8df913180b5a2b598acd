@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd75c07c_8151ebe2",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T15:23:02Z",
+      "side": 1,
+      "message": "Please make the final testing. Add logging of |field-\u003eusername_vote_type()| to the console and test two user flow:\n1. Credentials reuse.\n2. Username override. \n\nMake sure you run chrome with flag \"--password-store\u003dbasic\"\n\nDoes Chrome output correct username vote type?",
+      "range": {
+        "startLine": 1098,
+        "startChar": 8,
+        "endLine": 1098,
+        "endChar": 72
+      },
+      "revId": "e54aa82bfe677848d81b8df913180b5a2b598acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
