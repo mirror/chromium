@@ -107,8 +107,7 @@ void ProximityAuthProfilePrefManager::AddOrUpdateDevice(
 
   DictionaryPrefUpdate remote_ble_devices_update(
       pref_service_, prefs::kProximityAuthRemoteBleDevices);
-  remote_ble_devices_update->SetStringWithoutPathExpansion(bluetooth_address,
-                                                           public_key);
+  remote_ble_devices_update->SetKey(bluetooth_address, base::Value(public_key));
 }
 
 bool ProximityAuthProfilePrefManager::RemoveDeviceWithAddress(

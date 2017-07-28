@@ -315,11 +315,6 @@ class BASE_EXPORT DictionaryValue : public Value {
   Value* SetIntegerWithoutPathExpansion(StringPiece path, int in_value);
   // DEPRECATED, use Value::SetKey(path, Value(double)) instead.
   Value* SetDoubleWithoutPathExpansion(StringPiece path, double in_value);
-  // DEPRECATED, use Value::SetKey(path, Value(string)) instead.
-  Value* SetStringWithoutPathExpansion(StringPiece path, StringPiece in_value);
-  // DEPRECATED, use Value::SetKey(path, Value(string16)) instead.
-  Value* SetStringWithoutPathExpansion(StringPiece path,
-                                       const string16& in_value);
   // DEPRECATED, use Value::SetKey(path, Value(Type::DICTIONARY)) instead.
   DictionaryValue* SetDictionaryWithoutPathExpansion(
       StringPiece path,

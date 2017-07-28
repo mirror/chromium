@@ -414,8 +414,8 @@ void UserManagerBase::SaveUserDisplayName(const AccountId& account_id,
     if (!IsUserNonCryptohomeDataEphemeral(account_id)) {
       DictionaryPrefUpdate display_name_update(GetLocalState(),
                                                kUserDisplayName);
-      display_name_update->SetStringWithoutPathExpansion(
-          account_id.GetUserEmail(), display_name);
+      display_name_update->SetKey(account_id.GetUserEmail(),
+                                  base::Value(display_name));
     }
   }
 }
@@ -444,8 +444,8 @@ void UserManagerBase::SaveUserDisplayEmail(const AccountId& account_id,
     return;
 
   DictionaryPrefUpdate display_email_update(GetLocalState(), kUserDisplayEmail);
-  display_email_update->SetStringWithoutPathExpansion(account_id.GetUserEmail(),
-                                                      display_email);
+  display_email_update->SetKey(account_id.GetUserEmail(),
+                               base::Value(display_email));
 }
 
 std::string UserManagerBase::GetUserDisplayEmail(
@@ -487,8 +487,8 @@ void UserManagerBase::UpdateUserAccountData(
     user->set_given_name(given_name);
     if (!IsUserNonCryptohomeDataEphemeral(account_id)) {
       DictionaryPrefUpdate given_name_update(GetLocalState(), kUserGivenName);
-      given_name_update->SetStringWithoutPathExpansion(
-          account_id.GetUserEmail(), given_name);
+      given_name_update->SetKey(account_id.GetUserEmail(),
+                                base::Value(given_name));
     }
   }
 
