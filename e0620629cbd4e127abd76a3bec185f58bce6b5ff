@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dddfef57_801a5234",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "It appears that I accidentally added this. Will be removed.",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "733d7374_29e56336",
         "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 8
@@ -13,6 +30,24 @@
       "writtenOn": "2017-07-28T17:31:36Z",
       "side": 1,
       "message": "Sanity check: why is this true?  When is frame_connector_ null? Is it only during destruction?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862490ee_7223d155",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "It returns true because we cannot determine otherwise (given that |frame_connector_| is nullptr). This won\u0027t change the current way things work (i.e., create RWHVCF and then call Show).\n\nI also investigated |frame_connector_| \u003d\u003d nullptr and found that when we navigate an \u003ciframe\u003e to cross-origin:\n1- NavigatorImpl::OnBeginNavigation will eventually call RenderFrameHostManager::CreateRenderFrame which then creates RWHVCF.\n\n2- NavigatorImpl::DidNavigate calls RenderFrameHostManager::CommitPending which then calls RWHVCF::Show (at this point |frame_connector_| is still nullptr.\n\n2- Within the same task, RenderFrameHostManager::CommitPending will call RenderFrameHostManager::SwapOutOldFrame which then creates a RenderFrameProxyHost and a CrossProcessFrameConnector.\n\nStep 2 will lead to a crash if we do not check it here.",
+      "parentUuid": "733d7374_29e56336",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "6bd1777e_641a3fe6",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad7f21a5_22b051f9",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a884747_7354debb",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -47,6 +100,24 @@
       "writtenOn": "2017-07-28T17:31:36Z",
       "side": 1,
       "message": "Would TestTimeouts::tiny_timeout() make sense here?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc6ecc5_549eaa5e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7114,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Yes. Thanks for reminding me!",
+      "parentUuid": "9a884747_7354debb",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "9136e8aa_2106d77b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7150,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Yes. Thanks!",
+      "parentUuid": "b2fcc824_5a61cb6c",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e96a76_79423c8b",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -87,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "39464acc_3f512d59",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7159,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Ack. Thanks! Removed both occurrences.",
+      "parentUuid": "e5e96a76_79423c8b",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b08b0d2b_5f5dab0f",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -98,6 +205,24 @@
       "writtenOn": "2017-07-28T17:31:36Z",
       "side": 1,
       "message": "RenderFrameHostCreatedObserver might be cleaner to wait for this.  There\u0027s an example on line 2709.",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a407a6_276bea8b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7175,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Uh I did not find it for some reason! Thanks! I was using the loop only to avoid writing a new observer class.",
+      "parentUuid": "b08b0d2b_5f5dab0f",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "cabc88ea_a0c2c9d0",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7213,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "033b1c65_73ab0d2d",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8a61566_b63f7019",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -132,6 +275,24 @@
       "writtenOn": "2017-07-28T17:31:36Z",
       "side": 1,
       "message": "I\u0027m a bit confused by this check.  If it checks that the two child frames have roughly the same count, then what if the first frame has received 20 frames and the second has received 1 frame -  the ratio will be 20 and it will still pass this check, no?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8a82fb_ec3818f8",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7217,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Thanks. I think more than checking \"the frames have roughly the same count\" I was trying to show that before hiding, frame 1 has a \"sufficiently large count\" where large is defined as not being much smaller than the count for frame 2.\n\nBut that being said I can add another check to makes sure the ratio is not too high. This is outside the scope of what we are testing but still harmless to add (and might be useful in case a weird case of 20 / 1 happens).\n\nAlso, I will change line 7212 to use second counter instead to make sure division by zero never occurs.",
+      "parentUuid": "e8a61566_b63f7019",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "cd3bd512_6c751d46",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7226,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "It could be, but it will require casting to RenderWidgetHostImpl.",
+      "parentUuid": "78d37d75_b0fb7628",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "366aa1cd_1fa31394",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -166,6 +345,24 @@
       "writtenOn": "2017-07-28T17:31:36Z",
       "side": 1,
       "message": "Would it be worth verifying first_child_view-\u003eFrameConnectorForTesting()-\u003eis_hidden() here?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50eb40c4_da841f95",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7233,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Good idea! It will at least make the test expectations for understandable.",
+      "parentUuid": "366aa1cd_1fa31394",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "d1ea9557_2e33189c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7234,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "To accommodate that, I could either make 1) CanBecomeVisible() public, 2) Expose a test version of it, 3) Make this test friend with RWHVCF. I am trying option 1 in the new patch. WDYT?",
+      "parentUuid": "7e9069c8_200f7025",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66d0e923_c108a1c6",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -206,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "48547681_cee77f4d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7256,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66d0e923_c108a1c6",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97240d94_78f3218d",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -217,6 +450,24 @@
       "writtenOn": "2017-07-28T17:31:36Z",
       "side": 1,
       "message": "This needs to come before the ExecuteScript, otherwise there could be a race.  (Even though the RFH changes, this should be ok to use, as it looks up the WebContents and FTN ID at construction time and doesn\u0027t use the RFH thereafter.)",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478a19dd_00fb991f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7299,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Acknowledged. I don\u0027t think I meant to put it after running the scripts. This seems like a mistake.",
+      "parentUuid": "97240d94_78f3218d",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "4d792d6b_425cd26e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7319,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Ideally it should be zero. But I doubt it might be flaky. I found out that we call RenderWidgetHostViewChildFrame::Show when it is created and right before we set its |frame_connector_|. That call may schedule (at least one) compositor frame.",
+      "parentUuid": "f3e30537_27f58256",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d73c00a_d2aaee3b",
         "filename": "content/test/data/counter.html",
         "patchSetId": 8
@@ -251,6 +520,24 @@
       "writtenOn": "2017-07-28T17:31:36Z",
       "side": 1,
       "message": "nit: s/Couting/Counting/",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254ecceb_ba69b863",
+        "filename": "content/test/data/counter.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-07-28T21:37:42Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "1d73c00a_d2aaee3b",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
