@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "00ee607e_21cec434",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45788561_e0df1bc8",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e8f12f_24c3fbaa",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 1
@@ -89,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5448b23c_80a0c005",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "note to self to handle devices that dont support any styli :P",
+      "parentUuid": "e4bf20df_ba3de73b",
+      "range": {
+        "startLine": 485,
+        "startChar": 18,
+        "endLine": 485,
+        "endChar": 41
+      },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55f579c1_b9e2b966",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 1
@@ -106,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "e95637e4_86e25c38",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f579c1_b9e2b966",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14f08527_d8d05bc2",
         "filename": "ash/system/palette/palette_tray.h",
         "patchSetId": 1
@@ -120,6 +180,24 @@
       "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f17267_b2320f36",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "it\u0027s not a boolean without a ! or two",
+      "parentUuid": "14f08527_d8d05bc2",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "cc8be94b_3c93f09d",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98f0628c_66fd27cf",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 17
+      },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "041c0791_3061b1ee",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 1
@@ -181,6 +283,24 @@
       "writtenOn": "2017-07-28T19:01:12Z",
       "side": 1,
       "message": "Where is this initialized before? (ie, you used the word again)",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a916e045_985e7692",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "I believe in AshTestBase when the shelf and status area stuff is created, but i didn\u0027t did into.",
+      "parentUuid": "041c0791_3061b1ee",
       "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -201,6 +321,24 @@
       "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8c8f04_56d9d762",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da5f9d54_5d86098b",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +373,24 @@
       "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b8398f_64f987d5",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T21:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "940e5111_17214e84",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
