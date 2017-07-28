@@ -1,0 +1,318 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f1b42ed_dec98c00",
+        "filename": "content/browser/cache_storage/cache_storage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "sort alphabetically.",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "530e6c46_2eb0a6b7",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "This is just a raw pointer, so no std::move.",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5b11c6c_c20e6ada",
+        "filename": "content/browser/cache_storage/cache_storage_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "Wouldn\u0027t hurt to DCHECK(!ContainsValue(observers_, observer));",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d90e14d_6652a561",
+        "filename": "content/browser/cache_storage/cache_storage_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "I\u0027d delete the explicit empty check for simplicity. I don\u0027t think it buys us anything performance-wise.",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "699f8e92_e4307adf",
+        "filename": "content/browser/cache_storage/cache_storage_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "I think that you probably want to do:\n\n  cache_storage-\u003ecache_storage_manager_ \u003d nullptr;\n\n(or equivalent) because I think it might be possible for this manager to be delete while the DeleteOriginDidClose is still in a message queue. See if Michael/Daniel agrees.",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59becfe3_bb91fd9d",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "No need to initialize cache_storage_observer_ to null, the default constructor does that for you.",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 29
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a674942_49baed3d",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "Just do:\n\n  if (cache_storage_observer_)",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e670178c_cfac5843",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "Will this work?\n\n  frontend_ \u003d base::MakeUnique\u003cStorage::Frontend\u003e(dispatcher-\u003echannel());",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04449d5_15066aa2",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "Prefer this:\n\ncache_storage_observer_ \u003d base::MakeUnique\u003cCacheStorageObserver\u003e(\n  ptr_factory_.GetWeakPtr(),\n  host_-\u003eGetProcess()-\u003eGetStoragePartition()-\u003eGetCacheStorageContext());\n\nAlso, have this function return a `CacheStorageObserver*`, so that above you can just do:\n\nGetCacheStorageObserver()-\u003eUntrackOrigin(url::Origin(origin_url));",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c1f6470_e0649d42",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "DCHECK(!base::ContainsValue(origin));",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa64081b_cf827abf",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "use base::ContainsValue().",
+      "range": {
+        "startLine": 286,
+        "startChar": 17,
+        "endLine": 286,
+        "endChar": 25
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11e78443_e983fd5b",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "use base::ContainsValue().",
+      "range": {
+        "startLine": 293,
+        "startChar": 17,
+        "endLine": 293,
+        "endChar": 25
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9f0e42e_223b4ea7",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "base::ContainsValue()",
+      "range": {
+        "startLine": 305,
+        "startChar": 17,
+        "endLine": 305,
+        "endChar": 25
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df6284b5_90f63906",
+        "filename": "content/public/browser/cache_storage_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "space before {}",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92afc6ca_0a01023b",
+        "filename": "content/public/browser/cache_storage_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "Why virtual?",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a64ac93_051c3967",
+        "filename": "content/public/browser/cache_storage_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-28T20:48:00Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(Observer);",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
