@@ -25,6 +25,8 @@ import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.webapk.lib.client.WebApkVersion;
 
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * WebApkUpdateManager manages when to check for updates to the WebAPK's Web Manifest, and sends
@@ -32,6 +34,8 @@ import java.util.Map;
  */
 public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     private static final String TAG = "WebApkUpdateManager";
+
+    private static final int UPDATE_TIMEOUT_MILLISECONDS = 1000 * 60 * 3; // 3 min
 
     /**
      * Number of times to wait for updating the WebAPK after it is moved to the background prior
@@ -58,6 +62,9 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     private final WebappDataStorage mStorage;
 
     private WebApkUpdateDataFetcher mFetcher;
+
+    /** Run failure handler if Webapk update is not scheduled wthin deadline. */
+    private Timer mUpdateTimer;
 
     /**
      * Contains all the data which is cached for a pending update request once the WebAPK is no
@@ -97,6 +104,13 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
 
         mFetcher = buildFetcher();
         mFetcher.start(tab, mInfo, this);
+        mUpdateTimer = new Timer();
+        mUpdateTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                onWebManifestForInitialUrlNotWebApkCompatible();
+            }
+        }, UPDATE_TIMEOUT_MILLISECONDS);
     }
 
     /**
@@ -221,6 +235,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     protected void scheduleUpdate(WebApkInfo info, byte[] serializedProto) {
         int numberOfUpdateRequests = mStorage.getUpdateRequests();
         boolean forceUpdateNow =  numberOfUpdateRequests >= MAX_UPDATE_ATTEMPTS;
+        if (mUpdateTimer != null) mUpdateTimer.cancel();
         if (!isInForeground() || forceUpdateNow) {
             updateAsync(info, serializedProto);
             WebApkUma.recordUpdateRequestSent(WebApkUma.UPDATE_REQUEST_SENT_FIRST_TRY);
