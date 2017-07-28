@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df1b3a06_8ed9fbff",
+        "filename": "content/renderer/dom_serializer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-28T18:53:44Z",
+      "side": 1,
+      "message": "nit:\n    serialized_contents_.append(segment, segment_size);\n?",
+      "revId": "26d6f7552fee057f802106f380a2b002487fcefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fede4fc2_ec64d3a2",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4760,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-28T18:53:44Z",
+      "side": 1,
+      "message": "to minimize reallocations, I would write this as\n\n  std::string serialized_contents;\n  serialized_contents.reserve(data.size());\n  data.ForEachSegment([...](...) {\n    serialized_contents.append(segment, segment_size);\n    return true;\n  });",
+      "range": {
+        "startLine": 4754,
+        "startChar": 0,
+        "endLine": 4760,
+        "endChar": 5
+      },
+      "revId": "26d6f7552fee057f802106f380a2b002487fcefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9c45c6_b976a50b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4762,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-28T18:53:44Z",
+      "side": 1,
+      "message": "nit: std::move(serialized_contents)",
+      "range": {
+        "startLine": 4762,
+        "startChar": 19,
+        "endLine": 4762,
+        "endChar": 38
+      },
+      "revId": "26d6f7552fee057f802106f380a2b002487fcefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91ac143_d00f021e",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameSerializerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-28T18:53:44Z",
+      "side": 1,
+      "message": "Since we start with contiguous source data, I don\u0027t think WebData/SharedBuffer is a particularly good fit.  Unlike (Web)CString, which allocates one exactly-sized block, this will internally break the storage into 4k segments \u003d\u003e more allocations, inexact sizing (allocated mem is effectively rounded up to multiple of 4k), and awkward/segment-based access.\n\nIs there any drawback to using WebVector here also?",
+      "revId": "26d6f7552fee057f802106f380a2b002487fcefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
