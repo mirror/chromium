@@ -92,9 +92,15 @@ struct PageLoadTiming {
   // future.
   mojo.common.mojom.Time navigation_start;
 
-  // Time relative to navigation_start that the first byte of the response is
-  // received.
+  // Time relative to navigation_start to various stages of response processing.
+  mojo.common.mojom.TimeDelta? domain_lookup_start;
+  mojo.common.mojom.TimeDelta? domain_lookup_end;
+  mojo.common.mojom.TimeDelta? connect_start;
+  mojo.common.mojom.TimeDelta? connect_end;
+  mojo.common.mojom.TimeDelta? request_start;
   mojo.common.mojom.TimeDelta? response_start;
+  mojo.common.mojom.TimeDelta? response_end;
+
   DocumentTiming document_timing;
   PaintTiming paint_timing;
   ParseTiming parse_timing;

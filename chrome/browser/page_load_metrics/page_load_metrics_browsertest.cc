@@ -257,6 +257,66 @@ class PageLoadMetricsWaiter
 
 using TimingField = PageLoadMetricsWaiter::TimingField;
 
+// Waits until nonzero loading metrics have been produced. See the
+// LoadingMetrics test, below.
+class LoadingMetricsWaiter
+    : public page_load_metrics::MetricsWebContentsObserver::TestingObserver {
+ public:
+  explicit LoadingMetricsWaiter(content::WebContents* web_contents)
+      : TestingObserver(web_contents), weak_factory_(this) {}
+
+  // Waits for loading metrics to be updated. If they aren't updated as
+  // expected, the test will hang.
+  void Wait() {
+    if (saw_timing_)
+      return;
+    run_loop_ = base::MakeUnique<base::RunLoop>();
+    run_loop_->Run();
+    run_loop_ = nullptr;
+  }
+
+  // Notifcation from the MetricsObserver that timing has been received.
+  void OnTimingUpdated(const page_load_metrics::mojom::PageLoadTiming& timing) {
+    if (saw_timing_)
+      return;
+    if (run_loop_ && timing.domain_lookup_start && timing.domain_lookup_end &&
+        timing.request_start && timing.response_start && timing.response_end) {
+      saw_timing_ = true;
+      run_loop_->Quit();
+    }
+  }
+
+ private:
+  class MetricsObserver : public page_load_metrics::PageLoadMetricsObserver {
+   public:
+    // We use a WeakPtr to the PageLoadMetricsWaiter because |waiter| can be
+    // destroyed before this WaiterMetricsObserver.
+    explicit MetricsObserver(base::WeakPtr<LoadingMetricsWaiter> waiter)
+        : waiter_(waiter) {}
+
+    void OnTimingUpdate(
+        bool is_subframe,
+        const page_load_metrics::mojom::PageLoadTiming& timing,
+        const page_load_metrics::PageLoadExtraInfo& extra_info) override {
+      if (waiter_)
+        waiter_->OnTimingUpdated(timing);
+    }
+
+   private:
+    const base::WeakPtr<LoadingMetricsWaiter> waiter_;
+  };
+
+  void OnCommit(page_load_metrics::PageLoadTracker* tracker) override {
+    tracker->AddObserver(
+        base::MakeUnique<MetricsObserver>(weak_factory_.GetWeakPtr()));
+  }
+
+  std::unique_ptr<base::RunLoop> run_loop_;
+  bool saw_timing_ = false;
+
+  base::WeakPtrFactory<LoadingMetricsWaiter> weak_factory_;
+};
+
 }  // namespace
 
 class PageLoadMetricsBrowserTest : public InProcessBrowserTest {
@@ -350,6 +410,17 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NewPageInNewForegroundTab) {
   // foreground.
   histogram_tester_.ExpectTotalCount(internal::kHistogramLoad, 1);
   histogram_tester_.ExpectTotalCount(internal::kBackgroundHistogramLoad, 0);
+}
+
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, LoadingMetrics) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  auto waiter = base::MakeUnique<LoadingMetricsWaiter>(
+      browser()->tab_strip_model()->GetActiveWebContents());
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL("/title1.html"));
+  // Waits until nonzero loading metrics are seen.
+  waiter->Wait();
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoPaintForEmptyDocument) {

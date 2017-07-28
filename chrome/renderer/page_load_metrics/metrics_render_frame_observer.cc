@@ -118,10 +118,25 @@ mojom::PageLoadTimingPtr MetricsRenderFrameObserver::GetTiming() const {
       render_frame()->GetWebFrame()->Performance();
 
   mojom::PageLoadTimingPtr timing(CreatePageLoadTiming());
+
   double start = perf.NavigationStart();
   timing->navigation_start = base::Time::FromDoubleT(start);
+
+  if (perf.DomainLookupStart() > 0.0)
+    timing->domain_lookup_start = ClampDelta(perf.DomainLookupStart(), start);
+  if (perf.DomainLookupEnd() > 0.0)
+    timing->domain_lookup_end = ClampDelta(perf.DomainLookupEnd(), start);
+  if (perf.ConnectStart() > 0.0)
+    timing->connect_start = ClampDelta(perf.ConnectStart(), start);
+  if (perf.ConnectEnd() > 0.0)
+    timing->connect_end = ClampDelta(perf.ConnectEnd(), start);
+  if (perf.RequestStart() > 0.0)
+    timing->request_start = ClampDelta(perf.RequestStart(), start);
   if (perf.ResponseStart() > 0.0)
     timing->response_start = ClampDelta(perf.ResponseStart(), start);
+  if (perf.ResponseEnd() > 0.0)
+    timing->response_end = ClampDelta(perf.ResponseEnd(), start);
+
   if (perf.DomContentLoadedEventStart() > 0.0) {
     timing->document_timing->dom_content_loaded_event_start =
         ClampDelta(perf.DomContentLoadedEventStart(), start);
