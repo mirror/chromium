@@ -60,6 +60,8 @@ class PlatformSensorProviderWin final : public PlatformSensorProvider {
  private:
   friend struct base::DefaultSingletonTraits<PlatformSensorProviderWin>;
 
+  bool HasSensor(mojom::SensorType sensor_type);
+
   base::win::ScopedComPtr<ISensorManager> sensor_manager_;
   std::unique_ptr<base::Thread> sensor_thread_;
 
