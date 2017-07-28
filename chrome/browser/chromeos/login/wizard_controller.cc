@@ -72,6 +72,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
 #include "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h"
 #include "chrome/browser/ui/webui/help/help_utils_chromeos.h"
@@ -270,6 +271,10 @@ WizardController::WizardController(LoginDisplayHost* host, OobeUI* oobe_ui)
   } else {
     NOTIMPLEMENTED();
   }
+
+  if (is_in_session_oobe_) {
+    SessionControllerClient::Get()->UpdateInSessionOobeStatus(true);
+  }
 }
 
 WizardController::~WizardController() {
@@ -284,6 +289,10 @@ WizardController::~WizardController() {
     default_controller_ = nullptr;
   } else {
     NOTREACHED() << "More than one controller are alive.";
+  }
+
+  if (is_in_session_oobe_) {
+    SessionControllerClient::Get()->UpdateInSessionOobeStatus(false);
   }
 }
 
