@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db27a78f_e2092023",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T18:56:31Z",
+      "side": 1,
+      "message": "Here is a bug fix - we care about RenderFrameHost objects, not RenderFrames created for them in renderer process.",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 29
+      },
+      "revId": "65fd65e181e6c759aa6edb40df6b2730a24f30fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -22,6 +22,30 @@
       "revId": "0304a814fb97c32f549537cd595c2edfd688e6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d49069_04acd100",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T18:56:31Z",
+      "side": 0,
+      "message": "I actually changed it, but there was a bug in frame tracking with PlzNavigate. Changed that part - PTAL.",
+      "parentUuid": "db3ff425_e489ab40",
+      "range": {
+        "startLine": 545,
+        "startChar": 25,
+        "endLine": 545,
+        "endChar": 46
+      },
+      "revId": "0304a814fb97c32f549537cd595c2edfd688e6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
