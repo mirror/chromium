@@ -15,6 +15,7 @@
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/layers/recording_source.h"
 #include "cc/paint/image_id.h"
+#include "cc/paint/paint_canvas.h"
 #include "skia/ext/analysis_canvas.h"
 #include "third_party/skia/include/core/SkPicture.h"
 #include "ui/gfx/color_space.h"
@@ -46,6 +47,15 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
     // The ImageProvider used to replace images during playback.
     ImageProvider* image_provider = nullptr;
   };
+
+  void SetupCanvasTransformAndClip(
+      PaintCanvas* canvas,
+      const gfx::Rect& canvas_bitmap_rect,
+      const gfx::Rect& canvas_playback_rect,
+      const gfx::AxisTransform2d& raster_transform) const;
+
+  void ClearCanvasForPlayback(SkCanvas* canvas) const;
+  void ClearCanvasForPlayback(PaintCanvas* canvas) const;
 
   // Helper function to apply a few common operations before passing the canvas
   // to the shorter version. This is useful for rastering into tiles.
@@ -141,8 +151,6 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   void RasterCommon(SkCanvas* canvas,
                     ImageProvider* image_provider = nullptr,
                     SkPicture::AbortCallback* callback = nullptr) const;
-
-  void PrepareForPlaybackToCanvas(SkCanvas* canvas) const;
 
   DISALLOW_COPY_AND_ASSIGN(RasterSource);
 };
