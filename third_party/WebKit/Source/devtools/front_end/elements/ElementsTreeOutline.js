@@ -29,6 +29,7 @@
  */
 
 /**
+ * @implements {SDK.AnalysisModel.FlagsDelegate}
  * @unrestricted
  */
 Elements.ElementsTreeOutline = class extends UI.TreeOutline {
@@ -410,6 +411,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       return Promise.resolve();
     var analysisModel = SDK.targetManager.mainTarget().model(SDK.AnalysisModel);
     if (node.nodeType() === Node.ELEMENT_NODE && analysisModel) {
+      analysisModel.addFlagGroup(node);
       flags = mergeFlagMaps(await this._flagsForNode(node, analysisModel, flagChildren), flags || []);
       analysisModel.nodeFlagged(/** @type {!SDK.DOMNode} */ (node), flags.get(node));
       flags.delete(node);
@@ -455,7 +457,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
       var doc = await node.domModel().requestDocumentPromise();
       var nodes = await node.domModel().querySelectorAll(doc.id, `#${id}`);
       if (nodes.length > 1)
-        nodeFlags.push(new SDK.AnalysisModel.Flag('error', 'The `id` attribute must be unique'));
+        nodeFlags.push(new SDK.AnalysisModel.Flag(this, 'error', 'The `id` attribute must be unique'));
       this._updateFlagDependency(node, 'id', id, !!preventPropagation);
     }
 
@@ -468,18 +470,19 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
         parent = parent.parentNode;
       }
       if (parent === null)
-        nodeFlags.push(new SDK.AnalysisModel.Flag('warning', 'Password fields should have associated `form`s'));
+        nodeFlags.push(new SDK.AnalysisModel.Flag(this, 'warning', 'Password fields should have associated `form`s'));
     }
 
     // Missing autocomplete attributes.
     if (name === 'form')
-      await inferAutocompleteValuesForForm();
+      await inferAutocompleteValuesForForm.call(this);
 
     return flags;
 
     /**
      * Attempt to deduce the intended usage of the input elements within the form and provide a sensible autocomplete
      * attribute value for each of them.
+     * @this Elements.ElementsTreeOutline
      */
     async function inferAutocompleteValuesForForm() {
       var passwordFields = await node.querySelectorAll('input[type="password"]:not([autocomplete])');
@@ -487,36 +490,37 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
         var textTypes = ['text', 'email', 'tel'];
         var selectors = textTypes.map(type => `input[type="${type}"]:not([autocomplete])`).join();
         // Find the first text field preceding the first password field in the form.
-        var textFields = (await node.querySelectorAll(selectors))
-          .filter(node => nodePrecedes(node, passwordFields[0]));
+        var textFields = (await node.querySelectorAll(selectors)).filter(node => nodePrecedes(node, passwordFields[0]));
         var textField = textFields[textFields.length - 1];
         if (textField)
-          inferAutocompleteValuesForInput(textField, 'username');
+          inferAutocompleteValuesForInput.call(this, textField, 'username');
         switch (passwordFields.length) {
           case 3:
-            inferAutocompleteValuesForInput(passwordFields[0], 'current-password');
-            // Fall-through here to match the last two password fields.
+            inferAutocompleteValuesForInput.call(this, passwordFields[0], 'current-password');
+          // Fall-through here to match the last two password fields.
           case 2:
-            inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 2], 'new-password');
-            inferAutocompleteValuesForInput(passwordFields[passwordFields.length - 1], 'new-password');
+            inferAutocompleteValuesForInput.call(this, passwordFields[passwordFields.length - 2], 'new-password');
+            inferAutocompleteValuesForInput.call(this, passwordFields[passwordFields.length - 1], 'new-password');
             break;
           case 1:
-            inferAutocompleteValuesForInput(passwordFields[0], textField ? 'current-password' : 'new-password');
+            inferAutocompleteValuesForInput.call(
+                this, passwordFields[0], textField ? 'current-password' : 'new-password');
             break;
         }
       }
 
       /**
+       * @this Elements.ElementsTreeOutline
        * @param {!SDK.DOMNode} descendant
        * @param {string} autocompleteValue
        */
       function inferAutocompleteValuesForInput(descendant, autocompleteValue) {
         if (!flags.has(descendant))
           flags.set(descendant, []);
-        var annotation = new SDK.AnalysisModel.Annotation(SDK.AnalysisModel.Annotation.Types.Attribute,
-          {text: `autocomplete="${autocompleteValue}"`});
+        var annotation = new SDK.AnalysisModel.Annotation(
+            SDK.AnalysisModel.Annotation.Types.Attribute, {text: `autocomplete="${autocompleteValue}"`});
         var flag = new SDK.AnalysisModel.Flag(
-            'warning', 'Adding an `autocomplete` attribute enhances the user experience', [annotation]);
+            this, 'warning', 'Adding an `autocomplete` attribute enhances the user experience', [annotation]);
         flags.get(descendant).push(flag);
       }
 
@@ -541,6 +545,21 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
         }
       }
     }
+  }
+
+  /**
+   * @override
+   * @param {!SDK.DOMNode} node
+   */
+  highlightFlag(node) {
+    this.setHoverEffect(this.findTreeElement(node));
+  }
+
+  /**
+   * @override
+   */
+  unhighlightFlags() {
+    this.setHoverEffect(null);
   }
 
   /**
@@ -1148,6 +1167,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     delete this._clipboardNodeData;
     SDK.OverlayModel.hideDOMNodeHighlight();
     this._updateRecords.clear();
+    SDK.targetManager.mainTarget().model(SDK.AnalysisModel).clearFlags();
   }
 
   wireToDOMModel() {
