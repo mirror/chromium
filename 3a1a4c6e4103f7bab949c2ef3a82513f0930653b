@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f626f74c_17b973c5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-28T04:53:16Z",
+      "side": 1,
+      "message": "Changed to FindNextLayoutOpportunity() by taking your idea for the other one. I like your idea of function name being explicit with \"WithMinimumInlineSize\", so took that one.",
+      "parentUuid": "e53bb185_c198721d",
+      "range": {
+        "startLine": 198,
+        "startChar": 20,
+        "endLine": 198,
+        "endChar": 40
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ca68b3d_23604dd8",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb0a232_f3b4b20b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-28T04:53:16Z",
+      "side": 1,
+      "message": "Updated the comment, primarily from your first paragraph. Thank you for much better wordings.\n\nThis does not recurse, because we know the first break opportunity, and we give it as the minimum inline size, so the next try should not overflow (or if no floats but still overflow, we don\u0027t re-enter here by HasFloatsOrIntrudingFloats(); the check is to prevent recurse in that case.)",
+      "parentUuid": "6ca68b3d_23604dd8",
+      "range": {
+        "startLine": 649,
+        "startChar": 12,
+        "endLine": 649,
+        "endChar": 22
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4e2775b5_ece85413",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-28T04:53:16Z",
+      "side": 1,
+      "message": "That seems to work! I just didn\u0027t know we can figure this out with that piece of code, and this code is rare enough that this is much better, thank you!",
+      "parentUuid": "498be54d_fa036c92",
+      "range": {
+        "startLine": 650,
+        "startChar": 12,
+        "endLine": 650,
+        "endChar": 36
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3b44d4_01fa6650",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5686147e_235b4cb4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-28T04:53:16Z",
+      "side": 1,
+      "message": "I like the former one, so renamed to it. Thank you for the suggestion.",
+      "parentUuid": "ae3b44d4_01fa6650",
+      "range": {
+        "startLine": 651,
+        "startChar": 4,
+        "endLine": 651,
+        "endChar": 23
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7256fd9_4fdb77b4",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.h",
         "patchSetId": 6
@@ -108,6 +204,24 @@
       "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b878769_dfa476d0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-28T04:53:16Z",
+      "side": 1,
+      "message": "Removed, thanks to GetClearanceOffset().",
+      "parentUuid": "f7256fd9_4fdb77b4",
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
