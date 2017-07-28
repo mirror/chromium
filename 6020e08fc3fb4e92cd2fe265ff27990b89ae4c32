@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90546f8e_7064419a",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-28T22:12:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be\n[[isControlled_(data)]]\n\nOtherwise we are dereferencing controlledInfo twice.",
+      "revId": "6020e08fc3fb4e92cd2fe265ff27990b89ae4c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c45a9a_a39b1fd5",
+        "filename": "chrome/browser/resources/md_extensions/item_util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-28T22:12:12Z",
+      "side": 1,
+      "message": "Nit: Remove line 33 and change this line as follows:\n\n@return {boolean} Whether the extension is controlled.",
+      "revId": "6020e08fc3fb4e92cd2fe265ff27990b89ae4c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bba6a4_ed152d7a",
+        "filename": "chrome/browser/resources/md_extensions/item_util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-28T22:12:12Z",
+      "side": 1,
+      "message": "Is this check enough? Shouldn\u0027t we be cheching that controlledInfo is not null/undefined too?",
+      "revId": "6020e08fc3fb4e92cd2fe265ff27990b89ae4c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
