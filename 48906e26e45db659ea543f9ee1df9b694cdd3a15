@@ -22,6 +22,30 @@
       "revId": "48906e26e45db659ea543f9ee1df9b694cdd3a15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cbf312_8ea1e083",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1165541
+      },
+      "writtenOn": "2017-07-28T06:23:18Z",
+      "side": 0,
+      "message": "Sorry to bring risk. Recover this and use mutable as you suggested. Let\u0027s wait for the trybots\u0027 result.",
+      "parentUuid": "7830c8c8_ff46b2cc",
+      "range": {
+        "startLine": 2073,
+        "startChar": 4,
+        "endLine": 2073,
+        "endChar": 34
+      },
+      "revId": "48906e26e45db659ea543f9ee1df9b694cdd3a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
