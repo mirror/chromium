@@ -871,6 +871,7 @@ Runner.prototype = {
         Runner.config.ARCADE_MODE_TOP_POSITION_PERCENT);
     this.containerEl.style.transform = 'scale(' + scale + ') translateY(' +
         translateY + 'px)';
+    this.containerEl.style.imageRendering = 'pixelated';
   },
 
   /**
