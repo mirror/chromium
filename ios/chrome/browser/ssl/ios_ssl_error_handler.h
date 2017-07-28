@@ -6,6 +6,7 @@
 #define IOS_CHROME_BROWSER_SSL_IOS_SSL_ERROR_HANDLER_H_
 
 #include "base/callback_forward.h"
+#include "components/captive_portal/captive_portal_types.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -30,14 +31,31 @@ class IOSSSLErrorHandler {
 
  private:
   ~IOSSSLErrorHandler() = delete;
+  // Displays an SSL error page interstitial.
+  static void ShowSSLInterstitial(web::WebState* web_state,
+                                  int cert_error,
+                                  const net::SSLInfo& info,
+                                  const GURL& request_url,
+                                  bool overridable,
+                                  const base::Callback<void(bool)>& callback);
+  // Displays an SSL error page interstitial.
+  static void ShowCaptivePortalInterstitial(
+      web::WebState* web_state,
+      const GURL& request_url,
+      const GURL& landing_url,
+      const base::Callback<void(bool)>& callback);
+  // Detects the current Captive Portal state and records the result with
+  // |LogCaptivePortalResult|.
+  static void RecordCaptivePortalState(web::WebState* web_state);
+  // Records a metric to classify if SSL errors are due to a Captive Portal
+  // state.
+  static void LogCaptivePortalResult(
+      captive_portal::CaptivePortalResult result);
   // Called on SSL interstitial dismissal.
   static void InterstitialWasDismissed(
       web::WebState* web_state,
       const base::Callback<void(bool)>& callback,
       bool proceed);
-  // Records a metric to classify if SSL errors are due to a Captive Portal
-  // state.
-  static void RecordCaptivePortalState(web::WebState* web_state);
   DISALLOW_IMPLICIT_CONSTRUCTORS(IOSSSLErrorHandler);
 };
 
