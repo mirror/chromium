@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "02b20834_d702395c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-28T07:35:40Z",
+      "side": 1,
+      "message": "Ah, got it. Then I\u0027m fine to keep it as is.",
+      "parentUuid": "122024df_99a5c9d5",
+      "revId": "94dbf91b6405a0076764fca818a3381b6725a52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eeb6b87c_aa5eff49",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
         "patchSetId": 2
