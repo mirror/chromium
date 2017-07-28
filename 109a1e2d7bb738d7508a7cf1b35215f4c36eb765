@@ -88,6 +88,24 @@
       "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788edfb4_3f516fd0",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-28T02:53:03Z",
+      "side": 1,
+      "message": "Hmm, I didn\u0027t think so. Oh well...",
+      "parentUuid": "57895803_28589247",
+      "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
