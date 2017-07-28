@@ -9,19 +9,21 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace vr {
 
 // TODO(vollick): if this grows, it should move to its own header.
 struct TabModel {
-  TabModel(const std::string& title, int id, SkColor color);
+  TabModel(const base::string16& title, int id, SkColor color, int image_id);
   TabModel(const TabModel& other);
   ~TabModel();
 
-  std::string title;
+  base::string16 title;
   int id = 0;
   SkColor color = SK_ColorWHITE;
+  int image_id = -1;
 };
 
 struct TabSetModel {
@@ -31,7 +33,7 @@ struct TabSetModel {
 
   bool incognito = false;
   // Eg, "last visited tabs", "incognito tabs", etc.
-  std::string name;
+  base::string16 name;
   std::vector<TabModel> tabs;
 };
 

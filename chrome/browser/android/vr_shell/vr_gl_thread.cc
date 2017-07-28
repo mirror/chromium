@@ -266,6 +266,22 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
                             weak_scene_manager_, enabled, reason));
 }
 
+void VrGLThread::AddOrUpdateTab(bool incognito,
+                                int id,
+                                const base::string16& title) {
+  WaitUntilThreadStarted();
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::UiSceneManager::AddOrUpdateTab,
+                            weak_scene_manager_, incognito, id, title));
+}
+
+void VrGLThread::RemoveTab(bool incognito, int id) {
+  WaitUntilThreadStarted();
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::UiSceneManager::RemoveTab, weak_scene_manager_,
+                            incognito, id));
+}
+
 void VrGLThread::CleanUp() {
   scene_manager_.reset();
   vr_shell_gl_.reset();
