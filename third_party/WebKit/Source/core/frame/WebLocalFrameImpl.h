@@ -157,6 +157,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   void StopLoading() override;
   WebDataSource* ProvisionalDataSource() const override;
   WebDataSource* DataSource() const override;
+  WebDataSource* GetNewerDataSource() const override;
   void EnableViewSourceMode(bool enable) override;
   bool IsViewSourceModeEnabled() const override;
   void SetReferrerForRequest(WebURLRequest&, const WebURL& referrer) override;

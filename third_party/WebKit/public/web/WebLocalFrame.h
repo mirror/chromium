@@ -219,6 +219,10 @@ class WebLocalFrame : public WebFrame {
   // Returns the data source that is currently loaded.
   virtual WebDataSource* DataSource() const = 0;
 
+  // Returns the data source that is currently loading if any. Otherwise,
+  // returns the data source that is currently loaded if any.
+  virtual WebDataSource* GetNewerDataSource() const = 0;
+
   enum FallbackContentResult {
     // An error page should be shown instead of fallback.
     NoFallbackContent,
