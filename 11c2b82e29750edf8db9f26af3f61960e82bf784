@@ -1,0 +1,256 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e5a7858_9d78cc4c",
+        "filename": "net/disk_cache/cleanup_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "using ContextMap \u003d ...;",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fd73ea_4da907f1",
+        "filename": "net/disk_cache/cleanup_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "Add a comment with \u0027// static\u0027 above this line",
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d14a8b_f96ea1c3",
+        "filename": "net/disk_cache/cleanup_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "Class needs a comment.",
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085e5b35_0b3473ae",
+        "filename": "net/disk_cache/cleanup_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "The name is a bit generic. How about BackendClosedNotifier?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3a1ffa_2261b819",
+        "filename": "net/disk_cache/cleanup_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "base::ObserverListThreadSafe provides most of what this class does. But you\u0027d need to make an Observer class (e.g., BackendClosedObserver) in order to use it. Your CacheCreator would then need to inherit from BackendClosedObserver.\n\nWDYT? I could probably be sold either way, but it\u0027s nice to reuse existing thread-safe code.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f10ce1_7305221b",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "What is \"this\" and \"we\" in the above?\n\nCan\u0027t there be more than 2 attempts?",
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c94ded_299d7e50",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "I propose that you separate the post_cleanup_callback_ code (and api changes) into a separate CL. They\u0027re pretty distinct.",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9138d0ac_25ee87d0",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "This function is pretty clever, and needs some comments to explain what\u0027s happening so that the reader doesn\u0027t need to think so hard :)",
+      "range": {
+        "startLine": 149,
+        "startChar": 15,
+        "endLine": 149,
+        "endChar": 0
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23c9961_10718eb8",
+        "filename": "net/disk_cache/disk_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "This is just a base::OnceClosure, use that instead.",
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea29e79_660f50a7",
+        "filename": "net/disk_cache/disk_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "If there are multiple attempts to create a cache that is currently in use, they will race to create the cache (if they\u0027re on separate threads) once the current backend is gone.\n\nNot sure if that\u0027s worth mentioning or not.",
+      "range": {
+        "startLine": 50,
+        "startChar": 39,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b3cc8c_48588218",
+        "filename": "net/disk_cache/disk_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "Perhaps: s/complete/run",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0ac014_da2079d1",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T17:32:24Z",
+      "side": 1,
+      "message": "Rather than manually AddRef/Release, you could:\n\nafter_write \u003d base::Bind([] (scoped_refptr\u003cCleanupContext\u003e) {}, cleanup_context_);",
+      "range": {
+        "startLine": 540,
+        "startChar": 4,
+        "endLine": 540,
+        "endChar": 15
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
