@@ -29,6 +29,7 @@ namespace chromeos {
 
 class CombiningPrinterDetector;
 class PpdProvider;
+class PrinterEventTracker;
 
 namespace settings {
 
@@ -120,6 +121,7 @@ class CupsPrintersHandler : public ::settings::SettingsPageUIHandler,
   std::unique_ptr<CombiningPrinterDetector> printer_detector_;
   scoped_refptr<PpdProvider> ppd_provider_;
   std::unique_ptr<PrinterConfigurer> printer_configurer_;
+  PrinterEventTracker* tracker_;
 
   // Cached list of {printer name, PpdReference} pairs for each manufacturer
   // that has been resolved in the lifetime of this object.
