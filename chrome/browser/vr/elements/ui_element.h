@@ -81,7 +81,8 @@ class UiElement : public cc::AnimationTarget {
   bool IsHitTestable() const;
 
   virtual void Render(UiElementRenderer* renderer,
-                      gfx::Transform view_proj_matrix) const;
+                      gfx::Transform view_proj_matrix,
+                      bool right_eye) const;
 
   virtual void Initialize();
 

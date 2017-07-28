@@ -18,6 +18,7 @@ void InitializeColorSchemes() {
     return;
 
   ColorScheme& normal_scheme = kColorSchemes[ColorScheme::kModeNormal];
+  normal_scheme.background_brightness = 1.0f;
   normal_scheme.world_background = 0xFF999999;
   normal_scheme.floor = 0xFF8C8C8C;
   normal_scheme.ceiling = normal_scheme.floor;
@@ -70,6 +71,7 @@ void InitializeColorSchemes() {
   kColorSchemes[ColorScheme::kModeFullscreen] =
       kColorSchemes[ColorScheme::kModeNormal];
   ColorScheme& fullscreen_scheme = kColorSchemes[ColorScheme::kModeFullscreen];
+  fullscreen_scheme.background_brightness = 0.2f;
   fullscreen_scheme.world_background = 0xFF000714;
   fullscreen_scheme.floor = 0xFF070F1C;
   fullscreen_scheme.ceiling = 0xFF04080F;
@@ -87,7 +89,10 @@ void InitializeColorSchemes() {
   fullscreen_scheme.close_button_background_down =
       fullscreen_scheme.element_background_down;
 
+  kColorSchemes[ColorScheme::kModeIncognito] =
+      kColorSchemes[ColorScheme::kModeNormal];
   ColorScheme& incognito_scheme = kColorSchemes[ColorScheme::kModeIncognito];
+  incognito_scheme.background_brightness = 0.2f;
   incognito_scheme.world_background = 0xFF2E2E2E;
   incognito_scheme.floor = 0xFF282828;
   incognito_scheme.ceiling = 0xFF2F2F2F;

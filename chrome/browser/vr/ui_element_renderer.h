@@ -28,6 +28,11 @@ class UiElementRenderer {
                                 const SkColor edge_color,
                                 const SkColor center_color,
                                 float opacity) = 0;
+
+  virtual void DrawStereoBackground(int texture_data_handle,
+                                    const gfx::Transform& view_proj_matrix,
+                                    bool right_eye,
+                                    float opacity) = 0;
 };
 
 }  // namespace vr

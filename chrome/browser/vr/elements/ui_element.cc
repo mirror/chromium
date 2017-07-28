@@ -45,7 +45,8 @@ UiElement::~UiElement() {
 }
 
 void UiElement::Render(UiElementRenderer* renderer,
-                       gfx::Transform view_proj_matrix) const {
+                       gfx::Transform view_proj_matrix,
+                       bool right_eye) const {
   NOTREACHED();
 }
 

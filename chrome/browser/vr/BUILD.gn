@@ -55,6 +55,8 @@ static_library("vr_common") {
     "elements/splash_screen_icon.h",
     "elements/splash_screen_icon_texture.cc",
     "elements/splash_screen_icon_texture.h",
+    "elements/stereo_background.cc",
+    "elements/stereo_background.h",
     "elements/system_indicator.cc",
     "elements/system_indicator.h",
     "elements/system_indicator_texture.cc",
