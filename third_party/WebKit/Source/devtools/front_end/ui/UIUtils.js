@@ -2019,6 +2019,29 @@ UI.createFileSelectorElement = function(callback) {
  */
 UI.MaxLengthForDisplayedURLs = 150;
 
+UI.MessageDialog = class {
+  /**
+   * @param {string} message
+   * @param {!Document|!Element=} where
+   * @return {!Promise}
+   */
+  static show(message, where) {
+    var dialog = new UI.Dialog();
+    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
+    dialog.setDimmed(true);
+    return new Promise(resolve => {
+             var shadowRoot = UI.createShadowRootWithCoreStyles(dialog.contentElement, 'ui/confirmDialog.css');
+             var content = shadowRoot.createChild('div', 'widget');
+             var okButton = UI.createTextButton(Common.UIString('OK'), resolve, '', true);
+             content.createChild('div', 'message').createChild('span').textContent = message;
+             content.createChild('div', 'button').appendChild(okButton);
+             dialog.show(where);
+             okButton.focus();
+           })
+        .then(() => dialog.hide());
+  }
+};
+
 /**
  * @unrestricted
  */
