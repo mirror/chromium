@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2b504367_7100a0d0",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-28T23:35:16Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "72059265_acc37d64",
+      "revId": "13005b911c65280f78a996a8381e608281155e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f40ffb2_ae75caf4",
         "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
         "patchSetId": 1
