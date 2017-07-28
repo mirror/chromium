@@ -23,12 +23,12 @@ class ScopedTempDir;
 namespace offline_pages {
 struct PrefetchItem;
 
+extern const int kPrefetchStoreCommandFailed;
+
 // Encapsulates the PrefetchStore and provides synchronous operations on the
 // store, for test writing convenience.
 class PrefetchStoreTestUtil {
  public:
-  static const int kStoreCommandFailed = -1;
-
   explicit PrefetchStoreTestUtil(
       scoped_refptr<base::TestSimpleTaskRunner> task_runner);
   ~PrefetchStoreTestUtil();
@@ -50,6 +50,9 @@ class PrefetchStoreTestUtil {
 
   // Returns number of affected items.
   int ZombifyPrefetchItems(const std::string& name_space, const GURL& url);
+
+  // Returns number of rows affected by last SQL statement.
+  int LastCommandChangeCount();
 
   PrefetchStore* store() { return store_.get(); }
 
