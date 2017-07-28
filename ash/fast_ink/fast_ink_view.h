@@ -11,15 +11,11 @@
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "cc/base/resource_id.h"
+#include "components/viz/common/resources/resource_id.h"
 #include "ui/views/view.h"
 
 namespace aura {
 class Window;
-}
-
-namespace cc {
-struct ReturnedResource;
 }
 
 namespace gfx {
@@ -28,6 +24,10 @@ class GpuMemoryBuffer;
 
 namespace views {
 class Widget;
+}
+
+namespace viz {
+struct ReturnedResource;
 }
 
 namespace ash {
@@ -59,7 +59,7 @@ class FastInkView : public views::View {
   void DidReceiveCompositorFrameAck();
 
   // Call this to return resources so they can be reused or freed.
-  void ReclaimResources(const std::vector<cc::ReturnedResource>& resources);
+  void ReclaimResources(const std::vector<viz::ReturnedResource>& resources);
 
   void UpdateBuffer();
   void UpdateSurface();
@@ -75,7 +75,7 @@ class FastInkView : public views::View {
   bool pending_draw_surface_ = false;
   std::unique_ptr<FastInkLayerTreeFrameSinkHolder> frame_sink_holder_;
   int next_resource_id_ = 1;
-  base::flat_map<cc::ResourceId, std::unique_ptr<FastInkResource>> resources_;
+  base::flat_map<viz::ResourceId, std::unique_ptr<FastInkResource>> resources_;
   std::vector<std::unique_ptr<FastInkResource>> returned_resources_;
   base::WeakPtrFactory<FastInkView> weak_ptr_factory_;
 

@@ -14,7 +14,7 @@
 #include "base/memory/weak_ptr.h"
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/render_pass.h"
-#include "cc/resources/transferable_resource.h"
+#include "components/viz/common/resources/transferable_resource.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/viz_service_export.h"
 #include "ui/gfx/color_space.h"
@@ -118,8 +118,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   void CopyQuadsToPass(
       const cc::QuadList& source_quad_list,
       const cc::SharedQuadStateList& source_shared_quad_state_list,
-      const std::unordered_map<cc::ResourceId, cc::ResourceId>&
-          resource_to_child_map,
+      const std::unordered_map<ResourceId, ResourceId>& resource_to_child_map,
       const gfx::Transform& target_transform,
       const ClipData& clip_rect,
       cc::RenderPass* dest_pass,
@@ -146,7 +145,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
                                  const gfx::Rect& full_rect) const;
 
   static void UnrefResources(base::WeakPtr<SurfaceClient> surface_client,
-                             const std::vector<cc::ReturnedResource>& resources,
+                             const std::vector<ReturnedResource>& resources,
                              cc::BlockingTaskRunner* main_thread_task_runner);
 
   SurfaceManager* manager_;
