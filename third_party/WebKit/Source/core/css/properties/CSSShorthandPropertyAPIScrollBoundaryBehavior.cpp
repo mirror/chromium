@@ -9,12 +9,12 @@
 
 namespace blink {
 
-bool CSSShorthandPropertyAPIScrollBoundaryBehavior::parseShorthand(
+bool CSSShorthandPropertyAPIScrollBoundaryBehavior::ParseShorthand(CSSPropertyID,
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     bool,
-    HeapVector<CSSProperty, 256>& properties) {
+    HeapVector<CSSProperty, 256>& properties) const {
   return CSSPropertyParserHelpers::ConsumeShorthandVia2LonghandAPIs(
       scrollBoundaryBehaviorShorthand(), important, context, range, properties);
 }

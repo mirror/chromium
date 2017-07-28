@@ -203,12 +203,12 @@ bool ConsumeFont(bool important,
 
 }  // namespace
 
-bool CSSShorthandPropertyAPIFont::parseShorthand(
+bool CSSShorthandPropertyAPIFont::ParseShorthand(CSSPropertyID,
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     bool,
-    HeapVector<CSSProperty, 256>& properties) {
+    HeapVector<CSSProperty, 256>& properties) const {
   const CSSParserToken& token = range.Peek();
   if (token.Id() >= CSSValueCaption && token.Id() <= CSSValueStatusBar)
     return ConsumeSystemFont(important, range, properties);

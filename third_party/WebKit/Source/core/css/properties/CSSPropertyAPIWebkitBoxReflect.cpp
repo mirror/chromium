@@ -44,10 +44,10 @@ static CSSValue* ConsumeReflect(CSSParserTokenRange& range,
 
 }  // namespace
 
-const CSSValue* CSSPropertyAPIWebkitBoxReflect::parseSingleValue(
+const CSSValue* CSSPropertyAPIWebkitBoxReflect::ParseSingleValue(CSSPropertyID, 
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return ConsumeReflect(range, &context);
 }
 

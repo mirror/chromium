@@ -10,10 +10,10 @@
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPIWebkitFontSizeDelta::parseSingleValue(
+const CSSValue* CSSPropertyAPIWebkitFontSizeDelta::ParseSingleValue(CSSPropertyID, 
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeLength(
       range, context.Mode(), kValueRangeAll,
       CSSPropertyParserHelpers::UnitlessQuirk::kAllow);
