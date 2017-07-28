@@ -187,7 +187,7 @@ GpuChildThread::GpuChildThread(
 GpuChildThread::~GpuChildThread() {
 }
 
-void GpuChildThread::Init(const base::Time& process_start_time) {
+void GpuChildThread::Init(const base::TimeTicks& process_start_time) {
   gpu_service_->set_start_time(process_start_time);
 
 #if defined(OS_ANDROID)
