@@ -52,6 +52,7 @@ struct Command {
 constexpr Command kCommands[] = {
     {"gen", "-gen <old_file> <new_file> <patch_file>", 3, MainGen},
     {"apply", "-apply <old_file> <patch_file> <new_file>", 3, MainApply},
+    {"crc32", "-crc32 <file>", 1, MainCrc32},
 };
 
 /******** ScopedResourceUsageTracker ********/

@@ -31,4 +31,8 @@ zucchini::status::Code MainGen(const base::CommandLine& command_line,
 zucchini::status::Code MainApply(const base::CommandLine& command_line,
                                  const std::vector<base::FilePath>& fnames);
 
+// Command Function: Compute CRC-32 of a file.
+zucchini::status::Code MainCrc32(const base::CommandLine& command_line,
+                                 const std::vector<base::FilePath>& fnames);
+
 #endif  // CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_COMMANDS_H_
