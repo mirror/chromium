@@ -16,6 +16,24 @@
       "revId": "705e7dd46d85f38fd1e4adaade2e6503ace3c9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d4c6e2_7b9bb663",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-28T20:05:25Z",
+      "side": 1,
+      "message": "Since it needs to be used in static method CanLockScreen(). Will add a comment to document the use.",
+      "parentUuid": "d20418a6_c63d88ee",
+      "revId": "705e7dd46d85f38fd1e4adaade2e6503ace3c9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
