@@ -21,6 +21,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/bad_clock_blocking_page.h"
+#include "chrome/browser/ssl/content_filter_blocking_page.h"
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/browser/ssl/ssl_error_assistant.pb.h"
@@ -171,6 +172,17 @@ bool IsCaptivePortalInterstitialEnabled() {
   return base::FeatureList::IsEnabled(kCaptivePortalInterstitial);
 }
 
+std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
+    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
+  auto hashes = base::MakeUnique<std::unordered_set<std::string>>();
+  for (const chrome_browser_ssl::CaptivePortalCert& cert :
+       proto.captive_portal_cert()) {
+    hashes.get()->insert(cert.sha256_hash());
+  }
+  return hashes;
+}
+#endif
+
 // Reads the SSL error assistant configuration from the resource bundle.
 std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
 ReadErrorAssistantProtoFromResourceBundle() {
@@ -184,16 +196,15 @@ ReadErrorAssistantProtoFromResourceBundle() {
   return proto->ParseFromZeroCopyStream(&stream) ? std::move(proto) : nullptr;
 }
 
-std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
+std::unique_ptr<std::unordered_set<std::string>> LoadContentFilterRegexes(
     const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
-  auto hashes = base::MakeUnique<std::unordered_set<std::string>>();
-  for (const chrome_browser_ssl::CaptivePortalCert& cert :
-       proto.captive_portal_cert()) {
-    hashes.get()->insert(cert.sha256_hash());
+  auto regexes = base::MakeUnique<std::unordered_set<std::string>>();
+  for (const chrome_browser_ssl::ContentFilterEntry& filter :
+       proto.content_filter()) {
+    regexes.get()->insert(filter.regex());
   }
-  return hashes;
+  return regexes;
 }
-#endif
 
 bool IsSSLCommonNameMismatchHandlingEnabled() {
   return base::FeatureList::IsEnabled(kSSLCommonNameMismatchHandling);
@@ -215,6 +226,10 @@ class ConfigSingleton {
   // use.
   bool IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info);
 #endif
+
+  // Returns true if the cert issuer matches one of our known content filter
+  // providers.
+  bool CertContainsContentFilterString(const net::SSLInfo& ssl_info);
 
   // Testing methods:
   void ResetForTesting();
@@ -254,6 +269,8 @@ class ConfigSingleton {
   // is called.
   std::unique_ptr<std::unordered_set<std::string>> captive_portal_spki_hashes_;
 #endif
+
+  std::unique_ptr<std::unordered_set<std::string>> content_filter_regexes_;
 };
 
 ConfigSingleton::ConfigSingleton()
@@ -349,6 +366,27 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
 }
 #endif
 
+bool ConfigSingleton::CertContainsContentFilterString(
+    const net::SSLInfo& ssl_info) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (!content_filter_regexes_) {
+    error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
+    CHECK(error_assistant_proto_);
+    content_filter_regexes_ = LoadContentFilterRegexes(*error_assistant_proto_);
+  }
+
+  // TODO(sperigo): Make this less shitty
+  // Return true if one of our content filter strings matches the common name
+  // of the issuer of this certificate.
+  const std::string cert_issuer = ssl_info.cert->issuer().common_name;
+  for (const std::string& regex : *content_filter_regexes_) {
+    if (cert_issuer.compare(regex)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
  public:
   SSLErrorHandlerDelegateImpl(
@@ -381,6 +419,7 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   void NavigateToSuggestedURL(const GURL& suggested_url) override;
   bool IsErrorOverridable() const override;
   void ShowCaptivePortalInterstitial(const GURL& landing_url) override;
+  void ShowContentFilterInterstitial() override;
   void ShowSSLInterstitial() override;
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override;
@@ -454,6 +493,24 @@ void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
 #else
   NOTREACHED();
 #endif
+}
+
+void SSLErrorHandlerDelegateImpl::ShowContentFilterInterstitial() {
+  // Show SSL blocking page. The interstitial owns the blocking page.
+  (new ContentFilterBlockingPage(web_contents_, cert_error_, request_url_,
+                                 std::move(ssl_cert_reporter_), ssl_info_,
+                                 callback_))
+      ->Show();
+
+  // TODO(sperigo): displaying the default interstitial for the time being.
+  // (SSLBlockingPage::Create(
+  //      web_contents_, cert_error_, ssl_info_, request_url_, options_mask_,
+  //      base::Time::NowFromSystemTime(), std::move(ssl_cert_reporter_),
+  //      base::FeatureList::IsEnabled(kSuperfishInterstitial) &&
+  //          IsSuperfish(ssl_info_.cert),
+  //      callback_))
+  //     ->Show();
+  LOG(ERROR) << "Content filter interstitial code called!";
 }
 
 void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial() {
@@ -607,6 +664,12 @@ void SSLErrorHandler::StartHandlingError() {
   }
 #endif
 
+  // Content filter interstitial logic
+  if (g_config.Pointer()->CertContainsContentFilterString(ssl_info_)) {
+    ShowContentFilterInterstitial();
+    return;
+  }
+
   if (IsSSLCommonNameMismatchHandlingEnabled() &&
       cert_error_ == net::ERR_CERT_COMMON_NAME_INVALID &&
       delegate_->IsErrorOverridable()) {
@@ -680,6 +743,18 @@ void SSLErrorHandler::ShowCaptivePortalInterstitial(const GURL& landing_url) {
 #else
   NOTREACHED();
 #endif
+}
+
+void SSLErrorHandler::ShowContentFilterInterstitial() {
+  // Show SSL blocking page. The interstitial owns the blocking page.
+  RecordUMA(delegate_->IsErrorOverridable()
+                ? SHOW_CONTENT_FILTER_INTERSTITIAL_OVERRIDABLE
+                : SHOW_CONTENT_FILTER_INTERSTITIAL_NONOVERRIDABLE);
+  delegate_->ShowContentFilterInterstitial();
+  // Once an interstitial is displayed, no need to keep the handler around.
+  // This is the equivalent of "delete this".
+  web_contents_->RemoveUserData(UserDataKey());
+  LOG(ERROR) << "Content filter interstitial code called!";
 }
 
 void SSLErrorHandler::ShowSSLInterstitial() {

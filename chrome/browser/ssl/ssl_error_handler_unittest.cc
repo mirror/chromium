@@ -161,6 +161,10 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     captive_portal_interstitial_shown_ = true;
   }
 
+  void ShowContentFilterInterstitial() override {
+    content_filter_interstitial_shown_ = true;
+  }
+
   void CheckSuggestedUrl(
       const GURL& suggested_url,
       const CommonNameMismatchHandler::CheckUrlCallback& callback) override {
@@ -182,6 +186,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
   bool ssl_interstitial_shown_;
   bool bad_clock_interstitial_shown_;
   bool captive_portal_interstitial_shown_;
+  bool content_filter_interstitial_shown_;
   bool redirected_to_suggested_url_;
   bool is_overridable_error_;
   CommonNameMismatchHandler::CheckUrlCallback suggested_url_callback_;
