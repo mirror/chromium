@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <unordered_set>
 #include <vector>
 
 #include "base/callback_list.h"
@@ -113,6 +114,10 @@ class SessionRestore {
   // without session restore started.
   static void OnTabLoaderFinishedLoadingTabs();
 
+  // Get called when the TabLoader stops loading a tab (e.g., when the tab
+  // finishes loading, is closed or is deferred).
+  static void OnTabLoaderStopLoadingTab(content::WebContents* web_contents);
+
  private:
   friend class SessionRestoreImpl;
   FRIEND_TEST_ALL_PREFIXES(SessionRestoreObserverTest, SingleSessionRestore);
@@ -144,6 +149,13 @@ class SessionRestore {
     return observers_;
   }
 
+  // Accessor for |tabs_restoring_|. Create the set the first time to always
+  // return valid object.
+  static std::unordered_set<content::WebContents*>* tabs_restoring() {
+    if (!tabs_restoring_)
+      tabs_restoring_ = new std::unordered_set<content::WebContents*>();
+    return tabs_restoring_;
+  }
   // Contains all registered callbacks for session restore notifications.
   static CallbackList* on_session_restored_callbacks_;
 
@@ -151,6 +163,15 @@ class SessionRestore {
   // multiple concurrent session restores, observers get notified only once in
   // the first session restore.
   static void NotifySessionRestoreStartedLoadingTabs();
+
+  // Get called when session restore is going to restore a tab.
+  static void OnWillRestoreTab(content::WebContents* web_contents);
+
+  // Get called when session restore stops loading a restored tab.
+  static void OnDidRestoreTab(content::WebContents* web_contents);
+
+  // Contains all tabs currently being restored by session restore.
+  static std::unordered_set<content::WebContents*>* tabs_restoring_;
 
   // Contains all registered observers for session restore events.
   static SessionRestoreObserverList* observers_;

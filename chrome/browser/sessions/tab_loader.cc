@@ -236,6 +236,8 @@ void TabLoader::RemoveTab(NavigationController* controller) {
       find(tabs_to_load_.begin(), tabs_to_load_.end(), controller);
   if (j != tabs_to_load_.end())
     tabs_to_load_.erase(j);
+
+  SessionRestore::OnTabLoaderStopLoadingTab(controller->GetWebContents());
 }
 
 void TabLoader::ForceLoadTimerFired() {
