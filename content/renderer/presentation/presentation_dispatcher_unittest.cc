@@ -482,25 +482,6 @@ TEST_F(PresentationDispatcherTest, TestOnReceiverConnectionAvailable) {
   run_loop.RunUntilIdle();
 }
 
-TEST_F(PresentationDispatcherTest, TestCloseConnection) {
-  base::RunLoop run_loop;
-  TestPresentationConnection connection;
-  TestPresentationConnectionProxy test_proxy(&connection);
-  EXPECT_CALL(test_proxy, Close());
-  EXPECT_CALL(presentation_service_,
-              CloseConnection(gurl1_, presentation_id_.Utf8()));
-  dispatcher_.CloseConnection(url1_, presentation_id_, &test_proxy);
-  run_loop.RunUntilIdle();
-}
-
-TEST_F(PresentationDispatcherTest, TestTerminatePresentation) {
-  base::RunLoop run_loop;
-  EXPECT_CALL(presentation_service_,
-              Terminate(gurl1_, presentation_id_.Utf8()));
-  dispatcher_.TerminatePresentation(url1_, presentation_id_);
-  run_loop.RunUntilIdle();
-}
-
 TEST_F(PresentationDispatcherTest, TestListenForScreenAvailability) {
   base::RunLoop run_loop1;
   for (const auto& gurl : gurls_) {

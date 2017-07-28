@@ -15,6 +15,7 @@
 #include "core/fileapi/FileReaderLoaderClient.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/UseCounter.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMArrayBufferView.h"
@@ -26,7 +27,10 @@
 #include "modules/presentation/PresentationReceiver.h"
 #include "modules/presentation/PresentationRequest.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/AtomicString.h"
+#include "public/platform/modules/presentation/presentation.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -133,15 +137,76 @@ class PresentationConnection::BlobLoader final
   std::unique_ptr<FileReaderLoader> loader_;
 };
 
+class PresentationConnection::Delegate
+    : public GarbageCollectedFinalized<Delegate> {
+ public:
+  virtual ~Delegate() = default;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+  virtual void Close(const KURL&, const String& id) = 0;
+  virtual void Terminate(const KURL&, const String& id) = 0;
+};
+
+class PresentationConnection::ControllerDelegate final
+    : public PresentationConnection::Delegate {
+ public:
+  explicit ControllerDelegate(
+      mojom::blink::PresentationServicePtr presentation_service)
+      : presentation_service_(std::move(presentation_service)) {
+    DCHECK(presentation_service_);
+  }
+
+  ~ControllerDelegate() override = default;
+
+  void Close(const KURL& url, const String& id) override {
+    presentation_service_->CloseConnection(url, id);
+  }
+
+  void Terminate(const KURL& url, const String& id) override {
+    presentation_service_->Terminate(url, id);
+  }
+
+ private:
+  mojom::blink::PresentationServicePtr presentation_service_;
+};
+
+class PresentationConnection::ReceiverDelegate final
+    : public PresentationConnection::Delegate {
+ public:
+  explicit ReceiverDelegate(Member<PresentationReceiver> receiver)
+      : receiver_(receiver) {
+    DCHECK(receiver_);
+  }
+
+  ~ReceiverDelegate() override = default;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(receiver_);
+    Delegate::Trace(visitor);
+  }
+
+  void Close(const KURL& url, const String& id) override {}
+
+  void Terminate(const KURL& url, const String& id) override {
+    receiver_->TerminateConnection();
+  }
+
+ private:
+  Member<PresentationReceiver> receiver_;
+};
+
 PresentationConnection::PresentationConnection(LocalFrame* frame,
                                                const String& id,
-                                               const KURL& url)
+                                               const KURL& url,
+                                               Delegate* delegate)
     : ContextClient(frame),
       id_(id),
       url_(url),
       state_(WebPresentationConnectionState::kConnecting),
       binary_type_(kBinaryTypeArrayBuffer),
-      proxy_(nullptr) {}
+      proxy_(nullptr),
+      delegate_(delegate) {}
 
 PresentationConnection::~PresentationConnection() {
   DCHECK(!blob_loader_);
@@ -182,8 +247,14 @@ PresentationConnection* PresentationConnection::Take(
   DCHECK(controller);
   DCHECK(request);
 
+  mojom::blink::PresentationServicePtr presentation_service;
+  auto* interface_provider =
+      controller->GetFrame()->Client()->GetInterfaceProvider();
+  interface_provider->GetInterface(mojo::MakeRequest(&presentation_service));
   PresentationConnection* connection = new PresentationConnection(
-      controller->GetFrame(), presentation_info.id, presentation_info.url);
+      controller->GetFrame(), presentation_info.id, presentation_info.url,
+      new PresentationConnection::ControllerDelegate(
+          std::move(presentation_service)));
   controller->RegisterConnection(connection);
 
   // Fire onconnectionavailable event asynchronously.
@@ -204,7 +275,8 @@ PresentationConnection* PresentationConnection::Take(
   DCHECK(receiver);
 
   PresentationConnection* connection = new PresentationConnection(
-      receiver->GetFrame(), presentation_info.id, presentation_info.url);
+      receiver->GetFrame(), presentation_info.id, presentation_info.url,
+      new PresentationConnection::ReceiverDelegate(receiver));
   receiver->RegisterConnection(connection);
 
   return connection;
@@ -244,6 +316,7 @@ void PresentationConnection::AddedEventListener(
 DEFINE_TRACE(PresentationConnection) {
   visitor->Trace(blob_loader_);
   visitor->Trace(messages_);
+  visitor->Trace(delegate_);
   EventTargetWithInlineData::Trace(visitor);
   ContextClient::Trace(visitor);
 }
@@ -387,10 +460,9 @@ void PresentationConnection::close() {
       state_ != WebPresentationConnectionState::kConnected) {
     return;
   }
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (client)
-    client->CloseConnection(url_, id_, proxy_.get());
+
+  proxy_->Close();
+  delegate_->Close(url_, id_);
 
   TearDown();
 }
@@ -398,10 +470,8 @@ void PresentationConnection::close() {
 void PresentationConnection::terminate() {
   if (state_ != WebPresentationConnectionState::kConnected)
     return;
-  WebPresentationClient* client =
-      PresentationController::ClientFromContext(GetExecutionContext());
-  if (client)
-    client->TerminatePresentation(url_, id_);
+
+  delegate_->Terminate(url_, id_);
 
   TearDown();
 }
