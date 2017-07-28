@@ -204,13 +204,11 @@ void PerformanceMonitor::Did(const probe::CallFunction& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  probe.CaptureStartTime();
 }
 
 void PerformanceMonitor::Did(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  probe.Duration();
 }
 
 void PerformanceMonitor::Will(const probe::UserCallback& probe) {
