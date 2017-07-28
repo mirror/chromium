@@ -226,7 +226,7 @@ Boolean ChromeCFBundleLoadExecutableAndReturnError(CFBundleRef bundle,
 
 }  // namespace
 
-void EnableCFBundleBlocker() {
+bool EnableCFBundleBlocker() {
   mach_error_t err = mach_override_ptr(
       reinterpret_cast<void*>(_CFBundleLoadExecutableAndReturnError),
       reinterpret_cast<void*>(ChromeCFBundleLoadExecutableAndReturnError),
@@ -235,7 +235,9 @@ void EnableCFBundleBlocker() {
   if (err != err_none) {
     DLOG(WARNING) << "mach_override _CFBundleLoadExecutableAndReturnError: "
                   << err;
+    return false;
   }
+  return true;
 }
 
 namespace {
