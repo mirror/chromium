@@ -407,6 +407,10 @@ class PrintWebViewHelper
   // True, when printing from print preview.
   bool print_for_preview_;
 
+  // True, when the system dialog has been cancelled on Windows after printing
+  // for print preview.
+  bool system_dialog_cancelled_;
+
   // Used to check the prerendering status.
   const std::unique_ptr<Delegate> delegate_;
 

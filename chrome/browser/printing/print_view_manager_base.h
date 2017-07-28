@@ -82,6 +82,9 @@ class PrintViewManagerBase : public content::NotificationObserver,
   void OnDidPrintPage(const PrintHostMsg_DidPrintPage_Params& params);
   void OnPrintingFailed(int cookie) override;
   void OnShowInvalidPrinterSettingsError();
+#if defined(OS_WIN) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  void OnSystemDialogCancelled();
+#endif
 
   // Processes a NOTIFY_PRINT_JOB_EVENT notification.
   void OnNotifyPrintJobEvent(const JobEventDetails& event_details);
