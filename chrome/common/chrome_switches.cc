@@ -526,6 +526,9 @@ const char kKioskModePrinting[]             = "kiosk-printing";
 const char kLoadMediaRouterComponentExtension[] =
     "load-media-router-component-extension";
 
+// Enable voice search on the local NTP.
+const char kLocalNtpVoiceSearch[] = "local-ntp-voice-search";
+
 // Makes Chrome default browser
 const char kMakeDefaultBrowser[]            = "make-default-browser";
 
