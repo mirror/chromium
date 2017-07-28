@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e31daf_b3cd3233",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-28T23:54:16Z",
+      "side": 1,
+      "message": "We are also changing some DVLOGs to VLOGs, please mention that as well.",
+      "revId": "41810e01c55586eda07a096b3063d83e180b234e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3c17487_05007585",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-28T23:54:16Z",
+      "side": 1,
+      "message": "Please remove, as it\u0027s not used anymore.",
+      "revId": "41810e01c55586eda07a096b3063d83e180b234e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79dab2c2_33e324cf",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-28T23:54:16Z",
+      "side": 1,
+      "message": "Replacing PLOG with VLOG would make us lose additional information that PLOG provides and VLOG does not.\nI think there is VPLOG() that we could use though?",
+      "revId": "41810e01c55586eda07a096b3063d83e180b234e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5475e9f8_019c6db6",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-28T23:54:16Z",
+      "side": 1,
+      "message": "VLOGF",
+      "revId": "41810e01c55586eda07a096b3063d83e180b234e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
