@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e848ef1_c2629761",
+        "filename": "chromeos/components/tether/notification_remover_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-28T17:59:08Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need to perform verifications on test doubles (e.g., FakeNotificationPresenter) - you only need to perform verifications on the class under test. Once you remove these extra verifications, these helper functions become single-line functions, so you can just remove them and inline them in your tests.\n\nIn general, use helper functions when the implementation of the helper function distracts from what you\u0027re actually testing (typically, if your helper function is more than a couple lines long, you should move code there). Inline things when they are short enough that they aren\u0027t distracting.\n\nYou can think of it as trying to strike a balance between making your tests concise and minimizing the number of times the reader has to move between your test and your helper functions :)",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 3
+      },
+      "revId": "8a4cfabd2f65c295c82dd50980749ec038a8bf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
