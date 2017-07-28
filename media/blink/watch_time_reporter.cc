@@ -328,20 +328,20 @@ void WatchTimeReporter::UpdateWatchTime() {
 
 #define RECORD_WATCH_TIME(key, value)                                      \
   do {                                                                     \
-    log_event->params.SetDoubleWithoutPathExpansion(                       \
+    log_event->params.SetKey(                                              \
         has_video_ ? kWatchTimeAudioVideo##key                             \
                    : (is_background_ ? kWatchTimeAudioVideoBackground##key \
                                      : kWatchTimeAudio##key),              \
-        value.InSecondsF());                                               \
+        base::Value(value.InSecondsF()));                                  \
   } while (0)
 
 // Similar to RECORD_WATCH_TIME but ignores background watch time.
 #define RECORD_FOREGROUND_WATCH_TIME(key, value)                       \
   do {                                                                 \
     DCHECK(!is_background_);                                           \
-    log_event->params.SetDoubleWithoutPathExpansion(                   \
+    log_event->params.SetKey(                                          \
         has_video_ ? kWatchTimeAudioVideo##key : kWatchTimeAudio##key, \
-        value.InSecondsF());                                           \
+        base::Value(value.InSecondsF()));                              \
   } while (0)
 
   // Only report watch time after some minimum amount has elapsed. Don't update

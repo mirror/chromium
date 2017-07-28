@@ -113,12 +113,6 @@ void DictionaryValueUpdate::SetIntegerWithoutPathExpansion(
   SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetDoubleWithoutPathExpansion(
-    base::StringPiece path,
-    double in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
-}
-
 void DictionaryValueUpdate::SetStringWithoutPathExpansion(
     base::StringPiece path,
     base::StringPiece in_value) {

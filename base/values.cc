@@ -746,11 +746,6 @@ Value* DictionaryValue::SetIntegerWithoutPathExpansion(StringPiece path,
   return SetWithoutPathExpansion(path, MakeUnique<Value>(in_value));
 }
 
-Value* DictionaryValue::SetDoubleWithoutPathExpansion(StringPiece path,
-                                                      double in_value) {
-  return SetWithoutPathExpansion(path, MakeUnique<Value>(in_value));
-}
-
 Value* DictionaryValue::SetStringWithoutPathExpansion(StringPiece path,
                                                       StringPiece in_value) {
   return SetWithoutPathExpansion(path, MakeUnique<Value>(in_value));
