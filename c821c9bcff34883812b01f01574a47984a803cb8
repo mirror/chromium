@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e665bba_ab25eb5c",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-28T08:03:39Z",
+      "side": 1,
+      "message": "This took me a few attempts to understand, I think we need a comment here :)\n\nSomething like: The navigation throttle will squash the navigation, and we set the raw_response to prevent a pointless network fetch from occurring.",
+      "range": {
+        "startLine": 956,
+        "startChar": 8,
+        "endLine": 956,
+        "endChar": 20
+      },
+      "revId": "c821c9bcff34883812b01f01574a47984a803cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
