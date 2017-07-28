@@ -23,9 +23,8 @@ enum class ModuleGraphLevel;
 
 // A ModuleScriptLoader is responsible for loading a new single ModuleScript.
 //
-// A ModuleScriptLoader constructs and emits FetchParameters to ResourceFetcher
-// (via ScriptResource::fetch). Then, it keeps track of the fetch progress by
-// being a ScriptResourceClient. Finally, it returns its client a compiled
+// A ModuleScriptLoader constructs FetchParameters and asks ModuleScriptFetcher
+// to fetch a script with the parameters. Then, it returns its client a compiled
 // ModuleScript.
 //
 // ModuleScriptLoader(s) should only be used via Modulator and its ModuleMap.
