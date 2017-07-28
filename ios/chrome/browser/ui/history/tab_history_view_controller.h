@@ -12,8 +12,8 @@
 // View controller for displaying a list of NavigationItems in a table.
 @interface TabHistoryViewController : UICollectionViewController
 
-// Designated initializer that takes a NavigationItemList.
-- (instancetype)initWithItems:(const web::NavigationItemList&)items
+// Designated initializer that takes a WeakNavigationItemList.
+- (instancetype)initWithItems:(const web::WeakNavigationItemList&)items
     NS_DESIGNATED_INITIALIZER;
 
 // TabHistoryViewControllers must be initialized with |-initWithItems:|.

@@ -48,7 +48,8 @@ NavigationItemImpl::NavigationItemImpl()
       is_created_from_hash_change_(false),
       should_skip_repost_form_confirmation_(false),
       navigation_initiation_type_(web::NavigationInitiationType::NONE),
-      is_unsafe_(false) {}
+      is_unsafe_(false),
+      weak_factory_(this) {}
 
 NavigationItemImpl::~NavigationItemImpl() {
 }
@@ -76,7 +77,8 @@ NavigationItemImpl::NavigationItemImpl(const NavigationItemImpl& item)
       post_data_([item.post_data_ copy]),
       navigation_initiation_type_(item.navigation_initiation_type_),
       is_unsafe_(item.is_unsafe_),
-      cached_display_title_(item.cached_display_title_) {}
+      cached_display_title_(item.cached_display_title_),
+      weak_factory_(this) {}
 
 int NavigationItemImpl::GetUniqueID() const {
   return unique_id_;
@@ -285,6 +287,10 @@ void NavigationItemImpl::ResetForCommit() {
   // Navigation initiation type is only valid for pending navigations, thus
   // always reset to NONE after the item is committed.
   SetNavigationInitiationType(web::NavigationInitiationType::NONE);
+}
+
+base::WeakPtr<NavigationItemImpl> NavigationItemImpl::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 // static

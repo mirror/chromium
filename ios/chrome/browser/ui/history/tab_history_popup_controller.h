@@ -18,7 +18,7 @@
 // |entries| is an array of CRWSessionEntries.
 - (id)initWithOrigin:(CGPoint)origin
           parentView:(UIView*)parent
-               items:(const web::NavigationItemList&)items
+               items:(const web::WeakNavigationItemList&)items
     NS_DESIGNATED_INITIALIZER;
 
 @end

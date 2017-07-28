@@ -7,15 +7,3 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
-
-namespace web {
-
-NavigationItemList CreateRawNavigationItemList(
-    const ScopedNavigationItemList& scoped_list) {
-  NavigationItemList list(scoped_list.size());
-  for (size_t index = 0; index < scoped_list.size(); ++index)
-    list[index] = scoped_list[index].get();
-  return list;
-}
-
-}  // namespace web

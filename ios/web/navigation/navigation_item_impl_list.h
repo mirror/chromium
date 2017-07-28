@@ -5,28 +5,56 @@
 #ifndef IOS_WEB_NAVIGATION_NAVIGATION_ITEM_IMPL_LIST_H_
 #define IOS_WEB_NAVIGATION_NAVIGATION_ITEM_IMPL_LIST_H_
 
+#include <vector>
+
+#include "base/memory/weak_ptr.h"
 #import "ios/web/public/navigation_item_list.h"
 
 namespace web {
 
 class NavigationItemImpl;
 
-// Convenience typedef for a list of raw NavigationItem pointers.
-typedef std::vector<NavigationItemImpl*> NavigationItemImplList;
+// Concrete implementation of ScopedNavigationItemImplList.
+class ScopedNavigationItemImplList : public ScopedNavigationItemList {
+ public:
+  // Constructor for a scoped list containing |items|.
+  explicit ScopedNavigationItemImplList(
+      const std::vector<std::unique_ptr<NavigationItemImpl>>& items);
+  virtual ~ScopedNavigationItemImplList();
 
-// Convenience typedef for a list of scoped NavigationItem pointers.
-typedef std::vector<std::unique_ptr<NavigationItemImpl>>
-    ScopedNavigationItemImplList;
+  // NavigationItemList:
+  size_t size() const override;
+  NavigationItem* GetItemAt(size_t index) const override;
+  NavigationItem* operator [](size_t  index) const override;
 
-// Creates a ScopedNavigationItemImplList from |scoped_item_list|.  Ownership
-// of the NavigationItems in |scoped_item_list| is transferred to the returned
-// value.
-ScopedNavigationItemImplList CreateScopedNavigationItemImplList(
-    ScopedNavigationItemList scoped_item_list);
+  // ScopedNavigationItemList:
+  std::unique_ptr<NavigationItem> GetScopedItemAtIndex(
+      size_t index) override;
 
-// Creates a NavigationItemList from |scoped_item_list|.
-NavigationItemList CreateNavigationItemList(
-    const ScopedNavigationItemImplList& scoped_item_list);
+ private:
+  // The list of scoped NavigationItemImpl pointers.
+  std::vector<std::unique_ptr<NavigationItemImpl>> items_;
+};
+
+// Concrete implementation of WeakNavigationItemList.
+class WeakNavigationItemImplList : public WeakNavigationItemList {
+ public:
+  // Constructor for a list containing weak references to |items|.
+  explicit WeakNavigationItemImplList(
+      const std::vector<NavigationItemImpl*>& items);
+  // Constructor for a list containing weak references to the items in |list|.
+  explicit WeakNavigationItemImplList(const NavigationItemList& list);
+  virtual ~WeakNavigationItemImplList();
+
+  // NavigationItemList:
+  size_t size() const override;
+  NavigationItem* GetItemAt(size_t index) const override;
+  NavigationItem* operator [](size_t  index) const override;
+
+ private:
+  // The list of weak NavigationItemImpl pointers.
+  std::vector<base::WeakPtr<NavigationItemImpl>> items_;
+};
 
 }  // namespace web
 

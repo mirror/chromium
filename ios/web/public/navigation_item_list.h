@@ -5,24 +5,47 @@
 #ifndef IOS_WEB_PUBLIC_NAVIGATION_ITEM_LIST_H_
 #define IOS_WEB_PUBLIC_NAVIGATION_ITEM_LIST_H_
 
+#include <cstddef>
 #include <memory>
-#include <vector>
 
 namespace web {
 
 class NavigationItem;
 
-// Convenience typedef for a list of raw NavigationItem pointers.
-// TODO(crbug.com/689321): Clean up these typedefs.
-typedef std::vector<NavigationItem*> NavigationItemList;
+// A class representing a list of NavigationItems.
+class NavigationItemList {
+ public:
+  // Returns whether the NavigationItemList is empty.
+  bool empty() const { return !size(); }
 
-// Convenience typedef for a list of scoped NavigationItem pointers.
-typedef std::vector<std::unique_ptr<NavigationItem>> ScopedNavigationItemList;
+  // Returns the number of NavigationItems pointers in the list.
+  virtual size_t size() const = 0;
 
-// Returns a NavigationItemList populated with raw pointer values from
-// |scoped_list|.
-NavigationItemList CreateRawNavigationItemList(
-    const ScopedNavigationItemList& scoped_list);
+  // Returns the NavigationItem at |index|.
+  virtual NavigationItem* GetItemAt(size_t index) const = 0;
+
+  // This class supports square bracket notation, which has the same behavior as
+  // GetItemAt().
+  virtual NavigationItem* operator [](size_t  index) const = 0;
+};
+
+// A NavigationItemList that owns the pointers to its NavigationItems.
+class ScopedNavigationItemList : public NavigationItemList {
+ public:
+  // Returns the scoped pointer at |index|, transferring ownership of that
+  // NavigationItem to the caller.
+  virtual std::unique_ptr<NavigationItem> GetScopedItemAtIndex(
+      size_t index) = 0;
+};
+
+// A NavigationItemList containing weak references to NavigationItems.
+class WeakNavigationItemList : public NavigationItemList {
+ public:
+  // Factory method that creates weak references from the scoped NavigationItem
+  // poitners in |scoped_list|.
+  static std::unique_ptr<WeakNavigationItemList> FromNavigationItemList(
+      const NavigationItemList& scoped_list);
+};
 
 }  // namespace web
 

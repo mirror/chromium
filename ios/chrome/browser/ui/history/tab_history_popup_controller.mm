@@ -53,7 +53,7 @@ static const CGFloat kHeightPercentage = 0.85;
 
 // Determines the width for the popup depending on the device, orientation, and
 // number of NavigationItems to display.
-+ (CGFloat)popupWidthForItems:(const web::NavigationItemList)items;
++ (CGFloat)popupWidthForItems:(const web::WeakNavigationItemList&)items;
 
 @end
 
@@ -64,7 +64,7 @@ static const CGFloat kHeightPercentage = 0.85;
 
 - (id)initWithOrigin:(CGPoint)origin
           parentView:(UIView*)parent
-               items:(const web::NavigationItemList&)items {
+               items:(const web::WeakNavigationItemList&)items {
   DCHECK(parent);
   if ((self = [super initWithParentView:parent])) {
     // Create the table view controller.
@@ -126,7 +126,7 @@ static const CGFloat kHeightPercentage = 0.85;
 
 #pragma mark -
 
-+ (CGFloat)popupWidthForItems:(const web::NavigationItemList)items {
++ (CGFloat)popupWidthForItems:(const web::WeakNavigationItemList&)items {
   CGFloat maxWidth;
 
   // Determine the maximum width for the device and orientation.
@@ -146,7 +146,11 @@ static const CGFloat kHeightPercentage = 0.85;
   // Increase the width to fit the text to display but don't exceed maxWidth.
   CGFloat cellWidth = kTabHistoryMinWidth;
   UIFont* font = [[MDCTypography fontLoader] regularFontOfSize:16];
-  for (web::NavigationItem* item : items) {
+  for (size_t i = 0; i < items.size(); ++i) {
+    web::NavigationItem* item = items[i];
+    if (!item)
+      continue;
+
     // TODO(rohitrao): Can this be replaced with GetTitleForDisplay()?
     NSString* cellText = item->GetTitle().empty()
                              ? base::SysUTF8ToNSString(item->GetURL().spec())

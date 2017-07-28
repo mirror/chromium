@@ -10,6 +10,7 @@
 #include <memory>
 
 #import "base/mac/scoped_nsobject.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "ios/web/public/favicon_status.h"
 #import "ios/web/public/navigation_item.h"
@@ -110,6 +111,9 @@ class NavigationItemImpl : public web::NavigationItem {
   // non-persisted state, as documented on the members below.
   void ResetForCommit();
 
+  // Returns a weak pointer to this NavigationItem.
+  base::WeakPtr<NavigationItemImpl> GetWeakPtr();
+
   // Returns the title string to be used for a page with |url| if that page
   // doesn't specify a title.
   static base::string16 GetDisplayTitleForURL(const GURL& url);
@@ -156,6 +160,9 @@ class NavigationItemImpl : public web::NavigationItem {
   // This is a cached version of the result of GetTitleForDisplay. When the URL,
   // virtual URL, or title is set, this should be cleared to force a refresh.
   mutable base::string16 cached_display_title_;
+
+  // Factory for weak pointers to this NavigationItemImpl.
+  base::WeakPtrFactory<NavigationItemImpl> weak_factory_;
 
   // Copy and assignment is explicitly allowed for this class.
 };
