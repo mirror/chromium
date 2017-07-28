@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "326cae94_47333dc8",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-28T19:04:19Z",
+      "side": 1,
+      "message": "this doesn\u0027t erase things the entry from the map, and also adds the entry if it\u0027s not already there",
+      "revId": "38619e9f421cba8f61655370bc672845eeb13df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6f1e10_2425dd37",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-28T19:04:19Z",
+      "side": 1,
+      "message": "this else is really hard to read. Is that intended? OnChildExitAsync already has a null pipe check, so can we just use that and make this a bit simpler",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 8
+      },
+      "revId": "38619e9f421cba8f61655370bc672845eeb13df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

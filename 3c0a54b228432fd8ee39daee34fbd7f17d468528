@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0609b22b_3d8290fe",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-28T19:04:19Z",
+      "side": 1,
+      "message": "\u003e Yeah, this is where I think the naming could be improved. It\u0027s odd having two things called *Observer. However I think that this change is right. The point is that the CrashDumpManager\u003d\u003eChildProcessCrashObserver needs to be added to the CrashDumpObserver singleton (which needs to be created) here.\n\nshouldn\u0027t this be on line 68 then?",
+      "parentUuid": "c5aa7062_c73e357f",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "562336aa_18423a63",
         "filename": "components/crash/content/browser/BUILD.gn",
         "patchSetId": 1
@@ -306,6 +330,24 @@
       "writtenOn": "2017-07-24T17:50:58Z",
       "side": 1,
       "message": "assert breakpad::IsCrashReporterEnabled?",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4005d15a_e9cc4a10",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-28T19:04:19Z",
+      "side": 1,
+      "message": "\u003e assert breakpad::IsCrashReporterEnabled?\n\nnot done yet?",
+      "parentUuid": "1995edc5_7a4dba15",
       "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
