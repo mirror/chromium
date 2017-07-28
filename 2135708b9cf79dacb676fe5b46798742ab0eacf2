@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "41089a57_075c0c71",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-28T20:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e174c09d_823cc9b3",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33aacc92_8ae3bd7a",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
         "patchSetId": 4
@@ -92,6 +116,30 @@
       "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae470c95_cb04f6dc",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-28T20:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33aacc92_8ae3bd7a",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
