@@ -9,6 +9,11 @@
 
 namespace bubble_util {
 
+// Calculate the coordinates of the point of the speech bubble's triangle based
+// on the |frame| of the target UI element and the bubble's |arrowDirection|.
+// The returned point is in the same coordinate system as |frame|.
+CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection);
+
 // Calculate the distance from the bubble's leading edge to the leading edge of
 // its bounding coordinate system. In LTR contexts, the returned float is the
 // x-coordinate of the bubble's origin. This calculation is based on
