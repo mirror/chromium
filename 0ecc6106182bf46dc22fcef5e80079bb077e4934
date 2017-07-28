@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "afae0c8e_36e10a6e",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T22:59:56Z",
+      "side": 1,
+      "message": "I\u0027m not aware of the bug for it. I know people had trouble making it work, then using grey_interactable() fixed it. Here\u0027s where I read about it:\nhttps://groups.google.com/a/google.com/forum/#!searchin/earlgrey-users/usingsearchaction%7Csort:relevance/earlgrey-users/gKUz5jCm4lc/iLHwZfz5AwAJ\n\nDoes it have to scroll to find the sign out button? If it doesn\u0027t need to scroll it shouldn\u0027t fail. You can test it by running it in landscape mode.",
+      "parentUuid": "4fd8172c_f9d86da1",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24938957_8fd117c9",
         "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
         "patchSetId": 1
@@ -189,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "936c0cd3_dff4bee4",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T22:59:56Z",
+      "side": 1,
+      "message": "oh, right. This is good.",
+      "parentUuid": "7c8e33ca_01ebeaa9",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f609db3c_aab1ded3",
         "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
         "patchSetId": 1
@@ -218,6 +260,24 @@
       "side": 1,
       "message": "Done.\n\nThis matcher is used in downstream tests as well.  Clean them up in another CL.",
       "parentUuid": "f609db3c_aab1ded3",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0e1344_52704085",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T22:59:56Z",
+      "side": 1,
+      "message": "Sounds good. Do we have a bug for it? Or is the CL in progress?",
+      "parentUuid": "4b536fd1_50c4fdc4",
       "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
