@@ -33,6 +33,24 @@
       "revId": "31d8f1952fb0ab9cff842b9d24fe9202e4b3d727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9562af67_9ea3be46",
+        "filename": "services/ui/gpu/interfaces/gpu_main.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T09:48:32Z",
+      "side": 1,
+      "message": "I feel it\u0027s awkward to put this inside \u0027main\u0027.\n\nShould we revisit the privileged interfaces location? For example, //services/viz/privileged/interfaces/[sub-component] (instead of the current //services/viz/[sub-component]/privileged/interfaces). GpuMain (or I guess VizMain) will just live in privileged/interfaces/, and not under any sub-component.",
+      "parentUuid": "a8540333_004bdf2f",
+      "revId": "31d8f1952fb0ab9cff842b9d24fe9202e4b3d727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
