@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5228240c_371b27a7",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-28T00:23:49Z",
+      "side": 1,
+      "message": "khushal noted in chat that he believes this (and the removed code) is dead code. And I think is suggesting we add NOTREACHED() here. I assumed this method was still called, but if it is not, then I agree we should add NOTREACHED(). Waiting for him to confirm the thought.",
+      "range": {
+        "startLine": 1419,
+        "startChar": 2,
+        "endLine": 1419,
+        "endChar": 16
+      },
+      "revId": "325b95fc1cd9512cc584ad19c3e904f7b901137c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
