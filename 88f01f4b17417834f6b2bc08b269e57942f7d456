@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6147ded_e2c4c79a",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-07-28T18:39:25Z",
+      "side": 1,
+      "message": "It\u0027s little weird for me to init this variable as boolean and use it as string later.\n\nHow about use tmp_created\u003d\"\" which is treated as False in the if statement later.",
+      "revId": "88f01f4b17417834f6b2bc08b269e57942f7d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12acd02_80b9734e",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-07-28T18:39:25Z",
+      "side": 1,
+      "message": "Is this GetTempPath() match the function here?\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/aa364992(v\u003dvs.85).aspx\n\nIf so, based on doc,\nWhat if the temp return a path while %TMP% is not set?\nWhat if the path doesn\u0027t exist or doesn\u0027t has access right?\n\nWill these cause any issue?",
+      "revId": "88f01f4b17417834f6b2bc08b269e57942f7d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
