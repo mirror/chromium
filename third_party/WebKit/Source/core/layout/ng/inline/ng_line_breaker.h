@@ -56,6 +56,10 @@ class CORE_EXPORT NGLineBreaker {
     // The current opportunity.
     WTF::Optional<NGLayoutOpportunity> opportunity;
 
+    // True if the current block offset has floats or exclusions, including
+    // intruding floats. Valid only when HasAvailableWidth().
+    bool has_floats_or_intruding_floats = false;
+
     // We don't create "certain zero-height line boxes".
     // https://drafts.csswg.org/css2/visuren.html#phantom-line-box
     // Such line boxes do not prevent two margins being "adjoining", and thus
@@ -79,7 +83,8 @@ class CORE_EXPORT NGLineBreaker {
 
   void PrepareNextLine(NGLineInfo*);
 
-  void UpdateAvailableWidth();
+  void FindNextLayoutOpportunity();
+  void FindNextLayoutOpportunityWithMinimumInlineSize(LayoutUnit);
 
   void ComputeLineLocation(NGLineInfo*) const;
 
@@ -134,6 +139,9 @@ class CORE_EXPORT NGLineBreaker {
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;
   ShapeResultSpacing<String> spacing_;
+
+  // Keep track of handled float items. See HandleFloat().
+  unsigned handled_floats_end_item_index_ = 0;
 
   // True when current box allows line wrapping.
   bool auto_wrap_ = false;
