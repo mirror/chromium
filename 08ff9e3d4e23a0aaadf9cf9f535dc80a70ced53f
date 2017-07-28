@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "836e0e85_350a8c8d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T17:50:56Z",
+      "side": 1,
+      "message": "This should be checked in TabManager::OnSessionRestoreFinishedLoadingTabs",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b433f41_9167c62c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T17:50:56Z",
+      "side": 1,
+      "message": "Instead of accessing private members of TabManager, how about following the same way OnSessionRestoreFinishedLoadingTabs() does? That is adding an API for this.\n\nAnd I would recommend also recording this information in TabManagerWebContentsData.",
+      "range": {
+        "startLine": 144,
+        "startChar": 18,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f60ed6b_a569a743",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T17:50:56Z",
+      "side": 1,
+      "message": "Why do you need friend here?",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56ad739_e1591a7d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T17:50:56Z",
+      "side": 1,
+      "message": "Move this upward, after loading_contents_, as they are related.",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5515082_e6d182e9",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T17:50:56Z",
+      "side": 1,
+      "message": "Can you add OnDidRestoreTab here, too. So public API OnTabLoaderStopLoadingTab can just call to this private API OnDidRestoreTab.\n\nThe reason is that it makes a pair, so it is more readable just from this header file.",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
