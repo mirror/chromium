@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b3c8c20_b6669104",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b03df125_aa8c44f7",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d9f8540_95007428",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "469fee5c_fe148185",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d9f8540_95007428",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ee3d61d_cbcdbd0a",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-26T22:28:38Z",
       "side": 1,
       "message": "What if there is already a channel already opened to |cast_sink|?",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fcea00_d3729cc8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "|cast_socket_service_|-\u003eOpenSocket() will try to find existing socket, and invoke OnChannelOpened() callback directly for already opened sockets.",
+      "parentUuid": "7ee3d61d_cbcdbd0a",
       "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2be66eac_e5cef759",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2c13a45_cea809d0",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd4dd66_f59daf49",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-26T22:28:38Z",
       "side": 1,
       "message": "Can the CastSocketService just pass the CastSocket* instead of having to look it up in the callback?",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7b7e0e_3b33ca16",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Do it in a seperate patch. Make CastSocket::OnOpenCallback take CastSocket* parameter.",
+      "parentUuid": "6bd4dd66_f59daf49",
       "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "cae7eb64_498beef4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Yes. (Just to be in consistent with DIAL)\n\nOpenChannels(); // cast socket 1, 2, 3\nOnChannelOpened(); // cast socket 1\nOnChannelOpened(); // cast socket 2\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003dcurrent_sinks_ has cast sink 1, 2\nOpenChannels(); // cast socket 2\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003dcurrent_sinks_ becomes empty\nOnChannelOpened(); // cast socket 2\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003dcurrent_sinks_ has cast sink 2\nOnChannelOpened(); // cast socket 3 (from last OpenChannels)\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003dcurrent_sinks_ has cast sink 2 (cast sink 3 not added)",
+      "parentUuid": "e8a70099_5d8daf96",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08da4ca7_e03f79a4",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 4
@@ -132,6 +240,24 @@
       "writtenOn": "2017-07-26T22:28:38Z",
       "side": 1,
       "message": "It seems like the net::IPEndpoint for the Cast channel could be part of the Cast-specific sink data, instead of being passed separately.  No request for a change with this patch, but might simplify this API.",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf188d7f_5d94937e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Will do this after making CastSinkExtraData hold net::IPEndPoint.",
+      "parentUuid": "08da4ca7_e03f79a4",
       "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "76abdedd_6e0a294d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066a591d_0b5cd90d",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fa91bd_dd3287f1",
         "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
         "patchSetId": 4
@@ -166,6 +310,24 @@
       "writtenOn": "2017-07-26T22:28:38Z",
       "side": 1,
       "message": "Can this be net::IPEndpoint (instead of adding a separate port member)?",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1d40aa_c78afa89",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T02:09:50Z",
+      "side": 1,
+      "message": "Will do it in a seperate patch. Changing this will affect mojo type mapping code and some unrelated tests.",
+      "parentUuid": "62fa91bd_dd3287f1",
       "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
