@@ -46,6 +46,30 @@
       "revId": "31be55246cd8b5c9f7d8ef6b54cb92bf91654531",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262fa179_fc21e679",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-07-28T14:01:19Z",
+      "side": 1,
+      "message": "VPLOG(2) should be fine since it isn\u0027t enabled by default anywhere. (I believe we still have level 1 enabled on CrOS devices.)",
+      "parentUuid": "7a18d95a_5211e677",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "31be55246cd8b5c9f7d8ef6b54cb92bf91654531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
