@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eda1b5db_9afb05ac",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-28T22:01:16Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the response be in the constructor instead of the prototype?",
+      "revId": "ba717986722e9cf755eb1b14b91b2899e3996eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336e9fd0_5eb7dd93",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-28T22:01:16Z",
+      "side": 1,
+      "message": "rootPromise should be declared in the constructor, and same for all other this.* properties defined below.\n\nHaving said that, it seems that MockDelegate should inherit from TestBrowserProxy, because it basically replicates functionality that it already exists there.\n\nrootPromise/keyPromise  are used simply when choosePackRootDirectory and choosePrivateKeyPath are called. keyPath/flag are used to check whether the correct arguments were passed. Both of these can be achieved with whenCalled().",
+      "revId": "ba717986722e9cf755eb1b14b91b2899e3996eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
