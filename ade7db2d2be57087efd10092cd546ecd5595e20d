@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "4543fc17_1f9bf358",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T07:10:38Z",
+      "side": 1,
+      "message": "Currently, only for sorting.",
+      "parentUuid": "07d2e8a8_9cb68a48",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97437226_d4e969c9",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "Are we going to have any source without FileInfo cache inside? If not, then it should be reasonable to put the common code here.",
       "parentUuid": "eb07bafe_e22e709c",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2002b8ff_0e38d032",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T07:10:38Z",
+      "side": 1,
+      "message": "For Downloads source we won\u0027t cache FileInfo. Downloads source recursively calls local file system backend via File API, so it\u0027s more natural not to cache FileInfo, and performance does not suffer.",
+      "parentUuid": "8410c4a1_3e326cda",
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -403,6 +439,30 @@
     },
     {
       "key": {
+        "uuid": "a41217f7_d45d2dcd",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T07:10:38Z",
+      "side": 1,
+      "message": "Maybe we need to talk offline to explain this. But meanwhile let me try again.\n\nRecentModel calls several RecentSource in parallel to get lists of recent files. Say we have two sources now: DriveRecentSource and DownloadsRecentSource. And both of sources have one file each, \"kitten.jpg\", identically named but different file.\n\nFilesMapBuilder::OnGetRecentFiles() is called for each source once a list of recent files is obtained, and it simply appends them into |files_|. And since calls to sources are made in parallel, it is not deterministic which source returns first. This means that order of two \"kitten.jpg\" from two sources in |files_| is random.\n\nAfter all sources returned lists of recent files, OnGetRecentFilesCompleted() is called where |files_| (std::vector\u003cstd::unique_ptr\u003cRecentFile\u003e\u003e) is converted to FilesMap (std::map\u003cbase::FilePath, std::unique_ptr\u003cRecentFile\u003e\u003e). Since it is not allowed to return duplicated file names in Recent file system, we need to rename either \"kitten.jpg\" to \"kitten (1).jpg\". However as I said above order in |files_| is not deterministic, so if we naively process |files_|, it\u0027s random \"kitten.jpg\" from which source is renamed.\n\nTo avoid this issue, I decided to sort |files_| in the beginning of OnGetRecentFilesCompleted(). The sort order used here should be as stable as possible. In the comparison we need SourceType at least (because different sources can return files with the identical name). File name is usable but it\u0027s not sufficient to distinguish two files with the identical name from the same source. So I introduced |unique_id|.",
+      "parentUuid": "a8e22bf7_059f118f",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b789658_fa97951f",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -636,6 +696,30 @@
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdf2a0cb_6fbc08b9",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T07:10:38Z",
+      "side": 1,
+      "message": "I believe the number of Identity is fairly limited. As long as we clear cache in State by some timeouts, memory consumption won\u0027t be much problem. WDYT?",
+      "parentUuid": "fe3d6342_eb571337",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
