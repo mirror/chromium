@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b2fd9e7_e5e539ac",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:37:02Z",
+      "side": 1,
+      "message": "The username vote type, if the autofill type is USERNAME. Otherwise, the field is ignored.",
+      "range": {
+        "startLine": 201,
+        "startChar": 5,
+        "endLine": 201,
+        "endChar": 44
+      },
+      "revId": "d81f68bb20bdaa596dcb27ed3ca498434eb7f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfba9c93_69dd1574",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:37:02Z",
+      "side": 1,
+      "message": "\u003d\u003e username_vote_type\n\nIn this function, everything is about votes. Let\u0027s clarify that.",
+      "range": {
+        "startLine": 840,
+        "startChar": 60,
+        "endLine": 840,
+        "endChar": 69
+      },
+      "revId": "d81f68bb20bdaa596dcb27ed3ca498434eb7f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
