@@ -313,8 +313,6 @@ Guide](https://google.github.io/styleguide/jsguide.html).
 * Use single-quotes instead of double-quotes for all strings.
     * `clang-format` now handles this automatically.
 
-* Omit curly braces for single-line if statements.
-
 * Use ES5 getters and setters
     * Use `@type` (instead of `@return` or `@param`) for JSDoc annotations on
       getters/setters
@@ -381,8 +379,8 @@ Also see the [Google Polymer Style Guide](http://go/polymer-style).
     * `created`, `ready`, `attached`, `detached`
     * public methods
     * event handlers, computed functions, and private methods
- 
-* Use camelCase for element IDs to simplify local DOM accessors (i.e. 
+
+* Use camelCase for element IDs to simplify local DOM accessors (i.e.
   `this.$.camelCase` instead of `this.$[‘dash-case’]`).
 
 * Use `this.foo` instead of `newFoo` arguments in observers when possible.
