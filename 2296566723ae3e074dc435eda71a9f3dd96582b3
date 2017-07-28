@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87d2b046_1119c46c",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-28T17:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870be86f_2faa86bb",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 58
+      },
+      "revId": "2296566723ae3e074dc435eda71a9f3dd96582b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dbb5d3e_f06316e3",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "2296566723ae3e074dc435eda71a9f3dd96582b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c242dec_d8820ccb",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-28T17:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dbb5d3e_f06316e3",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 66
+      },
+      "revId": "2296566723ae3e074dc435eda71a9f3dd96582b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
