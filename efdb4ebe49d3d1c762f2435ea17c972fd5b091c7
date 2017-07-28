@@ -46,6 +46,30 @@
       "revId": "efdb4ebe49d3d1c762f2435ea17c972fd5b091c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a85524_f5840169",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-28T20:32:20Z",
+      "side": 1,
+      "message": "I see, thanks for the explanation.",
+      "parentUuid": "2f39300e_cbdd56d8",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 54
+      },
+      "revId": "efdb4ebe49d3d1c762f2435ea17c972fd5b091c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
