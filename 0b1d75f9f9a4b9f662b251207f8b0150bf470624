@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d249dc2c_1c634063",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/profiles/ProfileManagerUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-28T14:58:49Z",
+      "side": 1,
+      "message": "it\u0027s a shame that this refers to ChromeMobileApplication but its\u0027 not the end of the world :/",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 67
+      },
+      "revId": "0b1d75f9f9a4b9f662b251207f8b0150bf470624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a401d23_8b1ac8e3",
+        "filename": "chrome/browser/android/profiles/profile_manager_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-28T14:58:49Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "0b1d75f9f9a4b9f662b251207f8b0150bf470624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
