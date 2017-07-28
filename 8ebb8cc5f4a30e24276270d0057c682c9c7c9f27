@@ -22,6 +22,30 @@
       "revId": "8ebb8cc5f4a30e24276270d0057c682c9c7c9f27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4766e9_f08f25c7",
+        "filename": "net/cert/x509_util_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T19:40:28Z",
+      "side": 1,
+      "message": "Probably? Let me try.",
+      "parentUuid": "42b1c77a_1679d890",
+      "range": {
+        "startLine": 10,
+        "startChar": 29,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "8ebb8cc5f4a30e24276270d0057c682c9c7c9f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
