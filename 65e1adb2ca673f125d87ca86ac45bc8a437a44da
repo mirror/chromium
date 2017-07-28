@@ -34,6 +34,24 @@
       "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7c7e3f_390d7f38",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-07-28T19:48:27Z",
+      "side": 1,
+      "message": "Btw, if you compare the code post this CL to the core prior to the mojoification of MessagePort, it is still way fewer copies and still far faster ;-)\n\nSo probably this CL is fine. I like your suggestion of doing away w/ the string16 parameter. Seems reasonable as a follow-up change.",
+      "parentUuid": "faf52c7b_609a9d7c",
+      "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
