@@ -33,6 +33,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/test/navigation_simulator.h"
+#include "content/public/test/navigation_throttle_inserter.h"
 #include "content/public/test/test_renderer_host.h"
 #include "net/base/host_port_pair.h"
 #include "url/gurl.h"
@@ -72,6 +73,11 @@ class DelayWillProcessResponseThrottle : public content::NavigationThrottle {
       content::NavigationHandle* navigation_handle)
       : NavigationThrottle(navigation_handle) {}
 
+  static std::unique_ptr<content::NavigationThrottle> Create(
+      content::NavigationHandle* handle) {
+    return base::MakeUnique<DelayWillProcessResponseThrottle>(handle);
+  }
+
   // content::NavigationThrottle:
   ThrottleCheckResult WillProcessResponse() override {
     base::SequencedTaskRunnerHandle::Get()->PostTask(
@@ -105,24 +111,6 @@ class DelayWillProcessResponseThrottle : public content::NavigationThrottle {
   }
 
   DISALLOW_COPY_AND_ASSIGN(DelayWillProcessResponseThrottle);
-};
-
-// Adds a navigation throttle to the navigation which delays
-// WillProcessResponse.
-class DelayWillProcessResponseObserver : public content::WebContentsObserver {
- public:
-  explicit DelayWillProcessResponseObserver(content::WebContents* contents)
-      : content::WebContentsObserver(contents) {}
-
-  // content::WebContentsObserver:
-  void DidStartNavigation(
-      content::NavigationHandle* navigation_handle) override {
-    navigation_handle->RegisterThrottleForTesting(
-        base::MakeUnique<DelayWillProcessResponseThrottle>(navigation_handle));
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(DelayWillProcessResponseObserver);
 };
 
 std::string AdTypeToString(AdType ad_type) {
@@ -706,7 +694,9 @@ TEST_F(AdsPageLoadMetricsObserverTest, MainFrameResource) {
 TEST_F(AdsPageLoadMetricsObserverTest, NoHistogramWithoutCommit) {
   {
     // Once the metrics observer has the GlobalRequestID, throttle.
-    DelayWillProcessResponseObserver delay_observer(web_contents());
+    content::NavigationThrottleInserter throttle_inserter(
+        web_contents(),
+        base::BindRepeating(&DelayWillProcessResponseThrottle::Create));
 
     // Start main-frame navigation. The commit will defer after calling
     // WillProcessNavigationResponse, it will load a resource, and then the
