@@ -4008,6 +4008,27 @@ IndexedDBBackingStore::OpenIndexCursor(
   return std::move(cursor);
 }
 
+leveldb::Status IndexedDBBackingStore::GetCompleteMetadata(
+    std::vector<IndexedDBDatabaseMetadata>* output) {
+  leveldb::Status status = leveldb::Status::OK();
+  std::vector<base::string16> names = GetDatabaseNames(&status);
+  if (!status.ok())
+    return status;
+  for (const base::string16& name : names) {
+    output->push_back(IndexedDBDatabaseMetadata());
+    bool success = false;
+    status = GetIDBDatabaseMetaData(name, &output->back(), &success);
+    output->back().name = name;
+    if (!success)
+      return status;
+    status = GetObjectStores(output->back().id, &output->back().object_stores);
+    if (!status.ok())
+      return status;
+  }
+
+  return status;
+}
+
 IndexedDBBackingStore::Transaction::Transaction(
     IndexedDBBackingStore* backing_store)
     : backing_store_(backing_store),

@@ -27,6 +27,7 @@
 #include "content/browser/indexed_db/indexed_db_active_blob_registry.h"
 #include "content/browser/indexed_db/indexed_db_blob_info.h"
 #include "content/browser/indexed_db/indexed_db_leveldb_coding.h"
+#include "content/browser/indexed_db/indexed_db_pre_close_task_list.h"
 #include "content/browser/indexed_db/leveldb/leveldb_iterator.h"
 #include "content/browser/indexed_db/leveldb/leveldb_transaction.h"
 #include "content/common/content_export.h"
@@ -585,6 +586,15 @@ class CONTENT_EXPORT IndexedDBBackingStore
       blink::WebIDBCursorDirection,
       leveldb::Status*);
 
+  leveldb::Status GetCompleteMetadata(
+      std::vector<IndexedDBDatabaseMetadata>* output);
+
+  std::unique_ptr<IndexedDBPreCloseTaskList>* pre_close_task_list() {
+    return &pre_close_task_list_;
+  }
+
+  LevelDBDatabase* db() { return db_.get(); }
+
  protected:
   friend class base::RefCounted<IndexedDBBackingStore>;
 
@@ -690,6 +700,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
   // will hold a reference to this backing store.
   IndexedDBActiveBlobRegistry active_blob_registry_;
   base::OneShotTimer close_timer_;
+  std::unique_ptr<IndexedDBPreCloseTaskList> pre_close_task_list_;
 
   // Incremented whenever a transaction starts committing, decremented when
   // complete. While > 0, temporary journal entries may exist so out-of-band
