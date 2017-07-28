@@ -2413,7 +2413,7 @@ void Document::UpdateStyleAndLayoutIgnorePendingStylesheets(
   ++force_layout_count_;
 }
 
-RefPtr<ComputedStyle> Document::StyleForElementIgnoringPendingStylesheets(
+PassRefPtr<ComputedStyle> Document::StyleForElementIgnoringPendingStylesheets(
     Element* element) {
   DCHECK_EQ(element->GetDocument(), this);
   StyleEngine::IgnoringPendingStylesheet ignoring(GetStyleEngine());
@@ -2433,7 +2433,7 @@ RefPtr<ComputedStyle> Document::StyleForElementIgnoringPendingStylesheets(
                                                layout_parent_style);
 }
 
-RefPtr<ComputedStyle> Document::StyleForPage(int page_index) {
+PassRefPtr<ComputedStyle> Document::StyleForPage(int page_index) {
   UpdateDistribution();
   return EnsureStyleResolver().StyleForPage(page_index);
 }
@@ -6034,7 +6034,7 @@ void Document::EnforceSandboxFlags(SandboxFlags mask) {
   }
 }
 
-void Document::UpdateSecurityOrigin(RefPtr<SecurityOrigin> origin) {
+void Document::UpdateSecurityOrigin(PassRefPtr<SecurityOrigin> origin) {
   SetSecurityOrigin(std::move(origin));
   DidUpdateSecurityOrigin();
 }
