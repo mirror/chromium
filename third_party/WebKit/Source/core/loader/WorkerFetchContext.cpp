@@ -123,11 +123,15 @@ bool WorkerFetchContext::ShouldBlockRequestByInspector(
 }
 
 void WorkerFetchContext::DispatchDidBlockRequest(
-    const ResourceRequest& resource_request,
+    const KURL& url,
+    WebURLRequest::RequestContext request_context,
+    WebURLRequest::FrameType frame_type,
+    ReferrerPolicy referrer_policy,
     const FetchInitiatorInfo& fetch_initiator_info,
     ResourceRequestBlockedReason blocked_reason) const {
-  probe::didBlockRequest(global_scope_, resource_request, nullptr,
-                         fetch_initiator_info, blocked_reason);
+  probe::didBlockRequest(global_scope_, url, request_context, frame_type,
+                         referrer_policy, nullptr, fetch_initiator_info,
+                         blocked_reason);
 }
 
 bool WorkerFetchContext::ShouldBypassMainWorldCSP() const {

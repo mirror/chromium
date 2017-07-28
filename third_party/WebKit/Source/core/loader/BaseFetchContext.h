@@ -58,7 +58,10 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
   // Used in the default implementation for CanRequest, CanFollowRedirect
   // and AllowResponse.
   virtual bool ShouldBlockRequestByInspector(const ResourceRequest&) const = 0;
-  virtual void DispatchDidBlockRequest(const ResourceRequest&,
+  virtual void DispatchDidBlockRequest(const KURL&,
+                                       WebURLRequest::RequestContext,
+                                       WebURLRequest::FrameType,
+                                       ReferrerPolicy,
                                        const FetchInitiatorInfo&,
                                        ResourceRequestBlockedReason) const = 0;
   virtual bool ShouldBypassMainWorldCSP() const = 0;

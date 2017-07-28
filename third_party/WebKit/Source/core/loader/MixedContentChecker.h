@@ -106,12 +106,9 @@ class CORE_EXPORT MixedContentChecker final {
 
   static WebMixedContentContextType ContextTypeForInspector(
       LocalFrame*,
-      const ResourceRequest&);
-
-  // Returns the frame that should be considered the effective frame
-  // for a mixed content check for the given frame type.
-  static Frame* EffectiveFrameForFrameType(LocalFrame*,
-                                           WebURLRequest::FrameType);
+      const KURL& kurls,
+      WebURLRequest::RequestContext,
+      WebURLRequest::FrameType);
 
   static void HandleCertificateError(LocalFrame*,
                                      const ResourceResponse&,

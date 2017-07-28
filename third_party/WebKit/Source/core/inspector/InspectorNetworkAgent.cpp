@@ -580,12 +580,16 @@ void InspectorNetworkAgent::ShouldBlockRequest(const ResourceRequest& request,
 
 void InspectorNetworkAgent::DidBlockRequest(
     ExecutionContext* execution_context,
-    const ResourceRequest& request,
+    const KURL& url,
+    WebURLRequest::RequestContext request_context,
+    WebURLRequest::FrameType frame_type,
+    ReferrerPolicy referrer_policy,
     DocumentLoader* loader,
     const FetchInitiatorInfo& initiator_info,
     ResourceRequestBlockedReason reason) {
   unsigned long identifier = CreateUniqueIdentifier();
-  WillSendRequestInternal(execution_context, identifier, loader, request,
+  WillSendRequestInternal(execution_context, identifier, loader, url,
+                          request_context, frame_type, referrer_policy,
                           ResourceResponse(), initiator_info);
 
   String request_id = IdentifiersFactory::RequestId(identifier);
@@ -610,12 +614,15 @@ void InspectorNetworkAgent::WillSendRequestInternal(
     ExecutionContext* execution_context,
     unsigned long identifier,
     DocumentLoader* loader,
-    const ResourceRequest& request,
+    const KURL& url,
+    WebURLRequest::RequestContext request_context,
+    WebURLRequest::FrameType frame_type,
+    ReferrerPolicy referrer_policy,
     const ResourceResponse& redirect_response,
     const FetchInitiatorInfo& initiator_info) {
   String request_id = IdentifiersFactory::RequestId(identifier);
   String loader_id = loader ? IdentifiersFactory::LoaderId(loader) : "";
-  resources_data_->ResourceCreated(request_id, loader_id, request.Url());
+  resources_data_->ResourceCreated(request_id, loader_id, url);
 
   InspectorPageAgent::ResourceType type = InspectorPageAgent::kOtherResource;
   if (initiator_info.name == FetchInitiatorTypeNames::xmlhttprequest) {
@@ -649,12 +656,11 @@ void InspectorNetworkAgent::WillSendRequestInternal(
   // type even if |loader| is null.
   if (loader) {
     request_info->setMixedContentType(MixedContentTypeForContextType(
-        MixedContentChecker::ContextTypeForInspector(loader->GetFrame(),
-                                                     request)));
+        MixedContentChecker::ContextTypeForInspector(
+            loader->GetFrame(), url, request_context, frame_type)));
   }
 
-  request_info->setReferrerPolicy(
-      GetReferrerPolicy(request.GetReferrerPolicy()));
+  request_info->setReferrerPolicy(GetReferrerPolicy(referrer_policy));
   if (initiator_info.is_link_preload)
     request_info->setIsLinkPreload(true);
 
@@ -703,9 +709,11 @@ void InspectorNetworkAgent::WillSendRequest(
 
   request.SetReportRawHeaders(true);
 
+  WebURLRequest::RequestContext request_context = request.GetRequestContext();
+
   if (state_->booleanProperty(NetworkAgentState::kCacheDisabled, false)) {
     if (LoadsFromCacheOnly(request) &&
-        request.GetRequestContext() != WebURLRequest::kRequestContextInternal) {
+        request_context != WebURLRequest::kRequestContextInternal) {
       request.SetCachePolicy(WebCachePolicy::kBypassCacheLoadOnlyFromCache);
     } else {
       request.SetCachePolicy(WebCachePolicy::kBypassingCache);
@@ -715,8 +723,10 @@ void InspectorNetworkAgent::WillSendRequest(
   if (state_->booleanProperty(NetworkAgentState::kBypassServiceWorker, false))
     request.SetServiceWorkerMode(WebURLRequest::ServiceWorkerMode::kNone);
 
-  WillSendRequestInternal(execution_context, identifier, loader, request,
-                          redirect_response, initiator_info);
+  WillSendRequestInternal(execution_context, identifier, loader, request.Url(),
+                          request_context, request.GetFrameType(),
+                          request.GetReferrerPolicy(), redirect_response,
+                          initiator_info);
 
   if (!host_id_.IsEmpty())
     request.AddHTTPHeaderField(

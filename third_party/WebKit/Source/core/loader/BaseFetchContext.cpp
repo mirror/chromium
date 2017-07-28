@@ -56,8 +56,10 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequest(
                          origin_restriction, redirect_status);
   if (blocked_reason != ResourceRequestBlockedReason::kNone &&
       reporting_policy == SecurityViolationReportingPolicy::kReport) {
-    DispatchDidBlockRequest(resource_request, options.initiator_info,
-                            blocked_reason);
+    DispatchDidBlockRequest(
+        resource_request.Url(), resource_request.GetRequestContext(),
+        resource_request.GetFrameType(), resource_request.GetReferrerPolicy(),
+        options.initiator_info, blocked_reason);
   }
   return blocked_reason;
 }

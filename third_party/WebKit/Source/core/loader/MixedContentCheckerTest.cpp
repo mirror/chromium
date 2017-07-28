@@ -72,35 +72,33 @@ TEST(MixedContentCheckerTest, ContextTypeForInspector) {
   dummy_page_holder->GetFrame().GetDocument()->SetSecurityOrigin(
       SecurityOrigin::CreateFromString("http://example.test"));
 
-  ResourceRequest not_mixed_content("https://example.test/foo.jpg");
-  not_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
-  not_mixed_content.SetRequestContext(WebURLRequest::kRequestContextScript);
+  KURL https_url(kParsedURLString, "https://example.test/foo.jpg");
   EXPECT_EQ(WebMixedContentContextType::kNotMixedContent,
             MixedContentChecker::ContextTypeForInspector(
-                &dummy_page_holder->GetFrame(), not_mixed_content));
+                &dummy_page_holder->GetFrame(), https_url,
+                WebURLRequest::kRequestContextScript,
+                WebURLRequest::kFrameTypeAuxiliary));
 
   dummy_page_holder->GetFrame().GetDocument()->SetSecurityOrigin(
       SecurityOrigin::CreateFromString("https://example.test"));
   EXPECT_EQ(WebMixedContentContextType::kNotMixedContent,
             MixedContentChecker::ContextTypeForInspector(
-                &dummy_page_holder->GetFrame(), not_mixed_content));
+                &dummy_page_holder->GetFrame(), https_url,
+                WebURLRequest::kRequestContextScript,
+                WebURLRequest::kFrameTypeAuxiliary));
 
-  ResourceRequest blockable_mixed_content("http://example.test/foo.jpg");
-  blockable_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
-  blockable_mixed_content.SetRequestContext(
-      WebURLRequest::kRequestContextScript);
+  KURL http_url(kParsedURLString, "http://example.test/foo.jpg");
   EXPECT_EQ(WebMixedContentContextType::kBlockable,
             MixedContentChecker::ContextTypeForInspector(
-                &dummy_page_holder->GetFrame(), blockable_mixed_content));
+                &dummy_page_holder->GetFrame(), http_url,
+                WebURLRequest::kRequestContextScript,
+                WebURLRequest::kFrameTypeAuxiliary));
 
-  ResourceRequest optionally_blockable_mixed_content(
-      "http://example.test/foo.jpg");
-  blockable_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
-  blockable_mixed_content.SetRequestContext(
-      WebURLRequest::kRequestContextImage);
   EXPECT_EQ(WebMixedContentContextType::kOptionallyBlockable,
             MixedContentChecker::ContextTypeForInspector(
-                &dummy_page_holder->GetFrame(), blockable_mixed_content));
+                &dummy_page_holder->GetFrame(), http_url,
+                WebURLRequest::kRequestContextImage,
+                WebURLRequest::kFrameTypeAuxiliary));
 }
 
 namespace {
