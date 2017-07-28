@@ -61,6 +61,7 @@ const StylePropertyShorthand& shorthandForProperty(CSSPropertyID propertyID) {
 
   if (propertyID == CSSPropertyTextDecoration &&
       !RuntimeEnabledFeatures::CSS3TextDecorationsEnabled())
+    NOTREACHED();
     return emptyShorthand;
   if (propertyID == CSSPropertyOffset &&
       !RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled())
