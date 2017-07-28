@@ -250,6 +250,8 @@ class CORE_EXPORT FrameSelection final
   base::Optional<int> LayoutSelectionStart() const;
   base::Optional<int> LayoutSelectionEnd() const;
   void ClearLayoutSelection();
+  // TODO(yoichio): |LayoutObject::IsSelectionBorder()| should be replaced with this.
+  bool IsLayoutObjectReferred(LayoutObject*) const;
 
   DECLARE_TRACE();
 

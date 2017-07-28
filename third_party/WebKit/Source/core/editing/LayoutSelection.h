@@ -107,6 +107,7 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   base::Optional<int> SelectionStart() const;
   base::Optional<int> SelectionEnd() const;
   void OnDocumentShutdown();
+  bool IsLayoutObjectReferred(LayoutObject*) const;
 
   DECLARE_TRACE();
 
