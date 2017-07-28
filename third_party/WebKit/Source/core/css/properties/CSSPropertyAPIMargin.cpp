@@ -11,10 +11,10 @@
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPIMargin::parseSingleValue(
+const CSSValue* CSSPropertyAPIMargin::ParseSingleValue(CSSPropertyID, 
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return CSSPropertyMarginUtils::ConsumeMarginOrOffset(
       range, context.Mode(), CSSPropertyParserHelpers::UnitlessQuirk::kAllow);
 }

@@ -10,12 +10,12 @@
 
 namespace blink {
 
-bool CSSShorthandPropertyAPIWebkitMaskPosition::parseShorthand(
+bool CSSShorthandPropertyAPIWebkitMaskPosition::ParseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     bool,
-    HeapVector<CSSProperty, 256>& properties) {
+    HeapVector<CSSProperty, 256>& properties) const {
   CSSValue* result_x = nullptr;
   CSSValue* result_y = nullptr;
 

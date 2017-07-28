@@ -42,10 +42,10 @@ CSSFontVariationValue* ConsumeFontVariationTag(CSSParserTokenRange& range) {
 
 }  // namespace
 
-const CSSValue* CSSPropertyAPIFontVariationSettings::parseSingleValue(
+const CSSValue* CSSPropertyAPIFontVariationSettings::ParseSingleValue(CSSPropertyID, 
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
   if (range.Peek().Id() == CSSValueNormal)
     return CSSPropertyParserHelpers::ConsumeIdent(range);

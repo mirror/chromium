@@ -11,10 +11,10 @@
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPILineHeightStep::parseSingleValue(
+const CSSValue* CSSPropertyAPILineHeightStep::ParseSingleValue(CSSPropertyID, 
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeLength(range, context.Mode(),
                                                  kValueRangeNonNegative);
 }

@@ -9,12 +9,12 @@
 
 namespace blink {
 
-bool CSSShorthandPropertyAPIBorderSpacing::parseShorthand(
+bool CSSShorthandPropertyAPIBorderSpacing::ParseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     bool,
-    HeapVector<CSSProperty, 256>& properties) {
+    HeapVector<CSSProperty, 256>& properties) const {
   CSSValue* horizontal_spacing =
       ConsumeLength(range, context.Mode(), kValueRangeNonNegative,
                     CSSPropertyParserHelpers::UnitlessQuirk::kAllow);

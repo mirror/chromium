@@ -12,10 +12,10 @@
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPIJustifyItems::parseSingleValue(
+const CSSValue* CSSPropertyAPIJustifyItems::ParseSingleValue(CSSPropertyID, 
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   CSSParserTokenRange range_copy = range;
   CSSIdentifierValue* legacy =
