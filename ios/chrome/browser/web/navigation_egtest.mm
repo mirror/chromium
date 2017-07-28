@@ -406,6 +406,11 @@ class RedirectResponseProvider : public web::DataResponseProvider {
   EARL_GREY_TEST_DISABLED(@"Test disabled on device.");
 #endif
 
+  // TODO(crbug.com/747440): Re-enable this test once the bug is fixed.
+  if (base::ios::IsRunningOnIOS11OrLater()) {
+    EARL_GREY_TEST_DISABLED(@"Disabled on iOS 11.");
+  }
+
   SetupBackAndForwardResponseProvider();
 
   // Go to page 1 with a button which calls window.history.forward().
