@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9f9e998e_ab0b3d25",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-28T07:07:18Z",
+      "side": 1,
+      "message": "Ah, unfortunately, this didn\u0027t work. There are cases where it returns different value than I need here. I need opportunity.BlockStartOffset(), while GetClearanceOffset() computes using BlockEndOffset()? I can\u0027t figure out it\u0027s different needs, or it\u0027s a bug in GetClearanceOffset(). Can you? PS8 contains both code under #if, and flipping it will crash several tests.",
+      "parentUuid": "4e2775b5_ece85413",
+      "range": {
+        "startLine": 650,
+        "startChar": 12,
+        "endLine": 650,
+        "endChar": 36
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae3b44d4_01fa6650",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
         "patchSetId": 6
