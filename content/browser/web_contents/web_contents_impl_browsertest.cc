@@ -493,6 +493,71 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
   EXPECT_EQ(3, delegate->loadingStateToDifferentDocumentCount());
 }
 
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest, TitleDuringCrossSiteLoad) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  std::unique_ptr<LoadingStateChangedDelegate> delegate(
+      new LoadingStateChangedDelegate());
+  shell()->web_contents()->SetDelegate(delegate.get());
+
+  const char* title2_title = "Title Of Awesomeness";
+  const char* title3_title = "Title Of More Awesomeness";
+  const char* title4_title = "Title Of Excessive Awesomeness";
+  const GURL url_for_site_with_no_title =
+      embedded_test_server()->GetURL("/title1.html");
+
+  // Navigate to a site; the contents gets the appropriate title.
+  {
+    EXPECT_TRUE(
+        NavigateToURL(shell(), embedded_test_server()->GetURL("/title2.html")));
+    EXPECT_EQ(base::ASCIIToUTF16(title2_title),
+              shell()->web_contents()->GetTitle());
+  }
+  // Navigate to a different site; the contents keeps the old title during load
+  // and gets the appropriate title after load is done.
+  {
+    LoadStopNotificationObserver load_observer(
+        &shell()->web_contents()->GetController());
+    shell()->LoadURL(embedded_test_server()->GetURL("/title3.html"));
+    EXPECT_EQ(base::ASCIIToUTF16(title2_title),
+              shell()->web_contents()->GetTitle());
+    load_observer.Wait();
+    EXPECT_EQ(base::ASCIIToUTF16(title3_title),
+              shell()->web_contents()->GetTitle());
+  }
+  // Navigate to a different site that has no title; the contents keeps the old
+  // title during load and gets the appropriate title (synthesized from URL)
+  // after load is done.
+  {
+    LoadStopNotificationObserver load_observer(
+        &shell()->web_contents()->GetController());
+    shell()->LoadURL(url_for_site_with_no_title);
+    EXPECT_EQ(base::ASCIIToUTF16(title3_title),
+              shell()->web_contents()->GetTitle());
+    load_observer.Wait();
+    base::string16 title = shell()->web_contents()->GetTitle();
+    EXPECT_FALSE(title.empty());
+    EXPECT_FALSE(url_for_site_with_no_title.spec().find(
+                     base::UTF16ToUTF8(title)) == std::string::npos)
+        << "title of " << title;
+  }
+  // Navigate to a different site to test behavior when navigating away from a
+  // site without a title.
+  {
+    LoadStopNotificationObserver load_observer(
+        &shell()->web_contents()->GetController());
+    const GURL url_for_title4 = embedded_test_server()->GetURL("/title4.html");
+    shell()->LoadURL(url_for_title4);
+    base::string16 title = shell()->web_contents()->GetTitle();
+    EXPECT_FALSE(title.empty());
+    EXPECT_FALSE(url_for_site_with_no_title.spec().find(
+                     base::UTF16ToUTF8(title)) == std::string::npos)
+        << "title of " << title;
+    load_observer.Wait();
+    EXPECT_EQ(base::ASCIIToUTF16(title4_title),
+              shell()->web_contents()->GetTitle());
+  }
+}
+
 IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
                        RenderViewCreatedForChildWindow) {
   ASSERT_TRUE(embedded_test_server()->Start());

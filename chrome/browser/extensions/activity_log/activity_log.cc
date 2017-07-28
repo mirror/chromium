@@ -37,6 +37,7 @@
 #include "chrome/common/pref_names.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_process_host.h"
@@ -779,7 +780,13 @@ void ActivityLog::OnScriptsExecuted(
                           Action::ACTION_CONTENT_SCRIPT,
                           "");  // no API call here
       action->set_page_url(on_url);
-      action->set_page_title(base::UTF16ToUTF8(web_contents->GetTitle()));
+      // If the entry is still loading, web_contents()->GetTitle() may
+      // not have updated the title yet, so directly access the
+      // NavigationEntry's title.
+      const content::NavigationEntry* entry =
+          web_contents->GetController().GetLastCommittedEntry();
+      if (entry)
+        action->set_page_title(base::UTF16ToUTF8(entry->GetTitleForDisplay()));
       action->set_page_incognito(
           web_contents->GetBrowserContext()->IsOffTheRecord());
 
