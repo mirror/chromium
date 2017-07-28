@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5147e4d5_4060df4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-28T15:36:05Z",
+      "side": 1,
+      "message": "With measureChildren(), the code works currently because all children are visible by default for the very first measurement. At the very first measurement they get their height and width (which don\u0027t change after that) and keep it so that even if they are set to GONE afterwards, they can still be shown later on.\nAs we might change the default behavior of the TileView to be GONE by default (for whatever reason), it is safer here to keep measuring the children with a for loop. Adding a comment to clarify this.",
+      "parentUuid": "aa1a811f_c76be5dd",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "9ed4bf0930a02c9e06c98ace71f7ef423bccfada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6215779b_e93aa7c3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9ed4bf0930a02c9e06c98ace71f7ef423bccfada",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016bc39c_ab583b79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-28T15:36:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6215779b_e93aa7c3",
+      "range": {
+        "startLine": 169,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 16
+      },
+      "revId": "9ed4bf0930a02c9e06c98ace71f7ef423bccfada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
