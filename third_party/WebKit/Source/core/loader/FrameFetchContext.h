@@ -174,7 +174,6 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   DocumentLoader* MasterDocumentLoader() const;
   LocalFrame* GetFrame() const;
   LocalFrameClient* GetLocalFrameClient() const;
-  LocalFrame* FrameOfImportsController() const;
   RefPtr<WebTaskRunner> GetTaskRunner() const;
 
   // FetchContext overrides:

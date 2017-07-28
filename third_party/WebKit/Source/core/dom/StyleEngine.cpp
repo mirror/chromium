@@ -64,8 +64,7 @@ using namespace HTMLNames;
 
 StyleEngine::StyleEngine(Document& document)
     : document_(&document),
-      is_master_(!document.ImportsController() ||
-                 document.ImportsController()->Master() == &document),
+      is_master_(!document.IsHTMLImport()),
       document_style_sheet_collection_(
           this,
           DocumentStyleSheetCollection::Create(document)) {
@@ -87,7 +86,8 @@ inline Document* StyleEngine::Master() {
   if (IsMaster())
     return document_;
   HTMLImportsController* import = GetDocument().ImportsController();
-  // Document::import() can return null while executing its destructor.
+  // Document::ImportsController() can return null while executing its
+  // destructor.
   if (!import)
     return nullptr;
   return import->Master();
@@ -549,11 +549,7 @@ void StyleEngine::MarkDocumentDirty() {
   if (RuntimeEnabledFeatures::CSSViewportEnabled())
     ViewportRulesChanged();
   if (GetDocument().ImportLoader())
-    GetDocument()
-        .ImportsController()
-        ->Master()
-        ->GetStyleEngine()
-        .MarkDocumentDirty();
+    GetDocument().MasterDocument().GetStyleEngine().MarkDocumentDirty();
   else
     GetDocument().ScheduleLayoutTreeUpdateIfNeeded();
 }
@@ -1022,11 +1018,7 @@ void StyleEngine::ViewportRulesChanged() {
 
 void StyleEngine::HtmlImportAddedOrRemoved() {
   if (GetDocument().ImportLoader()) {
-    GetDocument()
-        .ImportsController()
-        ->Master()
-        ->GetStyleEngine()
-        .HtmlImportAddedOrRemoved();
+    GetDocument().MasterDocument().GetStyleEngine().HtmlImportAddedOrRemoved();
     return;
   }
 
