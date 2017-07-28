@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1b5f1447_30642ee9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-28T08:28:19Z",
+      "side": 1,
+      "message": "Understood this one. An example of failure: fast/block/float/020.html\n\nThis test has float:left that fits within padding-left. GetClearanceOffset() includes such floats, while NGLayoutOpportunityIterator doesn\u0027t, by doing an additional check:\n  // Base case: exclusion is not in the node\u0027s constraint space.\n  if (!exclusion-\u003erect.IsContained(node-\u003eopportunity))\n    return;\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/ng/ng_layout_opportunity_iterator.cc?type\u003dcs\u0026l\u003d201\n\nIs this something GetClearanceOffset() should also do, or is this due to by different requirements?\n\nI\u0027ll move it back to the flag for now in PS9, but your thoughts appreciated.",
+      "parentUuid": "9f9e998e_ab0b3d25",
+      "range": {
+        "startLine": 650,
+        "startChar": 12,
+        "endLine": 650,
+        "endChar": 36
+      },
+      "revId": "3a1a4c6e4103f7bab949c2ef3a82513f0930653b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae3b44d4_01fa6650",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
         "patchSetId": 6
