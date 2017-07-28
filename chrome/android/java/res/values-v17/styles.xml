@@ -51,6 +51,10 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
+    <style name="TabbedModeThemeVrSupport" parent="TabbedModeTheme">
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
     <style name="FullscreenWhite" parent="Theme.AppCompat.Light" >
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:textColorLink">@color/light_active_color</item>

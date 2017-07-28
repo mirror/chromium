@@ -50,6 +50,7 @@ import org.chromium.chrome.browser.upgrade.UpgradeActivity;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.chrome.browser.vr_shell.ChromeTabbedVrActivity;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.webapps.ActivityAssigner;
 import org.chromium.chrome.browser.webapps.WebappLauncherActivity;
@@ -372,6 +373,24 @@ public class ChromeLauncherActivity extends Activity
         return newIntent;
     }
 
+    // TODO(ymalik): Move this language to MultiWindowUtil or find a better place for it.
+    private Class<? extends ChromeTabbedActivity> getTabbedActivityForIntent(Intent intent) {
+        Class<? extends ChromeTabbedActivity> multiWindowActivity =
+                MultiWindowUtils.getInstance().getTabbedActivityForIntent(intent, this);
+        // Check if CTA is already running.
+        for (WeakReference<Activity> activityRef : ApplicationStatus.getRunningActivities()) {
+            Activity activity = activityRef.get();
+            if (activity == null) continue;
+            if (activity.getClass().equals(ChromeTabbedVrActivity.class)) {
+                return ChromeTabbedVrActivity.class;
+            }
+            if (activity instanceof ChromeTabbedActivity) return multiWindowActivity;
+        }
+        // Cold-starting Chrome.
+        if (VrShellDelegate.isVrIntent(intent)) return ChromeTabbedVrActivity.class;
+        return multiWindowActivity;
+    }
+
     /**
      * Handles launching a {@link CustomTabActivity}, which will sit on top of a client's activity
      * in the same task.
@@ -396,8 +415,7 @@ public class ChromeLauncherActivity extends Activity
         maybePrefetchDnsInBackground();
 
         Intent newIntent = new Intent(getIntent());
-        String className = MultiWindowUtils.getInstance().getTabbedActivityForIntent(
-                newIntent, this).getName();
+        String className = getTabbedActivityForIntent(newIntent).getName();
         newIntent.setClassName(getApplicationContext().getPackageName(), className);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

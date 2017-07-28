@@ -118,6 +118,7 @@ import org.chromium.chrome.browser.tabmodel.TabWindowManager;
 import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.vr_shell.ChromeTabbedVrActivity;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetMetrics;
@@ -368,7 +369,8 @@ public class ChromeTabbedActivity
     public static boolean isTabbedModeClassName(String className) {
         return TextUtils.equals(className, ChromeTabbedActivity.class.getName())
                 || TextUtils.equals(className, MultiInstanceChromeTabbedActivity.class.getName())
-                || TextUtils.equals(className, ChromeTabbedActivity2.class.getName());
+                || TextUtils.equals(className, ChromeTabbedActivity2.class.getName())
+                || TextUtils.equals(className, ChromeTabbedVrActivity.class.getName());
     }
 
     /**

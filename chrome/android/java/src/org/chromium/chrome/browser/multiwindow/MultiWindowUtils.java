@@ -24,6 +24,7 @@ import org.chromium.chrome.browser.ChromeTabbedActivity2;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.vr_shell.ChromeTabbedVrActivity;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
@@ -115,6 +116,15 @@ public class MultiWindowUtils implements ActivityStateListener {
             // activity state changes to facilitate determining which ChromeTabbedActivity should
             // be used for intents.
             ApplicationStatus.registerStateListenerForAllActivities(sInstance.get());
+            for (WeakReference<Activity> reference : ApplicationStatus.getRunningActivities()) {
+                Activity activity = reference.get();
+                if (activity == null) continue;
+                if (activity.getClass().equals(ChromeTabbedActivity.class)) {
+                    return ChromeTabbedActivity.class;
+                } else if (activity.getClass().equals(ChromeTabbedVrActivity.class)) {
+                    return ChromeTabbedVrActivity.class;
+                }
+            }
             return ChromeTabbedActivity.class;
         } else if (current instanceof ChromeTabbedActivity) {
             mTabbedActivity2TaskRunning = true;
@@ -184,8 +194,9 @@ public class MultiWindowUtils implements ActivityStateListener {
             return ChromeTabbedActivity.class;
         }
 
-        boolean tabbedTaskRunning = isActivityTaskInRecents(
-                ChromeTabbedActivity.class.getName(), context);
+        boolean tabbedTaskRunning =
+                isActivityTaskInRecents(ChromeTabbedActivity.class.getName(), context)
+                || isActivityTaskInRecents(ChromeTabbedVrActivity.class.getName(), context);
         if (!tabbedTaskRunning) {
             return ChromeTabbedActivity2.class;
         }
@@ -200,7 +211,7 @@ public class MultiWindowUtils implements ActivityStateListener {
         for (WeakReference<Activity> reference : ApplicationStatus.getRunningActivities()) {
             Activity activity = reference.get();
             if (activity == null) continue;
-            if (activity.getClass().equals(ChromeTabbedActivity.class)) {
+            if (isChromeTabbedActivity(activity.getClass())) {
                 tabbedActivity = activity;
             } else if (activity.getClass().equals(ChromeTabbedActivity2.class)) {
                 tabbedActivity2 = activity;
@@ -220,8 +231,7 @@ public class MultiWindowUtils implements ActivityStateListener {
             ChromeTabbedActivity lastResumedActivity = mLastResumedTabbedActivity.get();
             if (lastResumedActivity != null) {
                 Class<?> lastResumedClassName = lastResumedActivity.getClass();
-                if (tabbedTaskRunning
-                        && lastResumedClassName.equals(ChromeTabbedActivity.class)) {
+                if (tabbedTaskRunning && isChromeTabbedActivity(lastResumedClassName)) {
                     return ChromeTabbedActivity.class;
                 }
                 if (tabbed2TaskRunning
@@ -233,6 +243,11 @@ public class MultiWindowUtils implements ActivityStateListener {
 
         // 6. Default to regular ChromeTabbedActivity.
         return ChromeTabbedActivity.class;
+    }
+
+    private static boolean isChromeTabbedActivity(Class<?> activityClass) {
+        return activityClass.equals(ChromeTabbedActivity.class)
+                || activityClass.equals(ChromeTabbedVrActivity.class);
     }
 
     /**
