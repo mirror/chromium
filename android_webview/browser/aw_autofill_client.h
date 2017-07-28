@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 
-#include "base/android/jni_weak_ref.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "components/autofill/core/browser/autofill_client.h"
