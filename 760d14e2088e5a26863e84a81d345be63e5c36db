@@ -16,6 +16,24 @@
       "revId": "760d14e2088e5a26863e84a81d345be63e5c36db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9ff9a1_ee759369",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-28T15:53:28Z",
+      "side": 1,
+      "message": "base::RetainedRef is a special case that should not normally be used because what it does is pass a raw pointer to the reference counted object when the callback is called instead of passing one wrapped in a scoped_refptr.",
+      "parentUuid": "2a641562_f532ac81",
+      "revId": "760d14e2088e5a26863e84a81d345be63e5c36db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
