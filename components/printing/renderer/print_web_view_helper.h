@@ -179,7 +179,7 @@ class PrintWebViewHelper
 
   // RenderFrameObserver implementation.
   void OnDestruct() override;
-  void DidStartProvisionalLoad(blink::WebDataSource* data_source) override;
+  void DidStartProvisionalLoad(blink::WebDocumentLoader* loader) override;
   void DidFailProvisionalLoad(const blink::WebURLError& error) override;
   void DidFinishLoad() override;
   void ScriptedPrint(bool user_initiated) override;
