@@ -613,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "dfa45fb3_577a1904",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T10:17:23Z",
+      "side": 1,
+      "message": "\u003e Actually this problem will still exist even with source_type. If after refresh a new duplicated file appears on the first source, then files with the same name from another source will change name. Also, opening a duplicated file will likely cause reordering in recents, so the duplicated file names will keep changing suffixes. Is my understanding right?\n\nYes you\u0027re right. This is never a perfect solution, but it \"partially\" fixes the problem when the underlying file system does not change between reloads.\n\n\u003e I\u0027m still not very sure if recents match semantics of a file system. I know we do it for Drive, but I don\u0027t think it\u0027s a good solution. Chrome OS file systems can\u0027t have files with the same name in the same directory, and adding a suffix is a workaround with side effects.\n\nIf we can allow duplicated file names that would be far better for users. Let\u0027s talk about this in details next week.",
+      "parentUuid": "208b94e7_0e2f7f19",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b789658_fa97951f",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
