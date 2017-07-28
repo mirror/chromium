@@ -45,6 +45,165 @@
       "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499c206e_2e517037",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "Do you mind adding a comment about the magic number? Something to the effect of...\n\"150 is a reasonable scroll displacement that works for all UI elements and screens, while not being too slow.\"\n\nI think we (not you :)) should move this to a constant in chrome_earl_grey to make it easier for users. No action needed on your part for this, just me rambling.",
+      "range": {
+        "startLine": 32,
+        "startChar": 70,
+        "endLine": 32,
+        "endChar": 73
+      },
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ada86bb_99cc82c7",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "Is there an accessibilityID we can use instead?",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c2854c_1f16c5d0",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bd46e1_719c040f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "[super tearDown];",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b69f66_2378bf73",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "Why does this need to be in the per test setUp?\n\nDo we need to clean it up in tearDown?",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459a1e17_4fc3bc49",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "Should this be the first line in the method?",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cea196_94a77a0c",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "nit: comment for method",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fae3b6_bd5ca445",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "Do you expect many more tests in this file?\n\nIf there\u0027s not too many more, would it make sense to have a helper matcher (rather than GREYElementInteraction), then have each test do the selectElementWithMatcher: usingSearchAction: onElementWithMatcher\n\nI\u0027m not pushing hard here, WDYT?",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56979ffb_28cb246e",
+        "filename": "ios/chrome/test/earl_grey/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-28T16:15:00Z",
+      "side": 1,
+      "message": "I think this is fine. What is the reason you would consider having it in a separate target?",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
