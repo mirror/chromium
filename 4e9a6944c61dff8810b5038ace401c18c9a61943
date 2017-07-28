@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d242c5_179d6336",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T17:08:00Z",
+      "side": 1,
+      "message": "There\u0027s not much benefit to storing this as a local, I would just call this where we need it, same as we do for e.g. SyncedPrintersManager.",
+      "revId": "4e9a6944c61dff8810b5038ace401c18c9a61943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
