@@ -790,6 +790,16 @@ blink::WebSize WebMediaPlayerImpl::NaturalSize() const {
   return blink::WebSize(pipeline_metadata_.natural_size);
 }
 
+blink::WebSize WebMediaPlayerImpl::VisibleRect() const {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
+  if (!video_frame)
+    return blink::WebSize();
+
+  const gfx::Rect& visible_rect = video_frame->visible_rect();
+  return blink::WebSize(visible_rect.width(), visible_rect.height());
+}
+
 bool WebMediaPlayerImpl::Paused() const {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
@@ -957,6 +967,10 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
     return;
 
   scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
+  if (video_frame) {
+    last_uploaded_frame_size_ = video_frame->natural_size();
+    last_uploaded_frame_timestamp_ = video_frame->timestamp();
+  }
 
   gfx::Rect gfx_rect(rect);
   Context3D context_3d;
@@ -2057,7 +2071,8 @@ static void GetCurrentFrameAndSignal(VideoFrameCompositor* compositor,
   event->Signal();
 }
 
-scoped_refptr<VideoFrame> WebMediaPlayerImpl::GetCurrentFrameFromCompositor() {
+scoped_refptr<VideoFrame> WebMediaPlayerImpl::GetCurrentFrameFromCompositor()
+    const {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT0("media", "WebMediaPlayerImpl::GetCurrentFrameFromCompositor");
 
@@ -2069,8 +2084,6 @@ scoped_refptr<VideoFrame> WebMediaPlayerImpl::GetCurrentFrameFromCompositor() {
     if (!video_frame) {
       return nullptr;
     }
-    last_uploaded_frame_size_ = video_frame->natural_size();
-    last_uploaded_frame_timestamp_ = video_frame->timestamp();
     return video_frame;
   }
 
@@ -2088,8 +2101,6 @@ scoped_refptr<VideoFrame> WebMediaPlayerImpl::GetCurrentFrameFromCompositor() {
   if (!video_frame) {
     return nullptr;
   }
-  last_uploaded_frame_size_ = video_frame->natural_size();
-  last_uploaded_frame_timestamp_ = video_frame->timestamp();
   return video_frame;
 }
 

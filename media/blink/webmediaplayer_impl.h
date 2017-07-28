@@ -147,6 +147,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Dimensions of the video.
   blink::WebSize NaturalSize() const override;
 
+  blink::WebSize VisibleRect() const override;
+
   // Getters of playback state.
   bool Paused() const override;
   bool Seeking() const override;
@@ -336,7 +338,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   // Returns the current video frame from |compositor_|. Blocks until the
   // compositor can return the frame.
-  scoped_refptr<VideoFrame> GetCurrentFrameFromCompositor();
+  scoped_refptr<VideoFrame> GetCurrentFrameFromCompositor() const;
 
   // Called when the demuxer encounters encrypted streams.
   void OnEncryptedMediaInitData(EmeInitDataType init_data_type,
