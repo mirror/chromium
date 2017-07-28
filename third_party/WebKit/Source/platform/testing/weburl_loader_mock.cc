@@ -87,7 +87,7 @@ WebURLRequest WebURLLoaderMock::ServeRedirect(
                     redirect_response.HttpHeaderField("Location"));
 
   WebURLRequest new_request(redirect_url);
-  new_request.SetFirstPartyForCookies(redirect_url);
+  new_request.SetSiteForCookies(redirect_url);
   new_request.SetDownloadToFile(request.DownloadToFile());
   new_request.SetUseStreamOnResponse(request.UseStreamOnResponse());
   new_request.SetRequestContext(request.GetRequestContext());

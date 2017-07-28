@@ -568,7 +568,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
 
   resource_request->method = method;
   resource_request->url = url;
-  resource_request->first_party_for_cookies = request.FirstPartyForCookies();
+  resource_request->site_for_cookies = request.SiteForCookies();
   resource_request->request_initiator =
       request.RequestorOrigin().IsNull()
           ? base::Optional<url::Origin>()
@@ -705,8 +705,8 @@ bool WebURLLoaderImpl::Context::OnReceivedRedirect(
   // First-party cookie logic moved from DocumentLoader in Blink to
   // net::URLRequest in the browser. Assert that Blink didn't try to change it
   // to something else.
-  DCHECK_EQ(redirect_info.new_first_party_for_cookies.spec(),
-            request_.FirstPartyForCookies().GetString().Utf8());
+  DCHECK_EQ(redirect_info.new_site_for_cookies.spec(),
+            request_.SiteForCookies().GetString().Utf8());
   return true;
 }
 
@@ -1215,8 +1215,7 @@ WebURLRequest WebURLLoaderImpl::PopulateURLRequestForRedirect(
   // TODO(darin): We lack sufficient information to construct the actual
   // request that resulted from the redirect.
   WebURLRequest new_request(redirect_info.new_url);
-  new_request.SetFirstPartyForCookies(
-      redirect_info.new_first_party_for_cookies);
+  new_request.SetSiteForCookies(redirect_info.new_site_for_cookies);
   new_request.SetDownloadToFile(request.DownloadToFile());
   new_request.SetUseStreamOnResponse(request.UseStreamOnResponse());
   new_request.SetRequestContext(request.GetRequestContext());
