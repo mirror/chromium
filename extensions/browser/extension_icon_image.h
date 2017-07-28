@@ -90,7 +90,7 @@ class IconImage : public content::NotificationObserver {
   // is passed to OnImageRepLoaded.
   void LoadImageForScaleAsync(float scale);
 
-  void OnImageLoaded(float scale, const gfx::Image& image);
+  void OnImageLoaded(float scale, gfx::Image image);
   void OnImageRepLoaded(const gfx::ImageSkiaRep& rep);
 
   // content::NotificationObserver overrides:

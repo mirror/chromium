@@ -409,7 +409,7 @@ void KioskAppData::SetCache(const std::string& name,
                          required_platform_version);
 }
 
-void KioskAppData::OnExtensionIconLoaded(const gfx::Image& icon) {
+void KioskAppData::OnExtensionIconLoaded(gfx::Image icon) {
   if (icon.IsEmpty()) {
     LOG(WARNING) << "Failed to load icon from installed app"
                  << ", id=" << app_id();

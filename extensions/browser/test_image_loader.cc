@@ -24,8 +24,8 @@ SkBitmap TestImageLoader::LoadAndGetExtensionBitmap(
   return image_loader.LoadAndGetBitmap(extension, image_path, size);
 }
 
-void TestImageLoader::OnImageLoaded(const gfx::Image& image) {
-  image_ = image;
+void TestImageLoader::OnImageLoaded(gfx::Image image) {
+  image_ = std::move(image);
   image_loaded_ = true;
   if (waiting_)
     loader_message_loop_quit_.Run();

@@ -26,7 +26,7 @@ class TestImageLoader {
                                             int size);
 
  private:
-  void OnImageLoaded(const gfx::Image& image);
+  void OnImageLoaded(gfx::Image image);
 
   SkBitmap LoadAndGetBitmap(const Extension* extension,
                             const std::string& path,

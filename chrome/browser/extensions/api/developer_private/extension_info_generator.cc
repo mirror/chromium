@@ -589,9 +589,8 @@ const std::string& ExtensionInfoGenerator::GetDefaultIconUrl(
   return *str;
 }
 
-std::string ExtensionInfoGenerator::GetIconUrlFromImage(
-    const gfx::Image& image,
-    bool should_greyscale) {
+std::string ExtensionInfoGenerator::GetIconUrlFromImage(gfx::Image image,
+                                                        bool should_greyscale) {
   scoped_refptr<base::RefCountedMemory> data;
   if (should_greyscale) {
     color_utils::HSL shift = {-1, 0, 0.6};
@@ -615,10 +614,10 @@ std::string ExtensionInfoGenerator::GetIconUrlFromImage(
 
 void ExtensionInfoGenerator::OnImageLoaded(
     std::unique_ptr<developer::ExtensionInfo> info,
-    const gfx::Image& icon) {
+    gfx::Image icon) {
   if (!icon.IsEmpty()) {
     info->icon_url = GetIconUrlFromImage(
-        icon, info->state != developer::EXTENSION_STATE_ENABLED);
+        std::move(icon), info->state != developer::EXTENSION_STATE_ENABLED);
   } else {
     bool is_app =
         info->type == developer::EXTENSION_TYPE_HOSTED_APP ||

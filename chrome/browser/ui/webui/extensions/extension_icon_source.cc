@@ -252,8 +252,7 @@ void ExtensionIconSource::OnFaviconDataAvailable(
   }
 }
 
-void ExtensionIconSource::OnImageLoaded(int request_id,
-                                        const gfx::Image& image) {
+void ExtensionIconSource::OnImageLoaded(int request_id, gfx::Image image) {
   if (image.IsEmpty())
     LoadIconFailed(request_id);
   else

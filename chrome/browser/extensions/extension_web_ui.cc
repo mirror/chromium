@@ -238,7 +238,7 @@ void UpdateOverridesLists(Profile* profile,
 // |image| will be empty.
 void RunFaviconCallbackAsync(
     const favicon_base::FaviconResultsCallback& callback,
-    const gfx::Image& image) {
+    gfx::Image image) {
   std::vector<favicon_base::FaviconRawBitmapResult>* favicon_bitmap_results =
       new std::vector<favicon_base::FaviconRawBitmapResult>();
 

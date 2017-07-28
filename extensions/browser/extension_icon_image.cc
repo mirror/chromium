@@ -206,7 +206,7 @@ void IconImage::LoadImageForScaleAsync(float scale) {
   }
 }
 
-void IconImage::OnImageLoaded(float scale, const gfx::Image& image_in) {
+void IconImage::OnImageLoaded(float scale, gfx::Image image_in) {
   const gfx::ImageSkia* image =
       image_in.IsEmpty() ? &default_icon_ : image_in.ToImageSkia();
 

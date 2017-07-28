@@ -306,7 +306,7 @@ void ImageLoader::ReplyBack(const ImageLoaderImageCallback& callback,
     image = gfx::Image(image_skia);
   }
 
-  callback.Run(image);
+  callback.Run(std::move(image));
 }
 
 void ImageLoader::ReplyBackWithImageFamily(

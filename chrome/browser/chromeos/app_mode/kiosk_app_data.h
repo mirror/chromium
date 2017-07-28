@@ -108,7 +108,7 @@ class KioskAppData : public KioskAppDataBase,
                 const std::string& required_platform_version);
 
   // Callback for extensions::ImageLoader.
-  void OnExtensionIconLoaded(const gfx::Image& icon);
+  void OnExtensionIconLoaded(gfx::Image icon);
 
   // Callbacks for WebstoreDataParser
   void OnWebstoreParseSuccess(const SkBitmap& icon,
