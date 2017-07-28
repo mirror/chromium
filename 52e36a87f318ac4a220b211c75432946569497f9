@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "ebd2afcc_450f2002",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-28T22:35:21Z",
+      "side": 1,
+      "message": "In that case, should we just remove OnPropertyChanged? Otherwise when it\u0027s called, what do we expect in observer? It\u0027s very likely that we still need to check the type.",
+      "parentUuid": "d15a6822_8443dc43",
+      "revId": "52e36a87f318ac4a220b211c75432946569497f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64203d8d_8db43311",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
         "patchSetId": 15
