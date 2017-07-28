@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01e8f10_f4cca6de",
+        "filename": "base/threading/scoped_may_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-28T15:41:45Z",
+      "side": 1,
+      "message": "// Interface for an observer informed when a thread is blocked or unblocked.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "375c7fff01de408513889889dd751baa8c411970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a20db8b_77ec26d7",
+        "filename": "base/threading/scoped_may_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-28T15:41:45Z",
+      "side": 1,
+      "message": "Add comment to explain that this must instantiated in every scope where a blocking call is made.",
+      "revId": "375c7fff01de408513889889dd751baa8c411970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
