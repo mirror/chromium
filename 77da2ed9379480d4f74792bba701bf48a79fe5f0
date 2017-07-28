@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34cbcf0b_977407de",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T21:13:14Z",
+      "side": 1,
+      "message": "Yes. The second call is a NOP.",
+      "parentUuid": "619c6363_2f8e8f7f",
+      "revId": "77da2ed9379480d4f74792bba701bf48a79fe5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e792909_b714ec3b",
         "filename": "android_webview/browser/aw_browser_terminator.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "77da2ed9379480d4f74792bba701bf48a79fe5f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e8c3ba_752098e0",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T21:13:14Z",
+      "side": 1,
+      "message": "Good point. Thanks.",
+      "parentUuid": "4e792909_b714ec3b",
+      "revId": "77da2ed9379480d4f74792bba701bf48a79fe5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
