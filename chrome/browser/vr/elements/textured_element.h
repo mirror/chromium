@@ -28,7 +28,8 @@ class TexturedElement : public UiElement {
 
   // UiElement interface.
   void Render(UiElementRenderer* renderer,
-              gfx::Transform view_proj_matrix) const final;
+              gfx::Transform view_proj_matrix,
+              bool right_eye) const final;
 
  protected:
   void UpdateTexture();

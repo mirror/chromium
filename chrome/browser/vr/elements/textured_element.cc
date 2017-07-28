@@ -47,7 +47,8 @@ void TexturedElement::UpdateElementSize() {
 }
 
 void TexturedElement::Render(UiElementRenderer* renderer,
-                             gfx::Transform view_proj_matrix) const {
+                             gfx::Transform view_proj_matrix,
+                             bool right_eye) const {
   if (!initialized_)
     return;
   DCHECK(!GetTexture()->dirty());

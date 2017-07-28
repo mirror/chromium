@@ -35,6 +35,7 @@ struct RenderInfo {
     gfx::Transform view_matrix;
     gfx::Transform proj_matrix;
     gfx::Transform view_proj_matrix;
+    bool right_eye;
   };
 
   gfx::Transform head_pose;
@@ -72,9 +73,11 @@ class UiRenderer {
                     const std::vector<const UiElement*>& elements,
                     const RenderInfo& render_info,
                     const ControllerInfo& controller_info,
-                    bool draw_reticle);
+                    bool draw_reticle,
+                    bool right_eye);
   void DrawElement(const gfx::Transform& view_proj_matrix,
                    const UiElement& element,
+                   bool right_eye,
                    const gfx::Size& content_texture_size);
   std::vector<const UiElement*> GetElementsInDrawOrder(
       const gfx::Transform& view_matrix,

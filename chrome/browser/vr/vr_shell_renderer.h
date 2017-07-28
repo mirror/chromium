@@ -39,6 +39,8 @@ enum ShaderID {
   CONTROLLER_FRAGMENT_SHADER,
   TEXTURED_QUAD_VERTEX_SHADER,
   TEXTURED_QUAD_FRAGMENT_SHADER,
+  STEREO_BACKGROUND_VERTEX_SHADER,
+  STEREO_BACKGROUND_FRAGMENT_SHADER,
   SHADER_ID_MAX
 };
 
@@ -287,6 +289,31 @@ class GradientGridRenderer : public BaseQuadRenderer {
   DISALLOW_COPY_AND_ASSIGN(GradientGridRenderer);
 };
 
+class StereoBackgroundRenderer : public BaseQuadRenderer {
+ public:
+  StereoBackgroundRenderer();
+  ~StereoBackgroundRenderer() override;
+
+  static void SetVertexBuffer();
+
+  void Draw(int texture_data_handle,
+            const gfx::Transform& view_proj_matrix,
+            bool right_eye,
+            float opacity);
+
+ private:
+  GLuint model_view_proj_matrix_handle_;
+  GLuint opacity_handle_;
+  GLuint right_eye_handle_;
+  GLuint sampler_handle_;
+
+  static GLuint vertex_buffer_;
+  static GLuint index_buffer_;
+  static GLuint index_count_;
+
+  DISALLOW_COPY_AND_ASSIGN(StereoBackgroundRenderer);
+};
+
 class VrShellRenderer : public vr::UiElementRenderer {
  public:
   VrShellRenderer();
@@ -301,6 +328,10 @@ class VrShellRenderer : public vr::UiElementRenderer {
                         const SkColor edge_color,
                         const SkColor center_color,
                         float opacity) override;
+  void DrawStereoBackground(int texture_data_handle,
+                            const gfx::Transform& view_proj_matrix,
+                            bool right_eye,
+                            float opacity) override;
 
   // VrShell's internal GL rendering API.
   ExternalTexturedQuadRenderer* GetExternalTexturedQuadRenderer();
@@ -311,6 +342,7 @@ class VrShellRenderer : public vr::UiElementRenderer {
   ControllerRenderer* GetControllerRenderer();
   GradientQuadRenderer* GetGradientQuadRenderer();
   GradientGridRenderer* GetGradientGridRenderer();
+  StereoBackgroundRenderer* GetStereoBackgroundRenderer();
   void Flush();
 
  private:
@@ -323,6 +355,7 @@ class VrShellRenderer : public vr::UiElementRenderer {
   std::unique_ptr<ControllerRenderer> controller_renderer_;
   std::unique_ptr<GradientQuadRenderer> gradient_quad_renderer_;
   std::unique_ptr<GradientGridRenderer> gradient_grid_renderer_;
+  std::unique_ptr<StereoBackgroundRenderer> stereo_background_renderer_;
 
   DISALLOW_COPY_AND_ASSIGN(VrShellRenderer);
 };

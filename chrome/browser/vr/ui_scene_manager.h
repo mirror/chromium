@@ -15,6 +15,8 @@
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
+#define STEREO_BACKGROUND 1
+
 namespace vr {
 
 class ExclusiveScreenToast;
@@ -111,8 +113,10 @@ class UiSceneManager {
   UiElement* screen_capture_indicator_ = nullptr;
   UiElement* location_access_indicator_ = nullptr;
   UiElement* screen_dimmer_ = nullptr;
+#if !defined(STEREO_BACKGROUND)
   UiElement* ceiling_ = nullptr;
   UiElement* floor_ = nullptr;
+#endif
   UiElement* close_button_ = nullptr;
   SplashScreenIcon* splash_screen_icon_ = nullptr;
   UrlBar* url_bar_ = nullptr;

@@ -25,7 +25,8 @@ void ScreenDimmer::Initialize() {
 }
 
 void ScreenDimmer::Render(UiElementRenderer* renderer,
-                          gfx::Transform view_proj_matrix) const {
+                          gfx::Transform view_proj_matrix,
+                          bool right_eye) const {
   gfx::Transform m;
   m.Scale3d(2.0f, 2.0f, 1.0f);
 
