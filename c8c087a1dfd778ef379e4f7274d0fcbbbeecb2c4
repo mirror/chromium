@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "85a3a4ec_e7e7ab2c",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T19:18:56Z",
+      "side": 1,
+      "message": "Yes. I think the naming may be confusing here, as GetUserCacheDirectory is different from the cache directory set by the user in their profile.\n\nBasically I strongly suspect that this:\n    network_context_params-\u003ehttp_cache_path \u003d\n        base::FilePath(profile-\u003eGetPath());\n\nshould rather be something like: \nchrome::GetUserCacheDirectory(profile-\u003eGetPath(), \u0026network_context_params-\u003ehttp_cache_path);\n(if you can call it from here)\n\nThis is what the users of ProfileImpl::GetCacheParameters started with:\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_impl.cc?rcl\u003d7eb91df14a130769ef277d00eadb589a437d96ca\u0026l\u003d603\n\nand used in https://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_impl.cc?rcl\u003d7eb91df14a130769ef277d00eadb589a437d96ca\u0026l\u003d640\n\nBasically, I suspect the changed could would place the cache in Linux into something like\n~/.config/google-chrome-beta/Default/Cache/ rather than something like: ~/.cache/google-chrome-beta/Default/Cache (the latter being what we currently do, possibly since somewhere in late 2012...)",
+      "parentUuid": "61986a2b_783a1574",
+      "revId": "c8c087a1dfd778ef379e4f7274d0fcbbbeecb2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10427868_08039908",
         "filename": "chrome/browser/net/profile_network_context_service.cc",
         "patchSetId": 10
