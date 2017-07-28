@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cc62b6f4_a372e26f",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T05:47:52Z",
+      "side": 1,
+      "message": "At first reading I\u0027m not clear what this means. I think this comment would be\nclearer with a specific scenario explained.",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36d9e488_ea2cfefb",
         "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.cc",
         "patchSetId": 6
@@ -13,6 +36,70 @@
       "writtenOn": "2017-07-27T14:37:55Z",
       "side": 1,
       "message": "The callback will stop here (instead of \u0027chrome/browser/ui/browser.cc\u0027 etc.)",
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5a6add_c20b14d2",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T05:47:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "36d9e488_ea2cfefb",
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95d18577_3159f3a3",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T05:47:52Z",
+      "side": 1,
+      "message": "Consider: OnBubbleHidden, or DidHideBubble",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 44
+      },
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87efdf4_b997da38",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T05:47:52Z",
+      "side": 1,
+      "message": "I don\u0027t trust comments like this when we can DCHECK. The hide_timeout_ is private in the base class. Let\u0027s make it either protected, or make an accessor so we can DCHECK that the timer has expired. The comment explaining why the DCHECK is expected would still be good.\n\ngrammar fix:\n  // This function is guarded by the |ExclusiveAccessBubble::hide_timeout_|\n  // timer, so the bubble has been displayed for at least\n  // |ExclusiveAccessBubble::kInitialDelayMs|.",
+      "range": {
+        "startLine": 276,
+        "startChar": 5,
+        "endLine": 276,
+        "endChar": 26
+      },
       "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
