@@ -37,68 +37,87 @@ namespace {
 
 class PdfConverterImpl;
 
-// Allows to delete temporary directory after all temporary files created inside
-// are closed. Windows cannot delete directory with opened files. Directory is
-// used to store PDF and metafiles. PDF should be gone by the time utility
-// process exits. Metafiles should be gone when all LazyEmf destroyed.
-class RefCountedTempDir
-    : public base::RefCountedThreadSafe<RefCountedTempDir,
-                                        BrowserThread::DeleteOnFileThread> {
- public:
-  RefCountedTempDir() { ignore_result(temp_dir_.CreateUniqueTempDir()); }
-  bool IsValid() const { return temp_dir_.IsValid(); }
-  const base::FilePath& GetPath() const { return temp_dir_.GetPath(); }
+void CloseFileOnFileThread(base::File temp_file) {
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  temp_file.Close();
+}
 
- private:
-  friend struct BrowserThread::DeleteOnThread<BrowserThread::FILE>;
-  friend class base::DeleteHelper<RefCountedTempDir>;
-  ~RefCountedTempDir() {}
-
-  base::ScopedTempDir temp_dir_;
-  DISALLOW_COPY_AND_ASSIGN(RefCountedTempDir);
-};
-
-using ScopedTempFile =
-    std::unique_ptr<base::File, BrowserThread::DeleteOnFileThread>;
-
-// Wrapper for Emf to keep only file handle in memory, and load actual data only
-// on playback. Emf::InitFromFile() can play metafile directly from disk, but it
-// can't open file handles. We need file handles to reliably delete temporary
-// files, and to efficiently interact with utility process.
-class LazyEmf : public MetafilePlayer {
- public:
-  LazyEmf(const scoped_refptr<RefCountedTempDir>& temp_dir, ScopedTempFile file)
-      : temp_dir_(temp_dir), file_(std::move(file)) {
-    CHECK(file_);
+base::File CreateTempFile() {
+  base::File file;
+  base::FilePath path;
+  if (!base::CreateTemporaryFile(&path)) {
+    PLOG(ERROR) << "Failed to create temp file";
+    return file;
   }
-  ~LazyEmf() override { Close(); }
+  file = base::File(path, base::File::FLAG_CREATE_ALWAYS |
+                              base::File::FLAG_WRITE | base::File::FLAG_READ |
+                              base::File::FLAG_DELETE_ON_CLOSE |
+                              base::File::FLAG_TEMPORARY);
+  if (!file.IsValid())
+    PLOG(ERROR) << "Failed to open temp file" << path.value();
+  return file;
+}
+
+base::File CreateTempPdfFile(
+    const scoped_refptr<base::RefCountedMemory>& data) {
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+
+  base::File pdf_file = CreateTempFile();
+  if (!pdf_file.IsValid() ||
+      static_cast<int>(data->size()) !=
+          pdf_file.WriteAtCurrentPos(data->front_as<char>(), data->size())) {
+    return base::File();
+  }
+  pdf_file.Seek(base::File::FROM_BEGIN, 0);
+  return pdf_file;
+}
+
+std::vector<char> ReadTempFile(base::File temp_file) {
+  std::vector<char> data;
+  int64_t size = temp_file.GetLength();
+  if (size > 0) {
+    bool seeked = temp_file.Seek(base::File::FROM_BEGIN, 0) != -1;
+    if (seeked) {
+      data.resize(size);
+      if (temp_file.ReadAtCurrentPos(data.data(), data.size()) != size)
+        data.clear();
+    }
+  }
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&CloseFileOnFileThread, base::Passed(std::move(temp_file))));
+  return data;
+}
+
+class EmfMetaFile : public MetafilePlayer {
+ public:
+  explicit EmfMetaFile(std::vector<char> data) : data_(std::move(data)) {
+    CHECK(!data_.empty());
+  }
+  ~EmfMetaFile() override {}
 
  protected:
   // MetafilePlayer:
   bool SafePlayback(HDC hdc) const override;
-
-  void Close() const;
-  bool LoadEmf(Emf* emf) const;
-
- private:
-  mutable scoped_refptr<RefCountedTempDir> temp_dir_;
-  mutable ScopedTempFile file_;  // Mutable because of consts in base class.
-
   bool GetDataAsVector(std::vector<char>* buffer) const override;
   bool SaveTo(base::File* file) const override;
 
-  DISALLOW_COPY_AND_ASSIGN(LazyEmf);
+  bool LoadEmf(Emf* emf) const;
+
+ private:
+  std::vector<char> data_;
+
+  DISALLOW_COPY_AND_ASSIGN(EmfMetaFile);
 };
 
 // Postscript metafile subclass to override SafePlayback.
-class PostScriptMetaFile : public LazyEmf {
+class PostScriptMetaFile : public EmfMetaFile {
  public:
-  PostScriptMetaFile(const scoped_refptr<RefCountedTempDir>& temp_dir,
-                     ScopedTempFile file)
-      : LazyEmf(temp_dir, std::move(file)) {}
-  ~PostScriptMetaFile() override;
+  explicit PostScriptMetaFile(std::vector<char> data)
+      : EmfMetaFile(std::move(data)) {}
+  ~PostScriptMetaFile() override {}
 
- protected:
+ private:
   // MetafilePlayer:
   bool SafePlayback(HDC hdc) const override;
 
@@ -133,15 +152,16 @@ class PdfConverterUtilityProcessHostClient
 
   void Stop();
 
-  // UtilityProcessHostClient implementation.
+  // UtilityProcessHostClient:
   void OnProcessCrashed(int exit_code) override;
   void OnProcessLaunchFailed(int exit_code) override;
+  bool OnMessageReceived(const IPC::Message& message) override;
 
   // Needs to be public to handle ChromeUtilityHostMsg_PreCacheFontCharacters
   // sync message replies.
   bool Send(IPC::Message* msg);
 
- protected:
+ private:
   class GetPageCallbackData {
    public:
     GetPageCallbackData(int page_number, PdfConverter::GetPageCallback callback)
@@ -149,6 +169,14 @@ class PdfConverterUtilityProcessHostClient
 
     GetPageCallbackData(GetPageCallbackData&& other) {
       *this = std::move(other);
+    }
+
+    ~GetPageCallbackData() {
+      if (file_.IsValid()) {
+        BrowserThread::PostTask(
+            BrowserThread::FILE, FROM_HERE,
+            base::Bind(&CloseFileOnFileThread, base::Passed(std::move(file_))));
+      }
     }
 
     GetPageCallbackData& operator=(GetPageCallbackData&& rhs) {
@@ -160,49 +188,47 @@ class PdfConverterUtilityProcessHostClient
 
     int page_number() const { return page_number_; }
     const PdfConverter::GetPageCallback& callback() const { return callback_; }
-    ScopedTempFile TakeFile() { return std::move(file_); }
-    void set_file(ScopedTempFile file) { file_ = std::move(file); }
+    base::File TakeFile() { return std::move(file_); }
+    void SetFile(base::File file) { file_ = std::move(file); }
 
    private:
     int page_number_;
 
     PdfConverter::GetPageCallback callback_;
-    ScopedTempFile file_;
+    base::File file_;
 
     DISALLOW_COPY_AND_ASSIGN(GetPageCallbackData);
   };
 
   ~PdfConverterUtilityProcessHostClient() override;
 
-  bool OnMessageReceived(const IPC::Message& message) override;
-
-  // Helper functions: must be overridden by subclasses
   // Set the process name
-  virtual base::string16 GetName() const;
-  // Create a metafileplayer subclass file from a temporary file.
-  virtual std::unique_ptr<MetafilePlayer> GetFileFromTemp(
-      std::unique_ptr<base::File, content::BrowserThread::DeleteOnFileThread>
-          temp_file);
+  base::string16 GetName() const;
+
+  // Create a MetafilePlayer from page data.
+  std::unique_ptr<MetafilePlayer> GetMetaFileFromData(std::vector<char> data);
+
   // Send the messages to Start, GetPage, and Stop.
-  virtual void SendStartMessage(IPC::PlatformFileForTransit transit);
-  virtual void SendGetPageMessage(int page_number,
-                                  IPC::PlatformFileForTransit transit);
-  virtual void SendStopMessage();
+  void SendStartMessage(IPC::PlatformFileForTransit transit);
+  void SendGetPageMessage(int page_number, IPC::PlatformFileForTransit transit);
+  void SendStopMessage();
 
   // Message handlers:
   void OnPageCount(int page_count);
   void OnPageDone(bool success, float scale_factor);
 
+  void OnPageFileRead(int page_number,
+                      float scale_factor,
+                      PdfConverter::GetPageCallback callback,
+                      std::vector<char> data);
   void OnFailed();
-  void OnTempPdfReady(ScopedTempFile pdf);
+  void OnTempPdfReady(base::File pdf_file);
   void OnTempFileReady(GetPageCallbackData* callback_data,
-                       ScopedTempFile temp_file);
+                       base::File temp_file);
 
   // Additional message handler needed for Pdf to Emf
   void OnPreCacheFontCharacters(const LOGFONT& log_font,
                                 const base::string16& characters);
-
-  scoped_refptr<RefCountedTempDir> temp_dir_;
 
   // Used to suppress callbacks after PdfConverter is deleted.
   base::WeakPtr<PdfConverterImpl> converter_;
@@ -224,16 +250,17 @@ class PdfConverterUtilityProcessHostClient
 };
 
 std::unique_ptr<MetafilePlayer>
-PdfConverterUtilityProcessHostClient::GetFileFromTemp(
-  std::unique_ptr<base::File, content::BrowserThread::DeleteOnFileThread>
-      temp_file) {
+PdfConverterUtilityProcessHostClient::GetMetaFileFromData(
+    std::vector<char> data) {
+  if (data.empty())
+    return nullptr;
+
   if (settings_.mode == PdfRenderSettings::Mode::POSTSCRIPT_LEVEL2 ||
       settings_.mode == PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3 ||
       settings_.mode == PdfRenderSettings::Mode::TEXTONLY) {
-    return base::MakeUnique<PostScriptMetaFile>(temp_dir_,
-                                                std::move(temp_file));
+    return base::MakeUnique<PostScriptMetaFile>(std::move(data));
   }
-  return base::MakeUnique<LazyEmf>(temp_dir_, std::move(temp_file));
+  return base::MakeUnique<EmfMetaFile>(std::move(data));
 }
 
 class PdfConverterImpl : public PdfConverter {
@@ -269,115 +296,43 @@ class PdfConverterImpl : public PdfConverter {
   DISALLOW_COPY_AND_ASSIGN(PdfConverterImpl);
 };
 
-ScopedTempFile CreateTempFile(scoped_refptr<RefCountedTempDir>* temp_dir) {
-  if (!temp_dir->get())
-    *temp_dir = new RefCountedTempDir();
-  ScopedTempFile file;
-  if (!(*temp_dir)->IsValid())
-    return file;
-  base::FilePath path;
-  if (!base::CreateTemporaryFileInDir((*temp_dir)->GetPath(), &path)) {
-    PLOG(ERROR) << "Failed to create file in "
-                << (*temp_dir)->GetPath().value();
-    return file;
-  }
-  file.reset(new base::File(path,
-                            base::File::FLAG_CREATE_ALWAYS |
-                            base::File::FLAG_WRITE |
-                            base::File::FLAG_READ |
-                            base::File::FLAG_DELETE_ON_CLOSE |
-                            base::File::FLAG_TEMPORARY));
-  if (!file->IsValid()) {
-    PLOG(ERROR) << "Failed to create " << path.value();
-    file.reset();
-  }
-  return file;
-}
-
-ScopedTempFile CreateTempPdfFile(
-    const scoped_refptr<base::RefCountedMemory>& data,
-    scoped_refptr<RefCountedTempDir>* temp_dir) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-
-  ScopedTempFile pdf_file = CreateTempFile(temp_dir);
-  if (!pdf_file ||
-      static_cast<int>(data->size()) !=
-          pdf_file->WriteAtCurrentPos(data->front_as<char>(), data->size())) {
-    pdf_file.reset();
-    return pdf_file;
-  }
-  pdf_file->Seek(base::File::FROM_BEGIN, 0);
-  return pdf_file;
-}
-
-bool LazyEmf::SafePlayback(HDC hdc) const {
+bool EmfMetaFile::SafePlayback(HDC hdc) const {
   Emf emf;
-  bool result = LoadEmf(&emf) && emf.SafePlayback(hdc);
-  // TODO(thestig): Fix destruction of metafiles. For some reasons
-  // instances of Emf are not deleted. https://crbug.com/260806
-  // It's known that the Emf going to be played just once to a printer. So just
-  // release |file_| here.
-  Close();
-  return result;
+  return LoadEmf(&emf) && emf.SafePlayback(hdc);
 }
 
-bool LazyEmf::GetDataAsVector(std::vector<char>* buffer) const {
+bool EmfMetaFile::GetDataAsVector(std::vector<char>* buffer) const {
   NOTREACHED();
   return false;
 }
 
-bool LazyEmf::SaveTo(base::File* file) const {
+bool EmfMetaFile::SaveTo(base::File* file) const {
   Emf emf;
   return LoadEmf(&emf) && emf.SaveTo(file);
 }
 
-void LazyEmf::Close() const {
-  file_.reset();
-  temp_dir_ = nullptr;
-}
-
-bool LazyEmf::LoadEmf(Emf* emf) const {
-  file_->Seek(base::File::FROM_BEGIN, 0);
-  int64_t size = file_->GetLength();
-  if (size <= 0)
-    return false;
-  std::vector<char> data(size);
-  if (file_->ReadAtCurrentPos(data.data(), data.size()) != size)
-    return false;
-  return emf->InitFromData(data.data(), data.size());
-}
-
-PostScriptMetaFile::~PostScriptMetaFile() {
+bool EmfMetaFile::LoadEmf(Emf* emf) const {
+  return emf->InitFromData(data_.data(), data_.size());
 }
 
 bool PostScriptMetaFile::SafePlayback(HDC hdc) const {
-  // TODO(thestig): Fix destruction of metafiles. For some reasons
-  // instances of Emf are not deleted. https://crbug.com/260806
-  // It's known that the Emf going to be played just once to a printer. So just
-  // release |file_| before returning.
   Emf emf;
-  if (!LoadEmf(&emf)) {
-    Close();
+  if (!LoadEmf(&emf))
     return false;
-  }
 
-  {
-    // Ensure enumerator destruction before calling Close() below.
-    Emf::Enumerator emf_enum(emf, nullptr, nullptr);
-    for (const Emf::Record& record : emf_enum) {
-      auto* emf_record = record.record();
-      if (emf_record->iType != EMR_GDICOMMENT)
-        continue;
+  Emf::Enumerator emf_enum(emf, nullptr, nullptr);
+  for (const Emf::Record& record : emf_enum) {
+    auto* emf_record = record.record();
+    if (emf_record->iType != EMR_GDICOMMENT)
+      continue;
 
-      const EMRGDICOMMENT* comment =
-          reinterpret_cast<const EMRGDICOMMENT*>(emf_record);
-      const char* data = reinterpret_cast<const char*>(comment->Data);
-      const uint16_t* ptr = reinterpret_cast<const uint16_t*>(data);
-      int ret = ExtEscape(hdc, PASSTHROUGH, 2 + *ptr, data, 0, nullptr);
-      DCHECK_EQ(*ptr, ret);
-    }
+    const EMRGDICOMMENT* comment =
+        reinterpret_cast<const EMRGDICOMMENT*>(emf_record);
+    const char* data = reinterpret_cast<const char*>(comment->Data);
+    const uint16_t* ptr = reinterpret_cast<const uint16_t*>(data);
+    int ret = ExtEscape(hdc, PASSTHROUGH, 2 + *ptr, data, 0, nullptr);
+    DCHECK_EQ(*ptr, ret);
   }
-  Close();
   return true;
 }
 
@@ -411,18 +366,16 @@ void PdfConverterUtilityProcessHostClient::Start(
   utility_process_host_->SetName(GetName());
 
   BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE, FROM_HERE,
-      base::Bind(&CreateTempPdfFile, data, &temp_dir_),
+      BrowserThread::FILE, FROM_HERE, base::Bind(&CreateTempPdfFile, data),
       base::Bind(&PdfConverterUtilityProcessHostClient::OnTempPdfReady, this));
 }
 
-void PdfConverterUtilityProcessHostClient::OnTempPdfReady(ScopedTempFile pdf) {
+void PdfConverterUtilityProcessHostClient::OnTempPdfReady(base::File pdf_file) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!utility_process_host_ || !pdf)
+  if (!utility_process_host_ || !pdf_file.IsValid())
     return OnFailed();
   // Should reply with OnPageCount().
-  SendStartMessage(
-      IPC::GetPlatformFileForTransit(pdf->GetPlatformFile(), false));
+  SendStartMessage(IPC::TakePlatformFileForTransit(std::move(pdf_file)));
 }
 
 void PdfConverterUtilityProcessHostClient::OnPageCount(int page_count) {
@@ -453,20 +406,20 @@ void PdfConverterUtilityProcessHostClient::GetPage(
     return OnFailed();
 
   BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE, FROM_HERE, base::Bind(&CreateTempFile, &temp_dir_),
+      BrowserThread::FILE, FROM_HERE, base::Bind(&CreateTempFile),
       base::Bind(&PdfConverterUtilityProcessHostClient::OnTempFileReady, this,
                  &get_page_callbacks_.back()));
 }
 
 void PdfConverterUtilityProcessHostClient::OnTempFileReady(
     GetPageCallbackData* callback_data,
-    ScopedTempFile temp_file) {
+    base::File temp_file) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!utility_process_host_ || !temp_file)
+  if (!utility_process_host_ || !temp_file.IsValid())
     return OnFailed();
   IPC::PlatformFileForTransit transit =
-      IPC::GetPlatformFileForTransit(temp_file->GetPlatformFile(), false);
-  callback_data->set_file(std::move(temp_file));
+      IPC::GetPlatformFileForTransit(temp_file.GetPlatformFile(), false);
+  callback_data->SetFile(std::move(temp_file));
   // Should reply with OnPageDone().
   SendGetPageMessage(callback_data->page_number(), transit);
 }
@@ -476,22 +429,40 @@ void PdfConverterUtilityProcessHostClient::OnPageDone(bool success,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (get_page_callbacks_.empty())
     return OnFailed();
-  GetPageCallbackData& data = get_page_callbacks_.front();
-  std::unique_ptr<MetafilePlayer> file;
 
-  if (success) {
-    ScopedTempFile temp_file = data.TakeFile();
-    if (!temp_file)  // Unexpected message from utility process.
-      return OnFailed();
-    file = GetFileFromTemp(std::move(temp_file));
+  GetPageCallbackData& data = get_page_callbacks_.front();
+  if (!success) {
+    OnPageFileRead(data.page_number(), scale_factor, std::move(data.callback()),
+                   std::vector<char>());
+    get_page_callbacks_.pop();
+    return;
   }
 
+  base::File temp_file = data.TakeFile();
+  if (!temp_file.IsValid())  // Unexpected message from utility process.
+    return OnFailed();
+
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE, FROM_HERE,
+      base::BindOnce(&ReadTempFile, base::Passed(std::move(temp_file))),
+      base::BindOnce(&PdfConverterUtilityProcessHostClient::OnPageFileRead,
+                     this, data.page_number(), scale_factor,
+                     std::move(data.callback())));
+  get_page_callbacks_.pop();
+}
+
+void PdfConverterUtilityProcessHostClient::OnPageFileRead(
+    int page_number,
+    float scale_factor,
+    PdfConverter::GetPageCallback callback,
+    std::vector<char> data) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  std::unique_ptr<MetafilePlayer> file = GetMetaFileFromData(std::move(data));
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::Bind(&PdfConverterImpl::RunCallback, converter_,
-                 base::Bind(data.callback(), data.page_number(), scale_factor,
-                            base::Passed(&file))));
-  get_page_callbacks_.pop();
+                 base::Bind(callback, page_number, scale_factor,
+                            base::Passed(std::move(file)))));
 }
 
 void PdfConverterUtilityProcessHostClient::Stop() {
