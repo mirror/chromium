@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dc6b2656_658f87bb",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-28T01:11:27Z",
+      "side": 1,
+      "message": "\u003e This is debugging code? It should be replaced with a TODO(gklassen)\nDone.",
+      "parentUuid": "1fe6ea86_d8884a71",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa21b1b7_6e26b452",
         "filename": "components/viz/client/client_layer_tree_frame_sink.h",
         "patchSetId": 14
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Yes, we\u0027ll chat offline.",
       "parentUuid": "e29f20f2_6b541952",
+      "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fddf958_2b840cbd",
+        "filename": "services/viz/hit_test/public/interfaces/hit_test_region_list.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-28T01:11:27Z",
+      "side": 1,
+      "message": "So the proposal is to use surface ID when aura::Window is submitting its own compositor frames and to use frame_sink_id for local windows. This way we should not need window_id field.",
+      "parentUuid": "d046c23d_f5ff4390",
       "revId": "1d3478da11214994b31db8f1a1c0e99cd7acc61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
