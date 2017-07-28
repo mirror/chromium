@@ -443,29 +443,27 @@ void SharedWorkerServiceImpl::WorkerConnected(SharedWorkerMessageFilter* filter,
     host->WorkerConnected(connection_request_id);
 }
 
-void SharedWorkerServiceImpl::AllowFileSystem(SharedWorkerMessageFilter* filter,
-                                              int worker_route_id,
-                                              const GURL& url,
-                                              IPC::Message* reply_msg) {
+void SharedWorkerServiceImpl::AllowFileSystem(
+    int render_process_id,
+    int worker_route_id,
+    const GURL& url,
+    base::OnceCallback<void(bool)> callback) {
   if (SharedWorkerHost* host =
-          FindSharedWorkerHost(filter->render_process_id(), worker_route_id)) {
-    host->AllowFileSystem(url, base::WrapUnique(reply_msg));
+          FindSharedWorkerHost(render_process_id, worker_route_id)) {
+    host->AllowFileSystem(url, std::move(callback));
   } else {
-    filter->Send(reply_msg);
-    return;
+    std::move(callback).Run(false);
   }
 }
 
-void SharedWorkerServiceImpl::AllowIndexedDB(SharedWorkerMessageFilter* filter,
+bool SharedWorkerServiceImpl::AllowIndexedDB(int render_process_id,
                                              int worker_route_id,
                                              const GURL& url,
-                                             const base::string16& name,
-                                             bool* result) {
+                                             const base::string16& name) {
   if (SharedWorkerHost* host =
-          FindSharedWorkerHost(filter->render_process_id(), worker_route_id))
-    host->AllowIndexedDB(url, name, result);
-  else
-    *result = false;
+          FindSharedWorkerHost(render_process_id, worker_route_id))
+    return host->AllowIndexedDB(url, name);
+  return false;
 }
 
 void SharedWorkerServiceImpl::OnSharedWorkerMessageFilterClosing(
