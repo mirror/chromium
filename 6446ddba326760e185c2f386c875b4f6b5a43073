@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac40dd9c_63e2f2c0",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T19:55:51Z",
+      "side": 1,
+      "message": "Oh, and I forgot to bump this up to USER_VISIBLE, since users that kicked off print jobs would like to see them processed at a reasonable rate.",
+      "range": {
+        "startLine": 160,
+        "startChar": 29,
+        "endLine": 160,
+        "endChar": 59
+      },
+      "revId": "6446ddba326760e185c2f386c875b4f6b5a43073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
