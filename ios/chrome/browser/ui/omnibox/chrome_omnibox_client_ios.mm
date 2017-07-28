@@ -156,7 +156,8 @@ void ChromeOmniboxClientIOS::DiscardNonCommittedNavigations() {
 }
 
 const base::string16& ChromeOmniboxClientIOS::GetTitle() const {
-  return controller_->GetWebState()->GetTitle();
+  return CurrentPageExists() ? controller_->GetWebState()->GetTitle()
+                             : base::EmptyString16();
 }
 
 gfx::Image ChromeOmniboxClientIOS::GetFavicon() const {
