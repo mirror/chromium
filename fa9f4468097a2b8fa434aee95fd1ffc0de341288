@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ae89c0d_e33ddbdc",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T23:15:23Z",
+      "side": 1,
+      "message": "nit: Have consistent spacing with the #if block.",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca43237_3721513e",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T23:15:23Z",
+      "side": 1,
+      "message": "Once the only caller gets wrapped in an #if, does this need to be wrapped in the same way?",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a110d7c8_1fdeb834",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T23:15:23Z",
+      "side": 1,
+      "message": "When the user cancels the native print dialog, that doesn\u0027t go through PrintingMessageFilter::OnScriptedPrint(Reply) first?",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6533da13_7eba2e6f",
+        "filename": "chrome/browser/printing/printing_message_filter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T23:15:23Z",
+      "side": 1,
+      "message": "The impl in the .cc file isn\u0027t wrapped in an #if block. Will it compile on all platforms?",
+      "revId": "fa9f4468097a2b8fa434aee95fd1ffc0de341288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
