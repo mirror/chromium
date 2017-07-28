@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ba68d2b_0b646c90",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T22:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb421afc_69ce0b46",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d79bb93_32b173b5",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T20:11:29Z",
       "side": 1,
       "message": "What actually starts the app list button\u0027s animation?\n(sorry, I\u0027m just missing something here...)",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebe7fef_81c02761",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T22:39:25Z",
+      "side": 1,
+      "message": "Changing to tablet calls an OnBoundsChanged somewhere is percolated down to ShelfView::OnBoundsChanged below, which calculates the new layout.",
+      "parentUuid": "9d79bb93_32b173b5",
       "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b143a3cc_f3c46139",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T22:39:25Z",
+      "side": 1,
+      "message": "GetAppListButtonAnimatonCurrentValue will return 0 at both here and line 1492.",
+      "parentUuid": "e0bf48ac_ffc204a8",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "193827dd_5249cd32",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-28T20:11:29Z",
       "side": 1,
       "message": "Should this case also be calling NotifyShelfIconPositionsChanged and hiding the overflow bubble?",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d85ab0a_d56e0ce7",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T22:39:25Z",
+      "side": 1,
+      "message": "NotifyShelfIconPositionsChanged will be called while the animation is progressing, and the overflow visibility is handled in CalculateIdealLayout(..) which is somewhere down the line from AnimateToIdealBounds.",
+      "parentUuid": "193827dd_5249cd32",
       "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2ccbe3b9_36dd6978",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T22:39:25Z",
+      "side": 1,
+      "message": "Seems like OnBoundsAnimatorDone is only called when all animations are done, but i think this is fine since all the animations start and end at the same time.",
+      "parentUuid": "61a62ea3_c16b79b5",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0033268_533ab3cb",
         "filename": "ash/shelf/shelf_view_test_api.h",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d3da5ac7_f320ce91",
+        "filename": "ash/shelf/shelf_view_test_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T22:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0033268_533ab3cb",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee213971_2aebab1d",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310dfede_9baea4af",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T22:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee213971_2aebab1d",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
