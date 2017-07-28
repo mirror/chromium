@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a6b3ff4_9415e3b3",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-28T00:30:27Z",
+      "side": 1,
+      "message": "Just copied the old extension strings over. Will change to normal casing.",
+      "parentUuid": "008ba7df_50792c8b",
+      "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7eeb484_0030e04f",
         "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b72956_60b8e51e",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-28T00:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7eeb484_0030e04f",
+      "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ce0a44af_81ca0800",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-28T00:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b399ee88_3d92609c",
+      "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9c1fc6_01830a1c",
         "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8804cba_fdab3390",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-28T00:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9c1fc6_01830a1c",
+      "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +173,24 @@
       "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba897ac_52fcc312",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-28T00:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4acd3f_32934df7",
+      "revId": "497ff1eaf8727d4c81c9465a2f2a56a7803c71f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
