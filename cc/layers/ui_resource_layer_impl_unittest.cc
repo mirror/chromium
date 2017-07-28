@@ -110,6 +110,7 @@ void OpaqueBoundsTest(FakeUIResourceLayerTreeHostImpl* host_impl,
   const QuadList& quads = render_pass->quad_list;
   EXPECT_GE(quads.size(), (size_t)0);
   gfx::Rect opaque_rect = quads.front()->opaque_rect;
+  EXPECT_TRUE(quads.front()->shared_quad_state->is_opaque);
   EXPECT_EQ(expected_opaque_bounds, opaque_rect);
 
   host_impl->active_tree()->DetachLayers();
