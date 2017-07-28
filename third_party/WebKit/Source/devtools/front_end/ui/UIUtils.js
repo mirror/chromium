@@ -2019,44 +2019,40 @@ UI.createFileSelectorElement = function(callback) {
  */
 UI.MaxLengthForDisplayedURLs = 150;
 
-/**
- * @unrestricted
- */
 UI.ConfirmDialog = class extends UI.VBox {
   /**
-   * @param {!Document|!Element} where
    * @param {string} message
-   * @param {!Function} callback
+   * @param {!Document|!Element=} where
+   * @return {!Promise<boolean>}
    */
-  static show(where, message, callback) {
-    var dialog = new UI.Dialog();
-    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
-    dialog.addCloseButton();
-    dialog.setDimmed(true);
-    new UI
-        .ConfirmDialog(
-            message,
-            () => {
-              dialog.hide();
-              callback();
-            },
-            () => dialog.hide())
-        .show(dialog.contentElement);
-    dialog.show(where);
+  static show(message, where) {
+    return new Promise(resolve => {
+      var dialog = new UI.Dialog();
+      dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
+      dialog.setDimmed(true);
+      new UI
+          .ConfirmDialog(
+              message,
+              result => {
+                dialog.hide();
+                resolve(result);
+              })
+          .show(dialog.contentElement);
+      dialog.show(where);
+    });
   }
 
   /**
    * @param {string} message
-   * @param {!Function} okCallback
-   * @param {!Function} cancelCallback
+   * @param {function(boolean)} callback
    */
-  constructor(message, okCallback, cancelCallback) {
+  constructor(message, callback) {
     super(true);
     this.registerRequiredCSS('ui/confirmDialog.css');
     this.contentElement.createChild('div', 'message').createChild('span').textContent = message;
     var buttonsBar = this.contentElement.createChild('div', 'button');
-    buttonsBar.appendChild(UI.createTextButton(Common.UIString('Ok'), okCallback));
-    buttonsBar.appendChild(UI.createTextButton(Common.UIString('Cancel'), cancelCallback));
+    buttonsBar.appendChild(UI.createTextButton(Common.UIString('OK'), () => callback(true), '', true));
+    buttonsBar.appendChild(UI.createTextButton(Common.UIString('Cancel'), () => callback(false)));
   }
 };
 
