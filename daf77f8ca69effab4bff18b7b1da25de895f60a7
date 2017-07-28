@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d554f2a_297eeb19",
+        "filename": "chrome/test/data/webui/md_bookmarks/reducers_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-28T05:33:45Z",
+      "side": 1,
+      "message": "Can you add a test here for the case where the parent isn\u0027t explicitly opened/closed?",
+      "revId": "daf77f8ca69effab4bff18b7b1da25de895f60a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
