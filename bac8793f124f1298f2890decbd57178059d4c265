@@ -34,6 +34,24 @@
       "revId": "bac8793f124f1298f2890decbd57178059d4c265",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23dbaea7_f0cf5bed",
+        "filename": "chrome/common/multi_process_lock_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-28T17:24:53Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "285c4942_4ec04c17",
+      "revId": "bac8793f124f1298f2890decbd57178059d4c265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
