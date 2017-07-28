@@ -16,6 +16,24 @@
       "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae043ef_c4f51dea",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190898
+      },
+      "writtenOn": "2017-07-28T01:26:49Z",
+      "side": 1,
+      "message": "I\u0027m worried about the effect adding hide_all_but_jni will have on libcast_assistant, which uses cast_shared_library and appears to explicitly require certain perhaps-non-JNI exports.",
+      "parentUuid": "19c8df34_5bcf4328",
+      "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
