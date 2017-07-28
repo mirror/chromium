@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5058248_6f88f4ca",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T12:49:56Z",
+      "side": 1,
+      "message": "Let\u0027s also add other fields in this CL.\nBASE_HEURISTIC\nHTML_CLASSIFIER",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 5
+      },
+      "revId": "4ae7a948ac45691aeff73a72be8ac4bb14fc40d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
