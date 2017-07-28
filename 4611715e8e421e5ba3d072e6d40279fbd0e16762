@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48ba38ce_f15cd362",
+        "filename": "WATCHLISTS",
+        "patchSetId": 11
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-28T09:42:18Z",
+      "side": 1,
+      "message": "This is not consistent in this file, but it might be better to have the \u0027|\u0027 in the previous line around here? (style looks different in blink_* and others :/)",
+      "range": {
+        "startLine": 777,
+        "startChar": 19,
+        "endLine": 777,
+        "endChar": 20
+      },
+      "revId": "4611715e8e421e5ba3d072e6d40279fbd0e16762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
