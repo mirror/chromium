@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7830c8c8_ff46b2cc",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-28T05:41:38Z",
+      "side": 0,
+      "message": "Please don\u0027t remove the updates of these variables. We\u0027re experimenting with providing this metadata to WebGL. If GetCurrentFrameFromCompositor has to be const, then please mark these fields mutable in the header.",
+      "range": {
+        "startLine": 2073,
+        "startChar": 4,
+        "endLine": 2073,
+        "endChar": 34
+      },
+      "revId": "48906e26e45db659ea543f9ee1df9b694cdd3a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
