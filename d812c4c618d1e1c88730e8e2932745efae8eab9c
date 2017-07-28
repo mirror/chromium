@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8981948_5e221bff",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "nit: \"at most\"",
+      "range": {
+        "startLine": 858,
+        "startChar": 61,
+        "endLine": 858,
+        "endChar": 62
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b324ef10_6611dc65",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "Willing to give me a sketch as to why the transaction being still on the wtiers list when DoneWithEntry() is called suggests a failure, and add it to the comment here if you think it\u0027s appropriate?",
+      "range": {
+        "startLine": 906,
+        "startChar": 26,
+        "endLine": 906,
+        "endChar": 33
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfb953a_2d68e74f",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "The header comment says \"Called from writers when ...\".  But this check and the result of this check is completely done within writers, so why would writers bother to call into the cache to do it?  It seems like this would be better hoisted up into writers?",
+      "range": {
+        "startLine": 927,
+        "startChar": 22,
+        "endLine": 927,
+        "endChar": 39
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be28193_9decb03b",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense if the transaction is null.  Is it guaranteed that the transaction won\u0027t be null in the case where CountTransactions() \u003e 1?  \n\n(This is part of my larger confusion around the use of this function in the null transaction case, which I\u0027m hoping my header file comment question will help me with.)",
+      "range": {
+        "startLine": 929,
+        "startChar": 20,
+        "endLine": 929,
+        "endChar": 37
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e80367b_1b6ed30d",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "nit, suggestion: If you move this ahead of the previous conditional and a a !success to it, you can combine the previous conditional with the final call just passing success as the second argument to DoneWritingToEntry()",
+      "range": {
+        "startLine": 938,
+        "startChar": 13,
+        "endLine": 938,
+        "endChar": 20
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b758dc4e_3b0ed197",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "nit: No need for final return.",
+      "range": {
+        "startLine": 951,
+        "startChar": 9,
+        "endLine": 951,
+        "endChar": 0
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42d86f2_49755962",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "Idea (not even a suggestion): Would it make sense to have a \"WritersDelegate\" class that HttpCache inherits from to cleanly specify the interface between Writers and the cache?",
+      "range": {
+        "startLine": 434,
+        "startChar": 17,
+        "endLine": 434,
+        "endChar": 24
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d60583_7481acb2",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "Could you expand the comment with what this method does?  This comment describes what the *consumers* do, which I don\u0027t think is the ideal way to document interfaces--instead, I try to document what the method does, at the layer of abstraction the interface provides (i.e. above the implementation, else there\u0027s no point), along with any requirements on the consumers.  In the abstract ideal world, the interface is a tool, and how the consumers use it is up to them.\n\nIn this case I\u0027d say something like \"Inform the cache that a particular transaction is done writing to the entry.  If it is the last transaction writing, the cache will cleanup the entry.\"  But that\u0027s clearly incomplete, as this function can be called with a null transaction, and I\u0027m not sure what calling it means if the transaction is null.  Can you expand the comment to include that information as well?\n\n(The same comment applies to the previous method as well, if you\u0027re willing to do a bit of comment cleanup in areas not touched by this CL.)",
+      "range": {
+        "startLine": 435,
+        "startChar": 5,
+        "endLine": 435,
+        "endChar": 12
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16693c4_c6d192d6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "nit, suggestion: move this down to first use of disk_entry_size.",
+      "range": {
+        "startLine": 388,
+        "startChar": 26,
+        "endLine": 388,
+        "endChar": 27
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a09c04_0a593b35",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "The whole point of the TransitionToState() mini-refactor was to have a single place where state transitions were occurring, for searching and putting checks.  Willing to keep using that function?",
+      "range": {
+        "startLine": 393,
+        "startChar": 22,
+        "endLine": 393,
+        "endChar": 52
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5e94f0_be92b393",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "Is there a way to DCHECK these cases?",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 80
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8741f737_6f76d775",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "This is disturbing to me.  Writers::DoneReading() may or may not remove the transaction from the writers list (depending on if there is an active_transaction_).  But this removes the transactions ability to access entry_, and therefore entry_-\u003ewriters.  If the transaction wasn\u0027t removed from writers_, what guarantees that we don\u0027t have a pointer to ourselves left around after we\u0027re done?",
+      "range": {
+        "startLine": 479,
+        "startChar": 6,
+        "endLine": 479,
+        "endChar": 34
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fa5a6a_1a46ffa0",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "Why not just incorporate !reading into the below conditional and eliminate this if clause?",
+      "range": {
+        "startLine": 1913,
+        "startChar": 6,
+        "endLine": 1913,
+        "endChar": 14
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8bffab_d3312363",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "If these conditionals aren\u0027t the case, shouldn\u0027t we tear down network_trans_?",
+      "range": {
+        "startLine": 1991,
+        "startChar": 12,
+        "endLine": 1991,
+        "endChar": 19
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0936a61_5027e29e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2878,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "If we don\u0027t need to read from the network anymore, is there a reason to keep writers around?  Wouldn\u0027t it make more sense to tear it down?",
+      "range": {
+        "startLine": 2878,
+        "startChar": 21,
+        "endLine": 2878,
+        "endChar": 39
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05eb6c61_4400e896",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 1,
+      "message": "Could you expand the comment a little more to talk about the effects of calling this function?  It isn\u0027t as important as for public functions, but it looks like SetNetworkReadOnly(false) is called in the code for its effect of dooming the entry, so talking at least a little bit about the effect of |success| makes sense to me.",
+      "range": {
+        "startLine": 420,
+        "startChar": 21,
+        "endLine": 420,
+        "endChar": 32
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

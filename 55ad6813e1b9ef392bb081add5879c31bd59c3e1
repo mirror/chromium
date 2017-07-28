@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b863aca_f905020e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 0,
+      "message": "Could you give me a sense as to what drove the removal of the direct transition to reading states and instead only to STATE_FINISH_HEADERS?  (Not criticizing, just trying to understand.)",
+      "range": {
+        "startLine": 1881,
+        "startChar": 5,
+        "endLine": 1881,
+        "endChar": 0
+      },
+      "revId": "55ad6813e1b9ef392bb081add5879c31bd59c3e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf8399d_cad65e15",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T17:30:11Z",
+      "side": 0,
+      "message": "Why move this into the conditional clauses?  It still looks like no matter what path this function takes, this will be the next state.",
+      "range": {
+        "startLine": 1921,
+        "startChar": 20,
+        "endLine": 1921,
+        "endChar": 49
+      },
+      "revId": "55ad6813e1b9ef392bb081add5879c31bd59c3e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
