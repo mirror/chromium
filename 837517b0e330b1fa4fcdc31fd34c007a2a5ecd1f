@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5b2b4b4_0997185f",
+        "filename": "chrome/browser/chromeos/printing/combining_printer_detector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-28T22:53:35Z",
+      "side": 1,
+      "message": "Seems you forgot to address the two \"const\" comments:)",
+      "revId": "837517b0e330b1fa4fcdc31fd34c007a2a5ecd1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
