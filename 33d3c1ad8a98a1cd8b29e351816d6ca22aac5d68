@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4538bc6a_e0ee3529",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-28T20:48:21Z",
+      "side": 1,
+      "message": "What is this comment trying to explain?\n\nThe discrepancy I\u0027m seeing is that we end up creating the TaskScheduler threads before TestBrowserThreadBundle::CreateThreads(). So that\u0027s what I\u0027d mention here (not sure that it actually matters in practice but it sure breaks DONT_CREATE_THREADS in some way).",
+      "revId": "33d3c1ad8a98a1cd8b29e351816d6ca22aac5d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
