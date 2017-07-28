@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69b0fbb7_616edb45",
+        "filename": "net/disk_cache/cleanup_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e5a7858_9d78cc4c",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2fd73ea_4da907f1",
         "filename": "net/disk_cache/cleanup_context.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c71742_cfa84508",
+        "filename": "net/disk_cache/cleanup_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2fd73ea_4da907f1",
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +164,24 @@
     },
     {
       "key": {
+        "uuid": "e3a444ba_2d7b4f07",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "Reworded. There can\u0027t be more than 2 since that\u0027s what CacheCreator implements for |force|... I guess I should probably explicitly distinguish attempts to grab a CleanupContext[1] from the attempts to make a backend.\n\n[1] name temporary :)",
+      "parentUuid": "37f10ce1_7305221b",
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c94ded_299d7e50",
         "filename": "net/disk_cache/disk_cache.cc",
         "patchSetId": 7
@@ -133,6 +193,30 @@
       "writtenOn": "2017-07-28T17:32:24Z",
       "side": 1,
       "message": "I propose that you separate the post_cleanup_callback_ code (and api changes) into a separate CL. They\u0027re pretty distinct.",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 20
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bae448_565e35a9",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "I am not sure it\u0027s worth it; the entire implementation of that is basically these 2 lines and the new entry point.",
+      "parentUuid": "a3c94ded_299d7e50",
       "range": {
         "startLine": 148,
         "startChar": 4,
@@ -168,6 +252,30 @@
     },
     {
       "key": {
+        "uuid": "bc82e5d6_1d1a7279",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "Tried to. Better?",
+      "parentUuid": "9138d0ac_25ee87d0",
+      "range": {
+        "startLine": 149,
+        "startChar": 15,
+        "endLine": 149,
+        "endChar": 0
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a23c9961_10718eb8",
         "filename": "net/disk_cache/disk_cache.h",
         "patchSetId": 7
@@ -182,6 +290,24 @@
       "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7aac2a6_679048d6",
+        "filename": "net/disk_cache/disk_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a23c9961_10718eb8",
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +357,30 @@
     },
     {
       "key": {
+        "uuid": "4b38bcc3_90b37af3",
+        "filename": "net/disk_cache/disk_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b3cc8c_48588218",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df0ac014_da2079d1",
         "filename": "net/disk_cache/simple/simple_index.cc",
         "patchSetId": 7
@@ -242,6 +392,30 @@
       "writtenOn": "2017-07-28T17:32:24Z",
       "side": 1,
       "message": "Rather than manually AddRef/Release, you could:\n\nafter_write \u003d base::Bind([] (scoped_refptr\u003cCleanupContext\u003e) {}, cleanup_context_);",
+      "range": {
+        "startLine": 540,
+        "startChar": 4,
+        "endLine": 540,
+        "endChar": 15
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7645aa1b_bb9a331d",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-28T20:05:04Z",
+      "side": 1,
+      "message": "Can\u0027t say I like it, I had to spend some time figuring out which thread the release would happen on; I think I prefer it being explicit, in this case, too.. (despite the rest of the change leaning heavily on making it implicit to be compact\u0027ish)",
+      "parentUuid": "df0ac014_da2079d1",
       "range": {
         "startLine": 540,
         "startChar": 4,
