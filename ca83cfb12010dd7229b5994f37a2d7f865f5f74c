@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "138c738c_65ed6649",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-28T20:30:23Z",
+      "side": 1,
+      "message": "is_loading_in_session_restore indeed does not guarantee TAB_IS_LOADING. In all browser tests, when |is_loading_in_session_restore| is set, the tab is TAB_IS_NOT_LOADING.\n\nI will change the variable name since its true value does not indicate the tab is being loaded. The variable is true since the tab was created by session restore until the TabLoader stops tracking the tab (i.e., finishes loading or defers loading the tab), or the tab is closed.",
+      "parentUuid": "e4453f68_e46bc2dc",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 38
+      },
+      "revId": "ca83cfb12010dd7229b5994f37a2d7f865f5f74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a75e9ff_f5b55cc3",
         "filename": "chrome/browser/sessions/session_restore.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-28T19:53:05Z",
       "side": 1,
       "message": "You can use ContainsKey from base/stl_util.h",
+      "revId": "ca83cfb12010dd7229b5994f37a2d7f865f5f74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3e1b53_1267a6b5",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-28T20:30:23Z",
+      "side": 1,
+      "message": "base::ContainsKey() uses find() internally and we need to find the |tab_stop_loading| iterator to erase it from tabs_restoring(), so I think we will call find() twice if base::ContainsKey() is used here, right?",
+      "parentUuid": "0a75e9ff_f5b55cc3",
       "revId": "ca83cfb12010dd7229b5994f37a2d7f865f5f74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
