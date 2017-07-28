@@ -601,6 +601,21 @@ bool FormStructure::IsCompleteCreditCardForm() const {
   return false;
 }
 
+bool FormStructure::ShouldFillCreditCardForm() const {
+  bool found_cc_number = false;
+  bool found_other_cc_field = false;
+  for (const auto& field : fields_) {
+    if (field->Type().GetStorableType() == CREDIT_CARD_NUMBER) {
+      found_cc_number = true;
+    } else if (field->Type().group() == CREDIT_CARD) {
+      found_other_cc_field = true;
+    }
+    if (found_cc_number && found_other_cc_field)
+      return true;
+  }
+  return false;
+}
+
 void FormStructure::UpdateAutofillCount() {
   autofill_count_ = 0;
   for (const auto& field : *this) {
