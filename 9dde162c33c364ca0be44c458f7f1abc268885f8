@@ -16,6 +16,24 @@
       "revId": "9dde162c33c364ca0be44c458f7f1abc268885f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3563efe_8374e184",
+        "filename": "ui/chromeos/resources/default_100_percent/default_user_images/avatar_anonymous.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-28T17:39:14Z",
+      "side": 1,
+      "message": "Done. 384x384",
+      "parentUuid": "fd5645e3_149d484d",
+      "revId": "9dde162c33c364ca0be44c458f7f1abc268885f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
