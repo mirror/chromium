@@ -60,6 +60,19 @@ void PageLoadMetricsObserverTestHarness::SimulateLoadedResource(
   tester_->SimulateLoadedResource(info, content::GlobalRequestID());
 }
 
+void PageLoadMetricsObserverTestHarness::SimulateFeaturesUpdate(
+    const mojom::PageLoadFeatures& new_features) {
+  observer_->OnTimingUpdated(web_contents()->GetMainFrame(),
+                             mojom::PageLoadTiming(), mojom::PageLoadMetadata(),
+                             new_features);
+  // If sending the timing update caused the PageLoadMetricsUpdateDispatcher to
+  // schedule a buffering timer, then fire it now so metrics are dispatched to
+  // observers.
+  base::MockTimer* mock_timer = GetMockTimer();
+  if (mock_timer && mock_timer->IsRunning())
+    mock_timer->Fire();
+}
+
 void PageLoadMetricsObserverTestHarness::SimulateLoadedResource(
     const ExtraRequestCompleteInfo& info,
     const content::GlobalRequestID& request_id) {
