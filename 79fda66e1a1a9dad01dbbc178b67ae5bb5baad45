@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2890c246_272d5d39",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T21:02:02Z",
+      "side": 1,
+      "message": "IIUC, these tests test that fetching the relevant works in the default network context.  Wouldn\u0027t a better test be to take control of configuring a network context and make sure the configuration options have the expected effect in both enabled and disabled configurations?",
+      "range": {
+        "startLine": 125,
+        "startChar": 23,
+        "endLine": 125,
+        "endChar": 61
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3532d2_67f67ce4",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T21:02:02Z",
+      "side": 1,
+      "message": "Why not ftp?",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 1
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7cc8f72_a5259439",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T21:02:02Z",
+      "side": 1,
+      "message": "Is there a reason not to simply call ProfileIOData::IsHandledProtocol from here?  It\u0027s a static.",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b585ccfc_6d3e67fb",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T21:02:02Z",
+      "side": 1,
+      "message": "It feels strange to me that ApplyContextParamsToBuilder() only applies the just added booleans.  Wouldn\u0027t it make sense to have it also apply the cache and cookie file paths, and have the defaulting of those to in memory be based on making sure those paths get set appropriately (i.e. to null)?",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83504272_b246fd20",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T21:02:02Z",
+      "side": 1,
+      "message": "nit, suggestion/thought: It seems weird to have two different pathways for putting together a URLRequestContext in this file--did you think about having this function just configure a builder, and then having the constructors that didn\u0027t take a builder call into the one that did?  (I imagine a function taking a mojom::NetworkContextParams* and returning a std::unique_ptr\u003cURLRequestContextBuilder\u003e, which could be built and then destroyed in argument initialization.)",
+      "range": {
+        "startLine": 88,
+        "startChar": 25,
+        "endLine": 88,
+        "endChar": 26
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63937a0f_d746a4f5",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-28T21:02:02Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027m was confused as to whether the parenthetical was talking about requests made from within PAC scripts, or URLs that could validly be supplied for PAC scripts.  Willing to put in a bit more detail about the relationship between these booleans and PAC scripts?",
+      "range": {
+        "startLine": 19,
+        "startChar": 44,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
