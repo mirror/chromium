@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "84eded66_6cace21c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T07:28:36Z",
+      "side": 1,
+      "message": "Hmm, I changed my mind. In order to limit the number of each source we need to query last modified time so it\u0027s better to be always cached. I\u0027ll revisit this.",
+      "parentUuid": "2002b8ff_0e38d032",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac9a4c9d_124dec86",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
@@ -333,6 +351,30 @@
     },
     {
       "key": {
+        "uuid": "88796fc6_84d20c96",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T07:28:36Z",
+      "side": 1,
+      "message": "I\u0027ve clarified the comments here.\n\nAnd also I swapped the meaning of soft cache and hard cache because the newer definition makes more sense...",
+      "parentUuid": "a6a234a7_fc041176",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59781363_5b87f821",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -365,6 +407,24 @@
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed0a542_1d32e45c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T07:28:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3f93e00e_57f6af9e",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
