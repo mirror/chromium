@@ -211,6 +211,11 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // of the root RenderWidgetHostView.
   gfx::Point GetViewOriginInRoot() const;
 
+  // Returns false if the view cannot be shown. This is the case where the frame
+  // associated with this view or a cross process ancestor frame has been hidden
+  // using CSS.
+  bool CanBecomeVisible();
+
  protected:
   friend class RenderWidgetHostView;
   friend class RenderWidgetHostViewChildFrameTest;
