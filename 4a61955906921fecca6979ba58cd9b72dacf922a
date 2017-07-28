@@ -46,6 +46,30 @@
       "revId": "4a61955906921fecca6979ba58cd9b72dacf922a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5545623c_51ee914d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 64812,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-28T20:32:19Z",
+      "side": 1,
+      "message": "Yup, readability on graphs. Me do try to reuse existing ones when we can.",
+      "parentUuid": "ba60a712_012afcb1",
+      "range": {
+        "startLine": 64812,
+        "startChar": 10,
+        "endLine": 64812,
+        "endChar": 17
+      },
+      "revId": "4a61955906921fecca6979ba58cd9b72dacf922a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
