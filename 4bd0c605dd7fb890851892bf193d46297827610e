@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fe5224c_80ba1650",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-07-28T04:27:16Z",
+      "side": 1,
+      "message": "You mean the case where text-input-flags is 0 always ? (Not from ClearTextInputState)\nThat means a text field whose flags are 0, so we end up calling NextPreviousFlags() multiple times.\n\nI didn\u0027t thought about that case. If this is the case you are talking, pls confirm",
+      "parentUuid": "f3b1e44d_874f4189",
+      "revId": "4bd0c605dd7fb890851892bf193d46297827610e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3aeb75ef_83f9acca",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T01:54:51Z",
       "side": 1,
       "message": "Can you call NextPreviousFlag() here?",
+      "revId": "4bd0c605dd7fb890851892bf193d46297827610e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb86c9e_a41701a6",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-07-28T04:27:16Z",
+      "side": 1,
+      "message": "AFAIK this sending also goes periodically. So call will be invoked multiple times. But i will double check and confirm to you later",
+      "parentUuid": "3aeb75ef_83f9acca",
       "revId": "4bd0c605dd7fb890851892bf193d46297827610e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
