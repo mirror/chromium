@@ -46,6 +46,9 @@ const char kUseFirstDisplayAsInternal[] = "use-first-display-as-internal";
 // Use an fp16 scRGB swap chain compatible with HDR output.
 const char kEnableHDR[] = "enable-hdr";
 
+// Use SkiaRenderer instead of GLRenderer for direct rendering.
+const char kUseSkiaRenderer[] = "use-skia-renderer";
+
 #if defined(OS_CHROMEOS)
 const char kDisableDisplayColorCalibration[] =
     "disable-display-color-calibration";

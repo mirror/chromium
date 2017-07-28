@@ -35,6 +35,8 @@ viz::RendererSettings CreateRendererSettings(
   renderer_settings.resource_settings.buffer_to_texture_target_map =
       image_targets;
 
+  renderer_settings.use_skia_renderer =
+      command_line->HasSwitch(switches::kUseSkiaRenderer);
   renderer_settings.disallow_non_exact_resource_reuse =
       command_line->HasSwitch(cc::switches::kDisallowNonExactResourceReuse);
   renderer_settings.allow_antialiasing =

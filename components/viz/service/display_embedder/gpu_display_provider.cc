@@ -22,6 +22,7 @@
 #include "gpu/command_buffer/service/image_factory.h"
 #include "gpu/ipc/service/gpu_channel_manager.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
+#include "ui/display/display_switches.h"
 
 #if defined(USE_OZONE)
 #include "components/viz/service/display_embedder/display_output_surface_ozone.h"
@@ -95,6 +96,9 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
   settings.show_overdraw_feedback =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           cc::switches::kShowOverdrawFeedback);
+  settings.use_skia_renderer =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kUseSkiaRenderer);
 
   // The ownership of the BeginFrameSource is transfered to the caller.
   *begin_frame_source = std::move(synthetic_begin_frame_source);
