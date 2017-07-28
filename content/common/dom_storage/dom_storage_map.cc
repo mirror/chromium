@@ -24,12 +24,15 @@ size_t size_of_item(const base::string16& key,
 }  // namespace
 
 DOMStorageMap::DOMStorageMap(size_t quota)
-    : bytes_used_(0), quota_(quota), has_only_keys_(false) {
+    : bytes_used_(0), memory_usage_(0), quota_(quota), has_only_keys_(false) {
   ResetKeyIterator();
 }
 
 DOMStorageMap::DOMStorageMap(size_t quota, bool has_only_keys)
-    : bytes_used_(0), quota_(quota), has_only_keys_(has_only_keys) {}
+    : bytes_used_(0),
+      memory_usage_(0),
+      quota_(quota),
+      has_only_keys_(has_only_keys) {}
 
 DOMStorageMap::~DOMStorageMap() {}
 
@@ -95,6 +98,10 @@ bool DOMStorageMap::SetItemInternal(const base::string16& key,
   values_[key] = new_value;
   ResetKeyIterator();
   bytes_used_ = new_bytes_used;
+  size_t old_item_memory =
+      old_value->is_null() ? 0 : size_of_item(key, old_value->string(), false);
+  memory_usage_ = memory_usage_ + size_of_item(key, new_value.string(), false) -
+                  old_item_memory;
   return true;
 }
 
@@ -119,6 +126,7 @@ bool DOMStorageMap::RemoveItemInternal(const base::string16& key,
   values_.erase(found);
   ResetKeyIterator();
   bytes_used_ -= size_of_item(key, *old_value, has_only_keys_);
+  memory_usage_ -= size_of_item(key, *old_value, false);
   return true;
 }
 
@@ -146,6 +154,7 @@ void DOMStorageMap::TakeValuesFrom(DOMStorageValuesMap* values) {
     values_.swap(*values);
   }
   bytes_used_ = CountBytes(values_, has_only_keys_);
+  memory_usage_ = CountBytes(values_, false);
   ResetKeyIterator();
 }
 
@@ -153,6 +162,7 @@ DOMStorageMap* DOMStorageMap::DeepCopy() const {
   DOMStorageMap* copy = new DOMStorageMap(quota_, has_only_keys_);
   copy->values_ = values_;
   copy->bytes_used_ = bytes_used_;
+  copy->memory_usage_ = memory_usage_;
   copy->ResetKeyIterator();
   return copy;
 }
