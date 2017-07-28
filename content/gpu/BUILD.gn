@@ -45,7 +45,6 @@ target(link_target_type, "gpu_sources") {
   ]
 
   configs += [ "//content:content_implementation" ]
-
   deps = [
     "//base",
     "//base/third_party/dynamic_annotations",
@@ -113,5 +112,9 @@ target(link_target_type, "gpu_sources") {
 
   if (enable_vulkan) {
     deps += [ "//gpu/vulkan" ]
+  }
+
+  if (is_desktop_linux) {
+    public_configs = [ "//media/gpu:libva_config" ]
   }
 }

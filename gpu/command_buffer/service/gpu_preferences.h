@@ -50,7 +50,7 @@ struct GPU_EXPORT GpuPreferences {
   // Disables hardware acceleration of video decode, where available.
   bool disable_accelerated_video_decode = false;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
   // Disables VA-API accelerated video encode.
   bool disable_vaapi_accelerated_video_encode = false;
 #endif

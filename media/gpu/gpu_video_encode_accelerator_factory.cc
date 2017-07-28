@@ -9,7 +9,7 @@
 #include "media/gpu/features.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
 #if defined(USE_V4L2_CODEC)
 #include "media/gpu/v4l2_video_encode_accelerator.h"
 #endif
