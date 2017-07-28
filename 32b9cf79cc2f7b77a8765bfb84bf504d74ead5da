@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1352cb9d_79edef59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/installedapp/InstalledAppProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-28T01:01:30Z",
+      "side": 1,
+      "message": "nit: No space between ) and :",
+      "range": {
+        "startLine": 199,
+        "startChar": 23,
+        "endLine": 199,
+        "endChar": 24
+      },
+      "revId": "32b9cf79cc2f7b77a8765bfb84bf504d74ead5da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
