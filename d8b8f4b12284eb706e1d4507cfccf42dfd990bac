@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "698e7fb3_4cb4a05d",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-28T18:47:15Z",
+      "side": 1,
+      "message": "We send this value up to Java when we show the text suggestion menu, and Java doesn\u0027t support unsigned ints. Do you still want it unsigned?",
+      "parentUuid": "b3e45d29_09bc1406",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a10806c_2e14e291",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 2
@@ -135,6 +153,24 @@
       "side": 1,
       "message": "Why is |tag_| signed?",
       "parentUuid": "7a10806c_2e14e291",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffea7b80_4acbd332",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-28T18:47:15Z",
+      "side": 1,
+      "message": "We send this value up to Java when we show the text suggestion menu, and Java doesn\u0027t support unsigned ints (we would have to convert it to signed and back anyway).",
+      "parentUuid": "279be181_382841aa",
       "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
