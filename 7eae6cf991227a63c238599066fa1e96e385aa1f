@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3aa9f17_c1b9066b",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T23:04:39Z",
+      "side": 1,
+      "message": "Do you need .get() here and below?",
+      "range": {
+        "startLine": 77,
+        "startChar": 16,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "7eae6cf991227a63c238599066fa1e96e385aa1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35a3da3_67e00474",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T23:04:39Z",
+      "side": 1,
+      "message": "auto?",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "7eae6cf991227a63c238599066fa1e96e385aa1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c506e3_e563c9d0",
+        "filename": "chrome/browser/android/locale/special_locale_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T23:04:39Z",
+      "side": 1,
+      "message": "Can you just use existing and pull out the if check at the bottom of the else?",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "7eae6cf991227a63c238599066fa1e96e385aa1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
