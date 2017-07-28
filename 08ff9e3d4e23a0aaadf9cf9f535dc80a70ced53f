@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64b91cc5_b3c6a87c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-28T18:46:54Z",
+      "side": 1,
+      "message": "This will be removed from TabManager as I will change to use TabManagerWebContentsData.",
+      "parentUuid": "836e0e85_350a8c8d",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b433f41_9167c62c",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-28T17:50:56Z",
       "side": 1,
       "message": "Instead of accessing private members of TabManager, how about following the same way OnSessionRestoreFinishedLoadingTabs() does? That is adding an API for this.\n\nAnd I would recommend also recording this information in TabManagerWebContentsData.",
+      "range": {
+        "startLine": 144,
+        "startChar": 18,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0d5248_8c792f67",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-28T18:46:54Z",
+      "side": 1,
+      "message": "Ack. I will create 2 methods On[Will,Did]RestoreTab for TabManager.\n\nI will use the TabManagerWebContentsData instead of the unordered_set tabs_restoring. Therefore, the DCHECK(tabs_restoring.empty()) will be removed from TabManager while two other DCHECK() are added in On[Will,Did]RestoreTab().",
+      "parentUuid": "6b433f41_9167c62c",
       "range": {
         "startLine": 144,
         "startChar": 18,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "a3673367_b711d37c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-28T18:46:54Z",
+      "side": 1,
+      "message": "You are right, the friend here is unnecessary because TabManagerSessionRestoreObserver is a nested class. I will remove this.",
+      "parentUuid": "8f60ed6b_a569a743",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b56ad739_e1591a7d",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "28705548_91b315f8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-28T18:46:54Z",
+      "side": 1,
+      "message": "I will remove this field since I will change to use TabManagerWebContentsData.",
+      "parentUuid": "b56ad739_e1591a7d",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5515082_e6d182e9",
         "filename": "chrome/browser/sessions/session_restore.h",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3300bc_30e840a7",
+        "filename": "chrome/browser/sessions/session_restore.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-28T18:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5515082_e6d182e9",
+      "revId": "08ff9e3d4e23a0aaadf9cf9f535dc80a70ced53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
