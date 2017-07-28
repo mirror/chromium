@@ -16,6 +16,23 @@
       "revId": "fe03c6512d0446d90b37b55f875c100994958f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577f4fcb_14861a44",
+        "filename": "ui/login/account_picker/md_user_pod_row.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:03:39Z",
+      "side": 1,
+      "message": "Please duplicate these changes in the non md* files as well, since right now Chrome desktop user switcher uses those.",
+      "revId": "fe03c6512d0446d90b37b55f875c100994958f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
