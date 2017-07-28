@@ -108,11 +108,6 @@ std::string ChromeTabRestoreServiceClient::GetExtensionAppIDForTab(
   return extension_app_id;
 }
 
-base::SequencedWorkerPool* ChromeTabRestoreServiceClient::GetBlockingPool() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  return content::BrowserThread::GetBlockingPool();
-}
-
 base::FilePath ChromeTabRestoreServiceClient::GetPathToSaveTo() {
   return profile_->GetPath();
 }
