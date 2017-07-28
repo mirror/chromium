@@ -183,7 +183,7 @@ public class ThumbnailProviderImplTest {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ThumbnailProviderImpl.clearCache();
+                mThumbnailProvider.clearCache();
             }
         });
     }

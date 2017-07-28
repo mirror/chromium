@@ -16,7 +16,6 @@ import org.chromium.base.SysUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -37,12 +36,10 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     private static final int MAX_CACHE_BYTES = 5 * 1024 * 1024;
 
     /**
-     *  Weakly referenced cache containing thumbnails that can be deleted under memory pressure.
-     *  Key in the cache is a pair of the filepath and the height/width of the thumbnail. Value is
-     *  a pair of the thumbnail and its byte size.
-     * */
-    private static WeakReference<LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>>>
-            sBitmapCache = new WeakReference<>(null);
+     * A cache containing thumbnails. Key in the cache is a pair of the filepath and the
+     * height/width of the thumbnail. Value is a pair of the thumbnail and its byte size.
+     */
+    private LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>> mBitmapCache;
 
     /** Enqueues requests. */
     private final Handler mHandler;
@@ -160,29 +157,26 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         return mNativeThumbnailProvider != 0;
     }
 
-    private static LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>> getBitmapCache() {
+    private LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>> getBitmapCache() {
         ThreadUtils.assertOnUiThread();
 
-        LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>> cache =
-                sBitmapCache == null ? null : sBitmapCache.get();
-        if (cache != null) return cache;
+        if (mBitmapCache != null) return mBitmapCache;
 
-        // Create a new weakly-referenced cache.
-        cache = new LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>>(MAX_CACHE_BYTES) {
+        // Create a new cache.
+        mBitmapCache = new LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>>(MAX_CACHE_BYTES) {
             @Override
             protected int sizeOf(
                     Pair<String, Integer> thumbnailIdPair, Pair<Bitmap, Integer> thumbnail) {
                 return thumbnail == null ? 0 : thumbnail.second;
             }
         };
-        sBitmapCache = new WeakReference<>(cache);
-        return cache;
+        return mBitmapCache;
     }
 
     /**
      * Evicts all cached thumbnails from previous fetches.
      */
-    public static void clearCache() {
+    public void clearCache() {
         getBitmapCache().evictAll();
     }
 
