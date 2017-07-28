@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc0aecf9_8a616301",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "Why are we using this bug number, by the way?  Are there layout tests that would be fixed by this change?  If so, we should mention them in the CL description.  Either way, I wonder if it\u0027s worth filing something more specific with repro steps or at least a description of the problem we\u0027re trying to solve, in case this needs to be reverted or merged in the future.",
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64cac93_22249705",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "nit: Maybe CancelThrottle, to be consistent?",
+      "range": {
+        "startLine": 440,
+        "startChar": 53,
+        "endLine": 440,
+        "endChar": 66
+      },
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3782c8c6_7afae176",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "Worth adding a brief comment like \"Creates CancelThrottles for any navigations to a given URL,\" since I wasn\u0027t able to guess from the class name.",
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64125d8a_ccdb8763",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "nit: No braces needed.",
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cf12bb_17b8c37d",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "Worth including the description of the test behavior here, since it\u0027s a bit subtle.",
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beaf3aea_77b5fe34",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "nit: All comments should end with periods (or some punctuation).",
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1080b3_f0e6ef2c",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "Can we verify that the tab is still loading here, after the WaitForCancel() call?",
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfc3a8e_90f09f0a",
+        "filename": "content/test/data/dropped_loading_subframe.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-28T00:02:48Z",
+      "side": 1,
+      "message": "Is this just here for debugging?  I\u0027m not sure if we need to add a special test file for the subframe if we don\u0027t need it to do anything (e.g., an existing simple page like title2.html may be sufficient).",
+      "revId": "02a8811966b914aad8ad879af320bb0a9224e7fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
