@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d31d7f03_fda82b54",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-07-28T19:12:08Z",
+      "side": 1,
+      "message": "I believe this implies an extra copy of the encoded message bytes, right? The current code isn\u0027t all that optimized for avoiding copies. Afterall a base::string16 is being passed in, but we might want to think about impact here for large messages.\n\nI have a little ping-pong test I wrote to measure performance here:\nhttp://darin.mtv.corp.google.com/chrome/test/message_port/perf_test.html",
+      "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
