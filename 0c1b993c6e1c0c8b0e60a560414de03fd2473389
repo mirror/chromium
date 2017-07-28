@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b870b4_44eed7c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-28T01:37:05Z",
+      "side": 1,
+      "message": "Can you make this more informative? E.g. \"Remove obsolete nagivation ID TODOs in language / translate logging\"",
+      "revId": "0c1b993c6e1c0c8b0e60a560414de03fd2473389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
