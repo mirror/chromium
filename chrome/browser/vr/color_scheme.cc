@@ -66,6 +66,8 @@ void InitializeColorSchemes() {
   normal_scheme.dimmer_inner = 0xCC0D0D0D;
   normal_scheme.dimmer_outer = 0xE6000000;
   normal_scheme.splash_screen_background = SK_ColorBLACK;
+  normal_scheme.location_bar_thumb = 0x4D242424;
+  normal_scheme.location_bar_background = 0x1A242424;
 
   kColorSchemes[ColorScheme::kModeFullscreen] =
       kColorSchemes[ColorScheme::kModeNormal];

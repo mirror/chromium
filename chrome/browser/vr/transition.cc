@@ -11,8 +11,8 @@ static constexpr int kDefaultTransitionDurationMs = 225;
 }  // namespace
 
 Transition::Transition()
-    : duration(
-          base::TimeDelta::FromMilliseconds(kDefaultTransitionDurationMs)) {}
+    : duration(base::TimeDelta::FromMilliseconds(kDefaultTransitionDurationMs)),
+      ease_type(cc::CubicBezierTimingFunction::EaseType::EASE) {}
 
 Transition::~Transition() {}
 
