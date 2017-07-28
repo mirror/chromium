@@ -51,3 +51,31 @@ message DatabaseManagerInfo {
 
   optional DatabaseInfo database_info = 2;
 }
+
+// The information about the full hashes stored in the cache.
+message FullHashCache {
+  // The information about a hash prefix stored in the cache.
+  message CachedHashPrefixInfo {
+    // The negative ttl for the hash prefix.
+    optional int64 negative_expiry = 1;
+
+    // The information about a particular full hash.
+    message FullHashInfo {
+      // The expiration time of the full hash for a particular store.
+      optional int64 positive_expiry = 1;
+
+      // The list for which this full hash is applicable.
+
+      // A variable-length SHA256 hash with size between 4 and 32 bytes
+      // inclusive.
+      optional bytes hash = 2;
+    }
+
+    // The list of all full hashes (and related info) that start with a
+    // particular hash prefix and are known to be unsafe.
+    repeated FullHashInfo full_hash_info = 2;
+  }
+
+  // Information about the cached hash prefix for each hash prefix in the cache.
+  repeated CachedHashPrefixInfo cached_hash_prefix_info = 1;
+}
