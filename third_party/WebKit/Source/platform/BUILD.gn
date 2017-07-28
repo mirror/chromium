@@ -1844,6 +1844,7 @@ test("blink_platform_unittests") {
     "text/UnicodeUtilitiesTest.cpp",
     "text/WritingModeUtilsTest.cpp",
     "threading/BackgroundTaskRunnerTest.cpp",
+    "threading/SpinLockTest.cpp",
     "transforms/AffineTransformTest.cpp",
     "transforms/RotationTest.cpp",
     "transforms/TransformOperationsTest.cpp",
