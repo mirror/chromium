@@ -84,6 +84,7 @@ class MockRenderThread : public RenderThread {
   int32_t GetClientId() override;
   scoped_refptr<base::SingleThreadTaskRunner> GetTimerTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> GetLoadingTaskRunner() override;
+  void SetRendererProcessType(const std::string& process_type) override;
 #if defined(OS_WIN)
   void PreCacheFont(const LOGFONT& log_font) override;
   void ReleaseCachedFonts() override;

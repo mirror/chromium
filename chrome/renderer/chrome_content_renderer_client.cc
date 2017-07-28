@@ -217,6 +217,9 @@ const char kFlashYouTubeRewriteUMA[] = "Plugin.Flash.YouTubeRewrite";
 
 namespace {
 
+constexpr char kExtensionRenderer[] = "ExtensionRenderer";
+constexpr char kRenderer[] = "Renderer";
+
 void RecordYouTubeRewriteUMA(internal::YouTubeRewriteStatus status) {
   UMA_HISTOGRAM_ENUMERATION(internal::kFlashYouTubeRewriteUMA, status,
                             internal::NUM_PLUGIN_ERROR);
@@ -288,12 +291,14 @@ bool SpellCheckReplacer::Visit(content::RenderFrame* render_frame) {
 SpellCheckReplacer::~SpellCheckReplacer() = default;
 #endif
 
-#if BUILDFLAG(ENABLE_EXTENSIONS)
 bool IsStandaloneExtensionProcess() {
+#if !BUILDFLAG(ENABLE_EXTENSIONS)
+  return false;
+#else
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       extensions::switches::kExtensionProcess);
-}
 #endif
+}
 
 // Defers media player loading in background pages until they're visible.
 // TODO(dalecurtis): Include an idle listener too.  http://crbug.com/509135
@@ -386,6 +391,9 @@ ChromeContentRendererClient::~ChromeContentRendererClient() = default;
 
 void ChromeContentRendererClient::RenderThreadStarted() {
   RenderThread* thread = RenderThread::Get();
+
+  thread->SetRendererProcessType(
+      IsStandaloneExtensionProcess() ? kExtensionRenderer : kRenderer);
 
   {
     startup_metric_utils::mojom::StartupMetricHostPtr startup_metric_host;
@@ -1156,11 +1164,7 @@ void ChromeContentRendererClient::GetNavigationErrorStrings(
 }
 
 bool ChromeContentRendererClient::RunIdleHandlerWhenWidgetsHidden() {
-#if BUILDFLAG(ENABLE_EXTENSIONS)
   return !IsStandaloneExtensionProcess();
-#else
-  return true;
-#endif
 }
 
 bool ChromeContentRendererClient::
@@ -1393,11 +1397,7 @@ bool ChromeContentRendererClient::ShouldGatherSiteIsolationStats() const {
   // TODO(nick): https://crbug.com/268640 Gather stats for extension processes
   // too; we would need to check the extension's manifest to know which sites
   // it's allowed to access.
-#if BUILDFLAG(ENABLE_EXTENSIONS)
   return !IsStandaloneExtensionProcess();
-#else
-  return true;
-#endif
 }
 
 std::unique_ptr<blink::WebContentSettingsClient>
@@ -1560,11 +1560,7 @@ void ChromeContentRendererClient::WillDestroyServiceWorkerContextOnWorkerThread(
 // information. Also, the enforcement of sending and binding UDP is already done
 // by chrome extension permission model.
 bool ChromeContentRendererClient::ShouldEnforceWebRTCRoutingPreferences() {
-#if BUILDFLAG(ENABLE_EXTENSIONS)
   return !IsStandaloneExtensionProcess();
-#else
-  return true;
-#endif
 }
 
 GURL ChromeContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
