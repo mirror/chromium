@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf1ba10_f875fdee",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-28T07:47:27Z",
+      "side": 1,
+      "message": "Nit: return base::ASCIIToUTF16(\"...\");",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b77d46_9b6eb286",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-28T07:47:27Z",
+      "side": 1,
+      "message": "Nit: requires disabled infobars -\u003e require infobars to be disabled",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e3c3a8_c96f9da0",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-28T07:47:27Z",
+      "side": 1,
+      "message": "Nit: Remove \"an\"",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef62536b_8480724c",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-28T07:47:27Z",
+      "side": 1,
+      "message": "I don\u0027t think the Accept() call above actually does anything.  I would take this block and the one above and just do something like this instead:\n\n  // InfoBar::RemoveSelf() is normally called after a user presses a\n  // button on the infobar.  This should close the hosting\n  // GlobalConfirmInfoBar.\n  first_tab_infobar-\u003eRemoveSelf();",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
