@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "001746bf_3a2722a9",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "While I appreciate the argument (and did the change), please note that this has multiple sections of #if defined(OS_CHROMEOS). Lines 644 and 654 are a good example... 591 is another one :).",
+      "parentUuid": "55a93026_cf5bda15",
+      "range": {
+        "startLine": 688,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 24
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fbec1db_6fd1450a",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0f3ffc_88187b86",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fbec1db_6fd1450a",
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "cbad4eac_548b61db",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9818,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc1b094b_09befaf6",
+      "range": {
+        "startLine": 9818,
+        "startChar": 48,
+        "endLine": 9818,
+        "endChar": 104
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e56c0c8_7afab0a2",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-28T09:22:33Z",
       "side": 1,
       "message": "Check or decide yourself if this should be made untraslatable resource by putting it in a \u003cph\u003e tag. Usually names of products are.",
+      "range": {
+        "startLine": 9835,
+        "startChar": 66,
+        "endLine": 9835,
+        "endChar": 77
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27576402_35a7e49e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9835,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "Google Cast is used in a few other places here in policies and never in \u003cph\u003e tag. What would you do? Should I fix them all here?",
+      "parentUuid": "8e56c0c8_7afab0a2",
       "range": {
         "startLine": 9835,
         "startChar": 66,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "55eb59c9_092b27c9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9837,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "I had decided to not mention the eclipse... Sure. More seriously, this is modeled after the dinosaur game policy: \"[...] If this policy is not set, users are not allowed to play the dinosaur easter egg game on enrolled Chrome OS, but are allowed to play it under other circumstances.\" (Line 729.) I think \"other circumstances\" is fine.",
+      "parentUuid": "da3e37de_ffa1a7e1",
+      "range": {
+        "startLine": 9837,
+        "startChar": 285,
+        "endLine": 9837,
+        "endChar": 310
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b95508b6_bb438bcf",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "d59b60ad_46e3e4c9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9851,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b95508b6_bb438bcf",
+      "range": {
+        "startLine": 9851,
+        "startChar": 36,
+        "endLine": 9851,
+        "endChar": 40
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d43d071_a8af6beb",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2017-07-28T09:22:33Z",
       "side": 1,
       "message": "\"non-empty\" sounds better imo.",
+      "range": {
+        "startLine": 9855,
+        "startChar": 37,
+        "endLine": 9855,
+        "endChar": 46
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80364bb6_3252c49f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9855,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "I really mean non blank, as is \"non empty after removing all whitespace.\"",
+      "parentUuid": "0d43d071_a8af6beb",
       "range": {
         "startLine": 9855,
         "startChar": 37,

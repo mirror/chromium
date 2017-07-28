@@ -75,6 +75,30 @@
       "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4851bd00_e6fe4c01",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9855,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T17:26:34Z",
+      "side": 1,
+      "message": "So I plan to do something like this when I write the UI:\n\nstring name \u003d prefs_registry-\u003eGetValue(kCastReceiverName).empty() ? cast_receiver-\u003eGetName() :\n  prefs_registry-\u003eGetValue(kCastReceiverName).empty();\nbool editable \u003d prefs_registry-\u003ePrefValueFromDefaultStore(kCastReceiverName);\n\nThis way the name gets set as documented, and if that empty string came from the default store (and not the cloud policy store) we know that an admin didn\u0027t set the policy and therefore the user can edit the name. \n\nSounds about right?",
+      "parentUuid": "6b29edfa_c712108a",
+      "range": {
+        "startLine": 9855,
+        "startChar": 254,
+        "endLine": 9855,
+        "endChar": 295
+      },
+      "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
