@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "45788561_e0df1bc8",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "I\u0027m a little worried that display logic is getting complex.\n\nIt would be good to unify the internal/external stylus detection so that the rest of the code doesn\u0027t care about the distinction. What about renaming SetHasSeenStylusEvent() to SetHasStylus()? Then when palette tray initializes if there is an internal stylus it will call SetHasStylus(). If there is no internal stylus it registers a pointer watcher.\n\nThe logic for displaying the palette tray then depends only on this has_stylus pref and is unaware of the internal/external stylus distinction.",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16e8f12f_24c3fbaa",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 1
@@ -48,6 +65,64 @@
     },
     {
       "key": {
+        "uuid": "e4bf20df_ba3de73b",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "?",
+      "parentUuid": "16e8f12f_24c3fbaa",
+      "range": {
+        "startLine": 485,
+        "startChar": 18,
+        "endLine": 485,
+        "endChar": 41
+      },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f579c1_b9e2b966",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "nit: move has_seen_stylus_ check before or after is_palette_enabled_, this is a more \"fundamental\" check",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f08527_d8d05bc2",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "Remove !!",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec22a0e_325e9344",
         "filename": "ash/system/palette/palette_tray.h",
         "patchSetId": 1
@@ -65,6 +140,98 @@
         "endLine": 132,
         "endChar": 17
       },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f0628c_66fd27cf",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "Not needed, this is unique_ptr\u003c\u003e",
+      "parentUuid": "7ec22a0e_325e9344",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 17
+      },
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041c0791_3061b1ee",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "Where is this initialized before? (ie, you used the word again)",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5f9d54_5d86098b",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "I haven\u0027t seen this pattern before - I\u0027m a bit hesitant of it because it uses inheritance which makes it tricky to compose various bits of logic. The pattern I usually see is moving SetUp logic to an Init method, ie,\n\n  Init(true /*internal_stylus*/);\n  Init(false /*internal_stylus*/);\n\nIf most of these tests are copy-pasted, consider using a parameterized test.",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4958a8f_803f3f30",
+        "filename": "ash/system/palette/test_palette_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "Remove fake_?",
+      "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940e5111_17214e84",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T19:01:12Z",
+      "side": 1,
+      "message": "nit: drop {}",
       "revId": "ded05e78951a76bb7253fe1a70b7e6484a2c1727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
