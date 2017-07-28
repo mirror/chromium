@@ -14,7 +14,6 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.autofill.PersonalDataManager;
 import org.chromium.chrome.browser.autofill.PersonalDataManager.AutofillProfile;
-import org.chromium.chrome.browser.preferences.PreferenceUtils;
 
 /**
  * Autofill profiles fragment, which allows the user to edit autofill profiles.
@@ -24,8 +23,7 @@ public class AutofillProfilesFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferenceUtils.addPreferencesFromResource(
-                this, R.xml.autofill_and_payments_preference_fragment_screen);
+        addPreferencesFromResource(R.xml.autofill_and_payments_preference_fragment_screen);
         getActivity().setTitle(R.string.autofill_profiles_title);
     }
 

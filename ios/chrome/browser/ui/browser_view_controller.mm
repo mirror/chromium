@@ -38,8 +38,6 @@
 #include "base/threading/thread_restrictions.h"
 #include "components/bookmarks/browser/base_bookmark_model_observer.h"
 #include "components/bookmarks/browser/bookmark_model.h"
-#include "components/feature_engagement/public/event_constants.h"
-#include "components/feature_engagement/public/tracker.h"
 #include "components/image_fetcher/ios/ios_image_data_fetcher_wrapper.h"
 #include "components/infobars/core/infobar_manager.h"
 #include "components/payments/core/features.h"
@@ -58,8 +56,6 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/favicon/favicon_loader.h"
 #include "ios/chrome/browser/favicon/ios_chrome_favicon_loader_factory.h"
-#include "ios/chrome/browser/feature_engagement/tracker_factory.h"
-#include "ios/chrome/browser/feature_engagement/tracker_util.h"
 #import "ios/chrome/browser/find_in_page/find_in_page_controller.h"
 #import "ios/chrome/browser/find_in_page/find_in_page_model.h"
 #import "ios/chrome/browser/find_in_page/find_tab_helper.h"
@@ -2577,12 +2573,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
           IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB);
       action = ^{
         Record(ACTION_OPEN_IN_NEW_TAB, isImage, isLink);
-        // The "New Tab" item in the context menu opens a new tab in the current
-        // browser state. |isOffTheRecord| indicates whether or not the current
-        // browser state is incognito.
         [weakSelf webPageOrderedOpen:link
                             referrer:referrer
-                         inIncognito:weakSelf.isOffTheRecord
                         inBackground:YES
                             appendTo:kCurrentTab];
       };
@@ -3788,10 +3780,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                inIncognito:(BOOL)inIncognito
               inBackground:(BOOL)inBackground
                   appendTo:(OpenPosition)appendTo {
-  // Send either the "New Tab Opened" or "New Incognito Tab" opened to the
-  // feature_engagement::Tracker based on |inIncognito|.
-  feature_engagement::NotifyNewTabEvent(_model.browserState, inIncognito);
-
   if (inIncognito == _isOffTheRecord) {
     [self webPageOrderedOpen:url
                     referrer:referrer
@@ -4034,11 +4022,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     return;
   }
 
-  // Either send or don't send the "New Tab Opened" or "Incognito Tab Opened"
-  // events to the feature_engagement::Tracker based on |command.userInitiated|
-  // and |command.incognito|.
-  feature_engagement::NotifyNewTabEventForCommand(_browserState, command);
-
   NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
   BOOL offTheRecord = self.isOffTheRecord;
   ProceduralBlock oldForegroundTabWasAddedCompletionBlock =
@@ -4089,15 +4072,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (void)addToReadingList:(ReadingListAddCommand*)command {
   [self addToReadingListURL:[command URL] title:[command title]];
-}
-
-- (void)showQRScanner {
-  _qrScannerViewController =
-      [[QRScannerViewController alloc] initWithDelegate:_toolbarController];
-  [self presentViewController:[_qrScannerViewController
-                                  getViewControllerToPresent]
-                     animated:YES
-                   completion:nil];
 }
 
 #pragma mark - Command Handling
@@ -4220,6 +4194,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       if ([sender isKindOfClass:[UIView class]])
         _voiceSearchButton = sender;
       [super chromeExecuteCommand:sender];
+      break;
+    case IDC_SHOW_QR_SCANNER:
+      [self showQRScanner];
       break;
     default:
       // Unknown commands get sent up the responder chain.
@@ -4448,6 +4425,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                           loader:self];
 
   [_readingListCoordinator start];
+}
+
+- (void)showQRScanner {
+  _qrScannerViewController =
+      [[QRScannerViewController alloc] initWithDelegate:_toolbarController];
+  [self presentViewController:[_qrScannerViewController
+                                  getViewControllerToPresent]
+                     animated:YES
+                   completion:nil];
 }
 
 - (void)showNTPPanel:(NewTabPage::PanelIdentifier)panel {

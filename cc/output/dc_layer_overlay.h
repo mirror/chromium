@@ -76,14 +76,12 @@ class DCLayerOverlayProcessor {
     DC_LAYER_FAILED_TEXTURE_NOT_CANDIDATE,
     DC_LAYER_FAILED_OCCLUDED,
     DC_LAYER_FAILED_COMPLEX_TRANSFORM,
-    DC_LAYER_FAILED_TRANSPARENT,
-    DC_LAYER_FAILED_NON_ROOT,
     DC_LAYER_FAILED_MAX,
   };
 
   void Process(ResourceProvider* resource_provider,
                const gfx::RectF& display_rect,
-               RenderPassList* render_passes,
+               QuadList* quad_list,
                gfx::Rect* overlay_damage_rect,
                gfx::Rect* damage_rect,
                DCLayerOverlayList* ca_layer_overlays);
@@ -98,13 +96,6 @@ class DCLayerOverlayProcessor {
                              QuadList::ConstIterator quad_list_begin,
                              QuadList::ConstIterator quad,
                              DCLayerOverlay* ca_layer_overlay);
-  void ProcessRenderPass(ResourceProvider* resource_provider,
-                         const gfx::RectF& display_rect,
-                         RenderPass* render_pass,
-                         bool is_root,
-                         gfx::Rect* overlay_damage_rect,
-                         gfx::Rect* damage_rect,
-                         DCLayerOverlayList* ca_layer_overlays);
   bool ProcessForOverlay(const gfx::RectF& display_rect,
                          QuadList* quad_list,
                          const gfx::Rect& quad_rectangle,
@@ -112,11 +103,10 @@ class DCLayerOverlayProcessor {
                          const QuadList::Iterator& it,
                          gfx::Rect* damage_rect);
   bool ProcessForUnderlay(const gfx::RectF& display_rect,
-                          RenderPass* render_pass,
+                          QuadList* quad_list,
                           const gfx::Rect& quad_rectangle,
                           const gfx::RectF& occlusion_bounding_box,
                           const QuadList::Iterator& it,
-                          bool is_root,
                           gfx::Rect* damage_rect,
                           gfx::Rect* this_frame_underlay_rect,
                           DCLayerOverlay* dc_layer);

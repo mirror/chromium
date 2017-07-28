@@ -62,7 +62,7 @@ class MODULES_EXPORT NavigatorVibration final
   static bool vibrate(Navigator&, unsigned time);
   static bool vibrate(Navigator&, const VibrationPattern&);
 
-  VibrationController* Controller(LocalFrame&);
+  VibrationController* Controller(const LocalFrame&);
 
   DECLARE_VIRTUAL_TRACE();
 

@@ -43,7 +43,6 @@
                      action:@selector(textFieldDidChange:)
            forControlEvents:UIControlEventEditingChanged];
   cell.textField.delegate = self.delegate;
-  cell.textField.accessibilityLabel = self.text;
   cell.textField.accessibilityIdentifier =
       [NSString stringWithFormat:@"%@_textField", self.accessibilityIdentifier];
 }
@@ -65,6 +64,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.isAccessibilityElement = YES;
+    self.accessibilityTraits |= UIAccessibilityTraitButton;
 
     _textField =
         ios::GetChromeBrowserProvider()->CreateStyledTextField(CGRectZero);
@@ -99,6 +100,10 @@
   self.textField.delegate = nil;
   self.textField.text = nil;
   self.textField.textValidator = nil;
+}
+
+- (NSString*)accessibilityLabel {
+  return self.textField.text;
 }
 
 @end

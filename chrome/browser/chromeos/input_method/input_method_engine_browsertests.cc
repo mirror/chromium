@@ -7,7 +7,6 @@
 #include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -127,7 +126,7 @@ class KeyEventDoneCallback {
 
   void Run(bool consumed) {
     if (consumed == expected_argument_) {
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
       is_called_ = true;
     }
   }

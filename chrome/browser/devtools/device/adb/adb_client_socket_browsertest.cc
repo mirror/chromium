@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "chrome/browser/devtools/device/adb/adb_device_provider.h"
 #include "chrome/browser/devtools/device/adb/mock_adb_server.h"
 #include "chrome/browser/devtools/device/devtools_android_bridge.h"
@@ -42,7 +41,7 @@ class AdbClientSocketTest : public InProcessBrowserTest,
       const DevToolsAndroidBridge::RemoteDevices& devices) override {
     devices_ = devices;
     android_bridge_->RemoveDeviceListListener(this);
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void CheckDevices() {

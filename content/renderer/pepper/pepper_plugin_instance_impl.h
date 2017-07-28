@@ -416,11 +416,6 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   void SetLinkUnderCursor(const std::string& url) override;
   void SetTextInputType(ui::TextInputType type) override;
   void PostMessageToJavaScript(PP_Var message) override;
-  void SetCaretPosition(const gfx::PointF& position) override;
-  void MoveRangeSelectionExtent(const gfx::PointF& extent) override;
-  void SetSelectionBounds(const gfx::PointF& base,
-                          const gfx::PointF& extent) override;
-  bool CanCut();
 
   // PPB_Instance_API implementation.
   PP_Bool BindGraphics(PP_Instance instance, PP_Resource device) override;
@@ -560,7 +555,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // cc::TextureLayerClient implementation.
   bool PrepareTextureMailbox(
       viz::TextureMailbox* mailbox,
-      std::unique_ptr<viz::SingleReleaseCallback>* release_callback) override;
+      std::unique_ptr<cc::SingleReleaseCallback>* release_callback) override;
 
   // RenderFrameObserver
   void AccessibilityModeChanged() override;

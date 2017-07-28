@@ -14,6 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
 #include "net/base/port_util.h"
@@ -174,7 +175,7 @@ class MockHttpStreamFactoryImplForPreconnect : public HttpStreamFactoryImpl {
   void OnPreconnectsCompleteInternal() override {
     preconnect_done_ = true;
     if (waiting_for_preconnect_)
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
   }
 
   bool preconnect_done_;

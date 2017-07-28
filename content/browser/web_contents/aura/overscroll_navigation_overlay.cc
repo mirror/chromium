@@ -14,6 +14,7 @@
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/web_contents/aura/overscroll_window_delegate.h"
+#include "content/browser/web_contents/aura/uma_navigation_type.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_thread.h"
@@ -47,12 +48,29 @@ bool DoesEntryMatchURL(NavigationEntry* entry, const GURL& url) {
   return false;
 }
 
+UmaNavigationType GetUmaNavigationType(
+    OverscrollNavigationOverlay::NavigationDirection direction,
+    OverscrollSource source) {
+  if (direction == OverscrollNavigationOverlay::NONE ||
+      source == OverscrollSource::NONE)
+    return NAVIGATION_TYPE_NONE;
+  if (direction == OverscrollNavigationOverlay::BACK)
+    return source == OverscrollSource::TOUCHPAD
+               ? UmaNavigationType::BACK_TOUCHPAD
+               : UmaNavigationType::BACK_TOUCHSCREEN;
+  DCHECK_EQ(direction, OverscrollNavigationOverlay::FORWARD);
+  return source == OverscrollSource::TOUCHPAD
+             ? UmaNavigationType::FORWARD_TOUCHPAD
+             : UmaNavigationType::FORWARD_TOUCHSCREEN;
+}
+
 // Records UMA historgram and also user action for the cancelled overscroll.
-void RecordCancelled(NavigationDirection direction, OverscrollSource source) {
+void RecordCancelled(OverscrollNavigationOverlay::NavigationDirection direction,
+                     OverscrollSource source) {
   UMA_HISTOGRAM_ENUMERATION("Overscroll.Cancelled3",
                             GetUmaNavigationType(direction, source),
                             NAVIGATION_TYPE_COUNT);
-  if (direction == NavigationDirection::BACK)
+  if (direction == OverscrollNavigationOverlay::BACK)
     RecordAction(base::UserMetricsAction("Overscroll_Cancelled.Back"));
   else
     RecordAction(base::UserMetricsAction("Overscroll_Cancelled.Forward"));
@@ -105,7 +123,7 @@ class OverlayDismissAnimator
 OverscrollNavigationOverlay::OverscrollNavigationOverlay(
     WebContentsImpl* web_contents,
     aura::Window* web_contents_window)
-    : direction_(NavigationDirection::NONE),
+    : direction_(NONE),
       web_contents_(web_contents),
       loading_complete_(false),
       received_paint_update_(false),
@@ -169,7 +187,7 @@ std::unique_ptr<aura::Window> OverscrollNavigationOverlay::CreateOverlayWindow(
   window->SetName("OverscrollOverlay");
   web_contents_window_->AddChild(window.get());
   aura::Window* event_window = GetMainWindow();
-  if (direction_ == NavigationDirection::FORWARD)
+  if (direction_ == FORWARD)
     web_contents_window_->StackChildAbove(window.get(), event_window);
   else
     web_contents_window_->StackChildBelow(window.get(), event_window);
@@ -186,8 +204,7 @@ const gfx::Image OverscrollNavigationOverlay::GetImageForDirection(
     NavigationDirection direction) const {
   const NavigationControllerImpl& controller = web_contents_->GetController();
   const NavigationEntryImpl* entry = NavigationEntryImpl::FromNavigationEntry(
-      controller.GetEntryAtOffset(
-          direction == NavigationDirection::FORWARD ? 1 : -1));
+      controller.GetEntryAtOffset(direction == FORWARD ? 1 : -1));
 
   if (entry && entry->screenshot().get()) {
     std::vector<gfx::ImagePNGRep> image_reps;
@@ -201,7 +218,7 @@ std::unique_ptr<aura::Window> OverscrollNavigationOverlay::CreateFrontWindow(
     const gfx::Rect& bounds) {
   if (!web_contents_->GetController().CanGoForward())
     return nullptr;
-  direction_ = NavigationDirection::FORWARD;
+  direction_ = FORWARD;
   return CreateOverlayWindow(bounds);
 }
 
@@ -209,7 +226,7 @@ std::unique_ptr<aura::Window> OverscrollNavigationOverlay::CreateBackWindow(
     const gfx::Rect& bounds) {
   if (!web_contents_->GetController().CanGoBack())
     return nullptr;
-  direction_ = NavigationDirection::BACK;
+  direction_ = BACK;
   return CreateOverlayWindow(bounds);
 }
 
@@ -230,7 +247,7 @@ void OverscrollNavigationOverlay::OnOverscrollCompleting() {
 
 void OverscrollNavigationOverlay::OnOverscrollCompleted(
     std::unique_ptr<aura::Window> window) {
-  DCHECK_NE(direction_, NavigationDirection::NONE);
+  DCHECK(direction_ != NONE);
   aura::Window* main_window = GetMainWindow();
   if (!main_window) {
     RecordCancelled(direction_, owa_->overscroll_source());
@@ -249,12 +266,10 @@ void OverscrollNavigationOverlay::OnOverscrollCompleted(
   // during an overscroll gesture and navigating without history produces a
   // crash.
   bool navigated = false;
-  if (direction_ == NavigationDirection::FORWARD &&
-      web_contents_->GetController().CanGoForward()) {
+  if (direction_ == FORWARD && web_contents_->GetController().CanGoForward()) {
     web_contents_->GetController().GoForward();
     navigated = true;
-  } else if (direction_ == NavigationDirection::BACK &&
-      web_contents_->GetController().CanGoBack()) {
+  } else if (direction_ == BACK && web_contents_->GetController().CanGoBack()) {
     web_contents_->GetController().GoBack();
     navigated = true;
   } else {
@@ -269,14 +284,14 @@ void OverscrollNavigationOverlay::OnOverscrollCompleted(
         "Overscroll.Navigated3",
         GetUmaNavigationType(direction_, owa_->overscroll_source()),
         NAVIGATION_TYPE_COUNT);
-    if (direction_ == NavigationDirection::BACK)
+    if (direction_ == BACK)
       RecordAction(base::UserMetricsAction("Overscroll_Navigated.Back"));
     else
       RecordAction(base::UserMetricsAction("Overscroll_Navigated.Forward"));
     StartObserving();
   }
 
-  direction_ = NavigationDirection::NONE;
+  direction_ = NONE;
   StopObservingIfDone();
 }
 
@@ -286,7 +301,7 @@ void OverscrollNavigationOverlay::OnOverscrollCancelled() {
   if (!main_window)
     return;
   main_window->ReleaseCapture();
-  direction_ = NavigationDirection::NONE;
+  direction_ = NONE;
   StopObservingIfDone();
 }
 

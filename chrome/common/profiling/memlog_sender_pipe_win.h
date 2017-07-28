@@ -11,19 +11,22 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace profiling {
 
 class MemlogSenderPipe {
  public:
-  explicit MemlogSenderPipe(mojo::edk::ScopedPlatformHandle handle);
+  explicit MemlogSenderPipe(const std::string& pipe_id);
   ~MemlogSenderPipe();
+
+  bool Connect();
 
   bool Send(const void* data, size_t sz);
 
  private:
-  mojo::edk::ScopedPlatformHandle handle_;
+  base::string16 pipe_id_;
+
+  HANDLE handle_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogSenderPipe);
 };

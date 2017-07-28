@@ -9,6 +9,7 @@
 #include "base/files/file_path.h"
 #include "base/json/json_file_value_serializer.h"
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
@@ -43,14 +44,14 @@ class ImageLoaderTest : public ExtensionsTest {
   void OnImageLoaded(const gfx::Image& image) {
     image_loaded_count_++;
     if (quit_in_image_loaded_)
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
     image_ = image;
   }
 
   void OnImageFamilyLoaded(const gfx::ImageFamily& image_family) {
     image_loaded_count_++;
     if (quit_in_image_loaded_)
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
     image_family_ = image_family;
   }
 

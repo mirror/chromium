@@ -60,8 +60,6 @@ blink_core_sources("loader") {
     "ScheduledNavigation.h",
     "SubresourceFilter.cpp",
     "SubresourceFilter.h",
-    "SubresourceIntegrityHelper.cpp",
-    "SubresourceIntegrityHelper.h",
     "TextResourceDecoderBuilder.cpp",
     "TextResourceDecoderBuilder.h",
     "TextTrackLoader.cpp",

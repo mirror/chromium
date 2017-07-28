@@ -53,8 +53,9 @@ class FlexItem {
  public:
   FlexItem(LayoutBox*,
            LayoutUnit flex_base_content_size,
-           MinMaxSize min_max_sizes,
+           LayoutUnit hypothetical_main_content_size,
            LayoutUnit main_axis_border_and_padding,
+           MinMaxSize min_max_sizes,
            LayoutUnit main_axis_margin);
 
   LayoutUnit HypotheticalMainAxisMarginBoxSize() const {
@@ -72,15 +73,13 @@ class FlexItem {
            main_axis_margin;
   }
 
-  LayoutUnit ClampSizeToMinAndMax(LayoutUnit size) const {
-    return min_max_sizes.ClampSizeToMinAndMax(size);
-  }
+  LayoutUnit ClampSizeToMinAndMax(LayoutUnit size) const;
 
   LayoutBox* box;
   const LayoutUnit flex_base_content_size;
-  const MinMaxSize min_max_sizes;
   const LayoutUnit hypothetical_main_content_size;
   const LayoutUnit main_axis_border_and_padding;
+  const MinMaxSize min_max_sizes;
   const LayoutUnit main_axis_margin;
   LayoutUnit flexed_content_size;
   bool frozen;
@@ -137,7 +136,7 @@ class FlexLine {
   LayoutUnit initial_free_space;
   LayoutUnit remaining_free_space;
 
-  // These get filled in by PlaceLineItems (for now)
+  // These get filled in by LayoutAndPlaceChildren (for now)
   // TODO(cbiesinger): Move that to FlexibleBoxAlgorithm.
   LayoutUnit cross_axis_offset;
   LayoutUnit cross_axis_extent;

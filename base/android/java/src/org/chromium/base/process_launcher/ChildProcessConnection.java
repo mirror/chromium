@@ -45,9 +45,11 @@ public class ChildProcessConnection {
 
         /**
          * Called when the child process failed to start. This can happen if the process is already
-         * in use by another client. The client will not receive any other callbacks after this one.
+         * in use by another client. Note onChildProcessDied will be called after this callback,
+         * once the client unbinds and the service gets cleaned.
+         * TODO(jcivelli): crbug.com/736948 we should improve the behavior in such cases.
          */
-        void onChildStartFailed(ChildProcessConnection connection);
+        void onChildStartFailed();
 
         /**
          * Called when the service has been disconnected. whether it was stopped by the client or
@@ -400,7 +402,10 @@ public class ChildProcessConnection {
      */
     public void stop() {
         assert isRunningOnLauncherThread();
+        cancelWatchDog();
         unbind();
+        mService = null;
+        mConnectionParams = null;
         notifyChildProcessDied();
     }
 
@@ -426,9 +431,8 @@ public class ChildProcessConnection {
                 try {
                     if (!mService.bindToCaller()) {
                         if (mServiceCallback != null) {
-                            mServiceCallback.onChildStartFailed(this);
+                            mServiceCallback.onChildStartFailed();
                         }
-                        unbind();
                         return;
                     }
                 } catch (RemoteException ex) {
@@ -533,9 +537,6 @@ public class ChildProcessConnection {
     @VisibleForTesting
     protected void unbind() {
         assert isRunningOnLauncherThread();
-        cancelWatchDog();
-        mService = null;
-        mConnectionParams = null;
         mUnbound = true;
         unbindAll();
         // Note that we don't update the waived bound only state here as to preserve the state when

@@ -16,6 +16,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "media/blink/active_loader.h"
 #include "media/blink/cache_util.h"
 #include "media/blink/media_blink_export.h"
 #include "media/blink/url_index.h"
@@ -130,7 +131,7 @@ void ResourceMultiBufferDataProvider::Start() {
 
   // Start the resource loading.
   loader->LoadAsynchronously(request, this);
-  active_loader_ = std::move(loader);
+  active_loader_.reset(new ActiveLoader(std::move(loader)));
 }
 
 ResourceMultiBufferDataProvider::~ResourceMultiBufferDataProvider() {}
@@ -170,8 +171,9 @@ scoped_refptr<DataBuffer> ResourceMultiBufferDataProvider::Read() {
 }
 
 void ResourceMultiBufferDataProvider::SetDeferred(bool deferred) {
-  if (active_loader_)
-    active_loader_->SetDefersLoading(deferred);
+  if (!active_loader_ || active_loader_->deferred() == deferred)
+    return;
+  active_loader_->SetDeferred(deferred);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -471,7 +473,8 @@ void ResourceMultiBufferDataProvider::DidFinishLoading(double finishTime) {
 }
 
 void ResourceMultiBufferDataProvider::DidFail(const WebURLError& error) {
-  DVLOG(1) << "didFail: reason=" << error.reason << ", domain=" << error.domain
+  DVLOG(1) << "didFail: reason=" << error.reason
+           << ", domain=" << error.domain.Utf8().data()
            << ", localizedDescription="
            << error.localized_description.Utf8().data();
   DCHECK(active_loader_.get());

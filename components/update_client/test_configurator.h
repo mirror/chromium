@@ -18,6 +18,11 @@
 
 class PrefService;
 
+namespace base {
+class SequencedTaskRunner;
+class SingleThreadTaskRunner;
+}  // namespace base
+
 namespace net {
 class TestURLRequestContextGetter;
 class URLRequestContextGetter;
@@ -56,7 +61,9 @@ const uint8_t gjpm_hash[] = {0x69, 0xfc, 0x41, 0xf6, 0x17, 0x20, 0xc6, 0x36,
 
 class TestConfigurator : public Configurator {
  public:
-  TestConfigurator();
+  TestConfigurator(
+      const scoped_refptr<base::SequencedTaskRunner>& worker_task_runner,
+      const scoped_refptr<base::SingleThreadTaskRunner>& network_task_runner);
 
   // Overrrides for Configurator.
   int InitialDelay() const override;
@@ -79,6 +86,8 @@ class TestConfigurator : public Configurator {
   bool EnabledComponentUpdates() const override;
   bool EnabledBackgroundDownloader() const override;
   bool EnabledCupSigning() const override;
+  scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunner()
+      const override;
   PrefService* GetPrefService() const override;
   bool IsPerUserInstall() const override;
   std::vector<uint8_t> GetRunActionKeyHash() const override;
@@ -94,7 +103,10 @@ class TestConfigurator : public Configurator {
 
  private:
   friend class base::RefCountedThreadSafe<TestConfigurator>;
+
   ~TestConfigurator() override;
+
+  scoped_refptr<base::SequencedTaskRunner> worker_task_runner_;
 
   std::string brand_;
   int initial_time_;

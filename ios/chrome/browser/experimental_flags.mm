@@ -272,6 +272,11 @@ bool IsNewFeedbackKitEnabled() {
       boolForKey:@"NewFeedbackKitEnabled"];
 }
 
+bool IsKeyboardAccessoryViewWithCameraSearchEnabled() {
+  return ![[NSUserDefaults standardUserDefaults]
+      boolForKey:@"NewKeyboardAccessoryViewDisabled"];
+}
+
 bool IsSlimNavigationManagerEnabled() {
   // Check if the experimental flag is forced on or off.
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();

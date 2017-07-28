@@ -35,7 +35,7 @@ class DeviceCountMetricsProvider : public metrics::MetricsProvider {
   ~DeviceCountMetricsProvider() override;
 
   // MetricsProvider:
-  void ProvideCurrentSessionData(
+  void ProvideGeneralMetrics(
       metrics::ChromeUserMetricsExtension* uma_proto) override;
 
  private:

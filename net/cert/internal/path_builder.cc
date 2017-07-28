@@ -14,6 +14,7 @@
 #include "net/cert/internal/certificate_policies.h"
 #include "net/cert/internal/parse_certificate.h"
 #include "net/cert/internal/parse_name.h"  // For CertDebugString.
+#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store.h"
 #include "net/cert/internal/verify_certificate_chain.h"
 #include "net/cert/internal/verify_name_match.h"
@@ -547,7 +548,7 @@ void CertPathBuilder::Result::Clear() {
 CertPathBuilder::CertPathBuilder(
     scoped_refptr<ParsedCertificate> cert,
     TrustStore* trust_store,
-    CertPathBuilderDelegate* delegate,
+    const SignaturePolicy* signature_policy,
     const der::GeneralizedTime& time,
     KeyPurpose key_purpose,
     InitialExplicitPolicy initial_explicit_policy,
@@ -556,7 +557,7 @@ CertPathBuilder::CertPathBuilder(
     InitialAnyPolicyInhibit initial_any_policy_inhibit,
     Result* result)
     : cert_path_iter_(new CertPathIter(std::move(cert), trust_store)),
-      delegate_(delegate),
+      signature_policy_(signature_policy),
       time_(time),
       key_purpose_(key_purpose),
       initial_explicit_policy_(initial_explicit_policy),
@@ -565,7 +566,6 @@ CertPathBuilder::CertPathBuilder(
       initial_any_policy_inhibit_(initial_any_policy_inhibit),
       next_state_(STATE_NONE),
       out_result_(result) {
-  DCHECK(delegate);
   result->Clear();
   // The TrustStore also implements the CertIssuerSource interface.
   AddCertIssuerSource(trust_store);
@@ -614,25 +614,20 @@ void CertPathBuilder::DoGetNextPathComplete() {
 
   // Verify the entire certificate chain.
   auto result_path = base::MakeUnique<ResultPath>();
-  result_path->path = next_path_;
   VerifyCertificateChain(
-      result_path->path.certs, result_path->path.last_cert_trust, delegate_,
-      time_, key_purpose_, initial_explicit_policy_, user_initial_policy_set_,
+      next_path_.certs, next_path_.last_cert_trust, signature_policy_, time_,
+      key_purpose_, initial_explicit_policy_, user_initial_policy_set_,
       initial_policy_mapping_inhibit_, initial_any_policy_inhibit_,
       &result_path->user_constrained_policy_set, &result_path->errors);
+  bool verify_result = !result_path->errors.ContainsHighSeverityErrors();
 
-  DVLOG(1) << "CertPathBuilder VerifyCertificateChain errors:\n"
-           << result_path->errors.ToDebugString(result_path->path.certs);
-
-  // Give the delegate a chance to add errors to the path.
-  delegate_->CheckPathAfterVerification(result_path->path,
-                                        &result_path->errors);
-
-  bool path_is_good = result_path->IsValid();
-
+  DVLOG(1) << "CertPathBuilder VerifyCertificateChain result = "
+           << verify_result << "\n"
+           << result_path->errors.ToDebugString(next_path_.certs);
+  result_path->path = next_path_;
   AddResultPath(std::move(result_path));
 
-  if (path_is_good) {
+  if (verify_result) {
     // Found a valid path, return immediately.
     // TODO(mattm): add debug/test mode that tries all possible paths.
     next_state_ = STATE_NONE;

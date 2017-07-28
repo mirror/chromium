@@ -1630,12 +1630,6 @@ const char kEnableWebapkDescription[] =
 const char kEnableWebNfcName[] = "WebNFC";
 const char kEnableWebNfcDescription[] = "Enable WebNFC support.";
 
-const char kEnableWebPaymentsMethodSectionOrderV2Name[] =
-    "Enable Web Payments method section order V2.";
-const char kEnableWebPaymentsMethodSectionOrderV2Description[] =
-    "Enable this option to display payment method section above address "
-    "section instead of below it.";
-
 const char kEnableWebPaymentsSingleAppUiSkipName[] =
     "Enable Web Payments single app UI skip";
 const char kEnableWebPaymentsSingleAppUiSkipDescription[] =
@@ -1804,11 +1798,6 @@ const char kProgressBarCompletionResourcesBeforeDclAndSameOriginIframes[] =
 const char kPullToRefreshEffectName[] = "The pull-to-refresh effect";
 const char kPullToRefreshEffectDescription[] =
     "Page reloads triggered by vertically overscrolling content.";
-
-const char kPwaPersistentNotificationName[] =
-    "Persistent notification in standalone PWA";
-const char kPwaPersistentNotificationDescription[] =
-    "Enables a persistent Android notification for standalone PWAs";
 
 const char kReaderModeHeuristicsName[] = "Reader Mode triggering";
 const char kReaderModeHeuristicsDescription[] =

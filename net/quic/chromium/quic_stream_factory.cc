@@ -664,6 +664,7 @@ QuicStreamFactory::QuicStreamFactory(
     bool mark_quic_broken_when_network_blackholes,
     int idle_connection_timeout_seconds,
     int reduced_ping_timeout_seconds,
+    int packet_reader_yield_after_duration_milliseconds,
     bool migrate_sessions_on_network_change,
     bool migrate_sessions_early,
     bool allow_server_migration,
@@ -701,7 +702,7 @@ QuicStreamFactory::QuicStreamFactory(
           QuicTime::Delta::FromSeconds(reduced_ping_timeout_seconds)),
       yield_after_packets_(kQuicYieldAfterPacketsRead),
       yield_after_duration_(QuicTime::Delta::FromMilliseconds(
-          kQuicYieldAfterDurationMilliseconds)),
+          packet_reader_yield_after_duration_milliseconds)),
       close_sessions_on_ip_change_(close_sessions_on_ip_change),
       migrate_sessions_on_network_change_(
           migrate_sessions_on_network_change &&
@@ -1524,7 +1525,7 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
   if (socket_performance_watcher_factory_) {
     socket_performance_watcher =
         socket_performance_watcher_factory_->CreateSocketPerformanceWatcher(
-            SocketPerformanceWatcherFactory::PROTOCOL_QUIC, address_list);
+            SocketPerformanceWatcherFactory::PROTOCOL_QUIC);
   }
 
   *session = new QuicChromiumClientSession(

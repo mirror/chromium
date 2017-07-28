@@ -27,7 +27,6 @@ constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
             "User visits a site that calls navigator.credentials.get(). "
             "Assuming there are matching credentials in the Chromium password "
             "store, the avatars are retrieved."
-          data: "Only avatar URL, no user data."
           destination: WEBSITE
         }
         policy {

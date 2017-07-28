@@ -22,10 +22,9 @@ DataTypeErrorHandlerImpl::~DataTypeErrorHandlerImpl() {}
 void DataTypeErrorHandlerImpl::OnUnrecoverableError(const SyncError& error) {
   if (!dump_stack_.is_null())
     dump_stack_.Run();
-  // TODO(wychen): enum uma should be strongly typed. crbug.com/661401
   UMA_HISTOGRAM_ENUMERATION("Sync.DataTypeRunFailures",
                             ModelTypeToHistogramInt(error.model_type()),
-                            static_cast<int>(MODEL_TYPE_COUNT));
+                            MODEL_TYPE_COUNT);
   ui_thread_->PostTask(error.location(), base::Bind(sync_callback_, error));
 }
 

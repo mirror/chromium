@@ -40,7 +40,6 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences;
 import org.chromium.chrome.browser.preferences.website.SingleWebsitePreferences;
 import org.chromium.chrome.browser.preferences.website.SiteSettingsCategory;
-import org.chromium.chrome.browser.webapps.WebApkServiceClient;
 import org.chromium.components.url_formatter.UrlFormatter;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
@@ -585,7 +584,7 @@ public class NotificationPlatformBridge {
 
         String platformTag = makePlatformTag(notificationId, origin, tag);
         if (forWebApk) {
-            WebApkServiceClient.getInstance().notifyNotification(
+            WebApkNotificationClient.notifyNotification(
                     webApkPackage, notificationBuilder, platformTag, PLATFORM_ID);
         } else {
             // Set up a pending intent for going to the settings screen for |origin|.
@@ -720,8 +719,7 @@ public class NotificationPlatformBridge {
         if (webApkPackage.isEmpty()) {
             mNotificationManager.cancel(platformTag, PLATFORM_ID);
         } else {
-            WebApkServiceClient.getInstance().cancelNotification(
-                    webApkPackage, platformTag, PLATFORM_ID);
+            WebApkNotificationClient.cancelNotification(webApkPackage, platformTag, PLATFORM_ID);
         }
     }
 

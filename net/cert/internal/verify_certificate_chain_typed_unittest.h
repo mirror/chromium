@@ -71,7 +71,7 @@ TYPED_TEST_P(VerifyCertificateChainSingleRootTest, UnknownExtension) {
   this->RunTest("target-unknown-critical-extension/main.test");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, WeakSignature) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, Md5) {
   this->RunTest("target-signed-with-md5/main.test");
   this->RunTest("intermediate-signed-with-md5/main.test");
 }
@@ -86,9 +86,8 @@ TYPED_TEST_P(VerifyCertificateChainSingleRootTest, LastCertificateNotTrusted) {
   this->RunTest("target-and-intermediate/unspecified-trust-root.test");
 }
 
-TYPED_TEST_P(VerifyCertificateChainSingleRootTest, WeakPublicKey) {
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetSignedBy512bitRsa) {
   this->RunTest("target-signed-by-512bit-rsa/main.test");
-  this->RunTest("target-has-512bit-rsa-key/main.test");
 }
 
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetSignedUsingEcdsa) {
@@ -175,10 +174,10 @@ REGISTER_TYPED_TEST_CASE_P(VerifyCertificateChainSingleRootTest,
                            BasicConstraintsCa,
                            BasicConstraintsPathlen,
                            UnknownExtension,
-                           WeakSignature,
+                           Md5,
                            WrongSignature,
                            LastCertificateNotTrusted,
-                           WeakPublicKey,
+                           TargetSignedBy512bitRsa,
                            TargetSignedUsingEcdsa,
                            Expired,
                            TargetNotEndEntity,

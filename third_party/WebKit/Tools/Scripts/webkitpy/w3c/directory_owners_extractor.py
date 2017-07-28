@@ -10,10 +10,7 @@ from webkitpy.common.system.filesystem import FileSystem
 
 
 # Format of OWNERS files can be found at //src/third_party/depot_tools/owners.py
-# In our use case (under external/wpt), we only process the first enclosing
-# non-empty OWNERS file for any given path (i.e. always assuming "set noparent"),
-# and we only care about lines that are valid email addresses.
-
+# In our use case, we only care about lines that are valid email addresses.
 # Recognizes 'X@Y' email addresses. Very simplistic. (from owners.py)
 BASIC_EMAIL_REGEXP = r'^[\w\-\+\%\.]+\@[\w\-\+\%\.]+$'
 
@@ -35,46 +32,40 @@ class DirectoryOwnersExtractor(object):
             A dict mapping tuples of owner email addresses to lists of
             owned directories (paths relative to the root of layout tests).
         """
-        email_map = collections.defaultdict(set)
+        email_map = collections.defaultdict(list)
         for relpath in changed_files:
             if self.finder.layout_test_name(relpath) is None:
                 continue
-            owners_file, owners = self.find_and_extract_owners(self.filesystem.dirname(relpath))
+            owners_file = self.find_owners_file(self.filesystem.dirname(relpath))
             if not owners_file:
                 continue
+            owners = self.extract_owners(owners_file)
             owners_file_relpath = self.filesystem.relpath(owners_file, self.finder.chromium_base())
             owned_directory = self.finder.layout_test_name(self.filesystem.dirname(owners_file_relpath))
-            email_map[tuple(owners)].add(owned_directory)
-        return {owners: sorted(owned_directories) for owners, owned_directories in email_map.iteritems()}
+            email_map[tuple(owners)].append(owned_directory)
+        return email_map
 
-    def find_and_extract_owners(self, start_directory):
-        """Find the first enclosing OWNERS file for a given path and extract owners.
+    def find_owners_file(self, start_directory):
+        """Find the first enclosing OWNERS file for a given path.
 
         Starting from the given directory, walks up the directory tree until the
-        first non-empty OWNERS file is found or LayoutTests/external is reached.
-        (OWNERS files with no valid emails are also considered empty.)
+        first OWNERS file is found or the root of the repository is reached.
 
         Args:
             start_directory: A relative path from the root of the repository.
 
         Returns:
-            (path, owners): the absolute path to the first non-empty OWNERS file
-            found, and a list of valid owners.
-            Or (None, None) if not found.
+            The absolute path to the first OWNERS file found, or None if not found.
         """
         # Absolute paths do not work with path_from_chromium_base (os.path.join).
         assert not self.filesystem.isabs(start_directory)
         directory = self.finder.path_from_chromium_base(start_directory)
-        external_root = self.finder.path_from_layout_tests('external')
-        assert directory.startswith(external_root)
-        while directory != external_root:
+        while directory != self.finder.chromium_base():
             owners_file = self.filesystem.join(directory, 'OWNERS')
             if self.filesystem.isfile(self.finder.path_from_chromium_base(owners_file)):
-                owners = self.extract_owners(owners_file)
-                if owners:
-                    return owners_file, owners
+                return owners_file
             directory = self.filesystem.dirname(directory)
-        return None, None
+        return None
 
     def extract_owners(self, owners_file):
         """Extract owners from an OWNERS file.

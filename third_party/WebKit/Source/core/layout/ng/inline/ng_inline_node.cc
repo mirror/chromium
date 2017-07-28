@@ -674,37 +674,4 @@ String NGInlineNode::ToString() const {
   return String::Format("NGInlineNode");
 }
 
-// static
-Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node) {
-  LayoutObject* layout_object = node.GetLayoutObject();
-  if (!layout_object || !layout_object->IsInline())
-    return WTF::nullopt;
-  LayoutBox* box = layout_object->EnclosingBox();
-  if (!box->IsLayoutNGBlockFlow())
-    return WTF::nullopt;
-  DCHECK(box);
-  DCHECK(box->ChildrenInline());
-  return NGInlineNode(ToLayoutNGBlockFlow(box));
-}
-
-const NGOffsetMappingUnit* NGInlineNode::GetMappingUnitForDOMOffset(
-    const Node& node,
-    unsigned offset) {
-  // TODO(xiaochengh): Move/Reimplement AssociatedLayoutObjectOf in core/layout.
-  LayoutObject* layout_object = AssociatedLayoutObjectOf(node, offset);
-  if (!layout_object || !layout_object->IsText())
-    return nullptr;
-
-  DCHECK_EQ(layout_object->EnclosingBox(), GetLayoutBlockFlow());
-  const auto& result = ComputeOffsetMappingIfNeeded();
-  return result.GetMappingUnitForDOMOffset(ToLayoutText(layout_object), offset);
-}
-
-size_t NGInlineNode::GetTextContentOffset(const Node& node, unsigned offset) {
-  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
-  if (!unit)
-    return kNotFound;
-  return unit->ConvertDOMOffsetToTextContent(offset);
-}
-
 }  // namespace blink

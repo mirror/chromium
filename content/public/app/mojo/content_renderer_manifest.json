@@ -25,7 +25,8 @@
           "device:power_monitor",
           "device:screen_orientation",
           "device:sensors",
-          "device:time_zone_monitor"
+          "device:time_zone_monitor",
+          "device:vibration"
         ],
         "ui": [
           "discardable_memory",
@@ -40,7 +41,6 @@
           "blink::mojom::EngagementClient",
           "blink::mojom::InstallationService",
           "blink::mojom::ManifestManager",
-          "blink::mojom::TextSuggestionBackend",
           "content::mojom::ImageDownloader",
           "content::mojom::FrameInputHandler",
           "content::mojom::Widget",

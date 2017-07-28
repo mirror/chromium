@@ -113,16 +113,6 @@
     "args": ["--stable-release-mode"]
   },
   {
-    "prefix": "feature-policy-permissions",
-    "base": "http/tests/webmidi",
-    "args": ["--enable-features=UseFeaturePolicyForPermissions"]
-  },
-  {
-    "prefix": "feature-policy-permissions",
-    "base": "http/tests/geolocation-api",
-    "args": ["--enable-features=UseFeaturePolicyForPermissions"]
-  },
-  {
     "prefix": "off-main-thread-fetch",
     "base": "external/wpt/html/browsers/offline/appcache/workers",
     "args": ["--enable-features=OffMainThreadFetch"]
@@ -352,6 +342,11 @@
     "args": ["--force-device-scale-factor=2", "--enable-use-zoom-for-dsf"]
   },
   {
+    "prefix": "documentwriteevaluator",
+    "base": "http/tests/preload/document-write",
+    "args": ["--enable-blink-features=DocumentWriteEvaluator"]
+  },
+  {
     "prefix": "wheelscrolllatching",
     "base": "fast/events/wheel",
     "args": ["--enable-features=TouchpadAndWheelScrollLatching"]
@@ -547,10 +542,5 @@
     "prefix": "outofblink-cors",
     "base": "webexposed",
     "args": ["--enable-blink-features=OutOfBlinkCORS"]
-  },
-  {
-    "prefix": "presentation",
-    "base": "receiver",
-    "args": ["--force-presentation-receiver-for-testing"]
   }
 ]

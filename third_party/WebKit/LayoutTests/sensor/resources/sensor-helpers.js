@@ -265,13 +265,6 @@ function sensorMocks() {
       assert_equals(rv.result, Mojo.RESULT_OK);
 
       let defaultConfig = {frequency: 5};
-      // Consider sensor traits to meet assertions in C++ code (see
-      // services/device/public/cpp/generic_sensor/sensor_traits.h)
-      if (type == device.mojom.SensorType.AMBIENT_LIGHT ||
-          type == device.mojom.SensorType.MAGNETOMETER) {
-        if (this.maxFrequency_ > 10)
-          this.maxFrequency_ = 10;
-      }
 
       let initParams =
           new device.mojom.SensorInitParams(
@@ -355,17 +348,22 @@ function sensorMocks() {
 }
 
 function sensor_test(func, name, properties) {
-  promise_test(async () => {
+  mojo_test(() => {
     let sensor = sensorMocks();
 
     // Clean up and reset mock sensor stubs asynchronously, so that the blink
     // side closes its proxies and notifies JS sensor objects before new test is
     // started.
-    try {
-      await func(sensor);
-    } finally {
+    let onSuccess = () => {
       sensor.mockSensorProvider.reset();
-      await new Promise(resolve => { setTimeout(resolve, 0); });
+      return new Promise((resolve, reject) => { setTimeout(resolve, 0); });
     };
+
+    let onFailure = error => {
+      sensor.mockSensorProvider.reset();
+      return new Promise((resolve, reject) => { setTimeout(() => {reject(error);}, 0); });
+    };
+
+    return Promise.resolve(func(sensor)).then(onSuccess, onFailure);
   }, name, properties);
 }

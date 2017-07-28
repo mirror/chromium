@@ -71,14 +71,14 @@ class FontSelectionValue {
 
   int16_t RawValue() const { return backing_; }
 
-  static const FontSelectionValue& MaximumValue() {
+  static const FontSelectionValue MaximumValue() {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         const FontSelectionValue, maximumValue,
         (std::numeric_limits<int16_t>::max(), RawTag::RawTag));
     return maximumValue;
   }
 
-  static const FontSelectionValue& MinimumValue() {
+  static const FontSelectionValue MinimumValue() {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         const FontSelectionValue, minimumValue,
         (std::numeric_limits<int16_t>::min(), RawTag::RawTag));
@@ -105,10 +105,6 @@ class FontSelectionValueStretch : public FontSelectionValue {
 class FontSelectionValueStyle : public FontSelectionValue {
   using FontSelectionValue::FontSelectionValue;
 };
-class FontSelectionValueWeight : public FontSelectionValue {
-  using FontSelectionValue::FontSelectionValue;
-};
-
 inline FontSelectionValue FontSelectionValue::operator+(
     const FontSelectionValue other) const {
   return FontSelectionValue(backing_ + other.backing_, RawTag::RawTag);
@@ -167,7 +163,7 @@ inline bool FontSelectionValue::operator>=(
   return backing_ >= other.backing_;
 }
 
-static inline const FontSelectionValue& ItalicThreshold() {
+static inline const FontSelectionValue ItalicThreshold() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValue, italicThreshold,
                                   (20));
   return italicThreshold;
@@ -177,45 +173,45 @@ static inline bool isItalic(FontSelectionValue fontWeight) {
   return fontWeight >= ItalicThreshold();
 }
 
-static inline const FontSelectionValue& FontSelectionZeroValue() {
+static inline const FontSelectionValue FontSelectionZeroValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValue,
                                   fontSelectionZeroValue, (0));
   return fontSelectionZeroValue;
 }
 
-static inline const FontSelectionValueStyle& NormalSlopeValue() {
+static inline const FontSelectionValueStyle NormalSlopeValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStyle,
                                   normalSlopeValue, ());
   return normalSlopeValue;
 }
 
-static inline const FontSelectionValueStyle& ItalicSlopeValue() {
+static inline const FontSelectionValueStyle ItalicSlopeValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStyle, italicValue,
                                   (20));
   return italicValue;
 }
 
-static inline const FontSelectionValueWeight& BoldThreshold() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueWeight, boldThreshold,
+static inline const FontSelectionValue BoldThreshold() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValue, boldThreshold,
                                   (600));
   return boldThreshold;
 }
 
-static inline const FontSelectionValueWeight& BoldWeightValue() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueWeight,
-                                  boldWeightValue, (700));
+static inline const FontSelectionValue BoldWeightValue() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValue, boldWeightValue,
+                                  (700));
   return boldWeightValue;
 }
 
-static inline const FontSelectionValueWeight& NormalWeightValue() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueWeight,
-                                  normalWeightValue, (400));
+static inline const FontSelectionValue NormalWeightValue() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValue, normalWeightValue,
+                                  (400));
   return normalWeightValue;
 }
 
-static inline const FontSelectionValueWeight& LightWeightValue() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueWeight,
-                                  lightWeightValue, (200));
+static inline const FontSelectionValue LightWeightValue() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValue, lightWeightValue,
+                                  (200));
   return lightWeightValue;
 }
 
@@ -223,61 +219,61 @@ static inline bool isFontWeightBold(FontSelectionValue fontWeight) {
   return fontWeight >= BoldThreshold();
 }
 
-static inline const FontSelectionValue& WeightSearchThreshold() {
+static inline const FontSelectionValue WeightSearchThreshold() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValue,
                                   weightSearchThreshold, (500));
   return weightSearchThreshold;
 }
 
-static inline const FontSelectionValueStretch& UltraCondensedWidthValue() {
+static inline const FontSelectionValueStretch UltraCondensedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   ultraCondensedWidthValue, (50));
   return ultraCondensedWidthValue;
 }
 
-static inline const FontSelectionValueStretch& ExtraCondensedWidthValue() {
+static inline const FontSelectionValueStretch ExtraCondensedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   extraCondensedWidthValue, (62.5f));
   return extraCondensedWidthValue;
 }
 
-static inline const FontSelectionValueStretch& CondensedWidthValue() {
+static inline const FontSelectionValueStretch CondensedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   condensedWidthValue, (75));
   return condensedWidthValue;
 }
 
-static inline const FontSelectionValueStretch& SemiCondensedWidthValue() {
+static inline const FontSelectionValueStretch SemiCondensedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   semiCondensedWidthValue, (87.5f));
   return semiCondensedWidthValue;
 }
 
-static inline const FontSelectionValueStretch& NormalWidthValue() {
+static inline const FontSelectionValueStretch NormalWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   normalWidthValue, (100.0f));
   return normalWidthValue;
 }
 
-static inline const FontSelectionValueStretch& SemiExpandedWidthValue() {
+static inline const FontSelectionValueStretch SemiExpandedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   semiExpandedWidthValue, (112.5f));
   return semiExpandedWidthValue;
 }
 
-static inline const FontSelectionValueStretch& ExpandedWidthValue() {
+static inline const FontSelectionValueStretch ExpandedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   expandedWidthValue, (125));
   return expandedWidthValue;
 }
 
-static inline const FontSelectionValueStretch& ExtraExpandedWidthValue() {
+static inline const FontSelectionValueStretch ExtraExpandedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   extraExpandedWidthValue, (150));
   return extraExpandedWidthValue;
 }
 
-static inline const FontSelectionValueStretch& UltraExpandedWidthValue() {
+static inline const FontSelectionValueStretch UltraExpandedWidthValue() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(const FontSelectionValueStretch,
                                   ultraExpandedWidthValue, (200));
   return ultraExpandedWidthValue;

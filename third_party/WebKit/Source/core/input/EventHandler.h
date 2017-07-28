@@ -149,8 +149,6 @@ class CORE_EXPORT EventHandler final
       const Vector<WebMouseEvent>& coalesced_events);
   void HandleMouseLeaveEvent(const WebMouseEvent&);
 
-  WebInputEventResult HandlePointerEvent(const WebPointerEvent&, Node* target);
-
   WebInputEventResult HandleMousePressEvent(const WebMouseEvent&);
   WebInputEventResult HandleMouseReleaseEvent(const WebMouseEvent&);
   WebInputEventResult HandleWheelEvent(const WebMouseWheelEvent&);
@@ -267,10 +265,6 @@ class CORE_EXPORT EventHandler final
 
   bool IsTouchPointerIdActiveOnFrame(int, LocalFrame*) const;
 
-  // Clears drag target and related states. It is called when drag is done or
-  // canceled.
-  void ClearDragState();
-
  private:
   WebInputEventResult HandleMouseMoveOrLeaveEvent(
       const WebMouseEvent&,
@@ -322,6 +316,10 @@ class CORE_EXPORT EventHandler final
       const String& canvas_region_id,
       const WebMouseEvent&,
       const Vector<WebMouseEvent>& coalesced_events);
+
+  // Clears drag target and related states. It is called when drag is done or
+  // canceled.
+  void ClearDragState();
 
   WebInputEventResult PassMousePressEventToSubframe(
       MouseEventWithHitTestResults&,
@@ -398,19 +396,8 @@ class CORE_EXPORT EventHandler final
   // firing for the current gesture sequence (i.e. until next GestureTapDown).
   bool suppress_mouse_events_from_gestures_;
 
-  // ShouldShowIBeamForNode's unit tests:
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, HitOnNothingDoesNotShowIBeam);
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, HitOnTextShowsIBeam);
-  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
-                           HitOnUserSelectNoneDoesNotShowIBeam);
-  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, ChildCanOverrideUserSelectNone);
-  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
-                           ShadowChildCanOverrideUserSelectNone);
-  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, ChildCanOverrideUserSelectText);
-  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
-                           ShadowChildCanOverrideUserSelectText);
-  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, InputFieldsCanStartSelection);
-  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, ImagesCannotStartSelection);
 };
 
 }  // namespace blink

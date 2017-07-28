@@ -36,7 +36,6 @@
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
-#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/workers/ParentFrameTaskRunners.h"
@@ -56,8 +55,6 @@
 #include "modules/notifications/Notification.h"
 #include "modules/notifications/NotificationEvent.h"
 #include "modules/notifications/NotificationEventInit.h"
-#include "modules/payments/AbortPaymentEvent.h"
-#include "modules/payments/AbortPaymentRespondWithObserver.h"
 #include "modules/payments/CanMakePaymentEvent.h"
 #include "modules/payments/CanMakePaymentRespondWithObserver.h"
 #include "modules/payments/PaymentEventDataConversion.h"
@@ -77,7 +74,6 @@
 #include "modules/serviceworkers/WaitUntilObserver.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/WaitableEvent.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
@@ -447,21 +443,6 @@ void ServiceWorkerGlobalScopeProxy::DispatchSyncEvent(
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
 }
 
-void ServiceWorkerGlobalScopeProxy::DispatchAbortPaymentEvent(int event_id) {
-  WaitUntilObserver* wait_until_observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kAbortPayment, event_id);
-  AbortPaymentRespondWithObserver* respond_with_observer =
-      new AbortPaymentRespondWithObserver(WorkerGlobalScope(), event_id,
-                                          wait_until_observer);
-
-  Event* event = AbortPaymentEvent::Create(
-      EventTypeNames::abortpayment, ExtendableEventInit(),
-      respond_with_observer, wait_until_observer);
-
-  WorkerGlobalScope()->DispatchExtendableEventWithRespondWith(
-      event, wait_until_observer, respond_with_observer);
-}
-
 void ServiceWorkerGlobalScopeProxy::DispatchCanMakePaymentEvent(
     int event_id,
     const WebCanMakePaymentEventData& web_event_data) {
@@ -564,28 +545,8 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
       WorkerGlobalScope()->ScriptController()->GetContext());
 }
 
-void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
-    const ContentSecurityPolicyResponseHeaders& csp_headers_on_worker_thread,
-    const String& referrer_policy_on_worker_thread) {
-  DCHECK(embedded_worker_);
-
-  // Post a task to the main thread to set CSP and ReferrerPolicy on the shadow
-  // page.
-  WaitableEvent waitable_event;
-  parent_frame_task_runners_->Get(TaskType::kUnthrottled)
-      ->PostTask(
-          BLINK_FROM_HERE,
-          CrossThreadBind(
-              &WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy,
-              CrossThreadUnretained(embedded_worker_),
-              csp_headers_on_worker_thread, referrer_policy_on_worker_thread,
-              CrossThreadUnretained(&waitable_event)));
+void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript() {
   Client().WorkerScriptLoaded();
-
-  // Wait for the task to complete before returning. This ensures that worker
-  // script evaluation can't start and issue any fetches until CSP and
-  // ReferrerPolicy are set.
-  waitable_event.Wait();
 }
 
 void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(

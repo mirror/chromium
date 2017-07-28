@@ -11,7 +11,6 @@
 #import "ios/chrome/browser/ui/collection_view/cells/MDCCollectionViewCell+Chrome.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
-#import "ios/chrome/browser/ui/constraints_ui_util.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_cell.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h"
@@ -394,8 +393,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   return ![self.collectionUpdater isMostVisitedSection:indexPath.section] &&
          ![self.collectionUpdater isHeaderSection:indexPath.section] &&
          [self.collectionUpdater contentSuggestionTypeForItem:item] !=
-             ContentSuggestionTypeLearnMore &&
-         [self.collectionUpdater contentSuggestionTypeForItem:item] !=
              ContentSuggestionTypeEmpty;
 }
 
@@ -410,8 +407,8 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
   [super scrollViewDidScroll:scrollView];
-  [self.audience contentSuggestionsDidScroll];
   [self.overscrollActionsController scrollViewDidScroll:scrollView];
+  [self.audience contentSuggestionsDidScroll];
   [self.headerCommandHandler updateFakeOmniboxForScrollView:scrollView];
   self.scrolledToTop =
       scrollView.contentOffset.y >= [self.suggestionsDelegate pinnedOffsetY];

@@ -46,7 +46,6 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/RenderedPosition.h"
-#include "core/editing/SetSelectionData.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/editing/commands/ApplyStyleCommand.h"
 #include "core/editing/commands/DeleteSelectionCommand.h"
@@ -949,7 +948,7 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, SetSelectionData());
+  ChangeSelectionAfterCommand(new_selection, 0);
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -988,11 +987,9 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->StartingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionData::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection,
+      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle);
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterRedoStep(cmd);
@@ -1011,11 +1008,9 @@ void Editor::ReappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(new_selection,
-                              SetSelectionData::Builder()
-                                  .SetShouldCloseTyping(true)
-                                  .SetShouldClearTypingStyle(true)
-                                  .Build());
+  ChangeSelectionAfterCommand(
+      new_selection,
+      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle);
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterUndoStep(cmd);
@@ -1420,20 +1415,15 @@ void Editor::RevealSelectionAfterEditingOperation(
   GetFrame().Selection().RevealSelection(alignment, reveal_extent_option);
 }
 
-// TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
-// "EditorCommand.cpp"
-void Transpose(LocalFrame& frame) {
-  Editor& editor = frame.GetEditor();
-  if (!editor.CanEdit())
+void Editor::Transpose() {
+  if (!CanEdit())
     return;
-
-  Document* const document = frame.GetDocument();
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited. see http://crbug.com/590369 for more details.
-  document->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  const EphemeralRange& range = ComputeRangeForTranspose(frame);
+  const EphemeralRange& range = ComputeRangeForTranspose(GetFrame());
   if (range.IsNull())
     return;
 
@@ -1444,23 +1434,23 @@ void Transpose(LocalFrame& frame) {
   const String& transposed = text.Right(1) + text.Left(1);
 
   if (DispatchBeforeInputInsertText(
-          EventTargetNodeForDocument(document), transposed,
+          EventTargetNodeForDocument(GetFrame().GetDocument()), transposed,
           InputEvent::InputType::kInsertTranspose,
           new StaticRangeVector(1, StaticRange::Create(range))) !=
       DispatchEventResult::kNotCanceled)
     return;
 
-  // 'beforeinput' event handler may destroy document->
-  if (frame.GetDocument() != document)
+  // 'beforeinput' event handler may destroy document.
+  if (frame_->GetDocument()->GetFrame() != frame_)
     return;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited. see http://crbug.com/590369 for more details.
-  document->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   // 'beforeinput' event handler may change selection, we need to re-calculate
   // range.
-  const EphemeralRange& new_range = ComputeRangeForTranspose(frame);
+  const EphemeralRange& new_range = ComputeRangeForTranspose(GetFrame());
   if (new_range.IsNull())
     return;
 
@@ -1474,12 +1464,12 @@ void Transpose(LocalFrame& frame) {
 
   // Select the two characters.
   if (CreateVisibleSelection(new_selection) !=
-      frame.Selection().ComputeVisibleSelectionInDOMTree())
-    frame.Selection().SetSelection(new_selection);
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTree())
+    GetFrame().Selection().SetSelection(new_selection);
 
   // Insert the transposed characters.
-  editor.ReplaceSelectionWithText(new_transposed, false, false,
-                                  InputEvent::InputType::kInsertTranspose);
+  ReplaceSelectionWithText(new_transposed, false, false,
+                           InputEvent::InputType::kInsertTranspose);
 }
 
 void Editor::AddToKillRing(const EphemeralRange& range) {
@@ -1494,7 +1484,7 @@ void Editor::AddToKillRing(const EphemeralRange& range) {
 
 void Editor::ChangeSelectionAfterCommand(
     const SelectionInDOMTree& new_selection,
-    const SetSelectionData& options) {
+    FrameSelection::SetSelectionOptions options) {
   if (new_selection.IsNone())
     return;
 

@@ -8,11 +8,14 @@
   await TestRunner.loadPanel("console");
   await TestRunner.loadModule("console_test_runner");
 
-  await TestRunner.evaluateInPagePromise(`
+  function log() {
+    // Fill console.
     console.log("one");
     console.log("two");
     console.log("three");
-  `);
+  }
+
+  await TestRunner.evaluateInPagePromise(`(${log.toString()})()`);
   TestRunner.addResult("=== Before clear ===");
   ConsoleTestRunner.dumpConsoleMessages();
 

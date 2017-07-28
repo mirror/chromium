@@ -2604,8 +2604,6 @@ public class AwSettingsTest extends AwTestBase {
         assertEquals(viewportTagSpecifiedWidth, getTitleOnUiThread(awContents));
     }
 
-    // WebView layout width tests are flaky: http://crbug.com/746264
-    @RetryOnFailure
     @SmallTest
     @Feature({"AndroidWebView", "Preferences"})
     public void testUseWideViewportLayoutWidth() throws Throwable {
@@ -2615,8 +2613,6 @@ public class AwSettingsTest extends AwTestBase {
         useWideViewportLayoutWidthTest(testContainerView, contentClient.getOnPageFinishedHelper());
     }
 
-    // WebView layout width tests are flaky: http://crbug.com/746264
-    @RetryOnFailure
     @SmallTest
     @Feature({"AndroidWebView", "Preferences"})
     public void testUseWideViewportLayoutWidthNoQuirks() throws Throwable {
@@ -2981,26 +2977,6 @@ public class AwSettingsTest extends AwTestBase {
     @Feature({"AndroidWebView", "Preferences"})
     public void testDisallowEmptyDocumentPersistence() throws Throwable {
         doAllowEmptyDocumentPersistenceTest(false);
-    }
-
-    @SmallTest
-    @Feature({"AndroidWebView", "Preferences"})
-    public void testCSSHexAlphaColorEnabled() throws Throwable {
-        final TestAwContentsClient client = new TestAwContentsClient();
-        final AwTestContainerView view = createAwTestContainerViewOnMainSync(client);
-        final AwContents awContents = view.getAwContents();
-        CallbackHelper onPageFinishedHelper = client.getOnPageFinishedHelper();
-        enableJavaScriptOnUiThread(awContents);
-        final String expectedTitle = "false"; // https://crbug.com/618472
-        final String page = "<!doctype html>"
-                + "<script>"
-                + "window.onload = function() {"
-                + "  document.title = CSS.supports('color', '#AABBCCDD');"
-                + "};"
-                + "</script>";
-        loadDataSync(awContents, onPageFinishedHelper, page, "text/html", false);
-        String actualTitle = getTitleOnUiThread(awContents);
-        assertEquals(expectedTitle, actualTitle);
     }
 
     private static class SelectionRangeTestDependencyFactory extends TestDependencyFactory {

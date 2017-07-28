@@ -26,7 +26,7 @@ class TestAPIAnimationObserver : public views::BoundsAnimatorObserver {
   // views::BoundsAnimatorObserver overrides:
   void OnBoundsAnimatorProgressed(views::BoundsAnimator* animator) override {}
   void OnBoundsAnimatorDone(views::BoundsAnimator* animator) override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

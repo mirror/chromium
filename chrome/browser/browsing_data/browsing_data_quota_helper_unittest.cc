@@ -11,10 +11,10 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/run_loop.h"
 #include "chrome/browser/browsing_data/browsing_data_quota_helper_impl.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_utils.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 #include "storage/browser/test/mock_storage_client.h"
@@ -36,7 +36,8 @@ class BrowsingDataQuotaHelperTest : public testing::Test {
     EXPECT_TRUE(dir_.CreateUniqueTempDir());
     quota_manager_ = new storage::QuotaManager(
         false, dir_.GetPath(),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO).get(), nullptr,
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO).get(),
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB).get(), nullptr,
         storage::GetQuotaSettingsFunc());
     helper_ = new BrowsingDataQuotaHelperImpl(quota_manager_.get());
   }
@@ -45,7 +46,7 @@ class BrowsingDataQuotaHelperTest : public testing::Test {
     helper_ = nullptr;
     quota_manager_ = nullptr;
     quota_info_.clear();
-    content::RunAllBlockingPoolTasksUntilIdle();
+    base::RunLoop().RunUntilIdle();
   }
 
  protected:
@@ -123,7 +124,7 @@ class BrowsingDataQuotaHelperTest : public testing::Test {
 
 TEST_F(BrowsingDataQuotaHelperTest, Empty) {
   StartFetching();
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(fetching_completed());
   EXPECT_TRUE(quota_info().empty());
 }
@@ -139,7 +140,7 @@ TEST_F(BrowsingDataQuotaHelperTest, FetchData) {
 
   RegisterClient(kOrigins, arraysize(kOrigins));
   StartFetching();
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(fetching_completed());
 
   std::set<QuotaInfo> expected, actual;
@@ -168,7 +169,7 @@ TEST_F(BrowsingDataQuotaHelperTest, IgnoreExtensionsAndDevTools) {
 
   RegisterClient(kOrigins, arraysize(kOrigins));
   StartFetching();
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(fetching_completed());
 
   std::set<QuotaInfo> expected, actual;
@@ -184,16 +185,16 @@ TEST_F(BrowsingDataQuotaHelperTest, RevokeHostQuota) {
 
   SetPersistentHostQuota(kHost1, 1);
   SetPersistentHostQuota(kHost2, 10);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   RevokeHostQuota(kHost1);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   GetPersistentHostQuota(kHost1);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0, quota());
 
   GetPersistentHostQuota(kHost2);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
   EXPECT_EQ(10, quota());
 }

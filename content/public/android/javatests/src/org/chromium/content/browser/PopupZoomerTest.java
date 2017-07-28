@@ -23,7 +23,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.input.ImeAdapter;
-import org.chromium.content.browser.input.TextSuggestionHost;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.TestInputMethodManagerWrapper;
 import org.chromium.content_public.browser.WebContents;
@@ -105,9 +104,6 @@ public class PopupZoomerTest {
                         new TestInputMethodManagerWrapper(mContentViewCore)));
                 mPopupZoomer = createPopupZoomerForTest(InstrumentationRegistry.getTargetContext());
                 mContentViewCore.setPopupZoomerForTest(mPopupZoomer);
-                mContentViewCore.setTextSuggestionHostForTesting(new TextSuggestionHost(context,
-                        webContents, mActivityTestRule.getContentViewCore().getContainerView(),
-                        mContentViewCore, mContentViewCore.getRenderCoordinates()));
             }
         });
     }

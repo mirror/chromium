@@ -116,18 +116,18 @@ class TokenValidatorFactoryImplTest : public testing::Test {
 
   void SuccessCallback(const std::string& shared_secret) {
     EXPECT_FALSE(shared_secret.empty());
-    run_loop_.QuitWhenIdle();
+    message_loop_.QuitWhenIdle();
   }
 
   void FailureCallback(const std::string& shared_secret) {
     EXPECT_TRUE(shared_secret.empty());
-    run_loop_.QuitWhenIdle();
+    message_loop_.QuitWhenIdle();
   }
 
   void DeleteOnFailureCallback(const std::string& shared_secret) {
     EXPECT_TRUE(shared_secret.empty());
     token_validator_.reset();
-    run_loop_.QuitWhenIdle();
+    message_loop_.QuitWhenIdle();
   }
 
  protected:
@@ -179,7 +179,6 @@ class TokenValidatorFactoryImplTest : public testing::Test {
   }
 
   base::MessageLoop message_loop_;
-  base::RunLoop run_loop_;
   scoped_refptr<RsaKeyPair> key_pair_;
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
   scoped_refptr<TokenValidatorFactoryImpl> token_validator_factory_;
@@ -196,7 +195,7 @@ TEST_F(TokenValidatorFactoryImplTest, Success) {
   token_validator_->ValidateThirdPartyToken(
       kToken, base::Bind(&TokenValidatorFactoryImplTest::SuccessCallback,
                              base::Unretained(this)));
-  run_loop_.Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(TokenValidatorFactoryImplTest, BadToken) {
@@ -208,7 +207,7 @@ TEST_F(TokenValidatorFactoryImplTest, BadToken) {
   token_validator_->ValidateThirdPartyToken(
       kToken, base::Bind(&TokenValidatorFactoryImplTest::FailureCallback,
                              base::Unretained(this)));
-  run_loop_.Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(TokenValidatorFactoryImplTest, BadScope) {
@@ -221,7 +220,7 @@ TEST_F(TokenValidatorFactoryImplTest, BadScope) {
   token_validator_->ValidateThirdPartyToken(
       kToken, base::Bind(&TokenValidatorFactoryImplTest::FailureCallback,
                          base::Unretained(this)));
-  run_loop_.Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(TokenValidatorFactoryImplTest, DeleteOnFailure) {
@@ -234,7 +233,7 @@ TEST_F(TokenValidatorFactoryImplTest, DeleteOnFailure) {
       kToken, base::Bind(
           &TokenValidatorFactoryImplTest::DeleteOnFailureCallback,
           base::Unretained(this)));
-  run_loop_.Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(TokenValidatorFactoryImplTest, DeleteOnStartError) {
@@ -247,7 +246,7 @@ TEST_F(TokenValidatorFactoryImplTest, DeleteOnStartError) {
       kToken,
       base::Bind(&TokenValidatorFactoryImplTest::DeleteOnFailureCallback,
                  base::Unretained(this)));
-  run_loop_.Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(TokenValidatorFactoryImplTest, DeleteOnSyncReadError) {
@@ -260,7 +259,7 @@ TEST_F(TokenValidatorFactoryImplTest, DeleteOnSyncReadError) {
       kToken,
       base::Bind(&TokenValidatorFactoryImplTest::DeleteOnFailureCallback,
                  base::Unretained(this)));
-  run_loop_.Run();
+  base::RunLoop().Run();
 }
 
 TEST_F(TokenValidatorFactoryImplTest, DeleteOnAsyncReadError) {
@@ -273,7 +272,7 @@ TEST_F(TokenValidatorFactoryImplTest, DeleteOnAsyncReadError) {
       kToken,
       base::Bind(&TokenValidatorFactoryImplTest::DeleteOnFailureCallback,
                  base::Unretained(this)));
-  run_loop_.Run();
+  base::RunLoop().Run();
 }
 
 }  // namespace remoting

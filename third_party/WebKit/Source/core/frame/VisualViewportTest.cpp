@@ -18,7 +18,6 @@
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/api/LayoutViewItem.h"
-#include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/page/Page.h"
@@ -1074,8 +1073,7 @@ TEST_P(VisualViewportTest, TestWebViewResizeCausesViewportConstrainedLayout) {
   EXPECT_TRUE(navbar->NeedsLayout());
 }
 
-class VisualViewportMockWebFrameClient
-    : public FrameTestHelpers::TestWebFrameClient {
+class MockWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
   MOCK_METHOD1(ShowContextMenu, void(const WebContextMenuData&));
   MOCK_METHOD0(DidChangeScrollOffset, void());
@@ -1111,7 +1109,7 @@ TEST_P(VisualViewportTest, TestContextMenuShownInCorrectLocation) {
   mouse_up_event.SetType(WebInputEvent::kMouseUp);
 
   WebFrameClient* old_client = WebViewImpl()->MainFrameImpl()->Client();
-  VisualViewportMockWebFrameClient mock_web_frame_client;
+  MockWebFrameClient mock_web_frame_client;
   EXPECT_CALL(mock_web_frame_client,
               ShowContextMenu(ContextMenuAtLocation(
                   mouse_down_event.PositionInWidget().x,
@@ -1154,7 +1152,7 @@ TEST_P(VisualViewportTest, TestClientNotifiedOfScrollEvents) {
   NavigateTo(base_url_ + "200-by-300.html");
 
   WebFrameClient* old_client = WebViewImpl()->MainFrameImpl()->Client();
-  VisualViewportMockWebFrameClient mock_web_frame_client;
+  MockWebFrameClient mock_web_frame_client;
   WebViewImpl()->MainFrameImpl()->SetClient(&mock_web_frame_client);
 
   WebViewImpl()->SetPageScaleFactor(2);
@@ -2120,21 +2118,13 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
       ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
   PaintLayerCompositor* compositor = document->GetLayoutView()->Compositor();
 
-  GraphicsLayer* backgroundLayer = nullptr;
-  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    ASSERT_FALSE(compositor->NeedsFixedRootBackgroundLayer());
-    backgroundLayer = document->GetLayoutView()
-                          ->Layer()
-                          ->GetCompositedLayerMapping()
-                          ->MainGraphicsLayer();
-  } else {
-    ASSERT_TRUE(compositor->NeedsFixedRootBackgroundLayer());
-    backgroundLayer = compositor->FixedRootBackgroundLayer();
-  }
-  ASSERT_TRUE(backgroundLayer);
+  ASSERT_TRUE(compositor->NeedsFixedRootBackgroundLayer(
+      document->GetLayoutView()->Layer()));
+  ASSERT_TRUE(compositor->FixedRootBackgroundLayer());
 
-  ASSERT_EQ(page_width, backgroundLayer->Size().Width());
-  ASSERT_EQ(page_height, backgroundLayer->Size().Height());
+  ASSERT_EQ(page_width, compositor->FixedRootBackgroundLayer()->Size().Width());
+  ASSERT_EQ(page_height,
+            compositor->FixedRootBackgroundLayer()->Size().Height());
   ASSERT_EQ(page_width, document->View()->GetLayoutSize().Width());
   ASSERT_EQ(smallest_height, document->View()->GetLayoutSize().Height());
 
@@ -2146,15 +2136,17 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
   ASSERT_EQ(smallest_height, document->View()->GetLayoutSize().Height());
 
   // The background layer's size should have changed though.
-  EXPECT_EQ(page_width, backgroundLayer->Size().Width());
-  EXPECT_EQ(smallest_height, backgroundLayer->Size().Height());
+  EXPECT_EQ(page_width, compositor->FixedRootBackgroundLayer()->Size().Width());
+  EXPECT_EQ(smallest_height,
+            compositor->FixedRootBackgroundLayer()->Size().Height());
 
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, page_height),
                                            browser_controls_height, 0, true);
 
   // The background layer's size should change again.
-  EXPECT_EQ(page_width, backgroundLayer->Size().Width());
-  EXPECT_EQ(page_height, backgroundLayer->Size().Height());
+  EXPECT_EQ(page_width, compositor->FixedRootBackgroundLayer()->Size().Width());
+  EXPECT_EQ(page_height,
+            compositor->FixedRootBackgroundLayer()->Size().Height());
 }
 
 static void configureAndroidNonCompositing(WebSettings* settings) {
@@ -2203,7 +2195,8 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
       ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
   PaintLayerCompositor* compositor = document->GetLayoutView()->Compositor();
 
-  ASSERT_FALSE(compositor->NeedsFixedRootBackgroundLayer());
+  ASSERT_FALSE(compositor->NeedsFixedRootBackgroundLayer(
+      document->GetLayoutView()->Layer()));
   ASSERT_FALSE(compositor->FixedRootBackgroundLayer());
 
   document->View()->SetTracksPaintInvalidations(true);

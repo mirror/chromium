@@ -479,8 +479,6 @@ target(link_target_type, "renderer") {
     "//media/midi",
     "//media/midi:mojo",
     "//media/mojo:features",
-    "//media/mojo/clients",
-    "//media/mojo/interfaces",
     "//media/mojo/interfaces:remoting",
     "//mojo/common",
     "//mojo/edk/js",
@@ -781,13 +779,11 @@ target(link_target_type, "renderer") {
       "//third_party/webrtc/media:rtc_media_base",
       "//third_party/webrtc/modules/audio_device",
       "//third_party/webrtc/modules/audio_processing",
-      "//third_party/webrtc/modules/audio_processing/aec_dump",
       "//third_party/webrtc/modules/video_coding:webrtc_h264",
       "//third_party/webrtc/p2p:libstunprober",
       "//third_party/webrtc/p2p:rtc_p2p",
       "//third_party/webrtc/pc:rtc_pc",
       "//third_party/webrtc/rtc_base:rtc_base",
-      "//third_party/webrtc/rtc_base:rtc_task_queue",
       "//third_party/webrtc/stats",
       "//third_party/webrtc/system_wrappers",
       "//third_party/webrtc_overrides:init_webrtc",
@@ -974,6 +970,11 @@ target(link_target_type, "renderer") {
     sources += [
       "media/media_interface_provider.cc",
       "media/media_interface_provider.h",
+    ]
+
+    deps += [
+      "//media/mojo/clients",
+      "//media/mojo/interfaces",
     ]
   }
 

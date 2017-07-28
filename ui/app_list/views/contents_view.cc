@@ -30,13 +30,6 @@
 
 namespace app_list {
 
-namespace {
-
-// Layout constants.
-constexpr int kDefaultContentsViewHeight = 633;
-
-}  // namespace
-
 ContentsView::ContentsView(AppListMainView* app_list_main_view,
                            AppListView* app_list_view)
     : model_(nullptr),
@@ -402,8 +395,10 @@ gfx::Rect ContentsView::GetSearchBoxBoundsForState(
 gfx::Rect ContentsView::GetDefaultContentsBounds() const {
   const gfx::Size contents_size(GetDefaultContentsSize());
   gfx::Point origin(0, GetDefaultSearchBoxBounds().bottom());
-  if (is_fullscreen_app_list_enabled_)
-    origin.Offset((bounds().width() - contents_size.width()) / 2, 0);
+  if (is_fullscreen_app_list_enabled_) {
+    origin.Offset((bounds().width() - contents_size.width()) / 2,
+                  kSearchBoxBottomPadding);
+  }
   return gfx::Rect(origin, contents_size);
 }
 
@@ -451,10 +446,7 @@ bool ContentsView::Back() {
 }
 
 gfx::Size ContentsView::GetDefaultContentsSize() const {
-  gfx::Size size = apps_container_view_->GetPreferredSize();
-  if (is_fullscreen_app_list_enabled_)
-    size.set_height(kDefaultContentsViewHeight);
-  return size;
+  return apps_container_view_->GetPreferredSize();
 }
 
 gfx::Size ContentsView::CalculatePreferredSize() const {

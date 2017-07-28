@@ -237,8 +237,7 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
                                                                  client_);
     ThreadableLoaderClient* client = client_;
     Clear();
-    client->DidFail(ResourceError(ResourceError::Domain::kBlinkInternal, 0,
-                                  request.Url(),
+    client->DidFail(ResourceError(kErrorDomainBlinkInternal, 0, request.Url(),
                                   "Cross origin requests are not supported."));
     return;
   }
@@ -540,7 +539,7 @@ void DocumentThreadableLoader::Clear() {
 // resource by calling clearResource().
 bool DocumentThreadableLoader::RedirectReceived(
     Resource* resource,
-    const ResourceRequest& new_request,
+    const ResourceRequest& request,
     const ResourceResponse& redirect_response) {
   DCHECK(client_);
   DCHECK_EQ(resource, this->GetResource());
@@ -550,23 +549,20 @@ bool DocumentThreadableLoader::RedirectReceived(
 
   checker_.RedirectReceived();
 
-  const KURL& new_url = new_request.Url();
-  const KURL& original_url = redirect_response.Url();
-
   if (!actual_request_.IsNull()) {
     ReportResponseReceived(resource->Identifier(), redirect_response);
 
-    HandlePreflightFailure(original_url,
+    HandlePreflightFailure(redirect_response.Url(),
                            "Response for preflight is invalid (redirect)");
 
     return false;
   }
 
   if (redirect_mode_ == WebURLRequest::kFetchRedirectModeManual) {
-    // We use |redirect_mode_| to check the original redirect mode.
-    // |new_request| is a new request for redirect. So we don't set the
-    // redirect mode of it in WebURLLoaderImpl::Context::OnReceivedRedirect().
-    DCHECK(new_request.UseStreamOnResponse());
+    // We use |m_redirectMode| to check the original redirect mode. |request| is
+    // a new request for redirect. So we don't set the redirect mode of it in
+    // WebURLLoaderImpl::Context::OnReceivedRedirect().
+    DCHECK(request.UseStreamOnResponse());
     // There is no need to read the body of redirect response because there is
     // no way to read the body of opaque-redirect filtered response's internal
     // response.
@@ -594,11 +590,11 @@ bool DocumentThreadableLoader::RedirectReceived(
 
   // Allow same origin requests to continue after allowing clients to audit the
   // redirect.
-  if (IsAllowedRedirect(new_request.GetFetchRequestMode(), new_url)) {
-    client_->DidReceiveRedirectTo(new_url);
+  if (IsAllowedRedirect(request.GetFetchRequestMode(), request.Url())) {
+    client_->DidReceiveRedirectTo(request.Url());
     if (client_->IsDocumentThreadableLoaderClient()) {
       return static_cast<DocumentThreadableLoaderClient*>(client_)
-          ->WillFollowRedirect(new_request, redirect_response);
+          ->WillFollowRedirect(request, redirect_response);
     }
     return true;
   }
@@ -622,31 +618,31 @@ bool DocumentThreadableLoader::RedirectReceived(
   String access_control_error_description;
 
   CrossOriginAccessControl::RedirectStatus redirect_status =
-      CrossOriginAccessControl::CheckRedirectLocation(new_url);
+      CrossOriginAccessControl::CheckRedirectLocation(request.Url());
   bool allow_redirect =
       redirect_status == CrossOriginAccessControl::kRedirectSuccess;
   if (!allow_redirect) {
     StringBuilder builder;
     builder.Append("Redirect from '");
-    builder.Append(original_url.GetString());
+    builder.Append(redirect_response.Url().GetString());
     builder.Append("' has been blocked by CORS policy: ");
     CrossOriginAccessControl::RedirectErrorString(builder, redirect_status,
-                                                  new_url);
+                                                  request.Url());
     access_control_error_description = builder.ToString();
   } else if (cors_flag_) {
     // The redirect response must pass the access control check if the CORS
     // flag is set.
     CrossOriginAccessControl::AccessStatus cors_status =
-        CrossOriginAccessControl::CheckAccess(
-            redirect_response, new_request.GetFetchCredentialsMode(),
-            GetSecurityOrigin());
+        CrossOriginAccessControl::CheckAccess(redirect_response,
+                                              request.GetFetchCredentialsMode(),
+                                              GetSecurityOrigin());
     allow_redirect = cors_status == CrossOriginAccessControl::kAccessAllowed;
     if (!allow_redirect) {
       StringBuilder builder;
       builder.Append("Redirect from '");
-      builder.Append(original_url.GetString());
+      builder.Append(redirect_response.Url().GetString());
       builder.Append("' to '");
-      builder.Append(new_url.GetString());
+      builder.Append(request.Url().GetString());
       builder.Append("' has been blocked by CORS policy: ");
       CrossOriginAccessControl::AccessControlErrorString(
           builder, cors_status, redirect_response, GetSecurityOrigin(),
@@ -658,12 +654,12 @@ bool DocumentThreadableLoader::RedirectReceived(
   if (!allow_redirect) {
     DispatchDidFailAccessControlCheck(
         ResourceError::CancelledDueToAccessCheckError(
-            original_url, ResourceRequestBlockedReason::kOther,
+            redirect_response.Url(), ResourceRequestBlockedReason::kOther,
             access_control_error_description));
     return false;
   }
 
-  client_->DidReceiveRedirectTo(new_url);
+  client_->DidReceiveRedirectTo(request.Url());
 
   // FIXME: consider combining this with CORS redirect handling performed by
   // CrossOriginAccessControl::handleRedirect().
@@ -678,9 +674,10 @@ bool DocumentThreadableLoader::RedirectReceived(
   // See https://fetch.spec.whatwg.org/#http-redirect-fetch.
   if (cors_flag_) {
     RefPtr<SecurityOrigin> original_origin =
-        SecurityOrigin::Create(original_url);
-    RefPtr<SecurityOrigin> new_origin = SecurityOrigin::Create(new_url);
-    if (!original_origin->IsSameSchemeHostPort(new_origin.Get()))
+        SecurityOrigin::Create(redirect_response.Url());
+    RefPtr<SecurityOrigin> request_origin =
+        SecurityOrigin::Create(request.Url());
+    if (!original_origin->IsSameSchemeHostPort(request_origin.Get()))
       security_origin_ = SecurityOrigin::CreateUnique();
   }
 
@@ -692,9 +689,9 @@ bool DocumentThreadableLoader::RedirectReceived(
   // Save the referrer to use when following the redirect.
   override_referrer_ = true;
   referrer_after_redirect_ =
-      Referrer(new_request.HttpReferrer(), new_request.GetReferrerPolicy());
+      Referrer(request.HttpReferrer(), request.GetReferrerPolicy());
 
-  ResourceRequest cross_origin_request(new_request);
+  ResourceRequest cross_origin_request(request);
 
   // Remove any headers that may have been added by the network layer that cause
   // access control to fail.
@@ -1106,8 +1103,8 @@ void DocumentThreadableLoader::LoadRequestAsync(
     // notified and |client| is null.
     if (!client)
       return;
-    client->DidFail(ResourceError(ResourceError::Domain::kBlinkInternal, 0,
-                                  request.Url(), "Failed to start loading."));
+    client->DidFail(ResourceError(kErrorDomainBlinkInternal, 0, request.Url(),
+                                  "Failed to start loading."));
     return;
   }
 

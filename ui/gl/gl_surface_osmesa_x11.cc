@@ -78,9 +78,8 @@ void GLSurfaceOSMesaX11::Destroy() {
 
 bool GLSurfaceOSMesaX11::Resize(const gfx::Size& new_size,
                                 float scale_factor,
-                                ColorSpace color_space,
                                 bool alpha) {
-  if (!GLSurfaceOSMesa::Resize(new_size, scale_factor, color_space, alpha))
+  if (!GLSurfaceOSMesa::Resize(new_size, scale_factor, alpha))
     return false;
 
   XWindowAttributes attributes;

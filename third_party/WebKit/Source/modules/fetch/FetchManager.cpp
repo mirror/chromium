@@ -11,9 +11,9 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/Blob.h"
 #include "core/frame/Frame.h"
+#include "core/frame/SubresourceIntegrity.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/loader/SubresourceIntegrityHelper.h"
 #include "core/loader/ThreadableLoader.h"
 #include "core/loader/ThreadableLoaderClient.h"
 #include "core/page/ChromeClient.h"
@@ -31,7 +31,6 @@
 #include "platform/HTTPNames.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
-#include "platform/loader/SubresourceIntegrity.h"
 #include "platform/loader/fetch/CrossOriginAccessControl.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -215,13 +214,9 @@ class FetchManager::Loader final
           "Unknown error occurred while trying to verify integrity.";
       finished_ = true;
       if (r == WebDataConsumerHandle::kDone) {
-        SubresourceIntegrity::ReportInfo report_info;
-        bool check_result = SubresourceIntegrity::CheckSubresourceIntegrity(
-            integrity_metadata_, buffer_.data(), buffer_.size(), url_,
-            report_info);
-        SubresourceIntegrityHelper::DoReport(*loader_->GetExecutionContext(),
-                                             report_info);
-        if (check_result) {
+        if (SubresourceIntegrity::CheckSubresourceIntegrity(
+                integrity_metadata_, buffer_.data(), buffer_.size(), url_,
+                *loader_->GetExecutionContext(), error_message)) {
           updater_->Update(
               new FormDataBytesConsumer(buffer_.data(), buffer_.size()));
           loader_->resolver_->Resolve(response_);
@@ -519,7 +514,7 @@ void FetchManager::Loader::DidFinishLoading(unsigned long, double) {
 
 void FetchManager::Loader::DidFail(const ResourceError& error) {
   if (error.IsCancellation() || error.IsTimeout() ||
-      error.GetDomain() != ResourceError::Domain::kBlinkInternal)
+      error.Domain() != kErrorDomainBlinkInternal)
     Failed(String());
   else
     Failed("Fetch API cannot load " + error.FailingURL() + ". " +

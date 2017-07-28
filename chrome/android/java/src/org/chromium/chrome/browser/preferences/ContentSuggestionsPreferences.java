@@ -72,7 +72,7 @@ public class ContentSuggestionsPreferences extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PreferenceUtils.addPreferencesFromResource(this, R.xml.suggestions_preferences);
+        addPreferencesFromResource(R.xml.suggestions_preferences);
         setHasOptionsMenu(true);
         finishSwitchInitialisation();
 

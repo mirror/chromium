@@ -61,12 +61,9 @@
 
 namespace service_manager {
 class InterfaceProvider;
-}  // namespace service_manager
+}
 
 namespace blink {
-namespace mojom {
-enum class WebFeature : int32_t;
-}  // namespace mojom
 
 class Document;
 class DocumentLoader;
@@ -191,10 +188,6 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   // Will be called when a particular loading code path has been used. This
   // propogates renderer loading behavior to the browser process for histograms.
   virtual void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) {}
-
-  // Will be called when a new useCounter feature has been observed in a frame.
-  // This propogates feature usage to the browser process for histograms.
-  virtual void DidObserveNewFeatureUsage(mojom::WebFeature) {}
 
   // Transmits the change in the set of watched CSS selectors property that
   // match any element on the frame.
@@ -356,8 +349,6 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
                                                         WebTaskRunner*) = 0;
 
   virtual void AnnotatedRegionsChanged() = 0;
-
-  virtual void DidBlockFramebust(const KURL&) {}
 };
 
 }  // namespace blink

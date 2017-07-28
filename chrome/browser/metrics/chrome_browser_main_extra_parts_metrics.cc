@@ -31,7 +31,6 @@
 
 #if !defined(OS_ANDROID)
 #include "chrome/browser/metrics/first_web_contents_profiler.h"
-#include "chrome/browser/metrics/tab_stats_tracker.h"
 #include "chrome/browser/metrics/tab_usage_recorder.h"
 #endif  // !defined(OS_ANDROID)
 
@@ -562,7 +561,6 @@ void ChromeBrowserMainExtraPartsMetrics::PostBrowserStart() {
 #if !defined(OS_ANDROID)
   metrics::BeginFirstWebContentsProfiling();
   metrics::TabUsageRecorder::InitializeIfNeeded();
-  metrics::TabStatsTracker::Initialize();
 #endif  // !defined(OS_ANDROID)
 }
 

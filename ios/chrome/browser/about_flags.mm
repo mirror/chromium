@@ -21,8 +21,6 @@
 #include "base/sys_info.h"
 #include "base/task_scheduler/switches.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
-#include "components/feature_engagement/public/feature_constants.h"
-#include "components/feature_engagement/public/feature_list.h"
 #include "components/flags_ui/feature_entry.h"
 #include "components/flags_ui/feature_entry_macros.h"
 #include "components/flags_ui/flags_storage.h"
@@ -66,26 +64,14 @@ const FeatureEntry::Choice kMarkHttpAsChoices[] = {
      security_state::switches::kMarkHttpAs,
      security_state::switches::kMarkHttpAsDangerous}};
 
-// To add a new entry, add to the end of kFeatureEntries. There are four
+// To add a new entry, add to the end of kFeatureEntries. There are two
 // distinct types of entries:
-// . ENABLE_DISABLE_VALUE: entry is either enabled, disabled, or uses the
-//   default value for this feature. Use the ENABLE_DISABLE_VALUE_TYPE
+// . SINGLE_VALUE: entry is either on or off. Use the SINGLE_VALUE_TYPE
 //   macro for this type supplying the command line to the macro.
 // . MULTI_VALUE: a list of choices, the first of which should correspond to a
 //   deactivated state for this lab (i.e. no command line option).  To specify
 //   this type of entry use the macro MULTI_VALUE_TYPE supplying it the
 //   array of choices.
-// . FEATURE_VALUE: entry is associated with a base::Feature instance. Entry is
-//   either enabled, disabled, or uses the default value of the associated
-//   base::Feature instance. To specify this type of entry use the macro
-//   FEATURE_VALUE_TYPE supplying it the base::Feature instance.
-// . FEATURE_WITH_PARAM_VALUES: a list of choices associated with a
-//   base::Feature instance. Choices corresponding to the default state, a
-//   universally enabled state, and a universally disabled state are
-//   automatically included. To specify this type of entry use the macro
-//   FEATURE_WITH_PARAMS_VALUE_TYPE supplying it the base::Feature instance and
-//   the array of choices.
-//
 // See the documentation of FeatureEntry for details on the fields.
 //
 // When adding a new choice, add it to the end of the list.
@@ -111,13 +97,8 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"ios-captive-portal", flag_descriptions::kIosCaptivePortalName,
      flag_descriptions::kIosCaptivePortalDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(captive_portal::kIosCaptivePortal)},
-    {"in-product-help-demo-mode-choice",
-     flag_descriptions::kInProductHelpDemoModeName,
-     flag_descriptions::kInProductHelpDemoModeDescription, flags_ui::kOsIos,
-     FEATURE_WITH_PARAMS_VALUE_TYPE(
-         feature_engagement::kIPHDemoMode,
-         feature_engagement::kIPHDemoModeChoiceVariations,
-         "IPH_DemoMode")}};
+
+};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {

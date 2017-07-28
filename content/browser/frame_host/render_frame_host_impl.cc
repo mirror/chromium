@@ -119,7 +119,6 @@
 #include "services/device/public/cpp/device_features.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
-#include "services/device/public/interfaces/vibration_manager.mojom.h"
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
@@ -882,7 +881,6 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidChangeFrameOwnerProperties)
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateTitle, OnUpdateTitle)
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateEncoding, OnUpdateEncoding)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_DidBlockFramebust, OnDidBlockFramebust)
     IPC_MESSAGE_HANDLER(FrameHostMsg_BeginNavigation,
                         OnBeginNavigation)
     IPC_MESSAGE_HANDLER(FrameHostMsg_AbortNavigation, OnAbortNavigation)
@@ -2257,10 +2255,6 @@ void RenderFrameHostImpl::OnUpdateEncoding(const std::string& encoding_name) {
   delegate_->UpdateEncoding(this, encoding_name);
 }
 
-void RenderFrameHostImpl::OnDidBlockFramebust(const GURL& url) {
-  // TODO(dgn): Hook this up to UI.
-}
-
 void RenderFrameHostImpl::OnBeginNavigation(
     const CommonNavigationParams& common_params,
     const BeginNavigationParams& begin_params) {
@@ -2980,10 +2974,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
         base::Bind(&ForwardRequest<device::mojom::SensorProvider>,
                    device::mojom::kServiceName));
   }
-
-  registry_->AddInterface(
-      base::Bind(&ForwardRequest<device::mojom::VibrationManager>,
-                 device::mojom::kServiceName));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {

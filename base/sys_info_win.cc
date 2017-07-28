@@ -63,12 +63,12 @@ int SysInfo::NumberOfProcessors() {
 }
 
 // static
-int64_t SysInfo::AmountOfPhysicalMemoryImpl() {
+int64_t SysInfo::AmountOfPhysicalMemory() {
   return AmountOfMemory(&MEMORYSTATUSEX::ullTotalPhys);
 }
 
 // static
-int64_t SysInfo::AmountOfAvailablePhysicalMemoryImpl() {
+int64_t SysInfo::AmountOfAvailablePhysicalMemory() {
   SystemMemoryInfoKB info;
   if (!GetSystemMemoryInfo(&info))
     return 0;

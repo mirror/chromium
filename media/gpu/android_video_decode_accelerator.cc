@@ -384,7 +384,7 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
     return;
   }
 
-  surface_chooser_state_.is_fullscreen = config_.overlay_info.is_fullscreen;
+  chooser_state_.is_fullscreen = config_.overlay_info.is_fullscreen;
 
   // Handle the sync path, which must use SurfaceTexture anyway.  Note that we
   // check both |during_initialize_| and |deferred_initialization_pending_|,
@@ -430,7 +430,7 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
                  weak_this_factory_.GetWeakPtr()),
       base::Bind(&AndroidVideoDecodeAccelerator::OnSurfaceTransition,
                  weak_this_factory_.GetWeakPtr(), nullptr),
-      std::move(factory), surface_chooser_state_);
+      std::move(factory), chooser_state_);
 }
 
 void AndroidVideoDecodeAccelerator::OnSurfaceTransition(
@@ -1274,10 +1274,10 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
   if (overlay_info.is_frame_hidden)
     picture_buffer_manager_.ImmediatelyForgetOverlay(output_picture_buffers_);
 
-  surface_chooser_state_.is_frame_hidden = overlay_info.is_frame_hidden;
+  chooser_state_.is_frame_hidden = overlay_info.is_frame_hidden;
 
   // Notify the chooser about the fullscreen state.
-  surface_chooser_state_.is_fullscreen = overlay_info.is_fullscreen;
+  chooser_state_.is_fullscreen = overlay_info.is_fullscreen;
 
   // Note that these might be kNoSurfaceID / empty.  In that case, we will
   // revoke the factory.
@@ -1296,7 +1296,7 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
       new_factory = base::Bind(&ContentVideoViewOverlay::Create, surface_id);
   }
 
-  surface_chooser_->UpdateState(new_factory, surface_chooser_state_);
+  surface_chooser_->UpdateState(new_factory, chooser_state_);
 }
 
 void AndroidVideoDecodeAccelerator::Destroy() {
@@ -1485,10 +1485,7 @@ void AndroidVideoDecodeAccelerator::OnMediaCryptoReady(
 
   codec_config_->media_crypto = std::move(media_crypto);
   codec_config_->requires_secure_codec = requires_secure_video_codec;
-  // Require a secure surface in all cases, even if we don't require a secure
-  // video codec.  This will send L3 content to a secure surface, if one is
-  // available, as well as L1.
-  surface_chooser_state_.is_secure = true;
+  chooser_state_.is_secure = requires_secure_video_codec;
 
   // After receiving |media_crypto_| we can start with surface creation.
   StartSurfaceChooser();
@@ -1565,10 +1562,10 @@ void AndroidVideoDecodeAccelerator::NotifyPromotionHint(
     const PromotionHintAggregator::Hint& hint) {
   promotion_hint_aggregator_->NotifyPromotionHint(hint);
   bool promotable = promotion_hint_aggregator_->IsSafeToPromote();
-  if (promotable != surface_chooser_state_.is_compositor_promotable) {
-    surface_chooser_state_.is_compositor_promotable = promotable;
+  if (promotable != chooser_state_.is_compositor_promotable) {
+    chooser_state_.is_compositor_promotable = promotable;
     surface_chooser_->UpdateState(base::Optional<AndroidOverlayFactoryCB>(),
-                                  surface_chooser_state_);
+                                  chooser_state_);
   }
 }
 

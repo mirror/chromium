@@ -47,7 +47,7 @@ public class AccessibilityPreferences extends PreferenceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.prefs_accessibility);
-        PreferenceUtils.addPreferencesFromResource(this, R.xml.accessibility_preferences);
+        addPreferencesFromResource(R.xml.accessibility_preferences);
 
         mFormat = NumberFormat.getPercentInstance();
         mFontSizePrefs = FontSizePrefs.getInstance(getActivity());

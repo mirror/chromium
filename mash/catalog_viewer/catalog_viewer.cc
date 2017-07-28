@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
-#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/catalog/public/interfaces/catalog.mojom.h"
@@ -218,7 +218,7 @@ void CatalogViewer::RemoveWindow(views::Widget* window) {
   DCHECK(it != windows_.end());
   windows_.erase(it);
   if (windows_.empty())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void CatalogViewer::OnStart() {

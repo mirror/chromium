@@ -542,10 +542,16 @@ LayerImplList::reverse_iterator LayerTreeImpl::rend() {
   return layer_list_.rend();
 }
 
-LayerImpl* LayerTreeImpl::LayerByElementId(ElementId element_id) const {
+int LayerTreeImpl::LayerIdByElementId(ElementId element_id) const {
   auto iter = element_layers_map_.find(element_id);
-  return (iter == element_layers_map_.end()) ? nullptr
-                                             : LayerById(iter->second);
+  if (iter == element_layers_map_.end())
+    return Layer::INVALID_ID;
+
+  return iter->second;
+}
+
+LayerImpl* LayerTreeImpl::LayerByElementId(ElementId element_id) const {
+  return LayerById(LayerIdByElementId(element_id));
 }
 
 void LayerTreeImpl::AddToElementMap(LayerImpl* layer) {

@@ -69,7 +69,7 @@ class CONTENT_EXPORT PresentationServiceImpl
   void StartPresentation(const std::vector<GURL>& presentation_urls,
                          NewPresentationCallback callback) override;
   void ReconnectPresentation(const std::vector<GURL>& presentation_urls,
-                             const std::string& presentation_id,
+                             const base::Optional<std::string>& presentation_id,
                              NewPresentationCallback callback) override;
   void CloseConnection(const GURL& presentation_url,
                        const std::string& presentation_id) override;
@@ -237,9 +237,6 @@ class CONTENT_EXPORT PresentationServiceImpl
   // Returns |controller_delegate| if current frame is controller frame; Returns
   // |receiver_delegate| if current frame is receiver frame.
   PresentationServiceDelegate* GetPresentationServiceDelegate();
-
-  // The RenderFrameHost associated with this object.
-  RenderFrameHost* const render_frame_host_;
 
   // Embedder-specific delegate for controller to forward Presentation requests
   // to. Must be nullptr if current page is receiver page or

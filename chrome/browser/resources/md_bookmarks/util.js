@@ -167,15 +167,6 @@ cr.define('bookmarks.util', function() {
   }
 
   /**
-   * @param {string} name
-   * @param {number} value
-   * @param {number} maxValue
-   */
-  function recordEnumHistogram(name, value, maxValue) {
-    chrome.send('metricsHandler:recordInHistogram', [name, value, maxValue]);
-  }
-
-  /**
    * @param {!Object<string, T>} map
    * @param {!Set<string>} ids
    * @return {!Object<string, T>}
@@ -212,7 +203,6 @@ cr.define('bookmarks.util', function() {
     isShowingSearch: isShowingSearch,
     normalizeNode: normalizeNode,
     normalizeNodes: normalizeNodes,
-    recordEnumHistogram: recordEnumHistogram,
     removeIdsFromMap: removeIdsFromMap,
     removeIdsFromSet: removeIdsFromSet,
   };

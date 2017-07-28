@@ -48,6 +48,7 @@
 #include "cc/layers/viewport.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/compositor_frame_metadata.h"
+#include "cc/output/copy_output_request.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/shared_quad_state.h"
@@ -82,7 +83,6 @@
 #include "cc/trees/transform_node.h"
 #include "cc/trees/tree_synchronizer.h"
 #include "components/viz/common/frame_sinks/delay_based_time_source.h"
-#include "components/viz/common/quads/copy_output_request.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -1105,19 +1105,16 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
     input_handler_client_->ReconcileElasticOverscrollAndRootScroll();
 
   if (const char* client_name = GetClientNameForMetrics()) {
-    size_t total_memory_in_bytes = 0;
-    size_t total_gpu_memory_for_tilings_in_bytes = 0;
-    for (const PictureLayerImpl* layer : active_tree()->picture_layers()) {
-      total_memory_in_bytes += layer->GetRasterSource()->GetMemoryUsage();
-      total_gpu_memory_for_tilings_in_bytes += layer->GPUMemoryUsageInBytes();
-    }
-    if (total_memory_in_bytes != 0) {
+    size_t total_memory = 0;
+    for (const PictureLayerImpl* layer : active_tree()->picture_layers())
+      total_memory += layer->GetRasterSource()->GetMemoryUsage();
+    if (total_memory != 0) {
       // GetClientNameForMetrics only returns one non-null value over the
       // lifetime of the process, so this histogram name is runtime constant.
       UMA_HISTOGRAM_COUNTS(
           base::StringPrintf("Compositing.%s.PictureMemoryUsageKb",
                              client_name),
-          base::saturated_cast<int>(total_memory_in_bytes / 1024));
+          base::saturated_cast<int>(total_memory / 1024));
     }
 
     // GetClientNameForMetrics only returns one non-null value over the lifetime
@@ -1131,18 +1128,6 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
                            client_name),
         base::saturated_cast<int>(active_tree_->picture_layers().size()), 1,
         400, 20);
-
-    // TODO(yigu): Maybe we should use the same check above. Need to figure out
-    // why exactly we skip 0.
-    if (!active_tree()->picture_layers().empty()) {
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          base::StringPrintf("Compositing.%s.GPUMemoryForTilingsInKb",
-                             client_name),
-          base::saturated_cast<int>(total_gpu_memory_for_tilings_in_bytes /
-                                    1024),
-          1, kGPUMemoryForTilingsLargestBucketKb,
-          kGPUMemoryForTilingsBucketCount);
-    }
   }
 
   bool ok = active_tree_->UpdateDrawProperties();
@@ -1409,11 +1394,8 @@ gfx::ColorSpace LayerTreeHostImpl::GetRasterColorSpace() const {
   return result;
 }
 
-void LayerTreeHostImpl::RequestImplSideInvalidationForCheckerImagedTiles() {
-  // When using impl-side invalidation for checker-imaging, a pending tree does
-  // not need to be flushed as an independent update through the pipeline.
-  bool needs_first_draw_on_activation = false;
-  client_->NeedsImplSideInvalidation(needs_first_draw_on_activation);
+void LayerTreeHostImpl::RequestImplSideInvalidation() {
+  client_->NeedsImplSideInvalidation();
 }
 
 void LayerTreeHostImpl::NotifyReadyToActivate() {
@@ -4176,6 +4158,7 @@ void LayerTreeHostImpl::CreateUIResource(UIResourceId uid,
   data.opaque = bitmap.GetOpaque();
   ui_resource_map_[uid] = data;
 
+  resource_provider_->GenerateSyncTokenForResource(id);
   MarkUIResourceNotEvicted(uid);
 }
 

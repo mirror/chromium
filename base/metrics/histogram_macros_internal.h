@@ -139,15 +139,12 @@
 // types.
 #define INTERNAL_HISTOGRAM_ENUMERATION_WITH_FLAG(name, sample, boundary, flag) \
   do {                                                                         \
-    using decayed_sample = std::decay<decltype(sample)>::type;                 \
-    using decayed_boundary = std::decay<decltype(boundary)>::type;             \
-    static_assert(!std::is_enum<decayed_boundary>::value ||                    \
-                      std::is_enum<decayed_sample>::value,                     \
-                  "Unexpected: |boundary| is enum, but |sample| is not.");     \
-    static_assert(!std::is_enum<decayed_sample>::value ||                      \
-                      !std::is_enum<decayed_boundary>::value ||                \
-                      std::is_same<decayed_sample, decayed_boundary>::value,   \
-                  "|sample| and |boundary| shouldn't be of different enums");  \
+    static_assert(                                                             \
+        !std::is_enum<decltype(sample)>::value ||                              \
+            !std::is_enum<decltype(boundary)>::value ||                        \
+            std::is_same<std::remove_const<decltype(sample)>::type,            \
+                         std::remove_const<decltype(boundary)>::type>::value,  \
+        "|sample| and |boundary| shouldn't be of different enums");            \
     static_assert(                                                             \
         static_cast<uintmax_t>(boundary) <                                     \
             static_cast<uintmax_t>(                                            \

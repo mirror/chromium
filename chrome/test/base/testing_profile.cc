@@ -161,7 +161,7 @@ class QuittingHistoryDBTask : public history::HistoryDBTask {
   }
 
   void DoneRunOnMainThread() override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

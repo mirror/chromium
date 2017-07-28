@@ -107,8 +107,8 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         if (tileGroupDelegate == null) {
             mTileGrid = null;
         } else {
-            mTileGrid = new TileGrid(uiDelegate, mContextMenuManager, tileGroupDelegate,
-                    offlinePageBridge, uiConfig);
+            mTileGrid = new TileGrid(
+                    uiDelegate, mContextMenuManager, tileGroupDelegate, offlinePageBridge);
             mRoot.addChild(mTileGrid);
         }
 

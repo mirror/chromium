@@ -740,38 +740,31 @@ void AnimationPlayer::TickAnimation(base::TimeTicks monotonic_time,
   switch (curve->Type()) {
     case AnimationCurve::TRANSFORM:
       target->NotifyClientTransformOperationsAnimated(
-          curve->ToTransformAnimationCurve()->GetValue(trimmed),
-          animation->target_property_id(), animation);
+          curve->ToTransformAnimationCurve()->GetValue(trimmed), animation);
       break;
     case AnimationCurve::FLOAT:
       target->NotifyClientFloatAnimated(
-          curve->ToFloatAnimationCurve()->GetValue(trimmed),
-          animation->target_property_id(), animation);
+          curve->ToFloatAnimationCurve()->GetValue(trimmed), animation);
       break;
     case AnimationCurve::FILTER:
       target->NotifyClientFilterAnimated(
-          curve->ToFilterAnimationCurve()->GetValue(trimmed),
-          animation->target_property_id(), animation);
+          curve->ToFilterAnimationCurve()->GetValue(trimmed), animation);
       break;
     case AnimationCurve::COLOR:
       target->NotifyClientColorAnimated(
-          curve->ToColorAnimationCurve()->GetValue(trimmed),
-          animation->target_property_id(), animation);
+          curve->ToColorAnimationCurve()->GetValue(trimmed), animation);
       break;
     case AnimationCurve::SCROLL_OFFSET:
       target->NotifyClientScrollOffsetAnimated(
-          curve->ToScrollOffsetAnimationCurve()->GetValue(trimmed),
-          animation->target_property_id(), animation);
+          curve->ToScrollOffsetAnimationCurve()->GetValue(trimmed), animation);
       break;
     case AnimationCurve::SIZE:
       target->NotifyClientSizeAnimated(
-          curve->ToSizeAnimationCurve()->GetValue(trimmed),
-          animation->target_property_id(), animation);
+          curve->ToSizeAnimationCurve()->GetValue(trimmed), animation);
       break;
     case AnimationCurve::BOOLEAN:
       target->NotifyClientBooleanAnimated(
-          curve->ToBooleanAnimationCurve()->GetValue(trimmed),
-          animation->target_property_id(), animation);
+          curve->ToBooleanAnimationCurve()->GetValue(trimmed), animation);
       break;
   }
 }

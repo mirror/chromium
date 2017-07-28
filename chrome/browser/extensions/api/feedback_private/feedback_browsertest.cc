@@ -4,7 +4,6 @@
 
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "chrome/browser/apps/app_browsertest_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/api/feedback_private/feedback_private_api.h"
@@ -28,7 +27,7 @@ using extensions::api::feedback_private::FeedbackFlow;
 namespace {
 
 void StopMessageLoopCallback() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoopForUI::current()->QuitWhenIdle();
 }
 
 }  // namespace

@@ -2,10 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/input_method/input_method_engine.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/input_method/input_method_engine.h"
 #include "chrome/browser/ui/input_method/input_method_engine_base.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/test/test_utils.h"
@@ -47,7 +46,7 @@ class KeyEventDoneCallback {
 
   void Run(bool consumed) {
     if (consumed == expected_argument_) {
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
       is_called_ = true;
     }
   }

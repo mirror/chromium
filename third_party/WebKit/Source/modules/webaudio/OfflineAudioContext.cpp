@@ -33,7 +33,6 @@
 #include "modules/webaudio/AudioListener.h"
 #include "modules/webaudio/DeferredTaskHandler.h"
 #include "modules/webaudio/OfflineAudioCompletionEvent.h"
-#include "modules/webaudio/OfflineAudioContextOptions.h"
 #include "modules/webaudio/OfflineAudioDestinationNode.h"
 #include "platform/bindings/ScriptState.h"
 
@@ -127,17 +126,6 @@ OfflineAudioContext* OfflineAudioContext::Create(
   offline_context_sample_rate_histogram.Count(sample_rate);
 
   return audio_context;
-}
-
-OfflineAudioContext* OfflineAudioContext::Create(
-    ExecutionContext* context,
-    const OfflineAudioContextOptions& options,
-    ExceptionState& exception_state) {
-  OfflineAudioContext* offline_context =
-      Create(context, options.numberOfChannels(), options.length(),
-             options.sampleRate(), exception_state);
-
-  return offline_context;
 }
 
 OfflineAudioContext::OfflineAudioContext(Document* document,

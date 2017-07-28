@@ -595,13 +595,15 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void ScrollByRecursively(const ScrollOffset& delta);
   // If makeVisibleInVisualViewport is set, the visual viewport will be scrolled
   // if required to make the rect visible.
-  void ScrollRectToVisibleRecursive(const LayoutRect&,
-                                    const ScrollAlignment& align_x,
-                                    const ScrollAlignment& align_y,
-                                    ScrollType = kProgrammaticScroll,
-                                    bool make_visible_in_visual_viewport = true,
-                                    ScrollBehavior = kScrollBehaviorAuto,
-                                    bool is_for_scroll_sequence = false);
+  // TODO(sunyunjia): Rename this method to distinguish with the one in
+  // LayoutObject. crbug.com/738160
+  void ScrollRectToVisible(const LayoutRect&,
+                           const ScrollAlignment& align_x,
+                           const ScrollAlignment& align_y,
+                           ScrollType = kProgrammaticScroll,
+                           bool make_visible_in_visual_viewport = true,
+                           ScrollBehavior = kScrollBehaviorAuto,
+                           bool is_for_scroll_sequence = false);
 
   LayoutRectOutsets MarginBoxOutsets() const override {
     return margin_box_outsets_;
@@ -821,13 +823,13 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   bool CrossesPageBoundary(LayoutUnit offset, LayoutUnit logical_height) const;
 
   // Calculate the strut to insert in order fit content of size
-  // |content_logical_height|. Usually this will merely return the distance to
-  // the next fragmentainer. However, in cases where the next fragmentainer
-  // isn't tall enough to fit the content, and there's a likelihood of taller
-  // fragmentainers further ahead, we'll search for one and return the distance
-  // to the first fragmentainer that can fit this piece of content.
-  LayoutUnit CalculatePaginationStrutToFitContent(
+  // |contentLogicalHeight|. |strutToNextPage| is the strut to add to |offset|
+  // to merely get to the top of the next page or column. This is what will be
+  // returned if the content can actually fit there. Otherwise, return the
+  // distance to the next fragmentainer that can fit this piece of content.
+  virtual LayoutUnit CalculatePaginationStrutToFitContent(
       LayoutUnit offset,
+      LayoutUnit strut_to_next_page,
       LayoutUnit content_logical_height) const;
 
   void PositionLineBox(InlineBox*);

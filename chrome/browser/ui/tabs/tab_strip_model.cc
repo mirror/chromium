@@ -430,14 +430,16 @@ void TabStripModel::MoveWebContentsAt(int index,
                                       int to_position,
                                       bool select_after_move) {
   DCHECK(ContainsIndex(index));
-
-  // Ensure pinned and non-pinned tabs do not mix.
-  const int first_non_pinned_tab = IndexOfFirstNonPinnedTab();
-  to_position = IsTabPinned(index)
-                    ? std::min(first_non_pinned_tab - 1, to_position)
-                    : std::max(first_non_pinned_tab, to_position);
   if (index == to_position)
     return;
+
+  int first_non_pinned_tab = IndexOfFirstNonPinnedTab();
+  if ((index < first_non_pinned_tab && to_position >= first_non_pinned_tab) ||
+      (to_position < first_non_pinned_tab && index >= first_non_pinned_tab)) {
+    // This would result in pinned tabs mixed with non-pinned tabs. We don't
+    // allow that.
+    return;
+  }
 
   MoveWebContentsAtImpl(index, to_position, select_after_move);
 }
@@ -499,16 +501,6 @@ void TabStripModel::UpdateWebContentsStateAt(int index,
 
   for (auto& observer : observers_)
     observer.TabChangedAt(GetWebContentsAtImpl(index), index, change_type);
-}
-
-void TabStripModel::TabNeedsAttentionAt(int index) {
-  DCHECK(ContainsIndex(index));
-
-  if (index == active_index())
-    return;
-
-  for (auto& observer : observers_)
-    observer.TabNeedsAttentionAt(index);
 }
 
 void TabStripModel::CloseAllTabs() {

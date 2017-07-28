@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '7d99dad70b97a534a6e23e9c74d914b5eb17ff1e',
+  'skia_revision': 'd3e247ff439da39d17bf646ce2bfe591abf90b56',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'f554b95b86c4ef7b016137ad025375935d62ebc0',
+  'v8_revision': '317f204b01f95cc6d6ed6290827cabb5d01e929c',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -60,11 +60,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': '4d3efedb10ce60bdb7847336eba0360fdc9af9d3',
+  'swiftshader_revision': '426cb5e11112c9a9c3a7f145474a29e5e81463ca',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': 'f63e8133d7a767c6f162e700056ae8ba8512820d',
+  'pdfium_revision': 'c411eb943bb51e16ff4fb5a6ffb06e277ca6a982',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '6c649ea4b0772143ecaa2fdbf1bf230d6272a94a',
+  'catapult_revision': 'b5d2ffa3c55ad3cb4e92e8b79e42d24361755c91',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -205,7 +205,7 @@ deps = {
     Var('chromium_git') + '/external/selenium/py.git' + '@' + '5fd78261a75fe08d27ca4835fb6c5ce4b42275bd',
 
   'src/third_party/libvpx/source/libvpx':
-    Var('chromium_git') + '/webm/libvpx.git' + '@' +  '8836e46ffd84f3e272ea9e5efefa143c2437829c',
+    Var('chromium_git') + '/webm/libvpx.git' + '@' +  'b578d59623ddb0f3f76efe5e160aff253b40d19b',
 
   'src/third_party/ffmpeg':
     Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + '97ebed67951a157f6add59046024bff5fa20f4ae',
@@ -244,7 +244,7 @@ deps = {
     Var('chromium_git') + '/external/github.com/open-source-parsers/jsoncpp.git' + '@' + 'f572e8e42e22cfcf5ab0aea26574f408943edfa4', # from svn 248
 
   'src/third_party/libyuv':
-    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + '56022ef77fab3ce5a7c8ee44bd095c22a94bff5b',
+    Var('chromium_git') + '/libyuv/libyuv.git' + '@' + 'd8136924bd0bef0cf39ef379d03196950ce58418',  # from r1662
 
   'src/third_party/smhasher/src':
     Var('chromium_git') + '/external/smhasher.git' + '@' + 'e87738e57558e0ec472b2fc3a643b838e5b6e88f',
@@ -407,7 +407,7 @@ deps_os = {
 
     # For Linux and Chromium OS.
     'src/third_party/cros_system_api':
-      Var('chromium_git') + '/chromiumos/platform/system_api.git' + '@' + 'dcb8a96005b0e1d1c21cdda06c204de9089a4e0a',
+      Var('chromium_git') + '/chromiumos/platform/system_api.git' + '@' + '6c45bba6ac21fea63228721a9781b5d55d25d039',
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
@@ -514,7 +514,7 @@ deps_os = {
       Var('chromium_git') + '/external/github.com/kennethreitz/requests.git' + '@' + 'f172b30356d821d180fa4ecfa3e71c7274a32de4',
 
     'src/third_party/custom_tabs_client/src':
-      Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + 'b1019f46ee9a0a873333958bb23e4260d112c8da',
+      Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + 'bbdd5c4537fd4372d4339984fadc4791055bc182',
 
     'src/third_party/gvr-android-sdk/src':
       Var('chromium_git') + '/external/github.com/googlevr/gvr-android-sdk.git' + '@' + 'a27f768b13682189c23eed69656319db5ef7cbfc',

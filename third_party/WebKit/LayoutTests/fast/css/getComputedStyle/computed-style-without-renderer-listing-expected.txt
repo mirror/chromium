@@ -161,7 +161,7 @@ font-variant: normal
 font-variant-caps: normal
 font-variant-ligatures: normal
 font-variant-numeric: normal
-font-weight: normal
+font-weight: 400
 grid-auto-columns: auto
 grid-auto-flow: row
 grid-auto-rows: auto
@@ -286,7 +286,7 @@ transition-property: all
 transition-timing-function: ease
 translate: none
 unicode-bidi: normal
-user-select: auto
+user-select: text
 vector-effect: none
 vertical-align: baseline
 visibility: visible

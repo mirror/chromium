@@ -17,7 +17,7 @@ public class LegalInformationPreferences extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferenceUtils.addPreferencesFromResource(this, R.xml.legal_information_preferences);
+        addPreferencesFromResource(R.xml.legal_information_preferences);
         getActivity().setTitle(R.string.legal_information_title);
     }
 }

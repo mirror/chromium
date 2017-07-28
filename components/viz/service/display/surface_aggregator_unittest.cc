@@ -689,7 +689,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, CopyRequest) {
 
   SubmitCompositorFrame(embedded_support.get(), embedded_passes,
                         arraysize(embedded_passes), embedded_local_surface_id);
-  auto copy_request = CopyOutputRequest::CreateEmptyRequest();
+  auto copy_request = cc::CopyOutputRequest::CreateEmptyRequest();
   auto* copy_request_ptr = copy_request.get();
   embedded_support->RequestCopyOfSurface(std::move(copy_request));
 
@@ -744,9 +744,9 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, RootCopyRequest) {
 
   SubmitCompositorFrame(embedded_support.get(), embedded_passes,
                         arraysize(embedded_passes), embedded_local_surface_id);
-  auto copy_request(CopyOutputRequest::CreateEmptyRequest());
+  auto copy_request(cc::CopyOutputRequest::CreateEmptyRequest());
   auto* copy_request_ptr = copy_request.get();
-  auto copy_request2(CopyOutputRequest::CreateEmptyRequest());
+  auto copy_request2(cc::CopyOutputRequest::CreateEmptyRequest());
   auto* copy_request2_ptr = copy_request2.get();
 
   Quad root_quads[] = {
@@ -825,7 +825,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, UnreferencedSurface) {
 
   SubmitCompositorFrame(embedded_support.get(), embedded_passes,
                         arraysize(embedded_passes), embedded_local_surface_id);
-  auto copy_request(CopyOutputRequest::CreateEmptyRequest());
+  auto copy_request(cc::CopyOutputRequest::CreateEmptyRequest());
   auto* copy_request_ptr = copy_request.get();
   embedded_support->RequestCopyOfSurface(std::move(copy_request));
 
@@ -1940,7 +1940,7 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
     auto* child_root_pass = child_pass_list[1].get();
 
     child_root_pass->copy_requests.push_back(
-        CopyOutputRequest::CreateEmptyRequest());
+        cc::CopyOutputRequest::CreateEmptyRequest());
     child_root_pass->damage_rect = gfx::Rect();
     SubmitPassListAsFrame(child_support_.get(), child_local_surface_id,
                           &child_pass_list);
@@ -2026,59 +2026,9 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
     EXPECT_EQ(0u, aggregated_pass_list[3]->quad_list.size());
   }
 
-  // Root surface has smaller damage rect. Opacity filter on render pass
-  // means Surface quad under it should be aggregated.
-  {
-    int root_pass_ids[] = {1, 2};
-    Quad root_quads1[] = {
-        Quad::SolidColorQuad(1),
-    };
-    Quad root_quads2[] = {
-        Quad::RenderPassQuad(root_pass_ids[0]),
-        Quad::SurfaceQuad(child_surface_id, InvalidSurfaceId(), 1.f)};
-    Pass root_passes[] = {
-        Pass(root_quads1, arraysize(root_quads1), root_pass_ids[0]),
-        Pass(root_quads2, arraysize(root_quads2), root_pass_ids[1])};
-
-    cc::RenderPassList root_pass_list;
-    AddPasses(&root_pass_list, gfx::Rect(SurfaceSize()), root_passes,
-              arraysize(root_passes));
-
-    auto* pass = root_pass_list[0].get();
-    auto* root_pass = root_pass_list[1].get();
-    root_pass->shared_quad_state_list.ElementAt(1)
-        ->quad_to_target_transform.Translate(10, 10);
-    pass->background_filters.Append(
-        cc::FilterOperation::CreateOpacityFilter(0.5f));
-    root_pass->damage_rect = gfx::Rect(10, 10, 2, 2);
-    SubmitPassListAsFrame(support_.get(), root_local_surface_id_,
-                          &root_pass_list);
-  }
-
-  {
-    cc::CompositorFrame aggregated_frame =
-        aggregator_.Aggregate(root_surface_id);
-    const auto& aggregated_pass_list = aggregated_frame.render_pass_list;
-
-    ASSERT_EQ(3u, aggregated_pass_list.size());
-
-    // Pass 0 is solid color quad from root, but outside damage rect.
-    EXPECT_EQ(gfx::Rect(10, 10, 2, 2), aggregated_pass_list[0]->damage_rect);
-    EXPECT_EQ(0u, aggregated_pass_list[0]->quad_list.size());
-    EXPECT_EQ(gfx::Rect(0, 0, 2, 2), aggregated_pass_list[1]->damage_rect);
-    EXPECT_EQ(0u, aggregated_pass_list[1]->quad_list.size());
-
-    // First render pass draw quad is outside damage rect, so shouldn't be
-    // drawn. SurfaceDrawQuad is after opacity filter, so corresponding
-    // cc::RenderPassDrawQuad should be drawn.
-    EXPECT_EQ(gfx::Rect(10, 10, 2, 2), aggregated_pass_list[2]->damage_rect);
-    EXPECT_EQ(1u, aggregated_pass_list[2]->quad_list.size());
-  }
-
-  // TODO(wutao): Partial swap does not work with pixel moving background
-  // filter. See https://crbug.com/737255.
-  // Has background filter on render pass will make the whole output rect as
-  // damaged.
+  // Root surface has smaller damage rect. Background filter on render pass
+  // means Surface
+  // quad under it should be aggregated.
   {
     int root_pass_ids[] = {1, 2};
     Quad root_quads1[] = {
@@ -2113,17 +2063,17 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
 
     ASSERT_EQ(3u, aggregated_pass_list.size());
 
-    // Pass 0 has background blur filter, so should be drawn.
-    EXPECT_EQ(gfx::Rect(SurfaceSize()), aggregated_pass_list[0]->damage_rect);
-    EXPECT_EQ(1u, aggregated_pass_list[0]->quad_list.size());
+    // Pass 0 is solid color quad from root, but outside damage rect.
+    EXPECT_EQ(gfx::Rect(10, 10, 2, 2), aggregated_pass_list[0]->damage_rect);
+    EXPECT_EQ(0u, aggregated_pass_list[0]->quad_list.size());
     EXPECT_EQ(gfx::Rect(SurfaceSize()), aggregated_pass_list[1]->damage_rect);
     EXPECT_EQ(1u, aggregated_pass_list[1]->quad_list.size());
 
-    // First render pass draw quad is outside damage rect but has background
-    // filter, so should be drawn. SurfaceDrawQuad is after background filter,
-    // so corresponding cc::RenderPassDrawQuad should be drawn.
-    EXPECT_EQ(gfx::Rect(SurfaceSize()), aggregated_pass_list[2]->damage_rect);
-    EXPECT_EQ(2u, aggregated_pass_list[2]->quad_list.size());
+    // First render pass draw quad is outside damage rect, so shouldn't be
+    // drawn. SurfaceDrawQuad is after background filter, so corresponding
+    // cc::RenderPassDrawQuad should be drawn.
+    EXPECT_EQ(gfx::Rect(10, 10, 2, 2), aggregated_pass_list[2]->damage_rect);
+    EXPECT_EQ(1u, aggregated_pass_list[2]->quad_list.size());
   }
 }
 
@@ -2433,7 +2383,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, SecureOutputTexture) {
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
                          surface1_id, cc::SurfaceDrawQuadType::PRIMARY,
                          nullptr);
-    pass->copy_requests.push_back(CopyOutputRequest::CreateEmptyRequest());
+    pass->copy_requests.push_back(cc::CopyOutputRequest::CreateEmptyRequest());
 
     cc::CompositorFrame frame = test::MakeEmptyCompositorFrame();
     frame.render_pass_list.push_back(std::move(pass));

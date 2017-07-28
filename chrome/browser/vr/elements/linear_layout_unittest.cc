@@ -18,7 +18,7 @@ TEST(LinearLayout, HorizontalLayout) {
 
   // One element should require no position adjustment at all.
   layout.LayOutChildren();
-  EXPECT_TRUE(rect_a.LocalTransform().IsIdentity());
+  EXPECT_TRUE(rect_a.transform_operations().Apply().IsIdentity());
 
   // Two elements should be centered and separated by the margin.
   UiElement rect_b;
@@ -27,24 +27,18 @@ TEST(LinearLayout, HorizontalLayout) {
   layout.AddChild(&rect_b);
   layout.LayOutChildren();
 
-  gfx::Point3F position_a;
-  rect_a.LocalTransform().TransformPoint(&position_a);
+  EXPECT_FLOAT_EQ(-15.0f, rect_a.transform_operations().at(0).translate.x);
+  EXPECT_FLOAT_EQ(0.0f, rect_a.transform_operations().at(0).translate.y);
+  EXPECT_FLOAT_EQ(0.0f, rect_a.transform_operations().at(0).translate.z);
 
-  gfx::Point3F position_b;
-  rect_b.LocalTransform().TransformPoint(&position_b);
-
-  EXPECT_FLOAT_EQ(-15.0f, position_a.x());
-  EXPECT_FLOAT_EQ(0.0f, position_a.y());
-  EXPECT_FLOAT_EQ(0.0f, position_a.z());
-
-  EXPECT_FLOAT_EQ(10.0f, position_b.x());
-  EXPECT_FLOAT_EQ(0.0f, position_b.y());
-  EXPECT_FLOAT_EQ(0.0f, position_b.z());
+  EXPECT_FLOAT_EQ(10.0f, rect_b.transform_operations().at(0).translate.x);
+  EXPECT_FLOAT_EQ(0.0f, rect_b.transform_operations().at(0).translate.y);
+  EXPECT_FLOAT_EQ(0.0f, rect_b.transform_operations().at(0).translate.z);
 
   rect_a.SetVisible(false);
   layout.LayOutChildren();
   // The invisible child should not be accounted for in the layout.
-  EXPECT_TRUE(rect_b.LocalTransform().IsIdentity());
+  EXPECT_TRUE(rect_b.transform_operations().Apply().IsIdentity());
 }
 
 TEST(LinearLayout, VerticalLayout) {
@@ -57,7 +51,7 @@ TEST(LinearLayout, VerticalLayout) {
 
   // One element should require no position adjustment at all.
   layout.LayOutChildren();
-  EXPECT_TRUE(rect_a.LocalTransform().IsIdentity());
+  EXPECT_TRUE(rect_a.transform_operations().Apply().IsIdentity());
 
   // Two elements should be centered and separated by the margin.
   UiElement rect_b;
@@ -66,24 +60,24 @@ TEST(LinearLayout, VerticalLayout) {
   layout.AddChild(&rect_b);
   layout.LayOutChildren();
 
-  gfx::Point3F position_a;
-  rect_a.LocalTransform().TransformPoint(&position_a);
+  const cc::TransformOperation& op_a =
+      rect_a.transform_operations().at(UiElement::kLayoutOffsetIndex);
 
-  gfx::Point3F position_b;
-  rect_b.LocalTransform().TransformPoint(&position_b);
+  EXPECT_FLOAT_EQ(0.0f, op_a.translate.x);
+  EXPECT_FLOAT_EQ(-15.0f, op_a.translate.y);
+  EXPECT_FLOAT_EQ(0.0f, op_a.translate.z);
 
-  EXPECT_FLOAT_EQ(0.0f, position_a.x());
-  EXPECT_FLOAT_EQ(-15.0f, position_a.y());
-  EXPECT_FLOAT_EQ(0.0f, position_a.z());
+  const cc::TransformOperation& op_b =
+      rect_b.transform_operations().at(UiElement::kLayoutOffsetIndex);
 
-  EXPECT_FLOAT_EQ(0.0f, position_b.x());
-  EXPECT_FLOAT_EQ(10.0f, position_b.y());
-  EXPECT_FLOAT_EQ(0.0f, position_b.z());
+  EXPECT_FLOAT_EQ(0.0f, op_b.translate.x);
+  EXPECT_FLOAT_EQ(10.0f, op_b.translate.y);
+  EXPECT_FLOAT_EQ(0.0f, op_b.translate.z);
 
   rect_a.SetVisible(false);
   layout.LayOutChildren();
   // The invisible child should not be accounted for in the layout.
-  EXPECT_TRUE(rect_b.LocalTransform().IsIdentity());
+  EXPECT_TRUE(rect_b.transform_operations().Apply().IsIdentity());
 }
 
 }  // namespace vr

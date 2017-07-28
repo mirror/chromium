@@ -105,7 +105,7 @@ void VSyncProviderWin::GetVSyncParameters(const UpdateVSyncCallback& callback) {
     }
   }
 
-  if (!interval.is_zero()) {
+  if (interval.ToInternalValue() != 0) {
     callback.Run(timebase, interval);
   }
 }

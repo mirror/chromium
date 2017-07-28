@@ -56,8 +56,8 @@ class LayoutTestPermissionManager : public PermissionManager {
 
   void SetPermission(PermissionType permission,
                      blink::mojom::PermissionStatus status,
-                     const GURL& url,
-                     const GURL& embedding_url);
+                     const GURL& origin,
+                     const GURL& embedding_origin);
   void ResetPermissions();
 
  private:

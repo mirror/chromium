@@ -525,7 +525,6 @@
       interpolable: true,
       name_for_methods: "Weight",
       priority: "High",
-      type_name: "FontSelectionValueWeight",
     },
     {
       name: "font-feature-settings",
@@ -663,7 +662,6 @@
     {
       name: "backdrop-filter",
       api_class: "CSSPropertyAPIFilter",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertFilterOperations",
       interpolable: true,
       runtime_flag: "CSSBackdropFilter",
@@ -1186,7 +1184,6 @@
     {
       name: "cx",
       api_class: "CSSPropertyAPIStrokeOrLength",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertLength",
       interpolable: true,
       svg: true,
@@ -1194,7 +1191,6 @@
     {
       name: "cy",
       api_class: "CSSPropertyAPIStrokeOrLength",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertLength",
       interpolable: true,
       svg: true,
@@ -1258,7 +1254,6 @@
     {
       name: "filter",
       api_class: "CSSPropertyAPIFilter",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertFilterOperations",
       interpolable: true,
       field_template: "storage_only",
@@ -2088,7 +2083,6 @@
     {
       name: "r",
       api_class: "CSSPropertyAPIStrokeOrLength",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertLength",
       interpolable: true,
       svg: true,
@@ -2438,7 +2432,6 @@
     {
       name: "stroke-dashoffset",
       api_class: "CSSPropertyAPIStrokeOrLength",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertLength",
       inherited: true,
       interpolable: true,
@@ -2481,7 +2474,6 @@
     {
       name: "stroke-width",
       api_class: "CSSPropertyAPIStrokeOrLength",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertUnzoomedLength",
       inherited: true,
       interpolable: true,
@@ -2812,7 +2804,6 @@
     {
       name: "x",
       api_class: "CSSPropertyAPIStrokeOrLength",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertLength",
       interpolable: true,
       svg: true,
@@ -2820,7 +2811,6 @@
     {
       name: "y",
       api_class: "CSSPropertyAPIStrokeOrLength",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertLength",
       interpolable: true,
       svg: true,
@@ -3364,8 +3354,8 @@
       name: "user-select",
       inherited: true,
       field_template: "keyword",
-      keywords: ["auto", "none", "text", "all"],
-      default_value: "auto",
+      keywords: ["none", "text", "all"],
+      default_value: "text",
       field_group: "rare-inherited",
     },
     {
@@ -3690,13 +3680,10 @@
     {
       name: "animation",
       longhands: ["animation-name", "animation-duration", "animation-timing-function", "animation-delay", "animation-iteration-count", "animation-direction", "animation-fill-mode", "animation-play-state"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "background",
       longhands: ["background-image", "background-position-x", "background-position-y", "background-size", "background-repeat-x", "background-repeat-y", "background-attachment", "background-origin", "background-clip", "background-color"],
-      api_class: true,
     },
     {
       name: "background-position",
@@ -3707,12 +3694,10 @@
     {
       name: "background-repeat",
       longhands: ["background-repeat-x", "background-repeat-y"],
-      api_class: true,
     },
     {
       name: "border",
       longhands: ["border-top-color", "border-top-style", "border-top-width", "border-right-color", "border-right-style", "border-right-width", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-left-color", "border-left-style", "border-left-width", "border-image-source", "border-image-slice", "border-image-width", "border-image-outset", "border-image-repeat"],
-      api_class: true,
     },
     {
       name: "border-bottom",
@@ -3804,31 +3789,26 @@
     {
       name: "grid",
       longhands: ["grid-template-rows", "grid-template-columns", "grid-template-areas", "grid-auto-flow", "grid-auto-rows", "grid-auto-columns", "grid-column-gap", "grid-row-gap"],
-      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "place-content",
       longhands: ["align-content", "justify-content"],
-      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "place-items",
       longhands: ["align-items", "justify-items"],
-      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "place-self",
       longhands: ["align-self", "justify-self"],
-      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
       name: "grid-area",
       longhands: ["grid-row-start", "grid-column-start", "grid-row-end", "grid-column-end"],
-      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
@@ -3841,7 +3821,6 @@
     {
       name: "grid-gap",
       longhands: ["grid-row-gap", "grid-column-gap"],
-      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
@@ -3854,7 +3833,6 @@
     {
       name: "grid-template",
       longhands: ["grid-template-rows", "grid-template-columns", "grid-template-areas"],
-      api_class: true,
       runtime_flag: "CSSGridLayout",
     },
     {
@@ -3872,7 +3850,6 @@
     {
       name: "marker",
       longhands: ["marker-start", "marker-mid", "marker-end"],
-      api_class: true,
     },
     {
       name: "offset",
@@ -3908,17 +3885,14 @@
     {
       name: "page-break-after",
       longhands: ["break-after"],
-      api_class: true,
     },
     {
       name: "page-break-before",
       longhands: ["break-before"],
-      api_class: true,
     },
     {
       name: "page-break-inside",
       longhands: ["break-inside"],
-      api_class: true,
     },
     {
       name: "scroll-padding",
@@ -3972,8 +3946,6 @@
     {
       name: "transition",
       longhands: ["transition-property", "transition-duration", "transition-timing-function", "transition-delay"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-border-after",
@@ -4002,17 +3974,14 @@
     {
       name: "-webkit-column-break-after",
       longhands: ["break-after"],
-      api_class: true,
     },
     {
       name: "-webkit-column-break-before",
       longhands: ["break-before"],
-      api_class: true,
     },
     {
       name: "-webkit-column-break-inside",
       longhands: ["break-inside"],
-      api_class: true,
     },
     {
       name: "column-rule",
@@ -4035,7 +4004,6 @@
     {
       name: "-webkit-mask",
       longhands: ["-webkit-mask-image", "-webkit-mask-position-x", "-webkit-mask-position-y", "-webkit-mask-size", "-webkit-mask-repeat-x", "-webkit-mask-repeat-y", "-webkit-mask-origin", "-webkit-mask-clip"],
-      api_class: true,
     },
     {
       name: "-webkit-mask-box-image",
@@ -4052,7 +4020,6 @@
     {
       name: "-webkit-mask-repeat",
       longhands: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
-      api_class: true,
     },
     {
       name: "-webkit-text-emphasis",

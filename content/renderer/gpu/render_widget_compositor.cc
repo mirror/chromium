@@ -11,7 +11,6 @@
 #include <string>
 #include <utility>
 
-#include "base/base_switches.h"
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -38,17 +37,16 @@
 #include "cc/debug/layer_tree_debug_state.h"
 #include "cc/input/layer_selection_bound.h"
 #include "cc/layers/layer.h"
+#include "cc/output/copy_output_request.h"
+#include "cc/output/copy_output_result.h"
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/output/swap_promise.h"
+#include "cc/resources/single_release_callback.h"
 #include "cc/trees/latency_info_swap_promise_monitor.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_mutator.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
-#include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/copy_output_result.h"
-#include "components/viz/common/quads/single_release_callback.h"
-#include "components/viz/common/switches.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/layer_tree_settings_factory.h"
 #include "content/public/common/content_client.h"
@@ -427,7 +425,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       cmd.HasSwitch(cc::switches::kEnableGpuBenchmarking));
   settings.enable_surface_synchronization =
       IsRunningInMash() ||
-      cmd.HasSwitch(switches::kEnableSurfaceSynchronization);
+      cmd.HasSwitch(cc::switches::kEnableSurfaceSynchronization);
 
   if (cmd.HasSwitch(cc::switches::kSlowDownRasterScaleFactor)) {
     const int kMinSlowDownScaleFactor = 0;
@@ -448,7 +446,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 #if defined(OS_ANDROID)
   bool using_synchronous_compositor =
       GetContentClient()->UsingSynchronousCompositing();
-  bool using_low_memory_policy = base::SysInfo::IsLowEndDevice();
 
   settings.use_stream_video_draw_quad = true;
   settings.using_synchronous_renderer_compositor = using_synchronous_compositor;
@@ -464,11 +461,19 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   settings.ignore_root_layer_flings = using_synchronous_compositor;
   // Memory policy on Android WebView does not depend on whether device is
   // low end, so always use default policy.
-  if (using_low_memory_policy && !using_synchronous_compositor) {
+  bool use_low_memory_policy =
+      base::SysInfo::IsLowEndDevice() && !using_synchronous_compositor;
+  if (use_low_memory_policy) {
     // On low-end we want to be very carefull about killing other
     // apps. So initially we use 50% more memory to avoid flickering
     // or raster-on-demand.
     settings.max_memory_for_prepaint_percentage = 67;
+
+    // RGBA_4444 textures are only enabled by default for low end devices
+    // and are disabled for Android WebView as it doesn't support the format.
+    if (!cmd.HasSwitch(switches::kDisableRGBA4444Textures) &&
+        base::SysInfo::AmountOfPhysicalMemoryMB() <= 512)
+      settings.preferred_tile_format = viz::RGBA_4444;
   } else {
     // On other devices we have increased memory excessively to avoid
     // raster-on-demand already, so now we reserve 50% _only_ to avoid
@@ -476,15 +481,16 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.max_memory_for_prepaint_percentage = 50;
   }
 
+  if (base::SysInfo::IsLowEndDevice()) {
+    // When running on a low end device, we limit cached bytes to 2MB.
+    // This allows a typical page to fit its images in cache, but prevents
+    // most long-term caching.
+    settings.decoded_image_cache_budget_bytes = 2 * 1024 * 1024;
+  }
+
   // TODO(danakj): Only do this on low end devices.
   settings.create_low_res_tiling = true;
 #else  // defined(OS_ANDROID)
-  bool using_synchronous_compositor = false;  // Only for Android WebView.
-  // On desktop, we never use the low memory policy unless we are simulating
-  // low-end mode via a switch.
-  bool using_low_memory_policy =
-      cmd.HasSwitch(switches::kEnableLowEndDeviceMode);
-
   if (ui::IsOverlayScrollbarEnabled()) {
     settings.scrollbar_animator = cc::LayerTreeSettings::AURA_OVERLAY;
     settings.scrollbar_fade_delay = ui::kOverlayScrollbarFadeDelay;
@@ -505,24 +511,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.decoded_image_cache_budget_bytes = 128 * 1024 * 1024;
     settings.decoded_image_working_set_budget_bytes = 128 * 1024 * 1024;
   }
+
 #endif  // defined(OS_ANDROID)
-
-  if (using_low_memory_policy) {
-    // RGBA_4444 textures are only enabled:
-    //  - If the user hasn't explicitly disabled them
-    //  - If system ram is <= 512MB (1GB devices are sometimes low-end).
-    //  - If we are not running in a WebView, where 4444 isn't supported.
-    if (!cmd.HasSwitch(switches::kDisableRGBA4444Textures) &&
-        base::SysInfo::AmountOfPhysicalMemoryMB() <= 512 &&
-        !using_synchronous_compositor) {
-      settings.preferred_tile_format = viz::RGBA_4444;
-    }
-
-    // When running on a low end device, we limit cached bytes to 2MB.
-    // This allows a typical page to fit its images in cache, but prevents
-    // most long-term caching.
-    settings.decoded_image_cache_budget_bytes = 2 * 1024 * 1024;
-  }
 
   if (cmd.HasSwitch(switches::kEnableLowResTiling))
     settings.create_low_res_tiling = true;
@@ -964,7 +954,7 @@ bool RenderWidgetCompositor::HaveScrollEventHandlers() const {
 
 void CompositeAndReadbackAsyncCallback(
     blink::WebCompositeAndReadbackAsyncCallback* callback,
-    std::unique_ptr<viz::CopyOutputResult> result) {
+    std::unique_ptr<cc::CopyOutputResult> result) {
   if (result->HasBitmap()) {
     std::unique_ptr<SkBitmap> result_bitmap = result->TakeBitmap();
     callback->DidCompositeAndReadback(*result_bitmap);
@@ -1022,11 +1012,11 @@ void RenderWidgetCompositor::CompositeAndReadbackAsync(
   DCHECK(!layout_and_paint_async_callback_);
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner =
       layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner();
-  std::unique_ptr<viz::CopyOutputRequest> request =
-      viz::CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
+  std::unique_ptr<cc::CopyOutputRequest> request =
+      cc::CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
           [](blink::WebCompositeAndReadbackAsyncCallback* callback,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-             std::unique_ptr<viz::CopyOutputResult> result) {
+             std::unique_ptr<cc::CopyOutputResult> result) {
             task_runner->PostTask(FROM_HERE,
                                   base::Bind(&CompositeAndReadbackAsyncCallback,
                                              callback, base::Passed(&result)));
@@ -1109,6 +1099,10 @@ void RenderWidgetCompositor::SetBrowserControlsHeight(float top_height,
 
 void RenderWidgetCompositor::SetBrowserControlsShownRatio(float ratio) {
   layer_tree_host_->SetBrowserControlsShownRatio(ratio);
+}
+
+void RenderWidgetCompositor::setBottomControlsHeight(float height) {
+  layer_tree_host_->SetBottomControlsHeight(height);
 }
 
 void RenderWidgetCompositor::RequestDecode(

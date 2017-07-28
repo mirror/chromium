@@ -8,7 +8,6 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "services/device/generic_sensor/linux/sensor_data_linux.h"
-#include "services/device/public/cpp/generic_sensor/sensor_reading.h"
 
 namespace device {
 
@@ -102,8 +101,7 @@ void SensorDeviceManager::OnDeviceAdded(udev_device* dev) {
       }
     }
 
-    if (sensor_file_names.empty() ||
-        sensor_file_names.size() > SensorReading::kValuesCount)
+    if (sensor_file_names.empty())
       continue;
 
     const std::string scaling_value =

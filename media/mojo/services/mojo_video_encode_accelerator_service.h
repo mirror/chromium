@@ -67,7 +67,6 @@ class MEDIA_MOJO_EXPORT MojoVideoEncodeAcceleratorService
                                        uint32_t framerate) override;
 
  private:
-  friend class MojoVideoEncodeAcceleratorIntegrationTest;
   friend class MojoVideoEncodeAcceleratorServiceTest;
 
   // VideoEncodeAccelerator::Client implementation.

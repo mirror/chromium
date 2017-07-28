@@ -382,7 +382,6 @@ bool ImageTransportSurfaceOverlayMac::IsSurfaceless() const {
 
 bool ImageTransportSurfaceOverlayMac::Resize(const gfx::Size& pixel_size,
                                              float scale_factor,
-                                             ColorSpace color_space,
                                              bool has_alpha) {
   pixel_size_ = pixel_size;
   scale_factor_ = scale_factor;

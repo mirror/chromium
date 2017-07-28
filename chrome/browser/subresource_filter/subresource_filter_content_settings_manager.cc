@@ -110,13 +110,9 @@ bool SubresourceFilterContentSettingsManager::ShouldShowUIForSite(
   return true;
 }
 
-void SubresourceFilterContentSettingsManager::
-    ResetSiteMetadataBasedOnActivation(const GURL& url, bool is_activated) {
-  if (!is_activated) {
-    SetSiteMetadata(url, nullptr);
-  } else if (!GetSiteMetadata(url)) {
-    SetSiteMetadata(url, base::MakeUnique<base::DictionaryValue>());
-  }
+void SubresourceFilterContentSettingsManager::ClearSiteMetadata(
+    const GURL& url) {
+  SetSiteMetadata(url, nullptr);
 }
 
 std::unique_ptr<base::DictionaryValue>

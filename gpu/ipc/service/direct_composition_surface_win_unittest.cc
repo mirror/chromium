@@ -156,8 +156,7 @@ TEST(DirectCompositionSurfaceTest, TestMakeCurrent) {
 
   scoped_refptr<gl::GLContext> context1 = gl::init::CreateGLContext(
       nullptr, surface1.get(), gl::GLContextAttribs());
-  EXPECT_TRUE(surface1->Resize(gfx::Size(100, 100), 1.0,
-                               gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface1->Resize(gfx::Size(100, 100), 1.0, true));
 
   // First SetDrawRectangle must be full size of surface.
   EXPECT_FALSE(surface1->SetDrawRectangle(gfx::Rect(0, 0, 50, 50)));
@@ -176,8 +175,7 @@ TEST(DirectCompositionSurfaceTest, TestMakeCurrent) {
   EXPECT_TRUE(surface1->SetDrawRectangle(gfx::Rect(0, 0, 100, 100)));
   EXPECT_TRUE(context1->IsCurrent(surface1.get()));
 
-  EXPECT_TRUE(surface1->Resize(gfx::Size(50, 50), 1.0,
-                               gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface1->Resize(gfx::Size(50, 50), 1.0, true));
   EXPECT_TRUE(context1->IsCurrent(surface1.get()));
   EXPECT_TRUE(surface1->SetDrawRectangle(gfx::Rect(0, 0, 50, 50)));
   EXPECT_TRUE(context1->IsCurrent(surface1.get()));
@@ -191,8 +189,7 @@ TEST(DirectCompositionSurfaceTest, TestMakeCurrent) {
       nullptr, surface2.get(), gl::GLContextAttribs());
   surface2->SetEnableDCLayers(true);
   EXPECT_TRUE(context2->MakeCurrent(surface2.get()));
-  EXPECT_TRUE(surface2->Resize(gfx::Size(100, 100), 1.0,
-                               gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface2->Resize(gfx::Size(100, 100), 1.0, true));
   // The previous IDCompositionSurface should be suspended when another
   // surface is being drawn to.
   EXPECT_TRUE(surface2->SetDrawRectangle(gfx::Rect(0, 0, 100, 100)));
@@ -222,8 +219,7 @@ TEST(DirectCompositionSurfaceTest, DXGIDCLayerSwitch) {
 
   scoped_refptr<gl::GLContext> context =
       gl::init::CreateGLContext(nullptr, surface.get(), gl::GLContextAttribs());
-  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0,
-                              gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0, true));
   EXPECT_FALSE(surface->swap_chain());
 
   // First SetDrawRectangle must be full size of surface for DXGI
@@ -277,8 +273,7 @@ TEST(DirectCompositionSurfaceTest, SwitchAlpha) {
 
   scoped_refptr<gl::GLContext> context =
       gl::init::CreateGLContext(nullptr, surface.get(), gl::GLContextAttribs());
-  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0,
-                              gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0, true));
   EXPECT_FALSE(surface->swap_chain());
 
   EXPECT_TRUE(surface->SetDrawRectangle(gfx::Rect(0, 0, 100, 100)));
@@ -289,12 +284,10 @@ TEST(DirectCompositionSurfaceTest, SwitchAlpha) {
   EXPECT_EQ(DXGI_ALPHA_MODE_PREMULTIPLIED, desc.AlphaMode);
 
   // Resize to the same parameters should have no effect.
-  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0,
-                              gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0, true));
   EXPECT_TRUE(surface->swap_chain());
 
-  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0,
-                              gl::GLSurface::ColorSpace::UNSPECIFIED, false));
+  EXPECT_TRUE(surface->Resize(gfx::Size(100, 100), 1.0, false));
   EXPECT_FALSE(surface->swap_chain());
 
   EXPECT_TRUE(surface->SetDrawRectangle(gfx::Rect(0, 0, 100, 100)));
@@ -363,7 +356,7 @@ TEST(DirectCompositionSurfaceTest, NoPresentTwice) {
 
   base::win::ScopedComPtr<IDXGISwapChain1> swap_chain2 =
       surface->GetLayerSwapChainForTesting(1);
-  EXPECT_EQ(swap_chain2.Get(), swap_chain.Get());
+  EXPECT_EQ(swap_chain2, swap_chain);
 
   // It's the same image, so it should have the same swapchain.
   EXPECT_TRUE(SUCCEEDED(swap_chain->GetLastPresentCount(&last_present_count)));
@@ -381,7 +374,7 @@ TEST(DirectCompositionSurfaceTest, NoPresentTwice) {
 
   base::win::ScopedComPtr<IDXGISwapChain1> swap_chain3 =
       surface->GetLayerSwapChainForTesting(1);
-  EXPECT_NE(swap_chain2.Get(), swap_chain3.Get());
+  EXPECT_NE(swap_chain2, swap_chain3);
 
   context = nullptr;
   DestroySurface(std::move(surface));
@@ -443,8 +436,7 @@ class DirectCompositionPixelTest : public testing::Test {
 
     scoped_refptr<gl::GLContext> context = gl::init::CreateGLContext(
         nullptr, surface_.get(), gl::GLContextAttribs());
-    EXPECT_TRUE(surface_->Resize(window_size, 1.0,
-                                 gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+    EXPECT_TRUE(surface_->Resize(window_size, 1.0, true));
     EXPECT_TRUE(surface_->SetDrawRectangle(gfx::Rect(window_size)));
     EXPECT_TRUE(context->MakeCurrent(surface_.get()));
 
@@ -499,8 +491,7 @@ TEST_F(DirectCompositionPixelTest, VideoSwapchain) {
 
   scoped_refptr<gl::GLContext> context = gl::init::CreateGLContext(
       nullptr, surface_.get(), gl::GLContextAttribs());
-  EXPECT_TRUE(surface_->Resize(window_size, 1.0,
-                               gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface_->Resize(window_size, 1.0, true));
 
   base::win::ScopedComPtr<ID3D11Device> d3d11_device =
       gl::QueryD3D11DeviceObjectFromANGLE();
@@ -554,8 +545,7 @@ TEST_F(DirectCompositionPixelTest, SoftwareVideoSwapchain) {
 
   scoped_refptr<gl::GLContext> context = gl::init::CreateGLContext(
       nullptr, surface_.get(), gl::GLContextAttribs());
-  EXPECT_TRUE(surface_->Resize(window_size, 1.0,
-                               gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface_->Resize(window_size, 1.0, true));
 
   base::win::ScopedComPtr<ID3D11Device> d3d11_device =
       gl::QueryD3D11DeviceObjectFromANGLE();
@@ -607,8 +597,7 @@ TEST_F(DirectCompositionPixelTest, VideoHandleSwapchain) {
 
   scoped_refptr<gl::GLContext> context = gl::init::CreateGLContext(
       nullptr, surface_.get(), gl::GLContextAttribs());
-  EXPECT_TRUE(surface_->Resize(window_size, 1.0,
-                               gl::GLSurface::ColorSpace::UNSPECIFIED, true));
+  EXPECT_TRUE(surface_->Resize(window_size, 1.0, true));
 
   base::win::ScopedComPtr<ID3D11Device> d3d11_device =
       gl::QueryD3D11DeviceObjectFromANGLE();

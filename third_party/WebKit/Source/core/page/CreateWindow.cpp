@@ -256,12 +256,11 @@ WebWindowFeatures GetWindowFeaturesFromString(const String& feature_string) {
 static Frame* ReuseExistingWindow(LocalFrame& active_frame,
                                   LocalFrame& lookup_frame,
                                   const AtomicString& frame_name,
-                                  NavigationPolicy policy,
-                                  const KURL& destination_url) {
+                                  NavigationPolicy policy) {
   if (!frame_name.IsEmpty() && !EqualIgnoringASCIICase(frame_name, "_blank") &&
       policy == kNavigationPolicyIgnore) {
-    if (Frame* frame = lookup_frame.FindFrameForNavigation(
-            frame_name, active_frame, destination_url)) {
+    if (Frame* frame =
+            lookup_frame.FindFrameForNavigation(frame_name, active_frame)) {
       if (!EqualIgnoringASCIICase(frame_name, "_self")) {
         if (Page* page = frame->GetPage()) {
           if (page == active_frame.GetPage())
@@ -350,11 +349,10 @@ static Frame* CreateWindowHelper(LocalFrame& opener_frame,
 
   created = false;
 
-  Frame* window =
-      features.noopener
-          ? nullptr
-          : ReuseExistingWindow(active_frame, lookup_frame, request.FrameName(),
-                                policy, request.GetResourceRequest().Url());
+  Frame* window = features.noopener
+                      ? nullptr
+                      : ReuseExistingWindow(active_frame, lookup_frame,
+                                            request.FrameName(), policy);
 
   if (!window) {
     // Sandboxed frames cannot open new auxiliary browsing contexts.

@@ -24,11 +24,10 @@ class SafeDialDeviceDescriptionParser {
  public:
   // Callback function to be invoked when utility process finishes parsing
   // device description XML.
+  // |success|: returns false if parsing fails.
   // |device_description|: device description object. Empty if parsing fails.
-  // |parsing_error|: error encountered while parsing DIAL device description.
-  using DeviceDescriptionCallback = base::Callback<void(
-      chrome::mojom::DialDeviceDescriptionPtr device_description,
-      chrome::mojom::DialParsingError parsing_error)>;
+  using DeviceDescriptionCallback =
+      base::Callback<void(chrome::mojom::DialDeviceDescriptionPtr)>;
 
   SafeDialDeviceDescriptionParser();
   virtual ~SafeDialDeviceDescriptionParser();

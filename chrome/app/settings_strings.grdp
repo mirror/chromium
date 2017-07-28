@@ -1872,16 +1872,9 @@
   </message>
 
   <!-- Search Page -->
-  <if expr="chromeos">
-    <message name="IDS_SETTINGS_SEARCH" desc="Name of the settings page which displays search engine and assistant preferences on Chrome OS.">
-      Search engine and Google Assistant
-    </message>
-  </if>
-  <if expr="not chromeos">
-    <message name="IDS_SETTINGS_SEARCH" desc="Name of the settings page which displays search engine preferences.">
-      Search engine
-    </message>
-  </if>
+  <message name="IDS_SETTINGS_SEARCH" desc="Name of the settings page which displays search engine preferences.">
+    Search engine
+  </message>
   <message name="IDS_SETTINGS_SEARCH_EXPLANATION" desc="Explanation for the search engine dropdown setting.">
     Search engine used in the <ph name="BEGIN_LINK">&lt;a target="_blank" href="$1"&gt;</ph>address bar<ph name="END_LINK">&lt;/a&gt;</ph>
   </message>
@@ -1921,17 +1914,6 @@
   <message name="IDS_SETTINGS_SEARCH_ENABLE_GOOGLE_NOW" desc="Label for the checkbox which enables the Google Now in the launcher.">
     Show Google Now cards in the launcher
   </message>
-<if expr="chromeos">
-  <message name="IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT" desc="Label for the Google Assistant button.">
-    Google Assistant
-  </message>
-  <message name="IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_ENABLED" desc="Sub label for the Google Assistant button when Assistant is enabled.">
-    Enabled
-  </message>
-  <message name="IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_DISABLED" desc="Sub label for the Google Assistant button when Assistant is disabled.">
-    Disabled
-  </message>
-</if>
 
   <!-- Search Engines Page -->
   <message name="IDS_SETTINGS_SEARCH_ENGINES" desc="Name of the settings page which manages search engines.">
@@ -1976,22 +1958,6 @@
   <message name="IDS_SETTINGS_SEARCH_ENGINES_MANAGE_EXTENSION" desc="Text displayed for a button that allows the user to manage a Chrome extension">
     Manage
   </message>
-
-  <!-- Google Assistant Page -->
-<if expr="chromeos">
-  <message name="IDS_SETTINGS_GOOGLE_ASSISTANT" desc="Name of the settings page for Google Assistant.">
-    Google Assistant
-  </message>
-  <message name="IDS_SETTINGS_GOOGLE_ASSISTANT_ENABLE_CONTEXT" desc="Title for a toggle that lets the assistant use whats on the screen.">
-    Let assistant use what's on your screen
-  </message>
-  <message name="IDS_SETTINGS_GOOGLE_ASSISTANT_ENABLE_CONTEXT_DESCRIPTION" desc="Sub label for context-enable toggle.">
-    Enables the assistant to show you related info, apps, and actions.
-  </message>
-  <message name="IDS_SETTINGS_GOOGLE_ASSISTANT_SETTINGS" desc="Title for a button that opens the Google Assistant app settings.">
-    Google Assistant settings
-  </message>
-</if>
 
   <!-- Site Settings Page -->
   <message name="IDS_SETTINGS_EXCEPTIONS_EMBEDDED_ON_HOST" desc="Template text for a child row in the content Exceptions page view. Controls the permission setting for the parent page when embedded on the specified site.">
@@ -2242,8 +2208,8 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_PERMISSIONS" desc="The Permissions header, used to group together permissions, such as Geolocation, on the Site Details page.">
     Permissions
   </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_RESET_BUTTON" desc="The Reset button, used to clear all permissions for a given site.">
-    Reset site settings
+  <message name="IDS_SETTINGS_SITE_SETTINGS_CLEAR_BUTTON" desc="The Clear and Reset button, used to clear all permissions and storage for a given site.">
+    Clear and reset
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_DELETE" desc="Label for the trashcan icon used to delete storage on the Site Details page.">
     Delete
@@ -2266,11 +2232,11 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_COOKIE_SUBPAGE" desc="A label for cookie subpage, stating which site we're showing data for.">
     <ph name="SITE">$1<ex>www.example.com</ex></ph> locally stored data
   </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_DIALOG_TITLE" desc="Title of the dialog that warns about resetting all permissions for a site.">
-    Reset settings for this site?
+  <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_REMOVE_DIALOG_TITLE" desc="Title of the dialog that warns about deleting all site data and resetting permissions.">
+    Clear and reset site
   </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_CONFIRMATION" desc="Text for the dialog that warns about resetting all permissions for a site.">
-    Chrome will reset permissions to their defaults
+  <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_REMOVE_CONFIRMATION" desc="Text for the dialog that warns about deleting all site data and permissions.">
+    This will delete any data <ph name="SITE">$1<ex>www.example.com</ex></ph> stored on your device, and reset any permissions you granted to run. Do you want to continue?
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_COOKIE_REMOVE_MULTIPLE" desc="Text for the dialog that warns about deleting all site data.">
     This will delete any data stored on your device for all the sites shown. Do you want to continue?
@@ -2281,8 +2247,8 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_COOKIES_CLEAR_ALL" desc="Text for the button that clears all site data.">
     Clear all
   </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_ALL" desc="Text for the button that resets the site's permissions back to the defaults.">
-    Reset
+  <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_CLEAR_ALL" desc="Text for the button that clears all site data and resets the site.">
+    Clear and reset
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_COOKIE_SEARCH" desc="A placeholder label shown inside the Cookie Data filter textbox as a hint that the user can enter a substring to search for.">
     Search cookies
@@ -3037,9 +3003,6 @@
     </message>
     <message name="IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_LABEL" desc="Label describing a dropdown that lets the user pick their default note-taking applications. The dropdown contains a list of all available choices. The user can install additional apps, so the contents of the dropdown is dynamic.">
       Note-taking app
-    </message>
-    <message name="IDS_SETTINGS_STYLUS_LOCK_SCREEN_NOTES_TITLE" desc="In stylus settings, title of a section that contains settings for controlling note taking on the lock screen.">
-      Lock screen notes
     </message>
     <message name="IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_LOCK_SCREEN_CHECKBOX" desc="Label for a check box that enables note-taking by selected note-taking application when user session is locked (i.e. when lock screen is shown).">
       Enable note-taking from lock screen

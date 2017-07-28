@@ -320,11 +320,11 @@ cr.define('print_preview', function() {
       var TicketStoreEvent = print_preview.PrintTicketStore.EventType;
       [TicketStoreEvent.INITIALIZE, TicketStoreEvent.TICKET_CHANGE,
        TicketStoreEvent.CAPABILITIES_CHANGE, TicketStoreEvent.DOCUMENT_CHANGE]
-          .forEach(eventType => {
+          .forEach(function(eventType) {
             this.tracker.add(
                 this.printTicketStore_, eventType,
                 this.onTicketChange_.bind(this));
-          });
+          }.bind(this));
 
       [this.printTicketStore_.color, this.printTicketStore_.cssBackground,
        this.printTicketStore_.customMargins, this.printTicketStore_.fitToPage,
@@ -332,11 +332,11 @@ cr.define('print_preview', function() {
        this.printTicketStore_.marginsType, this.printTicketStore_.pageRange,
        this.printTicketStore_.rasterize, this.printTicketStore_.selectionOnly,
        this.printTicketStore_.scaling]
-          .forEach(setting => {
+          .forEach(function(setting) {
             this.tracker.add(
                 setting, print_preview.ticket_items.TicketItem.EventType.CHANGE,
                 this.onTicketChange_.bind(this));
-          });
+          }.bind(this));
 
       if (this.checkPluginCompatibility_()) {
         this.previewGenerator_ = new print_preview.PreviewGenerator(
@@ -534,11 +534,16 @@ cr.define('print_preview', function() {
             PreviewArea.LOADING_TIMEOUT_);
       }
       previewRequest.request.then(
-          previewUid => {
+          /** @param {number} previewUid The unique id of the preview. */
+          function(previewUid) {
             this.previewGenerator_.onPreviewGenerationDone(
                 previewRequest.id, previewUid);
-          },
-          type => {
+          }.bind(this),
+          /**
+           * @param {*} type The type of print preview failure that
+           *     occurred.
+           */
+          function(type) {
             if (/** @type{string} */ (type) == 'CANCELLED')
               return;  // overriden by a new request, do nothing.
             if (/** @type{string} */ (type) == 'SETTINGS_INVALID') {
@@ -550,7 +555,7 @@ cr.define('print_preview', function() {
             } else {
               this.onPreviewGenerationFail_();
             }
-          });
+          }.bind(this));
     },
 
     /**

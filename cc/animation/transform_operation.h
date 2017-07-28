@@ -59,8 +59,8 @@ struct CC_ANIMATION_EXPORT TransformOperation {
   // Sets |matrix| based on type and the union values.
   void Bake();
 
-  bool ApproximatelyEqual(const TransformOperation& other,
-                          SkMScalar tolerance) const;
+  bool operator==(const TransformOperation& other) const;
+  bool operator!=(const TransformOperation& other) const;
 
   static bool BlendTransformOperations(const TransformOperation* from,
                                        const TransformOperation* to,

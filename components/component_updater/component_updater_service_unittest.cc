@@ -16,6 +16,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/histogram_tester.h"
@@ -125,12 +126,10 @@ class ComponentUpdaterTest : public testing::Test {
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::RunLoop runloop_;
-  const base::Closure quit_closure_ = runloop_.QuitClosure();
+  base::Closure quit_closure_;
 
-  scoped_refptr<TestConfigurator> config_ =
-      base::MakeRefCounted<TestConfigurator>();
-  scoped_refptr<MockUpdateClient> update_client_ =
-      base::MakeRefCounted<MockUpdateClient>();
+  scoped_refptr<TestConfigurator> config_;
+  scoped_refptr<MockUpdateClient> update_client_;
   std::unique_ptr<ComponentUpdateService> component_updater_;
 
   DISALLOW_COPY_AND_ASSIGN(ComponentUpdaterTest);
@@ -182,7 +181,16 @@ std::unique_ptr<ComponentUpdateService> TestComponentUpdateServiceFactory(
   return base::MakeUnique<CrxUpdateService>(config, new MockUpdateClient());
 }
 
-ComponentUpdaterTest::ComponentUpdaterTest() {
+ComponentUpdaterTest::ComponentUpdaterTest()
+    : scoped_task_environment_(
+          base::test::ScopedTaskEnvironment::MainThreadType::UI) {
+  quit_closure_ = runloop_.QuitClosure();
+
+  config_ = base::MakeRefCounted<TestConfigurator>(
+      base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()}),
+      base::ThreadTaskRunnerHandle::Get());
+
+  update_client_ = base::MakeRefCounted<MockUpdateClient>();
   EXPECT_CALL(update_client(), AddObserver(_)).Times(1);
   component_updater_ =
       base::MakeUnique<CrxUpdateService>(config_, update_client_);
@@ -304,7 +312,7 @@ TEST_F(ComponentUpdaterTest, OnDemandUpdate) {
     }
 
    private:
-    void Quit() { base::RunLoop::QuitCurrentWhenIdleDeprecated(); }
+    void Quit() { base::MessageLoop::current()->QuitWhenIdle(); }
 
     const int max_cnt_;
   };

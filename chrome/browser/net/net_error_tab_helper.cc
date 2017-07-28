@@ -258,10 +258,8 @@ void NetErrorTabHelper::SendInfo() {
 
   DVLOG(1) << "Sending status " << DnsProbeStatusToString(dns_probe_status_);
   content::RenderFrameHost* rfh = web_contents()->GetMainFrame();
-
-  chrome::mojom::NetworkDiagnosticsClientAssociatedPtr client;
-  rfh->GetRemoteAssociatedInterfaces()->GetInterface(&client);
-  client->DNSProbeStatus(dns_probe_status_);
+  rfh->Send(new ChromeViewMsg_NetErrorInfo(rfh->GetRoutingID(),
+                                           dns_probe_status_));
 
   if (!dns_probe_status_snoop_callback_.is_null())
     dns_probe_status_snoop_callback_.Run(dns_probe_status_);

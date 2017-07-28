@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/thread_test_helper.h"
 #include "base/threading/sequenced_worker_pool.h"
@@ -106,7 +105,7 @@ class StopTestOnCallback {
     for (size_t i = 0; i < arraysize(kTestHosts); ++i) {
       ASSERT_TRUE(test_hosts_found[i]) << kTestHosts[i];
     }
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

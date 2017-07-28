@@ -37,14 +37,13 @@ AndroidMetricsProvider::AndroidMetricsProvider(PrefService* local_state)
 AndroidMetricsProvider::~AndroidMetricsProvider() {
 }
 
-void AndroidMetricsProvider::ProvidePreviousSessionData(
-    metrics::ChromeUserMetricsExtension* uma_proto) {
+void AndroidMetricsProvider::ProvideStabilityMetrics(
+    metrics::SystemProfileProto* system_profile_proto) {
   ConvertStabilityPrefsToHistograms();
 }
 
-void AndroidMetricsProvider::ProvideCurrentSessionData(
+void AndroidMetricsProvider::ProvideGeneralMetrics(
     metrics::ChromeUserMetricsExtension* uma_proto) {
-  ConvertStabilityPrefsToHistograms();
   UMA_HISTOGRAM_ENUMERATION(
       "CustomTabs.Visible",
       chrome::android::GetCustomTabsVisibleValue(),
@@ -145,15 +144,14 @@ void AndroidMetricsProvider::ConvertStabilityPrefsToHistograms() {
     for (int count = 0; count < launch_count; ++count) {
       UMA_STABILITY_HISTOGRAM_ENUMERATION(
           "Chrome.Android.Activity.LaunchCounts",
-          static_cast<ActivityTypeIds::Type>(activity_type),
+          activity_type,
           ActivityTypeIds::ACTIVITY_MAX_VALUE);
     }
 
     for (int count = 0; count < crash_count; ++count) {
-      UMA_STABILITY_HISTOGRAM_ENUMERATION(
-          "Chrome.Android.Activity.CrashCounts",
-          static_cast<ActivityTypeIds::Type>(activity_type),
-          ActivityTypeIds::ACTIVITY_MAX_VALUE);
+      UMA_STABILITY_HISTOGRAM_ENUMERATION("Chrome.Android.Activity.CrashCounts",
+                                          activity_type,
+                                          ActivityTypeIds::ACTIVITY_MAX_VALUE);
     }
   }
 

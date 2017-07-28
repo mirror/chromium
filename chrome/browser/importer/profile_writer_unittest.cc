@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
@@ -106,7 +107,7 @@ class ProfileWriterTest : public testing::Test {
   }
 
   void HistoryQueryComplete(history::QueryResults* results) {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
     history_count_ = results->size();
   }
 

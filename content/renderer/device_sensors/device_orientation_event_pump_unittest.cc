@@ -63,7 +63,7 @@ class DeviceOrientationEventPumpForTesting : public DeviceOrientationEventPump {
   void FireEvent() override {
     DeviceOrientationEventPump::FireEvent();
     Stop();
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

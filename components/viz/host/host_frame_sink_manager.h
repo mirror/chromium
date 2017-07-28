@@ -5,8 +5,6 @@
 #ifndef COMPONENTS_VIZ_HOST_HOST_FRAME_SINK_MANAGER_H_
 #define COMPONENTS_VIZ_HOST_HOST_FRAME_SINK_MANAGER_H_
 
-#include <memory>
-
 #include "base/compiler_specific.h"
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
@@ -25,12 +23,15 @@ namespace base {
 class SingleThreadTaskRunner;
 }
 
+namespace cc {
+class SurfaceInfo;
+}  // namespace cc
+
 namespace viz {
 
 class CompositorFrameSinkSupport;
 class CompositorFrameSinkSupportClient;
 class FrameSinkManagerImpl;
-class SurfaceInfo;
 
 namespace test {
 class HostFrameSinkManagerTest;
@@ -100,7 +101,7 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     FrameSinkData& operator=(FrameSinkData&& other);
 
     bool HasCompositorFrameSinkData() const {
-      return has_created_compositor_frame_sink || support;
+      return private_interface.is_bound() || support;
     }
 
     // Returns true if there is nothing in FrameSinkData and it can be deleted.
@@ -114,9 +115,10 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     // The FrameSinkId registered as the parent in the BeginFrame hierarchy.
     base::Optional<FrameSinkId> parent;
 
-    // If a mojom::CompositorFrameSink was created for this FrameSinkId. This
-    // will always be false if not using Mojo.
-    bool has_created_compositor_frame_sink = false;
+    // The private interface that gives the host control over the
+    // CompositorFrameSink connection between the client and viz. This will be
+    // unbound if not using Mojo.
+    cc::mojom::CompositorFrameSinkPrivatePtr private_interface;
 
     // This will be null if using Mojo.
     CompositorFrameSinkSupport* support = nullptr;
@@ -124,10 +126,6 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
    private:
     DISALLOW_COPY_AND_ASSIGN(FrameSinkData);
   };
-
-  // Assigns the temporary reference to the frame sink that is expected to
-  // embeded |surface_id|, otherwise drops the temporary reference.
-  void PerformAssignTemporaryReference(const SurfaceId& surface_id);
 
   // cc::mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const SurfaceInfo& surface_info) override;

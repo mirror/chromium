@@ -510,9 +510,10 @@ bool Tab::IsActive() const {
 }
 
 void Tab::ActiveStateChanged() {
-  // The attention indicator is only shown for inactive tabs. When transitioning
-  // between active and inactive always reset the state to enforce that.
-  SetTabNeedsAttention(false);
+  // The pinned tab title changed indicator is only shown for inactive tabs.
+  // When transitioning between active and inactive always reset the state
+  // to enforce that.
+  SetPinnedTabTitleChangedIndicatorVisible(false);
   OnButtonColorMaybeChanged();
   alert_indicator_button_->UpdateEnabledForMuteToggle();
   Layout();
@@ -560,7 +561,7 @@ void Tab::SetData(const TabRendererData& data) {
     alert_indicator_button_->TransitionToAlertState(data_.alert_state);
 
   if (old.pinned != data_.pinned)
-    showing_alert_indicator_ = false;
+    showing_pinned_tab_title_changed_indicator_ = false;
 
   DataChanged(old);
 
@@ -583,11 +584,13 @@ void Tab::StopPulse() {
   pulse_animation_->Stop();
 }
 
-void Tab::SetTabNeedsAttention(bool value) {
-  if (value == showing_attention_indicator_)
+void Tab::SetPinnedTabTitleChangedIndicatorVisible(bool value) {
+  if (value == showing_pinned_tab_title_changed_indicator_)
     return;
 
-  showing_attention_indicator_ = value;
+  DCHECK(!value || data().pinned);
+
+  showing_pinned_tab_title_changed_indicator_ = value;
   SchedulePaint();
 }
 
@@ -1216,9 +1219,10 @@ void Tab::PaintTabBackgroundStroke(gfx::Canvas* canvas,
   canvas->DrawPath(path, flags);
 }
 
-void Tab::PaintAttentionIndicatorAndIcon(gfx::Canvas* canvas,
-                                         const gfx::Rect& favicon_draw_bounds) {
-  // The attention indicator consists of two parts:
+void Tab::PaintPinnedTabTitleChangedIndicatorAndIcon(
+    gfx::Canvas* canvas,
+    const gfx::Rect& favicon_draw_bounds) {
+  // The pinned tab title changed indicator consists of two parts:
   // . a clear (totally transparent) part over the bottom right (or left in rtl)
   //   of the favicon. This is done by drawing the favicon to a layer, then
   //   drawing the clear part on top of the favicon.
@@ -1241,7 +1245,7 @@ void Tab::PaintAttentionIndicatorAndIcon(gfx::Canvas* canvas,
     canvas->Restore();
   }
 
-  // Draws the actual attention indicator.
+  // Draws the actual pinned tab title changed indicator.
   cc::PaintFlags indicator_flags;
   indicator_flags.setColor(GetNativeTheme()->GetSystemColor(
       ui::NativeTheme::kColorId_ProminentButtonColor));
@@ -1284,8 +1288,9 @@ void Tab::PaintIcon(gfx::Canvas* canvas) {
     }
   }
 
-  if (showing_attention_indicator_ && !should_display_crashed_favicon_) {
-    PaintAttentionIndicatorAndIcon(canvas, bounds);
+  if (showing_pinned_tab_title_changed_indicator_ &&
+      !should_display_crashed_favicon_) {
+    PaintPinnedTabTitleChangedIndicatorAndIcon(canvas, bounds);
   } else if (!favicon_.isNull()) {
     canvas->DrawImageInt(favicon_, 0, 0, bounds.width(), bounds.height(),
                          bounds.x(), bounds.y(), bounds.width(),

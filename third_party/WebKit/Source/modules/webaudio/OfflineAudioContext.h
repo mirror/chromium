@@ -33,7 +33,6 @@
 namespace blink {
 
 class ExceptionState;
-class OfflineAudioContextOptions;
 class OfflineAudioDestinationHandler;
 
 class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
@@ -44,10 +43,6 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
                                      unsigned number_of_channels,
                                      unsigned number_of_frames,
                                      float sample_rate,
-                                     ExceptionState&);
-
-  static OfflineAudioContext* Create(ExecutionContext*,
-                                     const OfflineAudioContextOptions&,
                                      ExceptionState&);
 
   ~OfflineAudioContext() override;

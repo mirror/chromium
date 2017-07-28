@@ -319,16 +319,6 @@ WorkerGlobalScope::WorkerGlobalScope(
         std::move(starter_origin_privilage_data));
 }
 
-void WorkerGlobalScope::ApplyContentSecurityPolicyFromHeaders(
-    const ContentSecurityPolicyResponseHeaders& headers) {
-  if (!GetContentSecurityPolicy()) {
-    ContentSecurityPolicy* csp = ContentSecurityPolicy::Create();
-    SetContentSecurityPolicy(csp);
-  }
-  GetContentSecurityPolicy()->DidReceiveHeaders(headers);
-  GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
-}
-
 void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
     const Vector<CSPHeaderAndType>& headers) {
   if (!GetContentSecurityPolicy()) {

@@ -84,7 +84,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
   _actionImageView =
       [[MDCActionImageView alloc] initWithFrame:_floatingButton.bounds
-                                   primaryImage:RemotingTheme.menuIcon
+                                   primaryImage:RemotingTheme.settingsIcon
                                     activeImage:RemotingTheme.closeIcon];
   [_floatingButton addSubview:_actionImageView];
   [self.view addSubview:_floatingButton];
@@ -115,7 +115,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   // the surface is not ready to handle the transformation matrix.
   // Call onSurfaceChanged here to cover that case.
   [_client surfaceChanged:self.view.frame];
-  [self resizeHostToFitIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -155,7 +154,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
     // If the context is not set yet, the view size will be set in
     // viewDidAppear.
     [_client surfaceChanged:self.view.bounds];
-    [self resizeHostToFitIfNeeded];
   }
 
   CGSize btnSize = _floatingButton.frame.size;
@@ -246,10 +244,10 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 }
 
 - (void)setResizeToFit:(BOOL)resizeToFit {
-  // TODO(yuweih): Maybe we add a native screen size mimimum before enabling
-  // this option? This doesn't work well for smaller screens. Ask Jon.
-  _settings.shouldResizeHostToFit = resizeToFit;
-  [self resizeHostToFitIfNeeded];
+  // TODO(nicholss): I don't think this option makes sense for phones. Maybe
+  // for an iPad. Maybe we add a native screen size mimimum before enabling
+  // this option? Ask Jon.
+  NSLog(@"TODO: resizeToFit %d", resizeToFit);
 }
 
 - (void)useDirectInputMode {
@@ -271,13 +269,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 }
 
 #pragma mark - Private
-
-- (void)resizeHostToFitIfNeeded {
-  if (_settings.shouldResizeHostToFit) {
-    [_client setHostResolution:self.view.frame.size
-                         scale:self.view.contentScaleFactor];
-  }
-}
 
 - (void)applyInputMode {
   switch (_settings.inputMode) {
@@ -361,8 +352,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
         [[RemotingSettingsViewController alloc] init];
     settingsViewController.delegate = weakSelf;
     settingsViewController.inputMode = currentInputMode;
-    settingsViewController.shouldResizeHostToFit =
-        _settings.shouldResizeHostToFit;
     UINavigationController* navController = [[UINavigationController alloc]
         initWithRootViewController:settingsViewController];
     [weakSelf presentViewController:navController animated:YES completion:nil];

@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/ref_counted_delete_on_sequence.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
@@ -108,7 +107,7 @@ class AndroidDeviceManager {
 
   class DeviceProvider;
 
-  class Device final : public base::RefCountedDeleteOnSequence<Device> {
+  class Device : public base::RefCountedThreadSafe<Device> {
    public:
     void QueryDeviceInfo(const DeviceInfoCallback& callback);
 
@@ -128,22 +127,24 @@ class AndroidDeviceManager {
         const std::string& path,
         AndroidWebSocket::Delegate* delegate);
 
-    const std::string& serial() { return serial_; }
+    std::string serial() { return serial_; }
 
    private:
-    friend class base::RefCountedDeleteOnSequence<Device>;
-    friend class base::DeleteHelper<Device>;
+    friend class base::RefCountedThreadSafe<Device>;
     friend class AndroidDeviceManager;
     friend class AndroidWebSocket;
 
     Device(scoped_refptr<base::SingleThreadTaskRunner> device_task_runner,
            scoped_refptr<DeviceProvider> provider,
            const std::string& serial);
-    ~Device();
+
+    virtual ~Device();
 
     scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
     scoped_refptr<DeviceProvider> provider_;
-    const std::string serial_;
+    std::string serial_;
+
+    SEQUENCE_CHECKER(sequence_checker_);
 
     base::WeakPtrFactory<Device> weak_factory_;
 

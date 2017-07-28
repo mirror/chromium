@@ -33,7 +33,6 @@
  *   EDIT_DICTIONARY: (undefined|!settings.Route),
  *   FINGERPRINT: (undefined|!settings.Route),
  *   FONTS: (undefined|!settings.Route),
- *   GOOGLE_ASSISTANT: (undefined|!settings.Route),
  *   IMPORT_DATA: (undefined|!settings.Route),
  *   INPUT_METHODS: (undefined|!settings.Route),
  *   INTERNET: (undefined|!settings.Route),
@@ -225,9 +224,6 @@ cr.define('settings', function() {
 
     r.SEARCH = r.BASIC.createSection('/search', 'search');
     r.SEARCH_ENGINES = r.SEARCH.createChild('/searchEngines');
-    // <if expr="chromeos">
-    r.GOOGLE_ASSISTANT = r.SEARCH.createChild('/googleAssistant');
-    // </if>
 
     // <if expr="chromeos">
     r.ANDROID_APPS = r.BASIC.createSection('/androidApps', 'androidApps');
@@ -236,7 +232,7 @@ cr.define('settings', function() {
 
     if (pageVisibility.onStartup !== false) {
       r.ON_STARTUP = r.BASIC.createSection('/onStartup', 'onStartup');
-      r.STARTUP_PAGES = r.ON_STARTUP.createChild('/startupPages');
+      r.STARTUP_URLS = r.ON_STARTUP.createChild('/startupUrls');
     }
 
     if (pageVisibility.people !== false) {

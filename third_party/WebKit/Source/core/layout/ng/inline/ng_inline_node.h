@@ -11,7 +11,6 @@
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_layout_input_node.h"
 #include "platform/heap/Handle.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
@@ -29,7 +28,7 @@ class NGInlineItemRange;
 using NGInlineItemsBuilder =
     NGInlineItemsBuilderTemplate<EmptyOffsetMappingBuilder>;
 class NGLayoutResult;
-class NGOffsetMappingResult;
+struct NGOffsetMappingResult;
 
 // Represents an anonymous block box to be laid out, that contains consecutive
 // inline nodes and their descendants.
@@ -82,17 +81,6 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
 
   String ToString() const;
 
-  // ------ Offset Mapping APIs -----
-
-  // Returns the NGOffsetMappingUnit that contains the given offset in the DOM
-  // node. If there are multiple qualifying units, returns the last one.
-  const NGOffsetMappingUnit* GetMappingUnitForDOMOffset(const Node&, unsigned);
-
-  // Returns the text content offset corresponding to the given DOM offset.
-  size_t GetTextContentOffset(const Node&, unsigned);
-
-  // TODO(xiaochengh): Add APIs for reverse mapping.
-
  protected:
   // Prepare inline and text content for layout. Must be called before
   // calling the Layout method.
@@ -121,10 +109,6 @@ inline void NGInlineNode::AssertEndOffset(unsigned index,
                                           unsigned offset) const {
   Data().items_[index].AssertEndOffset(offset);
 }
-
-// If the given Node is laid out as an inline, returns the NGInlineNode that
-// encloses it. Otherwise, returns null.
-CORE_EXPORT Optional<NGInlineNode> GetNGInlineNodeFor(const Node&);
 
 DEFINE_TYPE_CASTS(NGInlineNode,
                   NGLayoutInputNode,

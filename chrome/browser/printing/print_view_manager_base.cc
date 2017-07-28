@@ -367,7 +367,7 @@ bool PrintViewManagerBase::RenderAllMissingPagesNow() {
   // to actually spool the pages, only to have the renderer generate them. Run
   // a message loop until we get our signal that the print job is satisfied.
   // PrintJob will send a ALL_PAGES_REQUESTED after having received all the
-  // pages it needs. RunLoop::QuitCurrentWhenIdleDeprecated() will be called as
+  // pages it needs. MessageLoop::current()->QuitWhenIdle() will be called as
   // soon as print_job_->document()->IsComplete() is true on either
   // ALL_PAGES_REQUESTED or in DidPrintPage(). The check is done in
   // ShouldQuitFromInnerMessageLoop().
@@ -388,7 +388,7 @@ void PrintViewManagerBase::ShouldQuitFromInnerMessageLoop() {
       inside_inner_message_loop_) {
     // We are in a message loop created by RenderAllMissingPagesNow. Quit from
     // it.
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
     inside_inner_message_loop_ = false;
   }
 }
@@ -495,10 +495,9 @@ bool PrintViewManagerBase::RunInnerMessageLoop() {
   // memory-bound.
   static const int kPrinterSettingsTimeout = 60000;
   base::OneShotTimer quit_timer;
-  base::RunLoop run_loop;
-  quit_timer.Start(FROM_HERE,
-                   TimeDelta::FromMilliseconds(kPrinterSettingsTimeout),
-                   run_loop.QuitWhenIdleClosure());
+  quit_timer.Start(
+      FROM_HERE, TimeDelta::FromMilliseconds(kPrinterSettingsTimeout),
+      base::MessageLoop::current(), &base::MessageLoop::QuitWhenIdle);
 
   inside_inner_message_loop_ = true;
 
@@ -506,7 +505,7 @@ bool PrintViewManagerBase::RunInnerMessageLoop() {
   {
     base::MessageLoop::ScopedNestableTaskAllower allow(
         base::MessageLoop::current());
-    run_loop.Run();
+    base::RunLoop().Run();
   }
 
   bool success = true;

@@ -172,8 +172,6 @@ class CC_PAINT_EXPORT PaintFlags {
     return shader_ ? shader_->GetSkShader().get() : nullptr;
   }
 
-  ALWAYS_INLINE const PaintShader* getShader() const { return shader_.get(); }
-
   // Returns true if the shader has been set on the flags.
   ALWAYS_INLINE bool HasShader() const { return !!shader_; }
 

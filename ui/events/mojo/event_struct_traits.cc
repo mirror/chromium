@@ -133,10 +133,9 @@ int32_t StructTraits<ui::mojom::EventDataView, EventUniquePtr>::flags(
   return event->flags();
 }
 
-base::TimeTicks
-StructTraits<ui::mojom::EventDataView, EventUniquePtr>::time_stamp(
+int64_t StructTraits<ui::mojom::EventDataView, EventUniquePtr>::time_stamp(
     const EventUniquePtr& event) {
-  return event->time_stamp();
+  return event->time_stamp().ToInternalValue();
 }
 
 const ui::LatencyInfo&
@@ -249,23 +248,20 @@ bool StructTraits<ui::mojom::EventDataView, EventUniquePtr>::Read(
       ui::mojom::KeyDataPtr key_data;
       if (!event.ReadKeyData<ui::mojom::KeyDataPtr>(&key_data))
         return false;
-      base::TimeTicks time_stamp;
-      if (!event.ReadTimeStamp(&time_stamp))
-        return false;
 
       if (key_data->is_char) {
-        out->reset(
-            new ui::KeyEvent(static_cast<base::char16>(key_data->character),
-                             static_cast<ui::KeyboardCode>(key_data->key_code),
-                             event.flags(), time_stamp));
+        out->reset(new ui::KeyEvent(
+            static_cast<base::char16>(key_data->character),
+            static_cast<ui::KeyboardCode>(key_data->key_code), event.flags(),
+            base::TimeTicks::FromInternalValue(event.time_stamp())));
 
       } else {
-        out->reset(
-            new ui::KeyEvent(event.action() == ui::mojom::EventType::KEY_PRESSED
-                                 ? ui::ET_KEY_PRESSED
-                                 : ui::ET_KEY_RELEASED,
-                             static_cast<ui::KeyboardCode>(key_data->key_code),
-                             event.flags(), time_stamp));
+        out->reset(new ui::KeyEvent(
+            event.action() == ui::mojom::EventType::KEY_PRESSED
+                ? ui::ET_KEY_PRESSED
+                : ui::ET_KEY_RELEASED,
+            static_cast<ui::KeyboardCode>(key_data->key_code), event.flags(),
+            base::TimeTicks::FromInternalValue(event.time_stamp())));
       }
       if (key_data->properties)
         (*out)->AsKeyEvent()->SetProperties(*key_data->properties);

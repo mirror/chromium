@@ -791,19 +791,6 @@ IPC_SYNC_MESSAGE_ROUTED1_2(
     PP_Bool /* result */)
 IPC_MESSAGE_ROUTED1(PpapiMsg_PPPPdf_EnableAccessibility,
                     PP_Instance /* instance */)
-IPC_MESSAGE_ROUTED2(PpapiMsg_PPPPdf_SetCaretPosition,
-                    PP_Instance /* instance */,
-                    PP_FloatPoint /* position */)
-IPC_MESSAGE_ROUTED2(PpapiMsg_PPPPdf_MoveRangeSelectionExtent,
-                    PP_Instance /* instance */,
-                    PP_FloatPoint /* extent */)
-IPC_MESSAGE_ROUTED3(PpapiMsg_PPPPdf_SetSelectionBounds,
-                    PP_Instance /* instance */,
-                    PP_FloatPoint /* base */,
-                    PP_FloatPoint /* extent */)
-IPC_SYNC_MESSAGE_ROUTED1_1(PpapiMsg_PPPPdf_CanCut,
-                           PP_Instance /* instance */,
-                           PP_Bool /* result */)
 
 // Find
 IPC_MESSAGE_ROUTED2(PpapiPluginMsg_PPPFind_StartFind,
@@ -2542,13 +2529,6 @@ IPC_MESSAGE_CONTROL3(
     PP_PrivateAccessibilityPageInfo /* page_info */,
     std::vector<PP_PrivateAccessibilityTextRunInfo> /* text_runs */,
     std::vector<PP_PrivateAccessibilityCharInfo> /* chars */)
-
-// Send information about the selection coordinates.
-IPC_MESSAGE_CONTROL4(PpapiHostMsg_PDF_SelectionChanged,
-                     PP_FloatPoint /* left */,
-                     int32_t /* left_height */,
-                     PP_FloatPoint /* right */,
-                     int32_t /* right_height */)
 
 // VideoCapture ----------------------------------------------------------------
 

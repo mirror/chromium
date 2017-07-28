@@ -1140,8 +1140,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="SEARCH_PEOPLE"/>
   <int value="5" label="SUGGESTION"/>
   <int value="6" label="LAUNCHER_SEARCH_PROVIDER"/>
-  <int value="7" label="PLAY_STORE_UNINSTALLED_APP"/>
-  <int value="8" label="PLAY_STORE_INSTANT_APP"/>
 </enum>
 
 <enum name="AppListSearchResultDisplayType">
@@ -2863,24 +2861,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="6" label="Omnibox suggestion"/>
 </enum>
 
-<enum name="BookmarkManagerCommand">
-  <int value="0" label="Edit"/>
-  <int value="1" label="Copy URL"/>
-  <int value="2" label="Show in folder"/>
-  <int value="3" label="Delete"/>
-  <int value="4" label="Open in new tab"/>
-  <int value="5" label="Open in new window"/>
-  <int value="6" label="Open in incognito"/>
-  <int value="7" label="Undo"/>
-  <int value="8" label="Redo"/>
-  <int value="9" label="Open (double click/enter)"/>
-  <int value="10" label="Select all"/>
-  <int value="11" label="Deselect all"/>
-  <int value="12" label="Copy"/>
-  <int value="13" label="Cut"/>
-  <int value="14" label="Paste"/>
-</enum>
-
 <enum name="BookmarksEntryPoint">
   <int value="0" label="Accelerator(Ctrl+D)"/>
   <int value="1" label="Gesture"/>
@@ -4021,13 +4001,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="YT_PLAYER_FAILURE"/>
   <int value="2" label="DEFAULT_PLAYER_SUCCESS"/>
   <int value="3" label="DEFAULT_PLAYER_FAILURE"/>
-</enum>
-
-<enum name="CastSignatureStatus">
-  <int value="0" label="OK"/>
-  <int value="1" label="SignatureEmpty"/>
-  <int value="2" label="SignatureDigestUnsupported"/>
-  <int value="3" label="SignatureVerificationFailed"/>
 </enum>
 
 <enum name="CatSixtyFour">
@@ -5917,9 +5890,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="32" label="Ads setting"/>
   <int value="33" label="Ads metadata"/>
   <int value="34" label="Password protection setting"/>
-  <int value="35" label="Media engagement setting"/>
-  <int value="36" label="Sound setting"/>
-  <int value="37" label="Client hints setting"/>
 </enum>
 
 <enum name="ContentTypeParseableResult">
@@ -22828,7 +22798,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1438279809" label="GamepadExtensions:disabled"/>
   <int value="-1433719718" label="enable-webrtc-stun-origin"/>
   <int value="-1433087548" label="enable-app-install-alerts"/>
-  <int value="-1431563697" label="WebPaymentsMethodSectionOrderV2:enabled"/>
   <int value="-1426034869" label="NoCreditCardAbort:enabled"/>
   <int value="-1419788257" label="enable-experimental-hotwording"/>
   <int value="-1416754663" label="enable-mac-views-native-app-windows"/>
@@ -23368,7 +23337,6 @@ from previous Chrome versions.
   <int value="423615350" label="enable-tab-audio-muting"/>
   <int value="423855924" label="enable-tab-switcher-theme-colors"/>
   <int value="431691805" label="MediaDocumentDownloadButton:enabled"/>
-  <int value="434033638" label="PwaPersistentNotification:disabled"/>
   <int value="446316019" label="enable-threaded-compositing"/>
   <int value="451196246" label="disable-impl-side-painting"/>
   <int value="453102772" label="OfflinePagesLoadSignalCollecting:disabled"/>
@@ -23650,7 +23618,6 @@ from previous Chrome versions.
   <int value="1319725131" label="enable-distance-field-text"/>
   <int value="1320201920" label="enable-touchpad-three-finger-click"/>
   <int value="1330264457" label="OmniboxUIExperimentVerticalLayout:disabled"/>
-  <int value="1340690624" label="WebPaymentsMethodSectionOrderV2:disabled"/>
   <int value="1344833841" label="ImeThread:enabled"/>
   <int value="1351830811" label="do-not-ignore-autocomplete-off"/>
   <int value="1352447982" label="enable-lcd-text"/>
@@ -23692,7 +23659,6 @@ from previous Chrome versions.
   <int value="1441897340" label="AndroidSpellCheckerNonLowEnd:enabled"/>
   <int value="1442798825" label="enable-quic"/>
   <int value="1442830837" label="MemoryAblation:disabled"/>
-  <int value="1452546183" label="PwaPersistentNotification:enabled"/>
   <int value="1454143461" label="CaptureThumbnailOnNavigatingAway:disabled"/>
   <int value="1454363479" label="disable-storage-manager"/>
   <int value="1458583431" label="arc-use-auth-endpoint"/>
@@ -25166,20 +25132,6 @@ from previous Chrome versions.
   <int value="1" label="Overflow Menu"/>
   <int value="2" label="Contextual Menu"/>
   <int value="3" label="Page"/>
-</enum>
-
-<enum name="MediaRouterDialParsingError">
-  <int value="0" label="None"/>
-  <int value="1" label="Invalid XML"/>
-  <int value="2" label="Failed to read UDN"/>
-  <int value="3" label="Failed to read friendly name"/>
-  <int value="4" label="Failed to read model name"/>
-  <int value="5" label="Failed to read device type"/>
-  <int value="6" label="Missing unique ID"/>
-  <int value="7" label="Missing name"/>
-  <int value="8" label="Missing app URL"/>
-  <int value="9" label="Invalid app URL"/>
-  <int value="10" label="Utility process error"/>
 </enum>
 
 <enum name="MediaRouterInitialViews">
@@ -37492,7 +37444,7 @@ from previous Chrome versions.
 <enum name="TriggerHelpUIResult">
   <int value="0" label="SUCCESS"/>
   <int value="1" label="FAILURE"/>
-  <int value="2" label="FAILURE_EVENT_MODEL_NOT_READY"/>
+  <int value="2" label="FAILURE_MODEL_NOT_READY"/>
   <int value="3" label="FAILURE_CURRENTLY_SHOWING"/>
   <int value="4" label="FAILURE_FEATURE_DISABLED"/>
   <int value="5" label="FAILURE_CONFIG_INVALID"/>

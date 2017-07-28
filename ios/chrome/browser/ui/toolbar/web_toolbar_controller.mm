@@ -1483,8 +1483,10 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
 }
 
-- (void)keyboardAccessoryCameraSearchTouchUp {
-  [self.dispatcher showQRScanner];
+- (void)keyboardAccessoryCameraSearchTouchUpInside:(UIView*)view {
+  GenericChromeCommand* command =
+      [[GenericChromeCommand alloc] initWithTag:IDC_SHOW_QR_SCANNER];
+  [view chromeExecuteCommand:command];
 }
 
 - (void)keyPressed:(NSString*)title {

@@ -92,7 +92,8 @@ TEST_F(UserActivityDetectorTest, Basic) {
   ui::KeyEvent key_event(ui::ET_KEY_PRESSED, ui::VKEY_A, ui::EF_NONE);
   OnEvent(&key_event);
   EXPECT_FALSE(key_event.handled());
-  EXPECT_EQ(now_, detector_->last_activity_time());
+  EXPECT_EQ(now_.ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(1, observer_->num_invocations());
   observer_->reset_stats();
 
@@ -103,7 +104,8 @@ TEST_F(UserActivityDetectorTest, Basic) {
                              ui::EventTimeForNow(), ui::EF_NONE, ui::EF_NONE);
   OnEvent(&mouse_event);
   EXPECT_FALSE(mouse_event.handled());
-  EXPECT_EQ(now_, detector_->last_activity_time());
+  EXPECT_EQ(now_.ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(1, observer_->num_invocations());
   observer_->reset_stats();
 
@@ -113,7 +115,8 @@ TEST_F(UserActivityDetectorTest, Basic) {
   detector_->OnDisplayPowerChanging();
   OnEvent(&mouse_event);
   EXPECT_FALSE(mouse_event.handled());
-  EXPECT_EQ(time_before_ignore, detector_->last_activity_time());
+  EXPECT_EQ(time_before_ignore.ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(0, observer_->num_invocations());
   observer_->reset_stats();
 
@@ -123,7 +126,8 @@ TEST_F(UserActivityDetectorTest, Basic) {
   AdvanceTime(kIgnoreMouseTime / 2);
   OnEvent(&mouse_event);
   EXPECT_FALSE(mouse_event.handled());
-  EXPECT_EQ(time_before_ignore, detector_->last_activity_time());
+  EXPECT_EQ(time_before_ignore.ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(0, observer_->num_invocations());
   observer_->reset_stats();
 
@@ -131,7 +135,8 @@ TEST_F(UserActivityDetectorTest, Basic) {
   AdvanceTime(std::max(kIgnoreMouseTime, advance_delta));
   OnEvent(&mouse_event);
   EXPECT_FALSE(mouse_event.handled());
-  EXPECT_EQ(now_, detector_->last_activity_time());
+  EXPECT_EQ(now_.ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(1, observer_->num_invocations());
   observer_->reset_stats();
 
@@ -141,7 +146,8 @@ TEST_F(UserActivityDetectorTest, Basic) {
       ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
   OnEvent(&touch_event);
   EXPECT_FALSE(touch_event.handled());
-  EXPECT_EQ(now_, detector_->last_activity_time());
+  EXPECT_EQ(now_.ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(1, observer_->num_invocations());
   observer_->reset_stats();
 
@@ -150,7 +156,8 @@ TEST_F(UserActivityDetectorTest, Basic) {
                                  ui::GestureEventDetails(ui::ET_GESTURE_TAP));
   OnEvent(&gesture_event);
   EXPECT_FALSE(gesture_event.handled());
-  EXPECT_EQ(now_, detector_->last_activity_time());
+  EXPECT_EQ(now_.ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(1, observer_->num_invocations());
   observer_->reset_stats();
 }
@@ -197,7 +204,8 @@ TEST_F(UserActivityDetectorTest, IgnoreSyntheticMouseEvents) {
                              ui::EF_NONE);
   OnEvent(&mouse_event);
   EXPECT_FALSE(mouse_event.handled());
-  EXPECT_EQ(base::TimeTicks(), detector_->last_activity_time());
+  EXPECT_EQ(base::TimeTicks().ToInternalValue(),
+            detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(0, observer_->num_invocations());
 }
 

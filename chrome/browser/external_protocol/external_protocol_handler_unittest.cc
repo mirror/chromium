@@ -4,6 +4,7 @@
 
 #include "chrome/browser/external_protocol/external_protocol_handler.h"
 
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "chrome/browser/prefs/browser_prefs.h"
 #include "chrome/common/pref_names.h"
@@ -11,7 +12,6 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/prefs/testing_pref_service.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class FakeExternalProtocolHandlerWorker
@@ -85,7 +85,7 @@ class FakeExternalProtocolHandlerDelegate
   }
 
   void FinishedProcessingCheck() override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void set_os_state(shell_integration::DefaultWebClientState value) {
@@ -110,7 +110,9 @@ class FakeExternalProtocolHandlerDelegate
 
 class ExternalProtocolHandlerTest : public testing::Test {
  protected:
-  ExternalProtocolHandlerTest() {}
+  ExternalProtocolHandlerTest()
+      : test_browser_thread_bundle_(
+            content::TestBrowserThreadBundle::REAL_FILE_THREAD) {}
 
   void SetUp() override {
     local_state_.reset(new TestingPrefServiceSimple);
@@ -141,7 +143,7 @@ class ExternalProtocolHandlerTest : public testing::Test {
     ExternalProtocolHandler::LaunchUrlWithDelegate(
         url, 0, 0, ui::PAGE_TRANSITION_LINK, true, &delegate_);
     if (block_state != ExternalProtocolHandler::BLOCK)
-      content::RunAllBlockingPoolTasksUntilIdle();
+      base::RunLoop().Run();
 
     ASSERT_EQ(should_prompt, delegate_.has_prompted());
     ASSERT_EQ(should_launch, delegate_.has_launched());

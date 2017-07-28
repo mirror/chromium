@@ -67,6 +67,7 @@ class HTMLResourcePreloader;
 class HTMLTreeBuilder;
 class SegmentedString;
 class TokenizedChunkQueue;
+class DocumentWriteEvaluator;
 
 class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
                                        private HTMLParserScriptRunnerHost {
@@ -124,6 +125,8 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
     HTMLInputCheckpoint input_checkpoint;
     TokenPreloadScannerCheckpoint preload_scanner_checkpoint;
     bool starting_script;
+    // Indices into |tokens|.
+    Vector<int> likely_document_write_script_indices;
     // Index into |tokens| of the last <meta> csp tag in |tokens|. Preloads will
     // be deferred until this token is parsed. Will be noPendingToken if there
     // are no csp tokens.
@@ -230,6 +233,8 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   void ScanAndPreload(HTMLPreloadScanner*);
   void FetchQueuedPreloads();
 
+  void EvaluateAndPreloadScriptForDocumentWrite(const String& source);
+
   HTMLToken& Token() { return *token_; }
 
   HTMLParserOptions options_;
@@ -264,7 +269,9 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   WeakPtr<BackgroundHTMLParser> background_parser_;
   Member<HTMLResourcePreloader> preloader_;
   PreloadRequestStream queued_preloads_;
+  Vector<String> queued_document_write_scripts_;
   RefPtr<TokenizedChunkQueue> tokenized_chunk_queue_;
+  std::unique_ptr<DocumentWriteEvaluator> evaluator_;
 
   // If this is non-null, then there is a meta CSP token somewhere in the
   // speculation buffer. Preloads will be deferred until a token matching this

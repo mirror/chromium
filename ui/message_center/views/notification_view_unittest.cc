@@ -163,11 +163,13 @@ class NotificationViewTest : public views::ViewsTestBase,
   }
 
   PaddedButton* GetCloseButton() {
-    return notification_view()->control_buttons_view_->close_button();
+    return notification_view()
+        ->control_buttons_view_->close_button_for_testing();
   }
 
   PaddedButton* GetSettingsButton() {
-    return notification_view()->control_buttons_view_->settings_button();
+    return notification_view()
+        ->control_buttons_view_->settings_button_for_testing();
   }
 
   void UpdateNotificationViews() {

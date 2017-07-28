@@ -253,10 +253,9 @@ void DataTypeManagerImpl::Restart(ConfigureReason reason) {
       reason == CONFIGURE_REASON_NEWLY_ENABLED_DATA_TYPE) {
     for (ModelTypeSet::Iterator iter = last_requested_types_.First();
          iter.Good(); iter.Inc()) {
-      // TODO(wychen): enum uma should be strongly typed. crbug.com/661401
       UMA_HISTOGRAM_ENUMERATION("Sync.ConfigureDataTypes",
                                 ModelTypeToHistogramInt(iter.Get()),
-                                static_cast<int>(MODEL_TYPE_COUNT));
+                                MODEL_TYPE_COUNT);
     }
   }
 

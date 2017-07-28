@@ -12,81 +12,90 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.chromium.webapk.lib.runtime_library.IWebApkApi;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Hashtable;
 
 /**
- * Each WebAPK has several services. This class manages static global connections between the
- * Chrome application and the "WebAPK services."
+ * Manages static global connections between the Chrome application and "WebAPK services". Each
+ * WebAPK has its own "WebAPK service".
  */
 public class WebApkServiceConnectionManager {
     /**
-     * Interface for getting notified once Chrome is connected to a WebAPK service.
+     * Interface for getting notified once Chrome is connected to the WebAPK service.
      */
     public interface ConnectionCallback {
         /**
          * Called once Chrome is connected to the WebAPK service.
-         * @param service The WebAPK service.
+         * @param api The WebAPK service API.
          */
-        void onConnected(IBinder service);
+        public void onConnected(IWebApkApi api);
     }
 
-    /** Managed connection to WebAPK service. */
+    /**
+     * Managed connection to WebAPK service.
+     */
     private static class Connection implements ServiceConnection {
-        /** The connection manager who owns this connection. */
-        private WebApkServiceConnectionManager mConnectionManager;
+        /**
+         * Whether the connection to the service was established.
+         */
+        private boolean mHasConnected;
 
-        /** Callbacks to call once the connection is established. */
+        /**
+         * Callbacks to call once the connection is established.
+         */
         private ArrayList<ConnectionCallback> mCallbacks = new ArrayList<ConnectionCallback>();
 
-        /** WebAPK IBinder interface.*/
-        private IBinder mBinder;
+        /**
+         * WebAPK IBinder interface.
+         */
+        private IWebApkApi mApi;
 
-        public IBinder getService() {
-            return mBinder;
+        public boolean hasConnected() {
+            return mHasConnected;
+        }
+
+        public IWebApkApi getApi() {
+            return mApi;
         }
 
         public void addCallback(ConnectionCallback callback) {
             mCallbacks.add(callback);
         }
 
-        public Connection(WebApkServiceConnectionManager manager) {
-            mConnectionManager = manager;
-        }
-
         @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mBinder = null;
-            mConnectionManager.onServiceDisconnected(name.getPackageName());
-        }
+        public void onServiceDisconnected(ComponentName name) {}
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mBinder = service;
-            Log.d(TAG, String.format("Got IBinder Service: %s", mBinder));
+            mHasConnected = true;
+            mApi = IWebApkApi.Stub.asInterface(service);
+            Log.d(TAG, String.format("Got IWebApkApi: %s", mApi));
+
             for (ConnectionCallback callback : mCallbacks) {
-                callback.onConnected(mBinder);
+                callback.onConnected(mApi);
             }
             mCallbacks.clear();
         }
     }
 
-    private static final String TAG = "cr_WebApkService";
+    private static final String CATEGORY_WEBAPK_API = "android.intent.category.WEBAPK_API";
 
-    /** The category of the service to connect to. */
-    private String mCategory;
+    private static final String TAG = "cr_WebApk";
 
-    /** The action of the service to connect to. */
-    private String mAction;
+    private static WebApkServiceConnectionManager sInstance;
 
-    /** Mapping of WebAPK package to WebAPK service connection.*/
-    private HashMap<String, Connection> mConnections = new HashMap<>();
+    /**
+     * Mapping of WebAPK package to WebAPK service connection.
+     */
+    private Hashtable<String, Connection> mConnections = new Hashtable<String, Connection>();
 
-    /** Called when a WebAPK service connection is disconnected. */
-    private void onServiceDisconnected(String webApkName) {
-        mConnections.remove(webApkName);
+    public static WebApkServiceConnectionManager getInstance() {
+        if (sInstance == null) {
+            sInstance = new WebApkServiceConnectionManager();
+        }
+        return sInstance;
     }
 
     /**
@@ -94,80 +103,47 @@ public class WebApkServiceConnectionManager {
      * @param appContext Application context.
      * @param webApkPackage WebAPK package to create connection for.
      * @param callback Callback to call after connection has been established. Called synchronously
+     *   if the connection is already established.
      */
     public void connect(final Context appContext, final String webApkPackage,
             final ConnectionCallback callback) {
         Connection connection = mConnections.get(webApkPackage);
         if (connection != null) {
-            IBinder service = connection.getService();
-            if (service != null) {
-                callback.onConnected(service);
+            if (connection.hasConnected()) {
+                callback.onConnected(connection.getApi());
             } else {
                 connection.addCallback(callback);
             }
             return;
         }
 
-        new AsyncTask<Void, Void, Connection>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Connection doInBackground(Void... params) {
-                Connection newConnection = new Connection(WebApkServiceConnectionManager.this);
+            protected Void doInBackground(Void... params) {
+                Connection newConnection = new Connection();
                 newConnection.addCallback(callback);
                 Intent intent = createConnectIntent(webApkPackage);
+
                 try {
-                    if (appContext.bindService(intent, newConnection, Context.BIND_AUTO_CREATE)) {
-                        return newConnection;
-                    } else {
-                        appContext.unbindService(newConnection);
-                        return null;
-                    }
+                    appContext.bindService(intent, newConnection, Context.BIND_AUTO_CREATE);
+
                 } catch (SecurityException e) {
                     Log.w(TAG, "Security failed binding.", e);
                     return null;
                 }
-            }
 
-            @Override
-            protected void onPostExecute(Connection connection) {
-                if (connection == null) {
-                    callback.onConnected(null);
-                } else {
-                    mConnections.put(webApkPackage, connection);
-                }
+                mConnections.put(webApkPackage, newConnection);
+                return null;
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
-     * Disconnect from all of the WebAPK services. Can be called from any thread.
-     * @param appContext The application context.
+     * Disconnects Chrome application from WebAPK service. Can be called from any thread.
+     * @param appContext Application context.
+     * @param webApkPackage WebAPK package for the service to disconnect from.
      */
-    public void disconnectAll(final Context appContext) {
-        if (mConnections.isEmpty()) return;
-
-        List<Connection> values = new ArrayList<>();
-        values.addAll(mConnections.values());
-        mConnections.clear();
-
-        new AsyncTask<Collection<Connection>, Void, Void>() {
-            @Override
-            protected Void doInBackground(Collection<Connection>... collections) {
-                Collection<Connection> values = collections[0];
-                for (Connection connection : values) {
-                    if (connection.getService() != null) {
-                        appContext.unbindService(connection);
-                    }
-                }
-                return null;
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, values);
-    }
-
-    /**
-     * Disconnect from the given WebAPK. Can be called from any thread.
-     * @param browserContext The browser context.
-     */
-    public void disconnect(final Context browserContext, String webApkPackage) {
+    public void disconnect(final Context appContext, String webApkPackage) {
         if (webApkPackage == null) {
             return;
         }
@@ -180,25 +156,22 @@ public class WebApkServiceConnectionManager {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                browserContext.unbindService(connection);
+                appContext.unbindService(connection);
                 return null;
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public WebApkServiceConnectionManager(String category, String action) {
-        mCategory = category;
-        mAction = action;
+    WebApkServiceConnectionManager() {
     }
 
     /**
      * Creates intent to connect to WebAPK service.
      * @param webApkPackage The package name of the WebAPK to connect to.
      */
-    private Intent createConnectIntent(String webApkPackage) {
+    private static Intent createConnectIntent(String webApkPackage) {
         Intent intent = new Intent();
-        if (mCategory != null) intent.addCategory(mCategory);
-        if (mAction != null) intent.setAction(mAction);
+        intent.addCategory(CATEGORY_WEBAPK_API);
         intent.setPackage(webApkPackage);
         return intent;
     }

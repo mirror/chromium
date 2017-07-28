@@ -13,7 +13,6 @@
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/gfx/transform.h"
-#include "ui/gl/gl_utils.h"
 
 namespace cc {
 
@@ -56,8 +55,7 @@ void PixelTestOutputSurface::Reshape(const gfx::Size& size,
   DCHECK(!use_stencil || !external_stencil_test_);
   if (context_provider()) {
     context_provider()->ContextGL()->ResizeCHROMIUM(
-        size.width(), size.height(), device_scale_factor,
-        gl::GetGLColorSpace(color_space), has_alpha);
+        size.width(), size.height(), device_scale_factor, has_alpha);
   } else {
     software_device()->Resize(size, device_scale_factor);
   }

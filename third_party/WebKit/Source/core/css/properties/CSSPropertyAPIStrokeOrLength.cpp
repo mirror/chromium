@@ -4,18 +4,4 @@
 
 #include "core/css/properties/CSSPropertyAPIStrokeOrLength.h"
 
-#include "core/css/parser/CSSPropertyParserHelpers.h"
-
-namespace blink {
-class CSSParserLocalContext;
-
-const CSSValue* CSSPropertyAPIStrokeOrLength::parseSingleValue(
-    CSSParserTokenRange& range,
-    const CSSParserContext&,
-    const CSSParserLocalContext&) {
-  return CSSPropertyParserHelpers::ConsumeLengthOrPercent(
-      range, kSVGAttributeMode, kValueRangeAll,
-      CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
-}
-
-}  // namespace blink
+namespace blink {}  // namespace blink

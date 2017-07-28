@@ -31,31 +31,19 @@ cr.define('settings_people_page_change_picture', function() {
 
       var fakeDefaultImages = [
         {
-          author: 'Author_Old',
-          index: 1,
+          author: 'Author1',
           title: 'Title1',
           url: 'chrome://foo/1.png',
           website: 'http://foo1.com',
         },
         {
-          author: 'Author1',
-          index: 2,
+          author: 'Author2',
           title: 'Title2',
           url: 'chrome://foo/2.png',
           website: 'http://foo2.com',
         },
-        {
-          author: 'Author2',
-          index: 3,
-          title: 'Title3',
-          url: 'chrome://foo/3.png',
-          website: 'http://foo3.com',
-        },
       ];
-      cr.webUIListenerCallback('default-images-changed', {
-        images: fakeDefaultImages,
-        first: 1,
-      });
+      cr.webUIListenerCallback('default-images-changed', fakeDefaultImages);
 
       this.methodCalled('initialize');
     },
@@ -68,10 +56,7 @@ cr.define('settings_people_page_change_picture', function() {
 
     /** @override */
     selectOldImage: function() {
-      cr.webUIListenerCallback('old-image-changed', {
-        url: 'fake-old-image.jpg',
-        index: 1,
-      });
+      cr.webUIListenerCallback('old-image-changed', 'fake-old-image.jpg');
       this.methodCalled('selectOldImage');
     },
 
@@ -215,10 +200,7 @@ cr.define('settings_people_page_change_picture', function() {
         assertTrue(!!oldImage);
         assertTrue(oldImage.hidden);
 
-        cr.webUIListenerCallback('old-image-changed', {
-          url: 'fake-old-image.jpg',
-          index: 1,
-        });
+        cr.webUIListenerCallback('old-image-changed', 'fake-old-image.jpg');
         Polymer.dom.flush();
 
         return new Promise(function(resolve) {
@@ -234,43 +216,6 @@ cr.define('settings_people_page_change_picture', function() {
           var discard = crPicturePane.$$('#discard');
           assertTrue(!!discard);
           expectFalse(discard.hidden);
-          // Ensure the old image shows the author credit.
-          var credit = changePicture.$$('#authorCredit');
-          assertTrue(!!credit);
-          expectFalse(credit.hidden);
-        });
-      });
-
-      test('ChangePictureFileImage', function() {
-        assertFalse(!!changePicture.selectedItem_);
-
-        // By default there is no old image and the element is hidden.
-        var oldImage = crPictureList.$.oldImage;
-        assertTrue(!!oldImage);
-        assertTrue(oldImage.hidden);
-
-        cr.webUIListenerCallback('old-image-changed', {
-          url: 'file-image.jpg',
-          index: -1,
-        });
-        Polymer.dom.flush();
-
-        return new Promise(function(resolve) {
-          changePicture.async(resolve);
-        }).then(function() {
-          assertTrue(!!changePicture.selectedItem_);
-          // Expect the old image to be selected once an old image is sent via
-          // the native interface.
-          expectEquals(CrPicture.SelectionTypes.OLD,
-                       changePicture.selectedItem_.dataset.type);
-          expectFalse(oldImage.hidden);
-          expectFalse(crPicturePane.cameraActive_);
-          var discard = crPicturePane.$$('#discard');
-          assertTrue(!!discard);
-          expectFalse(discard.hidden);
-          // Ensure the file image does not show the author credit.
-          var credit = changePicture.$$('#authorCredit');
-          assertTrue(!credit || credit.hidden);
         });
       });
 
@@ -282,7 +227,7 @@ cr.define('settings_people_page_change_picture', function() {
 
         return browserProxy.whenCalled('selectDefaultImage').then(
             function(args) {
-              expectEquals('chrome://foo/2.png', args[0]);
+              expectEquals('chrome://foo/1.png', args[0]);
 
               Polymer.dom.flush();
               expectEquals(CrPicture.SelectionTypes.DEFAULT,
@@ -298,7 +243,7 @@ cr.define('settings_people_page_change_picture', function() {
                   changePicture.selectedItem_, 39 /* right */);
               return browserProxy.whenCalled('selectDefaultImage');
             }).then(function(args) {
-              expectEquals('chrome://foo/3.png', args[0]);
+              expectEquals('chrome://foo/2.png', args[0]);
             });
       });
 
@@ -312,10 +257,7 @@ cr.define('settings_people_page_change_picture', function() {
           Polymer.dom.flush();
           expectEquals(firstDefaultImage, changePicture.selectedItem_);
 
-          cr.webUIListenerCallback('old-image-changed', {
-            url: 'fake-old-image.jpg',
-            index: 1,
-          });
+          cr.webUIListenerCallback('old-image-changed', 'fake-old-image.jpg');
 
           Polymer.dom.flush();
           expectEquals(CrPicture.SelectionTypes.OLD,

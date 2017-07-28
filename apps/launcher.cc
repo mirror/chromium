@@ -16,8 +16,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
@@ -154,11 +152,11 @@ class PlatformAppPathLauncher
   }
 
   void LaunchWithRelativePath(const base::FilePath& current_directory) {
-    base::PostTaskWithTraits(
+    BrowserThread::PostTask(
+        BrowserThread::FILE,
         FROM_HERE,
-        {base::TaskPriority::USER_VISIBLE, base::MayBlock(),
-         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
-        base::Bind(&PlatformAppPathLauncher::MakePathAbsolute, this,
+        base::Bind(&PlatformAppPathLauncher::MakePathAbsolute,
+                   this,
                    current_directory));
   }
 
@@ -168,6 +166,8 @@ class PlatformAppPathLauncher
   virtual ~PlatformAppPathLauncher() {}
 
   void MakePathAbsolute(const base::FilePath& current_directory) {
+    DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+
     for (std::vector<base::FilePath>::iterator it = entry_paths_.begin();
          it != entry_paths_.end(); ++it) {
       if (!DoMakePathAbsolute(current_directory, &*it)) {

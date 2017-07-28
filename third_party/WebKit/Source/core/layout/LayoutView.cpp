@@ -243,7 +243,7 @@ void LayoutView::SetShouldDoFullPaintInvalidationOnResizeIfNeeded(
   // composited and needs full paint invalidation on background positioning area
   // resize.
   if (Style()->HasFixedBackgroundImage() &&
-      (!compositor_ || !compositor_->NeedsFixedRootBackgroundLayer())) {
+      (!compositor_ || !compositor_->NeedsFixedRootBackgroundLayer(Layer()))) {
     if ((width_changed && MustInvalidateFillLayersPaintOnWidthChange(
                               Style()->BackgroundLayers())) ||
         (height_changed && MustInvalidateFillLayersPaintOnHeightChange(

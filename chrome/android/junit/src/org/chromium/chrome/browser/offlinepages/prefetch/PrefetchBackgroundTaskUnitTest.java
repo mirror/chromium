@@ -134,7 +134,7 @@ public class PrefetchBackgroundTaskUnitTest {
     @Test
     public void scheduleTask() {
         final int additionalDelaySeconds = 15;
-        PrefetchBackgroundTask.scheduleTask(additionalDelaySeconds, true);
+        PrefetchBackgroundTask.scheduleTask(additionalDelaySeconds);
         TaskInfo scheduledTask =
                 mShadowTaskScheduler.getTaskInfo(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
         assertNotNull(scheduledTask);
@@ -151,7 +151,7 @@ public class PrefetchBackgroundTaskUnitTest {
                 mShadowTaskScheduler.getTaskInfo(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
         assertNull(scheduledTask);
 
-        PrefetchBackgroundTask.scheduleTask(0, true);
+        PrefetchBackgroundTask.scheduleTask(0);
         scheduledTask = mShadowTaskScheduler.getTaskInfo(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
         assertNotNull(scheduledTask);
         assertEquals(TimeUnit.SECONDS.toMillis(PrefetchBackgroundTask.DEFAULT_START_DELAY_SECONDS),

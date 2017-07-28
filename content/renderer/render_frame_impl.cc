@@ -2639,7 +2639,7 @@ void RenderFrameImpl::LoadURLExternally(
 void RenderFrameImpl::LoadErrorPage(int reason) {
   blink::WebURLError error;
   error.unreachable_url = frame_->GetDocument().Url();
-  error.domain = blink::WebURLError::Domain::kNet;
+  error.domain = WebString::FromUTF8(net::kErrorDomain);
   error.reason = reason;
 
   std::string error_html;
@@ -3919,13 +3919,15 @@ void RenderFrameImpl::RunScriptsAtDocumentReady(bool document_is_empty) {
     return;
 
   // Display error page instead of a blank page, if appropriate.
+  std::string error_domain = "http";
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDataSource(frame_->DataSource());
   int http_status_code = internal_data->http_status_code();
-  if (GetContentClient()->renderer()->HasErrorPage(http_status_code)) {
+  if (GetContentClient()->renderer()->HasErrorPage(http_status_code,
+                                                   &error_domain)) {
     WebURLError error;
     error.unreachable_url = frame_->GetDocument().Url();
-    error.domain = WebURLError::Domain::kHttp;
+    error.domain = WebString::FromUTF8(error_domain);
     error.reason = http_status_code;
     // This call may run scripts, e.g. via the beforeunload event.
     LoadNavigationErrorPage(frame_->DataSource()->GetRequest(), error, true,
@@ -4114,10 +4116,6 @@ bool RenderFrameImpl::IsClientLoFiActiveForFrame() {
     return false;
   }
   return true;
-}
-
-void RenderFrameImpl::DidBlockFramebust(const WebURL& url) {
-  Send(new FrameHostMsg_DidBlockFramebust(GetRoutingID(), url));
 }
 
 void RenderFrameImpl::AbortClientNavigation() {
@@ -4536,12 +4534,6 @@ void RenderFrameImpl::DidObserveLoadingBehavior(
     blink::WebLoadingBehaviorFlag behavior) {
   for (auto& observer : observers_)
     observer.DidObserveLoadingBehavior(behavior);
-}
-
-void RenderFrameImpl::DidObserveNewFeatureUsage(
-    blink::mojom::WebFeature feature) {
-  for (auto& observer : observers_)
-    observer.DidObserveNewFeatureUsage(feature);
 }
 
 void RenderFrameImpl::DidCreateScriptContext(v8::Local<v8::Context> context,

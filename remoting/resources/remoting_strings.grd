@@ -31,10 +31,7 @@
     <output filename="remoting/resources/es.pak" lang="es" type="data_package"/>
     <output filename="remoting/resources/et.pak" lang="et" type="data_package"/>
     <output filename="remoting/resources/fa.pak" lang="fa" type="data_package"/>
-    <if expr="not _official_build">
-      <!-- We don't need to generate the fake-bidi locale for official builds. -->
-      <output filename="remoting/resources/fake-bidi.pak" lang="fake-bidi" type="data_package"/>
-    </if>
+    <output filename="remoting/resources/fake-bidi.pak" lang="fake-bidi" type="data_package"/>
     <output filename="remoting/resources/fi.pak" lang="fi" type="data_package"/>
     <output filename="remoting/resources/fil.pak" lang="fil" type="data_package"/>
     <output filename="remoting/resources/fr.pak" lang="fr" type="data_package"/>
@@ -90,10 +87,7 @@
     <output filename="remoting/webapp/_locales/da/messages.json" lang="da" type="chrome_messages_json"/>
     <output filename="remoting/webapp/_locales/de/messages.json" lang="de" type="chrome_messages_json"/>
     <output filename="remoting/webapp/_locales/fa/messages.json" lang="fa" type="chrome_messages_json"/>
-    <if expr="not _official_build">
-      <!-- We don't need to generate the fake-bidi locale for official builds. -->
-      <output filename="remoting/webapp/_locales/fake_bidi/messages.json" lang="fake-bidi" type="chrome_messages_json"/>
-    </if>
+    <output filename="remoting/webapp/_locales/fake_bidi/messages.json" lang="fake-bidi" type="chrome_messages_json"/>
     <output filename="remoting/webapp/_locales/el/messages.json" lang="el" type="chrome_messages_json"/>
     <output filename="remoting/webapp/_locales/en/messages.json" lang="en" type="chrome_messages_json"/>
     <if expr="chromeos">
@@ -872,9 +866,6 @@ After your remote device is setup, you can access it directly from this page
       </message>
       <message desc="Error displayed when the service returns a 503 error. Such errors are usually temporary, and resolve themselves in about 30 seconds." name="IDS_ERROR_SERVICE_UNAVAILABLE">
         The service is temporarily unavailable. Please try again later.
-      </message>
-      <message desc="Error displayed when the user's oauth token is invalid." name="IDS_ERROR_OAUTH_TOKEN_INVALID">
-        There was an issue authenticating, please login again.
       </message>
       <message desc="Error displayed in situations where things go wrong in ways not anticipated by the developers. There is typically no user-workaround to suggest, other than reporting the error so that we can investigate further." name="IDS_ERROR_UNEXPECTED" formatter_data="android_java">
         An unexpected error occurred. Please report this problem to the developers.

@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "gin/handle.h"
@@ -31,7 +32,9 @@ class Result : public Wrappable<Result> {
   int count() const { return count_; }
   void set_count(int count) { count_ = count; }
 
-  void Quit() { base::RunLoop::QuitCurrentDeprecated(); }
+  void Quit() {
+    base::MessageLoop::current()->QuitNow();
+  }
 
  private:
   Result() : count_(0) {

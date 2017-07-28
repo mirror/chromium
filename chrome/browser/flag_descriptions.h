@@ -998,9 +998,6 @@ extern const char kEnableWebapkDescription[];
 extern const char kEnableWebNfcName[];
 extern const char kEnableWebNfcDescription[];
 
-extern const char kEnableWebPaymentsMethodSectionOrderV2Name[];
-extern const char kEnableWebPaymentsMethodSectionOrderV2Description[];
-
 extern const char kEnableWebPaymentsSingleAppUiSkipName[];
 extern const char kEnableWebPaymentsSingleAppUiSkipDescription[];
 
@@ -1102,9 +1099,6 @@ extern const char
 
 extern const char kPullToRefreshEffectName[];
 extern const char kPullToRefreshEffectDescription[];
-
-extern const char kPwaPersistentNotificationName[];
-extern const char kPwaPersistentNotificationDescription[];
 
 extern const char kReaderModeHeuristicsName[];
 extern const char kReaderModeHeuristicsDescription[];

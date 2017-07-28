@@ -13,10 +13,14 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/scoped_feature_list.h"
-#include "base/test/scoped_task_environment.h"
+#include "base/test/scoped_task_scheduler.h"
+#include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/machine_intelligence/proto/ranker_model.pb.h"
 #include "components/machine_intelligence/proto/translate_ranker_model.pb.h"
@@ -27,6 +31,7 @@
 
 namespace {
 
+using base::TaskScheduler;
 using machine_intelligence::RankerModel;
 using machine_intelligence::RankerModelLoader;
 using machine_intelligence::RankerModelStatus;
@@ -39,6 +44,8 @@ class RankerModelLoaderTest : public ::testing::Test {
   RankerModelLoaderTest();
 
   void SetUp() override;
+
+  void TearDown() override;
 
   // Returns a copy of |model|.
   static std::unique_ptr<RankerModel> Clone(const RankerModel& model);
@@ -75,7 +82,7 @@ class RankerModelLoaderTest : public ::testing::Test {
   void OnModelAvailable(std::unique_ptr<RankerModel> model);
 
   // Sets up the task scheduling/task-runner environment for each test.
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
 
   // Override the default URL fetcher to return custom responses for tests.
   net::FakeURLFetcherFactory url_fetcher_factory_;
@@ -140,6 +147,10 @@ void RankerModelLoaderTest::SetUp() {
   ASSERT_NO_FATAL_FAILURE(InitLocalModels());
 }
 
+void RankerModelLoaderTest::TearDown() {
+  base::RunLoop().RunUntilIdle();
+}
+
 // static
 std::unique_ptr<RankerModel> RankerModelLoaderTest::Clone(
     const RankerModel& model) {
@@ -175,7 +186,7 @@ bool RankerModelLoaderTest::DoLoaderTest(const base::FilePath& model_path,
       request_context_getter_.get(), model_path, model_url,
       "RankerModelLoaderTest");
   loader->NotifyOfRankerActivity();
-  scoped_task_environment_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   return true;
 }

@@ -9,7 +9,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/threading/thread.h"
@@ -85,16 +84,12 @@ class WallpaperResizerTest : public testing::Test,
     return worker_thread_.task_runner();
   }
 
-  void WaitForResize() {
-    active_runloop_ = base::MakeUnique<base::RunLoop>();
-    active_runloop_->Run();
-  }
+  void WaitForResize() { base::RunLoop().Run(); }
 
-  void OnWallpaperResized() override { active_runloop_->Quit(); }
+  void OnWallpaperResized() override { message_loop_.QuitWhenIdle(); }
 
  private:
   base::MessageLoop message_loop_;
-  std::unique_ptr<base::RunLoop> active_runloop_;
   base::Thread worker_thread_;
 
   DISALLOW_COPY_AND_ASSIGN(WallpaperResizerTest);

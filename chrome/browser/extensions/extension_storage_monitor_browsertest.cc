@@ -73,7 +73,7 @@ class NotificationObserver : public message_center::MessageCenterObserver {
     received_notifications_.insert(notification_id);
 
     if (waiting_ && HasReceivedNotification())
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoopForUI::current()->QuitWhenIdle();
   }
 
   message_center::MessageCenter* message_center_;

@@ -25,6 +25,10 @@
                   '|isimpledom' \
                   '|liblouis'
     },
+    'activity_log': {
+      'filepath': 'chrome/browser/extensions/activity_log/' \
+                  '|chrome/browser/extensions/api/activity_log_private/'
+    },
     'add_to_homescreen': {
       'filepath': 'chrome/android/java/src/org/chromium/chrome/browser/webapps/|'\
                   'chrome/android/javatests/src/org/chromium/chrome/browser/webapps/|'\
@@ -212,6 +216,12 @@
     'bottombar': {
       'filepath': 'chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/',
     },
+    'breakpad_app': {
+      'filepath': 'components/crash/content/app/',
+    },
+    'browser': {
+      'filepath': 'chrome/browser/',
+    },
     'browser_chromeos': {
       'filepath': 'chrome/browser/chromeos/',
     },
@@ -256,8 +266,7 @@
     },
     'cast_channel': {
       'filepath':  'chrome/test/data/extensions/api_test/cast_channel/' \
-                   '|components/cast_channel/' \
-                   '|extensions/browser/api/cast_channel'
+                   '|extensions/(browser|common)/api/cast_channel'
     },
     'certificate_transparency': {
       'filepath': 'components/certificate_transparency/'\
@@ -375,6 +384,10 @@
     },
     'content_network' : {
       'filepath': 'content/network/',
+    },
+    'cookie_monster': {
+      'filepath': 'net/cookies/|'\
+                  'chrome/browser/net/sqlite_persistent_cookie_store',
     },
     'courgette': {
       'filepath': 'courgette/',
@@ -551,9 +564,6 @@
     'importer': {
       'filepath': 'import',
     },
-    'incident_reporting': {
-      'filepath': 'chrome/browser/safe_browsing/incident_reporting',
-    },
     'indexed_db': {
       'filepath': 'content/browser/indexed_db|'\
                   'content/child/indexed_db|'\
@@ -573,12 +583,11 @@
     'installable': {
       'filepath': 'chrome/browser/installable/',
     },
+    'installer': {
+      'filepath': 'chrome/install(_static|er)/',
+    },
     'installer_linux': {
       'filepath': 'chrome/installer/linux/',
-    },
-    'installer_win': {
-      'filepath': 'chrome/install_static/'\
-                  '|chrome/installer/(?!gcapi_mac/|linux/|mac/)',
     },
     'instant': {
       'filepath': 'instant|searchbox|'\
@@ -610,6 +619,10 @@
     },
     'ipc': {
       'filepath': 'ipc/ipc',
+    },
+    'ipc_messages': {
+      'filepath': '_message.*.h|'\
+                  '_messages.cc',
     },
     'login': {
       'filepath': 'chrome/browser/ui/login'
@@ -787,6 +800,11 @@
     'nqe': {
       'filepath': 'nqe',
     },
+    'ntp': {
+      'filepath': 'chrome/browser/resources/ntp4/|'\
+        'chrome/browser/resources/ntp_android/|'\
+        'chrome/browser/ui/webui/ntp/',
+    },
     'ntp_snippets': {
       'filepath': 'chrome/android/java/src/org/chromium/chrome/browser/ntp/|'\
         'chrome/android/javatests/src/org/chromium/chrome/browser/ntp/|'\
@@ -954,6 +972,15 @@
     'safe_browsing_db': {
       'filepath': 'components/safe_browsing_db/',
     },
+    'sandbox': {
+      'filepath': 'sandbox/'\
+                  '|content/browser/bootstrap_sandbox_mac'\
+                  '|content/browser/renderer_host/render_sandbox_host_linux'\
+                  '|content/browser/renderer_host/sandbox_ipc_linux'\
+                  '|content/browser/zygote_host/'\
+                  '|content/common/sandbox_'\
+                  '|content/zygote/'\
+    },
     'scheduler': {
       'filepath': 'cc/scheduler'\
                   '|components/scheduler'\
@@ -961,6 +988,9 @@
     },
     'screen_orientation': {
       'filepath': 'screen_orientation',
+    },
+    'search': {
+      'filepath': 'chrome/browser/ui/search/',
     },
     'service_worker': {
       'filepath': 'content/(browser|renderer|child|common)/service_worker/',
@@ -979,6 +1009,12 @@
     'site_instance': {
       'filepath': 'content/browser/site_instance|'\
         'content/browser/browsing_instance',
+    },
+    'speech': {
+      'filepath': 'chrome/browser/speech/'\
+                  '|content/browser/speech/'\
+                  '|content/common/.*speech'\
+                  '|content/public/.*speech'
     },
     'spellcheck': {
       'filepath': 'chrome/browser/spellchecker/'\
@@ -1051,6 +1087,9 @@
         'content/browser/tab_contents/|'\
         'chrome/browser/ui/tab_contents/',
     },
+    'task_manager': {
+      'filepath': 'task_manager'
+    },
     'tbmv2_metrics': {
       'filepath': 'third_party/catapult/tracing/tracing/metrics'
     },
@@ -1096,6 +1135,9 @@
     'timers': {
       'filepath': 'base/timer/'\
                   '|components/timers/'
+    },
+    'tools': {
+      'filepath': 'tools/',
     },
     'tools_win_chromeexts': {
       'filepath': 'tools/win/chromeexts',
@@ -1152,6 +1194,9 @@
     'views': {
       # Applies to all files and subdirs within this directory.
       'filepath': '^ui/views/',
+    },
+    'views_corewm': {
+      'filepath': 'ui/views/corewm/',
     },
     'virtual_keyboard': {
       'filepath': 'ui/keyboard/'\
@@ -1247,6 +1292,11 @@
                   '|third_party/WebKit/Source/web/.*Drag' \
                   '|third_party/WebKit/public/platform/.*Drag' \
                   '|third_party/WebKit/public/web/.*Drag',
+    },
+    'blink_content_security_policy': {
+      'filepath': 'third_party/WebKit/Source/core/frame/csp' \
+                  '|third_party/WebKit/Source/core/events/SecurityPolicyViolationEvent' \
+                  '|third_party/WebKit/LayoutTests/http/tests/security/contentSecurityPolicy'
     },
     'blink_css': {
       'filepath': 'third_party/WebKit/Source/core/css',
@@ -1648,7 +1698,8 @@
                         'kalyan.kondapally@intel.com',
                         'piman+watch@chromium.org'],
     'auto_bisect': ['auto-bisect-reviews@chromium.org'],
-    'autofill': ['rouslan+autofill@chromium.org',
+    'autofill': ['estade+watch@chromium.org',
+                 'rouslan+autofill@chromium.org',
                  'vabr+watchlistautofill@chromium.org',
                  'mathp+autofillwatch@chromium.org',
                  'sebsg+autofillwatch@chromium.org',
@@ -1726,7 +1777,8 @@
     'blink_dom': ['blink-reviews-dom@chromium.org',
                   'dglazkov+blink@chromium.org',
                   'eae+blinkwatch@chromium.org',
-                  'rob.buis@samsung.com'],
+                  'rob.buis@samsung.com',
+                  'sigbjornf@opera.com'],
     'blink_dom_events': ['hayato@chromium.org'],
     'blink_events': ['blink-reviews-events@chromium.org',
                      'dglazkov+blink@chromium.org',
@@ -1890,8 +1942,7 @@
     'cast_certificate': ['dougsteed+watch@chromium.org',
                          'mfoltz+watch@chromium.org',
                          'ryanchung+watch@chromium.org'],
-    'cast_channel': ['mfoltz+watch@chromium.org',
-                     'ryanchung+watch@chromium.org'],
+    'cast_channel': ['mfoltz+watch@chromium.org'],
     'cc': ['cc-bugs@chromium.org'],
     'certificate_transparency': ['certificate-transparency-chrome@googlegroups.com',
                                  'eranm@chromium.org',
@@ -2013,16 +2064,15 @@
     'hotword': ['rlp+watch@chromium.org'],
     'i18n': ['jshin+watch@chromium.org'],
     'importer': ['tfarina@chromium.org'],
-    'incident_reporting': ['grt+watch@chromium.org'],
     'indexed_db': ['cmumford@chromium.org',
                    'jsbell+idb@chromium.org'],
     'ink_drop': ['bruthig+ink_drop@chromium.org'],
     'input': ['dtapuska+chromiumwatch@chromium.org'],
     'installable': ['dominickn+watch@chromium.org'],
+    'installer': ['grt+watch@chromium.org',
+                  'pennymac+watch@chromium.org',
+                  'wfh+watch@chromium.org'],
     'installer_linux': [ 'mmoss@chromium.org'],
-    'installer_win': ['grt+watch@chromium.org',
-                      'pennymac+watch@chromium.org',
-                      'wfh+watch@chromium.org'],
     'instant': ['dcblack@chromium.org',
                 'donnd+watch@chromium.org',
                 'jered+watch@chromium.org',
@@ -2168,7 +2218,8 @@
     'rlz_id': ['alito+watch@chromium.org',
                'gab+watch@chromium.org',
                'robertshield+watch@chromium.org'],
-    'safe_browsing': ['timvolodine@chromium.org',
+    'safe_browsing': ['grt+watch@chromium.org',
+                      'timvolodine@chromium.org',
                       'vakh+watch@chromium.org'],
     'safe_browsing_db': ['timvolodine@chromium.org',
                          'vakh+watch@chromium.org'],

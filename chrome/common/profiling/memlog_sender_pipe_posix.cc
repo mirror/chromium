@@ -7,14 +7,18 @@
 #include <unistd.h>
 
 #include "base/logging.h"
+#include "base/posix/unix_domain_socket_linux.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/common/profiling/memlog_stream.h"
 #include "mojo/edk/embedder/platform_channel_utils_posix.h"
 
 namespace profiling {
 
-MemlogSenderPipe::MemlogSenderPipe(mojo::edk::ScopedPlatformHandle fd)
-    : handle_(std::move(fd)) {}
+MemlogSenderPipe::MemlogSenderPipe(const std::string& pipe_id) {
+  int fd;
+  CHECK(base::StringToInt(pipe_id, &fd));
+  handle_.reset(mojo::edk::PlatformHandle(fd));
+}
 
 MemlogSenderPipe::~MemlogSenderPipe() {
 }

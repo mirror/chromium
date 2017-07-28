@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -470,7 +471,7 @@ void MDnsTest::RunFor(base::TimeDelta time_period) {
 }
 
 void MDnsTest::Stop() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 TEST_F(MDnsTest, PassiveListeners) {

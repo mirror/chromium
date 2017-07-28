@@ -10,7 +10,6 @@
 #include "modules/sensor/SensorProviderProxy.h"
 #include "platform/mojo/MojoHelper.h"
 #include "public/platform/Platform.h"
-#include "services/device/public/cpp/generic_sensor/sensor_traits.h"
 
 namespace blink {
 
@@ -210,8 +209,9 @@ void SensorProxy::OnSensorCreated(SensorInitParamsPtr params,
 
   DCHECK_GT(frequency_limits_.first, 0.0);
   DCHECK_GE(frequency_limits_.second, frequency_limits_.first);
-  DCHECK_GE(device::GetSensorMaxAllowedFrequency(type_),
-            frequency_limits_.second);
+  constexpr double kMaxAllowedFrequency =
+      SensorConfiguration::kMaxAllowedFrequency;
+  DCHECK_GE(kMaxAllowedFrequency, frequency_limits_.second);
 
   auto error_callback =
       WTF::Bind(&SensorProxy::HandleSensorError, WrapWeakPersistent(this));

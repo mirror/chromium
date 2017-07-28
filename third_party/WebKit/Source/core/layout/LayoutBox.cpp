@@ -366,17 +366,16 @@ void LayoutBox::UpdateBackgroundAttachmentFixedStatusAfterStyleChange() {
     return;
 
   // An object needs to be repainted on frame scroll when it has background-
-  // attachment:fixed, unless the background will be separately composited.
-  // LayoutView is responsible for painting root background, thus the root
-  // element (and the body element if html element has no background) skips
-  // painting backgrounds.
+  // attachment:fixed. LayoutView is responsible for painting root background,
+  // thus the root element (and the body element if html element has no
+  // background) skips painting backgrounds.
   bool is_background_attachment_fixed_object =
       !IsDocumentElement() && !BackgroundStolenForBeingBody() &&
       StyleRef().HasFixedBackgroundImage();
   if (IsLayoutView() &&
-      View()->Compositor()->PreferCompositingToLCDTextEnabled() &&
-      StyleRef().HasEntirelyFixedBackground()) {
-    is_background_attachment_fixed_object = false;
+      View()->Compositor()->SupportsFixedRootBackgroundCompositing()) {
+    if (StyleRef().HasEntirelyFixedBackground())
+      is_background_attachment_fixed_object = false;
   }
 
   SetIsBackgroundAttachmentFixedObject(is_background_attachment_fixed_object);
@@ -644,14 +643,13 @@ static bool IsDisallowedAutoscroll(HTMLFrameOwnerElement* owner_element,
   return false;
 }
 
-void LayoutBox::ScrollRectToVisibleRecursive(
-    const LayoutRect& rect,
-    const ScrollAlignment& align_x,
-    const ScrollAlignment& align_y,
-    ScrollType scroll_type,
-    bool make_visible_in_visual_viewport,
-    ScrollBehavior scroll_behavior,
-    bool is_for_scroll_sequence) {
+void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
+                                    const ScrollAlignment& align_x,
+                                    const ScrollAlignment& align_y,
+                                    ScrollType scroll_type,
+                                    bool make_visible_in_visual_viewport,
+                                    ScrollBehavior scroll_behavior,
+                                    bool is_for_scroll_sequence) {
   DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
@@ -740,10 +738,9 @@ void LayoutBox::ScrollRectToVisibleRecursive(
     parent_box = EnclosingScrollableBox();
 
   if (parent_box) {
-    parent_box->ScrollRectToVisibleRecursive(
-        new_rect, align_x, align_y, scroll_type,
-        make_visible_in_visual_viewport, scroll_behavior,
-        is_for_scroll_sequence);
+    parent_box->ScrollRectToVisible(new_rect, align_x, align_y, scroll_type,
+                                    make_visible_in_visual_viewport,
+                                    scroll_behavior, is_for_scroll_sequence);
   }
 }
 
@@ -1056,10 +1053,9 @@ void LayoutBox::Autoscroll(const IntPoint& position_in_root_frame) {
 
   IntPoint position_in_content =
       frame_view->RootFrameToContents(position_in_root_frame);
-  ScrollRectToVisibleRecursive(
-      LayoutRect(position_in_content, LayoutSize(1, 1)),
-      ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, kUserScroll);
+  ScrollRectToVisible(LayoutRect(position_in_content, LayoutSize(1, 1)),
+                      ScrollAlignment::kAlignToEdgeIfNeeded,
+                      ScrollAlignment::kAlignToEdgeIfNeeded, kUserScroll);
 }
 
 // There are two kinds of layoutObject that can autoscroll.
@@ -5862,10 +5858,10 @@ bool LayoutBox::CrossesPageBoundary(LayoutUnit offset,
 
 LayoutUnit LayoutBox::CalculatePaginationStrutToFitContent(
     LayoutUnit offset,
+    LayoutUnit strut_to_next_page,
     LayoutUnit content_logical_height) const {
-  LayoutUnit strut_to_next_page =
-      PageRemainingLogicalHeightForOffset(offset, kAssociateWithLatterPage);
-
+  DCHECK_EQ(strut_to_next_page, PageRemainingLogicalHeightForOffset(
+                                    offset, kAssociateWithLatterPage));
   // If we're inside a cell in a row that straddles a page then avoid the
   // repeating header group if necessary. If we're a table section we're
   // already accounting for it.

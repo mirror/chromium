@@ -244,13 +244,6 @@ class DebugDevToolsInterceptor : public net::URLRequestInterceptor {
 };
 #endif  // BUILDFLAG(DEBUG_DEVTOOLS)
 
-std::unique_ptr<net::HttpTransactionFactory> CreateDevToolsTransactionFactory(
-    DevToolsNetworkController* devtools_network_controller,
-    net::HttpNetworkSession* session) {
-  return base::WrapUnique(new DevToolsNetworkTransactionFactory(
-      devtools_network_controller, session));
-}
-
 #if defined(OS_CHROMEOS)
 // The following four functions are responsible for initializing NSS for each
 // profile on ChromeOS, which has a separate NSS database and TPM slot
@@ -507,8 +500,6 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
     sync_first_setup_complete_.Init(syncer::prefs::kSyncFirstSetupComplete,
                                     pref_service);
     sync_first_setup_complete_.MoveToThread(io_task_runner);
-    sync_has_auth_error_.Init(syncer::prefs::kSyncHasAuthError, pref_service);
-    sync_has_auth_error_.MoveToThread(io_task_runner);
   }
 
   network_prediction_options_.Init(prefs::kNetworkPredictionOptions,
@@ -915,10 +906,6 @@ bool ProfileIOData::IsSyncEnabled() const {
          !sync_suppress_start_.GetValue();
 }
 
-bool ProfileIOData::SyncHasAuthError() const {
-  return sync_has_auth_error_.GetValue();
-}
-
 bool ProfileIOData::IsOffTheRecord() const {
   return profile_type() == Profile::INCOGNITO_PROFILE
       || profile_type() == Profile::GUEST_PROFILE;
@@ -1173,10 +1160,6 @@ void ProfileIOData::Init(
   InitializeInternal(builder.get(), profile_params_.get(), protocol_handlers,
                      std::move(request_interceptors));
 
-  builder->SetCreateHttpTransactionFactoryCallback(
-      base::BindOnce(&CreateDevToolsTransactionFactory,
-                     network_controller_handle_.GetController()));
-
   main_network_context_ =
       io_thread_globals->network_service->CreateNetworkContextWithBuilder(
           std::move(profile_params_->main_network_context_request),
@@ -1386,7 +1369,6 @@ void ProfileIOData::ShutdownOnUIThread(
   google_services_user_account_id_.Destroy();
   sync_suppress_start_.Destroy();
   sync_first_setup_complete_.Destroy();
-  sync_has_auth_error_.Destroy();
   enable_referrers_.Destroy();
   enable_do_not_track_.Destroy();
   force_google_safesearch_.Destroy();

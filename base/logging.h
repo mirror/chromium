@@ -602,13 +602,7 @@ class CheckOpResult {
 #define CHECK(condition) \
   UNLIKELY(!(condition)) ? IMMEDIATE_CRASH() : EAT_STREAM_PARAMETERS
 
-// PCHECK includes the system error code, which is useful for determining
-// why the condition failed. In official builds, preserve only the error code
-// message so that it is available in crash reports. The stringified
-// condition and any additional stream parameters are dropped.
-#define PCHECK(condition)                                  \
-  LAZY_STREAM(PLOG_STREAM(FATAL), UNLIKELY(!(condition))); \
-  EAT_STREAM_PARAMETERS
+#define PCHECK(condition) CHECK(condition)
 
 #define CHECK_OP(name, op, val1, val2) CHECK((val1) op (val2))
 

@@ -142,7 +142,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidRunContentWithCertificateErrors(const KURL&) override;
   void DidChangePerformanceTiming() override;
   void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) override;
-  void DidObserveNewFeatureUsage(mojom::WebFeature) override;
   void SelectorMatchChanged(const Vector<String>& added_selectors,
                             const Vector<String>& removed_selectors) override;
 
@@ -242,8 +241,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   void AnnotatedRegionsChanged() override;
-
-  void DidBlockFramebust(const KURL&) override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameBase*);

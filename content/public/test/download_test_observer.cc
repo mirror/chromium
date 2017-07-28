@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "content/public/browser/browser_thread.h"
@@ -51,7 +50,7 @@ void DownloadUpdatedObserver::OnDownloadUpdated(DownloadItem* item) {
   if (filter_.Run(item_))
     event_seen_ = true;
   if (waiting_ && event_seen_)
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoopForUI::current()->QuitWhenIdle();
 }
 
 void DownloadUpdatedObserver::OnDownloadDestroyed(DownloadItem* item) {
@@ -59,7 +58,7 @@ void DownloadUpdatedObserver::OnDownloadDestroyed(DownloadItem* item) {
   item_->RemoveObserver(this);
   item_ = NULL;
   if (waiting_)
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoopForUI::current()->QuitWhenIdle();
 }
 
 DownloadTestObserver::DownloadTestObserver(
@@ -218,7 +217,7 @@ void DownloadTestObserver::DownloadInFinalState(DownloadItem* download) {
 
 void DownloadTestObserver::SignalIfFinished() {
   if (waiting_ && IsFinished())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoopForUI::current()->QuitWhenIdle();
 }
 
 void DownloadTestObserver::AcceptDangerousDownload(uint32_t download_id) {
@@ -444,7 +443,7 @@ void DownloadTestItemCreationObserver::DownloadItemCreationCallback(
   DCHECK_EQ(1u, called_back_count_);
 
   if (waiting_)
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoopForUI::current()->QuitWhenIdle();
 }
 
 const DownloadUrlParameters::OnStartedCallback

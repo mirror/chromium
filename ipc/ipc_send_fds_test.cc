@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/message_loop/message_loop.h"
 #include "build/build_config.h"
 
 #if defined(OS_POSIX)
@@ -82,7 +83,7 @@ class MyChannelDescriptorListener : public MyChannelDescriptorListenerBase {
   }
 
   void OnChannelError() override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  protected:
@@ -105,7 +106,7 @@ class MyChannelDescriptorListener : public MyChannelDescriptorListenerBase {
 
     ++num_fds_received_;
     if (num_fds_received_ == kNumFDsToSend * kNumMessages)
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

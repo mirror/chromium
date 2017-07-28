@@ -35,6 +35,7 @@
 #include "net/http/http_response_info.h"
 #include "net/http/http_status_code.h"
 #include "net/nqe/network_quality_estimator_util.h"
+#include "net/nqe/socket_watcher_factory.h"
 #include "net/nqe/throughput_analyzer.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
@@ -699,7 +700,6 @@ void NetworkQualityEstimator::SetUseLocalHostRequestsForTesting(
     bool use_localhost_requests) {
   DCHECK(thread_checker_.CalledOnValidThread());
   use_localhost_requests_ = use_localhost_requests;
-  watcher_factory_->SetUseLocalHostRequestsForTesting(use_localhost_requests_);
   throughput_analyzer_->SetUseLocalHostRequestsForTesting(
       use_localhost_requests_);
 }
@@ -1483,12 +1483,6 @@ bool NetworkQualityEstimator::ReadCachedNetworkQualityEstimate() {
   if (!params_->persistent_cache_reading_enabled())
     return false;
 
-  if (current_network_id_.type !=
-          NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI &&
-      !disable_offline_check_) {
-    return false;
-  }
-
   nqe::internal::CachedNetworkQuality cached_network_quality;
 
   const bool cached_estimate_available = network_quality_store_->GetById(
@@ -1826,11 +1820,6 @@ void NetworkQualityEstimator::MaybeUpdateNetworkQualityFromCache(
     return;
   if (network_id != current_network_id_)
     return;
-  if (network_id.type !=
-          NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI &&
-      !disable_offline_check_) {
-    return;
-  }
 
   // Since the cached network quality is for the current network, add it to
   // the current observations.

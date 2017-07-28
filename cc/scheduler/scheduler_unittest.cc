@@ -17,11 +17,11 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/test/fake_external_begin_frame_source.h"
+#include "cc/test/ordered_simple_task_runner.h"
 #include "cc/test/scheduler_test_common.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/fake_delay_based_time_source.h"
-#include "components/viz/test/ordered_simple_task_runner.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -3219,8 +3219,7 @@ TEST_F(SchedulerTest, ImplSideInvalidationsInDeadline) {
 
   // Request an impl-side invalidation and trigger the deadline. Ensure that the
   // invalidation runs inside the deadline.
-  bool needs_first_draw_on_activation = true;
-  scheduler_->SetNeedsImplSideInvalidation(needs_first_draw_on_activation);
+  scheduler_->SetNeedsImplSideInvalidation();
   client_->Reset();
   EXPECT_SCOPED(AdvanceFrame());
   EXPECT_ACTIONS("WillBeginImplFrame");
@@ -3237,8 +3236,7 @@ TEST_F(SchedulerTest, ImplSideInvalidationsMergedWithCommit) {
   // Request a main frame and invalidation, the only action run should be
   // sending the main frame.
   scheduler_->SetNeedsBeginMainFrame();
-  bool needs_first_draw_on_activation = true;
-  scheduler_->SetNeedsImplSideInvalidation(needs_first_draw_on_activation);
+  scheduler_->SetNeedsImplSideInvalidation();
   client_->Reset();
   EXPECT_SCOPED(AdvanceFrame());
   EXPECT_ACTIONS("WillBeginImplFrame", "ScheduledActionSendBeginMainFrame");
@@ -3263,8 +3261,7 @@ TEST_F(SchedulerTest, AbortedCommitsTriggerImplSideInvalidations) {
 
   // Request a main frame and invalidation.
   scheduler_->SetNeedsBeginMainFrame();
-  bool needs_first_draw_on_activation = true;
-  scheduler_->SetNeedsImplSideInvalidation(needs_first_draw_on_activation);
+  scheduler_->SetNeedsImplSideInvalidation();
   client_->Reset();
   EXPECT_SCOPED(AdvanceFrame());
   EXPECT_ACTIONS("WillBeginImplFrame", "ScheduledActionSendBeginMainFrame");

@@ -18,7 +18,7 @@
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/wm/window_state.h"
 #include "base/memory/ptr_util.h"
-#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/user_manager/user_info_impl.h"
 #include "ui/aura/window.h"
@@ -93,7 +93,7 @@ void ShellDelegateImpl::PreInit() {}
 void ShellDelegateImpl::PreShutdown() {}
 
 void ShellDelegateImpl::Exit() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 std::unique_ptr<keyboard::KeyboardUI> ShellDelegateImpl::CreateKeyboardUI() {

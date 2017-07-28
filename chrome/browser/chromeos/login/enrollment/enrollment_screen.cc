@@ -202,8 +202,6 @@ void EnrollmentScreen::OnLoginDone(const std::string& user,
       auth_code, shark_controller_ != nullptr /* fetch_additional_token */);
 }
 
-void EnrollmentScreen::OnLicenseTypeSelected(const std::string& license_type) {}
-
 void EnrollmentScreen::OnRetry() {
   retry_task_.Cancel();
   ProcessRetry();

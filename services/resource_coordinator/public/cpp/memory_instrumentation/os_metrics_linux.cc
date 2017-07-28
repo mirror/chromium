@@ -19,9 +19,6 @@ namespace memory_instrumentation {
 
 namespace {
 
-using mojom::VmRegion;
-using mojom::VmRegionPtr;
-
 const uint32_t kMaxLineSize = 4096;
 
 base::ScopedFD OpenStatm(base::ProcessId pid) {
@@ -56,7 +53,8 @@ std::unique_ptr<base::ProcessMetrics> CreateProcessMetrics(
   return base::ProcessMetrics::CreateProcessMetrics(pid);
 }
 
-bool ParseSmapsHeader(const char* header_line, VmRegion* region) {
+bool ParseSmapsHeader(const char* header_line,
+                      base::trace_event::ProcessMemoryMaps::VMRegion* region) {
   // e.g., "00400000-00421000 r-xp 00000000 fc:01 1234  /foo.so\n"
   bool res = true;  // Whether this region should be appended or skipped.
   uint64_t end_addr = 0;
@@ -78,16 +76,20 @@ bool ParseSmapsHeader(const char* header_line, VmRegion* region) {
 
   region->protection_flags = 0;
   if (protection_flags[0] == 'r') {
-    region->protection_flags |= VmRegion::kProtectionFlagsRead;
+    region->protection_flags |=
+        base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsRead;
   }
   if (protection_flags[1] == 'w') {
-    region->protection_flags |= VmRegion::kProtectionFlagsWrite;
+    region->protection_flags |=
+        base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsWrite;
   }
   if (protection_flags[2] == 'x') {
-    region->protection_flags |= VmRegion::kProtectionFlagsExec;
+    region->protection_flags |=
+        base::trace_event::ProcessMemoryMaps::VMRegion::kProtectionFlagsExec;
   }
   if (protection_flags[3] == 's') {
-    region->protection_flags |= VmRegion::kProtectionFlagsMayshare;
+    region->protection_flags |= base::trace_event::ProcessMemoryMaps::VMRegion::
+        kProtectionFlagsMayshare;
   }
 
   region->mapped_file = mapped_file;
@@ -103,7 +105,9 @@ uint64_t ReadCounterBytes(char* counter_line) {
   return res == 1 ? counter_value * 1024 : 0;
 }
 
-uint32_t ParseSmapsCounter(char* counter_line, VmRegion* region) {
+uint32_t ParseSmapsCounter(
+    char* counter_line,
+    base::trace_event::ProcessMemoryMaps::VMRegion* region) {
   // A smaps counter lines looks as follows: "RSS:  0 Kb\n"
   uint32_t res = 1;
   char counter_name[20];
@@ -131,7 +135,7 @@ uint32_t ParseSmapsCounter(char* counter_line, VmRegion* region) {
 }
 
 uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
-                                std::vector<VmRegionPtr>* maps) {
+                                base::trace_event::ProcessMemoryMaps* pmm) {
   if (!smaps_file)
     return 0;
 
@@ -141,14 +145,14 @@ uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
   const uint32_t kNumExpectedCountersPerRegion = 6;
   uint32_t counters_parsed_for_current_region = 0;
   uint32_t num_valid_regions = 0;
+  base::trace_event::ProcessMemoryMaps::VMRegion region;
   bool should_add_current_region = false;
-  VmRegion region;
   for (;;) {
     line[0] = '\0';
     if (fgets(line, kMaxLineSize, smaps_file) == nullptr || !strlen(line))
       break;
     if (isxdigit(line[0]) && !isupper(line[0])) {
-      region = VmRegion();
+      region = base::trace_event::ProcessMemoryMaps::VMRegion();
       counters_parsed_for_current_region = 0;
       should_add_current_region = ParseSmapsHeader(line, &region);
     } else {
@@ -157,7 +161,7 @@ uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
                 kNumExpectedCountersPerRegion);
       if (counters_parsed_for_current_region == kNumExpectedCountersPerRegion) {
         if (should_add_current_region) {
-          maps->push_back(VmRegion::New(region));
+          pmm->AddVMRegion(region);
           ++num_valid_regions;
           should_add_current_region = false;
         }
@@ -207,24 +211,27 @@ bool OSMetrics::FillOSMemoryDump(base::ProcessId pid,
 }
 
 // static
-std::vector<VmRegionPtr> OSMetrics::GetProcessMemoryMaps(base::ProcessId pid) {
-  std::vector<VmRegionPtr> maps;
+bool OSMetrics::FillProcessMemoryMaps(
+    base::ProcessId pid,
+    base::trace_event::ProcessMemoryDump* pmd) {
   uint32_t res = 0;
   if (g_proc_smaps_for_testing) {
-    res = ReadLinuxProcSmapsFile(g_proc_smaps_for_testing, &maps);
+    res =
+        ReadLinuxProcSmapsFile(g_proc_smaps_for_testing, pmd->process_mmaps());
   } else {
     std::string file_name =
         "/proc/" +
         (pid == base::kNullProcessId ? "self" : base::IntToString(pid)) +
         "/smaps";
     base::ScopedFILE smaps_file(fopen(file_name.c_str(), "r"));
-    res = ReadLinuxProcSmapsFile(smaps_file.get(), &maps);
+    res = ReadLinuxProcSmapsFile(smaps_file.get(), pmd->process_mmaps());
   }
 
   if (!res)
-    return std::vector<VmRegionPtr>();
+    return false;
 
-  return maps;
+  pmd->set_has_process_mmaps();
+  return true;
 }
 
 }  // namespace memory_instrumentation

@@ -63,8 +63,8 @@ extern const char kUseDoubleBuffering[];
 // I2S loopback configuration switches
 extern const char kLoopbackI2sBits[];
 extern const char kLoopbackI2sChannels[];
-extern const char kLoopbackI2sBusNumber[];
-extern const char kLoopbackI2sRateHz[];
+extern const char kLoopbackI2sNumber[];
+extern const char kLoopbackI2sRate[];
 
 // Graphics switches
 extern const char kDesktopWindow1080p[];

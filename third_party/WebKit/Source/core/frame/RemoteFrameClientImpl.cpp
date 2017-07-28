@@ -9,10 +9,10 @@
 #include "core/events/MouseEvent.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/events/WheelEvent.h"
-#include "core/exported/WebRemoteFrameImpl.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/frame/WebLocalFrameBase.h"
+#include "core/frame/WebRemoteFrameBase.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/api/LayoutItem.h"
 #include "platform/exported/WrappedResourceRequest.h"
@@ -38,11 +38,11 @@ Frame* ToCoreFrame(WebFrame* frame) {
 
 }  // namespace
 
-RemoteFrameClientImpl::RemoteFrameClientImpl(WebRemoteFrameImpl* web_frame)
+RemoteFrameClientImpl::RemoteFrameClientImpl(WebRemoteFrameBase* web_frame)
     : web_frame_(web_frame) {}
 
 RemoteFrameClientImpl* RemoteFrameClientImpl::Create(
-    WebRemoteFrameImpl* web_frame) {
+    WebRemoteFrameBase* web_frame) {
   return new RemoteFrameClientImpl(web_frame);
 }
 
@@ -118,8 +118,9 @@ void RemoteFrameClientImpl::Reload(
     ClientRedirectPolicy client_redirect_policy) {
   DCHECK(IsReloadLoadType(load_type));
   if (web_frame_->Client()) {
-    web_frame_->Client()->Reload(static_cast<WebFrameLoadType>(load_type),
-                                 client_redirect_policy);
+    web_frame_->Client()->Reload(
+        static_cast<WebFrameLoadType>(load_type),
+        static_cast<WebClientRedirectPolicy>(client_redirect_policy));
   }
 }
 

@@ -19,12 +19,6 @@
 namespace media {
 namespace remoting {
 
-namespace {
-// The duration to delay the start of media remoting to ensure all preconditions
-// are held stable before switching to media remoting.
-constexpr base::TimeDelta kDelayedStart = base::TimeDelta::FromSeconds(5);
-}  // namespace
-
 RendererController::RendererController(scoped_refptr<SharedSession> session)
     : session_(std::move(session)), weak_factory_(this) {
   session_->AddClient(this);
@@ -44,6 +38,7 @@ void RendererController::OnStarted(bool success) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (success) {
+    VLOG(1) << "Remoting started successively.";
     if (remote_rendering_started_) {
       metrics_recorder_.DidStartSession();
       DCHECK(client_);
@@ -66,10 +61,13 @@ void RendererController::OnSessionStateChanged() {
 void RendererController::UpdateFromSessionState(StartTrigger start_trigger,
                                                 StopTrigger stop_trigger) {
   VLOG(1) << "UpdateFromSessionState: " << session_->state();
+  if (client_)
+    client_->ActivateViewportIntersectionMonitoring(IsRemoteSinkAvailable());
+
   UpdateAndMaybeSwitch(start_trigger, stop_trigger);
 }
 
-bool RendererController::IsRemoteSinkAvailable() const {
+bool RendererController::IsRemoteSinkAvailable() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   switch (session_->state()) {
@@ -87,11 +85,43 @@ bool RendererController::IsRemoteSinkAvailable() const {
   return false;  // To suppress compiler warning on Windows.
 }
 
+void RendererController::OnEnteredFullscreen() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  is_fullscreen_ = true;
+  // See notes in OnBecameDominantVisibleContent() for why this is forced:
+  is_dominant_content_ = true;
+  UpdateAndMaybeSwitch(ENTERED_FULLSCREEN, UNKNOWN_STOP_TRIGGER);
+}
+
+void RendererController::OnExitedFullscreen() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  is_fullscreen_ = false;
+  // See notes in OnBecameDominantVisibleContent() for why this is forced:
+  is_dominant_content_ = false;
+  UpdateAndMaybeSwitch(UNKNOWN_START_TRIGGER, EXITED_FULLSCREEN);
+}
+
 void RendererController::OnBecameDominantVisibleContent(bool is_dominant) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (is_dominant_content_ == is_dominant)
+  // Two scenarios where "dominance" status mixes with fullscreen transitions:
+  //
+  //   1. Just before/after entering fullscreen, the element will, of course,
+  //      become the dominant on-screen content via automatic page layout.
+  //   2. Just before/after exiting fullscreen, the element may or may not
+  //      shrink in size enough to become non-dominant. However, exiting
+  //      fullscreen was caused by a user action that explicitly indicates a
+  //      desire to exit remoting, so even if the element is still dominant,
+  //      remoting should be shut down.
+  //
+  // Thus, to achieve the desired behaviors, |is_dominant_content_| is force-set
+  // in OnEnteredFullscreen() and OnExitedFullscreen(), and changes to it here
+  // are ignored while in fullscreen.
+  if (is_fullscreen_)
     return;
+
   is_dominant_content_ = is_dominant;
   UpdateAndMaybeSwitch(BECAME_DOMINANT_CONTENT, BECAME_AUXILIARY_CONTENT);
 }
@@ -210,7 +240,7 @@ void RendererController::UpdateRemotePlaybackAvailabilityMonitoringState() {
   client_->UpdateRemotePlaybackCompatibility(is_source_supported);
 }
 
-bool RendererController::IsVideoCodecSupported() const {
+bool RendererController::IsVideoCodecSupported() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(has_video());
 
@@ -234,7 +264,7 @@ bool RendererController::IsVideoCodecSupported() const {
   }
 }
 
-bool RendererController::IsAudioCodecSupported() const {
+bool RendererController::IsAudioCodecSupported() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(has_audio());
 
@@ -279,11 +309,9 @@ void RendererController::OnPaused() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   is_paused_ = true;
-  // Cancel the start if in the middle of delayed start.
-  CancelDelayedStart();
 }
 
-bool RendererController::CanBeRemoting() const {
+bool RendererController::ShouldBeRemoting() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (!client_) {
@@ -327,10 +355,13 @@ bool RendererController::CanBeRemoting() const {
   if (is_remote_playback_disabled_)
     return false;
 
-  return true;
+  // Normally, entering fullscreen or being the dominant visible content is the
+  // signal that starts remote rendering. However, current technical limitations
+  // require encrypted content be remoted without waiting for a user signal.
+  return is_fullscreen_ || is_dominant_content_;
 }
 
-bool RendererController::IsAudioOrVideoSupported() const {
+bool RendererController::IsAudioOrVideoSupported() {
   if ((!has_audio() && !has_video()) ||
       (has_video() && !IsVideoCodecSupported()) ||
       (has_audio() && !IsAudioCodecSupported())) {
@@ -344,27 +375,10 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
                                               StopTrigger stop_trigger) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  bool should_be_remoting = CanBeRemoting();
-  if (!is_encrypted_ && client_)
-    client_->ActivateViewportIntersectionMonitoring(should_be_remoting);
+  bool should_be_remoting = ShouldBeRemoting();
 
-  // Normally, being the dominant visible content is the signal that starts
-  // remote rendering. However, current technical limitations require encrypted
-  // content be remoted without waiting for a user signal.
-  if (!is_encrypted_)
-    should_be_remoting &= is_dominant_content_;
-
-  if ((remote_rendering_started_ ||
-       delayed_start_stability_timer_.IsRunning()) == should_be_remoting)
+  if (remote_rendering_started_ == should_be_remoting)
     return;
-
-  DCHECK(client_);
-
-  if (is_encrypted_) {
-    DCHECK(should_be_remoting);
-    StartRemoting(start_trigger);
-    return;
-  }
 
   // Only switch to remoting when media is playing. Since the renderer is
   // created when video starts loading/playing, receiver will display a black
@@ -374,13 +388,22 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
   if (should_be_remoting && is_paused_)
     return;
 
-  if (should_be_remoting) {
-    WaitForStabilityBeforeStart(start_trigger);
-  } else if (delayed_start_stability_timer_.IsRunning()) {
-    DCHECK(!remote_rendering_started_);
-    CancelDelayedStart();
+  // Switch between local renderer and remoting renderer.
+  remote_rendering_started_ = should_be_remoting;
+
+  DCHECK(client_);
+  if (remote_rendering_started_) {
+    if (session_->state() == SharedSession::SESSION_PERMANENTLY_STOPPED) {
+      client_->SwitchRenderer(true);
+      return;
+    }
+    DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
+    metrics_recorder_.WillStartSession(start_trigger);
+    VLOG(2) << "Request to start remoting: start_trigger=" << start_trigger;
+    // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
+    // started successfully.
+    session_->StartRemoting(this);
   } else {
-    remote_rendering_started_ = false;
     // For encrypted content, it's only valid to switch to remoting renderer,
     // and never back to the local renderer. The RemotingCdmController will
     // force-stop the session when remoting has ended; so no need to call
@@ -392,50 +415,6 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
     VLOG(2) << "Request to stop remoting: stop_trigger=" << stop_trigger;
     session_->StopRemoting(this);
   }
-}
-
-void RendererController::WaitForStabilityBeforeStart(
-    StartTrigger start_trigger) {
-  DCHECK(!delayed_start_stability_timer_.IsRunning());
-  DCHECK(!remote_rendering_started_);
-  DCHECK(!is_encrypted_);
-  delayed_start_stability_timer_.Start(
-      FROM_HERE, kDelayedStart,
-      base::Bind(&RendererController::OnDelayedStartTimerFired,
-                 base::Unretained(this), start_trigger));
-
-  // TODO(xjz): Start content bitrate estimation.
-}
-
-void RendererController::CancelDelayedStart() {
-  delayed_start_stability_timer_.Stop();
-
-  // TODO(xjz): Stop content bitrate estimation.
-}
-
-void RendererController::OnDelayedStartTimerFired(StartTrigger start_trigger) {
-  DCHECK(is_dominant_content_);
-  DCHECK(!remote_rendering_started_);
-  DCHECK(!is_encrypted_);
-
-  // TODO(xjz): Stop content bitrate estimation and evaluate whether the
-  // estimated bitrate is supported by remoting.
-
-  StartRemoting(start_trigger);
-}
-
-void RendererController::StartRemoting(StartTrigger start_trigger) {
-  DCHECK(client_);
-  remote_rendering_started_ = true;
-  if (session_->state() == SharedSession::SESSION_PERMANENTLY_STOPPED) {
-    client_->SwitchRenderer(true);
-    return;
-  }
-  DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
-  metrics_recorder_.WillStartSession(start_trigger);
-  // |MediaObserverClient::SwitchRenderer()| will be called after remoting is
-  // started successfully.
-  session_->StartRemoting(this);
 }
 
 void RendererController::OnRendererFatalError(StopTrigger stop_trigger) {
@@ -456,8 +435,7 @@ void RendererController::SetClient(MediaObserverClient* client) {
   DCHECK(!client_);
 
   client_ = client;
-  if (!is_encrypted_)
-    client_->ActivateViewportIntersectionMonitoring(CanBeRemoting());
+  client_->ActivateViewportIntersectionMonitoring(IsRemoteSinkAvailable());
 }
 
 }  // namespace remoting

@@ -56,11 +56,10 @@ void HostFrameSinkManager::CreateCompositorFrameSink(
   DCHECK(!data.HasCompositorFrameSinkData());
 
   data.is_root = false;
-  data.has_created_compositor_frame_sink = true;
 
   frame_sink_manager_->CreateCompositorFrameSink(
-      frame_sink_id, std::move(request), std::move(client));
-  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
+      frame_sink_id, std::move(request),
+      mojo::MakeRequest(&data.private_interface), std::move(client));
 }
 
 void HostFrameSinkManager::DestroyCompositorFrameSink(
@@ -70,13 +69,11 @@ void HostFrameSinkManager::DestroyCompositorFrameSink(
 
   FrameSinkData& data = iter->second;
   DCHECK(data.HasCompositorFrameSinkData());
-  if (data.has_created_compositor_frame_sink) {
-    // This will also destroy the CompositorFrameSink pipe to the client.
-    frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id);
-    data.has_created_compositor_frame_sink = false;
-  } else {
+  if (data.private_interface.is_bound())
+    // This will close the message pipe and destroy the CompositorFrameSink.
+    data.private_interface.reset();
+  else
     data.support = nullptr;
-  }
 
   if (data.IsEmpty())
     frame_sink_data_map_.erase(iter);
@@ -135,38 +132,9 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
   return support;
 }
 
-void HostFrameSinkManager::PerformAssignTemporaryReference(
-    const SurfaceId& surface_id) {
-  // Find the expected embedder for the new surface and assign the temporary
-  // reference to it.
-  auto iter = frame_sink_data_map_.find(surface_id.frame_sink_id());
-  if (iter != frame_sink_data_map_.end()) {
-    const FrameSinkData& data = iter->second;
-
-    // Display roots don't have temporary references to assign.
-    if (data.is_root)
-      return;
-
-    if (data.parent.has_value()) {
-      frame_sink_manager_impl_->AssignTemporaryReference(surface_id,
-                                                         data.parent.value());
-      return;
-    }
-  }
-
-  // We don't have any hierarchy information for what will embed the new
-  // surface, drop the temporary reference.
-  frame_sink_manager_->DropTemporaryReference(surface_id);
-}
-
 void HostFrameSinkManager::OnSurfaceCreated(const SurfaceInfo& surface_info) {
   for (auto& observer : observers_)
     observer.OnSurfaceCreated(surface_info);
-
-  if (frame_sink_manager_impl_ &&
-      frame_sink_manager_impl_->surface_manager()->using_surface_references()) {
-    PerformAssignTemporaryReference(surface_info.id());
-  }
 }
 
 void HostFrameSinkManager::OnClientConnectionClosed(

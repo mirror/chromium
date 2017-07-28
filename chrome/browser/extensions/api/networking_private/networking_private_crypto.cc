@@ -13,7 +13,6 @@
 #include "components/cast_certificate/cast_cert_validator.h"
 #include "crypto/openssl_util.h"
 #include "crypto/rsa_private_key.h"
-#include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/pem_tokenizer.h"
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "third_party/boringssl/src/include/openssl/rsa.h"
@@ -114,8 +113,7 @@ bool VerifyCredentialsAtTime(
 
   // Use the public key from verified certificate to verify |signature| over
   // |data|.
-  if (!verification_context->VerifySignatureOverData(
-          signature, data, net::DigestAlgorithm::Sha1)) {
+  if (!verification_context->VerifySignatureOverData(signature, data)) {
     LOG(ERROR) << kErrorPrefix
                << "Failed verifying signature using cast device cert";
     return false;

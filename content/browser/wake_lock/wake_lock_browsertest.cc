@@ -4,7 +4,6 @@
 
 #include "base/command_line.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/test/test_timeouts.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/common/content_switches.h"
@@ -25,7 +24,7 @@ const char kBlinkWakeLockFeature[] = "WakeLock";
 
 void OnHasWakeLock(bool* out, bool has_wakelock) {
   *out = has_wakelock;
-  base::RunLoop::QuitCurrentDeprecated();
+  base::MessageLoop::current()->QuitNow();
 }
 
 }  // namespace

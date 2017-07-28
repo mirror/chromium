@@ -64,7 +64,6 @@ class EnrollmentScreen
   // EnrollmentScreenView::Controller implementation:
   void OnLoginDone(const std::string& user,
                    const std::string& auth_code) override;
-  void OnLicenseTypeSelected(const std::string& license_type) override;
   void OnRetry() override;
   void OnCancel() override;
   void OnConfirmationClosed() override;

@@ -352,10 +352,6 @@ uint32_t AccessibleNode::GetProperty(Element* element,
                            default_value);
 }
 
-bool AccessibleNode::IsUndefinedAttrValue(const AtomicString& value) {
-  return value.IsEmpty() || EqualIgnoringASCIICase(value, "undefined");
-}
-
 // static
 const AtomicString& AccessibleNode::GetPropertyOrARIAAttribute(
     Element* element,
@@ -363,23 +359,13 @@ const AtomicString& AccessibleNode::GetPropertyOrARIAAttribute(
   if (!element)
     return g_null_atom;
 
-  const bool is_token_attr = IsStringTokenProperty(property);
   const AtomicString& result = GetProperty(element, property);
+  if (!result.IsNull())
+    return result;
 
-  if (result.IsNull()) {
-    // Fall back on the equivalent ARIA attribute.
-    QualifiedName attribute = GetCorrespondingARIAAttribute(property);
-    const AtomicString& attr_value = element->FastGetAttribute(attribute);
-    if (is_token_attr && IsUndefinedAttrValue(attr_value))
-      return g_null_atom;  // Attribute not set or explicitly undefined.
-
-    return attr_value;
-  }
-
-  if (is_token_attr && IsUndefinedAttrValue(result))
-    return g_null_atom;  // Property specifically set to undefined value.
-
-  return result;
+  // Fall back on the equivalent ARIA attribute.
+  QualifiedName attribute = GetCorrespondingARIAAttribute(property);
+  return element->FastGetAttribute(attribute);
 }
 
 // static
@@ -450,7 +436,7 @@ bool AccessibleNode::GetPropertyOrARIAAttribute(Element* element,
   // Fall back on the equivalent ARIA attribute.
   QualifiedName attribute = GetCorrespondingARIAAttribute(property);
   AtomicString attr_value = element->FastGetAttribute(attribute);
-  is_null = IsUndefinedAttrValue(attr_value);
+  is_null = attr_value.IsNull();
   return EqualIgnoringASCIICase(attr_value, "true");
 }
 
@@ -979,33 +965,6 @@ AtomicString AccessibleNode::valueText() const {
 void AccessibleNode::setValueText(const AtomicString& value_text) {
   SetStringProperty(AOMStringProperty::kValueText, value_text);
   NotifyAttributeChanged(aria_valuetextAttr);
-}
-
-// These properties support a list of tokens, and "undefined"/"" is
-// equivalent to not setting the attribute.
-bool AccessibleNode::IsStringTokenProperty(AOMStringProperty property) {
-  switch (property) {
-    case AOMStringProperty::kAutocomplete:
-    case AOMStringProperty::kChecked:
-    case AOMStringProperty::kCurrent:
-    case AOMStringProperty::kHasPopUp:
-    case AOMStringProperty::kInvalid:
-    case AOMStringProperty::kLive:
-    case AOMStringProperty::kOrientation:
-    case AOMStringProperty::kPressed:
-    case AOMStringProperty::kRelevant:
-    case AOMStringProperty::kSort:
-      return true;
-    case AOMStringProperty::kKeyShortcuts:
-    case AOMStringProperty::kLabel:
-    case AOMStringProperty::kPlaceholder:
-    case AOMStringProperty::kRole:  // Is token, but ""/"undefined" not
-                                    // supported.
-    case AOMStringProperty::kRoleDescription:
-    case AOMStringProperty::kValueText:
-      break;
-  }
-  return false;
 }
 
 void AccessibleNode::SetStringProperty(AOMStringProperty property,

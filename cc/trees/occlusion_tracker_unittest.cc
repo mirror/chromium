@@ -12,6 +12,8 @@
 #include "cc/base/math_util.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
+#include "cc/output/copy_output_request.h"
+#include "cc/output/copy_output_result.h"
 #include "cc/test/animation_test_common.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_host.h"
@@ -22,8 +24,6 @@
 #include "cc/test/test_task_graph_runner.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/single_thread_proxy.h"
-#include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/copy_output_result.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/transform.h"
@@ -195,17 +195,17 @@ class OcclusionTrackerTest : public testing::Test {
     layer_iterator_.reset();
   }
 
-  void CopyOutputCallback(std::unique_ptr<viz::CopyOutputResult> result) {}
+  void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {}
 
   void AddCopyRequest(Layer* layer) {
-    layer->RequestCopyOfOutput(viz::CopyOutputRequest::CreateBitmapRequest(
+    layer->RequestCopyOfOutput(CopyOutputRequest::CreateBitmapRequest(
         base::BindOnce(&OcclusionTrackerTest::CopyOutputCallback,
                        base::Unretained(this))));
   }
 
   void AddCopyRequest(LayerImpl* layer) {
     layer->test_properties()->copy_requests.push_back(
-        viz::CopyOutputRequest::CreateBitmapRequest(
+        CopyOutputRequest::CreateBitmapRequest(
             base::BindOnce(&OcclusionTrackerTest::CopyOutputCallback,
                            base::Unretained(this))));
   }

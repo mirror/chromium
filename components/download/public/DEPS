@@ -3,6 +3,5 @@ include_rules = [
   "+base",
   "+components/keyed_service",
   "+net/http",
-  "+net/traffic_annotation",
   "+url",
 ]

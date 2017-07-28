@@ -472,6 +472,7 @@ source_set("blink_headers") {
     "web/WebAutofillClient.h",
     "web/WebBlob.h",
     "web/WebCSSParser.h",
+    "web/WebClientRedirectPolicy.h",
     "web/WebColorChooser.h",
     "web/WebColorChooserClient.h",
     "web/WebColorSuggestion.h",
@@ -743,12 +744,12 @@ mojom("mojo_bindings") {
     "platform/referrer.mojom",
     "platform/reporting.mojom",
     "platform/site_engagement.mojom",
+    "platform/web_feature.mojom",
     "web/console_message.mojom",
     "web/window_features.mojom",
   ]
   public_deps = [
     ":android_mojo_bindings",
-    ":web_feature_mojo_bindings",
     "//device/bluetooth/public/interfaces",
     "//device/screen_orientation/public/interfaces",
     "//mojo/common:common_custom_types",
@@ -780,8 +781,6 @@ mojom("android_mojo_bindings") {
   visibility = [ ":mojo_bindings" ]
   visibility_blink = [ ":mojo_bindings_blink" ]
   sources = [
-    "platform/input_host.mojom",
-    "platform/input_messages.mojom",
     "platform/modules/document_metadata/copyless_paste.mojom",
     "platform/modules/installation/installation.mojom",
     "platform/modules/installedapp/installed_app_provider.mojom",
@@ -846,15 +845,6 @@ group("generate_mojo_bindings") {
     ":mojo_bindings__generator",
     ":mojo_bindings_blink__generator",
     ":offscreen_canvas_mojo_bindings_blink__generator",
-  ]
-}
-
-# The web_feature_mojo_bindings is separated from the rest of the mojom files
-# because the chromium typemap for blink mojo_bindings has private content
-# dependencies.
-mojom("web_feature_mojo_bindings") {
-  sources = [
-    "platform/web_feature.mojom",
   ]
 }
 

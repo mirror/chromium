@@ -100,11 +100,10 @@ std::unique_ptr<HistoryData::Associations> Parse(
     association_data.primary = primary;
     association_data.secondary.swap(secondary);
 
-    // Parse time as microseconds since Windows epoch (year 1601).
     int64_t update_time_val;
     base::StringToInt64(update_time_string, &update_time_val);
     association_data.update_time =
-        base::Time() + base::TimeDelta::FromMicroseconds(update_time_val);
+        base::Time::FromInternalValue(update_time_val);
   }
 
   return data;
@@ -174,10 +173,8 @@ void HistoryDataStore::SetSecondary(
 void HistoryDataStore::SetUpdateTime(const std::string& query,
                                      const base::Time& update_time) {
   base::DictionaryValue* entry_dict = GetEntryDict(query);
-  // Persist time as microseconds since Windows epoch (year 1601).
-  const int64_t update_time_val = update_time.since_origin().InMicroseconds();
   entry_dict->SetStringWithoutPathExpansion(
-      kKeyUpdateTime, base::Int64ToString(update_time_val));
+      kKeyUpdateTime, base::Int64ToString(update_time.ToInternalValue()));
   if (data_store_.get())
     data_store_->ScheduleWrite();
 }

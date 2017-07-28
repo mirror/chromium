@@ -11,15 +11,15 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
+import org.chromium.chrome.browser.feature_engagement_tracker.FeatureEngagementTrackerFactory;
 import org.chromium.chrome.browser.infobar.InfoBarContainer.InfoBarContainerObserver;
 import org.chromium.chrome.browser.infobar.InfoBarContainerLayout.Item;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
-import org.chromium.components.feature_engagement.EventConstants;
-import org.chromium.components.feature_engagement.FeatureConstants;
-import org.chromium.components.feature_engagement.Tracker;
+import org.chromium.components.feature_engagement_tracker.EventConstants;
+import org.chromium.components.feature_engagement_tracker.FeatureConstants;
+import org.chromium.components.feature_engagement_tracker.FeatureEngagementTracker;
 
 /**
  * A helper class to managing showing and dismissing in-product help dialogs based on which infobar
@@ -30,7 +30,7 @@ import org.chromium.components.feature_engagement.Tracker;
 class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAnimationListener,
                                    InfoBarContainerObserver {
     private final Context mContext;
-    private final Tracker mTracker;
+    private final FeatureEngagementTracker mTracker;
 
     /** Helper class to hold all relevant display parameters for an in-product help window. */
     private static class TrackerParameters {
@@ -70,7 +70,7 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     IPHInfoBarSupport(Context context) {
         mContext = context;
         Profile profile = Profile.getLastUsedProfile();
-        mTracker = TrackerFactory.getTrackerForProfile(profile);
+        mTracker = FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(profile);
     }
 
     // InfoBarContainer.InfoBarAnimationListener implementation.

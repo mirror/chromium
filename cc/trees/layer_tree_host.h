@@ -292,6 +292,7 @@ class CC_EXPORT LayerTreeHost
                                 float bottom_height,
                                 bool shrink);
   void SetBrowserControlsShownRatio(float ratio);
+  void SetBottomControlsHeight(float height);
 
   void SetPageScaleFactorAndLimits(float page_scale_factor,
                                    float min_page_scale_factor,

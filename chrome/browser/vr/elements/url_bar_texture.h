@@ -84,7 +84,9 @@ class UrlBarTexture : public UiTexture {
 
   ToolbarState state_;
 
-  bool url_dirty_ = true;
+  GURL last_drawn_gurl_;
+  security_state::SecurityLevel last_drawn_security_level_;
+  float last_drawn_url_x_position_ = -1.0f;
 
   bool has_back_button_ = true;
   bool opaque_background_ = false;

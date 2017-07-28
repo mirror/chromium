@@ -6,11 +6,8 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/frame/DeprecationReport.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/Report.h"
-#include "core/frame/ReportingContext.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/Page.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
@@ -151,15 +148,12 @@ void Deprecation::CountDeprecation(const LocalFrame* frame,
     return;
 
   if (!page->GetUseCounter().HasRecordedMeasurement(feature)) {
-    page->GetUseCounter().RecordMeasurement(feature, *frame);
-    String message = DeprecationMessage(feature);
-
-    DCHECK(!message.IsEmpty());
-    ConsoleMessage* console_message = ConsoleMessage::Create(
-        kDeprecationMessageSource, kWarningMessageLevel, message);
+    page->GetUseCounter().RecordMeasurement(feature);
+    DCHECK(!DeprecationMessage(feature).IsEmpty());
+    ConsoleMessage* console_message =
+        ConsoleMessage::Create(kDeprecationMessageSource, kWarningMessageLevel,
+                               DeprecationMessage(feature));
     frame->Console().AddMessage(console_message);
-
-    GenerateReport(frame, message);
   }
 }
 
@@ -249,22 +243,6 @@ void Deprecation::CountDeprecationFeaturePolicy(
     default:
       NOTREACHED();
   }
-}
-
-void Deprecation::GenerateReport(const LocalFrame* frame,
-                                 const String& message) {
-  if (!frame || !frame->Client())
-    return;
-
-  Document* document = frame->GetDocument();
-  ReportingContext* reporting_context = ReportingContext::From(document);
-  if (!reporting_context->ObserverExists())
-    return;
-
-  // Send a deprecation report to any ReportingObservers.
-  ReportBody* body = new DeprecationReport(message, SourceLocation::Capture());
-  Report* report = new Report("deprecation", document->Url().GetString(), body);
-  reporting_context->QueueReport(report);
 }
 
 String Deprecation::DeprecationMessage(WebFeature feature) {

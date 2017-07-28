@@ -9,8 +9,9 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/test/scoped_task_environment.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_checker.h"
 #include "remoting/base/constants.h"
@@ -260,8 +261,7 @@ class ConnectionTest : public testing::Test,
                        public testing::WithParamInterface<bool> {
  public:
   ConnectionTest()
-      : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::IO),
+      : scoped_task_scheduler_(&message_loop_),
         video_encode_thread_("VideoEncode"),
         audio_encode_thread_("AudioEncode"),
         audio_decode_thread_("AudioDecode") {
@@ -289,16 +289,14 @@ class ConnectionTest : public testing::Test,
       host_connection_.reset(new WebrtcConnectionToClient(
           base::WrapUnique(host_session_),
           TransportContext::ForTests(protocol::TransportRole::SERVER),
-          scoped_task_environment_.GetMainThreadTaskRunner(),
-          scoped_task_environment_.GetMainThreadTaskRunner()));
+          message_loop_.task_runner(), message_loop_.task_runner()));
       client_connection_.reset(new WebrtcConnectionToHost());
 
     } else {
       host_connection_.reset(new IceConnectionToClient(
           base::WrapUnique(host_session_),
           TransportContext::ForTests(protocol::TransportRole::SERVER),
-          scoped_task_environment_.GetMainThreadTaskRunner(),
-          scoped_task_environment_.GetMainThreadTaskRunner()));
+          message_loop_.task_runner(), message_loop_.task_runner()));
       client_connection_.reset(new IceConnectionToHost());
     }
 
@@ -434,7 +432,8 @@ class ConnectionTest : public testing::Test,
                      .empty());
   }
 
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  base::MessageLoopForIO message_loop_;
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
   std::unique_ptr<base::RunLoop> run_loop_;
 
   MockConnectionToClientEventHandler host_event_handler_;

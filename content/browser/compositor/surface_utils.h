@@ -18,8 +18,11 @@ namespace base {
 class SingleThreadTaskRunner;
 }
 
-namespace viz {
+namespace cc {
 class CopyOutputResult;
+}  // namespace cc
+
+namespace viz {
 class FrameSinkManagerImpl;
 class HostFrameSinkManager;
 class FrameSinkManagerImpl;
@@ -37,7 +40,7 @@ void CopyFromCompositingSurfaceHasResult(
     const gfx::Size& dst_size_in_pixel,
     const SkColorType color_type,
     const ReadbackRequestCallback& callback,
-    std::unique_ptr<viz::CopyOutputResult> result);
+    std::unique_ptr<cc::CopyOutputResult> result);
 
 namespace surface_utils {
 

@@ -201,7 +201,6 @@ public abstract class ChromeFeatureList {
     public static final String NTP_SNIPPETS_INCREASED_VISIBILITY = "NTPSnippetsIncreasedVisibility";
     public static final String OMNIBOX_SPARE_RENDERER = "OmniboxSpareRenderer";
     public static final String PAY_WITH_GOOGLE_V1 = "PayWithGoogleV1";
-    public static final String READER_MODE_IN_CCT = "ReaderModeInCCT";
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
     public static final String SITE_NOTIFICATION_CHANNELS = "SiteNotificationChannels";
     public static final String SPANNABLE_INLINE_AUTOCOMPLETE = "SpannableInlineAutocomplete";
@@ -212,8 +211,6 @@ public abstract class ChromeFeatureList {
     public static final String VR_CUSTOM_TAB_BROWSING = "VrCustomTabBrowsing";
     public static final String VR_SHELL = "VrShell";
     public static final String WEB_PAYMENTS = "WebPayments";
-    public static final String WEB_PAYMENTS_METHOD_SECTION_ORDER_V2 =
-            "WebPaymentsMethodSectionOrderV2";
     public static final String WEB_PAYMENTS_MODIFIERS = "WebPaymentsModifiers";
     public static final String WEB_PAYMENTS_SINGLE_APP_UI_SKIP = "WebPaymentsSingleAppUiSkip";
     public static final String WEBVR_AUTOPRESENT = "WebVrAutopresent";

@@ -85,14 +85,14 @@ class FFDecryptorServerChannelListener : public IPC::Listener {
     DCHECK(!got_result);
     result_bool = result;
     got_result = true;
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void OnDecryptedTextResponse(const base::string16& decrypted_text) {
     DCHECK(!got_result);
     result_string = decrypted_text;
     got_result = true;
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void OnParseSignonsResponse(
@@ -100,7 +100,7 @@ class FFDecryptorServerChannelListener : public IPC::Listener {
     DCHECK(!got_result);
     result_vector = parsed_vector;
     got_result = true;
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void QuitClient() {
@@ -122,7 +122,7 @@ class FFDecryptorServerChannelListener : public IPC::Listener {
   // If an error occured, just kill the message Loop.
   void OnChannelError() override {
     got_result = false;
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   // Results of IPC calls.
@@ -253,7 +253,7 @@ class FFDecryptorClientChannelListener : public IPC::Listener {
     sender_->Send(new Msg_ParseSignons_Response(forms));
   }
 
-  void OnQuitRequest() { base::RunLoop::QuitCurrentWhenIdleDeprecated(); }
+  void OnQuitRequest() { base::MessageLoop::current()->QuitWhenIdle(); }
 
   bool OnMessageReceived(const IPC::Message& msg) override {
     bool handled = true;
@@ -268,7 +268,7 @@ class FFDecryptorClientChannelListener : public IPC::Listener {
   }
 
   void OnChannelError() override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

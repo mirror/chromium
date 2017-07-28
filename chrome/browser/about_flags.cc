@@ -46,8 +46,8 @@
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/error_page/common/error_page_switches.h"
 #include "components/favicon/core/features.h"
-#include "components/feature_engagement/public/feature_constants.h"
-#include "components/feature_engagement/public/feature_list.h"
+#include "components/feature_engagement_tracker/public/feature_constants.h"
+#include "components/feature_engagement_tracker/public/feature_list.h"
 #include "components/flags_ui/feature_entry.h"
 #include "components/flags_ui/feature_entry_macros.h"
 #include "components/flags_ui/flags_storage.h"
@@ -1848,8 +1848,8 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kInProductHelpDemoModeChoiceName,
      flag_descriptions::kInProductHelpDemoModeChoiceDescription, kOsAll,
      FEATURE_WITH_PARAMS_VALUE_TYPE(
-         feature_engagement::kIPHDemoMode,
-         feature_engagement::kIPHDemoModeChoiceVariations,
+         feature_engagement_tracker::kIPHDemoMode,
+         feature_engagement_tracker::kIPHDemoModeChoiceVariations,
          "IPH_DemoMode")},
     {"num-raster-threads", flag_descriptions::kNumRasterThreadsName,
      flag_descriptions::kNumRasterThreadsDescription, kOsAll,
@@ -2631,11 +2631,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableAndroidPayIntegrationV2Name,
      flag_descriptions::kEnableAndroidPayIntegrationV2Description, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kAndroidPayIntegrationV2)},
-    {"enable-web-payments-method-section-order-v2",
-     flag_descriptions::kEnableWebPaymentsMethodSectionOrderV2Name,
-     flag_descriptions::kEnableWebPaymentsMethodSectionOrderV2Description,
-     kOsAndroid,
-     FEATURE_VALUE_TYPE(payments::features::kWebPaymentsMethodSectionOrderV2)},
     {"enable-web-payments-single-app-ui-skip",
      flag_descriptions::kEnableWebPaymentsSingleAppUiSkipName,
      flag_descriptions::kEnableWebPaymentsSingleAppUiSkipDescription,
@@ -3263,13 +3258,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAndroidSigninPromosName,
      flag_descriptions::kAndroidSigninPromosDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kAndroidSigninPromos)},
-#endif  // OS_ANDROID
-
-#if defined(OS_ANDROID)
-    {"pwa-persistent-notification",
-     flag_descriptions::kPwaPersistentNotificationName,
-     flag_descriptions::kPwaPersistentNotificationDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kPwaPersistentNotification)},
 #endif  // OS_ANDROID
 
     // NOTE: Adding new command-line switches requires adding corresponding

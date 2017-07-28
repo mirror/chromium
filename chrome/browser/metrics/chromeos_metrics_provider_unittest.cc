@@ -7,6 +7,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
@@ -132,7 +133,7 @@ class TestChromeOSMetricsProvider : public ChromeOSMetricsProvider {
   }
   void GetBluetoothAdapterCallback() {
     ASSERT_TRUE(base::RunLoop::IsRunningOnCurrentThread());
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 };
 

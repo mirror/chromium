@@ -38,7 +38,8 @@ blink::WebPlugin* ContentRendererClient::CreatePluginReplacement(
   return nullptr;
 }
 
-bool ContentRendererClient::HasErrorPage(int http_status_code) {
+bool ContentRendererClient::HasErrorPage(int http_status_code,
+                                         std::string* error_domain) {
   return false;
 }
 

@@ -28,6 +28,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include "gpu/ipc/service/child_window_surface_win.h"
 #include "gpu/ipc/service/direct_composition_surface_win.h"
 #endif
 

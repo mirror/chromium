@@ -73,11 +73,11 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   VisiblePositionTemplate<Strategy> VisibleStart() const {
     return CreateVisiblePosition(
-        Start(), IsRange() ? TextAffinity::kDownstream : Affinity());
+        start_, IsRange() ? TextAffinity::kDownstream : Affinity());
   }
   VisiblePositionTemplate<Strategy> VisibleEnd() const {
     return CreateVisiblePosition(
-        End(), IsRange() ? TextAffinity::kUpstream : Affinity());
+        end_, IsRange() ? TextAffinity::kUpstream : Affinity());
   }
   VisiblePositionTemplate<Strategy> VisibleBase() const {
     return CreateVisiblePosition(
@@ -118,6 +118,7 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   Element* RootEditableElement() const;
   bool IsContentEditable() const;
+  bool HasEditableStyle() const;
   bool IsContentRichlyEditable() const;
 
   bool IsValidFor(const Document&) const;

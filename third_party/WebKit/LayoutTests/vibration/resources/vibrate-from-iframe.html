@@ -14,22 +14,18 @@ function startTest() {
     var iframe = iframes[iframes.length-1];
     // Simulates a user click for vibrate to be allowed.
     var element = document.getElementById("test");
-    simulateUserClick(element.offsetLeft + iframe.offsetLeft + 4, element.offsetTop + iframe.offsetTop + 4);
-  }
-}
-
-window.onmessage = msg => {
-  if (msg.data === 'Start') {
-    startTest();
+    simulateUserClick(element.offsetLeft + iframe.offsetLeft + 2, element.offsetTop + iframe.offsetTop + 2);
   }
 }
 
 function testVibrate() {
-  assert_true(navigator.vibrate(200));
+  test(function () {
+      assert_true(navigator.vibrate(200));
+  }, "An iframe may call navigator.vibrate with user gesture.");
 }
 </script>
 </head>
-<body>
+<body onload="startTest();">
 <button id="test" onclick="testVibrate();">Click to vibrate</button>
 </body>
 </html>

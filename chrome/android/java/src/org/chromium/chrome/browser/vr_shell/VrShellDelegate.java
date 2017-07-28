@@ -46,6 +46,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
+import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
@@ -93,7 +94,8 @@ public class VrShellDelegate
     @IntDef({VR_NOT_AVAILABLE, VR_CARDBOARD, VR_DAYDREAM})
     private @interface VrSupportLevel {}
 
-    public static final String DAYDREAM_VR_EXTRA = "android.intent.extra.VR_LAUNCH";
+    private static final String DAYDREAM_VR_EXTRA = "android.intent.extra.VR_LAUNCH";
+    private static final String DAYDREAM_HOME_PACKAGE = "com.google.android.vr.home";
     static final String VR_FRE_INTENT_EXTRA = "org.chromium.chrome.browser.vr_shell.VR_FRE";
 
     // Linter and formatter disagree on how the line below should be formatted.
@@ -371,7 +373,8 @@ public class VrShellDelegate
 
     public static void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
         if (isInMultiWindowMode && isInVr()) {
-            sInstance.shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
+            sInstance.shutdownVr(
+                    true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
         }
     }
 
@@ -628,7 +631,8 @@ public class VrShellDelegate
                     if (mShowingDaydreamDoff) {
                         onExitVrResult(true);
                     } else {
-                        shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
+                        shutdownVr(true /* disableVrMode */, false /* canReenter */,
+                                false /* stayingInChrome */);
                     }
                 }
                 if (!activitySupportsPresentation(activity)) return;
@@ -848,6 +852,11 @@ public class VrShellDelegate
         sBlackOverlayView = null;
     }
 
+    private static boolean isTrustedDaydreamIntent(Intent intent) {
+        return isVrIntent(intent)
+                && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE);
+    }
+
     private void onAutopresentIntent() {
         // Autopresent intents are only expected from trusted first party apps while
         // we're not in vr.
@@ -878,7 +887,7 @@ public class VrShellDelegate
         VrShellDelegate instance = getInstance(activity);
         if (instance == null) return;
         instance.onVrIntent();
-        if (VrIntentHandler.getInstance().isTrustedDaydreamIntent(intent)) {
+        if (isTrustedDaydreamIntent(intent)) {
             if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
                     || !activitySupportsPresentation(activity)
                     || !isVrShellEnabled(instance.mVrSupportLevel)) {
@@ -893,7 +902,7 @@ public class VrShellDelegate
      * This is called when ChromeTabbedActivity gets a new intent before native is initialized.
      */
     public static void maybeHandleVrIntentPreNative(ChromeActivity activity, Intent intent) {
-        if (VrIntentHandler.getInstance().isTrustedDaydreamIntent(intent)) {
+        if (isTrustedDaydreamIntent(intent)) {
             // We add a black overlay view so that we can show black while the VR UI is loading.
             // Note that this alone isn't sufficient to prevent 2D UI from showing when
             // auto-presenting WebVR. See comment about the custom animation in {@link
@@ -1063,7 +1072,8 @@ public class VrShellDelegate
         if (!isVrShellEnabled(mVrSupportLevel) || !isDaydreamCurrentViewer()
                 || !activitySupportsVrBrowsing(mActivity)) {
             if (isDaydreamCurrentViewer() && showDoff(false /* optional */)) return false;
-            shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
+            shutdownVr(
+                    true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
         } else {
             mVrBrowserUsed = true;
             mAutopresentWebVr = false;
@@ -1120,7 +1130,7 @@ public class VrShellDelegate
         } else if (mProbablyInDon) {
             // This means the user backed out of the DON flow, and we won't be entering VR.
             maybeSetPresentResult(false, mDonSucceeded);
-            shutdownVr(true, false);
+            shutdownVr(true, false, false);
         }
         mProbablyInDon = false;
     }
@@ -1186,14 +1196,14 @@ public class VrShellDelegate
 
         // TODO(mthiesse): When the user resumes Chrome in a 2D context, we don't want to tear down
         // VR UI, so for now, exit VR.
-        shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
+        shutdownVr(true /* disableVrMode */, true /* canReenter */, false /* stayingInChrome */);
     }
 
     private boolean onBackPressedInternal() {
         if (mVrSupportLevel == VR_NOT_AVAILABLE) return false;
         cancelPendingVrEntry();
         if (!mInVr) return false;
-        shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
+        shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
         return true;
     }
 
@@ -1219,7 +1229,8 @@ public class VrShellDelegate
         mShowingDaydreamDoff = false;
         callOnExitVrRequestListener(success);
         if (success) {
-            shutdownVr(true /* disableVrMode */, !mExitingCct /* stayingInChrome */);
+            shutdownVr(true /* disableVrMode */, false /* canReenter */,
+                    !mExitingCct /* stayingInChrome */);
             if (mExitingCct) ((CustomTabActivity) mActivity).finishAndClose(false);
         }
         mExitingCct = false;
@@ -1282,19 +1293,17 @@ public class VrShellDelegate
     private void cancelPendingVrEntry() {
         // Ensure we can't asynchronously enter VR after trying to exit it.
         mEnterVrHandler.removeCallbacksAndMessages(null);
-        removeBlackOverlayView();
         mDonSucceeded = false;
-        if (!mShowingDaydreamDoff) {
-            mVrClassesWrapper.setVrModeEnabled(mActivity, false);
-            restoreWindowMode();
-        }
+        removeBlackOverlayView();
+        mVrClassesWrapper.setVrModeEnabled(mActivity, false);
+        restoreWindowMode();
     }
 
     /**
      * Exits VR Shell, performing all necessary cleanup.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    public void shutdownVr(boolean disableVrMode, boolean stayingInChrome) {
+    public void shutdownVr(boolean disableVrMode, boolean canReenter, boolean stayingInChrome) {
         cancelPendingVrEntry();
         if (!mInVr) return;
 
@@ -1335,7 +1344,7 @@ public class VrShellDelegate
     private void showDoffAndExitVrInternal(boolean optional) {
         if (mShowingDaydreamDoff) return;
         if (showDoff(optional)) return;
-        shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
+        shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
     }
 
     /* package */ void onExitVrRequestResult(boolean shouldExit) {
@@ -1356,7 +1365,8 @@ public class VrShellDelegate
                 mExitingCct = true;
                 return;
             }
-            shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
+            shutdownVr(
+                    true /* disableVrMode */, false /* canReenter */, false /* stayingInChrome */);
             ((CustomTabActivity) mActivity).finishAndClose(false);
         }
     }
@@ -1598,7 +1608,7 @@ public class VrShellDelegate
 
     private void destroy() {
         if (sInstance == null) return;
-        shutdownVr(false /* disableVrMode */, false /* stayingInChrome */);
+        shutdownVr(false /* disableVrMode */, false /* canReenter */, false /* stayingInChrome */);
         if (mNativeVrShellDelegate != 0) nativeDestroy(mNativeVrShellDelegate);
         mNativeVrShellDelegate = 0;
         shutdownNonPresentingNativeContext();

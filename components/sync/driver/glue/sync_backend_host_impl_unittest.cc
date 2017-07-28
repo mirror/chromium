@@ -76,7 +76,7 @@ class TestSyncEngineHost : public SyncEngineHostStub {
                            bool success) override {
     EXPECT_EQ(expect_success_, success);
     set_engine_types_.Run(initial_types);
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void SetExpectSuccess(bool expect_success) {
@@ -277,7 +277,7 @@ class SyncEngineTest : public testing::Test {
  protected:
   void DownloadReady(ModelTypeSet succeeded_types, ModelTypeSet failed_types) {
     engine_types_.PutAll(succeeded_types);
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void OnDownloadRetry() { NOTIMPLEMENTED(); }

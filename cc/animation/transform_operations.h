@@ -102,8 +102,8 @@ class CC_ANIMATION_EXPORT TransformOperations {
     return operations_[index];
   }
 
-  bool ApproximatelyEqual(const TransformOperations& other,
-                          SkMScalar tolerance) const;
+  bool operator==(const TransformOperations& other) const;
+  bool operator!=(const TransformOperations& other) const;
 
  private:
   bool BlendInternal(const TransformOperations& from,

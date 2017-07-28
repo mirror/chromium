@@ -214,13 +214,6 @@ class SandboxedUnpackerTestWithRealIOThread : public SandboxedUnpackerTest {
   SandboxedUnpackerTestWithRealIOThread()
       : SandboxedUnpackerTest(
             content::TestBrowserThreadBundle::REAL_IO_THREAD) {}
-
-  void TearDown() override {
-    // The utility process task could still be running.  Ensure it is fully
-    // finished before ending the test.
-    content::RunAllPendingInMessageLoop(content::BrowserThread::IO);
-    SandboxedUnpackerTest::TearDown();
-  }
 };
 
 TEST_F(SandboxedUnpackerTestWithRealIOThread, UtilityProcessCrash) {

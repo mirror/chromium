@@ -1637,8 +1637,6 @@ static_library("test_support") {
     "testing/HistogramTester.cpp",
     "testing/HistogramTester.h",
     "testing/MessageLoopForMojo.h",
-    "testing/MockWebCrypto.cpp",
-    "testing/MockWebCrypto.h",
     "testing/PaintPrinters.cpp",
     "testing/PaintPrinters.h",
     "testing/PaintPropertyTestHelpers.h",
@@ -1680,7 +1678,6 @@ static_library("test_support") {
     "//cc",
     "//cc:test_support",
     "//cc/blink",
-    "//components/viz/test:test_support",
     "//testing/gmock",
     "//testing/gtest:gtest",
   ]

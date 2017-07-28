@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "base/logging.h"
-#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
@@ -37,7 +37,7 @@ void TestService::Create(mojom::TestServiceRequest request) {
 
 void TestService::DoSomething(DoSomethingCallback callback) {
   std::move(callback).Run();
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void TestService::DoTerminateProcess(DoTerminateProcessCallback callback) {

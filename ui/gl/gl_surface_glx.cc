@@ -592,7 +592,6 @@ void NativeViewGLSurfaceGLX::Destroy() {
 
 bool NativeViewGLSurfaceGLX::Resize(const gfx::Size& size,
                                     float scale_factor,
-                                    ColorSpace color_space,
                                     bool has_alpha) {
   size_ = size;
   glXWaitGL();

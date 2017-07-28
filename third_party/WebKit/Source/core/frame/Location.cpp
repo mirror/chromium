@@ -241,16 +241,7 @@ void Location::SetLocation(const String& url,
   if (!current_window->GetFrame())
     return;
 
-  Document* entered_document = entered_window->document();
-  if (!entered_document)
-    return;
-
-  KURL completed_url = entered_document->CompleteURL(url);
-  if (completed_url.IsNull())
-    return;
-
-  if (!current_window->GetFrame()->CanNavigate(*dom_window_->GetFrame(),
-                                               completed_url)) {
+  if (!current_window->GetFrame()->CanNavigate(*dom_window_->GetFrame())) {
     if (exception_state) {
       exception_state->ThrowSecurityError(
           "The current window does not have permission to navigate the target "
@@ -259,6 +250,14 @@ void Location::SetLocation(const String& url,
     }
     return;
   }
+
+  Document* entered_document = entered_window->document();
+  if (!entered_document)
+    return;
+
+  KURL completed_url = entered_document->CompleteURL(url);
+  if (completed_url.IsNull())
+    return;
   if (exception_state && !completed_url.IsValid()) {
     exception_state->ThrowDOMException(kSyntaxError,
                                        "'" + url + "' is not a valid URL.");

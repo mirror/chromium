@@ -140,7 +140,7 @@ void BalancedMediaTaskRunnerTest::ScheduleTask() {
       has_task = true;
   }
   if (!has_task) {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
     return;
   }
 
@@ -206,7 +206,7 @@ void BalancedMediaTaskRunnerTest::Task(
 void BalancedMediaTaskRunnerTest::OnTestTimeout() {
   ADD_FAILURE() << "Test timed out";
   if (base::MessageLoop::current())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
 }
 
 TEST_F(BalancedMediaTaskRunnerTest, OneTaskRunner) {

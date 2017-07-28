@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -226,7 +227,7 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
   void BlockImplSideInvalidationRequestsForTesting(bool block) override {
     block_impl_side_invalidation_ = block;
     if (!block_impl_side_invalidation_ && impl_side_invalidation_was_blocked_) {
-      RequestImplSideInvalidationForCheckerImagedTiles();
+      RequestImplSideInvalidation();
       impl_side_invalidation_was_blocked_ = false;
     }
   }
@@ -278,7 +279,7 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
     test_hooks_->DidInvalidateContentOnImplSide(this);
   }
 
-  void RequestImplSideInvalidationForCheckerImagedTiles() override {
+  void RequestImplSideInvalidation() override {
     test_hooks_->DidReceiveImplSideInvalidationRequest(this);
     if (block_impl_side_invalidation_) {
       impl_side_invalidation_was_blocked_ = true;
@@ -286,7 +287,7 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
     }
 
     impl_side_invalidation_was_blocked_ = false;
-    LayerTreeHostImpl::RequestImplSideInvalidationForCheckerImagedTiles();
+    LayerTreeHostImpl::RequestImplSideInvalidation();
     test_hooks_->DidRequestImplSideInvalidation(this);
   }
 
@@ -737,7 +738,7 @@ void LayerTreeTest::RealEndTest() {
     return;
   }
 
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void LayerTreeTest::DispatchAddAnimationToPlayer(

@@ -17,7 +17,6 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
-#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "storage/browser/fileapi/copy_or_move_file_validator.h"
 #include "storage/browser/fileapi/copy_or_move_operation_delegate.h"
@@ -175,18 +174,14 @@ class CopyOrMoveOperationTestHelper {
   CopyOrMoveOperationTestHelper(const GURL& origin,
                                 storage::FileSystemType src_type,
                                 storage::FileSystemType dest_type)
-      : origin_(origin),
-        src_type_(src_type),
-        dest_type_(dest_type),
-        scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::IO) {}
+      : origin_(origin), src_type_(src_type), dest_type_(dest_type) {}
 
   ~CopyOrMoveOperationTestHelper() {
     file_system_context_ = NULL;
     quota_manager_proxy_->SimulateQuotaManagerDestroyed();
     quota_manager_ = NULL;
     quota_manager_proxy_ = NULL;
-    scoped_task_environment_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
   }
 
   void SetUp() {
@@ -203,6 +198,7 @@ class CopyOrMoveOperationTestHelper {
     base::FilePath base_dir = base_.GetPath();
     quota_manager_ =
         new MockQuotaManager(false /* is_incognito */, base_dir,
+                             base::ThreadTaskRunnerHandle::Get().get(),
                              base::ThreadTaskRunnerHandle::Get().get(),
                              NULL /* special storage policy */);
     quota_manager_proxy_ = new MockQuotaManagerProxy(
@@ -233,7 +229,7 @@ class CopyOrMoveOperationTestHelper {
         FileSystemURL::CreateForTest(origin_, dest_type_, base::FilePath()),
         storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT,
         base::Bind(&ExpectOk));
-    scoped_task_environment_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
 
     // Grant relatively big quota initially.
     quota_manager_->SetQuota(
@@ -399,7 +395,7 @@ class CopyOrMoveOperationTestHelper {
   const storage::FileSystemType src_type_;
   const storage::FileSystemType dest_type_;
 
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  base::MessageLoopForIO message_loop_;
   scoped_refptr<storage::FileSystemContext> file_system_context_;
   scoped_refptr<MockQuotaManagerProxy> quota_manager_proxy_;
   scoped_refptr<MockQuotaManager> quota_manager_;

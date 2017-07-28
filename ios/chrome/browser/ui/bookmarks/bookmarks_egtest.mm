@@ -1344,18 +1344,13 @@ id<GREYMatcher> ActionSheet(Action action) {
 // Rename folder title to |folderTitle|. Must be in edit folder UI.
 + (void)renameBookmarkFolderWithFolderTitle:(NSString*)folderTitle {
   NSString* titleIdentifier = @"Title_textField";
+  NSString* clearTextFieldIdentifier = @"Clear text";
 
   // Edit the title field.
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(titleIdentifier)]
       performAction:grey_tap()];
-  // TODO(crbug.com/748748): Getting the clear button from the text field since
-  // the clear button has no accessibility label on iOS11/XCode9 betas thus we
-  // can't access it directly. EarlGray team believes that this could be a bug
-  // and might be fixed later on.
-  id<GREYMatcher> clearTextButton =
-      grey_allOf(grey_ancestor(grey_accessibilityID(titleIdentifier)),
-                 grey_kindOfClass([UIButton class]), nil);
-  [[EarlGrey selectElementWithMatcher:clearTextButton]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(
+                                          clearTextFieldIdentifier)]
       performAction:grey_tap()];
 
   // Type in the new title and use '\n' to dismiss the keyboard.
@@ -1378,14 +1373,7 @@ id<GREYMatcher> ActionSheet(Action action) {
   NSString* titleIdentifier = @"Title Field_textField";
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(titleIdentifier)]
       performAction:grey_tap()];
-  // TODO(crbug.com/748748): Getting the clear button from the text field since
-  // the clear button has no accessibility label on iOS11/XCode9 betas thus we
-  // can't access it directly. EarlGray team believes that this could be a bug
-  // and might be fixed later on.
-  id<GREYMatcher> clearTextButton =
-      grey_allOf(grey_ancestor(grey_accessibilityID(titleIdentifier)),
-                 grey_kindOfClass([UIButton class]), nil);
-  [[EarlGrey selectElementWithMatcher:clearTextButton]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Clear text")]
       performAction:grey_tap()];
 
   // Use '\n' to tap Done and dismiss the keyboard.

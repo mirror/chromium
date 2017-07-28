@@ -266,7 +266,7 @@ class PaymentResponse {
 
   // The payment method identifier for the payment method that the user selected
   // to fulfil the transaction.
-  std::string method_name;
+  base::string16 method_name;
 
   // The json-serialized stringified details of the payment method. Used by the
   // merchant to process the transaction and determine successful fund transfer.

@@ -47,20 +47,22 @@ InlineEditor.ColorSwatch = class extends HTMLSpanElement {
       case cf.HSLA:
         if (color.nickname())
           return cf.Nickname;
-        return color.detectHEXFormat();
+        if (!color.hasAlpha())
+          return color.canBeShortHex() ? cf.ShortHEX : cf.HEX;
+        else
+          return cf.Original;
 
       case cf.ShortHEX:
         return cf.HEX;
 
-      case cf.ShortHEXA:
-        return cf.HEXA;
-
-      case cf.HEXA:
       case cf.HEX:
         return cf.Original;
 
       case cf.Nickname:
-        return color.detectHEXFormat();
+        if (!color.hasAlpha())
+          return color.canBeShortHex() ? cf.ShortHEX : cf.HEX;
+        else
+          return cf.Original;
 
       default:
         return cf.RGBA;

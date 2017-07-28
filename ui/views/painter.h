@@ -24,10 +24,6 @@ class Rect;
 class Size;
 }
 
-namespace ui {
-class LayerOwner;
-}
-
 namespace views {
 
 class View;
@@ -92,10 +88,6 @@ class VIEWS_EXPORT Painter {
       SkColor color,
       int thickness,
       const gfx::InsetsF& insets);
-
-  // Creates and returns a texture layer that is painted by |painter|.
-  static std::unique_ptr<ui::LayerOwner> CreatePaintedLayer(
-      std::unique_ptr<Painter> painter);
 
   // Returns the minimum size this painter can paint without obvious graphical
   // problems (e.g. overlapping images).

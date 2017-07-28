@@ -1002,18 +1002,10 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   first_run::IsChromeFirstRun();
 #endif  // !defined(OS_ANDROID)
 
-  // The initial read is done synchronously, the TaskPriority is thus only used
-  // for flushes to disks and BACKGROUND is therefore appropriate. Priority of
-  // remaining BACKGROUND+BLOCK_SHUTDOWN tasks is bumped by the TaskScheduler on
-  // shutdown. However, some shutdown use cases happen without
-  // TaskScheduler::Shutdown() (e.g. ChromeRestartRequest::Start() and
-  // BrowserProcessImpl::EndSession()) and we must thus unfortunately make this
-  // USER_VISIBLE until we solve https://crbug.com/747495 to allow bumping
-  // priority of a sequence on demand.
   scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+      JsonPrefStore::GetTaskRunnerForFile(
+          base::FilePath(chrome::kLocalStorePoolName),
+          BrowserThread::GetBlockingPool());
 
   {
     TRACE_EVENT0("startup",
@@ -1239,13 +1231,9 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   SetupFieldTrials();
 
   // ChromeOS needs ResourceBundle::InitSharedInstance to be called before this.
+  // This also instantiates the IOThread which requests the metrics service and
+  // must be after |SetupMetrics()|.
   browser_process_->PreCreateThreads();
-
-  // This must occur in PreCreateThreads() because it initializes global state
-  // which is then read by all threads without synchronization. It must be after
-  // browser_process_->PreCreateThreads() as that instantiates the IOThread
-  // which is used in SetupMetrics().
-  SetupMetrics();
 
   return content::RESULT_CODE_NORMAL_EXIT;
 }
@@ -1437,6 +1425,10 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
 
   SCOPED_UMA_HISTOGRAM_LONG_TIMER("Startup.PreMainMessageLoopRunImplLongTime");
   const base::TimeTicks start_time_step1 = base::TimeTicks::Now();
+
+  // This must occur at PreMainMessageLoopRun because |SetupMetrics()| uses the
+  // blocking pool, which is disabled until the CreateThreads phase of startup.
+  SetupMetrics();
 
   // Can't be in SetupFieldTrials() because it needs a task runner.
   MemoryAblationExperiment::MaybeStart(

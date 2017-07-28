@@ -97,8 +97,6 @@ enum class ChallengeReplyError {
   CRL_INVALID,
   CERT_REVOKED,
   SENDER_NONCE_MISMATCH,
-  SIGNATURE_EMPTY,
-  DIGEST_UNSUPPORTED,
 };
 
 // Used by CastSocket/CastTransport to track connection state.

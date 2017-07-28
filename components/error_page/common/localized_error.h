@@ -43,6 +43,8 @@ class LocalizedError {
   // Returns true if an error page exists for the specified parameters.
   static bool HasStrings(const std::string& error_domain, int error_code);
 
+  static const char kHttpErrorDomain[];
+
  private:
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(LocalizedError);

@@ -44,6 +44,7 @@ using base::Callback;
 using base::Closure;
 using base::ConstRef;
 using base::FilePath;
+using base::MessageLoop;
 using base::Unretained;
 using content::BrowserThread;
 using content::WebContents;
@@ -655,7 +656,7 @@ void DnsProbeBrowserTest::OnDnsProbeStatusSent(
     DnsProbeStatus dns_probe_status) {
   dns_probe_status_queue_.push_back(dns_probe_status);
   if (awaiting_dns_probe_status_)
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    MessageLoop::current()->QuitWhenIdle();
 }
 
 // Make sure probes don't break non-DNS error pages when corrections load.

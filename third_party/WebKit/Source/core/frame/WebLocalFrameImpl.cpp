@@ -116,7 +116,6 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/PlainTextRange.h"
-#include "core/editing/SetSelectionData.h"
 #include "core/editing/TextAffinity.h"
 #include "core/editing/TextFinder.h"
 #include "core/editing/iterators/TextIterator.h"
@@ -482,7 +481,7 @@ class ChromePluginPrintContext final : public ChromePrintContext {
 };
 
 static WebDataSource* DataSourceForDocLoader(DocumentLoader* loader) {
-  return loader ? WebDataSourceImpl::FromDocumentLoader(loader) : nullptr;
+  return loader ? WebDataSourceImpl::FromDocumentLoader(loader) : 0;
 }
 
 // WebFrame -------------------------------------------------------------------
@@ -1210,13 +1209,15 @@ void WebLocalFrameImpl::SelectRange(
       handle_visibility_behavior == kShowSelectionHandle ||
       (handle_visibility_behavior == kPreserveHandleVisibility &&
        selection.IsHandleVisible());
-  selection.SetSelection(SelectionInDOMTree::Builder()
-                             .SetBaseAndExtent(range)
-                             .SetAffinity(VP_DEFAULT_AFFINITY)
-                             .SetIsHandleVisible(show_handles)
-                             .SetIsDirectional(false)
-                             .Build(),
-                         SetSelectionData());
+  selection.SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(range)
+          .SetAffinity(VP_DEFAULT_AFFINITY)
+          .SetIsHandleVisible(show_handles)
+          .SetIsDirectional(false)
+          .Build(),
+      FrameSelection::ConvertSetSelectionByToSetSelectionOptions(
+          SetSelectionBy::kSystem));
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {
@@ -1772,6 +1773,14 @@ WebViewBase* WebLocalFrameImpl::ViewImpl() const {
   if (!GetFrame())
     return nullptr;
   return GetFrame()->GetPage()->GetChromeClient().GetWebView();
+}
+
+WebDataSourceImpl* WebLocalFrameImpl::DataSourceImpl() const {
+  return static_cast<WebDataSourceImpl*>(DataSource());
+}
+
+WebDataSourceImpl* WebLocalFrameImpl::ProvisionalDataSourceImpl() const {
+  return static_cast<WebDataSourceImpl*>(ProvisionalDataSource());
 }
 
 void WebLocalFrameImpl::DidFail(const ResourceError& error,

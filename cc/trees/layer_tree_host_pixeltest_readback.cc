@@ -5,13 +5,13 @@
 #include "build/build_config.h"
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/texture_layer.h"
+#include "cc/output/copy_output_request.h"
+#include "cc/output/copy_output_result.h"
 #include "cc/test/fake_picture_layer.h"
 #include "cc/test/fake_picture_layer_impl.h"
 #include "cc/test/layer_tree_pixel_test.h"
 #include "cc/test/solid_color_content_layer_client.h"
 #include "cc/trees/layer_tree_impl.h"
-#include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/test/paths.h"
 
 #if !defined(OS_ANDROID)
@@ -60,22 +60,22 @@ class LayerTreeHostReadbackPixelTest
     RunPixelTestWithReadbackTarget(type, content_root, target, file_name);
   }
 
-  std::unique_ptr<viz::CopyOutputRequest> CreateCopyOutputRequest() override {
-    std::unique_ptr<viz::CopyOutputRequest> request;
+  std::unique_ptr<CopyOutputRequest> CreateCopyOutputRequest() override {
+    std::unique_ptr<CopyOutputRequest> request;
 
     if (readback_type_ == READBACK_BITMAP) {
-      request = viz::CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
+      request = CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
           &LayerTreeHostReadbackPixelTest::ReadbackResultAsBitmap,
           base::Unretained(this)));
     } else {
       DCHECK_EQ(readback_type_, READBACK_DEFAULT);
       if (test_type_ == PIXEL_TEST_SOFTWARE) {
-        request = viz::CopyOutputRequest::CreateRequest(base::BindOnce(
+        request = CopyOutputRequest::CreateRequest(base::BindOnce(
             &LayerTreeHostReadbackPixelTest::ReadbackResultAsBitmap,
             base::Unretained(this)));
       } else {
         DCHECK_EQ(test_type_, PIXEL_TEST_GL);
-        request = viz::CopyOutputRequest::CreateRequest(base::BindOnce(
+        request = CopyOutputRequest::CreateRequest(base::BindOnce(
             &LayerTreeHostReadbackPixelTest::ReadbackResultAsTexture,
             base::Unretained(this)));
       }
@@ -104,19 +104,19 @@ class LayerTreeHostReadbackPixelTest
     }
   }
 
-  void ReadbackResultAsBitmap(std::unique_ptr<viz::CopyOutputResult> result) {
+  void ReadbackResultAsBitmap(std::unique_ptr<CopyOutputResult> result) {
     EXPECT_TRUE(task_runner_provider()->IsMainThread());
     EXPECT_TRUE(result->HasBitmap());
     result_bitmap_ = result->TakeBitmap();
     EndTest();
   }
 
-  void ReadbackResultAsTexture(std::unique_ptr<viz::CopyOutputResult> result) {
+  void ReadbackResultAsTexture(std::unique_ptr<CopyOutputResult> result) {
     EXPECT_TRUE(task_runner_provider()->IsMainThread());
     EXPECT_TRUE(result->HasTexture());
 
     viz::TextureMailbox texture_mailbox;
-    std::unique_ptr<viz::SingleReleaseCallback> release_callback;
+    std::unique_ptr<SingleReleaseCallback> release_callback;
     result->TakeTexture(&texture_mailbox, &release_callback);
     EXPECT_TRUE(texture_mailbox.IsValid());
     EXPECT_TRUE(texture_mailbox.IsTexture());
@@ -126,7 +126,7 @@ class LayerTreeHostReadbackPixelTest
     release_callback->Run(gpu::SyncToken(), false);
 
     ReadbackResultAsBitmap(
-        viz::CopyOutputResult::CreateBitmapResult(std::move(bitmap)));
+        CopyOutputResult::CreateBitmapResult(std::move(bitmap)));
   }
 
   ReadbackType readback_type_;
@@ -134,7 +134,7 @@ class LayerTreeHostReadbackPixelTest
   int insert_copy_request_after_frame_count_;
 };
 
-void IgnoreReadbackResult(std::unique_ptr<viz::CopyOutputResult> result) {}
+void IgnoreReadbackResult(std::unique_ptr<CopyOutputResult> result) {}
 
 TEST_P(LayerTreeHostReadbackPixelTest, ReadbackRootLayer) {
   scoped_refptr<SolidColorLayer> background =
@@ -289,9 +289,8 @@ TEST_P(LayerTreeHostReadbackPixelTest,
       CreateSolidColorLayer(gfx::Rect(150, 150, 50, 50), SK_ColorBLUE);
   hidden_target->AddChild(blue);
 
-  hidden_target->RequestCopyOfOutput(
-      viz::CopyOutputRequest::CreateBitmapRequest(
-          base::BindOnce(&IgnoreReadbackResult)));
+  hidden_target->RequestCopyOfOutput(CopyOutputRequest::CreateBitmapRequest(
+      base::BindOnce(&IgnoreReadbackResult)));
   RunReadbackTest(GetParam().pixel_test_type, GetParam().readback_type,
                   background, base::FilePath(FILE_PATH_LITERAL("black.png")));
 }
@@ -415,7 +414,7 @@ TEST_P(LayerTreeHostReadbackPixelTest, ReadbackNonRootOrFirstLayer) {
 
   scoped_refptr<SolidColorLayer> blue =
       CreateSolidColorLayer(gfx::Rect(150, 150, 50, 50), SK_ColorBLUE);
-  blue->RequestCopyOfOutput(viz::CopyOutputRequest::CreateBitmapRequest(
+  blue->RequestCopyOfOutput(CopyOutputRequest::CreateBitmapRequest(
       base::BindOnce(&IgnoreReadbackResult)));
   background->AddChild(blue);
 
@@ -435,7 +434,7 @@ TEST_P(LayerTreeHostReadbackPixelTest, MultipleReadbacksOnLayer) {
   scoped_refptr<SolidColorLayer> background =
       CreateSolidColorLayer(gfx::Rect(200, 200), SK_ColorGREEN);
 
-  background->RequestCopyOfOutput(viz::CopyOutputRequest::CreateBitmapRequest(
+  background->RequestCopyOfOutput(CopyOutputRequest::CreateBitmapRequest(
       base::BindOnce(&IgnoreReadbackResult)));
 
   RunReadbackTestWithReadbackTarget(

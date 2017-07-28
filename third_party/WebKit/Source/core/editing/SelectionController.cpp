@@ -35,11 +35,9 @@
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/RenderedPosition.h"
-#include "core/editing/SetSelectionData.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarkerController.h"
-#include "core/editing/suggestion/TextSuggestionController.h"
 #include "core/events/Event.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
@@ -345,8 +343,7 @@ bool SelectionController::HandleSingleClick(
   }
 
   bool is_handle_visible = false;
-  const bool has_editable_style = HasEditableStyle(*inner_node);
-  if (has_editable_style) {
+  if (HasEditableStyle(*inner_node)) {
     const bool is_text_box_empty =
         CreateVisibleSelection(SelectionInFlatTree::Builder()
                                    .SelectAllChildren(*inner_node)
@@ -368,12 +365,6 @@ bool SelectionController::HandleSingleClick(
       TextGranularity::kCharacter,
       is_handle_visible ? HandleVisibility::kVisible
                         : HandleVisibility::kNotVisible);
-
-  if (has_editable_style && event.Event().FromTouch()) {
-    frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
-        visible_pos.DeepEquivalent());
-  }
-
   return false;
 }
 
@@ -807,12 +798,8 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
     return;
   Selection().SetSelection(
       ConvertToSelectionInDOMTree(selection_in_flat_tree),
-      SetSelectionData::Builder()
-          .SetShouldCloseTyping(true)
-          .SetShouldClearTypingStyle(true)
-          .SetCursorAlignOnScroll(CursorAlignOnScroll::kIfNeeded)
-          .SetGranularity(granularity)
-          .Build());
+      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle,
+      CursorAlignOnScroll::kIfNeeded, granularity);
 }
 
 void SelectionController::SetCaretAtHitTestResult(
@@ -942,8 +929,9 @@ bool SelectionController::HandleMousePressEvent(
     // effects, e.g., word selection, to editable regions.
     mouse_down_allows_multi_click_ =
         !event.Event().FromTouch() ||
-        IsEditablePosition(
-            Selection().ComputeVisibleSelectionInDOMTreeDeprecated().Start());
+        Selection()
+            .ComputeVisibleSelectionInDOMTreeDeprecated()
+            .HasEditableStyle();
   }
 
   if (event.Event().click_count >= 3)

@@ -336,10 +336,7 @@ void DataReductionProxyNetworkDelegate::OnBeforeStartTransactionInternal(
   if (data_reduction_proxy_io_data_->lofi_decider()) {
     data_reduction_proxy_io_data_->lofi_decider()
         ->MaybeSetAcceptTransformHeader(
-            *request,
-            !params::IsBlackListEnabledForServerPreviews() &&
-                data_reduction_proxy_config_->lofi_off(),
-            headers);
+            *request, data_reduction_proxy_config_->lofi_off(), headers);
   }
 
   MaybeAddChromeProxyECTHeader(headers, *request);

@@ -96,11 +96,6 @@ void NativeViewHostMac::RemovedFromWidget() {
   NativeViewDetaching(false);
 }
 
-bool NativeViewHostMac::SetCornerRadius(int corner_radius) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
 void NativeViewHostMac::InstallClip(int x, int y, int w, int h) {
   NOTIMPLEMENTED();
 }

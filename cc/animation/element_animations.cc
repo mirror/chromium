@@ -298,7 +298,6 @@ void ElementAnimations::SetNeedsUpdateImplClientState() {
 }
 
 void ElementAnimations::NotifyClientFloatAnimated(float opacity,
-                                                  int target_property_id,
                                                   Animation* animation) {
   DCHECK(animation->target_property_id() == TargetProperty::OPACITY);
   opacity = MathUtil::ClampToRange(opacity, 0.0f, 1.0f);
@@ -310,7 +309,6 @@ void ElementAnimations::NotifyClientFloatAnimated(float opacity,
 
 void ElementAnimations::NotifyClientFilterAnimated(
     const FilterOperations& filters,
-    int target_property_id,
     Animation* animation) {
   if (AnimationAffectsActiveElements(animation))
     OnFilterAnimated(ElementListType::ACTIVE, filters);
@@ -320,7 +318,6 @@ void ElementAnimations::NotifyClientFilterAnimated(
 
 void ElementAnimations::NotifyClientTransformOperationsAnimated(
     const TransformOperations& operations,
-    int target_property_id,
     Animation* animation) {
   gfx::Transform transform = operations.Apply();
   if (AnimationAffectsActiveElements(animation))
@@ -331,7 +328,6 @@ void ElementAnimations::NotifyClientTransformOperationsAnimated(
 
 void ElementAnimations::NotifyClientScrollOffsetAnimated(
     const gfx::ScrollOffset& scroll_offset,
-    int target_property_id,
     Animation* animation) {
   if (AnimationAffectsActiveElements(animation))
     OnScrollOffsetAnimated(ElementListType::ACTIVE, scroll_offset);

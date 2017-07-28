@@ -17,7 +17,6 @@
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
-#include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
@@ -56,7 +55,7 @@ void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
   task_queue_.AddTask(std::move(add_task));
 
   // TODO(dewittj): Remove when we have proper scheduling.
-  service_->GetPrefetchBackgroundTaskHandler()->EnsureTaskScheduled();
+  BeginBackgroundTask(nullptr);
 }
 
 void PrefetchDispatcherImpl::RemoveAllUnprocessedPrefetchURLs(
@@ -82,12 +81,15 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
 
   background_task_ = std::move(background_task);
 
-  // Check if there are NEW_REQUEST urls, send them to the service to
-  // start offlining. Transition state of sent urls to
-  // SENT_GENERATE_PAGE_BUNDLE.
+  // TODO(dewittj): Remove this when the task can get the suggestions from the
+  // SQL store directly.
+  std::vector<PrefetchURL> prefetch_urls;
+  service_->GetSuggestedArticlesObserver()->GetCurrentSuggestions(
+      &prefetch_urls);
+
   std::unique_ptr<Task> generate_page_bundle_task =
       base::MakeUnique<GeneratePageBundleTask>(
-          service_->GetPrefetchStore(), service_->GetPrefetchGCMHandler(),
+          prefetch_urls, service_->GetPrefetchGCMHandler(),
           service_->GetPrefetchNetworkRequestFactory(),
           base::Bind(&PrefetchDispatcherImpl::DidPrefetchRequest,
                      weak_factory_.GetWeakPtr(), "GeneratePageBundleRequest"));

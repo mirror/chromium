@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/location.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/scoped_task_environment.h"
@@ -117,7 +118,7 @@ class PrivetURLFetcherTest : public ::testing::Test {
     callback.Cancel();
   }
 
-  void Stop() { base::RunLoop::QuitCurrentWhenIdleDeprecated(); }
+  void Stop() { base::MessageLoop::current()->QuitWhenIdle(); }
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;

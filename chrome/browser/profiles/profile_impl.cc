@@ -29,8 +29,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/version.h"
@@ -106,6 +105,7 @@
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/json_pref_store.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/proxy_config/pref_proxy_config_tracker.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -236,25 +236,26 @@ void CreateDirectoryAndSignal(const base::FilePath& path,
 }
 
 // Task that blocks the FILE thread until CreateDirectoryAndSignal() finishes on
-// the IO task runner.
+// blocking I/O pool.
 void BlockFileThreadOnDirectoryCreate(base::WaitableEvent* done_creating) {
   done_creating->Wait();
 }
 
-// Initiates creation of profile directory on |io_task_runner| and ensures that
-// FILE thread is blocked until that operation finishes. If |create_readme| is
-// true, the profile README will be created in the profile directory.
-void CreateProfileDirectory(base::SequencedTaskRunner* io_task_runner,
+// Initiates creation of profile directory on |sequenced_task_runner| and
+// ensures that FILE thread is blocked until that operation finishes. If
+// |create_readme| is true, the profile README will be created in the profile
+// directory.
+void CreateProfileDirectory(base::SequencedTaskRunner* sequenced_task_runner,
                             const base::FilePath& path,
                             bool create_readme) {
   base::WaitableEvent* done_creating =
       new base::WaitableEvent(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                               base::WaitableEvent::InitialState::NOT_SIGNALED);
-  io_task_runner->PostTask(
+  sequenced_task_runner->PostTask(
       FROM_HERE, base::BindOnce(&CreateDirectoryAndSignal, path, done_creating,
                                 create_readme));
-  // Block the FILE thread until directory is created on I/O task runner to make
-  // sure that we don't attempt any operation until that part completes.
+  // Block the FILE thread until directory is created on I/O pool to make sure
+  // that we don't attempt any operation until that part completes.
   BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
                           base::BindOnce(&BlockFileThreadOnDirectoryCreate,
                                          base::Owned(done_creating)));
@@ -314,14 +315,14 @@ Profile* Profile::CreateProfile(const base::FilePath& path,
                path.AsUTF8Unsafe());
 
   // Get sequenced task runner for making sure that file operations of
-  // this profile are executed in expected order (what was previously assured by
-  // the FILE thread).
-  scoped_refptr<base::SequencedTaskRunner> io_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::TaskShutdownBehavior::BLOCK_SHUTDOWN, base::MayBlock()});
+  // this profile (defined by |path|) are executed in expected order
+  // (what was previously assured by the FILE thread).
+  scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner =
+      JsonPrefStore::GetTaskRunnerForFile(path,
+                                          BrowserThread::GetBlockingPool());
   if (create_mode == CREATE_MODE_ASYNCHRONOUS) {
     DCHECK(delegate);
-    CreateProfileDirectory(io_task_runner.get(), path, true);
+    CreateProfileDirectory(sequenced_task_runner.get(), path, true);
   } else if (create_mode == CREATE_MODE_SYNCHRONOUS) {
     if (!base::PathExists(path)) {
       // TODO(rogerta): http://crbug/160553 - Bad things happen if we can't
@@ -336,7 +337,8 @@ Profile* Profile::CreateProfile(const base::FilePath& path,
     NOTREACHED();
   }
 
-  return new ProfileImpl(path, delegate, create_mode, io_task_runner);
+  return new ProfileImpl(
+      path, delegate, create_mode, sequenced_task_runner.get());
 }
 
 // static
@@ -419,19 +421,17 @@ void ProfileImpl::RegisterProfilePrefs(
   registry->RegisterIntegerPref(prefs::kMediaCacheSize, 0);
 }
 
-ProfileImpl::ProfileImpl(
-    const base::FilePath& path,
-    Delegate* delegate,
-    CreateMode create_mode,
-    scoped_refptr<base::SequencedTaskRunner> io_task_runner)
+ProfileImpl::ProfileImpl(const base::FilePath& path,
+                         Delegate* delegate,
+                         CreateMode create_mode,
+                         base::SequencedTaskRunner* sequenced_task_runner)
     : path_(path),
-      io_task_runner_(std::move(io_task_runner)),
       pref_registry_(new user_prefs::PrefRegistrySyncable),
       io_data_(this),
       last_session_exit_type_(EXIT_NORMAL),
       start_time_(Time::Now()),
       delegate_(delegate),
-      predictor_(nullptr) {
+      predictor_(NULL) {
   TRACE_EVENT0("browser,startup", "ProfileImpl::ctor")
   DCHECK(!path.empty()) << "Using an empty path will attempt to write " <<
                             "profile files to the root directory!";
@@ -478,13 +478,13 @@ ProfileImpl::ProfileImpl(
     chromeos::DeviceSettingsService::Get()->LoadImmediately();
   configuration_policy_provider_ =
       policy::UserPolicyManagerFactoryChromeOS::CreateForProfile(
-          this, force_immediate_policy_load, io_task_runner_);
+          this, force_immediate_policy_load, sequenced_task_runner);
   chromeos::AuthPolicyCredentialsManagerFactory::
       BuildForProfileIfActiveDirectory(this);
 #else
   configuration_policy_provider_ =
       policy::UserCloudPolicyManagerFactory::CreateForOriginalBrowserContext(
-          this, force_immediate_policy_load, io_task_runner_,
+          this, force_immediate_policy_load, sequenced_task_runner,
           BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 #endif
@@ -510,8 +510,8 @@ ProfileImpl::ProfileImpl(
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   supervised_user_settings =
       SupervisedUserSettingsServiceFactory::GetForProfile(this);
-  supervised_user_settings->Init(path_, io_task_runner_.get(),
-                                 create_mode == CREATE_MODE_SYNCHRONOUS);
+  supervised_user_settings->Init(
+      path_, sequenced_task_runner, create_mode == CREATE_MODE_SYNCHRONOUS);
 #endif
 
   scoped_refptr<safe_browsing::SafeBrowsingService> safe_browsing_service(
@@ -602,7 +602,10 @@ void ProfileImpl::DoFinalInit() {
   // to PathService.
   chrome::GetUserCacheDirectory(path_, &base_cache_path_);
   // Always create the cache directory asynchronously.
-  CreateProfileDirectory(io_task_runner_.get(), base_cache_path_, false);
+  scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner =
+      JsonPrefStore::GetTaskRunnerForFile(base_cache_path_,
+                                          BrowserThread::GetBlockingPool());
+  CreateProfileDirectory(sequenced_task_runner.get(), base_cache_path_, false);
 
   // Initialize components that depend on the current value.
   UpdateSupervisedUserIdInStorage();
@@ -813,7 +816,8 @@ base::FilePath ProfileImpl::GetPath() const {
 }
 
 scoped_refptr<base::SequencedTaskRunner> ProfileImpl::GetIOTaskRunner() {
-  return io_task_runner_;
+  return JsonPrefStore::GetTaskRunnerForFile(
+      GetPath(), BrowserThread::GetBlockingPool());
 }
 
 bool ProfileImpl::IsOffTheRecord() const {

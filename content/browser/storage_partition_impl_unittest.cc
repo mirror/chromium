@@ -107,7 +107,7 @@ class AwaitCompletionHelper {
   void Notify() {
     if (start_) {
       DCHECK(!already_quit_);
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
       start_ = false;
     } else {
       DCHECK(!already_quit_);
@@ -632,6 +632,7 @@ class StoragePartitionImplTest : public testing::Test {
       quota_manager_ = new MockQuotaManager(
           browser_context_->IsOffTheRecord(), browser_context_->GetPath(),
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO).get(),
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::DB).get(),
           browser_context_->GetSpecialStoragePolicy());
     }
     return quota_manager_.get();

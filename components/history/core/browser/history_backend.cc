@@ -516,15 +516,6 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     ui::PageTransition redirect_info = ui::PAGE_TRANSITION_CHAIN_START;
 
     RedirectList redirects = request.redirects;
-    // In the presence of client redirects, |request.redirects| can be a partial
-    // chain because previous calls to this function may have reported a
-    // redirect chain already. This is fine for the visits database where we'll
-    // just append data but insufficient for |recent_redirects_|
-    // (backpropagation of favicons and titles), where we'd like the full
-    // (extended) redirect chain. We use |extended_redirect_chain| to represent
-    // this.
-    RedirectList extended_redirect_chain;
-
     if (redirects[0].SchemeIs(url::kAboutScheme)) {
       // When the redirect source + referrer is "about" we skip it. This
       // happens when a page opens a new frame/window to about:blank and then
@@ -563,8 +554,6 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
               visit_row.transition & ~ui::PAGE_TRANSITION_CHAIN_END);
           db_->UpdateVisitRow(visit_row);
         }
-
-        GetCachedRecentRedirects(request.referrer, &extended_redirect_chain);
       }
     }
 
@@ -599,12 +588,8 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     }
 
     // Last, save this redirect chain for later so we can set titles & favicons
-    // on the redirected pages properly. For this we use the extended redirect
-    // chain, which includes URLs from chained redirects.
-    extended_redirect_chain.insert(extended_redirect_chain.end(),
-                                   std::make_move_iterator(redirects.begin()),
-                                   std::make_move_iterator(redirects.end()));
-    recent_redirects_.Put(request.url, extended_redirect_chain);
+    // on the redirected pages properly.
+    recent_redirects_.Put(request.url, redirects);
   }
 
   // TODO(brettw) bug 1140015: Add an "add page" notification so the history
@@ -1054,12 +1039,6 @@ bool HistoryBackend::GetVisitsSource(const VisitVector& visits,
 bool HistoryBackend::GetURL(const GURL& url, URLRow* url_row) {
   if (db_)
     return db_->GetRowForURL(url, url_row) != 0;
-  return false;
-}
-
-bool HistoryBackend::GetURLByID(URLID url_id, URLRow* url_row) {
-  if (db_)
-    return db_->GetURLRow(url_id, url_row);
   return false;
 }
 
@@ -2126,8 +2105,6 @@ bool HistoryBackend::SetFaviconMappingsForPageAndRedirects(
   if (page_url.has_ref()) {
     // Refs often gets added by Javascript, but the redirect chain is keyed to
     // the URL without a ref.
-    // TODO(crbug.com/746268): This can cause orphan favicons, i.e. without a
-    // matching history URL, which will never be cleaned up by the expirer.
     GURL::Replacements replacements;
     replacements.ClearRef();
     GURL page_url_without_ref = page_url.ReplaceComponents(replacements);

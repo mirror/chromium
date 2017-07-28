@@ -32,8 +32,6 @@ import org.chromium.content.browser.ChildProcessLauncherHelper;
 public class ChildProcessLauncherTestHelperService extends Service {
     public static final int MSG_BIND_SERVICE = IBinder.FIRST_CALL_TRANSACTION + 1;
     public static final int MSG_BIND_SERVICE_REPLY = MSG_BIND_SERVICE + 1;
-    public static final int MSG_UNBIND_SERVICE = MSG_BIND_SERVICE_REPLY + 1;
-    public static final int MSG_UNBIND_SERVICE_REPLY = MSG_UNBIND_SERVICE + 1;
 
     private final Handler.Callback mHandlerCallback = new Handler.Callback() {
         @Override
@@ -42,17 +40,12 @@ public class ChildProcessLauncherTestHelperService extends Service {
                 case MSG_BIND_SERVICE:
                     doBindService(msg);
                     return true;
-                case MSG_UNBIND_SERVICE:
-                    unbindService(msg);
-                    return true;
             }
             return false;
         }
     };
 
     private final HandlerThread mHandlerThread = new HandlerThread("Helper Service Handler");
-
-    private ChildProcessLauncherHelper mProcessLauncher;
 
     @Override
     public void onCreate() {
@@ -78,8 +71,9 @@ public class ChildProcessLauncherTestHelperService extends Service {
         final boolean bindToCaller = true;
         ChildProcessCreationParams params = new ChildProcessCreationParams(
                 getPackageName(), false, LibraryProcessType.PROCESS_CHILD, bindToCaller);
-        mProcessLauncher = ChildProcessLauncherTestUtils.startForTesting(true /* sandboxed */,
-                commandLine, new FileDescriptorInfo[0], params, true /* doSetupConnection */);
+        final ChildProcessLauncherHelper processLauncher =
+                ChildProcessLauncherTestUtils.startForTesting(true /* sandboxed */, commandLine,
+                        new FileDescriptorInfo[0], params, true /* doSetupConnection */);
 
         // Poll the launcher until the connection is set up. The main test in
         // ChildProcessLauncherTest, which has bound the connection to this service, manages the
@@ -91,7 +85,7 @@ public class ChildProcessLauncherTestHelperService extends Service {
             @Override
             public void run() {
                 int pid = 0;
-                ChildProcessConnection conn = mProcessLauncher.getChildProcessConnection();
+                ChildProcessConnection conn = processLauncher.getChildProcessConnection();
                 if (conn != null) {
                     pid = ChildProcessLauncherTestUtils.getConnectionPid(conn);
                 }
@@ -109,16 +103,5 @@ public class ChildProcessLauncherTestHelperService extends Service {
             }
         };
         handler.postDelayed(task, 10);
-    }
-
-    private void unbindService(Message msg) {
-        // Crash the service instead of unbinding so we are guaranteed the service process dies
-        // (if we were to unbind, the service process would stay around and may be reused).
-        try {
-            mProcessLauncher.getChildProcessConnection().crashServiceForTesting();
-            msg.replyTo.send(Message.obtain(null, MSG_UNBIND_SERVICE_REPLY));
-        } catch (RemoteException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 }

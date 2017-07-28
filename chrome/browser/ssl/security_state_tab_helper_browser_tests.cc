@@ -158,37 +158,36 @@ void CheckBrokenSecurityStyle(const SecurityStyleTestObserver& observer,
   EXPECT_TRUE(expired_explanation.insecure_explanations[0].has_certificate);
 }
 
-// Checks that the given |explanation| contains an appropriate
+// Checks that the given |secure_explanations| contains an appropriate
 // explanation if the certificate status is valid.
-void CheckSecureCertificateExplanation(
-    const content::SecurityStyleExplanation& explanation,
+void CheckSecureExplanations(
+    const std::vector<content::SecurityStyleExplanation>& secure_explanations,
+    CertificateStatus cert_status,
     Browser* browser,
     net::X509Certificate* expected_cert) {
-  ASSERT_EQ(kTestCertificateIssuerName,
-            expected_cert->issuer().GetDisplayName());
-  EXPECT_EQ(l10n_util::GetStringUTF8(IDS_VALID_SERVER_CERTIFICATE),
-            explanation.summary);
-  EXPECT_EQ(
-      l10n_util::GetStringFUTF8(IDS_VALID_SERVER_CERTIFICATE_DESCRIPTION,
-                                base::UTF8ToUTF16(kTestCertificateIssuerName)),
-      explanation.description);
-  net::X509Certificate* cert = browser->tab_strip_model()
-                                   ->GetActiveWebContents()
-                                   ->GetController()
-                                   .GetActiveEntry()
-                                   ->GetSSL()
-                                   .certificate.get();
-  EXPECT_TRUE(cert->Equals(expected_cert));
-  EXPECT_TRUE(explanation.has_certificate);
-}
+  ASSERT_EQ(cert_status == VALID_CERTIFICATE ? 2u : 1u,
+            secure_explanations.size());
+  if (cert_status == VALID_CERTIFICATE) {
+    ASSERT_EQ(kTestCertificateIssuerName,
+              expected_cert->issuer().GetDisplayName());
+    EXPECT_EQ(l10n_util::GetStringUTF8(IDS_VALID_SERVER_CERTIFICATE),
+              secure_explanations[0].summary);
+    EXPECT_EQ(l10n_util::GetStringFUTF8(
+                  IDS_VALID_SERVER_CERTIFICATE_DESCRIPTION,
+                  base::UTF8ToUTF16(kTestCertificateIssuerName)),
+              secure_explanations[0].description);
+    net::X509Certificate* cert = browser->tab_strip_model()
+                                     ->GetActiveWebContents()
+                                     ->GetController()
+                                     .GetActiveEntry()
+                                     ->GetSSL()
+                                     .certificate.get();
+    EXPECT_TRUE(cert->Equals(expected_cert));
+    EXPECT_TRUE(secure_explanations[0].has_certificate);
+  }
 
-// Checks that the given |explanation| contains an appropriate
-// explanation that the connection is secure.
-void CheckSecureConnectionExplanation(
-    const content::SecurityStyleExplanation& explanation,
-    Browser* browser) {
   EXPECT_EQ(l10n_util::GetStringUTF8(IDS_STRONG_SSL_SUMMARY),
-            explanation.summary);
+            secure_explanations.back().summary);
 
   content::WebContents* web_contents =
       browser->tab_strip_model()->GetActiveWebContents();
@@ -224,17 +223,8 @@ void CheckSecureConnectionExplanation(
   base::string16 secure_description = l10n_util::GetStringFUTF16(
       IDS_STRONG_SSL_DESCRIPTION, description_replacements, nullptr);
 
-  EXPECT_EQ(secure_description, base::ASCIIToUTF16(explanation.description));
-}
-
-// Checks that the given |explanation| contains an appropriate
-// explanation that the subresources are secure.
-void CheckSecureSubresourcesExplanation(
-    const content::SecurityStyleExplanation& explanation) {
-  EXPECT_EQ(l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_SUMMARY),
-            explanation.summary);
-  EXPECT_EQ(l10n_util::GetStringUTF8(IDS_SECURE_RESOURCES_DESCRIPTION),
-            explanation.description);
+  EXPECT_EQ(secure_description,
+            base::ASCIIToUTF16(secure_explanations.back().description));
 }
 
 void CheckSecurityInfoForSecure(
@@ -1570,14 +1560,11 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
 
   const content::SecurityStyleExplanations& mixed_content_explanation =
       observer.latest_explanations();
-  ASSERT_EQ(1u, mixed_content_explanation.neutral_explanations.size());
+  ASSERT_EQ(0u, mixed_content_explanation.neutral_explanations.size());
   ASSERT_EQ(0u, mixed_content_explanation.insecure_explanations.size());
-  ASSERT_EQ(2u, mixed_content_explanation.secure_explanations.size());
-  CheckSecureCertificateExplanation(
-      mixed_content_explanation.secure_explanations[0], browser(),
-      https_server_.GetCertificate().get());
-  CheckSecureConnectionExplanation(
-      mixed_content_explanation.secure_explanations[1], browser());
+  CheckSecureExplanations(mixed_content_explanation.secure_explanations,
+                          VALID_CERTIFICATE, browser(),
+                          https_server_.GetCertificate().get());
   EXPECT_TRUE(mixed_content_explanation.scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
@@ -1599,11 +1586,9 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(web_contents->ShowingInterstitialPage());
   CheckBrokenSecurityStyle(observer, net::ERR_CERT_DATE_INVALID, browser(),
                            https_test_server_expired.GetCertificate().get());
-  ASSERT_EQ(2u, observer.latest_explanations().secure_explanations.size());
-  CheckSecureConnectionExplanation(
-      observer.latest_explanations().secure_explanations[0], browser());
-  CheckSecureSubresourcesExplanation(
-      observer.latest_explanations().secure_explanations[1]);
+  CheckSecureExplanations(observer.latest_explanations().secure_explanations,
+                          INVALID_CERTIFICATE, browser(),
+                          https_test_server_expired.GetCertificate().get());
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
@@ -1618,14 +1603,9 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_EQ(blink::kWebSecurityStyleSecure, observer.latest_security_style());
   EXPECT_EQ(0u, observer.latest_explanations().neutral_explanations.size());
   EXPECT_EQ(0u, observer.latest_explanations().insecure_explanations.size());
-  ASSERT_EQ(3u, observer.latest_explanations().secure_explanations.size());
-  CheckSecureCertificateExplanation(
-      observer.latest_explanations().secure_explanations[0], browser(),
-      https_server_.GetCertificate().get());
-  CheckSecureConnectionExplanation(
-      observer.latest_explanations().secure_explanations[1], browser());
-  CheckSecureSubresourcesExplanation(
-      observer.latest_explanations().secure_explanations[2]);
+  CheckSecureExplanations(observer.latest_explanations().secure_explanations,
+                          VALID_CERTIFICATE, browser(),
+                          https_server_.GetCertificate().get());
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
@@ -1640,11 +1620,9 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_TRUE(web_contents->ShowingInterstitialPage());
   CheckBrokenSecurityStyle(observer, net::ERR_CERT_DATE_INVALID, browser(),
                            https_test_server_expired.GetCertificate().get());
-  ASSERT_EQ(2u, observer.latest_explanations().secure_explanations.size());
-  CheckSecureConnectionExplanation(
-      observer.latest_explanations().secure_explanations[0], browser());
-  CheckSecureSubresourcesExplanation(
-      observer.latest_explanations().secure_explanations[1]);
+  CheckSecureExplanations(observer.latest_explanations().secure_explanations,
+                          INVALID_CERTIFICATE, browser(),
+                          https_test_server_expired.GetCertificate().get());
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
@@ -1663,11 +1641,9 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   ProceedThroughInterstitial(web_contents);
   CheckBrokenSecurityStyle(observer, net::ERR_CERT_DATE_INVALID, browser(),
                            https_test_server_expired.GetCertificate().get());
-  ASSERT_EQ(2u, observer.latest_explanations().secure_explanations.size());
-  CheckSecureConnectionExplanation(
-      observer.latest_explanations().secure_explanations[0], browser());
-  CheckSecureSubresourcesExplanation(
-      observer.latest_explanations().secure_explanations[1]);
+  CheckSecureExplanations(observer.latest_explanations().secure_explanations,
+                          INVALID_CERTIFICATE, browser(),
+                          https_test_server_expired.GetCertificate().get());
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
@@ -1963,14 +1939,9 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_EQ(blink::kWebSecurityStyleSecure, observer.latest_security_style());
   EXPECT_EQ(0u, observer.latest_explanations().neutral_explanations.size());
   EXPECT_EQ(0u, observer.latest_explanations().insecure_explanations.size());
-  ASSERT_EQ(3u, observer.latest_explanations().secure_explanations.size());
-  CheckSecureCertificateExplanation(
-      observer.latest_explanations().secure_explanations[0], browser(),
-      https_server_.GetCertificate().get());
-  CheckSecureConnectionExplanation(
-      observer.latest_explanations().secure_explanations[1], browser());
-  CheckSecureSubresourcesExplanation(
-      observer.latest_explanations().secure_explanations[2]);
+  CheckSecureExplanations(observer.latest_explanations().secure_explanations,
+                          VALID_CERTIFICATE, browser(),
+                          https_server_.GetCertificate().get());
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
@@ -1996,11 +1967,9 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   CheckBrokenSecurityStyle(observer, net::ERR_CERT_COMMON_NAME_INVALID,
                            browser(),
                            https_test_server_expired.GetCertificate().get());
-  ASSERT_EQ(2u, observer.latest_explanations().secure_explanations.size());
-  CheckSecureConnectionExplanation(
-      observer.latest_explanations().secure_explanations[0], browser());
-  CheckSecureSubresourcesExplanation(
-      observer.latest_explanations().secure_explanations[1]);
+  CheckSecureExplanations(observer.latest_explanations().secure_explanations,
+                          INVALID_CERTIFICATE, browser(),
+                          https_test_server_expired.GetCertificate().get());
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());
@@ -2017,14 +1986,9 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   EXPECT_EQ(blink::kWebSecurityStyleSecure, observer.latest_security_style());
   EXPECT_EQ(0u, observer.latest_explanations().neutral_explanations.size());
   EXPECT_EQ(0u, observer.latest_explanations().insecure_explanations.size());
-  ASSERT_EQ(3u, observer.latest_explanations().secure_explanations.size());
-  CheckSecureCertificateExplanation(
-      observer.latest_explanations().secure_explanations[0], browser(),
-      https_server_.GetCertificate().get());
-  CheckSecureConnectionExplanation(
-      observer.latest_explanations().secure_explanations[1], browser());
-  CheckSecureSubresourcesExplanation(
-      observer.latest_explanations().secure_explanations[2]);
+  CheckSecureExplanations(observer.latest_explanations().secure_explanations,
+                          VALID_CERTIFICATE, browser(),
+                          https_server_.GetCertificate().get());
   EXPECT_TRUE(observer.latest_explanations().scheme_is_cryptographic);
   EXPECT_FALSE(observer.latest_explanations().pkp_bypassed);
   EXPECT_TRUE(observer.latest_explanations().info_explanations.empty());

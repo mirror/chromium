@@ -320,7 +320,7 @@ class Request {
     if (handler_)
       handler_->Handle(this);
     if (quit_on_complete_) {
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
       quit_on_complete_ = false;
     }
   }
@@ -1028,7 +1028,7 @@ TEST_F(HostResolverImplTest, BypassCache) {
                   CreateRequest(info, DEFAULT_PRIORITY)->Resolve());
       } else if (71 == req->info().port()) {
         // Test is done.
-        base::RunLoop::QuitCurrentWhenIdleDeprecated();
+        base::MessageLoop::current()->QuitWhenIdle();
       } else {
         FAIL() << "Unexpected request";
       }

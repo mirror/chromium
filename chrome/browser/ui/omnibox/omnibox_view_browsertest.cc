@@ -9,7 +9,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/scoped_observer.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
@@ -156,7 +155,7 @@ class OmniboxViewTest : public InProcessBrowserTest,
   // history::HisoryServiceObserver
   void OnHistoryServiceLoaded(
       history::HistoryService* history_service) override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  protected:
@@ -369,12 +368,12 @@ class OmniboxViewTest : public InProcessBrowserTest,
       default:
         FAIL() << "Unexpected notification type";
     }
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void OnURLsModified(history::HistoryService* history_service,
                       const history::URLRows& changed_urls) override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

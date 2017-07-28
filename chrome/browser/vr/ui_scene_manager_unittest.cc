@@ -279,7 +279,8 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
   UiElement* content_quad = scene_->GetUiElementByDebugId(kContentQuad);
   gfx::SizeF initial_content_size = content_quad->size();
-  gfx::Transform initial_position = content_quad->LocalTransform();
+  gfx::Transform initial_position =
+      content_quad->transform_operations().Apply();
 
   // In fullscreen mode, content elements should be visible, control elements
   // should be hidden.
@@ -293,7 +294,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
   EXPECT_NE(initial_content_size, content_quad->size());
-  EXPECT_NE(initial_position, content_quad->LocalTransform());
+  EXPECT_NE(initial_position, content_quad->transform_operations().Apply());
 
   // Everything should return to original state after leaving fullscreen.
   manager_->SetFullscreen(false);
@@ -305,7 +306,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
   EXPECT_EQ(initial_content_size, content_quad->size());
-  EXPECT_EQ(initial_position, content_quad->LocalTransform());
+  EXPECT_EQ(initial_position, content_quad->transform_operations().Apply());
 }
 
 TEST_F(UiSceneManagerTest, SecurityIconClickTriggersUnsupportedMode) {

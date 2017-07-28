@@ -25,8 +25,7 @@ PageTimingMetricsSender::PageTimingMetricsSender(
     : sender_(std::move(sender)),
       timer_(std::move(timer)),
       last_timing_(std::move(initial_timing)),
-      metadata_(mojom::PageLoadMetadata::New()),
-      new_features_(mojom::PageLoadFeatures::New()) {
+      metadata_(mojom::PageLoadMetadata::New()) {
   if (!IsEmpty(*last_timing_)) {
     EnsureSendTimer();
   }
@@ -46,16 +45,6 @@ void PageTimingMetricsSender::DidObserveLoadingBehavior(
   if (behavior & metadata_->behavior_flags)
     return;
   metadata_->behavior_flags |= behavior;
-  EnsureSendTimer();
-}
-
-void PageTimingMetricsSender::DidObserveNewFeatureUsage(
-    blink::mojom::WebFeature feature) {
-  int32_t feature_id = static_cast<int32_t>(feature);
-  if (features_sent_.test(feature_id))
-    return;
-  features_sent_.set(feature_id);
-  new_features_->features.push_back(feature);
   EnsureSendTimer();
 }
 
@@ -89,8 +78,7 @@ void PageTimingMetricsSender::EnsureSendTimer() {
 
 void PageTimingMetricsSender::SendNow() {
   have_sent_ipc_ = true;
-  sender_->SendTiming(last_timing_, metadata_, std::move(new_features_));
-  new_features_ = mojom::PageLoadFeatures::New();
+  sender_->SendTiming(last_timing_, metadata_);
 }
 
 }  // namespace page_load_metrics

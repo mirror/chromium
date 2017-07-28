@@ -12,13 +12,18 @@
 #include "base/strings/string_util.h"
 #include "chrome/browser/media/router/discovery/dial/device_description_fetcher.h"
 #include "chrome/browser/media/router/discovery/dial/safe_dial_device_description_parser.h"
-#include "chrome/browser/media/router/media_router_metrics.h"
 #include "net/base/ip_address.h"
 #include "url/gurl.h"
 
-using ErrorType = chrome::mojom::DialParsingError;
-
 namespace {
+
+enum ErrorType {
+  NONE,
+  MISSING_UNIQUE_ID,
+  MISSING_FRIENDLY_NAME,
+  MISSING_APP_URL,
+  INVALID_APP_URL
+};
 
 // How long to cache a device description.
 constexpr int kDeviceDescriptionCacheTimeHours = 12;
@@ -220,8 +225,7 @@ DeviceDescriptionService::CheckAndUpdateCache(
 void DeviceDescriptionService::OnParsedDeviceDescription(
     const DialDeviceData& device_data,
     const GURL& app_url,
-    chrome::mojom::DialDeviceDescriptionPtr parsed_device_description,
-    chrome::mojom::DialParsingError parsing_error) {
+    chrome::mojom::DialDeviceDescriptionPtr parsed_device_description) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   // Last callback for current utility process. Release |parser_| and
@@ -233,7 +237,6 @@ void DeviceDescriptionService::OnParsedDeviceDescription(
   }
 
   if (!parsed_device_description) {
-    MediaRouterMetrics::RecordDialParsingError(parsing_error);
     error_cb_.Run(device_data, "Failed to parse device description XML");
     return;
   }
@@ -244,14 +247,11 @@ void DeviceDescriptionService::OnParsedDeviceDescription(
   description_data.model_name = parsed_device_description->model_name;
   description_data.app_url = app_url;
 
-  ErrorType error = ValidateParsedDeviceDescription(
+  auto error = ValidateParsedDeviceDescription(
       device_data.device_description_url().host(), description_data);
 
   if (error != ErrorType::NONE) {
-    DLOG(WARNING) << "Device description failed to validate. "
-                     "MediaRouterDialParsingError code: "
-                  << error;
-    MediaRouterMetrics::RecordDialParsingError(error);
+    DLOG(WARNING) << "Device description failed to validate: " << error;
     error_cb_.Run(device_data, "Failed to process fetch result");
     return;
   }

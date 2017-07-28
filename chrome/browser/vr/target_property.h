@@ -9,7 +9,6 @@ namespace vr {
 
 enum TargetProperty {
   TRANSFORM = 0,
-  LAYOUT_OFFSET,
   OPACITY,
   BOUNDS,
   VISIBILITY,

@@ -25,8 +25,8 @@
 #include "base/time/time.h"
 #include "components/component_updater/component_updater_service.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
-#include "components/feature_engagement/public/event_constants.h"
-#include "components/feature_engagement/public/tracker.h"
+#include "components/feature_engagement_tracker/public/event_constants.h"
+#include "components/feature_engagement_tracker/public/feature_engagement_tracker.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_service.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -73,7 +73,7 @@
 #import "ios/chrome/browser/crash_report/crash_report_background_uploader.h"
 #import "ios/chrome/browser/crash_report/crash_restore_helper.h"
 #include "ios/chrome/browser/experimental_flags.h"
-#include "ios/chrome/browser/feature_engagement/tracker_factory.h"
+#include "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h"
 #include "ios/chrome/browser/file_metadata_util.h"
 #import "ios/chrome/browser/first_run/first_run.h"
 #include "ios/chrome/browser/geolocation/omnibox_geolocation_controller.h"
@@ -683,10 +683,9 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                                        tabModelObserver:self
                              applicationCommandEndpoint:self];
 
-  // Send "Chrome Opened" event to the feature_engagement::Tracker on cold
-  // start.
-  feature_engagement::TrackerFactory::GetForBrowserState(chromeBrowserState)
-      ->NotifyEvent(feature_engagement::events::kChromeOpened);
+  // Send "Chrome Opened" event to the FeatureEngagementTracker on cold start.
+  FeatureEngagementTrackerFactory::GetForBrowserState(chromeBrowserState)
+      ->NotifyEvent(feature_engagement_tracker::events::kChromeOpened);
 
   // Ensure the main tab model is created.
   ignore_result([_browserViewWrangler mainTabModel]);
@@ -1241,7 +1240,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   if (firstRun || [self shouldOpenNTPTabOnActivationOfTabModel:tabModel]) {
     OpenNewTabCommand* command = [OpenNewTabCommand
         commandWithIncognito:(self.currentBVC == self.otrBVC)];
-    command.userInitiated = NO;
     [self.currentBVC.dispatcher openNewTab:command];
   }
 
@@ -1832,7 +1830,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     [self.currentBVC startVoiceSearch];
   } else if (self.startQRScannerAfterTabSwitcherDismissal) {
     self.startQRScannerAfterTabSwitcherDismissal = NO;
-    [self.currentBVC.dispatcher showQRScanner];
+    [self.currentBVC showQRScanner];
   } else if (self.startFocusOmniboxAfterTabSwitcherDismissal) {
     self.startFocusOmniboxAfterTabSwitcherDismissal = NO;
     [self.currentBVC focusOmnibox];
@@ -2195,7 +2193,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   }
   if ([_startupParameters launchQRScanner]) {
     tabOpenedCompletion = ^{
-      [targetBVC.dispatcher showQRScanner];
+      [targetBVC showQRScanner];
     };
   }
   if ([_startupParameters launchFocusOmnibox]) {

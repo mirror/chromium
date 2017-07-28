@@ -32,7 +32,7 @@
 
 namespace blink {
 
-class LocalFrame;
+class Document;
 class UnsignedLongOrUnsignedLongSequence;
 
 class MODULES_EXPORT VibrationController final
@@ -45,7 +45,7 @@ class MODULES_EXPORT VibrationController final
  public:
   using VibrationPattern = Vector<unsigned>;
 
-  explicit VibrationController(LocalFrame&);
+  explicit VibrationController(Document&);
   virtual ~VibrationController();
 
   static VibrationPattern SanitizeVibrationPattern(

@@ -430,8 +430,6 @@ class ExtensionService
   void FinishInstallationForTest(const extensions::Extension* extension) {
     FinishInstallation(extension);
   }
-
-  void UninstallMigratedExtensionsForTest() { UninstallMigratedExtensions(); }
 #endif
 
   void set_browser_terminating_for_test(bool value) {
@@ -597,9 +595,6 @@ class ExtensionService
   // Upon reloading an extension, spins up its lazy background page if
   // necessary.
   void MaybeSpinUpLazyBackgroundPage(const extensions::Extension* extension_id);
-
-  // Uninstall extensions that have been migrated to component extensions.
-  void UninstallMigratedExtensions();
 
   const base::CommandLine* command_line_ = nullptr;
 

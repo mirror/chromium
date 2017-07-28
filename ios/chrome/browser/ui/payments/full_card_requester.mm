@@ -42,9 +42,11 @@ class PRCardUnmaskPromptViewBridge
 
 }  // namespace
 
-FullCardRequester::FullCardRequester(UIViewController* base_view_controller,
+FullCardRequester::FullCardRequester(id<FullCardRequesterConsumer> consumer,
+                                     UIViewController* base_view_controller,
                                      ios::ChromeBrowserState* browser_state)
-    : base_view_controller_(base_view_controller),
+    : consumer_(consumer),
+      base_view_controller_(base_view_controller),
       unmask_controller_(browser_state->GetPrefs(),
                          browser_state->IsOffTheRecord()) {}
 
@@ -58,6 +60,13 @@ void FullCardRequester::GetFullCard(
   autofill_manager->GetOrCreateFullCardRequest()->GetFullCard(
       card, autofill::AutofillClient::UNMASK_FOR_PAYMENT_REQUEST,
       result_delegate, AsWeakPtr());
+}
+
+void FullCardRequester::OnInstrumentDetailsReady(
+    const std::string& method_name,
+    const std::string& stringified_details) {
+  [consumer_ fullCardRequestDidSucceedWithMethodName:method_name
+                                  stringifiedDetails:stringified_details];
 }
 
 void FullCardRequester::ShowUnmaskPrompt(

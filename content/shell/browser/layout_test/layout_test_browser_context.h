@@ -27,8 +27,6 @@ class LayoutTestBrowserContext : public ShellBrowserContext {
   LayoutTestBrowserContext(bool off_the_record, net::NetLog* net_log);
   ~LayoutTestBrowserContext() override;
 
-  void Init();
-
   // BrowserContext implementation.
   DownloadManagerDelegate* GetDownloadManagerDelegate() override;
   PushMessagingService* GetPushMessagingService() override;

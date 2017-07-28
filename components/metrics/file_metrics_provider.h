@@ -201,7 +201,7 @@ class FileMetricsProvider : public MetricsProvider,
   bool ProvideIndependentMetrics(
       SystemProfileProto* system_profile_proto,
       base::HistogramSnapshotManager* snapshot_manager) override;
-  bool HasPreviousSessionData() override;
+  bool HasInitialStabilityMetrics() override;
   void RecordInitialHistogramSnapshots(
       base::HistogramSnapshotManager* snapshot_manager) override;
 

@@ -15,8 +15,7 @@ Entry::Entry(const DownloadParams& params)
       create_time(base::Time::Now()),
       scheduling_params(params.scheduling_params),
       request_params(params.request_params),
-      attempt_count(0),
-      traffic_annotation(params.traffic_annotation) {}
+      attempt_count(0) {}
 
 Entry::~Entry() = default;
 
@@ -35,8 +34,7 @@ bool Entry::operator==(const Entry& other) const {
          state == other.state && target_file_path == other.target_file_path &&
          create_time == other.create_time &&
          completion_time == other.completion_time &&
-         attempt_count == other.attempt_count &&
-         traffic_annotation == other.traffic_annotation;
+         attempt_count == other.attempt_count;
 }
 
 }  // namespace download

@@ -38,7 +38,6 @@ bool GLSurface::Initialize(GLSurfaceFormat format) {
 
 bool GLSurface::Resize(const gfx::Size& size,
                        float scale_factor,
-                       ColorSpace color_space,
                        bool has_alpha) {
   NOTIMPLEMENTED();
   return false;
@@ -183,10 +182,6 @@ bool GLSurface::SupportsDCLayers() const {
   return false;
 }
 
-bool GLSurface::UseOverlaysForVideo() const {
-  return false;
-}
-
 bool GLSurface::SetDrawRectangle(const gfx::Rect& rect) {
   return false;
 }
@@ -243,9 +238,8 @@ void GLSurfaceAdapter::Destroy() {
 
 bool GLSurfaceAdapter::Resize(const gfx::Size& size,
                               float scale_factor,
-                              ColorSpace color_space,
                               bool has_alpha) {
-  return surface_->Resize(size, scale_factor, color_space, has_alpha);
+  return surface_->Resize(size, scale_factor, has_alpha);
 }
 
 bool GLSurfaceAdapter::Recreate() {
@@ -395,10 +389,6 @@ bool GLSurfaceAdapter::BuffersFlipped() const {
 
 bool GLSurfaceAdapter::SupportsDCLayers() const {
   return surface_->SupportsDCLayers();
-}
-
-bool GLSurfaceAdapter::UseOverlaysForVideo() const {
-  return surface_->UseOverlaysForVideo();
 }
 
 bool GLSurfaceAdapter::SetDrawRectangle(const gfx::Rect& rect) {

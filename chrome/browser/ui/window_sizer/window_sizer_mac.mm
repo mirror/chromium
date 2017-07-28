@@ -13,7 +13,6 @@
 // How much horizontal and vertical offset there is between newly
 // opened windows.
 const int WindowSizer::kWindowTilePixels = 22;
-const int WindowSizer::kWindowMaxDefaultWidth = 1200;
 
 // static
 gfx::Point WindowSizer::GetDefaultPopupOrigin(const gfx::Size& size) {

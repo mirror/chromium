@@ -35,7 +35,7 @@ static const CGFloat kActivityIndicatorRadius = 33.f;
 static const CGFloat kPinEntryViewWidth = 240.f;
 static const CGFloat kPinEntryViewHeight = 90.f;
 
-static const CGFloat kReconnectViewWidth = 240.f;
+static const CGFloat kReconnectViewWidth = 120.f;
 static const CGFloat kReconnectViewHeight = 90.f;
 
 static const CGFloat kPadding = 20.f;
@@ -144,7 +144,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   _iconView = [[UIImageView alloc] initWithFrame:CGRectZero];
   _iconView.contentMode = UIViewContentModeCenter;
   _iconView.alpha = 0.87f;
-  _iconView.backgroundColor = RemotingTheme.hostOnlineColor;
+  _iconView.backgroundColor = RemotingTheme.onlineHostColor;
   _iconView.layer.cornerRadius = kIconRadius;
   _iconView.layer.masksToBounds = YES;
   _iconView.image = RemotingTheme.desktopIcon;
@@ -162,6 +162,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   _pinEntryView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_pinEntryView];
   _pinEntryView.delegate = self;
+
+  _reconnectView.hidden = YES;
 
   [self
       initializeLayoutConstraintsWithViews:NSDictionaryOfVariableBindings(
@@ -415,8 +417,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
   _reconnectView.hidden = YES;
 
-  _iconView.backgroundColor = RemotingTheme.hostOnlineColor;
-
   [_activityIndicator stopAnimating];
   _activityIndicator.cycleColors = @[ [UIColor whiteColor] ];
   _activityIndicator.indicatorMode = MDCActivityIndicatorModeIndeterminate;
@@ -426,14 +426,10 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)showPinPromptState {
   _statusLabel.text = [NSString stringWithFormat:@"%@", _remoteHostName];
-
-  _iconView.backgroundColor = RemotingTheme.hostOnlineColor;
-
   [_activityIndicator stopAnimating];
   _activityIndicator.hidden = YES;
 
   _pinEntryView.hidden = NO;
-
   _reconnectView.hidden = YES;
 
   _reconnectView.hidden = YES;
@@ -451,15 +447,12 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   _pinEntryView.hidden = YES;
   [_pinEntryView clearPinEntry];
 
-  _iconView.backgroundColor = RemotingTheme.hostOnlineColor;
-
   _activityIndicator.progress = 0.0;
   _activityIndicator.hidden = NO;
   _activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
   _activityIndicator.cycleColors = @[ [UIColor greenColor] ];
   [_activityIndicator startAnimating];
   _activityIndicator.progress = 1.0;
-
   _reconnectView.hidden = YES;
 
   _reconnectView.hidden = YES;
@@ -474,19 +467,18 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 - (void)showReconnect {
   _statusLabel.text =
       [self stringWithHostNameForId:IDS_CONNECTION_CLOSED_FOR_HOST_MESSAGE];
-
-  _iconView.backgroundColor = RemotingTheme.hostErrorColor;
-
   [_activityIndicator stopAnimating];
   _activityIndicator.hidden = YES;
 
   _pinEntryView.hidden = YES;
 
   _reconnectView.hidden = NO;
-  _reconnectView.errorText =
-      l10n_util::GetNSString(IDS_MESSAGE_SESSION_FINISHED);
 
   [self.navigationController popToViewController:self animated:YES];
+  [MDCSnackbarManager
+      showMessage:[MDCSnackbarMessage
+                      messageWithText:l10n_util::GetNSString(
+                                          IDS_MESSAGE_SESSION_FINISHED)]];
 }
 
 - (void)showError {
@@ -495,60 +487,77 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
   _pinEntryView.hidden = YES;
 
-  _iconView.backgroundColor = RemotingTheme.hostErrorColor;
+  _activityIndicator.indicatorMode = MDCActivityIndicatorModeDeterminate;
+  _activityIndicator.cycleColors = @[ [UIColor redColor] ];
+  _activityIndicator.progress = 1.0;
+  _activityIndicator.hidden = NO;
+  [_activityIndicator startAnimating];
 
-  _activityIndicator.hidden = YES;
+  _reconnectView.hidden = NO;
 
-  NSString* message = nil;
+  // TODO(yuweih): I18N
+  MDCSnackbarMessage* message = nil;
   switch (_lastError) {
     case SessionErrorOk:
       // Do nothing.
       break;
     case SessionErrorPeerIsOffline:
-      message = l10n_util::GetNSString(IDS_ERROR_HOST_IS_OFFLINE);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorPeerIsOffline."];
       break;
     case SessionErrorSessionRejected:
-      message = l10n_util::GetNSString(IDS_ERROR_INVALID_ACCOUNT);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorSessionRejected."];
       break;
     case SessionErrorIncompatibleProtocol:
-      message = l10n_util::GetNSString(IDS_ERROR_INCOMPATIBLE_PROTOCOL);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorIncompatibleProtocol."];
       break;
     case SessionErrorAuthenticationFailed:
-      message = l10n_util::GetNSString(IDS_ERROR_INVALID_ACCESS_CODE);
+      message = [MDCSnackbarMessage messageWithText:@"Error: Invalid Pin."];
       [_pinEntryView clearPinEntry];
       break;
     case SessionErrorInvalidAccount:
-      message = l10n_util::GetNSString(IDS_ERROR_INVALID_ACCOUNT);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorInvalidAccount."];
       break;
     case SessionErrorChannelConnectionError:
-      message = l10n_util::GetNSString(IDS_ERROR_NETWORK_FAILURE);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorChannelConnectionError."];
       break;
     case SessionErrorSignalingError:
-      message = l10n_util::GetNSString(IDS_ERROR_P2P_FAILURE);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorSignalingError."];
       break;
     case SessionErrorSignalingTimeout:
-      message = l10n_util::GetNSString(IDS_ERROR_SERVICE_UNAVAILABLE);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorSignalingTimeout."];
       break;
     case SessionErrorHostOverload:
-      message = l10n_util::GetNSString(IDS_ERROR_HOST_OVERLOAD);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorHostOverload."];
       break;
     case SessionErrorMaxSessionLength:
-      message = l10n_util::GetNSString(IDS_ERROR_MAX_SESSION_LENGTH);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorMaxSessionLength."];
       break;
     case SessionErrorHostConfigurationError:
-      message = l10n_util::GetNSString(IDS_ERROR_HOST_CONFIGURATION_ERROR);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorHostConfigurationError."];
       break;
     case SessionErrorUnknownError:
-      message = l10n_util::GetNSString(IDS_ERROR_UNEXPECTED);
+      message = [MDCSnackbarMessage
+          messageWithText:@"Error: SessionErrorUnknownError."];
       break;
     case SessionErrorOAuthTokenInvalid:
-      message = l10n_util::GetNSString(IDS_ERROR_OAUTH_TOKEN_INVALID);
+      message = [MDCSnackbarMessage
+          messageWithText:
+              @"Error: SessionErrorOAuthTokenInvalid. Please login again."];
       break;
   }
-  if (message) {
-    _reconnectView.errorText = message;
+  if (message.text) {
+    [MDCSnackbarManager showMessage:message];
   }
-  _reconnectView.hidden = NO;
 }
 
 - (void)didProvidePin:(NSString*)pin createPairing:(BOOL)createPairing {

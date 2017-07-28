@@ -40,7 +40,7 @@ void MessageCenterStatsCollector::NotificationStats::RecordAggregateStats() {
     if (!actions_[i])
       continue;
     UMA_HISTOGRAM_ENUMERATION("Notifications.PerNotificationActions",
-                              static_cast<NotificationActionType>(i),
+                              i,
                               NOTIFICATION_ACTION_COUNT);
   }
 }

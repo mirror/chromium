@@ -131,13 +131,13 @@ class CallbackHelper : public base::RefCountedThreadSafe<CallbackHelper> {
 
   void OnInserted(int64_t id) {
     success_ = id != 0;
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void OnQueryResult(AndroidStatement* statement) {
     success_ = statement != NULL;
     statement_ = statement;
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

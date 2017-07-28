@@ -35,12 +35,12 @@ MobileSessionShutdownMetricsProvider::MobileSessionShutdownMetricsProvider(
 
 MobileSessionShutdownMetricsProvider::~MobileSessionShutdownMetricsProvider() {}
 
-bool MobileSessionShutdownMetricsProvider::HasPreviousSessionData() {
+bool MobileSessionShutdownMetricsProvider::HasInitialStabilityMetrics() {
   return true;
 }
 
-void MobileSessionShutdownMetricsProvider::ProvidePreviousSessionData(
-    metrics::ChromeUserMetricsExtension* uma_proto) {
+void MobileSessionShutdownMetricsProvider::ProvideInitialStabilityMetrics(
+    metrics::SystemProfileProto* system_profile_proto) {
   // If this is the first launch after an upgrade, existing crash reports may
   // have been deleted before this code runs, so log this case in its own
   // bucket.

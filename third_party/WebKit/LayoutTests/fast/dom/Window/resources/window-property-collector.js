@@ -55,10 +55,6 @@ function emitExpectedResult(path, expected)
       return;
     if (propertyPath == 'navigator.connection.downlink')
       return;
-    // timeOrigin is variable, skip.
-    if (propertyPath == 'performance.timeOrigin')
-      return;
-
 
     switch (propertyPath) {
     case "location.href":

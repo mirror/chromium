@@ -7,23 +7,23 @@ cr.define('accessibility', function() {
 
   // Note: keep these values in sync with the values in
   // content/common/accessibility_mode_enums.h
-  const AXMode = {
+  const ui::AXMode = {
     kNativeAPIs: 1 << 0,
     kWebContents: 1 << 1,
     kInlineTextBoxes: 1 << 2,
     kScreenReader: 1 << 3,
     kHTML: 1 << 4,
 
-    get kAXModeWebContentsOnly() {
-      return AXMode.kWebContents |
-        AXMode.kInlineTextBoxes | AXMode.kScreenReader |
-        AXMode.kHTML;
+    get ui::kAXModeWebContentsOnly() {
+      return ui::AXMode.kWebContents |
+        ui::AXMode.kInlineTextBoxes | ui::AXMode.kScreenReader |
+        ui::AXMode.kHTML;
     },
 
-    get kAXModeComplete() {
-      return AXMode.kNativeAPIs | AXMode.kWebContents |
-        AXMode.kInlineTextBoxes | AXMode.kScreenReader |
-        AXMode.kHTML;
+    get ui::kAXModeComplete() {
+      return ui::AXMode.kNativeAPIs | ui::AXMode.kWebContents |
+        ui::AXMode.kInlineTextBoxes | ui::AXMode.kScreenReader |
+        ui::AXMode.kHTML;
     }
   };
 
@@ -110,12 +110,12 @@ cr.define('accessibility', function() {
       siteInfo.appendChild(formatValue(data, properties[j]));
     row.appendChild(siteInfo);
 
-    row.appendChild(createModeElement(AXMode.kNativeAPIs, data))
-    row.appendChild(createModeElement(AXMode.kWebContents, data))
-    row.appendChild(createModeElement(AXMode.kInlineTextBoxes,
+    row.appendChild(createModeElement(ui::AXMode.kNativeAPIs, data))
+    row.appendChild(createModeElement(ui::AXMode.kWebContents, data))
+    row.appendChild(createModeElement(ui::AXMode.kInlineTextBoxes,
       data))
-    row.appendChild(createModeElement(AXMode.kScreenReader, data))
-    row.appendChild(createModeElement(AXMode.kHTML, data))
+    row.appendChild(createModeElement(ui::AXMode.kScreenReader, data))
+    row.appendChild(createModeElement(ui::AXMode.kHTML, data))
 
     row.appendChild(document.createTextNode(' | '));
 
@@ -154,15 +154,15 @@ cr.define('accessibility', function() {
 
   function getNameForAccessibilityMode(mode) {
     switch (mode) {
-      case AXMode.kNativeAPIs:
+      case ui::AXMode.kNativeAPIs:
         return "native"
-      case AXMode.kWebContents:
+      case ui::AXMode.kWebContents:
         return "web"
-      case AXMode.kInlineTextBoxes:
+      case ui::AXMode.kInlineTextBoxes:
         return "inline text"
-      case AXMode.kScreenReader:
+      case ui::AXMode.kScreenReader:
         return "screen reader"
-      case AXMode.kHTML:
+      case ui::AXMode.kHTML:
         return "html"
     }
     return "unknown"

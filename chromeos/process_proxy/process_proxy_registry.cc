@@ -6,8 +6,6 @@
 
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
-#include "base/sequenced_task_runner.h"
-#include "base/task_scheduler/lazy_task_runner.h"
 
 namespace chromeos {
 
@@ -70,16 +68,7 @@ void ProcessProxyRegistry::ShutDown() {
 
 // static
 ProcessProxyRegistry* ProcessProxyRegistry::Get() {
-  DCHECK(ProcessProxyRegistry::GetTaskRunner()->RunsTasksInCurrentSequence());
   return g_process_proxy_registry.Pointer();
-}
-
-// static
-scoped_refptr<base::SequencedTaskRunner> ProcessProxyRegistry::GetTaskRunner() {
-  static base::LazySequencedTaskRunner task_runner =
-      LAZY_SEQUENCED_TASK_RUNNER_INITIALIZER(
-          base::TaskTraits({base::MayBlock(), base::TaskPriority::BACKGROUND}));
-  return task_runner.Get();
 }
 
 int ProcessProxyRegistry::OpenProcess(const std::string& command,
@@ -100,7 +89,7 @@ int ProcessProxyRegistry::OpenProcess(const std::string& command,
   // We can use Unretained because proxy will stop calling callback after it is
   // closed, which is done before this object goes away.
   if (!proxy->StartWatchingOutput(
-          watcher_thread_->task_runner(), GetTaskRunner(),
+          watcher_thread_->task_runner(),
           base::Bind(&ProcessProxyRegistry::OnProcessOutput,
                      base::Unretained(this), terminal_id))) {
     proxy->Close();

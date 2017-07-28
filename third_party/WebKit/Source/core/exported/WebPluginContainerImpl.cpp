@@ -109,16 +109,6 @@
 
 namespace blink {
 
-namespace {
-
-#if defined(OS_MACOSX)
-WebInputEvent::Modifiers kEditingModifier = WebInputEvent::kMetaKey;
-#else
-WebInputEvent::Modifiers kEditingModifier = WebInputEvent::kControlKey;
-#endif
-
-}  // namespace
-
 // Public methods --------------------------------------------------------------
 
 void WebPluginContainerImpl::AttachToLayout() {
@@ -833,10 +823,15 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
 
   if (web_event.GetType() == WebInputEvent::kRawKeyDown ||
       web_event.GetType() == WebInputEvent::kKeyDown) {
+#if defined(OS_MACOSX)
     if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
-            kEditingModifier &&
-        (web_event.windows_key_code == VKEY_C ||
-         web_event.windows_key_code == VKEY_INSERT)
+            WebInputEvent::kMetaKey
+#else
+    if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
+            WebInputEvent::kControlKey
+#endif
+        && (web_event.windows_key_code == VKEY_C ||
+            web_event.windows_key_code == VKEY_INSERT)
         // Only copy if there's a selection, so that we only ever do this
         // for Pepper plugins that support copying.  Windowless NPAPI
         // plugins will get the event as before.

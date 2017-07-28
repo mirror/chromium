@@ -37,9 +37,6 @@ DiceAction GetDiceActionFromHeader(const std::string& value) {
 
 }  // namespace
 
-DiceHeaderHelper::DiceHeaderHelper(bool signed_in_with_auth_error)
-    : signed_in_with_auth_error_(signed_in_with_auth_error) {}
-
 // static
 DiceResponseParams DiceHeaderHelper::BuildDiceSigninResponseParams(
     const std::string& header_value) {
@@ -130,17 +127,9 @@ DiceResponseParams DiceHeaderHelper::BuildDiceSignoutResponseParams(
 }
 
 bool DiceHeaderHelper::IsUrlEligibleForRequestHeader(const GURL& url) {
-  if (!IsDiceFixAuthErrorsEnabled())
-    return false;
-
-  // With kDiceFixAuthError, only set the request header if the user is signed
-  // in and has an authentication error.
-  if (!signed_in_with_auth_error_ &&
-      (GetAccountConsistencyMethod() ==
-       AccountConsistencyMethod::kDiceFixAuthErrors)) {
+  if (GetAccountConsistencyMethod() != AccountConsistencyMethod::kDice) {
     return false;
   }
-
   return gaia::IsGaiaSignonRealm(url.GetOrigin());
 }
 

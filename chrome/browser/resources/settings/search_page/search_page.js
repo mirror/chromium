@@ -42,16 +42,6 @@ Polymer({
 
     /** @type {?Map<string, string>} */
     focusConfig_: Object,
-
-    // <if expr="chromeos">
-    /** @private */
-    voiceInteractionFeatureEnabled_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('enableVoiceInteraction');
-      },
-    }
-    // </if>
   },
 
   /** @private {?settings.SearchEnginesBrowserProxy} */
@@ -88,15 +78,8 @@ Polymer({
     if (settings.routes.SEARCH_ENGINES) {
       this.focusConfig_.set(
           settings.routes.SEARCH_ENGINES.path,
-          '#engines-subpage-trigger .subpage-arrow');
+          '#subpage-trigger .subpage-arrow');
     }
-    // <if expr="chromeos">
-    if (settings.routes.GOOGLE_ASSISTANT) {
-      this.focusConfig_.set(
-          settings.routes.GOOGLE_ASSISTANT.path,
-          '#assistant-subpage-trigger .subpage-arrow');
-    }
-    // </if>
   },
 
   /** @private */
@@ -115,14 +98,6 @@ Polymer({
   onManageSearchEnginesTap_: function() {
     settings.navigateTo(settings.routes.SEARCH_ENGINES);
   },
-
-  // <if expr="chromeos">
-  /** @private */
-  onGoogleAssistantTap_: function() {
-    assert(this.voiceInteractionFeatureEnabled_);
-    settings.navigateTo(settings.routes.GOOGLE_ASSISTANT);
-  },
-  // </if>
 
   /**
    * @param {!Event} event
@@ -193,19 +168,6 @@ Polymer({
     // Re-enable hotword search enable; this will trigger the retrain UI.
     this.browserProxy_.setHotwordSearchEnabled(this.hotwordInfo_.enabled);
   },
-
-  // <if expr="chromeos">
-  /**
-   * @param {boolean} toggleValue
-   * @return {string}
-   * @private
-   */
-  getAssistantEnabledDisabledLabel_: function(toggleValue) {
-    return this.i18n(
-        toggleValue ? 'searchGoogleAssistantEnabled' :
-                      'searchGoogleAssistantDisabled');
-  },
-  // </if>
 
   /**
    * @param {!Event} event

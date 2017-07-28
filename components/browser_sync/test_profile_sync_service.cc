@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 
 namespace browser_sync {
 
@@ -28,7 +28,7 @@ TestProfileSyncService::~TestProfileSyncService() {}
 void TestProfileSyncService::OnConfigureDone(
     const syncer::DataTypeManager::ConfigureResult& result) {
   ProfileSyncService::OnConfigureDone(result);
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 syncer::UserShare* TestProfileSyncService::GetUserShare() const {

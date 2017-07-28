@@ -34,7 +34,6 @@ source_set("test_support") {
     "//base",
     "//components/download/internal",
     "//components/download/public",
-    "//net:test_support",
     "//testing/gmock",
   ]
 }

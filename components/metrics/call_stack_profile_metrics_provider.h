@@ -73,8 +73,7 @@ class CallStackProfileMetricsProvider : public MetricsProvider {
   // MetricsProvider:
   void OnRecordingEnabled() override;
   void OnRecordingDisabled() override;
-  void ProvideCurrentSessionData(
-      ChromeUserMetricsExtension* uma_proto) override;
+  void ProvideGeneralMetrics(ChromeUserMetricsExtension* uma_proto) override;
 
  protected:
   // base::Feature for reporting profiles. Provided here for test use.

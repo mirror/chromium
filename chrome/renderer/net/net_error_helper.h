@@ -11,21 +11,20 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
-#include "chrome/common/navigation_corrector.mojom.h"
 #include "chrome/common/network_diagnostics.mojom.h"
-#include "chrome/renderer/net/net_error_helper_core.h"
 #include "chrome/renderer/net/net_error_page_controller.h"
 #include "components/error_page/common/net_error_info.h"
+#include "components/error_page/renderer/net_error_helper_core.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_frame_observer_tracker.h"
 #include "content/public/renderer/render_thread_observer.h"
-#include "mojo/public/cpp/bindings/associated_binding_set.h"
-#include "third_party/WebKit/public/platform/WebURLError.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 
 class GURL;
 
 namespace blink {
 class WebURLResponse;
+struct WebURLError;
 }
 
 namespace content {
@@ -45,16 +44,15 @@ class NetErrorHelper
     : public content::RenderFrameObserver,
       public content::RenderFrameObserverTracker<NetErrorHelper>,
       public content::RenderThreadObserver,
-      public NetErrorHelperCore::Delegate,
+      public error_page::NetErrorHelperCore::Delegate,
       public NetErrorPageController::Delegate,
-      public chrome::mojom::NetworkDiagnosticsClient,
-      public chrome::mojom::NavigationCorrector {
+      public chrome::mojom::NetworkDiagnosticsClient {
  public:
   explicit NetErrorHelper(content::RenderFrame* render_frame);
   ~NetErrorHelper() override;
 
   // NetErrorPageController::Delegate implementation
-  void ButtonPressed(NetErrorHelperCore::Button button) override;
+  void ButtonPressed(error_page::NetErrorHelperCore::Button button) override;
   void TrackClick(int tracking_id) override;
 
   // RenderFrameObserver implementation.
@@ -66,6 +64,9 @@ class NetErrorHelper
   void WasShown() override;
   void WasHidden() override;
   void OnDestruct() override;
+
+  // IPC::Listener implementation.
+  bool OnMessageReceived(const IPC::Message& message) override;
 
   // RenderThreadObserver implementation.
   void NetworkStateChanged(bool online) override;
@@ -81,10 +82,6 @@ class NetErrorHelper
   // Returns whether a load for |url| in the |frame| the NetErrorHelper is
   // attached to should have its error page suppressed.
   bool ShouldSuppressErrorPage(const GURL& url);
-
-  // Returns a string representation of |domain|. The returned value is usable
-  // for error_page::LocalizedError.
-  static std::string GetDomainString(blink::WebURLError::Domain domain);
 
  private:
   chrome::mojom::NetworkDiagnostics* GetRemoteNetworkDiagnostics();
@@ -117,6 +114,7 @@ class NetErrorHelper
   void DownloadPageLater() override;
   void SetIsShowingDownloadButton(bool show) override;
 
+  void OnNetErrorInfo(int status);
   void OnSetNavigationCorrectionInfo(const GURL& navigation_correction_url,
                                      const std::string& language,
                                      const std::string& country_code,
@@ -131,30 +129,18 @@ class NetErrorHelper
 
   void OnNetworkDiagnosticsClientRequest(
       chrome::mojom::NetworkDiagnosticsClientAssociatedRequest request);
-  void OnNavigationCorrectorRequest(
-      chrome::mojom::NavigationCorrectorAssociatedRequest request);
 
   // chrome::mojom::NetworkDiagnosticsClient:
   void SetCanShowNetworkDiagnosticsDialog(bool can_show) override;
-  void DNSProbeStatus(int32_t) override;
-
-  // chrome::mojom::NavigationCorrector:
-  void SetNavigationCorrectionInfo(const GURL& navigation_correction_url,
-                                   const std::string& language,
-                                   const std::string& country_code,
-                                   const std::string& api_key,
-                                   const GURL& search_url) override;
 
   std::unique_ptr<content::ResourceFetcher> correction_fetcher_;
   std::unique_ptr<content::ResourceFetcher> tracking_fetcher_;
 
-  std::unique_ptr<NetErrorHelperCore> core_;
+  std::unique_ptr<error_page::NetErrorHelperCore> core_;
 
-  mojo::AssociatedBindingSet<chrome::mojom::NetworkDiagnosticsClient>
-      network_diagnostics_client_bindings_;
+  mojo::AssociatedBinding<chrome::mojom::NetworkDiagnosticsClient>
+      network_diagnostics_client_binding_;
   chrome::mojom::NetworkDiagnosticsAssociatedPtr remote_network_diagnostics_;
-  mojo::AssociatedBindingSet<chrome::mojom::NavigationCorrector>
-      navigation_corrector_bindings_;
 
   // Weak factory for vending a weak pointer to a NetErrorPageController. Weak
   // pointers are invalidated on each commit, to prevent getting messages from

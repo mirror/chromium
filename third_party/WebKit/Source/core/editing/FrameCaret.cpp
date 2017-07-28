@@ -141,8 +141,7 @@ void FrameCaret::UpdateStyleAndLayoutIfNeeded() {
   bool should_paint_caret =
       should_paint_caret_ && IsActive() &&
       caret_visibility_ == CaretVisibility::kVisible &&
-      IsEditablePosition(
-          selection_editor_->ComputeVisibleSelectionInDOMTree().Start());
+      selection_editor_->ComputeVisibleSelectionInDOMTree().HasEditableStyle();
 
   display_item_client_->UpdateStyleAndLayoutIfNeeded(
       should_paint_caret ? CaretPosition() : PositionWithAffinity());

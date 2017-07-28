@@ -21,7 +21,6 @@ class GLSurfaceEGLOzoneX11 : public gl::NativeViewGLSurfaceEGL {
   EGLConfig GetConfig() override;
   bool Resize(const gfx::Size& size,
               float scale_factor,
-              ColorSpace color_space,
               bool has_alpha) override;
 
  private:

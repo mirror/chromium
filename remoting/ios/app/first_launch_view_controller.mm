@@ -19,8 +19,8 @@ static const float kLogoYOffset = -10.f;
 static const float kButtonHeight = 80.f;
 
 @interface FirstLaunchViewController () {
-  NSArray<NSLayoutConstraint*>* _compactWidthConstraints;
-  NSArray<NSLayoutConstraint*>* _compactHeightConstraints;
+  NSArray* _compactWidthConstraints;
+  NSArray* _compactHeightConstraints;
 }
 @end
 
@@ -69,23 +69,12 @@ static const float kButtonHeight = 80.f;
                                forAxis:UILayoutConstraintAxisVertical];
   [imageView setContentHuggingPriority:UILayoutPriorityRequired
                                forAxis:UILayoutConstraintAxisHorizontal];
-  [imageView
-      setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
-                                      forAxis:UILayoutConstraintAxisVertical];
-  [imageView
-      setContentCompressionResistancePriority:UILayoutPriorityDefaultLow
-                                      forAxis:UILayoutConstraintAxisHorizontal];
-
   _compactWidthConstraints =
       @[ [imageView.widthAnchor constraintEqualToAnchor:self.view.widthAnchor
                                              multiplier:kLogoSizeMultiplier] ];
-  _compactWidthConstraints[0].priority = UILayoutPriorityDefaultHigh;
-
   _compactHeightConstraints =
       @[ [imageView.heightAnchor constraintEqualToAnchor:self.view.heightAnchor
                                               multiplier:kLogoSizeMultiplier] ];
-  _compactHeightConstraints[0].priority = UILayoutPriorityDefaultHigh;
-
   [NSLayoutConstraint activateConstraints:@[
     [imageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
     [imageView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor
@@ -104,19 +93,13 @@ static const float kButtonHeight = 80.f;
 }
 
 - (void)refreshTraitCollection {
-  if (self.traitCollection.verticalSizeClass ==
+  if (self.traitCollection.horizontalSizeClass ==
       UIUserInterfaceSizeClassCompact) {
-    [NSLayoutConstraint deactivateConstraints:_compactWidthConstraints];
-    [NSLayoutConstraint activateConstraints:_compactHeightConstraints];
-  } else if (self.traitCollection.horizontalSizeClass ==
-                 UIUserInterfaceSizeClassCompact &&
-             self.traitCollection.verticalSizeClass ==
-                 UIUserInterfaceSizeClassRegular) {
     [NSLayoutConstraint deactivateConstraints:_compactHeightConstraints];
     [NSLayoutConstraint activateConstraints:_compactWidthConstraints];
   } else {
     [NSLayoutConstraint deactivateConstraints:_compactWidthConstraints];
-    [NSLayoutConstraint deactivateConstraints:_compactHeightConstraints];
+    [NSLayoutConstraint activateConstraints:_compactHeightConstraints];
   }
 }
 

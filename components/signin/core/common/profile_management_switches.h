@@ -43,12 +43,7 @@ bool IsAccountConsistencyMirrorEnabled();
 // Checks whether Dice account consistency is enabled. If enabled, then account
 // management UI is available on the Gaia webpages.
 // Returns true when the account consistency method is kDice.
-// WARNING: returns false when the method is kDiceFixAuthErrors.
 bool IsAccountConsistencyDiceEnabled();
-
-// Returns true if the account consistency method is kDiceFixAuthErrors or
-// kDice.
-bool IsDiceFixAuthErrorsEnabled();
 
 // Whether the chrome.identity API should be multi-account.
 bool IsExtensionsMultiAccount();

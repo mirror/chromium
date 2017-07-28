@@ -936,7 +936,6 @@ gfx::Size NativeViewGLSurfaceEGL::GetSize() {
 
 bool NativeViewGLSurfaceEGL::Resize(const gfx::Size& size,
                                     float scale_factor,
-                                    ColorSpace color_space,
                                     bool has_alpha) {
   if (size == GetSize())
     return true;
@@ -1173,7 +1172,6 @@ gfx::Size PbufferGLSurfaceEGL::GetSize() {
 
 bool PbufferGLSurfaceEGL::Resize(const gfx::Size& size,
                                  float scale_factor,
-                                 ColorSpace color_space,
                                  bool has_alpha) {
   if (size == size_)
     return true;
@@ -1257,7 +1255,6 @@ gfx::Size SurfacelessEGL::GetSize() {
 
 bool SurfacelessEGL::Resize(const gfx::Size& size,
                             float scale_factor,
-                            ColorSpace color_space,
                             bool has_alpha) {
   size_ = size;
   return true;

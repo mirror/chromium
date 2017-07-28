@@ -4,6 +4,7 @@
 
 #include <stddef.h>
 
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -57,7 +58,7 @@ class TopSitesExtensionTest : public InProcessBrowserTest {
  private:
   void OnTopSitesAvailable(const history::MostVisitedURLList& data) {
     if (waiting_) {
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
       waiting_ = false;
     }
     top_sites_inited_ = true;

@@ -77,11 +77,6 @@ class OutOfProcessInstance : public pp::Instance,
   pp::Var GetLinkAtPosition(const pp::Point& point);
   void GetPrintPresetOptionsFromDocument(PP_PdfPrintPresetOptions_Dev* options);
   void EnableAccessibility();
-  void SetCaretPosition(const pp::FloatPoint& position);
-  void MoveRangeSelectionExtent(const pp::FloatPoint& extent);
-  void SetSelectionBounds(const pp::FloatPoint& base,
-                          const pp::FloatPoint& extent);
-  bool CanCut();
 
   void FlushCallback(int32_t result);
   void DidOpen(int32_t result);
@@ -141,9 +136,7 @@ class OutOfProcessInstance : public pp::Instance,
   void FormTextFieldFocusChange(bool in_focus) override;
   bool IsPrintPreview() override;
   uint32_t GetBackgroundColor() override;
-  void CancelBrowserDownload() override;
   void IsSelectingChanged(bool is_selecting) override;
-  void SelectionChanged(const pp::Rect& left, const pp::Rect& right) override;
 
   // PreviewModeClient::Client implementation.
   void PreviewDocumentLoadComplete() override;

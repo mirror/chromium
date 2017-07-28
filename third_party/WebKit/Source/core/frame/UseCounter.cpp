@@ -32,7 +32,6 @@
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameClient.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/Page.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
@@ -1165,8 +1164,7 @@ void UseCounter::UnmuteForInspector() {
   mute_count_--;
 }
 
-void UseCounter::RecordMeasurement(WebFeature feature,
-                                   const LocalFrame& source_frame) {
+void UseCounter::RecordMeasurement(WebFeature feature) {
   if (mute_count_)
     return;
 
@@ -1183,8 +1181,6 @@ void UseCounter::RecordMeasurement(WebFeature feature,
       TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("blink.feature_usage"),
                    "FeatureFirstUsed", "feature", feature_id);
       FeaturesHistogram().Count(feature_id);
-      if (LocalFrameClient* client = source_frame.Client())
-        client->DidObserveNewFeatureUsage(feature);
       NotifyFeatureCounted(feature);
     }
     features_recorded_.QuickSet(feature_id);
@@ -1319,7 +1315,7 @@ void UseCounter::Count(CSSParserMode css_parser_mode, CSSPropertyID property) {
 void UseCounter::Count(WebFeature feature, const LocalFrame* source_frame) {
   // TODO(rbyers): Report UseCounter to browser process along with page
   // load metrics for sourceFrame  crbug.com/716565
-  RecordMeasurement(feature, *source_frame);
+  RecordMeasurement(feature);
 }
 
 bool UseCounter::IsCountedAnimatedCSS(CSSPropertyID unresolved_property) {

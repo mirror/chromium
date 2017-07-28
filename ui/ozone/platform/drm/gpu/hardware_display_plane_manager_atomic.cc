@@ -17,11 +17,12 @@ namespace {
 
 void AtomicPageFlipCallback(std::vector<base::WeakPtr<CrtcController>> crtcs,
                             unsigned int frame,
-                            base::TimeTicks timestamp) {
+                            unsigned int seconds,
+                            unsigned int useconds) {
   for (auto& crtc : crtcs) {
     auto* crtc_ptr = crtc.get();
     if (crtc_ptr)
-      crtc_ptr->OnPageFlipEvent(frame, timestamp);
+      crtc_ptr->OnPageFlipEvent(frame, seconds, useconds);
   }
 }
 

@@ -47,6 +47,7 @@ class MockQuotaManager : public QuotaManager {
       bool is_incognito,
       const base::FilePath& profile_path,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_thread,
+      const scoped_refptr<base::SequencedTaskRunner>& db_thread,
       const scoped_refptr<SpecialStoragePolicy>& special_storage_policy);
 
   // Overrides QuotaManager's implementation. The internal usage data is

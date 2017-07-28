@@ -144,12 +144,9 @@ namespace {
 // Wait this many seconds after an extensions becomes idle before updating it.
 const int kUpdateIdleDelay = 5;
 
-// IDs of extensions that have been replaced by component extensions and need to
-// be uninstalled.
-const char* kMigratedExtensionIds[] = {
-    "boadgeojelhgndaghljhdicfkmllpafd",  // Google Cast
-    "dliochdbjfkdbacpmhlcpmleaejidimm"   // Google Cast (Beta)
-};
+// Comma-separated list of directories with extensions to load.
+// TODO(samuong): Remove this in M58 (see comment in ExtensionService::Init).
+const char kDeprecatedLoadComponentExtension[] = "load-component-extension";
 
 void DoNothingWithExtensionHost(extensions::ExtensionHost* host) {}
 
@@ -474,11 +471,23 @@ void ExtensionService::Init() {
   LoadExtensionsFromCommandLineFlag(switches::kDisableExtensionsExcept);
   if (load_command_line_extensions)
     LoadExtensionsFromCommandLineFlag(extensions::switches::kLoadExtension);
+  // ChromeDriver has no way of determining the Chrome version until after
+  // launch, so it needs to continue passing load-component-extension until it
+  // stops supporting Chrome 56 (when M58 is released). These extensions are
+  // loaded as regular extensions, not component extensions, and are thus safe.
+  // TODO(samuong): Remove this when we release Chrome 58 to stable channel.
+  if (command_line_->HasSwitch(switches::kEnableAutomation) &&
+      command_line_->HasSwitch(kDeprecatedLoadComponentExtension)) {
+    LOG(WARNING) << "Loading extension specified by "
+                    "--load-component-extension as a regular extension. "
+                    "Extensions specified by --load-component-extension will "
+                    "not be loaded starting in M58. Use --load-extension or "
+                    "--disable-extensions-except.";
+    LoadExtensionsFromCommandLineFlag(kDeprecatedLoadComponentExtension);
+  }
   EnabledReloadableExtensions();
   MaybeFinishShutdownDelayed();
   SetReadyAndNotifyListeners();
-
-  UninstallMigratedExtensions();
 
   // TODO(erikkay): this should probably be deferred to a future point
   // rather than running immediately at startup.
@@ -2582,16 +2591,4 @@ void ExtensionService::MaybeSpinUpLazyBackgroundPage(
       extensions::LazyBackgroundTaskQueue::Get(profile_);
   queue->AddPendingTask(profile_, extension->id(),
                         base::Bind(&DoNothingWithExtensionHost));
-}
-
-void ExtensionService::UninstallMigratedExtensions() {
-  std::unique_ptr<ExtensionSet> installed_extensions =
-      registry_->GenerateInstalledExtensionsSet();
-
-  for (const std::string& extension_id : kMigratedExtensionIds) {
-    if (installed_extensions->Contains(extension_id)) {
-      UninstallExtension(extension_id, extensions::UNINSTALL_REASON_MIGRATED,
-                         base::Bind(&base::DoNothing), nullptr);
-    }
-  }
 }

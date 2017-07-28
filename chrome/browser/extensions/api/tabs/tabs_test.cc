@@ -12,7 +12,6 @@
 #include "apps/test/app_window_waiter.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/strings/pattern.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -839,7 +838,7 @@ class ExtensionWindowLastFocusedTest : public ExtensionTabsTest {
     void OnWidgetActivationChanged(views::Widget* widget,
                                    bool active) override {
       if (widget_ == widget && waiting_) {
-        base::RunLoop::QuitCurrentWhenIdleDeprecated();
+        base::MessageLoopForUI::current()->QuitWhenIdle();
         waiting_ = false;
       }
     }

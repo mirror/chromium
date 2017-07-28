@@ -232,6 +232,8 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
 
   WebLocalFrameBase* GetWebLocalFrameBase(LocalFrame*) override;
 
+  WebRemoteFrameBase* GetWebRemoteFrameBase(RemoteFrame&) override;
+
   void RequestDecode(
       LocalFrame*,
       const PaintImage&,

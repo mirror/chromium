@@ -34,7 +34,7 @@ class PLATFORM_EXPORT ImageLayerBridge
 
   // cc::TextureLayerClient implementation.
   bool PrepareTextureMailbox(viz::TextureMailbox* out_mailbox,
-                             std::unique_ptr<viz::SingleReleaseCallback>*
+                             std::unique_ptr<cc::SingleReleaseCallback>*
                                  out_release_callback) override;
 
   void MailboxReleasedGpu(RefPtr<StaticBitmapImage>,

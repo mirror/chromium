@@ -23,10 +23,6 @@
 #include <sys/mman.h>
 #endif
 
-#if defined(OS_IOS)
-#include "base/ios/ios_util.h"
-#endif
-
 namespace base {
 namespace trace_event {
 
@@ -432,13 +428,6 @@ TEST(ProcessMemoryDumpTest, CountResidentBytes) {
 }
 
 TEST(ProcessMemoryDumpTest, CountResidentBytesInSharedMemory) {
-#if defined(OS_IOS)
-  // TODO(crbug.com/748410): Reenable this test.
-  if (!base::ios::IsRunningOnIOS10OrLater()) {
-    return;
-  }
-#endif
-
   const size_t page_size = ProcessMemoryDump::GetSystemPageSize();
 
   // Allocate few page of dirty memory and check if it is resident.

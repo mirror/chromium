@@ -203,7 +203,7 @@ class ConnectTestApp : public Service,
 
   void OnConnectionError() {
     if (bindings_.empty() && standalone_bindings_.empty())
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
   }
 
   BinderRegistryWithArgs<const BindSourceInfo&> registry_;

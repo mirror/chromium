@@ -63,7 +63,6 @@ class TestingBrowserProcess : public BrowserProcess {
   // BrowserProcess overrides:
   void ResourceDispatcherHostCreated() override;
   void EndSession() override;
-  void FlushLocalStateAndReply(base::OnceClosure reply) override;
   metrics_services_manager::MetricsServicesManager* GetMetricsServicesManager()
       override;
   metrics::MetricsService* metrics_service() override;

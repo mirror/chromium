@@ -13,7 +13,9 @@
 #include "base/environment.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/test/scoped_task_environment.h"
+#include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "base/test/test_simple_task_runner.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -33,7 +35,8 @@ base::FilePath GetKernel32DllFilePath() {
 class ModuleInspectorTest : public testing::Test {
  protected:
   ModuleInspectorTest()
-      : module_inspector_(base::Bind(&ModuleInspectorTest::OnModuleInspected,
+      : scoped_task_scheduler_(base::MessageLoop::current()),
+        module_inspector_(base::Bind(&ModuleInspectorTest::OnModuleInspected,
                                      base::Unretained(this))) {}
 
   void AddModules(const std::vector<ModuleInfoKey>& modules) {
@@ -53,11 +56,10 @@ class ModuleInspectorTest : public testing::Test {
     return inspected_modules_;
   }
 
- protected:
-  // Must be before the ModuleInspector.
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
-
  private:
+  // Must be before the ModuleInspector.
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
+
   ModuleInspector module_inspector_;
 
   std::vector<std::unique_ptr<ModuleInspectionResult>> inspected_modules_;
@@ -72,7 +74,7 @@ TEST_F(ModuleInspectorTest, OneModule) {
       {GetKernel32DllFilePath(), 0, 0, 1},
   });
 
-  scoped_task_environment_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(1u, inspected_modules().size());
 
@@ -88,7 +90,7 @@ TEST_F(ModuleInspectorTest, MultipleModules) {
       {base::FilePath(), 0, 0, 5},
   });
 
-  scoped_task_environment_.RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(5u, inspected_modules().size());
   for (const auto& inspection_result : inspected_modules())

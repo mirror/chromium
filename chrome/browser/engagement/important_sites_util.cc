@@ -56,21 +56,20 @@ static const int kMaxBookmarks = 5;
 // We need this to be a macro, as the histogram macros cache their pointers
 // after the first call, so when we change the uma name we check fail if we're
 // just a method.
-#define RECORD_UMA_FOR_IMPORTANT_REASON(uma_name, uma_count_name,              \
-                                        reason_bitfield)                       \
-  do {                                                                         \
-    int count = 0;                                                             \
-    int32_t bitfield = (reason_bitfield);                                      \
-    for (int i = 0; i < ImportantReason::REASON_BOUNDARY; i++) {               \
-      if ((bitfield >> i) & 1) {                                               \
-        count++;                                                               \
-        UMA_HISTOGRAM_ENUMERATION((uma_name), static_cast<ImportantReason>(i), \
-                                  ImportantReason::REASON_BOUNDARY);           \
-      }                                                                        \
-    }                                                                          \
-    UMA_HISTOGRAM_EXACT_LINEAR(                                                \
-        (uma_count_name), count,                                               \
-        static_cast<int>(ImportantReason::REASON_BOUNDARY));                   \
+#define RECORD_UMA_FOR_IMPORTANT_REASON(uma_name, uma_count_name,    \
+                                        reason_bitfield)             \
+  do {                                                               \
+    int count = 0;                                                   \
+    int32_t bitfield = (reason_bitfield);                            \
+    for (int i = 0; i < ImportantReason::REASON_BOUNDARY; i++) {     \
+      if ((bitfield >> i) & 1) {                                     \
+        count++;                                                     \
+        UMA_HISTOGRAM_ENUMERATION((uma_name), i,                     \
+                                  ImportantReason::REASON_BOUNDARY); \
+      }                                                              \
+    }                                                                \
+    UMA_HISTOGRAM_ENUMERATION((uma_count_name), count,               \
+                              ImportantReason::REASON_BOUNDARY);     \
   } while (0)
 
 // Do not change the values here, as they are used for UMA histograms and
@@ -224,38 +223,28 @@ base::hash_set<std::string> GetBlacklistedImportantDomains(Profile* profile) {
   return ignoring_domains;
 }
 
-void PopulateInfoMapWithSiteEngagementAndNotifications(
+void PopulateInfoMapWithSiteEngagement(
     Profile* profile,
     blink::mojom::EngagementLevel minimum_engagement,
     std::map<GURL, double>* engagement_map,
     std::map<std::string, ImportantDomainInfo>* output) {
   SiteEngagementService* service = SiteEngagementService::Get(profile);
-  std::vector<mojom::SiteEngagementDetails> engagement_details =
-      service->GetAllDetails();
-  std::set<GURL> content_origins;
-
+  *engagement_map = service->GetScoreMap();
   // We can have multiple origins for a single domain, so we record the one
   // with the highest engagement score.
-  for (const auto& detail : engagement_details) {
-    if (detail.notifications_bonus > 0) {
-      // This origin has notifications enabled.
-      MaybePopulateImportantInfoForReason(detail.origin, &content_origins,
-                                          ImportantReason::NOTIFICATIONS,
-                                          output);
-    }
-
-    (*engagement_map)[detail.origin] = detail.total_score;
-
-    if (!service->IsEngagementAtLeast(detail.origin, minimum_engagement))
+  for (const auto& url_engagement_pair : *engagement_map) {
+    if (!service->IsEngagementAtLeast(url_engagement_pair.first,
+                                      minimum_engagement)) {
       continue;
-
+    }
     std::string registerable_domain =
-        ImportantSitesUtil::GetRegisterableDomainOrIP(detail.origin);
+        ImportantSitesUtil::GetRegisterableDomainOrIP(
+            url_engagement_pair.first);
     ImportantDomainInfo& info = (*output)[registerable_domain];
-    if (detail.total_score > info.engagement_score) {
+    if (url_engagement_pair.second > info.engagement_score) {
       info.registerable_domain = registerable_domain;
-      info.engagement_score = detail.total_score;
-      info.example_origin = detail.origin;
+      info.engagement_score = url_engagement_pair.second;
+      info.example_origin = url_engagement_pair.first;
       info.reason_bitfield |= 1 << ImportantReason::ENGAGEMENT;
     }
   }
@@ -384,9 +373,13 @@ ImportantSitesUtil::GetImportantRegisterableDomains(Profile* profile,
   std::map<std::string, ImportantDomainInfo> important_info;
   std::map<GURL, double> engagement_map;
 
-  PopulateInfoMapWithSiteEngagementAndNotifications(
+  PopulateInfoMapWithSiteEngagement(
       profile, blink::mojom::EngagementLevel::MEDIUM, &engagement_map,
       &important_info);
+
+  PopulateInfoMapWithContentTypeAllowed(
+      profile, CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+      ImportantReason::NOTIFICATIONS, &important_info);
 
   PopulateInfoMapWithContentTypeAllowed(
       profile, CONTENT_SETTINGS_TYPE_DURABLE_STORAGE, ImportantReason::DURABLE,

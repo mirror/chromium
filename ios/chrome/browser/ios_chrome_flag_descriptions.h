@@ -43,11 +43,6 @@ extern const char kWebPaymentsDescription[];
 extern const char kIosCaptivePortalName[];
 extern const char kIosCaptivePortalDescription[];
 
-// Title and description for the flag to enable feature_engagement::Tracker
-// demo mode.
-extern const char kInProductHelpDemoModeName[];
-extern const char kInProductHelpDemoModeDescription[];
-
 }  // namespace flag_descriptions
 
 #endif  // IOS_CHROME_BROWSER_IOS_CHROME_FLAG_DESCRIPTIONS_H_

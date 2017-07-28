@@ -16,10 +16,10 @@
 #include "cc/base/math_util.h"
 #include "cc/output/bsp_tree.h"
 #include "cc/output/bsp_walk_action.h"
+#include "cc/output/copy_output_request.h"
 #include "cc/quads/draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
-#include "components/viz/common/quads/copy_output_request.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
@@ -294,6 +294,13 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
       render_pass_background_filters_[pass->id] = &pass->background_filters;
   }
 
+  // Draw all non-root render passes except for the root render pass.
+  for (const auto& pass : *render_passes_in_draw_order) {
+    if (pass.get() == root_render_pass)
+      break;
+    DrawRenderPassAndExecuteCopyRequests(pass.get());
+  }
+
   // Create the overlay candidate for the output surface, and mark it as
   // always handled.
   if (output_surface_->IsDisplayedAsOverlayPlane()) {
@@ -310,20 +317,12 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
   // Attempt to replace some or all of the quads of the root render pass with
   // overlays.
   overlay_processor_->ProcessForOverlays(
-      resource_provider_, render_passes_in_draw_order, render_pass_filters_,
+      resource_provider_, root_render_pass, render_pass_filters_,
       render_pass_background_filters_, &current_frame()->overlay_list,
       &current_frame()->ca_layer_overlay_list,
       &current_frame()->dc_layer_overlay_list,
       &current_frame()->root_damage_rect,
       &current_frame()->root_content_bounds);
-
-  // Draw all non-root render passes except for the root render pass.
-  for (const auto& pass : *render_passes_in_draw_order) {
-    if (pass.get() == root_render_pass)
-      break;
-    DrawRenderPassAndExecuteCopyRequests(pass.get());
-  }
-
   bool was_using_dc_layers = using_dc_layers_;
   if (!current_frame()->dc_layer_overlay_list.empty()) {
     DCHECK(supports_dc_layers_);

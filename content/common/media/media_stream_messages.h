@@ -88,3 +88,33 @@ IPC_MESSAGE_ROUTED3(MediaStreamMsg_DeviceOpened,
 // The browser has failed to open a device.
 IPC_MESSAGE_ROUTED1(MediaStreamMsg_DeviceOpenFailed,
                     int /* request id */)
+
+// Messages sent from the renderer to the browser.
+
+// Request a new media stream.
+IPC_MESSAGE_CONTROL5(MediaStreamHostMsg_GenerateStream,
+                     int /* render frame id */,
+                     int /* request id */,
+                     content::StreamControls /* controls */,
+                     url::Origin /* security origin */,
+                     bool /* user_gesture */)
+
+// Request to open the device.
+IPC_MESSAGE_CONTROL5(MediaStreamHostMsg_OpenDevice,
+                     int /* render frame id */,
+                     int /* request id */,
+                     std::string /* device_id */,
+                     content::MediaStreamType /* type */,
+                     url::Origin /* security origin */)
+
+// Tell the browser process if the video capture is secure (i.e., all
+// connected video sinks meet the requirement of output protection.).
+// Note: the browser process only trusts the |is_sucure| value in this IPC
+// message if it's comimg from a trusted, whitelisted extension. Extensions run
+// in separate render processes. So it shouldn't be possible, for example, for
+// a user's visit to a malicious web page to compromise a render process running
+// a trusted extension to make it report falsehood in this IPC message.
+IPC_MESSAGE_CONTROL3(MediaStreamHostMsg_SetCapturingLinkSecured,
+                     int,                      /* session_id */
+                     content::MediaStreamType, /* type */
+                     bool /* is_secure */)

@@ -11,7 +11,6 @@ namespace prefs {
 extern const char kEasyUnlockProximityThreshold[];
 extern const char kProximityAuthLastPasswordEntryTimestampMs[];
 extern const char kProximityAuthLastPromotionCheckTimestampMs[];
-extern const char kProximityAuthPromotionShownCount[];
 extern const char kProximityAuthRemoteBleDevices[];
 extern const char kProximityAuthIsChromeOSLoginEnabled[];
 

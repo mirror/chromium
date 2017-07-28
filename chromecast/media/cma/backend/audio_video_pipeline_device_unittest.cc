@@ -772,7 +772,7 @@ void AudioVideoPipelineDeviceTest::OnEndOfStream() {
     for (auto& feeder : effects_feeders_)
       feeder->Stop();
 
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 }
 
@@ -912,7 +912,7 @@ void AudioVideoPipelineDeviceTest::EndImmediateEosTest() {
 
   RunStoppedChecks();
 
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 TEST_F(AudioVideoPipelineDeviceTest, Mp3Playback) {

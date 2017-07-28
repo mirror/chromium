@@ -13,9 +13,10 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
-#include "base/test/scoped_task_environment.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/version.h"
 #include "build/build_config.h"
@@ -63,6 +64,7 @@ class UpdateCheckerTest : public testing::Test {
  protected:
   void Quit();
   void RunThreads();
+  void RunThreadsUntilIdle();
 
   std::unique_ptr<Component> MakeComponent() const;
 
@@ -84,21 +86,21 @@ class UpdateCheckerTest : public testing::Test {
  private:
   std::unique_ptr<UpdateContext> MakeFakeUpdateContext() const;
 
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  base::MessageLoopForIO loop_;
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
   base::Closure quit_closure_;
 
   DISALLOW_COPY_AND_ASSIGN(UpdateCheckerTest);
 };
 
-UpdateCheckerTest::UpdateCheckerTest()
-    : scoped_task_environment_(
-          base::test::ScopedTaskEnvironment::MainThreadType::IO) {}
+UpdateCheckerTest::UpdateCheckerTest() : scoped_task_scheduler_(&loop_) {}
 
 UpdateCheckerTest::~UpdateCheckerTest() {
 }
 
 void UpdateCheckerTest::SetUp() {
-  config_ = base::MakeRefCounted<TestConfigurator>();
+  config_ = base::MakeRefCounted<TestConfigurator>(
+      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
   pref_ = base::MakeUnique<TestingPrefServiceSimple>();
   PersistedData::RegisterPrefs(pref_->registry());
   metadata_ = base::MakeUnique<PersistedData>(pref_.get());
@@ -124,7 +126,7 @@ void UpdateCheckerTest::TearDown() {
 
   // The PostInterceptor requires the message loop to run to destruct correctly.
   // TODO(sorin): This is fragile and should be fixed.
-  scoped_task_environment_.RunUntilIdle();
+  RunThreadsUntilIdle();
 }
 
 void UpdateCheckerTest::RunThreads() {
@@ -136,7 +138,11 @@ void UpdateCheckerTest::RunThreads() {
   // intercepts on the IO thread, run the threads until they are
   // idle. The component updater service won't loop again until the loop count
   // is set and the service is started.
-  scoped_task_environment_.RunUntilIdle();
+  RunThreadsUntilIdle();
+}
+
+void UpdateCheckerTest::RunThreadsUntilIdle() {
+  base::RunLoop().RunUntilIdle();
 }
 
 void UpdateCheckerTest::Quit() {

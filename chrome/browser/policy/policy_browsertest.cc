@@ -3254,7 +3254,7 @@ class MediaStreamDevicesControllerBrowserTest
                    base::Unretained(this)),
         &prompt_delegate_);
 
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   void FinishVideoTest() {
@@ -3268,7 +3268,7 @@ class MediaStreamDevicesControllerBrowserTest
                    base::Unretained(this)),
         &prompt_delegate_);
 
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   TestPermissionPromptDelegate prompt_delegate_;
@@ -3969,7 +3969,7 @@ void ComponentUpdaterPolicyTest::EndTest() {
   interceptor_factory_ = nullptr;
   cus_ = nullptr;
 
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void ComponentUpdaterPolicyTest::VerifyExpectations(bool update_disabled) {

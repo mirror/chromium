@@ -23,7 +23,6 @@
 
 using net::test::IsError;
 using net::test::IsOk;
-using testing::Not;
 
 namespace base {
 class TimeDelta;
@@ -38,12 +37,12 @@ namespace {
 TEST(TCPClientSocketTest, BindLoopbackToLoopback) {
   IPAddress lo_address = IPAddress::IPv4Localhost();
 
-  TCPServerSocket server(nullptr, NetLogSource());
+  TCPServerSocket server(NULL, NetLogSource());
   ASSERT_THAT(server.Listen(IPEndPoint(lo_address, 0), 1), IsOk());
   IPEndPoint server_address;
   ASSERT_THAT(server.GetLocalAddress(&server_address), IsOk());
 
-  TCPClientSocket socket(AddressList(server_address), nullptr, nullptr,
+  TCPClientSocket socket(AddressList(server_address), NULL, NULL,
                          NetLogSource());
 
   EXPECT_THAT(socket.Bind(IPEndPoint(lo_address, 0)), IsOk());
@@ -53,15 +52,17 @@ TEST(TCPClientSocketTest, BindLoopbackToLoopback) {
   EXPECT_EQ(lo_address, local_address_result.address());
 
   TestCompletionCallback connect_callback;
-  int connect_result = socket.Connect(connect_callback.callback());
+  EXPECT_THAT(socket.Connect(connect_callback.callback()),
+              IsError(ERR_IO_PENDING));
 
   TestCompletionCallback accept_callback;
   std::unique_ptr<StreamSocket> accepted_socket;
   int result = server.Accept(&accepted_socket, accept_callback.callback());
-  result = accept_callback.GetResult(result);
+  if (result == ERR_IO_PENDING)
+    result = accept_callback.WaitForResult();
   ASSERT_THAT(result, IsOk());
 
-  EXPECT_THAT(connect_callback.GetResult(connect_result), IsOk());
+  EXPECT_THAT(connect_callback.WaitForResult(), IsOk());
 
   EXPECT_TRUE(socket.IsConnected());
   socket.Disconnect();
@@ -81,10 +82,12 @@ TEST(TCPClientSocketTest, BindLoopbackToExternal) {
 
   TestCompletionCallback connect_callback;
   int result = socket.Connect(connect_callback.callback());
+  if (result == ERR_IO_PENDING)
+    result = connect_callback.WaitForResult();
 
   // We may get different errors here on different system, but
   // connect() is not expected to succeed.
-  EXPECT_THAT(connect_callback.GetResult(result), Not(IsOk()));
+  EXPECT_NE(OK, result);
 }
 
 // Bind a socket to the IPv4 loopback interface and try to connect to
@@ -108,8 +111,10 @@ TEST(TCPClientSocketTest, BindLoopbackToIPv6) {
 
   TestCompletionCallback connect_callback;
   int result = socket.Connect(connect_callback.callback());
+  if (result == ERR_IO_PENDING)
+    result = connect_callback.WaitForResult();
 
-  EXPECT_THAT(connect_callback.GetResult(result), Not(IsOk()));
+  EXPECT_NE(OK, result);
 }
 
 class TestSocketPerformanceWatcher : public SocketPerformanceWatcher {

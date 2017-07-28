@@ -10,8 +10,6 @@
 namespace error_page {
 
 const char kDnsProbeErrorDomain[] = "dnsprobe";
-const char kHttpErrorDomain[] = "http";
-const char kUnknownErrorDomain[] = "unknown";
 
 const char* DnsProbeStatusToString(int status) {
   switch (status) {

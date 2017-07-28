@@ -596,7 +596,7 @@ bool FileMetricsProvider::ProvideIndependentMetrics(
   return false;
 }
 
-bool FileMetricsProvider::HasPreviousSessionData() {
+bool FileMetricsProvider::HasInitialStabilityMetrics() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Measure the total time spent checking all sources as well as the time

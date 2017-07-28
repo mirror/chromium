@@ -168,19 +168,6 @@ int HeadlessBrowserContextImpl::GetFrameTreeNodeId(int render_process_id,
   return find_it->second;
 }
 
-int HeadlessBrowserContextImpl::GetFrameTreeNodeIdForDevToolsFrameId(
-    const std::string& devtools_id) const {
-  base::AutoLock lock(frame_tree_node_map_lock_);
-  for (const auto& pair : frame_tree_node_map_) {
-    std::string frame_devtools_id = content::DevToolsAgentHost::
-        GetUntrustedDevToolsFrameIdForFrameTreeNodeId(pair.first.first,
-                                                      pair.second);
-    if (frame_devtools_id == devtools_id)
-      return pair.second;
-  }
-  return -1;
-}
-
 void HeadlessBrowserContextImpl::Close() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   browser_->DestroyBrowserContext(this);
@@ -390,13 +377,6 @@ HeadlessBrowserContext::Builder&
 HeadlessBrowserContext::Builder::SetProductNameAndVersion(
     const std::string& product_name_and_version) {
   options_->product_name_and_version_ = product_name_and_version;
-  return *this;
-}
-
-HeadlessBrowserContext::Builder&
-HeadlessBrowserContext::Builder::SetAcceptLanguage(
-    const std::string& accept_language) {
-  options_->accept_language_ = accept_language;
   return *this;
 }
 

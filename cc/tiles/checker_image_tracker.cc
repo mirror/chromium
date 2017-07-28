@@ -40,10 +40,11 @@ enum class CheckerImagingDecision {
 };
 
 std::string ToString(PaintImage::Id paint_image_id,
+                     SkImageId sk_image_id,
                      CheckerImagingDecision decision) {
   std::ostringstream str;
-  str << "paint_image_id[" << paint_image_id << "] decision["
-      << static_cast<int>(decision) << "]";
+  str << "paint_image_id[" << paint_image_id << "] sk_image_id[" << sk_image_id
+      << "] decision[" << static_cast<int>(decision) << "]";
   return str.str();
 }
 
@@ -303,7 +304,7 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
 
     TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                  "CheckerImageTracker::CheckerImagingDecision", "image_params",
-                 ToString(image_id, decision));
+                 ToString(image_id, image.sk_image()->uniqueID(), decision));
   }
 
   // Update the decode state from the latest image we have seen. Note that it

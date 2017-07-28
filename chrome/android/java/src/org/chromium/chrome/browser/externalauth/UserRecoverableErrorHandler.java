@@ -199,12 +199,5 @@ public abstract class UserRecoverableErrorHandler {
                 mDialog = null;
             }
         }
-
-        /**
-         * Checks whether dialog is being shown.
-         */
-        public boolean isShowing() {
-            return mDialog != null && mDialog.isShowing();
-        }
     }
 }

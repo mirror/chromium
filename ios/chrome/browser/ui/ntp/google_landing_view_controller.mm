@@ -15,7 +15,6 @@
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
-#import "ios/chrome/browser/ui/constraints_ui_util.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/context_menu/context_menu_coordinator.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
@@ -942,13 +941,8 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
       MostVisitedCell* cell = (MostVisitedCell*)sender.view;
       [[strongSelf dataSource] logMostVisitedClick:index
                                           tileType:cell.tileType];
-      // GoogleLandingViewController is only displayed in non-incognito tabs,
-      // so |inIncognito| can be assumed to be NO. If it were displayed in an
-      // incognito state, then passing NO to |inIncognito| would open a tab in
-      // the wrong browser state.
       [[strongSelf dispatcher] webPageOrderedOpen:url
                                          referrer:web::Referrer()
-                                      inIncognito:NO
                                      inBackground:YES
                                          appendTo:kCurrentTab];
     };

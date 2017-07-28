@@ -408,7 +408,7 @@ void GDig::Finish(Result result) {
   DCHECK_NE(RESULT_PENDING, result);
   result_ = result;
   if (base::MessageLoop::current())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void GDig::OnDnsConfig(const DnsConfig& dns_config_const) {

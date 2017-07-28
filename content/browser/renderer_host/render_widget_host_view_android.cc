@@ -26,12 +26,12 @@
 #include "cc/layers/layer.h"
 #include "cc/layers/surface_layer.h"
 #include "cc/output/compositor_frame.h"
+#include "cc/output/copy_output_request.h"
+#include "cc/output/copy_output_result.h"
 #include "cc/output/latency_info_swap_promise.h"
+#include "cc/resources/single_release_callback.h"
 #include "cc/trees/layer_tree_host.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/copy_output_result.h"
-#include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_hittest.h"
@@ -43,7 +43,6 @@
 #include "content/browser/android/overscroll_controller_android.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
-#include "content/browser/android/text_suggestion_host_android.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
@@ -293,7 +292,7 @@ void ReleaseGLHelper() {
 
 void CopyFromCompositingSurfaceFinished(
     const ReadbackRequestCallback& callback,
-    std::unique_ptr<viz::SingleReleaseCallback> release_callback,
+    std::unique_ptr<cc::SingleReleaseCallback> release_callback,
     std::unique_ptr<SkBitmap> bitmap,
     const base::TimeTicks& start_time,
     scoped_refptr<PendingReadbackLock> readback_lock,
@@ -358,7 +357,7 @@ void PrepareTextureCopyOutputResult(
     const base::TimeTicks& start_time,
     const ReadbackRequestCallback& callback,
     scoped_refptr<PendingReadbackLock> readback_lock,
-    std::unique_ptr<viz::CopyOutputResult> result) {
+    std::unique_ptr<cc::CopyOutputResult> result) {
   base::ScopedClosureRunner scoped_callback_runner(
       base::Bind(callback, SkBitmap(), READBACK_FAILED));
   TRACE_EVENT0("cc",
@@ -366,7 +365,7 @@ void PrepareTextureCopyOutputResult(
   if (!result->HasTexture() || result->IsEmpty() || result->size().IsEmpty())
     return;
   viz::TextureMailbox texture_mailbox;
-  std::unique_ptr<viz::SingleReleaseCallback> release_callback;
+  std::unique_ptr<cc::SingleReleaseCallback> release_callback;
   result->TakeTexture(&texture_mailbox, &release_callback);
   DCHECK(texture_mailbox.IsTexture());
   if (!texture_mailbox.IsTexture())
@@ -456,7 +455,6 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       content_view_core_(nullptr),
       ime_adapter_android_(nullptr),
       selection_popup_controller_(nullptr),
-      text_suggestion_host_(nullptr),
       background_color_(SK_ColorWHITE),
       cached_background_color_(SK_ColorWHITE),
       view_(this),
@@ -966,11 +964,6 @@ bool RenderWidgetHostViewAndroid::OnTouchEvent(
     return false;
 
   ComputeEventLatencyOSTouchHistograms(event);
-
-  // Receiving any other touch event before the double-tap timeout expires
-  // cancels opening the spellcheck menu.
-  if (text_suggestion_host_)
-    text_suggestion_host_->StopSpellCheckMenuTimer();
 
   // If a browser-based widget consumes the touch event, it's critical that
   // touch event interception be disabled. This avoids issues with
@@ -1832,11 +1825,6 @@ void RenderWidgetHostViewAndroid::SendKeyEvent(
     target_host = host_->delegate()->GetFocusedRenderWidgetHost(host_);
   if (!target_host)
     return;
-
-  // Receiving a key event before the double-tap timeout expires cancels opening
-  // the spellcheck menu. If the suggestion menu is open, we close the menu.
-  if (text_suggestion_host_)
-    text_suggestion_host_->OnKeyEvent();
 
   ui::LatencyInfo latency_info;
   if (event.GetType() == blink::WebInputEvent::kRawKeyDown ||

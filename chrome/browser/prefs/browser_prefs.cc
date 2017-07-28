@@ -145,8 +145,8 @@
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#include "chrome/browser/android/offline_pages/prefetch/prefetch_background_task.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
-#include "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -263,7 +263,7 @@
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
@@ -587,7 +587,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
-  feature_engagement::NewTabTracker::RegisterProfilePrefs(registry);
+  feature_engagement_tracker::NewTabTracker::RegisterProfilePrefs(registry);
 #endif
 
 #if defined(OS_CHROMEOS)

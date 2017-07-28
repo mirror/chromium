@@ -5,9 +5,11 @@
 #ifndef COMPONENTS_VIZ_HOST_FRAME_SINK_OBSERVER_H_
 #define COMPONENTS_VIZ_HOST_FRAME_SINK_OBSERVER_H_
 
-namespace viz {
-
+namespace cc {
 class SurfaceInfo;
+}
+
+namespace viz {
 
 class FrameSinkObserver {
  public:

@@ -13,7 +13,6 @@
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/parsed_certificate.h"
 #include "net/der/input.h"
-#include "third_party/boringssl/src/include/openssl/evp.h"
 
 namespace net {
 
@@ -21,6 +20,7 @@ namespace der {
 struct GeneralizedTime;
 }
 
+class SignaturePolicy;
 struct CertificateTrust;
 
 // The key purpose (extended key usage) to check for during verification.
@@ -43,30 +43,6 @@ enum class InitialPolicyMappingInhibit {
 enum class InitialAnyPolicyInhibit {
   kFalse,
   kTrue,
-};
-
-// VerifyCertificateChainDelegate exposes delegate methods used when verifying a
-// chain.
-class NET_EXPORT VerifyCertificateChainDelegate {
- public:
-  // Implementations should return true if |signature_algorithm| is allowed for
-  // certificate signing, false otherwise. When returning false implementations
-  // can optionally add high-severity errors to |errors| with details on why it
-  // was rejected.
-  virtual bool IsSignatureAlgorithmAcceptable(
-      const SignatureAlgorithm& signature_algorithm,
-      CertErrors* errors) = 0;
-
-  // Implementations should return true if |public_key| is acceptable. This is
-  // called for each certificate in the chain, including the target certificate.
-  // When returning false implementations can optionally add high-severity
-  // errors to |errors| with details on why it was rejected.
-  //
-  // |public_key| can be assumed to be non-null.
-  virtual bool IsPublicKeyAcceptable(EVP_PKEY* public_key,
-                                     CertErrors* errors) = 0;
-
-  virtual ~VerifyCertificateChainDelegate();
 };
 
 // VerifyCertificateChain() verifies an ordered certificate path in accordance
@@ -122,10 +98,9 @@ class NET_EXPORT VerifyCertificateChainDelegate {
 //     similar role to "trust anchor information" defined in RFC 5280
 //     section 6.1.1.d.
 //
-//   delegate:
-//     |delegate| must be non-null. It is used to answer policy questions such
-//     as whether a signature algorithm is acceptable, or a public key is strong
-//     enough.
+//   signature_policy:
+//     The policy to use when verifying signatures (what hash algorithms are
+//     allowed, what length keys, what named curves, etc).
 //
 //   time:
 //     The UTC time to use for expiration checks. This is equivalent to
@@ -226,7 +201,7 @@ class NET_EXPORT VerifyCertificateChainDelegate {
 NET_EXPORT void VerifyCertificateChain(
     const ParsedCertificateList& certs,
     const CertificateTrust& last_cert_trust,
-    VerifyCertificateChainDelegate* delegate,
+    const SignaturePolicy* signature_policy,
     const der::GeneralizedTime& time,
     KeyPurpose required_key_purpose,
     InitialExplicitPolicy initial_explicit_policy,

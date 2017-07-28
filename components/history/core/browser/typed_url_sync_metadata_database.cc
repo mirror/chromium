@@ -6,6 +6,7 @@
 
 #include "base/big_endian.h"
 #include "base/logging.h"
+#include "components/history/core/browser/url_row.h"
 #include "sql/statement.h"
 
 namespace history {
@@ -54,10 +55,16 @@ bool TypedURLSyncMetadataDatabase::UpdateSyncMetadata(
   DCHECK_EQ(model_type, syncer::TYPED_URLS)
       << "Only the TYPED_URLS model type is supported";
 
+  int64_t storage_key_int = 0;
+  DCHECK_EQ(storage_key.size(), sizeof(storage_key_int));
+  base::ReadBigEndian(storage_key.data(), &storage_key_int);
+  // Make sure storage_key_int is set.
+  DCHECK_NE(storage_key_int, 0);
+
   sql::Statement s(GetDB().GetUniqueStatement(
       "INSERT OR REPLACE INTO typed_url_sync_metadata "
       "(storage_key, value) VALUES(?, ?)"));
-  s.BindInt64(0, StorageKeyToURLID(storage_key));
+  s.BindInt64(0, storage_key_int);
   s.BindString(1, metadata.SerializeAsString());
 
   return s.Run();
@@ -69,9 +76,15 @@ bool TypedURLSyncMetadataDatabase::ClearSyncMetadata(
   DCHECK_EQ(model_type, syncer::TYPED_URLS)
       << "Only the TYPED_URLS model type is supported";
 
+  int64_t storage_key_int = 0;
+  DCHECK_EQ(storage_key.size(), sizeof(storage_key_int));
+  base::ReadBigEndian(storage_key.data(), &storage_key_int);
+  // Make sure storage_key_int is set.
+  DCHECK_NE(storage_key_int, 0);
+
   sql::Statement s(GetDB().GetUniqueStatement(
       "DELETE FROM typed_url_sync_metadata WHERE storage_key=?"));
-  s.BindInt64(0, StorageKeyToURLID(storage_key));
+  s.BindInt64(0, storage_key_int);
 
   return s.Run();
 }
@@ -93,17 +106,6 @@ bool TypedURLSyncMetadataDatabase::ClearModelTypeState(
       << "Only the TYPED_URLS model type is supported";
   DCHECK_GT(GetMetaTable().GetVersionNumber(), 0);
   return GetMetaTable().DeleteKey(kTypedURLModelTypeStateKey);
-}
-
-// static
-URLID TypedURLSyncMetadataDatabase::StorageKeyToURLID(
-    const std::string& storage_key) {
-  URLID storage_key_int = 0;
-  DCHECK_EQ(storage_key.size(), sizeof(storage_key_int));
-  base::ReadBigEndian(storage_key.data(), &storage_key_int);
-  // Make sure storage_key_int is set.
-  DCHECK_NE(storage_key_int, 0);
-  return storage_key_int;
 }
 
 bool TypedURLSyncMetadataDatabase::InitSyncTable() {

@@ -31,8 +31,6 @@
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/shadow_value.h"
-#include "ui/keyboard/keyboard_controller.h"
-#include "ui/keyboard/keyboard_util.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -63,13 +61,11 @@ constexpr int kSearchBoxBorderCornerRadiusSearchResult = 4;
 constexpr int kMicIconSize = 24;
 constexpr int kCloseIconSize = 24;
 
-constexpr int kLightVibrantBlendAlpha = 0xE6;
+constexpr int kLightVibrantBlendAlpha = 0xB3;
 
 // Color of placeholder text in zero query state.
 constexpr SkColor kZeroQuerySearchboxColor =
     SkColorSetARGBMacro(0x8A, 0x00, 0x00, 0x00);
-
-}  // namespace
 
 // A background that paints a solid white rounded rect with a thin grey border.
 class SearchBoxBackground : public views::Background {
@@ -102,8 +98,9 @@ class SearchBoxBackground : public views::Background {
   DISALLOW_COPY_AND_ASSIGN(SearchBoxBackground);
 };
 
-// To paint grey background on mic and back buttons, and close buttons for
-// fullscreen launcher.
+}  // namespace
+
+// To paint grey background on mic and back buttons
 class SearchBoxImageButton : public views::ImageButton {
  public:
   explicit SearchBoxImageButton(views::ButtonListener* listener)
@@ -135,10 +132,8 @@ class SearchBoxImageButton : public views::ImageButton {
  private:
   // views::View overrides:
   void OnPaintBackground(gfx::Canvas* canvas) override {
-    if ((state() == STATE_HOVERED && !features::IsFullscreenAppListEnabled()) ||
-        state() == STATE_PRESSED || selected_) {
+    if (state() == STATE_HOVERED || state() == STATE_PRESSED || selected_)
       canvas->FillRect(gfx::Rect(size()), kSelectedColor);
-    }
   }
 
   const char* GetClassName() const override { return "SearchBoxImageButton"; }
@@ -193,7 +188,6 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
   content_container_->AddChildView(back_button_);
 
   if (is_fullscreen_app_list_enabled_) {
-    is_tablet_mode_ = app_list_view->is_tablet_mode();
     search_icon_ = new views::ImageView();
     content_container_->AddChildView(search_icon_);
     search_box_->set_placeholder_text_color(search_box_color_);
@@ -404,15 +398,12 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
 
   is_search_box_active_ = active;
   UpdateSearchIcon();
-  UpdateBackgroundColor(active ? kSearchBoxBackgroundDefault
-                               : background_color_);
   search_box_->set_placeholder_text_draw_flags(
       active ? gfx::Canvas::TEXT_ALIGN_LEFT : gfx::Canvas::TEXT_ALIGN_CENTER);
   search_box_->set_placeholder_text_color(active ? kZeroQuerySearchboxColor
                                                  : search_box_color_);
   search_box_->SetCursorEnabled(active);
-
-  UpdateKeyboardVisibility();
+  search_box_->SchedulePaint();
 
   if (speech_button_)
     speech_button_->SetVisible(!active);
@@ -420,29 +411,6 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   if (focused_view_ != FOCUS_CONTENTS_VIEW)
     ResetTabFocus(false);
   content_container_->Layout();
-  SchedulePaint();
-}
-
-void SearchBoxView::UpdateKeyboardVisibility() {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-  if (!is_tablet_mode_)
-    return;
-
-  keyboard::KeyboardController* const keyboard_controller =
-      keyboard::KeyboardController::GetInstance();
-  if (!keyboard_controller ||
-      is_search_box_active_ == keyboard::IsKeyboardVisible()) {
-    return;
-  }
-
-  if (is_search_box_active_) {
-    keyboard_controller->ShowKeyboard(false);
-    return;
-  }
-
-  keyboard_controller->HideKeyboard(
-      keyboard::KeyboardController::HIDE_REASON_MANUAL);
 }
 
 void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
@@ -508,40 +476,6 @@ void SearchBoxView::OnMouseEvent(ui::MouseEvent* event) {
   HandleSearchBoxEvent(event);
 }
 
-void SearchBoxView::ButtonPressed(views::Button* sender,
-                                  const ui::Event& event) {
-  if (back_button_ && sender == back_button_) {
-    delegate_->BackButtonPressed();
-  } else if (speech_button_ && sender == speech_button_) {
-    view_delegate_->StartSpeechRecognition();
-  } else if (close_button_ && sender == close_button_) {
-    ClearSearch();
-    app_list_view_->SetStateFromSearchBoxView(true);
-  } else {
-    NOTREACHED();
-  }
-}
-
-void SearchBoxView::UpdateBackground(double progress,
-                                     AppListModel::State current_state,
-                                     AppListModel::State target_state) {
-  GetSearchBoxBackground()->set_corner_radius(gfx::Tween::LinearIntValueBetween(
-      progress, GetSearchBoxBorderCornerRadiusForState(current_state),
-      GetSearchBoxBorderCornerRadiusForState(target_state)));
-  const SkColor color = gfx::Tween::ColorValueBetween(
-      progress, GetBackgroundColorForState(current_state),
-      GetBackgroundColorForState(target_state));
-  UpdateBackgroundColor(color);
-}
-
-void SearchBoxView::OnTabletModeChanged(bool started) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
-  is_tablet_mode_ = started;
-  UpdateKeyboardVisibility();
-}
-
 int SearchBoxView::GetSearchBoxBorderCornerRadiusForState(
     AppListModel::State state) {
   if (state == AppListModel::STATE_SEARCH_RESULTS)
@@ -554,6 +488,35 @@ SkColor SearchBoxView::GetBackgroundColorForState(
   if (state == AppListModel::STATE_SEARCH_RESULTS)
     return kSearchBoxBackgroundDefault;
   return background_color_;
+}
+
+void SearchBoxView::UpdateBackground(double progress,
+                                     AppListModel::State current_state,
+                                     AppListModel::State target_state) {
+  SearchBoxBackground* background =
+      static_cast<SearchBoxBackground*>(content_container_->background());
+  background->set_corner_radius(gfx::Tween::LinearIntValueBetween(
+      progress, GetSearchBoxBorderCornerRadiusForState(current_state),
+      GetSearchBoxBorderCornerRadiusForState(target_state)));
+  const SkColor color = gfx::Tween::ColorValueBetween(
+      progress, GetBackgroundColorForState(current_state),
+      GetBackgroundColorForState(target_state));
+  background->set_color(color);
+  search_box_->SetBackgroundColor(color);
+}
+
+void SearchBoxView::ButtonPressed(views::Button* sender,
+                                  const ui::Event& event) {
+  if (back_button_ && sender == back_button_) {
+    delegate_->BackButtonPressed();
+  } else if (speech_button_ && sender == speech_button_) {
+    view_delegate_->StartSpeechRecognition();
+  } else if (close_button_ && sender == close_button_) {
+    ClearSearch();
+    app_list_view_->SetStateFromSearchBoxView(true);
+  } else {
+    NOTREACHED();
+  }
 }
 
 void SearchBoxView::UpdateModel() {
@@ -732,17 +695,17 @@ void SearchBoxView::WallpaperProminentColorsChanged() {
   SetBackgroundColor(
       prominent_colors[static_cast<int>(ColorProfileType::LIGHT_VIBRANT)]);
   UpdateSearchIcon();
-  if (speech_button_) {
-    speech_button_->SetImage(
-        views::Button::STATE_NORMAL,
-        gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize,
-                              search_box_color_));
-  }
+  speech_button_->SetImage(
+      views::Button::STATE_NORMAL,
+      gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize, search_box_color_));
   close_button_->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize, search_box_color_));
   search_box_->set_placeholder_text_color(search_box_color_);
-  UpdateBackgroundColor(background_color_);
+  SearchBoxBackground* background =
+      static_cast<SearchBoxBackground*>(content_container_->background());
+  background->set_color(background_color_);
+  search_box_->SetBackgroundColor(background_color_);
   SchedulePaint();
 }
 
@@ -767,7 +730,6 @@ const std::vector<SkColor>& SearchBoxView::GetWallpaperProminentColors() const {
 }
 
 void SearchBoxView::SetBackgroundColor(SkColor light_vibrant) {
-  DCHECK(is_fullscreen_app_list_enabled_);
   const SkColor light_vibrant_mixed = color_utils::AlphaBlend(
       SK_ColorWHITE, light_vibrant, kLightVibrantBlendAlpha);
   background_color_ = SK_ColorTRANSPARENT == light_vibrant
@@ -778,15 +740,6 @@ void SearchBoxView::SetBackgroundColor(SkColor light_vibrant) {
 void SearchBoxView::SetSearchBoxColor(SkColor color) {
   search_box_color_ =
       SK_ColorTRANSPARENT == color ? kDefaultSearchboxColor : color;
-}
-
-void SearchBoxView::UpdateBackgroundColor(SkColor color) {
-  GetSearchBoxBackground()->set_color(color);
-  search_box_->SetBackgroundColor(color);
-}
-
-SearchBoxBackground* SearchBoxView::GetSearchBoxBackground() const {
-  return static_cast<SearchBoxBackground*>(content_container_->background());
 }
 
 }  // namespace app_list

@@ -27,6 +27,8 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/weak_ptr.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
@@ -35,6 +37,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "base/version.h"
 #include "build/build_config.h"
@@ -197,8 +200,6 @@ const char updates_from_webstore[] = "akjooamlhcgeopfifcmlggaebeocgokj";
 const char updates_from_webstore2[] = "oolblhbomdbcpmafphaodhjfcgbihcdg";
 const char updates_from_webstore3[] = "bmfoocgfinpmkmlbjhcbofejhkhlbchk";
 const char permissions_blocklist[] = "noffkehfcaggllbcojjbopcmlhcnhcdn";
-const char cast_stable[] = "boadgeojelhgndaghljhdicfkmllpafd";
-const char cast_beta[] = "dliochdbjfkdbacpmhlcpmleaejidimm";
 
 struct BubbleErrorsTestData {
   BubbleErrorsTestData(const std::string& id,
@@ -266,23 +267,6 @@ scoped_refptr<Extension> CreateExtension(const base::string16& name,
       Extension::Create(path, location, manifest, Extension::NO_FLAGS, &error);
   EXPECT_TRUE(extension.get() != nullptr) << error;
   return extension;
-}
-
-scoped_refptr<const extensions::Extension> CreateExtensionWithId(
-    const std::string& extension_id) {
-  extensions::DictionaryBuilder manifest;
-  manifest.Set(extensions::manifest_keys::kName, "extension name")
-      .Set(extensions::manifest_keys::kDescription, "extension description")
-      .Set(extensions::manifest_keys::kManifestVersion, 1)
-      .Set(extensions::manifest_keys::kVersion, "1.0.0")
-      .Set(extensions::manifest_keys::kBrowserAction,
-           extensions::DictionaryBuilder().Build());
-
-  return extensions::ExtensionBuilder()
-      .SetManifest(manifest.Build())
-      .SetID(extension_id)
-      .SetLocation(extensions::Manifest::INTERNAL)
-      .Build();
 }
 
 std::unique_ptr<ExternalInstallInfoFile> CreateExternalExtension(
@@ -769,7 +753,7 @@ void PackExtensionTestClient::OnPackSuccess(
   // on with the rest of the test.
   // This call to |Quit()| matches the call to |Run()| in the
   // |PackPunctuatedExtension| test.
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
   EXPECT_EQ(expected_crx_path_.value(), crx_path.value());
   EXPECT_EQ(expected_private_key_path_.value(), private_key_path.value());
   ASSERT_TRUE(base::PathExists(private_key_path));
@@ -4596,17 +4580,26 @@ TEST_F(ExtensionServiceTest, UnpackedRequirements) {
 
 class ExtensionCookieCallback {
  public:
-  ExtensionCookieCallback() : result_(false) {}
+  ExtensionCookieCallback()
+    : result_(false),
+      weak_factory_(base::MessageLoop::current()) {}
 
   void SetCookieCallback(bool result) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&base::MessageLoop::QuitWhenIdle,
+                                  weak_factory_.GetWeakPtr()));
     result_ = result;
   }
 
   void GetAllCookiesCallback(const net::CookieList& list) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&base::MessageLoop::QuitWhenIdle,
+                                  weak_factory_.GetWeakPtr()));
     list_ = list;
   }
   net::CookieList list_;
   bool result_;
+  base::WeakPtrFactory<base::MessageLoop> weak_factory_;
 };
 
 namespace {
@@ -7038,38 +7031,4 @@ TEST_F(ExtensionServiceTest, ReloadSharedModule) {
   content::RunAllBlockingPoolTasksUntilIdle();
   // The shared module should be enabled.
   EXPECT_TRUE(registry()->enabled_extensions().Contains(kExtensionId));
-}
-
-// Tests that extensions that have been migrated to component extensions can be
-// uninstalled.
-TEST_F(ExtensionServiceTest, UninstallMigratedExtensions) {
-  InitializeEmptyExtensionService();
-
-  scoped_refptr<const Extension> cast_extension =
-      CreateExtensionWithId(cast_stable);
-  scoped_refptr<const Extension> cast_beta_extension =
-      CreateExtensionWithId(cast_beta);
-  service()->AddExtension(cast_extension.get());
-  service()->AddExtension(cast_beta_extension.get());
-  ASSERT_TRUE(registry()->enabled_extensions().Contains(cast_stable));
-  ASSERT_TRUE(registry()->enabled_extensions().Contains(cast_beta));
-
-  service()->UninstallMigratedExtensionsForTest();
-  EXPECT_FALSE(service()->GetInstalledExtension(cast_stable));
-  EXPECT_FALSE(service()->GetInstalledExtension(cast_beta));
-}
-
-// Tests that extensions that have been migrated to component extensions can be
-// uninstalled even when they are disabled.
-TEST_F(ExtensionServiceTest, UninstallDisabledMigratedExtension) {
-  InitializeEmptyExtensionService();
-
-  scoped_refptr<const Extension> cast_extension =
-      CreateExtensionWithId(cast_stable);
-  service()->AddExtension(cast_extension.get());
-  service()->DisableExtension(cast_stable, Extension::DISABLE_USER_ACTION);
-  ASSERT_TRUE(registry()->disabled_extensions().Contains(cast_stable));
-
-  service()->UninstallMigratedExtensionsForTest();
-  EXPECT_FALSE(service()->GetInstalledExtension(cast_stable));
 }

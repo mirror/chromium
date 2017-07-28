@@ -172,12 +172,10 @@ class UpdateClientTest : public testing::Test {
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::RunLoop runloop_;
-  const base::Closure quit_closure_ = runloop_.QuitClosure();
+  base::Closure quit_closure_;
 
-  scoped_refptr<update_client::TestConfigurator> config_ =
-      base::MakeRefCounted<TestConfigurator>();
-  std::unique_ptr<TestingPrefServiceSimple> pref_ =
-      base::MakeUnique<TestingPrefServiceSimple>();
+  scoped_refptr<update_client::TestConfigurator> config_;
+  std::unique_ptr<TestingPrefServiceSimple> pref_;
   std::unique_ptr<update_client::PersistedData> metadata_;
 
   DISALLOW_COPY_AND_ASSIGN(UpdateClientTest);
@@ -185,7 +183,15 @@ class UpdateClientTest : public testing::Test {
 
 constexpr int UpdateClientTest::kNumWorkerThreads_;
 
-UpdateClientTest::UpdateClientTest() {
+UpdateClientTest::UpdateClientTest()
+    : scoped_task_environment_(
+          base::test::ScopedTaskEnvironment::MainThreadType::UI),
+      pref_(base::MakeUnique<TestingPrefServiceSimple>()) {
+  quit_closure_ = runloop_.QuitClosure();
+
+  config_ = base::MakeRefCounted<TestConfigurator>(
+      base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()}),
+      base::ThreadTaskRunnerHandle::Get());
   PersistedData::RegisterPrefs(pref_->registry());
   metadata_ = base::MakeUnique<PersistedData>(pref_.get());
 }

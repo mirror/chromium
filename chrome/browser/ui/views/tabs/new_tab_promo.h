@@ -36,6 +36,7 @@ class NewTabPromo : public views::BubbleDialogDelegateView {
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseEntered(const ui::MouseEvent& event) override;
   void OnMouseExited(const ui::MouseEvent& event) override;
+  void Init() override;
 
   // Closes the New Tab Promo.
   void CloseBubble();

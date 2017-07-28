@@ -74,13 +74,8 @@ namespace media_router {
 class DialDeviceDescriptionParserImplTest : public testing::Test {
  public:
   DialDeviceDescriptionParserImplTest() {}
-  chrome::mojom::DialDeviceDescriptionPtr Parse(
-      const std::string& xml,
-      chrome::mojom::DialParsingError expected_error) {
-    chrome::mojom::DialParsingError error;
-    auto out = parser_.Parse(xml, &error);
-    EXPECT_EQ(expected_error, error);
-    return out;
+  chrome::mojom::DialDeviceDescriptionPtr Parse(const std::string& xml) {
+    return parser_.Parse(xml);
   }
 
  private:
@@ -89,18 +84,15 @@ class DialDeviceDescriptionParserImplTest : public testing::Test {
 };
 
 TEST_F(DialDeviceDescriptionParserImplTest, TestInvalidXml) {
-  chrome::mojom::DialDeviceDescriptionPtr device_description =
-      Parse("", chrome::mojom::DialParsingError::NONE);
-  ASSERT_TRUE(device_description);
-  EXPECT_TRUE(device_description->unique_id.empty());
+  chrome::mojom::DialDeviceDescriptionPtr device_description = Parse("");
+  EXPECT_FALSE(device_description);
 }
 
 TEST_F(DialDeviceDescriptionParserImplTest, TestParse) {
   std::string xml_text(kDeviceDescriptionWithService);
 
-  chrome::mojom::DialDeviceDescriptionPtr device_description =
-      Parse(xml_text, chrome::mojom::DialParsingError::NONE);
-  ASSERT_TRUE(device_description);
+  chrome::mojom::DialDeviceDescriptionPtr device_description = Parse(xml_text);
+  EXPECT_TRUE(device_description);
 
   EXPECT_EQ("urn:dial-multiscreen-org:device:dial:1",
             device_description->device_type);
@@ -117,9 +109,8 @@ TEST_F(DialDeviceDescriptionParserImplTest, TestParseWithSpecialCharacter) {
   std::string xml_text(kDeviceDescriptionWithService);
   xml_text = Replace(xml_text, old_name, new_name);
 
-  chrome::mojom::DialDeviceDescriptionPtr device_description =
-      Parse(xml_text, chrome::mojom::DialParsingError::NONE);
-  ASSERT_TRUE(device_description);
+  chrome::mojom::DialDeviceDescriptionPtr device_description = Parse(xml_text);
+  EXPECT_TRUE(device_description);
 
   EXPECT_EQ("urn:dial-multiscreen-org:device:dial:1",
             device_description->device_type);
@@ -138,11 +129,8 @@ TEST_F(DialDeviceDescriptionParserImplTest,
   xml_text = Replace(xml_text, friendly_name, "");
   xml_text = Replace(xml_text, model_name, "");
 
-  chrome::mojom::DialDeviceDescriptionPtr device_description =
-      Parse(xml_text, chrome::mojom::DialParsingError::NONE);
-  ASSERT_TRUE(device_description);
-  EXPECT_TRUE(device_description->friendly_name.empty());
-  EXPECT_TRUE(device_description->model_name.empty());
+  chrome::mojom::DialDeviceDescriptionPtr device_description = Parse(xml_text);
+  EXPECT_FALSE(device_description);
 }
 
 TEST_F(DialDeviceDescriptionParserImplTest, TestParseWithoutFriendlyName) {
@@ -151,9 +139,8 @@ TEST_F(DialDeviceDescriptionParserImplTest, TestParseWithoutFriendlyName) {
   std::string xml_text(kDeviceDescriptionWithoutService);
   xml_text = Replace(xml_text, friendly_name, "");
 
-  chrome::mojom::DialDeviceDescriptionPtr device_description =
-      Parse(xml_text, chrome::mojom::DialParsingError::NONE);
-  ASSERT_TRUE(device_description);
+  chrome::mojom::DialDeviceDescriptionPtr device_description = Parse(xml_text);
+  EXPECT_TRUE(device_description);
 
   EXPECT_EQ("urn:dial-multiscreen-org:device:dial:1",
             device_description->device_type);

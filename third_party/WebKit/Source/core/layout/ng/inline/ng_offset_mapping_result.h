@@ -6,7 +6,6 @@
 #define NGOffsetMappingResult_h
 
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/HashMap.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -29,28 +28,10 @@ enum class NGOffsetMappingUnitType { kIdentity, kCollapsed, kExpanded };
 //   |text_content_end > text_content_start + 1|, indicating that the character
 //   in the dom range is expanded into multiple characters.
 // See design doc https://goo.gl/CJbxky for details.
-class NGOffsetMappingUnit {
+struct NGOffsetMappingUnit {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
- public:
-  NGOffsetMappingUnit(NGOffsetMappingUnitType,
-                      const LayoutText*,
-                      unsigned dom_start,
-                      unsigned dom_end,
-                      unsigned text_content_start,
-                      unsigned text_content_end);
-
-  NGOffsetMappingUnitType GetType() const { return type_; }
-  const LayoutText* GetOwner() const { return owner_; }
-  unsigned DOMStart() const { return dom_start_; }
-  unsigned DOMEnd() const { return dom_end_; }
-  unsigned TextContentStart() const { return text_content_start_; }
-  unsigned TextContentEnd() const { return text_content_end_; }
-
-  unsigned ConvertDOMOffsetToTextContent(unsigned) const;
-
- private:
-  const NGOffsetMappingUnitType type_ = NGOffsetMappingUnitType::kIdentity;
+  NGOffsetMappingUnitType type = NGOffsetMappingUnitType::kIdentity;
 
   // Ideally, we should store |Node| as owner, instead of |LayoutObject|.
   // However, we need to ensure the invariant that, units of the same owner are
@@ -60,37 +41,21 @@ class NGOffsetMappingUnit {
   // the node.
   // TODO(xiaochengh): Figure out if this the issue really exists. If not, then
   // we should use |Node| as owner.
-  const LayoutText* const owner_;
+  const LayoutText* owner = nullptr;
 
-  const unsigned dom_start_;
-  const unsigned dom_end_;
-  const unsigned text_content_start_;
-  const unsigned text_content_end_;
+  unsigned dom_start = 0;
+  unsigned dom_end = 0;
+  unsigned text_content_start = 0;
+  unsigned text_content_end = 0;
 };
 
 // An NGOffsetMappingResult stores the units of a LayoutNGBlockFlow in sorted
 // order in a vector. For each text node, the index range of the units owned by
 // the node is also stored.
 // See design doc https://goo.gl/CJbxky for details.
-class NGOffsetMappingResult {
- public:
-  using UnitVector = Vector<NGOffsetMappingUnit>;
-  using RangeMap = HashMap<const LayoutText*, std::pair<unsigned, unsigned>>;
-
-  NGOffsetMappingResult(NGOffsetMappingResult&&);
-  NGOffsetMappingResult(UnitVector&&, RangeMap&&);
-
-  const UnitVector& GetUnits() const { return units_; }
-  const RangeMap& GetRanges() const { return ranges_; }
-
-  const NGOffsetMappingUnit* GetMappingUnitForDOMOffset(const LayoutText*,
-                                                        unsigned) const;
-
- private:
-  UnitVector units_;
-  RangeMap ranges_;
-
-  DISALLOW_COPY_AND_ASSIGN(NGOffsetMappingResult);
+struct NGOffsetMappingResult {
+  Vector<NGOffsetMappingUnit> units;
+  HashMap<const LayoutText*, std::pair<unsigned, unsigned>> ranges;
 };
 
 }  // namespace blink

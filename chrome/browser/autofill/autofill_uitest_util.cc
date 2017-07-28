@@ -5,7 +5,6 @@
 #include "chrome/browser/autofill/autofill_uitest_util.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "chrome/browser/autofill/personal_data_manager_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -30,7 +29,7 @@ class PdmChangeWaiter : public PersonalDataManagerObserver {
   // PersonalDataManagerObserver:
   void OnPersonalDataChanged() override {
     if (has_run_message_loop_) {
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoopForUI::current()->QuitWhenIdle();
       has_run_message_loop_ = false;
     }
     alerted_ = true;

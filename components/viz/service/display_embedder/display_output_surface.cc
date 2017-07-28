@@ -15,7 +15,6 @@
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
-#include "ui/gl/gl_utils.h"
 
 namespace viz {
 
@@ -75,8 +74,7 @@ void DisplayOutputSurface::Reshape(const gfx::Size& size,
   size_ = size;
   has_set_draw_rectangle_since_last_resize_ = false;
   context_provider()->ContextGL()->ResizeCHROMIUM(
-      size.width(), size.height(), device_scale_factor,
-      gl::GetGLColorSpace(color_space), has_alpha);
+      size.width(), size.height(), device_scale_factor, has_alpha);
 }
 
 void DisplayOutputSurface::SwapBuffers(cc::OutputSurfaceFrame frame) {

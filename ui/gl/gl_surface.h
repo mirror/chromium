@@ -57,17 +57,8 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // Destroys the surface.
   virtual void Destroy() = 0;
 
-  // Color spaces that can be dynamically specified to the surface when resized.
-  enum class ColorSpace {
-    UNSPECIFIED,
-    SRGB,
-    DISPLAY_P3,
-    SCRGB_LINEAR,
-  };
-
   virtual bool Resize(const gfx::Size& size,
                       float scale_factor,
-                      ColorSpace color_space,
                       bool has_alpha);
 
   // Recreate the surface without changing the size.
@@ -222,8 +213,6 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
 
   virtual bool SupportsDCLayers() const;
 
-  virtual bool UseOverlaysForVideo() const;
-
   // Set the rectangle that will be drawn into on the surface.
   virtual bool SetDrawRectangle(const gfx::Rect& rect);
 
@@ -265,7 +254,6 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
   void Destroy() override;
   bool Resize(const gfx::Size& size,
               float scale_factor,
-              ColorSpace color_space,
               bool has_alpha) override;
   bool Recreate() override;
   bool DeferDraws() override;
@@ -310,7 +298,6 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
   bool FlipsVertically() const override;
   bool BuffersFlipped() const override;
   bool SupportsDCLayers() const override;
-  bool UseOverlaysForVideo() const override;
   bool SetDrawRectangle(const gfx::Rect& rect) override;
   gfx::Vector2d GetDrawOffset() const override;
   void WaitForSnapshotRendering() override;

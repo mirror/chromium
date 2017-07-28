@@ -16,8 +16,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/instant.mojom.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/common/search.mojom.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/renderer/searchbox/searchbox_extension.h"
 #include "components/favicon_base/favicon_types.h"
@@ -231,10 +231,10 @@ SearchBox::SearchBox(content::RenderFrame* render_frame)
   // Connect to the embedded search interface in the browser.
   chrome::mojom::EmbeddedSearchConnectorAssociatedPtr connector;
   render_frame->GetRemoteAssociatedInterfaces()->GetInterface(&connector);
-  chrome::mojom::EmbeddedSearchClientAssociatedPtrInfo embedded_search_client;
-  binding_.Bind(mojo::MakeRequest(&embedded_search_client));
-  connector->Connect(mojo::MakeRequest(&embedded_search_service_),
-                     std::move(embedded_search_client));
+  chrome::mojom::SearchBoxAssociatedPtrInfo search_box;
+  binding_.Bind(mojo::MakeRequest(&search_box));
+  connector->Connect(mojo::MakeRequest(&instant_service_),
+                     std::move(search_box));
 }
 
 SearchBox::~SearchBox() = default;
@@ -247,29 +247,29 @@ void SearchBox::LogEvent(NTPLoggingEventType event) {
       (base::TimeTicks::Now() - base::TimeTicks::UnixEpoch()).InMilliseconds();
   DCHECK(now >= start);
   base::TimeDelta delta = base::TimeDelta::FromMilliseconds(now - start);
-  embedded_search_service_->LogEvent(page_seq_no_, event, delta);
+  instant_service_->LogEvent(page_seq_no_, event, delta);
 }
 
 void SearchBox::LogMostVisitedImpression(int position,
                                          ntp_tiles::TileSource tile_source,
                                          ntp_tiles::TileVisualType tile_type) {
-  embedded_search_service_->LogMostVisitedImpression(page_seq_no_, position,
-                                                     tile_source, tile_type);
+  instant_service_->LogMostVisitedImpression(page_seq_no_, position,
+                                             tile_source, tile_type);
 }
 
 void SearchBox::LogMostVisitedNavigation(int position,
                                          ntp_tiles::TileSource tile_source,
                                          ntp_tiles::TileVisualType tile_type) {
-  embedded_search_service_->LogMostVisitedNavigation(page_seq_no_, position,
-                                                     tile_source, tile_type);
+  instant_service_->LogMostVisitedNavigation(page_seq_no_, position,
+                                             tile_source, tile_type);
 }
 
 void SearchBox::CheckIsUserSignedInToChromeAs(const base::string16& identity) {
-  embedded_search_service_->ChromeIdentityCheck(page_seq_no_, identity);
+  instant_service_->ChromeIdentityCheck(page_seq_no_, identity);
 }
 
 void SearchBox::CheckIsUserSyncingHistory() {
-  embedded_search_service_->HistorySyncCheck(page_seq_no_);
+  instant_service_->HistorySyncCheck(page_seq_no_);
 }
 
 void SearchBox::DeleteMostVisitedItem(
@@ -277,7 +277,7 @@ void SearchBox::DeleteMostVisitedItem(
   GURL url = GetURLForMostVisitedItem(most_visited_item_id);
   if (!url.is_valid())
     return;
-  embedded_search_service_->DeleteMostVisitedItem(page_seq_no_, url);
+  instant_service_->DeleteMostVisitedItem(page_seq_no_, url);
 }
 
 bool SearchBox::GenerateImageURLFromTransientURL(const GURL& transient_url,
@@ -308,19 +308,19 @@ const EmbeddedSearchRequestParams& SearchBox::GetEmbeddedSearchRequestParams() {
 }
 
 void SearchBox::Paste(const base::string16& text) {
-  embedded_search_service_->PasteAndOpenDropdown(page_seq_no_, text);
+  instant_service_->PasteAndOpenDropdown(page_seq_no_, text);
 }
 
 void SearchBox::StartCapturingKeyStrokes() {
-  embedded_search_service_->FocusOmnibox(page_seq_no_, OMNIBOX_FOCUS_INVISIBLE);
+  instant_service_->FocusOmnibox(page_seq_no_, OMNIBOX_FOCUS_INVISIBLE);
 }
 
 void SearchBox::StopCapturingKeyStrokes() {
-  embedded_search_service_->FocusOmnibox(page_seq_no_, OMNIBOX_FOCUS_NONE);
+  instant_service_->FocusOmnibox(page_seq_no_, OMNIBOX_FOCUS_NONE);
 }
 
 void SearchBox::UndoAllMostVisitedDeletions() {
-  embedded_search_service_->UndoAllMostVisitedDeletions(page_seq_no_);
+  instant_service_->UndoAllMostVisitedDeletions(page_seq_no_);
 }
 
 void SearchBox::UndoMostVisitedDeletion(
@@ -328,7 +328,7 @@ void SearchBox::UndoMostVisitedDeletion(
   GURL url = GetURLForMostVisitedItem(most_visited_item_id);
   if (!url.is_valid())
     return;
-  embedded_search_service_->UndoMostVisitedDeletion(page_seq_no_, url);
+  instant_service_->UndoMostVisitedDeletion(page_seq_no_, url);
 }
 
 void SearchBox::SetPageSequenceNumber(int page_seq_no) {
@@ -432,8 +432,7 @@ GURL SearchBox::GetURLForMostVisitedItem(InstantRestrictedID item_id) const {
   return GetMostVisitedItemWithID(item_id, &item) ? item.url : GURL();
 }
 
-void SearchBox::Bind(
-    chrome::mojom::EmbeddedSearchClientAssociatedRequest request) {
+void SearchBox::Bind(chrome::mojom::SearchBoxAssociatedRequest request) {
   binding_.Bind(std::move(request));
 }
 

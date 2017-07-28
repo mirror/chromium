@@ -218,9 +218,6 @@ TEST_F(SplitViewControllerTest, EnterOverviewTest) {
   auto iter = std::find(windows.begin(), windows.end(),
                         split_view_controller()->GetDefaultSnappedWindow());
   EXPECT_TRUE(iter == windows.end());
-
-  // End overview mode before test shutdown to avoid use after free.
-  ToggleOverview();
 }
 
 }  // namespace ash

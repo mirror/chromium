@@ -15,14 +15,11 @@ namespace memory_instrumentation {
 class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT OSMetrics {
  public:
   static bool FillOSMemoryDump(base::ProcessId pid, mojom::RawOSMemDump* dump);
-  static bool FillProcessMemoryMapsDeprecated(
-      base::ProcessId,
-      base::trace_event::ProcessMemoryDump*);
-  static bool FillProcessMemoryMaps(base::ProcessId, mojom::RawOSMemDump*);
+  static bool FillProcessMemoryMaps(base::ProcessId,
+                                    base::trace_event::ProcessMemoryDump*);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(OSMetricsTest, ParseProcSmaps);
-  static std::vector<mojom::VmRegionPtr> GetProcessMemoryMaps(base::ProcessId);
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   static void SetProcSmapsForTesting(FILE*);

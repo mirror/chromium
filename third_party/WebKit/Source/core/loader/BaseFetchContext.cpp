@@ -93,18 +93,18 @@ void BaseFetchContext::AddCSPHeaderIfNecessary(Resource::Type type,
 }
 
 ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequest(
-    WebURLRequest::RequestContext request_context,
+    const ResourceRequest& resource_request,
     const KURL& url,
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     ResourceRequest::RedirectStatus redirect_status) const {
   return CheckCSPForRequestInternal(
-      request_context, url, options, reporting_policy, redirect_status,
+      resource_request, url, options, reporting_policy, redirect_status,
       ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
 }
 
 ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequestInternal(
-    WebURLRequest::RequestContext request_context,
+    const ResourceRequest& resource_request,
     const KURL& url,
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
@@ -116,10 +116,11 @@ ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequestInternal(
   }
 
   const ContentSecurityPolicy* csp = GetContentSecurityPolicy();
-  if (csp && !csp->AllowRequest(
-                 request_context, url, options.content_security_policy_nonce,
-                 options.integrity_metadata, options.parser_disposition,
-                 redirect_status, reporting_policy, check_header_type)) {
+  if (csp && !csp->AllowRequest(resource_request.GetRequestContext(), url,
+                                options.content_security_policy_nonce,
+                                options.integrity_metadata,
+                                options.parser_disposition, redirect_status,
+                                reporting_policy, check_header_type)) {
     return ResourceRequestBlockedReason::kCSP;
   }
   return ResourceRequestBlockedReason::kNone;
@@ -192,8 +193,7 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   // populateResourceRequest). We check the enforced headers here to ensure we
   // block things we ought to block.
   if (CheckCSPForRequestInternal(
-          resource_request.GetRequestContext(), url, options, reporting_policy,
-          redirect_status,
+          resource_request, url, options, reporting_policy, redirect_status,
           ContentSecurityPolicy::CheckHeaderType::kCheckEnforce) ==
       ResourceRequestBlockedReason::kCSP) {
     return ResourceRequestBlockedReason::kCSP;

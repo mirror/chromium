@@ -96,10 +96,6 @@ void WebRuntimeFeatures::EnableCompositorTouchAction(bool enable) {
   RuntimeEnabledFeatures::SetCompositorTouchActionEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableCSSHexAlphaColor(bool enable) {
-  RuntimeEnabledFeatures::SetCSSHexAlphaColorEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnableDatabase(bool enable) {
   RuntimeEnabledFeatures::SetDatabaseEnabled(enable);
 }
@@ -118,6 +114,10 @@ void WebRuntimeFeatures::ForceDisable2dCanvasCopyOnWrite(bool enable) {
 
 void WebRuntimeFeatures::EnableDisplayList2dCanvas(bool enable) {
   RuntimeEnabledFeatures::SetDisplayList2dCanvasEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableDocumentWriteEvaluator(bool enable) {
+  RuntimeEnabledFeatures::SetDocumentWriteEvaluatorEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableExperimentalCanvasFeatures(bool enable) {

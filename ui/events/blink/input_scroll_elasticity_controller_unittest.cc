@@ -83,8 +83,7 @@ class ScrollElasticityControllerTest : public testing::Test {
   ScrollElasticityControllerTest()
       : controller_(&helper_),
         input_event_count_(0),
-        current_time_(base::TimeTicks() +
-                      base::TimeDelta::FromMicroseconds(INT64_C(100000000))) {}
+        current_time_(base::TimeTicks::FromInternalValue(100000000ull)) {}
   ~ScrollElasticityControllerTest() override {}
 
 

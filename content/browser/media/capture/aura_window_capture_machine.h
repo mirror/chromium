@@ -18,8 +18,11 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_animation_observer.h"
 
-namespace viz {
+namespace cc {
 class CopyOutputResult;
+}  // namespace cc
+
+namespace viz {
 class ReadbackYUVInterface;
 }
 
@@ -81,7 +84,7 @@ class AuraWindowCaptureMachine
                      base::TimeTicks event_time,
                      base::TimeTicks start_time,
                      const CaptureFrameCallback& capture_frame_cb,
-                     std::unique_ptr<viz::CopyOutputResult> result);
+                     std::unique_ptr<cc::CopyOutputResult> result);
 
   // A helper which does the real work for DidCopyOutput. Returns true if
   // succeeded and |capture_frame_cb| will be run at some future point. Returns
@@ -90,7 +93,7 @@ class AuraWindowCaptureMachine
   bool ProcessCopyOutputResponse(scoped_refptr<media::VideoFrame> video_frame,
                                  base::TimeTicks event_time,
                                  const CaptureFrameCallback& capture_frame_cb,
-                                 std::unique_ptr<viz::CopyOutputResult> result);
+                                 std::unique_ptr<cc::CopyOutputResult> result);
 
   // Renders the cursor if needed and then delivers the captured frame.
   static void CopyOutputFinishedForVideo(
@@ -98,7 +101,7 @@ class AuraWindowCaptureMachine
       base::TimeTicks event_time,
       const CaptureFrameCallback& capture_frame_cb,
       scoped_refptr<media::VideoFrame> target,
-      std::unique_ptr<viz::SingleReleaseCallback> release_callback,
+      std::unique_ptr<cc::SingleReleaseCallback> release_callback,
       bool result);
 
   // The window associated with the desktop.

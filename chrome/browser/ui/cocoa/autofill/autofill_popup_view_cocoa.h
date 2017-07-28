@@ -8,7 +8,6 @@
 #import <Cocoa/Cocoa.h>
 #include <stddef.h>
 
-#include "base/mac/availability.h"
 #import "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.h"
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
 
@@ -39,7 +38,7 @@ class AutofillPopupViewCocoaDelegate;
 - (void)invalidateRow:(NSInteger)row;
 
 // Creates and returns a touch bar if the popup is for credit cards.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+- (NSTouchBar*)makeTouchBar;
 
 @end
 

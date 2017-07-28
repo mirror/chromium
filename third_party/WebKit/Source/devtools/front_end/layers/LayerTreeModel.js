@@ -389,14 +389,6 @@ Layers.AgentLayer = class {
 
   /**
    * @override
-   * @return {?SDK.Layer.StickyPositionConstraint}
-   */
-  stickyPositionConstraint() {
-    return this._stickyPositionConstraint;
-  }
-
-  /**
-   * @override
    * @return {!Promise<!Array<string>>}
    */
   async requestCompositingReasons() {
@@ -458,10 +450,6 @@ Layers.AgentLayer = class {
     this._layerPayload = layerPayload;
     this._image = null;
     this._scrollRects = this._layerPayload.scrollRects || [];
-    this._stickyPositionConstraint = this._layerPayload.stickyPositionConstraint ?
-        new SDK.Layer.StickyPositionConstraint(
-            this._layerTreeModel.layerTree(), this._layerPayload.stickyPositionConstraint) :
-        null;
   }
 
   /**

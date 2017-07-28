@@ -324,6 +324,7 @@ class _BuildArchive(object):
     """Save build artifacts necessary for diffing."""
     logging.info('Saving build results to: %s', self.dir)
     _EnsureDirsExist(self.dir)
+    self._ArchiveFile(self.build.abs_main_lib_path)
     if self.build.IsAndroid():
       self._ArchiveFile(self.build.abs_apk_path)
       self._ArchiveResourceSizes()

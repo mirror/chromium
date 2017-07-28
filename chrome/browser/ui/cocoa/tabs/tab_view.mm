@@ -49,7 +49,6 @@ const NSTimeInterval kHoverHideDuration = 0.4;
 const NSTimeInterval kAlertShowDuration = 0.4;
 const NSTimeInterval kAlertHoldDuration = 0.4;
 const NSTimeInterval kAlertHideDuration = 0.4;
-const NSTimeInterval kAlertOffDuration = 0.4;
 
 // The default time interval in seconds between glow updates (when
 // increasing/decreasing).
@@ -719,28 +718,10 @@ CGFloat LineWidthFromContext(CGContextRef context) {
   }
 }
 
-- (void)startOnceAlert {
-  // Do not start a new once-alert to interrupt another once-alert or an
-  // infinite-alert.
+- (void)startAlert {
+  // Do not start a new alert while already alerting or while in a decay cycle.
   if (alertState_ == tabs::kAlertNone) {
-    isInfiniteAlert_ = NO;
     alertState_ = tabs::kAlertRising;
-    [self resetLastGlowUpdateTime];
-    [self adjustGlowValue];
-  }
-}
-
-- (void)startInfiniteAlert {
-  // Allow turning a once-alert into an infinite-alert.
-  if (alertState_ == tabs::kAlertNone || !isInfiniteAlert_) {
-    if (alertState_ == tabs::kAlertNone) {
-      // No existing alert; start one.
-      isInfiniteAlert_ = YES;
-      alertState_ = tabs::kAlertRising;
-    } else {
-      // Upgrade an existing once-alert; leave the current cycle state alone.
-      isInfiniteAlert_ = YES;
-    }
     [self resetLastGlowUpdateTime];
     [self adjustGlowValue];
   }
@@ -748,7 +729,6 @@ CGFloat LineWidthFromContext(CGContextRef context) {
 
 - (void)cancelAlert {
   if (alertState_ != tabs::kAlertNone) {
-    isInfiniteAlert_ = NO;
     alertState_ = tabs::kAlertFalling;
     alertHoldEndTime_ =
         [NSDate timeIntervalSinceReferenceDate] + kGlowUpdateInterval;
@@ -921,61 +901,39 @@ CGFloat LineWidthFromContext(CGContextRef context) {
   }
 
   CGFloat alertAlpha = [self alertAlpha];
-  switch (alertState_) {
-    case tabs::kAlertNone: {
-      break;
-    }
-    case tabs::kAlertRising: {
-      // Increase alert glow until it's 1 ...
-      alertAlpha = MIN(alertAlpha + elapsed / kAlertShowDuration, 1);
-      [self setAlertAlpha:alertAlpha];
+  if (alertState_ == tabs::kAlertRising) {
+    // Increase alert glow until it's 1 ...
+    alertAlpha = MIN(alertAlpha + elapsed / kAlertShowDuration, 1);
+    [self setAlertAlpha:alertAlpha];
 
-      // ... and having reached 1, switch to holding.
-      if (alertAlpha >= 1) {
-        alertState_ = tabs::kAlertHolding;
-        alertHoldEndTime_ = currentTime + kAlertHoldDuration;
-        nextUpdate = MIN(kAlertHoldDuration, nextUpdate);
-      } else {
-        nextUpdate = MIN(kGlowUpdateInterval, nextUpdate);
-      }
-      break;
+    // ... and having reached 1, switch to holding.
+    if (alertAlpha >= 1) {
+      alertState_ = tabs::kAlertHolding;
+      alertHoldEndTime_ = currentTime + kAlertHoldDuration;
+      nextUpdate = MIN(kAlertHoldDuration, nextUpdate);
+    } else {
+      nextUpdate = MIN(kGlowUpdateInterval, nextUpdate);
     }
-    case tabs::kAlertHolding: {
+  } else if (alertState_ != tabs::kAlertNone) {
+    if (alertAlpha > 0) {
       if (currentTime >= alertHoldEndTime_) {
-        alertState_ = tabs::kAlertFalling;
-        nextUpdate = MIN(kGlowUpdateInterval, nextUpdate);
-      } else {
-        nextUpdate = MIN(alertHoldEndTime_ - currentTime, nextUpdate);
-      }
-      break;
-    }
-    case tabs::kAlertFalling: {
-      // Decrease alert glow until it's 0 ...
-      alertAlpha = MAX(alertAlpha - elapsed / kAlertHideDuration, 0);
-      [self setAlertAlpha:alertAlpha];
-
-      // ... and having reached 0, switch to either off or stop alerting.
-      if (alertAlpha <= 0) {
-        if (isInfiniteAlert_) {
-          alertState_ = tabs::kAlertOff;
-          alertHoldEndTime_ = currentTime + kAlertOffDuration;
-          nextUpdate = MIN(kAlertOffDuration, nextUpdate);
+        // Stop holding, then decrease alert glow (until it's 0).
+        if (alertState_ == tabs::kAlertHolding) {
+          alertState_ = tabs::kAlertFalling;
+          nextUpdate = MIN(kGlowUpdateInterval, nextUpdate);
         } else {
-          alertState_ = tabs::kAlertNone;
+          DCHECK_EQ(tabs::kAlertFalling, alertState_);
+          alertAlpha = MAX(alertAlpha - elapsed / kAlertHideDuration, 0);
+          [self setAlertAlpha:alertAlpha];
+          nextUpdate = MIN(kGlowUpdateInterval, nextUpdate);
         }
       } else {
-        nextUpdate = MIN(kGlowUpdateInterval, nextUpdate);
-      }
-      break;
-    }
-    case tabs::kAlertOff: {
-      if (currentTime >= alertHoldEndTime_) {
-        alertState_ = tabs::kAlertRising;
-        nextUpdate = MIN(kGlowUpdateInterval, nextUpdate);
-      } else {
+        // Schedule update for end of hold time.
         nextUpdate = MIN(alertHoldEndTime_ - currentTime, nextUpdate);
       }
-      break;
+    } else {
+      // Done the alert decay cycle.
+      alertState_ = tabs::kAlertNone;
     }
   }
 

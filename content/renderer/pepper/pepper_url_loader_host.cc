@@ -177,7 +177,7 @@ void PepperURLLoaderHost::DidFinishLoading(double finish_time) {
 void PepperURLLoaderHost::DidFail(const WebURLError& error) {
   // Note that |loader| will be NULL for document loads.
   int32_t pp_error = PP_ERROR_FAILED;
-  if (error.domain == WebURLError::Domain::kNet) {
+  if (error.domain.Equals(WebString::FromUTF8(net::kErrorDomain))) {
     // TODO(bbudge): Extend pp_errors.h to cover interesting network errors
     // from the net error domain.
     switch (error.reason) {

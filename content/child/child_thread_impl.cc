@@ -24,7 +24,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process.h"
 #include "base/process/process_handle.h"
-#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -634,7 +633,7 @@ void ChildThreadImpl::OnChannelError() {
   // If this thread runs in the browser process, only Thread::Stop should
   // stop its message loop. Otherwise, QuitWhenIdle could race Thread::Stop.
   if (!IsInBrowserProcess())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
 }
 
 bool ChildThreadImpl::Send(IPC::Message* msg) {
@@ -795,7 +794,7 @@ void ChildThreadImpl::OnProcessPurgeAndSuspend() {
 void ChildThreadImpl::OnProcessResume() {}
 
 void ChildThreadImpl::OnShutdown() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)

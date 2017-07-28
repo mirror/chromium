@@ -48,7 +48,6 @@
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/CurrentTime.h"
-#include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
 
@@ -58,18 +57,6 @@ SecurityOrigin* GetSecurityOrigin(ExecutionContext* context) {
   if (context)
     return context->GetSecurityOrigin();
   return nullptr;
-}
-
-// When a PerformanceBase object is first created, use the current system time
-// to calculate what the Unix time would be at the time the monotonic clock time
-// was zero, assuming no manual changes to the system clock. This can be
-// calculated as current_unix_time - current_monotonic_time.
-DOMHighResTimeStamp GetUnixAtZeroMonotonic() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      DOMHighResTimeStamp, unix_at_zero_monotonic,
-      {ConvertSecondsToDOMHighResTimeStamp(CurrentTime() -
-                                           MonotonicallyIncreasingTime())});
-  return unix_at_zero_monotonic;
 }
 
 }  // namespace
@@ -99,12 +86,6 @@ const AtomicString& PerformanceBase::InterfaceName() const {
 
 PerformanceTiming* PerformanceBase::timing() const {
   return nullptr;
-}
-
-DOMHighResTimeStamp PerformanceBase::timeOrigin() const {
-  DCHECK(time_origin_ > 0.0);
-  return GetUnixAtZeroMonotonic() +
-         ConvertSecondsToDOMHighResTimeStamp(time_origin_);
 }
 
 PerformanceEntryVector PerformanceBase::getEntries() {
@@ -323,7 +304,7 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
 
   if (info.RedirectChain().IsEmpty()) {
     PerformanceEntry* entry = PerformanceResourceTiming::Create(
-        info, GetTimeOrigin(), start_time, allow_timing_details, serverTiming);
+        info, TimeOrigin(), start_time, allow_timing_details, serverTiming);
     NotifyObserversOfEntry(*entry);
     if (!IsResourceTimingBufferFull())
       AddResourceTimingBuffer(*entry);
@@ -347,7 +328,7 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
   double last_redirect_end_time = last_redirect_timing->ReceiveHeadersEnd();
 
   PerformanceEntry* entry = PerformanceResourceTiming::Create(
-      info, GetTimeOrigin(), start_time, last_redirect_end_time,
+      info, TimeOrigin(), start_time, last_redirect_end_time,
       allow_timing_details, allow_redirect_details, serverTiming);
   NotifyObserversOfEntry(*entry);
   if (!IsResourceTimingBufferFull())

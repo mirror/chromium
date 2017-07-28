@@ -105,6 +105,8 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   static void CountEvent(ExecutionContext*, const Event*);
   void CopyImage(const HitTestResult&);
 
+  void Transpose();
+
   void RespondToChangedContents(const Position&);
 
   bool SelectionStartHasStyle(CSSPropertyID, const String& value) const;
@@ -355,7 +357,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
       const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded,
       RevealExtentOption = kDoNotRevealExtent);
   void ChangeSelectionAfterCommand(const SelectionInDOMTree&,
-                                   const SetSelectionData&);
+                                   FrameSelection::SetSelectionOptions);
 
   SpellChecker& GetSpellChecker() const;
 
@@ -389,10 +391,6 @@ inline void Editor::ClearTypingStyle() {
 inline void Editor::SetTypingStyle(EditingStyle* style) {
   typing_style_ = style;
 }
-
-// TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
-// "EditorCommand.cpp"
-void Transpose(LocalFrame&);
 
 }  // namespace blink
 

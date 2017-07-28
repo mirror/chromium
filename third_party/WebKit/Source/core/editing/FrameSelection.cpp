@@ -182,18 +182,6 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
                kCloseTyping | kClearTypingStyle | kUserTriggered);
 }
 
-void FrameSelection::SetSelection(const SelectionInDOMTree& selection,
-                                  const SetSelectionData& data) {
-  const SetSelectionOptions options =
-      (data.GetSetSelectionBy() == SetSelectionBy::kUser ? kUserTriggered : 0) |
-      (data.ShouldCloseTyping() ? kCloseTyping : 0) |
-      (data.ShouldClearTypingStyle() ? kClearTypingStyle : 0) |
-      (data.DoNotSetFocus() ? kDoNotSetFocus : 0) |
-      (data.DoNotClearStrategy() ? kDoNotClearStrategy : 0);
-  SetSelection(selection, options, data.GetCursorAlignOnScroll(),
-               data.Granularity());
-}
-
 void FrameSelection::SetSelection(const SelectionInDOMTree& passed_selection,
                                   SetSelectionOptions options,
                                   CursorAlignOnScroll align,
@@ -506,9 +494,8 @@ bool FrameSelection::ShouldPaintCaret(const LayoutBlock& block) const {
   DCHECK_GE(GetDocument().Lifecycle().GetState(),
             DocumentLifecycle::kLayoutClean);
   bool result = frame_caret_->ShouldPaintCaret(block);
-  DCHECK(!result ||
-         (ComputeVisibleSelectionInDOMTree().IsCaret() &&
-          IsEditablePosition(ComputeVisibleSelectionInDOMTree().Start())));
+  DCHECK(!result || (ComputeVisibleSelectionInDOMTree().IsCaret() &&
+                     ComputeVisibleSelectionInDOMTree().HasEditableStyle()));
   return result;
 }
 

@@ -574,6 +574,37 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, IgnoreDownloads) {
   EXPECT_TRUE(NoPageLoadMetricsRecorded());
 }
 
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, PreloadDocumentWrite) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  auto waiter = CreatePageLoadMetricsWaiter();
+  waiter->AddPageExpectation(TimingField::FIRST_CONTENTFUL_PAINT);
+
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL(
+                     "/page_load_metrics/document_write_external_script.html"));
+  waiter->Wait();
+
+  histogram_tester_.ExpectTotalCount(
+      internal::kHistogramDocWriteParseStartToFirstContentfulPaint, 1);
+}
+
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoPreloadDocumentWrite) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  auto waiter = CreatePageLoadMetricsWaiter();
+  waiter->AddPageExpectation(TimingField::FIRST_CONTENTFUL_PAINT);
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL(
+                     "/page_load_metrics/document_write_no_script.html"));
+  waiter->Wait();
+
+  histogram_tester_.ExpectTotalCount(internal::kHistogramFirstContentfulPaint,
+                                     1);
+  histogram_tester_.ExpectTotalCount(
+      internal::kHistogramDocWriteParseStartToFirstContentfulPaint, 0);
+}
+
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoDocumentWrite) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -586,6 +617,8 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoDocumentWrite) {
 
   histogram_tester_.ExpectTotalCount(internal::kHistogramFirstContentfulPaint,
                                      1);
+  histogram_tester_.ExpectTotalCount(
+      internal::kHistogramDocWriteParseStartToFirstContentfulPaint, 0);
   histogram_tester_.ExpectTotalCount(
       internal::kHistogramDocWriteBlockParseStartToFirstContentfulPaint, 0);
   histogram_tester_.ExpectTotalCount(internal::kHistogramDocWriteBlockCount, 0);
@@ -701,8 +734,12 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoDocumentWriteScript) {
 }
 
 // TODO(crbug.com/712935): Flaky on Linux dbg.
-// TODO(crbug.com/738235): Now flaky on Win and Mac.
-IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, DISABLED_BadXhtml) {
+#if defined(OS_LINUX) && !defined(NDEBUG)
+#define MAYBE_BadXhtml DISABLED_BadXhtml
+#else
+#define MAYBE_BadXhtml BadXhtml
+#endif
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, MAYBE_BadXhtml) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // When an XHTML page contains invalid XML, it causes a paint of the error

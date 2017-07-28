@@ -1796,13 +1796,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-  // Update and cache the new input context. Otherwise,
-  // [NSTextInputContext currentInputContext] might still hold on to this
-  // view's NSTextInputContext even after it's deallocated.
-  // See http://crbug.com/684388.
-  [[self window] makeFirstResponder:nil];
-  [NSApp updateWindows];
-
   [super dealloc];
 }
 
@@ -2002,9 +1995,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     [self finishComposingText];
   }
 
-  if (type == NSMouseMoved)
-    cursorHidden_ = NO;
-
   WebMouseEvent event =
       WebMouseEventBuilder::Build(theEvent, self, pointerType_);
   ui::LatencyInfo latency_info(ui::SourceEventType::OTHER);
@@ -2172,10 +2162,8 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     widgetHost->ForwardKeyboardEventWithLatencyInfo(event, latency_info);
 
     // Possibly autohide the cursor.
-    if ([self shouldAutohideCursorForEvent:theEvent]) {
+    if ([self shouldAutohideCursorForEvent:theEvent])
       [NSCursor setHiddenUntilMouseMoves:YES];
-      cursorHidden_ = YES;
-    }
 
     return;
   }
@@ -2344,10 +2332,8 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   }
 
   // Possibly autohide the cursor.
-  if ([self shouldAutohideCursorForEvent:theEvent]) {
+  if ([self shouldAutohideCursorForEvent:theEvent])
     [NSCursor setHiddenUntilMouseMoves:YES];
-    cursorHidden_ = YES;
-  }
 }
 
 - (void)forceTouchEvent:(NSEvent*)theEvent {
@@ -3571,12 +3557,6 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
 
   currentCursor_.reset([cursor retain]);
   [[self window] invalidateCursorRectsForView:self];
-
-  // NSWindow's invalidateCursorRectsForView: resets cursor rects but does not
-  // update the cursor instantly. The cursor is updated when the mouse moves.
-  // Update the cursor by setting the current cursor if not hidden.
-  if (!cursorHidden_)
-    [currentCursor_ set];
 }
 
 - (void)popupWindowWillClose:(NSNotification *)notification {

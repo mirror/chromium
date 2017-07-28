@@ -23,11 +23,6 @@ const int64_t kDefaultDelayAfterDocumentAvailableMs = 7000;
 const int64_t kDelayAfterDocumentOnLoadCompletedMsForeground = 1000;
 const int64_t kDelayAfterDocumentOnLoadCompletedMsBackground = 2000;
 
-// Default delay, in milliseconds, between renovations finishing and
-// taking a snapshot. Allows for page to update in response to the
-// renovations.
-const int64_t kDelayAfterRenovationsCompletedMs = 2000;
-
 // Delay for testing to keep polling times reasonable.
 const int64_t kDelayForTests = 0;
 
@@ -43,21 +38,18 @@ SnapshotController::CreateForForegroundOfflining(
   return std::unique_ptr<SnapshotController>(new SnapshotController(
       task_runner, client, kDefaultDelayAfterDocumentAvailableMs,
       kDelayAfterDocumentOnLoadCompletedMsForeground,
-      kDelayAfterRenovationsCompletedMs, kDocumentAvailableTriggersSnapshot,
-      false));
+      kDocumentAvailableTriggersSnapshot));
 }
 
 // static
 std::unique_ptr<SnapshotController>
 SnapshotController::CreateForBackgroundOfflining(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-    SnapshotController::Client* client,
-    bool renovations_enabled) {
+    SnapshotController::Client* client) {
   return std::unique_ptr<SnapshotController>(new SnapshotController(
       task_runner, client, kDefaultDelayAfterDocumentAvailableMs,
       kDelayAfterDocumentOnLoadCompletedMsBackground,
-      kDelayAfterRenovationsCompletedMs, !kDocumentAvailableTriggersSnapshot,
-      renovations_enabled));
+      !kDocumentAvailableTriggersSnapshot));
 }
 
 SnapshotController::SnapshotController(
@@ -65,25 +57,19 @@ SnapshotController::SnapshotController(
     SnapshotController::Client* client,
     int64_t delay_after_document_available_ms,
     int64_t delay_after_document_on_load_completed_ms,
-    int64_t delay_after_renovations_completed_ms,
-    bool document_available_triggers_snapshot,
-    bool renovations_enabled)
+    bool document_available_triggers_snapshot)
     : task_runner_(task_runner),
       client_(client),
       state_(State::READY),
       delay_after_document_available_ms_(delay_after_document_available_ms),
       delay_after_document_on_load_completed_ms_(
           delay_after_document_on_load_completed_ms),
-      delay_after_renovations_completed_ms_(
-          delay_after_renovations_completed_ms),
       document_available_triggers_snapshot_(
           document_available_triggers_snapshot),
-      renovations_enabled_(renovations_enabled),
       weak_ptr_factory_(this) {
   if (offline_pages::ShouldUseTestingSnapshotDelay()) {
     delay_after_document_available_ms_ = kDelayForTests;
     delay_after_document_on_load_completed_ms_ = kDelayForTests;
-    delay_after_renovations_completed_ms_ = kDelayForTests;
   }
 }
 
@@ -109,14 +95,8 @@ void SnapshotController::PendingSnapshotCompleted() {
 }
 
 void SnapshotController::RenovationsCompleted() {
-  if (renovations_enabled_) {
-    task_runner_->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&SnapshotController::MaybeStartSnapshotThenStop,
-                   weak_ptr_factory_.GetWeakPtr()),
-        base::TimeDelta::FromMilliseconds(
-            delay_after_renovations_completed_ms_));
-  }
+  // Do nothing for now.
+  // TODO(collinbaker): delay snapshot until this signal is received.
 }
 
 void SnapshotController::DocumentAvailableInMainFrame() {
@@ -133,19 +113,12 @@ void SnapshotController::DocumentAvailableInMainFrame() {
 }
 
 void SnapshotController::DocumentOnLoadCompletedInMainFrame() {
-  if (renovations_enabled_) {
-    // Run renovations. After renovations complete, a snapshot will be
-    // triggered after a delay.
-    client_->RunRenovations();
-  } else {
-    // Post a delayed task to snapshot and then stop this controller.
-    task_runner_->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&SnapshotController::MaybeStartSnapshotThenStop,
-                   weak_ptr_factory_.GetWeakPtr()),
-        base::TimeDelta::FromMilliseconds(
-            delay_after_document_on_load_completed_ms_));
-  }
+  // Post a delayed task to snapshot and then stop this controller.
+  task_runner_->PostDelayedTask(
+      FROM_HERE, base::Bind(&SnapshotController::MaybeStartSnapshotThenStop,
+                            weak_ptr_factory_.GetWeakPtr()),
+      base::TimeDelta::FromMilliseconds(
+          delay_after_document_on_load_completed_ms_));
 }
 
 void SnapshotController::MaybeStartSnapshot(PageQuality updated_page_quality) {
@@ -168,10 +141,6 @@ int64_t SnapshotController::GetDelayAfterDocumentAvailableForTest() {
 
 int64_t SnapshotController::GetDelayAfterDocumentOnLoadCompletedForTest() {
   return delay_after_document_on_load_completed_ms_;
-}
-
-int64_t SnapshotController::GetDelayAfterRenovationsCompletedForTest() {
-  return delay_after_renovations_completed_ms_;
 }
 
 }  // namespace offline_pages

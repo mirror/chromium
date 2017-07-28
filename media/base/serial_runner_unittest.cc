@@ -115,6 +115,7 @@ class SerialRunnerTest : public ::testing::Test {
 
     done_called_ = true;
     done_status_ = status;
+    message_loop_.QuitWhenIdle();
   }
 
   void CancelSerialRunner(const PipelineStatusCB& status_cb) {

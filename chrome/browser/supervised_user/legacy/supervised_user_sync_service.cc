@@ -170,8 +170,10 @@ bool SupervisedUserSyncService::GetAvatarIndex(const std::string& avatar_str,
   const int kChromeOSDummyAvatarIndex = -111;
 
 #if defined(OS_CHROMEOS)
-  return *avatar_index == kChromeOSDummyAvatarIndex ||
-         chromeos::default_user_image::IsInCurrentImageSet(*avatar_index);
+  return (
+      *avatar_index == kChromeOSDummyAvatarIndex ||
+      (*avatar_index >= chromeos::default_user_image::kFirstDefaultImageIndex &&
+       *avatar_index < chromeos::default_user_image::kDefaultImagesCount));
 #else
   // Check if the Chrome avatar index is set to a dummy value. Some early
   // supervised user profiles on ChromeOS stored a dummy avatar index as a

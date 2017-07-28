@@ -47,12 +47,12 @@ class TestHandler : public MessageLoopForIO::Watcher {
   void OnFileCanReadWithoutBlocking(int fd) override {
     watcher_to_delete_ = nullptr;
     is_readable_ = true;
-    RunLoop::QuitCurrentWhenIdleDeprecated();
+    MessageLoop::current()->QuitWhenIdle();
   }
   void OnFileCanWriteWithoutBlocking(int fd) override {
     watcher_to_delete_ = nullptr;
     is_writable_ = true;
-    RunLoop::QuitCurrentWhenIdleDeprecated();
+    MessageLoop::current()->QuitWhenIdle();
   }
 
   bool is_readable_ = false;

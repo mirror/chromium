@@ -74,8 +74,7 @@ class AutofillRiskFingerprintTest : public content::ContentBrowserTest {
         available_screen_bounds_(0, 11, 101, 60),
         unavailable_screen_bounds_(0, 0, 101, 11) {}
 
-  void GetFingerprintTestCallback(base::OnceClosure continuation_callback,
-                                  std::unique_ptr<Fingerprint> fingerprint) {
+  void GetFingerprintTestCallback(std::unique_ptr<Fingerprint> fingerprint) {
     // Verify that all fields Chrome can fill have been filled.
     ASSERT_TRUE(fingerprint->has_machine_characteristics());
     const Fingerprint::MachineCharacteristics& machine =
@@ -168,7 +167,7 @@ class AutofillRiskFingerprintTest : public content::ContentBrowserTest {
     EXPECT_EQ(kAccuracy, location.accuracy());
     EXPECT_EQ(kGeolocationTime, location.time_in_ms());
 
-    std::move(continuation_callback).Run();
+    message_loop_.QuitWhenIdle();
   }
 
  protected:
@@ -204,17 +203,16 @@ IN_PROC_BROWSER_TEST_F(AutofillRiskFingerprintTest, GetFingerprint) {
   screen_info.rect = screen_bounds_;
   screen_info.available_rect = available_screen_bounds_;
 
-  base::RunLoop run_loop;
   internal::GetFingerprintInternal(
       kObfuscatedGaiaId, window_bounds_, content_bounds_, screen_info,
       "25.0.0.123", kCharset, kAcceptLanguages, base::Time::Now(), kLocale,
       kUserAgent,
       base::TimeDelta::FromDays(1),  // Ought to be longer than any test run.
       base::Bind(&AutofillRiskFingerprintTest::GetFingerprintTestCallback,
-                 base::Unretained(this), run_loop.QuitWhenIdleClosure()));
+                 base::Unretained(this)));
 
   // Wait for the callback to be called.
-  run_loop.Run();
+  base::RunLoop().Run();
 }
 
 }  // namespace risk

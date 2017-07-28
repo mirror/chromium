@@ -580,10 +580,6 @@
                 "returns": [
                     {  "name": "executionContextId", "$ref": "Runtime.ExecutionContextId", "description": "Execution context of the isolated world." }
                 ]
-            },
-            {
-                "name": "bringToFront",
-                "description": "Brings page to front (activates tab)."
             }
         ],
         "events": [
@@ -644,8 +640,7 @@
                 "parameters": [
                     { "name": "frameId", "$ref": "FrameId", "description": "Id of the frame that has scheduled a navigation." },
                     { "name": "delay", "type": "number", "description": "Delay (in seconds) until the navigation is scheduled to begin. The navigation is not guaranteed to start." },
-                    { "name": "reason", "type": "string", "experimental": true, "enum": ["formSubmission", "httpHeaderRefresh", "scriptInitiated", "metaTagRefresh", "pageBlockInterstitial", "reload"], "description": "The reason for the navigation." },
-                    { "name": "url", "type": "string", "experimental": true, "description": "The destination URL for the scheduled navigation." }
+                    { "name": "reason", "type": "string", "experimental": true, "enum": ["formSubmission", "httpHeaderRefresh", "scriptInitiated", "metaTagRefresh", "pageBlockInterstitial", "reload"], "description": "The reason for the navigation." }
                 ],
                 "experimental": true
             },
@@ -4145,17 +4140,6 @@
                 ]
             },
             {
-                "id": "StickyPositionConstraint",
-                "type": "object",
-                "description": "Sticky position constraints.",
-                "properties": [
-                    { "name": "stickyBoxRect", "$ref": "DOM.Rect", "description": "Layout rectangle of the sticky element before being shifted" },
-                    { "name": "containingBlockRect", "$ref": "DOM.Rect", "description": "Layout rectangle of the containing block of the sticky element" },
-                    { "name": "nearestLayerShiftingStickyBox", "$ref": "LayerId", "optional": true, "description": "The nearest sticky layer that shifts the sticky box" },
-                    { "name": "nearestLayerShiftingContainingBlock", "$ref": "LayerId", "optional": true, "description": "The nearest sticky layer that shifts the containing block" }
-                ]
-            },
-            {
                 "id": "PictureTile",
                 "type": "object",
                 "description": "Serialized fragment of layer picture along with its offset within the layer.",
@@ -4184,8 +4168,7 @@
                     { "name": "paintCount", "type": "integer", "description": "Indicates how many time this layer has painted." },
                     { "name": "drawsContent", "type": "boolean", "description": "Indicates whether this layer hosts any content, rather than being used for transform/scrolling purposes only." },
                     { "name": "invisible", "type": "boolean", "optional": true, "description": "Set if layer is not visible." },
-                    { "name": "scrollRects", "type": "array", "items": { "$ref": "ScrollRect"}, "optional": true, "description": "Rectangles scrolling on main thread only."},
-                    { "name": "stickyPositionConstraint", "$ref": "StickyPositionConstraint", "optional": true, "description": "Sticky position constraint information" }
+                    { "name": "scrollRects", "type": "array", "items": { "$ref": "ScrollRect"}, "optional": true, "description": "Rectangles scrolling on main thread only."}
                 ]
             },
             {

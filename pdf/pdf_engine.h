@@ -188,14 +188,8 @@ class PDFEngine {
     // Get the background color of the PDF.
     virtual uint32_t GetBackgroundColor() = 0;
 
-    // Cancel browser initiated document download.
-    virtual void CancelBrowserDownload() = 0;
-
     // Sets selection status.
     virtual void IsSelectingChanged(bool is_selecting) {}
-
-    virtual void SelectionChanged(const pp::Rect& left, const pp::Rect& right) {
-    }
   };
 
   // Factory method to create an instance of the PDF Engine.
@@ -234,7 +228,6 @@ class PDFEngine {
   virtual void RotateClockwise() = 0;
   virtual void RotateCounterclockwise() = 0;
   virtual std::string GetSelectedText() = 0;
-  virtual bool CanCut() = 0;
   virtual std::string GetLinkAtPosition(const pp::Point& point) = 0;
   // Checks the permissions associated with this document.
   virtual bool HasPermission(DocumentPermission permission) const = 0;
@@ -309,12 +302,9 @@ class PDFEngine {
   virtual void SetScrollPosition(const pp::Point& position) = 0;
 #endif
 
-  virtual std::string GetMetadata(const std::string& key) = 0;
+  virtual bool IsProgressiveLoad() = 0;
 
-  virtual void SetCaretPosition(const pp::Point& position) = 0;
-  virtual void MoveRangeSelectionExtent(const pp::Point& extent) = 0;
-  virtual void SetSelectionBounds(const pp::Point& base,
-                                  const pp::Point& extent) = 0;
+  virtual std::string GetMetadata(const std::string& key) = 0;
 };
 
 // Interface for exports that wrap the PDF engine.

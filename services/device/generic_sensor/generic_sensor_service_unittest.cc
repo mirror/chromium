@@ -20,12 +20,9 @@
 #include "services/device/generic_sensor/sensor_provider_impl.h"
 #include "services/device/public/cpp/device_features.h"
 #include "services/device/public/cpp/generic_sensor/sensor_reading.h"
-#include "services/device/public/cpp/generic_sensor/sensor_traits.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 
 namespace device {
-
-using mojom::SensorType;
 
 namespace {
 
@@ -42,7 +39,7 @@ void CheckSuccess(base::OnceClosure quit_closure,
 
 class FakePlatformSensor : public PlatformSensor {
  public:
-  FakePlatformSensor(SensorType type,
+  FakePlatformSensor(mojom::SensorType type,
                      mojo::ScopedSharedBufferMapping mapping,
                      PlatformSensorProvider* provider)
       : PlatformSensor(type, std::move(mapping), provider) {}
@@ -50,7 +47,7 @@ class FakePlatformSensor : public PlatformSensor {
   bool StartSensor(const PlatformSensorConfiguration& configuration) override {
     SensorReading reading;
     // Only mocking the shared memory update for AMBIENT_LIGHT type is enough.
-    if (GetType() == SensorType::AMBIENT_LIGHT) {
+    if (GetType() == mojom::SensorType::AMBIENT_LIGHT) {
       // Set the shared buffer value as frequency for testing purpose.
       reading.values[0] = configuration.frequency();
       UpdateSensorReading(reading, true);
@@ -98,10 +95,10 @@ class FakePlatformSensorProvider : public PlatformSensorProvider {
   FakePlatformSensorProvider() = default;
   ~FakePlatformSensorProvider() override = default;
 
-  void CreateSensorInternal(SensorType type,
+  void CreateSensorInternal(mojom::SensorType type,
                             mojo::ScopedSharedBufferMapping mapping,
                             const CreateSensorCallback& callback) override {
-    DCHECK(type >= SensorType::FIRST && type <= SensorType::LAST);
+    DCHECK(type >= mojom::SensorType::FIRST && type <= mojom::SensorType::LAST);
     auto sensor = base::MakeRefCounted<FakePlatformSensor>(
         type, std::move(mapping), this);
     callback.Run(sensor);
@@ -112,7 +109,7 @@ class FakePlatformSensorProvider : public PlatformSensorProvider {
 
 class TestSensorClient : public mojom::SensorClient {
  public:
-  TestSensorClient(SensorType type) : client_binding_(this), type_(type) {}
+  TestSensorClient() : client_binding_(this) {}
 
   // Implements mojom::SensorClient:
   void SensorReadingChanged() override {
@@ -130,13 +127,8 @@ class TestSensorClient : public mojom::SensorClient {
                        mojom::SensorClientRequest client_request) {
     ASSERT_TRUE(params);
     EXPECT_TRUE(params->memory.is_valid());
-    const double expected_default_frequency =
-        std::min(30.0, GetSensorMaxAllowedFrequency(type_));
-    EXPECT_DOUBLE_EQ(expected_default_frequency,
-                     params->default_configuration.frequency());
-    const double expected_maximum_frequency =
-        std::min(50.0, GetSensorMaxAllowedFrequency(type_));
-    EXPECT_DOUBLE_EQ(expected_maximum_frequency, params->maximum_frequency);
+    EXPECT_DOUBLE_EQ(30.0, params->default_configuration.frequency());
+    EXPECT_DOUBLE_EQ(50.0, params->maximum_frequency);
     EXPECT_DOUBLE_EQ(1.0, params->minimum_frequency);
 
     shared_buffer_ = params->memory->MapAtOffset(
@@ -208,7 +200,6 @@ class TestSensorClient : public mojom::SensorClient {
   // |check_value_| is called to verify the data is same as we
   // expected in SensorReadingChanged().
   base::OnceCallback<void(double)> check_value_;
-  SensorType type_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSensorClient);
 };
@@ -253,10 +244,10 @@ class GenericSensorServiceTest : public DeviceServiceTestBase {
 // Requests the SensorProvider to create a sensor.
 TEST_F(GenericSensorServiceTest, GetSensorTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::PROXIMITY);
+  auto client = base::MakeUnique<TestSensorClient>();
   base::RunLoop run_loop;
   sensor_provider_->GetSensor(
-      SensorType::PROXIMITY, mojo::MakeRequest(&sensor),
+      mojom::SensorType::PROXIMITY, mojo::MakeRequest(&sensor),
       base::BindOnce(&TestSensorClient::OnSensorCreated,
                      base::Unretained(client.get()), run_loop.QuitClosure()));
   run_loop.Run();
@@ -265,10 +256,10 @@ TEST_F(GenericSensorServiceTest, GetSensorTest) {
 // Tests GetDefaultConfiguration.
 TEST_F(GenericSensorServiceTest, GetDefaultConfigurationTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::ACCELEROMETER);
+  auto client = base::MakeUnique<TestSensorClient>();
   base::RunLoop run_loop;
 
-  sensor_provider_->GetSensor(SensorType::ACCELEROMETER,
+  sensor_provider_->GetSensor(mojom::SensorType::ACCELEROMETER,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -285,8 +276,8 @@ TEST_F(GenericSensorServiceTest, GetDefaultConfigurationTest) {
 // SensorClient::SensorReadingChanged().
 TEST_F(GenericSensorServiceTest, ValidAddConfigurationTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -311,11 +302,10 @@ TEST_F(GenericSensorServiceTest, ValidAddConfigurationTest) {
 // the mocked SensorImpl, while we add one with 60.0.
 TEST_F(GenericSensorServiceTest, InvalidAddConfigurationTest) {
   mojom::SensorPtr sensor;
-  auto client =
-      base::MakeUnique<TestSensorClient>(SensorType::LINEAR_ACCELERATION);
+  auto client = base::MakeUnique<TestSensorClient>();
   base::RunLoop run_loop;
 
-  sensor_provider_->GetSensor(SensorType::LINEAR_ACCELERATION,
+  sensor_provider_->GetSensor(mojom::SensorType::LINEAR_ACCELERATION,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -337,16 +327,16 @@ TEST_F(GenericSensorServiceTest, InvalidAddConfigurationTest) {
 // its clients.
 TEST_F(GenericSensorServiceTest, MultipleClientsTest) {
   mojom::SensorPtr sensor_1;
-  auto client_1 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client_1 = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor_1),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client_1.get()),
                                              base::BindOnce(&base::DoNothing)));
 
   mojom::SensorPtr sensor_2;
-  auto client_2 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client_2 = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor_2),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client_2.get()),
@@ -379,18 +369,18 @@ TEST_F(GenericSensorServiceTest, MultipleClientsTest) {
 // client, other clients should not be affected.
 TEST_F(GenericSensorServiceTest, ClientMojoConnectionBrokenTest) {
   mojom::SensorPtr sensor_1;
-  auto client_1 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client_1 = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor_1),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client_1.get()),
                                              base::BindOnce(&base::DoNothing)));
   mojom::SensorPtr sensor_2;
-  auto client_2 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
+  auto client_2 = base::MakeUnique<TestSensorClient>();
   {
     base::RunLoop run_loop;
     sensor_provider_->GetSensor(
-        SensorType::AMBIENT_LIGHT, mojo::MakeRequest(&sensor_2),
+        mojom::SensorType::AMBIENT_LIGHT, mojo::MakeRequest(&sensor_2),
         base::BindOnce(&TestSensorClient::OnSensorCreated,
                        base::Unretained(client_2.get()),
                        run_loop.QuitClosure()));
@@ -424,8 +414,8 @@ TEST_F(GenericSensorServiceTest, ClientMojoConnectionBrokenTest) {
 // Adds a valid configuration, then remove it.
 TEST_F(GenericSensorServiceTest, ValidRemoveConfigurationTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -462,10 +452,10 @@ TEST_F(GenericSensorServiceTest, ValidRemoveConfigurationTest) {
 // Removes an invalid configuration.
 TEST_F(GenericSensorServiceTest, InvalidRemoveConfigurationTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
+  auto client = base::MakeUnique<TestSensorClient>();
   base::RunLoop run_loop;
 
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -485,8 +475,8 @@ TEST_F(GenericSensorServiceTest, InvalidRemoveConfigurationTest) {
 // Test mixed add and remove configuration operations.
 TEST_F(GenericSensorServiceTest, MixedAddAndRemoveConfigurationTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -549,8 +539,8 @@ TEST_F(GenericSensorServiceTest, MixedAddAndRemoveConfigurationTest) {
 // SensorReadingChanged()).
 TEST_F(GenericSensorServiceTest, SuspendTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -585,8 +575,8 @@ TEST_F(GenericSensorServiceTest, SuspendTest) {
 // be notified by SensorReadingChanged() as usual.
 TEST_F(GenericSensorServiceTest, SuspendThenResumeTest) {
   mojom::SensorPtr sensor;
-  auto client = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client.get()),
@@ -632,15 +622,15 @@ TEST_F(GenericSensorServiceTest, SuspendThenResumeTest) {
 // receive SensorReadingChanged() notification.
 TEST_F(GenericSensorServiceTest, MultipleClientsSuspendAndResumeTest) {
   mojom::SensorPtr sensor_1;
-  auto client_1 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client_1 = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor_1),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client_1.get()),
                                              base::BindOnce(&base::DoNothing)));
   mojom::SensorPtr sensor_2;
-  auto client_2 = base::MakeUnique<TestSensorClient>(SensorType::AMBIENT_LIGHT);
-  sensor_provider_->GetSensor(SensorType::AMBIENT_LIGHT,
+  auto client_2 = base::MakeUnique<TestSensorClient>();
+  sensor_provider_->GetSensor(mojom::SensorType::AMBIENT_LIGHT,
                               mojo::MakeRequest(&sensor_2),
                               base::BindOnce(&TestSensorClient::OnSensorCreated,
                                              base::Unretained(client_2.get()),

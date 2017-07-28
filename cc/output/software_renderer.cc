@@ -8,6 +8,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
+#include "cc/output/copy_output_request.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_frame.h"
 #include "cc/output/software_output_device.h"
@@ -19,7 +20,6 @@
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
-#include "components/viz/common/quads/copy_output_request.h"
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -346,6 +346,13 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
 
   RasterSource::PlaybackSettings playback_settings;
   playback_settings.playback_to_shared_canvas = true;
+  // Indicates whether content rasterization should happen through an
+  // ImageHijackCanvas, which causes image decodes to be managed by an
+  // ImageDecodeCache. PictureDrawQuads are used for resourceless software
+  // draws, while a GPU ImageDecodeCache may be in use by the compositor
+  // providing the RasterSource. So we disable the image hijack canvas to avoid
+  // trying to use the GPU ImageDecodeCache while doing a software draw.
+  playback_settings.use_image_hijack_canvas = false;
   if (needs_transparency || disable_image_filtering) {
     // TODO(aelias): This isn't correct in all cases. We should detect these
     // cases and fall back to a persistent bitmap backing
@@ -564,7 +571,7 @@ void SoftwareRenderer::DrawUnsupportedQuad(const DrawQuad* quad) {
 }
 
 void SoftwareRenderer::CopyCurrentRenderPassToBitmap(
-    std::unique_ptr<viz::CopyOutputRequest> request) {
+    std::unique_ptr<CopyOutputRequest> request) {
   gfx::Rect copy_rect = current_frame()->current_render_pass->output_rect;
   if (request->has_area())
     copy_rect.Intersect(request->area());

@@ -80,9 +80,9 @@ void MediaStreamDispatcher::GenerateStream(
   DVLOG(1) << "MediaStreamDispatcher::GenerateStream(" << request_id << ")";
 
   requests_.push_back(Request(event_handler, request_id, next_ipc_id_));
-  GetMediaStreamDispatcherHost()->GenerateStream(routing_id(), next_ipc_id_++,
-                                                 controls, security_origin,
-                                                 is_processing_user_gesture);
+  Send(new MediaStreamHostMsg_GenerateStream(routing_id(), next_ipc_id_++,
+                                             controls, security_origin,
+                                             is_processing_user_gesture));
 }
 
 void MediaStreamDispatcher::CancelGenerateStream(
@@ -142,8 +142,11 @@ void MediaStreamDispatcher::OpenDevice(
   DVLOG(1) << "MediaStreamDispatcher::OpenDevice(" << request_id << ")";
 
   requests_.push_back(Request(event_handler, request_id, next_ipc_id_));
-  GetMediaStreamDispatcherHost()->OpenDevice(routing_id(), next_ipc_id_++,
-                                             device_id, type, security_origin);
+  Send(new MediaStreamHostMsg_OpenDevice(routing_id(),
+                                         next_ipc_id_++,
+                                         device_id,
+                                         type,
+                                         security_origin));
 }
 
 void MediaStreamDispatcher::CancelOpenDevice(
@@ -186,6 +189,15 @@ StreamDeviceInfoArray MediaStreamDispatcher::GetNonScreenCaptureDevices() {
 
 void MediaStreamDispatcher::OnDestruct() {
   // Do not self-destruct. UserMediaClientImpl owns |this|.
+}
+
+bool MediaStreamDispatcher::Send(IPC::Message* message) {
+  if (!RenderThread::Get()) {
+    delete message;
+    return false;
+  }
+
+  return RenderThread::Get()->Send(message);
 }
 
 bool MediaStreamDispatcher::OnMessageReceived(const IPC::Message& message) {

@@ -374,7 +374,7 @@ public class AppMenuPropertiesDelegate {
     /**
      * Updates the request desktop site item's state.
      *
-     * @param menu {@link Menu} for request desktop site.
+     * @param requstMenuItem {@link MenuItem} for request desktop site.
      * @param currentTab      Current tab being displayed.
      */
     protected void updateRequestDesktopSiteMenuItem(Menu menu, Tab currentTab) {
@@ -386,10 +386,7 @@ public class AppMenuPropertiesDelegate {
         String url = currentTab.getUrl();
         boolean isChromeScheme = url.startsWith(UrlConstants.CHROME_URL_PREFIX)
                 || url.startsWith(UrlConstants.CHROME_NATIVE_URL_PREFIX);
-        // Also hide request desktop site on Reader Mode.
-        boolean isDistilledPage = DomDistillerUrlUtils.isDistilledPage(url);
-        requestMenuRow.setVisible(
-                (!isChromeScheme || currentTab.isNativePage()) && !isDistilledPage);
+        requestMenuRow.setVisible(!isChromeScheme || currentTab.isNativePage());
 
         // Mark the checkbox if RDS is activated on this page.
         requestMenuCheck.setChecked(currentTab.getUseDesktopUserAgent());

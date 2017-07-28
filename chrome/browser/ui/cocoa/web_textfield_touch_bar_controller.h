@@ -29,7 +29,7 @@
 - (void)showCreditCardAutofillForPopupView:(AutofillPopupViewCocoa*)popupView;
 
 // Creates and returns a touch bar.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+- (NSTouchBar*)makeTouchBar;
 
 @end
 

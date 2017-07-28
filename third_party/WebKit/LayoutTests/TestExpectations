@@ -251,11 +251,38 @@ crbug.com/724701 overflow/overflow-basic-004.html [ Failure ]
 ### Platfom-specific tests cannot be generated automatically
 
 ### virtual/layout Mac color palette/font failures
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-007.xht [ Failure ]
 crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-table-002a.xht [ Failure ]
 crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-table-002b.xht [ Failure ]
 crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-table-valign-001.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inlines-016.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/normal-flow/max-width-110.xht [ Failure ]
 crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/normal-flow/width-inherit-001.xht [ Failure ]
 crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-027.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-001.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-002.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-003.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-004.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-005.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-006.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-007.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-009.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-012.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-013.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-014.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/bottom-applies-to-015.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-001.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-002.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-003.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-004.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-005.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-006.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-007.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-009.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-012.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-013.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-014.xht [ Failure ]
+crbug.com/704961 [ Mac ] virtual/layout_ng/external/wpt/css/CSS2/positioning/position-applies-to-015.xht [ Failure ]
 
 ### virtual/layout_ng Mac textarea.
 crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/float/overhanging-tall-block.html [ Failure ]
@@ -277,6 +304,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-003-right-overflow.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-004.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-006.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-bfc-007.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-bfc-001l.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-bfc-001r.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-wrap-top-below-inline-001l.xht [ Failure ]
@@ -290,9 +318,9 @@ crbug.com/723135 virtual/layout_ng/external/wpt/css/CSS2/floats/floats-zero-heig
 
 ### virtual/layout_ng/external/wpt/css/CSS2/floats-clear
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-008.xht [ Failure ]
-crbug.com/635619 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/clear-applies-to-012.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-008.xht [ Failure ]
-crbug.com/635619 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-applies-to-012.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/float-replaced-width-002.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floating-replaced-height-008.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-005.xht [ Failure ]
@@ -335,8 +363,8 @@ crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inlin
 # 1px glyph position diff at box boundary. Check if they need fix.
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatting-context-001.xht [ Failure ]
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/inline-formatting-context-023.xht [ Failure ]
-crbug.com/636993 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-sub-001.xht [ Failure ]
-crbug.com/636993 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-super-001.xht [ Failure ]
+crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-sub-001.xht [ Failure ]
+crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-super-001.xht [ Failure ]
 
 # Inline: abspos inline static positions.
 crbug.com/636993 virtual/layout_ng/external/wpt/css/CSS2/linebox/vertical-align-baseline-004a.xht [ Failure ]
@@ -392,19 +420,33 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/replaced-in
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/replaced-intrinsic-002.xht [ Failure ]
 
 ### virtual/layout_ng/external/wpt/css/CSS2/positioning
-# tests absolute-replaced-width-036->071 would pass if reference page rendered correctly. It is an inline bug, not oof bug
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-036.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-037.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-043.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-050.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-051.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-057.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-064.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-065.xht [ Failure ]
-crbug.com/740993 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-071.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-025.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-non-replaced-width-026.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-004.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-005.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-011.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-018.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-019.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-025.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-026.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-032.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-033.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-height-036.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-036.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-037.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-043.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-050.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-051.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-057.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-064.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-065.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-066.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-067.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/absolute-replaced-width-071.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-007.xht [ Failure ]
-crbug.com/635619 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-011.xht [ Failure ]
-crbug.com/635619 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-011.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-012.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-001.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-002.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-007.xht [ Failure ]
@@ -609,10 +651,35 @@ crbug.com/728378 virtual/layout_ng/overflow/overflow-position-004.html [ Failure
 # ====== LayoutNG-only failures until here ======
 
 # ====== DevTools test migration failures from here ======
-# Temporary failures (these tests are moves from html to js)
+# Temporary failures (these tests are copies from html to js)
 # See crbug.com/667560 for details
 
+crbug.com/667560 http/tests/devtools/console/console-assert.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-big-array.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-custom-formatters.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-dir-es6.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-dirxml.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-edit-expanded-tree.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-external-array.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-format-array-prototype.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-format-es6-2.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-format-es6-symbols-error.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-format-es6.js [ Skip ]
+crbug.com/667560 http/tests/devtools/console/console-format-style.js [ Skip ]
+
 ### virtual/mojo-loading/http/tests/devtools
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-assert.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-big-array.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-custom-formatters.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-dir-es6.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-dirxml.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-edit-expanded-tree.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-external-array.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-format-array-prototype.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-format-es6-2.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-format-es6-symbols-error.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-format-es6.js [ Skip ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/console/console-format-style.js [ Skip ]
 
 # ====== DevTools test migration failures until here ======
 
@@ -665,10 +732,6 @@ crbug.com/520188 [ Win ] http/tests/local/fileapi/file-last-modified-after-delet
 crbug.com/520188 [ Win ] virtual/mojo-loading/http/tests/local/fileapi/file-last-modified-after-delete.html [ Failure Pass ]
 crbug.com/520611 [ Debug ] fast/filesystem/workers/file-writer-events-shared-worker.html [ Failure Pass ]
 crbug.com/520194 http/tests/xmlhttprequest/timeout/xmlhttprequest-timeout-worker-overridesexpires.html [ Failure Pass ]
-
-crbug.com/749251 [ Mac10.11 ] http/tests/inspector/application-panel/resources-panel-websql.html [ Failure Pass ]
-
-crbug.com/233303 [ Win7 Debug ] inspector/sources/debugger-breakpoints/dom-breakpoints.html [ Pass Failure Timeout ]
 
 crbug.com/410974 fast/scroll-behavior/scroll-customization/scrollstate-basic.html [ Pass Failure ]
 crbug.com/410974 fast/scroll-behavior/scroll-customization/scrollstate-consume-deltas.html [ Pass Failure ]
@@ -793,7 +856,6 @@ crbug.com/627706 external/wpt/html/semantics/embedded-content/the-img-element/in
 crbug.com/698135 external/wpt/editing/run/delete.html [ Crash Failure Timeout ]
 crbug.com/698165 external/wpt/editing/run/forwarddelete.html [ Pass Timeout ]
 crbug.com/698165 external/wpt/editing/run/justifycenter.html [ Pass Timeout ]
-crbug.com/698165 [ Win7 Debug ] external/wpt/editing/run/multitest.html [ Pass Timeout ]
 
 crbug.com/688613 external/wpt/mediacapture-streams/MediaStreamTrack-MediaElement-disabled-audio-is-silence.https.html [ Skip ]
 
@@ -1184,6 +1246,8 @@ crbug.com/408159 accessibility/is-ignored-change-sends-notification.html [ Timeo
 crbug.com/504706 [ Linux ] inspector/profiler/heap-snapshot-containment-expansion-preserved-when-sorting.html [ Pass ]
 crbug.com/504706 [ Linux ] inspector/profiler/heap-snapshot-containment-sorting.html [ Pass ]
 
+crbug.com/425345 [ Mac ] fast/text/line-break-after-question-mark.html [ Failure ]
+
 # When drawing subpixel smoothed glyphs, CoreGraphics will fake bold the glyphs.
 # In this configuration, the pixel smoothed glyphs will be created from subpixel smoothed glyphs.
 # This means that CoreGraphics may draw outside the reported glyph bounds, and in this case does.
@@ -1263,14 +1327,6 @@ crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerevent_touch-action-in
 crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerevent_touch-action-inherit_child-auto-child-none_touch-manual.html  [ Skip ]
 crbug.com/613672 [ Mac ] fast/events/synthetic-events/tap-on-scaled-screen.html  [ Skip ]
 crbug.com/613672 [ Mac ] virtual/scalefactor150/fast/events/synthetic-events/tap-on-scaled-screen.html  [ Skip ]
-
-# Coverage tests in need of rebaselining for the new block coverage mode.
-crbug.com/v8/6000 inspector/coverage/coverage-repeated.html [ NeedsManualRebaseline ]
-crbug.com/v8/6000 inspector/coverage/coverage-view-filter.html [ NeedsManualRebaseline ]
-crbug.com/v8/6000 inspector/coverage/coverage-view.html [ NeedsManualRebaseline ]
-crbug.com/v8/6000 inspector/coverage/decorations-after-script-formatter.html [ NeedsManualRebaseline ]
-crbug.com/v8/6000 inspector/coverage/gutter-js.html [ NeedsManualRebaseline ]
-crbug.com/v8/6000 inspector/coverage/multiple-instances-merge.html [ NeedsManualRebaseline ]
 
 # We should send PointerLeave events for stylus devices.
 crbug.com/583413 external/wpt/pointerevents/pointerevent_pointerleave_pen-manual.html  [ Failure ]
@@ -1551,6 +1607,12 @@ crbug.com/453002 [ Win ] fast/text/international/vertical-text-glyph-test.html [
 crbug.com/453002 [ Win ] fast/text/justify-ideograph-vertical.html [ Failure Pass ]
 crbug.com/453002 [ Win ] fast/text/orientation-sideways.html [ Failure Pass ]
 
+# DocumentWriteEvaluator is still experimental
+crbug.com/599115 http/tests/preload/document-write [ Failure ]
+crbug.com/599115 http/tests/preload/document-write/document_write_no_preload.html [ Pass ]
+crbug.com/599115 virtual/mojo-loading/http/tests/preload/document-write [ Failure ]
+crbug.com/599115 virtual/mojo-loading/http/tests/preload/document-write/document_write_no_preload.html [ Pass ]
+
 crbug.com/605525 [ Win ] http/tests/xmlhttprequest/redirect-cross-origin-post.html [ Failure Pass ]
 
 crbug.com/600248 external/wpt/web-animations/interfaces/Animation/oncancel.html [ Pass Failure ]
@@ -1819,12 +1881,6 @@ crbug.com/626703 virtual/threaded/inspector/tracing/timeline-js/timeline-runtime
 crbug.com/626703 virtual/threaded/transitions/transition-end-event-multiple-03.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
-crbug.com/626703 external/wpt/page-visibility/onvisibilitychange.html [ Timeout ]
-crbug.com/626703 external/wpt/webrtc/RTCIceTransport.html [ Timeout ]
-crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-answer.html [ Timeout ]
-crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-offer.html [ Timeout ]
-crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-answer.html [ Timeout ]
-crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-offer.html [ Timeout ]
 crbug.com/626703 [ Mac10.10 ] external/wpt/WebCryptoAPI/generateKey/test_successes_RSA-PSS.https.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCDtlsTransport-getRemoteCertificates.html [ Timeout ]
 crbug.com/626703 [ Win10 ] external/wpt/preload/delaying-onload-link-preload-after-discovery.html [ Timeout ]
@@ -2176,6 +2232,7 @@ crbug.com/626703 external/wpt/XMLHttpRequest/preserve-ua-header-on-redirect.htm 
 crbug.com/626703 external/wpt/XMLHttpRequest/send-entity-body-document.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-allow-empty-value.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-allow-whitespace-in-value.htm [ Failure ]
+crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-content-type.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-header-allowed.htm [ Failure ]
 crbug.com/626703 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
 crbug.com/626703 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/update-bytecheck.https.html [ Timeout ]
@@ -2262,8 +2319,6 @@ crbug.com/658997 virtual/service-worker-script-streaming/external/wpt/service-wo
 
 crbug.com/435547 http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
 crbug.com/435547 virtual/mojo-loading/http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
-
-crbug.com/749212 [ Mac10.10 ] webaudio/internals/audiosource-premature-gc.html [ Crash Pass ]
 
 crbug.com/747502 paint/roundedrects/input-with-rounded-rect-and-shadow.html [ NeedsManualRebaseline ]
 crbug.com/747502 fast/borders/border-radius-with-box-shadow.html [ NeedsManualRebaseline ]
@@ -2510,6 +2565,8 @@ crbug.com/684874 virtual/threaded/fast/scroll-behavior/smooth-scroll/scroll-duri
 # ====== Random order flaky tests end here ======
 
 # ====== Tests from enabling .any.js/.worker.js tests begin here ======
+crbug.com/709227 external/wpt/FileAPI/idlharness.worker.html [ Failure ]
+crbug.com/709227 external/wpt/IndexedDB/interfaces.worker.html [ Failure ]
 crbug.com/709227 external/wpt/WebCryptoAPI/derive_bits_keys/ecdh_bits.worker.html [ Failure ]
 crbug.com/709227 external/wpt/WebCryptoAPI/derive_bits_keys/ecdh_keys.worker.html [ Failure ]
 crbug.com/709227 external/wpt/WebCryptoAPI/derive_bits_keys/hkdf.worker.html [ Failure ]
@@ -2550,6 +2607,8 @@ crbug.com/709227 external/wpt/WebCryptoAPI/sign_verify/hmac.worker.html [ Failur
 crbug.com/709227 external/wpt/WebCryptoAPI/sign_verify/rsa_pkcs.worker.html [ Failure ]
 crbug.com/709227 external/wpt/WebCryptoAPI/sign_verify/rsa_pss.worker.html [ Failure ]
 crbug.com/709227 external/wpt/WebCryptoAPI/wrapKey_unwrapKey/wrapKey_unwrapKey.worker.html [ Failure ]
+crbug.com/709227 external/wpt/WebIDL/ecmascript-binding/es-exceptions/constructor-object.worker.html [ Failure ]
+crbug.com/709227 external/wpt/background-fetch/interfaces.worker.html [ Failure ]
 crbug.com/709227 external/wpt/console/console-count-label-conversion.any.html [ Failure ]
 crbug.com/709227 external/wpt/console/console-count-label-conversion.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/console/console-time-label-conversion.any.html [ Failure ]
@@ -2558,7 +2617,18 @@ crbug.com/709227 external/wpt/console/console-timeline-timelineEnd-historical.an
 crbug.com/709227 external/wpt/console/console-timeline-timelineEnd-historical.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/css/geometry-1/DOMMatrix-css-string.worker.html [ Failure ]
 crbug.com/709227 external/wpt/css/geometry-1/interfaces.worker.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/basic/request-upload.any.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/basic/request-upload.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/basic/scheme-about.any.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/basic/scheme-about.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/cors/cors-preflight-redirect.any.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/cors/cors-preflight-redirect.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/cors/cors-preflight-referrer.any.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/cors/cors-preflight-referrer.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/cors/cors-preflight-star.any.html [ Failure ]
+crbug.com/709227 external/wpt/fetch/api/cors/cors-preflight-star.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/html/browsers/history/the-location-interface/per-global.window.html [ Failure ]
+crbug.com/709227 external/wpt/html/dom/interfaces.worker.html [ Failure ]
 crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_isindex.html?run_type=uri [ Failure ]
 crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_isindex.html?run_type=write [ Failure ]
 crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_isindex.html?run_type=write_single [ Failure ]
@@ -2638,6 +2708,12 @@ crbug.com/709227 external/wpt/performance-timeline/po-disconnect.any.worker.html
 crbug.com/709227 external/wpt/performance-timeline/po-getentries.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/performance-timeline/po-mark-measure.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/performance-timeline/po-observe.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/storage/interfaces.worker.html [ Failure ]
+crbug.com/709227 external/wpt/url/historical.any.html [ Failure ]
+crbug.com/709227 external/wpt/url/historical.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/url/interfaces.any.html [ Failure ]
+crbug.com/709227 external/wpt/url/interfaces.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/url/toascii.window.html [ Failure ]
 crbug.com/709227 external/wpt/user-timing/invoke_with_timing_attributes.worker.html [ Failure ]
 crbug.com/709227 external/wpt/websockets/closing-handshake/002.html?wss [ Failure ]
 crbug.com/709227 external/wpt/websockets/closing-handshake/003.html?wss [ Failure ]
@@ -2691,6 +2767,18 @@ crbug.com/709227 external/wpt/websockets/unload-a-document/001.html [ Failure ]
 crbug.com/709227 external/wpt/websockets/unload-a-document/001.html?wss [ Failure ]
 crbug.com/709227 external/wpt/websockets/unload-a-document/002.html [ Failure ]
 crbug.com/709227 external/wpt/websockets/unload-a-document/002.html?wss [ Failure ]
+crbug.com/709227 external/wpt/workers/constructors/Worker/DedicatedWorkerGlobalScope-members.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/constructors/Worker/expected-self-properties.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/interfaces.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/interfaces/WorkerUtils/importScripts/002.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/semantics/interface-objects/001.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/semantics/interface-objects/002.worker.html [ Failure ]
+crbug.com/709227 external/wpt/WebIDL/ecmascript-binding/es-exceptions/DOMException-custom-bindings.any.html [ Failure ]
+crbug.com/709227 external/wpt/WebIDL/ecmascript-binding/es-exceptions/DOMException-custom-bindings.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/dom/abort/event.any.html [ Failure ]
+crbug.com/709227 external/wpt/dom/abort/event.any.worker.html [ Failure ]
+crbug.com/709227 external/wpt/dom/events/EventTarget-constructible.any.html [ Failure ]
+crbug.com/709227 external/wpt/dom/events/EventTarget-constructible.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/performance-timeline/po-callback-mutate.any.html [ Failure ]
 crbug.com/709227 external/wpt/performance-timeline/po-callback-mutate.any.worker.html [ Failure ]
 crbug.com/709227 external/wpt/performance-timeline/po-disconnect.any.html [ Failure ]
@@ -2937,8 +3025,6 @@ crbug.com/v8/6529 inspector/console/console-format.html [ NeedsManualRebaseline 
 
 crbug.com/737959 http/tests/misc/video-poster-image-load-outlives-gc-without-crashing.html [ Failure Pass Crash ]
 crbug.com/737959 virtual/off-main-thread-fetch/http/tests/misc/video-poster-image-load-outlives-gc-without-crashing.html [ Failure Pass Crash ]
-crbug.com/737959 [ Mac10.11 ] virtual/off-main-thread-fetch/http/tests/misc/image-input-type-outlives-gc-without-crashing.html [ Failure Pass Crash ]
-crbug.com/737959 [ Linux ] virtual/off-main-thread-fetch/http/tests/misc/embed-image-load-outlives-gc-without-crashing.html [ Failure Pass Crash ]
 
 # Awaiting rebaseline after skia roll.
 crbug.com/739559 virtual/gpu-rasterization/images/color-profile-background-image-space.html [ Failure Pass ]
@@ -3028,14 +3114,6 @@ crbug.com/736056 [ Mac ] external/wpt/encoding/legacy-mb-korean [ Timeout Pass ]
 crbug.com/736056 [ Mac ] external/wpt/encoding/legacy-mb-tchinese [ Timeout Pass ]
 crbug.com/736056 external/wpt/encoding/legacy-mb-korean/euc-kr/euckr-encode-form-errors-hangul.html [ Timeout Pass ]
 
-# Timeout on Win 7
-crbug.com/626703 [ Win7 Debug ] external/wpt/encoding/legacy-mb-tchinese/big5/big5-encode-form-errors-extBa.html [ Timeout Pass ]
-crbug.com/626703 [ Win7 Debug ] external/wpt/encoding/legacy-mb-tchinese/big5/big5-encode-form-errors-extBb.html [ Timeout Pass ]
-crbug.com/626703 [ Win7 Debug ] external/wpt/encoding/legacy-mb-korean/euc-kr/euckr-encode-href-errors-han.html [ Timeout Pass ]
-
-# Needs a mac person to fix the bug
-crbug.com/719737 [ Mac ] css3/flexbox/radiobutton-min-size.html [ Failure ]
-
 # module script lacks XHTML support
 crbug.com/717643 external/wpt/html/semantics/scripting-1/the-script-element/module/module-in-xhtml.xhtml [ Failure ]
 
@@ -3071,3 +3149,4 @@ crbug.com/746926 [ Win Debug ] virtual/outofblink-cors/webexposed/global-interfa
 
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-applyConstraints.html [ Pass Crash ]
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-getSettings.html [ Pass Crash ]
+

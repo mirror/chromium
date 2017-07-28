@@ -12,9 +12,7 @@
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
-#include "base/files/file_util.h"
 #include "base/strings/string_split.h"
-#include "base/strings/stringprintf.h"
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
 #include "base/values.h"
@@ -331,15 +329,8 @@ Status ExecuteSendKeysToElement(Session* session,
     std::vector<base::FilePath> paths;
     for (const auto& path_piece : base::SplitStringPiece(
              paths_string, base::FilePath::StringType(1, '\n'),
-             base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL)) {
-      if (!base::PathExists(base::FilePath(path_piece))) {
-        return Status(
-            kInvalidArgument,
-            base::StringPrintf("File not found : %s",
-                               base::FilePath(path_piece).value().c_str()));
-      }
+             base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL))
       paths.push_back(base::FilePath(path_piece));
-    }
 
     bool multiple = false;
     status = IsElementAttributeEqualToIgnoreCase(

@@ -917,8 +917,7 @@ NSString* const kPhysicalWebOptedInPreference = @"PhysicalWebOptedIn";
     state |= PHYSICAL_WEB_OPTED_IN_UNDECIDED_FLAG;
   }
   DCHECK(state < PHYSICAL_WEB_INITIAL_STATE_COUNT);
-  UMA_HISTOGRAM_ENUMERATION("PhysicalWeb.InitialState",
-                            static_cast<PhysicalWebInitialState>(state),
+  UMA_HISTOGRAM_ENUMERATION("PhysicalWeb.InitialState", state,
                             PHYSICAL_WEB_INITIAL_STATE_COUNT);
 }
 

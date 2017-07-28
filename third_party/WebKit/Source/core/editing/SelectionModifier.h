@@ -73,14 +73,12 @@ class SelectionModifier {
   VisiblePosition EndForPlatform() const;
   LayoutUnit LineDirectionPointForBlockDirectionNavigation(const Position&);
   VisiblePosition ModifyExtendingRight(TextGranularity);
-  VisiblePosition ModifyExtendingRightInternal(TextGranularity);
   VisiblePosition ModifyExtendingForward(TextGranularity);
   VisiblePosition ModifyExtendingForwardInternal(TextGranularity);
   VisiblePosition ModifyMovingRight(TextGranularity);
   VisiblePosition ModifyMovingForward(TextGranularity);
   VisiblePosition ModifyExtendingLeft(TextGranularity);
   VisiblePosition ModifyExtendingBackward(TextGranularity);
-  VisiblePosition ModifyExtendingBackwardInternal(TextGranularity);
   VisiblePosition ModifyMovingLeft(TextGranularity);
   VisiblePosition ModifyMovingBackward(TextGranularity);
   VisiblePosition NextWordPositionForPlatform(const VisiblePosition&);

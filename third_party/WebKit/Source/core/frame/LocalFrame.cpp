@@ -44,7 +44,6 @@
 #include "core/editing/InputMethodController.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
-#include "core/editing/suggestion/TextSuggestionController.h"
 #include "core/events/Event.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/EventHandlerRegistry.h"
@@ -223,7 +222,6 @@ DEFINE_TRACE(LocalFrame) {
   visitor->Trace(console_);
   visitor->Trace(input_method_controller_);
   visitor->Trace(frame_resource_coordinator_);
-  visitor->Trace(text_suggestion_controller_);
   Frame::Trace(visitor);
   Supplementable<LocalFrame>::Trace(visitor);
 }
@@ -386,14 +384,12 @@ void LocalFrame::DocumentAttached() {
   Selection().DocumentAttached(GetDocument());
   GetInputMethodController().DocumentAttached(GetDocument());
   GetSpellChecker().DocumentAttached(GetDocument());
-  GetTextSuggestionController().DocumentAttached(GetDocument());
 }
 
 Frame* LocalFrame::FindFrameForNavigation(const AtomicString& name,
-                                          LocalFrame& active_frame,
-                                          const KURL& destination_url) {
+                                          LocalFrame& active_frame) {
   Frame* frame = Tree().Find(name);
-  if (!frame || !active_frame.CanNavigate(*frame, destination_url))
+  if (!frame || !active_frame.CanNavigate(*frame))
     return nullptr;
   return frame;
 }
@@ -748,7 +744,6 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       event_handler_(new EventHandler(*this)),
       console_(FrameConsole::Create(*this)),
       input_method_controller_(InputMethodController::Create(*this)),
-      text_suggestion_controller_(new TextSuggestionController(*this)),
       navigation_disable_count_(0),
       page_zoom_factor_(ParentPageZoomFactor(this)),
       text_zoom_factor_(ParentTextZoomFactor(this)),
@@ -777,8 +772,7 @@ void LocalFrame::ScheduleVisualUpdateUnlessThrottled() {
   GetPage()->Animator().ScheduleVisualUpdate(this);
 }
 
-bool LocalFrame::CanNavigate(const Frame& target_frame,
-                             const KURL& destination_url) {
+bool LocalFrame::CanNavigate(const Frame& target_frame) {
   String error_reason;
   const bool is_allowed_navigation =
       CanNavigateWithoutFramebusting(target_frame, error_reason);
@@ -855,7 +849,8 @@ bool LocalFrame::CanNavigate(const Frame& target_frame,
         "user gesture. See "
         "https://www.chromestatus.com/features/5851021045661696.";
     PrintNavigationErrorMessage(target_frame, error_reason.Latin1().data());
-    Client()->DidBlockFramebust(destination_url);
+    GetNavigationScheduler().SchedulePageBlock(GetDocument(),
+                                               ResourceError::ACCESS_DENIED);
     return false;
   }
   if (!is_allowed_navigation && !error_reason.IsNull())

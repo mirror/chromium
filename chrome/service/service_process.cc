@@ -166,6 +166,8 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
   }
 
   // Initialize TaskScheduler and redirect SequencedWorkerPool tasks to it.
+  using StandbyThreadPolicy =
+      base::SchedulerWorkerPoolParams::StandbyThreadPolicy;
   constexpr int kMaxBackgroundThreads = 1;
   constexpr int kMaxBackgroundBlockingThreads = 1;
   constexpr int kMaxForegroundThreads = 3;
@@ -175,10 +177,14 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
 
   base::TaskScheduler::Create("CloudPrintServiceProcess");
   base::TaskScheduler::GetInstance()->Start(
-      {{kMaxBackgroundThreads, kSuggestedReclaimTime},
-       {kMaxBackgroundBlockingThreads, kSuggestedReclaimTime},
-       {kMaxForegroundThreads, kSuggestedReclaimTime},
-       {kMaxForegroundBlockingThreads, kSuggestedReclaimTime,
+      {{StandbyThreadPolicy::LAZY, kMaxBackgroundThreads,
+        kSuggestedReclaimTime},
+       {StandbyThreadPolicy::LAZY, kMaxBackgroundBlockingThreads,
+        kSuggestedReclaimTime},
+       {StandbyThreadPolicy::LAZY, kMaxForegroundThreads,
+        kSuggestedReclaimTime},
+       {StandbyThreadPolicy::LAZY, kMaxForegroundBlockingThreads,
+        kSuggestedReclaimTime,
         base::SchedulerBackwardCompatibility::INIT_COM_STA}});
 
   base::SequencedWorkerPool::EnableWithRedirectionToTaskSchedulerForProcess();

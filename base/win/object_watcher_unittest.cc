@@ -18,7 +18,7 @@ namespace {
 class QuitDelegate : public ObjectWatcher::Delegate {
  public:
   void OnObjectSignaled(HANDLE object) override {
-    RunLoop::QuitCurrentWhenIdleDeprecated();
+    MessageLoop::current()->QuitWhenIdle();
   }
 };
 
@@ -144,7 +144,7 @@ class QuitAfterMultipleDelegate : public ObjectWatcher::Delegate {
     if (--iterations_) {
       SetEvent(event_);
     } else {
-      RunLoop::QuitCurrentWhenIdleDeprecated();
+      MessageLoop::current()->QuitWhenIdle();
     }
   }
 

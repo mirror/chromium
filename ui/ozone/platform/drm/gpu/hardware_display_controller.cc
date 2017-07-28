@@ -283,8 +283,8 @@ gfx::Size HardwareDisplayController::GetModeSize() const {
                    crtc_controllers_[0]->mode().vdisplay);
 }
 
-base::TimeTicks HardwareDisplayController::GetTimeOfLastFlip() const {
-  base::TimeTicks time;
+uint64_t HardwareDisplayController::GetTimeOfLastFlip() const {
+  uint64_t time = 0;
   for (const auto& controller : crtc_controllers_) {
     if (time < controller->time_of_last_flip())
       time = controller->time_of_last_flip();

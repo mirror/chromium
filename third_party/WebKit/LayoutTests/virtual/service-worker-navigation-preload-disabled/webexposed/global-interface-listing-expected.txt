@@ -4826,7 +4826,6 @@ interface Performance : EventTarget
     getter memory
     getter navigation
     getter onresourcetimingbufferfull
-    getter timeOrigin
     getter timing
     method clearMarks
     method clearMeasures
@@ -5304,11 +5303,6 @@ interface RemotePlayback : EventTarget
     setter onconnect
     setter onconnecting
     setter ondisconnect
-interface ReportingObserver
-    attribute @@toStringTag
-    method constructor
-    method disconnect
-    method observe
 interface Request
     attribute @@toStringTag
     getter bodyUsed
@@ -6601,6 +6595,7 @@ interface SharedWorker : EventTarget
     attribute @@toStringTag
     getter onerror
     getter port
+    getter workerStart
     method constructor
     setter onerror
 interface SourceBuffer : EventTarget

@@ -243,14 +243,8 @@ void ChromeOSMetricsProvider::ProvideStabilityMetrics(
   }
 }
 
-void ChromeOSMetricsProvider::ProvidePreviousSessionData(
+void ChromeOSMetricsProvider::ProvideGeneralMetrics(
     metrics::ChromeUserMetricsExtension* uma_proto) {
-  ProvideStabilityMetrics(uma_proto->mutable_system_profile());
-}
-
-void ChromeOSMetricsProvider::ProvideCurrentSessionData(
-    metrics::ChromeUserMetricsExtension* uma_proto) {
-  ProvideStabilityMetrics(uma_proto->mutable_system_profile());
   std::vector<SampledProfile> sampled_profiles;
   if (perf_provider_.GetSampledProfiles(&sampled_profiles)) {
     for (auto& profile : sampled_profiles) {

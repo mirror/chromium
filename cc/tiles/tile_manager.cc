@@ -25,7 +25,6 @@
 #include "cc/base/histograms.h"
 #include "cc/debug/traced_value.h"
 #include "cc/layers/picture_layer_impl.h"
-#include "cc/raster/playback_image_provider.h"
 #include "cc/raster/raster_buffer.h"
 #include "cc/raster/task_category.h"
 #include "cc/tiles/frame_viewer_instrumentation.h"
@@ -92,8 +91,7 @@ class RasterTaskImpl : public TileTask {
                  uint64_t source_prepare_tiles_id,
                  std::unique_ptr<RasterBuffer> raster_buffer,
                  TileTask::Vector* dependencies,
-                 bool is_gpu_rasterization,
-                 std::unique_ptr<ImageProvider> image_provider)
+                 bool is_gpu_rasterization)
       : TileTask(!is_gpu_rasterization, dependencies),
         tile_manager_(tile_manager),
         tile_id_(tile->id()),
@@ -110,10 +108,8 @@ class RasterTaskImpl : public TileTask {
         new_content_id_(tile->id()),
         source_frame_number_(tile->source_frame_number()),
         is_gpu_rasterization_(is_gpu_rasterization),
-        raster_buffer_(std::move(raster_buffer)),
-        image_provider_(std::move(image_provider)) {
+        raster_buffer_(std::move(raster_buffer)) {
     DCHECK(origin_thread_checker_.CalledOnValidThread());
-    playback_settings_.image_provider = image_provider_.get();
   }
 
   // Overridden from Task:
@@ -177,7 +173,6 @@ class RasterTaskImpl : public TileTask {
   int source_frame_number_;
   bool is_gpu_rasterization_;
   std::unique_ptr<RasterBuffer> raster_buffer_;
-  std::unique_ptr<ImageProvider> image_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(RasterTaskImpl);
 };
@@ -1106,7 +1101,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
 
   // For LOW_RESOLUTION tiles, we don't draw or predecode images.
   RasterSource::PlaybackSettings playback_settings;
-  const bool skip_images =
+  playback_settings.skip_images =
       prioritized_tile.priority().resolution == LOW_RESOLUTION;
   playback_settings.use_lcd_text = tile->can_use_lcd_text();
 
@@ -1118,13 +1113,12 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
   std::vector<DrawImage>& sync_decoded_images =
       scheduled_draw_images_[tile->id()];
   sync_decoded_images.clear();
-  PaintImageIdFlatSet images_to_skip;
-  if (!skip_images) {
+  if (!playback_settings.skip_images) {
     std::vector<PaintImage> checkered_images;
     PartitionImagesForCheckering(prioritized_tile, color_space,
                                  &sync_decoded_images, &checkered_images);
     for (const auto& image : checkered_images) {
-      images_to_skip.insert(image.stable_id());
+      playback_settings.images_to_skip.insert(image.sk_image()->uniqueID());
 
       // This can be the case for tiles on the active tree that will be replaced
       // or are occluded on the pending tree. While we still need to continue
@@ -1138,7 +1132,12 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
     }
   }
 
-  const bool has_checker_images = !images_to_skip.empty();
+  // We can skip the image hijack canvas if we have no images, or no images to
+  // skip during raster.
+  playback_settings.use_image_hijack_canvas =
+      !sync_decoded_images.empty() || !playback_settings.images_to_skip.empty();
+
+  bool has_checker_images = !playback_settings.images_to_skip.empty();
   tile->set_raster_task_scheduled_with_checker_images(has_checker_images);
   if (has_checker_images)
     num_of_tiles_with_checker_images_++;
@@ -1153,20 +1152,11 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
   std::unique_ptr<RasterBuffer> raster_buffer =
       raster_buffer_provider_->AcquireBufferForRaster(
           resource, resource_content_id, tile->invalidated_id());
-
-  std::unique_ptr<ImageProvider> image_provider;
-  const bool has_predecoded_images = !sync_decoded_images.empty();
-  if (skip_images || has_checker_images || has_predecoded_images) {
-    image_provider = base::MakeUnique<PlaybackImageProvider>(
-        skip_images, std::move(images_to_skip), image_controller_.cache(),
-        color_space);
-  }
-
   return make_scoped_refptr(new RasterTaskImpl(
       this, tile, resource, prioritized_tile.raster_source(), playback_settings,
       prioritized_tile.priority().resolution, invalidated_rect,
       prepare_tiles_count_, std::move(raster_buffer), &decode_tasks,
-      use_gpu_rasterization_, std::move(image_provider)));
+      use_gpu_rasterization_));
 }
 
 void TileManager::ResetSignalsForTesting() {
@@ -1454,7 +1444,7 @@ void TileManager::ClearCheckerImageTracking(
 }
 
 void TileManager::NeedsInvalidationForCheckerImagedTiles() {
-  client_->RequestImplSideInvalidationForCheckerImagedTiles();
+  client_->RequestImplSideInvalidation();
 }
 
 viz::ResourceFormat TileManager::DetermineResourceFormat(

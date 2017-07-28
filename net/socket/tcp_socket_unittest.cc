@@ -27,7 +27,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
-using net::test::IsError;
 using net::test::IsOk;
 
 namespace net {
@@ -68,7 +67,7 @@ const int kListenBacklog = 5;
 
 class TCPSocketTest : public PlatformTest {
  protected:
-  TCPSocketTest() : socket_(nullptr, nullptr, NetLogSource()) {}
+  TCPSocketTest() : socket_(NULL, NULL, NetLogSource()) {}
 
   void SetUpListenIPv4() {
     ASSERT_THAT(socket_.Open(ADDRESS_FAMILY_IPV4), IsOk());
@@ -96,16 +95,16 @@ class TCPSocketTest : public PlatformTest {
     TestCompletionCallback accept_callback;
     std::unique_ptr<TCPSocket> accepted_socket;
     IPEndPoint accepted_address;
-    ASSERT_THAT(socket_.Accept(&accepted_socket, &accepted_address,
-                               accept_callback.callback()),
-                IsError(ERR_IO_PENDING));
+    ASSERT_EQ(ERR_IO_PENDING,
+              socket_.Accept(&accepted_socket, &accepted_address,
+                             accept_callback.callback()));
 
     TestCompletionCallback connect_callback;
-    TCPClientSocket connecting_socket(local_address_list(), nullptr, nullptr,
+    TCPClientSocket connecting_socket(local_address_list(), NULL, NULL,
                                       NetLogSource());
-    int connect_result = connecting_socket.Connect(connect_callback.callback());
-    EXPECT_THAT(connect_callback.GetResult(connect_result), IsOk());
+    connecting_socket.Connect(connect_callback.callback());
 
+    EXPECT_THAT(connect_callback.WaitForResult(), IsOk());
     EXPECT_THAT(accept_callback.WaitForResult(), IsOk());
 
     EXPECT_TRUE(accepted_socket.get());
@@ -136,12 +135,11 @@ class TCPSocketTest : public PlatformTest {
         new TestSocketPerformanceWatcher(should_notify_updated_rtt));
     TestSocketPerformanceWatcher* watcher_ptr = watcher.get();
 
-    TCPSocket connecting_socket(std::move(watcher), nullptr, NetLogSource());
+    TCPSocket connecting_socket(std::move(watcher), NULL, NetLogSource());
 
     int result = connecting_socket.Open(ADDRESS_FAMILY_IPV4);
     ASSERT_THAT(result, IsOk());
-    int connect_result =
-        connecting_socket.Connect(local_address_, connect_callback.callback());
+    connecting_socket.Connect(local_address_, connect_callback.callback());
 
     TestCompletionCallback accept_callback;
     std::unique_ptr<TCPSocket> accepted_socket;
@@ -155,7 +153,7 @@ class TCPSocketTest : public PlatformTest {
     // Both sockets should be on the loopback network interface.
     EXPECT_EQ(accepted_address.address(), local_address_.address());
 
-    ASSERT_THAT(connect_callback.GetResult(connect_result), IsOk());
+    ASSERT_THAT(connect_callback.WaitForResult(), IsOk());
 
     for (size_t i = 0; i < num_messages; ++i) {
       // Use a 1 byte message so that the watcher is notified at most once per
@@ -201,23 +199,25 @@ TEST_F(TCPSocketTest, Accept) {
   TestCompletionCallback connect_callback;
   // TODO(yzshen): Switch to use TCPSocket when it supports client socket
   // operations.
-  TCPClientSocket connecting_socket(local_address_list(), nullptr, nullptr,
+  TCPClientSocket connecting_socket(local_address_list(), NULL, NULL,
                                     NetLogSource());
-  int connect_result = connecting_socket.Connect(connect_callback.callback());
+  connecting_socket.Connect(connect_callback.callback());
 
   TestCompletionCallback accept_callback;
   std::unique_ptr<TCPSocket> accepted_socket;
   IPEndPoint accepted_address;
   int result = socket_.Accept(&accepted_socket, &accepted_address,
                               accept_callback.callback());
-  ASSERT_THAT(accept_callback.GetResult(result), IsOk());
+  if (result == ERR_IO_PENDING)
+    result = accept_callback.WaitForResult();
+  ASSERT_THAT(result, IsOk());
 
   EXPECT_TRUE(accepted_socket.get());
 
   // Both sockets should be on the loopback network interface.
   EXPECT_EQ(accepted_address.address(), local_address_.address());
 
-  EXPECT_THAT(connect_callback.GetResult(connect_result), IsOk());
+  EXPECT_THAT(connect_callback.WaitForResult(), IsOk());
 }
 
 // Test Accept() callback.
@@ -228,7 +228,7 @@ TEST_F(TCPSocketTest, AcceptAsync) {
 
 // Test AdoptConnectedSocket()
 TEST_F(TCPSocketTest, AdoptConnectedSocket) {
-  TCPSocket accepting_socket(nullptr, nullptr, NetLogSource());
+  TCPSocket accepting_socket(NULL, NULL, NetLogSource());
   ASSERT_THAT(accepting_socket.Open(ADDRESS_FAMILY_IPV4), IsOk());
   ASSERT_THAT(accepting_socket.Bind(IPEndPoint(IPAddress::IPv4Localhost(), 0)),
               IsOk());
@@ -238,16 +238,18 @@ TEST_F(TCPSocketTest, AdoptConnectedSocket) {
   TestCompletionCallback connect_callback;
   // TODO(yzshen): Switch to use TCPSocket when it supports client socket
   // operations.
-  TCPClientSocket connecting_socket(local_address_list(), nullptr, nullptr,
+  TCPClientSocket connecting_socket(local_address_list(), NULL, NULL,
                                     NetLogSource());
-  int connect_result = connecting_socket.Connect(connect_callback.callback());
+  connecting_socket.Connect(connect_callback.callback());
 
   TestCompletionCallback accept_callback;
   std::unique_ptr<TCPSocket> accepted_socket;
   IPEndPoint accepted_address;
   int result = accepting_socket.Accept(&accepted_socket, &accepted_address,
                                        accept_callback.callback());
-  ASSERT_THAT(accept_callback.GetResult(result), IsOk());
+  if (result == ERR_IO_PENDING)
+    result = accept_callback.WaitForResult();
+  ASSERT_THAT(result, IsOk());
 
   SocketDescriptor accepted_descriptor =
       accepted_socket->ReleaseSocketDescriptorForTesting();
@@ -261,7 +263,7 @@ TEST_F(TCPSocketTest, AdoptConnectedSocket) {
   ASSERT_THAT(socket_.GetLocalAddress(&adopted_address), IsOk());
   EXPECT_EQ(local_address_.address(), adopted_address.address());
 
-  EXPECT_THAT(connect_callback.GetResult(connect_result), IsOk());
+  EXPECT_THAT(connect_callback.WaitForResult(), IsOk());
 }
 
 // Test Accept() for AdoptUnconnectedSocket.
@@ -289,20 +291,19 @@ TEST_F(TCPSocketTest, Accept2Connections) {
   std::unique_ptr<TCPSocket> accepted_socket;
   IPEndPoint accepted_address;
 
-  ASSERT_THAT(socket_.Accept(&accepted_socket, &accepted_address,
-                             accept_callback.callback()),
-              IsError(ERR_IO_PENDING));
+  ASSERT_EQ(ERR_IO_PENDING,
+            socket_.Accept(&accepted_socket, &accepted_address,
+                           accept_callback.callback()));
 
   TestCompletionCallback connect_callback;
-  TCPClientSocket connecting_socket(local_address_list(), nullptr, nullptr,
+  TCPClientSocket connecting_socket(local_address_list(), NULL, NULL,
                                     NetLogSource());
-  int connect_result = connecting_socket.Connect(connect_callback.callback());
+  connecting_socket.Connect(connect_callback.callback());
 
   TestCompletionCallback connect_callback2;
-  TCPClientSocket connecting_socket2(local_address_list(), nullptr, nullptr,
+  TCPClientSocket connecting_socket2(local_address_list(), NULL, NULL,
                                      NetLogSource());
-  int connect_result2 =
-      connecting_socket2.Connect(connect_callback2.callback());
+  connecting_socket2.Connect(connect_callback2.callback());
 
   EXPECT_THAT(accept_callback.WaitForResult(), IsOk());
 
@@ -312,10 +313,12 @@ TEST_F(TCPSocketTest, Accept2Connections) {
 
   int result = socket_.Accept(&accepted_socket2, &accepted_address2,
                               accept_callback2.callback());
-  ASSERT_THAT(accept_callback2.GetResult(result), IsOk());
+  if (result == ERR_IO_PENDING)
+    result = accept_callback2.WaitForResult();
+  ASSERT_THAT(result, IsOk());
 
-  EXPECT_THAT(connect_callback.GetResult(connect_result), IsOk());
-  EXPECT_THAT(connect_callback2.GetResult(connect_result2), IsOk());
+  EXPECT_THAT(connect_callback.WaitForResult(), IsOk());
+  EXPECT_THAT(connect_callback2.WaitForResult(), IsOk());
 
   EXPECT_TRUE(accepted_socket.get());
   EXPECT_TRUE(accepted_socket2.get());
@@ -333,34 +336,35 @@ TEST_F(TCPSocketTest, AcceptIPv6) {
     return;
 
   TestCompletionCallback connect_callback;
-  TCPClientSocket connecting_socket(local_address_list(), nullptr, nullptr,
+  TCPClientSocket connecting_socket(local_address_list(), NULL, NULL,
                                     NetLogSource());
-  int connect_result = connecting_socket.Connect(connect_callback.callback());
+  connecting_socket.Connect(connect_callback.callback());
 
   TestCompletionCallback accept_callback;
   std::unique_ptr<TCPSocket> accepted_socket;
   IPEndPoint accepted_address;
   int result = socket_.Accept(&accepted_socket, &accepted_address,
                               accept_callback.callback());
-  ASSERT_THAT(accept_callback.GetResult(result), IsOk());
+  if (result == ERR_IO_PENDING)
+    result = accept_callback.WaitForResult();
+  ASSERT_THAT(result, IsOk());
 
   EXPECT_TRUE(accepted_socket.get());
 
   // Both sockets should be on the loopback network interface.
   EXPECT_EQ(accepted_address.address(), local_address_.address());
 
-  EXPECT_THAT(connect_callback.GetResult(connect_result), IsOk());
+  EXPECT_THAT(connect_callback.WaitForResult(), IsOk());
 }
 
 TEST_F(TCPSocketTest, ReadWrite) {
   ASSERT_NO_FATAL_FAILURE(SetUpListenIPv4());
 
   TestCompletionCallback connect_callback;
-  TCPSocket connecting_socket(nullptr, nullptr, NetLogSource());
+  TCPSocket connecting_socket(NULL, NULL, NetLogSource());
   int result = connecting_socket.Open(ADDRESS_FAMILY_IPV4);
   ASSERT_THAT(result, IsOk());
-  int connect_result =
-      connecting_socket.Connect(local_address_, connect_callback.callback());
+  connecting_socket.Connect(local_address_, connect_callback.callback());
 
   TestCompletionCallback accept_callback;
   std::unique_ptr<TCPSocket> accepted_socket;
@@ -374,7 +378,7 @@ TEST_F(TCPSocketTest, ReadWrite) {
   // Both sockets should be on the loopback network interface.
   EXPECT_EQ(accepted_address.address(), local_address_.address());
 
-  EXPECT_THAT(connect_callback.GetResult(connect_result), IsOk());
+  EXPECT_THAT(connect_callback.WaitForResult(), IsOk());
 
   const std::string message("test message");
   std::vector<char> buffer(message.size());

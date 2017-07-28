@@ -40,7 +40,7 @@ bool LayerTreeFrameSinkHolder::HasReleaseCallbackForResource(
 
 void LayerTreeFrameSinkHolder::SetResourceReleaseCallback(
     cc::ResourceId id,
-    const viz::ReleaseCallback& callback) {
+    const cc::ReleaseCallback& callback) {
   DCHECK(!callback.is_null());
   release_callbacks_[id] = callback;
 }

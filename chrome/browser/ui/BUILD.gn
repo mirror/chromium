@@ -486,7 +486,7 @@ split_static_library("ui") {
     "//chrome/browser/ui/webui/omnibox:mojo_bindings",
     "//chrome/browser/ui/webui/usb_internals:mojo_bindings",
     "//chrome/common",
-    "//chrome/common:search_mojom",
+    "//chrome/common:instant_mojom",
     "//chrome/common/net",
     "//chrome/installer/util:with_no_strings",
     "//components/about_ui",
@@ -644,13 +644,6 @@ split_static_library("ui") {
       "//components/guest_view/browser",
       "//extensions/browser",
       "//extensions/strings",
-    ]
-  }
-
-  if (enable_oop_heap_profiling) {
-    sources += [
-      "webui/memory_internals_ui.cc",
-      "webui/memory_internals_ui.h",
     ]
   }
 
@@ -1030,8 +1023,6 @@ split_static_library("ui") {
       "webui/settings/chromeos/easy_unlock_settings_handler.h",
       "webui/settings/chromeos/fingerprint_handler.cc",
       "webui/settings/chromeos/fingerprint_handler.h",
-      "webui/settings/chromeos/google_assistant_handler.cc",
-      "webui/settings/chromeos/google_assistant_handler.h",
       "webui/settings/chromeos/internet_handler.cc",
       "webui/settings/chromeos/internet_handler.h",
       "webui/settings/downloads_handler.cc",
@@ -1212,8 +1203,6 @@ split_static_library("ui") {
       "webui/chromeos/certificate_manager_dialog_ui.h",
       "webui/chromeos/proxy_settings_ui.cc",
       "webui/chromeos/proxy_settings_ui.h",
-      "webui/chromeos/user_image_source.cc",
-      "webui/chromeos/user_image_source.h",
       "webui/help/help_handler.cc",
       "webui/help/help_handler.h",
       "webui/help/help_utils_chromeos.cc",
@@ -1258,6 +1247,8 @@ split_static_library("ui") {
       "webui/options/chromeos/stats_options_handler.h",
       "webui/options/chromeos/storage_manager_handler.cc",
       "webui/options/chromeos/storage_manager_handler.h",
+      "webui/options/chromeos/user_image_source.cc",
+      "webui/options/chromeos/user_image_source.h",
       "webui/options/clear_browser_data_handler.cc",
       "webui/options/clear_browser_data_handler.h",
       "webui/options/content_settings_handler.cc",
@@ -1538,8 +1529,6 @@ split_static_library("ui") {
       "views/extensions/chooser_dialog_view.h",
       "views/extensions/extension_install_dialog_view.cc",
       "views/extensions/extension_install_dialog_view.h",
-      "views/extensions/extension_installed_bubble_view.cc",
-      "views/extensions/extension_installed_bubble_view.h",
       "views/extensions/extension_keybinding_registry_views.cc",
       "views/extensions/extension_keybinding_registry_views.h",
       "views/extensions/extension_uninstall_dialog_view.cc",
@@ -1723,6 +1712,7 @@ split_static_library("ui") {
         "views/extensions/extension_dialog.h",
         "views/extensions/extension_dialog_observer.cc",
         "views/extensions/extension_dialog_observer.h",
+        "views/extensions/extension_installed_bubble_view.cc",
         "views/extensions/extension_popup.cc",
         "views/extensions/extension_popup.h",
         "views/extensions/extension_view_views.cc",
@@ -2138,6 +2128,12 @@ split_static_library("ui") {
         "webui/signin/signin_dice_internals_handler.h",
         "webui/signin/signin_dice_internals_ui.cc",
         "webui/signin/signin_dice_internals_ui.h",
+      ]
+    }
+    if (enable_oop_heap_profiling) {
+      sources += [
+        "webui/memory_internals_ui.cc",
+        "webui/memory_internals_ui.h",
       ]
     }
     if (is_mac && !mac_views_browser) {

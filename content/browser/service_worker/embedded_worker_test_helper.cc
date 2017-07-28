@@ -296,9 +296,10 @@ EmbeddedWorkerTestHelper::EmbeddedWorkerTestHelper(
       mock_render_process_id_(render_process_host_->GetID()),
       new_mock_render_process_id_(new_render_process_host_->GetID()),
       weak_factory_(this) {
-  scoped_refptr<base::SequencedTaskRunner> database_task_runner =
-      base::ThreadTaskRunnerHandle::Get();
-  wrapper_->InitInternal(user_data_directory, std::move(database_task_runner),
+  std::unique_ptr<MockServiceWorkerDatabaseTaskManager> database_task_manager(
+      new MockServiceWorkerDatabaseTaskManager(
+          base::ThreadTaskRunnerHandle::Get()));
+  wrapper_->InitInternal(user_data_directory, std::move(database_task_manager),
                          base::ThreadTaskRunnerHandle::Get(), nullptr, nullptr,
                          nullptr, nullptr);
   wrapper_->process_manager()->SetProcessIdForTest(mock_render_process_id());

@@ -23,8 +23,7 @@ class CC_PAINT_EXPORT PaintImage {
 
   // This is the id used in places where we are currently not plumbing the
   // correct image id from blink.
-  // TODO(khushalsagar): The only user of these seems to be the ImageBuffer in
-  // blink. Same goes for the animation and completeion states.
+  // TODO(khushalsagar): Eliminate these cases. See crbug.com/722559.
   static const Id kUnknownStableId = -2;
 
   // TODO(vmpstr): Work towards removing "UNKNOWN" value.
@@ -71,10 +70,10 @@ class CC_PAINT_EXPORT PaintImage {
   PaintImage CloneWithSkImage(sk_sp<SkImage> new_image) const;
 
  private:
-  Id id_;
+  Id id_ = kUnknownStableId;
   sk_sp<SkImage> sk_image_;
-  AnimationType animation_type_;
-  CompletionState completion_state_;
+  AnimationType animation_type_ = AnimationType::UNKNOWN;
+  CompletionState completion_state_ = CompletionState::UNKNOWN;
   // The number of frames known to exist in this image (eg number of GIF frames
   // loaded). 0 indicates either unknown or only a single frame, both of which
   // should be treated similarly.

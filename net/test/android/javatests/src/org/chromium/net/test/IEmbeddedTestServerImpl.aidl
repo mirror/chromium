@@ -4,8 +4,6 @@
 
 package org.chromium.net.test;
 
-import org.chromium.net.test.IConnectionListener;
-
 interface IEmbeddedTestServerImpl {
 
     /** Initialize the native object. */
@@ -47,6 +45,5 @@ interface IEmbeddedTestServerImpl {
     /** Destroy the native object. */
     void destroy();
 
-    /** Set a connection listener. Must be called before {@link start()}. */
-    void setConnectionListener(IConnectionListener callback);
 }
+

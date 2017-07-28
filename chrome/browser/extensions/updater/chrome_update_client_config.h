@@ -13,7 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/component_updater/configurator_impl.h"
-#include "components/update_client/configurator.h"
+#include "extensions/browser/updater/update_client_config.h"
 
 namespace content {
 class BrowserContext;
@@ -21,7 +21,7 @@ class BrowserContext;
 
 namespace extensions {
 
-class ChromeUpdateClientConfig : public update_client::Configurator {
+class ChromeUpdateClientConfig : public UpdateClientConfig {
  public:
   explicit ChromeUpdateClientConfig(content::BrowserContext* context);
 

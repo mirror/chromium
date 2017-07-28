@@ -419,7 +419,7 @@ TEST(TimerTest, OneShotTimer_CustomTaskRunner) {
   OneShotTimerTester f(&did_run);
   f.SetTaskRunner(other_thread.task_runner());
   f.Start();
-  EXPECT_TRUE(f.IsRunning() || did_run.IsSignaled());
+  EXPECT_TRUE(f.IsRunning());
 
   f.WaitAndConfirmTimerFiredAfterDelay();
   EXPECT_TRUE(did_run.IsSignaled());
@@ -680,12 +680,12 @@ void ClearAllCallbackHappened() {
 
 void SetCallbackHappened1() {
   g_callback_happened1 = true;
-  RunLoop::QuitCurrentWhenIdleDeprecated();
+  MessageLoop::current()->QuitWhenIdle();
 }
 
 void SetCallbackHappened2() {
   g_callback_happened2 = true;
-  RunLoop::QuitCurrentWhenIdleDeprecated();
+  MessageLoop::current()->QuitWhenIdle();
 }
 
 }  // namespace

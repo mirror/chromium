@@ -118,6 +118,8 @@ ALWAYS_INLINE void AtomicSetDidExtendTextCodecMaps() {
 }
 }  // namespace
 
+static const char kTextEncodingNameBlacklist[][6] = {"UTF-7"};
+
 #if ERROR_DISABLED
 
 static inline void checkExistingName(const char*, const char*) {}
@@ -178,6 +180,27 @@ static void AddToTextCodecMap(const char* name,
                            TextCodecFactory(function, additional_data));
 }
 
+static void PruneBlacklistedCodecs() {
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(kTextEncodingNameBlacklist); ++i) {
+    const char* atomic_name =
+        g_text_encoding_name_map->at(kTextEncodingNameBlacklist[i]);
+    if (!atomic_name)
+      continue;
+
+    Vector<const char*> names;
+    TextEncodingNameMap::const_iterator it = g_text_encoding_name_map->begin();
+    TextEncodingNameMap::const_iterator end = g_text_encoding_name_map->end();
+    for (; it != end; ++it) {
+      if (it->value == atomic_name)
+        names.push_back(it->key);
+    }
+
+    g_text_encoding_name_map->RemoveAll(names);
+
+    g_text_codec_map->erase(atomic_name);
+  }
+}
+
 static void BuildBaseTextCodecMaps() {
   DCHECK(IsMainThread());
   DCHECK(!g_text_codec_map);
@@ -205,6 +228,8 @@ static void ExtendTextCodecMaps() {
 
   TextCodecICU::RegisterEncodingNames(AddToTextEncodingNameMap);
   TextCodecICU::RegisterCodecs(AddToTextCodecMap);
+
+  PruneBlacklistedCodecs();
 }
 
 std::unique_ptr<TextCodec> NewTextCodec(const TextEncoding& encoding) {
@@ -218,7 +243,7 @@ std::unique_ptr<TextCodec> NewTextCodec(const TextEncoding& encoding) {
 
 const char* AtomicCanonicalTextEncodingName(const char* name) {
   if (!name || !name[0])
-    return nullptr;
+    return 0;
   if (!g_text_encoding_name_map)
     BuildBaseTextCodecMaps();
 
@@ -227,7 +252,7 @@ const char* AtomicCanonicalTextEncodingName(const char* name) {
   if (const char* atomic_name = g_text_encoding_name_map->at(name))
     return atomic_name;
   if (AtomicDidExtendTextCodecMaps())
-    return nullptr;
+    return 0;
   ExtendTextCodecMaps();
   AtomicSetDidExtendTextCodecMaps();
   return g_text_encoding_name_map->at(name);
@@ -241,7 +266,7 @@ const char* AtomicCanonicalTextEncodingName(const CharacterType* characters,
   for (size_t i = 0; i < length; ++i) {
     char c = static_cast<char>(characters[i]);
     if (j == kMaxEncodingNameLength || c != characters[i])
-      return nullptr;
+      return 0;
     buffer[j++] = c;
   }
   buffer[j] = 0;
@@ -250,10 +275,10 @@ const char* AtomicCanonicalTextEncodingName(const CharacterType* characters,
 
 const char* AtomicCanonicalTextEncodingName(const String& alias) {
   if (!alias.length())
-    return nullptr;
+    return 0;
 
   if (alias.Contains('\0'))
-    return nullptr;
+    return 0;
 
   if (alias.Is8Bit())
     return AtomicCanonicalTextEncodingName<LChar>(alias.Characters8(),

@@ -195,11 +195,13 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
   base::HistogramTester histogram_tester;
   // Enable requests to local host to be used for network quality estimation.
   std::map<std::string, std::string> variation_params;
+  variation_params["persistent_cache_reading_enabled"] = "true";
   TestNetworkQualityEstimator estimator(variation_params);
 
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "test");
-  histogram_tester.ExpectTotalCount("NQE.CachedNetworkQualityAvailable", 0);
+  histogram_tester.ExpectUniqueSample("NQE.CachedNetworkQualityAvailable",
+                                      false, 1);
 
   base::TimeDelta rtt;
   int32_t kbps;
@@ -288,7 +290,7 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test-1");
   histogram_tester.ExpectUniqueSample("NQE.CachedNetworkQualityAvailable",
-                                      false, 1);
+                                      false, 2);
   histogram_tester.ExpectTotalCount("NQE.PeakKbps.Unknown", 1);
   histogram_tester.ExpectTotalCount("NQE.FastestRTT.Unknown", 1);
 
@@ -323,7 +325,7 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, std::string());
   histogram_tester.ExpectUniqueSample("NQE.CachedNetworkQualityAvailable",
-                                      false, 1);
+                                      false, 2);
   histogram_tester.ExpectTotalCount("NQE.PeakKbps.Unknown", 1);
   histogram_tester.ExpectTotalCount("NQE.FastestRTT.Unknown", 1);
 
@@ -355,6 +357,8 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "test");
   histogram_tester.ExpectBucketCount("NQE.CachedNetworkQualityAvailable", false,
+                                     2);
+  histogram_tester.ExpectBucketCount("NQE.CachedNetworkQualityAvailable", true,
                                      1);
 }
 
@@ -363,10 +367,11 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
 TEST(NetworkQualityEstimatorTest, Caching) {
   base::HistogramTester histogram_tester;
   std::map<std::string, std::string> variation_params;
+  variation_params["persistent_cache_reading_enabled"] = "true";
   TestNetworkQualityEstimator estimator(variation_params);
 
   estimator.SimulateNetworkChange(
-      NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test");
+      NetworkChangeNotifier::ConnectionType::CONNECTION_2G, "test");
   histogram_tester.ExpectUniqueSample("NQE.CachedNetworkQualityAvailable",
                                       false, 1);
 
@@ -426,7 +431,7 @@ TEST(NetworkQualityEstimatorTest, Caching) {
   EXPECT_LE(2, num_net_log_entries);
 
   estimator.SimulateNetworkChange(
-      NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test");
+      NetworkChangeNotifier::ConnectionType::CONNECTION_2G, "test");
   histogram_tester.ExpectBucketCount(
       "NQE.RTT.ObservationSource",
       NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_CACHED_ESTIMATE, 1);
@@ -473,11 +478,10 @@ TEST(NetworkQualityEstimatorTest, CachingDisabled) {
   base::HistogramTester histogram_tester;
   std::map<std::string, std::string> variation_params;
   // Do not set |persistent_cache_reading_enabled| variation param.
-  variation_params["persistent_cache_reading_enabled"] = "false";
   TestNetworkQualityEstimator estimator(variation_params);
 
   estimator.SimulateNetworkChange(
-      NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test");
+      NetworkChangeNotifier::ConnectionType::CONNECTION_2G, "test");
   histogram_tester.ExpectTotalCount("NQE.CachedNetworkQualityAvailable", 0);
 
   base::TimeDelta rtt;
@@ -2077,23 +2081,15 @@ TEST(NetworkQualityEstimatorTest, TestRttThroughputObservers) {
   base::TimeDelta tcp_rtt(base::TimeDelta::FromMilliseconds(1));
   base::TimeDelta quic_rtt(base::TimeDelta::FromMilliseconds(2));
 
-  // Use a public IP address so that the socket watcher runs the RTT callback.
-  IPAddressList ip_list;
-  IPAddress ip_address;
-  ASSERT_TRUE(ip_address.AssignFromIPLiteral("157.0.0.1"));
-  ip_list.push_back(ip_address);
-  AddressList address_list =
-      AddressList::CreateFromIPAddressList(ip_list, "canonical.example.com");
-
   std::unique_ptr<SocketPerformanceWatcher> tcp_watcher =
       estimator.GetSocketPerformanceWatcherFactory()
           ->CreateSocketPerformanceWatcher(
-              SocketPerformanceWatcherFactory::PROTOCOL_TCP, address_list);
+              SocketPerformanceWatcherFactory::PROTOCOL_TCP);
 
   std::unique_ptr<SocketPerformanceWatcher> quic_watcher =
       estimator.GetSocketPerformanceWatcherFactory()
           ->CreateSocketPerformanceWatcher(
-              SocketPerformanceWatcherFactory::PROTOCOL_QUIC, address_list);
+              SocketPerformanceWatcherFactory::PROTOCOL_QUIC);
 
   tcp_watcher->OnUpdatedRTTAvailable(tcp_rtt);
   quic_watcher->OnUpdatedRTTAvailable(quic_rtt);
@@ -2237,12 +2233,6 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestTCPSocketRTT) {
 
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_2G, "test");
-  histogram_tester.ExpectBucketCount(
-      "NQE.RTT.ObservationSource",
-      NETWORK_QUALITY_OBSERVATION_SOURCE_TRANSPORT_CACHED_ESTIMATE, 0);
-
-  estimator.SimulateNetworkChange(
-      NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test-1");
   histogram_tester.ExpectBucketCount(
       "NQE.RTT.ObservationSource",
       NETWORK_QUALITY_OBSERVATION_SOURCE_TRANSPORT_CACHED_ESTIMATE, 1);
@@ -3016,7 +3006,7 @@ TEST(NetworkQualityEstimatorTest, OnPrefsReadWithReadingDisabled) {
   std::map<std::string, std::string> variation_params;
   variation_params["effective_connection_type_algorithm"] =
       "TransportRTTOrDownstreamThroughput";
-  variation_params["persistent_cache_reading_enabled"] = "false";
+  // |persistent_cache_reading_enabled| variation param is not set.
 
   // Disable default platform values so that the effect of cached estimates
   // at the time of startup can be studied in isolation.

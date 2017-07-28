@@ -9,7 +9,6 @@
 #include "components/download/public/client.h"
 #include "components/download/public/clients.h"
 #include "components/download/public/download_params.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace download {
 
@@ -78,9 +77,6 @@ struct Entry {
 
   // Stores the number of retries for this download.
   uint32_t attempt_count;
-
-  // Traffic annotation for the network request.
-  net::MutableNetworkTrafficAnnotationTag traffic_annotation;
 };
 
 }  // namespace download

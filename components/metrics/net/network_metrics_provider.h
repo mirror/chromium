@@ -66,8 +66,7 @@ class NetworkMetricsProvider
   class EffectiveConnectionTypeObserver;
 
   // MetricsProvider:
-  void ProvideCurrentSessionData(
-      ChromeUserMetricsExtension* uma_proto) override;
+  void ProvideGeneralMetrics(ChromeUserMetricsExtension* uma_proto) override;
   void ProvideSystemProfileMetrics(SystemProfileProto* system_profile) override;
 
   // ConnectionTypeObserver:

@@ -21,9 +21,9 @@
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/surface_layer.h"
 #include "cc/layers/texture_layer.h"
+#include "cc/output/copy_output_request.h"
 #include "cc/resources/transferable_resource.h"
 #include "cc/trees/layer_tree_settings.h"
-#include "components/viz/common/quads/copy_output_request.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/compositor/layer_animator.h"
@@ -445,13 +445,14 @@ void Layer::SetLayerInverted(bool inverted) {
 }
 
 void Layer::SetMaskLayer(Layer* layer_mask) {
-  if (layer_mask_ == layer_mask)
-    return;
   // The provided mask should not have a layer mask itself.
   DCHECK(!layer_mask ||
-         (!layer_mask->layer_mask_layer() && layer_mask->children().empty() &&
+         (!layer_mask->layer_mask_layer() &&
+          layer_mask->children().empty() &&
           !layer_mask->layer_mask_back_link_));
   DCHECK(!layer_mask_back_link_);
+  if (layer_mask_ == layer_mask)
+    return;
   // We need to de-reference the currently linked object so that no problem
   // arises if the mask layer gets deleted before this object.
   if (layer_mask_)
@@ -656,7 +657,7 @@ void Layer::SwitchCCLayerForTest() {
 
 void Layer::SetTextureMailbox(
     const viz::TextureMailbox& mailbox,
-    std::unique_ptr<viz::SingleReleaseCallback> release_callback,
+    std::unique_ptr<cc::SingleReleaseCallback> release_callback,
     gfx::Size texture_size_in_dip) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
   DCHECK(mailbox.IsValid());
@@ -916,7 +917,7 @@ void Layer::SetScrollOffset(const gfx::ScrollOffset& offset) {
 }
 
 void Layer::RequestCopyOfOutput(
-    std::unique_ptr<viz::CopyOutputRequest> request) {
+    std::unique_ptr<cc::CopyOutputRequest> request) {
   cc_layer_->RequestCopyOfOutput(std::move(request));
 }
 
@@ -953,7 +954,7 @@ size_t Layer::GetApproximateUnsharedMemoryUsage() const {
 
 bool Layer::PrepareTextureMailbox(
     viz::TextureMailbox* mailbox,
-    std::unique_ptr<viz::SingleReleaseCallback>* release_callback) {
+    std::unique_ptr<cc::SingleReleaseCallback>* release_callback) {
   if (!mailbox_release_callback_)
     return false;
   *mailbox = mailbox_;

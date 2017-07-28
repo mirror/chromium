@@ -40,6 +40,8 @@ TaskScheduler::InitParams::~InitParams() = default;
 #if !defined(OS_NACL)
 // static
 void TaskScheduler::CreateAndStartWithDefaultParams(StringPiece name) {
+  using StandbyThreadPolicy = SchedulerWorkerPoolParams::StandbyThreadPolicy;
+
   // Values were chosen so that:
   // * There are few background threads.
   // * Background threads never outnumber foreground threads.
@@ -54,10 +56,14 @@ void TaskScheduler::CreateAndStartWithDefaultParams(StringPiece name) {
 
   Create(name);
   GetInstance()->Start(
-      {{kBackgroundMaxThreads, kSuggestedReclaimTime},
-       {kBackgroundBlockingMaxThreads, kSuggestedReclaimTime},
-       {kForegroundMaxThreads, kSuggestedReclaimTime},
-       {kForegroundBlockingMaxThreads, kSuggestedReclaimTime}});
+      {{StandbyThreadPolicy::LAZY, kBackgroundMaxThreads,
+        kSuggestedReclaimTime},
+       {StandbyThreadPolicy::LAZY, kBackgroundBlockingMaxThreads,
+        kSuggestedReclaimTime},
+       {StandbyThreadPolicy::LAZY, kForegroundMaxThreads,
+        kSuggestedReclaimTime},
+       {StandbyThreadPolicy::LAZY, kForegroundBlockingMaxThreads,
+        kSuggestedReclaimTime}});
 }
 #endif  // !defined(OS_NACL)
 

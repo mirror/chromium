@@ -24,8 +24,9 @@ ScopedAsyncTaskScheduler::ScopedAsyncTaskScheduler() {
   // threads and get rid of this limitation. http://crbug.com/738104
   constexpr int kMaxThreads = 2;
   const TimeDelta kSuggestedReclaimTime = TimeDelta::Max();
-  const SchedulerWorkerPoolParams worker_pool_params(kMaxThreads,
-                                                     kSuggestedReclaimTime);
+  const SchedulerWorkerPoolParams worker_pool_params(
+      SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE, kMaxThreads,
+      kSuggestedReclaimTime);
   TaskScheduler::Create("ScopedAsync");
   task_scheduler_ = TaskScheduler::GetInstance();
   TaskScheduler::GetInstance()->Start({worker_pool_params, worker_pool_params,

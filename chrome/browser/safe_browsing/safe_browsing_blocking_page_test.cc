@@ -13,7 +13,6 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
@@ -281,7 +280,7 @@ class TestSafeBrowsingBlockingPage : public SafeBrowsingBlockingPage {
       return;
 
     // Notify that we are gone
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoopForUI::current()->QuitWhenIdle();
     wait_for_delete_ = false;
   }
 

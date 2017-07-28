@@ -38,7 +38,6 @@
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h"
-#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_sink.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_audience.h"
@@ -411,7 +410,7 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
 }
 
 - (void)reload {
-  [self.contentSuggestionsMediator.dataSink reloadAllData];
+  // TODO(crbug.com/700375): implement this.
 }
 
 - (void)wasShown {

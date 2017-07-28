@@ -7,10 +7,8 @@
 #include <memory>
 
 #include "base/run_loop.h"
-#include "base/task_scheduler/task_scheduler.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -18,12 +16,12 @@ namespace {
 
 using content::BrowserThread;
 
-using testing::Invoke;
 using testing::_;
+using testing::Invoke;
 
 class MockDiscoveryObserver : public DiscoveryNetworkMonitor::Observer {
  public:
-  MOCK_METHOD1(OnNetworksChanged, void(const std::string&));
+  MOCK_METHOD1(OnNetworksChanged, void(const DiscoveryNetworkMonitor&));
 };
 
 }  // namespace
@@ -70,8 +68,9 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
   std::string current_network_id;
 
   auto capture_network_id =
-      [&current_network_id](const std::string& network_id) {
-        current_network_id = network_id;
+      [&current_network_id](const DiscoveryNetworkMonitor& monitor) {
+        DCHECK_CURRENTLY_ON(BrowserThread::IO);
+        current_network_id = monitor.GetNetworkId();
       };
   discovery_network_monitor->AddObserver(&mock_observer);
   EXPECT_CALL(mock_observer, OnNetworksChanged(_))
@@ -79,7 +78,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   std::string ethernet_network_id = current_network_id;
 
@@ -89,7 +88,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_NONE);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   fake_network_info = fake_wifi_info;
   EXPECT_CALL(mock_observer, OnNetworksChanged(_))
@@ -97,7 +96,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_WIFI);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   std::string wifi_network_id = current_network_id;
   fake_network_info = fake_ethernet_info;
@@ -106,7 +105,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(ethernet_network_id, current_network_id);
   EXPECT_NE(ethernet_network_id, wifi_network_id);
@@ -118,88 +117,37 @@ TEST_F(DiscoveryNetworkMonitorTest, RemoveObserverStopsNotifications) {
   fake_network_info = fake_ethernet_info;
 
   discovery_network_monitor->AddObserver(&mock_observer);
-  EXPECT_CALL(mock_observer, OnNetworksChanged(_));
+  EXPECT_CALL(mock_observer, OnNetworksChanged(_))
+      .WillOnce(Invoke([](const DiscoveryNetworkMonitor& monitor) {
+        DCHECK_CURRENTLY_ON(BrowserThread::IO);
+      }));
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   discovery_network_monitor->RemoveObserver(&mock_observer);
   fake_network_info.clear();
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_NONE);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(DiscoveryNetworkMonitorTest, RefreshIndependentOfChangeObserver) {
   fake_network_info = fake_ethernet_info;
 
   discovery_network_monitor->AddObserver(&mock_observer);
-  EXPECT_CALL(mock_observer, OnNetworksChanged(_)).Times(testing::AtMost(1));
-  auto force_refresh_callback = [](const std::string& network_id) {
+  auto force_refresh_callback = [](const DiscoveryNetworkMonitor* monitor) {
     EXPECT_NE(std::string(DiscoveryNetworkMonitor::kNetworkIdDisconnected),
-              network_id);
+              monitor->GetNetworkId());
     EXPECT_NE(std::string(DiscoveryNetworkMonitor::kNetworkIdUnknown),
-              network_id);
+              monitor->GetNetworkId());
   };
 
-  discovery_network_monitor->Refresh(base::BindOnce(force_refresh_callback));
-  content::RunAllBlockingPoolTasksUntilIdle();
-}
-
-TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithoutRefresh) {
-  fake_network_info = fake_ethernet_info;
-
-  auto check_network_id = [](const std::string& network_id) {
-    EXPECT_EQ(DiscoveryNetworkMonitor::kNetworkIdDisconnected, network_id);
-  };
-  discovery_network_monitor->GetNetworkId(base::BindOnce(check_network_id));
-  content::RunAllBlockingPoolTasksUntilIdle();
-}
-
-TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithRefresh) {
-  fake_network_info = fake_ethernet_info;
-
-  std::string current_network_id;
-  auto capture_network_id = [](std::string* network_id_result,
-                               const std::string& network_id) {
-    EXPECT_NE(std::string(DiscoveryNetworkMonitor::kNetworkIdDisconnected),
-              network_id);
-    EXPECT_NE(std::string(DiscoveryNetworkMonitor::kNetworkIdUnknown),
-              network_id);
-    *network_id_result = network_id;
-  };
-  discovery_network_monitor->Refresh(
-      base::BindOnce(capture_network_id, &current_network_id));
-  content::RunAllBlockingPoolTasksUntilIdle();
-
-  auto check_network_id = [](const std::string& refresh_network_id,
-                             const std::string& network_id) {
-    EXPECT_EQ(refresh_network_id, network_id);
-  };
-  discovery_network_monitor->GetNetworkId(
-      base::BindOnce(check_network_id, base::ConstRef(current_network_id)));
-  content::RunAllBlockingPoolTasksUntilIdle();
-}
-
-TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithObserver) {
-  fake_network_info = fake_ethernet_info;
-
-  discovery_network_monitor->AddObserver(&mock_observer);
-  EXPECT_CALL(mock_observer, OnNetworksChanged(_));
-
-  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
-      net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  content::RunAllBlockingPoolTasksUntilIdle();
-
-  std::string current_network_id;
-  auto check_network_id = [](const std::string& network_id) {
-    EXPECT_NE(std::string(DiscoveryNetworkMonitor::kNetworkIdDisconnected),
-              network_id);
-    EXPECT_NE(std::string(DiscoveryNetworkMonitor::kNetworkIdUnknown),
-              network_id);
-  };
-  discovery_network_monitor->GetNetworkId(base::BindOnce(check_network_id));
-  content::RunAllBlockingPoolTasksUntilIdle();
+  EXPECT_EQ(std::string(DiscoveryNetworkMonitor::kNetworkIdDisconnected),
+            discovery_network_monitor->GetNetworkId());
+  discovery_network_monitor->Refresh(base::Bind(
+      force_refresh_callback, base::Unretained(discovery_network_monitor)));
+  base::RunLoop().RunUntilIdle();
 }

@@ -43,18 +43,24 @@ void MetricsProvider::ProvideSystemProfileMetrics(
     SystemProfileProto* system_profile_proto) {
 }
 
-bool MetricsProvider::HasPreviousSessionData() {
+bool MetricsProvider::HasInitialStabilityMetrics() {
   return false;
 }
 
 void MetricsProvider::ProvidePreviousSessionData(
     ChromeUserMetricsExtension* uma_proto) {
+  ProvideInitialStabilityMetrics(uma_proto->mutable_system_profile());
   ProvideStabilityMetrics(uma_proto->mutable_system_profile());
 }
 
 void MetricsProvider::ProvideCurrentSessionData(
     ChromeUserMetricsExtension* uma_proto) {
   ProvideStabilityMetrics(uma_proto->mutable_system_profile());
+  ProvideGeneralMetrics(uma_proto);
+}
+
+void MetricsProvider::ProvideInitialStabilityMetrics(
+    SystemProfileProto* system_profile_proto) {
 }
 
 void MetricsProvider::ProvideStabilityMetrics(
@@ -62,6 +68,10 @@ void MetricsProvider::ProvideStabilityMetrics(
 }
 
 void MetricsProvider::ClearSavedStabilityMetrics() {
+}
+
+void MetricsProvider::ProvideGeneralMetrics(
+    ChromeUserMetricsExtension* uma_proto) {
 }
 
 void MetricsProvider::RecordHistogramSnapshots(

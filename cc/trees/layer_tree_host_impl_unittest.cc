@@ -20,7 +20,6 @@
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
 #include "cc/animation/transform_operations.h"
-#include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
 #include "cc/input/browser_controls_offset_manager.h"
 #include "cc/input/main_thread_scrolling_reason.h"
@@ -37,6 +36,8 @@
 #include "cc/layers/video_layer_impl.h"
 #include "cc/layers/viewport.h"
 #include "cc/output/compositor_frame_metadata.h"
+#include "cc/output/copy_output_request.h"
+#include "cc/output/copy_output_result.h"
 #include "cc/output/gl_renderer.h"
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/quads/render_pass_draw_quad.h"
@@ -68,8 +69,6 @@
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/transform_node.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
-#include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "media/base/media.h"
@@ -191,7 +190,7 @@ class LayerTreeHostImplTest : public testing::Test,
     host_impl_->DidDrawAllLayers(*frame);
     last_on_draw_frame_ = std::move(frame);
   }
-  void NeedsImplSideInvalidation(bool needs_first_draw_on_activation) override {
+  void NeedsImplSideInvalidation() override {
     did_request_impl_side_invalidation_ = true;
   }
   void NotifyImageDecodeRequestFinished() override {}
@@ -566,45 +565,6 @@ class LayerTreeHostImplTest : public testing::Test,
     host_impl_->DidDrawAllLayers(frame);
   }
 
-  void TestGPUMemoryForTilings(const gfx::Size& layer_size) {
-    LayerTreeSettings settings = DefaultSettings();
-    CreateHostImpl(settings, CreateLayerTreeFrameSink());
-
-    std::unique_ptr<FakeRecordingSource> recording_source =
-        FakeRecordingSource::CreateFilledRecordingSource(layer_size);
-    PaintImage checkerable_image = PaintImage(
-        PaintImage::GetNextId(), CreateDiscardableImage(gfx::Size(500, 500)));
-    recording_source->add_draw_image(checkerable_image, gfx::Point(0, 0));
-
-    recording_source->Rerecord();
-    scoped_refptr<FakeRasterSource> raster_source =
-        FakeRasterSource::CreateFromRecordingSource(recording_source.get());
-
-    // Create the pending tree.
-    host_impl_->BeginCommit();
-    LayerTreeImpl* pending_tree = host_impl_->pending_tree();
-    host_impl_->SetViewportSize(layer_size);
-    pending_tree->SetRootLayerForTesting(
-        FakePictureLayerImpl::CreateWithRasterSource(pending_tree, 1,
-                                                     raster_source));
-    auto* root = static_cast<FakePictureLayerImpl*>(*pending_tree->begin());
-    root->SetBounds(layer_size);
-    root->SetDrawsContent(true);
-    pending_tree->BuildPropertyTreesForTesting();
-
-    // CompleteCommit which should perform a PrepareTiles, adding tilings for
-    // the root layer, each one having a raster task.
-    host_impl_->CommitComplete();
-    // Activate the pending tree and ensure that all tiles are rasterized.
-    while (!did_notify_ready_to_activate_)
-      base::RunLoop().RunUntilIdle();
-
-    DrawFrame();
-
-    host_impl_->ReleaseLayerTreeFrameSink();
-    host_impl_ = nullptr;
-  }
-
   void pinch_zoom_pan_viewport_forces_commit_redraw(float device_scale_factor);
   void pinch_zoom_pan_viewport_test(float device_scale_factor);
   void pinch_zoom_pan_viewport_and_scroll_test(float device_scale_factor);
@@ -932,30 +892,6 @@ TEST_F(LayerTreeHostImplTest, ScrollerSizeOfCCScrollingHistogramRecordingTest) {
                                      10000, 1);
   histogram_tester.ExpectTotalCount("Event.Scroll.ScrollerSize.OnScroll_Wheel",
                                     1);
-}
-
-TEST_F(LayerTreeHostImplTest, GPUMemoryForSmallLayerHistogramTest) {
-  base::HistogramTester histogram_tester;
-  SetClientNameForMetrics("Renderer");
-  // With default tile size being set to 256 * 256, the following layer needs
-  // one tile only which costs 256 * 256 * 4 / 1024 = 256KB memory.
-  TestGPUMemoryForTilings(gfx::Size(200, 200));
-  histogram_tester.ExpectBucketCount(
-      "Compositing.Renderer.GPUMemoryForTilingsInKb", 256, 1);
-  histogram_tester.ExpectTotalCount(
-      "Compositing.Renderer.GPUMemoryForTilingsInKb", 1);
-}
-
-TEST_F(LayerTreeHostImplTest, GPUMemoryForLargeLayerHistogramTest) {
-  base::HistogramTester histogram_tester;
-  SetClientNameForMetrics("Browser");
-  // With default tile size being set to 256 * 256, the following layer needs
-  // 4 tiles which cost 256 * 256 * 4 * 4 / 1024 = 1024KB memory.
-  TestGPUMemoryForTilings(gfx::Size(500, 500));
-  histogram_tester.ExpectBucketCount(
-      "Compositing.Browser.GPUMemoryForTilingsInKb", 1024, 1);
-  histogram_tester.ExpectTotalCount(
-      "Compositing.Browser.GPUMemoryForTilingsInKb", 1);
 }
 
 TEST_F(LayerTreeHostImplTest, ScrollRootCallsCommitAndRedraw) {
@@ -3931,11 +3867,11 @@ class DidDrawCheckLayer : public LayerImpl {
     did_draw_called_ = false;
   }
 
-  static void IgnoreResult(std::unique_ptr<viz::CopyOutputResult> result) {}
+  static void IgnoreResult(std::unique_ptr<CopyOutputResult> result) {}
 
   void AddCopyRequest() {
     test_properties()->copy_requests.push_back(
-        viz::CopyOutputRequest::CreateRequest(base::BindOnce(&IgnoreResult)));
+        CopyOutputRequest::CreateRequest(base::BindOnce(&IgnoreResult)));
   }
 
  protected:
@@ -8956,7 +8892,7 @@ TEST_F(LayerTreeHostImplTest, CreateETC1UIResource) {
 }
 
 void ShutdownReleasesContext_Callback(
-    std::unique_ptr<viz::CopyOutputResult> result) {}
+    std::unique_ptr<CopyOutputResult> result) {}
 
 class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
  public:
@@ -9001,7 +8937,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
 
   LayerImpl* root = host_impl_->active_tree()->root_layer_for_testing();
   root->test_properties()->copy_requests.push_back(
-      viz::CopyOutputRequest::CreateRequest(
+      CopyOutputRequest::CreateRequest(
           base::BindOnce(&ShutdownReleasesContext_Callback)));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 

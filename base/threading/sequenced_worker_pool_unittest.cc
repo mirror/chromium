@@ -245,6 +245,7 @@ class SequencedWorkerPoolTest
   void SetUp() override {
     if (RedirectedToTaskScheduler()) {
       const SchedulerWorkerPoolParams worker_pool_params(
+          SchedulerWorkerPoolParams::StandbyThreadPolicy::LAZY,
           static_cast<int>(kNumWorkerThreads), TimeDelta::Max());
       TaskScheduler::Create("SequencedWorkerPoolTest");
       TaskScheduler::GetInstance()->Start(

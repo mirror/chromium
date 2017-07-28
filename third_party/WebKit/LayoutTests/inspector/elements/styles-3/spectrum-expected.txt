@@ -5,12 +5,8 @@ Testing: red
 red
 Testing: #ABC
 #abc
-Testing: #ABCA
-#abca
 Testing: #ABCDEF
 #abcdef
-Testing: #ABCDEFAA
-#abcdefaa
 Testing: rgb(1, 2, 3)
 rgb(1, 2, 3)
 Testing: rgba(1, 2, 3, 0.2)
@@ -21,15 +17,11 @@ Testing: hsla(1, 100%, 50%, 0.2)
 hsla(1, 100%, 50%, 0.2)
 --- Testing alpha changes
 Testing: red
-#ff000000
+rgba(255, 0, 0, 0)
 Testing: #ABC
-#abc0
-Testing: #ABCA
-#abc0
+rgba(170, 187, 204, 0)
 Testing: #ABCDEF
-#abcdef00
-Testing: #ABCDEFAA
-#abcdef00
+rgba(171, 205, 239, 0)
 Testing: rgb(1, 2, 3)
 rgba(1, 2, 3, 0)
 Testing: rgba(1, 2, 3, 0.2)
@@ -45,13 +37,7 @@ hsl
 Testing: #ABC
 rgb
 hsl
-Testing: #ABCA
-rgb
-hsl
 Testing: #ABCDEF
-rgb
-hsl
-Testing: #ABCDEFAA
 rgb
 hsl
 Testing: rgb(1, 2, 3)
@@ -59,11 +45,11 @@ hsl
 hex
 Testing: rgba(1, 2, 3, 0.2)
 hsl
-hex
+rgb
 Testing: hsl(1, 100%, 50%)
 hex
 rgb
 Testing: hsla(1, 100%, 50%, 0.2)
-hex
 rgb
+hsl
 

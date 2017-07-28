@@ -74,8 +74,6 @@ blink_core_sources("editing") {
     "SelectionTemplate.cpp",
     "SelectionTemplate.h",
     "SelectionType.h",
-    "SetSelectionData.cpp",
-    "SetSelectionData.h",
     "SurroundingText.cpp",
     "SurroundingText.h",
     "TextAffinity.cpp",
@@ -283,10 +281,6 @@ blink_core_sources("editing") {
     "state_machines/StateMachineUtil.h",
     "state_machines/TextSegmentationMachineState.cpp",
     "state_machines/TextSegmentationMachineState.h",
-    "suggestion/TextSuggestionBackendImpl.cpp",
-    "suggestion/TextSuggestionBackendImpl.h",
-    "suggestion/TextSuggestionController.cpp",
-    "suggestion/TextSuggestionController.h",
   ]
 
   if (is_mac) {
@@ -368,7 +362,6 @@ source_set("unit_tests") {
     "state_machines/StateMachineTestUtil.cpp",
     "state_machines/StateMachineTestUtil.h",
     "state_machines/StateMachineUtilTest.cpp",
-    "suggestion/TextSuggestionControllerTest.cpp",
   ]
 
   configs += [

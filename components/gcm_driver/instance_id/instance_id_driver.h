@@ -31,15 +31,15 @@ class InstanceIDDriver {
 
   // Returns the InstanceID that provides the Instance ID service for the given
   // application. The lifetime of the InstanceID will be managed by this class.
-  virtual InstanceID* GetInstanceID(const std::string& app_id);
+  InstanceID* GetInstanceID(const std::string& app_id);
 
   // Removes the InstanceID when it is not longer needed, i.e. the app is being
   // uninstalled.
-  virtual void RemoveInstanceID(const std::string& app_id);
+  void RemoveInstanceID(const std::string& app_id);
 
   // Returns true if the InstanceID for the given application has been created.
   // This is currently only used for testing purpose.
-  virtual bool ExistsInstanceID(const std::string& app_id) const;
+  bool ExistsInstanceID(const std::string& app_id) const;
 
  private:
   // Owned by GCMProfileServiceFactory, which is a dependency of

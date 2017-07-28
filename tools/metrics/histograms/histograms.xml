@@ -1895,35 +1895,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Arc.PlayStoreSearch.QueryTime" units="ms">
-  <owner>hejq@chromium.org</owner>
-  <summary>
-    Time between sending an Play Store app discovery request and the storing
-    returned results.
-  </summary>
-</histogram>
-
-<histogram name="Arc.PlayStoreSearch.ReturnedAppsTotal" units="apps">
-  <owner>hejq@chromium.org</owner>
-  <summary>
-    The total number of returned apps of a Play Store app discovery query.
-  </summary>
-</histogram>
-
-<histogram name="Arc.PlayStoreSearch.ReturnedInstantApps" units="apps">
-  <owner>hejq@chromium.org</owner>
-  <summary>
-    The number of returned instant apps of a Play Store app discovery query.
-  </summary>
-</histogram>
-
-<histogram name="Arc.PlayStoreSearch.ReturnedUninstalledApps" units="apps">
-  <owner>hejq@chromium.org</owner>
-  <summary>
-    The number of returned uninstalled apps of a Play Store app discovery query.
-  </summary>
-</histogram>
-
 <histogram name="Arc.PlayStoreShown.TimeDelta" units="ms">
   <owner>yusukes@google.com</owner>
   <owner>khmel@google.com</owner>
@@ -6796,23 +6767,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="BookmarkManager.CommandExecuted" enum="BookmarkManagerCommand">
-  <owner>calamity@chromium.org</owner>
-  <summary>
-    Logs when a user action triggers a command in the bookmark manager. Commands
-    can be triggered by keyboard shortcuts, menu items or other buttons in the
-    UI.
-  </summary>
-</histogram>
-
-<histogram name="BookmarkManager.CommandExecutedFromKeyboard"
-    enum="BookmarkManagerCommand">
-  <owner>calamity@chromium.org</owner>
-  <summary>
-    Logs when a keyboard shortcut triggers a command in the bookmark manager.
-  </summary>
-</histogram>
-
 <histogram name="BookmarkManager.NumDragged" units="bookmarks">
   <owner>calamity@chromium.org</owner>
   <summary>
@@ -7217,14 +7171,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Records whether the correct nonce challenge was in the Cast receiver's
     response.
-  </summary>
-</histogram>
-
-<histogram name="Cast.Channel.Signature" enum="CastSignatureStatus">
-  <owner>ryanchung@google.com</owner>
-  <summary>
-    Records whether the signature returned by the Cast receiver is verifiable
-    with the challenge and device certificate.
   </summary>
 </histogram>
 
@@ -8652,20 +8598,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Compositing.Browser.GPUMemoryForTilingsInKb" units="Kb">
-  <owner>yigu@chromium.org</owner>
-  <summary>
-    The GPU memory allocated for tilings (in a browser process), summed over all
-    picture layers. Emitted once per drawing. Nothing is recorded if there are
-    no picture layers.
-
-    Tilings are used for decomposition of the layer's entire contents at a
-    picture screenspace resolution to do threaded rasterization.
-
-    Team: threaded-rendering-dev@chromium.org.
-  </summary>
-</histogram>
-
 <histogram base="true" name="Compositing.Browser.LayersUpdateTime"
     units="microseconds">
   <owner>threaded-rendering-dev@chromium.org</owner>
@@ -8989,20 +8921,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time spent updating (i.e. recording) a display list, in microseconds.
     Recorded when display list is updated (in a renderer process).
-  </summary>
-</histogram>
-
-<histogram name="Compositing.Renderer.GPUMemoryForTilingsInKb" units="Kb">
-  <owner>yigu@chromium.org</owner>
-  <summary>
-    The GPU memory allocated for tilings (in a renderer process), summed over
-    all picture layers. Emitted once per drawing. Nothing is recorded if there
-    are no picture layers.
-
-    Tilings are used for decomposition of the layer's entire contents at a
-    picture screenspace resolution to do threaded rasterization.
-
-    Team: threaded-rendering-dev@chromium.org.
   </summary>
 </histogram>
 
@@ -24824,9 +24742,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistenciesBrowser" enum="Inconsistencies">
-  <obsolete>
-    Deprecated 7/2017.
-  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
@@ -24840,9 +24755,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistenciesBrowserUnique" enum="Inconsistencies">
-  <obsolete>
-    Deprecated 7/2017.
-  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
@@ -24856,9 +24768,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistenciesChildProcess" enum="Inconsistencies">
-  <obsolete>
-    Deprecated 7/2017.
-  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
@@ -24873,9 +24782,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Histogram.InconsistenciesChildProcessUnique"
     enum="Inconsistencies">
-  <obsolete>
-    Deprecated 7/2017.
-  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of inconsistency events found when examining a single histogram's
@@ -24922,9 +24828,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistentCountHigh">
-  <obsolete>
-    Deprecated 7/2017.
-  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of extra samples counted in the redundant_count in a histogram
@@ -24933,9 +24836,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Histogram.InconsistentCountLow">
-  <obsolete>
-    Deprecated 7/2017.
-  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <summary>
     The number of missing samples in the redundant_count in a histogram that
@@ -32089,16 +31989,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of known DIAL devices. Recorded when browser finishes discovering
     DIAL devices. Recording happens roughly once per hour.
-  </summary>
-</histogram>
-
-<histogram name="MediaRouter.Dial.ParsingError"
-    enum="MediaRouterDialParsingError">
-  <owner>zhaobin@chromium.org</owner>
-  <summary>
-    Error encountered while parsing DIAL device description XML text. Recorded
-    when utility process returns an invalid DIAL device description object to
-    browser.
   </summary>
 </histogram>
 
@@ -59005,9 +58895,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="PreloadScanner.DocumentWrite.ExecutionTime.Failure" units="ms">
-  <obsolete>
-    DocumentWriteEvaluator was removed in 07/2017
-  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     Time spent executing a script tag in the blink preload scanner, for the
@@ -59017,9 +58904,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="PreloadScanner.DocumentWrite.ExecutionTime.Success" units="ms">
-  <obsolete>
-    DocumentWriteEvaluator was removed in 07/2017
-  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     Time spent executing a script tag in the blink preload scanner, for the
@@ -59030,9 +58914,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="PreloadScanner.DocumentWrite.GatedEvaluation"
     enum="DocumentWriteGatedEvaluation">
-  <obsolete>
-    DocumentWriteEvaluator was removed in 07/2017
-  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The reason a particular inline script was blocked from evaluation.
@@ -59040,9 +58921,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="PreloadScanner.DocumentWrite.InitializationTime" units="ms">
-  <obsolete>
-    DocumentWriteEvaluator was removed in 07/2017
-  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     Time spent initializing a new V8 context for the purpose of evaluating it
@@ -62606,24 +62484,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     This metric records the duration of an image decode for out of raster path
     in the compositor. It is recorded every time we decode an image. It is
     suffixed by the type of rasterization we're in (either Gpu or Software).
-  </summary>
-</histogram>
-
-<histogram name="Renderer4.ImagePixelsPercentSRGB" units="%">
-  <owner>ccameron@chromium.org</owner>
-  <summary>
-    For each cc::Layer that has more than zero discardable images, this metric
-    records the percent of image pixels that were from images that were
-    originally specified in an sRGB color space.
-  </summary>
-</histogram>
-
-<histogram name="Renderer4.ImagesPercentSRGB" units="%">
-  <owner>ccameron@chromium.org</owner>
-  <summary>
-    For each cc::Layer that has more than zero discardable images, this metric
-    records the percent of images that were originally specified in an sRGB
-    color space.
   </summary>
 </histogram>
 
@@ -95743,6 +95603,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram
       name="PageLoad.Clients.DocWrite.Block.Timing2.ParseDuration"/>
   <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.PaintTiming.NavigationToFirstContentfulPaint"/>
+  <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.ParseTiming.ParseBlockedOnScriptLoad"/>
+  <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.ParseTiming.ParseBlockedOnScriptLoadFromDocumentWrite"/>
+  <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.ParseTiming.ParseDuration"/>
+  <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.Timing2.NavigationToFirstContentfulPaint"/>
+  <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.Timing2.ParseBlockedOnScriptLoad"/>
+  <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.Timing2.ParseBlockedOnScriptLoadFromDocumentWrite"/>
+  <affected-histogram
+      name="PageLoad.Clients.DocWrite.Evaluator.Timing2.ParseDuration"/>
+  <affected-histogram
       name="PageLoad.Clients.MultiTabLoading.DocumentTiming.NavigationToDOMContentLoadedEventFired"/>
   <affected-histogram
       name="PageLoad.Clients.MultiTabLoading.DocumentTiming.NavigationToLoadEventFired"/>
@@ -95992,6 +95868,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="PageLoadMetrics from a page that has synchronous, cross-origin
              document.written scripts that could be blocked if the
              document.write script blocking feature is enabled."/>
+  <suffix name="Clients.DocWrite.Evaluator"
+      label="PageLoadMetrics from a page that could have been evaluated by
+             the DocumentWriteEvaluator"/>
   <affected-histogram
       name="PageLoad.Experimental.PaintTiming.ParseStartToFirstMeaningfulPaint"/>
   <affected-histogram

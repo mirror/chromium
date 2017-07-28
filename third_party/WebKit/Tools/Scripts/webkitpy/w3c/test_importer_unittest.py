@@ -280,7 +280,7 @@ class TestImporterTest(LoggingTestCase):
         importer = TestImporter(host)
         blink_path = '/mock-checkout/third_party/WebKit'
         host.filesystem.write_text_file(blink_path + '/LayoutTests/external/wpt/MANIFEST.json', '{}')
-        importer._generate_manifest()
+        importer._generate_manifest(blink_path + '/LayoutTests/external/wpt')
         self.assertEqual(
             host.executive.calls,
             [
@@ -300,27 +300,27 @@ class TestImporterTest(LoggingTestCase):
 
     def test_delete_orphaned_baselines(self):
         host = MockHost()
-        importer = TestImporter(host)
-        dest_path = importer.dest_path
+        dest_path = '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt'
         host.filesystem.write_text_file(dest_path + '/b-expected.txt', '')
         host.filesystem.write_text_file(dest_path + '/b.x-expected.txt', '')
         host.filesystem.write_text_file(dest_path + '/b.x.html', '')
-        importer._delete_orphaned_baselines()
+        importer = TestImporter(host)
+        importer._delete_orphaned_baselines(dest_path)
         self.assertFalse(host.filesystem.exists(dest_path + '/b-expected.txt'))
         self.assertTrue(host.filesystem.exists(dest_path + '/b.x-expected.txt'))
         self.assertTrue(host.filesystem.exists(dest_path + '/b.x.html'))
 
     def test_clear_out_dest_path(self):
         host = MockHost()
-        importer = TestImporter(host)
-        dest_path = importer.dest_path
+        dest_path = '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt'
         host.filesystem.write_text_file(dest_path + '/foo-test.html', '')
         host.filesystem.write_text_file(dest_path + '/foo-test-expected.txt', '')
         host.filesystem.write_text_file(dest_path + '/OWNERS', '')
         host.filesystem.write_text_file(dest_path + '/bar/baz/OWNERS', '')
+        importer = TestImporter(host)
         # When the destination path is cleared, OWNERS files and baselines
         # are kept.
-        importer._clear_out_dest_path()
+        importer._clear_out_dest_path(dest_path)
         self.assertFalse(host.filesystem.exists(dest_path + '/foo-test.html'))
         self.assertTrue(host.filesystem.exists(dest_path + '/foo-test-expected.txt'))
         self.assertTrue(host.filesystem.exists(dest_path + '/OWNERS'))

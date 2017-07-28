@@ -4,7 +4,7 @@
 
 #include "chromeos/login/auth/mock_auth_status_consumer.h"
 
-#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "google_apis/gaia/gaia_auth_consumer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -19,59 +19,59 @@ MockAuthStatusConsumer::~MockAuthStatusConsumer() {
 // static
 void MockAuthStatusConsumer::OnRetailModeSuccessQuit(
     const UserContext& user_context) {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnRetailModeSuccessQuitAndFail(
     const UserContext& user_context) {
   ADD_FAILURE() << "Retail mode login should have failed!";
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnGuestSuccessQuit() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnGuestSuccessQuitAndFail() {
   ADD_FAILURE() << "Guest login should have failed!";
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnSuccessQuit(const UserContext& user_context) {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnSuccessQuitAndFail(
     const UserContext& user_context) {
   ADD_FAILURE() << "Login should NOT have succeeded!";
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnFailQuit(const AuthFailure& error) {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnFailQuitAndFail(const AuthFailure& error) {
   ADD_FAILURE() << "Login should not have failed!";
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnMigrateQuit() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 // static
 void MockAuthStatusConsumer::OnMigrateQuitAndFail() {
   ADD_FAILURE() << "Should not have detected a PW change!";
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 }  // namespace chromeos

@@ -7,7 +7,6 @@
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "components/history/core/browser/history_db_task.h"
@@ -34,7 +33,7 @@ class WaitForHistoryTask : public history::HistoryDBTask {
   }
 
   void DoneRunOnMainThread() override {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
  private:

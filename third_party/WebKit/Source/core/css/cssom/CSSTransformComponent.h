@@ -13,7 +13,6 @@
 namespace blink {
 
 class DOMMatrix;
-class ExceptionState;
 
 // CSSTransformComponent is the base class used for the representations of
 // the individual CSS transforms. They are combined in a CSSTransformValue
@@ -53,7 +52,7 @@ class CORE_EXPORT CSSTransformComponent
   // Internal methods.
   virtual TransformComponentType GetType() const = 0;
   virtual const CSSFunctionValue* ToCSSValue() const = 0;
-  virtual const DOMMatrix* AsMatrix(ExceptionState&) const = 0;
+  virtual const DOMMatrix* AsMatrix() const = 0;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 

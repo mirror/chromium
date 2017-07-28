@@ -8,6 +8,7 @@
 #include "base/json/json_file_value_serializer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -69,7 +70,7 @@ class ExtensionIconManagerTest : public testing::Test {
   void ImageLoadObserved() {
     unwaited_image_loads_++;
     if (waiting_) {
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
     }
   }
 

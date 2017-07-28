@@ -6,16 +6,15 @@
 
 namespace mojo {
 
-// Note: the constant below must be maximum defined sensor traits
-// (see sensor_traits.h).
-constexpr double kMaxAllowedFrequency = 60.0;
-
 // static
 bool StructTraits<device::mojom::SensorConfigurationDataView,
                   device::PlatformSensorConfiguration>::
     Read(device::mojom::SensorConfigurationDataView data,
          device::PlatformSensorConfiguration* out) {
-  if (data.frequency() > kMaxAllowedFrequency || data.frequency() <= 0.0) {
+  // Maximum allowed frequency is capped to 60Hz.
+  if (data.frequency() >
+          device::mojom::SensorConfiguration::kMaxAllowedFrequency ||
+      data.frequency() <= 0.0) {
     return false;
   }
 

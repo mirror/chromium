@@ -36,19 +36,9 @@ class MockMojoMediaStreamDispatcherHost
  public:
   MockMojoMediaStreamDispatcherHost() {}
 
-  MOCK_METHOD5(
-      GenerateStream,
-      void(int32_t, int32_t, const StreamControls&, const url::Origin&, bool));
   MOCK_METHOD2(CancelGenerateStream, void(int32_t, int32_t));
   MOCK_METHOD2(StopStreamDevice, void(int32_t, const std::string&));
-  MOCK_METHOD5(OpenDevice,
-               void(int32_t,
-                    int32_t,
-                    const std::string&,
-                    MediaStreamType,
-                    const url::Origin&));
   MOCK_METHOD1(CloseDevice, void(const std::string&));
-  MOCK_METHOD3(SetCapturingLinkSecured, void(int32_t, MediaStreamType, bool));
   MOCK_METHOD1(StreamStarted, void(const std::string&));
 };
 
@@ -118,7 +108,7 @@ class MockMediaStreamDispatcherEventHandler
 
 class MediaStreamDispatcherUnderTest : public MediaStreamDispatcher {
  public:
-  MediaStreamDispatcherUnderTest() : MediaStreamDispatcher(nullptr) {}
+  MediaStreamDispatcherUnderTest() : MediaStreamDispatcher(NULL) {}
 
   using MediaStreamDispatcher::GetNextIpcIdForTest;
   using RenderFrameObserver::OnMessageReceived;
@@ -227,9 +217,12 @@ TEST_F(MediaStreamDispatcherTest, GenerateStreamAndStopDevices) {
 }
 
 TEST_F(MediaStreamDispatcherTest, BasicVideoDevice) {
-  auto dispatcher = base::MakeUnique<MediaStreamDispatcher>(nullptr);
-  auto handler1 = base::MakeUnique<MockMediaStreamDispatcherEventHandler>();
-  auto handler2 = base::MakeUnique<MockMediaStreamDispatcherEventHandler>();
+  std::unique_ptr<MediaStreamDispatcher> dispatcher(
+      new MediaStreamDispatcher(NULL));
+  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler1(
+      new MockMediaStreamDispatcherEventHandler);
+  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler2(
+      new MockMediaStreamDispatcherEventHandler);
   MockMojoMediaStreamDispatcherHost mock_dispatcher_host;
   dispatcher->dispatcher_host_ = &mock_dispatcher_host;
   url::Origin security_origin;
@@ -292,10 +285,10 @@ TEST_F(MediaStreamDispatcherTest, BasicVideoDevice) {
 }
 
 TEST_F(MediaStreamDispatcherTest, TestFailure) {
-  auto dispatcher = base::MakeUnique<MediaStreamDispatcher>(nullptr);
-  auto handler = base::MakeUnique<MockMediaStreamDispatcherEventHandler>();
-  MockMojoMediaStreamDispatcherHost mock_dispatcher_host;
-  dispatcher->dispatcher_host_ = &mock_dispatcher_host;
+  std::unique_ptr<MediaStreamDispatcher> dispatcher(
+      new MediaStreamDispatcher(NULL));
+  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler(
+      new MockMediaStreamDispatcherEventHandler);
   StreamControls components(true, true);
   url::Origin security_origin;
 
@@ -340,8 +333,10 @@ TEST_F(MediaStreamDispatcherTest, TestFailure) {
 }
 
 TEST_F(MediaStreamDispatcherTest, CancelGenerateStream) {
-  auto dispatcher = base::MakeUnique<MediaStreamDispatcher>(nullptr);
-  auto handler = base::MakeUnique<MockMediaStreamDispatcherEventHandler>();
+  std::unique_ptr<MediaStreamDispatcher> dispatcher(
+      new MediaStreamDispatcher(NULL));
+  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler(
+      new MockMediaStreamDispatcherEventHandler);
   MockMojoMediaStreamDispatcherHost mock_dispatcher_host;
   dispatcher->dispatcher_host_ = &mock_dispatcher_host;
   StreamControls components(true, true);
@@ -399,8 +394,10 @@ TEST_F(MediaStreamDispatcherTest, DeviceClosed) {
 }
 
 TEST_F(MediaStreamDispatcherTest, GetNonScreenCaptureDevices) {
-  auto dispatcher = base::MakeUnique<MediaStreamDispatcher>(nullptr);
-  auto handler = base::MakeUnique<MockMediaStreamDispatcherEventHandler>();
+  std::unique_ptr<MediaStreamDispatcher> dispatcher(
+      new MediaStreamDispatcher(nullptr));
+  std::unique_ptr<MockMediaStreamDispatcherEventHandler> handler(
+      new MockMediaStreamDispatcherEventHandler);
   MockMojoMediaStreamDispatcherHost mock_dispatcher_host;
   dispatcher->dispatcher_host_ = &mock_dispatcher_host;
   url::Origin security_origin;

@@ -5,7 +5,7 @@
 #include "net/cert/internal/path_builder.h"
 
 #include "net/cert/internal/cert_issuer_source_static.h"
-#include "net/cert/internal/simple_path_builder_delegate.h"
+#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store_in_memory.h"
 #include "net/cert/internal/verify_certificate_chain_typed_unittest.h"
 
@@ -13,11 +13,11 @@ namespace net {
 
 namespace {
 
-class PathBuilderTestDelegate {
+class PathBuilderDelegate {
  public:
   static void Verify(const VerifyCertChainTest& test,
                      const std::string& test_file_path) {
-    SimplePathBuilderDelegate path_builder_delegate(1024);
+    SimpleSignaturePolicy signature_policy(1024);
     ASSERT_FALSE(test.chain.empty());
 
     TrustStoreInMemory trust_store;
@@ -44,7 +44,7 @@ class PathBuilderTestDelegate {
     CertPathBuilder::Result result;
     // First cert in the |chain| is the target.
     CertPathBuilder path_builder(
-        test.chain.front(), &trust_store, &path_builder_delegate, test.time,
+        test.chain.front(), &trust_store, &signature_policy, test.time,
         test.key_purpose, test.initial_explicit_policy,
         test.user_initial_policy_set, test.initial_policy_mapping_inhibit,
         test.initial_any_policy_inhibit, &result);
@@ -59,6 +59,6 @@ class PathBuilderTestDelegate {
 
 INSTANTIATE_TYPED_TEST_CASE_P(PathBuilder,
                               VerifyCertificateChainSingleRootTest,
-                              PathBuilderTestDelegate);
+                              PathBuilderDelegate);
 
 }  // namespace net

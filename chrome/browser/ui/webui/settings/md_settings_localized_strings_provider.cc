@@ -1677,26 +1677,19 @@ void AddSearchInSettingsStrings(content::WebUIDataSource* html_source) {
 
 void AddSearchStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
-    {"searchPageTitle", IDS_SETTINGS_SEARCH},
-    {"searchEnginesManage", IDS_SETTINGS_SEARCH_MANAGE_SEARCH_ENGINES},
-    {"searchOkGoogleLabel", IDS_SETTINGS_SEARCH_OK_GOOGLE_LABEL},
-#if defined(OS_CHROMEOS)
-    {"searchGoogleAssistant", IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT},
-    {"searchGoogleAssistantEnabled",
-     IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_ENABLED},
-    {"searchGoogleAssistantDisabled",
-     IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_DISABLED},
-#endif
-    {"searchOkGoogleSubtextAlwaysOn",
-     IDS_SETTINGS_SEARCH_OK_GOOGLE_SUBTEXT_ALWAYS_ON},
-    {"searchOkGoogleSubtextNoHardware",
-     IDS_SETTINGS_SEARCH_OK_GOOGLE_SUBTEXT_NO_HARDWARE},
-    {"searchOkGoogleAudioHistoryLabel",
-     IDS_SETTINGS_SEARCH_OK_GOOGLE_AUDIO_HISTORY_LABEL},
-    {"searchOkGoogleAudioHistorySubtext",
-     IDS_SETTINGS_SEARCH_OK_GOOGLE_AUDIO_HISTORY_SUBTEXT},
-    {"searchOkGoogleRetrain", IDS_SETTINGS_SEARCH_OK_GOOGLE_RETRAIN},
-    {"searchEnableGoogleNowLabel", IDS_SETTINGS_SEARCH_ENABLE_GOOGLE_NOW},
+      {"searchPageTitle", IDS_SETTINGS_SEARCH},
+      {"searchEnginesManage", IDS_SETTINGS_SEARCH_MANAGE_SEARCH_ENGINES},
+      {"searchOkGoogleLabel", IDS_SETTINGS_SEARCH_OK_GOOGLE_LABEL},
+      {"searchOkGoogleSubtextAlwaysOn",
+       IDS_SETTINGS_SEARCH_OK_GOOGLE_SUBTEXT_ALWAYS_ON},
+      {"searchOkGoogleSubtextNoHardware",
+       IDS_SETTINGS_SEARCH_OK_GOOGLE_SUBTEXT_NO_HARDWARE},
+      {"searchOkGoogleAudioHistoryLabel",
+       IDS_SETTINGS_SEARCH_OK_GOOGLE_AUDIO_HISTORY_LABEL},
+      {"searchOkGoogleAudioHistorySubtext",
+       IDS_SETTINGS_SEARCH_OK_GOOGLE_AUDIO_HISTORY_SUBTEXT},
+      {"searchOkGoogleRetrain", IDS_SETTINGS_SEARCH_OK_GOOGLE_RETRAIN},
+      {"searchEnableGoogleNowLabel", IDS_SETTINGS_SEARCH_ENABLE_GOOGLE_NOW},
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
@@ -1708,10 +1701,6 @@ void AddSearchStrings(content::WebUIDataSource* html_source) {
       IDS_SETTINGS_SEARCH_EXPLANATION,
       base::ASCIIToUTF16(chrome::kOmniboxLearnMoreURL));
   html_source->AddString("searchExplanation", search_explanation_text);
-#if defined(OS_CHROMEOS)
-  html_source->AddBoolean("enableVoiceInteraction",
-                          chromeos::switches::IsVoiceInteractionEnabled());
-#endif
 }
 
 void AddSearchEnginesStrings(content::WebUIDataSource* html_source) {
@@ -1741,21 +1730,6 @@ void AddSearchEnginesStrings(content::WebUIDataSource* html_source) {
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
 }
-
-#if defined(OS_CHROMEOS)
-void AddGoogleAssistantStrings(content::WebUIDataSource* html_source) {
-  LocalizedString localized_strings[] = {
-      {"googleAssistantPageTitle", IDS_SETTINGS_GOOGLE_ASSISTANT},
-      {"googleAssistantEnableContext",
-       IDS_SETTINGS_GOOGLE_ASSISTANT_ENABLE_CONTEXT},
-      {"googleAssistantEnableContextDescription",
-       IDS_SETTINGS_GOOGLE_ASSISTANT_ENABLE_CONTEXT_DESCRIPTION},
-      {"googleAssistantSettings", IDS_SETTINGS_GOOGLE_ASSISTANT_SETTINGS},
-  };
-  AddLocalizedStringsBulk(html_source, localized_strings,
-                          arraysize(localized_strings));
-}
-#endif
 
 void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
                             Profile* profile) {
@@ -1943,7 +1917,7 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
      IDS_SETTINGS_SITE_SETTINGS_SESSION_ONLY_MENU},
     {"siteSettingsUsage", IDS_SETTINGS_SITE_SETTINGS_USAGE},
     {"siteSettingsPermissions", IDS_SETTINGS_SITE_SETTINGS_PERMISSIONS},
-    {"siteSettingsReset", IDS_SETTINGS_SITE_SETTINGS_RESET_BUTTON},
+    {"siteSettingsClearAndReset", IDS_SETTINGS_SITE_SETTINGS_CLEAR_BUTTON},
     {"siteSettingsCookieHeader", IDS_SETTINGS_SITE_SETTINGS_COOKIE_HEADER},
     {"siteSettingsCookieRemove", IDS_SETTINGS_SITE_SETTINGS_COOKIE_REMOVE},
     {"siteSettingsCookieRemoveAll",
@@ -1961,11 +1935,11 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"siteSettingsCookieSearch", IDS_SETTINGS_SITE_SETTINGS_COOKIE_SEARCH},
     {"siteSettingsCookieSubpage", IDS_SETTINGS_SITE_SETTINGS_COOKIE_SUBPAGE},
     {"siteSettingsDelete", IDS_SETTINGS_SITE_SETTINGS_DELETE},
-    {"siteSettingsSiteResetAll", IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_ALL},
-    {"siteSettingsSiteResetConfirmation",
-     IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_CONFIRMATION},
-    {"siteSettingsSiteResetDialogTitle",
-     IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_DIALOG_TITLE},
+    {"siteSettingsSiteClearAll", IDS_SETTINGS_SITE_SETTINGS_SITE_CLEAR_ALL},
+    {"siteSettingsSiteRemoveConfirmation",
+     IDS_SETTINGS_SITE_SETTINGS_SITE_REMOVE_CONFIRMATION},
+    {"siteSettingsSiteRemoveDialogTitle",
+     IDS_SETTINGS_SITE_SETTINGS_SITE_REMOVE_DIALOG_TITLE},
     {"thirdPartyCookie", IDS_SETTINGS_SITE_SETTINGS_THIRD_PARTY_COOKIE},
     {"thirdPartyCookieSublabel",
      IDS_SETTINGS_SITE_SETTINGS_THIRD_PARTY_COOKIE_SUBLABEL},
@@ -2231,9 +2205,6 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source,
   AddPrivacyStrings(html_source, profile);
   AddResetStrings(html_source);
   AddSearchEnginesStrings(html_source);
-#if defined(OS_CHROMEOS)
-  AddGoogleAssistantStrings(html_source);
-#endif
   AddSearchInSettingsStrings(html_source);
   AddSearchStrings(html_source);
   AddSiteSettingsStrings(html_source, profile);

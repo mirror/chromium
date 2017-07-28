@@ -54,6 +54,7 @@ import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.bookmarks.BookmarkUtils;
 import org.chromium.chrome.browser.browseractions.BrowserActionsContextMenuItemDelegate;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
+import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
@@ -65,11 +66,10 @@ import org.chromium.chrome.browser.cookies.CookiesFetcher;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.document.DocumentUtils;
-import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
 import org.chromium.chrome.browser.download.DownloadUtils;
-import org.chromium.chrome.browser.feature_engagement.ScreenshotMonitor;
-import org.chromium.chrome.browser.feature_engagement.ScreenshotMonitorDelegate;
-import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
+import org.chromium.chrome.browser.feature_engagement_tracker.FeatureEngagementTrackerFactory;
+import org.chromium.chrome.browser.feature_engagement_tracker.ScreenshotMonitor;
+import org.chromium.chrome.browser.feature_engagement_tracker.ScreenshotMonitorDelegate;
 import org.chromium.chrome.browser.firstrun.FirstRunActivity;
 import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
 import org.chromium.chrome.browser.firstrun.FirstRunSignInProcessor;
@@ -122,10 +122,11 @@ import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetMetrics;
 import org.chromium.chrome.browser.widget.emptybackground.EmptyBackgroundViewWrapper;
+import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
-import org.chromium.components.feature_engagement.EventConstants;
-import org.chromium.components.feature_engagement.FeatureConstants;
-import org.chromium.components.feature_engagement.Tracker;
+import org.chromium.components.feature_engagement_tracker.EventConstants;
+import org.chromium.components.feature_engagement_tracker.FeatureConstants;
+import org.chromium.components.feature_engagement_tracker.FeatureEngagementTracker;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.crypto.CipherFactory;
@@ -217,6 +218,8 @@ public class ChromeTabbedActivity
 
     private final ActivityStopMetrics mActivityStopMetrics;
     private final MainIntentBehaviorMetrics mMainIntentMetrics;
+
+    private FindToolbarManager mFindToolbarManager;
 
     private UndoBarController mUndoBarPopupController;
 
@@ -739,6 +742,12 @@ public class ChromeTabbedActivity
                         (int) controlHeight;
             }
 
+            mFindToolbarManager = new FindToolbarManager(this,
+                    getToolbarManager().getActionModeController().getActionModeCallback());
+            if (getContextualSearchManager() != null) {
+                getContextualSearchManager().setFindToolbarManager(mFindToolbarManager);
+            }
+
             OnClickListener tabSwitcherClickHandler = new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -767,9 +776,9 @@ public class ChromeTabbedActivity
             };
 
             getToolbarManager().initializeWithNative(mTabModelSelectorImpl,
-                    getFullscreenManager().getBrowserVisibilityDelegate(), getFindToolbarManager(),
-                    mLayoutManager, mLayoutManager, tabSwitcherClickHandler, newTabClickHandler,
-                    bookmarkClickHandler, null);
+                    getFullscreenManager().getBrowserVisibilityDelegate(),
+                    mFindToolbarManager, mLayoutManager, mLayoutManager,
+                    tabSwitcherClickHandler, newTabClickHandler, bookmarkClickHandler, null);
 
             if (isTablet()) {
                 EmptyBackgroundViewWrapper bgViewWrapper = new EmptyBackgroundViewWrapper(
@@ -785,8 +794,9 @@ public class ChromeTabbedActivity
                 mLayoutManager.hideOverview(false);
             }
 
-            final Tracker tracker =
-                    TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+            final FeatureEngagementTracker tracker =
+                    FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
+                            Profile.getLastUsedProfile());
             tracker.addOnInitializedCallback(new Callback<Boolean>() {
                 @Override
                 public void onResult(Boolean result) {
@@ -802,7 +812,8 @@ public class ChromeTabbedActivity
         }
     }
 
-    private void showFeatureEngagementTextBubbleForDownloadHome(final Tracker tracker) {
+    private void showFeatureEngagementTextBubbleForDownloadHome(
+            final FeatureEngagementTracker tracker) {
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_HOME_FEATURE)) return;
 
         ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(this,
@@ -1652,6 +1663,16 @@ public class ChromeTabbedActivity
             getTabModelSelector().getModel(true).closeAllTabs();
             // TODO(nileshagrawal) Record unique action for this. See bug http://b/5542946.
             RecordUserAction.record("MobileMenuCloseAllTabs");
+        } else if (id == R.id.find_in_page_id) {
+            mFindToolbarManager.showToolbar();
+            if (getContextualSearchManager() != null) {
+                getContextualSearchManager().hideContextualSearch(StateChangeReason.UNKNOWN);
+            }
+            if (fromMenu) {
+                RecordUserAction.record("MobileMenuFindInPage");
+            } else {
+                RecordUserAction.record("MobileShortcutFindInPage");
+            }
         } else if (id == R.id.focus_url_bar) {
             boolean isUrlBarVisible = !mLayoutManager.overviewVisible()
                     && (!isTablet() || getCurrentTabModel().getCount() != 0);
@@ -1863,21 +1884,6 @@ public class ChromeTabbedActivity
                     null,
                     intent);
         } else {
-            // Check if the tab is being created from a Reader Mode navigation.
-            if (ReaderModeManager.isEnabled(this)
-                    && ReaderModeManager.isReaderModeCreatedIntent(intent)) {
-                Bundle extras = intent.getExtras();
-                int readerParentId = IntentUtils.safeGetInt(
-                        extras, ReaderModeManager.EXTRA_READER_MODE_PARENT, Tab.INVALID_TAB_ID);
-                extras.remove(ReaderModeManager.EXTRA_READER_MODE_PARENT);
-                // Set the parent tab to the tab that Reader Mode started from.
-                if (readerParentId != Tab.INVALID_TAB_ID && mTabModelSelectorImpl != null) {
-                    return getCurrentTabCreator().createNewTab(
-                            new LoadUrlParams(url, PageTransition.LINK), TabLaunchType.FROM_LINK,
-                            mTabModelSelectorImpl.getTabById(readerParentId));
-                }
-            }
-
             return getTabCreator(false).launchUrlFromExternalApp(url, referer, headers,
                     externalAppId, forceNewTab, intent, mIntentHandlingTimeMs);
         }
@@ -2008,6 +2014,11 @@ public class ChromeTabbedActivity
         // attempt to show the menu until the UI creation has finished.
         if (!mUIInitialized) return false;
 
+        // Do not show the menu if we are in find in page view.
+        if (mFindToolbarManager != null && mFindToolbarManager.isShowing() && !isTablet()) {
+            return false;
+        }
+
         return super.shouldShowAppMenu();
     }
 
@@ -2040,7 +2051,7 @@ public class ChromeTabbedActivity
 
     @Override
     public void onOverviewModeStartedShowing(boolean showToolbar) {
-        if (getFindToolbarManager() != null) getFindToolbarManager().hideToolbar();
+        if (mFindToolbarManager != null) mFindToolbarManager.hideToolbar();
         if (getAssistStatusHandler() != null) getAssistStatusHandler().updateAssistState();
         if (getAppMenuHandler() != null) getAppMenuHandler().hideAppMenu();
         ApiCompatibilityUtils.setStatusBarColor(getWindow(), Color.BLACK);
@@ -2210,12 +2221,15 @@ public class ChromeTabbedActivity
         // Second part of the check to determine whether to trigger help UI
         if (isInOverviewMode() || !DownloadUtils.isAllowedToDownloadPage(getActivityTab())) return;
 
-        Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+        FeatureEngagementTracker tracker =
+                FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
+                        Profile.getLastUsedProfile());
         tracker.notifyEvent(EventConstants.SCREENSHOT_TAKEN_CHROME_IN_FOREGROUND);
         maybeShowFeatureEngagementTextBubbleForDownloadPage(tracker);
     }
 
-    private void maybeShowFeatureEngagementTextBubbleForDownloadPage(final Tracker tracker) {
+    private void maybeShowFeatureEngagementTextBubbleForDownloadPage(
+            final FeatureEngagementTracker tracker) {
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_PAGE_SCREENSHOT_FEATURE)) return;
 
         ViewAnchoredTextBubble textBubble =

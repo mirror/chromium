@@ -98,8 +98,8 @@ uint8_t BlendColorComponents(uint8_t start,
 }
 
 double TimeDeltaDivide(base::TimeDelta dividend, base::TimeDelta divisor) {
-  return static_cast<double>(dividend.InMicroseconds()) /
-         static_cast<double>(divisor.InMicroseconds());
+  return static_cast<double>(dividend.ToInternalValue()) /
+         static_cast<double>(divisor.ToInternalValue());
 }
 
 }  // namespace

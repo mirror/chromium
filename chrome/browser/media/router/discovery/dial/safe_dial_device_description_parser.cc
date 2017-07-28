@@ -33,8 +33,7 @@ void SafeDialDeviceDescriptionParser::Start(
                 IDS_UTILITY_PROCESS_DIAL_DEVICE_DESCRIPTION_PARSER_NAME));
 
     utility_process_mojo_client_->set_error_callback(
-        base::Bind(callback, nullptr,
-                   chrome::mojom::DialParsingError::UTILITY_PROCESS_ERROR));
+        base::Bind(callback, nullptr));
 
     // This starts utility process in the background.
     utility_process_mojo_client_->Start();

@@ -392,9 +392,8 @@ void PaintPath(Canvas* canvas,
         if (elapsed_time >= delay + duration) {
           state = 1;
         } else if (elapsed_time > delay) {
-          DCHECK(!duration.is_zero());
-          state = (elapsed_time - delay).InMicroseconds() /
-                  static_cast<double>(duration.InMicroseconds());
+          state = (elapsed_time - delay).ToInternalValue() /
+                  static_cast<double>(duration.ToInternalValue());
         }
 
         auto weight = Tween::CalculateValue(

@@ -55,7 +55,7 @@
   return color;
 }
 
-+ (UIColor*)hostOfflineColor {
++ (UIColor*)offlineHostColor {
   static UIColor* color;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -64,23 +64,11 @@
   return color;
 }
 
-+ (UIColor*)hostOnlineColor {
++ (UIColor*)onlineHostColor {
   static UIColor* color;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     color = [UIColor colorWithRed:0.40f green:0.75f blue:0.40f alpha:1.f];
-  });
-  return color;
-}
-
-+ (UIColor*)hostErrorColor {
-  static UIColor* color;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    color = [UIColor colorWithRed:249.f / 255.f
-                            green:146.f / 255.f
-                             blue:34.f / 255.f
-                            alpha:1.f];
   });
   return color;
 }

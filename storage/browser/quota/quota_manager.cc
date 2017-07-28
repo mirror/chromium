@@ -27,7 +27,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_runner_util.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -150,8 +149,8 @@ bool DeleteOriginInfoOnDBThread(const GURL& origin,
   if (is_eviction) {
     QuotaDatabase::OriginInfoTableEntry entry;
     database->GetOriginInfo(origin, type, &entry);
-    UMA_HISTOGRAM_COUNTS_1M(QuotaManager::kEvictedOriginAccessedCountHistogram,
-                            entry.used_count);
+    UMA_HISTOGRAM_COUNTS(QuotaManager::kEvictedOriginAccessedCountHistogram,
+                         entry.used_count);
     UMA_HISTOGRAM_COUNTS_1000(
         QuotaManager::kEvictedOriginDaysSinceAccessHistogram,
         (now - entry.last_access_time).InDays());
@@ -817,6 +816,7 @@ QuotaManager::QuotaManager(
     bool is_incognito,
     const base::FilePath& profile_path,
     const scoped_refptr<base::SingleThreadTaskRunner>& io_thread,
+    const scoped_refptr<base::SequencedTaskRunner>& db_thread,
     const scoped_refptr<SpecialStoragePolicy>& special_storage_policy,
     const GetQuotaSettingsFunc& get_settings_function)
     : is_incognito_(is_incognito),
@@ -825,9 +825,7 @@ QuotaManager::QuotaManager(
       db_disabled_(false),
       eviction_disabled_(false),
       io_thread_(io_thread),
-      db_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
+      db_thread_(db_thread),
       get_settings_function_(get_settings_function),
       is_getting_eviction_origin_(false),
       special_storage_policy_(special_storage_policy),
@@ -1151,7 +1149,7 @@ QuotaManager::~QuotaManager() {
   for (auto* client : clients_)
     client->OnQuotaManagerDestroyed();
   if (database_)
-    db_runner_->DeleteSoon(FROM_HERE, database_.release());
+    db_thread_->DeleteSoon(FROM_HERE, database_.release());
 }
 
 QuotaManager::EvictionContext::EvictionContext()
@@ -1189,7 +1187,7 @@ void QuotaManager::LazyInitialize() {
   }
 
   base::PostTaskAndReplyWithResult(
-      db_runner_.get(), FROM_HERE,
+      db_thread_.get(), FROM_HERE,
       base::Bind(&QuotaDatabase::IsOriginDatabaseBootstrapped,
                  base::Unretained(database_.get())),
       base::Bind(&QuotaManager::FinishLazyInitialize,
@@ -1390,11 +1388,12 @@ void QuotaManager::DidGetTemporaryGlobalUsageForHistogram(
                   special_storage_policy_.get(),
                   &protected_origins,
                   &unlimited_origins);
-  UMA_HISTOGRAM_COUNTS_1M("Quota.NumberOfTemporaryStorageOrigins", num_origins);
-  UMA_HISTOGRAM_COUNTS_1M("Quota.NumberOfProtectedTemporaryStorageOrigins",
-                          protected_origins);
-  UMA_HISTOGRAM_COUNTS_1M("Quota.NumberOfUnlimitedTemporaryStorageOrigins",
-                          unlimited_origins);
+  UMA_HISTOGRAM_COUNTS("Quota.NumberOfTemporaryStorageOrigins",
+                       num_origins);
+  UMA_HISTOGRAM_COUNTS("Quota.NumberOfProtectedTemporaryStorageOrigins",
+                       protected_origins);
+  UMA_HISTOGRAM_COUNTS("Quota.NumberOfUnlimitedTemporaryStorageOrigins",
+                       unlimited_origins);
 
   GetGlobalUsage(kStorageTypePersistent,
                  base::Bind(
@@ -1417,12 +1416,12 @@ void QuotaManager::DidGetPersistentGlobalUsageForHistogram(
                   special_storage_policy_.get(),
                   &protected_origins,
                   &unlimited_origins);
-  UMA_HISTOGRAM_COUNTS_1M("Quota.NumberOfPersistentStorageOrigins",
-                          num_origins);
-  UMA_HISTOGRAM_COUNTS_1M("Quota.NumberOfProtectedPersistentStorageOrigins",
-                          protected_origins);
-  UMA_HISTOGRAM_COUNTS_1M("Quota.NumberOfUnlimitedPersistentStorageOrigins",
-                          unlimited_origins);
+  UMA_HISTOGRAM_COUNTS("Quota.NumberOfPersistentStorageOrigins",
+                       num_origins);
+  UMA_HISTOGRAM_COUNTS("Quota.NumberOfProtectedPersistentStorageOrigins",
+                       protected_origins);
+  UMA_HISTOGRAM_COUNTS("Quota.NumberOfUnlimitedPersistentStorageOrigins",
+                       unlimited_origins);
 
   // We DumpOriginInfoTable last to ensure the trackers caches are loaded.
   DumpOriginInfoTable(
@@ -1641,7 +1640,7 @@ void QuotaManager::GetStorageCapacity(const StorageCapacityCallback& callback) {
     return;
   }
   base::PostTaskAndReplyWithResult(
-      db_runner_.get(), FROM_HERE,
+      db_thread_.get(), FROM_HERE,
       base::Bind(&QuotaManager::CallGetVolumeInfo, get_volume_info_fn_,
                  profile_path_),
       base::Bind(&QuotaManager::DidGetStorageCapacity,
@@ -1680,11 +1679,11 @@ void QuotaManager::PostTaskAndReplyWithResultForDBThread(
     const tracked_objects::Location& from_here,
     base::Callback<bool(QuotaDatabase*)> task,
     base::Callback<void(bool)> reply) {
-  // Deleting manager will post another task to DB sequence to delete
+  // Deleting manager will post another task to DB thread to delete
   // |database_|, therefore we can be sure that database_ is alive when this
   // task runs.
   base::PostTaskAndReplyWithResult(
-      db_runner_.get(), from_here,
+      db_thread_.get(), from_here,
       base::Bind(std::move(task), base::Unretained(database_.get())),
       std::move(reply));
 }

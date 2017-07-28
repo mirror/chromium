@@ -43,8 +43,6 @@ enum ViewID {
 
   VIEW_ID_TAB_STRIP,
 
-  VIEW_ID_NEW_TAB_PROMO,
-
   // Toolbar & toolbar elements.
   VIEW_ID_TOOLBAR = 1000,
   VIEW_ID_BACK_BUTTON,

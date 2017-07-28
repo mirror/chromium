@@ -18,7 +18,6 @@ import android.widget.ListView;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
-import org.chromium.chrome.browser.preferences.PreferenceUtils;
 import org.chromium.chrome.browser.profiles.Profile;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class UsbDevicePreferences
     @Override
     @SuppressWarnings("unchecked")
     public void onActivityCreated(Bundle savedInstanceState) {
-        PreferenceUtils.addPreferencesFromResource(this, R.xml.usb_device_preferences);
+        addPreferencesFromResource(R.xml.usb_device_preferences);
         ListView listView = (ListView) getView().findViewById(android.R.id.list);
         listView.setDivider(null);
 
@@ -180,7 +179,7 @@ public class UsbDevicePreferences
 
     private void resetList() {
         getPreferenceScreen().removeAll();
-        PreferenceUtils.addPreferencesFromResource(this, R.xml.usb_device_preferences);
+        addPreferencesFromResource(R.xml.usb_device_preferences);
 
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         Preference header = preferenceScreen.findPreference(PREF_OBJECT_NAME);

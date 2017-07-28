@@ -469,12 +469,6 @@ bool RundownTaskCounter::TimedWaitUntil(const base::TimeTicks& end_time) {
 
 }  // namespace
 
-void BrowserProcessImpl::FlushLocalStateAndReply(base::OnceClosure reply) {
-  local_state()->CommitPendingWrite();
-  local_state_task_runner_->PostTaskAndReply(
-      FROM_HERE, base::Bind(&base::DoNothing), std::move(reply));
-}
-
 void BrowserProcessImpl::EndSession() {
   // Mark all the profiles as clean.
   ProfileManager* pm = profile_manager();
@@ -1358,7 +1352,7 @@ void BrowserProcessImpl::Unpin() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(ChromeBrowserMainPartsMac::DidEndMainMessageLoop));
 #endif
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 
 #if !defined(OS_ANDROID)
   chrome::ShutdownIfNeeded();

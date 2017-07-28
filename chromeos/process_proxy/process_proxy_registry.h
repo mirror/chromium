@@ -41,10 +41,6 @@ class CHROMEOS_EXPORT ProcessProxyRegistry {
 
   static ProcessProxyRegistry* Get();
 
-  // Returns a SequencedTaskRunner where the singleton instance of
-  // ProcessProxyRegistry lives.
-  static scoped_refptr<base::SequencedTaskRunner> GetTaskRunner();
-
   // Starts new ProcessProxy (which starts new process).
   // Returns ID used for the created process. Returns -1 on failure.
   int OpenProcess(const std::string& command, const OutputCallback& callback);

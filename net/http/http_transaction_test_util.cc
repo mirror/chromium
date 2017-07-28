@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
@@ -223,7 +224,7 @@ void TestTransactionConsumer::DidFinish(int result) {
   state_ = DONE;
   error_ = result;
   if (--quit_counter_ == 0)
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void TestTransactionConsumer::Read() {

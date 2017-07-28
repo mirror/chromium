@@ -176,6 +176,16 @@ std::vector<mojom::SiteEngagementDetails> SiteEngagementService::GetAllDetails()
   return details;
 }
 
+std::map<GURL, double> SiteEngagementService::GetScoreMap() const {
+  std::map<GURL, double> score_map;
+  for (const GURL& origin : GetEngagementOriginsFromContentSettings(profile_)) {
+    if (!origin.is_valid())
+      continue;
+    score_map[origin] = GetScore(origin);
+  }
+  return score_map;
+}
+
 void SiteEngagementService::HandleNotificationInteraction(const GURL& url) {
   if (!ShouldRecordEngagement(url))
     return;
@@ -277,11 +287,11 @@ mojom::SiteEngagementDetails SiteEngagementService::GetDetails(
 }
 
 double SiteEngagementService::GetTotalEngagementPoints() const {
-  std::vector<mojom::SiteEngagementDetails> details = GetAllDetails();
+  std::map<GURL, double> score_map = GetScoreMap();
 
   double total_score = 0;
-  for (const auto& detail : details)
-    total_score += detail.total_score;
+  for (const auto& value : score_map)
+    total_score += value.second;
 
   return total_score;
 }
@@ -424,15 +434,10 @@ void SiteEngagementService::RecordMetrics() {
   }
 
   last_metrics_time_ = now;
-  std::vector<mojom::SiteEngagementDetails> details = GetAllDetails();
-  std::sort(details.begin(), details.end(),
-            [](const mojom::SiteEngagementDetails& lhs,
-               const mojom::SiteEngagementDetails& rhs) {
-              return lhs.total_score < rhs.total_score;
-            });
+  std::map<GURL, double> score_map = GetScoreMap();
 
-  int origins_with_max_engagement = OriginsWithMaxEngagement(details);
-  int total_origins = details.size();
+  int origins_with_max_engagement = OriginsWithMaxEngagement(score_map);
+  int total_origins = score_map.size();
   int percent_origins_with_max_engagement =
       (total_origins == 0
            ? 0
@@ -446,8 +451,8 @@ void SiteEngagementService::RecordMetrics() {
   SiteEngagementMetrics::RecordTotalSiteEngagement(total_engagement);
   SiteEngagementMetrics::RecordMeanEngagement(mean_engagement);
   SiteEngagementMetrics::RecordMedianEngagement(
-      GetMedianEngagementFromSortedDetails(details));
-  SiteEngagementMetrics::RecordEngagementScores(details);
+      GetMedianEngagement(score_map));
+  SiteEngagementMetrics::RecordEngagementScores(score_map);
 
   SiteEngagementMetrics::RecordOriginsWithMaxDailyEngagement(
       OriginsWithMaxDailyEngagement());
@@ -486,19 +491,25 @@ base::TimeDelta SiteEngagementService::GetStalePeriod() const {
              SiteEngagementScore::GetLastEngagementGracePeriodInHours());
 }
 
-double SiteEngagementService::GetMedianEngagementFromSortedDetails(
-    const std::vector<mojom::SiteEngagementDetails>& details) const {
-  if (details.size() == 0)
+double SiteEngagementService::GetMedianEngagement(
+    const std::map<GURL, double>& score_map) const {
+  if (score_map.size() == 0)
     return 0;
+
+  std::vector<double> scores;
+  scores.reserve(score_map.size());
+  for (const auto& value : score_map)
+    scores.push_back(value.second);
 
   // Calculate the median as the middle value of the sorted engagement scores
   // if there are an odd number of scores, or the average of the two middle
   // scores otherwise.
-  size_t mid = details.size() / 2;
-  if (details.size() % 2 == 1)
-    return details[mid].total_score;
+  std::sort(scores.begin(), scores.end());
+  size_t mid = scores.size() / 2;
+  if (scores.size() % 2 == 1)
+    return scores[mid];
   else
-    return (details[mid - 1].total_score + details[mid].total_score) / 2;
+    return (scores[mid - 1] + scores[mid]) / 2;
 }
 
 void SiteEngagementService::HandleMediaPlaying(
@@ -619,11 +630,11 @@ int SiteEngagementService::OriginsWithMaxDailyEngagement() const {
 }
 
 int SiteEngagementService::OriginsWithMaxEngagement(
-    const std::vector<mojom::SiteEngagementDetails>& details) const {
+    const std::map<GURL, double>& score_map) const {
   int total_origins = 0;
 
-  for (const auto& detail : details)
-    if (detail.total_score == SiteEngagementScore::kMaxPoints)
+  for (const auto& value : score_map)
+    if (value.second == SiteEngagementScore::kMaxPoints)
       ++total_origins;
 
   return total_origins;

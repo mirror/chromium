@@ -8,7 +8,6 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "content/browser/web_contents/aura/overscroll_window_animation.h"
-#include "content/browser/web_contents/aura/types.h"
 #include "content/browser/web_contents/web_contents_view_aura.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -33,6 +32,8 @@ class CONTENT_EXPORT OverscrollNavigationOverlay
     : public WebContentsObserver,
       public OverscrollWindowAnimation::Delegate {
  public:
+  enum NavigationDirection { NONE, FORWARD, BACK, NAVIGATION_COUNT };
+
   OverscrollNavigationOverlay(WebContentsImpl* web_contents,
                               aura::Window* web_contents_window);
 

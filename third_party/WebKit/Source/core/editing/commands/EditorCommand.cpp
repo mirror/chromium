@@ -43,7 +43,6 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionModifier.h"
-#include "core/editing/SetSelectionData.h"
 #include "core/editing/commands/CreateLinkCommand.h"
 #include "core/editing/commands/EditorCommandNames.h"
 #include "core/editing/commands/FormatBlockCommand.h"
@@ -411,7 +410,7 @@ static bool ExpandSelectionToGranularity(LocalFrame& frame,
     return false;
   frame.Selection().SetSelection(
       SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build(),
-      SetSelectionData::Builder().SetShouldCloseTyping(true).Build());
+      FrameSelection::kCloseTyping);
   return true;
 }
 
@@ -818,7 +817,7 @@ static bool ExecuteDeleteToMark(LocalFrame& frame,
             .SetBaseAndExtent(
                 UnionEphemeralRanges(mark, frame.GetEditor().SelectedRange()))
             .Build(),
-        SetSelectionData::Builder().SetShouldCloseTyping(true).Build());
+        FrameSelection::kCloseTyping);
   }
   frame.GetEditor().PerformDelete();
   frame.GetEditor().SetMark(
@@ -1243,16 +1242,13 @@ bool ModifySelectionyWithPageGranularity(
     return false;
   }
 
-  frame.Selection().SetSelection(
-      selection_modifier.Selection().AsSelection(),
-      SetSelectionData::Builder()
-          .SetSetSelectionBy(SetSelectionBy::kUser)
-          .SetShouldCloseTyping(true)
-          .SetShouldClearTypingStyle(true)
-          .SetCursorAlignOnScroll(alter == SelectionModifyAlteration::kMove
-                                      ? CursorAlignOnScroll::kAlways
-                                      : CursorAlignOnScroll::kIfNeeded)
-          .Build());
+  frame.Selection().SetSelection(selection_modifier.Selection().AsSelection(),
+                                 FrameSelection::kCloseTyping |
+                                     FrameSelection::kClearTypingStyle |
+                                     FrameSelection::kUserTriggered,
+                                 alter == SelectionModifyAlteration::kMove
+                                     ? CursorAlignOnScroll::kAlways
+                                     : CursorAlignOnScroll::kIfNeeded);
   return true;
 }
 
@@ -1857,7 +1853,7 @@ static bool ExecuteSelectToMark(LocalFrame& frame,
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
           .Build(),
-      SetSelectionData::Builder().SetShouldCloseTyping(true).Build());
+      FrameSelection::kCloseTyping);
   return true;
 }
 
@@ -1958,7 +1954,7 @@ static bool ExecuteTranspose(LocalFrame& frame,
                              Event*,
                              EditorCommandSource,
                              const String&) {
-  Transpose(frame);
+  frame.GetEditor().Transpose();
   return true;
 }
 

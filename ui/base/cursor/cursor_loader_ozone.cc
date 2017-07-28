@@ -16,9 +16,7 @@ CursorLoaderOzone::CursorLoaderOzone() {
   factory_ = CursorFactoryOzone::GetInstance();
 }
 
-CursorLoaderOzone::~CursorLoaderOzone() {
-  UnloadAll();
-}
+CursorLoaderOzone::~CursorLoaderOzone() {}
 
 void CursorLoaderOzone::LoadImageCursor(CursorType id,
                                         int resource_id,

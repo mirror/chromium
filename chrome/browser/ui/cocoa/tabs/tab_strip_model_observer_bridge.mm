@@ -128,8 +128,3 @@ void TabStripModelObserverBridge::TabStripEmpty() {
   if ([controller_ respondsToSelector:@selector(tabStripEmpty)])
     [controller_ tabStripEmpty];
 }
-
-void TabStripModelObserverBridge::TabNeedsAttentionAt(int index) {
-  if ([controller_ respondsToSelector:@selector(tabNeedsAttentionAt:)])
-    [controller_ tabNeedsAttentionAt:index];
-}

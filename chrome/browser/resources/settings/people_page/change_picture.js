@@ -38,7 +38,7 @@ Polymer({
     },
 
     /**
-     * The active set of default user images.
+     * The default user images.
      * @private {!Array<!settings.DefaultImage>}
      */
     defaultImages_: {
@@ -47,12 +47,6 @@ Polymer({
         return [];
       },
     },
-
-    /**
-     * The index of the first default image to use in the selection list.
-     * @private
-     */
-    firstDefaultImageIndex_: Number,
   },
 
   listeners: {
@@ -104,12 +98,11 @@ Polymer({
 
   /**
    * Handler for the 'default-images-changed' event.
-   * @param {{first: number, images: !Array<!settings.DefaultImage>}} info
+   * @param {!Array<!settings.DefaultImage>} images
    * @private
    */
-  receiveDefaultImages_: function(info) {
-    this.defaultImages_ = info.images;
-    this.firstDefaultImageIndex_ = info.first;
+  receiveDefaultImages_: function(images) {
+    this.defaultImages_ = images;
   },
 
   /**
@@ -127,11 +120,11 @@ Polymer({
    * non-profile and non-default image. It can be from the camera, a file, or a
    * deprecated default image. When this method is called, the Old image
    * becomes the selected image.
-   * @param {!{url: string, index: number}} imageInfo
+   * @param {string} imageUrl
    * @private
    */
-  receiveOldImage_: function(imageInfo) {
-    this.pictureList_.setOldImageUrl(imageInfo.url, imageInfo.index);
+  receiveOldImage_: function(imageUrl) {
+    this.pictureList_.setOldImageUrl(imageUrl);
   },
 
   /**
@@ -170,11 +163,7 @@ Polymer({
         this.browserProxy_.selectProfileImage();
         break;
       case CrPicture.SelectionTypes.OLD:
-        var imageIndex = image.dataset.imageIndex;
-        if (imageIndex !== undefined && imageIndex >= 0 && image.src)
-          this.browserProxy_.selectDefaultImage(image.src);
-        else
-          this.browserProxy_.selectOldImage();
+        this.browserProxy_.selectOldImage();
         break;
       case CrPicture.SelectionTypes.DEFAULT:
         this.browserProxy_.selectDefaultImage(image.src);
@@ -251,25 +240,13 @@ Polymer({
   },
 
   /**
-   * @param {!Array<!settings.DefaultImage>} defaultImages
-   * @param {number} firstDefaultImageIndex
-   * @return {!Array<!settings.DefaultImage>}
-   * @private
-   */
-  getDefaultImages_(defaultImages, firstDefaultImageIndex) {
-    return defaultImages.slice(firstDefaultImageIndex);
-  },
-
-  /**
    * @param {CrPicture.ImageElement} selectedItem
    * @return {boolean} True if the author credit text is shown.
    * @private
    */
   isAuthorCreditShown_: function(selectedItem) {
     return !!selectedItem &&
-        (selectedItem.dataset.type == CrPicture.SelectionTypes.DEFAULT ||
-         (selectedItem.dataset.imageIndex !== undefined &&
-          selectedItem.dataset.imageIndex >= 0));
+        selectedItem.dataset.type == CrPicture.SelectionTypes.DEFAULT;
   },
 
   /**
@@ -280,11 +257,11 @@ Polymer({
    * @private
    */
   getAuthorCredit_: function(selectedItem, defaultImages) {
-    var index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
-    if (index === undefined || index < 0 || index >= defaultImages.length)
+    var index = selectedItem ? selectedItem.dataset.index : undefined;
+    if (index === undefined)
       return '';
-    var author = defaultImages[index].author;
-    return author ? this.i18n('authorCreditText', author) : '';
+    assert(index < defaultImages.length);
+    return this.i18n('authorCreditText', defaultImages[index].author);
   },
 
   /**
@@ -295,9 +272,10 @@ Polymer({
    * @private
    */
   getAuthorWebsite_: function(selectedItem, defaultImages) {
-    var index = selectedItem ? selectedItem.dataset.imageIndex : undefined;
-    if (index === undefined || index < 0 || index >= defaultImages.length)
+    var index = selectedItem ? selectedItem.dataset.index : undefined;
+    if (index === undefined)
       return '';
-    return defaultImages[index].website || '';
+    assert(index < defaultImages.length);
+    return defaultImages[index].website;
   },
 });

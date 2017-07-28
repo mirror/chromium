@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "net/android/network_change_notifier_android.h"
 #include "net/android/network_change_notifier_delegate_android.h"
@@ -112,7 +113,7 @@ class DNSChangeObserver : public NetworkChangeNotifier::DNSObserver {
 
   void OnInitialDNSConfigRead() override {
     initial_notifications_count_++;
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 
   int change_notifications_count() const { return change_notifications_count_; }

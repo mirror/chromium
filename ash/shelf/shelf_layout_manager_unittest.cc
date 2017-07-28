@@ -56,7 +56,6 @@
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
-#include "ui/wm/core/window_util.h"
 
 namespace ash {
 namespace {
@@ -121,7 +120,7 @@ class ShelfAnimationWaiter : views::WidgetObserver {
     ++animation_steps_;
     if (IsDoneAnimating()) {
       done_waiting_ = true;
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
     }
   }
 
@@ -1482,52 +1481,6 @@ TEST_F(ShelfLayoutManagerTest, GestureDrag) {
   }
 }
 
-// Swiping on shelf when fullscreen app list is opened should have no effect.
-TEST_F(ShelfLayoutManagerTest, SwipingOnShelfIfFullscreenAppListOpened) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(
-      app_list::features::kEnableFullscreenAppList);
-  Shelf* shelf = GetPrimaryShelf();
-  ShelfLayoutManager* layout_manager = GetShelfLayoutManager();
-  aura::Window* root_window =
-      RootWindowController::ForTargetRootWindow()->GetRootWindow();
-  layout_manager->OnAppListVisibilityChanged(true, root_window);
-  EXPECT_EQ(SHELF_ALIGNMENT_BOTTOM, shelf->alignment());
-  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
-  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
-
-  // Note: A window must be visible in order to hide the shelf.
-  CreateTestWidget();
-
-  ui::test::EventGenerator& generator(GetEventGenerator());
-  constexpr base::TimeDelta kTimeDelta = base::TimeDelta::FromMilliseconds(100);
-  constexpr int kNumScrollSteps = 4;
-  gfx::Point start = GetShelfWidget()->GetWindowBoundsInScreen().CenterPoint();
-
-  // Swiping down on shelf when the fullscreen app list is opened
-  // should not hide the shelf.
-  gfx::Point end = start + gfx::Vector2d(0, 120);
-  generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
-  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
-  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
-
-  // Swiping left on shelf when the fullscreen app list is opened
-  // should not hide the shelf.
-  shelf->SetAlignment(SHELF_ALIGNMENT_LEFT);
-  end = start + gfx::Vector2d(-120, 0);
-  generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
-  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
-  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
-
-  // Swiping right on shelf when the fullscreen app list is opened
-  // should not hide the shelf.
-  shelf->SetAlignment(SHELF_ALIGNMENT_RIGHT);
-  end = start + gfx::Vector2d(120, 0);
-  generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
-  EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
-  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
-}
-
 TEST_F(ShelfLayoutManagerTest, WindowVisibilityDisablesAutoHide) {
   UpdateDisplay("800x600,800x600");
   Shelf* shelf = GetPrimaryShelf();
@@ -1808,19 +1761,6 @@ TEST_F(ShelfLayoutManagerTest, ShelfBackgroundColor) {
 
   w1->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MAXIMIZED);
   EXPECT_EQ(SHELF_BACKGROUND_MAXIMIZED, GetShelfWidget()->GetBackgroundType());
-
-  std::unique_ptr<aura::Window> w3(CreateTestWindow());
-  w3->SetProperty(aura::client::kModalKey, ui::MODAL_TYPE_WINDOW);
-  ::wm::AddTransientChild(w1.get(), w3.get());
-  w3->Show();
-  wm::ActivateWindow(w3.get());
-
-  wm::WorkspaceWindowState window_state =
-      RootWindowController::ForWindow(GetShelfWidget()->GetNativeWindow())
-          ->GetWorkspaceWindowState();
-  EXPECT_EQ(wm::WORKSPACE_WINDOW_STATE_MAXIMIZED, window_state);
-
-  w3.reset();
   w1.reset();
   EXPECT_EQ(SHELF_BACKGROUND_DEFAULT, GetShelfWidget()->GetBackgroundType());
 }

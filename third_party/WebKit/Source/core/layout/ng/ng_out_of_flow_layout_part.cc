@@ -114,15 +114,9 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
     min_max_size = descendant.ComputeMinMaxSize();
   }
 
-  Optional<NGLogicalSize> replaced_size;
-  if (descendant.IsReplaced())
-    replaced_size =
-        ComputeReplacedSize(descendant, *container_space_, min_max_size);
-
   NGAbsolutePhysicalPosition node_position =
       ComputePartialAbsoluteWithChildInlineSize(
-          *container_space_, descendant.Style(), static_position, min_max_size,
-          replaced_size);
+          *container_space_, descendant.Style(), static_position, min_max_size);
 
   if (AbsoluteNeedsChildBlockSize(descendant.Style())) {
     layout_result = GenerateFragment(descendant, block_estimate, node_position);
@@ -136,7 +130,7 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
 
   ComputeFullAbsoluteWithChildBlockSize(*container_space_, descendant.Style(),
                                         static_position, block_estimate,
-                                        replaced_size, &node_position);
+                                        &node_position);
 
   // Skip this step if we produced a fragment when estimating the block size.
   if (!layout_result) {

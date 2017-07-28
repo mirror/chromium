@@ -621,13 +621,13 @@ static_library("test_support") {
   sources = [
     "page_load_metrics/test/page_load_metrics_test_util.cc",
     "page_load_metrics/test/page_load_metrics_test_util.h",
-    "search/mock_embedded_search_client.cc",
-    "search/mock_embedded_search_client.h",
+    "search/mock_searchbox.cc",
+    "search/mock_searchbox.h",
   ]
 
   deps = [
     ":common",
-    ":search_mojom",
+    ":instant_mojom",
     "//base",
     "//testing/gmock",
     "//testing/gtest",
@@ -675,7 +675,6 @@ mojom("mojo_bindings") {
     "file_patcher.mojom",
     "image_context_menu_renderer.mojom",
     "insecure_content_renderer.mojom",
-    "navigation_corrector.mojom",
     "net_benchmarking.mojom",
     "network_diagnostics.mojom",
     "open_search_description_document_handler.mojom",
@@ -711,9 +710,9 @@ mojom("mojo_bindings") {
   use_once_callback = false
 }
 
-mojom("search_mojom") {
+mojom("instant_mojom") {
   sources = [
-    "search.mojom",
+    "instant.mojom",
   ]
 
   public_deps = [
@@ -729,6 +728,5 @@ mojom("page_load_metrics_mojom") {
 
   public_deps = [
     "//mojo/common:common_custom_types",
-    "//third_party/WebKit/public:web_feature_mojo_bindings",
   ]
 }

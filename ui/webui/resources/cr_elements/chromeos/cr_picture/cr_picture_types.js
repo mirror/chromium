@@ -23,7 +23,6 @@ CrPicture.SelectionTypes = {
  *   dataset: {
  *     type: !CrPicture.SelectionTypes,
  *     index: (number|undefined),
- *     imageIndex: (number|undefined),
  *   },
  *   src: string,
  * }}

@@ -159,7 +159,7 @@ void ServiceProviderTestHelper::OnResponse(
     std::unique_ptr<dbus::Response> response) {
   *out_response = std::move(response);
   if (base::RunLoop::IsRunningOnCurrentThread())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
 }
 
 }  // namespace chromeos

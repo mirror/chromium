@@ -177,6 +177,10 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   return data;
 }
 
+bool ResourceRequest::IsEmpty() const {
+  return url_.IsEmpty();
+}
+
 bool ResourceRequest::IsNull() const {
   return url_.IsNull();
 }

@@ -67,7 +67,7 @@ public class SigninHelper {
 
     /**
      * Uses GoogleAuthUtil.getAccountChangeEvents to detect if account
-     * renaming has occurred.
+     * renaming has occured.
      */
     public static final class SystemAccountChangeEventChecker
             implements SigninHelper.AccountChangeEventChecker {

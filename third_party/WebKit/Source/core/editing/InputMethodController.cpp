@@ -35,7 +35,6 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
-#include "core/editing/SetSelectionData.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
@@ -343,7 +342,7 @@ void InputMethodController::SelectComposition() const {
   // The composition can start inside a composed character sequence, so we have
   // to override checks. See <http://bugs.webkit.org/show_bug.cgi?id=15781>
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build());
+      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(), 0);
 }
 
 bool IsCompositionTooLong(const Element& element) {
@@ -394,9 +393,8 @@ bool InputMethodController::FinishComposingText(
             .SetBaseAndExtent(old_selection_range)
             .SetIsHandleVisible(is_handle_visible)
             .Build();
-    GetFrame().Selection().SetSelection(
-        selection,
-        SetSelectionData::Builder().SetShouldCloseTyping(true).Build());
+    GetFrame().Selection().SetSelection(selection,
+                                        FrameSelection::kCloseTyping);
     return true;
   }
 
@@ -829,16 +827,16 @@ bool InputMethodController::SetSelectionOffsets(
 
 bool InputMethodController::SetSelectionOffsets(
     const PlainTextRange& selection_offsets,
-    TypingContinuation typing_continuation) {
+    TypingContinuation Typing_continuation) {
   const EphemeralRange range = EphemeralRangeForOffsets(selection_offsets);
   if (range.IsNull())
     return false;
 
   GetFrame().Selection().SetSelection(
       SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(),
-      SetSelectionData::Builder()
-          .SetShouldCloseTyping(typing_continuation == TypingContinuation::kEnd)
-          .Build());
+      Typing_continuation == TypingContinuation::kEnd
+          ? FrameSelection::kCloseTyping
+          : 0);
   return true;
 }
 

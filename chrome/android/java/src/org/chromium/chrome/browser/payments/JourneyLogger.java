@@ -16,7 +16,7 @@ public class JourneyLogger {
      */
     private long mJourneyLoggerAndroid;
 
-    private boolean mWasPaymentRequestTriggered;
+    private boolean mWasShowCalled;
     private boolean mHasRecorded;
 
     public JourneyLogger(boolean isIncognito, String url) {
@@ -88,16 +88,21 @@ public class JourneyLogger {
     }
 
     /**
+     * Records the fact that the Payment Request was shown to the user.
+     */
+    public void setShowCalled() {
+        mWasShowCalled = true;
+        nativeSetShowCalled(mJourneyLoggerAndroid);
+    }
+
+    /**
      * Records that an event occurred.
      *
-     * @param event The event that occurred.
+     * @param event The event that occured.
      */
     public void setEventOccurred(int event) {
         assert event >= 0;
         assert event < Event.ENUM_MAX;
-
-        if (event == Event.SHOWN || event == Event.SKIPPED_SHOW) mWasPaymentRequestTriggered = true;
-
         nativeSetEventOccurred(mJourneyLoggerAndroid, event);
     }
 
@@ -132,9 +137,9 @@ public class JourneyLogger {
      */
     public void setCompleted() {
         assert !mHasRecorded;
-        assert mWasPaymentRequestTriggered;
+        assert mWasShowCalled;
 
-        if (!mHasRecorded && mWasPaymentRequestTriggered) {
+        if (!mHasRecorded && mWasShowCalled) {
             mHasRecorded = true;
             nativeSetCompleted(mJourneyLoggerAndroid);
         }
@@ -151,7 +156,7 @@ public class JourneyLogger {
 
         // The abort reasons on Android cascade into each other, so only the first one should be
         // recorded.
-        if (!mHasRecorded && mWasPaymentRequestTriggered) {
+        if (!mHasRecorded && mWasShowCalled) {
             mHasRecorded = true;
             nativeSetAborted(mJourneyLoggerAndroid, reason);
         }
@@ -164,7 +169,7 @@ public class JourneyLogger {
      */
     public void setNotShown(int reason) {
         assert reason < NotShownReason.MAX;
-        assert !mWasPaymentRequestTriggered;
+        assert !mWasShowCalled;
         assert !mHasRecorded;
 
         if (!mHasRecorded) {
@@ -183,6 +188,7 @@ public class JourneyLogger {
     private native void nativeIncrementSelectionAdds(long nativeJourneyLoggerAndroid, int section);
     private native void nativeSetCanMakePaymentValue(
             long nativeJourneyLoggerAndroid, boolean value);
+    private native void nativeSetShowCalled(long nativeJourneyLoggerAndroid);
     private native void nativeSetEventOccurred(long nativeJourneyLoggerAndroid, int event);
     private native void nativeSetSelectedPaymentMethod(
             long nativeJourneyLoggerAndroid, int paymentMethod);

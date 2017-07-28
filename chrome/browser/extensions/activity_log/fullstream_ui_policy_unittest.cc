@@ -124,7 +124,7 @@ class FullStreamUIPolicyTest : public testing::Test {
   }
 
   static void TimeoutCallback() {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
     FAIL() << "Policy test timed out waiting for results";
   }
 

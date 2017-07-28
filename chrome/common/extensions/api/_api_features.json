@@ -93,7 +93,8 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://settings-frame/*"
     ]
   }],
   "automationInternal": {
@@ -560,7 +561,8 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://settings-frame/*"
     ]
   }],
   "launcherPage": {
@@ -633,7 +635,8 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://settings-frame/*"
     ]
   }],
   "permissions": {
@@ -679,7 +682,8 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://settings-frame/*"
     ],
     "platforms": ["chromeos"]
   },
@@ -709,7 +713,8 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://settings-frame/*"
     ]
   }],
   "signedInDevices": {
@@ -771,7 +776,8 @@
     "contexts": ["webui"],
     "matches": [
       "chrome://md-settings/*",
-      "chrome://settings/*"
+      "chrome://settings/*",
+      "chrome://settings-frame/*"
     ]
   }],
   "virtualKeyboardPrivate": {

@@ -52,12 +52,15 @@ SigninViewControllerDelegateMac::SigninViewControllerDelegateMac(
     NSRect frame,
     ui::ModalType dialog_modal_type,
     bool wait_for_size)
-    : SigninViewControllerDelegate(signin_view_controller,
-                                   web_contents.get(),
-                                   browser),
+    : SigninViewControllerDelegate(signin_view_controller, web_contents.get()),
       web_contents_(std::move(web_contents)),
+      browser_(browser),
       dialog_modal_type_(dialog_modal_type),
       window_frame_(frame) {
+  DCHECK(browser_);
+  DCHECK(browser_->tab_strip_model()->GetActiveWebContents())
+      << "A tab must be active to present the sign-in modal dialog.";
+
   if (!wait_for_size)
     DisplayModal();
 }
@@ -167,7 +170,7 @@ void SigninViewControllerDelegateMac::DisplayModal() {
   DCHECK(!window_);
 
   content::WebContents* host_web_contents =
-      browser()->tab_strip_model()->GetActiveWebContents();
+      browser_->tab_strip_model()->GetActiveWebContents();
 
   // Avoid displaying the sign-in modal view if there are no active web
   // contents. This happens if the user closes the browser window before this

@@ -171,9 +171,9 @@ void NavigatorVibration::CollectHistogramMetrics(const LocalFrame& frame) {
   }
 }
 
-VibrationController* NavigatorVibration::Controller(LocalFrame& frame) {
+VibrationController* NavigatorVibration::Controller(const LocalFrame& frame) {
   if (!controller_)
-    controller_ = new VibrationController(frame);
+    controller_ = new VibrationController(*frame.GetDocument());
 
   return controller_.Get();
 }

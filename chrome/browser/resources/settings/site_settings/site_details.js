@@ -36,6 +36,9 @@ Polymer({
      * @private
      */
     storageType_: Number,
+
+    /** @private */
+    confirmationDeleteMsg_: String,
   },
 
   listeners: {
@@ -69,11 +72,16 @@ Polymer({
     var siteDetailsPermissions =
         /** @type{!NodeList<!SiteDetailsPermissionElement>} */
         (this.root.querySelectorAll('site-details-permission'));
+    var categoryList =
+        /** @type{!Array<string>} */ (
+            Array.prototype.map.call(siteDetailsPermissions, (element) => {
+              return element.category;
+            }));
 
-    this.browserProxy.getOriginPermissions(this.origin, this.getCategoryList_())
+    this.browserProxy.getOriginPermissions(this.origin, categoryList)
         .then((exceptionList) => {
           exceptionList.forEach((exception, i) => {
-            // |exceptionList| should be in the same order as the category list,
+            // |exceptionList| should be in the same order as |categoryList|,
             // which is in the same order as |siteDetailsPermissions|.
             siteDetailsPermissions[i].site =
                 /** @type {!RawSiteException} */ (exception);
@@ -91,8 +99,10 @@ Polymer({
    * @param {!Event} e
    * @private
    */
-  onConfirmClearSettings_: function(e) {
+  onConfirmClearStorage_: function(e) {
     e.preventDefault();
+    this.confirmationDeleteMsg_ = loadTimeData.getStringF(
+        'siteSettingsSiteRemoveConfirmation', this.toUrl(this.origin).href);
     this.$.confirmDeleteDialog.showModal();
   },
 
@@ -119,24 +129,14 @@ Polymer({
    * @private
    */
   onClearAndReset_: function() {
+    var categoryList = /** @type {!Array<string>} */ (Array.prototype.map.call(
+        this.root.querySelectorAll('site-details-permission'), (element) => {
+          return element.category;
+        }));
     this.browserProxy.setOriginPermissions(
-        this.origin, this.getCategoryList_(), settings.ContentSetting.DEFAULT);
+        this.origin, categoryList, settings.ContentSetting.DEFAULT);
 
     if (this.storedData_ != '')
       this.onClearStorage_();
-
-    this.$.confirmDeleteDialog.close();
-  },
-
-  /**
-   * Returns list of categories for each permission displayed in <site-details>.
-   * @return {!Array<string>}
-   * @private
-   */
-  getCategoryList_: function() {
-    return Array.prototype.map.call(
-        this.root.querySelectorAll('site-details-permission'), (element) => {
-          return element.category;
-        });
   },
 });

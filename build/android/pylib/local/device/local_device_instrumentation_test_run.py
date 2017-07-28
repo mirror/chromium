@@ -73,7 +73,8 @@ RENDER_TEST_FEATURE_ANNOTATION = 'RenderTest'
 RE_RENDER_IMAGE_NAME = re.compile(
       r'(?P<test_class>\w+)\.'
       r'(?P<description>[-\w]+)\.'
-      r'(?P<device_model_sdk>[-\w]+)\.png')
+      r'(?P<device_model>\w+)\.'
+      r'(?P<orientation>port|land)\.png')
 
 @contextlib.contextmanager
 def _LogTestEndpoints(device, test_name):
@@ -538,8 +539,7 @@ class LocalDeviceInstrumentationTestRun(
                 device,
                 resolve_all_tombstones=True,
                 include_stack_symbols=False,
-                wipe_tombstones=True,
-                tombstone_symbolizer=self._test_instance.symbolizer)
+                wipe_tombstones=True)
             stream_name = 'tombstones_%s_%s' % (
                 time.strftime('%Y%m%dT%H%M%S-UTC', time.gmtime()),
                 device.serial)

@@ -52,7 +52,7 @@ FirstRunShowBridge::FirstRunShowBridge(
 
 void FirstRunShowBridge::ShowDialog() {
   [controller_ show];
-  base::RunLoop::QuitCurrentDeprecated();
+  base::MessageLoop::current()->QuitNow();
 }
 
 FirstRunShowBridge::~FirstRunShowBridge() {}

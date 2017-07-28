@@ -23,24 +23,24 @@ namespace profiling {
 class MemlogStreamReceiver;
 
 class MemlogReceiverPipe
-    : public base::RefCountedThreadSafe<MemlogReceiverPipe>,
-      public base::MessageLoopForIO::Watcher {
+    : public base::RefCountedThreadSafe<MemlogReceiverPipe> {
  public:
-  explicit MemlogReceiverPipe(int fd);
+  explicit MemlogReceiverPipe(base::ScopedFD fd);
 
-  // Must be called on the IO thread.
-  void StartReadingOnIOThread();
+  void ReadUntilBlocking();
 
   void SetReceiver(scoped_refptr<base::TaskRunner> task_runner,
                    scoped_refptr<MemlogStreamReceiver> receiver);
 
+  // TODO(ajwong): Remove when file watching is moved from the PipeServer to
+  // the MemlogReceiverPipe.
+  base::MessageLoopForIO::FileDescriptorWatcher* controller() {
+    return &controller_;
+  }
+
  private:
   friend class base::RefCountedThreadSafe<MemlogReceiverPipe>;
-  ~MemlogReceiverPipe() override;
-
-  // MessageLoopForIO::Watcher implementation.
-  void OnFileCanReadWithoutBlocking(int fd) override;
-  void OnFileCanWriteWithoutBlocking(int fd) override;
+  ~MemlogReceiverPipe();
 
   mojo::edk::ScopedPlatformHandle handle_;
   base::MessageLoopForIO::FileDescriptorWatcher controller_;
@@ -48,6 +48,9 @@ class MemlogReceiverPipe
 
   scoped_refptr<base::TaskRunner> receiver_task_runner_;
   scoped_refptr<MemlogStreamReceiver> receiver_;
+
+  // Make base::UnixDomainSocket::RecvMsg happy.
+  std::vector<base::ScopedFD>* dummy_for_receive_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogReceiverPipe);
 };

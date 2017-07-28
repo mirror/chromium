@@ -26,7 +26,7 @@ function getStateRunning() {
 }
 
 function setStateUnsettable() {
-  const error = 'Status can only be set to RUNNING, SUSPENDED or RESTARTING.';
+  const error = 'Status can only be set to RUNNING and SUSPENDED.';
   chrome.mediaPerceptionPrivate.setState({
     status: 'UNINITIALIZED'
   }, chrome.test.callbackFail(error));
@@ -43,21 +43,10 @@ function setStateSuspendedButWithDeviceContextFail() {
   }, chrome.test.callbackFail(error));
 }
 
-function setStateRestarted() {
-  chrome.mediaPerceptionPrivate.setState({
-    status: 'RESTARTING',
-  }, chrome.test.callbackPass(function(state) {
-    // Restarting the binary via Upstart results in it returning to a waiting
-    // state (SUSPENDED) and ready to receive a request for setState RUNNING.
-    chrome.test.assertEq('SUSPENDED', state.status);
-  }));
-}
-
 chrome.test.runTests([
     getStateUninitialized,
     setStateRunning,
     getStateRunning,
     setStateUnsettable,
-    setStateSuspendedButWithDeviceContextFail,
-    setStateRestarted]);
+    setStateSuspendedButWithDeviceContextFail]);
 

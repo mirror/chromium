@@ -75,7 +75,7 @@ class AutocompleteProviderClientWithClosure
     if (!closure_.is_null())
       closure_.Run();
     if (base::RunLoop::IsRunningOnCurrentThread())
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
   }
 
   base::Closure closure_;

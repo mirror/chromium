@@ -782,8 +782,8 @@ void PepperPluginInstanceImpl::PassCommittedTextureToTextureLayer() {
   if (!committed_texture_.IsValid())
     return;
 
-  std::unique_ptr<viz::SingleReleaseCallback> callback(
-      viz::SingleReleaseCallback::Create(base::Bind(
+  std::unique_ptr<cc::SingleReleaseCallback> callback(
+      cc::SingleReleaseCallback::Create(base::Bind(
           &PepperPluginInstanceImpl::FinishedConsumingCommittedTexture,
           weak_factory_.GetWeakPtr(), committed_texture_,
           committed_texture_graphics_3d_)));
@@ -1463,46 +1463,6 @@ base::string16 PepperPluginInstanceImpl::GetLinkAtPosition(
   // Release the ref the plugin transfered to us.
   PpapiGlobals::Get()->GetVarTracker()->ReleaseVar(rv);
   return link;
-}
-
-void PepperPluginInstanceImpl::SetCaretPosition(const gfx::PointF& position) {
-  if (!LoadPdfInterface())
-    return;
-
-  PP_FloatPoint p;
-  p.x = position.x();
-  p.y = position.y();
-  plugin_pdf_interface_->SetCaretPosition(pp_instance(), &p);
-}
-
-void PepperPluginInstanceImpl::MoveRangeSelectionExtent(
-    const gfx::PointF& extent) {
-  if (!LoadPdfInterface())
-    return;
-
-  PP_FloatPoint p;
-  p.x = extent.x();
-  p.y = extent.y();
-  plugin_pdf_interface_->MoveRangeSelectionExtent(pp_instance(), &p);
-}
-
-void PepperPluginInstanceImpl::SetSelectionBounds(const gfx::PointF& base,
-                                                  const gfx::PointF& extent) {
-  if (!LoadPdfInterface())
-    return;
-
-  PP_FloatPoint p_base;
-  p_base.x = base.x();
-  p_base.y = base.y();
-
-  PP_FloatPoint p_extent;
-  p_extent.x = extent.x();
-  p_extent.y = extent.y();
-  plugin_pdf_interface_->SetSelectionBounds(pp_instance(), &p_base, &p_extent);
-}
-
-bool PepperPluginInstanceImpl::CanCut() {
-  return PP_ToBool(plugin_pdf_interface_->CanCut(pp_instance()));
 }
 
 void PepperPluginInstanceImpl::RequestSurroundingText(
@@ -2210,7 +2170,7 @@ void PepperPluginInstanceImpl::UpdateLayer(bool force_creation) {
 
 bool PepperPluginInstanceImpl::PrepareTextureMailbox(
     viz::TextureMailbox* mailbox,
-    std::unique_ptr<viz::SingleReleaseCallback>* release_callback) {
+    std::unique_ptr<cc::SingleReleaseCallback>* release_callback) {
   if (!bound_graphics_2d_platform_)
     return false;
   return bound_graphics_2d_platform_->PrepareTextureMailbox(mailbox,

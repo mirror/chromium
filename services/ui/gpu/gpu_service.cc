@@ -8,7 +8,7 @@
 #include "base/debug/crash_logging.h"
 #include "base/lazy_instance.h"
 #include "base/memory/shared_memory.h"
-#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/viz/common/gpu/in_process_context_provider.h"
@@ -29,12 +29,10 @@
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_sync_channel.h"
 #include "ipc/ipc_sync_message_filter.h"
-#include "media/gpu/gpu_video_encode_accelerator_factory.h"
 #include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.h"
 #include "media/gpu/ipc/service/gpu_video_decode_accelerator.h"
 #include "media/gpu/ipc/service/gpu_video_encode_accelerator.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
-#include "media/mojo/services/mojo_video_encode_accelerator_service.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_switches.h"
@@ -234,10 +232,8 @@ void GpuService::CreateJpegDecodeAccelerator(
 void GpuService::CreateVideoEncodeAccelerator(
     media::mojom::VideoEncodeAcceleratorRequest vea_request) {
   DCHECK(io_runner_->BelongsToCurrentThread());
-  media::MojoVideoEncodeAcceleratorService::Create(
-      std::move(vea_request),
-      base::Bind(&media::GpuVideoEncodeAcceleratorFactory::CreateVEA),
-      gpu_preferences_);
+  // TODO(mcasas): Create a mojom::VideoEncodeAccelerator implementation,
+  // https://crbug.com/736517.
 }
 
 void GpuService::CreateGpuMemoryBuffer(
@@ -295,7 +291,7 @@ void GpuService::RequestCompleteGpuInfo(
 #if defined(OS_WIN)
   if (!in_host_process_) {
     // The unsandboxed GPU process fulfilled its duty. Rest in peace.
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoop::current()->QuitWhenIdle();
   }
 #endif
 }
@@ -523,10 +519,10 @@ void GpuService::ThrowJavaException() {
 
 void GpuService::Stop(const StopCallback& callback) {
   DCHECK(io_runner_->BelongsToCurrentThread());
-  main_runner_->PostTaskAndReply(
-      FROM_HERE,
-      base::Bind([] { base::RunLoop::QuitCurrentWhenIdleDeprecated(); }),
-      callback);
+  main_runner_->PostTaskAndReply(FROM_HERE, base::Bind([] {
+                                   base::MessageLoop::current()->QuitWhenIdle();
+                                 }),
+                                 callback);
 }
 
 }  // namespace ui

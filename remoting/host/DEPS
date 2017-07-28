@@ -2,7 +2,6 @@ include_rules = [
   "+ash",
   "+cc/output",
   "+components/policy/core/common",
-  "+components/viz/common",
   "+extensions/browser/api/messaging",
   "+google_apis",
   "+jingle/glue",

@@ -202,7 +202,7 @@ class MotionEventBufferTest : public testing::Test,
 
           base::TimeDelta dt = current_flushed_event->GetEventTime() -
                                last_flushed_event->GetEventTime();
-          EXPECT_GE(dt, base::TimeDelta());
+          EXPECT_GE(dt.ToInternalValue(), 0);
           // A time delta of 0 is possible if the flush rate is greater than the
           // event rate, in which case we can simply skip forward.
           if (dt.is_zero())

@@ -249,9 +249,6 @@ public class BottomSheet
     /** Whether {@link #destroy()} has been called. **/
     private boolean mIsDestroyed;
 
-    /** The token used to enable browser controls persistence. */
-    private int mPersistentControlsToken;
-
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
      * Home.
@@ -299,11 +296,6 @@ public class BottomSheet
          */
         @ContentType
         int getType();
-
-        /**
-         * @return Whether the default top padding should be applied to the content view.
-         */
-        boolean applyDefaultTopPadding();
     }
 
     /**
@@ -935,13 +927,6 @@ public class BottomSheet
     }
 
     /**
-     * @return The {@link BottomSheetNewTabController} used to present the new tab UI.
-     */
-    public BottomSheetNewTabController getNewTabController() {
-        return mNtpController;
-    }
-
-    /**
      * Show content in the bottom sheet's content area.
      * @param content The {@link BottomSheetContent} to show.
      */
@@ -976,17 +961,11 @@ public class BottomSheet
             }
         });
 
-        View contentView = content.getContentView();
-        if (content.applyDefaultTopPadding()) {
-            contentView.setPadding(contentView.getPaddingLeft(), mToolbarHolder.getHeight(),
-                    contentView.getPaddingRight(), contentView.getPaddingBottom());
-        }
-
         // For the toolbar transition, make sure we don't detach the default toolbar view.
         animators.add(getViewTransitionAnimator(
                 newToolbar, oldToolbar, mToolbarHolder, mDefaultToolbarView != oldToolbar));
         animators.add(getViewTransitionAnimator(
-                contentView, oldContent, mBottomSheetContentContainer, true));
+                content.getContentView(), oldContent, mBottomSheetContentContainer, true));
 
         // Temporarily make the background of the toolbar holder a solid color so the transition
         // doesn't appear to show a hole in the toolbar.
@@ -1052,7 +1031,7 @@ public class BottomSheet
      * Determines if a touch event is inside the toolbar. This assumes the toolbar is the full
      * width of the screen and that the toolbar is at the top of the bottom sheet.
      * @param e The motion event to test.
-     * @return True if the event occurred in the toolbar region.
+     * @return True if the event occured in the toolbar region.
      */
     private boolean isTouchEventInToolbar(MotionEvent e) {
         if (mControlContainer == null) return false;
@@ -1068,22 +1047,13 @@ public class BottomSheet
     private void onSheetOpened() {
         if (mIsSheetOpen) return;
 
-        mIsSheetOpen = true;
-
         // Make sure the toolbar is visible before expanding the sheet.
         Tab tab = getActiveTab();
         if (isToolbarAndroidViewHidden() && tab != null) {
             tab.updateBrowserControlsState(BrowserControlsState.SHOWN, false);
         }
 
-        mBottomSheetContentContainer.setVisibility(View.VISIBLE);
-
         mIsSheetOpen = true;
-
-        // Browser controls should stay visible until the sheet is closed.
-        mPersistentControlsToken =
-                mFullscreenManager.getBrowserVisibilityDelegate().showControlsPersistent();
-
         dismissSelectedText();
         for (BottomSheetObserver o : mObservers) o.onSheetOpened();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_opened));
@@ -1101,14 +1071,9 @@ public class BottomSheet
      */
     private void onSheetClosed() {
         if (!mIsSheetOpen) return;
-        mBottomSheetContentContainer.setVisibility(View.INVISIBLE);
+
         mBackButtonDismissesChrome = false;
         mIsSheetOpen = false;
-
-        // Update the browser controls since they are permanently shown while the sheet is open.
-        mFullscreenManager.getBrowserVisibilityDelegate().hideControlsPersistent(
-                mPersistentControlsToken);
-
         for (BottomSheetObserver o : mObservers) o.onSheetClosed();
         announceForAccessibility(getResources().getString(R.string.bottom_sheet_closed));
         clearFocus();
@@ -1147,11 +1112,14 @@ public class BottomSheet
         // The max height ratio will be greater than 1 to account for the toolbar shadow.
         mStateRatios[2] = (mContainerHeight + mToolbarShadowHeight) / mContainerHeight;
 
+        // Compute the height that the content section of the bottom sheet.
+        float contentHeight = (mContainerHeight * getFullRatio()) - mToolbarHeight;
+
         MarginLayoutParams sheetContentParams =
                 (MarginLayoutParams) mBottomSheetContentContainer.getLayoutParams();
         sheetContentParams.width = (int) mContainerWidth;
-        sheetContentParams.height = (int) mContainerHeight;
-        sheetContentParams.topMargin = mToolbarShadowHeight;
+        sheetContentParams.height = (int) contentHeight;
+        sheetContentParams.topMargin = (int) mToolbarHeight;
 
         MarginLayoutParams toolbarShadowParams =
                 (MarginLayoutParams) findViewById(R.id.toolbar_shadow).getLayoutParams();

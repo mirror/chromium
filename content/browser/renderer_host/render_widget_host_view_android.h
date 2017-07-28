@@ -56,7 +56,6 @@ class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
-class TextSuggestionHostAndroid;
 class TouchSelectionControllerClientManagerAndroid;
 class WebContentsAccessibilityAndroid;
 struct NativeWebKeyboardEvent;
@@ -259,10 +258,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void set_selection_popup_controller(SelectionPopupController* controller) {
     selection_popup_controller_ = controller;
   }
-  void set_text_suggestion_host(
-      TextSuggestionHostAndroid* text_suggestion_host) {
-    text_suggestion_host_ = text_suggestion_host;
-  }
 
   base::WeakPtr<RenderWidgetHostViewAndroid> GetWeakPtrAndroid();
 
@@ -405,7 +400,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   ImeAdapterAndroid* ime_adapter_android_;
   SelectionPopupController* selection_popup_controller_;
-  TextSuggestionHostAndroid* text_suggestion_host_;
 
   // The background color of the widget.
   SkColor background_color_;

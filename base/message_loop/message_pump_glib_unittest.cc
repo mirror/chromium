@@ -309,7 +309,7 @@ class ConcurrentHelper : public RefCounted<ConcurrentHelper>  {
       --task_count_;
     }
     if (task_count_ == 0 && event_count_ == 0) {
-      RunLoop::QuitCurrentWhenIdleDeprecated();
+        MessageLoop::current()->QuitWhenIdle();
     } else {
       ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, BindOnce(&ConcurrentHelper::FromTask, this));
@@ -321,7 +321,7 @@ class ConcurrentHelper : public RefCounted<ConcurrentHelper>  {
       --event_count_;
     }
     if (task_count_ == 0 && event_count_ == 0) {
-      RunLoop::QuitCurrentWhenIdleDeprecated();
+        MessageLoop::current()->QuitWhenIdle();
     } else {
       injector_->AddEventAsTask(0,
                                 BindOnce(&ConcurrentHelper::FromEvent, this));
@@ -465,7 +465,7 @@ void TestGLibLoopInternal(EventInjector* injector) {
 
   ASSERT_EQ(3, task_count);
   EXPECT_EQ(4, injector->processed_events());
-  RunLoop::QuitCurrentWhenIdleDeprecated();
+  MessageLoop::current()->QuitWhenIdle();
 }
 
 void TestGtkLoopInternal(EventInjector* injector) {
@@ -498,7 +498,7 @@ void TestGtkLoopInternal(EventInjector* injector) {
 
   ASSERT_EQ(3, task_count);
   EXPECT_EQ(4, injector->processed_events());
-  RunLoop::QuitCurrentWhenIdleDeprecated();
+  MessageLoop::current()->QuitWhenIdle();
 }
 
 }  // namespace

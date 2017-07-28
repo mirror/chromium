@@ -74,11 +74,13 @@
 -ProcessTest.WaitForExitWithTimeout
 -ProcessUtilTest.DelayedTermination
 -ProcessUtilTest.FDRemapping
+-ProcessUtilTest.GetAppOutputWithExitCode
 -ProcessUtilTest.GetTerminationStatusCrash
 -ProcessUtilTest.GetTerminationStatusSigKill
 -ProcessUtilTest.GetTerminationStatusSigTerm
 -ProcessUtilTest.ImmediateTermination
 -ProcessUtilTest.KillSlowChild
+-ProcessUtilTest.LaunchProcess
 -ProcessUtilTest.PreExecHook
 -ProcessUtilTest.SpawnChild
 -SysInfoTest.AmountOfFreeDiskSpace

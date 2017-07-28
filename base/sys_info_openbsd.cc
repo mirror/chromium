@@ -42,12 +42,12 @@ int SysInfo::NumberOfProcessors() {
 }
 
 // static
-int64_t SysInfo::AmountOfPhysicalMemoryImpl() {
+int64_t SysInfo::AmountOfPhysicalMemory() {
   return AmountOfMemory(_SC_PHYS_PAGES);
 }
 
 // static
-int64_t SysInfo::AmountOfAvailablePhysicalMemoryImpl() {
+int64_t SysInfo::AmountOfAvailablePhysicalMemory() {
   // We should add inactive file-backed memory also but there is no such
   // information from OpenBSD unfortunately.
   return AmountOfMemory(_SC_AVPHYS_PAGES);

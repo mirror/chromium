@@ -16,16 +16,14 @@ using ::showcase_utils::Open;
 using ::showcase_utils::Close;
 }
 
-@interface SCTextBadgeViewTestCase : ShowcaseTestCase
+@interface TextBadgeViewTestCase : ShowcaseTestCase
 @end
 
-@implementation SCTextBadgeViewTestCase
+@implementation TextBadgeViewTestCase
 
 // Tests that the accessibility label matches the display text.
 - (void)testTextBadgeAccessibilityLabel {
   Open(@"TextBadgeView");
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"TEXT")]
-      assertWithMatcher:grey_notNil()];
   Close();
 }
 

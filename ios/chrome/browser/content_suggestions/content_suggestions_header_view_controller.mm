@@ -158,10 +158,6 @@ const CGFloat kHintLabelSidePadding = 12;
   }
 }
 
-- (void)layoutHeader {
-  [self.headerView layoutIfNeeded];
-}
-
 #pragma mark - ContentSuggestionsHeaderProvider
 
 - (UIView*)headerForWidth:(CGFloat)width {

@@ -13,7 +13,6 @@
 #include "components/cryptauth/authenticator.h"
 #include "components/cryptauth/connection.h"
 #include "components/cryptauth/connection_observer.h"
-#include "components/cryptauth/device_to_device_initiator_helper.h"
 #include "components/cryptauth/session_keys.h"
 
 namespace base {
@@ -153,9 +152,6 @@ class DeviceToDeviceAuthenticator : public Authenticator,
 
   // Handles SecureMessage crypto operations.
   std::unique_ptr<SecureMessageDelegate> secure_message_delegate_;
-
-  // Performs authentication handshake.
-  std::unique_ptr<DeviceToDeviceInitiatorHelper> helper_;
 
   // The current state in the authentication flow.
   State state_;

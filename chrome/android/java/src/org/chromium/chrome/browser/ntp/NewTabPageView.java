@@ -43,12 +43,10 @@ import org.chromium.chrome.browser.omnibox.OmniboxPlaceholderFieldTrial;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
-import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.suggestions.Tile;
 import org.chromium.chrome.browser.suggestions.TileGridLayout;
 import org.chromium.chrome.browser.suggestions.TileGroup;
-import org.chromium.chrome.browser.suggestions.TileView;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
@@ -74,6 +72,18 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      * Experiment parameter for the number of tile title lines to show.
      */
     private static final String PARAM_NTP_TILE_TITLE_LINES = "ntp_tile_title_lines";
+
+    /**
+     * Experiment parameter for whether to use the condensed tile layout on small screens.
+     */
+    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED =
+            "condensed_tile_layout_for_small_screens_enabled";
+
+    /**
+     * Experiment parameter for whether to use the condensed tile layout on large screens.
+     */
+    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED =
+            "condensed_tile_layout_for_large_screens_enabled";
 
     /**
      * Experiment parameter for whether to show the logo in the condensed layout.
@@ -250,14 +260,14 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         OfflinePageBridge offlinePageBridge =
                 OfflinePageBridge.getForProfile(Profile.getLastUsedProfile());
 
-        mTileGridLayout = mNewTabPageLayout.findViewById(R.id.tile_grid_layout);
+        mTileGridLayout = (TileGridLayout) mNewTabPageLayout.findViewById(R.id.tile_grid_layout);
         mTileGridLayout.setMaxRows(getMaxTileRows(searchProviderHasLogo));
         mTileGridLayout.setMaxColumns(getMaxTileColumns());
         mTileGroup = new TileGroup(mActivity, mManager, mContextMenuManager, tileGroupDelegate,
-                /* observer = */ this, offlinePageBridge, getTileTitleLines(),
-                SuggestionsConfig.getTileStyle(mUiConfig));
+                /* observer = */ this, offlinePageBridge, getTileTitleLines());
 
-        mSearchProviderLogoView = mNewTabPageLayout.findViewById(R.id.search_provider_logo);
+        mSearchProviderLogoView =
+                (LogoView) mNewTabPageLayout.findViewById(R.id.search_provider_logo);
         int experimentalLogoHeightDp = ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
                 ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_CONDENSED_LAYOUT_LOGO_HEIGHT, 0);
         if (experimentalLogoHeightDp > 0) {
@@ -861,7 +871,9 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      */
     private int getMaxTileColumns() {
         if (!mUiConfig.getCurrentDisplayStyle().isSmall()
-                && SuggestionsConfig.getTileStyle(mUiConfig) == TileView.Style.CONDENSED) {
+                && ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                           ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                           PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false)) {
             return 5;
         }
         return 4;
@@ -874,6 +886,17 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         }
         return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
                 ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_NTP_TILE_TITLE_LINES, defaultValue);
+    }
+
+    private boolean shouldUseCondensedTileLayout() {
+        if (mUiConfig.getCurrentDisplayStyle().isSmall()) {
+            return ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                    ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                    PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED, false);
+        }
+        return ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false);
     }
 
     private boolean shouldShowLogo() {
@@ -909,7 +932,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
     @Override
     public void onTileDataChanged() {
-        mTileGroup.renderTileViews(mTileGridLayout);
+        mTileGroup.renderTileViews(mTileGridLayout, shouldUseCondensedTileLayout());
         mSnapshotTileGridChanged = true;
 
         // The page contents are initially hidden; otherwise they'll be drawn centered on the page

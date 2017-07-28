@@ -1000,9 +1000,9 @@ void LayoutFlexibleBox::LayoutFlexItems(bool relayout_children,
       DCHECK(!flex_item.box->IsOutOfFlowPositioned());
       current_line->remaining_free_space -= flex_item.FlexedMarginBoxSize();
     }
-    LayoutLineItems(current_line, relayout_children, layout_scope);
-    PlaceLineItems(cross_axis_offset, current_line,
-                   current_line->remaining_free_space);
+    LayoutAndPlaceChildren(cross_axis_offset, current_line,
+                           current_line->remaining_free_space,
+                           relayout_children, layout_scope);
   }
   if (HasLineIfEmpty()) {
     // Even if ComputeNextFlexLine returns true, the flexbox might not have
@@ -1191,7 +1191,9 @@ void LayoutFlexibleBox::PrepareOrderIteratorAndMargins() {
 DISABLE_CFI_PERF
 MinMaxSize LayoutFlexibleBox::ComputeMinAndMaxSizesForChild(
     const LayoutBox& child) const {
-  MinMaxSize sizes{LayoutUnit(), LayoutUnit::Max()};
+  MinMaxSize sizes;
+  sizes.min_size = LayoutUnit();
+  sizes.max_size = LayoutUnit::Max();
 
   Length max = IsHorizontalFlow() ? child.Style()->MaxWidth()
                                   : child.Style()->MaxHeight();
@@ -1352,10 +1354,13 @@ FlexItem LayoutFlexibleBox::ConstructFlexItem(LayoutBox& child,
                                       : child.BorderAndPaddingHeight();
   LayoutUnit child_inner_flex_base_size =
       ComputeInnerFlexBaseSizeForChild(child, border_and_padding, layout_type);
+  LayoutUnit child_min_max_applied_main_axis_extent = std::max(
+      sizes.min_size, std::min(child_inner_flex_base_size, sizes.max_size));
   LayoutUnit margin =
       IsHorizontalFlow() ? child.MarginWidth() : child.MarginHeight();
-  return FlexItem(&child, child_inner_flex_base_size, sizes, border_and_padding,
-                  margin);
+  return FlexItem(&child, child_inner_flex_base_size,
+                  child_min_max_applied_main_axis_extent, border_and_padding,
+                  sizes, margin);
 }
 
 // Returns true if we successfully ran the algorithm and sized the flex items.
@@ -1694,9 +1699,33 @@ EOverflow LayoutFlexibleBox::CrossAxisOverflowForChild(
 }
 
 DISABLE_CFI_PERF
-void LayoutFlexibleBox::LayoutLineItems(FlexLine* current_line,
-                                        bool relayout_children,
-                                        SubtreeLayoutScope& layout_scope) {
+void LayoutFlexibleBox::LayoutAndPlaceChildren(
+    LayoutUnit& cross_axis_offset,
+    FlexLine* current_line,
+    LayoutUnit available_free_space,
+    bool relayout_children,
+    SubtreeLayoutScope& layout_scope) {
+  const StyleContentAlignmentData justify_content = ResolvedJustifyContent();
+
+  LayoutUnit auto_margin_offset = AutoMarginOffsetInMainAxis(
+      current_line->line_items, available_free_space);
+  LayoutUnit main_axis_offset =
+      FlowAwareBorderStart() + FlowAwarePaddingStart();
+  main_axis_offset += InitialContentPositionOffset(
+      available_free_space, justify_content, current_line->line_items.size());
+  if (Style()->FlexDirection() == EFlexDirection::kRowReverse &&
+      ShouldPlaceBlockDirectionScrollbarOnLogicalLeft())
+    main_axis_offset += IsHorizontalFlow() ? VerticalScrollbarWidth()
+                                           : HorizontalScrollbarHeight();
+
+  LayoutUnit total_main_extent = MainAxisExtent();
+  if (!ShouldPlaceBlockDirectionScrollbarOnLogicalLeft())
+    total_main_extent -= IsHorizontalFlow() ? VerticalScrollbarWidth()
+                                            : HorizontalScrollbarHeight();
+  LayoutUnit max_descent;  // Used when align-items: baseline.
+  LayoutUnit max_child_cross_axis_extent;
+  bool should_flip_main_axis = !IsColumnFlow() && !IsLeftToRightFlow();
+  bool is_paginated = View()->GetLayoutState()->IsPaginated();
   for (size_t i = 0; i < current_line->line_items.size(); ++i) {
     const FlexItem& flex_item = current_line->line_items[i];
     LayoutBox* child = flex_item.box;
@@ -1736,41 +1765,6 @@ void LayoutFlexibleBox::LayoutLineItems(FlexLine* current_line,
     if (child->NeedsLayout())
       relaid_out_children_.insert(child);
     child->LayoutIfNeeded();
-  }
-}
-
-DISABLE_CFI_PERF
-void LayoutFlexibleBox::PlaceLineItems(LayoutUnit& cross_axis_offset,
-                                       FlexLine* current_line,
-                                       LayoutUnit available_free_space) {
-  const StyleContentAlignmentData justify_content = ResolvedJustifyContent();
-
-  LayoutUnit auto_margin_offset = AutoMarginOffsetInMainAxis(
-      current_line->line_items, available_free_space);
-  LayoutUnit main_axis_offset =
-      FlowAwareBorderStart() + FlowAwarePaddingStart();
-  main_axis_offset += InitialContentPositionOffset(
-      available_free_space, justify_content, current_line->line_items.size());
-  if (Style()->FlexDirection() == EFlexDirection::kRowReverse &&
-      ShouldPlaceBlockDirectionScrollbarOnLogicalLeft()) {
-    main_axis_offset += IsHorizontalFlow() ? VerticalScrollbarWidth()
-                                           : HorizontalScrollbarHeight();
-  }
-
-  LayoutUnit total_main_extent = MainAxisExtent();
-  if (!ShouldPlaceBlockDirectionScrollbarOnLogicalLeft()) {
-    total_main_extent -= IsHorizontalFlow() ? VerticalScrollbarWidth()
-                                            : HorizontalScrollbarHeight();
-  }
-  LayoutUnit max_descent;  // Used when align-items: baseline.
-  LayoutUnit max_child_cross_axis_extent;
-  bool should_flip_main_axis = !IsColumnFlow() && !IsLeftToRightFlow();
-  bool is_paginated = View()->GetLayoutState()->IsPaginated();
-  for (size_t i = 0; i < current_line->line_items.size(); ++i) {
-    const FlexItem& flex_item = current_line->line_items[i];
-    LayoutBox* child = flex_item.box;
-
-    DCHECK(!flex_item.box->IsOutOfFlowPositioned());
 
     UpdateAutoMarginsInMainAxis(*child, auto_margin_offset);
 

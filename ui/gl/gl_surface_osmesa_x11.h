@@ -28,7 +28,6 @@ class GL_EXPORT GLSurfaceOSMesaX11 : public GLSurfaceOSMesa {
   void Destroy() override;
   bool Resize(const gfx::Size& new_size,
               float scale_factor,
-              ColorSpace color_space,
               bool alpha) override;
   bool IsOffscreen() override;
   gfx::SwapResult SwapBuffers() override;

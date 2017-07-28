@@ -148,6 +148,7 @@
 #include "chrome/browser/ui/webui/chromeos/sim_unlock_ui.h"
 #include "chrome/browser/ui/webui/chromeos/slow_trace_ui.h"
 #include "chrome/browser/ui/webui/chromeos/slow_ui.h"
+#include "chrome/browser/ui/webui/options/options_ui.h"
 #include "chrome/browser/ui/webui/voice_search_ui.h"
 #include "components/proximity_auth/webui/proximity_auth_ui.h"
 #include "components/proximity_auth/webui/url_constants.h"
@@ -479,6 +480,8 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
     return &NewWebUI<chromeos::ProxySettingsUI>;
   if (url.host_piece() == chrome::kChromeUISetTimeHost)
     return &NewWebUI<chromeos::SetTimeUI>;
+  if (url.host_piece() == chrome::kChromeUISettingsFrameHost)
+    return &NewWebUI<options::OptionsUI>;
   if (url.host_piece() == chrome::kChromeUISimUnlockHost)
     return &NewWebUI<chromeos::SimUnlockUI>;
   if (url.host_piece() == chrome::kChromeUISlowHost)
@@ -811,6 +814,7 @@ base::RefCountedMemory* ChromeWebUIControllerFactory::GetFaviconResourceBytes(
 
   // Android doesn't use the Options/Settings pages.
   if (page_url.host_piece() == chrome::kChromeUISettingsHost ||
+      page_url.host_piece() == chrome::kChromeUISettingsFrameHost ||
       page_url.host_piece() == chrome::kChromeUIMdSettingsHost)
     return settings_utils::GetFaviconResourceBytes(scale_factor);
 

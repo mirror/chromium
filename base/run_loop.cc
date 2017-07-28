@@ -63,7 +63,6 @@ bool RunLoop::Delegate::Client::IsNested() const {
 
 RunLoop::Delegate::Client::Client(Delegate* outer) : outer_(outer) {}
 
-// static
 RunLoop::Delegate::Client* RunLoop::RegisterDelegateForCurrentThread(
     Delegate* delegate) {
   // Bind |delegate| to this thread.
@@ -219,18 +218,6 @@ bool RunLoop::IsNestingAllowedOnCurrentThread() {
 // static
 void RunLoop::DisallowNestingOnCurrentThread() {
   tls_delegate.Get().Get()->allow_nesting_ = false;
-}
-
-// static
-void RunLoop::QuitCurrentDeprecated() {
-  DCHECK(IsRunningOnCurrentThread());
-  tls_delegate.Get().Get()->active_run_loops_.top()->Quit();
-}
-
-// static
-void RunLoop::QuitCurrentWhenIdleDeprecated() {
-  DCHECK(IsRunningOnCurrentThread());
-  tls_delegate.Get().Get()->active_run_loops_.top()->QuitWhenIdle();
 }
 
 bool RunLoop::BeforeRun() {

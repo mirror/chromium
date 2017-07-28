@@ -15,7 +15,6 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/time/time.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/overlay_transform.h"
@@ -40,9 +39,9 @@ class HardwareDisplayPlaneManager;
 // would be called. In unit tests this interface would be stubbed.
 class DrmDevice : public base::RefCountedThreadSafe<DrmDevice> {
  public:
-  using PageFlipCallback =
-      base::Callback<void(unsigned int /* frame */,
-                          base::TimeTicks /* timestamp */)>;
+  typedef base::Callback<void(unsigned int /* frame */,
+                              unsigned int /* seconds */,
+                              unsigned int /* useconds */)> PageFlipCallback;
 
   DrmDevice(const base::FilePath& device_path,
             base::File file,

@@ -6,7 +6,6 @@
 
 #include <string>
 
-#include "base/logging.h"
 #include "base/macros.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/time/time.h"
@@ -30,8 +29,7 @@ class CastAuthUtilTest : public testing::Test {
   void SetUp() override {}
 
  protected:
-  static AuthResponse CreateAuthResponse(std::string* signed_data,
-                                         HashAlgorithm digest_algorithm) {
+  static AuthResponse CreateAuthResponse(std::string* signed_data) {
     auto chain = cast_certificate::testing::ReadCertificateChainFromFile(
         "certificates/chromecast_gen1.pem");
     CHECK(!chain.empty());
@@ -45,15 +43,7 @@ class CastAuthUtilTest : public testing::Test {
     for (size_t i = 1; i < chain.size(); ++i)
       response.add_intermediate_certificate(chain[i]);
 
-    response.set_hash_algorithm(digest_algorithm);
-    switch (digest_algorithm) {
-      case SHA1:
-        response.set_signature(signature_data.signature_sha1);
-        break;
-      case SHA256:
-        response.set_signature(signature_data.signature_sha256);
-        break;
-    }
+    response.set_signature(signature_data.signature_sha1);
     *signed_data = signature_data.message;
 
     return response;
@@ -68,7 +58,7 @@ class CastAuthUtilTest : public testing::Test {
 // being verified doesn't expire until 2032!
 TEST_F(CastAuthUtilTest, VerifySuccess) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA256);
+  AuthResponse auth_response = CreateAuthResponse(&signed_data);
   base::Time now = base::Time::Now();
   AuthResult result = VerifyCredentialsForTest(
       auth_response, signed_data, cast_certificate::CRLPolicy::CRL_OPTIONAL,
@@ -79,7 +69,7 @@ TEST_F(CastAuthUtilTest, VerifySuccess) {
 
 TEST_F(CastAuthUtilTest, VerifyBadCA) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA256);
+  AuthResponse auth_response = CreateAuthResponse(&signed_data);
   MangleString(auth_response.mutable_intermediate_certificate(0));
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());
@@ -88,7 +78,7 @@ TEST_F(CastAuthUtilTest, VerifyBadCA) {
 
 TEST_F(CastAuthUtilTest, VerifyBadClientAuthCert) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA256);
+  AuthResponse auth_response = CreateAuthResponse(&signed_data);
   MangleString(auth_response.mutable_client_auth_certificate());
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());
@@ -98,49 +88,16 @@ TEST_F(CastAuthUtilTest, VerifyBadClientAuthCert) {
 
 TEST_F(CastAuthUtilTest, VerifyBadSignature) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA256);
+  AuthResponse auth_response = CreateAuthResponse(&signed_data);
   MangleString(auth_response.mutable_signature());
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());
   EXPECT_EQ(AuthResult::ERROR_SIGNED_BLOBS_MISMATCH, result.error_type);
 }
 
-TEST_F(CastAuthUtilTest, VerifyEmptySignature) {
-  std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA256);
-  auth_response.mutable_signature()->clear();
-  AuthResult result = VerifyCredentials(auth_response, signed_data);
-  EXPECT_FALSE(result.success());
-  EXPECT_EQ(AuthResult::ERROR_SIGNATURE_EMPTY, result.error_type);
-}
-
-TEST_F(CastAuthUtilTest, VerifyUnsupportedDigest) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(
-      base::Feature{"CastSHA256Enforced", base::FEATURE_DISABLED_BY_DEFAULT});
-  std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA1);
-  base::Time now = base::Time::Now();
-  AuthResult result = VerifyCredentialsForTest(
-      auth_response, signed_data, cast_certificate::CRLPolicy::CRL_OPTIONAL,
-      nullptr, nullptr, now);
-  EXPECT_FALSE(result.success());
-  EXPECT_EQ(AuthResult::ERROR_DIGEST_UNSUPPORTED, result.error_type);
-}
-
-TEST_F(CastAuthUtilTest, VerifyBackwardsCompatibleDigest) {
-  std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA1);
-  base::Time now = base::Time::Now();
-  AuthResult result = VerifyCredentialsForTest(
-      auth_response, signed_data, cast_certificate::CRLPolicy::CRL_OPTIONAL,
-      nullptr, nullptr, now);
-  EXPECT_TRUE(result.success());
-}
-
 TEST_F(CastAuthUtilTest, VerifyBadPeerCert) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data, SHA256);
+  AuthResponse auth_response = CreateAuthResponse(&signed_data);
   MangleString(&signed_data);
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());

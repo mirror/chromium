@@ -8,6 +8,7 @@
 
 #include "ash/shell.h"
 #include "base/memory/ptr_util.h"
+#include "base/rand_util.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/camera_detector.h"
 #include "chrome/browser/chromeos/login/error_screens_histogram_helper.h"
@@ -539,7 +540,8 @@ void SupervisedUserCreationScreen::OnGetSupervisedUsers(
       ui_copy->SetString(kAvatarURLKey,
                          default_user_image::GetDefaultImageUrl(avatar_index));
     } else {
-      int i = default_user_image::GetRandomDefaultImageIndex();
+      int i = base::RandInt(default_user_image::kFirstDefaultImageIndex,
+                            default_user_image::kDefaultImagesCount - 1);
       local_copy->SetString(
           SupervisedUserSyncService::kChromeOsAvatar,
           SupervisedUserSyncService::BuildAvatarString(i));

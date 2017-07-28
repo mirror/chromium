@@ -12,14 +12,12 @@
 #include "base/test/mock_callback.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_network_request_factory.h"
 #include "components/offline_pages/core/task.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
 
 namespace offline_pages {
-class PrefetchStore;
 class Task;
 
 // Base class for testing prefetch requests with simulated responses.
@@ -28,10 +26,6 @@ class TaskTestBase : public testing::Test {
   TaskTestBase();
   ~TaskTestBase() override;
 
-  void SetUp() override;
-  void TearDown() override;
-
-  void RunUntilIdle();
   void ExpectTaskCompletes(Task* task);
 
   TestPrefetchNetworkRequestFactory* prefetch_request_factory() {
@@ -42,16 +36,12 @@ class TaskTestBase : public testing::Test {
     return &url_fetcher_factory_;
   }
 
-  PrefetchStore* store() { return store_test_util_.store(); }
-
-  PrefetchStoreTestUtil* store_util() { return &store_test_util_; }
+  scoped_refptr<base::TestSimpleTaskRunner> task_runner;
 
  private:
-  scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
   net::TestURLFetcherFactory url_fetcher_factory_;
   TestPrefetchNetworkRequestFactory prefetch_request_factory_;
-  PrefetchStoreTestUtil store_test_util_;
 
   std::vector<std::unique_ptr<base::MockCallback<Task::TaskCompletionCallback>>>
       completion_callbacks_;

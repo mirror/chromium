@@ -1,4 +1,5 @@
-file://ui/accessibility/OWNERS
+dmazzoni@chromium.org
+dtseng@chromium.org
 
 # TEAM: chromium-accessibility@chromium.org
-# COMPONENT: Internals>Accessibility
+# COMPONENT: UI>Accessibility

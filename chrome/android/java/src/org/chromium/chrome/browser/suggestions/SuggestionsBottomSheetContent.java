@@ -32,7 +32,6 @@ import org.chromium.chrome.browser.widget.FadingShadow;
 import org.chromium.chrome.browser.widget.FadingShadowView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
-import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetNewTabController;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.ui.widget.Toast;
 
@@ -42,8 +41,7 @@ import java.util.Locale;
 /**
  * Provides content to be displayed inside of the Home tab of bottom sheet.
  */
-public class SuggestionsBottomSheetContent
-        implements BottomSheet.BottomSheetContent, BottomSheetNewTabController.Observer {
+public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetContent {
     private final View mView;
     private final FadingShadowView mShadowView;
     private final SuggestionsRecyclerView mRecyclerView;
@@ -168,8 +166,6 @@ public class SuggestionsBottomSheetContent
                 return false;
             }
         });
-
-        sheet.getNewTabController().addObserver(this);
     }
 
     @Override
@@ -208,17 +204,6 @@ public class SuggestionsBottomSheetContent
     public int getType() {
         return BottomSheetContentController.TYPE_SUGGESTIONS;
     }
-
-    @Override
-    public boolean applyDefaultTopPadding() {
-        return false;
-    }
-
-    @Override
-    public void onNewTabShown() {}
-
-    @Override
-    public void onNewTabHidden() {}
 
     private void maybeUpdateContextualSuggestions() {
         if (mSuggestionsCarousel == null) return;

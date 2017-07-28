@@ -8,7 +8,6 @@
 
 #include <memory>
 
-#include "cc/raster/playback_image_provider.h"
 #include "cc/test/fake_recording_source.h"
 #include "cc/test/skia_common.h"
 #include "cc/tiles/software_image_decode_cache.h"
@@ -501,8 +500,7 @@ TEST(RasterSourceTest, ImageHijackCanvasRespectsSharedCanvasTransform) {
   SoftwareImageDecodeCache controller(
       viz::ResourceFormat::RGBA_8888,
       LayerTreeSettings().decoded_image_working_set_budget_bytes);
-  PlaybackImageProvider image_provider(false, PaintImageIdFlatSet(),
-                                       &controller, gfx::ColorSpace());
+  raster_source->set_image_decode_cache(&controller);
 
   SkBitmap bitmap;
   bitmap.allocN32Pixels(size.width() * 0.5f, size.height() * 0.25f);
@@ -511,7 +509,7 @@ TEST(RasterSourceTest, ImageHijackCanvasRespectsSharedCanvasTransform) {
 
   RasterSource::PlaybackSettings settings;
   settings.playback_to_shared_canvas = true;
-  settings.image_provider = &image_provider;
+  settings.use_image_hijack_canvas = true;
   raster_source->PlaybackToCanvas(&canvas, ColorSpaceForTesting(),
                                   gfx::Rect(size), gfx::Rect(size),
                                   gfx::AxisTransform2d(), settings);

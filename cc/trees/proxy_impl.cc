@@ -475,9 +475,9 @@ void ProxyImpl::OnDrawForLayerTreeFrameSink(bool resourceless_software_draw) {
   scheduler_->OnDrawForLayerTreeFrameSink(resourceless_software_draw);
 }
 
-void ProxyImpl::NeedsImplSideInvalidation(bool needs_first_draw_on_activation) {
+void ProxyImpl::NeedsImplSideInvalidation() {
   DCHECK(IsImplThread());
-  scheduler_->SetNeedsImplSideInvalidation(needs_first_draw_on_activation);
+  scheduler_->SetNeedsImplSideInvalidation();
 }
 
 void ProxyImpl::NotifyImageDecodeRequestFinished() {

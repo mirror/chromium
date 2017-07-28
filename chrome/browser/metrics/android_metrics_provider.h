@@ -24,9 +24,9 @@ class AndroidMetricsProvider : public metrics::MetricsProvider {
   ~AndroidMetricsProvider() override;
 
   // metrics::MetricsProvider:
-  void ProvidePreviousSessionData(
-      metrics::ChromeUserMetricsExtension* uma_proto) override;
-  void ProvideCurrentSessionData(
+  void ProvideStabilityMetrics(
+      metrics::SystemProfileProto* system_profile_proto) override;
+  void ProvideGeneralMetrics(
       metrics::ChromeUserMetricsExtension* uma_proto) override;
 
   // Called when the Activity that the user interacts with is swapped out.

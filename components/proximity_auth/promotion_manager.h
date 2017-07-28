@@ -23,7 +23,6 @@ class LocalDeviceDataProvider;
 
 namespace proximity_auth {
 
-class NotificationController;
 class ProximityAuthPrefManager;
 
 // The PromotionManager periodically checks with CryptAuth to determine if the
@@ -33,7 +32,6 @@ class PromotionManager : public ScreenlockBridge::Observer {
  public:
   PromotionManager(
       cryptauth::LocalDeviceDataProvider* local_device_data_provider,
-      NotificationController* notification_controller,
       ProximityAuthPrefManager* pref_manager,
       std::unique_ptr<cryptauth::CryptAuthClientFactory> client_factory,
       std::unique_ptr<base::Clock> clock,
@@ -82,9 +80,6 @@ class PromotionManager : public ScreenlockBridge::Observer {
 
   // Provides the local device information, e.g. public key.
   cryptauth::LocalDeviceDataProvider* local_device_data_provider_;
-
-  // Displays the notification to the user.
-  NotificationController* notification_controller_;
 
   // Used to store the last a promotion check was done.
   ProximityAuthPrefManager* pref_manager_;

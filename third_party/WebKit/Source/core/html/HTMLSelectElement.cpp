@@ -1566,10 +1566,8 @@ void HTMLSelectElement::ListBoxDefaultEventHandler(Event* event) {
                  static_cast<short>(WebPointerProperties::Button::kLeft) &&
              GetLayoutObject()) {
     if (GetDocument().GetPage() &&
-        GetDocument()
-            .GetPage()
-            ->GetAutoscrollController()
-            .AutoscrollInProgressFor(ToLayoutBox(GetLayoutObject())))
+        GetDocument().GetPage()->GetAutoscrollController().AutoscrollInProgress(
+            ToLayoutBox(GetLayoutObject())))
       GetDocument().GetPage()->GetAutoscrollController().StopAutoscroll();
     else
       HandleMouseRelease();

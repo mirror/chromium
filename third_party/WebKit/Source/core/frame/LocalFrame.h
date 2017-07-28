@@ -81,7 +81,6 @@ class PluginData;
 class ResourceRequest;
 class ScriptController;
 class SpellChecker;
-class TextSuggestionController;
 class WebFrameScheduler;
 class WebPluginContainerImpl;
 class WebTaskRunner;
@@ -132,8 +131,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void DocumentAttached();
 
   Frame* FindFrameForNavigation(const AtomicString& name,
-                                LocalFrame& active_frame,
-                                const KURL& destination_url);
+                                LocalFrame& active_frame);
 
   // Note: these two functions are not virtual but intentionally shadow the
   // corresponding method in the Frame base class to return the
@@ -156,7 +154,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   NavigationScheduler& GetNavigationScheduler() const;
   FrameSelection& Selection() const;
   InputMethodController& GetInputMethodController() const;
-  TextSuggestionController& GetTextSuggestionController() const;
   ScriptController& GetScriptController() const;
   SpellChecker& GetSpellChecker() const;
   FrameConsole& Console() const;
@@ -225,10 +222,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   bool IsNavigationAllowed() const { return navigation_disable_count_ == 0; }
 
-  // destination_url is only used when a navigation is blocked due to
-  // framebusting defenses, in order to give the option of restarting the
-  // navigation at a later time.
-  bool CanNavigate(const Frame&, const KURL& destination_url = KURL());
+  bool CanNavigate(const Frame&);
 
   service_manager::InterfaceProvider& GetInterfaceProvider();
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }
@@ -307,7 +301,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   const Member<EventHandler> event_handler_;
   const Member<FrameConsole> console_;
   const Member<InputMethodController> input_method_controller_;
-  const Member<TextSuggestionController> text_suggestion_controller_;
 
   int navigation_disable_count_;
 
@@ -360,11 +353,6 @@ inline FrameConsole& LocalFrame::Console() const {
 
 inline InputMethodController& LocalFrame::GetInputMethodController() const {
   return *input_method_controller_;
-}
-
-inline TextSuggestionController& LocalFrame::GetTextSuggestionController()
-    const {
-  return *text_suggestion_controller_;
 }
 
 inline bool LocalFrame::InViewSourceMode() const {

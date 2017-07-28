@@ -62,8 +62,8 @@ namespace blink {
 
 namespace {
 
-NSAttributedString* AttributedSubstringFromRange(const EphemeralRange& range,
-                                                 float font_scale) {
+NSAttributedString* attributedSubstringFromRange(const EphemeralRange& range,
+                                                 float fontScale) {
   NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
   NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
   size_t length = range.EndPosition().ComputeOffsetInContainerNode() -
@@ -79,21 +79,21 @@ NSAttributedString* AttributedSubstringFromRange(const EphemeralRange& range,
 
   for (TextIterator it(range.StartPosition(), range.EndPosition());
        !it.AtEnd() && [string length] < length; it.Advance()) {
-    unsigned num_characters = it.length();
-    if (!num_characters)
+    unsigned numCharacters = it.length();
+    if (!numCharacters)
       continue;
 
     Node* container = it.CurrentContainer();
-    LayoutObject* layout_object = container->GetLayoutObject();
-    DCHECK(layout_object);
-    if (!layout_object)
+    LayoutObject* layoutObject = container->GetLayoutObject();
+    DCHECK(layoutObject);
+    if (!layoutObject)
       continue;
 
-    const ComputedStyle* style = layout_object->Style();
-    FontPlatformData font_platform_data =
+    const ComputedStyle* style = layoutObject->Style();
+    FontPlatformData fontPlatformData =
         style->GetFont().PrimaryFont()->PlatformData();
-    font_platform_data.text_size_ *= font_scale;
-    NSFont* font = toNSFont(font_platform_data.CtFont());
+    fontPlatformData.text_size_ *= fontScale;
+    NSFont* font = toNSFont(fontPlatformData.CtFont());
     // If the platform font can't be loaded, or the size is incorrect comparing
     // to the computed style, it's likely that the site is using a web font.
     // For now, just use the default font instead.
@@ -101,12 +101,12 @@ NSAttributedString* AttributedSubstringFromRange(const EphemeralRange& range,
     // to use the font.
     // TODO(shuchen): Support scaling the font as necessary according to CSS
     // transforms, not just pinch-zoom.
-    if (!font || floor(font_platform_data.size()) !=
+    if (!font || floor(fontPlatformData.size()) !=
                      floor([[font fontDescriptor] pointSize])) {
       font = [NSFont systemFontOfSize:style->GetFont()
                                           .GetFontDescription()
                                           .ComputedSize() *
-                                      font_scale];
+                                      fontScale];
     }
     [attrs setObject:font forKey:NSFontAttributeName];
 
@@ -129,25 +129,25 @@ NSAttributedString* AttributedSubstringFromRange(const EphemeralRange& range,
                                        length:characters.Size()] autorelease];
     [string replaceCharactersInRange:NSMakeRange(position, 0)
                           withString:substring];
-    [string setAttributes:attrs range:NSMakeRange(position, num_characters)];
-    position += num_characters;
+    [string setAttributes:attrs range:NSMakeRange(position, numCharacters)];
+    position += numCharacters;
   }
   return [string autorelease];
 }
 
-WebPoint GetBaselinePoint(LocalFrameView* frame_view,
+WebPoint getBaselinePoint(LocalFrameView* frameView,
                           const EphemeralRange& range,
                           NSAttributedString* string) {
-  IntRect string_rect = frame_view->ContentsToViewport(ComputeTextRect(range));
-  IntPoint string_point = string_rect.MinXMaxYCorner();
+  IntRect stringRect = frameView->ContentsToViewport(ComputeTextRect(range));
+  IntPoint stringPoint = stringRect.MinXMaxYCorner();
 
   // Adjust for the font's descender. AppKit wants the baseline point.
   if ([string length]) {
     NSDictionary* attributes = [string attributesAtIndex:0 effectiveRange:NULL];
     if (NSFont* font = [attributes objectForKey:NSFontAttributeName])
-      string_point.Move(0, ceil([font descender]));
+      stringPoint.Move(0, ceil([font descender]));
   }
-  return string_point;
+  return stringPoint;
 }
 
 }  // namespace
@@ -174,9 +174,9 @@ NSAttributedString* WebSubstringUtil::AttributedWordAtPoint(
   const EphemeralRange word_range = selection.ToNormalizedEphemeralRange();
 
   // Convert to NSAttributedString.
-  NSAttributedString* string = AttributedSubstringFromRange(
+  NSAttributedString* string = attributedSubstringFromRange(
       word_range, frame->GetPage()->GetVisualViewport().Scale());
-  baseline_point = GetBaselinePoint(frame->View(), word_range, string);
+  baseline_point = getBaselinePoint(frame->View(), word_range, string);
   return string;
 }
 
@@ -205,10 +205,10 @@ NSAttributedString* WebSubstringUtil::AttributedSubstringInRange(
   if (ephemeral_range.IsNull())
     return nil;
 
-  NSAttributedString* result = AttributedSubstringFromRange(
+  NSAttributedString* result = attributedSubstringFromRange(
       ephemeral_range, frame->GetPage()->GetVisualViewport().Scale());
   if (baseline_point)
-    *baseline_point = GetBaselinePoint(frame->View(), ephemeral_range, result);
+    *baseline_point = getBaselinePoint(frame->View(), ephemeral_range, result);
   return result;
 }
 

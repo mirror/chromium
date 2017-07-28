@@ -85,7 +85,7 @@ class WindowedPersonalDataManagerObserver : public PersonalDataManagerObserver {
   // PersonalDataManagerObserver:
   void OnPersonalDataChanged() override {
     if (has_run_message_loop_) {
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoopForUI::current()->QuitWhenIdle();
       has_run_message_loop_ = false;
     }
     alerted_ = true;

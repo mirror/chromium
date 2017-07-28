@@ -80,7 +80,7 @@ void UpdateCastTransportStatus(
 void QuitLoopOnInitializationResult(media::cast::OperationalStatus result) {
   CHECK(result == media::cast::STATUS_INITIALIZED)
       << "Cast sender uninitialized";
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 net::IPEndPoint CreateUDPAddress(const std::string& ip_str, uint16_t port) {

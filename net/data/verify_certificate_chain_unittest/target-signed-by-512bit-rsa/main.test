@@ -3,9 +3,10 @@ last_cert_trust: TRUSTED_ANCHOR
 utc_time: 150302120000Z
 key_purpose: SERVER_AUTH
 expected_errors:
------ Certificate i=1 (CN=Intermediate) -----
+----- Certificate i=0 (CN=Target) -----
 ERROR: RSA modulus too small
   actual: 512
   minimum: 1024
-ERROR: Unacceptable public key
+ERROR: Unacceptable modulus length for RSA key
+ERROR: VerifySignedData failed
 

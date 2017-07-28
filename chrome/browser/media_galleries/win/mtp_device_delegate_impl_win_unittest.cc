@@ -170,7 +170,7 @@ TEST_F(MTPDeviceDelegateImplWinTest, GalleryNameMTP) {
   registry->GetMediaFileSystemsForExtension(
       web_contents(), extension_.get(),
       base::Bind(&GetGalleryInfoCallback, base::Unretained(&results)));
-  scoped_task_environment()->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(media_directories_.num_galleries() + 1u, results.size());
   bool checked = false;

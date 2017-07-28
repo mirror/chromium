@@ -7,6 +7,7 @@
 
 #include "ash/public/interfaces/ash_display_controller.mojom.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chromeos/dbus/services/console_service_provider.h"
 
 namespace service_manager {
@@ -17,7 +18,8 @@ namespace chromeos {
 
 // Chrome's implementation of ConsoleServiceProvider::Delegate
 class ChromeConsoleServiceProviderDelegate
-    : public ConsoleServiceProvider::Delegate {
+    : public ConsoleServiceProvider::Delegate,
+      public base::SupportsWeakPtr<ChromeConsoleServiceProviderDelegate> {
  public:
   ChromeConsoleServiceProviderDelegate();
   ~ChromeConsoleServiceProviderDelegate() override;

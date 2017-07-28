@@ -250,7 +250,7 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     request->pending_responses.insert({client, ResponseType::kOSDump});
     auto os_callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
                                   base::Unretained(this), client);
-    client->RequestOSMemoryDump(false /* wants_mmaps */, {pid}, os_callback);
+    client->RequestOSMemoryDump({pid}, os_callback);
 #endif  // !defined(OS_LINUX)
   }
 
@@ -276,8 +276,7 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     request->pending_responses.insert({browser_client, ResponseType::kOSDump});
     const auto callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
                                      base::Unretained(this), browser_client);
-    browser_client->RequestOSMemoryDump(false /* wants_mmaps */, pids,
-                                        callback);
+    browser_client->RequestOSMemoryDump(pids, callback);
   }
 #endif  // defined(OS_LINUX)
 

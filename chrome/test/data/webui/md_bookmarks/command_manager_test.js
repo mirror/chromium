@@ -94,7 +94,7 @@ suite('<bookmarks-command-manager>', function() {
     store.notifyObservers();
 
     MockInteractions.pressAndReleaseKeyOn(document.body, '', [], key);
-    commandManager.assertLastCommand(Command.EDIT, ['13']);
+    commandManager.assertLastCommand('edit', ['13']);
 
     // Doesn't trigger when multiple items are selected.
     store.data.selection.items = new Set(['11', '13']);
@@ -116,7 +116,7 @@ suite('<bookmarks-command-manager>', function() {
     store.notifyObservers();
 
     MockInteractions.pressAndReleaseKeyOn(document.body, 46, '', 'Delete');
-    commandManager.assertLastCommand(Command.DELETE, ['12', '13']);
+    commandManager.assertLastCommand('delete', ['12', '13']);
   });
 
   test('copy command triggers', function() {
@@ -126,7 +126,7 @@ suite('<bookmarks-command-manager>', function() {
     store.notifyObservers();
 
     MockInteractions.pressAndReleaseKeyOn(document.body, '', modifier, 'c');
-    commandManager.assertLastCommand(Command.COPY, ['11', '13']);
+    commandManager.assertLastCommand('copy', ['11', '13']);
   });
 
   test('cut/paste commands trigger', function() {
@@ -158,11 +158,11 @@ suite('<bookmarks-command-manager>', function() {
 
     MockInteractions.pressAndReleaseKeyOn(
         document.body, '', undoModifier, undoKey);
-    commandManager.assertLastCommand(Command.UNDO);
+    commandManager.assertLastCommand('undo');
 
     MockInteractions.pressAndReleaseKeyOn(
         document.body, '', redoModifier, redoKey);
-    commandManager.assertLastCommand(Command.REDO);
+    commandManager.assertLastCommand('redo');
   });
 
   test('Show In Folder is only available during search', function() {
@@ -172,8 +172,8 @@ suite('<bookmarks-command-manager>', function() {
     commandManager.openCommandMenuAtPosition(0, 0, MenuSource.LIST);
     Polymer.dom.flush();
 
-    var showInFolderItem = commandManager.root.querySelector(
-        `[command='${Command.SHOW_IN_FOLDER}']`);
+    var showInFolderItem =
+        commandManager.root.querySelector('[command=show-in-folder]');
 
     // Show in folder hidden when search is inactive.
     assertTrue(showInFolderItem.hidden);

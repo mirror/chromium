@@ -11,7 +11,6 @@ import android.util.Pair;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.payments.AndroidPaymentAppFactory;
-import org.chromium.chrome.browser.preferences.PreferenceUtils;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 
 import java.util.Map;
@@ -23,8 +22,7 @@ public class AndroidPaymentAppsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferenceUtils.addPreferencesFromResource(
-                this, R.xml.autofill_and_payments_preference_fragment_screen);
+        addPreferencesFromResource(R.xml.autofill_and_payments_preference_fragment_screen);
         getActivity().setTitle(R.string.payment_apps_title);
     }
 

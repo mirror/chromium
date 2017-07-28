@@ -159,8 +159,6 @@ public class TileGroup implements MostVisitedSites.Observer {
      */
     private final Collection<Integer> mPendingTasks = new ArrayList<>();
 
-    @TileView.Style
-    private final int mTileStyle;
     private final int mTitleLinesCount;
     private final int mMinIconSize;
     private final int mDesiredIconSize;
@@ -206,7 +204,7 @@ public class TileGroup implements MostVisitedSites.Observer {
      * The number of columns tiles get rendered in. Precalculated upon calling
      * {@link #startObserving(int, int)} and constant from then on. Used for pinning the home page
      * tile to the first tile row.
-     * @see #renderTileViews(ViewGroup)
+     * @see #renderTileViews(ViewGroup, boolean)
      */
     private int mNumColumns;
 
@@ -217,18 +215,16 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @param tileGroupDelegate Used for interactions with the Most Visited backend.
      * @param observer Will be notified of changes to the tile data.
      * @param titleLines The number of text lines to use for each tile title.
-     * @param tileStyle The style to use when building the tiles. See {@link TileView.Style}.
      */
     public TileGroup(Context context, SuggestionsUiDelegate uiDelegate,
             ContextMenuManager contextMenuManager, Delegate tileGroupDelegate, Observer observer,
-            OfflinePageBridge offlinePageBridge, int titleLines, @TileView.Style int tileStyle) {
+            OfflinePageBridge offlinePageBridge, int titleLines) {
         mContext = context;
         mUiDelegate = uiDelegate;
         mContextMenuManager = contextMenuManager;
         mTileGroupDelegate = tileGroupDelegate;
         mObserver = observer;
         mTitleLinesCount = titleLines;
-        mTileStyle = tileStyle;
 
         Resources resources = mContext.getResources();
         mDesiredIconSize = resources.getDimensionPixelSize(R.dimen.tile_view_icon_size);
@@ -333,8 +329,9 @@ public class TileGroup implements MostVisitedSites.Observer {
      * Renders tile views in the given {@link TileGridLayout}, reusing existing tile views where
      * possible because view inflation and icon loading are slow.
      * @param parent The layout to render the tile views into.
+     * @param condensed Whether to use a condensed layout.
      */
-    public void renderTileViews(ViewGroup parent) {
+    public void renderTileViews(ViewGroup parent, boolean condensed) {
         // Map the old tile views by url so they can be reused later.
         Map<String, TileView> oldTileViews = new HashMap<>();
         int childCount = parent.getChildCount();
@@ -350,7 +347,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         for (Tile tile : mTiles) {
             TileView tileView = oldTileViews.get(tile.getUrl());
             if (tileView == null) {
-                tileView = buildTileView(tile, parent);
+                tileView = buildTileView(tile, parent, condensed);
             } else {
                 tileView.updateIfDataChanged(tile);
             }
@@ -385,13 +382,14 @@ public class TileGroup implements MostVisitedSites.Observer {
      * Inflates a new tile view, initializes it, and loads an icon for it.
      * @param tile The tile that holds the data to populate the new tile view.
      * @param parentView The parent of the new tile view.
+     * @param condensed Whether to use a condensed layout.
      * @return The new tile view.
      */
     @VisibleForTesting
-    TileView buildTileView(Tile tile, ViewGroup parentView) {
+    TileView buildTileView(Tile tile, ViewGroup parentView, boolean condensed) {
         TileView tileView = (TileView) LayoutInflater.from(parentView.getContext())
                                     .inflate(R.layout.tile_view, parentView, false);
-        tileView.initialize(tile, mTitleLinesCount, mTileStyle);
+        tileView.initialize(tile, mTitleLinesCount, condensed);
 
         if (isLoadTracked()) addTask(TileTask.FETCH_ICON);
 

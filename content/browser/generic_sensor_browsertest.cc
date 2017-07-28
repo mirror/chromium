@@ -23,7 +23,6 @@
 #include "mojo/public/cpp/system/buffer.h"
 #include "services/device/public/cpp/generic_sensor/platform_sensor_configuration.h"
 #include "services/device/public/cpp/generic_sensor/sensor_reading.h"
-#include "services/device/public/cpp/generic_sensor/sensor_traits.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/sensor.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
@@ -67,19 +66,14 @@ class FakeAmbientLightSensor : public device::mojom::Sensor {
   void ConfigureReadingChangeNotifications(bool enabled) override {}
 
   device::PlatformSensorConfiguration GetDefaultConfiguration() {
-    return device::PlatformSensorConfiguration(
-        device::SensorTraits<
-            device::mojom::SensorType::AMBIENT_LIGHT>::kDefaultFrequency);
+    return device::PlatformSensorConfiguration(60 /* frequency */);
   }
 
   device::mojom::ReportingMode GetReportingMode() {
     return device::mojom::ReportingMode::ON_CHANGE;
   }
 
-  double GetMaximumSupportedFrequency() {
-    return device::SensorTraits<
-        device::mojom::SensorType::AMBIENT_LIGHT>::kMaxAllowedFrequency;
-  }
+  double GetMaximumSupportedFrequency() { return 60.0; }
   double GetMinimumSupportedFrequency() { return 1.0; }
 
   device::mojom::SensorClientRequest GetClient() {

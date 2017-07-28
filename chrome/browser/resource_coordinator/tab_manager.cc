@@ -79,10 +79,6 @@ namespace {
 // a dynamic threshold under different scenarios.
 const TimeDelta kBackgroundTabLoadTimeout = TimeDelta::FromSeconds(10);
 
-// The number of loading slots for background tabs. TabManager will start to
-// load the next background tab when the loading slots free up.
-const size_t kNumOfLoadingSlots = 1;
-
 // The default interval in seconds after which to adjust the oom_score_adj
 // value.
 const int kAdjustmentIntervalSeconds = 10;
@@ -160,7 +156,6 @@ TabManager::TabManager()
       test_tick_clock_(nullptr),
       is_session_restore_loading_tabs_(false),
       force_load_timer_(base::MakeUnique<base::OneShotTimer>()),
-      loading_slots_(kNumOfLoadingSlots),
       weak_ptr_factory_(this) {
 #if defined(OS_CHROMEOS)
   delegate_.reset(new TabManagerDelegate(weak_ptr_factory_.GetWeakPtr()));
@@ -1048,7 +1043,7 @@ std::vector<TabManager::BrowserInfo> TabManager::GetBrowserInfoList() const {
 content::NavigationThrottle::ThrottleCheckResult
 TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   content::NavigationHandle* navigation_handle = throttle->navigation_handle();
-  if (CanLoadNextTab()) {
+  if (!ShouldDelayNavigation(navigation_handle)) {
     loading_contents_.insert(navigation_handle->GetWebContents());
     return content::NavigationThrottle::PROCEED;
   }
@@ -1063,14 +1058,13 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   return content::NavigationThrottle::DEFER;
 }
 
-bool TabManager::CanLoadNextTab() const {
-  // TabManager can only load the next tab when the loading slots free up. The
-  // loading slot limit can be exceeded when |force_load_timer_| fires or when
-  // the user selects a background tab.
-  if (loading_contents_.size() < loading_slots_)
-    return true;
+bool TabManager::ShouldDelayNavigation(
+    content::NavigationHandle* navigation_handle) const {
+  // Do not delay the navigation if no tab is currently loading.
+  if (loading_contents_.empty())
+    return false;
 
-  return false;
+  return true;
 }
 
 void TabManager::OnDidFinishNavigation(
@@ -1105,10 +1099,10 @@ void TabManager::StartForceLoadTimer() {
 }
 
 void TabManager::LoadNextBackgroundTabIfNeeded() {
-  // Do not load more background tabs until TabManager can load the next tab.
-  // Ignore this constraint if the timer fires to force loading the next
-  // background tab.
-  if (force_load_timer_->IsRunning() && !CanLoadNextTab())
+  // Do not load more background tabs until all currently loading tabs have
+  // finished. Ignore this constraint if the timer fires to force loading the
+  // next background tab.
+  if (force_load_timer_->IsRunning() && !loading_contents_.empty())
     return;
 
   if (pending_navigations_.empty())

@@ -20,6 +20,7 @@ class UiElementTransformOperations {
   UiElementTransformOperations();
   ~UiElementTransformOperations();
 
+  void SetLayoutOffset(float x, float y);
   void SetTranslate(float x, float y, float z);
   void SetRotate(float x, float y, float z, float degrees);
   void SetScale(float x, float y, float z);

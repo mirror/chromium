@@ -164,14 +164,14 @@ VisibleSelectionTemplate<Strategy>::ToNormalizedEphemeralRange() const {
   // in the course of running edit commands which modify the DOM.
   // Failing to ensure this can result in equivalentXXXPosition calls returning
   // incorrect results.
-  DCHECK(!NeedsLayoutTreeUpdate(Start())) << *this;
+  DCHECK(!NeedsLayoutTreeUpdate(start_)) << *this;
 
   if (IsCaret()) {
     // If the selection is a caret, move the range start upstream. This
     // helps us match the conventions of text editors tested, which make
     // style determinations based on the character before the caret, if any.
     const PositionTemplate<Strategy> start =
-        MostBackwardCaretPosition(Start()).ParentAnchoredEquivalent();
+        MostBackwardCaretPosition(start_).ParentAnchoredEquivalent();
     return EphemeralRangeTemplate<Strategy>(start, start);
   }
   // If the selection is a range, select the minimum range that encompasses
@@ -186,7 +186,7 @@ VisibleSelectionTemplate<Strategy>::ToNormalizedEphemeralRange() const {
   //                       ^ selected
   //
   DCHECK(IsRange());
-  return NormalizeRange(EphemeralRangeTemplate<Strategy>(Start(), End()));
+  return NormalizeRange(EphemeralRangeTemplate<Strategy>(start_, end_));
 }
 
 template <typename Strategy>
@@ -196,8 +196,8 @@ VisibleSelectionTemplate<Strategy>::AppendTrailingWhitespace() const {
     return *this;
   if (!IsRange())
     return *this;
-  const PositionTemplate<Strategy>& new_end = SkipWhitespace(End());
-  if (End() == new_end)
+  const PositionTemplate<Strategy>& new_end = SkipWhitespace(end_);
+  if (end_ == new_end)
     return *this;
   VisibleSelectionTemplate<Strategy> result = *this;
   result.end_ = new_end;
@@ -475,60 +475,45 @@ void VisibleSelectionTemplate<Strategy>::Validate(
       ComputeStartRespectingGranularity(
           PositionWithAffinityTemplate<Strategy>(start, affinity_),
           granularity);
-  const PositionTemplate<Strategy> expanded_start =
-      new_start.IsNotNull() ? new_start : start;
+  start_ = new_start.IsNotNull() ? new_start : start;
 
   const PositionTemplate<Strategy> end = base_is_first_ ? extent_ : base_;
   const PositionTemplate<Strategy> new_end = ComputeEndRespectingGranularity(
-      expanded_start, PositionWithAffinityTemplate<Strategy>(end, affinity_),
+      start_, PositionWithAffinityTemplate<Strategy>(end, affinity_),
       granularity);
-  const PositionTemplate<Strategy> expanded_end =
-      new_end.IsNotNull() ? new_end : end;
+  end_ = new_end.IsNotNull() ? new_end : end;
 
-  const EphemeralRangeTemplate<Strategy> expanded_range(expanded_start,
-                                                        expanded_end);
-
-  const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
-      base_is_first_
-          ? EphemeralRangeTemplate<Strategy>(
-                expanded_range.StartPosition(),
-                SelectionAdjuster::
-                    AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-                        expanded_range))
-          : EphemeralRangeTemplate<Strategy>(
-                SelectionAdjuster::
-                    AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-                        expanded_range),
-                expanded_range.EndPosition());
+  if (base_is_first_) {
+    end_ = SelectionAdjuster::AdjustSelectionEndToAvoidCrossingShadowBoundaries(
+        EphemeralRangeTemplate<Strategy>(start_, end_));
+  } else {
+    start_ =
+        SelectionAdjuster::AdjustSelectionStartToAvoidCrossingShadowBoundaries(
+            EphemeralRangeTemplate<Strategy>(start_, end_));
+  }
 
   const EphemeralRangeTemplate<Strategy> editing_adjusted_range =
-      AdjustSelectionToAvoidCrossingEditingBoundaries(shadow_adjusted_range,
-                                                      base_);
-  selection_type_ = ComputeSelectionType(editing_adjusted_range.StartPosition(),
-                                         editing_adjusted_range.EndPosition());
+      AdjustSelectionToAvoidCrossingEditingBoundaries(
+          EphemeralRangeTemplate<Strategy>(start_, end_), base_);
+  start_ = editing_adjusted_range.StartPosition();
+  end_ = editing_adjusted_range.EndPosition();
+  selection_type_ = ComputeSelectionType(start_, end_);
 
-  // "Constrain" the selection to be the smallest equivalent range of
-  // nodes. This is a somewhat arbitrary choice, but experience shows that
-  // it is useful to make to make the selection "canonical" (if only for
-  // purposes of comparing selections). This is an ideal point of the code
-  // to do this operation, since all selection changes that result in a
-  // RANGE come through here before anyone uses it.
-  // TODO(yosin) Canonicalizing is good, but haven't we already done it
-  // (when we set these two positions to |VisiblePosition|
-  // |DeepEquivalent()|s above)?
-  const EphemeralRangeTemplate<Strategy> range =
-      selection_type_ == kRangeSelection
-          ? EphemeralRangeTemplate<Strategy>(
-                MostForwardCaretPosition(
-                    editing_adjusted_range.StartPosition()),
-                MostBackwardCaretPosition(editing_adjusted_range.EndPosition()))
-          : editing_adjusted_range;
-  if (selection_type_ != kCaretSelection) {
+  if (GetSelectionType() == kRangeSelection) {
+    // "Constrain" the selection to be the smallest equivalent range of
+    // nodes. This is a somewhat arbitrary choice, but experience shows that
+    // it is useful to make to make the selection "canonical" (if only for
+    // purposes of comparing selections). This is an ideal point of the code
+    // to do this operation, since all selection changes that result in a
+    // RANGE come through here before anyone uses it.
+    // TODO(yosin) Canonicalizing is good, but haven't we already done it
+    // (when we set these two positions to |VisiblePosition|
+    // |DeepEquivalent()|s above)?
+    start_ = MostForwardCaretPosition(start_);
+    end_ = MostBackwardCaretPosition(end_);
     // Affinity only makes sense for a caret
     affinity_ = TextAffinity::kDownstream;
   }
-  start_ = range.StartPosition();
-  end_ = range.EndPosition();
   base_ = base_is_first_ ? start_ : end_;
   extent_ = base_is_first_ ? end_ : start_;
 }
@@ -762,6 +747,11 @@ AdjustSelectionToAvoidCrossingEditingBoundaries(
 
 template <typename Strategy>
 bool VisibleSelectionTemplate<Strategy>::IsContentEditable() const {
+  return IsEditablePosition(Start());
+}
+
+template <typename Strategy>
+bool VisibleSelectionTemplate<Strategy>::HasEditableStyle() const {
   return IsEditablePosition(Start());
 }
 

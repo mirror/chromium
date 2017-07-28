@@ -41,6 +41,8 @@ constexpr char kThrottledErrorDescription[] =
     "information.";
 }  // namespace
 
+const char kErrorDomainBlinkInternal[] = "BlinkInternal";
+
 ResourceError ResourceError::CancelledError(const KURL& url) {
   return WebURLError(url, false, net::ERR_ABORTED);
 }
@@ -74,7 +76,7 @@ ResourceError ResourceError::TimeoutError(const KURL& url) {
 
 ResourceError ResourceError::Copy() const {
   ResourceError error_copy;
-  error_copy.domain_ = domain_;
+  error_copy.domain_ = domain_.IsolatedCopy();
   error_copy.error_code_ = error_code_;
   error_copy.failing_url_ = failing_url_.Copy();
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
@@ -91,7 +93,7 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
   if (a.IsNull() || b.IsNull())
     return false;
 
-  if (a.GetDomain() != b.GetDomain())
+  if (a.Domain() != b.Domain())
     return false;
 
   if (a.ErrorCode() != b.ErrorCode())
@@ -119,7 +121,7 @@ void ResourceError::InitializeWebURLError(WebURLError* error,
                                           const WebURL& url,
                                           bool stale_copy_in_cache,
                                           int reason) {
-  error->domain = Domain::kNet;
+  error->domain = WebString::FromASCII(net::kErrorDomain);
   error->reason = reason;
   error->stale_copy_in_cache = stale_copy_in_cache;
   error->unreachable_url = url;
@@ -133,15 +135,18 @@ void ResourceError::InitializeWebURLError(WebURLError* error,
 }
 
 bool ResourceError::IsTimeout() const {
-  return domain_ == Domain::kNet && error_code_ == net::ERR_TIMED_OUT;
+  return domain_ == String(net::kErrorDomain) &&
+         error_code_ == net::ERR_TIMED_OUT;
 }
 
 bool ResourceError::IsCancellation() const {
-  return domain_ == Domain::kNet && error_code_ == net::ERR_ABORTED;
+  return domain_ == String(net::kErrorDomain) &&
+         error_code_ == net::ERR_ABORTED;
 }
 
 bool ResourceError::IsCacheMiss() const {
-  return domain_ == Domain::kNet && error_code_ == net::ERR_CACHE_MISS;
+  return domain_ == String(net::kErrorDomain) &&
+         error_code_ == net::ERR_CACHE_MISS;
 }
 
 }  // namespace blink

@@ -775,8 +775,7 @@ void InspectorPageAgent::FrameScheduledNavigation(
     ScheduledNavigation* scheduled_navigation) {
   GetFrontend()->frameScheduledNavigation(
       FrameId(frame), scheduled_navigation->Delay(),
-      ScheduledNavigationReasonToProtocol(scheduled_navigation->GetReason()),
-      scheduled_navigation->Url().GetString());
+      ScheduledNavigationReasonToProtocol(scheduled_navigation->GetReason()));
 }
 
 void InspectorPageAgent::FrameClearedScheduledNavigation(LocalFrame* frame) {

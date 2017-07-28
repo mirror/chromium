@@ -85,9 +85,6 @@ class SingleThreadTaskRunner;
 }
 
 namespace blink {
-namespace mojom {
-enum class WebFeature : int32_t;
-}  // namespace mojom
 
 enum class WebTreeScopeType;
 class WebApplicationCacheHost;
@@ -511,10 +508,6 @@ class BLINK_EXPORT WebFrameClient {
     return false;
   }
 
-  // This frame tried to navigate its top level frame to the given url without
-  // ever having received a user gesture.
-  virtual void DidBlockFramebust(const WebURL&) {}
-
   // PlzNavigate
   // Called to abort a navigation that is being handled by the browser process.
   virtual void AbortClientNavigation() {}
@@ -654,12 +647,6 @@ class BLINK_EXPORT WebFrameClient {
   // Blink exhibited a certain loading behavior that the browser process will
   // use for segregated histograms.
   virtual void DidObserveLoadingBehavior(WebLoadingBehaviorFlag) {}
-
-  // Blink hit the code path for a certain feature for the first time on this
-  // frame. As a performance optimization, features already hit on other frames
-  // associated with the same page in the renderer are not currently reported.
-  // This is used for reporting UseCounter histograms.
-  virtual void DidObserveNewFeatureUsage(mojom::WebFeature) {}
 
   // Script notifications ------------------------------------------------
 

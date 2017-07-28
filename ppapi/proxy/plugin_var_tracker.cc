@@ -34,8 +34,7 @@ namespace {
 Connection GetConnectionForInstance(PP_Instance instance) {
   PluginDispatcher* dispatcher = PluginDispatcher::GetForInstance(instance);
   DCHECK(dispatcher);
-  return Connection(PluginGlobals::Get()->GetBrowserSender(),
-                    dispatcher->sender());
+  return Connection(PluginGlobals::Get()->GetBrowserSender(), dispatcher);
 }
 
 }  // namespace

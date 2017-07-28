@@ -75,7 +75,7 @@ class Foo : public RefCounted<Foo> {
 void SlowFunc(TimeDelta pause, int* quit_counter) {
     PlatformThread::Sleep(pause);
     if (--(*quit_counter) == 0)
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      MessageLoop::current()->QuitWhenIdle();
 }
 
 // This function records the time when Run was called in a Time object, which is
@@ -112,7 +112,8 @@ void RunTest_PostTask(MessagePumpFactory factory) {
       FROM_HERE, BindOnce(&Foo::Test2Mixed, foo, a, &d));
   // After all tests, post a message that will shut down the message loop
   ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, BindOnce(&RunLoop::QuitCurrentWhenIdleDeprecated));
+      FROM_HERE,
+      BindOnce(&MessageLoop::QuitWhenIdle, Unretained(MessageLoop::current())));
 
   // Now kick things off
   RunLoop().Run();
@@ -359,7 +360,7 @@ void NestingFunc(int* depth) {
     MessageLoop::current()->SetNestableTasksAllowed(true);
     RunLoop().Run();
   }
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  MessageLoop::current()->QuitWhenIdle();
 }
 
 void RunTest_Nesting(MessagePumpFactory factory) {
@@ -467,7 +468,7 @@ void RecursiveFunc(TaskList* order, int cookie, int depth,
 
 void QuitFunc(TaskList* order, int cookie) {
   order->RecordStart(QUITMESSAGELOOP, cookie);
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  MessageLoop::current()->QuitWhenIdle();
   order->RecordEnd(QUITMESSAGELOOP, cookie);
 }
 void RunTest_RecursiveDenial1(MessagePumpFactory factory) {
@@ -674,7 +675,7 @@ void FuncThatRuns(TaskList* order, int cookie, RunLoop* run_loop) {
 }
 
 void FuncThatQuitsNow() {
-  base::RunLoop::QuitCurrentDeprecated();
+  MessageLoop::current()->QuitNow();
 }
 // Tests RunLoopQuit only quits the corresponding MessageLoop::Run.
 void RunTest_QuitNow(MessagePumpFactory factory) {
@@ -968,7 +969,7 @@ void PostNTasksThenQuit(int posts_remaining) {
     ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, BindOnce(&PostNTasksThenQuit, posts_remaining - 1));
   } else {
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    MessageLoop::current()->QuitWhenIdle();
   }
 }
 

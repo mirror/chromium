@@ -41,15 +41,13 @@
     ConsoleTestRunner.evaluateInConsole(expression, step1);
   }
 
-  async function step2() {
-    await TestRunner.evaluateInPagePromise(`
-      (function assertNoBoundCommandLineAPI() {
-        ['__commandLineAPI', '__scopeChainForEval'].forEach(function(name) {
-          console.assert(!(name in window), 'FAIL: Should be no ' + name);
-        });
-      })();
-    `);
-    step3();
+  function step2() {
+    function assertNoBoundCommandLineAPI() {
+      ['__commandLineAPI', '__scopeChainForEval'].forEach(function(name) {
+        console.assert(!(name in window), 'FAIL: Should be no ' + name);
+      });
+    }
+    TestRunner.evaluateInPage(assertNoBoundCommandLineAPI, step3);
   }
 
   function step3() {

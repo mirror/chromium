@@ -1589,14 +1589,12 @@ TEST(TransformOperationTest, ScaleComponent) {
   EXPECT_EQ(2.f, scale);
 }
 
-TEST(TransformOperationsTest, ApproximateEquality) {
-  float noise = 1e-7f;
-  float tolerance = 1e-5f;
+TEST(TransformOperationsTest, Equality) {
   TransformOperations lhs;
   TransformOperations rhs;
 
   // Empty lists of operations are trivially equal.
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_EQ(lhs, rhs);
 
   rhs.AppendIdentity();
   rhs.AppendTranslate(0, 0, 0);
@@ -1607,52 +1605,40 @@ TEST(TransformOperationsTest, ApproximateEquality) {
 
   // Even though both lists operations are effectively the identity matrix, rhs
   // has a different number of operations and is therefore different.
-  EXPECT_FALSE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_NE(lhs, rhs);
 
   rhs.AppendPerspective(800);
 
   // Assignment should produce equal lists of operations.
   lhs = rhs;
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_EQ(lhs, rhs);
 
   // Cannot affect identity operations.
   lhs.at(0).translate.x = 1;
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_EQ(lhs, rhs);
 
-  lhs.at(1).translate.x += noise;
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
-  lhs.at(1).translate.x += 1;
-  EXPECT_FALSE(lhs.ApproximatelyEqual(rhs, tolerance));
+  lhs.at(1).translate.x = 1;
+  EXPECT_NE(lhs, rhs);
 
   lhs = rhs;
-  lhs.at(2).rotate.angle += noise;
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
   lhs.at(2).rotate.angle = 1;
-  EXPECT_FALSE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_NE(lhs, rhs);
 
   lhs = rhs;
-  lhs.at(3).scale.x += noise;
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
-  lhs.at(3).scale.x += 1;
-  EXPECT_FALSE(lhs.ApproximatelyEqual(rhs, tolerance));
+  lhs.at(3).scale.x = 2;
+  EXPECT_NE(lhs, rhs);
 
   lhs = rhs;
-  lhs.at(4).skew.x += noise;
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
   lhs.at(4).skew.x = 2;
-  EXPECT_FALSE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_NE(lhs, rhs);
 
   lhs = rhs;
-  lhs.at(5).matrix.Translate3d(noise, 0, 0);
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
   lhs.at(5).matrix.Translate3d(1, 1, 1);
-  EXPECT_FALSE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_NE(lhs, rhs);
 
   lhs = rhs;
-  lhs.at(6).perspective_depth += noise;
-  EXPECT_TRUE(lhs.ApproximatelyEqual(rhs, tolerance));
   lhs.at(6).perspective_depth = 801;
-  EXPECT_FALSE(lhs.ApproximatelyEqual(rhs, tolerance));
+  EXPECT_NE(lhs, rhs);
 }
 
 }  // namespace

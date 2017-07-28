@@ -8,7 +8,6 @@
 #include <stdint.h>
 #include <memory>
 
-#include "base/callback_forward.h"
 #include "base/md5.h"
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_task_scheduler.h"
@@ -199,8 +198,7 @@ class PipelineIntegrationTestBase : public Pipeline::Client {
 
   void DemuxerMediaTracksUpdatedCB(std::unique_ptr<MediaTracks> tracks);
 
-  void QuitAfterCurrentTimeTask(base::TimeDelta quit_time,
-                                base::OnceClosure quit_closure);
+  void QuitAfterCurrentTimeTask(const base::TimeDelta& quit_time);
 
   // Creates Demuxer and sets |demuxer_|.
   void CreateDemuxer(std::unique_ptr<DataSource> data_source);

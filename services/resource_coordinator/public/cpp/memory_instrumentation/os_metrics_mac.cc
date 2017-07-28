@@ -16,12 +16,13 @@
 
 #include "base/numerics/safe_math.h"
 #include "base/process/process_metrics.h"
+#include "base/trace_event/process_memory_dump.h"
 
 namespace memory_instrumentation {
 
 namespace {
 
-using VMRegion = mojom::VmRegion;
+using VMRegion = base::trace_event::ProcessMemoryMaps::VMRegion;
 
 bool IsAddressInSharedRegion(uint64_t address) {
   return address >= SHARED_REGION_BASE_X86_64 &&
@@ -247,16 +248,17 @@ bool OSMetrics::FillOSMemoryDump(base::ProcessId pid,
 }
 
 // static
-std::vector<mojom::VmRegionPtr> OSMetrics::GetProcessMemoryMaps(
-    base::ProcessId pid) {
-  std::vector<mojom::VmRegionPtr> maps;
+bool OSMetrics::FillProcessMemoryMaps(
+    base::ProcessId pid,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  using VMRegion = base::trace_event::ProcessMemoryMaps::VMRegion;
 
   std::vector<VMRegion> dyld_regions;
   if (!GetDyldRegions(&dyld_regions))
-    return maps;
+    return false;
   std::vector<VMRegion> all_regions;
   if (!GetAllRegions(&all_regions))
-    return maps;
+    return false;
 
   // Merge information from dyld regions and all regions.
   for (const VMRegion& region : all_regions) {
@@ -287,15 +289,15 @@ std::vector<mojom::VmRegionPtr> OSMetrics::GetProcessMemoryMaps(
     }
     if (skip)
       continue;
-
-    maps.push_back(VMRegion::New(region));
+    pmd->process_mmaps()->AddVMRegion(region);
   }
 
   for (VMRegion& region : dyld_regions) {
-    maps.push_back(VMRegion::New(region));
+    pmd->process_mmaps()->AddVMRegion(region);
   }
 
-  return maps;
+  pmd->set_has_process_mmaps();
+  return true;
 }
 
 }  // namespace memory_instrumentation

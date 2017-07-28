@@ -28,14 +28,14 @@ class FileUtilProxyTest : public testing::Test {
 
   void DidFinish(File::Error error) {
     error_ = error;
-    RunLoop::QuitCurrentWhenIdleDeprecated();
+    MessageLoop::current()->QuitWhenIdle();
   }
 
   void DidGetFileInfo(File::Error error,
                       const File::Info& file_info) {
     error_ = error;
     file_info_ = file_info;
-    RunLoop::QuitCurrentWhenIdleDeprecated();
+    MessageLoop::current()->QuitWhenIdle();
   }
 
  protected:

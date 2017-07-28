@@ -26,7 +26,6 @@ enum UninstallReason {
   UNINSTALL_REASON_INTERNAL_MANAGEMENT,  // Internal extensions (see usages)
   UNINSTALL_REASON_REINSTALL,
   UNINSTALL_REASON_COMPONENT_REMOVED,
-  UNINSTALL_REASON_MIGRATED,  // Migrated to component extensions
 
   UNINSTALL_REASON_MAX,  // Should always be the last value
 };

@@ -199,8 +199,7 @@ source_set("unit_tests") {
   deps = [
     "//base",
     "//base/test:test_support",
-    "//components/viz/common",
-    "//components/viz/test:test_support",
+    "//cc:test_support",
     "//skia",
     "//testing/gmock",
     "//testing/gtest",

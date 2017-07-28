@@ -28,8 +28,7 @@ class ProfilerMetricsProvider : public MetricsProvider {
   ~ProfilerMetricsProvider() override;
 
   // MetricsDataProvider:
-  void ProvideCurrentSessionData(
-      ChromeUserMetricsExtension* uma_proto) override;
+  void ProvideGeneralMetrics(ChromeUserMetricsExtension* uma_proto) override;
 
   // Records the passed profiled data, which should be a snapshot of the
   // browser's profiled performance during startup for a single process.
@@ -49,9 +48,9 @@ class ProfilerMetricsProvider : public MetricsProvider {
   bool IsCellularLogicEnabled();
 
   // Saved cache of generated Profiler event protos, to be copied into the UMA
-  // proto when ProvideCurrentSessionData() is called. The map is from a
-  // profiling phase id to the profiler event proto that represents profiler
-  // data for the profiling phase.
+  // proto when ProvideGeneralMetrics() is called. The map is from a profiling
+  // phase id to the profiler event proto that represents profiler data for the
+  // profiling phase.
   std::map<int, ProfilerEventProto> profiler_events_cache_;
 
   // Returns true if current connection type is cellular and user is assigned to

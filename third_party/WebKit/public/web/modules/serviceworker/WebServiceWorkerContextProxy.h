@@ -116,8 +116,6 @@ class WebServiceWorkerContextProxy {
                                  const WebString& tag,
                                  LastChanceOption) = 0;
 
-  virtual void DispatchAbortPaymentEvent(int event_id) = 0;
-
   virtual void DispatchCanMakePaymentEvent(
       int event_id,
       const WebCanMakePaymentEventData&) = 0;

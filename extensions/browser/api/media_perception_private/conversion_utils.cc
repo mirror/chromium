@@ -194,8 +194,6 @@ Status StateStatusProtoToIdl(const mri::State& state) {
       return STATUS_RUNNING;
     case mri::State::SUSPENDED:
       return STATUS_SUSPENDED;
-    case mri::State::RESTARTING:
-      return STATUS_RESTARTING;
     case mri::State::STATUS_UNSPECIFIED:
       return STATUS_NONE;
   }
@@ -213,8 +211,6 @@ mri::State::Status StateStatusIdlToProto(const State& state) {
       return mri::State::RUNNING;
     case STATUS_SUSPENDED:
       return mri::State::SUSPENDED;
-    case STATUS_RESTARTING:
-      return mri::State::RESTARTING;
     case STATUS_NONE:
       return mri::State::STATUS_UNSPECIFIED;
   }

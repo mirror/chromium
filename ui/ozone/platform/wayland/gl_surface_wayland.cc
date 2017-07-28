@@ -35,7 +35,6 @@ GLSurfaceWayland::GLSurfaceWayland(WaylandEglWindowPtr egl_window)
 
 bool GLSurfaceWayland::Resize(const gfx::Size& size,
                               float scale_factor,
-                              ColorSpace color_space,
                               bool has_alpha) {
   if (size_ == size)
     return true;

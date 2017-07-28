@@ -294,6 +294,11 @@ void CompositorFrameSinkSupport::WillDrawSurface(
     client_->WillDrawSurface(local_surface_id, damage_rect);
 }
 
+void CompositorFrameSinkSupport::ClaimTemporaryReference(
+    const SurfaceId& surface_id) {
+  surface_manager_->AssignTemporaryReference(surface_id, frame_sink_id_);
+}
+
 CompositorFrameSinkSupport::CompositorFrameSinkSupport(
     CompositorFrameSinkSupportClient* client,
     const FrameSinkId& frame_sink_id,
@@ -360,7 +365,7 @@ Surface* CompositorFrameSinkSupport::CreateSurface(
 }
 
 void CompositorFrameSinkSupport::RequestCopyOfSurface(
-    std::unique_ptr<CopyOutputRequest> copy_request) {
+    std::unique_ptr<cc::CopyOutputRequest> copy_request) {
   if (!current_surface_id_.is_valid())
     return;
   Surface* current_surface =

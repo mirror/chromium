@@ -75,46 +75,41 @@ public class PasswordEntryEditor extends Fragment {
                 : null;
 
         mException = (name == null);
-        final String url = mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_URL);
+        if (shouldDisplayInteractivePasswordEntryEditor()) {
+            if (!mException) {
+                mView = inflater.inflate(
+                        R.layout.password_entry_editor_interactive, container, false);
+            } else {
+                mView = inflater.inflate(R.layout.password_entry_exception, container, false);
+            }
+        } else {
+            mView = inflater.inflate(R.layout.password_entry_editor, container, false);
+        }
         getActivity().setTitle(R.string.password_entry_editor_title);
         mClipboard = (ClipboardManager) getActivity().getApplicationContext().getSystemService(
                 Context.CLIPBOARD_SERVICE);
-        if (shouldDisplayInteractivePasswordEntryEditor()) {
-            mView = inflater.inflate(mException ? R.layout.password_entry_exception
-                                                : R.layout.password_entry_editor_interactive,
-                    container, false);
-            getActivity().setTitle(R.string.password_entry_editor_title);
-            mClipboard = (ClipboardManager) getActivity().getApplicationContext().getSystemService(
-                    Context.CLIPBOARD_SERVICE);
-            View urlRowsView = createSimpleCopyableRow(
-                    R.id.url_row, R.string.password_entry_editor_site_title, url);
-            hookupCopySiteButton(urlRowsView);
-            if (!mException) {
-                View usernameView = createSimpleCopyableRow(
-                        R.id.username_row, R.string.password_entry_editor_username_title, name);
-                hookupCopyUsernameButton(usernameView);
-                mKeyguardManager =
-                        (KeyguardManager) getActivity().getApplicationContext().getSystemService(
-                                Context.KEYGUARD_SERVICE);
-                View passwordTitleView =
-                        mView.findViewById(R.id.password_entry_editor_password_title);
-                TextView passwordTitleTextView =
-                        (TextView) passwordTitleView.findViewById(R.id.password_entry_title);
-                passwordTitleTextView.setText(R.string.password_entry_editor_password);
-                hidePassword();
-                hookupPasswordButtons();
-            }
-
+        TextView nameView = (TextView) mView.findViewById(R.id.password_entry_editor_name);
+        if (!mException) {
+            nameView.setText(name);
         } else {
-            mView = inflater.inflate(R.layout.password_entry_editor, container, false);
-            TextView nameView = (TextView) mView.findViewById(R.id.password_entry_editor_name);
-            if (!mException) {
-                nameView.setText(name);
-            } else {
+            if (!shouldDisplayInteractivePasswordEntryEditor()) {
                 nameView.setText(R.string.section_saved_passwords_exceptions);
             }
-            TextView urlView = (TextView) mView.findViewById(R.id.password_entry_editor_url);
-            urlView.setText(url);
+        }
+        final String url = mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_URL);
+        TextView urlView = (TextView) mView.findViewById(R.id.password_entry_editor_url);
+        urlView.setText(url);
+        if (shouldDisplayInteractivePasswordEntryEditor()) {
+            mKeyguardManager =
+                    (KeyguardManager) getActivity().getApplicationContext().getSystemService(
+                            Context.KEYGUARD_SERVICE);
+            if (!mException) {
+                hidePassword();
+                hookupPasswordButtons();
+                hookupCopyUsernameButton();
+            }
+            hookupCopySiteButton();
+        } else {
             hookupCancelDeleteButtons();
         }
         return mView;
@@ -208,9 +203,9 @@ public class PasswordEntryEditor extends Fragment {
         });
     }
 
-    private void hookupCopyUsernameButton(View usernameView) {
+    private void hookupCopyUsernameButton() {
         final ImageButton copyUsernameButton =
-                (ImageButton) usernameView.findViewById(R.id.password_entry_editor_copy);
+                (ImageButton) mView.findViewById(R.id.password_entry_editor_copy_username);
         copyUsernameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,9 +220,9 @@ public class PasswordEntryEditor extends Fragment {
         });
     }
 
-    private void hookupCopySiteButton(View siteView) {
+    private void hookupCopySiteButton() {
         final ImageButton copySiteButton =
-                (ImageButton) siteView.findViewById(R.id.password_entry_editor_copy);
+                (ImageButton) mView.findViewById(R.id.password_entry_editor_copy_site);
         copySiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,15 +316,5 @@ public class PasswordEntryEditor extends Fragment {
                 }
             }
         });
-    }
-
-    private View createSimpleCopyableRow(int rowId, int titleId, String data) {
-        View rowsView = mView.findViewById(rowId);
-        View titleView = rowsView.findViewById(R.id.password_entry_editor_row_title);
-        TextView titleTextView = (TextView) titleView.findViewById(R.id.password_entry_title);
-        titleTextView.setText(titleId);
-        TextView dataView = (TextView) rowsView.findViewById(R.id.password_entry_editor_row_data);
-        dataView.setText(data);
-        return rowsView;
     }
 }

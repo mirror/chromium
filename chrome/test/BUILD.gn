@@ -1099,6 +1099,19 @@ static_library("browser_tests_runner") {
   }
 }
 
+# Used only by chrome/browser/ui/webui/bidi_checker_web_ui_test.cc
+chrome_repack_locales("repack_pseudo_locales") {
+  visibility = [ ":*" ]
+
+  input_locales = [ "fake-bidi" ]
+
+  if (is_mac) {
+    output_locales = [ "fake_bidi" ]  # Mac uses underscores.
+  } else {
+    output_locales = [ "fake-bidi" ]
+  }
+}
+
 test("browser_tests") {
   sources = [
     # TODO(jbudorick): Move tests here from other lists as Android support is
@@ -1109,6 +1122,7 @@ test("browser_tests") {
 
   deps = [
     ":browser_tests_runner",
+    ":repack_pseudo_locales",
     ":test_support",
     "//base",
     "//components/spellcheck:build_features",
@@ -1530,6 +1544,8 @@ test("browser_tests") {
       "../browser/ui/views/chrome_cleaner_dialog_browsertest_win.cc",
       "../browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
       "../browser/ui/views/hung_renderer_view_browsertest.cc",
+      "../browser/ui/webui/bidi_checker_web_ui_test.cc",
+      "../browser/ui/webui/bidi_checker_web_ui_test.h",
       "../browser/ui/webui/bookmarks_ui_browsertest.cc",
       "../browser/ui/webui/chrome_url_data_manager_browsertest.cc",
       "../browser/ui/webui/chromeos/bluetooth_pairing_ui_browsertest-inl.h",
@@ -1626,7 +1642,7 @@ test("browser_tests") {
       "//components/dom_distiller/content/browser",
       "//components/dom_distiller/content/renderer",
       "//components/dom_distiller/core:test_support",
-      "//components/policy:chrome_settings_proto_generated_compile",
+      "//components/policy:chrome_settings_proto",
       "//components/resources",
       "//components/safe_browsing_db:test_database_manager",
       "//components/strings",
@@ -2546,7 +2562,6 @@ test("browser_tests") {
         # Tests for non mobile and non CrOS (includes Linux, Win, Mac).
         "../browser/metrics/desktop_session_duration/audible_contents_tracker_browsertest.cc",
         "../browser/metrics/desktop_session_duration/chrome_visibility_observer_browsertest.cc",
-        "../browser/metrics/tab_stats_tracker_unittests.cc",
         "../browser/profiles/profile_statistics_browsertest.cc",
       ]
     }
@@ -3154,6 +3169,7 @@ test("unit_tests") {
     "../browser/media/router/offscreen_presentation_manager_factory_unittest.cc",
     "../browser/media/router/offscreen_presentation_manager_unittest.cc",
     "../browser/media/router/presentation_media_sinks_observer_unittest.cc",
+    "../browser/media/router/presentation_request_unittest.cc",
     "../browser/media/router/presentation_service_delegate_impl_unittest.cc",
     "../browser/media/webrtc/media_stream_device_permission_context_unittest.cc",
     "../browser/metrics/antivirus_metrics_provider_win_unittest.cc",
@@ -3394,7 +3410,6 @@ test("unit_tests") {
     "../renderer/content_settings_observer_unittest.cc",
     "../renderer/instant_restricted_id_cache_unittest.cc",
     "../renderer/media/chrome_key_systems_provider_unittest.cc",
-    "../renderer/net/net_error_helper_core_unittest.cc",
     "../renderer/page_load_metrics/fake_page_timing_sender.cc",
     "../renderer/page_load_metrics/fake_page_timing_sender.h",
     "../renderer/page_load_metrics/metrics_render_frame_observer_unittest.cc",
@@ -3546,7 +3561,6 @@ test("unit_tests") {
       "../browser/offline_pages/offline_page_tab_helper_unittest.cc",
       "../browser/offline_pages/offline_page_utils_unittest.cc",
       "../browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
-      "../browser/offline_pages/prefetch/prefetch_background_task_handler_impl_unittest.cc",
       "../browser/offline_pages/prefetch/prefetch_instance_id_proxy_unittest.cc",
       "../browser/offline_pages/prerender_adapter_unittest.cc",
       "../browser/offline_pages/prerendering_loader_unittest.cc",
@@ -3848,9 +3862,8 @@ test("unit_tests") {
   }
 
   if ((is_linux && !is_chromeos) || is_win) {
-    sources +=
-        [ "../browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc" ]
-    deps += [ "//components/feature_engagement/test:test_support" ]
+    sources += [ "../browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc" ]
+    deps += [ "//components/feature_engagement_tracker/test:test_support" ]
   }
 
   if (is_linux || is_win) {

@@ -257,7 +257,7 @@
     },
     {
       name: "CSSHexAlphaColor",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "CSSHyphens",
@@ -363,10 +363,6 @@
       status: "experimental",
     },
     {
-      name: "DeprecationReporting",
-      status: "experimental",
-    },
-    {
       name: "DesktopCaptureDisableLocalEchoControl",
       status: "experimental",
     },
@@ -390,6 +386,9 @@
     },
     {
       name: "DocumentWrite",
+    },
+    {
+      name: "DocumentWriteEvaluator",
     },
     {
       name: "DOMConvenienceAPI",
@@ -482,6 +481,10 @@
     },
     {
       name: "FramesTimingFunction",
+      status: "experimental",
+    },
+    {
+      name: "FrameTimingSupport",
       status: "experimental",
     },
     {
@@ -822,10 +825,6 @@
       status: "stable",
     },
     {
-      name: "PerformanceTimeOrigin",
-      status: "experimental",
-    },
-    {
       name: "PermissionDelegation",
       status: "test",
     },
@@ -890,10 +889,6 @@
     {
       name: "RenderUnicodeControlCharacters",
       status: "stable",
-    },
-    {
-      name: "ReportingObserver",
-      status: "experimental",
     },
     {
       name: "ResizeObserver",
@@ -961,12 +956,6 @@
     {
       name: "SetRootScroller",
       status: "experimental",
-    },
-    // Introduced this flag as stable so web developers can test their sites
-    // without native Shadow DOM v0 support
-    {
-      name: "ShadowDOMV0",
-      status: "stable",
     },
     {
       name: "ShadowPiercingDescendantCombinator",

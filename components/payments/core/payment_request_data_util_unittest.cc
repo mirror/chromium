@@ -34,14 +34,11 @@ TEST(PaymentRequestDataUtilTest, GetPaymentAddressFromAutofillProfile) {
       "{\"addressLine\":[\"666 Erebus St.\",\"Apt 8\"],"
       "\"city\":\"Elysium\","
       "\"country\":\"US\","
-      "\"dependentLocality\":\"\","
-      "\"languageCode\":\"\","
       "\"organization\":\"Underworld\","
       "\"phone\":\"16502111111\","
       "\"postalCode\":\"91111\","
       "\"recipient\":\"John H. Doe\","
-      "\"region\":\"CA\","
-      "\"sortingCode\":\"\"}",
+      "\"region\":\"CA\"}",
       json_address);
 }
 
@@ -62,14 +59,11 @@ TEST(PaymentRequestDataUtilTest, GetBasicCardResponseFromAutofillCreditCard) {
       "{\"addressLine\":[\"666 Erebus St.\",\"Apt 8\"],"
       "\"city\":\"Elysium\","
       "\"country\":\"US\","
-      "\"dependentLocality\":\"\","
-      "\"languageCode\":\"\","
       "\"organization\":\"Underworld\","
       "\"phone\":\"16502111111\","
       "\"postalCode\":\"91111\","
       "\"recipient\":\"John H. Doe\","
-      "\"region\":\"CA\","
-      "\"sortingCode\":\"\"},"
+      "\"region\":\"CA\"},"
       "\"cardNumber\":\"4111111111111111\","
       "\"cardSecurityCode\":\"123\","
       "\"cardholderName\":\"Test User\","

@@ -46,6 +46,20 @@ class HistogramFlattenerDeltaRecorder : public base::HistogramFlattener {
       recorded_delta_histogram_names_.push_back(histogram.histogram_name());
   }
 
+  void InconsistencyDetected(base::HistogramBase::Inconsistency problem)
+      override {
+    ASSERT_TRUE(false);
+  }
+
+  void UniqueInconsistencyDetected(
+      base::HistogramBase::Inconsistency problem) override {
+    ASSERT_TRUE(false);
+  }
+
+  void InconsistencyDetectedInLoggedCount(int amount) override {
+    ASSERT_TRUE(false);
+  }
+
   std::vector<std::string> GetRecordedDeltaHistogramNames() {
     return recorded_delta_histogram_names_;
   }
@@ -101,7 +115,9 @@ class FileMetricsProviderTest : public testing::TestWithParam<bool> {
     provider()->OnDidCreateMetricsLog();
   }
 
-  bool HasPreviousSessionData() { return provider()->HasPreviousSessionData(); }
+  bool HasInitialStabilityMetrics() {
+    return provider()->HasInitialStabilityMetrics();
+  }
 
   void MergeHistogramDeltas() {
     provider()->MergeHistogramDeltas();
@@ -418,7 +434,7 @@ TEST_P(FileMetricsProviderTest, AccessInitialMetrics) {
                              kMetricsName);
 
   // Record embedded snapshots via snapshot-manager.
-  ASSERT_TRUE(HasPreviousSessionData());
+  ASSERT_TRUE(HasInitialStabilityMetrics());
   RunTasks();
   {
     HistogramFlattenerDeltaRecorder flattener;
@@ -522,7 +538,7 @@ TEST_P(FileMetricsProviderTest, AccessEmbeddedFallbackMetricsWithoutProfile) {
       kMetricsName);
 
   // Record embedded snapshots via snapshot-manager.
-  ASSERT_TRUE(HasPreviousSessionData());
+  ASSERT_TRUE(HasInitialStabilityMetrics());
   RunTasks();
   {
     HistogramFlattenerDeltaRecorder flattener;
@@ -563,7 +579,7 @@ TEST_P(FileMetricsProviderTest, AccessEmbeddedFallbackMetricsWithProfile) {
       kMetricsName);
 
   // Record embedded snapshots via snapshot-manager.
-  EXPECT_FALSE(HasPreviousSessionData());
+  EXPECT_FALSE(HasInitialStabilityMetrics());
   RunTasks();
   {
     HistogramFlattenerDeltaRecorder flattener;

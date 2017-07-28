@@ -12,7 +12,6 @@
 
 @synthesize hostId = _hostId;
 @synthesize inputMode = _inputMode;
-@synthesize shouldResizeHostToFit = _shouldResizeHostToFit;
 
 - (id)initWithCoder:(NSCoder*)coder {
   self = [super init];
@@ -20,8 +19,6 @@
     self.hostId = [coder decodeObjectForKey:@"hostId"];
     NSNumber* mode = [coder decodeObjectForKey:@"inputMode"];
     self.inputMode = (ClientInputMode)[mode intValue];
-    self.shouldResizeHostToFit =
-        [[coder decodeObjectForKey:@"shouldResizeHostToFit"] boolValue];
   }
   return self;
 }
@@ -30,8 +27,6 @@
   [coder encodeObject:self.hostId forKey:@"hostId"];
   NSNumber* mode = [NSNumber numberWithInt:self.inputMode];
   [coder encodeObject:mode forKey:@"inputMode"];
-  [coder encodeObject:@(self.shouldResizeHostToFit)
-               forKey:@"shouldResizeHostToFit"];
 }
 
 - (NSString*)description {

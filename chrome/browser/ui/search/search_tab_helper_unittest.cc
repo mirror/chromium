@@ -19,7 +19,7 @@
 #include "chrome/browser/ui/search/search_ipc_router.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/common/search/mock_embedded_search_client.h"
+#include "chrome/common/search/mock_searchbox.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
@@ -71,11 +71,10 @@ class MockSearchIPCRouterDelegate : public SearchIPCRouter::Delegate {
   MOCK_METHOD0(OnHistorySyncCheck, void());
 };
 
-class MockEmbeddedSearchClientFactory
-    : public SearchIPCRouter::EmbeddedSearchClientFactory {
+class MockSearchBoxClientFactory
+    : public SearchIPCRouter::SearchBoxClientFactory {
  public:
-  MOCK_METHOD0(GetEmbeddedSearchClient,
-               chrome::mojom::EmbeddedSearchClient*(void));
+  MOCK_METHOD0(GetSearchBox, chrome::mojom::SearchBox*(void));
 };
 
 }  // namespace
@@ -88,11 +87,10 @@ class SearchTabHelperTest : public ChromeRenderViewHostTestHarness {
     ChromeRenderViewHostTestHarness::SetUp();
     SearchTabHelper::CreateForWebContents(web_contents());
     auto* search_tab = SearchTabHelper::FromWebContents(web_contents());
-    auto factory = base::MakeUnique<MockEmbeddedSearchClientFactory>();
-    ON_CALL(*factory, GetEmbeddedSearchClient())
-        .WillByDefault(Return(&mock_embedded_search_client_));
+    auto factory = base::MakeUnique<MockSearchBoxClientFactory>();
+    ON_CALL(*factory, GetSearchBox()).WillByDefault(Return(&mock_search_box_));
     search_tab->ipc_router_for_testing()
-        .set_embedded_search_client_factory_for_testing(std::move(factory));
+        .set_search_box_client_factory_for_testing(std::move(factory));
   }
 
   content::BrowserContext* CreateBrowserContext() override {
@@ -132,13 +130,11 @@ class SearchTabHelperTest : public ChromeRenderViewHostTestHarness {
 
   MockSearchIPCRouterDelegate* mock_delegate() { return &delegate_; }
 
-  MockEmbeddedSearchClient* mock_embedded_search_client() {
-    return &mock_embedded_search_client_;
-  }
+  MockSearchBox* mock_search_box() { return &mock_search_box_; }
 
  private:
   MockSearchIPCRouterDelegate delegate_;
-  MockEmbeddedSearchClient mock_embedded_search_client_;
+  MockSearchBox mock_search_box_;
 };
 
 TEST_F(SearchTabHelperTest, OnChromeIdentityCheckMatch) {
@@ -149,7 +145,7 @@ TEST_F(SearchTabHelperTest, OnChromeIdentityCheckMatch) {
   ASSERT_NE(static_cast<SearchTabHelper*>(NULL), search_tab_helper);
 
   const base::string16 test_identity = base::ASCIIToUTF16("foo@bar.com");
-  EXPECT_CALL(*mock_embedded_search_client(),
+  EXPECT_CALL(*mock_search_box(),
               ChromeIdentityCheckResult(Eq(test_identity), true));
   search_tab_helper->OnChromeIdentityCheck(test_identity);
 }
@@ -165,7 +161,7 @@ TEST_F(SearchTabHelperTest, OnChromeIdentityCheckMatchSlightlyDifferentGmail) {
   // standard form.
   const base::string16 test_identity =
       base::ASCIIToUTF16("Foo.Bar.123@gmail.com");
-  EXPECT_CALL(*mock_embedded_search_client(),
+  EXPECT_CALL(*mock_search_box(),
               ChromeIdentityCheckResult(Eq(test_identity), true));
   search_tab_helper->OnChromeIdentityCheck(test_identity);
 }
@@ -182,7 +178,7 @@ TEST_F(SearchTabHelperTest, OnChromeIdentityCheckMatchSlightlyDifferentGmail2) {
   // a standard form.
   const base::string16 test_identity =
       base::ASCIIToUTF16("chromeuser7forever@googlemail.com");
-  EXPECT_CALL(*mock_embedded_search_client(),
+  EXPECT_CALL(*mock_search_box(),
               ChromeIdentityCheckResult(Eq(test_identity), true));
   search_tab_helper->OnChromeIdentityCheck(test_identity);
 }
@@ -195,7 +191,7 @@ TEST_F(SearchTabHelperTest, OnChromeIdentityCheckMismatch) {
   ASSERT_NE(static_cast<SearchTabHelper*>(NULL), search_tab_helper);
 
   const base::string16 test_identity = base::ASCIIToUTF16("bar@foo.com");
-  EXPECT_CALL(*mock_embedded_search_client(),
+  EXPECT_CALL(*mock_search_box(),
               ChromeIdentityCheckResult(Eq(test_identity), false));
   search_tab_helper->OnChromeIdentityCheck(test_identity);
 }
@@ -208,7 +204,7 @@ TEST_F(SearchTabHelperTest, OnChromeIdentityCheckSignedOutMismatch) {
   ASSERT_NE(static_cast<SearchTabHelper*>(NULL), search_tab_helper);
 
   const base::string16 test_identity = base::ASCIIToUTF16("bar@foo.com");
-  EXPECT_CALL(*mock_embedded_search_client(),
+  EXPECT_CALL(*mock_search_box(),
               ChromeIdentityCheckResult(Eq(test_identity), false));
   search_tab_helper->OnChromeIdentityCheck(test_identity);
 }
@@ -220,7 +216,7 @@ TEST_F(SearchTabHelperTest, OnHistorySyncCheckSyncing) {
       SearchTabHelper::FromWebContents(web_contents());
   ASSERT_NE(static_cast<SearchTabHelper*>(NULL), search_tab_helper);
 
-  EXPECT_CALL(*mock_embedded_search_client(), HistorySyncCheckResult(true));
+  EXPECT_CALL(*mock_search_box(), HistorySyncCheckResult(true));
   search_tab_helper->OnHistorySyncCheck();
 }
 
@@ -231,7 +227,7 @@ TEST_F(SearchTabHelperTest, OnHistorySyncCheckNotSyncing) {
       SearchTabHelper::FromWebContents(web_contents());
   ASSERT_NE(static_cast<SearchTabHelper*>(NULL), search_tab_helper);
 
-  EXPECT_CALL(*mock_embedded_search_client(), HistorySyncCheckResult(false));
+  EXPECT_CALL(*mock_search_box(), HistorySyncCheckResult(false));
   search_tab_helper->OnHistorySyncCheck();
 }
 

@@ -143,15 +143,15 @@ class DeviceToDeviceAuthenticatorForTest : public DeviceToDeviceAuthenticator {
 
 }  // namespace
 
-class CryptAuthDeviceToDeviceAuthenticatorTest : public testing::Test {
+class ProximityAuthDeviceToDeviceAuthenticatorTest : public testing::Test {
  public:
-  CryptAuthDeviceToDeviceAuthenticatorTest()
+  ProximityAuthDeviceToDeviceAuthenticatorTest()
       : remote_device_(CreateClassicRemoteDeviceForTest()),
         connection_(remote_device_),
         secure_message_delegate_(new FakeSecureMessageDelegate),
         authenticator_(&connection_,
                        base::WrapUnique(secure_message_delegate_)) {}
-  ~CryptAuthDeviceToDeviceAuthenticatorTest() override {}
+  ~ProximityAuthDeviceToDeviceAuthenticatorTest() override {}
 
   void SetUp() override {
     // Set up the session asymmetric keys for both the local and remote devices.
@@ -179,7 +179,7 @@ class CryptAuthDeviceToDeviceAuthenticatorTest : public testing::Test {
   // device to the remote device.
   std::string BeginAuthentication() {
     authenticator_.Authenticate(base::Bind(
-        &CryptAuthDeviceToDeviceAuthenticatorTest::OnAuthenticationResult,
+        &ProximityAuthDeviceToDeviceAuthenticatorTest::OnAuthenticationResult,
         base::Unretained(this)));
 
     EXPECT_EQ(1u, connection_.message_buffer().size());
@@ -251,10 +251,10 @@ class CryptAuthDeviceToDeviceAuthenticatorTest : public testing::Test {
   // Stores the SecureContext returned after authentication succeeds.
   std::unique_ptr<SecureContext> secure_context_;
 
-  DISALLOW_COPY_AND_ASSIGN(CryptAuthDeviceToDeviceAuthenticatorTest);
+  DISALLOW_COPY_AND_ASSIGN(ProximityAuthDeviceToDeviceAuthenticatorTest);
 };
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, AuthenticateSucceeds) {
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest, AuthenticateSucceeds) {
   // Starts the authentication protocol and grab [Hello] message.
   std::string hello_message = BeginAuthentication();
 
@@ -277,7 +277,7 @@ TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, AuthenticateSucceeds) {
   ASSERT_TRUE(initiator_auth_validated);
 }
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, ResponderRejectsHello) {
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest, ResponderRejectsHello) {
   std::string hello_message = BeginAuthentication();
 
   // If the responder could not validate the [Hello message], it essentially
@@ -290,7 +290,7 @@ TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, ResponderRejectsHello) {
   EXPECT_FALSE(secure_context_);
 }
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, ResponderAuthTimesOut) {
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest, ResponderAuthTimesOut) {
   // Starts the authentication protocol and grab [Hello] message.
   std::string hello_message = BeginAuthentication();
   ASSERT_TRUE(authenticator_.timer());
@@ -300,7 +300,7 @@ TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, ResponderAuthTimesOut) {
   EXPECT_FALSE(secure_context_);
 }
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest,
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest,
        DisconnectsWaitingForResponderAuth) {
   std::string hello_message = BeginAuthentication();
   EXPECT_CALL(*this,
@@ -309,27 +309,27 @@ TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest,
   EXPECT_FALSE(secure_context_);
 }
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, NotConnectedInitially) {
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest, NotConnectedInitially) {
   connection_.Disconnect();
   EXPECT_CALL(*this,
               OnAuthenticationResultProxy(Authenticator::Result::DISCONNECTED));
   authenticator_.Authenticate(base::Bind(
-      &CryptAuthDeviceToDeviceAuthenticatorTest::OnAuthenticationResult,
+      &ProximityAuthDeviceToDeviceAuthenticatorTest::OnAuthenticationResult,
       base::Unretained(this)));
   EXPECT_FALSE(secure_context_);
 }
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, FailToSendHello) {
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest, FailToSendHello) {
   connection_.set_connection_blocked(true);
   EXPECT_CALL(*this,
               OnAuthenticationResultProxy(Authenticator::Result::FAILURE));
   authenticator_.Authenticate(base::Bind(
-      &CryptAuthDeviceToDeviceAuthenticatorTest::OnAuthenticationResult,
+      &ProximityAuthDeviceToDeviceAuthenticatorTest::OnAuthenticationResult,
       base::Unretained(this)));
   EXPECT_FALSE(secure_context_);
 }
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, FailToSendInitiatorAuth) {
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest, FailToSendInitiatorAuth) {
   std::string hello_message = BeginAuthentication();
 
   connection_.set_connection_blocked(true);
@@ -339,7 +339,7 @@ TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest, FailToSendInitiatorAuth) {
   EXPECT_FALSE(secure_context_);
 }
 
-TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest,
+TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest,
        SendMessagesAfterAuthenticationSuccess) {
   std::string hello_message = BeginAuthentication();
   EXPECT_CALL(*this,

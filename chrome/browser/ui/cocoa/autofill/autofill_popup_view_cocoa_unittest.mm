@@ -110,27 +110,31 @@ class AutofillPopupViewCocoaUnitTest : public CocoaTest {
 
 // Tests to check if the touch bar shows up properly.
 TEST_F(AutofillPopupViewCocoaUnitTest, CreditCardAutofillTouchBar) {
-  if (@available(macOS 10.12.2, *)) {
-    // Touch bar shouldn't appear if the popup is not for credit cards.
-    autofill_popup_controller_.SetIsCreditCardField(false);
-    EXPECT_FALSE([view_ makeTouchBar]);
+  if (!base::mac::IsAtLeastOS10_12())
+    return;
 
-    // Touch bar shouldn't appear if the popup is empty.
-    autofill_popup_controller_.SetIsCreditCardField(true);
-    SetLineCount(0);
-    EXPECT_FALSE([view_ makeTouchBar]);
+  // Touch bar shouldn't appear if the popup is not for credit cards.
+  autofill_popup_controller_.SetIsCreditCardField(false);
+  EXPECT_FALSE([view_ makeTouchBar]);
 
-    autofill_popup_controller_.SetIsCreditCardField(true);
-    SetLineCount(3);
-    NSTouchBar* touch_bar = [view_ makeTouchBar];
-    EXPECT_TRUE(touch_bar);
-    EXPECT_TRUE([[touch_bar customizationIdentifier]
-        isEqual:ui::GetTouchBarId(kCreditCardAutofillTouchBarId)]);
-  }
+  // Touch bar shouldn't appear if the popup is empty.
+  autofill_popup_controller_.SetIsCreditCardField(true);
+  SetLineCount(0);
+  EXPECT_FALSE([view_ makeTouchBar]);
+
+  autofill_popup_controller_.SetIsCreditCardField(true);
+  SetLineCount(3);
+  NSTouchBar* touch_bar = [view_ makeTouchBar];
+  EXPECT_TRUE(touch_bar);
+  EXPECT_TRUE([[touch_bar customizationIdentifier]
+      isEqual:ui::GetTouchBarId(kCreditCardAutofillTouchBarId)]);
 }
 
-// Tests that the touch bar histogram is logged correctly.
+// Tests that the touch bar logs into the histogram correctly.
 TEST_F(AutofillPopupViewCocoaUnitTest, CreditCardAutofillTouchBarMetric) {
+  if (!base::mac::IsAtLeastOS10_12())
+    return;
+
   {
     base::HistogramTester histogram_tester;
     [view_ acceptCreditCard:nil];

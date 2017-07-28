@@ -365,6 +365,23 @@ void MetricsService::RecordDelta(const base::HistogramBase& histogram,
                                                    snapshot);
 }
 
+void MetricsService::InconsistencyDetected(
+    base::HistogramBase::Inconsistency problem) {
+  UMA_HISTOGRAM_ENUMERATION("Histogram.InconsistenciesBrowser",
+                            problem, base::HistogramBase::NEVER_EXCEEDED_VALUE);
+}
+
+void MetricsService::UniqueInconsistencyDetected(
+    base::HistogramBase::Inconsistency problem) {
+  UMA_HISTOGRAM_ENUMERATION("Histogram.InconsistenciesBrowserUnique",
+                            problem, base::HistogramBase::NEVER_EXCEEDED_VALUE);
+}
+
+void MetricsService::InconsistencyDetectedInLoggedCount(int amount) {
+  UMA_HISTOGRAM_COUNTS("Histogram.InconsistentSnapshotBrowser",
+                       std::abs(amount));
+}
+
 void MetricsService::HandleIdleSinceLastTransmission(bool in_idle) {
   // If there wasn't a lot of action, maybe the computer was asleep, in which
   // case, the log transmissions should have stopped.  Here we start them up
@@ -747,7 +764,7 @@ bool MetricsService::ProvidersHaveInitialStabilityMetrics() {
   // the later call to RecordInitialHistogramSnapshots().
   bool has_stability_metrics = false;
   for (auto& provider : metrics_providers_)
-    has_stability_metrics |= provider->HasPreviousSessionData();
+    has_stability_metrics |= provider->HasInitialStabilityMetrics();
 
   return has_stability_metrics;
 }

@@ -20,10 +20,10 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
-import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.components.background_task_scheduler.BackgroundTask.TaskFinishedCallback;
 import org.chromium.components.background_task_scheduler.BackgroundTaskScheduler;
 import org.chromium.components.background_task_scheduler.BackgroundTaskSchedulerDelegate;
@@ -42,7 +42,8 @@ import java.util.concurrent.TimeUnit;
         "enable-features=OfflinePagesPrefetching"})
 public class PrefetchBackgroundTaskTest {
     @Rule
-    public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
+    public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
+            new ChromeActivityTestRule<>(ChromeActivity.class);
 
     private static final double BACKOFF_JITTER_FACTOR = 0.33;
     private static final int SEMAPHORE_TIMEOUT_MS = 5000;
@@ -220,7 +221,7 @@ public class PrefetchBackgroundTaskTest {
     @Test
     @SmallTest
     public void testSchedule() throws Exception {
-        PrefetchBackgroundTask.scheduleTask(0, true);
+        PrefetchBackgroundTask.scheduleTask(0);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(0);
         task.signalTaskFinished();
@@ -232,7 +233,7 @@ public class PrefetchBackgroundTaskTest {
     @SmallTest
     public void testScheduleWithAdditionalDelay() throws Exception {
         final int additionalDelaySeconds = 15;
-        PrefetchBackgroundTask.scheduleTask(additionalDelaySeconds, true);
+        PrefetchBackgroundTask.scheduleTask(additionalDelaySeconds);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(additionalDelaySeconds);
         task.signalTaskFinished();
@@ -243,7 +244,7 @@ public class PrefetchBackgroundTaskTest {
     @Test
     @SmallTest
     public void testReschedule() throws Exception {
-        PrefetchBackgroundTask.scheduleTask(0, true);
+        PrefetchBackgroundTask.scheduleTask(0);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(0);
 

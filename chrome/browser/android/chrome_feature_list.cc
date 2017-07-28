@@ -85,7 +85,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kPayWithGoogleV1,
     &kPhysicalWebFeature,
     &kPhysicalWebSharing,
-    &kPwaPersistentNotification,
     &kReaderModeInCCT,
     &kSearchEnginePromoExistingDevice,
     &kSearchEnginePromoNewDevice,
@@ -97,7 +96,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kVideoPersistence,
     &kVrBrowsingFeedback,
     &kVrCustomTabBrowsing,
-    &payments::features::kWebPaymentsMethodSectionOrderV2,
     &payments::features::kWebPaymentsModifiers,
     &kWebPaymentsSingleAppUiSkip,
     &kWebVrAutopresent,
@@ -242,9 +240,6 @@ const base::Feature kPhysicalWebFeature{"PhysicalWeb",
 
 const base::Feature kPhysicalWebSharing{"PhysicalWebSharing",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kPwaPersistentNotification{
-    "PwaPersistentNotification", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kReaderModeInCCT{"ReaderModeInCCT",
                                      base::FEATURE_DISABLED_BY_DEFAULT};

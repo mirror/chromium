@@ -5,7 +5,7 @@
 #include "services/service_manager/tests/lifecycle/app_client.h"
 
 #include "base/macros.h"
-#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
 namespace service_manager {
@@ -25,7 +25,7 @@ void AppClient::OnBindInterface(const BindSourceInfo& source_info,
 }
 
 bool AppClient::OnServiceManagerConnectionLost() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
   return true;
 }
 

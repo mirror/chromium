@@ -76,7 +76,7 @@ class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
     DeviceMotionEventPump::FireEvent();
     if (stop_on_fire_event_) {
       Stop();
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
     }
   }
 

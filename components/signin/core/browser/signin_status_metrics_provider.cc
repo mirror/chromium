@@ -35,7 +35,7 @@ SigninStatusMetricsProvider::SigninStatusMetricsProvider(
 
 SigninStatusMetricsProvider::~SigninStatusMetricsProvider() {}
 
-void SigninStatusMetricsProvider::ProvideCurrentSessionData(
+void SigninStatusMetricsProvider::ProvideGeneralMetrics(
     metrics::ChromeUserMetricsExtension* uma_proto) {
   RecordSigninStatusHistogram(signin_status());
   // After a histogram value is recorded, a new UMA session will be started, so

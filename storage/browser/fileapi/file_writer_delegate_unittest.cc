@@ -71,11 +71,11 @@ class Result {
     if (status == base::File::FILE_OK) {
       bytes_written_ += bytes;
       if (write_status_ != FileWriterDelegate::SUCCESS_IO_PENDING)
-        base::RunLoop::QuitCurrentWhenIdleDeprecated();
+        base::MessageLoop::current()->QuitWhenIdle();
     } else {
       EXPECT_EQ(base::File::FILE_OK, status_);
       status_ = status;
-      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+      base::MessageLoop::current()->QuitWhenIdle();
     }
   }
 

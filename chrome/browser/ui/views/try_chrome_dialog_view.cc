@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "chrome/browser/process_singleton.h"
@@ -22,7 +23,6 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/display/screen.h"
-#include "ui/display/win/screen_win.h"
 #include "ui/gfx/image/image.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/background.h"
@@ -293,11 +293,7 @@ TryChromeDialogView::Result TryChromeDialogView::ShowDialog(
   // Carve the toast shape into the window.
   HWND toast_window;
   toast_window = popup_->GetNativeView()->GetHost()->GetAcceleratedWidget();
-
-  gfx::Size size_in_pixels = display::win::ScreenWin::DIPToScreenSize(
-      toast_window, preferred);
-  SetToastRegion(toast_window, size_in_pixels.width(),
-                 size_in_pixels.height());
+  SetToastRegion(toast_window, preferred.width(), preferred.height());
 
   // Time to show the window in a modal loop.
   popup_->Show();
@@ -324,7 +320,8 @@ gfx::Rect TryChromeDialogView::ComputeWindowPosition(const gfx::Size& size,
   origin.set_x(is_RTL ? work_area.x() : work_area.right() - size.width());
   origin.set_y(work_area.bottom()- size.height());
 
-  return gfx::Rect(origin, size);
+  return display::Screen::GetScreen()->ScreenToDIPRectInWindow(
+      popup_->GetNativeView(), gfx::Rect(origin, size));
 }
 
 void TryChromeDialogView::SetToastRegion(HWND window, int w, int h) {
@@ -374,7 +371,7 @@ void TryChromeDialogView::ButtonPressed(views::Button* sender,
   }
 
   popup_->Close();
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  base::MessageLoop::current()->QuitWhenIdle();
 }
 
 void TryChromeDialogView::LinkClicked(views::Link* source, int event_flags) {

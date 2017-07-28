@@ -71,8 +71,7 @@ class CORE_EXPORT AutoscrollController final
   // Selection and drag-and-drop autoscroll.
   void Animate(double monotonic_frame_begin_time);
   bool SelectionAutoscrollInProgress() const;
-  bool AutoscrollInProgressFor(const LayoutBox*) const;
-  bool AutoscrollInProgress() const;
+  bool AutoscrollInProgress(const LayoutBox*) const;
   void StartAutoscrollForSelection(LayoutObject*);
   void StopAutoscroll();
   void StopAutoscrollIfNeeded(LayoutObject*);

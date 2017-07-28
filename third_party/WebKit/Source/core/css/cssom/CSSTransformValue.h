@@ -31,7 +31,7 @@ class CORE_EXPORT CSSTransformValue final : public CSSStyleValue {
 
   bool is2D() const;
 
-  DOMMatrix* toMatrix(ExceptionState&) const;
+  DOMMatrix* toMatrix() const;
 
   const CSSValue* ToCSSValue() const override;
 

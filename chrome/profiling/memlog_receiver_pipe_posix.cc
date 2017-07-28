@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/posix/eintr_wrapper.h"
+#include "base/posix/unix_domain_socket_linux.h"
 #include "base/threading/thread.h"
 #include "chrome/profiling/memlog_stream_receiver.h"
 #include "mojo/edk/embedder/platform_channel_utils_posix.h"
@@ -25,29 +26,14 @@ const int kReadBufferSize = 1024 * 64;
 
 }  // namespace
 
-MemlogReceiverPipe::MemlogReceiverPipe(int fd)
-    : handle_(mojo::edk::PlatformHandle(fd)),
+MemlogReceiverPipe::MemlogReceiverPipe(base::ScopedFD fd)
+    : handle_(mojo::edk::PlatformHandle(fd.release())),
       controller_(FROM_HERE),
-      read_buffer_(new char[kReadBufferSize]) {
-  base::MessageLoopForIO::current()->WatchFileDescriptor(
-      handle_.get().handle, true, base::MessageLoopForIO::WATCH_READ,
-      &controller_, this);
-}
+      read_buffer_(new char[kReadBufferSize]) {}
 
 MemlogReceiverPipe::~MemlogReceiverPipe() {}
 
-void MemlogReceiverPipe::StartReadingOnIOThread() {
-  OnFileCanReadWithoutBlocking(handle_.get().handle);
-}
-
-void MemlogReceiverPipe::SetReceiver(
-    scoped_refptr<base::TaskRunner> task_runner,
-    scoped_refptr<MemlogStreamReceiver> receiver) {
-  receiver_task_runner_ = task_runner;
-  receiver_ = receiver;
-}
-
-void MemlogReceiverPipe::OnFileCanReadWithoutBlocking(int fd) {
+void MemlogReceiverPipe::ReadUntilBlocking() {
   ssize_t bytes_read = 0;
   do {
     std::deque<mojo::edk::PlatformHandle> dummy_for_receive;
@@ -79,8 +65,11 @@ void MemlogReceiverPipe::OnFileCanReadWithoutBlocking(int fd) {
   } while (bytes_read > 0);
 }
 
-void MemlogReceiverPipe::OnFileCanWriteWithoutBlocking(int fd) {
-  NOTREACHED();
+void MemlogReceiverPipe::SetReceiver(
+    scoped_refptr<base::TaskRunner> task_runner,
+    scoped_refptr<MemlogStreamReceiver> receiver) {
+  receiver_task_runner_ = task_runner;
+  receiver_ = receiver;
 }
 
 }  // namespace profiling

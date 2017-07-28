@@ -144,11 +144,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
     [self setSpellCheckingType:UITextSpellCheckingTypeNo];
     [self setTextAlignment:NSTextAlignmentNatural];
     [self setKeyboardType:(UIKeyboardType)UIKeyboardTypeWebSearch];
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-    if (@available(iOS 11.0, *)) {
-      [self setSmartQuotesType:UITextSmartQuotesTypeNo];
-    }
-#endif
 
     // Sanity check:
     DCHECK([self conformsToProtocol:@protocol(UITextInput)]);

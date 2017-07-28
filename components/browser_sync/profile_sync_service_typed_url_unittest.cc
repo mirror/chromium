@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
@@ -307,7 +308,9 @@ class ProfileSyncServiceTypedUrlTest : public AbstractProfileSyncServiceTest {
 
   void SendNotification(const base::Closure& task) {
     data_type_thread()->task_runner()->PostTaskAndReply(
-        FROM_HERE, task, base::Bind(&base::RunLoop::QuitCurrentDeprecated));
+        FROM_HERE, task,
+        base::Bind(&base::MessageLoop::QuitNow,
+                   base::Unretained(base::MessageLoop::current())));
     base::RunLoop().Run();
   }
 

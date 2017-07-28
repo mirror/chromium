@@ -513,8 +513,7 @@ bool ResourceCreationProxy::OnMessageReceived(const IPC::Message& msg) {
 }
 
 Connection ResourceCreationProxy::GetConnection() {
-  return Connection(PluginGlobals::Get()->GetBrowserSender(),
-                    static_cast<PluginDispatcher*>(dispatcher())->sender());
+  return Connection(PluginGlobals::Get()->GetBrowserSender(), dispatcher());
 }
 
 }  // namespace proxy

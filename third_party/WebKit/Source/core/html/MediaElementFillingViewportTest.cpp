@@ -26,6 +26,10 @@ class MediaElementFillingViewportTest : public SimTest {
     return element->mostly_filling_viewport_;
   }
 
+  bool ViewportFillDebouncerTimerActive(HTMLMediaElement* element) {
+    return element->viewport_fill_debouncer_timer_.IsActive();
+  }
+
   void CheckViewportIntersectionChanged(HTMLMediaElement* element) {
     element->ActivateViewportIntersectionMonitoring(true);
     EXPECT_TRUE(element->check_viewport_intersection_timer_.IsActive());
@@ -56,7 +60,9 @@ TEST_F(MediaElementFillingViewportTest, MostlyFillingViewport) {
   HTMLMediaElement* element =
       ToElement<HTMLMediaElement>(GetDocument().getElementById("video"));
   CheckViewportIntersectionChanged(element);
-  EXPECT_TRUE(IsMostlyFillingViewport(element));
+  EXPECT_FALSE(IsMostlyFillingViewport(element));
+  EXPECT_TRUE(ViewportFillDebouncerTimerActive(element));
+  // TODO(xjz): Mock the time and check isMostlyFillingViewport() after 5s.
 }
 
 TEST_F(MediaElementFillingViewportTest, NotMostlyFillingViewport) {
@@ -75,6 +81,7 @@ TEST_F(MediaElementFillingViewportTest, NotMostlyFillingViewport) {
       ToElement<HTMLMediaElement>(GetDocument().getElementById("video"));
   CheckViewportIntersectionChanged(element);
   EXPECT_FALSE(IsMostlyFillingViewport(element));
+  EXPECT_FALSE(ViewportFillDebouncerTimerActive(element));
 }
 
 TEST_F(MediaElementFillingViewportTest, FillingViewportChanged) {
@@ -92,7 +99,8 @@ TEST_F(MediaElementFillingViewportTest, FillingViewportChanged) {
   HTMLMediaElement* element =
       ToElement<HTMLMediaElement>(GetDocument().getElementById("video"));
   CheckViewportIntersectionChanged(element);
-  EXPECT_TRUE(IsMostlyFillingViewport(element));
+  EXPECT_FALSE(IsMostlyFillingViewport(element));
+  EXPECT_TRUE(ViewportFillDebouncerTimerActive(element));
 
   element->setAttribute("style",
                         "position:fixed; left:0; top:0; width:80%; height:80%;",
@@ -101,6 +109,7 @@ TEST_F(MediaElementFillingViewportTest, FillingViewportChanged) {
 
   CheckViewportIntersectionChanged(element);
   EXPECT_FALSE(IsMostlyFillingViewport(element));
+  EXPECT_FALSE(ViewportFillDebouncerTimerActive(element));
 }
 
 TEST_F(MediaElementFillingViewportTest, LargeVideo) {
@@ -118,7 +127,8 @@ TEST_F(MediaElementFillingViewportTest, LargeVideo) {
   HTMLMediaElement* element =
       ToElement<HTMLMediaElement>(GetDocument().getElementById("video"));
   CheckViewportIntersectionChanged(element);
-  EXPECT_TRUE(IsMostlyFillingViewport(element));
+  EXPECT_FALSE(IsMostlyFillingViewport(element));
+  EXPECT_TRUE(ViewportFillDebouncerTimerActive(element));
 }
 
 TEST_F(MediaElementFillingViewportTest, VideoScrollOutHalf) {
@@ -136,7 +146,8 @@ TEST_F(MediaElementFillingViewportTest, VideoScrollOutHalf) {
   HTMLMediaElement* element =
       ToElement<HTMLMediaElement>(GetDocument().getElementById("video"));
   CheckViewportIntersectionChanged(element);
-  EXPECT_TRUE(IsMostlyFillingViewport(element));
+  EXPECT_FALSE(IsMostlyFillingViewport(element));
+  EXPECT_TRUE(ViewportFillDebouncerTimerActive(element));
 
   element->setAttribute(
       "style", "position:fixed; left:0; top:240px; width:100%; height:100%;",
@@ -144,6 +155,7 @@ TEST_F(MediaElementFillingViewportTest, VideoScrollOutHalf) {
   Compositor().BeginFrame();
   CheckViewportIntersectionChanged(element);
   EXPECT_FALSE(IsMostlyFillingViewport(element));
+  EXPECT_FALSE(ViewportFillDebouncerTimerActive(element));
 }
 
 }  // namespace blink

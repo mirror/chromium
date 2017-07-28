@@ -268,7 +268,8 @@ void MotionEventGeneric::PushHistoricalEvent(
   DCHECK_EQ(event->GetAction(), ACTION_MOVE);
   DCHECK_EQ(event->GetPointerCount(), GetPointerCount());
   DCHECK_EQ(event->GetAction(), GetAction());
-  DCHECK_LE(event->GetEventTime(), GetEventTime());
+  DCHECK_LE(event->GetEventTime().ToInternalValue(),
+            GetEventTime().ToInternalValue());
   historical_events_.push_back(std::move(event));
 }
 

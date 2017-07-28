@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "cc/paint/paint_flags.h"
-#include "cc/paint/paint_op_buffer.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "third_party/skia/include/core/SkRRect.h"
@@ -121,8 +120,6 @@ void PaintOpReader::Read(PaintFlags* flags) {
   Read(&flags->width_);
   Read(&flags->miter_limit_);
   ReadSimple(&flags->blend_mode_);
-  if (!PaintOp::IsValidSkBlendMode(flags->getBlendMode()))
-    valid_ = false;
   ReadSimple(&flags->bitfields_uint_);
 
   // TODO(enne): ReadTypeface, http://crbug.com/737629
@@ -139,7 +136,7 @@ void PaintOpReader::Read(PaintImage* image) {
 }
 
 void PaintOpReader::Read(sk_sp<SkData>* data) {
-  size_t bytes = 0;
+  size_t bytes;
   ReadSimple(&bytes);
   if (remaining_bytes_ < bytes)
     valid_ = false;

@@ -395,8 +395,7 @@ ServerWindowCompositorFrameSinkManager*
 ServerWindow::GetOrCreateCompositorFrameSinkManager() {
   if (!compositor_frame_sink_manager_.get())
     compositor_frame_sink_manager_ =
-        base::MakeUnique<ServerWindowCompositorFrameSinkManager>(
-            frame_sink_id_, delegate_->GetFrameSinkManager());
+        base::MakeUnique<ServerWindowCompositorFrameSinkManager>(this);
   return compositor_frame_sink_manager_.get();
 }
 

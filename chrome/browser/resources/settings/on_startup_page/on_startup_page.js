@@ -15,6 +15,6 @@ Polymer({
 
   /** @private */
   onManageStartupUrls_: function() {
-    settings.navigateTo(settings.routes.STARTUP_PAGES);
+    settings.navigateTo(settings.routes.STARTUP_URLS);
   },
 });

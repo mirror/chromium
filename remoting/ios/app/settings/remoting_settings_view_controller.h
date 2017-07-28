@@ -36,7 +36,6 @@
 
 @property(weak, nonatomic) id<RemotingSettingsViewControllerDelegate> delegate;
 @property(nonatomic) remoting::GestureInterpreter::InputMode inputMode;
-@property(nonatomic) BOOL shouldResizeHostToFit;
 
 @end
 

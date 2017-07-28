@@ -107,9 +107,6 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
                                              const WebServiceWorkerResponse&,
                                              WebServiceWorkerStreamHandle*,
                                              double event_dispatch_time);
-  void RespondToAbortPaymentEvent(int event_id,
-                                  bool abort_payment,
-                                  double event_dispatch_time);
   void RespondToCanMakePaymentEvent(int event_id,
                                     bool can_make_payment,
                                     double event_dispatch_time);
@@ -134,9 +131,6 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
   void DidHandleSyncEvent(int sync_event_id,
                           WebServiceWorkerEventResult,
                           double event_dispatch_time);
-  void DidHandleAbortPaymentEvent(int abort_payment_event_id,
-                                  WebServiceWorkerEventResult,
-                                  double event_dispatch_time);
   void DidHandleCanMakePaymentEvent(int payment_request_event_id,
                                     WebServiceWorkerEventResult,
                                     double event_dispatch_time);

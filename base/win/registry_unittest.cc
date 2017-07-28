@@ -361,7 +361,7 @@ class TestChangeDelegate {
    ~TestChangeDelegate() {}
 
    void OnKeyChanged() {
-     RunLoop::QuitCurrentWhenIdleDeprecated();
+     MessageLoop::current()->QuitWhenIdle();
      called_ = true;
    }
 

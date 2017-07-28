@@ -1017,33 +1017,35 @@ cr.define('print_preview', function() {
           destination.provisionalType ==
               print_preview.DestinationProvisionalType.NEEDS_USB_PERMISSION,
           'Provisional type cannot be resolved.');
-      this.nativeLayer_.grantExtensionPrinterAccess(destination.id)
-          .then(
-              destinationInfo => {
-                /**
-                 * Removes the destination from the store and replaces it with a
-                 * destination created from the resolved destination properties,
-                 * if any are reported. Then sends a
-                 * PROVISIONAL_DESTINATION_RESOLVED event.
-                 */
-                this.removeProvisionalDestination_(destination.id);
-                var parsedDestination =
-                    print_preview.ExtensionDestinationParser.parse(
-                        destinationInfo);
-                this.insertIntoStore_(parsedDestination);
-                this.dispatchProvisionalDestinationResolvedEvent_(
-                    destination.id, parsedDestination);
-              },
-              () => {
-                /**
-                 * The provisional destination is removed from the store and a
-                 * PROVISIONAL_DESTINATION_RESOLVED event is dispatched with a
-                 * null destination.
-                 */
-                this.removeProvisionalDestination_(destination.id);
-                this.dispatchProvisionalDestinationResolvedEvent_(
-                    destination.id, null);
-              });
+      this.nativeLayer_.grantExtensionPrinterAccess(destination.id).then(
+          /**
+           * @param {!print_preview.ProvisionalDestinationInfo}
+           *     destinationInfo Information about the resolved printer.
+           */
+          function(destinationInfo) {
+            /**
+             * Removes the destination from the store and replaces it with a
+             * destination created from the resolved destination properties, if
+             * any are reported. Then sends a PROVISIONAL_DESTINATION_RESOLVED
+             * event.
+             */
+            this.removeProvisionalDestination_(destination.id);
+            var parsedDestination =
+                print_preview.ExtensionDestinationParser.parse(destinationInfo);
+            this.insertIntoStore_(parsedDestination);
+            this.dispatchProvisionalDestinationResolvedEvent_(
+                destination.id, parsedDestination);
+          }.bind(this),
+          function() {
+            /**
+             * The provisional destination is removed from the store and a
+             * PROVISIONAL_DESTINATION_RESOLVED event is dispatched with a null
+             * destination.
+             */
+            this.removeProvisionalDestination_(destination.id);
+            this.dispatchProvisionalDestinationResolvedEvent_(destination.id,
+                                                              null);
+          }.bind(this));
     },
 
     /**
@@ -1097,11 +1099,11 @@ cr.define('print_preview', function() {
         return;
       this.isPrivetDestinationSearchInProgress_ = true;
       this.nativeLayer_.getPrivetPrinters().then(
-          this.endPrivetPrinterSearch_.bind(this), () => {
+          this.endPrivetPrinterSearch_.bind(this), function() {
             // Rejected by C++, indicating privet printing is disabled.
             this.hasLoadedAllPrivetDestinations_ = true;
             this.isPrivetDestinationSearchInProgress_ = false;
-          });
+          }.bind(this));
       cr.dispatchSimpleEvent(
           this, DestinationStore.EventType.DESTINATION_SEARCH_STARTED);
     },

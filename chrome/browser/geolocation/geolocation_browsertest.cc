@@ -9,7 +9,6 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -125,7 +124,7 @@ void IFrameLoader::Observe(int type,
     javascript_completed_ = true;
   }
   if (javascript_completed_ && navigation_completed_)
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+    base::MessageLoopForUI::current()->QuitWhenIdle();
 }
 
 // PermissionRequestObserver ---------------------------------------------------

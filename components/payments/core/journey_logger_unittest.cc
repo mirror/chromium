@@ -53,7 +53,7 @@ TEST(JourneyLoggerTest,
 
   // The merchant does not query CanMakePayment, show the PaymentRequest and the
   // user aborts it.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
 
@@ -83,7 +83,7 @@ TEST(JourneyLoggerTest,
 
   // The merchant does not query CanMakePayment, show the PaymentRequest and
   // there is an abort not initiated by the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
 
@@ -113,7 +113,7 @@ TEST(JourneyLoggerTest,
 
   // The merchant does not query CanMakePayment, show the PaymentRequest and the
   // user completes it.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCompleted();
 
@@ -175,7 +175,7 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user can make payment and the PaymentRequest is not shown.
+  // The user cannot make payment and the PaymentRequest is not shown.
   logger.SetCanMakePaymentValue(true);
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
 
@@ -208,9 +208,8 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user cannot make payment, the Payment Request is shown but is aborted
-  // by the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  // The user cannot make payment and the PaymentRequest is not shown.
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCanMakePaymentValue(false);
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -243,8 +242,8 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user cannot make payment, the Payment Request is shown but is aborted.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  // The user cannot make payment and the PaymentRequest is not shown.
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCanMakePaymentValue(false);
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -277,9 +276,8 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user cannot make payment, the payment request is shown and is
-  // completed.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  // The user cannot make payment and the PaymentRequest is not shown.
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCanMakePaymentValue(false);
   logger.SetCompleted();
@@ -313,9 +311,8 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user can make payment, the Payment Request is shown and aborted by the
-  // user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  // The user cannot make payment and the PaymentRequest is not shown.
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCanMakePaymentValue(true);
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -350,8 +347,8 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user can make a payment, the request is shown but the user aborts.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  // The user cannot make payment and the PaymentRequest is not shown.
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCanMakePaymentValue(true);
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -386,9 +383,8 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user can make a payment, the request is shown and the user completes
-  // the checkout.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  // The user cannot make payment and the PaymentRequest is not shown.
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCanMakePaymentValue(true);
   logger.SetCompleted();
@@ -423,9 +419,8 @@ TEST(JourneyLoggerTest,
       histogram_tester.GetTotalCountsForPrefix("PaymentRequest.CanMakePayment"),
       testing::ContainerEq(base::HistogramTester::CountsMap()));
 
-  // The user can make a payment, the request is shown and the user completes
-  // the checkout.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  // The user cannot make payment and the PaymentRequest is not shown.
+  logger.SetShowCalled();
   logger.SetRequestedInformation(true, false, false, false);
   logger.SetCanMakePaymentValue(true);
   logger.SetCompleted();
@@ -454,7 +449,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the user completes the checkout.
   logger.SetCompleted();
@@ -501,7 +496,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the user aborts the checkout.
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -548,7 +543,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the checkout is aborted.
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -596,7 +591,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the user completes the checkout.
   logger.SetCompleted();
@@ -643,7 +638,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the user completes the checkout.
   logger.SetCompleted();
@@ -691,7 +686,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the user aborts the checkout.
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -739,7 +734,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the the checkout is aborted.
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -788,7 +783,7 @@ TEST(JourneyLoggerTest,
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the user aborts the checkout.
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -838,7 +833,7 @@ TEST(
                                      /*has_complete_suggestion=*/false);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the the checkout is aborted.
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -890,7 +885,7 @@ TEST(
                                      /*has_complete_suggestion=*/true);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the the checkout is aborted.
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -942,7 +937,7 @@ TEST(
                                      /*has_complete_suggestion=*/true);
 
   // Simulate that the Payment Request was shown to the user.
-  logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger.SetShowCalled();
 
   // Simulate that the the checkout is aborted.
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -983,11 +978,11 @@ TEST(JourneyLoggerTest, RecordJourneyStatsHistograms_TwoPaymentRequests) {
                         /*ukm_recorder=*/nullptr);
 
   // Make the two loggers have different data.
-  logger1.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger1.SetShowCalled();
   logger1.SetRequestedInformation(
       /*requested_shipping=*/true, /*requested_email=*/true,
       /*requested_phone=*/false, /*requested_name=*/false);
-  logger2.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
+  logger2.SetShowCalled();
   logger2.SetRequestedInformation(
       /*requested_shipping=*/true, /*requested_email=*/false,
       /*requested_phone=*/false, /*requested_name=*/false);
@@ -1036,9 +1031,6 @@ TEST(JourneyLoggerTest,
   base::HistogramTester histogram_tester;
   JourneyLogger logger(/*is_incognito=*/true, /*url=*/GURL(test_url),
                        /*ukm_recorder=*/&ukm_recorder);
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/true, /*requested_email=*/true,
-      /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user aborts after being shown the Payment Request and
   // clicking pay.
@@ -1080,9 +1072,6 @@ TEST(JourneyLoggerTest,
   base::HistogramTester histogram_tester;
   JourneyLogger logger(/*is_incognito=*/true, /*url=*/GURL(test_url),
                        /*ukm_recorder=*/&ukm_recorder);
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/true, /*requested_email=*/true,
-      /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user aborts after being shown the Payment Request.
   logger.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
