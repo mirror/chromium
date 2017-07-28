@@ -622,6 +622,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
     // focused tab will be loaded by Browser, and TabLoader will load the rest.
     DCHECK(is_selected_tab || web_contents->GetController().NeedsReload());
 
+    SessionRestore::OnWillRestoreTab(web_contents);
+
     return web_contents;
   }
 
@@ -859,12 +861,18 @@ void SessionRestore::RemoveObserver(SessionRestoreObserver* observer) {
 
 // static
 void SessionRestore::OnTabLoaderFinishedLoadingTabs() {
+  DCHECK(tabs_restoring()->empty());
   if (!session_restore_started_)
     return;
 
   session_restore_started_ = false;
   for (auto& observer : *observers())
     observer.OnSessionRestoreFinishedLoadingTabs();
+}
+
+// static
+void SessionRestore::OnTabLoaderStopLoadingTab(WebContents* web_contents) {
+  OnDidRestoreTab(web_contents);
 }
 
 // static
@@ -878,11 +886,32 @@ void SessionRestore::NotifySessionRestoreStartedLoadingTabs() {
 }
 
 // static
+void SessionRestore::OnWillRestoreTab(content::WebContents* web_contents) {
+  tabs_restoring()->insert(web_contents);
+  for (auto& observer : *observers())
+    observer.OnWillRestoreTab(web_contents);
+}
+
+// static
+void SessionRestore::OnDidRestoreTab(content::WebContents* web_contents) {
+  auto tab_stop_loading = tabs_restoring()->find(web_contents);
+  if (tab_stop_loading != tabs_restoring()->end()) {
+    tabs_restoring()->erase(tab_stop_loading);
+    for (auto& observer : *observers())
+      observer.OnDidRestoreTab(web_contents);
+  }
+}
+
+// static
 base::CallbackList<void(int)>*
     SessionRestore::on_session_restored_callbacks_ = nullptr;
 
 // static
 base::ObserverList<SessionRestoreObserver>* SessionRestore::observers_ =
+    nullptr;
+
+// static
+std::unordered_set<content::WebContents*>* SessionRestore::tabs_restoring_ =
     nullptr;
 
 // static
