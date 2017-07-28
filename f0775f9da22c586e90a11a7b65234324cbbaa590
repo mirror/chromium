@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c44297cc_2e0d6f7c",
+        "filename": "ui/file_manager/file_manager/foreground/js/task_history.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-07-28T04:37:39Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f0775f9da22c586e90a11a7b65234324cbbaa590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b65ee9f_672aedca",
+        "filename": "ui/file_manager/file_manager/foreground/js/task_history.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-07-28T04:37:39Z",
+      "side": 1,
+      "message": "nit: storage changed callback is called with areaName. We can check areaName and return immediately if it\u0027s called for other than local.\n\nhttps://developer.chrome.com/extensions/storage#event-onChanged",
+      "range": {
+        "startLine": 96,
+        "startChar": 26,
+        "endLine": 96,
+        "endChar": 43
+      },
+      "revId": "f0775f9da22c586e90a11a7b65234324cbbaa590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
