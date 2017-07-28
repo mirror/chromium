@@ -106,6 +106,24 @@
       "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8096abab_6b65fb97",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190898
+      },
+      "writtenOn": "2017-07-28T03:02:46Z",
+      "side": 1,
+      "message": "Well I went ahead and filed a bug to Steve to investigate, as he\u0027s on a plane atm",
+      "parentUuid": "788edfb4_3f516fd0",
+      "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
