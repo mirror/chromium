@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe0c355f_a26907d4",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-28T04:31:30Z",
+      "side": 1,
+      "message": "Sorry, I cannot be sure about what you mean.\nHow can having DCHECK_CURRENTLY_ON in dtor result in improving readability?",
+      "parentUuid": "69b30c7a_a256fb8f",
+      "range": {
+        "startLine": 105,
+        "startChar": 62,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "7ea35dac1ca4b3588d04389944d3f5567240e833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dead548_06c5dd91",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "7ea35dac1ca4b3588d04389944d3f5567240e833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4bfc8f_48f82bce",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-28T04:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dead548_06c5dd91",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 55
+      },
+      "revId": "7ea35dac1ca4b3588d04389944d3f5567240e833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
