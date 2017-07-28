@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8c71e85_818cd4ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:46:01Z",
+      "side": 1,
+      "message": "Maybe rename |sWebInfoMap| to |sWebappInfoMap|. I think that this name makes sense as WebApkInfo inherits from WebappInfo",
+      "revId": "96bec855d94f8c1817189fc76c86d94528e65a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f769580_8448f309",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:46:01Z",
+      "side": 1,
+      "message": "For the comment, how about:\n\n\"When WebappActivity is killed by the Android OS, and an entry stays in \"Android Recents\" (The user does not swipe it away), when WebappActivity is relaunched it is relaunched with the intent stored in WebappActivity#getIntent() at the time that the WebappActivity was killed. WebappActivity may be relaunched from:\n(A) An intent from WebappLauncherActivity (e.g. as a result of a notification or a deep link) Android drops the intent from WebappLauncherActivity in favor of WebappActivity#getIntent() at the time that the WebappActivity was killed.\n(B) The user selecting the WebappActivity in recents\nIn case (A) we want to use the intent sent to WebappLauncherActivity and ignore WebappActivity#getSavedInstanceState(). In case (B) we want to restore to saved tab state.\"\n\nIn my version, I think that it is clearer that we want to use the WebappInfo from retrieveWebappInfoFromCache() in non-notification cases such as deep links too",
+      "revId": "96bec855d94f8c1817189fc76c86d94528e65a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d195d865_a974c0a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:46:01Z",
+      "side": 1,
+      "message": "Maybe rename |getIntentFromChrome| to |gotIntentFromWebappLauncherActivity| to make it clearer where the intent is coming from?",
+      "revId": "96bec855d94f8c1817189fc76c86d94528e65a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14495f53_3fbc2691",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:46:01Z",
+      "side": 1,
+      "message": "Nit: Inline info.shouldForceNavigation() check",
+      "revId": "96bec855d94f8c1817189fc76c86d94528e65a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb054cb_0ffd24a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:46:01Z",
+      "side": 1,
+      "message": "Nit: Inline info.id() check",
+      "range": {
+        "startLine": 185,
+        "startChar": 54,
+        "endLine": 185,
+        "endChar": 0
+      },
+      "revId": "96bec855d94f8c1817189fc76c86d94528e65a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b4a0ed_5c96e672",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:46:01Z",
+      "side": 1,
+      "message": "We should add a comment why creating the createWebappLaunchIntent() is still necessary. I think that it is non-obvious.\n\nMaybe: \"Add all information needed to launch WebappActivity without {@link WebappActivity#sWebappInfoMap} to launch intent. When the Android OS has killed a WebappActivity and the user selects the WebappActivity from \"Android Recents\" the WebappActivity is launched without going through WebappLauncherActivity first.\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 77,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "96bec855d94f8c1817189fc76c86d94528e65a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -104,6 +104,24 @@
       "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "109f94d9_e4fd9033",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:46:01Z",
+      "side": 1,
+      "message": "- In Chrome, as a general rule we don\u0027t handle cases that we don\u0027t expect to happen :)\nAs person reading code, when I see an if() statement, I try to figure out when the if() statement will be hit\n- Not checking for null is consistent with the behavior of the other static functions in this class like WebappInfo#create()",
+      "parentUuid": "fe69de14_df4871ed",
+      "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
