@@ -22,6 +22,8 @@ source_set("common_source_set") {
     "app_view_controller.h",
     "client_connection_view_controller.h",
     "client_connection_view_controller.mm",
+    "external_keyboard_detector.h",
+    "external_keyboard_detector.mm",
     "first_launch_view_controller.h",
     "first_launch_view_controller.mm",
     "first_launch_view_presenter.h",
