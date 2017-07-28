@@ -2871,6 +2871,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyTextAlignLast:
       return CSSIdentifierValue::Create(style.TextAlignLast());
     case CSSPropertyTextDecoration:
+      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       if (RuntimeEnabledFeatures::CSS3TextDecorationsEnabled())
         return ValuesForShorthandProperty(textDecorationShorthand(), style,
                                           layout_object, styled_node,

@@ -1415,6 +1415,7 @@ static inline bool IsValidFirstLetterStyleProperty(CSSPropertyID id) {
       DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
       return true;
     case CSSPropertyTextDecoration:
+      NOTREACHED();
       DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return true;
     case CSSPropertyTextDecorationColor:
