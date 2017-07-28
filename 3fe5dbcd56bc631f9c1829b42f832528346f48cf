@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a11ab6c6_3e19c25e",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-28T22:05:50Z",
+      "side": 1,
+      "message": "There is a convention in Objective-C to start setters with set prefix. You can fix your compilation problem by changing |navigationItem| from a property to a method.",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "3fe5dbcd56bc631f9c1829b42f832528346f48cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
