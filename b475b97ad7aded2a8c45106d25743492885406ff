@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19ff9a2d_967df495",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:40:16Z",
+      "side": 1,
+      "message": "This will break down under --gtest_repeat unless you reset it ahead of time.",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7cd655_b8758670",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:40:16Z",
+      "side": 1,
+      "message": "Don’t you think that “100 \u003e\u003d attempts” is less readable than “attempts \u003c 100”?",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a4db13_58382e96",
+        "filename": "third_party/mach_override/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:40:16Z",
+      "side": 1,
+      "message": "This is something that we might not want to upstream, I guess…",
+      "range": {
+        "startLine": 20,
+        "startChar": 46,
+        "endLine": 20,
+        "endChar": 86
+      },
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4888f9cd_9058ff52",
+        "filename": "third_party/mach_override/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:40:16Z",
+      "side": 1,
+      "message": "Stay within 80 columns.",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09da6500_23d1e001",
+        "filename": "third_party/mach_override/chromium.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:40:16Z",
+      "side": 1,
+      "message": "This should probably be an atomic increment. Same below.",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94602811_74b7c13d",
+        "filename": "third_party/mach_override/chromium.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:40:16Z",
+      "side": 1,
+      "message": "then you can remove the documented limitation.",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
