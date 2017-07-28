@@ -84,6 +84,7 @@ class SelectionModifier {
   VisiblePosition ModifyMovingLeft(TextGranularity);
   VisiblePosition ModifyMovingBackward(TextGranularity);
   VisiblePosition NextWordPositionForPlatform(const VisiblePosition&);
+  void ComputeVisibleExtent();
 
   // TODO(editing-dev): We should handle |skips_spaces_when_moving_right| in
   // another way, e.g. pass |EditingBehavior()|.
@@ -95,6 +96,7 @@ class SelectionModifier {
   Member<LocalFrame> frame_;
   VisibleSelection selection_;
   LayoutUnit x_pos_for_vertical_arrow_navigation_;
+  VisiblePosition visible_extent_position_;
 
   DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
 };
