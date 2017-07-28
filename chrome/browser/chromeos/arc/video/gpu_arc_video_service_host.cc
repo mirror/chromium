@@ -71,6 +71,12 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
                        base::Passed(&request)));
   }
 
+  void CreateDecodeAcceleratorNew(
+      mojom::VideoDecodeAcceleratorNewRequest request) override {
+    // TODO(hiroh): Implement this function.
+    NOTIMPLEMENTED();
+  }
+
   void CreateEncodeAccelerator(
       mojom::VideoEncodeAcceleratorRequest request) override {
     content::BrowserThread::PostTask(
