@@ -13,6 +13,7 @@
 #include "base/rand_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/multiprocess_test.h"
+#include "base/test/scoped_environment_variable_override.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "testing/multiprocess_func_list.h"
@@ -20,23 +21,6 @@
 class MultiProcessLockTest : public base::MultiProcessTest {
  public:
   static const char kLockEnviromentVarName[];
-
-  class ScopedEnvironmentVariable {
-   public:
-    ScopedEnvironmentVariable(const std::string &name,
-                              const std::string &value)
-        : name_(name), environment_(base::Environment::Create()) {
-      environment_->SetVar(name_.c_str(), value);
-    }
-    ~ScopedEnvironmentVariable() {
-      environment_->UnSetVar(name_.c_str());
-    }
-
-   private:
-    std::string name_;
-    std::unique_ptr<base::Environment> environment_;
-    DISALLOW_COPY_AND_ASSIGN(ScopedEnvironmentVariable);
-  };
 
   std::string GenerateLockName();
   void ExpectLockIsLocked(const std::string &name);
@@ -53,7 +37,8 @@ std::string MultiProcessLockTest::GenerateLockName() {
 }
 
 void MultiProcessLockTest::ExpectLockIsLocked(const std::string &name) {
-  ScopedEnvironmentVariable var(kLockEnviromentVarName, name);
+  base::test::ScopedEnvironmentVariableOverride var(kLockEnviromentVarName,
+                                                    name);
   base::SpawnChildResult spawn_child =
       SpawnChild("MultiProcessLockTryFailMain");
   ASSERT_TRUE(spawn_child.process.IsValid());
@@ -64,7 +49,8 @@ void MultiProcessLockTest::ExpectLockIsLocked(const std::string &name) {
 
 void MultiProcessLockTest::ExpectLockIsUnlocked(
     const std::string &name) {
-  ScopedEnvironmentVariable var(kLockEnviromentVarName, name);
+  base::test::ScopedEnvironmentVariableOverride var(kLockEnviromentVarName,
+                                                    name);
   base::SpawnChildResult spawn_child =
       SpawnChild("MultiProcessLockTrySucceedMain");
   ASSERT_TRUE(spawn_child.process.IsValid());
