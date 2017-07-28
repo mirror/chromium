@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "603a85f0_fccf287e",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-28T14:34:07Z",
+      "side": 1,
+      "message": "Does this mean Service Workers bypass Cross-Site cookie blocking?",
+      "revId": "3cc894e61a2fbe88900ad13671630698ce5412d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efa3d48_f852fda6",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-28T14:34:07Z",
+      "side": 1,
+      "message": "Should we file a bug for webRequest?",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "3cc894e61a2fbe88900ad13671630698ce5412d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
