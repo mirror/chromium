@@ -8,6 +8,7 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/process/launch.h"
+#include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/interstitials/chrome_metrics_helper.h"
@@ -145,8 +146,8 @@ void ChromeControllerClient::LaunchDateAndTimeSettings() {
   chrome::ShowSettingsSubPageForProfile(ProfileManager::GetActiveUserProfile(),
                                         chrome::kDateTimeSubPage);
 #else
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
       base::BindOnce(&LaunchDateAndTimeSettingsOnFileThread));
 #endif
 }
