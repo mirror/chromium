@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83d16281_4818eee6",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-28T01:22:07Z",
+      "side": 1,
+      "message": "I forgot to add stuff here.",
+      "range": {
+        "startLine": 954,
+        "startChar": 33,
+        "endLine": 954,
+        "endChar": 60
+      },
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0bb362_60fb87ac",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-28T01:22:07Z",
+      "side": 1,
+      "message": "Other choice is !!cdm_platform_verification_; Which one looks better?",
+      "range": {
+        "startLine": 1106,
+        "startChar": 9,
+        "endLine": 1106,
+        "endChar": 35
+      },
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
