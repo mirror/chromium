@@ -37,6 +37,15 @@ CGFloat MaxWidth(CGRect targetFrame,
                  BubbleAlignment alignment,
                  CGFloat boundingWidth);
 
+// Calculate the bubble's frame using bubble_util methods. Depends on the target
+// view, bubble size, arrow direction, alignment, and the width of the
+// containing view.
+CGRect BubbleFrame(CGRect targetFrame,
+                   CGSize size,
+                   BubbleArrowDirection direction,
+                   BubbleAlignment alignment,
+                   CGFloat boundingWidth);
+
 }  // namespace bubble_util
 
 #endif  // IOS_CHROME_BROWSER_UI_BUBBLE_BUBBLE_UTIL_H_
