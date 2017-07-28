@@ -156,8 +156,6 @@
   }
   _webUsageEnabled = webUsageEnabled;
   if (!_webUsageEnabled) {
-    [_overscrollActionsController invalidate];
-    [[self scrollView] setDelegate:nil];
     _staticHTMLViewController = nil;
   }
 }

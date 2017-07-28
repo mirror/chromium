@@ -4,11 +4,9 @@
 
 #import "ios/clean/chrome/app/app_delegate.h"
 
+#include "base/logging.h"
+#include "base/strings/sys_string_conversions.h"
 #import "ios/clean/chrome/app/application_state.h"
-#import "ios/clean/chrome/app/steps/launch_to_background.h"
-#import "ios/clean/chrome/app/steps/launch_to_basic.h"
-#import "ios/clean/chrome/app/steps/launch_to_foreground.h"
-#import "ios/clean/chrome/app/steps/root_coordinator+application_step.h"
 #import "ios/testing/perf/startupLoggers.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -29,10 +27,24 @@
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
   startup_loggers::RegisterAppDidFinishLaunchingTime();
   self.applicationState = [[ApplicationState alloc] init];
-  self.applicationState.application = application;
-  [self configureApplicationState];
+  [self.applicationState configure];
+  self.applicationState.launchOptions = launchOptions;
 
-  [self.applicationState launchWithOptions:launchOptions];
+  switch (application.applicationState) {
+    case UIApplicationStateBackground:
+      // The app is launching in the background.
+      self.applicationState.phase = APPLICATION_BACKGROUNDED;
+      break;
+    case UIApplicationStateInactive:
+      // The app is launching in the foreground but hasn't become active yet.
+      self.applicationState.phase = APPLICATION_FOREGROUNDED;
+      break;
+    case UIApplicationStateActive:
+      // This should never happen.
+      NOTREACHED() << "Application unexpectedly active in "
+                   << base::SysNSStringToUTF8(NSStringFromSelector(_cmd));
+  }
+
   return YES;
 }
 
@@ -50,6 +62,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication*)application {
+  self.applicationState.phase = APPLICATION_TERMINATING;
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application {
@@ -90,31 +103,7 @@
 - (BOOL)application:(UIApplication*)application
             openURL:(NSURL*)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey, id>*)options {
-  [self.applicationState.URLOpener openURL:url];
   return YES;
-}
-
-#pragma mark - Private methods
-
-// Configures the application state for application launch by setting the launch
-// steps.
-// Future architecture/refactoring note: configuring the application state in
-// this way is outside the scope of responsibility of the object as defined in
-// the header file. The correct solution is probably a helper object that can
-// perform all of the configuration necessary, and that can be adjusted as
-// needed.
-- (void)configureApplicationState {
-  [self.applicationState.launchSteps addObjectsFromArray:@[
-    [[ProviderInitializer alloc] init],
-    [[SetupBundleAndUserDefaults alloc] init],
-    [[StartChromeMain alloc] init],
-    [[SetBrowserState alloc] init],
-    [[BeginForegrounding alloc] init],
-    [[PrepareForUI alloc] init],
-    [[CompleteForegrounding alloc] init],
-    [[RootCoordinator alloc] init],
-    [[DebuggingInformationOverlay alloc] init],
-  ]];
 }
 
 @end

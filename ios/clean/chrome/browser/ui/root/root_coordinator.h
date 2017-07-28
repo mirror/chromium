@@ -10,6 +10,7 @@
 
 // Coordinator that runs the root container.
 @interface RootCoordinator : BrowserCoordinator<URLOpening>
+- (void)setWindow:(UIWindow*)window;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_ROOT_ROOT_COORDINATOR_H_

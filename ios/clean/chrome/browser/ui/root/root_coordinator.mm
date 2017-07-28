@@ -66,4 +66,12 @@
   [self.tabGridCoordinator openURL:URL];
 }
 
+- (void)setWindow:(UIWindow*)window {
+  window.rootViewController = self.viewController;
+
+  // Size the main view controller to fit the whole screen.
+  [self.viewController.view setFrame:window.bounds];
+  window.hidden = NO;
+}
+
 @end
