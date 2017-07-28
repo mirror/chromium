@@ -70,6 +70,30 @@
       "revId": "7c25ab3b69389b24f8639cb257e156196e4b25ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8157aa6_7e19872c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-28T16:03:11Z",
+      "side": 1,
+      "message": "Hi Hidehiko, yes I\u0027m also trying to make sure the tasks from |ImageDecorder::StartWithOptions| are finishing. Do you mean that |base::RunLoop().RunUntilIdle()| won\u0027t ensure those image decoding threads completing?",
+      "parentUuid": "9eb036f6_3f2c5313",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "7c25ab3b69389b24f8639cb257e156196e4b25ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
