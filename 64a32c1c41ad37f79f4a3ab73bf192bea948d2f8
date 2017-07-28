@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0db47d03_6d6792c1",
+        "filename": "chrome/browser/chromeos/printing/combining_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-28T22:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de73bfdf_d65a45d3",
+      "revId": "64a32c1c41ad37f79f4a3ab73bf192bea948d2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf29ebb_1426dfa7",
         "filename": "chrome/browser/chromeos/printing/combining_printer_detector_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "683be190_350e0741",
+        "filename": "chrome/browser/chromeos/printing/combining_printer_detector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-28T22:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf29ebb_1426dfa7",
+      "revId": "64a32c1c41ad37f79f4a3ab73bf192bea948d2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab4b3377_d9695f1d",
         "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "64a32c1c41ad37f79f4a3ab73bf192bea948d2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4252db_92af53f6",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-28T22:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab4b3377_d9695f1d",
+      "revId": "64a32c1c41ad37f79f4a3ab73bf192bea948d2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
