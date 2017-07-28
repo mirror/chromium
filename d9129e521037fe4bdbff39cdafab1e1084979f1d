@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b29776f_a9d8ddfe",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T22:00:24Z",
+      "side": 1,
+      "message": "initialize members in the existing initialization list",
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6257e81e_636e9e7d",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T22:00:24Z",
+      "side": 1,
+      "message": "not your fault, but why does this singleton class need all of these static methods?",
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf9b616_fb429309",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T22:00:24Z",
+      "side": 1,
+      "message": "s/oobe/OOBE/\n\nplease also call this \"in-session OOBE\" everywhere, since it\u0027s hard to parse without the hyphen.\n\nthis comment doesn\u0027t help at all to describe what the method does, either -- it\u0027s just restarting the method and argument names. how about something like this:\n\n  // Records whether an OOBE flow is currently active within a\n  // user session.\n\nas a bigger aside, i think that calling this an \"in-session OOBE\" is confusing. OOBE means the thing that the user runs once after they take the device out of the box (hence the \"OOB\" in the name). reusing the same term for things that don\u0027t run once right after the device is taken out of the box seems unfortunate. not sure how easy that is to change at this point, though.",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb4c7da_5c0eb953",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T22:00:24Z",
+      "side": 1,
+      "message": "same comment as above: update this to describe what \"in-session OOBE\" is instead of repeating the name of the member.",
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1398f782_25c2ed14",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T22:00:24Z",
+      "side": 1,
+      "message": "same comment as steven: make this non-static. this class is already a singleton. make the static method use the singleton instance.",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 8
+      },
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
