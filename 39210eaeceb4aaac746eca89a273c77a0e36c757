@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6085fcb3_08a67fee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-07-28T21:36:32Z",
+      "side": 0,
+      "message": "In the first attempt at landing this, we were rewriting parameters when formatting the console message to render.  This broke the equality check causing a failure.  Since tests don\u0027t usually wait for console viewport to render, it was flaky.",
+      "range": {
+        "startLine": 468,
+        "startChar": 20,
+        "endLine": 468,
+        "endChar": 21
+      },
+      "revId": "39210eaeceb4aaac746eca89a273c77a0e36c757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
