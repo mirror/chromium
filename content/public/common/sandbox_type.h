@@ -5,6 +5,9 @@
 #ifndef CONTENT_PUBLIC_COMMON_SANDBOX_TYPE_H_
 #define CONTENT_PUBLIC_COMMON_SANDBOX_TYPE_H_
 
+#include "base/command_line.h"
+#include "content/common/content_export.h"
+
 namespace content {
 
 // Defines the sandbox types known within content. Embedders can add additional
@@ -43,6 +46,9 @@ inline bool IsUnsandboxedSandboxType(SandboxType sandbox_type) {
   return sandbox_type == SANDBOX_TYPE_NO_SANDBOX ||
          sandbox_type == SANDBOX_TYPE_NETWORK;
 }
+
+CONTENT_EXPORT SandboxType
+SandboxTypeFromCommandLine(const base::CommandLine& command_line);
 
 }  // namespace content
 

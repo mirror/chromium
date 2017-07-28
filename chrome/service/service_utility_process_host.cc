@@ -255,8 +255,7 @@ bool ServiceUtilityProcessHost::Launch(base::CommandLine* cmd_line,
     mojo::edk::NamedPlatformChannelPair named_pair;
     parent_handle = named_pair.PassServerHandle();
     named_pair.PrepareToPassClientHandleToChildProcess(cmd_line);
-
-    cmd_line->AppendSwitch(switches::kNoSandbox);
+    cmd_line->AppendSwitchASCII(switches::kUtilityProcessSandboxType, "none");
     process_ = base::LaunchProcess(*cmd_line, base::LaunchOptions());
     success = process_.IsValid();
   } else {
