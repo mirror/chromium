@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "436e00b4_39d414f8",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T17:49:53Z",
+      "side": 1,
+      "message": "Also, I\u0027m hoping we can just get rid of the media cache before switching over to the network service - I don\u0027t think we want to expose the API to create it, or have content/ juggling two NetworkContexts wherever it makes media requests.",
+      "parentUuid": "590b512f_8e25af8e",
+      "revId": "c8c087a1dfd778ef379e4f7274d0fcbbbeecb2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3623fb80_45bc00f1",
         "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
         "patchSetId": 10
