@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a7e764_0a8d79f6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-28T19:24:28Z",
+      "side": 1,
+      "message": "Can you add a TODO in the ResourceCoordinatorInterface for this? It\u0027s kinda messy that we have to do null checks every time we\u0027re dealing with a ResourceCoordinatorInterface; it\u0027d be much better if we *always* have a ResourceCoordinatorInterface present and handle the potential lack of GRC being enabled internally in that class, rather than at every callsite.",
+      "revId": "52e36a87f318ac4a220b211c75432946569497f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b804f436_c25ee0a4",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-28T19:24:28Z",
+      "side": 1,
+      "message": "Hmm, it seems a little off to have to introduce both upcasting functions in the base class, as well as this switch, just to be able to have strongly typed notification methods.\n\nHow about introducing a base function in CoordinationUnitImpl that the subclasses can override, to directly call the observers in a strongly typed way?\n\ni.e.\nCoordinationUnitImpl::SetProperty(...) {\n   \u003cset property\u003e\n   CallOnSetPropertyObservers();\n}\n\nCoordinationUnitImpl::CallOnSetPropertyObservers() {\n   NOTIFY_OBSERVERS(..., OnPropertyChanged)\n}\n\nWebContentsCoordinationUnitImpl::CallOnsetPropertyObservers() {\n   NOTIFY_OBSERVERS(..., OnWebContentsPropertyChanged)\n}",
+      "revId": "52e36a87f318ac4a220b211c75432946569497f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64203d8d_8db43311",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-28T19:24:28Z",
+      "side": 1,
+      "message": "What\u0027s \"blurt\"?",
+      "revId": "52e36a87f318ac4a220b211c75432946569497f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
