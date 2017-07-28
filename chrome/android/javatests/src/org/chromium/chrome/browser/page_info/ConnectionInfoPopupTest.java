@@ -19,6 +19,12 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 
+import org.chromium.net.test.util.TestWebServer;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.chrome.R;
+import org.chromium.base.Log;
+
 /**
  * Tests for ConnectionInfoPopup.
  */
@@ -36,13 +42,26 @@ public class ConnectionInfoPopupTest {
     @MediumTest
     @Feature({"ConnectionInfoPopup"})
     @RetryOnFailure
-    public void testShow() throws InterruptedException {
-        mActivityTestRule.startMainActivityOnBlankPage();
+    public void testShow() throws Exception {
+        TestWebServer webServer = TestWebServer.startSsl();
+        final String pagePath = "/hello.html";
+        final String pageUrl =
+            webServer.setResponse(pagePath, "<html><body>hello world</body></html>", null);
+        mActivityTestRule.startMainActivityWithURL(pageUrl);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
+              Log.w("ConnectionInfoPopupTest", "Show connection info popup");
                 ConnectionInfoPopup.show(mActivityTestRule.getActivity(),
                         mActivityTestRule.getActivity().getActivityTab().getWebContents());
+                Log.w("ConnectionInfoPopupTest", "Done showing connection info popup");
+                CriteriaHelper.pollUiThread(new Criteria() {
+                    @Override
+                    public boolean isSatisfied() {
+                      return mActivityTestRule.getActivity().findViewById(R.id.connection_info_text_layout) != null;
+                    }
+                  }, 5000, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
+
             }
         });
     }
