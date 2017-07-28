@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcdf64a0_51f2340e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-28T09:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da89348_e3ca58f6",
+      "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2c6d0b4_63b5e434",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T07:02:45Z",
       "side": 1,
       "message": "nit: during loading -\u003e during the lifetime of a request (including redirect legs)\n\n? here and below. (This is what we often use in the browser-side code, but the term \u0027request\u0027 might be confusing? \u0027loading request\u0027 or \u0027fetch \u0027request\u0027?)",
+      "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c0eb78_8a0dc5dd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-28T09:03:33Z",
+      "side": 1,
+      "message": "\u003e nit: during loading -\u003e during the lifetime of a request (including redirect legs)\n\nDone\n\n\u003e ? here and below. (This is what we often use in the browser-side code, but the term \u0027request\u0027 might be confusing? \u0027loading request\u0027 or \u0027fetch \u0027request\u0027?)\n\nYeah, no idea. Let me start with your suggestion.",
+      "parentUuid": "d2c6d0b4_63b5e434",
       "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
