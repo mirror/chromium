@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5645e3_149d484d",
+        "filename": "ui/chromeos/resources/default_100_percent/default_user_images/avatar_anonymous.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T15:47:50Z",
+      "side": 1,
+      "message": "We need this particular image to be at least 388x388, otherwise it will look blurry on high DPI displays. (Ideally we would use the SVG version here but we don\u0027t appear to currently have the ability to load SVGs in themed resources. Another TODO item).",
+      "revId": "9dde162c33c364ca0be44c458f7f1abc268885f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
