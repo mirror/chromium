@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a267bf74_bd6d3cc9",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2341,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-28T00:16:11Z",
+      "side": 1,
+      "message": "Definitely.",
+      "revId": "2d388651fca09fec3907eeb1e6ab0e340b680157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cce11cf_23bd1192",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2342,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-28T00:16:11Z",
+      "side": 1,
+      "message": "Can you add some of these to the test_flags array as well?",
+      "revId": "2d388651fca09fec3907eeb1e6ab0e340b680157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a6888c_e9c78b7f",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-28T00:16:11Z",
+      "side": 1,
+      "message": "It\u0027s fine to punt on this in this patch, but probably we could add a top level PaintOpBuffer serialize / deserialize.",
+      "revId": "2d388651fca09fec3907eeb1e6ab0e340b680157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
