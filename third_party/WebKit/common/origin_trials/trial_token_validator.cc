@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/origin_trials/trial_token_validator.h"
+#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
-#include "content/common/origin_trials/trial_token.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/origin_trial_policy.h"
 #include "content/public/common/origin_util.h"
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_request.h"
+#include "third_party/WebKit/common/origin_trials/trial_token.h"
 #include "third_party/WebKit/public/platform/WebOriginTrialTokenStatus.h"
 
 namespace content {

@@ -1,0 +1,28 @@
+source_set("common") {
+  visibility = [ "//content/*" ]
+
+  sources = [
+    "origin_trials/trial_token.cc",
+    "origin_trials/trial_token.h",
+    "origin_trials/trial_token_validator.cc",
+    "origin_trials/trial_token_validator.h",
+  ]
+
+  deps = [
+    "//third_party/boringssl",
+  ]
+
+  configs += [ "//content:content_implementation" ]
+}
+
+source_set("content_common_tests") {
+  testonly = true
+  sources = [
+    "origin_trials/trial_token_unittest.cc",
+    "origin_trials/trial_token_validator_unittest.cc",
+  ]
+
+  deps = [
+    "//testing/gtest",
+  ]
+}

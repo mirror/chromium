@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/origin_trials/trial_token.h"
+#include "third_party/WebKit/common/origin_trials/trial_token.h"
 
 #include <vector>
 
@@ -189,8 +189,7 @@ std::unique_ptr<TrialToken> TrialToken::Parse(
 bool TrialToken::ValidateOrigin(const url::Origin& origin) const {
   if (match_subdomains_) {
     return origin.scheme() == origin_.scheme() &&
-           origin.DomainIs(origin_.host()) &&
-           origin.port() == origin_.port();
+           origin.DomainIs(origin_.host()) && origin.port() == origin_.port();
   }
   return origin == origin_;
 }
