@@ -178,7 +178,7 @@ PageLoadTracker::PageLoadTracker(
       aborted_chain_size_same_url_(aborted_chain_size_same_url),
       embedder_interface_(embedder_interface),
       metrics_update_dispatcher_(this, navigation_handle, embedder_interface),
-      source_id_(ukm::UkmRecorder::GetNewSourceID()) {
+      source_id_(navigation_handle->GetUkmSourceId()) {
   DCHECK(!navigation_handle->HasCommitted());
   embedder_interface_->RegisterObservers(this);
   INVOKE_AND_PRUNE_OBSERVERS(observers_, OnStart, navigation_handle,
@@ -335,11 +335,6 @@ void PageLoadTracker::Commit(content::NavigationHandle* navigation_handle) {
       navigation_handle->GetWebContents()->GetContentsMimeType();
   INVOKE_AND_PRUNE_OBSERVERS(observers_, ShouldObserveMimeType, mime_type);
 
-  // Only record page load UKM data for standard web page mime types, such as
-  // HTML and XHTML.
-  if (PageLoadMetricsObserver::IsStandardWebPageMimeType(mime_type))
-    RecordUkmSourceInfo();
-
   INVOKE_AND_PRUNE_OBSERVERS(observers_, OnCommit, navigation_handle,
                              source_id_);
   LogAbortChainHistograms(navigation_handle);
@@ -366,16 +361,6 @@ void PageLoadTracker::FailedProvisionalLoad(
   failed_provisional_load_info_.reset(new FailedProvisionalLoadInfo(
       failed_load_time - navigation_handle->NavigationStart(),
       navigation_handle->GetNetErrorCode()));
-  RecordUkmSourceInfo();
-}
-
-void PageLoadTracker::RecordUkmSourceInfo() {
-  ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
-  if (!ukm_recorder)
-    return;
-
-  ukm_recorder->UpdateSourceURL(source_id_, start_url_);
-  ukm_recorder->UpdateSourceURL(source_id_, url_);
 }
 
 void PageLoadTracker::Redirect(content::NavigationHandle* navigation_handle) {

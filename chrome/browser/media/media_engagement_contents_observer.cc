@@ -94,11 +94,8 @@ void MediaEngagementContentsObserver::RecordUkmMetrics() {
   if (!service_->ShouldRecordEngagement(url))
     return;
 
-  ukm::SourceId source_id = ukm_recorder->GetNewSourceID();
-  ukm_recorder->UpdateSourceURL(source_id, url);
-
   std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
-      source_id, MediaEngagementContentsObserver::kUkmEntryName);
+      committed_source_id_, MediaEngagementContentsObserver::kUkmEntryName);
 
   MediaEngagementScore score = service_->CreateEngagementScore(url);
   builder->AddMetric(
@@ -124,6 +121,8 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
 
   playback_timer_->Stop();
   ClearPlayerStates();
+
+  committed_source_id_ = navigation_handle->GetUkmSourceId();
 
   url::Origin new_origin(navigation_handle->GetURL());
   if (committed_origin_.IsSameOriginWith(new_origin))
