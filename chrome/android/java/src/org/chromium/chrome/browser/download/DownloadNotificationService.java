@@ -1070,8 +1070,7 @@ public class DownloadNotificationService extends Service {
                     // state.
                     notifyDownloadPending(entry.id, entry.fileName, entry.isOffTheRecord,
                             entry.canDownloadWhileMetered, entry.isTransient, null);
-                    downloadServiceDelegate.resumeDownload(
-                            entry.id, entry.buildDownloadItem(), true);
+                    downloadServiceDelegate.resumeDownload(entry.id, entry.isOffTheRecord, true);
                 } else if (ACTION_DOWNLOAD_RESUME_ALL.equals(intent.getAction())) {
                         assert entry == null;
                         resumeAllPendingDownloads();
@@ -1131,7 +1130,7 @@ public class DownloadNotificationService extends Service {
                                         .setDownloadGuid(id.id)
                                         .setIsOffTheRecord(isOffTheRecord)
                                         .build();
-            getServiceDelegate(id).resumeDownload(id, new DownloadItem(false, info), true);
+            getServiceDelegate(id).resumeDownload(id, isOffTheRecord, true);
         }
     }
 
@@ -1241,7 +1240,7 @@ public class DownloadNotificationService extends Service {
             notifyDownloadPending(entry.id, entry.fileName, entry.isOffTheRecord,
                     entry.canDownloadWhileMetered, entry.isTransient, null);
             DownloadServiceDelegate downloadServiceDelegate = getServiceDelegate(entry.id);
-            downloadServiceDelegate.resumeDownload(entry.id, entry.buildDownloadItem(), false);
+            downloadServiceDelegate.resumeDownload(entry.id, entry.isOffTheRecord, false);
             downloadServiceDelegate.destroyServiceDelegate();
         }
     }
