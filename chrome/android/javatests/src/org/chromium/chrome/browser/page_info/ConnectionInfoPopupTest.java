@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.page_info;
 
 import android.support.test.filters.MediumTest;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,12 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+
+import org.chromium.net.test.util.TestWebServer;
+import org.chromium.content.browser.test.util.Criteria;
+import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.chrome.R;
+import org.chromium.base.Log;
 
 /**
  * Tests for ConnectionInfoPopup.
@@ -36,13 +43,20 @@ public class ConnectionInfoPopupTest {
     @MediumTest
     @Feature({"ConnectionInfoPopup"})
     @RetryOnFailure
-    public void testShow() throws InterruptedException {
-        mActivityTestRule.startMainActivityOnBlankPage();
+    public void testShow() throws Exception {
+        TestWebServer webServer = TestWebServer.startSsl();
+        final String pagePath = "/hello.html";
+        final String pageUrl =
+            webServer.setResponse(pagePath, "<html><body>hello world</body></html>", null);
+        mActivityTestRule.startMainActivityWithURL(pageUrl);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                ConnectionInfoPopup.show(mActivityTestRule.getActivity(),
+              Log.e("ConnectionInfoPopupTest", "Show connection info popup");
+                ConnectionInfoPopup popup = ConnectionInfoPopup.showNewForTesting(mActivityTestRule.getActivity(),
                         mActivityTestRule.getActivity().getActivityTab().getWebContents());
+                Log.e("ConnectionInfoPopupTest", "Done showing connection info popup");
+                Assert.assertNotNull(popup.dialogForTesting().findViewById(R.id.connection_info_text_layout));
             }
         });
     }

@@ -101,6 +101,7 @@ public class ConnectionInfoPopup implements OnClickListener {
     @CalledByNative
     private void addCertificateSection(int enumeratedIconId, String headline, String description,
             String label) {
+      Log.w("ConnectionInfoPopup", "Adding certificate section");
         View section = addSection(enumeratedIconId, headline, description);
         assert mCertificateLayout == null;
         mCertificateLayout = (ViewGroup) section.findViewById(R.id.connection_info_text_layout);
@@ -190,6 +191,7 @@ public class ConnectionInfoPopup implements OnClickListener {
     /** Displays the ConnectionInfoPopup. */
     @CalledByNative
     private void showDialog() {
+      Log.w("ConnectionInfoPopup", "Showing dialog");
         ScrollView scrollView = new ScrollView(mContext);
         scrollView.addView(mContainer);
         mDialog.addContentView(scrollView,
@@ -199,6 +201,10 @@ public class ConnectionInfoPopup implements OnClickListener {
         mDialog.getWindow().setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         mDialog.show();
+    }
+
+    public Dialog dialogForTesting() {
+      return mDialog;
     }
 
     @Override
@@ -240,6 +246,10 @@ public class ConnectionInfoPopup implements OnClickListener {
      */
     public static void show(Context context, WebContents webContents) {
         new ConnectionInfoPopup(context, webContents);
+    }
+
+    public static ConnectionInfoPopup showNewForTesting(Context context, WebContents webContents) {
+        return new ConnectionInfoPopup(context, webContents);
     }
 
     private static native long nativeInit(ConnectionInfoPopup popup,
