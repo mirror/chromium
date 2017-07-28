@@ -63,7 +63,20 @@ bool SetPropVariantValueForPropertyStore(
   HRESULT result = property_store->SetValue(property_key, property_value.get());
   if (result == S_OK)
     result = property_store->Commit();
-  return SUCCEEDED(result);
+  if (SUCCEEDED(result)) {
+    return true;
+  } else {
+    if (DCHECK_IS_ON()) {
+      OLECHAR* guidString;
+      ::StringFromCLSID(property_key.fmtid, &guidString);
+      // See third_party/perl/c/i686-w64-mingw32/include/propkey.h for GUID and
+      // PID definitions.
+      DPLOG(ERROR) << "Failed to set property with GUID " << guidString
+                   << " PID " << property_key.pid;
+      ::CoTaskMemFree(guidString);
+    }
+    return false;
+  }
 }
 
 void __cdecl ForceCrashOnSigAbort(int) {
