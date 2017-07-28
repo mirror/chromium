@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b642f94_cccce1af",
+        "filename": "net/cert/x509_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-28T22:01:30Z",
+      "side": 1,
+      "message": "name CreateX509CertificateFromBuffers for consistency with other x509_util_foo files?",
+      "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca68550_0dd4b0ba",
+        "filename": "net/cert/x509_util_openssl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-28T22:01:30Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 417,
+        "startChar": 22,
+        "endLine": 417,
+        "endChar": 25
+      },
+      "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be13c888_3a28f489",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-28T22:01:30Z",
+      "side": 1,
+      "message": "Looks like this could add a ERR_SSL_CLIENT_AUTH_CERT_BAD_FORMAT in cases where SSL_set_chain_and_key fails, which aren\u0027t due to the client cert format.",
+      "range": {
+        "startLine": 1621,
+        "startChar": 6,
+        "endLine": 1621,
+        "endChar": 24
+      },
+      "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
