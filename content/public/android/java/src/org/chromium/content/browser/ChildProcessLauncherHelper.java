@@ -428,7 +428,7 @@ public class ChildProcessLauncherHelper {
                     };
             mLauncher = ChildProcessLauncher.createWithBoundConnectionProvider(
                     LauncherThread.getHandler(), mLauncherDelegate, commandLine, filesToBeMapped,
-                    connectionProvider, binderCallback);
+                    connectionProvider, connectionAllocator, binderCallback);
         } else {
             mLauncher = ChildProcessLauncher.createWithConnectionAllocator(
                     LauncherThread.getHandler(), mLauncherDelegate, commandLine, filesToBeMapped,

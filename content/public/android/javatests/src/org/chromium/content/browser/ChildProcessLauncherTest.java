@@ -397,7 +397,39 @@ public class ChildProcessLauncherTest {
                             FileDescriptorInfo[] filesToBeMapped, IBinder binderCallback) {
                         return ChildProcessLauncher.createWithBoundConnectionProvider(
                                 LauncherThread.getHandler(), delegate, commandLine, filesToBeMapped,
-                                connectionProvider, binderCallback);
+                                connectionProvider, null /* connectionAllocator */, binderCallback);
+                    }
+                };
+
+        testProcessLauncher(childProcessLauncherFactory);
+    }
+
+    /**
+     * Tests that the backup ChildConnectionAllocator provider is used when the
+     * BoundConnectionProvider returns null.
+     */
+    @Test
+    @LargeTest
+    @Feature({"ProcessManagement"})
+    public void testLaunchServiceCreatedWithNullBoundConnection() throws Exception {
+        final ChildProcessLauncher.BoundConnectionProvider connectionProvider =
+                new ChildProcessLauncher.BoundConnectionProvider() {
+                    @Override
+                    public ChildProcessConnection getConnection(
+                            ChildProcessConnection.ServiceCallback serviceCallback) {
+                        return null;
+                    }
+                };
+
+        final ChildProcessLauncherFactory childProcessLauncherFactory =
+                new ChildProcessLauncherFactory(false /* providesConnection */) {
+                    @Override
+                    public ChildProcessLauncher createChildProcessLauncher(
+                            ChildProcessLauncher.Delegate delegate, String[] commandLine,
+                            FileDescriptorInfo[] filesToBeMapped, IBinder binderCallback) {
+                        return ChildProcessLauncher.createWithBoundConnectionProvider(
+                                LauncherThread.getHandler(), delegate, commandLine, filesToBeMapped,
+                                connectionProvider, mConnectionAllocator, binderCallback);
                     }
                 };
 

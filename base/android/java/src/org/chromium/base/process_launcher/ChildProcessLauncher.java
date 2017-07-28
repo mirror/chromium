@@ -91,12 +91,15 @@ public class ChildProcessLauncher {
      * Creates a ChildProcessLauncher using the already bound connection provided.
      * Note that onBeforeConnectionAllocated and onConnectionBound will not be invoked on the
      * delegate since the connection is already available.
+     * If the BoundConnectionProvider returns null, the ChildConnectionAllocator is used to allocate
+     * an unbound connection.
      */
     public static ChildProcessLauncher createWithBoundConnectionProvider(Handler launcherHandler,
             Delegate delegate, String[] commandLine, FileDescriptorInfo[] filesToBeMapped,
-            BoundConnectionProvider connectionProvider, IBinder binderCallback) {
+            BoundConnectionProvider connectionProvider,
+            ChildConnectionAllocator connectionAllocator, IBinder binderCallback) {
         return new ChildProcessLauncher(launcherHandler, delegate, commandLine, filesToBeMapped,
-                connectionProvider, null /* connectionAllocator */, binderCallback);
+                connectionProvider, connectionAllocator, binderCallback);
     }
 
     /**
@@ -114,8 +117,7 @@ public class ChildProcessLauncher {
     private ChildProcessLauncher(Handler launcherHandler, Delegate delegate, String[] commandLine,
             FileDescriptorInfo[] filesToBeMapped, BoundConnectionProvider connectionProvider,
             ChildConnectionAllocator connectionAllocator, IBinder binderCallback) {
-        // Either a bound connection provider or a connection allocator should be provided.
-        assert (connectionProvider == null) != (connectionAllocator == null);
+        assert connectionProvider != null || connectionAllocator != null;
         mLauncherHandler = launcherHandler;
         isRunningOnLauncherThread();
         mCommandLine = commandLine;
@@ -172,15 +174,16 @@ public class ChildProcessLauncher {
                     };
             if (mConnectionProvider != null) {
                 mConnection = mConnectionProvider.getConnection(serviceCallback);
-                assert mConnection != null;
-                setupConnection();
-            } else {
-                assert mConnectionAllocator != null;
-                if (!allocateAndSetupConnection(
-                            serviceCallback, setupConnection, queueIfNoFreeConnection)
-                        && !queueIfNoFreeConnection) {
-                    return false;
+                if (mConnection != null) {
+                    setupConnection();
+                    return true;
                 }
+            }
+            assert mConnectionAllocator != null;
+            if (!allocateAndSetupConnection(
+                        serviceCallback, setupConnection, queueIfNoFreeConnection)
+                    && !queueIfNoFreeConnection) {
+                return false;
             }
             return true;
         } finally {
