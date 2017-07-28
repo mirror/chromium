@@ -90,9 +90,8 @@
 #include "build/build_config.h"
 
 namespace base {
-class MessageLoop;
 namespace test {
-class ScopedAsyncTaskScheduler;
+class ScopedTaskEnvironment;
 }  // namespace test
 #if defined(OS_WIN)
 namespace win {
@@ -131,9 +130,7 @@ class TestBrowserThreadBundle {
  private:
   void Init();
 
-  std::unique_ptr<base::MessageLoop> message_loop_;
-  std::unique_ptr<base::test::ScopedAsyncTaskScheduler>
-      scoped_async_task_scheduler_;
+  std::unique_ptr<base::test::ScopedTaskEnvironment> scoped_task_environment_;
   std::unique_ptr<TestBrowserThread> ui_thread_;
   std::unique_ptr<TestBrowserThread> db_thread_;
   std::unique_ptr<TestBrowserThread> file_thread_;
