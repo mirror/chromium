@@ -22,6 +22,30 @@
       "revId": "c5859289eaffee3989a96e1ef9736e4b0bcd54be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc322afc_724c9050",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-28T00:18:35Z",
+      "side": 1,
+      "message": "I wanted to be able to use nullptr to indicate no additional rewriters. Using reference would require creating an empty vector unnecessarily.",
+      "parentUuid": "f12d5154_672626b5",
+      "range": {
+        "startLine": 167,
+        "startChar": 24,
+        "endLine": 167,
+        "endChar": 42
+      },
+      "revId": "c5859289eaffee3989a96e1ef9736e4b0bcd54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
