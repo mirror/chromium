@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25fd43d8_1f830f82",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1233409
+      },
+      "writtenOn": "2017-07-28T18:39:57Z",
+      "side": 1,
+      "message": "why is this function commented out?",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8000e61f_040ab699",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1233409
+      },
+      "writtenOn": "2017-07-28T18:39:57Z",
+      "side": 1,
+      "message": "where did the comments for these variables go?",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bd5eb3_09484d16",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1233409
+      },
+      "writtenOn": "2017-07-28T18:39:57Z",
+      "side": 1,
+      "message": "these look duplicated in CronetTestRule?",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c32b97e_242eafe8",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1233409
+      },
+      "writtenOn": "2017-07-28T18:39:57Z",
+      "side": 1,
+      "message": "where did the comments for these methods go?",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
