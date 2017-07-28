@@ -51,7 +51,9 @@ public class SignInPreference extends Preference
      */
     public SignInPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mProfileDataCache = new ProfileDataCache(context, Profile.getLastUsedProfile());
+
+        int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
+        mProfileDataCache = new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
     }
 
     @Override
