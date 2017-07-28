@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0995a656_ad1c559c",
+        "filename": "ui/base/webui/web_ui_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T23:37:03Z",
+      "side": 1,
+      "message": "this seems like the responsibility of the caller. It\u0027s odd that this function takes an input like \"0]\".",
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907dc22f_28a7d2e3",
+        "filename": "ui/base/webui/web_ui_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T23:37:03Z",
+      "side": 1,
+      "message": "Add a note about how/when |path| is mutated.",
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80805ae_2b3abaab",
+        "filename": "ui/base/webui/web_ui_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T23:37:03Z",
+      "side": 1,
+      "message": "some more test cases: missing the [ or the ]",
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c51c29_430bc01d",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T23:37:03Z",
+      "side": 1,
+      "message": "use startsWith()",
+      "range": {
+        "startLine": 231,
+        "startChar": 12,
+        "endLine": 231,
+        "endChar": 19
+      },
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553f18ff_797ad806",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T23:37:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 19
+      },
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
