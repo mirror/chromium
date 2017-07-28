@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6abfc01_8cbc5bc2",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-07-28T13:52:38Z",
+      "side": 1,
+      "message": "nit: please replace FlingBegin with FlingStart in this CL to be consistent with other parts of chrome",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 28
+      },
+      "revId": "8adf9058c1b7c4db7383d80c1e71377c91a20d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
