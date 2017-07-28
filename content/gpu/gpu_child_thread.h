@@ -68,7 +68,7 @@ class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
 
   ~GpuChildThread() override;
 
-  void Init(const base::Time& process_start_time);
+  void Init(base::TimeTicks process_start_time);
 
  private:
   GpuChildThread(const ChildThreadImpl::Options& options,

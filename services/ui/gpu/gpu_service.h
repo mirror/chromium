@@ -87,7 +87,7 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
     in_host_process_ = in_host_process;
   }
 
-  void set_start_time(base::Time start_time) { start_time_ = start_time; }
+  void set_start_time(base::TimeTicks start_time) { start_time_ = start_time; }
 
   const gpu::GPUInfo& gpu_info() const { return gpu_info_; }
 
@@ -200,7 +200,7 @@ class GpuService : public gpu::GpuChannelManagerDelegate,
 
   // Whether this is running in the same process as the gpu host.
   bool in_host_process_ = false;
-  base::Time start_time_;
+  base::TimeTicks start_time_;
 
   // Used to track the task to bind a GpuServiceRequest on the io thread.
   base::CancelableTaskTracker bind_task_tracker_;

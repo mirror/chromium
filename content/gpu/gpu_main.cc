@@ -179,7 +179,7 @@ int GpuMain(const MainFunctionParams& parameters) {
     ChildProcess::WaitForDebugger("Gpu");
   }
 
-  base::Time start_time = base::Time::Now();
+  base::TimeTicks start_time = base::TimeTicks::Now();
 
 #if defined(OS_WIN)
   // Prevent Windows from displaying a modal dialog on failures like not being
