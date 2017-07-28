@@ -8,16 +8,16 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chromium.base.ApiCompatibilityUtils;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.util.MathUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A layout that arranges tiles in a grid.
@@ -25,9 +25,6 @@ import org.chromium.chrome.browser.util.MathUtils;
 public class TileGridLayout extends FrameLayout {
     public static final int PADDING_START_PX = 0;
     public static final int PADDING_END_PX = 0;
-
-    public static final int MARGIN_START_DP = 12;
-    public static final int MARGIN_END_DP = 12;
 
     private final int mVerticalSpacing;
     private final int mMinHorizontalSpacing;
@@ -37,35 +34,6 @@ public class TileGridLayout extends FrameLayout {
     private int mMaxRows;
     private int mMaxColumns;
     private int mExtraVerticalSpacing;
-
-    /**
-     * Calculate the number of tile columns that will actually be rendered. Uses constants, does not
-     * rely on anything already being rendered. Used for calculating the position of the home page
-     * tile.
-     *
-     * @see TileGroup#renderTileViews(ViewGroup, boolean)
-     * @return The number of rendered columns (at least 1). Still needs to be capped from above
-     * by the maximum number of columns.
-     */
-    public static int calculateNumColumns() {
-        Resources res = ContextUtils.getApplicationContext().getResources();
-        int minHorizontalSpacingPx =
-                res.getDimensionPixelOffset(R.dimen.tile_grid_layout_min_horizontal_spacing);
-        int maxWidthPx = res.getDimensionPixelOffset(R.dimen.tile_grid_layout_max_width);
-
-        DisplayMetrics metrics = res.getDisplayMetrics();
-        int marginsPx = Math.round(TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, MARGIN_START_DP + MARGIN_END_DP, metrics));
-        int paddingBoxWidthPx = Math.min(
-                maxWidthPx, Math.min(metrics.widthPixels, metrics.heightPixels) - marginsPx);
-
-        int contentWidthPx = paddingBoxWidthPx - PADDING_START_PX - PADDING_END_PX;
-        int childWidthPx = res.getDimensionPixelOffset(R.dimen.tile_view_width);
-
-        return Math.max(
-                (contentWidthPx + minHorizontalSpacingPx) / (childWidthPx + minHorizontalSpacingPx),
-                1);
-    }
 
     /**
      * Constructor for inflating from XML.
@@ -140,7 +108,10 @@ public class TileGridLayout extends FrameLayout {
             return;
         }
 
-        // Measure the children.
+        // Measure the children. We don't use the ViewGroup.measureChildren() method here because
+        // it only measures visible children. In a situation where a child is invisible before
+        // this measurement and we decide to show it after the measurement, it will not have its
+        // dimensions and will not be displayed.
         for (int i = 0; i < childCount; i++) {
             measureChild(getChildAt(i), MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
         }
@@ -173,8 +144,11 @@ public class TileGridLayout extends FrameLayout {
         int numRows = (visibleChildCount + numColumns - 1) / numColumns;
         int paddingTop = getPaddingTop();
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
+
+        List<TileView> orderedChildren = getCorrectTileViewOrder(numColumns);
+
         for (int i = 0; i < visibleChildCount; i++) {
-            View child = getChildAt(i);
+            View child = orderedChildren.get(i);
             child.setVisibility(View.VISIBLE);
             int row = i / numColumns;
             int column = i % numColumns;
@@ -189,13 +163,29 @@ public class TileGridLayout extends FrameLayout {
         // Hide any extra children in case there are more than needed for the maximum number of
         // rows.
         for (int i = visibleChildCount; i < childCount; i++) {
-            getChildAt(i).setVisibility(View.GONE);
+            orderedChildren.get(i).setVisibility(View.GONE);
         }
 
         int totalHeight = paddingTop + getPaddingBottom() + numRows * childHeight
                 + (numRows - 1) * mVerticalSpacing + mExtraVerticalSpacing;
 
         setMeasuredDimension(totalWidth, resolveSize(totalHeight, heightMeasureSpec));
+    }
+
+    private List<TileView> getCorrectTileViewOrder(int numColumns) {
+        List<TileView> orderedChildren = new ArrayList<>(getChildCount());
+
+        for (int i = 0; i < getChildCount(); i++) {
+            TileView view = (TileView) getChildAt(i);
+
+            if (view.getTileSource() == TileSource.HOMEPAGE && i > numColumns - 1) {
+                orderedChildren.add(numColumns - 1, view);
+            } else {
+                orderedChildren.add(view);
+            }
+        }
+
+        return orderedChildren;
     }
 
     /** @return A tile view associated to the provided URL, or {@code null} if none is found. */
