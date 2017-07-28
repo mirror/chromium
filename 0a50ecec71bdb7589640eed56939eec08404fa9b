@@ -22,6 +22,30 @@
       "revId": "0a50ecec71bdb7589640eed56939eec08404fa9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e9040a_a5fef418",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-28T09:58:28Z",
+      "side": 0,
+      "message": "The ultimate test is https://cs.chromium.org/chromium/src/content/browser/tracing/memory_instrumentation_browsertest.cc which trys the end-to-end then looks to see that the os dumps are getting filled in correctly, is that what you meant?\n\nWe don\u0027t have a test of just the client (e.g. that when we call RequestOSMemoryDump on a client we get something relevant back) we used to have some tests just of the client but we deleted them because they weren\u0027t testing much at that point. I could revive them?\n\nOn the other side testing just the service we have GlobalMemoryDumpStruct in this file which mocks the clients (but would fail if service was ignoring the (mocked) results returned by RequestOSMemoryDump or not looking at the right numbers).",
+      "parentUuid": "f8ec5dd6_780929be",
+      "range": {
+        "startLine": 328,
+        "startChar": 1,
+        "endLine": 328,
+        "endChar": 55
+      },
+      "revId": "0a50ecec71bdb7589640eed56939eec08404fa9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
