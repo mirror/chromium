@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9730c094_5916fa4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-28T13:50:06Z",
+      "side": 1,
+      "message": "the bigger change here is that fetching contextual suggestions now return real content... the image is a secondary change imo, even if it has a bigger line count.",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af66adf0_d77e9d07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SuggestionsSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-28T13:50:06Z",
+      "side": 1,
+      "message": "please clarify: if it just returns nullptr, say \"{@code null} is returned if no image is available\". Otherwise maybe \"null Bitmap\" is a well know constant that is not null?",
+      "range": {
+        "startLine": 116,
+        "startChar": 64,
+        "endLine": 116,
+        "endChar": 77
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b306963_b8e9d2c4",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-28T13:50:06Z",
+      "side": 1,
+      "message": "nits:\n- isn\u0027t that getting unnecessarily verbose the object is the ContextualSuggestionsSource, we could expect that the image fetched is about contextual suggestions already... \n- are we happy naming it generically \"fetch[...]Image\"? do we want to mention that it\u0027s the thumbnail in the method name?",
+      "range": {
+        "startLine": 356,
+        "startChar": 8,
+        "endLine": 356,
+        "endChar": 38
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
