@@ -105,6 +105,13 @@ class CORE_EXPORT DocumentMarkerController final
       unsigned start_offset,
       unsigned end_offset,
       DocumentMarker::MarkerTypes);
+  // Return all markers of the specified types whose interiors have non-empty
+  // overlap with the range [start_offset, end_offset]. Note that the range can
+  // be collapsed, in which case markers containing the offset in their
+  // interiors are returned.
+  HeapVector<std::pair<Member<Node>, Member<DocumentMarker>>>
+  MarkersIntersectingRange(const EphemeralRangeInFlatTree&,
+                           DocumentMarker::MarkerTypes);
   DocumentMarkerVector MarkersFor(
       Node*,
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
