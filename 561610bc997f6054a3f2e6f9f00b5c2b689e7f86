@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e76e87_4ac1628c",
+        "filename": "services/device/battery/battery_status_manager_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-28T16:16:35Z",
+      "side": 1,
+      "message": "yes first thought this was not equivalent, but yes it appears the OnSignalConnected did nothing anyway..",
+      "range": {
+        "startLine": 352,
+        "startChar": 49,
+        "endLine": 352,
+        "endChar": 0
+      },
+      "revId": "561610bc997f6054a3f2e6f9f00b5c2b689e7f86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
