@@ -46,6 +46,30 @@
       "revId": "75346e4432bf6cca7a9808b059d88be8c8d85cb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22976b0c_16b014ec",
+        "filename": "third_party/crashpad/README.chromium",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-28T19:27:17Z",
+      "side": 1,
+      "message": "Sorry, I forgot, could you also add a line to the bottom of this file in the local modifications that says something like \"PSAPI_VERSION set to 2, https://chromium-review.googlesource.com/c/588209/\". Just so we make sure not to overwrite when it\u0027s rolled again.",
+      "parentUuid": "41d51046_e37edacb",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "75346e4432bf6cca7a9808b059d88be8c8d85cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
