@@ -515,6 +515,7 @@ void ShelfView::CreateDragIconProxy(
     views::View* replaced_view,
     const gfx::Vector2d& cursor_offset_from_center,
     float scale_factor) {
+  LOG(ERROR) << "***** CreateDragIconProxy";
   drag_replaced_view_ = replaced_view;
   aura::Window* root_window =
       drag_replaced_view_->GetWidget()->GetNativeWindow()->GetRootWindow();

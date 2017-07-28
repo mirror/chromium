@@ -19,6 +19,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font_list.h"
@@ -49,6 +50,8 @@ constexpr int kLeftRightPaddingChars = 1;
 
 // Delay in milliseconds of when the dragging UI should be shown for mouse drag.
 constexpr int kMouseDragUIDelayInMs = 200;
+
+constexpr int kTouchLongpressDelayInMs = 300;
 
 gfx::FontList GetFontList() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
@@ -158,15 +161,24 @@ void AppListItemView::SetUIState(UIState ui_state) {
 void AppListItemView::SetTouchDragging(bool touch_dragging) {
   if (touch_dragging_ == touch_dragging)
     return;
-
-  touch_dragging_ = touch_dragging;
+  LOG(ERROR) << "***** SetTouchDragging=" << touch_dragging;
+  touch_dragging_ = touch_dragging;  
   SetState(STATE_NORMAL);
   SetUIState(touch_dragging_ ? UI_STATE_DRAGGING : UI_STATE_NORMAL);
 }
 
 void AppListItemView::OnMouseDragTimer() {
+  LOG(ERROR) << "***** OnMouseDragTimer is about to set UI_STATE_DRAGGING";
   DCHECK(apps_grid_view_->IsDraggedView(this));
+  apps_grid_view_->StartDragAndDropHostDragAfterLongPress(AppsGridView::MOUSE);
   SetUIState(UI_STATE_DRAGGING);
+}
+
+void AppListItemView::OnTouchLongPressTimer() {
+  LOG(ERROR) << "***** OnTouchLongPressTimer touch_dragging_=" << touch_dragging_;
+  DCHECK(apps_grid_view_->IsDraggedView(this));
+  apps_grid_view_->StartDragAndDropHostDragAfterLongPress(AppsGridView::TOUCH);
+  SetTouchDragging(true);
 }
 
 void AppListItemView::CancelContextMenu() {
@@ -179,7 +191,9 @@ gfx::ImageSkia AppListItemView::GetDragImage() {
 }
 
 void AppListItemView::OnDragEnded() {
+  LOG(ERROR) << "***** OnDragEnded is about to set UI_STATE_NORMAL";
   mouse_drag_timer_.Stop();
+  touch_long_press_timer_.Stop();
   SetUIState(UI_STATE_NORMAL);
 }
 
@@ -310,14 +324,19 @@ void AppListItemView::PaintButtonContents(gfx::Canvas* canvas) {
 }
 
 bool AppListItemView::OnMousePressed(const ui::MouseEvent& event) {
+  LOG(ERROR) << "***** OnMousePressed";
   CustomButton::OnMousePressed(event);
 
   if (!ShouldEnterPushedState(event))
     return true;
 
+  LOG(ERROR)
+      << "***** OnMousePressed is about to apps_grid_view_->InitiateDrag";
   apps_grid_view_->InitiateDrag(this, AppsGridView::MOUSE, event);
 
   if (apps_grid_view_->IsDraggedView(this)) {
+    LOG(ERROR) << "***** apps_grid_view_->InitiateDrag is about to start "
+                  "OnMouseDragTimer";
     mouse_drag_timer_.Start(FROM_HERE,
         base::TimeDelta::FromMilliseconds(kMouseDragUIDelayInMs),
         this, &AppListItemView::OnMouseDragTimer);
@@ -398,6 +417,7 @@ void AppListItemView::OnMouseReleased(const ui::MouseEvent& event) {
 }
 
 bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
+  LOG(ERROR) << "***** OnMouseDragged";
   CustomButton::OnMouseDragged(event);
   if (apps_grid_view_->IsDraggedView(this)) {
     // If the drag is no longer happening, it could be because this item
@@ -415,7 +435,7 @@ bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
   if (ui_state_ != UI_STATE_DRAGGING &&
       apps_grid_view_->dragging() &&
       apps_grid_view_->IsDraggedView(this)) {
-    mouse_drag_timer_.Stop();
+    mouse_drag_timer_.Stop();    
     SetUIState(UI_STATE_DRAGGING);
   }
   return true;
@@ -424,45 +444,55 @@ bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
 void AppListItemView::OnGestureEvent(ui::GestureEvent* event) {
   switch (event->type()) {
     case ui::ET_GESTURE_SCROLL_BEGIN:
-      if (touch_dragging_) {
-        apps_grid_view_->InitiateDrag(this, AppsGridView::TOUCH, *event);
-        event->SetHandled();
-      }
+      LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_SCROLL_BEGIN";
+      event->SetHandled();
       break;
     case ui::ET_GESTURE_SCROLL_UPDATE:
+      LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_SCROLL_UPDATE";
       if (touch_dragging_ && apps_grid_view_->IsDraggedView(this)) {
+        LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_SCROLL_UPDATE is about to UpdateDragFromItem";
         apps_grid_view_->UpdateDragFromItem(AppsGridView::TOUCH, *event);
         event->SetHandled();
       }
       break;
     case ui::ET_GESTURE_SCROLL_END:
-    case ui::ET_SCROLL_FLING_START:
+    case ui::ET_SCROLL_FLING_START:      
       if (touch_dragging_) {
+        LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_SCROLL_END";
         SetTouchDragging(false);
         apps_grid_view_->EndDrag(false);
         event->SetHandled();
       }
       break;
     case ui::ET_GESTURE_TAP_DOWN:
-      if (state() != STATE_DISABLED) {
+      LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_TAP_DOWN";
+      if (state() != STATE_DISABLED) {        
         SetState(STATE_PRESSED);
+        apps_grid_view_->InitiateDrag(this, AppsGridView::TOUCH, *event);
+        if (apps_grid_view_->has_dragged_view()) {          
+          LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_TAP_DOWN is about to start long press timer";
+          touch_long_press_timer_.Start(FROM_HERE,
+              base::TimeDelta::FromMilliseconds(kTouchLongpressDelayInMs),
+              this, &AppListItemView::OnTouchLongPressTimer);
+        }
         event->SetHandled();
       }
       break;
     case ui::ET_GESTURE_TAP:
     case ui::ET_GESTURE_TAP_CANCEL:
+      LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_TAP or ET_GESTURE_TAP_CANCEL";
       if (state() != STATE_DISABLED)
         SetState(STATE_NORMAL);
       break;
     case ui::ET_GESTURE_LONG_PRESS:
-      if (!apps_grid_view_->has_dragged_view())
-        SetTouchDragging(true);
       event->SetHandled();
       break;
     case ui::ET_GESTURE_LONG_TAP:
     case ui::ET_GESTURE_END:
-      if (touch_dragging_)
-        SetTouchDragging(false);
+      LOG(ERROR) << "***** OnGestureEvent ET_GESTURE_LONG_TAP or ET_GESTURE_END "
+          << "touch_dragging_=" << touch_dragging_;
+      SetTouchDragging(false);
+      apps_grid_view_->EndDrag(false);
       break;
     default:
       break;

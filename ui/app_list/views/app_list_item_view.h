@@ -113,6 +113,8 @@ class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
 
   // Invoked when |mouse_drag_timer_| fires to show dragging UI.
   void OnMouseDragTimer();
+  
+  void OnTouchLongPressTimer();
 
   // views::ContextMenuController overrides:
   void ShowContextMenuForView(views::View* source,
@@ -168,6 +170,10 @@ class APP_LIST_EXPORT AppListItemView : public views::CustomButton,
 
   // A timer to defer showing drag UI when mouse is pressed.
   base::OneShotTimer mouse_drag_timer_;
+  base::OneShotTimer touch_long_press_timer_;
+  
+  base::TimeTicks et_gesture_tap_down_start_;
+  base::TimeTicks et_gesture_long_press_start_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListItemView);
 };
