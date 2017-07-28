@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a69ed7fb_9748b1a6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-28T17:20:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c99b7ab_def2ebd6",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c73096_c26773a9",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 9
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "5d34b683_81795487",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-28T17:20:14Z",
+      "side": 1,
+      "message": "Because multiple contexts can come and go dynamically. This way we don\u0027t need to deal with shrink/rearranging/checking. Also the number of contexts is tiny so I don\u0027t think this will cause noticeable overhead.",
+      "parentUuid": "a5c73096_c26773a9",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94dd682f_864028b0",
         "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
         "patchSetId": 9
@@ -81,6 +117,24 @@
       "writtenOn": "2017-07-26T21:13:34Z",
       "side": 1,
       "message": "I\u0027ll have to defer to someone else to review this function.",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4a03b3_0d6a6a8c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-28T17:20:14Z",
+      "side": 1,
+      "message": "This part has not been changed from the first patch set and nhiroki@ did not raise any flag. Do we want one more look from him?",
+      "parentUuid": "94dd682f_864028b0",
       "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
