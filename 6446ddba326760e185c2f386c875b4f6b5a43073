@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edf1662c_e9ee8875",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T21:40:40Z",
+      "side": 1,
+      "message": "This class has to destroy its members, so it closes files and lets |temp_dir_| delete its directory. Thus asserting IO allowed here and in Init() to be explicit about the parts of the class that access files.",
+      "parentUuid": "f69cb15e_1252f309",
+      "revId": "6446ddba326760e185c2f386c875b4f6b5a43073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac40dd9c_63e2f2c0",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 2
@@ -56,6 +74,24 @@
       "revId": "6446ddba326760e185c2f386c875b4f6b5a43073",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f374a000_cdcff1ad",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T21:40:40Z",
+      "side": 1,
+      "message": "Ya, I missed the memo on that one.",
+      "parentUuid": "d43864a7_1c3b59c9",
+      "revId": "6446ddba326760e185c2f386c875b4f6b5a43073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
