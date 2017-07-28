@@ -22,6 +22,30 @@
       "revId": "c81ebd0ecc1d3fe0318cf844cfa9d1d546d64eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec121fb2_1cada4c9",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-28T14:02:47Z",
+      "side": 0,
+      "message": "Yes, because the browser will no longer be enteringAppKitFullscreen_ when Content Fullscreen is displayed.",
+      "parentUuid": "01af7bc8_a96942cd",
+      "range": {
+        "startLine": 674,
+        "startChar": 8,
+        "endLine": 674,
+        "endChar": 43
+      },
+      "revId": "c81ebd0ecc1d3fe0318cf844cfa9d1d546d64eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
