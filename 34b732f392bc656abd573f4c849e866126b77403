@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d25b082_6bd970cc",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-28T06:40:45Z",
+      "side": 1,
+      "message": "hmm this tricky. We never explicitly set the device as not connected when calling disconnect in our implementations, so I don\u0027t think we should do so here either. At least on macOS and Android, we wait for the platform to tell us that the device has disconnected before we mark it as disconnected.\n\nBut then, if we do that, the second call to connect would immediately return and after a bit our device would disconnect. (This is an actual bug in our implementation of the API and we need to implement connect/disconnect queuing to fix it.)\n\nI think to get around the bug, we could use getHealthThermometerDeviceWithServicesDiscovered(). The device in the iframe will keep the physical connection to the device alive so we will never actually call DisconnectGatt. I think this actually makes the test better and more applicable to real devices, since on real devices you cannot actually get a response after physically disconnecting, but it\u0027s possible to get a response if the device never physically disconnected.\n\nAlso, note that the concept of connection for the Web Bluetooth API is different than that of the device/bluetooth API. There are no guarantees that a device will physically disconnect when calling device.disconnect() in Web Bluetooth.",
+      "revId": "34b732f392bc656abd573f4c849e866126b77403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
