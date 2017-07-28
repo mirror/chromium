@@ -65,6 +65,9 @@ using ::testing::SaveArgPointee;
 using ::testing::UnorderedElementsAre;
 using ::testing::WithArg;
 
+// Shorten the name to spare line breaks.
+typedef autofill::AutofillUploadContents::Field UsernameVoteType;
+
 namespace password_manager {
 
 namespace {
@@ -127,10 +130,11 @@ MATCHER_P(CheckUsernamePtr, username_value, "Username incorrect") {
   return arg && arg->username_value == username_value;
 }
 
-MATCHER_P3(CheckUploadedAutofillTypesAndSignature,
+MATCHER_P4(CheckUploadedAutofillTypesAndSignature,
            form_signature,
            expected_types,
            expect_generation_vote,
+           expected_username_vote_type,
            "Unexpected autofill types or form signature") {
   if (form_signature != arg.FormSignatureAsStr()) {
     // Unexpected form's signature.
@@ -138,6 +142,7 @@ MATCHER_P3(CheckUploadedAutofillTypesAndSignature,
                   << ", but found " << arg.FormSignatureAsStr();
     return false;
   }
+
   bool found_generation_vote = false;
   for (const auto& field : arg) {
     if (field->possible_types().size() > 1) {
@@ -160,6 +165,20 @@ MATCHER_P3(CheckUploadedAutofillTypesAndSignature,
       ADD_FAILURE() << field->name << " field: expected vote " << expected_vote
                     << ", but found " << actual_vote;
       return false;
+    }
+    if (expected_vote == autofill::USERNAME) {
+      if (field->username_vote_type() != expected_username_vote_type) {
+        ADD_FAILURE() << field->name
+                      << " field has expected username vote type "
+                      << expected_username_vote_type << ", but found "
+                      << field->username_vote_type();
+      }
+    } else {
+      if (field->username_vote_type() !=
+          autofill::AutofillUploadContents::Field::NO_INFORMATION) {
+        ADD_FAILURE() << field->name
+                      << " field should not have any username vote type";
+      }
     }
   }
   EXPECT_EQ(expect_generation_vote, found_generation_vote);
@@ -453,7 +472,19 @@ class PasswordFormManagerTest : public testing::Test {
     autofill::ServerFieldTypeSet expected_available_field_types;
     FieldTypeMap expected_types;
     expected_types[ASCIIToUTF16("full_name")] = autofill::UNKNOWN_TYPE;
-    expected_types[match.username_element] = autofill::UNKNOWN_TYPE;
+
+    // When we're voting for an account creation form, we should also vote
+    // for its username field.
+    if (field_type && *field_type == autofill::ACCOUNT_CREATION_PASSWORD) {
+      expected_types[match.username_element] = autofill::USERNAME;
+      expected_available_field_types.insert(autofill::USERNAME);
+    } else {
+      expected_types[match.username_element] = autofill::UNKNOWN_TYPE;
+    }
+
+    autofill::AutofillUploadContents::Field::UsernameVoteType
+        expected_username_vote_type =
+            autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
 
     bool expect_generation_vote = false;
     if (field_type) {
@@ -469,13 +500,13 @@ class PasswordFormManagerTest : public testing::Test {
     }
 
     if (field_type) {
-      EXPECT_CALL(
-          *client()->mock_driver()->mock_autofill_download_manager(),
-          StartUploadRequest(CheckUploadedAutofillTypesAndSignature(
-                                 pending_structure.FormSignatureAsStr(),
-                                 expected_types, expect_generation_vote),
-                             false, expected_available_field_types,
-                             expected_login_signature, true));
+      EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
+                  StartUploadRequest(CheckUploadedAutofillTypesAndSignature(
+                                         pending_structure.FormSignatureAsStr(),
+                                         expected_types, expect_generation_vote,
+                                         expected_username_vote_type),
+                                     false, expected_available_field_types,
+                                     expected_login_signature, true));
     } else {
       EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
                   StartUploadRequest(_, _, _, _, _))
@@ -574,7 +605,9 @@ class PasswordFormManagerTest : public testing::Test {
     EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
                 StartUploadRequest(CheckUploadedAutofillTypesAndSignature(
                                        observed_form_signature, expected_types,
-                                       false /* expect_generation_vote */),
+                                       false /* expect_generation_vote */,
+                                       UsernameVoteType::NO_INFORMATION
+                                       /* expected_username_vote_type */),
                                    false, expected_available_field_types,
                                    expected_login_signature, true));
 
@@ -1104,6 +1137,7 @@ TEST_F(PasswordFormManagerTest, PSLMatchedCredentialsMetadataUpdated) {
 
   autofill::ServerFieldTypeSet expected_available_field_types;
   expected_available_field_types.insert(autofill::ACCOUNT_CREATION_PASSWORD);
+  expected_available_field_types.insert(autofill::USERNAME);
   EXPECT_CALL(
       *client()->mock_driver()->mock_autofill_download_manager(),
       StartUploadRequest(_, false, expected_available_field_types, _, true));
@@ -2866,7 +2900,9 @@ TEST_F(PasswordFormManagerTest,
   EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
               StartUploadRequest(CheckUploadedAutofillTypesAndSignature(
                                      observed_form_signature, expected_types,
-                                     false /* expect_generation_vote */),
+                                     false /* expect_generation_vote */,
+                                     UsernameVoteType::NO_INFORMATION
+                                     /* expected_username_vote_type */),
                                  false, expected_available_field_types,
                                  expected_login_signature, true));
 
@@ -3102,7 +3138,9 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
               StartUploadRequest(
                   CheckUploadedAutofillTypesAndSignature(
                       pending_structure.FormSignatureAsStr(), expected_types,
-                      false /* expect_generation_vote */),
+                      false /* expect_generation_vote */,
+                      UsernameVoteType::NO_INFORMATION
+                      /* expected_username_vote_type */),
                   false, expected_available_field_types, std::string(), true));
 
   form_manager.ProvisionallySave(
@@ -3242,6 +3280,11 @@ TEST_F(PasswordFormManagerTest, UploadUsernameCorrectionVote) {
   expected_username_vote.username_element =
       saved_match()->other_possible_usernames[0].second;
 
+  // Checks the username vote type is saved.
+  autofill::AutofillUploadContents::Field::UsernameVoteType
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_OVERWRITTEN;
+
   // Checks the upload.
   autofill::ServerFieldTypeSet expected_available_field_types;
   expected_available_field_types.insert(autofill::USERNAME);
@@ -3260,11 +3303,12 @@ TEST_F(PasswordFormManagerTest, UploadUsernameCorrectionVote) {
   expected_types[ASCIIToUTF16("Email")] = autofill::UNKNOWN_TYPE;
 
   EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
-              StartUploadRequest(CheckUploadedAutofillTypesAndSignature(
-                                     expected_upload.FormSignatureAsStr(),
-                                     expected_types, false),
-                                 false, expected_available_field_types,
-                                 expected_login_signature, true));
+              StartUploadRequest(
+                  CheckUploadedAutofillTypesAndSignature(
+                      expected_upload.FormSignatureAsStr(), expected_types,
+                      false, expected_username_vote_type),
+                  false, expected_available_field_types,
+                  expected_login_signature, true));
   form_manager()->Save();
 }
 
