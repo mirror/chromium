@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5952c24e_022e99e7",
+        "filename": "chrome/browser/ui/search/instant_search_prerenderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T15:26:36Z",
+      "side": 1,
+      "message": "Is this required? Doesn\u0027t it get reset after each test anyway?",
+      "revId": "1986cb6e5f0bd317aa209dd0a61b1d6efa1f42dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
