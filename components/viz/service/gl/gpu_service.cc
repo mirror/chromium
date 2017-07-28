@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/ui/gpu/gpu_service.h"
+#include "components/viz/service/gl/gpu_service.h"
 
 #include "base/bind.h"
 #include "base/debug/crash_logging.h"
@@ -47,7 +47,7 @@
 #include "media/gpu/content_video_view_overlay_allocator.h"
 #endif
 
-namespace ui {
+namespace viz {
 
 namespace {
 
@@ -148,14 +148,14 @@ void GpuService::UpdateGPUInfoFromPreferences(
   gpu_info_.initialization_time = base::TimeTicks::Now() - start_time_;
 }
 
-void GpuService::InitializeWithHost(mojom::GpuHostPtr gpu_host,
+void GpuService::InitializeWithHost(ui::mojom::GpuHostPtr gpu_host,
                                     gpu::GpuProcessActivityFlags activity_flags,
                                     gpu::SyncPointManager* sync_point_manager,
                                     base::WaitableEvent* shutdown_event) {
   DCHECK(main_runner_->BelongsToCurrentThread());
   gpu_host->DidInitialize(gpu_info_, gpu_feature_info_);
-  gpu_host_ =
-      mojom::ThreadSafeGpuHostPtr::Create(gpu_host.PassInterface(), io_runner_);
+  gpu_host_ = ui::mojom::ThreadSafeGpuHostPtr::Create(gpu_host.PassInterface(),
+                                                      io_runner_);
   if (!in_host_process_) {
     // The global callback is reset from the dtor. So Unretained() here is safe.
     // Note that the callback can be called from any thread. Consequently, the
@@ -529,4 +529,4 @@ void GpuService::Stop(const StopCallback& callback) {
       callback);
 }
 
-}  // namespace ui
+}  // namespace viz
