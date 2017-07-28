@@ -341,7 +341,7 @@ class ExtensionInstallPrompt {
   void SetIcon(const SkBitmap* icon);
 
   // ImageLoader callback.
-  void OnImageLoaded(const gfx::Image& image);
+  void OnImageLoaded(gfx::Image image);
 
   // Starts the process of showing a confirmation UI, which is split into two.
   // 1) Set off a 'load icon' task.
