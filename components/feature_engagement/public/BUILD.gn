@@ -26,6 +26,14 @@ source_set("public") {
 }
 
 if (is_android) {
+  java_cpp_enum("public_java_enums_srcjar") {
+    visibility = [ ":*" ]
+
+    sources = [
+      "tracker.h",
+    ]
+  }
+
   android_library("public_java") {
     java_files = [
       "android/java/src/org/chromium/components/feature_engagement/EventConstants.java",
@@ -37,5 +45,7 @@ if (is_android) {
       "//base:base_java",
       "//third_party/android_tools:android_support_annotations_java",
     ]
+
+    srcjar_deps = [ ":public_java_enums_srcjar" ]
   }
 }
