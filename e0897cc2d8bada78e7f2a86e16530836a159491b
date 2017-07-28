@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d8cc985_ded222a3",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T20:50:24Z",
+      "side": 1,
+      "message": "That\u0027s true, but IIUC, the ChromeSubresourceFilterClient eventually invokes this function.\nhttps://cs.chromium.org/chromium/src/chrome/browser/subresource_filter/chrome_subresource_filter_client.cc?sq\u003dpackage:chromium\u0026l\u003d85",
+      "parentUuid": "f1524b76_f2116ad0",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 76
+      },
+      "revId": "e0897cc2d8bada78e7f2a86e16530836a159491b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3886c0c3_285f3ffe",
         "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T20:39:00Z",
       "side": 1,
       "message": "I don\u0027t think this is true, couldn\u0027t it happen in the redirect?",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "e0897cc2d8bada78e7f2a86e16530836a159491b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d930250_10dc3a73",
+        "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-28T20:50:24Z",
+      "side": 1,
+      "message": "How I understood this logic is: DeferToCalculateLoadPolicy can be either invoked from WillStartRequest (called exactly once) or WillRedirectRequest (may be invoked multiple times). If the policy is WOULD_DISALLOW it would be computed in WillStartRequest. Before that it would be the default value of LoadPolicy::ALLOW. Once it is set to WOULD_DISALLOW, for all subsequent invocations of this function which will be through WillRedirectRequest we just return from here instead of invoking GetLoadPolicyForSubdocument. Let me know if I am missing something.",
+      "parentUuid": "3886c0c3_285f3ffe",
       "range": {
         "startLine": 79,
         "startChar": 5,
