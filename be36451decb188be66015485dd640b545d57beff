@@ -1,0 +1,285 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39fc9d2d_c8c7fdcd",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "I filed crbug.com/750259 for updating the header syntax -- can you put a comment in the markdown (it doesn\u0027t have to be visible in the rendered document) to update the header syntax in the examples here?",
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50469776_f17251de",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "In general in markdown, only a single backtick (`) character is required. I don\u0027t think that triple-backticks do anything different.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 15
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2a9dbb_7e94a364",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "We\u0027ll also want a todo here, too, to change this to\n\n\u003ciframe allowpaymentrequest allow\u003d’vibrate; fullscreen’\u003e\u003c/iframe\u003e",
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5212e40_10860198",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "The ` needs to be closed at the end of the filename here",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 80
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a9775e_e3d2037c",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "We should mention which flag (the experimentalfeatures flag) since line 42 says that there are two of them",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88a17d6_983fe6ea",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "behind the Experimental Features flag",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325eb9bd_bf3814bd",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "i.e,\n\nif (IsSupportedInFeaturePolicy(...)) {\n  if (frame-\u003eIsFeatureEnabled(...)) {\n     ...\n  }\n}",
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c3f34f_72687982",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "i.e,\n\nif (IsSupportedInFeaturePolicy(...)) {\n  if (!frame-\u003eIsFeatureEnabled(...)) {\n     ...\n  }\n}",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2056c58f_dad7499b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "Should this refer to a real file?",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a794a0f_e2b625b8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "Probably \"When adding a new...\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8c6940_6ad5ea2c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "mismatched quotes",
+      "range": {
+        "startLine": 15,
+        "startChar": 46,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921f5f24_ce672358",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "Spelling: Redirect?",
+      "range": {
+        "startLine": 18,
+        "startChar": 39,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874626b8_11ea6878",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T17:51:58Z",
+      "side": 1,
+      "message": "missed quote",
+      "range": {
+        "startLine": 19,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "be36451decb188be66015485dd640b545d57beff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
