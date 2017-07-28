@@ -3184,24 +3184,25 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_NewlineCharacterReplacement) {
 
 // Ensure horizontal alignment works in multiline mode.
 TEST_P(RenderTextHarfBuzzTest, Multiline_HorizontalAlignment) {
-  const struct {
+  constexpr struct {
     const wchar_t* const text;
     const HorizontalAlignment alignment;
+    const base::i18n::TextDirection display_text_direction;
   } kTestStrings[] = {
-    { L"abcdefghij\nhijkl", ALIGN_LEFT },
-    { L"nhijkl\nabcdefghij", ALIGN_LEFT },
-    // hebrew, 2nd line shorter
-    { L"\x5d0\x5d1\x5d2\x5d3\x5d4\x5d5\x5d6\x5d7\n\x5d0\x5d1\x5d2\x5d3",
-      ALIGN_RIGHT },
-    // hebrew, 2nd line longer
-    { L"\x5d0\x5d1\x5d2\x5d3\n\x5d0\x5d1\x5d2\x5d3\x5d4\x5d5\x5d6\x5d7",
-      ALIGN_RIGHT },
-    // arabic, 2nd line shorter
-    { L"\x62a\x62b\x62c\x62d\x62e\x62f\x630\n\x660\x661\x662\x663\x664",
-      ALIGN_RIGHT },
-    // arabic, 2nd line longer
-    { L"\x660\x661\x662\x663\x664\n\x62a\x62b\x62c\x62d\x62e\x62f\x630",
-      ALIGN_RIGHT },
+      {L"abcdefghi\nhijk", ALIGN_LEFT, base::i18n::LEFT_TO_RIGHT},
+      {L"nhij\nabcdefghi", ALIGN_LEFT, base::i18n::LEFT_TO_RIGHT},
+      // Hebrew, 2nd line shorter
+      {L"\x5d0\x5d1\x5d2\x5d3\x5d4\x5d5\x5d6\x5d7\n\x5d0\x5d1\x5d2\x5d3",
+       ALIGN_RIGHT, base::i18n::RIGHT_TO_LEFT},
+      // Hebrew, 2nd line longer
+      {L"\x5d0\x5d1\x5d2\x5d3\n\x5d0\x5d1\x5d2\x5d3\x5d4\x5d5\x5d6\x5d7",
+       ALIGN_RIGHT, base::i18n::RIGHT_TO_LEFT},
+      // Arabic, 2nd line shorter.
+      {L"\x660\x661\x662\x663\x664\x665\x666\x667\n\x660\x661\x662\x663",
+       ALIGN_RIGHT, base::i18n::RIGHT_TO_LEFT},
+      // Arabic, 2nd line longer.
+      {L"\x660\x661\x662\x663\n\x660\x661\x662\x663\x664\x665\x666\x667",
+       ALIGN_RIGHT, base::i18n::RIGHT_TO_LEFT},
   };
   const int kGlyphSize = 5;
   RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
@@ -3211,9 +3212,11 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_HorizontalAlignment) {
   render_text->SetMultiline(true);
 
   for (size_t i = 0; i < arraysize(kTestStrings); ++i) {
-    SCOPED_TRACE(base::StringPrintf("kTestStrings[%" PRIuS "] %ls", i,
-                                    kTestStrings[i].text));
+    SCOPED_TRACE(testing::Message("kTestStrings[")
+                 << i << "] = " << kTestStrings[i].text);
     render_text->SetText(WideToUTF16(kTestStrings[i].text));
+    EXPECT_EQ(kTestStrings[i].display_text_direction,
+              render_text->GetDisplayTextDirection());
     render_text->Draw(canvas());
     ASSERT_LE(2u, test_api()->lines().size());
     if (kTestStrings[i].alignment == ALIGN_LEFT) {
@@ -3224,6 +3227,9 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_HorizontalAlignment) {
           base::WideToUTF16(kTestStrings[i].text),
           base::string16(1, '\n'), base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
       ASSERT_EQ(2u, lines.size());
+      // Sanity check the input strings are a verified length.
+      EXPECT_EQ(4u, std::min(lines[0].length(), lines[1].length()));
+      EXPECT_EQ(8u, std::max(lines[0].length(), lines[1].length()));
       int difference = (lines[0].length() - lines[1].length()) * kGlyphSize;
       EXPECT_EQ(test_api()->GetAlignmentOffset(0).x() + difference,
                 test_api()->GetAlignmentOffset(1).x());
