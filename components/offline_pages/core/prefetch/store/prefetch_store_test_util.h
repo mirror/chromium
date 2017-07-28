@@ -6,13 +6,17 @@
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_STORE_PREFETCH_STORE_TEST_UTIL_H_
 
 #include <memory>
+#include <set>
 #include <string>
 
+#include "base/bind.h"
 #include "base/callback_forward.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/test/test_simple_task_runner.h"
+#include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 class GURL;
 
@@ -22,6 +26,8 @@ class ScopedTempDir;
 
 namespace offline_pages {
 struct PrefetchItem;
+
+const int kStoreCommandFailed = -1;
 
 // Encapsulates the PrefetchStore and provides synchronous operations on the
 // store, for test writing convenience.
@@ -33,25 +39,38 @@ class PrefetchStoreTestUtil {
       scoped_refptr<base::TestSimpleTaskRunner> task_runner);
   ~PrefetchStoreTestUtil();
 
+  // Builds a new store in a temporary directory.
   void BuildStore();
+  // Builds the store in memory (no disk storage).
   void BuildStoreInMemory();
   // Releases the ownership of currently controlled store.
   std::unique_ptr<PrefetchStore> ReleaseStore();
+  // Deletes the currently held store that was previously built.
   void DeleteStore();
 
-  // Returns auto-assigned offline_id or kStoreCommandFailed.
-  int64_t InsertPrefetchItem(const PrefetchItem& item);
+  // Inserts the provided item in store. Returns true if successful.
+  bool InsertPrefetchItem(const PrefetchItem& item);
 
-  // Returns the total count of prefetch items in the database.
+  // Returns the total count of prefetch items in the store.
   int CountPrefetchItems();
 
-  // Returns nullptr if the item with specified id is not found.
+  // Gets the item with the provided |offline_id|. Returns null if the item was
+  // not found.
   std::unique_ptr<PrefetchItem> GetPrefetchItem(int64_t offline_id);
 
-  // Returns number of affected items.
+  // Gets all existing items from the store, inserting them into |all_items|.
+  // Returns the number of items found.
+  std::size_t GetAllItems(std::set<PrefetchItem>* all_items);
+
+  // Sets to the ZOMBIE state entries identified by |name_space| and
+  // |url|, returning the number of entries found.
   int ZombifyPrefetchItems(const std::string& name_space, const GURL& url);
 
   PrefetchStore* store() { return store_.get(); }
+
+  static std::set<PrefetchItem> FilterItemsByState(const std::set<PrefetchItem>& items, PrefetchItemState state);
+  static std::set<PrefetchItem> ItemsIntersection(const std::set<PrefetchItem>& items1, const std::set<PrefetchItem>& items2);
+  static std::set<PrefetchItem> ItemsDifference(const std::set<PrefetchItem>& items1, const std::set<PrefetchItem>& items2);
 
  private:
   void RunUntilIdle();
