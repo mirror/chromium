@@ -163,6 +163,30 @@
       "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0823b3a3_7a6314fb",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-28T01:21:37Z",
+      "side": 1,
+      "message": "I think it works the other way: if the size here is 0 here and the other dumps have a size, we make the shared_memory dump size as the size of the largest owner, with an error message \"the size of the dump is less than the largest owner\". But yes, lets deal with it when we actulally see it. Hoping it won\u0027t happen.",
+      "parentUuid": "985e1f9e_110c8f22",
+      "range": {
+        "startLine": 88,
+        "startChar": 73,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
