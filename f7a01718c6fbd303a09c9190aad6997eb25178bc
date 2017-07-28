@@ -16,6 +16,24 @@
       "revId": "f7a01718c6fbd303a09c9190aad6997eb25178bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e80a131_06eed836",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-07-28T17:01:45Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "374180f6_0d2116f0",
+      "revId": "f7a01718c6fbd303a09c9190aad6997eb25178bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
