@@ -13,12 +13,15 @@ class LogdogLogcatMonitor(logcat_monitor.LogcatMonitor):
 
   The logdog stream client will return a url which contains the logcat.
   """
-  def __init__(self, adb, stream_name, clear=True, filter_specs=None):
+  def __init__(self, adb, stream_name, clear=True, filter_specs=None,
+               symbolizer=None, abi=None):
     super(LogdogLogcatMonitor, self).__init__(adb, clear, filter_specs)
     self._logcat_url = ''
     self._logdog_stream = None
     self._stream_client = None
     self._stream_name = stream_name
+    self._symbolizer = symbolizer
+    self._abi = abi
 
   def GetLogcatURL(self):
     """Return logcat url.
@@ -58,14 +61,42 @@ class LogdogLogcatMonitor(logcat_monitor.LogcatMonitor):
     """
     def record_to_stream():
       if self._logdog_stream:
+        look_for_stack_trace = False
+        have_seen_back_trace = False
+        data_to_symbolize = []
         for data in self._adb.Logcat(filter_specs=self._filter_specs,
                                      logcat_format='threadtime',
                                      iter_timeout=0.08):
-          if self._stop_recording_event.isSet():
+          # Make sure that when we stop, we always have the full stack trace.
+          if self._stop_recording_event.isSet() and not look_for_stack_trace:
             return
           if data:
+            if not look_for_stack_trace:
+              # Check whether it is the start of stack trace.
+              if 'Build fingerprint: ' in data:
+                look_for_stack_trace = True
+                data_to_symbolize.append(data[data.find(' :')+2:])
+                # Need more time to join thread if symbolization has run.
+                self._RECORD_THREAD_JOIN_WAIT = 180.0
+                continue
+            else:
+              # Check whether it is the end of stack trace.
+              if have_seen_back_trace and not '     #' in data:
+                look_for_stack_trace = False
+                data = (
+                    '\n'.join(
+                        self._symbolizer.ExtractAndResolveNativeStackTraces(
+                            data_to_symbolize, self._abi)) +
+                    '\n' + data)
+                data_to_symbolize = []
+              else:
+                if "backtrace:" in data:
+                  have_seen_back_trace = True
+                # Only include necessary information for symbolization.
+                data_to_symbolize.append(data[data.find(' :')+2:])
+                continue
             self._logdog_stream.write(data + '\n')
-          if self._stop_recording_event.isSet():
+          if self._stop_recording_event.isSet() and not look_for_stack_trace:
             return
 
     self._stop_recording_event.clear()
