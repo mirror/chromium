@@ -318,7 +318,7 @@ void DocumentLoader::UpdateForSameDocumentNavigation(
   HistoryCommitType commit_type = LoadTypeToCommitType(type);
   frame_->FrameScheduler()->DidCommitProvisionalLoad(
       commit_type == kHistoryInertCommit, type == kFrameLoadTypeReload,
-      frame_->IsLocalRoot());
+      frame_->IsLocalRoot(), true /* is_same_document */);
   GetLocalFrameClient().DispatchDidNavigateWithinPage(
       history_item_.Get(), commit_type, initiating_document);
 }
@@ -973,7 +973,7 @@ void DocumentLoader::DidCommitNavigation() {
   HistoryCommitType commit_type = LoadTypeToCommitType(load_type_);
   frame_->FrameScheduler()->DidCommitProvisionalLoad(
       commit_type == kHistoryInertCommit, load_type_ == kFrameLoadTypeReload,
-      frame_->IsLocalRoot());
+      frame_->IsLocalRoot(), false /* is_same_document */);
   GetLocalFrameClient().DispatchDidCommitLoad(history_item_.Get(), commit_type);
 
   // When the embedder gets notified (above) that the new navigation has

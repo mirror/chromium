@@ -270,10 +270,11 @@ void WebFrameSchedulerImpl::DidFailProvisionalLoad() {
 void WebFrameSchedulerImpl::DidCommitProvisionalLoad(
     bool is_web_history_inert_commit,
     bool is_reload,
-    bool is_main_frame) {
+    bool is_main_frame,
+    bool is_same_document) {
   parent_web_view_scheduler_->DidEndProvisionalLoad(this);
-  renderer_scheduler_->DidCommitProvisionalLoad(is_web_history_inert_commit,
-                                                is_reload, is_main_frame);
+  renderer_scheduler_->DidCommitProvisionalLoad(
+      is_web_history_inert_commit, is_reload, is_main_frame, is_same_document);
 }
 
 void WebFrameSchedulerImpl::DidStartLoading(unsigned long identifier) {

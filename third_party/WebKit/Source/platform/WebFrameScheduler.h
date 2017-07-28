@@ -149,7 +149,8 @@ class WebFrameScheduler {
   // and the UserModel. Must be called from the main thread.
   virtual void DidCommitProvisionalLoad(bool is_web_history_inert_commit,
                                         bool is_reload,
-                                        bool is_main_frame){};
+                                        bool is_main_frame,
+                                        bool is_same_document){};
 
   // Tells the scheduler if we are parsing a document on another thread. This
   // tells the scheduler not to advance virtual time if it's using the

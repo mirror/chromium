@@ -4003,12 +4003,12 @@ TEST_F(RendererSchedulerImplTest,
   // Start with a long task whose queueing time will be ignored.
   AdvanceTimeWithTask(10);
   // Navigation start.
-  scheduler_->DidCommitProvisionalLoad(false, false, false);
+  scheduler_->DidCommitProvisionalLoad(false, false, false, false);
   // The max queueing time of the following task will be recorded.
   AdvanceTimeWithTask(1);
   // The smaller queuing time will be ignored.
   AdvanceTimeWithTask(0.5);
-  scheduler_->DidCommitProvisionalLoad(false, false, false);
+  scheduler_->DidCommitProvisionalLoad(false, false, false, false);
   // Add another long task after navigation start but without navigation end.
   // This value won't be recorded as there is not navigation.
   AdvanceTimeWithTask(10);
@@ -4019,14 +4019,14 @@ TEST_F(RendererSchedulerImplTest,
 // Only the max of all the queueing times is recorded.
 TEST_F(RendererSchedulerImplTest, MaxQueueingTimeMetricRecordTheMax) {
   base::HistogramTester tester;
-  scheduler_->DidCommitProvisionalLoad(false, false, false);
+  scheduler_->DidCommitProvisionalLoad(false, false, false, false);
   // The smaller queuing time will be ignored.
   AdvanceTimeWithTask(0.5);
   // The max queueing time of the following task will be recorded.
   AdvanceTimeWithTask(1);
   // The smaller queuing time will be ignored.
   AdvanceTimeWithTask(0.5);
-  scheduler_->DidCommitProvisionalLoad(false, false, false);
+  scheduler_->DidCommitProvisionalLoad(false, false, false, false);
   tester.ExpectUniqueSample("RendererScheduler.MaxQueueingTime", 500, 1);
 }
 
@@ -4036,52 +4036,69 @@ TEST_F(RendererSchedulerImplTest, DidCommitProvisionalLoad) {
 
   // Check that we only clear state for main frame navigations that are either
   // not history inert or are reloads.
-  scheduler_->DidCommitProvisionalLoad(false /* is_web_history_inert_commit */,
-                                       false /* is_reload */,
-                                       false /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      false /* is_web_history_inert_commit */, false /* is_reload */,
+      false /* is_main_frame */, false /* is_same_document */);
   EXPECT_FALSE(scheduler_->waiting_for_meaningful_paint());
 
   scheduler_->OnFirstMeaningfulPaint();
-  scheduler_->DidCommitProvisionalLoad(false /* is_web_history_inert_commit */,
-                                       false /* is_reload */,
-                                       true /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      false /* is_web_history_inert_commit */, false /* is_reload */,
+      true /* is_main_frame */, false /* is_same_document */);
   EXPECT_TRUE(scheduler_->waiting_for_meaningful_paint());  // State cleared.
 
   scheduler_->OnFirstMeaningfulPaint();
-  scheduler_->DidCommitProvisionalLoad(false /* is_web_history_inert_commit */,
-                                       true /* is_reload */,
-                                       false /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      false /* is_web_history_inert_commit */, true /* is_reload */,
+      false /* is_main_frame */, false /* is_same_document */);
   EXPECT_FALSE(scheduler_->waiting_for_meaningful_paint());
 
   scheduler_->OnFirstMeaningfulPaint();
-  scheduler_->DidCommitProvisionalLoad(false /* is_web_history_inert_commit */,
-                                       true /* is_reload */,
-                                       true /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      false /* is_web_history_inert_commit */, true /* is_reload */,
+      true /* is_main_frame */, false /* is_same_document */);
   EXPECT_TRUE(scheduler_->waiting_for_meaningful_paint());  // State cleared.
 
   scheduler_->OnFirstMeaningfulPaint();
-  scheduler_->DidCommitProvisionalLoad(true /* is_web_history_inert_commit */,
-                                       false /* is_reload */,
-                                       false /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      true /* is_web_history_inert_commit */, false /* is_reload */,
+      false /* is_main_frame */, false /* is_same_document */);
   EXPECT_FALSE(scheduler_->waiting_for_meaningful_paint());
 
   scheduler_->OnFirstMeaningfulPaint();
-  scheduler_->DidCommitProvisionalLoad(true /* is_web_history_inert_commit */,
-                                       false /* is_reload */,
-                                       true /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      true /* is_web_history_inert_commit */, false /* is_reload */,
+      true /* is_main_frame */, false /* is_same_document */);
   EXPECT_FALSE(scheduler_->waiting_for_meaningful_paint());
 
   scheduler_->OnFirstMeaningfulPaint();
-  scheduler_->DidCommitProvisionalLoad(true /* is_web_history_inert_commit */,
-                                       true /* is_reload */,
-                                       false /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      true /* is_web_history_inert_commit */, true /* is_reload */,
+      false /* is_main_frame */, false /* is_same_document */);
   EXPECT_FALSE(scheduler_->waiting_for_meaningful_paint());
 
   scheduler_->OnFirstMeaningfulPaint();
-  scheduler_->DidCommitProvisionalLoad(true /* is_web_history_inert_commit */,
-                                       true /* is_reload */,
-                                       true /* is_main_frame */);
+  scheduler_->DidCommitProvisionalLoad(
+      true /* is_web_history_inert_commit */, true /* is_reload */,
+      true /* is_main_frame */, false /* is_same_document */);
   EXPECT_TRUE(scheduler_->waiting_for_meaningful_paint());  // State cleared.
+}
+
+TEST_F(RendererSchedulerImplTest, DidCommitProvisionalLoad_SameDocument) {
+  // Check that navigations that retain the original document do not clear the
+  // meaningful paint state.
+  for (int i = 0; i < 8; ++i) {
+    bool is_web_history_inert_commit = i & 1;
+    bool is_reload = i & 2;
+    bool is_main_frame = i & 4;
+
+    scheduler_->OnFirstMeaningfulPaint();
+    EXPECT_FALSE(scheduler_->waiting_for_meaningful_paint());
+    scheduler_->DidCommitProvisionalLoad(is_web_history_inert_commit, is_reload,
+                                         is_main_frame,
+                                         true /* is_same_document */);
+    EXPECT_FALSE(scheduler_->waiting_for_meaningful_paint());
+  }
 }
 
 TEST_F(RendererSchedulerImplTest, LoadingControlTasks) {
