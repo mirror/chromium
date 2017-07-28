@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84bc0c1d_a80dcded",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:49:40Z",
+      "side": 1,
+      "message": "I think we should document these methods.",
+      "range": {
+        "startLine": 105,
+        "startChar": 32,
+        "endLine": 105,
+        "endChar": 57
+      },
+      "revId": "051dde65cf8d458ef9d634d710a72905199e1ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeba3f54_9106b60b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:49:40Z",
+      "side": 1,
+      "message": "Split this up into two separate asserts? Probably a bit more readable, and it will you which one failed.",
+      "range": {
+        "startLine": 319,
+        "startChar": 15,
+        "endLine": 319,
+        "endChar": 40
+      },
+      "revId": "051dde65cf8d458ef9d634d710a72905199e1ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4da9de5_837cee5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:49:40Z",
+      "side": 1,
+      "message": "TODO(dgn) :)",
+      "range": {
+        "startLine": 398,
+        "startChar": 11,
+        "endLine": 398,
+        "endChar": 15
+      },
+      "revId": "051dde65cf8d458ef9d634d710a72905199e1ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
