@@ -20,6 +20,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::Invoke;
 using ::testing::IsNull;
 using ::testing::NiceMock;
@@ -246,7 +247,8 @@ class PlatformSensorAndProviderTestWin : public ::testing::Test {
   void SetSupportedSensor(REFSENSOR_TYPE_ID sensor) {
     // Returns mock ISensorCollection.
     EXPECT_CALL(*sensor_manager_, GetSensorsByType(sensor, _))
-        .WillOnce(Invoke(
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke(
             [this](REFSENSOR_TYPE_ID type, ISensorCollection** collection) {
               sensor_collection_->QueryInterface(
                   __uuidof(ISensorCollection),
@@ -257,14 +259,16 @@ class PlatformSensorAndProviderTestWin : public ::testing::Test {
     // Returns number of ISensor objects in ISensorCollection, at the moment
     // only one ISensor interface instance is suported.
     EXPECT_CALL(*sensor_collection_, GetCount(_))
-        .WillOnce(Invoke([](ULONG* count) {
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke([](ULONG* count) {
           *count = 1;
           return S_OK;
         }));
 
     // Returns ISensor interface instance at index 0.
     EXPECT_CALL(*sensor_collection_, GetAt(0, _))
-        .WillOnce(Invoke([this](ULONG index, ISensor** sensor) {
+        .Times(AtLeast(1))
+        .WillRepeatedly(Invoke([this](ULONG index, ISensor** sensor) {
           sensor_->QueryInterface(__uuidof(ISensor),
                                   reinterpret_cast<void**>(sensor));
           return S_OK;
