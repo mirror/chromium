@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdde6a64_98c9f96b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-parentiframe.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-07-28T18:50:01Z",
+      "side": 1,
+      "message": "might be cleaner to change this as follows:\n1. child iframe\u0027s onload post-messages to parent, then parent runs a long task\n2. child observes the long tasks and does a 2nd post-message, then parent does assert and t.done",
+      "range": {
+        "startLine": 12,
+        "startChar": 67,
+        "endLine": 12,
+        "endChar": 68
+      },
+      "revId": "6c79f08c3fa5e2dcb3889473300ea7261ff28c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d038bac0_da438d94",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-in-parentiframe.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-07-28T18:50:01Z",
+      "side": 1,
+      "message": "Which Frame context will this execute in?",
+      "revId": "6c79f08c3fa5e2dcb3889473300ea7261ff28c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
