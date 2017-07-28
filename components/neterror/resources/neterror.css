@@ -513,6 +513,7 @@ html[subframe] body {
 .arcade-mode .runner-canvas {
   max-width: 100%;
   overflow: hidden;
+  image-rendering: pixelated;
 }
 
 .arcade-mode #buttons,
