@@ -70,6 +70,30 @@
       "revId": "75346e4432bf6cca7a9808b059d88be8c8d85cb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8a027c7_f7f7fb9c",
+        "filename": "third_party/crashpad/README.chromium",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-07-28T19:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22976b0c_16b014ec",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "75346e4432bf6cca7a9808b059d88be8c8d85cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
