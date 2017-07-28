@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "66594e57_fa70cac6",
+        "filename": "components/viz/client/hit_test_data_provider.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-28T15:09:57Z",
+      "side": 1,
+      "message": "nit: I\u0027d like this to have a class comment of some kind.",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82923264_6ddbb9a7",
         "filename": "services/viz/hit_test/public/interfaces/hit_test_region_list.mojom",
         "patchSetId": 19
