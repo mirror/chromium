@@ -11,6 +11,8 @@
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_version_info.h"
 
+#include "base/trace_event/trace_event.h"
+
 namespace gl {
 
 class TimeElapsedTimerQuery;
@@ -216,6 +218,7 @@ class TimeElapsedTimerQuery : public TimerQuery {
     }
 
     GLuint done = 0;
+    TRACE_EVENT0("gpu", "glGetQueryObject_GL_QUERY_RESULT_AVAILABLE");
     glGetQueryObjectuiv(gl_query_id_, GL_QUERY_RESULT_AVAILABLE, &done);
     return !!done;
   }
@@ -288,6 +291,7 @@ class TimeStampTimerQuery : public TimerQuery {
   // Returns true when UpdateQueryResults() is ready to be called.
   bool IsAvailable(GPUTimingImpl* gpu_timing) override {
     GLuint done = 0;
+    TRACE_EVENT0("gpu", "glGetQueryObject_GL_QUERY_RESULT_AVAILABLE");
     glGetQueryObjectuiv(gl_query_id_, GL_QUERY_RESULT_AVAILABLE, &done);
     return !!done;
   }
