@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52503148_ae186741",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-28T13:58:46Z",
+      "side": 0,
+      "message": "It\u0027s called in PasswordAutofillAgent, why do we need to check a form twice?",
+      "parentUuid": "95e9aa47_4000a9a1",
+      "range": {
+        "startLine": 404,
+        "startChar": 3,
+        "endLine": 404,
+        "endChar": 0
+      },
+      "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1b80c9e_c7a5d613",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
         "patchSetId": 2
@@ -78,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "27ce73be_7e64e0a0",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-28T13:58:46Z",
+      "side": 0,
+      "message": "Resolved",
+      "parentUuid": "5648da8c_d562f2cc",
+      "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e147821e_bd87daa4",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 2
@@ -115,6 +157,30 @@
       "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39ba8ff_162e024d",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-28T13:58:46Z",
+      "side": 0,
+      "message": "Repeating my comment from Patchset 2:\n\nNow it\u0027s loaded with LoadHTMLWithUrlOverride instead of LoadHTML (line 245), and they are different in internal implementation, the loading of the former method load HTML such that %67 stays in input value, LoadHTML correctly parses, and %67 -\u003e g. This test basically tests only whether HTML is parsed correctly so it could be removed.",
+      "parentUuid": "d6bffaf0_6cd3f67c",
+      "range": {
+        "startLine": 1362,
+        "startChar": 7,
+        "endLine": 1362,
+        "endChar": 11
+      },
+      "revId": "dfecb7d2a56865ca228094b235b242a3606f5c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

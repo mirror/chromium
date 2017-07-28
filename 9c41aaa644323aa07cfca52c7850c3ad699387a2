@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41680c7c_ed378c2d",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3043,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-28T13:58:46Z",
+      "side": 1,
+      "message": "Isn\u0027t unittest for IsGaiaReathintication not enough?",
+      "parentUuid": "d38f099c_eefcbe27",
+      "range": {
+        "startLine": 3043,
+        "startChar": 8,
+        "endLine": 3043,
+        "endChar": 9
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5373212_c587200c",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46fd9a8a_7849ef6b",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-28T13:58:46Z",
+      "side": 1,
+      "message": "This is fallback case: if we find password field and || sent_request_to_store_ \u003d\u003d false, we send request to the browser again, that\u0027s exactly what we should fix",
+      "parentUuid": "e5373212_c587200c",
+      "range": {
+        "startLine": 933,
+        "startChar": 8,
+        "endLine": 933,
+        "endChar": 25
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8cea307f_b9e6a873",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-28T13:58:46Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "1df53466_58cf4fa2",
+      "range": {
+        "startLine": 1762,
+        "startChar": 2,
+        "endLine": 1762,
+        "endChar": 32
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bc39441_5175b448",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d00618c_7a5fe258",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-28T13:58:46Z",
+      "side": 1,
+      "message": "char* is better since LoadHTMLWithUrlOverride takes char*, why we need something else?",
+      "parentUuid": "2bc39441_5175b448",
+      "range": {
+        "startLine": 244,
+        "startChar": 33,
+        "endLine": 244,
+        "endChar": 37
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
