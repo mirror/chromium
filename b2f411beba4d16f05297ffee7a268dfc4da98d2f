@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c6573ec_58921340",
+        "filename": "ui/app_list/views/indicator_chip_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-28T23:52:05Z",
+      "side": 1,
+      "message": "sorry I meant\ngfx::Rect GetLabelBoundsInScreen() const;",
+      "revId": "b2f411beba4d16f05297ffee7a268dfc4da98d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
