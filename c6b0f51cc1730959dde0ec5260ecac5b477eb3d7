@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f665399_45a47fd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-28T07:08:12Z",
+      "side": 1,
+      "message": "nit: documents.",
+      "revId": "c6b0f51cc1730959dde0ec5260ecac5b477eb3d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9616b214_656d4ca6",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-28T07:08:12Z",
+      "side": 1,
+      "message": "Clarification: does this mean;\nIf |root| exists, but is empty (i.e. no child documents), then empty array is returned, right?\nCould you briefly mention that empty array and null have different meaning?",
+      "revId": "c6b0f51cc1730959dde0ec5260ecac5b477eb3d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fb6fbe_bb44f1cd",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-28T07:08:12Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c6b0f51cc1730959dde0ec5260ecac5b477eb3d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da9107d_823303d4",
+        "filename": "components/arc/test/fake_file_system_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-28T07:08:12Z",
+      "side": 1,
+      "message": "GetRecentDocumentsCallback?",
+      "revId": "c6b0f51cc1730959dde0ec5260ecac5b477eb3d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
