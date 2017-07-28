@@ -22,6 +22,30 @@
       "revId": "b9a5ed86ebcd9d3bf833da2c6b77321c5a5ff116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2bf4ce2_91bb66fa",
+        "filename": "chrome/browser/ui/page_info/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-07-28T18:04:32Z",
+      "side": 1,
+      "message": "Done (ninja\u0027ed :-P)",
+      "parentUuid": "4cc25a38_422544f9",
+      "range": {
+        "startLine": 9,
+        "startChar": 40,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "b9a5ed86ebcd9d3bf833da2c6b77321c5a5ff116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
