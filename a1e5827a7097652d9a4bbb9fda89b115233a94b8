@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "921b52c1_303c6cc4",
+        "filename": "media/base/cdm_output_protection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "This is CDM specific, let\u0027s put it under media/cdm? Then we don\u0027t need \"CDM\" in the file name, it can just be output_protection.h.",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321e7924_b81cabe2",
+        "filename": "media/base/cdm_output_protection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "LinkType is not defined.",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbe4527_7d718f84",
+        "filename": "media/base/cdm_output_protection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "ProtectionType is not defined.",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59cdd5f_36b23b7d",
+        "filename": "media/base/cdm_platform_verification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "ditto about location and file name",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83d16281_4818eee6",
         "filename": "media/cdm/cdm_adapter.cc",
         "patchSetId": 1
@@ -42,6 +116,108 @@
         "endLine": 1106,
         "endChar": 35
       },
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3708d05_f64e472a",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "Are FileIO and CdmFileIO the same thing?",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f445aa_725e7ed1",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "ditto: s/Cdm// to make the names a bit shorter",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d9b31d_4a844c7e",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "ditto: s/Cdm//",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e7cb72_84424fb7",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "This makes me wonder whether having a helper class here would be cleaner than having multiple callbacks. Note that we also have a bug to group the 4 callbacks below into a class. \n\nIt\u0027ll also make the tests easier to write since you can mock the helper class directly.\n\nWDYT?",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c334fb6_fcb21806",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "Typically we have something like\n\nstd::unique_ptr\u003cPlatformVerification\u003e GetPlatformVerification()\n\nwhich will lazy-create |platform_verification_| if it\u0027s not created yet.\n\nIt\u0027s a bit odd to create objects in an IsFoo() call.",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d9e8d9_76894a20",
+        "filename": "media/cdm/cdm_adapter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T04:51:45Z",
+      "side": 1,
+      "message": "Thoughts for discussion: I wonder whether we should decouple CdmAdapterTest from ECK. Currently there are some duplication between this test and the browser test. Also, using ECK makes fine control of this test much harder. In theory, we can just mock a cdm::ContentDecryptionModule, and test CdmAdapter against it. Then we can do anything we like in this test.",
       "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
