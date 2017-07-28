@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e99e8c0_afc3f5a8",
+        "filename": "components/offline_pages/core/offline_time_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-28T00:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33edcc05_f40f0533",
+      "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68690c02_1198ff1c",
         "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T00:08:25Z",
       "side": 1,
       "message": "It looks like it\u0027s usually:\nconst char[] kFoo \u003d \"foo string\";\nThis requires zero initialization, while std::strings have to be built at load time.\nNot very important for test code, but could be good to be consistent.",
+      "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e646c9a_a87f9c96",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-28T00:47:26Z",
+      "side": 1,
+      "message": "Used that pattern and moved to the header but I had to take it out of the class scope (renamed accordingly).",
+      "parentUuid": "68690c02_1198ff1c",
       "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07e9e12_ea81601e",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-28T00:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74dc6cf4_52de51e7",
+      "revId": "b8ee4d62b4ad1ed87253cb0890437cc38c41283f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
