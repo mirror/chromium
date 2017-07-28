@@ -16,6 +16,24 @@
       "revId": "a8de2d5baf5d3163255b004151ff3b296d36b4de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5476a9d_4861a742",
+        "filename": "extensions/browser/api/system_storage/system_storage_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1234874
+      },
+      "writtenOn": "2017-07-28T01:33:47Z",
+      "side": 1,
+      "message": "It looks better. I didn\u0027t know this usage before. Thanks much! I will update that.",
+      "parentUuid": "1f1e29d8_779c735c",
+      "revId": "a8de2d5baf5d3163255b004151ff3b296d36b4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
