@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87b1e435_e339710c",
+        "filename": "chrome/browser/resources/md_bookmarks/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-28T03:52:01Z",
+      "side": 1,
+      "message": "Changes to the persistent backend are made by directly calling the extensions API. chrome.bookmarks events then fire which create these actions and apply them to the model, updating the page.",
+      "revId": "215be5676bf867b4c679133f9a2689704fa66710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
