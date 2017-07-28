@@ -22,6 +22,30 @@
       "revId": "e8208e25fcbe35b49ebad41c00701b15f25852e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c40ee1d_020d4024",
+        "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-28T21:17:06Z",
+      "side": 1,
+      "message": "Done, thanks for the pointers!",
+      "parentUuid": "d839fb88_74aa9132",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 67
+      },
+      "revId": "e8208e25fcbe35b49ebad41c00701b15f25852e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
