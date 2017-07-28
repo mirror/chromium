@@ -27,6 +27,7 @@ component("message_center") {
   deps = [
     "//base",
     "//ui/base",
+    "//ui/strings",
     "//url",
   ]
 
@@ -46,7 +47,6 @@ component("message_center") {
       "//ui/gfx/geometry",
       "//ui/native_theme",
       "//ui/resources",
-      "//ui/strings",
     ]
 
     configs += [

@@ -100,6 +100,12 @@ const SkColor kSmallImageMaskBackgroundColor = SkColorSetRGB(0xa3, 0xa3, 0xa3);
 const SkColor kControlButtonBackgroundColor =
     SkColorSetA(SK_ColorWHITE, 0.9 * 0xff);
 
+// Accent colors of system notifications.
+const SkColor kSystemNotificationColorNormal = SkColorSetRGB(0x33, 0x67, 0xd6);
+const SkColor kSystemNotificationColorWarning = SkColorSetRGB(0xea, 0x61, 0x0);
+const SkColor kSystemNotificationColorCriticalWarning =
+    SkColorSetRGB(0xc5, 0x39, 0x29);
+
 // Limits.
 
 // Given the size of an image, returns the size of the properly scaled-up image

@@ -62,3 +62,7 @@ message_center::MessageCenterTray*
 MessageCenterTrayBridge::GetMessageCenterTray() {
   return tray_.get();
 }
+
+base::string16 MessageCenterTrayBridge::GetProductOSName() {
+  return base::string16();
+}

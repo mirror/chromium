@@ -137,6 +137,10 @@ base::string16 ShellDelegateImpl::GetProductName() const {
   return base::string16();
 }
 
+base::string16 ShellDelegateImpl::GetProductOSName() const {
+  return base::string16();
+}
+
 gfx::Image ShellDelegateImpl::GetDeprecatedAcceleratorImage() const {
   return gfx::Image();
 }

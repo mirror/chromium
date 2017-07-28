@@ -142,6 +142,12 @@ void FakeMessageCenter::RestartPopupTimers() {}
 
 void FakeMessageCenter::PausePopupTimers() {}
 
+base::string16 FakeMessageCenter::GetProductOSName() {
+  return base::string16();
+}
+void FakeMessageCenter::SetProductOSName(
+    const base::string16& product_os_name) {}
+
 void FakeMessageCenter::DisableTimersForTest() {}
 
 void FakeMessageCenter::EnableChangeQueueForTest(bool enabled) {}

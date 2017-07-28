@@ -42,6 +42,7 @@ class MessageCenterTrayBridge :
   bool ShowNotifierSettings() override;
   bool IsContextMenuEnabled() const override;
   message_center::MessageCenterTray* GetMessageCenterTray() override;
+  base::string16 GetProductOSName() override;
 
   message_center::MessageCenter* message_center() { return message_center_; }
 
