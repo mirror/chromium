@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b5543611_37517321",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-28T17:39:54Z",
+      "side": 1,
+      "message": "Ok. I think somebody has to strink/grow/check whether it\u0027s a hash or vector. \n\nPeople do do silly things like have 1000+ offline contexts. :-)\n\nUp to you on using a hash or vector.",
+      "parentUuid": "5d34b683_81795487",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94dd682f_864028b0",
         "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
         "patchSetId": 9
@@ -135,6 +153,24 @@
       "side": 1,
       "message": "This part has not been changed from the first patch set and nhiroki@ did not raise any flag. Do we want one more look from him?",
       "parentUuid": "94dd682f_864028b0",
+      "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303d00f6_6e70db1a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/WindowAudioWorklet.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-28T17:39:54Z",
+      "side": 1,
+      "message": "Oh.  I\u0027ll leave this to you then.",
+      "parentUuid": "ab4a03b3_0d6a6a8c",
       "revId": "4e63457533eb68f4b9304f11adaefde2ba4e68ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
