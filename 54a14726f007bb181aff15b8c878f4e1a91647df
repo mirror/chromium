@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c553755f_641452db",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T20:19:36Z",
+      "side": 1,
+      "message": "nit: this api doesn\u0027t look very elegant now with the second argument being used depending on the value of the first one. I\u0027d change it to two separate methods like SwithToRemoteRenderer(const std::string\u0026 remote_device_friendly_name) and SwitchToLocalRenderer();",
+      "revId": "54a14726f007bb181aff15b8c878f4e1a91647df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67347bc_49ebea83",
+        "filename": "third_party/WebKit/public/platform/WebLocalizedString.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T20:19:36Z",
+      "side": 1,
+      "message": "nit: s/Unknown/UnknownDevice for clarity?",
+      "revId": "54a14726f007bb181aff15b8c878f4e1a91647df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
