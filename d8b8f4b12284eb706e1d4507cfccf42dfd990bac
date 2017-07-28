@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d401771c_503c4cde",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "How about |++current_suggetion_marker_tag_| to avoid using zero as tag\nto use |tag \u003d\u003d 0| as invalid marker?\n\nIt seems it is better to have class member \nSuggetionMarker::NextSuggetionMarkerTag() to make DMC free from tag management.",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082b795e_d0be158e",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "Could you initialize |next_suggetions_marker_tag_| here to avoid forgetting\ninitialization when introducing new constructor.",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3913153a_155d361a",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "I would like to add DCHECK_GT(tag_, 0); I assume 0 and negative are invalid a tag.",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecff45a_021a3ab6",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "nit: DCHECK_LT(static_cast\u003csize_t\u003e(suggetion_index), suggestions_.size())\n\nCating to wide number is prefered rather than truncating to avoid losing bits.",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a10806c_2e14e291",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "nit: s/int32_t/const int32_t/",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166a73e8_a2da14cb",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "nit: s/Vector\u003cString\u003e/const Vector\u003cString\u003e/",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d3da03_36c6b861",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "nit: s/RemoveUponReplace/const RemoveUponReplace/",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3ff81e_5a9312cb",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "nit: s/Color/const Color/",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a26a37d_3bb59242",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "Could you move |did_remove_marker| here?\n\nconst bool did_remove_marker \u003d!unremoved_markers.IsEmpty();",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18b80d5_795d023a",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "Could you move this change into another patch for ease of review?",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c0c819_3925bf1c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T01:39:31Z",
+      "side": 1,
+      "message": "Could you move this change into another patch for ease of review?",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
