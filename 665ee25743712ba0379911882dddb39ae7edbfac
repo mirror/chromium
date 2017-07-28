@@ -22,6 +22,30 @@
       "revId": "665ee25743712ba0379911882dddb39ae7edbfac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ad2f15_7993bc93",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-28T22:28:57Z",
+      "side": 1,
+      "message": "I have no objections, but since this CL is closed maybe file a bug or change it in your next CL that uses |tab_manager_stats_collector_|?",
+      "parentUuid": "261e059c_db2cd85d",
+      "range": {
+        "startLine": 479,
+        "startChar": 44,
+        "endLine": 479,
+        "endChar": 72
+      },
+      "revId": "665ee25743712ba0379911882dddb39ae7edbfac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
