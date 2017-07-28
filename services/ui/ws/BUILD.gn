@@ -148,6 +148,7 @@ static_library("lib") {
     "//services/ui/public/interfaces",
     "//services/viz/compositing/privileged/interfaces",
     "//ui/base",
+    "//ui/compositor",
     "//ui/display",
     "//ui/events",
     "//ui/events/devices",
