@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e4e98f10_3e2a34e0",
+        "filename": "components/cryptauth/secure_channel.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-28T18:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5572d094_632963b0",
+      "range": {
+        "startLine": 93,
+        "startChar": 24,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cf5333c_2433885d",
         "filename": "components/cryptauth/secure_channel_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T03:15:01Z",
       "side": 1,
       "message": "Do you really need a vector for this? You seem to be just comparing the last sequence_number below.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e66805e_b3ebeefb",
+        "filename": "components/cryptauth/secure_channel_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-28T18:40:05Z",
+      "side": 1,
+      "message": "Using a vector guarantees us that our tests don\u0027t pass \"by accident\". If we just stored the most recent sequence number, it could be the case that we actually had the same sequence number twice; using a vector ensures that we look at the value as well as the number of values we have total.",
+      "parentUuid": "9cf5333c_2433885d",
       "range": {
         "startLine": 70,
         "startChar": 4,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c5d5310e_ae6eae83",
+        "filename": "components/cryptauth/wire_message.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-28T18:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "078962d3_1d32e3e2",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "520e144d_69ff77a5",
         "filename": "components/cryptauth/wire_message.h",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2017-07-28T03:15:01Z",
       "side": 1,
       "message": "Is this a valid use case of WireMessage?",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 78
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d3f35b1_2c8f03cc",
+        "filename": "components/cryptauth/wire_message.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-28T18:40:05Z",
+      "side": 1,
+      "message": "Yes - Deserialize() does not provide a sequence number.",
+      "parentUuid": "520e144d_69ff77a5",
       "range": {
         "startLine": 62,
         "startChar": 39,
