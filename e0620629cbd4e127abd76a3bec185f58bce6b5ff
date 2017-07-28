@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733d7374_29e56336",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "Sanity check: why is this true?  When is frame_connector_ null? Is it only during destruction?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7f21a5_22b051f9",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "Should this be \"ancestor frame\", rather than \"parent frame\", since it will recurse up the RWHV chain?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a884747_7354debb",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7114,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "Would TestTimeouts::tiny_timeout() make sense here?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fcc824_5a61cb6c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7150,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "There\u0027s already frame_tree/page_with_two_frames.html, would that work instead of adding a new file?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e96a76_79423c8b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7159,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "NavigateFrameToURL will wait for the navigation to finish using TestFrameNavigationObserver internally, so there\u0027s no need for another TestFrameNavigationObserver here.  Same for second frame and other test.",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08b0d2b_5f5dab0f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7175,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "RenderFrameHostCreatedObserver might be cleaner to wait for this.  There\u0027s an example on line 2709.",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033b1c65_73ab0d2d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7213,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "nit: can use ASSERT_LE and drop the +1",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a61566_b63f7019",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7217,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this check.  If it checks that the two child frames have roughly the same count, then what if the first frame has received 20 frames and the second has received 1 frame -  the ratio will be 20 and it will still pass this check, no?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d37d75_b0fb7628",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7226,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "nit: can this just use first_child_view-\u003eGetRenderWidgetHost()?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366aa1cd_1fa31394",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7233,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "Would it be worth verifying first_child_view-\u003eFrameConnectorForTesting()-\u003eis_hidden() here?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9069c8_200f7025",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7234,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "Maybe also check CanBecomeVisible() on all the views, before/after the visibility change, to make sure that it reflects the change properly?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d0e923_c108a1c6",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7256,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "nit: s/to cross origin/cross-origin/",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97240d94_78f3218d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7299,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "This needs to come before the ExecuteScript, otherwise there could be a race.  (Even though the RFH changes, this should be ok to use, as it looks up the WebContents and FTN ID at construction time and doesn\u0027t use the RFH thereafter.)",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e30537_27f58256",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7319,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "For the check it seems like the hidden frame might still swap some frames, no?  Is there a reason we couldn\u0027t just assert that first_counter.GetCount() is zero?",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d73c00a_d2aaee3b",
+        "filename": "content/test/data/counter.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-28T17:31:36Z",
+      "side": 1,
+      "message": "nit: s/Couting/Counting/",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
