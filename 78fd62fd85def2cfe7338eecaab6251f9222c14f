@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c02050d3_c61fcd73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-28T00:24:25Z",
+      "side": 1,
+      "message": "nit: please link to relevant spec in commit message :)",
+      "revId": "78fd62fd85def2cfe7338eecaab6251f9222c14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f19b4c_a5e3efd5",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-28T00:24:25Z",
+      "side": 1,
+      "message": "this logic should probably go inside the other AdjustComputedStyle with the rest of the element specific logic. This method is just a wrapper",
+      "revId": "78fd62fd85def2cfe7338eecaab6251f9222c14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
