@@ -70,6 +70,24 @@
       "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e72a3d_23872cf1",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-28T22:02:07Z",
+      "side": 1,
+      "message": "I would lean towards just passing the port to the MRP rather than creating another structure that duplicates an existing one.",
+      "parentUuid": "0eabf272_10d28d42",
+      "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
