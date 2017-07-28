@@ -21,6 +21,7 @@
 #include "components/favicon_base/fallback_icon_style.h"
 #include "components/favicon_base/favicon_types.h"
 #include "components/ntp_snippets/content_suggestions_metrics.h"
+#include "components/ntp_snippets/contextual_suggestions_source.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
 #include "components/prefs/pref_registry_simple.h"
