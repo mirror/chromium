@@ -7,9 +7,11 @@
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "cc/base/math_util.h"
 #include "chrome/browser/vr/databinding/one_way_binding.h"
 #include "chrome/browser/vr/databinding/vector_binding.h"
+#include "chrome/browser/vr/elements/bar.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/close_button_texture.h"
 #include "chrome/browser/vr/elements/content_element.h"
@@ -18,10 +20,12 @@
 #include "chrome/browser/vr/elements/exit_prompt_backplane.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/loading_indicator.h"
+#include "chrome/browser/vr/elements/location_bar.h"
 #include "chrome/browser/vr/elements/paged_grid_view.h"
 #include "chrome/browser/vr/elements/screen_dimmer.h"
 #include "chrome/browser/vr/elements/splash_screen_icon.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
+#include "chrome/browser/vr/elements/tab_item.h"
 #include "chrome/browser/vr/elements/transient_url_bar.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
@@ -33,6 +37,7 @@
 #include "chrome/browser/vr/ui_browser_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/vr_shell_resources.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/transform_util.h"
 
@@ -200,11 +205,9 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateExitPrompt();
   CreateToasts();
   CreateSplashScreen();
-
 #if HACKERY
   CreateModel();
-
-  CreatePagedGrid();
+  CreateTabMenu();
 #endif
 
   ConfigureScene();
@@ -564,16 +567,31 @@ void UiSceneManager::CreateToasts() {
 }
 
 // XXX: the fact that this all lives here is hackery for the demo.
-typedef VectorBinding<TabModel, UiElement> TabSetBinding;
+typedef VectorBinding<TabModel, TabItem> TabSetBinding;
 typedef typename TabSetBinding::ElementBinding TabBinding;
+
+base::string16 GetTitle(TabBinding* element) {
+  return element->model()->title;
+}
+
+void SetTitle(TabBinding* element, const base::string16& title) {
+  element->view()->SetTitle(title);
+}
 
 SkColor GetColor(TabBinding* element) {
   return element->model()->color;
 }
 
 void SetColor(TabBinding* element, const SkColor& color) {
-  element->view()->set_center_color(color);
-  element->view()->set_edge_color(color);
+  element->view()->SetColor(color);
+}
+
+int GetImageId(TabBinding* element) {
+  return element->model()->image_id;
+}
+
+void SetImageId(TabBinding* element, const int& image_id) {
+  element->view()->SetImageId(image_id);
 }
 
 // XXX: it's unfortunate to pass the scene manager here. We only do it to get
@@ -583,23 +601,29 @@ void OnModelAdded(UiSceneManager* mgr,
                   UiScene* scene,
                   PagedGridView* view,
                   TabBinding* tab_binding) {
-  std::unique_ptr<UiElement> element = base::MakeUnique<UiElement>();
+  auto element = base::MakeUnique<TabItem>();
   element->set_id(mgr->AllocateId());
   element->set_draw_phase(kPhaseForeground);
   element->SetSize(kContentWidth / 4.1f, kContentHeight / 3.5f);
-  element->set_fill(vr::Fill::OPAQUE_GRADIENT);
-  element->set_center_color(SK_ColorWHITE);
-  element->set_edge_color(SK_ColorWHITE);
   element->SetVisible(true);
-  element->animation_player().SetTransitionedProperties({OPACITY});
+  element->animation_player().SetTransitionedProperties({OPACITY, TRANSFORM});
   tab_binding->set_view(element.get());
   view->AddChild(element.get());
+
+  std::unique_ptr<Binding> title_binding(new OneWayBinding<base::string16>(
+      base::Bind(&GetTitle, base::Unretained(tab_binding)),
+      base::Bind(&SetTitle, base::Unretained(tab_binding))));
+  tab_binding->bindings().push_back(std::move(title_binding));
 
   std::unique_ptr<Binding> color_binding(new OneWayBinding<SkColor>(
       base::Bind(&GetColor, base::Unretained(tab_binding)),
       base::Bind(&SetColor, base::Unretained(tab_binding))));
-
   tab_binding->bindings().push_back(std::move(color_binding));
+
+  std::unique_ptr<Binding> image_id_binding(new OneWayBinding<int>(
+      base::Bind(&GetImageId, base::Unretained(tab_binding)),
+      base::Bind(&SetImageId, base::Unretained(tab_binding))));
+  tab_binding->bindings().push_back(std::move(image_id_binding));
 
   scene->AddUiElement(std::move(element));
 }
@@ -609,25 +633,14 @@ void OnModelRemoved(UiScene* scene, TabBinding* binding) {
 }
 
 void UiSceneManager::CreateModel() {
-  // TODO(vollick,tiborg): connect this to real values.
-  TabSetModel current;
-  for (size_t i = 0; i < arraysize(kTabColors); ++i) {
-    std::string name = base::StringPrintf("current_%zu", i);
-    current.tabs.push_back(TabModel(name, i, kTabColors[i]));
-  }
-
+  TabSetModel non_incognito;
   TabSetModel incognito;
   incognito.incognito = true;
-  for (size_t i = 0; i < arraysize(kTabColors); ++i) {
-    std::string name = base::StringPrintf("incognito_%zu", i);
-    incognito.tabs.push_back(TabModel(name, i, kTabColors[i]));
-  }
-
-  tab_sets_.push_back(current);
+  tab_sets_.push_back(non_incognito);
   tab_sets_.push_back(incognito);
 }
 
-void UiSceneManager::CreatePagedGrid() {
+void UiSceneManager::CreateTabMenu() {
   // XXX: magic numbers ahoy.
   std::unique_ptr<PagedGridView> view =
       base::MakeUnique<PagedGridView>(2lu, 3lu, 0.08 * kContentHeight);
@@ -652,7 +665,7 @@ void UiSceneManager::CreatePagedGrid() {
   TabSetBinding::ModelRemovedCallback removed_callback =
       base::Bind(&OnModelRemoved, base::Unretained(scene_));
 
-  // Only binding the current tabs for now.
+  // Only binding the non_incognito tabs for now.
   std::unique_ptr<TabSetBinding> binding = base::MakeUnique<TabSetBinding>(
       &tab_sets_[0].tabs, added_callback, removed_callback);
 
@@ -661,28 +674,92 @@ void UiSceneManager::CreatePagedGrid() {
   page_grid_view_ = view.get();
   scene_->AddUiElement(std::move(view));
 
-  std::unique_ptr<LinearLayout> page_grid_layout =
-      base::MakeUnique<LinearLayout>(LinearLayout::kVertical);
-  page_grid_layout->set_id(AllocateId());
-  page_grid_layout->SetTranslate(0, kContentVerticalOffset,
-                                 -kContentDistance + 0.01f);
-  page_grid_layout->set_margin(kIndicatorGap);
-  page_grid_layout->AddChild(page_grid_view_);
+  auto background_element = base::MakeUnique<Bar>();
+  background_element->set_id(AllocateId());
+  background_element->SetVisible(true);
+  background_element->set_hit_testable(true);
+  background_element->set_draw_phase(kPhaseForeground);
+  background_element->SetColor(
+      ColorScheme::GetColorScheme(ColorScheme::Mode::kModeNormal)
+          .location_bar_background);
 
-  // This will eventually be replaced with the progress bar.
-  auto rect = base::MakeUnique<UiElement>();
-  rect->set_id(AllocateId());
-  rect->SetSize(kUrlBarHeight, kUrlBarHeight);
-  rect->set_fill(Fill::OPAQUE_GRADIENT);
-  rect->set_draw_phase(kPhaseForeground);
-  rect->set_center_color(SK_ColorGREEN);
-  rect->set_edge_color(SK_ColorGREEN);
-  rect->SetVisible(true);
+  constexpr float kLocationBarWidth = 1.0f;
+  auto thumb_element = base::MakeUnique<Bar>();
+  thumb_element->set_id(AllocateId());
+  thumb_element->SetSize(kLocationBarWidth / 2, 0.06f);
+  thumb_element->SetVisible(true);
+  thumb_element->set_hit_testable(true);
+  thumb_element->set_draw_phase(kPhaseForeground);
+  thumb_element->SetColor(
+      ColorScheme::GetColorScheme(ColorScheme::Mode::kModeNormal)
+          .location_bar_thumb);
+  thumb_element->animation_player().SetTransitionedProperties({TRANSFORM});
+  location_bar_thumb_ = thumb_element.get();
 
-  page_grid_layout->AddChild(rect.get());
+  auto location_bar_element = base::MakeUnique<LocationBar>(
+      background_element.get(), thumb_element.get());
+  location_bar_element->set_id(AllocateId());
+  location_bar_element->SetSize(kLocationBarWidth, 0.05f);
+  location_bar_element->SetTranslate(0.0, 0.0, 0.0);
+  location_bar_element->SetVisible(true);
+  location_bar_element->set_hit_testable(true);
+  location_bar_element->set_draw_phase(kPhaseForeground);
+  location_bar_ = location_bar_element.get();
 
-  scene_->AddUiElement(std::move(page_grid_layout));
-  scene_->AddUiElement(std::move(rect));
+  scene_->AddUiElement(std::move(background_element));
+  scene_->AddUiElement(std::move(thumb_element));
+  scene_->AddUiElement(std::move(location_bar_element));
+
+  // Bind location bar to tab model.
+  auto range_binding = base::MakeUnique<OneWayBinding<size_t>>(
+      base::Bind(
+          [](PagedGridView* page_grid_view) {
+            return page_grid_view->NumPages();
+          },
+          base::Unretained(page_grid_view_)),
+      base::Bind([](LocationBar* location_bar,
+                    const size_t& range) { location_bar->SetRange(range); },
+                 base::Unretained(location_bar_)));
+  scene_->bindings().push_back(std::move(range_binding));
+
+  auto position_binding = base::MakeUnique<OneWayBinding<size_t>>(
+      base::Bind(
+          [](PagedGridView* page_grid_view) {
+            return page_grid_view->CurrentPage();
+          },
+          base::Unretained(page_grid_view_)),
+      base::Bind(
+          [](LocationBar* location_bar, const size_t& position) {
+            location_bar->SetPosition(position);
+          },
+          base::Unretained(location_bar_)));
+  scene_->bindings().push_back(std::move(position_binding));
+
+  // TODO(tiborg): This is a bit weird since the background size is set in
+  // LocationBar and the thumb size is set via bindings. Better to set the
+  // background size here instead.
+  auto width_binding = base::MakeUnique<OneWayBinding<float>>(
+      base::Bind(
+          [](PagedGridView* page_grid_view) {
+            return kLocationBarWidth / page_grid_view->NumPages();
+          },
+          base::Unretained(page_grid_view_)),
+      base::Bind(
+          [](UiElement* location_bar_thumb, const float& width) {
+            location_bar_thumb->SetSize(width,
+                                        location_bar_thumb->size().height());
+          },
+          base::Unretained(location_bar_thumb_)));
+  scene_->bindings().push_back(std::move(width_binding));
+
+  auto tab_menu =
+      base::MakeUnique<LinearLayout>(LinearLayout::Direction::kVertical);
+  tab_menu->set_id(AllocateId());
+  tab_menu->SetTranslate(0, kContentVerticalOffset, -kContentDistance + 0.01f);
+  tab_menu->AddChild(location_bar_);
+  tab_menu->AddChild(page_grid_view_);
+  tab_menu->set_hit_testable(false);
+  scene_->AddUiElement(std::move(tab_menu));
 }
 
 base::WeakPtr<UiSceneManager> UiSceneManager::GetWeakPtr() {
@@ -1019,6 +1096,34 @@ int UiSceneManager::AllocateId() {
   return next_available_id_++;
 }
 
+void UiSceneManager::AddOrUpdateTab(bool incognito,
+                                    int id,
+                                    const base::string16& title) {
+  TabSetModel& tab_set = GetTabSet(incognito);
+  auto it = FindTab(incognito, id);
+  if (it == tab_set.tabs.end()) {
+    // Adding a tab.
+    constexpr int kImageIds[] = {
+        IDR_VR_SHELL_TAB_MOCK_0, IDR_VR_SHELL_TAB_MOCK_1,
+        IDR_VR_SHELL_TAB_MOCK_2, IDR_VR_SHELL_TAB_MOCK_3,
+        IDR_VR_SHELL_TAB_MOCK_4, -1,
+    };
+    auto color = kTabColors[std::rand() % arraysize(kTabColors)];
+    auto image_id = kImageIds[std::rand() % arraysize(kImageIds)];
+    tab_set.tabs.push_back(TabModel(title, id, color, image_id));
+  } else {
+    // Updating a tab.
+    it->title = title;
+  }
+}
+
+void UiSceneManager::RemoveTab(bool incognito, int id) {
+  TabSetModel& tab_set = GetTabSet(incognito);
+  auto it = FindTab(incognito, id);
+  DCHECK(it != tab_set.tabs.end());
+  tab_set.tabs.erase(it);
+}
+
 ColorScheme::Mode UiSceneManager::mode() const {
   if (incognito_)
     return ColorScheme::kModeIncognito;
@@ -1029,6 +1134,17 @@ ColorScheme::Mode UiSceneManager::mode() const {
 
 const ColorScheme& UiSceneManager::color_scheme() const {
   return ColorScheme::GetColorScheme(mode());
+}
+
+TabSetModel& UiSceneManager::GetTabSet(bool incognito) {
+  return tab_sets_[incognito ? 1 : 0];
+}
+
+std::vector<TabModel>::iterator UiSceneManager::FindTab(bool incognito,
+                                                        int id) {
+  TabSetModel& tab_set = GetTabSet(incognito);
+  return std::find_if(tab_set.tabs.begin(), tab_set.tabs.end(),
+                      [id](const TabModel& model) { return model.id == id; });
 }
 
 }  // namespace vr

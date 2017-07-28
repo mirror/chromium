@@ -29,6 +29,7 @@ class UiScene;
 class UrlBar;
 class ExitPrompt;
 class PagedGridView;
+class LocationBar;
 
 class UiSceneManager {
  public:
@@ -72,6 +73,10 @@ class UiSceneManager {
 
   int AllocateId();
 
+  // Tab handling.
+  void AddOrUpdateTab(bool incognito, int id, const base::string16& title);
+  void RemoveTab(bool incognito, int id);
+
  private:
   void CreateScreenDimmer();
   void CreateSecurityWarnings();
@@ -85,7 +90,7 @@ class UiSceneManager {
   void CreateExitPrompt();
   void CreateToasts();
   void CreateModel();
-  void CreatePagedGrid();
+  void CreateTabMenu();
 
   void ConfigureScene();
   void ConfigureSecurityWarnings();
@@ -100,6 +105,8 @@ class UiSceneManager {
   void OnUnsupportedMode(UiUnsupportedMode mode);
   ColorScheme::Mode mode() const;
   const ColorScheme& color_scheme() const;
+  TabSetModel& GetTabSet(bool incognito);
+  std::vector<TabModel>::iterator FindTab(bool incognito, int id);
 
   UiBrowserInterface* browser_;
   UiScene* scene_;
@@ -126,6 +133,8 @@ class UiSceneManager {
   TransientUrlBar* transient_url_bar_ = nullptr;
   LoadingIndicator* loading_indicator_ = nullptr;
   PagedGridView* page_grid_view_ = nullptr;
+  UiElement* location_bar_thumb_ = nullptr;
+  LocationBar* location_bar_ = nullptr;
 
   std::vector<UiElement*> system_indicators_;
 

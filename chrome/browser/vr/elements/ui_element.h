@@ -146,7 +146,7 @@ class UiElement : public cc::AnimationTarget {
 
   // The size of the object.  This does not affect children.
   gfx::SizeF size() const { return size_; }
-  void SetSize(float width, float hight);
+  virtual void SetSize(float width, float height);
 
   // It is assumed that operations is of size 4 with a component for layout
   // translation, translation, rotation and scale, in that order (see

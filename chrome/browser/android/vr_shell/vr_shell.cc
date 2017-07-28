@@ -385,7 +385,6 @@ void VrShell::OnTabListCreated(JNIEnv* env,
                                jobjectArray incognito_tabs) {
   ProcessTabArray(env, tabs, false);
   ProcessTabArray(env, incognito_tabs, true);
-  ui_->FlushTabList();
 }
 
 void VrShell::ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito) {
@@ -394,7 +393,7 @@ void VrShell::ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito) {
     jobject jtab = env->GetObjectArrayElement(tabs, i);
     TabAndroid* tab =
         TabAndroid::GetNativeTab(env, JavaParamRef<jobject>(env, jtab));
-    ui_->AppendToTabList(incognito, tab->GetAndroidId(), tab->GetTitle());
+    ui_->AddOrUpdateTab(incognito, tab->GetAndroidId(), tab->GetTitle());
   }
 }
 
@@ -403,9 +402,9 @@ void VrShell::OnTabUpdated(JNIEnv* env,
                            jboolean incognito,
                            jint id,
                            jstring jtitle) {
-  std::string title;
-  base::android::ConvertJavaStringToUTF8(env, jtitle, &title);
-  ui_->UpdateTab(incognito, id, title);
+  base::string16 title;
+  base::android::ConvertJavaStringToUTF16(env, jtitle, &title);
+  ui_->AddOrUpdateTab(incognito, id, title);
 }
 
 void VrShell::OnTabRemoved(JNIEnv* env,
