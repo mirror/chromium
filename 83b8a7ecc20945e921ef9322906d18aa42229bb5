@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a4a2b47_eae7be20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T22:46:18Z",
+      "side": 1,
+      "message": "Is it cleaner to just pass the intent through here and just have finishNativeInitialization call propagateInteraction(intent)?",
+      "range": {
+        "startLine": 136,
+        "startChar": 48,
+        "endLine": 136,
+        "endChar": 86
+      },
+      "revId": "83b8a7ecc20945e921ef9322906d18aa42229bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

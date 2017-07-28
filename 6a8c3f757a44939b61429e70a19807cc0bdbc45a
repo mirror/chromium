@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "398e71aa_8de5230c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T22:46:18Z",
+      "side": 1,
+      "message": "Ah actually this gave me an idea.  To make this safe for native library load, can we just cancel the task when we get an intent, and then just post the new delay after the native library loads?",
+      "parentUuid": "1852eac6_812a01c4",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "635bd6ff_33ccb01b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 9
