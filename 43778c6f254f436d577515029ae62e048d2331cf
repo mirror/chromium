@@ -22,6 +22,30 @@
       "revId": "43778c6f254f436d577515029ae62e048d2331cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17475db3_34d31362",
+        "filename": "base/values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-28T22:17:57Z",
+      "side": 1,
+      "message": "Looks like I spoke to soon ...",
+      "parentUuid": "7f191174_19a6ec3b",
+      "range": {
+        "startLine": 283,
+        "startChar": 21,
+        "endLine": 283,
+        "endChar": 24
+      },
+      "revId": "43778c6f254f436d577515029ae62e048d2331cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
