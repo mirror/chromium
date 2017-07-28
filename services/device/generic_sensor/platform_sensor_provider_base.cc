@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/stl_util.h"
+#include "services/device/generic_sensor/platform_sensor_fusion.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 
 namespace device {
@@ -96,6 +97,16 @@ PlatformSensorProviderBase::CloneSharedBufferHandle() {
 bool PlatformSensorProviderBase::HasSensors() const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return !sensor_map_.empty();
+}
+
+void PlatformSensorProviderBase::AddFusionSensor(
+    scoped_refptr<PlatformSensorFusion> fusion_sensor) {
+  fusion_sensors_.insert(fusion_sensor);
+}
+
+void PlatformSensorProviderBase::RemoveFusionSensor(
+    PlatformSensorFusion* fusion_sensor) {
+  fusion_sensors_.erase(fusion_sensor);
 }
 
 void PlatformSensorProviderBase::NotifySensorCreated(

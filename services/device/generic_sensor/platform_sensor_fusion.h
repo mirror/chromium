@@ -64,6 +64,7 @@ class PlatformSensorFusion : public PlatformSensor,
   void CreateSensorSucceeded();
 
   size_t num_sensors_created_ = 0;
+  size_t num_sensors_failed_ = 0;
   PlatformSensorProviderBase::CreateSensorCallback callback_;
   SensorReading reading_;
   std::vector<scoped_refptr<PlatformSensor>> source_sensors_;

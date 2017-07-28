@@ -97,6 +97,7 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
   // thread, notifications are forwarded to |task_runner_|.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   base::ObserverList<Client, true> clients_;
+  PlatformSensorProvider* provider_;
 
  private:
   friend class base::RefCountedThreadSafe<PlatformSensor>;
@@ -104,7 +105,6 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
   std::unique_ptr<SensorReadingSharedBufferReader> shared_buffer_reader_;
   mojom::SensorType type_;
   ConfigMap config_map_;
-  PlatformSensorProvider* provider_;
   base::WeakPtrFactory<PlatformSensor> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(PlatformSensor);
 };

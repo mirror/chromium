@@ -134,8 +134,16 @@ void PlatformSensorFusion::CreateSensorCallback(
   source_sensors_[index] = sensor;
   if (source_sensors_[index])
     CreateSensorSucceeded();
-  else if (callback_)
-    std::move(callback_).Run(nullptr);
+  else {
+    ++num_sensors_failed_;
+    if (callback_)
+      std::move(callback_).Run(nullptr);
+    if (num_sensors_created_ + num_sensors_failed_ == source_sensors_.size()) {
+      // All the |source_sensors_|'s callbacks are called, so it is safe to
+      // remove this object from the |provider_| which temporarily stores it.
+      provider_->RemoveFusionSensor(this);
+    }
+  }
 }
 
 void PlatformSensorFusion::CreateSensorSucceeded() {
@@ -147,6 +155,11 @@ void PlatformSensorFusion::CreateSensorSucceeded() {
     sensor->AddClient(this);
 
   callback_.Run(this);
+  // All the |source_sensors_|'s callbacks are called, so it is safe to
+  // remove this object from the |provider_| which temporarily stores it.
+  // And the above callback run will add a reference to it, so this object
+  // is still valid for the caller.
+  provider_->RemoveFusionSensor(this);
 }
 
 }  // namespace device

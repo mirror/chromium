@@ -5,13 +5,17 @@
 #ifndef SERVICES_DEVICE_GENERIC_SENSOR_PLATFORM_SENSOR_PROVIDER_BASE_H_
 #define SERVICES_DEVICE_GENERIC_SENSOR_PLATFORM_SENSOR_PROVIDER_BASE_H_
 
-#include "base/macros.h"
+#include <set>
 
+#include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "services/device/generic_sensor/platform_sensor.h"
 
 namespace device {
+
+class PlatformSensorFusion;
 
 // Base class that defines factory methods for PlatformSensor creation.
 // Its implementations must be accessed via GetInstance() method.
@@ -38,6 +42,9 @@ class PlatformSensorProviderBase {
   // to read from sensor files. For example, linux does so.
   virtual void SetFileTaskRunner(
       scoped_refptr<base::SingleThreadTaskRunner> file_task_runner) {}
+
+  void AddFusionSensor(scoped_refptr<PlatformSensorFusion> fusion_sensor);
+  void RemoveFusionSensor(PlatformSensorFusion* fusion_sensor);
 
  protected:
   PlatformSensorProviderBase();
@@ -74,6 +81,10 @@ class PlatformSensorProviderBase {
   std::map<mojom::SensorType, PlatformSensor*> sensor_map_;
   std::map<mojom::SensorType, CallbackQueue> requests_map_;
   mojo::ScopedSharedBufferHandle shared_buffer_handle_;
+  // The PlatformSensorFusion object is temporarily stored here in order to
+  // make it valid until we know whether this object is created successfully,
+  // after that, this object is deleted from the set.
+  std::set<scoped_refptr<PlatformSensorFusion>> fusion_sensors_;
 
   DISALLOW_COPY_AND_ASSIGN(PlatformSensorProviderBase);
 };
