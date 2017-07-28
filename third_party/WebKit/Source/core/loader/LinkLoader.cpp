@@ -185,8 +185,7 @@ static void DnsPrefetchIfNeeded(
     // FIXME: The href attribute of the link element can be in "//hostname"
     // form, and we shouldn't attempt to complete that as URL
     // <https://bugs.webkit.org/show_bug.cgi?id=48857>.
-    if (settings && settings->GetDNSPrefetchingEnabled() && href.IsValid() &&
-        !href.IsEmpty()) {
+    if (settings && settings->GetDNSPrefetchingEnabled() && !href.IsEmpty()) {
       if (settings->GetLogDnsPrefetchAndPreconnect()) {
         SendMessageToConsoleForPossiblyNullDocument(
             ConsoleMessage::Create(
@@ -207,8 +206,7 @@ static void PreconnectIfNeeded(
     const CrossOriginAttributeValue cross_origin,
     const NetworkHintsInterface& network_hints_interface,
     LinkCaller caller) {
-  if (rel_attribute.IsPreconnect() && href.IsValid() &&
-      href.ProtocolIsInHTTPFamily()) {
+  if (rel_attribute.IsPreconnect() && href.ProtocolIsInHTTPFamily()) {
     UseCounter::Count(frame, WebFeature::kLinkRelPreconnect);
     if (caller == kLinkCalledFromHeader)
       UseCounter::Count(frame, WebFeature::kLinkHeaderPreconnect);
@@ -339,7 +337,7 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
         String("<link rel=preload> has an unsupported `type` value")));
     return nullptr;
   }
-  ResourceRequest resource_request(document.CompleteURL(href));
+  ResourceRequest resource_request(href);
   resource_request.SetRequestContext(ResourceFetcher::DetermineRequestContext(
       resource_type.value(), ResourceFetcher::kImageNotImageSet, false));
 
@@ -376,7 +374,7 @@ static Resource* PrefetchIfNeeded(Document& document,
   if (rel_attribute.IsLinkPrefetch() && href.IsValid() && document.GetFrame()) {
     UseCounter::Count(document, WebFeature::kLinkRelPrefetch);
 
-    ResourceRequest resource_request(document.CompleteURL(href));
+    ResourceRequest resource_request(href);
     if (referrer_policy != kReferrerPolicyDefault) {
       resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
           referrer_policy, href, document.OutgoingReferrer()));
