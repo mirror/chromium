@@ -16,6 +16,24 @@
       "revId": "857224c18a82eee4d8f77e30cb9d338e56495633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25927e14_a27bb944",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-28T17:02:32Z",
+      "side": 1,
+      "message": "I must have copied the issue number off of https://chromium-review.googlesource.com/c/575383 rather than the bug number.\n\nProbably i should get off my butt and actually push on something like this proposal from a while back: https://groups.google.com/a/chromium.org/forum/#!searchin/chromium-dev/bug$20presubmit%7Csort:relevance/chromium-dev/v4Ht1r-p-ZI/uVqPMRfbAAAJ",
+      "parentUuid": "248200fd_0cfdf9c9",
+      "revId": "857224c18a82eee4d8f77e30cb9d338e56495633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
