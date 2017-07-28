@@ -186,6 +186,52 @@
     },
     {
       "key": {
+        "uuid": "9f548365_58b7d169",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "Can you add some comments? It\u0027d be good to know at a high level what this function is trying to do and why each direction is taken.",
+      "range": {
+        "startLine": 385,
+        "startChar": 56,
+        "endLine": 385,
+        "endChar": 0
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd8376f_fa3e25cd",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "Can we pull out the !entry case earlier in this function? It\u0027s a simple case to think about and two conditions depend on entry_.\n\nE.g.,\n\nif (!entry_) { \n  if (network_trans_) {\n    next_state_ \u003d\u003d STATE_NETWORK_READ;\n    return OK;\n  }\n  next_state_ \u003d STATE_NONE;\n  DCHECK_LT(shared_writing_error_, 0);\n  return shared_writing_error_;\n}",
+      "range": {
+        "startLine": 386,
+        "startChar": 6,
+        "endLine": 386,
+        "endChar": 12
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d16693c4_c6d192d6",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 3
@@ -220,6 +266,30 @@
       "writtenOn": "2017-07-28T17:30:11Z",
       "side": 1,
       "message": "The whole point of the TransitionToState() mini-refactor was to have a single place where state transitions were occurring, for searching and putting checks.  Willing to keep using that function?",
+      "range": {
+        "startLine": 393,
+        "startChar": 22,
+        "endLine": 393,
+        "endChar": 52
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5013b814_a2644564",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "We\u0027re not in the DoLoop here, we\u0027re directly called by Read, so TransitionToState doesn\u0027t make so much sense.",
+      "parentUuid": "f9a09c04_0a593b35",
       "range": {
         "startLine": 393,
         "startChar": 22,
@@ -272,6 +342,40 @@
         "endLine": 479,
         "endChar": 34
       },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf29ebf_46b34fcc",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "DCHECK that we\u0027re in the reading phase but that the state is NONE?",
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24b5ad5_ca6713f1",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "The Read() state machine just got more complex, and we need to address that in the comments here and below.",
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -347,6 +451,69 @@
     },
     {
       "key": {
+        "uuid": "00606eba_acab0e53",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "Public methods need a comment. Why is this made public?",
+      "range": {
+        "startLine": 186,
+        "startChar": 15,
+        "endLine": 186,
+        "endChar": 31
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad7877d_e6cb595e",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 190,
+        "startChar": 18,
+        "endLine": 190,
+        "endChar": 19
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51266e81_5db3b8f1",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "Due to this newline the block below is not part of the comment above (These states are entered from Read). Suggest removing newline.",
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05eb6c61_4400e896",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 3
@@ -363,6 +530,184 @@
         "startChar": 21,
         "endLine": 420,
         "endChar": 32
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0168ed7b_70cff7ae",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "What\u0027s the difference between, \"doesn\u0027t have to write to the cache anymore\" and DoneWritingToEntry which has the comment, \"called when we are done writing to the cache entry\"?",
+      "range": {
+        "startLine": 420,
+        "startChar": 33,
+        "endLine": 420,
+        "endChar": 54
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9541cfaa_87df510e",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 426,
+        "startChar": 54,
+        "endLine": 426,
+        "endChar": 55
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b25f0d_7d63bec5",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "That\u0027s a bit general. It\u0027s unclear when it might need to be called.",
+      "range": {
+        "startLine": 462,
+        "startChar": 2,
+        "endLine": 462,
+        "endChar": 66
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfe22b3_5af12c0f",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "Needs a line to describe what |success| is and how it\u0027s used.",
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8735d4_7c26cffe",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 131,
+        "endChar": 16
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f0bfe4_f2bf7f19",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "from",
+      "range": {
+        "startLine": 131,
+        "startChar": 44,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0e0906_b1e045bf",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "worth.\n\nWhat does it mean for an entry to be worth keeping?",
+      "range": {
+        "startLine": 134,
+        "startChar": 25,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71fe3ad_0c922ad0",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-28T18:43:20Z",
+      "side": 1,
+      "message": "base::RepeatingClosure.",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 24
       },
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
