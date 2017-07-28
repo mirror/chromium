@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4aa7c66d_06d098c6",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-28T20:00:07Z",
+      "side": 1,
+      "message": "Yes I believe that\u0027s safe. Done.",
+      "parentUuid": "017da97a_bf957f2c",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66b2c186_985b379d",
         "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5b5b58_557225dc",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-28T20:00:07Z",
+      "side": 1,
+      "message": "It\u0027s not super useful but it\u0027s just more data for how people are using the feature. A high count could indicate that devs are finding it useful to test their site, etc.\n\nDone.",
+      "parentUuid": "66b2c186_985b379d",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dcb7ac64_7da09406",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-28T20:00:07Z",
+      "side": 1,
+      "message": "Prefer not to since this would mean that the SubresourceFilterClient base class is imposing \"const\" on this method to all subclasses which might not be desired.\n\nThis is e.g. the style used in //content.",
+      "parentUuid": "ce6ff5e3_db945641",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cb7b4b9_07906147",
         "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
         "patchSetId": 13
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cecacb7b_6bde91fa",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-28T20:00:07Z",
+      "side": 1,
+      "message": "Done. Can you link to that discussion?",
+      "parentUuid": "3cb7b4b9_07906147",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a622ecc_35170ef6",
         "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
         "patchSetId": 13
@@ -84,6 +156,24 @@
       "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77492153_25c1563b",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-28T20:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a622ecc_35170ef6",
+      "revId": "276eebdeb65762e8adb6db2b1913c99f1e0f36a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
