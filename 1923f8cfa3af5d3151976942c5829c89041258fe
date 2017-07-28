@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa4fa800_79f0a914",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T09:58:38Z",
+      "side": 1,
+      "message": "Thanks for suggestion. However, it doesn\u0027t work.\nWe can\u0027t compute VisibleSelection on-demand. Because, start/end of VisibleSelection are different between calling Set{Starting,Ending}Selection() and {Starting,Ending}Selection().",
+      "parentUuid": "7dbbd8af_13d16226",
+      "revId": "1923f8cfa3af5d3151976942c5829c89041258fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa11c85a_0015133c",
         "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T07:22:23Z",
       "side": 1,
       "message": "Can we return empty SelectionInDOMTree w/o affinity and directional when we have null base_?",
+      "revId": "1923f8cfa3af5d3151976942c5829c89041258fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63f11ca_b2dd644a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T09:58:38Z",
+      "side": 1,
+      "message": "Done.\nNote: even if empty selection, is_directional_ can be true.",
+      "parentUuid": "aa11c85a_0015133c",
       "revId": "1923f8cfa3af5d3151976942c5829c89041258fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
