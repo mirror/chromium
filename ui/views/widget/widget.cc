@@ -571,6 +571,10 @@ void Widget::SetShape(std::unique_ptr<SkRegion> shape) {
   native_widget_->SetShape(std::move(shape));
 }
 
+bool Widget::CanClose() {
+  return !non_client_view_ || non_client_view_->CanClose();
+}
+
 void Widget::Close() {
   if (widget_closed_) {
     // It appears we can hit this code path if you close a modal dialog then

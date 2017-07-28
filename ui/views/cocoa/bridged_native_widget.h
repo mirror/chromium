@@ -118,6 +118,9 @@ class VIEWS_EXPORT BridgedNativeWidget
   // Sets the cursor associated with the NSWindow. Retains |cursor|.
   void SetCursor(NSCursor* cursor);
 
+  // Called before browser is closed.
+  bool CanClose();
+
   // Called internally by the NSWindowDelegate when the window is closing.
   void OnWindowWillClose();
 

@@ -101,6 +101,10 @@ bool NativeWidgetMac::IsWindowModalSheet() const {
              ui::MODAL_TYPE_WINDOW;
 }
 
+bool NativeWidgetMac::CanClose() {
+  return GetWidget()->CanClose();
+}
+
 void NativeWidgetMac::OnWindowDestroyed() {
   DCHECK(bridge_);
   bridge_.reset();

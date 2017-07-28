@@ -92,6 +92,10 @@
   parent_->OnWindowKeyStatusChangedTo(false);
 }
 
+- (BOOL)windowShouldClose:(id)sender {
+  return parent_->CanClose();
+}
+
 - (void)windowWillClose:(NSNotification*)notification {
   // Retain |self|. |parent_| should be cleared. OnWindowWillClose() may delete
   // |parent_|, but it may also dealloc |self| before returning. However, the

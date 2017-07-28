@@ -709,6 +709,10 @@ void BridgedNativeWidget::SetCursor(NSCursor* cursor) {
   [window_delegate_ setCursor:cursor];
 }
 
+bool BridgedNativeWidget::CanClose() {
+  return native_widget_mac_->CanClose();
+}
+
 void BridgedNativeWidget::OnWindowWillClose() {
   native_widget_mac_->GetWidget()->OnNativeWidgetDestroying();
 
