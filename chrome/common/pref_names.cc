@@ -998,6 +998,14 @@ const char kInstantTetheringAllowed[] = "tether.allowed";
 
 // Boolean pref indicating whether a user has enabled Tether.
 const char kInstantTetheringEnabled[] = "tether.enabled";
+
+// Boolean pref indicating whether someone can cast to the device.
+const char kCastReceiverEnabled[] = "cast.receiver.enabled";
+
+// String pref indicating what name should be advertised for casting to.
+// If the string is empty or blank the system name will be used.
+const char kCastReceiverName[] = "cast.receiver.name";
+
 #endif  // defined(OS_CHROMEOS)
 
 // A boolean pref set to true if a Home button to open the Home pages should be
