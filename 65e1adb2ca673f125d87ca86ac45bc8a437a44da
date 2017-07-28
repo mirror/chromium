@@ -16,6 +16,24 @@
       "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf52c7b_609a9d7c",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-28T19:38:10Z",
+      "side": 1,
+      "message": "Yeah, this does currently make an extra copy. One copy could (well, probably should) be avoided by indeed getting rid of the meaningless string16, and instead just pass SerializedScriptValue::GetWireData directly to here (which is just a pointer to its internal buffer). That would at least get us back on parity with the pre-existing code with regard to number of copies (i.e. we\u0027d be left with: SSV::data_buffer_ -\u003e MessagePortMessage::encoded_message -\u003e mojo serialized message, while before we had SSV::data_buffer_ -\u003e string16 -\u003e mojo serialized message). Reducing copies even more would be nice, but not straight forward. Maybe easiest would be to define our own struct/class to typemap the mojom::MessagePortMessage to, which would store the encoded message as the same reference to the internal SSV data buffer. Although I\u0027m not entirely sure how mojo serialization works in that situation and if that would actually let us copy the data straight from the SSV internal buffer to the serialized mojo message.\n\nAlso not sure if that would let us reduce copies to one in the reverse case, as we\u0027d need some way to directly copy the data from the serialized mojo message into the SSV internal buffer.",
+      "parentUuid": "d31d7f03_fda82b54",
+      "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
