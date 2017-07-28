@@ -481,7 +481,9 @@ void ServiceWorkerMetrics::CountControlledPageLoad(
 void ServiceWorkerMetrics::RecordStartWorkerStatus(
     ServiceWorkerStatusCode status,
     EventType purpose,
-    bool is_installed) {
+    bool is_installed,
+    base::Optional<ServiceWorkerInstalledScriptsSender::FinishedReason>
+        script_sender_reason) {
   if (!is_installed) {
     UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartNewWorker.Status", status,
                               SERVICE_WORKER_ERROR_MAX_VALUE);
@@ -490,16 +492,20 @@ void ServiceWorkerMetrics::RecordStartWorkerStatus(
 
   UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartWorker.Status", status,
                             SERVICE_WORKER_ERROR_MAX_VALUE);
+  if (script_sender_reason) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "ServiceWorker.StartWorker.InstalledScriptsSender.FinishedReason",
+        script_sender_reason.value(),
+        ServiceWorkerInstalledScriptsSender::FinishedReason::kMaxValue);
+  }
   RecordHistogramEnum(std::string("ServiceWorker.StartWorker.StatusByPurpose") +
                           EventTypeToSuffix(purpose),
                       status, SERVICE_WORKER_ERROR_MAX_VALUE);
-  UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartWorker.Purpose",
-                            static_cast<int>(purpose),
-                            static_cast<int>(EventType::NUM_TYPES));
+  UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartWorker.Purpose", purpose,
+                            EventType::NUM_TYPES);
   if (status == SERVICE_WORKER_ERROR_TIMEOUT) {
     UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartWorker.Timeout.StartPurpose",
-                              static_cast<int>(purpose),
-                              static_cast<int>(EventType::NUM_TYPES));
+                              purpose, EventType::NUM_TYPES);
   }
 }
 
