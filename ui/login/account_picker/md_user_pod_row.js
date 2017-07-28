@@ -1406,6 +1406,7 @@ cr.define('login', function() {
      * @type {(HTMLButtonElement|HTMLInputElement)}
      */
     get mainInput() {
+      console.error('!! mainInput this.isAuthTypePassword=' + this.isAuthTypePassword + ', this.isAuthTypeOnlineSignIn=' + this.isAuthTypeOnlineSignIn + ', this.isAuthTypeUserClick=' + this.isAuthTypeUserClick)
       if (this.isAuthTypePassword) {
         return this.passwordElement;
       } else if (this.isAuthTypeOnlineSignIn) {
@@ -1538,8 +1539,37 @@ cr.define('login', function() {
 
     /**
      * Focuses on input element.
+     * @param {boolean?} opt_ensureFocus If true, keep trying to focus until a
+     * focus change event is raised.
      */
-    focusInput: function() {
+    focusInput: function(opt_ensureFocus) {
+      console.error('!! md_user_pod_row focusInput document.readyState=' + document.readyState + ', mainInput=' + this.mainInput);
+      var getStackTrace = function() {
+        var obj = {};
+        Error.captureStackTrace(obj, getStackTrace);
+        return obj.stack;
+      };
+      console.error(getStackTrace());
+
+
+      if (opt_ensureFocus) {
+        console.error('!! md_user_pod_row focusInput force');
+        var INTERVAL_REPEAT_MS = 10
+        var input = this.mainInput;
+        var intervalId = setInterval(function() {
+          console.error('!! md_user_pod_row setInterval call focus()');
+          input.focus();
+        }, INTERVAL_REPEAT_MS);
+        window.addEventListener('focus', function refocus() {
+          if (document.activeElement != input)
+            return;
+
+          console.error('!! md_user_pod_row got focus, clearing setInterval');
+          window.removeEventListener('focus', refocus);
+          window.clearInterval(intervalId);
+        }, true);
+      }
+
       // Move tabIndex from the whole pod to the main input.
       // Note: the |mainInput| can be the pod itself.
       this.tabIndex = -1;
@@ -1637,8 +1667,10 @@ cr.define('login', function() {
       this.updateInput_();
       this.classList.toggle('signing-in', false);
       if (takeFocus) {
-        if (!this.multiProfilesPolicyApplied)
-          this.focusInput();  // This will set a custom tab order.
+        if (!this.multiProfilesPolicyApplied) {
+          // This will set a custom tab order.
+          this.focusInput(true /*opt_ensureFocus*/);
+        }
       }
       else
         this.resetTabOrder();
@@ -4608,11 +4640,19 @@ cr.define('login', function() {
      * Called right after the pod row is shown.
      */
     handleAfterShow: function() {
+      console.error('!! handleAfterShow focusedPod=' + this.focusedPod_ + ', this.pods.length=' + this.pods.length);
+      // if (!this.focusedPod_ && this.pods.length > 0) {
+      //   console.error('!! handleAfterShow HACK PRE auto-focusing pod');
+      //   this.focusPod(
+      //       this.pods[0], true /* force */, false /* opt_skipInputFocus */);
+      //   console.error('!! handleAfterShow HACK POST auto-focusing pod focusedPod=' + this.focusedPod_);
+      // }
       var focusedPod = this.focusedPod_;
 
       // Without timeout changes in pods positions will be animated even though
       // it happened when 'flying-pods' class was disabled.
       setTimeout(function() {
+        console.error('!! handleAfterShow SetTimeout invocation for flying-pods, focusedPod=' + focusedPod);
         Oobe.getInstance().toggleClass('flying-pods', true);
         if (focusedPod)
           ensureTransitionEndEvent(focusedPod);
@@ -4622,8 +4662,11 @@ cr.define('login', function() {
       if (focusedPod) {
         var screen = this.parentNode;
         var self = this;
+
+        console.error('!! handleAfterShow register transitionend event handler for ' + focusedPod);
         focusedPod.addEventListener('transitionend', function f(e) {
           focusedPod.removeEventListener('transitionend', f);
+          console.error('!! handleAfterShow transitionend handler fired; resetting focusedPod');
           focusedPod.reset(true);
           // Notify screen that it is ready.
           screen.onShow();
