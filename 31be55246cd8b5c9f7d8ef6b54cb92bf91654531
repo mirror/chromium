@@ -22,6 +22,30 @@
       "revId": "31be55246cd8b5c9f7d8ef6b54cb92bf91654531",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a18d95a_5211e677",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-28T00:17:41Z",
+      "side": 1,
+      "message": "On eve 4k buffers will be rejected and we\u0027d end up here. If we move around a window with a 4k video we might hit this line every frame.\nUsing VPLOG is definitely a better idea. I\u0027m not familiar how we use different verbose levels, does 2 work for something that can log at every frame?",
+      "parentUuid": "992054a0_88123d8b",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "31be55246cd8b5c9f7d8ef6b54cb92bf91654531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
