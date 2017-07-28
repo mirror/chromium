@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdda4f5f_c482a011",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T21:25:09Z",
+      "side": 1,
+      "message": "I think there\u0027s an Intent constructor that takes a context and class.",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 89
+      },
+      "revId": "b349f0cd532dde7d179289cd08fe10d2bd778c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643d4456_45c2fe14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T21:25:09Z",
+      "side": 1,
+      "message": "Javadoc.  Describing isComplete will be nice :).",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 67
+      },
+      "revId": "b349f0cd532dde7d179289cd08fe10d2bd778c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f915ff_6c9d27d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T21:25:09Z",
+      "side": 1,
+      "message": "We have to be careful because if we\u0027re in the process of creating the service, we still have to call startForeground even if we really want to just stop and kill it.  That will require some extra no-fun tracking to figure out what to do at startup time.\n\nAs an alternative that might avoid you the headache, we could also keep a list of all updateDownloadStatus() calls that need to be applied after the service starts.  That would guarantee we call startForeground() then immediately call stopForeground() if we got a hide before the service launched.  Then the only other detail to remember would be to not start the service if it isn\u0027t started and isActive is false.\n\nJust a suggestion!",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "b349f0cd532dde7d179289cd08fe10d2bd778c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e893033_40d49566",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T21:25:09Z",
+      "side": 1,
+      "message": "Ah ok so you\u0027re relying on the internal updatePinnedNotificationIfNeededCheck() to delay if mBoundService is null?  That works :).",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 27
+      },
+      "revId": "b349f0cd532dde7d179289cd08fe10d2bd778c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00275ba6_32597b3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T21:25:09Z",
+      "side": 1,
+      "message": "Call this before unbind.  Unbind will drop your mBoundService reference.",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 46
+      },
+      "revId": "b349f0cd532dde7d179289cd08fe10d2bd778c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce4ba88_3c74482f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-28T21:25:09Z",
+      "side": 1,
+      "message": "We can\u0027t do this :(.  Sadly we made Android a promise and have to keep it.  I wish their API let you just stop if the state between when you requested the service to launch and the time it actually launched changes... but sadly they don\u0027t (see suggestion about queuing above).",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 9
+      },
+      "revId": "b349f0cd532dde7d179289cd08fe10d2bd778c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
