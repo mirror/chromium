@@ -153,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "f6c4f26d_f0d01d70",
+        "filename": "third_party/mach_override/chromium.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T23:41:40Z",
+      "side": 1,
+      "message": "\u003e Yep, I thought about that, but I got concerned about:\n\u003e 1. Dragging additional header (libkern/OSAtomic.h)\n\u003e 2. Slowing down the method (+2 memory barriers). \n\u003e \n\u003e None of these two impact Chrome, but may impact other clients of this third_party library. If you insist, I will add the OSAtomicAdd64 (OSAtomicIncrement64 requires 10.10+).\n\nI can deal with the flake that this causes because it’s test-only and we don’t care about thread-safety here, but the flake is kind of why I thought that upstream might not want this.",
+      "parentUuid": "79271fdd_24ceb3e5",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94602811_74b7c13d",
         "filename": "third_party/mach_override/chromium.patch",
         "patchSetId": 5

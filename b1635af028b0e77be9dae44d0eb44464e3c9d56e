@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07062866_350efe26",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T23:41:40Z",
+      "side": 1,
+      "message": "Still concerned about --gtest_repeat.\n\nMaybe you should start by saving off the initial number of allocation attempts, and then after calling EnableCFBundleBlocker(), EXPECT_LT(allocation_attempts, original_allocation_attempts + 100u)",
+      "revId": "b1635af028b0e77be9dae44d0eb44464e3c9d56e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
