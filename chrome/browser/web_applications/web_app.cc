@@ -116,7 +116,7 @@ void OnImageLoaded(std::unique_ptr<web_app::ShortcutInfo> shortcut_info,
     image_skia.MakeThreadSafe();
     shortcut_info->favicon.Add(gfx::Image(image_skia));
   } else {
-    shortcut_info->favicon = image_family;
+    shortcut_info->favicon = image_family.Clone();
   }
 
   callback.Run(std::move(shortcut_info));
