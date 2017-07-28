@@ -54,14 +54,13 @@ PresentationServiceImpl::PresentationServiceImpl(
       controller_delegate_(controller_delegate),
       receiver_delegate_(receiver_delegate),
       start_presentation_request_id_(kInvalidRequestId),
+      render_process_id_(render_frame_host->GetProcess()->GetID()),
+      render_frame_id_(render_frame_host->GetRoutingID()),
+      is_main_frame_(!render_frame_host->GetParent()),
       weak_factory_(this) {
-  DCHECK(render_frame_host);
+  DCHECK(render_frame_host_);
   DCHECK(web_contents);
-  CHECK(render_frame_host->IsRenderFrameLive());
-
-  render_process_id_ = render_frame_host->GetProcess()->GetID();
-  render_frame_id_ = render_frame_host->GetRoutingID();
-  is_main_frame_ = !render_frame_host->GetParent();
+  CHECK(render_frame_host_->IsRenderFrameLive());
 
   DVLOG(2) << "PresentationServiceImpl: " << render_process_id_ << ", "
            << render_frame_id_ << " is main frame: " << is_main_frame_;
@@ -79,10 +78,9 @@ PresentationServiceImpl::~PresentationServiceImpl() {
 }
 
 // static
-void PresentationServiceImpl::CreateMojoService(
-    RenderFrameHost* render_frame_host,
-    blink::mojom::PresentationServiceRequest request) {
-  DVLOG(2) << "CreateMojoService";
+std::unique_ptr<PresentationServiceImpl> PresentationServiceImpl::Create(
+    RenderFrameHost* render_frame_host) {
+  DVLOG(2) << __func__;
   WebContents* web_contents =
       WebContents::FromRenderFrameHost(render_frame_host);
   DCHECK(web_contents);
@@ -98,17 +96,14 @@ void PresentationServiceImpl::CreateMojoService(
           ? nullptr
           : browser->GetControllerPresentationServiceDelegate(web_contents);
 
-  // This object will be deleted when the RenderFrameHost is about to be
-  // deleted (RenderFrameDeleted).
-  PresentationServiceImpl* impl = new PresentationServiceImpl(
+  return base::MakeUnique<PresentationServiceImpl>(
       render_frame_host, web_contents, controller_delegate, receiver_delegate);
-  impl->Bind(std::move(request));
 }
 
 void PresentationServiceImpl::Bind(
     blink::mojom::PresentationServiceRequest request) {
-  binding_.reset(new mojo::Binding<blink::mojom::PresentationService>(
-      this, std::move(request)));
+  // TODO(imcheng): Set connection error handler.
+  bindings_.AddBinding(this, std::move(request));
 }
 
 void PresentationServiceImpl::SetClient(
@@ -423,18 +418,14 @@ void PresentationServiceImpl::RenderFrameDeleted(
   if (!FrameMatches(render_frame_host))
     return;
 
-  // RenderFrameDeleted means the associated RFH is going to be deleted soon.
-  // This object should also be deleted.
   Reset();
-  delete this;
 }
 
 void PresentationServiceImpl::WebContentsDestroyed() {
   LOG(ERROR) << "PresentationServiceImpl is being deleted in "
              << "WebContentsDestroyed()! This shouldn't happen since it "
-             << "should've been deleted during RenderFrameDeleted().";
+             << "should've been deleted during ~RenderFrameHost().";
   Reset();
-  delete this;
 }
 
 void PresentationServiceImpl::Reset() {

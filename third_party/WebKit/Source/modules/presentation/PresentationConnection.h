@@ -11,6 +11,7 @@
 #include "core/fileapi/Blob.h"
 #include "core/fileapi/FileError.h"
 #include "core/typed_arrays/ArrayBufferViewHelpers.h"
+#include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/WTFString.h"
@@ -31,9 +32,10 @@ class PresentationController;
 class PresentationReceiver;
 class PresentationRequest;
 
-class PresentationConnection final : public EventTargetWithInlineData,
-                                     public ContextClient,
-                                     public WebPresentationConnection {
+class MODULES_EXPORT PresentationConnection final
+    : public EventTargetWithInlineData,
+      public ContextClient,
+      public WebPresentationConnection {
   USING_GARBAGE_COLLECTED_MIXIN(PresentationConnection);
   DEFINE_WRAPPERTYPEINFO();
 
@@ -116,7 +118,14 @@ class PresentationConnection final : public EventTargetWithInlineData,
 
   class Message;
 
-  PresentationConnection(LocalFrame*, const String& id, const KURL&);
+  // Delegate for certain operations such as Close/Terminate.
+  class Delegate;
+
+  // Delegate implementations.
+  class ControllerDelegate;
+  class ReceiverDelegate;
+
+  PresentationConnection(LocalFrame*, const String& id, const KURL&, Delegate*);
 
   bool CanSendMessage(ExceptionState&);
   void HandleMessageQueue();
@@ -143,6 +152,10 @@ class PresentationConnection final : public EventTargetWithInlineData,
   BinaryType binary_type_;
 
   std::unique_ptr<WebPresentationConnectionProxy> proxy_;
+
+  // Performs additional operations (e.g., Close/Terminate) depending on the
+  // type of PresentationConnection (controller / receiver).
+  Member<Delegate> delegate_;
 };
 
 }  // namespace blink
