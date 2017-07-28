@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5892b27b_d1730945",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-28T08:16:11Z",
+      "side": 1,
+      "message": "No strong reason, it\u0027s just shorter.",
+      "parentUuid": "ff132fc0_0b7a0900",
+      "revId": "2594dec551fcdcc901341827e60563d9830ac320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ae759a_8480f72a",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 9
