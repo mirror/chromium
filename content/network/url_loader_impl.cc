@@ -9,7 +9,7 @@
 #include "base/time/time.h"
 #include "content/common/loader_util.h"
 #include "content/common/net_adapters.h"
-#include "content/network/network_context.h"
+#include "content/network/network_context_impl.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -156,7 +156,7 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
 }  // namespace
 
 URLLoaderImpl::URLLoaderImpl(
-    NetworkContext* context,
+    NetworkContextImpl* context,
     mojom::URLLoaderRequest url_loader_request,
     int32_t options,
     const ResourceRequest& request,
