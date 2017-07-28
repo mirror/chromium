@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3b1e44d_874f4189",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-28T01:54:51Z",
+      "side": 1,
+      "message": "This is not good. If the focused element has neither next nor previous focusable elements, NextPreviousFlags() is called very frequently.",
+      "revId": "4bd0c605dd7fb890851892bf193d46297827610e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aeb75ef_83f9acca",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-28T01:54:51Z",
+      "side": 1,
+      "message": "Can you call NextPreviousFlag() here?",
+      "revId": "4bd0c605dd7fb890851892bf193d46297827610e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
