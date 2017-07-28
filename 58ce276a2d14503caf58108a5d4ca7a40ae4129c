@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d14d75fd_62092966",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-28T05:20:05Z",
+      "side": 1,
+      "message": "Done (it\u0027s not per process. This adds 1-2[ms] in total per whole (three) processes.)",
+      "parentUuid": "30493e5a_0277143c",
+      "range": {
+        "startLine": 14,
+        "startChar": 44,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e46b55_5a1cf503",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 9
@@ -83,6 +107,30 @@
       "writtenOn": "2017-07-27T14:58:33Z",
       "side": 1,
       "message": "not sure if that is easily possible but would be nice if, in the case when COUNT_RESIDENT_BYTES_SUPPORTED is defined, we also emit a \"virtual_size\" column, mostly to double check the results in the trace. \nI know that other columns won\u0027t be propagate across edges, but I think that is fine, it wuold at least show up in the shared_memory column right?",
+      "range": {
+        "startLine": 87,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecaf66f_859a1690",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-28T05:20:05Z",
+      "side": 1,
+      "message": "Hmm, sorry but not sure what the \u0027virtual_size\u0027 is. Are you talking about DiscardableSharedMemoryHeap?",
+      "parentUuid": "1187c0a9_6465e6b8",
       "range": {
         "startLine": 87,
         "startChar": 16,
@@ -187,6 +235,30 @@
       "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efce82cc_1e3ec25d",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-28T05:20:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0823b3a3_7a6314fb",
+      "range": {
+        "startLine": 88,
+        "startChar": 73,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
