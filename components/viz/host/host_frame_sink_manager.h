@@ -36,9 +36,25 @@ namespace test {
 class HostFrameSinkManagerTest;
 }
 
-// Browser side wrapper of mojom::FrameSinkManager, to be used from the
-// UI thread. Manages frame sinks and is intended to replace all usage of
+// Browser side wrapper of mojom::FrameSinkManager, to be used from the UI
+// thread. Manages frame sinks and is intended to replace all usage of
 // FrameSinkManagerImpl.
+//
+// Clients can use this class to submit CompositorFrames in two ways. In order
+// to connect a mojom::CompositorFrameSink the client should call
+// CreateCompositorFrameSink(). As CompositorFrames will go directly to the
+// DisplayCompositor, the client should also add itself as a FrameSinkObserver.
+// When the client is done submitting CompositorFrames it should call
+// DestroyCompositorFrameSink().
+//
+// Alternatively clients can create a CompositorFrameSinkSupport. The client
+// should call CreateCompositorFrameSinkSupport(). When the client is done
+// submitting CompositorFrames it should destroy the CompositorFrameSinkSupport.
+// If the client wishes to manually control FrameSinkId lifetime it should call
+// RegisterFrameSinkId() before creating a CompositorFrameSinkSupport, set
+// |handles_frame_sink_id_invalidation| false for
+// CreateCompositorFrameSinkSupport() and finally call InvalidateFrameSinkId()
+// after destroying the CompositorFrameSinkSupport.
 class VIZ_HOST_EXPORT HostFrameSinkManager
     : public NON_EXPORTED_BASE(mojom::FrameSinkManagerClient),
       public NON_EXPORTED_BASE(CompositorFrameSinkSupportManager) {
@@ -81,6 +97,16 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   void UnregisterFrameSinkHierarchy(const FrameSinkId& parent_frame_sink_id,
                                     const FrameSinkId& child_frame_sink_id);
 
+  // Explicitly registers |frame_sink_id| for CompositorFrameSinkSupport. If
+  // CreateCompositorFrameSinkSupport() is used with
+  // |handles_frame_sink_id_invalidation| false then this must be called first.
+  // If a client calls RegisterFrameSinkId() then it must also call
+  // InvalidateFrameSinkId() when done with the frame sink.
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id);
+
+  // Explicitly invalidates |frame_sink_id|.
+  void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id);
+
   // CompositorFrameSinkSupportManager:
   std::unique_ptr<CompositorFrameSinkSupport> CreateCompositorFrameSinkSupport(
       CompositorFrameSinkSupportClient* client,
@@ -104,14 +130,19 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
     // Returns true if there is nothing in FrameSinkData and it can be deleted.
     bool IsEmpty() const {
-      return !HasCompositorFrameSinkData() && !parent.has_value();
+      return !is_frame_sink_id_registered && !HasCompositorFrameSinkData() &&
+             !parent.has_value();
     }
+
+    // If the FrameSinkId has been registered.
+    bool is_frame_sink_id_registered = false;
 
     // If the frame sink is a root that corresponds to a Display.
     bool is_root = false;
 
-    // The FrameSinkId registered as the parent in the BeginFrame hierarchy.
-    base::Optional<FrameSinkId> parent;
+    // If we should automatically register and invalidate FrameSinkid based on
+    // frame sink lifetime.
+    bool handles_frame_sink_id_invalidation = false;
 
     // If a mojom::CompositorFrameSink was created for this FrameSinkId. This
     // will always be false if not using Mojo.
@@ -119,6 +150,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
     // This will be null if using Mojo.
     CompositorFrameSinkSupport* support = nullptr;
+
+    // The FrameSinkId registered as the parent in the BeginFrame hierarchy.
+    base::Optional<FrameSinkId> parent;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(FrameSinkData);

@@ -586,8 +586,7 @@ TEST_F(CompositorFrameSinkSupportTest,
             local_surface_id);
   local_surface_id_ = LocalSurfaceId();
 
-  manager_.surface_manager()->RegisterFrameSinkId(
-      kYetAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kYetAnotherArbitraryFrameSinkId);
 
   SurfaceId surface_id(kAnotherArbitraryFrameSinkId, local_surface_id);
   Surface* surface = GetSurfaceForId(surface_id);
@@ -649,7 +648,7 @@ TEST_F(CompositorFrameSinkSupportTest, InvalidFrameSinkId) {
   support_->SubmitCompositorFrame(local_surface_id,
                                   test::MakeCompositorFrame());
 
-  manager_.surface_manager()->RegisterFrameSinkId(frame_sink_id);
+  manager_.RegisterFrameSinkId(frame_sink_id);
   GetSurfaceForId(id)->AddDestructionDependency(
       SurfaceSequence(frame_sink_id, 4));
 
@@ -658,7 +657,7 @@ TEST_F(CompositorFrameSinkSupportTest, InvalidFrameSinkId) {
   // Verify the dependency has prevented the surface from getting destroyed.
   EXPECT_TRUE(GetSurfaceForId(id));
 
-  manager_.surface_manager()->InvalidateFrameSinkId(frame_sink_id);
+  manager_.InvalidateFrameSinkId(frame_sink_id);
 
   // Verify that the invalidated namespace caused the unsatisfied sequence
   // to be ignored.
@@ -671,7 +670,7 @@ TEST_F(CompositorFrameSinkSupportTest, DestroyCycle) {
   auto support2 = CompositorFrameSinkSupport::Create(
       &fake_support_client_, &manager_, kYetAnotherArbitraryFrameSinkId,
       kIsChildRoot, kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
-  manager_.surface_manager()->RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
   // Give local_surface_id_ an initial frame so another client can refer to
   // that surface.
   {

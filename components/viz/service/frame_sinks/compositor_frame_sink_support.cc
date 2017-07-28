@@ -314,7 +314,7 @@ void CompositorFrameSinkSupport::Init(
   frame_sink_manager_ = frame_sink_manager;
   surface_manager_ = frame_sink_manager->surface_manager();
   if (handles_frame_sink_id_invalidation_)
-    surface_manager_->RegisterFrameSinkId(frame_sink_id_);
+    frame_sink_manager->RegisterFrameSinkId(frame_sink_id_);
   frame_sink_manager_->RegisterFrameSinkManagerClient(frame_sink_id_, this);
 }
 

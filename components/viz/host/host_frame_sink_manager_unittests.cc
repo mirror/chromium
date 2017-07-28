@@ -84,11 +84,11 @@ class HostFrameSinkManagerTest : public testing::Test {
 
   std::unique_ptr<CompositorFrameSinkSupport> CreateCompositorFrameSinkSupport(
       const FrameSinkId& frame_sink_id,
-      bool is_root) {
+      bool is_root,
+      bool handles_frame_sink_id_invalidation = true) {
     return host_manager_->CreateCompositorFrameSinkSupport(
         nullptr /* client */, frame_sink_id, is_root,
-        true /* handles_frame_sink_id_invalidation */,
-        false /* needs_sync_points */);
+        handles_frame_sink_id_invalidation, false /* needs_sync_points */);
   }
 
   mojom::FrameSinkManagerClient* GetFrameSinkManagerClient() {
@@ -184,6 +184,74 @@ TEST_F(HostFrameSinkManagerTest, CreateCompositorFrameSinkSupport) {
 
   // Data for |kParentFrameSinkId| should be deleted now.
   EXPECT_FALSE(FrameSinkDataExists(kParentFrameSinkId));
+}
+
+// Verify that creating/destroying a CompositorFrameSinkSupport registers and
+// invalidates the FrameSinkId correctly.
+TEST_F(HostFrameSinkManagerTest, ImplicitFrameSinkIdRegistration) {
+  const FrameSinkId& frame_sink_id = kClientFrameSinkId;
+
+  // Creating a CompositorFrameSinkSupport that handles invaldiation should
+  // register on creation.
+  EXPECT_CALL(manager_impl(), RegisterFrameSinkId(frame_sink_id));
+  auto support = CreateCompositorFrameSinkSupport(
+      frame_sink_id, false /* is_root */,
+      true /* handles_frame_sink_id_invalidation */);
+
+  EXPECT_TRUE(FrameSinkDataExists(frame_sink_id));
+
+  // Likewise, it should invalidation on destruction of the
+  // CompositorFrameSinkSupport.
+  EXPECT_CALL(manager_impl(), InvalidateFrameSinkId(frame_sink_id));
+  support.reset();
+
+  EXPECT_FALSE(FrameSinkDataExists(frame_sink_id));
+}
+
+// Verify that handling registering and invalidating FrameSinkId explicitly
+// works and that it's not linked to creating/destroying a
+// CompositorFrameSinkSupport.
+TEST_F(HostFrameSinkManagerTest, ExplicitFrameSinkIdRegistration) {
+  const FrameSinkId& frame_sink_id = kClientFrameSinkId;
+
+  // Registering the CompositorFrameSinkSupport first should work.
+  EXPECT_CALL(manager_impl(), RegisterFrameSinkId(frame_sink_id));
+  host_manager().RegisterFrameSinkId(frame_sink_id);
+
+  // There should be FrameSinkData that stores it was registered.
+  EXPECT_TRUE(FrameSinkDataExists(frame_sink_id));
+
+  // Creating a CompositorFrameSinkSupport should not register again.
+  EXPECT_CALL(manager_impl(), RegisterFrameSinkId(frame_sink_id)).Times(0);
+  auto support = CreateCompositorFrameSinkSupport(
+      frame_sink_id, false /* is_root */,
+      false /* handles_frame_sink_id_invalidation */);
+
+  // Destroying the CompositorFrameSinkSupport should not invalidate.
+  EXPECT_CALL(manager_impl(), InvalidateFrameSinkId(frame_sink_id)).Times(0);
+  support.reset();
+
+  EXPECT_TRUE(FrameSinkDataExists(frame_sink_id));
+
+  // Invalidate should work correctly and the FrameSinkData should be deleted.
+  EXPECT_CALL(manager_impl(), InvalidateFrameSinkId(frame_sink_id));
+  host_manager().InvalidateFrameSinkId(frame_sink_id);
+  EXPECT_FALSE(FrameSinkDataExists(frame_sink_id));
+}
+
+// Verify that we can explicitly register a FrameSinkId and then invalidate it
+// before doing anything else.
+TEST_F(HostFrameSinkManagerTest, OnlyRegisterFrameSinkId) {
+  const FrameSinkId& frame_sink_id = kClientFrameSinkId;
+
+  // Registering the CompositorFrameSinkSupport first should work.
+  EXPECT_CALL(manager_impl(), RegisterFrameSinkId(frame_sink_id));
+  host_manager().RegisterFrameSinkId(frame_sink_id);
+
+  // Invalidate should work correctly and the FrameSinkData should be deleted.
+  EXPECT_CALL(manager_impl(), InvalidateFrameSinkId(frame_sink_id));
+  host_manager().InvalidateFrameSinkId(frame_sink_id);
+  EXPECT_FALSE(FrameSinkDataExists(frame_sink_id));
 }
 
 TEST_F(HostFrameSinkManagerTest, AssignTemporaryReference) {
