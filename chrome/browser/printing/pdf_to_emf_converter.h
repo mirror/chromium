@@ -33,7 +33,7 @@ class PdfConverter {
 
   // Requests conversion of the page. |page_number| is 0-base page number in
   // PDF provided in Start() call.
-  // Calls |get_page_callback| after conversion. |emf| of callback in not NULL
+  // Calls |get_page_callback| after conversion. |file| of callback in not NULL
   // if conversion succeeded.
   virtual void GetPage(int page_number,
                        const GetPageCallback& get_page_callback) = 0;
