@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b86e962f_d25e0ee2",
+        "filename": "components/components_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-28T18:22:47Z",
+      "side": 1,
+      "message": "Can you add a per-file OWNERS rule for this file? Alternatively, I think it would probably be reasonable to include these strings in the existing security_interstitials_strings.grdp",
+      "range": {
+        "startLine": 191,
+        "startChar": 18,
+        "endLine": 191,
+        "endChar": 40
+      },
+      "revId": "60de4d3f501a48768d7b22e14507a020cd9198ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
