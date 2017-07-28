@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd8ffba_2bb8a6e9",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T16:33:41Z",
+      "side": 1,
+      "message": "Out of interest, why didn\u0027t you mark the method as API_AVAILABLE(10.12.2) in the .h instead of checking for this here? Does any pre-10.12 code call this method?",
+      "revId": "1a10b0cc3a3c52b16ea8734aab307ebee28c3496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
