@@ -22,6 +22,30 @@
       "revId": "1be6e3e4967adf7e9dc6a96876b231951c6d92cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b02de82_8e352532",
+        "filename": "chrome/browser/vr/fps_meter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-28T21:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01352147_d7136fc6",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "1be6e3e4967adf7e9dc6a96876b231951c6d92cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
