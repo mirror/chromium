@@ -2842,8 +2842,11 @@ class WaylandDataDeviceDelegate : public DataDeviceDelegate {
                                DndAction dnd_action) override {
     wl_resource* data_offer_resource =
         wl_resource_create(client_, &wl_data_offer_interface, 1, 0);
-    std::unique_ptr<DataOffer> data_offer = base::MakeUnique<DataOffer>(
-        new WaylandDataOfferDelegate(data_offer_resource));
+    std::unique_ptr<class DataOffer> data_offer =
+        base::MakeUnique<class DataOffer>(
+            new WaylandDataOfferDelegate(data_offer_resource),
+            std::vector<std::string>(), base::flat_set<DndAction>(),
+            DndAction::kNone);
     data_offer->SetProperty(kDataOfferResourceKey, data_offer_resource);
     SetImplementation(data_offer_resource, &data_offer_implementation,
                       std::move(data_offer));
