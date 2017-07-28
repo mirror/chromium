@@ -419,7 +419,7 @@ bool GLImageMemory::BindTexImage(unsigned target) {
   return false;
 }
 
-bool GLImageMemory::CopyTexImage(unsigned target) {
+bool GLImageMemory::CopyTexImage(unsigned target, unsigned internalformat) {
   TRACE_EVENT2("gpu", "GLImageMemory::CopyTexImage", "width", size_.width(),
                "height", size_.height());
 
@@ -427,9 +427,13 @@ bool GLImageMemory::CopyTexImage(unsigned target) {
   if (target == GL_TEXTURE_EXTERNAL_OES)
     return false;
 
+  GLenum texture_format = TextureFormat(format_);
+  if (internalformat != texture_format && internalformat != 0)
+    return false;
+
   if (IsCompressedFormat(format_)) {
     glCompressedTexImage2D(
-        target, 0, TextureFormat(format_), size_.width(), size_.height(), 0,
+        target, 0, texture_format, size_.width(), size_.height(), 0,
         static_cast<GLsizei>(BufferSizeForBufferFormat(size_, format_)),
         memory_);
   } else {
@@ -446,8 +450,8 @@ bool GLImageMemory::CopyTexImage(unsigned target) {
     if (data_row_length != size_.width())
       glPixelStorei(GL_UNPACK_ROW_LENGTH, data_row_length);
 
-    glTexImage2D(target, 0, TextureFormat(format_), size_.width(),
-                 size_.height(), 0, data_format, data_type,
+    glTexImage2D(target, 0, texture_format, size_.width(), size_.height(), 0,
+                 data_format, data_type,
                  gles2_data ? gles2_data.get() : memory_);
 
     if (data_row_length != size_.width())

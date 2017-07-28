@@ -55,7 +55,7 @@ bool GLImageEGL::BindTexImage(unsigned target) {
   return true;
 }
 
-bool GLImageEGL::CopyTexImage(unsigned target) {
+bool GLImageEGL::CopyTexImage(unsigned target, unsigned internalformat) {
   return false;
 }
 

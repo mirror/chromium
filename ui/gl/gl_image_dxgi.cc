@@ -38,7 +38,7 @@ bool GLImageDXGIBase::BindTexImage(unsigned target) {
 
 void GLImageDXGIBase::ReleaseTexImage(unsigned target) {}
 
-bool GLImageDXGIBase::CopyTexImage(unsigned target) {
+bool GLImageDXGIBase::CopyTexImage(unsigned target, unsigned internalformat) {
   return false;
 }
 

@@ -150,7 +150,9 @@ class GLStreamTextureImageStub : public GLStreamTextureImage {
   unsigned GetInternalFormat() override { return 0; }
   bool BindTexImage(unsigned target) override { return false; }
   void ReleaseTexImage(unsigned target) override {}
-  bool CopyTexImage(unsigned target) override { return false; }
+  bool CopyTexImage(unsigned target, unsigned internalformat) override {
+    return false;
+  }
   bool CopyTexSubImage(unsigned target,
                        const gfx::Point& offset,
                        const gfx::Rect& rect) override {

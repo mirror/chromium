@@ -1049,11 +1049,11 @@ error::Error GLES2DecoderPassthroughImpl::BindTexImage2DCHROMIUMImpl(
 
   if (internalformat) {
     if (!image->BindTexImageWithInternalformat(target, internalformat)) {
-      image->CopyTexImage(target);
+      image->CopyTexImage(target, internalformat);
     }
   } else {
     if (!image->BindTexImage(target)) {
-      image->CopyTexImage(target);
+      image->CopyTexImage(target, 0);
     }
   }
 
