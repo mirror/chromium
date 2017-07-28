@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "facdeac6_af5b8b2e",
+        "filename": "components/image_fetcher/ios/ios_image_decoder_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T08:33:49Z",
+      "side": 1,
+      "message": "Does the test actually require the explicit pool? Typically you can just create a base::test::ScopedTaskEnvironment and then use the regular path for creating the task runner.",
+      "revId": "aea0d83ab862e445d69d40e83a456221cdf829c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
