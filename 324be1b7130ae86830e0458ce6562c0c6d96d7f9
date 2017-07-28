@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b08f6c29_2d4ab9b3",
+        "filename": "components/machine_intelligence/ranker_url_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-28T13:50:51Z",
+      "side": 1,
+      "message": "Yes, this is correct.\n\nThat said, this is intended to be a utility/helper to facilitate a bunch of different model request. So, in the future, we may want to parameterize this.",
+      "range": {
+        "startLine": 73,
+        "startChar": 10,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "324be1b7130ae86830e0458ce6562c0c6d96d7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
