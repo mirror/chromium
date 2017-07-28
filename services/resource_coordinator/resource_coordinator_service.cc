@@ -23,7 +23,9 @@ std::unique_ptr<service_manager::Service> ResourceCoordinatorService::Create() {
 ResourceCoordinatorService::ResourceCoordinatorService()
     : weak_factory_(this) {}
 
-ResourceCoordinatorService::~ResourceCoordinatorService() = default;
+ResourceCoordinatorService::~ResourceCoordinatorService() {
+  ref_factory_.reset();
+}
 
 void ResourceCoordinatorService::OnStart() {
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(
@@ -34,6 +36,16 @@ void ResourceCoordinatorService::OnStart() {
                                     base::Unretained(ref_factory_.get()),
                                     base::Unretained(this)));
 
+  registry_.AddInterface(
+      base::Bind(&CoordinationUnitIntrospectorImpl::BindToInterface,
+                 base::Unretained(&introspector_)));
+
+  provider_.reset(new CoordinationUnitProviderImpl(
+      ref_factory_.get(), &coordination_unit_manager_));
+  registry_.AddInterface(
+      base::Bind(&CoordinationUnitProviderImpl::BindToInterface,
+                 base::Unretained(provider_.get())));
+
   // Register new |CoordinationUnitGraphObserver| implementations here.
   auto tab_signal_generator_impl = base::MakeUnique<TabSignalGeneratorImpl>();
   registry_.AddInterface(
@@ -41,8 +53,6 @@ void ResourceCoordinatorService::OnStart() {
                  base::Unretained(tab_signal_generator_impl.get())));
   coordination_unit_manager_.RegisterObserver(
       std::move(tab_signal_generator_impl));
-
-  coordination_unit_manager_.OnStart(&registry_, ref_factory_.get());
 }
 
 void ResourceCoordinatorService::OnBindInterface(
