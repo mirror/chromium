@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aeb4873_3c0d6451",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-28T01:16:25Z",
+      "side": 1,
+      "message": "I might name this IsScreenshotWithinDynamicContentThreshold which is IMO a little clearer. Can do in a separate patch if you think warrants.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 29
+      },
+      "revId": "4380b9911ea1174ffac0727fc2f28520b17347a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d57d48_2f6d39eb",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot_unittest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-28T01:16:25Z",
+      "side": 1,
+      "message": "And would want to rename this method as well.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "4380b9911ea1174ffac0727fc2f28520b17347a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
