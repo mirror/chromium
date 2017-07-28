@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4798e3_7b3a90c8",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-28T18:47:55Z",
+      "side": 1,
+      "message": "no empty line",
+      "revId": "c61c9e300d63dc15bbb8518b46793984373b8a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e24ae3_3a17b6ae",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-28T18:47:55Z",
+      "side": 1,
+      "message": "dumb question, why not construct it and then add it to bindingset?",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "c61c9e300d63dc15bbb8518b46793984373b8a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
