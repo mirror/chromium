@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca6cf683_222c353e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-28T18:57:14Z",
+      "side": 1,
+      "message": "I think this makes sense.\n\nOptional: wdyt of documenting this in a comment?",
+      "revId": "020df8b1943b2907d9035aae6904b52a22139c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4133e903_49b81466",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-28T18:57:14Z",
+      "side": 1,
+      "message": "You moved this comment up here but doesn\u0027t it correspond to the FlooredIntPoint call for ScrollPosition?",
+      "revId": "020df8b1943b2907d9035aae6904b52a22139c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d566489d_6405c748",
+        "filename": "third_party/WebKit/Source/core/paint/ScrollableAreaPainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-28T18:57:14Z",
+      "side": 1,
+      "message": "Could this let custom scrollbars paint on top of the border when they previously wouldn\u0027t?",
+      "revId": "020df8b1943b2907d9035aae6904b52a22139c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
