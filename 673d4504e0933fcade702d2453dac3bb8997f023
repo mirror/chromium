@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5bb4ad5_afd16276",
+        "filename": "components/arc/common/video_decode_accelerator_new.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1112716
+      },
+      "writtenOn": "2017-07-28T05:25:56Z",
+      "side": 1,
+      "message": "I found that |length| is actually un-used. Could we remove it then?",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "673d4504e0933fcade702d2453dac3bb8997f023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
