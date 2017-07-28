@@ -8,8 +8,6 @@
 #include <utility>
 
 #include "base/macros.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_factory.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -27,24 +25,27 @@ CoordinationUnitProviderImpl::CoordinationUnitProviderImpl(
 
 CoordinationUnitProviderImpl::~CoordinationUnitProviderImpl() = default;
 
+void CoordinationUnitProviderImpl::OnConnectionError(
+    CoordinationUnitImpl* coordination_unit) {
+  coordination_unit_manager_->OnBeforeCoordinationUnitDestroyed(
+      coordination_unit);
+  coordination_unit->Destruct();
+}
+
 void CoordinationUnitProviderImpl::CreateCoordinationUnit(
     mojom::CoordinationUnitRequest request,
     const CoordinationUnitID& id) {
-  std::unique_ptr<CoordinationUnitImpl> coordination_unit =
-      coordination_unit_factory::CreateCoordinationUnit(
+  CoordinationUnitImpl* coordination_unit =
+      CoordinationUnitImpl::CreateCoordinationUnit(
           id, service_ref_factory_->CreateRef());
 
-  CoordinationUnitImpl* coordination_unit_impl = coordination_unit.get();
+  coordination_unit->Bind(std::move(request));
+  coordination_unit_manager_->OnCoordinationUnitCreated(coordination_unit);
+  auto& coordination_unit_binding = coordination_unit->binding();
 
-  auto coordination_unit_binding =
-      mojo::MakeStrongBinding(std::move(coordination_unit), std::move(request));
-
-  coordination_unit_manager_->OnCoordinationUnitCreated(coordination_unit_impl);
-
-  coordination_unit_binding->set_connection_error_handler(
-      base::Bind(&CoordinationUnitManager::OnBeforeCoordinationUnitDestroyed,
-                 base::Unretained(coordination_unit_manager_),
-                 base::Unretained(coordination_unit_impl)));
+  coordination_unit_binding.set_connection_error_handler(
+      base::BindOnce(&CoordinationUnitProviderImpl::OnConnectionError,
+                     base::Unretained(this), coordination_unit));
 }
 
 // static
