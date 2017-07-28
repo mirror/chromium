@@ -22,6 +22,30 @@
       "revId": "19d415b055675f99fc799dfcfcbf38e0ad333637",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851303da_e6d0112d",
+        "filename": "components/sync/base/sync_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T13:55:40Z",
+      "side": 1,
+      "message": "This policy is currently exposed only as a Windows GPO policy. It is read as a blocking operation very early in the startup process before the PrefService can be accessed so it is guaranteed to be set then.  We don\u0027t offer this policy as a cloud policy so it can\u0027t come from the cloud right now but even if it can it will be cached and available at the next start just as regular Windows GPO policy.",
+      "parentUuid": "71dd155f_767cb42b",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "19d415b055675f99fc799dfcfcbf38e0ad333637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
