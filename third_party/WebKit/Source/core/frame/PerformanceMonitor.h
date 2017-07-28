@@ -99,6 +99,9 @@ class CORE_EXPORT PerformanceMonitor final
   void UnsubscribeAll(Client*);
   void Shutdown();
 
+  double member_to_prevent_optimization_for_start_time;
+  double member_to_prevent_optimization_for_duration;
+
   explicit PerformanceMonitor(LocalFrame*);
   ~PerformanceMonitor();
 
