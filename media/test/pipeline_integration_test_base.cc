@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "media/base/media_log.h"
@@ -106,7 +107,9 @@ class RendererFactoryImpl final : public PipelineTestRendererFactory {
 PipelineIntegrationTestBase::PipelineIntegrationTestBase()
     : hashing_enabled_(false),
       clockless_playback_(false),
-      pipeline_(new PipelineImpl(message_loop_.task_runner(), &media_log_)),
+      pipeline_(
+          new PipelineImpl(scoped_task_environment_.GetMainThreadTaskRunner(),
+                           &media_log_)),
       ended_(false),
       pipeline_status_(PIPELINE_OK),
       last_video_frame_format_(PIXEL_FORMAT_UNKNOWN),
@@ -136,7 +139,7 @@ void PipelineIntegrationTestBase::OnSeeked(base::TimeDelta seek_time,
 
 void PipelineIntegrationTestBase::OnStatusCallback(PipelineStatus status) {
   pipeline_status_ = status;
-  message_loop_.task_runner()->PostTask(
+  scoped_task_environment_.GetMainThreadTaskRunner()->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 
@@ -165,29 +168,29 @@ void PipelineIntegrationTestBase::OnEnded() {
   DCHECK(!ended_);
   ended_ = true;
   pipeline_status_ = PIPELINE_OK;
-  message_loop_.task_runner()->PostTask(
+  scoped_task_environment_.GetMainThreadTaskRunner()->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 
 bool PipelineIntegrationTestBase::WaitUntilOnEnded() {
-  if (ended_)
-    return (pipeline_status_ == PIPELINE_OK);
-  base::RunLoop().Run();
+  if (!ended_)
+    base::RunLoop().Run();
   EXPECT_TRUE(ended_);
+  scoped_task_environment_.RunUntilIdle();
   return ended_ && (pipeline_status_ == PIPELINE_OK);
 }
 
 PipelineStatus PipelineIntegrationTestBase::WaitUntilEndedOrError() {
-  if (ended_ || pipeline_status_ != PIPELINE_OK)
-    return pipeline_status_;
-  base::RunLoop().Run();
+  if (!ended_ && pipeline_status_ == PIPELINE_OK)
+    base::RunLoop().Run();
+  scoped_task_environment_.RunUntilIdle();
   return pipeline_status_;
 }
 
 void PipelineIntegrationTestBase::OnError(PipelineStatus status) {
   DCHECK_NE(status, PIPELINE_OK);
   pipeline_status_ = status;
-  message_loop_.task_runner()->PostTask(
+  scoped_task_environment_.GetMainThreadTaskRunner()->PostTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
 
@@ -305,11 +308,12 @@ void PipelineIntegrationTestBase::Pause() {
 bool PipelineIntegrationTestBase::Seek(base::TimeDelta seek_time) {
   ended_ = false;
 
+  base::RunLoop run_loop;
   EXPECT_CALL(*this, OnBufferingStateChange(BUFFERING_HAVE_ENOUGH))
-      .WillOnce(InvokeWithoutArgs(&message_loop_, &base::MessageLoop::QuitNow));
+      .WillOnce(InvokeWithoutArgs(&run_loop, &base::RunLoop::Quit));
   pipeline_->Seek(seek_time, base::Bind(&PipelineIntegrationTestBase::OnSeeked,
                                         base::Unretained(this), seek_time));
-  base::RunLoop().Run();
+  run_loop.Run();
   EXPECT_CALL(*this, OnBufferingStateChange(_)).Times(AnyNumber());
   return (pipeline_status_ == PIPELINE_OK);
 }
@@ -324,14 +328,15 @@ bool PipelineIntegrationTestBase::Suspend() {
 bool PipelineIntegrationTestBase::Resume(base::TimeDelta seek_time) {
   ended_ = false;
 
+  base::RunLoop run_loop;
   EXPECT_CALL(*this, OnBufferingStateChange(BUFFERING_HAVE_ENOUGH))
-      .WillOnce(InvokeWithoutArgs(&message_loop_, &base::MessageLoop::QuitNow));
+      .WillOnce(InvokeWithoutArgs(&run_loop, &base::RunLoop::Quit));
   pipeline_->Resume(renderer_factory_->CreateRenderer(CreateVideoDecodersCB(),
                                                       CreateAudioDecodersCB()),
                     seek_time,
                     base::Bind(&PipelineIntegrationTestBase::OnSeeked,
                                base::Unretained(this), seek_time));
-  base::RunLoop().Run();
+  run_loop.Run();
   return (pipeline_status_ == PIPELINE_OK);
 }
 
@@ -350,11 +355,11 @@ void PipelineIntegrationTestBase::QuitAfterCurrentTimeTask(
     const base::TimeDelta& quit_time) {
   if (pipeline_->GetMediaTime() >= quit_time ||
       pipeline_status_ != PIPELINE_OK) {
-    message_loop_.QuitWhenIdle();
+    base::MessageLoop::current()->QuitWhenIdle();
     return;
   }
 
-  message_loop_.task_runner()->PostDelayedTask(
+  scoped_task_environment_.GetMainThreadTaskRunner()->PostDelayedTask(
       FROM_HERE,
       base::Bind(&PipelineIntegrationTestBase::QuitAfterCurrentTimeTask,
                  base::Unretained(this), quit_time),
@@ -367,7 +372,7 @@ bool PipelineIntegrationTestBase::WaitUntilCurrentTimeIsAfter(
   DCHECK_GT(pipeline_->GetPlaybackRate(), 0);
   DCHECK(wait_time <= pipeline_->GetMediaDuration());
 
-  message_loop_.task_runner()->PostDelayedTask(
+  scoped_task_environment_.GetMainThreadTaskRunner()->PostDelayedTask(
       FROM_HERE,
       base::Bind(&PipelineIntegrationTestBase::QuitAfterCurrentTimeTask,
                  base::Unretained(this), wait_time),
@@ -381,9 +386,8 @@ void PipelineIntegrationTestBase::CreateDemuxer(
   data_source_ = std::move(data_source);
 
 #if !defined(MEDIA_DISABLE_FFMPEG)
-  task_scheduler_.reset(new base::test::ScopedTaskScheduler(&message_loop_));
   demuxer_ = std::unique_ptr<Demuxer>(new FFmpegDemuxer(
-      message_loop_.task_runner(), data_source_.get(),
+      scoped_task_environment_.GetMainThreadTaskRunner(), data_source_.get(),
       base::Bind(&PipelineIntegrationTestBase::DemuxerEncryptedMediaInitDataCB,
                  base::Unretained(this)),
       base::Bind(&PipelineIntegrationTestBase::DemuxerMediaTracksUpdatedCB,
@@ -400,18 +404,20 @@ std::unique_ptr<Renderer> PipelineIntegrationTestBase::CreateRenderer(
       clockless_playback_, base::TimeDelta::FromSecondsD(1.0 / 60),
       base::Bind(&PipelineIntegrationTestBase::OnVideoFramePaint,
                  base::Unretained(this)),
-      message_loop_.task_runner()));
+      scoped_task_environment_.GetMainThreadTaskRunner()));
 
   // Disable frame dropping if hashing is enabled.
   std::unique_ptr<VideoRenderer> video_renderer(new VideoRendererImpl(
-      message_loop_.task_runner(), message_loop_.task_runner().get(),
+      scoped_task_environment_.GetMainThreadTaskRunner(),
+      scoped_task_environment_.GetMainThreadTaskRunner().get(),
       video_sink_.get(),
       base::Bind(&CreateVideoDecodersForTest, &media_log_,
                  prepend_video_decoders_cb),
       false, nullptr, &media_log_));
 
   if (!clockless_playback_) {
-    audio_sink_ = new NullAudioSink(message_loop_.task_runner());
+    audio_sink_ =
+        new NullAudioSink(scoped_task_environment_.GetMainThreadTaskRunner());
   } else {
     clockless_audio_sink_ = new ClocklessAudioSink(OutputDeviceInfo(
         "", OUTPUT_DEVICE_STATUS_OK,
@@ -424,12 +430,13 @@ std::unique_ptr<Renderer> PipelineIntegrationTestBase::CreateRenderer(
   }
 
   std::unique_ptr<AudioRenderer> audio_renderer(new AudioRendererImpl(
-      message_loop_.task_runner(),
+      scoped_task_environment_.GetMainThreadTaskRunner(),
       (clockless_playback_)
           ? static_cast<AudioRendererSink*>(clockless_audio_sink_.get())
           : audio_sink_.get(),
       base::Bind(&CreateAudioDecodersForTest, &media_log_,
-                 message_loop_.task_runner(), prepend_audio_decoders_cb),
+                 scoped_task_environment_.GetMainThreadTaskRunner(),
+                 prepend_audio_decoders_cb),
       &media_log_));
   if (hashing_enabled_) {
     if (clockless_playback_)
@@ -439,8 +446,8 @@ std::unique_ptr<Renderer> PipelineIntegrationTestBase::CreateRenderer(
   }
 
   std::unique_ptr<RendererImpl> renderer_impl(
-      new RendererImpl(message_loop_.task_runner(), std::move(audio_renderer),
-                       std::move(video_renderer)));
+      new RendererImpl(scoped_task_environment_.GetMainThreadTaskRunner(),
+                       std::move(audio_renderer), std::move(video_renderer)));
 
   // Prevent non-deterministic buffering state callbacks from firing (e.g., slow
   // machine, valgrind).
