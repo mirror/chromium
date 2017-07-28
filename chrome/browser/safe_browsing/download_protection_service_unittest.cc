@@ -676,11 +676,11 @@ TEST_F(DownloadProtectionServiceTest,
     FILE_PATH_LITERAL("a.exe"));  // final_path
 
   EXPECT_CALL(*binary_feature_extractor_.get(), CheckSignature(tmp_path_, _))
-      .Times(4);
+      .Times(3);
   EXPECT_CALL(*binary_feature_extractor_.get(),
               ExtractImageFeatures(
                   tmp_path_, BinaryFeatureExtractor::kDefaultOptions, _, _))
-      .Times(4);
+      .Times(3);
 
   // We should not get whilelist checks for other URLs than specified below.
   EXPECT_CALL(*sb_service_->mock_database_manager(),
@@ -771,11 +771,11 @@ TEST_F(DownloadProtectionServiceTest,
     FILE_PATH_LITERAL("a.tmp"),   // tmp_path
     FILE_PATH_LITERAL("a.exe"));  // final_path
   EXPECT_CALL(*binary_feature_extractor_.get(), CheckSignature(tmp_path_, _))
-      .Times(4);
+      .Times(1);
   EXPECT_CALL(*binary_feature_extractor_.get(),
               ExtractImageFeatures(
                   tmp_path_, BinaryFeatureExtractor::kDefaultOptions, _, _))
-      .Times(6);
+      .Times(3);
   // Assume http://www.whitelist.com/a.exe is on the whitelist.
   EXPECT_CALL(*sb_service_->mock_database_manager(),
               MatchDownloadWhitelistUrl(_)).Times(0);
@@ -2132,11 +2132,12 @@ TEST_F(DownloadProtectionServiceTest,
         item.reset();
         return false;
       }));
-  EXPECT_CALL(*binary_feature_extractor_.get(), CheckSignature(tmp_path_, _));
+  EXPECT_CALL(*binary_feature_extractor_.get(), CheckSignature(tmp_path_, _))
+      .Times(0);
   EXPECT_CALL(*binary_feature_extractor_.get(),
-              ExtractImageFeatures(tmp_path_,
-                                   BinaryFeatureExtractor::kDefaultOptions,
-                                   _, _));
+              ExtractImageFeatures(
+                  tmp_path_, BinaryFeatureExtractor::kDefaultOptions, _, _))
+      .Times(0);
 
   RunLoop run_loop;
   download_service_->CheckClientDownload(
