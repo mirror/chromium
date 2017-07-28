@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2dcb2f7c_082ba603",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T23:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d58d547_fbf9770b",
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "440d67c5_a1dce438",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcbd127_20bef795",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T23:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "440d67c5_a1dce438",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f2095588_f82fe10d",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T23:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b24e606_24724f42",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fe5fc98_6ad55a0b",
         "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "f74bf9ac_b6ba5240",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T23:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fe5fc98_6ad55a0b",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0c46aef_dc4f702e",
         "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
         "patchSetId": 5
@@ -108,6 +198,30 @@
       "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fa94e2_491d7827",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T23:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0c46aef_dc4f702e",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
