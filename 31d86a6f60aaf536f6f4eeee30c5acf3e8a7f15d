@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46acf8bd_3ce08d0f",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T14:26:27Z",
+      "side": 1,
+      "message": "generated_password_changed_(false), here as well.",
+      "range": {
+        "startLine": 563,
+        "startChar": 73,
+        "endLine": 563,
+        "endChar": 74
+      },
+      "revId": "31d86a6f60aaf536f6f4eeee30c5acf3e8a7f15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb43690_d2553639",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T14:26:27Z",
+      "side": 1,
+      "message": "username_vote_type\n\nPlease also update the method description. It should explain why |username_vote_type| needed. \nMy suggestion: \"For fields of |USERNAME| type, the username vote type will be set to |username_vote_type|.\"",
+      "range": {
+        "startLine": 184,
+        "startChar": 62,
+        "endLine": 184,
+        "endChar": 71
+      },
+      "revId": "31d86a6f60aaf536f6f4eeee30c5acf3e8a7f15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131f2686_ef263d8f",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-28T14:26:27Z",
+      "side": 1,
+      "message": "1. \"using\" should be used instead of \"typedef\"\n2. Don\u0027t declare anything in global context (out of any namespace, i.e. password_manager for this file)\n3. UsernameVoteType isn\u0027t used so often. So, let\u0027s use the full name. If full name looks really ugly, then add \"using autofill::AutofillUploadContents::Field\". Up to you.\n4. You created a shortcut but still use the full name in some cases.\n5. This typedef is confusing. You defined field as UsernameVoteType. What if somebody needs autofill::AutofillUploadContents::Field::NO_GENERATION? It will look like \"UsernameVoteType::NO_GENERATION\"",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 7
+      },
+      "revId": "31d86a6f60aaf536f6f4eeee30c5acf3e8a7f15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
