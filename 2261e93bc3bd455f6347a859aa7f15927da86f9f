@@ -22,6 +22,30 @@
       "revId": "2261e93bc3bd455f6347a859aa7f15927da86f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d069a02_f2ab50e0",
+        "filename": "ios/chrome/browser/ui/tools_menu/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-28T19:51:37Z",
+      "side": 1,
+      "message": "Done.\nclean\u0027s tools_menu_ui source set still includes this source set because it needs the tools_menu_constants files. Moving those out would require me to update 25+ BUILD.gn files, so I will do that as a followup.",
+      "parentUuid": "2b8bd430_02c950e2",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "2261e93bc3bd455f6347a859aa7f15927da86f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
