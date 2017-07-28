@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4fbf4e9_afd3a95b",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T21:47:00Z",
+      "side": 1,
+      "message": "Does PrefService require unique_ptr? It would be better to use value semantics and just return this by value (since that is the direction we\u0027re migrating base::Value usage)",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac285a7_e46fbe50",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T21:47:00Z",
+      "side": 1,
+      "message": "I would suggest just using a union internally for serialization / deserialization.\n\nunion UnguessableTokenRepresentation {\n  uint8_t buffer[128];\n  struct {\n    uint64_t high;\n    uint64_t low;\n  };\n};\n\nand static_assert that sizeof(UnguessableTokenRepresentation) \u003d\u003d sizeof(UnguessableToken)",
+      "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea58a2f6_c94fe44a",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T21:47:00Z",
+      "side": 1,
+      "message": "Nit: add newline after this for consistency.",
+      "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
