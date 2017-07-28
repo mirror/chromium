@@ -10,10 +10,13 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.StringDef;
 
+import org.chromium.chrome.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +33,7 @@ public class ChannelDefinitions {
     public static final String CHANNEL_ID_DOWNLOADS = "downloads";
     public static final String CHANNEL_ID_INCOGNITO = "incognito";
     public static final String CHANNEL_ID_MEDIA = "media";
+    public static final String CHANNEL_ID_CONTENT_SUGGESTIONS = "content_suggestions";
     // TODO(crbug.com/700377): Deprecate the 'sites' channel.
     public static final String CHANNEL_ID_SITES = "sites";
     public static final String CHANNEL_ID_PREFIX_SITES = "web:";
@@ -49,7 +53,7 @@ public class ChannelDefinitions {
      * Predefined Channels.MAP, and add the ID to the LEGACY_CHANNELS_ID array below.
      */
     @StringDef({CHANNEL_ID_BROWSER, CHANNEL_ID_DOWNLOADS, CHANNEL_ID_INCOGNITO, CHANNEL_ID_MEDIA,
-            CHANNEL_ID_SITES})
+            CHANNEL_ID_CONTENT_SUGGESTIONS, CHANNEL_ID_SITES})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ChannelId {}
 
@@ -61,34 +65,61 @@ public class ChannelDefinitions {
     @TargetApi(Build.VERSION_CODES.N) // for NotificationManager.IMPORTANCE_* constants
     private static class PredefinedChannels {
         /**
-         * The set of predefined channels to be initialized on startup. CHANNELS_VERSION must be
-         * incremented every time an entry is modified, removed or added to this map.
-         * If an entry is removed from here then it must be added to the LEGACY_CHANNEL_IDs array.
+         * Definitions for predefined channels. Any channel listed in STARTUP must have an entry in
+         * this map; it may also contain channels that are enabled conditionally.
          */
         static final Map<String, PredefinedChannel> MAP;
+
+        /**
+         * The set of predefined channels to be initialized on startup.
+         *
+         * <p>CHANNELS_VERSION must be incremented every time an entry is added to or removed from
+         * this set, or when the definition of one of a channel in this set is changed. If an entry
+         * is removed from here then it must be added to the LEGACY_CHANNEL_IDs array.
+         */
+        static final Set<String> STARTUP;
+
         static {
             Map<String, PredefinedChannel> map = new HashMap<>();
+            Set<String> startup = new HashSet<>();
+
             map.put(CHANNEL_ID_BROWSER,
                     new PredefinedChannel(CHANNEL_ID_BROWSER,
-                            org.chromium.chrome.R.string.notification_category_browser,
+                            R.string.notification_category_browser,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            startup.add(CHANNEL_ID_BROWSER);
+
             map.put(CHANNEL_ID_DOWNLOADS,
                     new PredefinedChannel(CHANNEL_ID_DOWNLOADS,
-                            org.chromium.chrome.R.string.notification_category_downloads,
+                            R.string.notification_category_downloads,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            startup.add(CHANNEL_ID_DOWNLOADS);
+
             map.put(CHANNEL_ID_INCOGNITO,
                     new PredefinedChannel(CHANNEL_ID_INCOGNITO,
-                            org.chromium.chrome.R.string.notification_category_incognito,
+                            R.string.notification_category_incognito,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            startup.add(CHANNEL_ID_INCOGNITO);
+
             map.put(CHANNEL_ID_MEDIA,
-                    new PredefinedChannel(CHANNEL_ID_MEDIA,
-                            org.chromium.chrome.R.string.notification_category_media,
+                    new PredefinedChannel(CHANNEL_ID_MEDIA, R.string.notification_category_media,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            startup.add(CHANNEL_ID_MEDIA);
+
             map.put(CHANNEL_ID_SITES,
-                    new PredefinedChannel(CHANNEL_ID_SITES,
-                            org.chromium.chrome.R.string.notification_category_sites,
+                    new PredefinedChannel(CHANNEL_ID_SITES, R.string.notification_category_sites,
                             NotificationManager.IMPORTANCE_DEFAULT, CHANNEL_GROUP_ID_GENERAL));
+            startup.add(CHANNEL_ID_SITES);
+
+            // As of Aug 2017, this channel is experimental and enabled only through the associated
+            // feature (see org.chromium.chrome.browser.ntp.ContentSuggestionsNotificationHelper).
+            map.put(CHANNEL_ID_CONTENT_SUGGESTIONS,
+                    new PredefinedChannel(CHANNEL_ID_CONTENT_SUGGESTIONS,
+                            R.string.notification_category_content_suggestions,
+                            NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+
             MAP = Collections.unmodifiableMap(map);
+            STARTUP = Collections.unmodifiableSet(startup);
         }
     }
 
@@ -106,10 +137,9 @@ public class ChannelDefinitions {
             Map<String, ChannelGroup> map = new HashMap<>();
             map.put(CHANNEL_GROUP_ID_GENERAL,
                     new ChannelGroup(CHANNEL_GROUP_ID_GENERAL,
-                            org.chromium.chrome.R.string.notification_category_group_general));
+                            R.string.notification_category_group_general));
             map.put(CHANNEL_GROUP_ID_SITES,
-                    new ChannelGroup(CHANNEL_GROUP_ID_SITES,
-                            org.chromium.chrome.R.string.notification_category_sites));
+                    new ChannelGroup(CHANNEL_GROUP_ID_SITES, R.string.notification_category_sites));
             MAP = Collections.unmodifiableMap(map);
         }
     }
@@ -119,7 +149,7 @@ public class ChannelDefinitions {
      */
     static Set<String> getStartupChannelIds() {
         // CHANNELS_VERSION must be incremented if the set of channels returned here changes.
-        return PredefinedChannels.MAP.keySet();
+        return PredefinedChannels.STARTUP;
     }
 
     /**
