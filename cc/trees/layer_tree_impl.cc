@@ -1508,6 +1508,27 @@ bool LayerTreeImpl::DistributeRootScrollOffset(
   if (inner_viewport_offset + outer_viewport_offset == root_offset)
     return false;
 
+  // If the viewports aren't scrollable, we shouldn't distribute scroll offsets
+  // to them. See http://crbug.com/745727.
+  // TODO(smcgruer): This may not be the right place for this check.
+  // TODO(smcgruer): What should we do if one of the viewports is scrollable?
+  // TODO(smcgruer): What should we do if one of the axes is scrollable?
+  auto& scroll_tree = property_trees()->scroll_tree;
+  ScrollNode* outer_viewport_scroll_node = scroll_tree.FindNodeFromElementId(
+      OuterViewportScrollLayer()->element_id());
+  if (outer_viewport_scroll_node &&
+      (!outer_viewport_scroll_node->user_scrollable_vertical ||
+       !outer_viewport_scroll_node->user_scrollable_horizontal)) {
+    return false;
+  }
+  ScrollNode* inner_viewport_scroll_node = scroll_tree.FindNodeFromElementId(
+      InnerViewportScrollLayer()->element_id());
+  if (inner_viewport_scroll_node &&
+      (!inner_viewport_scroll_node->user_scrollable_vertical ||
+       !inner_viewport_scroll_node->user_scrollable_horizontal)) {
+    return false;
+  }
+
   gfx::ScrollOffset max_outer_viewport_scroll_offset =
       OuterViewportScrollLayer()->MaxScrollOffset();
 
