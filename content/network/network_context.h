@@ -74,6 +74,8 @@ class NetworkContext : public mojom::NetworkContext {
   // destroy NetworkContext's URLRequestContext.
   void Cleanup();
 
+  void DisableQuic();
+
  private:
   NetworkContext();
 
