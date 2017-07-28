@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f255408e_5c0fff13",
+        "filename": "chrome/browser/web_applications/web_app.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-28T17:38:35Z",
+      "side": 1,
+      "message": "Where does app_name come from? Shouldn\u0027t it be already in UTF-8?",
+      "range": {
+        "startLine": 533,
+        "startChar": 61,
+        "endLine": 533,
+        "endChar": 66
+      },
+      "revId": "1c1c7419eb773068b912cd02c5c1ba51d3265de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf85799_54aeb412",
+        "filename": "content/browser/download/save_package.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-28T17:38:35Z",
+      "side": 1,
+      "message": "This should be UTF-8, too given what\u0027s done before getting here.",
+      "range": {
+        "startLine": 1286,
+        "startChar": 62,
+        "endLine": 1286,
+        "endChar": 69
+      },
+      "revId": "1c1c7419eb773068b912cd02c5c1ba51d3265de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
