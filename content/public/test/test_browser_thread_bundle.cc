@@ -31,37 +31,56 @@ TestBrowserThreadBundle::TestBrowserThreadBundle(int options)
 
 TestBrowserThreadBundle::~TestBrowserThreadBundle() {
   CHECK(threads_created_);
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() A";
 
   // To avoid memory leaks, we must ensure that any tasks posted to the blocking
   // pool via PostTaskAndReply are able to reply back to the originating thread.
   // Thus we must flush the blocking pool while the browser threads still exist.
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() B";
   BrowserThreadImpl::FlushThreadPoolHelperForTesting();
-
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() C";
   // To ensure a clean teardown, each thread's message loop must be flushed
   // just before the thread is destroyed. But stopping a fake thread does not
   // automatically flush the message loop, so we have to do it manually.
   // See http://crbug.com/247525 for discussion.
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() D";
   io_thread_->Stop();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() E";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() F";
   cache_thread_->Stop();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() G";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() H";
   process_launcher_thread_->Stop();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() I";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() J";
   file_user_blocking_thread_->Stop();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() K";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() L";
   file_thread_->Stop();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() M";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() N";
   db_thread_->Stop();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() O";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() P";
   // This is the point at which we normally shut down the thread pool. So flush
   // it again in case any shutdown tasks have been posted to the pool from the
   // threads above.
   BrowserThreadImpl::FlushThreadPoolHelperForTesting();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() Q";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() R";
   ui_thread_->Stop();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() S";
   base::RunLoop().RunUntilIdle();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() T";
 
   // Skip the following step when TaskScheduler isn't managed by this
   // TestBrowserThreadBundle, otherwise it can hang (e.g.
@@ -80,20 +99,27 @@ TestBrowserThreadBundle::~TestBrowserThreadBundle() {
     // unit tests as running more tasks can merely uncover more issues (e.g. if
     // a bad tasks is posted but never blocked upon it could make a test flaky
     // whereas by flushing we guarantee it will blow up).
+    LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() U";
     RunAllBlockingPoolTasksUntilIdle();
-
+    LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() V";
     scoped_async_task_scheduler_.reset();
+    LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() W";
     CHECK(base::MessageLoop::current()->IsIdleForTesting());
   }
+
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() X";
 
   // |message_loop_| needs to explicitly go away before fake threads in order
   // for DestructionObservers hooked to |message_loop_| to be able to invoke
   // BrowserThread::CurrentlyOn() -- ref. ~TestBrowserThread().
   message_loop_.reset();
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() Y";
 
 #if defined(OS_WIN)
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() Z";
   com_initializer_.reset();
 #endif
+  LOG(ERROR) << "SKYM ~TestBrowserThreadBundle() AA";
 }
 
 void TestBrowserThreadBundle::Init() {

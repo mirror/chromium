@@ -167,12 +167,6 @@ class LastDownloadFinderTest : public testing::Test {
   }
 
   void TearDown() override {
-    // Shut down the history service on all profiles.
-    std::vector<Profile*> profiles(
-        profile_manager_->profile_manager()->GetLoadedProfiles());
-    for (size_t i = 0; i < profiles.size(); ++i) {
-      profiles[0]->AsTestingProfile()->DestroyHistoryService();
-    }
     profile_manager_.reset();
     TestingBrowserProcess::DeleteInstance();
     testing::Test::TearDown();
@@ -241,9 +235,8 @@ class LastDownloadFinderTest : public testing::Test {
   // the originating thread. The PostTaskAndReplyRelay holds a reference to the
   // backend until its RunReplyAndSelfDestruct is called on the originating
   // thread. This reference MUST be released (on the originating thread,
-  // remember) _before_ calling DestroyHistoryService in TearDown(). See the
-  // giant comment in HistoryService::Cleanup explaining where the backend's
-  // dtor must be run.
+  // remember) _before_ the HistoryService in shutdown. See the giant comment in
+  // HistoryService::Cleanup explaining where the backend's dtor must be run.
   void FlushHistoryBackend(Profile* profile) {
     base::RunLoop run_loop;
     HistoryServiceFactory::GetForProfile(profile,
