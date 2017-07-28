@@ -21,10 +21,8 @@ class MockPasswordStore : public PasswordStore {
  public:
   MockPasswordStore();
 
-  bool Init(const syncer::SyncableService::StartSyncFlare& flare,
-            PrefService* prefs) override {
-    return true;
-  };
+  /*bool Init(const syncer::SyncableService::StartSyncFlare& flare,
+            PrefService* prefs) override;*/
   MOCK_METHOD1(RemoveLogin, void(const autofill::PasswordForm&));
   MOCK_METHOD2(GetLogins,
                void(const PasswordStore::FormDigest&, PasswordStoreConsumer*));
@@ -91,7 +89,14 @@ class MockPasswordStore : public PasswordStore {
   PasswordStoreSync* GetSyncInterface() { return this; }
 
  protected:
-  virtual ~MockPasswordStore();
+  ~MockPasswordStore() override;
+
+ private:
+  // PasswordStore:
+  scoped_refptr<base::SequencedTaskRunner> CreateBackgroundTaskRunner()
+      const override;
+  void InitOnBackgroundThread(
+      const syncer::SyncableService::StartSyncFlare& flare) override;
 };
 
 }  // namespace password_manager
