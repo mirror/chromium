@@ -6,13 +6,16 @@
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_STORE_PREFETCH_STORE_TEST_UTIL_H_
 
 #include <memory>
+#include <set>
 #include <string>
 
+#include "base/bind.h"
 #include "base/callback_forward.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/test/test_simple_task_runner.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 class GURL;
 
@@ -33,23 +36,31 @@ class PrefetchStoreTestUtil {
       scoped_refptr<base::TestSimpleTaskRunner> task_runner);
   ~PrefetchStoreTestUtil();
 
+  // Builds a new store in a temporary directory.
   void BuildStore();
+  // Builds the store in memory (no disk storage).
   void BuildStoreInMemory();
   // Releases the ownership of currently controlled store.
   std::unique_ptr<PrefetchStore> ReleaseStore();
+  // Deletes the currently held store that was previously built.
   void DeleteStore();
 
-  // Returns auto-assigned offline_id or kStoreCommandFailed.
-  int64_t InsertPrefetchItem(const PrefetchItem& item);
+  // Inserts the provided item in store. Returns true if successful.
+  bool InsertPrefetchItem(const PrefetchItem& item);
 
-  // Returns the total count of prefetch items in the database.
+  // Returns the total count of prefetch items in the store.
   int CountPrefetchItems();
 
-  // Returns nullptr if the item with specified id is not found.
+  // Gets the item with the provided |offline_id|. Returns null if the item was
+  // not found.
   std::unique_ptr<PrefetchItem> GetPrefetchItem(int64_t offline_id);
 
-  // Returns number of affected items.
-  int ZombifyPrefetchItems(const std::string& name_space, const GURL& url);
+  // Gets all existing items from the store.
+  std::size_t GetAllItems(std::set<PrefetchItem>* all_items);
+
+  // Sets to the ZOMBIE state the entry uniquely identified by |name_space| and
+  // |url|, returning true if an entry with that identifier was found.
+  bool ZombifyPrefetchItems(const std::string& name_space, const GURL& url);
 
   PrefetchStore* store() { return store_.get(); }
 
