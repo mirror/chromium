@@ -34,6 +34,18 @@ SSLStatus::SSLStatus(const net::SSLInfo& ssl_info)
 
 SSLStatus::SSLStatus(const SSLStatus& other) = default;
 
+void SSLStatus::SetUserData(const char* key, const UserData& user_data) {
+  user_data_[key] = user_data;
+}
+
+const SSLStatus::UserData& SSLStatus::GetUserData(const char* key) {
+  return user_data_[key];
+}
+
+void SSLStatus::RemoveUserData(const char* key) {
+  user_data_.erase(key);
+}
+
 SSLStatus::~SSLStatus() {}
 
 }  // namespace content

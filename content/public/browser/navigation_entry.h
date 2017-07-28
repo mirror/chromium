@@ -26,7 +26,7 @@ namespace content {
 
 class PageState;
 struct FaviconStatus;
-struct SSLStatus;
+class SSLStatus;
 
 // A NavigationEntry is a data structure that captures all the information
 // required to recreate a browsing state. This includes some opaque binary

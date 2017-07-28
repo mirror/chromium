@@ -26,7 +26,7 @@ class ServiceWorkerNavigationHandle;
 class StreamHandle;
 struct GlobalRequestID;
 struct ResourceResponse;
-struct SSLStatus;
+class SSLStatus;
 
 class NavigationURLLoaderImpl : public NavigationURLLoader {
  public:
