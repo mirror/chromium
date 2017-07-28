@@ -27,8 +27,8 @@
 #include "crypto/sha2.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
-#include "third_party/WebKit/public/web/WebDataSource.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebDocumentLoader.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "url/gurl.h"
@@ -135,9 +135,9 @@ void PhishingClassifier::BeginFeatureExtraction() {
     return;
   }
 
-  blink::WebDataSource* ds = frame->DataSource();
-  if (!ds || ds->GetRequest().HttpMethod().Ascii() != "GET") {
-    if (ds)
+  blink::WebDocumentLoader* loader = frame->DocumentLoader();
+  if (!loader || loader->GetRequest().HttpMethod().Ascii() != "GET") {
+    if (loader)
       RecordReasonForSkippingClassificationToUMA(SKIP_NONE_GET);
     RunFailureCallback();
     return;

@@ -35,7 +35,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/SecurityContext.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebFactory.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/WebLocalFrameBase.h"
@@ -356,7 +356,7 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
   DCHECK(loading_shadow_page_);
   DCHECK(!asked_to_terminate_);
   loading_shadow_page_ = false;
-  main_frame_->DataSource()->SetServiceWorkerNetworkProvider(
+  main_frame_->DocumentLoader()->SetServiceWorkerNetworkProvider(
       worker_context_client_->CreateServiceWorkerNetworkProvider());
 
   // Kickstart the worker before loading the script when the script has been

@@ -36,7 +36,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
-#include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebFactory.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/WebLocalFrameBase.h"
@@ -185,7 +185,7 @@ void WebSharedWorkerImpl::DidFinishDocumentLoad() {
   DCHECK(IsMainThread());
   DCHECK(!loading_document_);
   DCHECK(!main_script_loader_);
-  main_frame_->DataSource()->SetServiceWorkerNetworkProvider(
+  main_frame_->DocumentLoader()->SetServiceWorkerNetworkProvider(
       client_->CreateServiceWorkerNetworkProvider());
   main_script_loader_ = WorkerScriptLoader::Create();
   loading_document_ = main_frame_->GetFrame()->GetDocument();
@@ -346,7 +346,7 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
         client_->CreateWorkerFetchContext(
             WebLocalFrameBase::FromFrame(main_frame_->GetFrame())
-                ->DataSource()
+                ->DocumentLoader()
                 ->GetServiceWorkerNetworkProvider());
     DCHECK(web_worker_fetch_context);
     web_worker_fetch_context->SetApplicationCacheHostID(
