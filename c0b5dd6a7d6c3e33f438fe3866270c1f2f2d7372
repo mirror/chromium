@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "758ddf9d_2afc1b75",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T21:43:55Z",
+      "side": 1,
+      "message": "Maybe clarify \"data table\", not a dinner table.\n\nFor \"If it is longer than 5 characters\", maybe clarify that you\u0027re talking about the translation of the word \u0027table\u0027 and not the rest of the string ($1 $2x$3)",
+      "revId": "c0b5dd6a7d6c3e33f438fe3866270c1f2f2d7372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be08712_05029932",
+        "filename": "chrome/browser/resources/chromeos/chromevox/strings/chromevox_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T21:43:55Z",
+      "side": 1,
+      "message": "Use \u003cph name\u003d\"tableName\"\u003e$1\u003c/ph\u003e and similarly for $2 and $3 to aid translators in understanding what the arguments are for",
+      "revId": "c0b5dd6a7d6c3e33f438fe3866270c1f2f2d7372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
