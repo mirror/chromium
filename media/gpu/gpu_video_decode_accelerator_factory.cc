@@ -18,7 +18,7 @@
 #include "media/gpu/dxva_video_decode_accelerator_win.h"
 #elif defined(OS_MACOSX)
 #include "media/gpu/vt_video_decode_accelerator_mac.h"
-#elif defined(OS_CHROMEOS)
+#elif defined(OS_CHROMEOS) || defined(OS_LINUX)
 #if defined(USE_V4L2_CODEC)
 #include "media/gpu/v4l2_device.h"
 #include "media/gpu/v4l2_slice_video_decode_accelerator.h"
@@ -85,6 +85,7 @@ GpuVideoDecodeAcceleratorFactory::GetDecoderCapabilities(
 // profile (instead of calculating a superset).
 // TODO(posciak,henryhsu): improve this so that we choose a superset of
 // resolutions and other supported profile parameters.
+  DVLOG(1) << "Get Supported profiles";
 #if defined(OS_WIN)
   capabilities.supported_profiles =
       DXVAVideoDecodeAccelerator::GetSupportedProfiles(gpu_preferences,
