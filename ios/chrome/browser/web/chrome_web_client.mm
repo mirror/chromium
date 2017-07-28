@@ -23,6 +23,7 @@
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/ios_chrome_main_parts.h"
+#include "ios/chrome/browser/passwords/credential_manager_features.h"
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/ssl/ios_ssl_error_handler.h"
 #import "ios/chrome/browser/ui/chrome_web_view_factory.h"
@@ -164,11 +165,18 @@ void ChromeWebClient::PostBrowserURLRewriterCreation(
 NSString* ChromeWebClient::GetEarlyPageScript(
     web::BrowserState* browser_state) const {
   NSString* chrome_page_script = GetPageScript(@"chrome_bundle");
+  NSString* kScriptTemplate = @"%@; %@";
+
+  if (base::FeatureList::IsEnabled(
+          credential_manager::features::kCredentialManager)) {
+    chrome_page_script = [NSString
+        stringWithFormat:kScriptTemplate, GetPageScript(@"credential_manager"),
+                         chrome_page_script];
+  }
 
   if (!base::FeatureList::IsEnabled(payments::features::kWebPayments))
     return chrome_page_script;
 
-  NSString* kScriptTemplate = @"%@; %@";
   return [NSString stringWithFormat:kScriptTemplate,
                                     GetPageScript(@"payment_request"),
                                     chrome_page_script];
