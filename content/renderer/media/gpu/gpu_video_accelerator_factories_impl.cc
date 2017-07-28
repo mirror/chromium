@@ -22,7 +22,6 @@
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
 #include "media/gpu/ipc/client/gpu_video_decode_accelerator_host.h"
-#include "media/gpu/ipc/client/gpu_video_encode_accelerator_host.h"
 #include "media/gpu/ipc/common/media_messages.h"
 #include "media/mojo/clients/mojo_video_encode_accelerator.h"
 #include "media/video/video_decode_accelerator.h"
@@ -58,13 +57,14 @@ GpuVideoAcceleratorFactoriesImpl::Create(
     bool enable_gpu_memory_buffer_video_frames,
     const viz::BufferToTextureTargetMap& image_texture_targets,
     bool enable_video_accelerator,
-    media::mojom::VideoEncodeAcceleratorPtrInfo unbound_vea) {
+    media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider) {
   RecordContextProviderPhaseUmaEnum(
       ContextProviderPhase::CONTEXT_PROVIDER_ACQUIRED);
   return base::WrapUnique(new GpuVideoAcceleratorFactoriesImpl(
       std::move(gpu_channel_host), main_thread_task_runner, task_runner,
       context_provider, enable_gpu_memory_buffer_video_frames,
-      image_texture_targets, enable_video_accelerator, std::move(unbound_vea)));
+      image_texture_targets, enable_video_accelerator,
+      std::move(unbound_vea_provider)));
 }
 
 GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
@@ -75,7 +75,7 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
     bool enable_gpu_memory_buffer_video_frames,
     const viz::BufferToTextureTargetMap& image_texture_targets,
     bool enable_video_accelerator,
-    media::mojom::VideoEncodeAcceleratorPtrInfo unbound_vea)
+    media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider)
     : main_thread_task_runner_(main_thread_task_runner),
       task_runner_(task_runner),
       gpu_channel_host_(std::move(gpu_channel_host)),
@@ -87,10 +87,15 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
       video_accelerator_enabled_(enable_video_accelerator),
       gpu_memory_buffer_manager_(
           RenderThreadImpl::current()->GetGpuMemoryBufferManager()),
-      unbound_vea_(std::move(unbound_vea)),
       thread_safe_sender_(ChildThreadImpl::current()->thread_safe_sender()) {
   DCHECK(main_thread_task_runner_);
   DCHECK(gpu_channel_host_);
+
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&GpuVideoAcceleratorFactoriesImpl::
+                     BindVideoEncodeAcceleratorProviderOnTaskRunner,
+                 base::Unretained(this), base::Passed(&unbound_vea_provider)));
 }
 
 GpuVideoAcceleratorFactoriesImpl::~GpuVideoAcceleratorFactoriesImpl() {}
@@ -160,9 +165,11 @@ GpuVideoAcceleratorFactoriesImpl::CreateVideoEncodeAccelerator() {
   if (CheckContextLost())
     return nullptr;
 
-  if (base::FeatureList::IsEnabled(features::kMojoVideoEncodeAccelerator)) {
+  if (base::FeatureList::IsEnabled(features::kMojoVideoEncodeAccelerator) &&
+      vea_provider_.is_bound()) {
     media::mojom::VideoEncodeAcceleratorPtr vea;
-    vea.Bind(std::move(unbound_vea_));
+    vea_provider_->CreateVideoEncodeAccelerator(mojo::MakeRequest(&vea));
+
     if (vea) {
       return std::unique_ptr<media::VideoEncodeAccelerator>(
           new media::MojoVideoEncodeAccelerator(
@@ -173,10 +180,12 @@ GpuVideoAcceleratorFactoriesImpl::CreateVideoEncodeAccelerator() {
                   .video_encode_accelerator_supported_profiles));
     }
   }
-
   return std::unique_ptr<media::VideoEncodeAccelerator>(
-      new media::GpuVideoEncodeAcceleratorHost(
-          context_provider_->GetCommandBufferProxy()));
+      new media::MojoVideoEncodeAccelerator(
+          std::move(vea), context_provider_->GetCommandBufferProxy()
+                              ->channel()
+                              ->gpu_info()
+                              .video_encode_accelerator_supported_profiles));
 }
 
 bool GpuVideoAcceleratorFactoriesImpl::CreateTextures(
@@ -364,6 +373,15 @@ scoped_refptr<ui::ContextProviderCommandBuffer>
 GpuVideoAcceleratorFactoriesImpl::ContextProviderMainThread() {
   DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
   return context_provider_refptr_;
+}
+
+void GpuVideoAcceleratorFactoriesImpl::
+    BindVideoEncodeAcceleratorProviderOnTaskRunner(
+        media::mojom::VideoEncodeAcceleratorProviderPtrInfo
+            unbound_vea_provider) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  DCHECK(!vea_provider_.is_bound());
+  vea_provider_.Bind(std::move(unbound_vea_provider));
 }
 
 }  // namespace content

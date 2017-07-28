@@ -29,12 +29,12 @@
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_sync_channel.h"
 #include "ipc/ipc_sync_message_filter.h"
+#include "media/gpu/gpu_video_accelerator_util.h"
 #include "media/gpu/gpu_video_encode_accelerator_factory.h"
 #include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.h"
 #include "media/gpu/ipc/service/gpu_video_decode_accelerator.h"
-#include "media/gpu/ipc/service/gpu_video_encode_accelerator.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
-#include "media/mojo/services/mojo_video_encode_accelerator_service.h"
+#include "media/mojo/services/mojo_video_encode_accelerator_provider.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_switches.h"
@@ -139,7 +139,9 @@ void GpuService::UpdateGPUInfoFromPreferences(
       media::GpuVideoDecodeAccelerator::GetCapabilities(gpu_preferences_,
                                                         gpu_workarounds);
   gpu_info_.video_encode_accelerator_supported_profiles =
-      media::GpuVideoEncodeAccelerator::GetSupportedProfiles(gpu_preferences_);
+      media::GpuVideoAcceleratorUtil::ConvertMediaToGpuEncodeProfiles(
+          media::GpuVideoEncodeAcceleratorFactory::GetSupportedProfiles(
+              gpu_preferences_));
   gpu_info_.jpeg_decode_accelerator_supported =
       media::GpuJpegDecodeAcceleratorFactoryProvider::
           IsAcceleratedJpegDecodeSupported();
@@ -231,11 +233,11 @@ void GpuService::CreateJpegDecodeAccelerator(
   NOTIMPLEMENTED();
 }
 
-void GpuService::CreateVideoEncodeAccelerator(
-    media::mojom::VideoEncodeAcceleratorRequest vea_request) {
+void GpuService::CreateVideoEncodeAcceleratorProvider(
+    media::mojom::VideoEncodeAcceleratorProviderRequest vea_provider_request) {
   DCHECK(io_runner_->BelongsToCurrentThread());
-  media::MojoVideoEncodeAcceleratorService::Create(
-      std::move(vea_request),
+  media::MojoVideoEncodeAcceleratorProvider::Create(
+      std::move(vea_provider_request),
       base::Bind(&media::GpuVideoEncodeAcceleratorFactory::CreateVEA),
       gpu_preferences_);
 }

@@ -128,9 +128,10 @@ GpuVideoEncodeAcceleratorFactory::GetSupportedProfiles(
   VideoEncodeAccelerator::SupportedProfiles profiles;
   for (const auto& create_vea : GetVEAFactoryFunctions(gpu_preferences)) {
     auto vea = create_vea();
-    if (vea)
+    if (vea) {
       GpuVideoAcceleratorUtil::InsertUniqueEncodeProfiles(
           vea->GetSupportedProfiles(), &profiles);
+    }
   }
   return profiles;
 }
