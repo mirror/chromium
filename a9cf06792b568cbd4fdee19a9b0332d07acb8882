@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7584b310_035db46b",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-28T06:31:33Z",
+      "side": 1,
+      "message": "I\u0027m afraid we can\u0027t unless we add a MediaStreamDispatcherProvider\ncreated on one thread but passed around and rebound. Probably\ntoo much for this set of CLs, but keep an eye out for such\nlater simplifications and add a TODO+bug if you see them plz.",
+      "parentUuid": "bb0554dd_d6a74daa",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "a9cf06792b568cbd4fdee19a9b0332d07acb8882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72b732bd_d01ce7d9",
         "filename": "content/renderer/media/media_stream_dispatcher.cc",
         "patchSetId": 5
@@ -41,6 +65,53 @@
         "startChar": 61,
         "endLine": 197,
         "endChar": 0
+      },
+      "revId": "a9cf06792b568cbd4fdee19a9b0332d07acb8882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6001b3c7_b3f9e85f",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-28T06:31:33Z",
+      "side": 1,
+      "message": "Hmm I checked other callers and almost none does anything\nabout TryBindInterface. I guess I was expecting a IGNORE_RET\nbut that seems Linux-specific [1]. I guess it\u0027s OK as-is :-)\n\n\n[1] https://cs.chromium.org/chromium/src/breakpad/src/common/linux/ignore_ret.h?type\u003dcs\u0026q\u003dignore_ret\u0026l\u003d38",
+      "parentUuid": "72b732bd_d01ce7d9",
+      "range": {
+        "startLine": 197,
+        "startChar": 61,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "a9cf06792b568cbd4fdee19a9b0332d07acb8882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09e01bbc_34d6d04e",
+        "filename": "content/renderer/media/media_stream_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-28T06:31:33Z",
+      "side": 1,
+      "message": "nit: no need for {} in one-line bodies and conditions.",
+      "range": {
+        "startLine": 294,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 5
       },
       "revId": "a9cf06792b568cbd4fdee19a9b0332d07acb8882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
