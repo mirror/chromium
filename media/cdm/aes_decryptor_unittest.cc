@@ -270,9 +270,9 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
       helper_.reset(new ExternalClearKeyTestHelper());
       std::unique_ptr<CdmAllocator> allocator(new SimpleCdmAllocator());
       CdmAdapter::Create(
-          helper_->KeySystemName(), helper_->LibraryPath(), cdm_config,
-          std::move(allocator), base::Bind(&AesDecryptorTest::CreateCdmFileIO,
-                                           base::Unretained(this)),
+          helper_->KeySystemName(), cdm_config, std::move(allocator),
+          base::Bind(&AesDecryptorTest::CreateCdmFileIO,
+                     base::Unretained(this)),
           base::Bind(&MockCdmClient::OnSessionMessage,
                      base::Unretained(&cdm_client_)),
           base::Bind(&MockCdmClient::OnSessionClosed,
