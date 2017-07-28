@@ -93,10 +93,6 @@ class CSSPropertyParser {
   bool ConsumeGridShorthand(bool important);
   bool ConsumeGridAreaShorthand(bool important);
 
-  bool ConsumePlaceContentShorthand(bool important);
-  bool ConsumePlaceItemsShorthand(bool important);
-  bool ConsumePlaceSelfShorthand(bool important);
-
  private:
   // Inputs:
   CSSParserTokenRange range_;
