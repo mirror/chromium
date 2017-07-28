@@ -22,6 +22,30 @@
       "revId": "61a21b50bae9642d8dd16df2da61f310208cac56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abeafca2_e2d111a3",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-28T17:12:55Z",
+      "side": 1,
+      "message": "The icon disappears when user permission has been granted, so that we don\u0027t need to bother user again. \nTo be consistency, I changed the function name to be similar to SetPerformanceTracingIconVisible(bool visible) in L33.\nThanks.",
+      "parentUuid": "50fecae7_0b62875a",
+      "range": {
+        "startLine": 45,
+        "startChar": 67,
+        "endLine": 45,
+        "endChar": 75
+      },
+      "revId": "61a21b50bae9642d8dd16df2da61f310208cac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
