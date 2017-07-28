@@ -280,6 +280,24 @@
     },
     {
       "key": {
+        "uuid": "5588aca1_58de8d72",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-28T04:09:48Z",
+      "side": 1,
+      "message": "I guess it depends if this is something that only ever needs to handle grammar and spelling markers, or if we think it\u0027s valuable to have the compiler enforce that people adding new marker types (i.e. me) are aware of the switch statement.\n\nI actually don\u0027t really understand how this paint code works, I\u0027m just assuming suggestion markers should be handled the same way as composition markers :-/",
+      "parentUuid": "46237b40_6fe1dc3c",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54c0c819_3925bf1c",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 2
