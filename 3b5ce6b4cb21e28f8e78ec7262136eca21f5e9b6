@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca84375_684d2add",
+        "filename": "chrome/android/java/res/xml/notifications_preferences.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:25:31Z",
+      "side": 1,
+      "message": "Are the keys unique inside of the PreferenceScreen or in a bigger namespace? If the latter, maybe prepend notifications_ or something.",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e77353c_0e52f0fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:25:31Z",
+      "side": 1,
+      "message": "Do you need to import this? I would almost say using the qualified BuildInfo.getPackageName() is clearer.",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034c102d_b52e1b0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:25:31Z",
+      "side": 1,
+      "message": "Why don\u0027t you use BuildInfo.isAtLeastO() again?",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 39
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cb17cd_85ed21b3",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:25:31Z",
+      "side": 1,
+      "message": "Have those strings been reviewed yet?",
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98e9ecb6_798d260e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/NotificationsPreferencesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:25:31Z",
+      "side": 1,
+      "message": "Would it make sense to add a UI catalogue entry for this? :D",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "3b5ce6b4cb21e28f8e78ec7262136eca21f5e9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
