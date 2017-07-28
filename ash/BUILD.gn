@@ -13,6 +13,11 @@ assert(is_chromeos)
 assert(use_aura)
 assert(enable_hidpi)
 
+# X11 CrOS is deprecated and will be deleted soon, see https://crbug.com/742623.
+# This assert ensures all builders are building Ozone CrOS.
+# TODO(kylechar): Remove this comment when X11 CrOS code has been removed.
+assert(use_ozone)
+
 component("ash") {
   sources = [
     "accelerators/accelerator_commands.cc",
