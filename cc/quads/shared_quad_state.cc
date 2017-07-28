@@ -32,6 +32,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
                              const gfx::Rect& visible_quad_layer_rect,
                              const gfx::Rect& clip_rect,
                              bool is_clipped,
+                             bool is_opaque,
                              float opacity,
                              SkBlendMode blend_mode,
                              int sorting_context_id) {
@@ -40,6 +41,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
   this->visible_quad_layer_rect = visible_quad_layer_rect;
   this->clip_rect = clip_rect;
   this->is_clipped = is_clipped;
+  this->is_opaque = is_opaque;
   this->opacity = opacity;
   this->blend_mode = blend_mode;
   this->sorting_context_id = sorting_context_id;

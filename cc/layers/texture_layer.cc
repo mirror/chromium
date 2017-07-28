@@ -154,6 +154,11 @@ void TextureLayer::SetTextureMailbox(
                             requires_commit, allow_mailbox_reuse);
 }
 
+void TextureLayer::SetBackgroundColor(SkColor color) {
+  SetContentsOpaque(blend_background_color_ && SkColorGetA(color) == 255);
+  Layer::SetBackgroundColor(color);
+}
+
 void TextureLayer::SetNeedsDisplayRect(const gfx::Rect& dirty_rect) {
   Layer::SetNeedsDisplayRect(dirty_rect);
 }
@@ -217,6 +222,11 @@ void TextureLayer::PushPropertiesTo(LayerImpl* layer) {
   texture_layer->SetVertexOpacity(vertex_opacity_);
   texture_layer->SetPremultipliedAlpha(premultiplied_alpha_);
   texture_layer->SetBlendBackgroundColor(blend_background_color_);
+  texture_layer->SetContentsOpaque(
+      contents_opaque() ||
+      (blend_background_color_ && SkColorGetA(background_color()) == 0xFF
+           ? true
+           : false));
   if (needs_set_mailbox_) {
     viz::TextureMailbox texture_mailbox;
     std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl;

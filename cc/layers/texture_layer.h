@@ -136,6 +136,7 @@ class CC_EXPORT TextureLayer : public Layer {
       const viz::TextureMailbox& mailbox,
       std::unique_ptr<viz::SingleReleaseCallback> release_callback);
 
+  void SetBackgroundColor(SkColor color) override;
   void SetNeedsDisplayRect(const gfx::Rect& dirty_rect) override;
 
   void SetLayerTreeHost(LayerTreeHost* layer_tree_host) override;

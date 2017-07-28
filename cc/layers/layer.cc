@@ -397,6 +397,7 @@ bool Layer::SubtreeHasCopyRequest() const {
 }
 
 void Layer::SetBackgroundColor(SkColor background_color) {
+  //  LOG(ERROR) << "--------------------------show properties";
   DCHECK(IsPropertyChangeAllowed());
   if (inputs_.background_color == background_color)
     return;
