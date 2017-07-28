@@ -39,6 +39,12 @@ void DialMediaSinkServiceProxy::Stop() {
       base::BindOnce(&DialMediaSinkServiceProxy::StopOnIOThread, this));
 }
 
+void DialMediaSinkServiceProxy::SetDialMediaSinkServiceDelegate(
+    DialMediaSinkServiceDelegate* delegate) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  delegate_ = delegate;
+}
+
 void DialMediaSinkServiceProxy::SetDialMediaSinkServiceForTest(
     std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service) {
   DCHECK(dial_media_sink_service);
@@ -54,6 +60,7 @@ void DialMediaSinkServiceProxy::StartOnIOThread() {
         base::Bind(&DialMediaSinkServiceProxy::OnSinksDiscoveredOnIOThread,
                    this),
         request_context_.get());
+    dial_media_sink_service_->SetDialMediaSinkServiceDelegate(delegate_);
   }
 
   dial_media_sink_service_->Start();

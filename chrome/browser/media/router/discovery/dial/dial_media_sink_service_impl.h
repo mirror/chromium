@@ -18,6 +18,19 @@ namespace media_router {
 class DeviceDescriptionService;
 class DialRegistry;
 
+// A delegate class registered with DialMediaSinkService to receive
+// notifications when dial sinks are added or removed from DialMediaSinkService
+class DialMediaSinkServiceDelegate {
+ public:
+  // Invoked when |sink| is added to DialMediaSinkServiceImpl instance.
+  virtual void OnDialSinkAdded(const MediaSinkInternal& sink) = 0;
+
+  // Invoked when dial sinks are removed from DialMediaSinkServiceImpl instance.
+  virtual void OnDialSinksRemoved() = 0;
+
+  virtual ~DialMediaSinkServiceDelegate() {}
+};
+
 // A service which can be used to start background discovery and resolution of
 // DIAL devices (Smart TVs, Game Consoles, etc.).
 // This class is not thread safe. All methods must be called from the IO thread.
@@ -27,6 +40,11 @@ class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
   DialMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
                            net::URLRequestContextGetter* request_context);
   ~DialMediaSinkServiceImpl() override;
+
+  // Does not take ownership of |delegate|. Caller should make sure |delegate|
+  // object outlives instance of this class, or
+  // SetDialMediaSinkServiceDelegate(nullptr) is called before |delegate| dies.
+  void SetDialMediaSinkServiceDelegate(DialMediaSinkServiceDelegate* delegate);
 
   // MediaSinkService implementation
   void Start() override;
@@ -77,6 +95,8 @@ class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
 
   // Device data list from current round of discovery.
   DialRegistry::DeviceList current_devices_;
+
+  DialMediaSinkServiceDelegate* delegate_;
 
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 

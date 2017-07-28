@@ -10,6 +10,26 @@
 #include "components/cast_channel/cast_socket_service.h"
 #include "components/net_log/chrome_net_log.h"
 
+namespace {
+
+static media_router::MediaSinkInternal CreateCastSinkFromDialSink(
+    const media_router::MediaSinkInternal& dial_sink) {
+  std::string unique_id = dial_sink.sink().id();
+  std::string friendly_name = dial_sink.sink().name();
+  media_router::MediaSink sink(unique_id, friendly_name,
+                               media_router::SinkIconType::CAST);
+
+  media_router::CastSinkExtraData extra_data;
+  extra_data.ip_address = dial_sink.dial_data().ip_address;
+  extra_data.port = media_router::CastMediaSinkServiceImpl::kCastControlPort;
+  extra_data.model_name = dial_sink.dial_data().model_name;
+  extra_data.discovered_by_dial = true;
+
+  return media_router::MediaSinkInternal(sink, extra_data);
+}
+
+}  // namespace
+
 namespace media_router {
 
 CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
@@ -36,6 +56,26 @@ void CastMediaSinkServiceImpl::Stop() {
   MediaSinkServiceBase::StopTimer();
 }
 
+void CastMediaSinkServiceImpl::OnFetchCompleted() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  current_sinks_.clear();
+
+  // Copy cast sink from mDNS service to |current_sinks_|.
+  for (const auto& sink_it : current_sinks_by_mdns_) {
+    DVLOG(2) << "Discovered by mdns [name]: " << sink_it.second.sink().name();
+    current_sinks_.insert(sink_it.second);
+  }
+
+  // Copy cast sink from DIAL discovery to |current_sinks_|.
+  for (const auto& sink_it : current_sinks_by_dial_) {
+    DVLOG(2) << "Discovered by dial [name]: " << sink_it.second.sink().name();
+    if (!base::ContainsKey(current_sinks_by_mdns_, sink_it.first))
+      current_sinks_.insert(sink_it.second);
+  }
+
+  MediaSinkServiceBase::OnFetchCompleted();
+}
+
 // static
 const int CastMediaSinkServiceImpl::kCastControlPort = 8009;
 
@@ -43,7 +83,7 @@ void CastMediaSinkServiceImpl::OpenChannels(
     std::vector<MediaSinkInternal> cast_sinks) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  current_sinks_.clear();
+  current_sinks_by_mdns_.clear();
   current_service_ip_endpoints_.clear();
 
   for (const auto& cast_sink : cast_sinks) {
@@ -91,14 +131,17 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
     return;
   }
 
-  // Skip adding if IP address not found in current round of mDNS discovery.
   net::IPEndPoint ip_endpoint(cast_sink.cast_data().ip_address,
                               cast_sink.cast_data().port);
-  if (current_service_ip_endpoints_.find(ip_endpoint) ==
-      current_service_ip_endpoints_.end()) {
-    DVLOG(2) << "Service data not found in current service data list..."
-             << ip_endpoint.ToString();
-    return;
+
+  // Skip adding if IP address not found in current round of mDNS discovery.
+  if (!cast_sink.cast_data().discovered_by_dial) {
+    if (current_service_ip_endpoints_.find(ip_endpoint) ==
+        current_service_ip_endpoints_.end()) {
+      DVLOG(2) << "Service data not found in current service data list..."
+               << ip_endpoint.ToString();
+      return;
+    }
   }
 
   media_router::CastSinkExtraData extra_data = cast_sink.cast_data();
@@ -111,8 +154,32 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
   DVLOG(2) << "Ading sink to current_sinks_ [name]: "
            << updated_sink.sink().name();
 
-  current_sinks_.insert(updated_sink);
+  // Add or update existing cast sink.
+  if (updated_sink.cast_data().discovered_by_dial) {
+    current_sinks_by_dial_[ip_endpoint] = updated_sink;
+  } else {
+    current_sinks_by_mdns_[ip_endpoint] = updated_sink;
+  }
   MediaSinkServiceBase::RestartTimer();
+}
+
+void CastMediaSinkServiceImpl::OnDialSinkAdded(const MediaSinkInternal& sink) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  auto ip_address = sink.dial_data().ip_address;
+  net::IPEndPoint ip_endpoint(ip_address, kCastControlPort);
+
+  if (base::ContainsKey(current_service_ip_endpoints_, ip_endpoint)) {
+    DVLOG(2) << "Sink discovered by mDNS, skip adding [name]: "
+             << sink.sink().name();
+    return;
+  }
+
+  OpenChannel(ip_endpoint, CreateCastSinkFromDialSink(sink));
+}
+
+void CastMediaSinkServiceImpl::OnDialSinksRemoved() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  current_sinks_by_dial_.clear();
 }
 
 CastMediaSinkServiceImpl::CastSocketObserver::CastSocketObserver() {}

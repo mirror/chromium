@@ -86,8 +86,10 @@ MediaRouterMojoImpl::MediaRouterMojoImpl(content::BrowserContext* context,
 
 MediaRouterMojoImpl::~MediaRouterMojoImpl() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (dial_media_sink_service_proxy_)
+  if (dial_media_sink_service_proxy_) {
+    dial_media_sink_service_proxy_->SetDialMediaSinkServiceDelegate(nullptr);
     dial_media_sink_service_proxy_->Stop();
+  }
   if (cast_media_sink_service_)
     cast_media_sink_service_->Stop();
 }
@@ -974,16 +976,6 @@ void MediaRouterMojoImpl::StartDiscovery() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG_WITH_INSTANCE(1) << "StartDiscovery";
 
-  if (media_router::DialLocalDiscoveryEnabled()) {
-    if (!dial_media_sink_service_proxy_) {
-      dial_media_sink_service_proxy_ = new DialMediaSinkServiceProxy(
-          base::Bind(&MediaRouterMojoImpl::ProvideSinks,
-                     weak_factory_.GetWeakPtr(), "dial"),
-          context_);
-    }
-    dial_media_sink_service_proxy_->Start();
-  }
-
   if (media_router::CastDiscoveryEnabled()) {
     if (!cast_media_sink_service_) {
       cast_media_sink_service_ = new CastMediaSinkService(
@@ -992,6 +984,18 @@ void MediaRouterMojoImpl::StartDiscovery() {
           context_);
     }
     cast_media_sink_service_->Start();
+  }
+
+  if (media_router::DialLocalDiscoveryEnabled()) {
+    if (!dial_media_sink_service_proxy_) {
+      dial_media_sink_service_proxy_ = new DialMediaSinkServiceProxy(
+          base::Bind(&MediaRouterMojoImpl::ProvideSinks,
+                     weak_factory_.GetWeakPtr(), "dial"),
+          context_);
+      dial_media_sink_service_proxy_->SetDialMediaSinkServiceDelegate(
+          cast_media_sink_service_.get());
+    }
+    dial_media_sink_service_proxy_->Start();
   }
 }
 

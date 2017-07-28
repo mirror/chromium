@@ -25,6 +25,7 @@ class URLRequestContextGetter;
 namespace media_router {
 
 class DialMediaSinkServiceImpl;
+class DialMediaSinkServiceDelegate;
 
 // A wrapper class of DialMediaSinkService handling thread hopping between UI
 // and IO threads. This class is thread safe. Public APIs should be invoked on
@@ -50,6 +51,11 @@ class DialMediaSinkServiceProxy
   // Start() is cleared.
   void Stop() override;
 
+  // Does not take ownership of |delegate|. Caller should make sure |delegate|
+  // object outlives instance of this class, or
+  // SetDialMediaSinkServiceDelegate(nullptr) is called before |delegate| dies.
+  void SetDialMediaSinkServiceDelegate(DialMediaSinkServiceDelegate* delegate);
+
   void SetDialMediaSinkServiceForTest(
       std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service);
 
@@ -74,6 +80,8 @@ class DialMediaSinkServiceProxy
 
  private:
   std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service_;
+
+  DialMediaSinkServiceDelegate* delegate_;
 
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 
