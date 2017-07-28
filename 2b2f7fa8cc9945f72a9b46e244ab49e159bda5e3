@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c300a8e0_b91dc43c",
+        "filename": "components/printing/renderer/print_web_frame_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-07-28T06:00:44Z",
+      "side": 1,
+      "message": "This was added by clang-format, I reverted those unnecessary/funny ones.",
+      "parentUuid": "f8ed2906_b40eec86",
+      "revId": "2b2f7fa8cc9945f72a9b46e244ab49e159bda5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc99c749_11fbbbce",
         "filename": "components/printing/renderer/print_web_frame_helper.h",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "bc337701_78f4f33b",
+        "filename": "components/printing/renderer/print_web_frame_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-07-28T06:00:44Z",
+      "side": 1,
+      "message": "Seems PrintRenderFrameHelper is a better name, I changed both CLs with the new name.",
+      "parentUuid": "dc99c749_11fbbbce",
+      "range": {
+        "startLine": 77,
+        "startChar": 67,
+        "endLine": 77,
+        "endChar": 77
+      },
+      "revId": "2b2f7fa8cc9945f72a9b46e244ab49e159bda5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bab37be4_84108b82",
         "filename": "components/printing/test/print_web_frame_helper_browsertest.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-25T21:52:30Z",
       "side": 1,
       "message": "This is formatted funny.",
+      "revId": "2b2f7fa8cc9945f72a9b46e244ab49e159bda5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e50f1a_e2448cd6",
+        "filename": "components/printing/test/print_web_frame_helper_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-07-28T06:00:44Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "bab37be4_84108b82",
       "revId": "2b2f7fa8cc9945f72a9b46e244ab49e159bda5e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
