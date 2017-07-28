@@ -16,6 +16,24 @@
       "revId": "26cdc3ccf809bbb304c52dba23b85fb7cf5608e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1088a9_819e3837",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-28T16:19:40Z",
+      "side": 1,
+      "message": "Good point Rouslan. And thanks for the links. I have a couple of CLs in the working that try to achieve exactly that. The reason they\u0027re in separate CLs is that they need some prerequisite code to do things in different order and be able to throw errors with appropriate names and messages.\nOne CL will handling the Constructor scenario, the next one will be rejecting .show() with \"NotSupportedError\" and resolves .CanMakePayment() with \"false\".",
+      "parentUuid": "0cc6535c_5c5974b9",
+      "revId": "26cdc3ccf809bbb304c52dba23b85fb7cf5608e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
