@@ -1226,12 +1226,7 @@ void Editor::Paste(EditorCommandSource source) {
   ResourceFetcher* loader = GetFrame().GetDocument()->Fetcher();
   ResourceCacheValidationSuppressor validation_suppressor(loader);
 
-  PasteMode paste_mode = GetFrame()
-                                 .Selection()
-                                 .ComputeVisibleSelectionInDOMTree()
-                                 .IsContentRichlyEditable()
-                             ? kAllMimeTypes
-                             : kPlainTextOnly;
+  const PasteMode paste_mode = CanEditRichly() ? kAllMimeTypes : kPlainTextOnly;
 
   if (source == kCommandFromMenuOrKeyBinding) {
     DataTransfer* data_transfer =
