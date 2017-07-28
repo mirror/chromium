@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c2f2b87_c8bc1c71",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 12278,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:11:23Z",
+      "side": 1,
+      "message": "Is this in shared memory? (I\u0027m just wondering as I\u0027m not really familiar with this part of the code.)",
+      "range": {
+        "startLine": 12277,
+        "startChar": 0,
+        "endLine": 12278,
+        "endChar": 68
+      },
+      "revId": "84a47ced1e8e48d7fd1c2d3736b5527927091394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eaae5c2_7a0fd0b7",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:11:23Z",
+      "side": 1,
+      "message": "I\u0027m also curious why this needs to manually cast now.\n\nI feel like having this code in ParamTraits() is nicer, since we can use the type deducing WriteParam(). Would it be a possibility to use IPC::ParamTraits\u003cgfx::ColorSpace\u003e::Write(\u0026pickle, color_space) directly rather than moving this code? Then it\u0027s clear that it\u0027s security sensitive in the various places it\u0027s used now.",
+      "range": {
+        "startLine": 673,
+        "startChar": 27,
+        "endLine": 673,
+        "endChar": 48
+      },
+      "revId": "84a47ced1e8e48d7fd1c2d3736b5527927091394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa9cabc_706cb1d2",
+        "filename": "ui/gfx/color_space.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T09:11:23Z",
+      "side": 1,
+      "message": "Does this need to return bool if no one ever checks the return value? Same question below. For better or worse, I think we just take it for granted that Pickle serialization will always work.",
+      "revId": "84a47ced1e8e48d7fd1c2d3736b5527927091394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
