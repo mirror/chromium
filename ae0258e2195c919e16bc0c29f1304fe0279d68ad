@@ -22,6 +22,30 @@
       "revId": "ae0258e2195c919e16bc0c29f1304fe0279d68ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4074cb_1e2902bf",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-28T22:43:17Z",
+      "side": 1,
+      "message": "Are you proposing something like:\n\ntemplate\u003ctypename Iterator\u003e\nbool HexStringToBytes(const std::string\u0026, Iterator it);\n\nAnd |it| points a buffer which is bigger enough?",
+      "parentUuid": "2570485b_3a5291cd",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "ae0258e2195c919e16bc0c29f1304fe0279d68ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
