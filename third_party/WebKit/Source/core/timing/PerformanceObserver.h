@@ -15,6 +15,7 @@ namespace blink {
 
 class ExecutionContext;
 class ExceptionState;
+class LocalDOMWindow;
 class PerformanceBase;
 class PerformanceObserver;
 class PerformanceObserverCallback;
@@ -45,12 +46,14 @@ class CORE_EXPORT PerformanceObserver final
 
  private:
   PerformanceObserver(ScriptState*,
+                      LocalDOMWindow*,
                       PerformanceBase*,
                       PerformanceObserverCallback*);
   void Deliver();
   bool ShouldBeSuspended() const;
 
   Member<ExecutionContext> execution_context_;
+  WeakMember<LocalDOMWindow> window_;
   TraceWrapperMember<PerformanceObserverCallback> callback_;
   WeakMember<PerformanceBase> performance_;
   PerformanceEntryVector performance_entries_;
