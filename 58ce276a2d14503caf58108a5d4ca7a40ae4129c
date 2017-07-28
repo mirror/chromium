@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "078badf1_78eddacf",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-28T09:27:34Z",
+      "side": 1,
+      "message": "No I meant: the number that we know here right now (before this CL that uses CountResidentBytes) is the virtual size right (or am I misunderstanding)? In essence the size passed as argument to mmap(). What I was suggesting is that we could keep that as a side FYI column (even if it doesn\u0027t back-propagate to owners). Does it make sense (even if it does, maybe do in a separate CL?)",
+      "parentUuid": "0ecaf66f_859a1690",
+      "range": {
+        "startLine": 87,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 25
+      },
+      "revId": "58ce276a2d14503caf58108a5d4ca7a40ae4129c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ece37921_94865e92",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 9
