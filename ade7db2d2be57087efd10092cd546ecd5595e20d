@@ -589,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "208b94e7_0e2f7f19",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T10:01:11Z",
+      "side": 1,
+      "message": "I\u0027m still not very sure if recents match semantics of a file system. I know we do it for Drive, but I don\u0027t think it\u0027s a good solution. Chrome OS file systems can\u0027t have files with the same name in the same directory, and adding a suffix is a workaround with side effects.\n\nAlternatively we could abandon the recents provider part and add a private API for Files app to read contents directly from this model, and remove deduplication here. The API could return an array of Entries. We do it this way for searching (https://cs.chromium.org/chromium/src/chrome/common/extensions/api/file_manager_private.idl?rcl\u003d8b5c96123b992e826759c0aedded7606028c60de\u0026l\u003d850) and it works well. We\u0027d show files with their real name (without any suffix) in the Files app UI, and wouldn\u0027t have the problem mentioned in the comment above. Also, the code should be much simpler, as we\u0027d remove the recents provider which is doing nothing but proxying.\n\nI\u0027m sorry for design level concerns at this stage from my side. I mentioned it earlier in your design doc, but I forgot to follow up on your reply there.",
+      "parentUuid": "d4f31c61_079a7a67",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b789658_fa97951f",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
