@@ -46,6 +46,9 @@ class TaskTestBase : public testing::Test {
 
   PrefetchStoreTestUtil* store_util() { return &store_test_util_; }
 
+  int64_t InsertPrefetchItemInStateWithOperation(std::string operation_name,
+                                                 PrefetchItemState state);
+
  private:
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;

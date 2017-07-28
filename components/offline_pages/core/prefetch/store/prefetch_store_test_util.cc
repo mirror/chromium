@@ -15,6 +15,8 @@
 #include "url/gurl.h"
 
 namespace offline_pages {
+const int kPrefetchStoreCommandFailed = -1;
+
 namespace {
 
 int64_t InsertPrefetchItemSync(const PrefetchItem& item, sql::Connection* db) {
@@ -44,7 +46,7 @@ int64_t InsertPrefetchItemSync(const PrefetchItem& item, sql::Connection* db) {
   statement.BindString(13, item.archive_body_name);
 
   if (!statement.Run())
-    return PrefetchStoreTestUtil::kStoreCommandFailed;
+    return kPrefetchStoreCommandFailed;
 
   return item.offline_id;
 }
@@ -56,7 +58,7 @@ int CountPrefetchItemsSync(sql::Connection* db) {
   if (statement.Step())
     return statement.ColumnInt(0);
 
-  return PrefetchStoreTestUtil::kStoreCommandFailed;
+  return kPrefetchStoreCommandFailed;
 }
 
 int UpdateItemsStateSync(const std::string& name_space,
@@ -75,7 +77,7 @@ int UpdateItemsStateSync(const std::string& name_space,
   if (statement.Run())
     return db->GetLastChangeCount();
 
-  return PrefetchStoreTestUtil::kStoreCommandFailed;
+  return kPrefetchStoreCommandFailed;
 }
 
 std::unique_ptr<PrefetchItem> GetPrefetchItemSync(int64_t offline_id,
@@ -160,7 +162,7 @@ int PrefetchStoreTestUtil::ZombifyPrefetchItems(const std::string& name_space,
 }
 
 int64_t PrefetchStoreTestUtil::InsertPrefetchItem(const PrefetchItem& item) {
-  int64_t offline_id = kStoreCommandFailed;
+  int64_t offline_id = kPrefetchStoreCommandFailed;
   store_->Execute(
       base::BindOnce(&InsertPrefetchItemSync, item),
       base::BindOnce([](int64_t* result, int64_t id) { *result = id; },
@@ -190,6 +192,17 @@ std::unique_ptr<PrefetchItem> PrefetchStoreTestUtil::GetPrefetchItem(
                       &item));
   RunUntilIdle();
   return item;
+}
+
+int PrefetchStoreTestUtil::LastCommandChangeCount() {
+  int count = 0;
+  store_->Execute(
+      base::BindOnce([](sql::Connection* connection) {
+        return connection->GetLastChangeCount();
+      }),
+      base::BindOnce([](int* result, int count) { *result = count; }, &count));
+  RunUntilIdle();
+  return count;
 }
 
 }  // namespace offline_pages

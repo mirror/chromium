@@ -14,11 +14,23 @@
 
 namespace offline_pages {
 class PrefetchNetworkRequestFactory;
+class PrefetchStore;
 
-// Task that attempts to fetch results for a completed operation.
+// Task that attempts to fetch results for a completed operation.  Searches the
+// URLs table for operations with rows in the appropriate state and fires off
+// concurrent GetOperation requests.
 class GetOperationTask : public Task {
  public:
-  GetOperationTask(const std::string& operation_name,
+  // Result of executing the command in the store.
+  enum class StoreResult {
+    SUCCESS,
+    STORE_ERROR,
+  };
+
+  using OperationResultList =
+      std::pair<GetOperationTask::StoreResult, std::vector<std::string>>;
+
+  GetOperationTask(PrefetchStore* store,
                    PrefetchNetworkRequestFactory* request_factory,
                    const PrefetchRequestFinishedCallback& callback);
   ~GetOperationTask() override;
@@ -27,9 +39,9 @@ class GetOperationTask : public Task {
   void Run() override;
 
  private:
-  void StartGetOperation(int updated_entry_count);
+  void StartGetOperationRequests(OperationResultList list);
 
-  const std::string& operation_name_;
+  PrefetchStore* prefetch_store_;
   PrefetchNetworkRequestFactory* request_factory_;
   PrefetchRequestFinishedCallback callback_;
 

@@ -23,7 +23,6 @@ using testing::DoAll;
 using testing::SaveArg;
 
 namespace offline_pages {
-const int kStoreFailure = PrefetchStoreTestUtil::kStoreCommandFailed;
 
 // All tests cases here only validate the request data and check for general
 // http response. The tests for the Operation proto data returned in the http
@@ -64,8 +63,8 @@ TEST_F(GeneratePageBundleTaskTest, TaskMakesNetworkRequest) {
   item.offline_id = PrefetchStoreUtils::GenerateOfflineId();
   int64_t id2 = store_util()->InsertPrefetchItem(item);
 
-  EXPECT_NE(kStoreFailure, id1);
-  EXPECT_NE(kStoreFailure, id2);
+  EXPECT_NE(kPrefetchStoreCommandFailed, id1);
+  EXPECT_NE(kPrefetchStoreCommandFailed, id2);
   EXPECT_NE(id1, id2);
   EXPECT_EQ(2, store_util()->CountPrefetchItems());
 
