@@ -150,3 +150,53 @@ captive_portal_cert {
 captive_portal_cert {
   sha256_hash: "sha256/LKtpdq9q7F7msGK0w1+b/gKoDHaQcZKTHIf9PTz2u+U="
 }
+
+content_filter {
+  regex: ""
+  name: "Avast"
+}
+
+content_filter {
+  regex: ""
+  name: "Kaspersky"
+}
+
+content_filter {
+  regex: ""
+  name: "Bit Defender"
+}
+
+content_filter {
+  regex: ""
+  name: "Fortigate"
+}
+
+content_filter {
+  regex: ""
+  name: "Cyberfoam"
+}
+
+content_filter {
+  regex: ""
+  name: "Fortinet"
+}
+
+content_filter {
+  regex: ""
+  name: "Cisco Umbrella"
+}
+
+content_filter {
+  regex: ""
+  name: "Sophos"
+}
+
+content_filter {
+  regex: ""
+  name: "Blue Coat"
+}
+
+content_filter {
+  regex: ""
+  name: "McAfee Antivirus"
+}

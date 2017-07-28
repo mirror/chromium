@@ -78,6 +78,9 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
     SHOW_BAD_CLOCK = 8,
     CAPTIVE_PORTAL_CERT_FOUND = 9,
     WWW_MISMATCH_FOUND_IN_SAN = 10,
+    SHOW_CONTENT_FILTER_INTERSTITIAL_NONOVERRIDABLE = 11,
+    SHOW_CONTENT_FILTER_INTERSTITIAL_OVERRIDABLE = 12,
+    CONTENT_FILTER_CERT_FOUND = 13,
     SSL_ERROR_HANDLER_EVENT_COUNT
   };
 
@@ -95,6 +98,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
     virtual void NavigateToSuggestedURL(const GURL& suggested_url) = 0;
     virtual bool IsErrorOverridable() const = 0;
     virtual void ShowCaptivePortalInterstitial(const GURL& landing_url) = 0;
+    virtual void ShowContentFilterInterstitial() = 0;
     virtual void ShowSSLInterstitial() = 0;
     virtual void ShowBadClockInterstitial(
         const base::Time& now,
@@ -152,6 +156,7 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
 
  private:
   void ShowCaptivePortalInterstitial(const GURL& landing_url);
+  void ShowContentFilterInterstitial();
   void ShowSSLInterstitial();
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state);
