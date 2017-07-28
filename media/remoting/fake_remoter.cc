@@ -9,10 +9,14 @@
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "media/remoting/proto_utils.h"
+#include "build/build_config.h"
 #include "media/remoting/shared_session.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if !defined(OS_ANDROID)
+#include "media/remoting/proto_utils.h"  // nogncheck
+#endif
 
 namespace media {
 namespace remoting {
@@ -45,6 +49,9 @@ bool FakeRemotingDataStreamSender::ValidateFrameBuffer(size_t index,
     return false;
   }
 
+#if defined(OS_ANDROID)
+  return true;
+#else
   const std::vector<uint8_t>& data = received_frame_list[index];
   scoped_refptr<DecoderBuffer> media_buffer =
       ByteArrayToDecoderBuffer(data.data(), data.size());
@@ -83,6 +90,7 @@ bool FakeRemotingDataStreamSender::ValidateFrameBuffer(size_t index,
     }
   }
   return return_value;
+#endif
 }
 
 void FakeRemotingDataStreamSender::ConsumeDataChunk(

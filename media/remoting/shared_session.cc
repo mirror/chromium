@@ -6,15 +6,23 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "media/remoting/proto_utils.h"
+#include "build/build_config.h"
+
+#if !defined(OS_ANDROID)
+#include "media/remoting/proto_utils.h"  // nogncheck
+#endif
 
 namespace media {
 namespace remoting {
 
 SharedSession::SharedSession(mojom::RemotingSourceRequest source_request,
                              mojom::RemoterPtr remoter)
+#if defined(OS_ANDROID)
+    :
+#else
     : rpc_broker_(base::Bind(&SharedSession::SendMessageToSink,
                              base::Unretained(this))),
+#endif
       binding_(this, std::move(source_request)),
       remoter_(std::move(remoter)) {
   DCHECK(remoter_);
@@ -123,13 +131,16 @@ void SharedSession::OnStopped(mojom::RemotingStopReason reason) {
 void SharedSession::OnMessageFromSink(const std::vector<uint8_t>& message) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+#if !defined(OS_ANDROID)
   std::unique_ptr<pb::RpcMessage> rpc(new pb::RpcMessage());
   if (!rpc->ParseFromArray(message.data(), message.size())) {
     VLOG(1) << "corrupted Rpc message";
     Shutdown();
     return;
   }
+
   rpc_broker_.ProcessMessageFromRemote(std::move(rpc));
+#endif
 }
 
 void SharedSession::UpdateAndNotifyState(SessionState state) {

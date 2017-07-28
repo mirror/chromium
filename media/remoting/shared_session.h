@@ -10,9 +10,13 @@
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "build/build_config.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
-#include "media/remoting/rpc_broker.h"
 #include "mojo/public/cpp/bindings/binding.h"
+
+#if !defined(OS_ANDROID)
+#include "media/remoting/rpc_broker.h"  // nogncheck
+#endif
 
 namespace media {
 namespace remoting {
@@ -124,7 +128,9 @@ class SharedSession final : public mojom::RemotingSource,
   void AddClient(Client* client);
   void RemoveClient(Client* client);
 
+#if !defined(OS_ANDROID)
   RpcBroker* rpc_broker() { return &rpc_broker_; }
+#endif
 
  private:
   friend class base::RefCountedThreadSafe<SharedSession>;
@@ -137,8 +143,10 @@ class SharedSession final : public mojom::RemotingSource,
   // Callback from RpcBroker when sending message to remote sink.
   void SendMessageToSink(std::unique_ptr<std::vector<uint8_t>> message);
 
+#if !defined(OS_ANDROID)
   // Handles dispatching of incoming and outgoing RPC messages.
   RpcBroker rpc_broker_;
+#endif
 
   const mojo::Binding<mojom::RemotingSource> binding_;
   const mojom::RemoterPtr remoter_;

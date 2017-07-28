@@ -118,11 +118,13 @@ void RendererController::OnRemotePlaybackDisabled(bool disabled) {
   UpdateAndMaybeSwitch(ENABLED_BY_PAGE, DISABLED_BY_PAGE);
 }
 
+#if !defined(OS_ANDROID)
 base::WeakPtr<RpcBroker> RendererController::GetRpcBroker() const {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   return session_->rpc_broker()->GetWeakPtr();
 }
+#endif
 
 void RendererController::StartDataPipe(
     std::unique_ptr<mojo::DataPipe> audio_data_pipe,
