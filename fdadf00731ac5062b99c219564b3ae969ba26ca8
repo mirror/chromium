@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7269a0b_a466dabf",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-28T16:54:11Z",
+      "side": 1,
+      "message": "can we add:\nif (IsInMainFrame() \u0026\u0026 url_.SchemeIsHTTPOrHTTPS()) {\n\nI know we want to support extension URLs etc eventually, so we could add a TODO for that, but for now we want to avoid logging things like blob URLs, data URIs, file URIs, etc.",
+      "revId": "fdadf00731ac5062b99c219564b3ae969ba26ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907669cd_a5b88ccb",
+        "filename": "services/metrics/public/cpp/ukm_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-28T16:54:11Z",
+      "side": 1,
+      "message": "what\u0027s this needed for? we allocate val but then never use it. maybe add a comment?",
+      "revId": "fdadf00731ac5062b99c219564b3ae969ba26ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
