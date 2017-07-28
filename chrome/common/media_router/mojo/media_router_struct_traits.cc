@@ -154,7 +154,8 @@ bool StructTraits<media_router::mojom::CastMediaSinkDataView,
                   media_router::CastSinkExtraData>::
     Read(media_router::mojom::CastMediaSinkDataView data,
          media_router::CastSinkExtraData* out) {
-  if (!data.ReadIpAddress(&out->ip_address))
+  net::IPAddress ip_address;
+  if (!data.ReadIpAddress(&ip_address))
     return false;
 
   if (!data.ReadModelName(&out->model_name))
@@ -162,6 +163,9 @@ bool StructTraits<media_router::mojom::CastMediaSinkDataView,
 
   out->capabilities = data.capabilities();
   out->cast_channel_id = data.cast_channel_id();
+  // These type mapping functions are for test use only. Production code will
+  // not reach here because MRP never passes mojo sinks back to MR.
+  out->ip_endpoint = net::IPEndPoint(ip_address, 0);
 
   return true;
 }

@@ -55,7 +55,8 @@ void VerifyMediaSinkInternal(const media_router::MediaSinkInternal& cast_sink,
   EXPECT_EQ(id, cast_sink.sink().id());
   EXPECT_EQ(name, cast_sink.sink().name());
   EXPECT_EQ(model_name, cast_sink.cast_data().model_name);
-  EXPECT_EQ(service.ip_address, cast_sink.cast_data().ip_address.ToString());
+  EXPECT_EQ(service.ip_address,
+            cast_sink.cast_data().ip_endpoint.address().ToString());
 
   int capabilities = cast_channel::CastDeviceCapability::AUDIO_OUT;
   if (!audio_only)

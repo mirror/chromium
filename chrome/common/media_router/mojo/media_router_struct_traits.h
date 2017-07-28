@@ -138,7 +138,7 @@ struct StructTraits<media_router::mojom::CastMediaSinkDataView,
 
   static const net::IPAddress& ip_address(
       const media_router::CastSinkExtraData& extra_data) {
-    return extra_data.ip_address;
+    return extra_data.ip_endpoint.address();
   }
 
   static uint8_t capabilities(
