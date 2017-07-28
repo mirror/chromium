@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1df3a531_ad512553",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-28T17:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf1ba10_f875fdee",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b77d46_9b6eb286",
         "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef13c58d_68f1048f",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-28T17:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b77d46_9b6eb286",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "89d8d319_b6e49193",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-28T17:38:23Z",
+      "side": 1,
+      "message": "The problem was the typo s/interacting/interaction",
+      "parentUuid": "55e3c3a8_c96f9da0",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef62536b_8480724c",
         "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083d2cf0_ef7a8311",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-28T17:38:23Z",
+      "side": 1,
+      "message": "The Accept() is necessary because it\u0027s the delegate that is responsible for closing the remaining info bars when it is interacted with. Removing the info bar on one tab without using the GlobalConfirmInfoBar\u0027s Close() function will just result in that tab closing.",
+      "parentUuid": "ef62536b_8480724c",
+      "revId": "f7dfe0fcd40142a75265804298ad6c670b8ce2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
