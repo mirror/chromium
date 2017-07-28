@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71aa91e9_d596c01b",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T17:38:54Z",
+      "side": 1,
+      "message": "2-space indent.",
+      "revId": "fcb1d9fd027b69f393ba94d2f5643f676acfff9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9aa8c1_ecc8fd8a",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T17:38:54Z",
+      "side": 1,
+      "message": "4-space indent.\n\nI\u0027m not going to comment on all of these, just apply the proper indentation and proofread your CL please.",
+      "revId": "fcb1d9fd027b69f393ba94d2f5643f676acfff9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd67dea_6f5fc159",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T17:38:54Z",
+      "side": 1,
+      "message": "No line break. Again, fix throughout.",
+      "revId": "fcb1d9fd027b69f393ba94d2f5643f676acfff9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ead763_599bd997",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T17:38:54Z",
+      "side": 1,
+      "message": "Using keyboard handlers for menu items seems like a hack. Is there a more straightforward way?",
+      "revId": "fcb1d9fd027b69f393ba94d2f5643f676acfff9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed40416a_9e0dfb5d",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T17:38:54Z",
+      "side": 1,
+      "message": "Please use proper Closure annotations: https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler",
+      "revId": "fcb1d9fd027b69f393ba94d2f5643f676acfff9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa63851_e7252563",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T17:38:54Z",
+      "side": 1,
+      "message": "You can avoid the attempt_/pending_attempt_ variables by saving the window timeout ID instead, and using clearTimeout(timeoutId) in onTouchEnd.",
+      "revId": "fcb1d9fd027b69f393ba94d2f5643f676acfff9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
