@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "de7aeee0_5dfb5b89",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-07-28T19:45:31Z",
+      "side": 1,
+      "message": "As far as the Java code is concerned, this is just an opaque identifier. It can be converted back-and-forth between signed and unsigned just fine if we want to store it as unsigned in C++, so I\u0027m not sure what checks we would need. It\u0027s also probably never going to be outside the range 0 through 4 on Android.",
+      "parentUuid": "93e641ea_85bda8fc",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a10806c_2e14e291",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 2
