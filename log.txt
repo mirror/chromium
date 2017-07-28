@@ -1,0 +1,2492 @@
+aec_untrusted_delay_for_testing
+    Current value (from the default) = false
+      From //third_party/webrtc/modules/audio_processing/BUILD.gn:17
+
+    Disables the usual mode where we trust the reported system delay
+    values the AEC receives. The corresponding define is set appropriately
+    in the code, but it can be force-enabled here for testing.
+
+allow_posix_link_time_opt
+    Current value (from the default) = false
+      From //build/toolchain/toolchain.gni:17
+
+android_full_debug
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:42
+
+    Normally, Android builds are lightly optimized, even for debug builds, to
+    keep binary size down. Setting this flag to true disables such optimization
+
+apm_debug_dump
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:72
+
+    Selects whether debug dumps for the audio processing module
+    should be generated.
+
+asan_globals
+    Current value (from the default) = true
+      From //build/config/sanitizers/sanitizers.gni:157
+
+    Detect overflow/underflow for global objects.
+   
+    Mac: http://crbug.com/352073
+
+auto_profile_path
+    Current value (from the default) = ""
+      From //build/config/compiler/BUILD.gn:97
+
+    AFDO (Automatic Feedback Directed Optimizer) is a form of profile-guided
+    optimization that GCC supports. It used by ChromeOS in their official
+    builds. To use it, set auto_profile_path to the path to a file containing
+    the needed gcov profiling data.
+
+binutils_path
+    Current value (from the default) = "../../third_party/binutils/Linux_x64/Release/bin"
+      From //build/config/compiler/BUILD.gn:51
+
+blink_gc_plugin
+    Current value (from the default) = true
+      From //third_party/WebKit/Source/BUILD.gn:17
+
+    Set to true to enable the clang plugin that checks the usage of the  Blink
+    garbage-collection infrastructure during compilation.
+
+blink_gc_plugin_option_do_dump_graph
+    Current value (from the default) = false
+      From //third_party/WebKit/Source/BUILD.gn:21
+
+    Set to true to have the clang Blink GC plugin emit class graph (in JSON)
+    with typed pointer edges; for debugging or other (internal) uses.
+
+blink_gc_plugin_option_use_chromium_style_naming
+    Current value (from the default) = true
+      From //third_party/WebKit/Source/BUILD.gn:31
+
+    Set to true to have the clang Blink GC plugin use Chromium-style naming
+    rather than legacy Blink name.
+    TODO(https://crbug.com/675879): Remove this option after the Blink rename.
+
+blink_gc_plugin_option_warn_unneeded_finalizer
+    Current value (from the default) = false
+      From //third_party/WebKit/Source/BUILD.gn:26
+
+    Set to true to have the clang Blink GC plugin additionally check if
+    a class has an empty destructor which would be unnecessarily invoked
+    when finalized.
+
+blink_logging_always_on
+    Current value (from the default) = false
+      From //third_party/WebKit/Source/config.gni:22
+
+    If true, enables WTF::ScopedLogger unconditionally.
+    When false, WTF::ScopedLogger is enabled only if assertions are enabled.
+
+build_angle_deqp_tests
+    Current value (from the default) = false
+      From //third_party/angle/src/tests/BUILD.gn:205
+
+    Don't build dEQP by default.
+
+build_libsrtp_tests
+    Current value (from the default) = false
+      From //third_party/libsrtp/BUILD.gn:10
+
+    Tests may not be appropriate for some build environments, e.g. Windows.
+    Rather than enumerate valid options, we just let clients ask for them.
+
+build_sfntly_samples
+    Current value (from the default) = false
+      From //third_party/sfntly/BUILD.gn:9
+
+    Flip to true to build sfntly sample programs.
+
+build_with_mozilla
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:93
+
+    Enable to use the Mozilla internal settings.
+
+cc_wrapper
+    Current value (from the default) = ""
+      From //build/toolchain/cc_wrapper.gni:36
+
+    Set to "ccache", "icecc" or "distcc".  Probably doesn't work on windows.
+
+chrome_pgo_phase
+    Current value (from the default) = 0
+      From //build/config/compiler/pgo/pgo.gni:13
+
+    Specify the current PGO phase.
+    Here's the different values that can be used:
+        0 : Means that PGO is turned off.
+        1 : Used during the PGI (instrumentation) phase.
+        2 : Used during the PGO (optimization) phase.
+   
+    TODO(sebmarchand): Add support for the PGU (update) phase.
+
+clang_base_path
+    Current value (from the default) = "//third_party/llvm-build/Release+Asserts"
+      From //build/config/clang/clang.gni:12
+
+clang_use_chrome_plugins
+    Current value (from the default) = false
+      From //build/config/clang/clang.gni:10
+
+    Indicates if the build should use the Chrome-specific plugins for enforcing
+    coding guidelines, etc. Only used when compiling with Clang.
+
+clang_version
+    Current value (from the default) = "5.0.0"
+      From //build/toolchain/toolchain.gni:61
+
+    Clang compiler version. Clang files are placed at version-dependent paths.
+
+compute_grit_inputs_for_analyze
+    Current value (from the default) = false
+      From //tools/grit/grit_rule.gni:105
+
+    When set, this will fork out to grit at GN-time to get all inputs
+    referenced by the .grd file.
+   
+    Normal builds don't need this since proper incremental builds are handled
+    by grit writing out the inputs in .d files at build-time. But for analyze
+    to work on the bots, it needs to know about all input files at GN-time so
+    it knows which tests to trigger when something changes. This option will
+    slow down the GN run.
+
+concurrent_links
+    Current value (from the default) = -1
+      From //build/toolchain/concurrent_links.gni:19
+
+    Limit the number of concurrent links; we often want to run fewer
+    links at once than we do compiles, because linking is memory-intensive.
+    The default to use varies by platform and by the amount of memory
+    available, so we call out to a script to get the right value.
+
+content_shell_product_name
+    Current value (from the default) = "Content Shell"
+      From //content/shell/BUILD.gn:27
+
+content_shell_version
+    Current value (from the default) = "99.77.34.5"
+      From //content/shell/BUILD.gn:28
+
+current_cpu
+    Current value (from the default) = ""
+      (Internally set; try `gn help current_cpu`.)
+
+current_os
+    Current value (from the default) = ""
+      (Internally set; try `gn help current_os`.)
+
+custom_toolchain
+    Current value (from the default) = ""
+      From //build/config/BUILDCONFIG.gn:147
+
+    Allows the path to a custom target toolchain to be injected as a single
+    argument, and set as the default toolchain.
+
+dcheck_always_on
+    Current value (from the default) = false
+      From //build/config/dcheck_always_on.gni:7
+
+    Set to true to enable dcheck in Release builds.
+
+debug_devtools
+    Current value (from the default) = false
+      From //third_party/WebKit/public/public_features.gni:12
+
+    If debug_devtools is set to true, JavaScript files for DevTools are stored
+    as is and loaded from disk. Otherwise, a concatenated file is stored in
+    resources.pak. It is still possible to load JS files from disk by passing
+    --debug-devtools cmdline switch.
+
+disable_brotli_filter
+    Current value (from the default) = false
+      From //net/features.gni:26
+
+    Do not disable brotli filter by default.
+
+disable_ffmpeg_video_decoders
+    Current value (from the default) = false
+      From //media/media_options.gni:100
+
+    On Android, FFMpeg is built without video decoders by default.
+    This flag gives the option to override that decision in case there are no
+    hardware decoders. To do so, you will also need to update ffmpeg build files
+    in order to define which decoders to build in.
+
+disable_file_support
+    Current value (from the default) = false
+      From //net/features.gni:12
+
+    Disables support for file URLs.  File URL support requires use of icu.
+
+disable_ftp_support
+    Current value (from the default) = false
+      From //net/features.gni:17
+
+disable_libfuzzer
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:95
+
+    Helper variable for testing builds with disabled libfuzzer.
+    Not for client use.
+
+enable_ac3_eac3_audio_demuxing
+    Current value (from the default) = false
+      From //media/media_options.gni:40
+
+    Enables AC3/EAC3 audio demuxing. This is enabled only on Chromecast, since
+    it only provides demuxing, and is only useful for AC3/EAC3 audio
+    pass-through to HDMI sink on Chromecast.
+
+enable_app_list
+    Current value (from the default) = false
+      From //chrome/common/features.gni:21
+
+enable_app_shell_installer
+    Current value (from the default) = false
+      From //extensions/shell/installer/BUILD.gn:13
+
+enable_background
+    Current value (from the default) = true
+      From //chrome/common/features.gni:24
+
+    Enables support for background apps.
+
+enable_basic_print_dialog
+    Current value (from the default) = true
+      From //chrome/common/features.gni:28
+
+    Enable the printing system dialog for platforms that support printing
+    and have a system dialog.
+
+enable_basic_printing
+    Current value (from the default) = true
+      From //printing/features/features.gni:10
+
+    Enable basic printing support and UI.
+
+enable_captive_portal_detection
+    Current value (from the default) = true
+      From //chrome/common/features.gni:30
+
+enable_cbcs_encryption_scheme
+    Current value (from the default) = false
+      From //media/media_options.gni:47
+
+    Enable support for the 'cbcs' encryption scheme added by MPEG Common
+    Encryption 3rd Edition (ISO/IEC 23001-7), published 02/15/2016.
+
+enable_cross_trusted
+    Current value (from the default) = false
+      From //native_client_sdk/src/BUILD.gn:10
+
+    Set to true if cross compiling trusted (e.g. building sel_ldr_arm on x86)
+    binaries is supported.
+
+enable_debugallocation
+    Current value (from the default) = true
+      From //base/allocator/BUILD.gn:13
+
+    Provide a way to force disable debugallocation in Debug builds,
+    e.g. for profiling (it's more rare to profile Debug builds,
+    but people sometimes need to do that).
+
+enable_dolby_vision_demuxing
+    Current value (from the default) = false
+      From //media/media_options.gni:56
+
+    Enable Dolby Vision demuxing. Enable by default for Chromecast. Actual
+    decoding must be provided by the platform. Note some Dolby Vision profiles
+    which are encoded using HEVC require |enable_hevc_demuxing| to be enabled.
+
+enable_exo_ozone_gamepad
+    Current value (from the default) = false
+      From //chrome/common/features.gni:54
+
+    Indicates if Exo should use ozone gamepad. If this is false, exo will use
+    /device/gamepad as backend.
+
+enable_extensions
+    Current value (from the default) = true
+      From //extensions/features/features.gni:8
+
+enable_full_stack_frames_for_profiling
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:59
+
+    Compile in such a way as to make it possible for the profiler to unwind full
+    stack frames. Setting this flag has a large effect on the performance of the
+    generated code than just setting profiling, but gives the profiler more
+    information to analyze.
+    Requires profiling to be set to true.
+
+enable_google_now
+    Current value (from the default) = false
+      From //chrome/common/features.gni:34
+
+    Google Now is disabled to prepare for its removal.
+    http://crbug.com/539674
+
+enable_hangout_services_extension
+    Current value (from the default) = false
+      From //chrome/common/features.gni:38
+
+    Hangout services is an extension that adds extra features to Hangouts.
+    It is enableable separately to facilitate testing.
+
+enable_hevc_demuxing
+    Current value (from the default) = false
+      From //media/media_options.gni:51
+
+    Enable HEVC/H265 demuxing. Actual decoding must be provided by the
+    platform. Enable by default for Chromecast.
+
+enable_hls_sample_aes
+    Current value (from the default) = false
+      From //media/media_options.gni:63
+
+    Enable HLS with SAMPLE-AES decryption.
+    Enabled by default on the cast desktop implementation to allow unit tests of
+    MP2TS parsing support.
+
+enable_hotwording
+    Current value (from the default) = false
+      From //chrome/common/features.gni:43
+
+    'Ok Google' hotwording is disabled by default. Set to true to enable. (This
+    will download a closed-source NaCl module at startup.) Chrome-branded
+    ChromeOS builds have this enabled by default.
+
+enable_internal_app_remoting_targets
+    Current value (from the default) = false
+      From //remoting/remoting_options.gni:18
+
+    Set this to enable building internal AppRemoting apps.
+
+enable_ipc_fuzzer
+    Current value (from the default) = false
+      From //tools/ipc_fuzzer/ipc_fuzzer.gni:14
+
+enable_ipc_logging
+    Current value (from the default) = true
+      From //ipc/BUILD.gn:13
+
+    Enabling debug builds automatically sets enable_ipc_logging to true.
+
+enable_iterator_debugging
+    Current value (from the default) = true
+      From //build/config/BUILD.gn:26
+
+    When set (the default) enables C++ iterator debugging in debug builds.
+    Iterator debugging is always off in release builds (technically, this flag
+    affects the "debug" config, which is always available but applied by
+    default only in debug builds).
+   
+    Iterator debugging is generally useful for catching bugs. But it can
+    introduce extra locking to check the state of an iterator against the state
+    of the current object. For iterator- and thread-heavy code, this can
+    significantly slow execution.
+
+enable_linux_installer
+    Current value (from the default) = false
+      From //chrome/installer/BUILD.gn:8
+
+enable_mdns
+    Current value (from the default) = true
+      From //net/features.gni:29
+
+    Multicast DNS.
+
+enable_media_codec_video_decoder
+    Current value (from the default) = false
+      From //media/gpu/BUILD.gn:14
+
+    A temporary arg for building MCVD while it's being implemented.
+    See http://crbug.com/660942
+
+enable_media_remoting
+    Current value (from the default) = true
+      From //media/media_options.gni:182
+
+    This switch defines whether the Media Remoting implementation will be built.
+    When enabled, media is allowed to be renderer and played back on remote
+    devices when the tab is being casted and other conditions are met.
+
+enable_mojo_media
+    Current value (from the default) = false
+      From //media/media_options.gni:108
+
+    Experiment to enable mojo media services (e.g. "renderer", "cdm", see
+    |mojo_media_services|). When enabled, selected mojo paths will be enabled in
+    the media pipeline and corresponding services will hosted in the selected
+    remote process (e.g. "utility" process, see |mojo_media_host|).
+
+enable_mojom_typemapping
+    Current value (from the default) = true
+      From //mojo/public/tools/bindings/mojom.gni:14
+
+    Indicates whether typemapping should be supported in this build
+    configuration. This may be disabled when building external projects which
+    depend on //mojo but which do not need/want all of the Chromium tree
+    dependencies that come with typemapping.
+   
+    Note that (perhaps obviously) a huge amount of Chromium code will not build
+    with typemapping disabled, so it is never valid to set this to |false| in
+    any Chromium build configuration.
+
+enable_mse_mpeg2ts_stream_parser
+    Current value (from the default) = false
+      From //media/media_options.gni:43
+
+enable_nacl
+    Current value (from the default) = true
+      From //build/config/features.gni:27
+
+    Enables Native Client support.
+    Temporarily disable nacl on arm64 linux to get rid of compilation errors.
+    TODO(mcgrathr): When mipsel-nacl-clang is available, drop the exclusion.
+
+enable_nacl_nonsfi
+    Current value (from the default) = true
+      From //build/config/features.gni:31
+
+    Non-SFI is not yet supported on mipsel
+
+enable_native_notifications
+    Current value (from the default) = false
+      From //chrome/common/features.gni:47
+
+enable_nocompile_tests
+    Current value (from the default) = false
+      From //build/nocompile.gni:63
+
+enable_offline_pages
+    Current value (from the default) = false
+      From //components/offline_pages/features/features.gni:8
+
+    Whether to enable OfflinePages support. Currently user-visible features
+    are Android-only.
+
+enable_offline_pages_harness
+    Current value (from the default) = false
+      From //components/offline_pages/features/features.gni:12
+
+    This enables test API for locally-built harness which is used for quality
+    evaluations. Requires setting this variable manually at local environment.
+
+enable_one_click_signin
+    Current value (from the default) = true
+      From //chrome/common/features.gni:50
+
+enable_oop_heap_profiling
+    Current value (from the default) = false
+      From //chrome/common/features.gni:58
+
+    Enable out-of-process logging of heap profiling data. Currently being
+    implemented.
+
+enable_openvr
+    Current value (from the default) = false
+      From //device/vr/features/features.gni:14
+
+enable_package_mash_services
+    Current value (from the default) = false
+      From //chrome/common/features.gni:62
+
+    Set to true to bundle all the mash related mojo services into chrome.
+    Specify --mash to chrome to have chrome start the mash environment.
+
+enable_pdf
+    Current value (from the default) = true
+      From //pdf/features.gni:12
+
+enable_plugins
+    Current value (from the default) = true
+      From //ppapi/features/features.gni:11
+
+enable_precompiled_headers
+    Current value (from the default) = true
+      From //build/config/pch.gni:11
+
+    Precompiled header file support is by default available,
+    but for distributed build system uses (like goma) or when
+    doing official builds.
+
+enable_print_preview
+    Current value (from the default) = true
+      From //printing/features/features.gni:14
+
+    Enable printing with print preview. It does not imply
+    enable_basic_printing. It's possible to build Chrome with preview only.
+
+enable_profiling
+    Current value (from the default) = false
+      From //build/config/compiler/compiler.gni:28
+
+    Compile in such a way as to enable profiling of the generated code. For
+    example, don't omit the frame pointer and leave in symbols.
+
+enable_reading_list
+    Current value (from the default) = true
+      From //components/reading_list/features/reading_list.gni:8
+
+    Controls whether reading list support is active or not. Currently only
+    supported on iOS (on other platforms, the feature is always disabled).
+
+enable_remoting
+    Current value (from the default) = true
+      From //remoting/remoting_enable.gni:9
+
+enable_remoting_jscompile
+    Current value (from the default) = false
+      From //remoting/remoting_options.gni:15
+
+    Set this to run the jscompile checks after building the webapp.
+
+enable_resource_whitelist_generation
+    Current value (from the default) = false
+      From //build/config/android/config.gni:377
+
+    Enables used resource whitelist generation. Set for official builds only
+    as a large amount of build output is generated.
+
+enable_runtime_media_renderer_selection
+    Current value (from the default) = false
+      From //media/media_options.gni:120
+
+    When enabled, this feature allows developers to use a runtime flag to
+    choose the implementation of the renderer that is used. On a build which
+    enables the mojo renderer, if --disable-mojo-renderer is passed at start-up,
+    the "default" renderer will be used instead. Both renderer implementations
+    will be linked if this feature is enabled, increasing the binary size. This
+    feature does not make sense if the mojo renderer is not enabled.
+
+enable_service_discovery
+    Current value (from the default) = true
+      From //chrome/common/features.gni:64
+
+enable_session_service
+    Current value (from the default) = true
+      From //chrome/common/features.gni:68
+
+    Enables use of the session service, which is enabled by default.
+    Android stores them separately on the Java side.
+
+enable_supervised_users
+    Current value (from the default) = true
+      From //chrome/common/features.gni:70
+
+enable_swiftshader
+    Current value (from the default) = true
+      From //ui/gl/BUILD.gn:13
+
+enable_test_mojo_media_client
+    Current value (from the default) = false
+      From //media/media_options.gni:112
+
+    Enable the TestMojoMediaClient to be used in mojo MediaService. This is for
+    testing only and will override the default platform MojoMediaClient, if any.
+
+enable_vr
+    Current value (from the default) = false
+      From //device/vr/features/features.gni:12
+
+    Enable WebVR support by default on Android
+    Still requires command line flag to access API
+    TODO(bshe): Enable for other architecture too. Currently we only support arm
+    and arm64.
+
+enable_vulkan
+    Current value (from the default) = false
+      From //gpu/vulkan/features.gni:9
+
+    Enable experimental vulkan backend.
+
+enable_wayland_server
+    Current value (from the default) = false
+      From //chrome/common/features.gni:73
+
+    Indicates if Wayland display server support is enabled.
+
+enable_webrtc
+    Current value (from the default) = true
+      From //media/media_options.gni:58
+
+enable_websockets
+    Current value (from the default) = true
+      From //net/features.gni:16
+
+    WebSockets and socket stream code are not used on iOS and are optional in
+    cronet.
+
+enable_widevine
+    Current value (from the default) = false
+      From //third_party/widevine/cdm/widevine.gni:7
+
+    Allow widevinecdmadapter to be built in Chromium.
+
+enable_wifi_display
+    Current value (from the default) = false
+      From //extensions/features/features.gni:12
+
+    Enables Wi-Fi Display functionality
+    WARNING: This enables MPEG Transport Stream (MPEG-TS) encoding!
+
+exclude_unwind_tables
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:74
+
+    Omit unwind support in official builds to save space.
+    We can use breakpad for these builds.
+
+fatal_linker_warnings
+    Current value (from the default) = true
+      From //build/config/compiler/BUILD.gn:86
+
+    Enable fatal linker warnings. Building Chromium with certain versions
+    of binutils can cause linker warning.
+    See: https://bugs.chromium.org/p/chromium/issues/detail?id=457359
+
+ffmpeg_branding
+    Current value (from the default) = "Chromium"
+      From //third_party/ffmpeg/ffmpeg_options.gni:34
+
+    Controls whether we build the Chromium or Google Chrome version of FFmpeg.
+    The Google Chrome version contains additional codecs. Typical values are
+    Chromium, Chrome, and ChromeOS.
+
+fieldtrial_testing_like_official_build
+    Current value (from the default) = false
+      From //build/config/features.gni:55
+
+    Set to true make a build that disables activation of field trial tests
+    specified in testing/variations/fieldtrial_testing_config_*.json.
+    Note: this setting is ignored if is_chrome_branded.
+
+full_wpo_on_official
+    Current value (from the default) = false
+      From //build/config/compiler/compiler.gni:118
+
+gcc_target_rpath
+    Current value (from the default) = ""
+      From //build/config/gcc/BUILD.gn:18
+
+    When non empty, overrides the target rpath value. This allows a user to
+    make a Chromium build where binaries and shared libraries are meant to be
+    installed into separate directories, like /usr/bin/chromium and
+    /usr/lib/chromium for instance. It is useful when a build system that
+    generates a whole target root filesystem (like Yocto) is used on top of gn,
+    especially when cross-compiling.
+    Note: this gn arg is similar to gyp target_rpath generator flag.
+
+generate_linker_map
+    Current value (from the default) = false
+      From //build/toolchain/toolchain.gni:42
+
+    Used for binary size analysis.
+    Currently disabled on LLD because of a bug (fixed upstream).
+    See https://crbug.com/716209.
+
+gold_path
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:63
+
+    When we are going to use gold we need to find it.
+    This is initialized below, after use_gold might have been overridden.
+
+goma_dir
+    Current value (from the default) = "/goma"
+      From //build/toolchain/goma.gni:17
+
+    Absolute directory containing the gomacc binary.
+
+google_api_key
+    Current value = "AIzaSyBw6RrHZsVxyOqQ7IT18sFuZFPOaWTiMJo"
+      From //out/dbg/args.gn:15
+    Overridden from the default = ""
+      From //google_apis/BUILD.gn:46
+
+    Set these to bake the specified API keys and OAuth client
+    IDs/secrets into your build.
+   
+    If you create a build without values baked in, you can instead
+    set environment variables to provide the keys at runtime (see
+    src/google_apis/google_api_keys.h for details).  Features that
+    require server-side APIs may fail to work if no keys are
+    provided.
+   
+    Note that if you are building an official build or if
+    use_official_google_api_keys has been set to trie (explicitly or
+    implicitly), these values will be ignored and the official
+    keys will be used instead.
+
+google_default_client_id
+    Current value = "1043667059466-hlsratbu1njumqjummjmjaclim419o4s.apps.googleusercontent.com"
+      From //out/dbg/args.gn:16
+    Overridden from the default = ""
+      From //google_apis/BUILD.gn:49
+
+    See google_api_key.
+
+google_default_client_secret
+    Current value = "xTOEBlhG5s2pQAFzvqv9qzVM"
+      From //out/dbg/args.gn:17
+    Overridden from the default = ""
+      From //google_apis/BUILD.gn:52
+
+    See google_api_key.
+
+has_native_accessibility
+    Current value (from the default) = true
+      From //ui/base/ui_features.gni:15
+
+    Whether the platform provides a native accessibility toolkit.
+
+headless_fontconfig_utils
+    Current value (from the default) = false
+      From //headless/headless.gni:10
+
+    Provide bindings for font loading for headless embedders.
+
+headless_use_embedded_resources
+    Current value (from the default) = false
+      From //headless/headless.gni:7
+
+    Embed resource.pak file into the binary for easier distribution.
+
+host_byteorder
+    Current value (from the default) = "undefined"
+      From //build/config/host_byteorder.gni:9
+
+host_cpu
+    Current value (from the default) = "x64"
+      (Internally set; try `gn help host_cpu`.)
+
+host_os
+    Current value (from the default) = "win"
+      (Internally set; try `gn help host_os`.)
+
+host_pkg_config
+    Current value (from the default) = ""
+      From //build/config/linux/pkg_config.gni:36
+
+    A optional pkg-config wrapper to use for tools built on the host.
+
+host_toolchain
+    Current value (from the default) = ""
+      From //build/config/BUILDCONFIG.gn:151
+
+    This should not normally be set as a build argument.  It's here so that
+    every toolchain can pass through the "global" value via toolchain_args().
+
+icu_use_data_file
+    Current value (from the default) = true
+      From //third_party/icu/config.gni:15
+
+    Tells icu to load an external data file rather than rely on the icudata
+    being linked directly into the binary.
+   
+    This flag is a bit confusing. As of this writing, icu.gyp set the value to
+    0 but common.gypi sets the value to 1 for most platforms (and the 1 takes
+    precedence).
+   
+    TODO(GYP) We'll probably need to enhance this logic to set the value to
+    true or false in similar circumstances.
+
+ignore_elf32_limitations
+    Current value (from the default) = false
+      From //build_overrides/build.gni:47
+
+    Android 32-bit non-component, non-clang builds cannot have symbol_level=2
+    due to 4GiB file size limit, see https://crbug.com/648948.
+    Set this flag to true to skip the assertion.
+
+internal_gles2_conform_tests
+    Current value (from the default) = false
+      From //gpu/gles2_conform_support/BUILD.gn:7
+
+    Set to true to compile with the OpenGL ES 2.0 conformance tests.
+
+internal_khronos_glcts_tests
+    Current value (from the default) = false
+      From //gpu/khronos_glcts_support/BUILD.gn:8
+
+is_asan
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:11
+
+    Compile for Address Sanitizer to find memory bugs.
+
+is_cast_audio_only
+    Current value (from the default) = false
+      From //build/config/chromecast_build.gni:14
+
+    Set this true for an audio-only Chromecast build.
+
+is_cast_desktop_build
+    Current value (from the default) = false
+      From //build/config/chromecast_build.gni:26
+
+    True if Chromecast build is targeted for linux desktop. This type of build
+    is useful for testing and development, but currently supports only a subset
+    of Cast functionality. Though this defaults to true for x86 Linux devices,
+    this should be overriden manually for an embedded x86 build.
+    TODO(slan): Remove instances of this when x86 is a fully supported platform.
+
+is_cast_using_cma_backend
+    Current value (from the default) = true
+      From //media/media_options.gni:66
+
+    If true, use cast CMA backend instead of default chromium media pipeline.
+
+is_cfi
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:58
+
+    Compile with Control Flow Integrity to protect virtual calls and casts.
+    See http://clang.llvm.org/docs/ControlFlowIntegrity.html
+   
+    TODO(pcc): Remove this flag if/when CFI is enabled in all official builds.
+
+is_chrome_branded
+    Current value (from the default) = false
+      From //build/config/chrome_build.gni:9
+
+    Select the desired branding flavor. False means normal Chromium branding,
+    true means official Google Chrome branding (requires extra Google-internal
+    resources).
+
+is_chromecast
+    Current value (from the default) = false
+      From //build/config/chromecast_build.gni:11
+
+    Set this true for a Chromecast build. Chromecast builds are supported on
+    Linux and Android.
+
+is_clang
+    Current value (from the default) = false
+      From //build/config/BUILDCONFIG.gn:139
+
+is_component_build
+    Current value = true
+      From //out/dbg/args.gn:10
+    Overridden from the default = true
+      From //build/config/BUILDCONFIG.gn:169
+
+is_component_ffmpeg
+    Current value (from the default) = false
+      From //third_party/ffmpeg/ffmpeg_options.gni:41
+
+    Set true to build ffmpeg as a shared library. NOTE: this means we should
+    always consult is_component_ffmpeg instead of is_component_build for
+    ffmpeg targets. This helps linux chromium packagers that swap out our
+    ffmpeg.so with their own. See discussion here
+    https://groups.google.com/a/chromium.org/forum/#!msg/chromium-packagers/R5rcZXWxBEQ/B6k0zzmJbvcJ
+
+is_debug
+    Current value = true
+      From //out/dbg/args.gn:9
+    Overridden from the default = true
+      From //build/config/BUILDCONFIG.gn:158
+
+    Debug build. Enabling official builds automatically sets is_debug to false.
+
+is_desktop_linux
+    Current value (from the default) = false
+      From //build/config/BUILDCONFIG.gn:134
+
+    Whether we're a traditional desktop unix.
+
+is_lsan
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:14
+
+    Compile for Leak Sanitizer to find leaks.
+
+is_msan
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:17
+
+    Compile for Memory Sanitizer to find uninitialized reads.
+
+is_multi_dll_chrome
+    Current value (from the default) = false
+      From //build/config/chrome_build.gni:13
+
+    Break chrome.dll into multple pieces based on process type. Only available
+    on Windows.
+
+is_nacl_glibc
+    Current value (from the default) = false
+      From //build/config/nacl/config.gni:11
+
+    Native Client supports both Newlib and Glibc C libraries where Newlib
+    is assumed to be the default one; use this to determine whether Glibc
+    is being used instead.
+
+is_official_build
+    Current value (from the default) = false
+      From //build/config/BUILDCONFIG.gn:131
+
+    Set to enable the official build level of optimization. This has nothing
+    to do with branding, but enables an additional level of optimization above
+    release (!is_debug). This might be better expressed as a tri-state
+    (debug, release, official) but for historical reasons there are two
+    separate flags.
+
+is_proto_quic
+    Current value (from the default) = false
+      From //net/features.gni:9
+
+    If true, prune things down as needed for proto-quic build.
+
+is_syzyasan
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:52
+
+    Enable building with SyzyAsan which can find certain types of memory
+    errors. Only works on Windows. See
+    https://github.com/google/syzygy/wiki/SyzyASanHowTo
+
+is_tsan
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:20
+
+    Compile for Thread Sanitizer to find threading bugs.
+
+is_ubsan
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:24
+
+    Compile for Undefined Behaviour Sanitizer to find various types of
+    undefined behaviour (excludes vptr checks).
+
+is_ubsan_no_recover
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:27
+
+    Halt the program if a problem is detected.
+
+is_ubsan_null
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:30
+
+    Compile for Undefined Behaviour Sanitizer's null pointer checks.
+
+is_ubsan_security
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:87
+
+    Enables core ubsan security features. Will later be removed once it matches
+    is_ubsan.
+
+is_ubsan_vptr
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:33
+
+    Compile for Undefined Behaviour Sanitizer's vptr checks.
+
+is_win_fastlink
+    Current value = true
+      From //out/dbg/args.gn:13
+    Overridden from the default = false
+      From //build/config/compiler/compiler.gni:45
+
+    Tell VS to create a PDB that references information in .obj files rather
+    than copying it all. This should improve linker performance. mspdbcmf.exe
+    can be used to convert a fastlink pdb to a normal one.
+
+libyuv_disable_jpeg
+    Current value (from the default) = false
+      From //third_party/libyuv/libyuv.gni:15
+
+libyuv_include_tests
+    Current value (from the default) = false
+      From //third_party/libyuv/libyuv.gni:14
+
+libyuv_use_gflags
+    Current value (from the default) = true
+      From //third_party/libyuv/BUILD.gn:14
+
+    Set to false to disable building with gflags.
+
+libyuv_use_msa
+    Current value (from the default) = false
+      From //third_party/libyuv/libyuv.gni:18
+
+libyuv_use_neon
+    Current value (from the default) = false
+      From //third_party/libyuv/libyuv.gni:16
+
+link_pulseaudio
+    Current value (from the default) = false
+      From //media/media_options.gni:14
+
+    Allows distributions to link pulseaudio directly (DT_NEEDED) instead of
+    using dlopen. This helps with automated detection of ABI mismatches and
+    prevents silent errors.
+
+linkrepro_root_dir
+    Current value (from the default) = ""
+      From //build/config/compiler/compiler.gni:63
+
+    Root directory that will store the MSVC link repro. This should only be
+    used for debugging purposes on the builders where a MSVC linker flakyness
+    has been observed. The targets for which a link repro should be generated
+    should add somethink like this to their configuration:
+      if (linkrepro_root_dir != "") {
+        ldflags = ["/LINKREPRO:" + linkrepro_root_dir + "/" + target_name]
+      }
+   
+    Note that doing a link repro uses a lot of disk space and slows down the
+    build, so this shouldn't be enabled on too many targets.
+   
+    See crbug.com/669854.
+
+linux_use_bundled_binutils
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:49
+
+llvm_force_head_revision
+    Current value (from the default) = false
+      From //build/toolchain/toolchain.gni:32
+
+    If this is set to true, or if LLVM_FORCE_HEAD_REVISION is set to 1
+    in the environment, we use the revision in the llvm repo to determine
+    the CLANG_REVISION to use, instead of the version hard-coded into
+    //tools/clang/scripts/update.py. This should only be used in
+    conjunction with setting LLVM_FORCE_HEAD_REVISION in the
+    environment when `gclient runhooks` is run as well.
+
+mac_views_browser
+    Current value (from the default) = false
+      From //ui/base/ui_features.gni:12
+
+    Whether the entire browser uses toolkit-views on Mac instead of Cocoa.
+
+media_use_ffmpeg
+    Current value (from the default) = true
+      From //media/media_options.gni:19
+
+    Enable usage of FFmpeg within the media library. Used for most software
+    based decoding, demuxing, and sometimes optimized FFTs. If disabled,
+    implementors must provide their own demuxers and decoders.
+
+media_use_libvpx
+    Current value (from the default) = true
+      From //media/media_options.gni:23
+
+    Enable usage of libvpx within the media library. Used for software based
+    decoding of VP9 and VP8A type content.
+
+mojo_media_host
+    Current value (from the default) = "none"
+      From //media/media_options.gni:150
+
+    The process to host the mojo media service.
+    Valid options are:
+    - "none": Do not use mojo media service.
+    - "browser": Use mojo media service hosted in the browser process.
+    - "gpu": Use mojo media service hosted in the gpu process.
+    - "utility": Use mojo media service hosted in the utility process.
+
+mojo_media_services
+    Current value (from the default) = []
+      From //media/media_options.gni:142
+
+    A list of mojo media services that should be used in the media pipeline.
+    Must not be empty if |enable_mojo_media| is true.
+    Valid entries in the list are:
+    - "renderer": Use mojo-based media Renderer service.
+    - "cdm": Use mojo-based Content Decryption Module.
+    - "audio_decoder": Use mojo-based audio decoder in the default media
+                       Renderer. Cannot be used with the mojo Renderer above.
+    - "video_decoder": Use mojo-based video decoder in the default media
+                       Renderer. Cannot be used with the mojo Renderer above.
+
+msan_track_origins
+    Current value (from the default) = 2
+      From //build/config/sanitizers/sanitizers.gni:38
+
+    Track where uninitialized memory originates from. From fastest to slowest:
+    0 - no tracking, 1 - track only the initial allocation site, 2 - track the
+    chain of stores leading from allocation site to use site.
+
+msvs_xtree_patched
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:69
+
+    Whether the VS xtree header has been patched to disable warning 4702. If
+    it has, then we don't need to disable 4702 (unreachable code warning).
+    The patch is preapplied to the internal toolchain and hence all bots.
+
+nacl_sdk_untrusted
+    Current value (from the default) = false
+      From //native_client_sdk/src/BUILD.gn:14
+
+    Build the nacl SDK untrusted components.  This is disabled by default since
+    not all NaCl untrusted compilers are in goma (e.g arm-nacl-glibc)
+
+openmax_big_float_fft
+    Current value (from the default) = true
+      From //third_party/openmax_dl/dl/BUILD.gn:10
+
+    Override this value to build with small float FFT tables
+
+optimize_for_fuzzing
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:101
+
+    Optimize for coverage guided fuzzing (balance between speed and number of
+    branches)
+
+optimize_for_size
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:81
+
+    If true, optimize for size. Does not affect windows builds.
+    Linux & Mac favor speed over size.
+    TODO(brettw) it's weird that Mac and desktop Linux are different. We should
+    explore favoring size over speed in this case as well.
+
+override_build_date
+    Current value (from the default) = "N/A"
+      From //base/BUILD.gn:38
+
+    Override this value to give a specific build date.
+    See //base/build_time.cc and //build/write_build_date_header.py for more
+    details and the expected format.
+
+ozone_auto_platforms
+    Current value (from the default) = false
+      From //ui/ozone/ozone.gni:10
+
+    Select platforms automatically. Turn this off for manual control.
+
+ozone_platform
+    Current value (from the default) = ""
+      From //ui/ozone/ozone.gni:23
+
+    The platform that will used at runtime by default. This can be overridden
+    with the command line flag --ozone-platform=<platform>.
+
+ozone_platform_cast
+    Current value (from the default) = false
+      From //ui/ozone/ozone.gni:26
+
+    Compile the 'cast' platform.
+
+ozone_platform_gbm
+    Current value (from the default) = false
+      From //ui/ozone/ozone.gni:29
+
+    Compile the 'gbm' platform.
+
+ozone_platform_headless
+    Current value (from the default) = false
+      From //ui/ozone/ozone.gni:32
+
+    Compile the 'headless' platform.
+
+ozone_platform_wayland
+    Current value (from the default) = false
+      From //ui/ozone/ozone.gni:38
+
+    Compile the 'wayland' platform.
+
+ozone_platform_x11
+    Current value (from the default) = false
+      From //ui/ozone/ozone.gni:35
+
+    Compile the 'x11' platform.
+
+pdf_bundle_freetype
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:16
+
+    Build PDFium either:
+    1) When set to true, with a bundled FreeType, built from FreeType source
+       code in //third_party/freetype and PDFium's FreeType configs in
+       third_party/freetype/include.
+    2) When set to false, use whatever FreeType target is defined in
+       //build/config/freetype.
+
+pdf_enable_v8
+    Current value (from the default) = true
+      From //third_party/pdfium/pdfium.gni:19
+
+    Build PDFium either with or without v8 support.
+
+pdf_enable_xfa
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:22
+
+    Build PDFium either with or without XFA Forms support.
+
+pdf_enable_xfa_bmp
+    Current value (from the default) = true
+      From //third_party/pdfium/pdfium.gni:25
+
+    If XFA, also support bmp codec. Ignored if not XFA.
+
+pdf_enable_xfa_gif
+    Current value (from the default) = true
+      From //third_party/pdfium/pdfium.gni:28
+
+    If XFA, also support gif codec. Ignored if not XFA.
+
+pdf_enable_xfa_png
+    Current value (from the default) = true
+      From //third_party/pdfium/pdfium.gni:31
+
+    If XFA, also support png codec. Ignored if not XFA.
+
+pdf_enable_xfa_tiff
+    Current value (from the default) = true
+      From //third_party/pdfium/pdfium.gni:34
+
+    If XFA, also support png codec. Ignored if not XFA.
+
+pdf_is_complete_lib
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:51
+
+    Build a complete static library
+
+pdf_is_standalone
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:48
+
+    Build PDFium standalone
+
+pdf_use_skia
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:38
+
+    Build PDFium against skia (experimental) rather than agg. Use Skia to draw
+    everything.
+
+pdf_use_skia_paths
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:42
+
+    Build PDFium against skia (experimental) rather than agg. Use Skia to draw
+    paths.
+
+pdf_use_win32_gdi
+    Current value (from the default) = true
+      From //third_party/pdfium/pdfium.gni:45
+
+    Build PDFium with or without experimental win32 GDI APIs.
+
+pgo_build
+    Current value (from the default) = false
+      From //chrome/common/features.gni:76
+
+    Indicates if the build is using PGO.
+
+pgo_data_path
+    Current value (from the default) = ""
+      From //build/config/compiler/pgo/pgo.gni:16
+
+    When using chrome_pgo_phase = 2, read profile data from this path.
+
+pkg_config
+    Current value (from the default) = ""
+      From //build/config/linux/pkg_config.gni:33
+
+    A pkg-config wrapper to call instead of trying to find and call the right
+    pkg-config directly. Wrappers like this are common in cross-compilation
+    environments.
+    Leaving it blank defaults to searching PATH for 'pkg-config' and relying on
+    the sysroot mechanism to find the right .pc files.
+
+proprietary_codecs
+    Current value (from the default) = false
+      From //build/config/features.gni:38
+
+    Enables proprietary codecs and demuxers; e.g. H264, AAC, MP3, and MP4.
+    We always build Google Chrome and Chromecast with proprietary codecs.
+   
+    Note: this flag is used by WebRTC which is DEPSed into Chrome. Moving it
+    out of //build will require using the build_overrides directory.
+
+remove_webcore_debug_symbols
+    Current value (from the default) = false
+      From //third_party/WebKit/Source/config.gni:18
+
+    If true, doesn't compile debug symbols into webcore reducing the
+    size of the binary and increasing the speed of gdb.
+
+root_extra_deps
+    Current value (from the default) = []
+      From //BUILD.gn:33
+
+    A list of extra dependencies to add to the root target. This allows a
+    checkout to add additional targets without explicitly changing any checked-
+    in files.
+
+rtc_audio_device_plays_sinus_tone
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:154
+
+    When set to true, replace the audio output with a sinus tone at 440Hz.
+    The ADM will ask for audio data from WebRTC but instead of reading real
+    audio samples from NetEQ, a sinus tone will be generated and replace the
+    real audio samples.
+
+rtc_build_json
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:81
+
+    Disable these to not build components which can be externally provided.
+
+rtc_build_libevent
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:112
+
+rtc_build_libjpeg
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:82
+
+rtc_build_libsrtp
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:83
+
+rtc_build_libvpx
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:84
+
+rtc_build_libyuv
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:86
+
+rtc_build_openmax_dl
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:87
+
+rtc_build_opus
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:88
+
+rtc_build_ssl
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:89
+
+rtc_build_usrsctp
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:90
+
+rtc_build_with_neon
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:131
+
+rtc_enable_android_opensl
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:95
+
+rtc_enable_bwe_test_logging
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:75
+
+    Set this to true to enable BWE test logging.
+
+rtc_enable_external_auth
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:68
+
+    Enable when an external authentication mechanism is used for performing
+    packet authentication for RTP packets instead of libsrtp.
+
+rtc_enable_intelligibility_enhancer
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:64
+
+    Disable the code for the intelligibility enhancer by default.
+
+rtc_enable_libevent
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:111
+
+rtc_enable_protobuf
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:61
+
+    Enables the use of protocol buffers for debug recordings.
+
+rtc_enable_sctp
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:78
+
+    Set this to disable building with support for SCTP data channels.
+
+rtc_include_ilbc
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:177
+
+    Include the iLBC audio codec?
+
+rtc_include_internal_audio_device
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:186
+
+    Chromium uses its own IO handling, so the internal ADM is only built for
+    standalone WebRTC.
+
+rtc_include_opus
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:37
+
+    Disable this to avoid building the Opus audio codec.
+
+rtc_include_pulse_audio
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:182
+
+    Excluded in Chromium since its prerequisites don't require Pulse Audio.
+
+rtc_include_tests
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:189
+
+    Include tests in standalone checkout.
+
+rtc_initialize_ffmpeg
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:165
+
+    FFmpeg must be initialized for |H264DecoderImpl| to work. This can be done
+    by WebRTC during |H264DecoderImpl::InitDecode| or externally. FFmpeg must
+    only be initialized once. Projects that initialize FFmpeg externally, such
+    as Chromium, must turn this flag off so that WebRTC does not also
+    initialize.
+
+rtc_jsoncpp_root
+    Current value (from the default) = "//third_party/jsoncpp/source/include"
+      From //third_party/webrtc/webrtc.gni:51
+
+    Used to specify an external Jsoncpp include path when not compiling the
+    library that comes with WebRTC (i.e. rtc_build_json == 0).
+
+rtc_libvpx_build_vp9
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:85
+
+rtc_opus_support_120ms_ptime
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:41
+
+    Enable this if the Opus version upon which WebRTC is built supports direct
+    encoding of 120 ms packets.
+
+rtc_opus_variable_complexity
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:44
+
+    Enable this to let the Opus audio codec change complexity on the fly.
+
+rtc_prefer_fixed_point
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:58
+
+    Selects fixed-point code where possible.
+
+rtc_relative_path
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:47
+
+    Disable to use absolute header paths for some libraries.
+
+rtc_restrict_logging
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:179
+
+rtc_sanitize_coverage
+    Current value (from the default) = ""
+      From //third_party/webrtc/webrtc.gni:107
+
+    Set to "func", "block", "edge" for coverage generation.
+    At unit test runtime set UBSAN_OPTIONS="coverage=1".
+    It is recommend to set include_examples=0.
+    Use llvm's sancov -html-report for human readable reports.
+    See http://clang.llvm.org/docs/SanitizerCoverage.html .
+
+rtc_ssl_root
+    Current value (from the default) = ""
+      From //third_party/webrtc/webrtc.gni:55
+
+    Used to specify an external OpenSSL include path when not compiling the
+    library that comes with WebRTC (i.e. rtc_build_ssl == 0).
+
+rtc_use_dummy_audio_file_devices
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:148
+
+    By default, use normal platform audio support or dummy audio, but don't
+    use file-based audio playout and record.
+
+rtc_use_gtk
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:169
+
+    Build sources requiring GTK. NOTICE: This is not present in Chrome OS
+    build environments, even if available for Chromium builds.
+
+rtc_use_h264
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:141
+
+    Enable this to build OpenH264 encoder/FFmpeg decoder. This is supported on
+    all platforms except Android and iOS. Because FFmpeg can be built
+    with/without H.264 support, |ffmpeg_branding| has to separately be set to a
+    value that includes H.264, for example "Chrome". If FFmpeg is built without
+    H.264, compilation succeeds but |H264DecoderImpl| fails to initialize. See
+    also: |rtc_initialize_ffmpeg|.
+    CHECK THE OPENH264, FFMPEG AND H.264 LICENSES/PATENTS BEFORE BUILDING.
+    http://www.openh264.org, https://www.ffmpeg.org/
+
+rtc_use_lto
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:100
+
+    Link-Time Optimizations.
+    Executes code generation at link-time instead of compile-time.
+    https://gcc.gnu.org/wiki/LinkTimeOptimization
+
+rtc_use_memcheck
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:158
+
+    When set to true, test targets will declare the files needed to run memcheck
+    as data dependencies. This is to enable memcheck execution on swarming bots.
+
+rtc_use_openmax_dl
+    Current value (from the default) = true
+      From //third_party/webrtc/webrtc.gni:124
+
+rtc_use_quic
+    Current value (from the default) = false
+      From //third_party/webrtc/webrtc.gni:144
+
+    Determines whether QUIC code will be built.
+
+safe_browsing_mode
+    Current value (from the default) = 1
+      From //build/config/features.gni:49
+
+sanitizer_coverage_flags
+    Current value (from the default) = ""
+      From //build/config/sanitizers/sanitizers.gni:103
+
+    Value for -fsanitize-coverage flag. Setting this causes
+    use_sanitizer_coverage to be enabled.
+    Default value when unset and use_afl=true or use_libfuzzer=true:
+        trace-pc-guard
+    Default value when unset and use_sanitizer_coverage=true:
+        trace-pc-guard,indirect-calls
+
+sanitizer_keep_symbols
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:109
+
+    Keep symbol level when building with sanitizers. When sanitizers are
+    enabled, the default is to compile with the minimum debug info level
+    necessary, overriding any other symbol level arguments that may be set.
+    Setting this to true prevents this.
+
+single_module_mode_handle_verifier
+    Current value (from the default) = false
+      From //base/win/BUILD.gn:13
+
+    Indicates if the handle verifier should operate in a single module mode. By
+    default a single instance gets shared by all the modules.
+
+skia_whitelist_serialized_typefaces
+    Current value (from the default) = false
+      From //skia/BUILD.gn:24
+
+strip_absolute_paths_from_debug_symbols
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:106
+
+    Optimize symbol files for maximizing goma cache hit rate. This isn't
+    on by default when goma is enabled because setting this to true may make
+    it harder to debug binaries.
+
+symbol_level
+    Current value = 2
+      From //out/dbg/args.gn:12
+    Overridden from the default = -1
+      From //build/config/compiler/compiler.gni:24
+
+    How many symbols to include in the build. This affects the performance of
+    the build since the symbols are large and dealing with them is slow.
+      2 means regular build with symbols.
+      1 means minimal symbols, usually enough for backtraces only. Symbols with
+    internal linkage (static functions or those in anonymous namespaces) may not
+    appear when using this level.
+      0 means no symbols.
+      -1 means auto-set according to debug/release and platform.
+
+system_libdir
+    Current value (from the default) = "lib"
+      From //build/config/linux/pkg_config.gni:47
+
+    CrOS systemroots place pkgconfig files at <systemroot>/usr/share/pkgconfig
+    and one of <systemroot>/usr/lib/pkgconfig or <systemroot>/usr/lib64/pkgconfig
+    depending on whether the systemroot is for a 32 or 64 bit architecture.
+   
+    When build under GYP, CrOS board builds specify the 'system_libdir' variable
+    as part of the GYP_DEFINES provided by the CrOS emerge build or simple
+    chrome build scheme. This variable permits controlling this for GN builds
+    in similar fashion by setting the `system_libdir` variable in the build's
+    args.gn file to 'lib' or 'lib64' as appropriate for the target architecture.
+
+target_cpu
+    Current value = "x86"
+      From //out/dbg/args.gn:11
+    Overridden from the default = ""
+      (Internally set; try `gn help target_cpu`.)
+
+target_os
+    Current value (from the default) = ""
+      (Internally set; try `gn help target_os`.)
+
+target_sysroot
+    Current value (from the default) = ""
+      From //build/config/sysroot.gni:13
+
+    The absolute path of the sysroot that is applied when compiling using
+    the target toolchain.
+
+target_sysroot_dir
+    Current value (from the default) = "//build/linux"
+      From //build/config/sysroot.gni:16
+
+    The absolute path to directory containing linux sysroot images
+
+toolkit_views
+    Current value (from the default) = false
+      From //build/config/ui.gni:43
+
+treat_warnings_as_errors
+    Current value (from the default) = true
+      From //build/config/compiler/BUILD.gn:38
+
+    Default to warnings as errors for default workflow, where we catch
+    warnings with known toolchains. Allow overriding this e.g. for Chromium
+    builds on Linux that could use a different version of the compiler.
+    With GCC, warnings in no-Chromium code are always not treated as errors.
+
+use_afl
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:83
+
+    Compile for fuzzing with AFL.
+
+use_allocator
+    Current value (from the default) = "tcmalloc"
+      From //build/config/allocator.gni:29
+
+    Memory allocator to use. Set to "none" to use default allocator.
+
+use_allocator_shim
+    Current value (from the default) = false
+      From //build/config/allocator.gni:32
+
+    Causes all the allocations to be routed via allocator_shim.cc.
+
+use_alsa
+    Current value (from the default) = true
+      From //media/media_options.gni:84
+
+use_ash
+    Current value (from the default) = false
+      From //build/config/ui.gni:25
+
+    Indicates if Ash is enabled. Ash is the Aura Shell which provides a
+    desktop-like environment for Aura. Requires use_aura = true
+
+use_aura
+    Current value (from the default) = false
+      From //build/config/ui.gni:34
+
+    Indicates if Aura is enabled. Aura is a low-level windowing library, sort
+    of a replacement for GDI or GTK.
+
+use_cfi_cast
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:64
+
+    Enable checks for bad casts: derived cast and unrelated cast.
+    TODO(krasin): remove this, when we're ready to add these checks by default.
+    https://crbug.com/626794
+
+use_cfi_diag
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:72
+
+    Print detailed diagnostics when Control Flow Integrity detects a violation.
+
+use_cfi_icall
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:69
+
+    Enable checks for indirect function calls via a function pointer.
+    TODO(pcc): remove this when we're ready to add these checks by default.
+    https://crbug.com/701919
+
+use_cfi_recover
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:76
+
+    Let Control Flow Integrity continue execution instead of crashing when
+    printing diagnostics (use_cfi_diag = true).
+
+use_clang_static_analyzer
+    Current value (from the default) = false
+      From //build/toolchain/clang_static_analyzer.gni:10
+
+    Uses the Clang static analysis tools during compilation.
+
+use_coverage
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:54
+
+    Enable coverage information
+
+use_cras
+    Current value (from the default) = false
+      From //media/media_options.gni:32
+
+    Override to dynamically link the cras (ChromeOS audio) library.
+
+use_cups
+    Current value (from the default) = false
+      From //printing/features/features.gni:16
+
+use_custom_libcxx
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:146
+
+use_dbus
+    Current value (from the default) = false
+      From //build/config/features.gni:60
+
+use_debug_fission
+    Current value (from the default) = "default"
+      From //build/config/compiler/compiler.gni:40
+
+    use_debug_fission: whether to use split DWARF debug info
+    files. This can reduce link time significantly, but is incompatible
+    with some utilities such as icecc and ccache. Requires gold and
+    gcc >= 4.8 or clang.
+    http://gcc.gnu.org/wiki/DebugFission
+   
+    This is a placeholder value indicating that the code below should set
+    the default.  This is necessary to delay the evaluation of the default
+    value expression until after its input values such as use_gold have
+    been set, e.g. by a toolchain_args() block.
+
+use_drfuzz
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:91
+
+    Compile for fuzzing with Dr. Fuzz
+    See http://www.chromium.org/developers/testing/dr-fuzz
+
+use_evdev_gestures
+    Current value (from the default) = false
+      From //ui/events/ozone/BUILD.gn:12
+
+    Support ChromeOS touchpad gestures with ozone.
+
+use_external_popup_menu
+    Current value (from the default) = false
+      From //content/common/features.gni:7
+
+    Whether or not to use external popup menu.
+
+use_gcm_from_platform
+    Current value (from the default) = false
+      From //components/gcm_driver/config.gni:8
+
+    Use native GCM driver for all non-Android builds. On Android, the platform
+    includes GMS which provides the GCM client.
+
+use_gconf
+    Current value (from the default) = false
+      From //build/config/features.gni:64
+
+    Option controlling the use of GConf (the classic GNOME configuration
+    system).
+
+use_gio
+    Current value (from the default) = false
+      From //build/config/features.gni:66
+
+use_glib
+    Current value (from the default) = false
+      From //build/config/ui.gni:37
+
+    Whether we should use glib, a low level C utility library.
+
+use_gnome_keyring
+    Current value (from the default) = false
+      From //components/os_crypt/features.gni:10
+
+    Whether to use libgnome-keyring (deprecated by libsecret).
+    See http://crbug.com/466975 and http://crbug.com/355223.
+
+use_gold
+    Current value (from the default) = false
+      From //build/config/compiler/compiler.gni:125
+
+use_goma
+    Current value (from the default) = false
+      From //build/toolchain/goma.gni:9
+
+    Set to true to enable distributed compilation using Goma.
+
+use_incremental_wpo
+    Current value (from the default) = false
+      From //build/config/compiler/compiler.gni:49
+
+    Whether or not we should turn on incremental WPO. Only affects the VS
+    Windows build.
+
+use_kerberos
+    Current value (from the default) = true
+      From //net/features.gni:23
+
+    Enable Kerberos authentication. It is disabled by default on iOS,
+    Chromecast, at least for now. This feature needs configuration (krb5.conf
+    and so on). On Chrome OS it is only supported on Active Directory
+    managed devices.
+
+use_libfuzzer
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:80
+
+    Compile for fuzzing with LLVM LibFuzzer.
+    See http://www.chromium.org/developers/testing/libfuzzer
+
+use_libjpeg_turbo
+    Current value (from the default) = true
+      From //third_party/BUILD.gn:17
+
+    Uses libjpeg_turbo as the jpeg implementation. Has no effect if
+    use_system_libjpeg is set.
+
+use_libpci
+    Current value (from the default) = false
+      From //third_party/angle/BUILD.gn:15
+
+    Use the PCI lib to collect GPU information on Linux.
+
+use_lld
+    Current value (from the default) = false
+      From //build/toolchain/toolchain.gni:66
+
+    Set to true to use lld, the LLVM linker. This flag may be used on Windows
+    or Linux.
+
+use_locally_built_instrumented_libraries
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:47
+
+    Use dynamic libraries instrumented by one of the sanitizers instead of the
+    standard system libraries. Set this flag to build the libraries from source.
+
+use_low_memory_buffer
+    Current value (from the default) = false
+      From //media/media_options.gni:35
+
+    Use low-memory buffers on non-Android builds of Chromecast.
+
+use_low_quality_image_interpolation
+    Current value (from the default) = false
+      From //third_party/WebKit/Source/config.gni:25
+
+    If true, defaults image interpolation to low quality.
+
+use_official_google_api_keys
+    Current value (from the default) = ""
+      From //google_apis/BUILD.gn:31
+
+    You can set the variable 'use_official_google_api_keys' to true
+    to use the Google-internal file containing official API keys
+    for Google Chrome even in a developer build.  Setting this
+    variable explicitly to true will cause your build to fail if the
+    internal file is missing.
+   
+    The variable is documented here, but not handled in this file;
+    see //google_apis/determine_use_official_keys.gypi for the
+    implementation.
+   
+    Set the variable to false to not use the internal file, even when
+    it exists in your checkout.
+   
+    Leave it unset or set to "" to have the variable
+    implicitly set to true if you have
+    src/google_apis/internal/google_chrome_api_keys.h in your
+    checkout, and implicitly set to false if not.
+   
+    Note that official builds always behave as if the variable
+    was explicitly set to true, i.e. they always use official keys,
+    and will fail to build if the internal file is missing.
+
+use_openh264
+    Current value (from the default) = false
+      From //third_party/openh264/openh264_args.gni:11
+
+    Enable this to build OpenH264 (for encoding, not decoding).
+    CHECK THE OPENH264 LICENSE/PATENT BEFORE BUILDING, see
+    http://www.openh264.org/.
+
+use_ozone
+    Current value (from the default) = false
+      From //build/config/ui.gni:30
+
+    Indicates if Ozone is enabled. Ozone is a low-level library layer for Linux
+    that does not require X11. Enabling this feature disables use of glib, x11,
+    Pango, and Cairo. Default to false on non-Chromecast builds.
+
+use_partition_alloc
+    Current value (from the default) = true
+      From //base/BUILD.gn:41
+
+    Partition alloc is included by default except iOS.
+
+use_pic
+    Current value (from the default) = true
+      From //build/config/compiler/compiler.gni:66
+
+    Whether or not we should use position independent code.
+
+use_platform_icu_alternatives
+    Current value (from the default) = false
+      From //url/features.gni:10
+
+    Enables the use of ICU alternatives in lieu of ICU. The flag is used
+    for Cronet to reduce the size of the Cronet binary.
+
+use_prebuilt_instrumented_libraries
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:43
+
+    Use dynamic libraries instrumented by one of the sanitizers instead of the
+    standard system libraries. Set this flag to download prebuilt binaries from
+    GCS.
+
+use_pulseaudio
+    Current value (from the default) = true
+      From //media/media_options.gni:88
+
+use_rtti
+    Current value (from the default) = false
+      From //build/config/compiler/BUILD.gn:91
+
+    Build with C++ RTTI enabled. Chromium builds without RTTI by default,
+    but some sanitizers are known to require it, like CFI diagnostics
+    and UBsan variants.
+
+use_sanitizer_coverage
+    Current value (from the default) = false
+      From //build/config/sanitizers/sanitizers.gni:152
+
+use_swiftshader_with_subzero
+    Current value (from the default) = true
+      From //third_party/swiftshader/src/Reactor/BUILD.gn:18
+
+    Currently, Subzero is not used by default
+    LLVM is still the default backend
+
+use_sysroot
+    Current value (from the default) = true
+      From //build/config/sysroot.gni:18
+
+use_system_freetype
+    Current value (from the default) = false
+      From //build/config/freetype/freetype.gni:13
+
+    Blink needs a recent and properly build-configured FreeType version to
+    support OpenType variations, color emoji and avoid security bugs. By default
+    we ship and link such a version as part of Chrome. For distributions that
+    prefer to keep linking to the version the system, FreeType must be newer
+    than version 2.7.1 and have color bitmap support compiled in. WARNING:
+    System FreeType configurations other than as described WILL INTRODUCE TEXT
+    RENDERING AND SECURITY REGRESSIONS.
+
+use_system_harfbuzz
+    Current value (from the default) = false
+      From //third_party/harfbuzz-ng/harfbuzz.gni:11
+
+    Blink uses a cutting-edge version of Harfbuzz; most Linux distros do not
+    contain a new enough version of the code to work correctly. However,
+    ChromeOS chroots (i.e, real ChromeOS builds for devices) do contain a
+    new enough version of the library, and so this variable exists so that
+    ChromeOS can build against the system lib and keep binary sizes smaller.
+
+use_system_lcms2
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:60
+
+    Don't build against bundled lcms2.
+
+use_system_libjpeg
+    Current value (from the default) = false
+      From //third_party/BUILD.gn:13
+
+    Uses system libjpeg. If true, overrides use_libjpeg_turbo.
+
+use_system_sqlite
+    Current value (from the default) = false
+      From //third_party/sqlite/BUILD.gn:11
+
+    Controls whether the build should uses the version of sqlite3 library
+    shipped with the system (currently only supported on iOS) or the one
+    shipped with Chromium source.
+
+use_system_xcode
+    Current value (from the default) = ""
+      From //build_overrides/build.gni:54
+
+    Use the system install of Xcode for tools like ibtool, libtool, etc.
+    This does not affect the compiler. When this variable is false, targets will
+    instead use a hermetic install of Xcode. [The hermetic install can be
+    obtained with gclient sync after setting the environment variable
+    FORCE_MAC_TOOLCHAIN].
+
+use_system_zlib
+    Current value (from the default) = false
+      From //third_party/pdfium/pdfium.gni:57
+
+    Don't build against bundled zlib.
+
+use_thin_lto
+    Current value (from the default) = false
+      From //build/toolchain/toolchain.gni:24
+
+    If used with allow_posix_link_time_opt, it enables the experimental support
+    of ThinLTO that links 3x-10x faster but (as of now) does not have all the
+    important optimizations such us devirtualization implemented. See also
+    http://blog.llvm.org/2016/06/thinlto-scalable-and-incremental-lto.html
+
+use_udev
+    Current value (from the default) = false
+      From //build/config/features.gni:58
+
+    libudev usage. This currently only affects the content layer.
+
+use_unofficial_version_number
+    Current value (from the default) = true
+      From //components/version_info/BUILD.gn:10
+
+use_v4l2_codec
+    Current value (from the default) = false
+      From //media/gpu/args.gni:11
+
+    Indicates if Video4Linux2 codec is used. This is used for all CrOS
+    platforms which have v4l2 hardware encoder / decoder.
+
+use_v4lplugin
+    Current value (from the default) = false
+      From //media/gpu/args.gni:7
+
+    Indicates if V4L plugin is used.
+
+use_vgem_map
+    Current value (from the default) = false
+      From //ui/ozone/ozone.gni:17
+
+    This enables memory-mapped access to accelerated graphics buffers via the
+    VGEM ("virtual GEM") driver. This is currently only available on Chrome OS
+    kernels and affects code in the GBM ozone platform.
+    TODO(dshwang): remove this flag when all gbm hardware supports vgem map.
+    crbug.com/519587
+
+use_vs_code_analysis
+    Current value (from the default) = false
+      From //build/config/win/BUILD.gn:18
+
+    Set this to true to enable static analysis through Visual Studio's
+    /analyze. This dramatically slows compiles and reports thousands of
+    warnings, so normally this is done on a build machine and only the new
+    warnings are examined.
+
+use_vulcanize
+    Current value (from the default) = false
+      From //chrome/common/features.gni:82
+
+    Optimize parts of Chrome's UI written with web technologies (HTML/CSS/JS)
+    for runtime performance purposes. This does more work at compile time for
+    speed benefits at runtime (so we skip in debug builds). TODO(dbeam): rename
+    this flag "optimize_web_uis" because we run more than vulcanize these days.
+
+use_xcode_clang
+    Current value (from the default) = false
+      From //build/toolchain/toolchain.gni:37
+
+    Compile with Xcode version of clang instead of hermetic version shipped
+    with the build. Used on iOS to ship official builds (as they are built
+    with the version of clang shipped with Xcode).
+
+use_xkbcommon
+    Current value (from the default) = false
+      From //ui/base/ui_features.gni:9
+
+    Optional system library.
+
+v8_android_log_stdout
+    Current value (from the default) = false
+      From //v8/BUILD.gn:22
+
+    Print to stdout on Android.
+
+v8_can_use_fpu_instructions
+    Current value (from the default) = true
+      From //v8/BUILD.gn:98
+
+    Similar to vfp but on MIPS.
+
+v8_check_microtasks_scopes_consistency
+    Current value = false
+      From //.gn:54
+    Overridden from the default = ""
+      From //v8/BUILD.gn:121
+
+    Temporary flag to allow embedders to update their microtasks scopes
+    while rolling in a new version of V8.
+
+v8_correctness_fuzzer
+    Current value (from the default) = false
+      From //v8/gni/v8.gni:11
+
+    Includes files needed for correctness fuzzing.
+
+v8_current_cpu
+    Current value (from the default) = "x86"
+      From //build/config/v8_target_cpu.gni:60
+
+    This argument is declared here so that it can be overridden in toolchains.
+    It should never be explicitly set by the user.
+
+v8_deprecation_warnings
+    Current value (from the default) = false
+      From //v8/BUILD.gn:34
+
+    Enable compiler warnings when using V8_DEPRECATED apis.
+
+v8_embed_script
+    Current value (from the default) = ""
+      From //v8/BUILD.gn:40
+
+    Embeds the given script into the snapshot.
+
+v8_enable_backtrace
+    Current value (from the default) = ""
+      From //v8/gni/v8.gni:27
+
+    Support for backtrace_symbols on linux.
+
+v8_enable_concurrent_marking
+    Current value (from the default) = false
+      From //v8/BUILD.gn:80
+
+    Sets -dV8_CONCURRENT_MARKING
+
+v8_enable_disassembler
+    Current value (from the default) = ""
+      From //v8/BUILD.gn:43
+
+    Sets -dENABLE_DISASSEMBLER.
+
+v8_enable_future
+    Current value (from the default) = false
+      From //v8/BUILD.gn:25
+
+    Sets -DV8_ENABLE_FUTURE.
+
+v8_enable_gdbjit
+    Current value = false
+      From //.gn:49
+    Overridden from the default = false
+      From //v8/BUILD.gn:115
+
+v8_enable_handle_zapping
+    Current value (from the default) = true
+      From //v8/BUILD.gn:55
+
+    Sets -dENABLE_HANDLE_ZAPPING.
+
+v8_enable_i18n_support
+    Current value (from the default) = true
+      From //v8/gni/v8.gni:39
+
+    Enable ECMAScript Internationalization API. Enabling this feature will
+    add a dependency on the ICU library.
+
+v8_enable_object_print
+    Current value (from the default) = ""
+      From //v8/BUILD.gn:68
+
+    Sets -dOBJECT_PRINT.
+
+v8_enable_slow_dchecks
+    Current value (from the default) = false
+      From //v8/BUILD.gn:58
+
+    Enable slow dchecks.
+
+v8_enable_trace_ignition
+    Current value (from the default) = false
+      From //v8/BUILD.gn:77
+
+    Sets -dV8_TRACE_IGNITION.
+
+v8_enable_trace_maps
+    Current value (from the default) = ""
+      From //v8/BUILD.gn:71
+
+    Sets -dV8_TRACE_MAPS.
+
+v8_enable_v8_checks
+    Current value (from the default) = ""
+      From //v8/BUILD.gn:74
+
+    Sets -dV8_ENABLE_CHECKS.
+
+v8_enable_verify_csa
+    Current value (from the default) = false
+      From //v8/BUILD.gn:61
+
+    Enable code-generation-time checking of types in the CodeStubAssembler.
+
+v8_enable_verify_heap
+    Current value (from the default) = ""
+      From //v8/BUILD.gn:28
+
+    Sets -DVERIFY_HEAP.
+
+v8_enable_verify_predictable
+    Current value (from the default) = false
+      From //v8/BUILD.gn:31
+
+    Sets -DVERIFY_PREDICTABLE
+
+v8_enable_vtunejit
+    Current value (from the default) = false
+      From //v8/BUILD.gn:52
+
+    Sets -dENABLE_VTUNE_JIT_INTERFACE.
+
+v8_experimental_extra_library_files
+    Current value = []
+      From //.gn:48
+    Overridden from the default = ["//test/cctest/test-experimental-extra.js"]
+      From //v8/BUILD.gn:113
+
+v8_extra_library_files
+    Current value = ["//third_party/WebKit/Source/core/streams/CommonStrings.js", "//third_party/WebKit/Source/core/streams/SimpleQueue.js", "//third_party/WebKit/Source/core/streams/ByteLengthQueuingStrategy.js", "//third_party/WebKit/Source/core/streams/CountQueuingStrategy.js", "//third_party/WebKit/Source/core/streams/ReadableStream.js", "//third_party/WebKit/Source/core/streams/WritableStream.js"]
+      From //.gn:36
+    Overridden from the default = ["//test/cctest/test-extra.js"]
+      From //v8/BUILD.gn:107
+
+    List of extra files to snapshot. They will be snapshotted in order so
+    if files export symbols used by later files, they should go first.
+   
+    This default is used by cctests. Projects using V8 will want to override.
+
+v8_gcmole
+    Current value (from the default) = false
+      From //v8/gni/v8.gni:21
+
+    Indicate if gcmole was fetched as a hook to make it available on swarming.
+
+v8_has_valgrind
+    Current value (from the default) = false
+      From //v8/gni/v8.gni:18
+
+    Indicate if valgrind was fetched as a custom deps to make it available on
+    swarming.
+
+v8_imminent_deprecation_warnings
+    Current value = false
+      From //.gn:50
+    Overridden from the default = false
+      From //v8/BUILD.gn:37
+
+    Enable compiler warnings when using V8_DEPRECATE_SOON apis.
+
+v8_interpreted_regexp
+    Current value (from the default) = false
+      From //v8/BUILD.gn:65
+
+    Interpreted regexp engine exists as platform-independent alternative
+    based where the regular expression is compiled to a bytecode.
+
+v8_multi_arch_build
+    Current value (from the default) = false
+      From //v8/gni/v8.gni:14
+
+    Adds additional compile target for building multiple architectures at once.
+
+v8_no_inline
+    Current value (from the default) = false
+      From //v8/BUILD.gn:92
+
+    Switches off inlining in V8.
+
+v8_optimized_debug
+    Current value (from the default) = true
+      From //v8/gni/v8.gni:24
+
+    Turns on compiler optimizations in V8 in Debug build.
+
+v8_os_page_size
+    Current value (from the default) = "0"
+      From //v8/BUILD.gn:95
+
+    Override OS page size when generating snapshot
+
+v8_perf_prof_unwinding_info
+    Current value (from the default) = false
+      From //v8/BUILD.gn:84
+
+    Build the snapshot with unwinding information for perf.
+    Sets -dV8_USE_SNAPSHOT_WITH_UNWINDING_INFO.
+
+v8_postmortem_support
+    Current value (from the default) = false
+      From //v8/BUILD.gn:89
+
+    With post mortem support enabled, metadata is embedded into libv8 that
+    describes various parameters of the VM for use by debuggers. See
+    tools/gen-postmortem-metadata.py for details.
+
+v8_promise_internal_field_count
+    Current value (from the default) = 0
+      From //v8/BUILD.gn:46
+
+    Sets the number of internal fields on promise objects.
+
+v8_snapshot_toolchain
+    Current value (from the default) = ""
+      From //v8/snapshot_toolchain.gni:34
+
+    The v8 snapshot needs to be built by code that is compiled with a
+    toolchain that matches the bit-width of the target CPU, but runs on
+    the host.
+
+v8_static_library
+    Current value (from the default) = false
+      From //v8/gni/v8.gni:42
+
+    Use static libraries instead of source_sets.
+
+v8_target_cpu
+    Current value (from the default) = ""
+      From //build/config/v8_target_cpu.gni:33
+
+    This arg is used when we want to tell the JIT-generating v8 code
+    that we want to have it generate for an architecture that is different
+    than the architecture that v8 will actually run on; we then run the
+    code under an emulator. For example, we might run v8 on x86, but
+    generate arm code and run that under emulation.
+   
+    This arg is defined here rather than in the v8 project because we want
+    some of the common architecture-specific args (like arm_float_abi or
+    mips_arch_variant) to be set to their defaults either if the current_cpu
+    applies *or* if the v8_current_cpu applies.
+   
+    As described below, you can also specify the v8_target_cpu to use
+    indirectly by specifying a `custom_toolchain` that contains v8_$cpu in the
+    name after the normal toolchain.
+   
+    For example, `gn gen --args="custom_toolchain=...:clang_x64_v8_arm64"`
+    is equivalent to setting --args=`v8_target_cpu="arm64"`. Setting
+    `custom_toolchain` is more verbose but makes the toolchain that is
+    (effectively) being used explicit.
+   
+    v8_target_cpu can only be used to target one architecture in a build,
+    so if you wish to build multiple copies of v8 that are targetting
+    different architectures, you will need to do something more
+    complicated involving multiple toolchains along the lines of
+    custom_toolchain, above.
+
+v8_test_isolation_mode
+    Current value (from the default) = "noop"
+      From //v8/gni/isolate.gni:11
+
+    Sets the test isolation mode (noop|prepare|check).
+
+v8_use_external_startup_data
+    Current value (from the default) = ""
+      From //v8/gni/v8.gni:35
+
+    Use external files for startup data blobs:
+    the JS builtins sources and the start snapshot.
+
+v8_use_mips_abi_hardfloat
+    Current value (from the default) = true
+      From //v8/BUILD.gn:101
+
+    Similar to the ARM hard float ABI but on MIPS.
+
+v8_use_snapshot
+    Current value (from the default) = true
+      From //v8/gni/v8.gni:31
+
+    Enable the snapshot feature, for fast context creation.
+    http://v8project.blogspot.com/2015/09/custom-startup-snapshots.html
+
+visual_studio_path
+    Current value (from the default) = ""
+      From //build/config/win/visual_studio_version.gni:9
+
+    Path to Visual Studio. If empty, the default is used which is to use the
+    automatic toolchain in depot_tools. If set, you must also set the
+    visual_studio_version and wdk_path.
+
+visual_studio_version
+    Current value (from the default) = ""
+      From //build/config/win/visual_studio_version.gni:13
+
+    Version of Visual Studio pointed to by the visual_studio_path.
+    Currently always "2015".
+
+wdk_path
+    Current value (from the default) = ""
+      From //build/config/win/visual_studio_version.gni:17
+
+    Directory of the Windows driver kit. If visual_studio_path is empty, this
+    will be auto-filled.
+
+win_console_app
+    Current value (from the default) = false
+      From //build/config/win/console_app.gni:12
+
+    If true, builds as a console app (rather than a windowed app), which allows
+    logging to be printed to the user. This will cause a terminal window to pop
+    up when the executable is not run from the command line, so should only be
+    used for development. Only has an effect on Windows builds.
+
+win_linker_timing
+    Current value (from the default) = false
+      From //build/config/win/BUILD.gn:21
+
+    Turn this on to have the linker output extra timing information.
+
+windows_sdk_path
+    Current value (from the default) = "C:\Program Files (x86)\Windows Kits\10"
+      From //build/config/win/visual_studio_version.gni:22
+
+    Full path to the Windows SDK, not including a backslash at the end.
+    This value is the default location, override if you have a different
+    installation location.
+
