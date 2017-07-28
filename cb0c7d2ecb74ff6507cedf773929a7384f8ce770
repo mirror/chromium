@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e75b848_4bf165dc",
+        "filename": "ui/views/test/widget_test_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-28T17:38:59Z",
+      "side": 1,
+      "message": "Does a direct call to -[NSApp updateWindows] fix this too? Otherwise, LGTM.",
+      "revId": "cb0c7d2ecb74ff6507cedf773929a7384f8ce770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
