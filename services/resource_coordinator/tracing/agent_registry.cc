@@ -10,6 +10,7 @@
 #include "base/callback_forward.h"
 #include "base/logging.h"
 #include "base/threading/thread_checker.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace {
 tracing::AgentRegistry* g_agent_registry;
@@ -79,9 +80,10 @@ AgentRegistry::~AgentRegistry() {
 }
 
 void AgentRegistry::BindAgentRegistryRequest(
-    mojom::AgentRegistryRequest request) {
+    mojom::AgentRegistryRequest request,
+    const service_manager::BindSourceInfo& source_info) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  bindings_.AddBinding(this, std::move(request));
+  bindings_.AddBinding(this, std::move(request), source_info.identity);
 }
 
 void AgentRegistry::SetAgentInitializationCallback(
