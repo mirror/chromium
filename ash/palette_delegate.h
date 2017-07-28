@@ -22,6 +22,10 @@ class PaletteDelegate {
   using EnableListenerSubscription =
       base::CallbackList<void(bool)>::Subscription;
 
+  using SeenStylusListener = base::Callback<void(bool)>;
+  using SeenStylusListenerSubscription =
+      base::CallbackList<void(bool)>::Subscription;
+
   virtual ~PaletteDelegate() {}
 
   // Sets callback function that will receive the current state of the palette
@@ -29,6 +33,12 @@ class PaletteDelegate {
   // available.
   virtual std::unique_ptr<EnableListenerSubscription> AddPaletteEnableListener(
       const EnableListener& on_state_changed) = 0;
+
+  // Sets callback function that will receive the current state of the pref
+  // which tracks whether a stylus event has been seen before. The callback will
+  // be invoked once the initial pref value is available.
+  virtual std::unique_ptr<SeenStylusListenerSubscription> AddSeenStylusListener(
+      const SeenStylusListener& on_state_changed) = 0;
 
   // Create a new note.
   virtual void CreateNote() = 0;
@@ -65,6 +75,10 @@ class PaletteDelegate {
 
   // Hides the metalayer.
   virtual void HideMetalayer() = 0;
+
+  // Notifies (for devices without internal styluses) that a stylus event has
+  // been detected.
+  virtual void SetHasSeenStylusEvent() = 0;
 
  private:
   DISALLOW_ASSIGN(PaletteDelegate);

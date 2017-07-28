@@ -5,6 +5,7 @@
 #include "ash/system/palette/palette_tray.h"
 
 #include "ash/ash_switches.h"
+#include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/system/palette/test_palette_delegate.h"
 #include "ash/system/status_area_widget.h"
@@ -13,6 +14,7 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "ui/events/event.h"
+#include "ui/events/test/event_generator.h"
 
 namespace ash {
 
@@ -34,6 +36,9 @@ class PaletteTrayTest : public AshTestBase {
     test_api_ = base::MakeUnique<PaletteTray::TestApi>(palette_tray_);
 
     ShellTestApi().SetPaletteDelegate(base::MakeUnique<TestPaletteDelegate>());
+    // Initialize the palette tray again since this test requires information
+    // from the palette delegate.
+    palette_tray_->Initialize();
   }
 
   // Performs a tap on the palette tray button.
@@ -41,6 +46,10 @@ class PaletteTrayTest : public AshTestBase {
     ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
                          ui::GestureEventDetails(ui::ET_GESTURE_TAP));
     palette_tray_->PerformAction(tap);
+  }
+
+  TestPaletteDelegate* test_palette_delegate() {
+    return static_cast<TestPaletteDelegate*>(Shell::Get()->palette_delegate());
   }
 
  protected:
@@ -52,15 +61,75 @@ class PaletteTrayTest : public AshTestBase {
   DISALLOW_COPY_AND_ASSIGN(PaletteTrayTest);
 };
 
+class PaletteTrayInternalStylusTest : public PaletteTrayTest {
+ public:
+  PaletteTrayInternalStylusTest() {}
+  ~PaletteTrayInternalStylusTest() override {}
+
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kHasInternalStylus);
+    PaletteTrayTest::SetUp();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PaletteTrayInternalStylusTest);
+};
+
+// Verify the palette tray button exists and but is not visible initially.
+TEST_F(PaletteTrayTest, PaletteTrayIsInvisible) {
+  ASSERT_TRUE(palette_tray_);
+  EXPECT_FALSE(palette_tray_->visible());
+}
+
+// Verify that if the has seen stylus pref is not set initially, the palette
+// tray's touch event watcher should be active.
+TEST_F(PaletteTrayTest, PaletteTrayStylusWatcherAlive) {
+  ASSERT_FALSE(palette_tray_->visible());
+  ASSERT_FALSE(test_palette_delegate()->fake_has_seen_stylus_pref());
+
+  EXPECT_TRUE(test_api_->IsStylusWatcherActive());
+}
+
+// Verify if the has seen stylus pref is not set initially, the palette tray
+// shoudl become visible after seeing a stylus event.
+TEST_F(PaletteTrayTest, PaletteTrayVisibleAfterStylusSeen) {
+  ASSERT_FALSE(palette_tray_->visible());
+  ASSERT_FALSE(test_palette_delegate()->fake_has_seen_stylus_pref());
+  ASSERT_TRUE(test_api_->IsStylusWatcherActive());
+
+  // Send a stylus event.
+  GetEventGenerator().EnterPenPointerMode();
+  GetEventGenerator().PressTouch();
+  GetEventGenerator().ReleaseTouch();
+  GetEventGenerator().ExitPenPointerMode();
+
+  // Verify that the palette tray is now visible, the stylus event watcher is
+  // inactive and that the has seen stylus pref is now set to true.
+  EXPECT_TRUE(palette_tray_->visible());
+  EXPECT_FALSE(test_api_->IsStylusWatcherActive());
+  EXPECT_TRUE(test_palette_delegate()->fake_has_seen_stylus_pref());
+}
+
+// Verify if the has seen stylus pref is initially set, the palette tray is
+// visible.
+TEST_F(PaletteTrayTest, StylusSeenPrefInitiallySet) {
+  ASSERT_FALSE(palette_tray_->visible());
+  test_palette_delegate()->set_fake_has_seen_stylus_pref(true);
+
+  EXPECT_TRUE(palette_tray_->visible());
+  EXPECT_FALSE(test_api_->IsStylusWatcherActive());
+}
+
 // Verify the palette tray button exists and is visible with the flags we added
 // during setup.
-TEST_F(PaletteTrayTest, PaletteTrayIsVisible) {
+TEST_F(PaletteTrayInternalStylusTest, PaletteTrayIsVisible) {
   ASSERT_TRUE(palette_tray_);
   EXPECT_TRUE(palette_tray_->visible());
 }
 
 // Verify taps on the palette tray button results in expected behaviour.
-TEST_F(PaletteTrayTest, PaletteTrayWorkflow) {
+TEST_F(PaletteTrayInternalStylusTest, PaletteTrayWorkflow) {
   // Verify the palette tray button is not active, and the palette tray bubble
   // is not shown initially.
   EXPECT_FALSE(palette_tray_->is_active());
@@ -105,7 +174,7 @@ TEST_F(PaletteTrayTest, PaletteTrayWorkflow) {
 // Verify that the palette tray button and bubble are as expected when modes
 // that can be deactivated without pressing the palette tray button (such as
 // capture region) are deactivated.
-TEST_F(PaletteTrayTest, ModeToolDeactivatedAutomatically) {
+TEST_F(PaletteTrayInternalStylusTest, ModeToolDeactivatedAutomatically) {
   // Open the palette tray with a tap.
   PerformTap();
   ASSERT_TRUE(palette_tray_->is_active());

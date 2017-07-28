@@ -261,6 +261,7 @@ extern const char kDisplayProperties[];
 extern const char kSecondaryDisplays[];
 extern const char kDisplayRotationLock[];
 extern const char kEnableStylusTools[];
+extern const char kHasSeenStylus[];
 extern const char kLaunchPaletteOnEjectEvent[];
 extern const char kNoteTakingAppId[];
 extern const char kNoteTakingAppEnabledOnLockScreen[];
