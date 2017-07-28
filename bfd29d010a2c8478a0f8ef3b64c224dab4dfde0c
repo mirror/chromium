@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5da89348_e3ca58f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-28T07:02:45Z",
+      "side": 1,
+      "message": "nit: USe -\u003e Use",
+      "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c6d0b4_63b5e434",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-28T07:02:45Z",
+      "side": 1,
+      "message": "nit: during loading -\u003e during the lifetime of a request (including redirect legs)\n\n? here and below. (This is what we often use in the browser-side code, but the term \u0027request\u0027 might be confusing? \u0027loading request\u0027 or \u0027fetch \u0027request\u0027?)",
+      "revId": "bfd29d010a2c8478a0f8ef3b64c224dab4dfde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff64e5e1_d491f691",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 3
