@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1efa6d5_8f92ad5d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/link-prefetch.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-28T18:28:52Z",
+      "side": 1,
+      "message": "Hrm. Looks like `onerror` isn\u0027t being called now that we\u0027re doing the check earlier. Any thoughts, Yoav? If nothing jumps out at you, I\u0027ll poke at it Monday morning.",
+      "revId": "a294a7b5fc8191bc6dcaa2cdeaeb70ff8e982272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
