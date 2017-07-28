@@ -1027,7 +1027,6 @@ void FrameSelection::SetShouldShowBlockCursor(bool should_show_block_cursor) {
 void FrameSelection::ShowTreeForThis() const {
   ComputeVisibleSelectionInDOMTreeDeprecated().ShowTreeForThis();
 }
-
 #endif
 
 DEFINE_TRACE(FrameSelection) {
@@ -1182,6 +1181,10 @@ base::Optional<int> FrameSelection::LayoutSelectionEnd() const {
 
 void FrameSelection::ClearLayoutSelection() {
   layout_selection_->ClearSelection();
+}
+
+bool FrameSelection::IsLayoutObjectReferred(LayoutObject* layout_object) const {
+  return layout_selection_->IsLayoutObjectReferred(layout_object);
 }
 
 }  // namespace blink

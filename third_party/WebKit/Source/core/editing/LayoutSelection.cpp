@@ -494,6 +494,14 @@ void LayoutSelection::InvalidatePaintForSelection() {
   }
 }
 
+bool LayoutSelection::IsLayoutObjectReferred(
+    LayoutObject* layout_object) const {
+  if (paint_range_.IsNull())
+    return false;
+  return layout_object == paint_range_.StartLayoutObject() ||
+         layout_object == paint_range_.EndLayoutObject();
+}
+
 DEFINE_TRACE(LayoutSelection) {
   visitor->Trace(frame_selection_);
 }
