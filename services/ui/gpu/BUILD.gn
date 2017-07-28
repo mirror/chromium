@@ -13,8 +13,6 @@ source_set("gpu") {
   sources = [
     "gpu_main.cc",
     "gpu_main.h",
-    "gpu_service.cc",
-    "gpu_service.h",
   ]
 
   defines = [ "NOTIMPLEMENTED_POLICY=5" ]
@@ -26,8 +24,6 @@ source_set("gpu") {
     "//gpu/ipc/common",
     "//gpu/ipc/service",
     "//ipc",
-    "//media/gpu/ipc/service",
-    "//media/mojo/services",
     "//mojo/public/cpp/system",
     "//services/service_manager/public/cpp",
     "//services/ui/gpu/interfaces",
@@ -46,7 +42,7 @@ if (use_aura) {
     testonly = true
 
     sources = [
-      "gpu_service_unittest.cc",
+      "gl/gpu_service_unittest.cc",
     ]
 
     deps = [
