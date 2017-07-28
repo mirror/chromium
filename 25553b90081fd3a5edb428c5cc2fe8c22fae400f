@@ -16,6 +16,24 @@
       "revId": "25553b90081fd3a5edb428c5cc2fe8c22fae400f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963c5ee5_8759ddce",
+        "filename": "chrome/browser/interstitials/chrome_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-28T23:05:49Z",
+      "side": 1,
+      "message": "Done, thanks for the suggestion.",
+      "parentUuid": "b4ea17f3_9d4432ab",
+      "revId": "25553b90081fd3a5edb428c5cc2fe8c22fae400f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
