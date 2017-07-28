@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3459824c_67916719",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-28T17:26:12Z",
+      "side": 1,
+      "message": "Don\u0027t pass this if you\u0027re already passing the provider wrapper.",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8573efdb_be3cd0a1",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-28T17:26:12Z",
+      "side": 1,
+      "message": "This is your problem on mac builds: No need to lock \u0027image\u0027 if you are going to be using a GpuMemoryBuffer.",
+      "range": {
+        "startLine": 421,
+        "startChar": 30,
+        "endLine": 421,
+        "endChar": 34
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80e5fc63_2aa43c6d",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 19
