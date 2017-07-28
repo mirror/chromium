@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adaf56da_205a0bbb",
+        "filename": "services/device/generic_sensor/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-28T18:44:20Z",
+      "side": 1,
+      "message": "To make the filenames consistent with other fusion algorithm filenames in the //services/device/generic_sensor/ directory, change filenames to be: \"linear_acceleration_fusion_algorithm_using_accelerometer.*\"?",
+      "revId": "dd78e551caf2397552e42eeec4a132f039079e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be19925_518b60d2",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_using_accelerometer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-28T18:44:20Z",
+      "side": 1,
+      "message": "Notice that this variable is explained in the following comments, maybe change this variable name to \"delivery_rate\" to make it more clear?",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 11
+      },
+      "revId": "dd78e551caf2397552e42eeec4a132f039079e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768d9afe_fa8e3357",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_using_accelerometer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-28T18:44:20Z",
+      "side": 1,
+      "message": "This comment can be moved to the \"time_constant_\" class variable declaration.\n\nAnd the comment for \"alpha\" here can be removed since it just repeats what the code does.",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 39
+      },
+      "revId": "dd78e551caf2397552e42eeec4a132f039079e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3600478c_b7742a44",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_using_accelerometer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-28T18:44:20Z",
+      "side": 1,
+      "message": "\"DISALLOW_COPY_AND_ASSIGN(...)\" is usually put in the last line inside a class, and there is an empty line above it.",
+      "revId": "dd78e551caf2397552e42eeec4a132f039079e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9b8a9b_d2f501d6",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-28T18:44:20Z",
+      "side": 1,
+      "message": "Add a new line between these two lines.",
+      "revId": "dd78e551caf2397552e42eeec4a132f039079e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
