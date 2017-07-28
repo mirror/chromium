@@ -83,6 +83,7 @@
         '<(EXTERNS_GYP):bookmark_manager_private',
         '<(EXTERNS_GYP):metrics_private',
         'dnd_chip',
+        'folder_node',
         'store',
         'timer_proxy',
         'types',

@@ -32,6 +32,15 @@ cr.define('bookmarks', function() {
   }
 
   /**
+   * @param {BookmarkElement} element
+   * @return {boolean}
+   */
+  function isClosedBookmarkFolderNode(element) {
+    return isBookmarkFolderNode(element) &&
+        !(/** @type {BookmarksFolderNodeElement} */ (element).isOpen);
+  }
+
+  /**
    * @param {Array<!Element>|undefined} path
    * @return {BookmarkElement}
    */
@@ -183,9 +192,8 @@ cr.define('bookmarks', function() {
         var action = bookmarks.actions.changeFolderOpen(itemId, true);
         store.dispatch(action);
       } else if (
-          overElement && isBookmarkFolderNode(overElement) &&
-          bookmarks.util.hasChildFolders(itemId, store.data.nodes) &&
-          store.data.closedFolders.has(itemId)) {
+          overElement && isClosedBookmarkFolderNode(overElement) &&
+          bookmarks.util.hasChildFolders(itemId, store.data.nodes)) {
         // Since this is a closed folder node that has children, set the auto
         // expander to this element.
         this.lastTimestamp_ = eventTimestamp;
@@ -824,7 +832,7 @@ cr.define('bookmarks', function() {
 
       // Don't allow dropping below an expanded sidebar folder item since it is
       // confusing to the user anyway.
-      if (isOverFolderNode && !state.closedFolders.has(overElement.itemId) &&
+      if (isOverFolderNode && !isClosedBookmarkFolderNode(overElement) &&
           bookmarks.util.hasChildFolders(overElement.itemId, state.nodes)) {
         return validDropPositions;
       }
