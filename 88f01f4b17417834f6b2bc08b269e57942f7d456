@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e96f06c_0de8f393",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:25:51Z",
+      "side": 1,
+      "message": "oops, that was supposed to be \" \u003d None\". fixed.",
+      "parentUuid": "a6147ded_e2c4c79a",
+      "revId": "88f01f4b17417834f6b2bc08b269e57942f7d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a12acd02_80b9734e",
         "filename": "chrome/test/mini_installer/test_installer.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T18:39:25Z",
       "side": 1,
       "message": "Is this GetTempPath() match the function here?\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/aa364992(v\u003dvs.85).aspx\n\nIf so, based on doc,\nWhat if the temp return a path while %TMP% is not set?\nWhat if the path doesn\u0027t exist or doesn\u0027t has access right?\n\nWill these cause any issue?",
+      "revId": "88f01f4b17417834f6b2bc08b269e57942f7d456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd6b567_c0c4cc65",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T19:25:51Z",
+      "side": 1,
+      "message": "\u003e Is this GetTempPath() match the function here?\n\u003e https://msdn.microsoft.com/en-us/library/windows/desktop/aa364992(v\u003dvs.85).aspx\n\ni certainly hope so. i expect it\u0027s a thin wrapper.\n\n\u003e If so, based on doc,\n\u003e What if the temp return a path while %TMP% is not set?\n\nChrome\u0027s installer uses GetTempPath rather than checking TMP directly. the intent is to check the actual thing used by the installer and then use the first available knob (TMP) to adjust when needed,\n\n\u003e What if the path doesn\u0027t exist or doesn\u0027t has access right?\n\u003e \n\u003e Will these cause any issue?\n\nthat would cause enough issues to make just about everything unreliable. i don\u0027t think it\u0027s necessary to code against foot-guns, just the ordinary run-of-the-mill \"set temp on another volume\".",
+      "parentUuid": "a12acd02_80b9734e",
       "revId": "88f01f4b17417834f6b2bc08b269e57942f7d456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
