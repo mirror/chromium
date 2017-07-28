@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ba6543d_94b9fa03",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T23:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "263390a3_876fe729",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ba095b_5bab4940",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c09ed4_1cf1b6c6",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T23:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ba095b_5bab4940",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b02cd72d_778eab6a",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T23:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ad3c04_e481b320",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f0226b2_a826cd0d",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-28T22:00:28Z",
       "side": 1,
       "message": "What about just moving ShellTestApi().SetPaletteDelegate(...) before the AshTestBase::SetUp() call?",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4199bf5_f730e4a7",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T23:56:24Z",
+      "side": 1,
+      "message": "instance of shell is not available then",
+      "parentUuid": "3f0226b2_a826cd0d",
       "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "81f147d9_c4f11ba8",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T23:56:24Z",
+      "side": 1,
+      "message": "I kind of like this approach better now that you mentioned it :p , but lets see what owner thinks.",
+      "parentUuid": "050ea06a_f073283f",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb1713b8_99fafd77",
         "filename": "ash/system/palette/test_palette_delegate.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e0fbab_d8610bfd",
+        "filename": "ash/system/palette/test_palette_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-28T23:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb1713b8_99fafd77",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
