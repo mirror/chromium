@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aaf12bf_561aa4e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T15:38:22Z",
+      "side": 1,
+      "message": "Nit: You can use WebappInfo#shouldForceNavigation() instead",
+      "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bb1b77_4e11dc1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T15:38:22Z",
+      "side": 1,
+      "message": "Looking at the API of java.util.HashMap can you instead do:\n\nreturn sWebInfoMap.remove(id);",
+      "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d568bc7d_16f31746",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T15:38:22Z",
+      "side": 1,
+      "message": "I don\u0027t think that you need to handle the case of the intent being null. WebappInfo#create() does not handle the case of the intent being null.",
+      "revId": "ce2e7685a52772ccc7dee1f9e3f4dd6432b94948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
