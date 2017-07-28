@@ -15,6 +15,7 @@ namespace resource_coordinator {
 class ProcessCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   ProcessCoordinationUnitImpl(
+      mojom::CoordinationUnitRequest request,
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~ProcessCoordinationUnitImpl() override;
