@@ -2,12 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <atlbase.h>
-#include <atlcom.h>
-#include <limits.h>
-#include <oleacc.h>
-#include <stdint.h>
-
 #include "base/containers/hash_tables.h"
 #include "base/lazy_instance.h"
 #include "base/strings/string_number_conversions.h"
@@ -1049,7 +1043,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accSelection(VARIANT* selected) {
     AXPlatformNodeWin* node = static_cast<AXPlatformNodeWin*>(
         FromNativeViewAccessible(delegate_->ChildAtIndex(i)));
 
-    if (node && node->GetData().state & (1 << ui::AX_STATE_SELECTED))
+    if (node && node->GetData().HasState(ui::AX_STATE_SELECTED))
       ++selected_count;
   }
 
@@ -1063,7 +1057,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accSelection(VARIANT* selected) {
       AXPlatformNodeWin* node = static_cast<AXPlatformNodeWin*>(
           FromNativeViewAccessible(delegate_->ChildAtIndex(i)));
 
-      if (node && node->GetData().state & (1 << ui::AX_STATE_SELECTED)) {
+      if (node && node->GetData().HasState(ui::AX_STATE_SELECTED)) {
         selected->vt = VT_DISPATCH;
         selected->pdispVal = node;
         node->AddRef();
@@ -1081,7 +1075,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accSelection(VARIANT* selected) {
     AXPlatformNodeWin* node = static_cast<AXPlatformNodeWin*>(
         FromNativeViewAccessible(delegate_->ChildAtIndex(i)));
 
-    if (node && node->GetData().state & (1 << ui::AX_STATE_SELECTED)) {
+    if (node && node->GetData().HasState(ui::AX_STATE_SELECTED)) {
       enum_variant->ItemAt(index)->vt = VT_DISPATCH;
       enum_variant->ItemAt(index)->pdispVal = node;
       node->AddRef();
@@ -1410,8 +1404,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnDescription(long column,
     return S_FALSE;
   }
 
-  for (int i = 0; i < rows; ++i) {
-    auto* cell = GetTableCell(i, column);
+  for (int r = 0; r < rows; ++r) {
+    auto* cell = GetTableCell(r, column);
     if (cell && cell->GetData().role == ui::AX_ROLE_COLUMN_HEADER) {
       base::string16 cell_name = cell->GetString16Attribute(ui::AX_ATTR_NAME);
       if (cell_name.size() > 0) {
@@ -1489,28 +1483,79 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(long* cell_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_CHILDREN);
   if (!cell_count)
     return E_INVALIDARG;
-
-  // TODO(dmazzoni): add support for selected cells/rows/columns in tables.
   *cell_count = 0;
-  return S_FALSE;
+
+  int columns = GetTableColumnCount();
+  int rows = GetTableRowCount();
+  if (columns <= 0 || rows <= 0)
+    return S_FALSE;
+
+  long result = 0;
+  for (int r = 0; r < rows; ++r) {
+    for (int c = 0; c < columns; ++c) {
+      auto* cell = GetTableCell(r, c);
+      if (cell && cell->GetData().HasState(ui::AX_STATE_SELECTED))
+        result++;
+    }
+  }
+  *cell_count = result;
+  return S_OK;
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(long* column_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_COLUMNS);
   if (!column_count)
     return E_INVALIDARG;
-
   *column_count = 0;
-  return S_FALSE;
+
+  int columns = GetTableColumnCount();
+  int rows = GetTableRowCount();
+  if (columns <= 0 || rows <= 0)
+    return S_FALSE;
+
+  // If every cell in a column is selected, then that column is selected.
+  long result = 0;
+  for (int c = 0; c < columns; ++c) {
+    bool selected = true;
+    for (int r = 0; r < rows && selected == true; ++r) {
+      auto* cell = GetTableCell(r, c);
+      if (!cell || !(cell->GetData().HasState(ui::AX_STATE_SELECTED)))
+        selected = false;
+    }
+    if (selected)
+      result++;
+  }
+
+  *column_count = result;
+  return S_OK;
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(long* row_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_ROWS);
   if (!row_count)
     return E_INVALIDARG;
-
   *row_count = 0;
-  return S_FALSE;
+
+  int columns = GetTableColumnCount();
+  int rows = GetTableRowCount();
+  if (columns <= 0 || rows <= 0)
+    return S_FALSE;
+
+  // If every cell in a row is selected, then that row is selected.
+  long result = 0;
+  for (int r = 0; r < rows; ++r) {
+    bool selected = true;
+    for (int c = 0; c < columns && selected == true; ++c) {
+      auto* cell = GetTableCell(r, c);
+      if (!cell || !(cell->GetData().HasState(ui::AX_STATE_SELECTED)))
+        selected = false;
+    }
+    if (selected)
+      result++;
+  }
+
+  *row_count = result;
+  return S_OK;
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_rowDescription(long row,
@@ -1528,8 +1573,8 @@ STDMETHODIMP AXPlatformNodeWin::get_rowDescription(long row,
     return S_FALSE;
   }
 
-  for (int i = 0; i < columns; ++i) {
-    auto* cell = GetTableCell(row, i);
+  for (int c = 0; c < columns; ++c) {
+    auto* cell = GetTableCell(row, c);
     if (cell && cell->GetData().role == ui::AX_ROLE_ROW_HEADER) {
       base::string16 cell_name = cell->GetString16Attribute(ui::AX_ATTR_NAME);
       if (cell_name.size() > 0) {
@@ -1586,34 +1631,77 @@ STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long cell_index, long* row_index) {
 STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(long max_children,
                                                      long** children,
                                                      long* n_children) {
-  if (!children || !n_children)
+  if (!children || !n_children || max_children >= LONG_MAX || max_children <= 0)
     return E_INVALIDARG;
 
-  // TODO(dmazzoni): Implement this.
-  *n_children = 0;
-  return S_FALSE;
+  int columns = GetTableColumnCount();
+  int rows = GetTableRowCount();
+  if (columns <= 0 || rows <= 0)
+    return S_FALSE;
+
+  std::vector<long> results;
+  for (int r = 0; r < rows; ++r) {
+    for (int c = 0; c < columns; ++c) {
+      auto* cell = GetTableCell(r, c);
+      if (cell && cell->GetData().HasState(ui::AX_STATE_SELECTED))
+        // index is row index * column count + column index.
+        results.push_back(r * columns + c);
+    }
+  }
+
+  return AllocateSelectedResults(results, max_children, children, n_children);
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long max_columns,
                                                     long** columns,
                                                     long* n_columns) {
-  if (!columns || !n_columns)
+  if (!columns || !n_columns || max_columns >= LONG_MAX || max_columns <= 0)
     return E_INVALIDARG;
 
-  // TODO(dmazzoni): Implement this.
-  *n_columns = 0;
-  return S_FALSE;
+  int column_count = GetTableColumnCount();
+  int row_count = GetTableRowCount();
+  if (column_count <= 0 || row_count <= 0)
+    return S_FALSE;
+
+  std::vector<long> results;
+  for (int c = 0; c < column_count; ++c) {
+    bool selected = true;
+    for (int r = 0; r < row_count && selected == true; ++r) {
+      auto* cell = GetTableCell(r, c);
+      if (!cell || !(cell->GetData().HasState(ui::AX_STATE_SELECTED)))
+        selected = false;
+    }
+    if (selected)
+      results.push_back(c);
+  }
+
+  return AllocateSelectedResults(results, max_columns, columns, n_columns);
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long max_rows,
                                                  long** rows,
                                                  long* n_rows) {
-  if (!rows || !n_rows)
+  if (!rows || !n_rows || max_rows >= LONG_MAX || max_rows <= 0)
     return E_INVALIDARG;
 
-  // TODO(dmazzoni): Implement this.
-  *n_rows = 0;
-  return S_FALSE;
+  int column_count = GetTableColumnCount();
+  int row_count = GetTableRowCount();
+  if (column_count <= 0 || row_count <= 0)
+    return S_FALSE;
+
+  std::vector<long> results;
+  for (int r = 0; r < row_count; ++r) {
+    bool selected = true;
+    for (int c = 0; c < column_count && selected == true; ++c) {
+      auto* cell = GetTableCell(r, c);
+      if (!cell || !(cell->GetData().HasState(ui::AX_STATE_SELECTED)))
+        selected = false;
+    }
+    if (selected)
+      results.push_back(r);
+  }
+
+  return AllocateSelectedResults(results, max_rows, rows, n_rows);
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_summary(IUnknown** accessible) {
@@ -1629,9 +1717,20 @@ STDMETHODIMP AXPlatformNodeWin::get_isColumnSelected(long column,
                                                      boolean* is_selected) {
   if (!is_selected)
     return E_INVALIDARG;
-
-  // TODO(dmazzoni): Implement this.
   *is_selected = false;
+
+  int columns = GetTableColumnCount();
+  int rows = GetTableRowCount();
+  if (columns <= 0 || rows <= 0 || column >= columns || column < 0)
+    return S_FALSE;
+
+  for (int r = 0; r < rows; ++r) {
+    auto* cell = GetTableCell(r, column);
+    if (!cell || !(cell->GetData().HasState(ui::AX_STATE_SELECTED)))
+      return S_OK;
+  }
+
+  *is_selected = true;
   return S_OK;
 }
 
@@ -1639,9 +1738,20 @@ STDMETHODIMP AXPlatformNodeWin::get_isRowSelected(long row,
                                                   boolean* is_selected) {
   if (!is_selected)
     return E_INVALIDARG;
-
-  // TODO(dmazzoni): Implement this.
   *is_selected = false;
+
+  int columns = GetTableColumnCount();
+  int rows = GetTableRowCount();
+  if (columns <= 0 || rows <= 0 || row >= rows || row < 0)
+    return S_FALSE;
+
+  for (int c = 0; c < columns; ++c) {
+    auto* cell = GetTableCell(row, c);
+    if (!cell || !(cell->GetData().HasState(ui::AX_STATE_SELECTED)))
+      return S_OK;
+  }
+
+  *is_selected = true;
   return S_OK;
 }
 
@@ -1650,9 +1760,18 @@ STDMETHODIMP AXPlatformNodeWin::get_isSelected(long row,
                                                boolean* is_selected) {
   if (!is_selected)
     return E_INVALIDARG;
-
-  // TODO(dmazzoni): Implement this.
   *is_selected = false;
+
+  int columns = GetTableColumnCount();
+  int rows = GetTableRowCount();
+  if (columns <= 0 || rows <= 0 || row >= rows || row < 0 ||
+      column >= columns || column < 0)
+    return S_FALSE;
+
+  auto* cell = GetTableCell(row, column);
+  if (cell && cell->GetData().HasState(ui::AX_STATE_SELECTED))
+    *is_selected = true;
+
   return S_OK;
 }
 
@@ -1786,8 +1905,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
   if (columns <= 0 || rows <= 0 || column < 0 || column >= columns)
     return S_FALSE;
 
-  for (int i = 0; i < rows; ++i) {
-    auto* cell = GetTableCell(i, column);
+  for (int r = 0; r < rows; ++r) {
+    auto* cell = GetTableCell(r, column);
     if (cell && cell->GetData().role == ui::AX_ROLE_COLUMN_HEADER)
       (*n_column_header_cells)++;
   }
@@ -1795,8 +1914,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
   *cell_accessibles = static_cast<IUnknown**>(
       CoTaskMemAlloc((*n_column_header_cells) * sizeof(cell_accessibles[0])));
   int index = 0;
-  for (int i = 0; i < rows; ++i) {
-    AXPlatformNodeBase* cell = GetTableCell(i, column);
+  for (int r = 0; r < rows; ++r) {
+    AXPlatformNodeBase* cell = GetTableCell(r, column);
     if (cell && cell->GetData().role == ui::AX_ROLE_COLUMN_HEADER) {
       auto* node_win = static_cast<AXPlatformNodeWin*>(cell);
       node_win->AddRef();
@@ -1842,8 +1961,8 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
   if (columns <= 0 || rows <= 0 || row < 0 || row >= rows)
     return S_FALSE;
 
-  for (int i = 0; i < columns; ++i) {
-    auto* cell = GetTableCell(row, i);
+  for (int c = 0; c < columns; ++c) {
+    auto* cell = GetTableCell(row, c);
     if (cell && cell->GetData().role == ui::AX_ROLE_ROW_HEADER)
       (*n_row_header_cells)++;
   }
@@ -1851,8 +1970,8 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
   *cell_accessibles = static_cast<IUnknown**>(
       CoTaskMemAlloc((*n_row_header_cells) * sizeof(cell_accessibles[0])));
   int index = 0;
-  for (int i = 0; i < columns; ++i) {
-    AXPlatformNodeBase* cell = GetTableCell(row, i);
+  for (int c = 0; c < columns; ++c) {
+    AXPlatformNodeBase* cell = GetTableCell(row, c);
     if (cell && cell->GetData().role == ui::AX_ROLE_ROW_HEADER) {
       auto* node_win = static_cast<AXPlatformNodeWin*>(cell);
       node_win->AddRef();
@@ -3372,6 +3491,19 @@ bool AXPlatformNodeWin::IsInTreeGrid() {
     return false;
 
   return container->GetData().role == ui::AX_ROLE_TREE_GRID;
+}
+
+HRESULT AXPlatformNodeWin::AllocateSelectedResults(std::vector<long>& results,
+                                                   long max,
+                                                   long** selected,
+                                                   long* n_selected) {
+  auto count = std::min((long)results.size(), max);
+  *n_selected = count;
+  *selected = static_cast<long*>(CoTaskMemAlloc(sizeof(long) * count));
+
+  for (long i = 0; i < count; i++)
+    (*selected)[i] = results[i];
+  return S_OK;
 }
 
 }  // namespace ui
