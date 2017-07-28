@@ -1220,7 +1220,6 @@ component("base") {
       "message_loop/message_pump_libevent.cc",
       "message_loop/message_pump_libevent.h",
       "posix/unix_domain_socket.cc",
-      "posix/unix_domain_socket.h",
       "process/kill_posix.cc",
       "process/launch_posix.cc",
       "process/process_handle_posix.cc",
@@ -2366,15 +2365,15 @@ test("base_unittests") {
   }
 
   if (is_posix && !is_ios && !is_fuchsia) {
-    sources += [ "message_loop/message_pump_libevent_unittest.cc" ]
+    sources += [
+      "message_loop/message_pump_libevent_unittest.cc",
+      "posix/unix_domain_socket_unittest.cc",
+    ]
     deps += [ "//base/third_party/libevent" ]
   }
 
   if (is_fuchsia) {
-    sources -= [
-      "files/file_locking_unittest.cc",
-      "posix/unix_domain_socket_unittest.cc",
-    ]
+    sources -= [ "files/file_locking_unittest.cc" ]
   }
 
   if (is_android) {

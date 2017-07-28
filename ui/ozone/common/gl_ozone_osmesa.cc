@@ -27,17 +27,27 @@ bool GLOzoneOSMesa::InitializeGLOneOffPlatform() {
 
 bool GLOzoneOSMesa::InitializeStaticGLBindings(
     gl::GLImplementation implementation) {
+#if defined(OS_FUCHSIA)
+  // KM: PUNT! I have no idea what I'm doing WRT graphics.
+  return false;
+#else
   return gl::InitializeStaticGLBindingsOSMesaGL();
+#endif
 }
 
 void GLOzoneOSMesa::InitializeDebugGLBindings() {
+  // Also punt
+#if !defined(OS_FUCHSIA)
   gl::InitializeDebugGLBindingsGL();
   gl::InitializeDebugGLBindingsOSMESA();
+#endif
 }
 
 void GLOzoneOSMesa::ShutdownGL() {
+#if !defined(OS_FUCHSIA)
   gl::ClearBindingsGL();
   gl::ClearBindingsOSMESA();
+#endif
 }
 
 bool GLOzoneOSMesa::GetGLWindowSystemBindingInfo(

@@ -100,6 +100,7 @@ source_set("config_sources") {
     "gpu_info_collector.cc",
     "gpu_info_collector.h",
     "gpu_info_collector_android.cc",
+    "gpu_info_collector_fuchsia.cc",
     "gpu_info_collector_linux.cc",
     "gpu_info_collector_mac.mm",
     "gpu_info_collector_win.cc",
