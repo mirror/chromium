@@ -70,6 +70,30 @@
       "revId": "ae0258e2195c919e16bc0c29f1304fe0279d68ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb38e6f_a732e987",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T23:56:56Z",
+      "side": 1,
+      "message": "Basically, have the inverse of the current HexEncode function, that takes a pointer to an output buffer and the size of the output buffer.",
+      "parentUuid": "1bfc2cbd_37965ff6",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "ae0258e2195c919e16bc0c29f1304fe0279d68ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
