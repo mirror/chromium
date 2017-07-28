@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b34ecab3_89b1e089",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T21:12:45Z",
+      "side": 1,
+      "message": "It seems better to use a static const:\n\nnamespace {\nDM::MarkerType marker_types_used_by_ax(... | ... | ...);\n}\n\n...\n\nif (marker_types_used_by_ax.Contains(marker-\u003eGetType())) {\n...\n}\n\n...",
+      "range": {
+        "startLine": 1507,
+        "startChar": 9,
+        "endLine": 1509,
+        "endChar": 76
+      },
+      "revId": "50f4edcf675868c2832978310bc92886edb1b570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
