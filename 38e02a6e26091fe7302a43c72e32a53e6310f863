@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91ebc95a_f91b999e",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-28T14:38:04Z",
+      "side": 1,
+      "message": "Nit: c (Sorry, I only spelled it with a capital C because of the colon)",
+      "range": {
+        "startLine": 40,
+        "startChar": 55,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a736ef60_26f64ecf",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-28T14:38:04Z",
+      "side": 1,
+      "message": "Nit: Use \u0027Callback\u0027 for consistency.",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074292e8_ac97631c",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-28T14:38:04Z",
+      "side": 1,
+      "message": "Is everything in this class public? I don\u0027t see any protected: or private:. Please make methods and members protected/private as appropriate.",
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1549ae20_07e362bc",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-28T14:38:04Z",
+      "side": 1,
+      "message": "Is this valid? signal_callback is a local variable (not a unique_ptr) and is destroyed at the end of the scope, so its pointer loses validity.",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 64
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
