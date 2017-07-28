@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e0bef1_12dee24d",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-28T05:27:19Z",
+      "side": 1,
+      "message": "Could you comment SetSelection(selection) is different from SetSelection(selection, {}) \n from the point of CloseTyping and ClearTypingStyle?",
+      "revId": "c39e4ee07b0dd4ee67b3815705d4b2e62ac7e3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
