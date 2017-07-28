@@ -88,6 +88,24 @@
       "revId": "ec21aee32602b5032314cf5684f59035390a0788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52d9a9a_7d46fcde",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T19:12:49Z",
+      "side": 1,
+      "message": "Ok, done.\n\n\u003e  I can imagine that as long as we\u0027re linking to other libs in the Win SDK we probably have to use the MSVC stdlib as well.\n\nI believe that\u0027s not true: The Win APIs generally and wisely don\u0027t pass C++ objects (std::string, std::vector) across library boundaries. Also, the MSVC stdlib expects you to statically link the c++ stdlib, so the c++ stdlib is different for different apps (usually just different versions of the MSVC c++ stdlib, but different though), so system libraries can\u0027t make assumptions about the c++ stdlib apps link with. (But this discussion is a bit out of scope for this CL anyhow :-) )",
+      "parentUuid": "4d196ae8_cc6859fe",
+      "revId": "ec21aee32602b5032314cf5684f59035390a0788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
