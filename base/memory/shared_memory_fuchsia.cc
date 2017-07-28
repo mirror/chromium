@@ -46,7 +46,7 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
   mapped_size_ = bits::Align(requested_size_, GetPageSize());
   mx_status_t status = mx_vmo_create(mapped_size_, 0, &vmo);
   if (status != MX_OK) {
-    DLOG(ERROR) << "mx_vmo_create failed, status=" << status;
+    LOG(ERROR) << "mx_vmo_create failed, status=" << status;
     return false;
   }
 
@@ -55,7 +55,7 @@ bool SharedMemory::Create(const SharedMemoryCreateOptions& options) {
     const int kNoExecFlags = MX_DEFAULT_VMO_RIGHTS & ~MX_RIGHT_EXECUTE;
     status = mx_handle_replace(vmo, kNoExecFlags, &vmo);
     if (status != MX_OK) {
-      DLOG(ERROR) << "mx_handle_replace failed, status=" << status;
+      LOG(ERROR) << "mx_handle_replace failed, status=" << status;
       mx_handle_close(vmo);
       return false;
     }
