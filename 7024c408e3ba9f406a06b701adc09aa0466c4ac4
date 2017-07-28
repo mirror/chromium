@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b96000_9b97f5bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:44:04Z",
+      "side": 1,
+      "message": "Mini-nit: Capitalize Java :)",
+      "range": {
+        "startLine": 122,
+        "startChar": 74,
+        "endLine": 122,
+        "endChar": 78
+      },
+      "revId": "7024c408e3ba9f406a06b701adc09aa0466c4ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fb9078_1a41021b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-28T15:44:04Z",
+      "side": 1,
+      "message": "You could initialize the array list with the number of tiles.",
+      "range": {
+        "startLine": 127,
+        "startChar": 62,
+        "endLine": 127,
+        "endChar": 64
+      },
+      "revId": "7024c408e3ba9f406a06b701adc09aa0466c4ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
