@@ -1285,6 +1285,8 @@ ResourceProvider::ScopedReadLockSkImage::ScopedReadLockSkImage(
     ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
   const Resource* resource = resource_provider->LockForRead(resource_id);
+  // if (resource_provider_->resource_sk_image.find(resource_id) ==
+  //     resource_provider_->resource_sk_image.end()) {
   if (resource->gl_id) {
     GrGLTextureInfo texture_info;
     texture_info.fID = resource->gl_id;
@@ -1310,6 +1312,10 @@ ResourceProvider::ScopedReadLockSkImage::ScopedReadLockSkImage(
     // is fixed.  DCHECK that this is the only case where there are no pixels.
     DCHECK(!resource->shared_bitmap_id.IsZero());
   }
+  // } else {
+  //   sk_image_ =
+  //   resource_provider_->resource_sk_image.find(resource_id)->second;
+  // }
 }
 
 ResourceProvider::ScopedReadLockSkImage::~ScopedReadLockSkImage() {
