@@ -46,6 +46,30 @@
       "revId": "dd2aef1dccc8bb9287b5a15a2abdb77f7ac81358",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d38356_7d623682",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-28T19:58:53Z",
+      "side": 1,
+      "message": "Oh no, for sure you can\u0027t assert in any good way that you got every field in an op. Just to be defensive for new ops added later on. And have a comment saying, \"please update me if you add new fields to any op\". And maybe DCHECK the same function at raster time. Do you think that would be any help?",
+      "parentUuid": "c6b1c056_bf1a9307",
+      "range": {
+        "startLine": 781,
+        "startChar": 15,
+        "endLine": 781,
+        "endChar": 30
+      },
+      "revId": "dd2aef1dccc8bb9287b5a15a2abdb77f7ac81358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
