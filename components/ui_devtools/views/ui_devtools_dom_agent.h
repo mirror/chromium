@@ -100,7 +100,10 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
                                  const gfx::RectF& hovered_rectF,
                                  const cc::PaintFlags& flags,
                                  gfx::Canvas* canvas_);
-
+  void DrawR1IntersectsR2(gfx::RectF& pinned_rectF,
+                          gfx::RectF& hovered_rectF,
+                          const cc::PaintFlags& flags,
+                          gfx::Canvas* canvas_);
   // ui::LayerDelegate:
   void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
   void OnDeviceScaleFactorChanged(float device_scale_factor) override {}
