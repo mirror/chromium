@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f13000_8d449479",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T19:55:41Z",
+      "side": 1,
+      "message": "Don\u0027t you want to cancel the timer in buildProtoAndScheduleUpdate() instead of in WebApkUpdateManager#scheduleUpdate() ?\n\nnativeBuildUpdateWebApkProto() is asynchronous. (I know it is not obvious). It is possible for the timer to fire after buildProtoAndScheduleUpdate() but before scheduleUpdate() is called.",
+      "revId": "459cb752ba07e39215a01278fc8f7c0b1d7d621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
