@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "52d60323_8b5fbf3b",
+        "filename": "services/device/serial/serial_device_enumerator_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-28T17:37:06Z",
+      "side": 1,
+      "message": "This can be shortened to:\n\nbase::PostTaskWithTraits(\n    FROM_HERE,\n    {base::MayBlock(), base::TaskPriority::BACKGROUND},\n    base::BindOnce(\u0026CreateAndBindOnBlockableRunner, std::move(request)));\n\nAs Colin points out I believe you can remove the |runner| parameter. The SequencedTaskRunner created for this task is implicitly saved by the binding that is created in the posted task.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 80
+      },
+      "revId": "5fb94bf7156a88cbfa72e5b734edd17e27545c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90aa078c_90e7c84d",
         "filename": "services/device/serial/serial_device_enumerator_impl.cc",
         "patchSetId": 13
