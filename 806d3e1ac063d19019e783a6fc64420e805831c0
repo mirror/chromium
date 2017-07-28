@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d392da51_6a1dcf20",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T22:36:06Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d0c22659_db161cbe",
+      "range": {
+        "startLine": 1308,
+        "startChar": 20,
+        "endLine": 1308,
+        "endChar": 53
+      },
+      "revId": "806d3e1ac063d19019e783a6fc64420e805831c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "366df44b_ff032fea",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T21:02:02Z",
       "side": 0,
       "message": "I believe the host_resolver arg is no longer needed.",
+      "range": {
+        "startLine": 1313,
+        "startChar": 23,
+        "endLine": 1313,
+        "endChar": 36
+      },
+      "revId": "806d3e1ac063d19019e783a6fc64420e805831c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6bd242_80261be6",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T22:36:06Z",
+      "side": 0,
+      "message": "Nice catch, done!",
+      "parentUuid": "366df44b_ff032fea",
       "range": {
         "startLine": 1313,
         "startChar": 23,
