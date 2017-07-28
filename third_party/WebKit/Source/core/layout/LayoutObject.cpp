@@ -2616,6 +2616,11 @@ void LayoutObject::WillBeDestroyed() {
 
   if (GetFrameView())
     SetIsBackgroundAttachmentFixedObject(false);
+
+  // FrameSelection refers LayoutObject for selection invalidation.
+  // We should release its reference appropreately.
+  if (GetFrame() && GetFrame()->Selection().IsLayoutObjectReferred(this))
+    GetFrame()->Selection().ClearLayoutSelection();
 }
 
 DISABLE_CFI_PERF
@@ -2827,6 +2832,11 @@ void LayoutObject::DestroyAndCleanupAnonymousWrappers() {
 
 void LayoutObject::Destroy() {
   WillBeDestroyed();
+#if DCHECK_IS_ON()
+  // FrameSelection refers LayoutObject for selection invalidation.
+  // We should release its reference appropreately.
+  DCHECK(!GetFrame() || !GetFrame()->Selection().IsLayoutObjectReferred(this));
+#endif
   delete this;
 }
 

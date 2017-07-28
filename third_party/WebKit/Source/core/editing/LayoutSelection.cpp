@@ -498,4 +498,14 @@ DEFINE_TRACE(LayoutSelection) {
   visitor->Trace(frame_selection_);
 }
 
+#if DCHECK_IS_ON()
+bool LayoutSelection::IsLayoutObjectReferred(
+    LayoutObject* layout_object) const {
+  if (paint_range_.IsNull())
+    return false;
+  return layout_object == paint_range_.StartLayoutObject() ||
+         layout_object == paint_range_.EndLayoutObject();
+}
+#endif
+
 }  // namespace blink
