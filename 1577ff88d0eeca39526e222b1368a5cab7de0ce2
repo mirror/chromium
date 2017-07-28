@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c5330c_f0ab43d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "might comment on how this variable is used for easier understanding of these codes. Some for below variables.",
+      "range": {
+        "startLine": 68,
+        "startChar": 54,
+        "endLine": 68,
+        "endChar": 67
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e390c4_3875a88f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "mOriginToUriDefaultMethodsMapping?",
+      "range": {
+        "startLine": 72,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 60
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449bc80c_7499d8bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "but not as default payment method?",
+      "range": {
+        "startLine": 74,
+        "startChar": 89,
+        "endLine": 74,
+        "endChar": 95
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5f9352_f99c5e69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "mMethodToAsSupportedAppsMapping?",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 75,
+        "endChar": 65
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a0f0b0_faff604e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: more details about finding what kind of installed android payment apps?",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 35
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b9627e_9516b905",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: methodToApps?",
+      "range": {
+        "startLine": 167,
+        "startChar": 38,
+        "endLine": 167,
+        "endChar": 42
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ded72d9_84bc117c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: methodToDefaultApps?",
+      "range": {
+        "startLine": 170,
+        "startChar": 38,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e4f85d_a3faf9fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: methodToSupportedOrigins?",
+      "range": {
+        "startLine": 174,
+        "startChar": 27,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da560e98_1647daf2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "remove line 176-179 and check null instead of empty below?",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 26
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c8186d_d9c2266f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: move this line to line 197?",
+      "range": {
+        "startLine": 202,
+        "startChar": 12,
+        "endLine": 202,
+        "endChar": 45
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de54c57_cee51507",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: comment on payment app has non-uri based default payment method might support uri based payment method?",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 88
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cc84a0_8b452d5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: remove above space line, looks they are belong to the same purpose,",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 51
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f21e8f_4f5faa82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: comment on we do not verify the apps if they claim to support a payment method which supports all origins.",
+      "range": {
+        "startLine": 354,
+        "startChar": 49,
+        "endLine": 354,
+        "endChar": 69
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6dd7e2_6b071623",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "\u0027assert supportedAppMethodNames !\u003d null\u0027 ?",
+      "range": {
+        "startLine": 363,
+        "startChar": 20,
+        "endLine": 363,
+        "endChar": 43
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafb2aab_64b2a519",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "comment on addMethodName might be called on the same method name multiple times?",
+      "range": {
+        "startLine": 424,
+        "startChar": 26,
+        "endLine": 424,
+        "endChar": 36
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541b0155_4371a376",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "nit: Technically, if mDefaultApplications.isEmpty(), then mMessageDigest has no use. This could happen if this verifier is only for supported origins.",
+      "range": {
+        "startLine": 204,
+        "startChar": 27,
+        "endLine": 204,
+        "endChar": 28
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e229f2_8057a49e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "assert !(mSupportedOrigins.isEmpty() \u0026\u0026 mDefaultApplications.isEmpty()); somewhere?",
+      "range": {
+        "startLine": 238,
+        "startChar": 20,
+        "endLine": 238,
+        "endChar": 44
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a756cd4_74bc8345",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "how this could happen? assert?",
+      "range": {
+        "startLine": 270,
+        "startChar": 16,
+        "endLine": 270,
+        "endChar": 30
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b66ab05_dfcdc2bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "move continue out of \u0027if(uriOrigin !\u003d null)\u0027?",
+      "range": {
+        "startLine": 286,
+        "startChar": 20,
+        "endLine": 286,
+        "endChar": 28
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1f8663_5aa719e1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-28T19:24:26Z",
+      "side": 1,
+      "message": "Can we test a \u0027basic-card\u0027 payment app can use \u0027https://henrypay.com/payment-manifest.json\u0027? This makes sure \u0027mMethodToAppsMapping.get(supportedUriMethod).add(app);\u0027 is happened before \u0027if (appOrigin \u003d\u003d null) continue;\u0027 in the code?",
+      "range": {
+        "startLine": 879,
+        "startChar": 7,
+        "endLine": 879,
+        "endChar": 49
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
