@@ -9,7 +9,6 @@
 #include "core/loader/WorkletScriptLoader.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
 #include "core/workers/WorkletGlobalScopeProxy.h"
-#include "core/workers/WorkletPendingTasks.h"
 
 namespace blink {
 

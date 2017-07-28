@@ -16,7 +16,9 @@
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkletGlobalScope.h"
+#include "core/workers/WorkletPendingTasks.h"
 #include "platform/CrossThreadFunctional.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebTaskRunner.h"
 
 namespace blink {
@@ -126,11 +128,31 @@ DEFINE_TRACE(ThreadedWorkletMessagingProxy) {
 
 void ThreadedWorkletMessagingProxy::FetchAndInvokeScript(
     const KURL& module_url_record,
-    WorkletModuleResponsesMap*,
+    WorkletModuleResponsesMap* module_responses_map,
     WebURLRequest::FetchCredentialsMode credentials_mode,
     RefPtr<WebTaskRunner> outside_settings_task_runner,
     WorkletPendingTasks* pending_tasks) {
   DCHECK(IsMainThread());
+
+  if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
+    // Module script loading.
+    TaskRunnerHelper::Get(TaskType::kUnspecedLoading, GetWorkerThread())
+        ->PostTask(
+            BLINK_FROM_HERE,
+            CrossThreadBind(&ThreadedWorkletObjectProxy::FetchAndInvokeScript,
+                            CrossThreadUnretained(worklet_object_proxy_.get()),
+                            module_url_record,
+                            WrapCrossThreadPersistent(module_responses_map),
+                            credentials_mode,
+                            std::move(outside_settings_task_runner),
+                            WrapCrossThreadPersistent(pending_tasks),
+                            CrossThreadUnretained(GetWorkerThread())));
+    return;
+  }
+
+  // Classic script loading.
+  // TODO(nhiroki): Remove this path after module loading is enabled by default.
+  // (https://crbug.com/727194)
   LoaderClient* client = new LoaderClient(
       std::move(outside_settings_task_runner), pending_tasks, this);
   WorkletScriptLoader* loader = WorkletScriptLoader::Create(
