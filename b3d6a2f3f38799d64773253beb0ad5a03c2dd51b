@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d12ed2_43833eed",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "If you provide a delegate interface instead of using the inheritance pattern, maybe you could clarify this comment a bit and telling the reader that this only deals with the session time? Maybe even referring to which particular event that it keeps up to date?",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87f3a50_834e0379",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "I wonder if this should be named related to session time, since that\u0027s what it\u0027s counting?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d50f32_f4dcde47",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "If you use a delegate, this should probably get a base::TimeDelta as an argument so the delegate can use that to decide.",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321a6519_267d8172",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "How would you feel about passing in a delegate to this tracker instead of requiring inheritance? Then instead of calling ShowPromo() in this class, you\u0027d call delegate_-\u003eShowPromo() or something along those lines? (of course, HasEnoughSessionTimeElapsed() should also be called on the delegate).",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d1e591_89a70ed8",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "Should this follow the same pattern as https://chromium-review.googlesource.com/c/583902 ?",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46174cd_a9ba0a2c",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure if you want to do it in this CL or a different one, but this should probably be rebased on top of https://chromium-review.googlesource.com/c/590501/ when that lands.",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c74aba1_abd89db2",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to move this to a |features| subdirectory.",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df22ebe3_4bd50d2f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T19:40:15Z",
+      "side": 1,
+      "message": "You probably want to rebase this again.",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
