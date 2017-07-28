@@ -1803,6 +1803,7 @@ crbug.com/736050 external/wpt/IndexedDB/transaction-create_in_versionchange.htm 
 crbug.com/736050 external/wpt/IndexedDB/upgrade-transaction-lifecycle-backend-aborted.html [ Pass Failure ]
 crbug.com/736050 external/wpt/IndexedDB/value_recursive.htm [ Pass Failure ]
 
+crbug.com/750310 [ Win7 ] virtual/off-main-thread-fetch/http/tests/inspector/network/network-blocked-reason.html [ Pass Failure ]
 # Failures in non-wpt tests from:
 # https://chromium-review.googlesource.com/c/543695/
 # Possibly became flaky after a change in testharness.js.
