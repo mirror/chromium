@@ -16,6 +16,24 @@
       "revId": "0fa380d9d4904c298103579be2ea90b0293a03ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9e8840_3817e217",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-28T20:31:08Z",
+      "side": 1,
+      "message": "webview does not have ftp.",
+      "parentUuid": "569c4a60_d5997d09",
+      "revId": "0fa380d9d4904c298103579be2ea90b0293a03ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
