@@ -1040,6 +1040,9 @@ util.getRootTypeLabel = function(locationInfo) {
       }
       console.error('Unsupported media view root type: ' + mediaViewRootType);
       return locationInfo.volumeInfo.label;
+    case VolumeManagerCommon.RootType.RECENT:
+      // TODO(crbug.com/742722): Use a string resource.
+      return locationInfo.volumeInfo.label;
     case VolumeManagerCommon.RootType.DRIVE_OTHER:
     case VolumeManagerCommon.RootType.ARCHIVE:
     case VolumeManagerCommon.RootType.REMOVABLE:

@@ -5,6 +5,8 @@
 #include "chrome/browser/chromeos/extensions/file_manager/private_api_util.h"
 
 #include <stddef.h>
+
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -246,6 +248,9 @@ void VolumeToVolumeMetadata(
       volume_metadata->volume_type =
           file_manager_private::VOLUME_TYPE_MEDIA_VIEW;
       break;
+    case VOLUME_TYPE_RECENT:
+      volume_metadata->volume_type = file_manager_private::VOLUME_TYPE_RECENT;
+      break;
     case VOLUME_TYPE_TESTING:
       volume_metadata->volume_type =
           file_manager_private::VOLUME_TYPE_TESTING;
@@ -368,8 +373,8 @@ void SetupProfileFileAccessPermissions(int render_view_process_id,
     util::GetDownloadsFolderForProfile(profile),
   };
   for (size_t i = 0; i < arraysize(paths); ++i) {
-    content::ChildProcessSecurityPolicy::GetInstance(
-        )->GrantCreateReadWriteFile(render_view_process_id, paths[i]);
+    content::ChildProcessSecurityPolicy::GetInstance()
+        ->GrantCreateReadWriteFile(render_view_process_id, paths[i]);
   }
 }
 

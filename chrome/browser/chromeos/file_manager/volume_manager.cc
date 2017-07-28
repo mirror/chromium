@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
@@ -27,6 +29,7 @@
 #include "chrome/browser/chromeos/file_manager/volume_manager_factory.h"
 #include "chrome/browser/chromeos/file_manager/volume_manager_observer.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
+#include "chrome/browser/chromeos/fileapi/recent_util.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/media_galleries/fileapi/mtp_device_map_service.h"
 #include "chrome/browser/profiles/profile.h"
@@ -51,6 +54,10 @@ const char kFileManagerMTPMountNamePrefix[] = "fileman-mtp-";
 const char kMtpVolumeIdPrefix[] = "mtp:";
 const char kRootPath[] = "/";
 
+// TODO(crbug.com/742722): Enable by default.
+const base::Feature kRecentFileSystemFeature{"RecentFileSystem",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Registers |path| as the "Downloads" folder to the FileSystem API backend.
 // If another folder is already mounted. It revokes and overrides the old one.
 bool RegisterDownloadsMountPoint(Profile* profile, const base::FilePath& path) {
@@ -70,6 +77,15 @@ bool RegisterDownloadsMountPoint(Profile* profile, const base::FilePath& path) {
                                           storage::kFileSystemTypeNativeLocal,
                                           storage::FileSystemMountOption(),
                                           path);
+}
+
+bool RegisterRecentMountPoint(Profile* profile) {
+  storage::ExternalMountPoints* const mount_points =
+      storage::ExternalMountPoints::GetSystemInstance();
+  return mount_points->RegisterFileSystem(
+      chromeos::GetRecentMountPointName(profile),
+      storage::kFileSystemTypeRecent, storage::FileSystemMountOption(),
+      chromeos::GetRecentMountPointPath(profile));
 }
 
 // Finds the path register as the "Downloads" folder to FileSystem API backend.
@@ -117,6 +133,8 @@ std::string VolumeTypeToString(VolumeType type) {
       return "mtp";
     case VOLUME_TYPE_MEDIA_VIEW:
       return "media_view";
+    case VOLUME_TYPE_RECENT:
+      return "recent";
     case VOLUME_TYPE_TESTING:
       return "testing";
     case NUM_VOLUME_TYPE:
@@ -295,6 +313,20 @@ std::unique_ptr<Volume> Volume::CreateForMediaView(
 }
 
 // static
+std::unique_ptr<Volume> Volume::CreateForRecent(Profile* profile) {
+  std::unique_ptr<Volume> volume(new Volume());
+  volume->type_ = VOLUME_TYPE_RECENT;
+  volume->device_type_ = chromeos::DEVICE_TYPE_UNKNOWN;
+  volume->source_ = SOURCE_SYSTEM;
+  volume->mount_path_ = chromeos::GetRecentMountPointPath(profile);
+  volume->mount_condition_ = chromeos::disks::MOUNT_CONDITION_NONE;
+  volume->is_read_only_ = true;
+  volume->watchable_ = false;
+  volume->volume_id_ = GenerateVolumeId(*volume);
+  return volume;
+}
+
+// static
 std::unique_ptr<Volume> Volume::CreateForTesting(
     const base::FilePath& path,
     VolumeType volume_type,
@@ -357,11 +389,20 @@ void VolumeManager::Initialize() {
   // Register 'Downloads' folder for the profile to the file system.
   const base::FilePath downloads =
       file_manager::util::GetDownloadsFolderForProfile(profile_);
-  const bool success = RegisterDownloadsMountPoint(profile_, downloads);
-  DCHECK(success);
+  const bool downloads_success =
+      RegisterDownloadsMountPoint(profile_, downloads);
+  DCHECK(downloads_success);
 
   DoMountEvent(chromeos::MOUNT_ERROR_NONE,
                Volume::CreateForDownloads(downloads));
+
+  // Register 'Recent' view for the profile to the file system.
+  if (base::FeatureList::IsEnabled(kRecentFileSystemFeature)) {
+    const bool recent_success = RegisterRecentMountPoint(profile_);
+    DCHECK(recent_success);
+
+    DoMountEvent(chromeos::MOUNT_ERROR_NONE, Volume::CreateForRecent(profile_));
+  }
 
   // Subscribe to DriveIntegrationService.
   if (drive_integration_service_) {

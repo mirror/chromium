@@ -38,6 +38,7 @@ NavigationUma.RootType = [
   VolumeManagerCommon.RootType.DRIVE_SHARED_WITH_ME,
   VolumeManagerCommon.RootType.DRIVE_RECENT,
   VolumeManagerCommon.RootType.MEDIA_VIEW,
+  VolumeManagerCommon.RootType.RECENT,
 ];
 
 /**

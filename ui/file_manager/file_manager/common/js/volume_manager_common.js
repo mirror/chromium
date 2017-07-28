@@ -64,6 +64,9 @@ VolumeManagerCommon.RootType = {
 
   // Root for media views.
   MEDIA_VIEW: 'media_view',
+
+  // Root for recent.
+  RECENT: 'recent',
 };
 Object.freeze(VolumeManagerCommon.RootType);
 
@@ -143,6 +146,7 @@ VolumeManagerCommon.VolumeType = {
   MTP: 'mtp',
   PROVIDED: 'provided',
   MEDIA_VIEW: 'media_view',
+  RECENT: 'recent',
 };
 
 /**
@@ -198,6 +202,8 @@ VolumeManagerCommon.getVolumeTypeFromRootType = function(rootType) {
       return VolumeManagerCommon.VolumeType.PROVIDED;
     case VolumeManagerCommon.RootType.MEDIA_VIEW:
       return VolumeManagerCommon.VolumeType.MEDIA_VIEW;
+    case VolumeManagerCommon.RootType.RECENT:
+      return VolumeManagerCommon.VolumeType.RECENT;
   }
   assertNotReached('Unknown root type: ' + rootType);
 };
