@@ -92,6 +92,17 @@ class WebServiceWorkerNetworkProviderForFrame
 
   ServiceWorkerNetworkProvider* provider() { return provider_.get(); }
 
+  std::unique_ptr<WebURLLoader> CreateURLLoader(
+      const WebURLRequest& request,
+      base::SingleThreadTaskRunner* task_runner) override {
+    if (!ServiceWorkerUtils::IsServicificationEnabled() || !event_dispatcher_)
+      return nullptr;
+
+    // TODO(kinuko): Set up URLLoaderFactory with NetworkProvider's
+    // event_dispatcher_ for fetch event handling.
+    return nullptr;
+  }
+
  private:
   std::unique_ptr<ServiceWorkerNetworkProvider> provider_;
 };
@@ -177,7 +188,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     ServiceWorkerProviderType provider_type,
     int browser_provider_id,
     bool is_parent_frame_secure)
-    : provider_id_(browser_provider_id) {
+    : provider_id_(browser_provider_id), weak_factory_(this) {
   if (provider_id_ == kInvalidServiceWorkerProviderId)
     return;
   if (!ChildThreadImpl::current())
@@ -193,8 +204,9 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
   DCHECK(host_info.host_request.handle().is_valid());
   context_ = new ServiceWorkerProviderContext(
       provider_id_, provider_type, std::move(client_request),
-      ChildThreadImpl::current()->thread_safe_sender());
-
+      ChildThreadImpl::current()->thread_safe_sender(),
+      base::Bind(&ServiceWorkerNetworkProvider::OnControllerChange,
+                 weak_factory_.GetWeakPtr()));
   ChildThreadImpl::current()->channel()->GetRemoteAssociatedInterface(
       &dispatcher_host_);
   dispatcher_host_->OnProviderCreated(std::move(host_info));
@@ -211,11 +223,17 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
 
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr info)
-    : provider_id_(info->provider_id) {
+    : provider_id_(info->provider_id), weak_factory_(this) {
   context_ = new ServiceWorkerProviderContext(
       provider_id_, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
       std::move(info->client_request),
-      ChildThreadImpl::current()->thread_safe_sender());
+      ChildThreadImpl::current()->thread_safe_sender(),
+      ServiceWorkerProviderContext::ControllerChangeCallback());
+
+  if (info->script_loader_factory_ptr_info.is_valid()) {
+    script_loader_factory_.Bind(
+        std::move(info->script_loader_factory_ptr_info));
+  }
 
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
@@ -229,7 +247,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
 }
 
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider()
-    : provider_id_(kInvalidServiceWorkerProviderId) {}
+    : provider_id_(kInvalidServiceWorkerProviderId), weak_factory_(this) {}
 
 ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider() {
   if (provider_id_ == kInvalidServiceWorkerProviderId)
@@ -246,6 +264,12 @@ bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {
     return false;
   }
   return context() && context()->controller();
+}
+
+void ServiceWorkerNetworkProvider::OnControllerChange(
+    mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info) {
+  if (event_dispatcher_ptr_info.is_valid())
+    event_dispatcher_.Bind(std::move(event_dispatcher_ptr_info));
 }
 
 }  // namespace content

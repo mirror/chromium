@@ -19,6 +19,7 @@
 #include "content/browser/service_worker/service_worker_handle.h"
 #include "content/browser/service_worker/service_worker_registration_handle.h"
 #include "content/browser/service_worker/service_worker_version.h"
+#include "content/browser/service_worker/service_worker_version_proxy.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_types.h"
@@ -528,8 +529,14 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
 
   scoped_refptr<ServiceWorkerVersion> previous_version = controlling_version_;
   controlling_version_ = version;
+
+  // This will drop the message pipes to the client pages as well.
+  controlling_version_proxy_.reset();
+
   if (version) {
     version->AddControllee(this);
+    controlling_version_proxy_ =
+        base::MakeUnique<ServiceWorkerVersionProxy>(version);
     for (const auto& pair : worker_clients_) {
       pair.second->SetControllerServiceWorker(version->version_id());
     }
@@ -542,10 +549,19 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
 
   // SetController message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_SetControllerServiceWorker(
-      render_thread_id_, provider_id(), GetOrCreateServiceWorkerHandle(version),
-      notify_controllerchange,
-      version ? version->used_features() : std::set<uint32_t>()));
+  ServiceWorkerMsg_SetControllerServiceWorker_Params params;
+  params.thread_id = render_thread_id_;
+  params.provider_id = provider_id();
+  params.object_info = GetOrCreateServiceWorkerHandle(version);
+  params.should_notify_controllerchange = notify_controllerchange;
+  if (version) {
+    params.used_features = version->used_features();
+    params.controller_event_dispatcher =
+        controlling_version_proxy_->CreateEventDispatcherPtrInfo()
+            .PassHandle()
+            .release();
+  }
+  Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
 }
 
 void ServiceWorkerProviderHost::CreateScriptURLLoaderFactory(
@@ -1104,12 +1120,16 @@ void ServiceWorkerProviderHost::NotifyControllerToAssociatedProvider() {
   if (associated_registration_.get()) {
     SendAssociateRegistrationMessage();
     if (dispatcher_host_ && associated_registration_->active_version()) {
-      Send(new ServiceWorkerMsg_SetControllerServiceWorker(
-          render_thread_id_, provider_id(),
-          GetOrCreateServiceWorkerHandle(
-              associated_registration_->active_version()),
-          false /* shouldNotifyControllerChange */,
-          associated_registration_->active_version()->used_features()));
+      ServiceWorkerMsg_SetControllerServiceWorker_Params params;
+      params.thread_id = render_thread_id_;
+      params.provider_id = provider_id();
+      params.object_info = GetOrCreateServiceWorkerHandle(
+          associated_registration_->active_version());
+      params.should_notify_controllerchange = false;
+      params.used_features =
+          associated_registration_->active_version()->used_features();
+      // TODO(kinuko): Fill controller_event_dispatcher
+      Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
     }
   }
 }

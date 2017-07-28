@@ -12,9 +12,11 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/supports_user_data.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker.mojom.h"
+#include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 
 namespace blink {
@@ -81,11 +83,17 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   bool IsControlledByServiceWorker() const;
 
  private:
+  void OnControllerChange(
+      mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info);
+
   const int provider_id_;
   scoped_refptr<ServiceWorkerProviderContext> context_;
   mojom::ServiceWorkerDispatcherHostAssociatedPtr dispatcher_host_;
   mojom::ServiceWorkerProviderHostAssociatedPtr provider_host_;
   mojom::URLLoaderFactoryAssociatedPtr script_loader_factory_;
+  mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
+
+  base::WeakPtrFactory<ServiceWorkerNetworkProvider> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerNetworkProvider);
 };

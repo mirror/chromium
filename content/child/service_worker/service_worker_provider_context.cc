@@ -148,11 +148,13 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerProviderAssociatedRequest request,
-    ThreadSafeSender* thread_safe_sender)
+    ThreadSafeSender* thread_safe_sender,
+    const ControllerChangeCallback& controller_change_callback)
     : provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       thread_safe_sender_(thread_safe_sender),
-      binding_(this, std::move(request)) {
+      binding_(this, std::move(request)),
+      controller_change_callback_(controller_change_callback) {
   if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER)
     delegate_.reset(new ControllerDelegate);
   else
@@ -190,10 +192,13 @@ void ServiceWorkerProviderContext::OnDisassociateRegistration() {
 
 void ServiceWorkerProviderContext::OnSetControllerServiceWorker(
     std::unique_ptr<ServiceWorkerHandleReference> controller,
-    const std::set<uint32_t>& used_features) {
+    const std::set<uint32_t>& used_features,
+    mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   delegate_->SetController(std::move(controller));
   used_features_ = used_features;
+  if (controller_change_callback_)
+    controller_change_callback_.Run(std::move(event_dispatcher_ptr_info));
 }
 
 void ServiceWorkerProviderContext::GetAssociatedRegistration(
