@@ -3134,7 +3134,18 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // that native controllers vended here always correspond to the current tab.
   Tab* currentTab = [_model currentTab];
   NSString* nativeControllerKey = currentTab.tabId;
-  if (!currentTab || currentTab.lastCommittedURL != url ||
+  GURL currentTabURL = url;
+  web::NavigationManager* manager = currentTab.navigationManager;
+  if (manager) {
+    // If |currentTab| has a transient item, use its URL rather than the last
+    // committed URL since any native controller vended for the last committed
+    // URL would have already been destroyed when the interstitial is displayed.
+    web::NavigationItem* item = manager->GetLastCommittedItem();
+    currentTabURL = item ? item->GetURL() : currentTabURL;
+    item = manager->GetTransientItem();
+    currentTabURL = item ? item->GetURL() : currentTabURL;
+  }
+  if (!currentTab || currentTabURL != url ||
       [[_nativeControllersForTabIDs objectForKey:nativeControllerKey]
           isKindOfClass:[nativeController class]]) {
     nativeControllerKey = kNativeControllerTemporaryKey;
