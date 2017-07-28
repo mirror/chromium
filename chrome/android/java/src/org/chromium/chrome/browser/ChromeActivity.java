@@ -803,8 +803,11 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         ChromeActivitySessionTracker.getInstance().onStartWithNative();
 
         if (GSAState.getInstance(this).isGsaAvailable()) {
-            GSAAccountChangeListener.getInstance().connect();
-            createContextReporterIfNeeded();
+            // GSA connection is not needed on low-end devices because Icing is disabled.
+            if (!SysUtils.isLowEndDevice()) {
+                GSAAccountChangeListener.getInstance().connect();
+                createContextReporterIfNeeded();
+            }
         } else {
             ContextReporter.reportStatus(ContextReporter.STATUS_GSA_NOT_AVAILABLE);
         }
@@ -925,7 +928,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         if (tab != null && !hasWindowFocus()) tab.onActivityHidden();
         if (mAppMenuHandler != null) mAppMenuHandler.hideAppMenu();
 
-        if (GSAState.getInstance(this).isGsaAvailable()) {
+        if (GSAState.getInstance(this).isGsaAvailable() && !SysUtils.isLowEndDevice()) {
             GSAAccountChangeListener.getInstance().disconnect();
             if (mSyncStateChangedListener != null) {
                 ProfileSyncService syncService = ProfileSyncService.get();
