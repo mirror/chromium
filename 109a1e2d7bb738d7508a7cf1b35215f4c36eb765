@@ -52,6 +52,24 @@
       "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e400900c_a0208404",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190898
+      },
+      "writtenOn": "2017-07-28T01:40:02Z",
+      "side": 1,
+      "message": "Right -- we have at least one shared library that was manually removing \"hide_all_but_jni_onload\" in its target specifically for symbol export reasons. Let me defer to Steve F. who knows a bit more about that specific case. I think, from your description of cast_loadable_module, that we can probably switch that library over and add the hide_all_but_jni config to cast_shared_library.",
+      "parentUuid": "e71a4783_8aa3afb2",
+      "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
