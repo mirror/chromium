@@ -167,10 +167,12 @@ void PerformanceMonitor::Did(const probe::UpdateLayout& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::ExecuteScript& probe) {
+  probe.CaptureStartTime();
   WillExecuteScript(probe.context);
 }
 
 void PerformanceMonitor::Did(const probe::ExecuteScript& probe) {
+  probe.Duration();
   DidExecuteScript();
 }
 
