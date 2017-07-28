@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4fd8172c_f9d86da1",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-07-28T01:04:26Z",
+      "side": 1,
+      "message": "Do we have a bug for this?  I tried locally on both ios 9/10 iPhone/iPad simulators and they are running fine.  I checked the code base and it\u0027s not very consistent.  A lot of them have the grey_interactable() check, though some don\u0027t have it, e.g. external_url_tests.",
+      "parentUuid": "4f0aa379_9b4e572b",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24938957_8fd117c9",
         "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
         "patchSetId": 1
@@ -100,6 +118,24 @@
       "writtenOn": "2017-07-26T16:21:43Z",
       "side": 1,
       "message": "We should use methods in ChromeEarlGreyUI to scroll and tap, and create a helper if it doesn\u0027t exist. I think you dont\u0027 need to fix it in this CL, but maybe file a bug to remove uses of usingSearchAction:grey_scroll... in our tests, since it can be problematic?",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f70c5ab_18157a00",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-07-28T01:04:26Z",
+      "side": 1,
+      "message": "Sure, I filed the bug and will clean this up in another CL.",
+      "parentUuid": "24938957_8fd117c9",
       "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -129,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "7c8e33ca_01ebeaa9",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-07-28T01:04:26Z",
+      "side": 1,
+      "message": "You\u0027re right.  It might be too noisy to keep matchers be used only oncE.  However,  if we keep it in the test file, the file would still depend on the view controllers.  I\u0027ll keep these matchers here for now.  We can decide how to split things up when the file grows huge.",
+      "parentUuid": "0be6ba02_343c8ff5",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f609db3c_aab1ded3",
         "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
         "patchSetId": 1
@@ -140,6 +200,24 @@
       "writtenOn": "2017-07-26T16:21:43Z",
       "side": 1,
       "message": "This looks to be used in a few other tests, would you mind doing one of the following?\n1. Fix it in a follow up CL, right after this lands\n2. File a bug to clean it up\n3. Fix it in this CL",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b536fd1_50c4fdc4",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-07-28T01:04:26Z",
+      "side": 1,
+      "message": "Done.\n\nThis matcher is used in downstream tests as well.  Clean them up in another CL.",
+      "parentUuid": "f609db3c_aab1ded3",
       "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
