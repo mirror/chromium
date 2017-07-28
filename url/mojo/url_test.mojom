@@ -14,3 +14,19 @@ interface UrlTest {
   [Sync]
   BounceOrigin(Origin in) => (Origin out);
 };
+
+interface CronetEngine {
+
+  StartNetLog(string file);
+
+  [Sync]
+  GetDefaultUserAgent() => (string default_user_agent);
+
+  [Sync]
+  SyncCount(int16 i) => ();
+
+  [Sync]
+  DoStuffSync() => ();
+
+};
+
