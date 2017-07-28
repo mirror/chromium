@@ -73,6 +73,9 @@ class SessionControllerClient
 
   static bool IsMultiProfileEnabled();
 
+  // Update the in session oobe status.
+  void UpdateInSessionOobeStatus(bool status);
+
   // user_manager::UserManager::UserSessionStateObserver:
   void ActiveUserChanged(const user_manager::User* active_user) override;
   void UserAddedToSession(const user_manager::User* added_user) override;
@@ -138,6 +141,10 @@ class SessionControllerClient
 
   // Whether the primary user session info is sent to ash.
   bool primary_user_session_sent_ = false;
+
+  // Whether the in session OOBE is active or not. If it is active the lock
+  // screen will be disabled.
+  static bool in_session_oobe_active_;
 
   // If the session is for a supervised user, the profile of that user.
   // Chrome OS only supports a single supervised user in a session.
