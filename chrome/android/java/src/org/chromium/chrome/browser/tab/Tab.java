@@ -1566,7 +1566,7 @@ public class Tab
 
     private void showDataSaverInProductHelp(final FeatureEngagementTracker tracker) {
         ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
-                getActivity().getToolbarManager().getMenuButton(),
+                getActivity().getToolbarManager().getToolbarAnchorViewForIPH(),
                 R.string.iph_data_saver_detail_text,
                 R.string.iph_data_saver_detail_accessibility_text);
         textBubble.setDismissOnTouchInteraction(true);

@@ -509,7 +509,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
                 if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_PAGE_FEATURE)) return;
 
-                mTextBubble = new ViewAnchoredTextBubble(mToolbar.getContext(), getMenuButton(),
+                mTextBubble = new ViewAnchoredTextBubble(mToolbar.getContext(),
+                        getToolbarAnchorViewForIPH(),
                         R.string.iph_download_page_for_offline_usage_text,
                         R.string.iph_download_page_for_offline_usage_accessibility_text);
                 mTextBubble.setDismissOnTouchInteraction(true);
@@ -528,8 +529,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 activity.getAppMenuHandler().setMenuHighlight(R.id.offline_page_id);
                 int yInsetPx = mToolbar.getContext().getResources().getDimensionPixelOffset(
                         R.dimen.text_bubble_menu_anchor_y_inset);
-                mTextBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
-                        FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
+                mTextBubble.setInsetPx(
+                        0, 0, 0, FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
                 mTextBubble.show();
             }
 
@@ -748,6 +749,18 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
      * @return The view containing the pop up menu button.
      */
     public View getMenuButton() {
+        return mToolbar.getMenuButton();
+    }
+
+    /**
+     * @return The view to which the in-product-help text bubble should be anchored to.
+     */
+    public View getToolbarAnchorViewForIPH() {
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            View toolbarHandle = mControlContainer.findViewById(R.id.toolbar_handle);
+            if (toolbarHandle != null) return toolbarHandle;
+        }
+
         return mToolbar.getMenuButton();
     }
 

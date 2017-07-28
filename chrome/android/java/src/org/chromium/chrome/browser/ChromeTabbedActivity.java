@@ -817,7 +817,7 @@ public class ChromeTabbedActivity
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_HOME_FEATURE)) return;
 
         ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(this,
-                getToolbarManager().getMenuButton(), R.string.iph_download_home_text,
+                getToolbarManager().getToolbarAnchorViewForIPH(), R.string.iph_download_home_text,
                 R.string.iph_download_home_accessibility_text);
         textBubble.setDismissOnTouchInteraction(true);
         textBubble.addOnDismissListener(new OnDismissListener() {
@@ -835,8 +835,7 @@ public class ChromeTabbedActivity
         getAppMenuHandler().setMenuHighlight(R.id.downloads_menu_id);
         int yInsetPx =
                 getResources().getDimensionPixelOffset(R.dimen.text_bubble_menu_anchor_y_inset);
-        textBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
-                FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
+        textBubble.setInsetPx(0, 0, 0, FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
         textBubble.show();
     }
 
@@ -2238,7 +2237,7 @@ public class ChromeTabbedActivity
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_PAGE_SCREENSHOT_FEATURE)) return;
 
         ViewAnchoredTextBubble textBubble =
-                new ViewAnchoredTextBubble(this, getToolbarManager().getMenuButton(),
+                new ViewAnchoredTextBubble(this, getToolbarManager().getToolbarAnchorViewForIPH(),
                         R.string.iph_download_page_for_offline_usage_text,
                         R.string.iph_download_page_for_offline_usage_accessibility_text);
         textBubble.setDismissOnTouchInteraction(true);
@@ -2257,8 +2256,7 @@ public class ChromeTabbedActivity
         getAppMenuHandler().setMenuHighlight(R.id.offline_page_id);
         int yInsetPx =
                 getResources().getDimensionPixelOffset(R.dimen.text_bubble_menu_anchor_y_inset);
-        textBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
-                FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
+        textBubble.setInsetPx(0, 0, 0, FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
         textBubble.show();
     }
 }
