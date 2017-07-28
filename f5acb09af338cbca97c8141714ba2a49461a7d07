@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68247504_9941f8ec",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-28T06:43:10Z",
+      "side": 1,
+      "message": "It seems we don\u0027t need this |rect|. Could you remove this?",
+      "revId": "f5acb09af338cbca97c8141714ba2a49461a7d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
