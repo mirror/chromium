@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4722282_b972c4c2",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-28T09:58:49Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this one (unless I am missing something). global dumps are invisible to the UI and edge rules don\u0027t affect other columns !\u003d \"size\"",
+      "range": {
+        "startLine": 99,
+        "startChar": 3,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "0d6640ec71539912fd208ca02c70af09cab3b16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
