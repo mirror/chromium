@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "577f7e69_07aee335",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-28T21:47:45Z",
+      "side": 1,
+      "message": "Is there a bug filed about this / these? Please reference in the TODO. Thanks.",
+      "revId": "51a4c2172292e1a85e3fd6f33fb83ea8d2dd16b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
