@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04923e33_5532def1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-28T20:44:27Z",
+      "side": 1,
+      "message": "resposne -\u003e response",
+      "revId": "7f18d3c9da2305f00edf47279737f465eefc4711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f01e8f_1c62f036",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-28T20:44:27Z",
+      "side": 1,
+      "message": "Nit: sort imports",
+      "revId": "7f18d3c9da2305f00edf47279737f465eefc4711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f95fab_8382e9c4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-28T20:44:27Z",
+      "side": 1,
+      "message": "Style nit: PEP8 suggests using implied line continuation inside parentheses instead of backslash line continuations. (https://www.python.org/dev/peps/pep-0008/#maximum-line-length)",
+      "revId": "7f18d3c9da2305f00edf47279737f465eefc4711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
