@@ -886,8 +886,8 @@ public class DownloadManagerService
     }
 
     @Override
-    public void resumeDownload(ContentId id, DownloadItem item, boolean hasUserGesture) {
-        DownloadProgress progress = mDownloadProgressMap.get(item.getId());
+    public void resumeDownload(ContentId id, boolean isOffTheRecord, boolean hasUserGesture) {
+        DownloadProgress progress = mDownloadProgressMap.get(id.id);
         if (progress != null && progress.mDownloadStatus == DOWNLOAD_STATUS_IN_PROGRESS
                 && !progress.mDownloadItem.getDownloadInfo().isPaused()) {
             // Download already in progress, do nothing
@@ -899,7 +899,7 @@ public class DownloadManagerService
         if (progress == null) {
             assert !item.getDownloadInfo().isPaused();
             updateDownloadProgress(item, DOWNLOAD_STATUS_IN_PROGRESS);
-            progress = mDownloadProgressMap.get(item.getId());
+            progress = mDownloadProgressMap.get(id.id);
             // If progress is null, the browser must have been killed while the download is active.
             recordDownloadResumption(UMA_DOWNLOAD_RESUMPTION_BROWSER_KILLED);
         }
@@ -910,22 +910,21 @@ public class DownloadManagerService
             if (!progress.mCanDownloadWhileMetered) {
                 progress.mCanDownloadWhileMetered = isActiveNetworkMetered(mContext);
             }
-            incrementDownloadRetryCount(item.getId(), true);
-            clearDownloadRetryCount(item.getId(), true);
+            incrementDownloadRetryCount(id.id, true);
+            clearDownloadRetryCount(id.id, true);
         } else {
             // TODO(qinmin): Consolidate this logic with the logic in notification service that
             // throttles browser restarts.
             SharedPreferences sharedPrefs = getAutoRetryCountSharedPreference(mContext);
-            int count = sharedPrefs.getInt(item.getId(), 0);
+            int count = sharedPrefs.getInt(id.id, 0);
             if (count >= getAutoResumptionLimit()) {
-                removeAutoResumableDownload(item.getId());
+                removeAutoResumableDownload(id.id);
                 onDownloadInterrupted(item.getDownloadInfo(), false);
                 return;
             }
-            incrementDownloadRetryCount(item.getId(), false);
+            incrementDownloadRetryCount(id.id, false);
         }
-        nativeResumeDownload(getNativeDownloadManagerService(), item.getId(),
-                item.getDownloadInfo().isOffTheRecord());
+        nativeResumeDownload(getNativeDownloadManagerService(), id.id, isOffTheRecord);
     }
 
     /**

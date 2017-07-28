@@ -13,7 +13,6 @@ import org.chromium.base.ObserverList;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
-import org.chromium.chrome.browser.download.DownloadItem;
 import org.chromium.chrome.browser.download.DownloadServiceDelegate;
 import org.chromium.chrome.browser.download.ui.BackendProvider.OfflinePageDelegate;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
@@ -143,13 +142,13 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
     }
 
     @Override
-    public void resumeDownload(ContentId id, DownloadItem item, boolean hasUserGesture) {
+    public void resumeDownload(ContentId id, boolean hasUserGesture) {
         // If the resumption was an user action then we have to resume the specific download item.
         // Otherwise it can only be called when Chrome starts and we would like to resume all
         // pending requests.
         // We assume that |hasUserGesture| == false means resume all pending requests.
         if (hasUserGesture) {
-            resumeDownload(item.getId());
+            resumeDownload(id);
         } else {
             nativeResumePendingRequestImmediately(mNativeOfflinePageDownloadBridge);
         }

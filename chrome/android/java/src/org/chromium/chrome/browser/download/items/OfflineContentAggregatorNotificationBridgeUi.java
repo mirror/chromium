@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.download.items;
 
 import org.chromium.chrome.browser.download.DownloadInfo;
-import org.chromium.chrome.browser.download.DownloadItem;
 import org.chromium.chrome.browser.download.DownloadNotifier;
 import org.chromium.chrome.browser.download.DownloadServiceDelegate;
 import org.chromium.components.offline_items_collection.ContentId;
@@ -119,7 +118,7 @@ public class OfflineContentAggregatorNotificationBridgeUi
     }
 
     @Override
-    public void resumeDownload(ContentId id, DownloadItem item, boolean hasUserGesture) {
+    public void resumeDownload(ContentId id, boolean isOffTheRecord, boolean hasUserGesture) {
         mProvider.resumeDownload(id);
     }
 
