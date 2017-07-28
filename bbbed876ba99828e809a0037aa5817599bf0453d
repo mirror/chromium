@@ -16,6 +16,24 @@
       "revId": "bbbed876ba99828e809a0037aa5817599bf0453d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b53e2fb_a01e58b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-28T13:09:37Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve been slow with that CL as well.\n\nLet me see if I can pull out the part of it that doesn\u0027t involve Content Suggestions.",
+      "parentUuid": "3bffaeb7_484c2ee0",
+      "revId": "bbbed876ba99828e809a0037aa5817599bf0453d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
