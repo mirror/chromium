@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb421afc_69ce0b46",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-28T20:11:29Z",
+      "side": 1,
+      "message": "\"tablet mode and the\"",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d79bb93_32b173b5",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-28T20:11:29Z",
+      "side": 1,
+      "message": "What actually starts the app list button\u0027s animation?\n(sorry, I\u0027m just missing something here...)",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0bf48ac_ffc204a8",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-28T20:11:29Z",
+      "side": 1,
+      "message": "Can you remove this member and just check GetAppListButtonAnimationCurrentValue()?",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193827dd_5249cd32",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-28T20:11:29Z",
+      "side": 1,
+      "message": "Should this case also be calling NotifyShelfIconPositionsChanged and hiding the overflow bubble?",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a62ea3_c16b79b5",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-28T20:11:29Z",
+      "side": 1,
+      "message": "Should this check if the animator is actually the one for the app list button?",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0033268_533ab3cb",
+        "filename": "ash/shelf/shelf_view_test_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-28T20:11:29Z",
+      "side": 1,
+      "message": "Move this function (and its definition) adjacent to SetAnimationDuration",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee213971_2aebab1d",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-28T20:11:29Z",
+      "side": 1,
+      "message": "\"tablet mode\"",
+      "revId": "6728483516c9aaaa2e50306bf7e8b3ddf264bdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
