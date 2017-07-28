@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c6937d_5cf294c2",
+        "filename": "components/offline_pages/core/offline_page_model_query.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-28T00:04:18Z",
+      "side": 1,
+      "message": "I\u0027d refactor this a bit, you have a bunch of duplicate code due to trying to keep the switch.\n\nDoes something like this make sense?\n\nif (urls_.first !\u003d Requirement::UNSET) {\n   std::vector\u003cGURL\u003e item_urls \u003d {item.url};\n   if (!search_by_final_url_only_)\n     item_urls.push_back(item.original_url);\n\n   ... now you need to match against all the URLs in |item_urls| ...\n}",
+      "revId": "253a0c0d4660766333655cd5bb4ddc965726a65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0074947a_49b4100a",
+        "filename": "components/offline_pages/core/offline_page_model_query.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-28T00:04:18Z",
+      "side": 1,
+      "message": "Are you sure you need this?  Could we just always search by original and final URL?  I think the only case where this would be set is in a unit test.",
+      "revId": "253a0c0d4660766333655cd5bb4ddc965726a65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e034a137_46e6832d",
+        "filename": "components/offline_pages/core/offline_page_model_query.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-28T00:04:18Z",
+      "side": 1,
+      "message": "Instead of bool, please use UrlSearchMode. https://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_model.h?rcl\u003d9a650335461f853e79328d0d173361f3731b7547\u0026l\u003d48",
+      "revId": "253a0c0d4660766333655cd5bb4ddc965726a65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
