@@ -67,6 +67,7 @@ class WebDocumentSubresourceFilterImpl
       const blink::WebURL& url) override;
   void ReportDisallowedLoad() override;
   bool ShouldLogToConsole() override;
+  bool AllowNavigationToBlankTarget() override;
 
   const ActivationState& activation_state() const {
     return filter_.activation_state();

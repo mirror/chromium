@@ -69,6 +69,7 @@
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/NetworkHintsInterface.h"
 #include "core/loader/ProgressTracker.h"
+#include "core/loader/SubresourceFilter.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/CreateWindow.h"
@@ -879,11 +880,17 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
 
   SetReferrerForFrameRequest(request);
 
+  SubresourceFilter* subresource_filter =
+      document_loader_->GetSubresourceFilter();
+  bool allow_navigations_to_blank_target =
+      !subresource_filter ||
+      subresource_filter->AllowNavigationsToBlankTarget();
   if (!target_frame && !request.FrameName().IsEmpty()) {
     if (policy == kNavigationPolicyDownload) {
       Client()->DownloadURL(request.GetResourceRequest(), String());
       return;  // Navigation/download will be handled by the client.
-    } else if (ShouldNavigateTargetFrame(policy)) {
+    } else if (ShouldNavigateTargetFrame(policy) &&
+               allow_navigations_to_blank_target) {
       request.GetResourceRequest().SetFrameType(
           WebURLRequest::kFrameTypeAuxiliary);
       CreateWindowForRequest(request, *frame_, policy);

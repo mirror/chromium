@@ -32,6 +32,7 @@ class MockWebDocumentSubresourceFilter
       const blink::WebURL& url) override;
   void ReportDisallowedLoad() override;
   bool ShouldLogToConsole() override;
+  bool AllowNavigationToBlankTarget() override;
 
  private:
   LoadPolicy getLoadPolicyImpl(const blink::WebURL& url);

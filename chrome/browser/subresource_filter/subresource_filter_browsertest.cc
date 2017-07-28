@@ -1173,6 +1173,52 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                    ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
 }
 
+IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
+                       DisallowBlankTargetNavigations) {
+  Configuration config = Configuration::MakePresetForLiveRunOnPhishingSites();
+  config.activation_options.should_strengthen_popup_blocker = true;
+  ResetConfiguration(std::move(config));
+  const char kBlankTargetPath[] =
+      "/subresource_filter/blank_target_navigation.html";
+  GURL a_url(embedded_test_server()->GetURL("a.com", kBlankTargetPath));
+  GURL b_url(embedded_test_server()->GetURL("b.com", kBlankTargetPath));
+  // Only configure |a_url| as a phishing URL.
+  ConfigureAsPhishingURL(a_url);
+
+  // Only necessary so we have a valid ruleset.
+  ASSERT_NO_FATAL_FAILURE(SetRulesetWithRules(std::vector<proto::UrlRule>()));
+
+  // Navigate to a_url, should not trigger the popup blocker, but instead should
+  // just navigate the page in the current tab.
+  ui_test_utils::NavigateToURL(browser(), a_url);
+  content::TestNavigationObserver navigation_observer(nullptr, 1);
+  navigation_observer.StartWatchingNewWebContents();
+  EXPECT_TRUE(content::ExecuteScript(
+      web_contents(), "document.getElementsByTagName('a')[0].click();"));
+  // Make sure the popup UI was not shown.
+  EXPECT_FALSE(TabSpecificContentSettings::FromWebContents(web_contents())
+                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
+  // Wait for the navigation to finish, and expect that it finished in this tab.
+  content::WebContents* nav_finished_contents = navigation_observer.Wait();
+  EXPECT_EQ(nav_finished_contents, web_contents());
+
+  // Navigate to b_url, should not trigger the popup blocker, and should
+  // successfully open a new tab.
+  ui_test_utils::NavigateToURL(browser(), b_url);
+  content::TestNavigationObserver navigation_observer2(nullptr, 1);
+  navigation_observer.StartWatchingNewWebContents();
+  EXPECT_TRUE(content::ExecuteScript(
+      web_contents(), "document.getElementsByTagName('a')[0].click();"));
+
+  // Make sure the popup UI was not shown.
+  EXPECT_FALSE(TabSpecificContentSettings::FromWebContents(web_contents())
+                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
+  // Wait for the navigation to finish, and expect that it finished in a new
+  // tab.
+  nav_finished_contents = navigation_observer2.Wait();
+  EXPECT_NE(nav_finished_contents, web_contents());
+}
+
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, BlockCreatingNewWindows) {
   Configuration config = Configuration::MakePresetForLiveRunOnPhishingSites();
   config.activation_options.should_strengthen_popup_blocker = true;

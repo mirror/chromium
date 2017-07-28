@@ -74,6 +74,7 @@ TestNavigationObserver::TestNavigationObserver(
       number_of_navigations_(number_of_navigations),
       last_navigation_succeeded_(false),
       last_net_error_code_(net::OK),
+      last_completed_web_contents_(nullptr),
       message_loop_runner_(new MessageLoopRunner(quit_mode)),
       web_contents_created_callback_(
           base::Bind(&TestNavigationObserver::OnWebContentsCreated,
@@ -91,8 +92,9 @@ TestNavigationObserver::~TestNavigationObserver() {
   StopWatchingNewWebContents();
 }
 
-void TestNavigationObserver::Wait() {
+WebContents* TestNavigationObserver::Wait() {
   message_loop_runner_->Run();
+  return last_completed_web_contents_;
 }
 
 void TestNavigationObserver::StartWatchingNewWebContents() {
@@ -147,6 +149,7 @@ void TestNavigationObserver::OnDidStopLoading(WebContents* web_contents) {
     return;
 
   ++navigations_completed_;
+  last_completed_web_contents_ = web_contents;
   if (navigations_completed_ == number_of_navigations_) {
     navigation_started_ = false;
     message_loop_runner_->Quit();

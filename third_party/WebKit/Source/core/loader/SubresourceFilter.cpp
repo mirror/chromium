@@ -83,6 +83,13 @@ bool SubresourceFilter::AllowWebSocketConnection(const KURL& url) {
   return load_policy != WebDocumentSubresourceFilter::kDisallow;
 }
 
+bool SubresourceFilter::AllowNavigationsToBlankTarget() {
+  // TODO(csharrison): Consider logging to console when this occurs. Since it
+  // will precede a navigation it will only be really useful if the developer is
+  // using persistent logging though.
+  return true;
+}
+
 void SubresourceFilter::ReportLoad(
     const KURL& resource_url,
     WebDocumentSubresourceFilter::LoadPolicy load_policy) {

@@ -49,6 +49,8 @@ class TestDocumentSubresourceFilter : public WebDocumentSubresourceFilter {
 
   bool ShouldLogToConsole() override { return false; }
 
+  bool AllowNavigationToBlankTarget() { return true; }
+
   const std::vector<std::string>& QueriedSubresourcePaths() const {
     return queried_subresource_paths_;
   }

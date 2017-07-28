@@ -25,6 +25,7 @@ IPC_STRUCT_TRAITS_BEGIN(subresource_filter::ActivationState)
   IPC_STRUCT_TRAITS_MEMBER(generic_blocking_rules_disabled)
   IPC_STRUCT_TRAITS_MEMBER(measure_performance)
   IPC_STRUCT_TRAITS_MEMBER(enable_logging)
+  IPC_STRUCT_TRAITS_MEMBER(enable_strong_popup_blocker)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(subresource_filter::DocumentLoadStatistics)

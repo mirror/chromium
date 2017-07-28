@@ -242,8 +242,6 @@ bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow(
     return false;
   const ActivationState state = it->second->activation_state();
   if (state.activation_level != ActivationLevel::ENABLED ||
-      state.filtering_disabled_for_document ||
-      state.generic_blocking_rules_disabled ||
       !delegate_->AllowStrongPopupBlocking()) {
     return false;
   }
