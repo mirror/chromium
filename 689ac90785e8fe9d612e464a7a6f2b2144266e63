@@ -99,6 +99,30 @@
       "revId": "689ac90785e8fe9d612e464a7a6f2b2144266e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72de860_2b6d264b",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T20:23:53Z",
+      "side": 1,
+      "message": "Just saw this. Yes, we will have some traversal overhead. But I don\u0027t think that\u0027s a lot. I am mostly thinking about consistency on how to recalculate properties. It is just easier to follow when all properties are recalculated using the same way, instead of some using passed-in value and some other using traversal and ignore the default null value.",
+      "parentUuid": "093c8a7c_5846c68b",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 55
+      },
+      "revId": "689ac90785e8fe9d612e464a7a6f2b2144266e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
