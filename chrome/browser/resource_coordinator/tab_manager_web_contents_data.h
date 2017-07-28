@@ -137,6 +137,14 @@ class TabManager::WebContentsData
     return tab_data_.tab_loading_state;
   }
 
+  void SetIsLoadingInSessionRestore(bool is_loading) {
+    tab_data_.is_loading_in_session_restore = is_loading;
+  }
+
+  bool is_loading_in_session_restore() const {
+    return tab_data_.is_loading_in_session_restore;
+  }
+
  private:
   // Needed to access tab_data_.
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, CopyState);
@@ -168,6 +176,8 @@ class TabManager::WebContentsData
     bool is_auto_discardable;
     // Current loading state of this tab.
     TabLoadingState tab_loading_state;
+    // True if the tab is being loaded by session restore.
+    bool is_loading_in_session_restore;
   };
 
   // Returns either the system's clock or the test clock. See |test_tick_clock_|

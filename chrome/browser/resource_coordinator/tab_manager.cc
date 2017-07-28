@@ -201,6 +201,14 @@ class TabManager::TabManagerSessionRestoreObserver
     tab_manager_->OnSessionRestoreFinishedLoadingTabs();
   }
 
+  void OnWillRestoreTab(WebContents* web_contents) override {
+    tab_manager_->OnWillRestoreTab(web_contents);
+  }
+
+  void OnDidRestoreTab(WebContents* web_contents) override {
+    tab_manager_->OnDidRestoreTab(web_contents);
+  }
+
  private:
   TabManager* tab_manager_;
 };
@@ -586,6 +594,18 @@ void TabManager::OnSessionRestoreStartedLoadingTabs() {
 void TabManager::OnSessionRestoreFinishedLoadingTabs() {
   DCHECK(is_session_restore_loading_tabs_);
   is_session_restore_loading_tabs_ = false;
+}
+
+void TabManager::OnWillRestoreTab(WebContents* web_contents) {
+  WebContentsData* data = GetWebContentsData(web_contents);
+  DCHECK(!data->is_loading_in_session_restore());
+  data->SetIsLoadingInSessionRestore(true);
+}
+
+void TabManager::OnDidRestoreTab(WebContents* web_contents) {
+  WebContentsData* data = GetWebContentsData(web_contents);
+  DCHECK(data->is_loading_in_session_restore());
+  data->SetIsLoadingInSessionRestore(false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
