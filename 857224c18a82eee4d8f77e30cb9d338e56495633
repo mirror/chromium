@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "248200fd_0cfdf9c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-28T02:29:34Z",
+      "side": 1,
+      "message": "Also, how did 689520 become 575383?",
+      "revId": "857224c18a82eee4d8f77e30cb9d338e56495633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
