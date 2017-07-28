@@ -22,6 +22,30 @@
       "revId": "f4a9de3ad97f7cb3bd4e5b6f3d77bbcbd4ace6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f77ea59_8b7716cc",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameSerializerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-28T15:45:10Z",
+      "side": 1,
+      "message": "I\u0027ve updated to use the segmented access explicitly -- given that the serialized frame data could be arbitrarily long, it seemed like the right thing to do.",
+      "parentUuid": "41d9b519_cb09ae6b",
+      "range": {
+        "startLine": 274,
+        "startChar": 6,
+        "endLine": 274,
+        "endChar": 13
+      },
+      "revId": "f4a9de3ad97f7cb3bd4e5b6f3d77bbcbd4ace6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
