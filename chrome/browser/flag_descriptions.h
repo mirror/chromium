@@ -864,6 +864,9 @@ extern const char kAccessibilityTabSwitcherDescription[];
 extern const char kAndroidAutofillAccessibilityName[];
 extern const char kAndroidAutofillAccessibilityDescription[];
 
+extern const char kAndroidPaymentAppDescriptionsName[];
+extern const char kAndroidPaymentAppDescriptionsDescription[];
+
 extern const char kAndroidPaymentAppsName[];
 extern const char kAndroidPaymentAppsDescription[];
 

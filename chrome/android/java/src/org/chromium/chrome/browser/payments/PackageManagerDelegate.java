@@ -112,6 +112,16 @@ public class PackageManagerDelegate {
     }
 
     /**
+     * Retrieves the description of the app.
+     * @param applicationInfo The application info.
+     * @return The description for this app.
+     */
+    public CharSequence getAppDescription(ApplicationInfo applicationInfo) {
+        return applicationInfo.loadDescription(
+                ContextUtils.getApplicationContext().getPackageManager());
+    }
+
+    /**
      * Retrieves the icon of the app.
      * @param resolveInfo The identifying information for an app.
      * @return The icon for this app.

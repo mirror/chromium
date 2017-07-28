@@ -604,7 +604,8 @@ const char kGamepadExtensionsDescription[] =
 const char kGlCompositedOverlayCandidateQuadBordersName[] =
     "GL composited overlay candidate quad borders";
 const char kGlCompositedOverlayCandidateQuadBordersDescription[] =
-    "Renders a border around GL composited overlay candidate quads to help debug and "
+    "Renders a border around GL composited overlay candidate quads to help "
+    "debug and "
     "study overlay support.";
 
 const char kGpuRasterizationMsaaSampleCountName[] =
@@ -1391,6 +1392,11 @@ const char kAccessibilityTabSwitcherDescription[] =
 const char kAndroidAutofillAccessibilityName[] = "Autofill Accessibility";
 const char kAndroidAutofillAccessibilityDescription[] =
     "Enable accessibility for autofill popup.";
+
+const char kAndroidPaymentAppDescriptionsName[] =
+    "Android payment app descriptions";
+const char kAndroidPaymentAppDescriptionsDescription[] =
+    "Show the descriptions of the Android payment apps in the web payments UI.";
 
 const char kAndroidPaymentAppsName[] = "Android payment apps";
 const char kAndroidPaymentAppsDescription[] =

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.payments.PaymentAppFactory.PaymentAppCreatedCallback;
 import org.chromium.chrome.browser.payments.PaymentManifestVerifier.ManifestVerifyCallback;
@@ -276,8 +277,18 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
                 Log.e(TAG, "Skipping \"%s\" because of empty label.", packageName);
                 return;
             }
+
+            String description = null;
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_PAYMENT_APP_DESCRIPTIONS)) {
+                CharSequence descriptionCharSequence = mPackageManagerDelegate.getAppDescription(
+                        resolveInfo.activityInfo.applicationInfo);
+                if (!TextUtils.isEmpty(descriptionCharSequence)) {
+                    description = descriptionCharSequence.toString();
+                }
+            }
+
             app = new AndroidPaymentApp(mWebContents, packageName, resolveInfo.activityInfo.name,
-                    label.toString(), mPackageManagerDelegate.getAppIcon(resolveInfo),
+                    label.toString(), description, mPackageManagerDelegate.getAppIcon(resolveInfo),
                     mIsIncognito);
             mResult.put(packageName, app);
         }
