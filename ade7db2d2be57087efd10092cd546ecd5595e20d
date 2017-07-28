@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "97437226_d4e969c9",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:38:05Z",
+      "side": 1,
+      "message": "Shall we cache entire FileInfo instead? Obtaining it will require spinning the process if it\u0027s not active. Since it\u0027s an aggregate we may be spinning tens of processes just to list a directory of recents.\n\n\nIIUC the logic assumes that obtaining list of recents is slower than obtaining file info for all recent files. Not sure if it\u0027s true for at least FSP. Android does some internal optimizations to avoid spinning processes, but not sure how it would affect performance here. It may be worth checking.",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac9a4c9d_124dec86",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
