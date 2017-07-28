@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dbbd8af_13d16226",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-28T07:22:23Z",
+      "side": 1,
+      "message": "Could you split this patch into 3+ patches of:\n1. Replace starting_selection_ type to SelectionForUndoStep. Hold functions and their \n signature as-is and convert VisibleSelection\u003c-\u003eSelectionForUndoStep in SetXXXSelection and \nStarting/EndingSelection.\n2. Introduce |SelectionForUndoStep StartingSelection()| and utilize it in some where.\n2+. Utilize the function on each usage class.",
+      "revId": "1923f8cfa3af5d3151976942c5829c89041258fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa11c85a_0015133c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-28T07:22:23Z",
+      "side": 1,
+      "message": "Can we return empty SelectionInDOMTree w/o affinity and directional when we have null base_?",
+      "revId": "1923f8cfa3af5d3151976942c5829c89041258fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
