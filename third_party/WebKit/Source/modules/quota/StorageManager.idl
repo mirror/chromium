@@ -3,9 +3,8 @@
 // found in the LICENSE file.
 
 // https://storage.spec.whatwg.org/#storagemanager
-
-// TODO(jsbell): Should have [SecureContext] on interface
 [
+    SecureContext,
     Exposed=(Window,Worker)
 ] interface StorageManager {
     [CallWith=ScriptState, MeasureAs=DurableStoragePersisted] Promise<boolean> persisted();

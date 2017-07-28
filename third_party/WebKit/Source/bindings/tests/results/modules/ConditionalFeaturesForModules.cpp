@@ -51,10 +51,6 @@ void InstallConditionalFeaturesOnGlobalForModules(
   if (wrapper_type_info == &V8Window::wrapperTypeInfo) {
     V8WindowPartial::InstallConditionalFeaturesOnGlobal(
         script_state->GetContext(), script_state->World());
-  }
-  // TODO(chasej): Uncomment when [SecureContext] is applied to an interface
-  // exposed to workers (i.e. StorageManager.idl).
-  /*
   } else if (wrapper_type_info ==
              &V8DedicatedWorkerGlobalScope::wrapperTypeInfo) {
     V8DedicatedWorkerGlobalScopePartial::InstallConditionalFeaturesOnGlobal(
@@ -67,7 +63,6 @@ void InstallConditionalFeaturesOnGlobalForModules(
     V8ServiceWorkerGlobalScope::InstallConditionalFeaturesOnGlobal(
         script_state->GetContext(), script_state->World());
   }
-  */
 }
 
 void InstallPendingConditionalFeatureForModules(
