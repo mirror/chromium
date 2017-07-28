@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16df229_b413c1bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-018.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T17:07:12Z",
+      "side": 1,
+      "message": "Maybe a border around this element would make it easier to tell a pass from nothing?",
+      "revId": "e2cd7b51b1ee9a21a536c02cdcb41ee4c748337d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c71bd01_ab7ce5ae",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-018.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T17:07:12Z",
+      "side": 1,
+      "message": "nit: consistent indent.",
+      "revId": "e2cd7b51b1ee9a21a536c02cdcb41ee4c748337d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab6ab31_192d0531",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-018.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T17:07:12Z",
+      "side": 1,
+      "message": "Document why we generate a random string - i.e. that there is no way to determine which global scope this code is running in so we are using a random string to make it extremely unlikely that the multiple constructed global scopes will have the same input arguments.",
+      "revId": "e2cd7b51b1ee9a21a536c02cdcb41ee4c748337d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f627204_5a8856ad",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-018.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T17:07:12Z",
+      "side": 1,
+      "message": "I think the explanation of how this test passes should be moved to visible text above the div so that manual testing can be done.",
+      "revId": "e2cd7b51b1ee9a21a536c02cdcb41ee4c748337d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7857a51a_0707e58f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-018.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T17:07:12Z",
+      "side": 1,
+      "message": "Since any painting would an error, how about filling with red?",
+      "revId": "e2cd7b51b1ee9a21a536c02cdcb41ee4c748337d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
