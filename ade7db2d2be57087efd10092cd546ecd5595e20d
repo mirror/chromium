@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec6bbab2_bb92fc97",
+        "filename": "chrome/browser/chromeos/fileapi/recent_async_file_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "Yes, for now, to avoid compiler warning.",
+      "parentUuid": "4c222c14_811475dd",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9038b1a_14284939",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9460dc_314d0b31",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "We need comparator. Please see the other comment.",
+      "parentUuid": "c9038b1a_14284939",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "eb07bafe_e22e709c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "RecentFile implementations can choose to cache FileInfo instead of querying each time. Actually RecentFile for ARC media view will cache documents:\n\nhttps://chromium-review.googlesource.com/c/588730/2/chrome/browser/chromeos/fileapi/recent_arc_media_source.cc#75",
+      "parentUuid": "97437226_d4e969c9",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac9a4c9d_124dec86",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
@@ -70,6 +130,30 @@
       "writtenOn": "2017-07-28T04:55:33Z",
       "side": 1,
       "message": "The naming seems confusing. Original sounds like the original, real, without changes. What if the original file name does not conform to Chrome OS file name restrictions? Will it be altered? If so, then it\u0027s no longer original. Why do we need this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954975e9_3e8ac65d",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "Your argument makes sense.\n\nThe background about this is that this file name won\u0027t be one appearing in Recent due to name conflicts (e.g. \"kitten (1).jpg\"). In case of duplicates, this field will be different from its corresponding key in RecentModel::FilesMap.\n\nWhat do you think is an appropriate naming for this? Maybe I\u0027ll name it just \"file_name\" and add comments about duplicates here?",
+      "parentUuid": "ac9a4c9d_124dec86",
       "range": {
         "startLine": 55,
         "startChar": 17,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ce0c998f_bb0db88c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "This is a cache time for the whole FilesMap, not each file entry.",
+      "parentUuid": "96501247_7faf51cf",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59781363_5b87f821",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -116,6 +224,24 @@
       "writtenOn": "2017-07-28T05:31:26Z",
       "side": 1,
       "message": "How about posting a delayed task to clear the cache after 60s to avoid keeping memory which would never be used anyway?",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f93e00e_57f6af9e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "That sounds a good idea, let me try.",
+      "parentUuid": "59781363_5b87f821",
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "16904133_e60f08fd",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "Yes, we need to sort files to make deduplication suffix as stable as possible.\n\nFor example, both Drive source and Downloads source provided \"kitten.jpg\", where either one is renamed to \"kitten (1).jpg\" in Recent. If we don\u0027t sort files in stable manner, it is not deterministic which one is renamed for each reload.",
+      "parentUuid": "8b1f1c8d_17a31ca8",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b789658_fa97951f",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -165,6 +315,30 @@
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee1f65a_3db15062",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "FilesMap is not copyable because its values are unique_ptr. So we need to std::move() anyway.",
+      "parentUuid": "5b789658_fa97951f",
+      "range": {
+        "startLine": 82,
+        "startChar": 56,
+        "endLine": 82,
+        "endChar": 64
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "b20ce846_9849c74c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "Definitely yes because |callback| is base::OnceCallback.",
+      "parentUuid": "8b828c3a_2177a634",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba00ded5_1b86353f",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -202,6 +400,30 @@
       "writtenOn": "2017-07-28T04:55:33Z",
       "side": 1,
       "message": "Shall we add a limit on number of recents per each source and/or total?",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 53
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d83d01e_1bba4f46",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "I will.",
+      "parentUuid": "ba00ded5_1b86353f",
       "range": {
         "startLine": 137,
         "startChar": 35,
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "b66baf29_3646fd22",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "To avoid possible races I want to avoid deleting whole states. I\u0027m happy to delete cache in states instead.",
+      "parentUuid": "267af922_5217be1c",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c15eb200_c090909e",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
         "patchSetId": 4
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "3279fa97_cc530c2e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "Our plan is to limit the number of files from single source to 1000.",
+      "parentUuid": "c15eb200_c090909e",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0efcf588_0b7357b0",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
         "patchSetId": 4
@@ -271,6 +541,30 @@
       "writtenOn": "2017-07-28T05:31:26Z",
       "side": 1,
       "message": "Do we need cache per each identity? IIUC the cache will be pretty much the same (some entries may be refreshed more often or less though).",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12164efa_7b1551d4",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:00:42Z",
+      "side": 1,
+      "message": "We need |profile| in cache key at least (e.g. for Drive). Maybe we don\u0027t need |origin|... please let me think.",
+      "parentUuid": "0efcf588_0b7357b0",
       "range": {
         "startLine": 68,
         "startChar": 11,
