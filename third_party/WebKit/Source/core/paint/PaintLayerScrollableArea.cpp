@@ -1472,6 +1472,19 @@ void PaintLayerScrollableArea::UpdateScrollCornerStyle() {
   }
 }
 
+Scrollbar* PaintLayerScrollableArea::ScrollbarAtFramePoint(
+    const IntPoint& point_in_frame) {
+  if (HorizontalScrollbar() &&
+      HorizontalScrollbar()->ShouldParticipateInHitTesting() &&
+      HorizontalScrollbar()->FrameRect().Contains(point_in_frame))
+    return HorizontalScrollbar();
+  if (VerticalScrollbar() &&
+      VerticalScrollbar()->ShouldParticipateInHitTesting() &&
+      VerticalScrollbar()->FrameRect().Contains(point_in_frame))
+    return VerticalScrollbar();
+  return nullptr;
+}
+
 bool PaintLayerScrollableArea::HitTestOverflowControls(
     HitTestResult& result,
     const IntPoint& local_point) {
