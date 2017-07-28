@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import json
+
 from webkitpy.common.checkout.git_mock import MockGit
 from webkitpy.common.host_mock import MockHost
 from webkitpy.common.net.buildbot import Build
@@ -299,16 +301,47 @@ class TestImporterTest(LoggingTestCase):
             ])
 
     def test_delete_orphaned_baselines(self):
+        # In this example, there are three existing tests, corresponding to
+        # two files, and one leftover baseline that doesn't correspond to any
+        # existing test (c-expected.txt).
         host = MockHost()
         importer = TestImporter(host)
         dest_path = importer.dest_path
-        host.filesystem.write_text_file(dest_path + '/b-expected.txt', '')
-        host.filesystem.write_text_file(dest_path + '/b.x-expected.txt', '')
-        host.filesystem.write_text_file(dest_path + '/b.x.html', '')
+        host.filesystem.write_text_file(
+            dest_path + '/MANIFEST.json',
+            json.dumps({
+                'items': {
+                    'testharness': {
+                        'a.html': [['/a.html', {}]],
+                        'b.any.js': [
+                            ['/b.any.html', {}],
+                            ['/b.any.worker.html', {}],
+                        ],
+                        'c.html': [
+                            ['/c.html?q=1', {}],
+                            ['/c.html?q=2', {}],
+                        ],
+                    },
+                    'manual': {},
+                    'reftest': {},
+                },
+            }))
+        host.filesystem.write_text_file(dest_path + '/a.html', '')
+        host.filesystem.write_text_file(dest_path + '/a-expected.txt', '')
+        host.filesystem.write_text_file(dest_path + '/b.any.js', '')
+        host.filesystem.write_text_file(dest_path + '/b.any-expected.txt', '')
+        host.filesystem.write_text_file(dest_path + '/b.any.worker-expected.txt', '')
+        host.filesystem.write_text_file(dest_path + '/c.html', '')
+        host.filesystem.write_text_file(dest_path + '/c-expected.txt', '')
+        host.filesystem.write_text_file(dest_path + '/orphaned-expected.txt', '')
+
         importer._delete_orphaned_baselines()
-        self.assertFalse(host.filesystem.exists(dest_path + '/b-expected.txt'))
-        self.assertTrue(host.filesystem.exists(dest_path + '/b.x-expected.txt'))
-        self.assertTrue(host.filesystem.exists(dest_path + '/b.x.html'))
+
+        self.assertFalse(host.filesystem.exists(dest_path + '/orphaned-expected.txt'))
+        self.assertTrue(host.filesystem.exists(dest_path + '/a-expected.txt'))
+        self.assertTrue(host.filesystem.exists(dest_path + '/b.any-expected.txt'))
+        self.assertTrue(host.filesystem.exists(dest_path + '/b.any.worker-expected.txt'))
+        self.assertTrue(host.filesystem.exists(dest_path + '/c-expected.txt'))
 
     def test_clear_out_dest_path(self):
         host = MockHost()
