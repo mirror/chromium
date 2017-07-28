@@ -68,7 +68,7 @@ class BackgroundApplicationListModel::Application
   virtual ~Application();
 
   // Invoked when a request icon is available.
-  void OnImageLoaded(const gfx::Image& image);
+  void OnImageLoaded(gfx::Image image);
 
   // Uses the FILE thread to request this extension's icon, sized
   // appropriately.
@@ -130,7 +130,7 @@ BackgroundApplicationListModel::Application::Application(
     : extension_(extension), model_(model) {}
 
 void BackgroundApplicationListModel::Application::OnImageLoaded(
-    const gfx::Image& image) {
+    gfx::Image image) {
   if (image.IsEmpty())
     return;
   icon_.reset(image.CopyImageSkia());

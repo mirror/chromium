@@ -41,11 +41,11 @@ class ImageLoaderTest : public ExtensionsTest {
         image_loaded_count_(0),
         quit_in_image_loaded_(false) {}
 
-  void OnImageLoaded(const gfx::Image& image) {
+  void OnImageLoaded(gfx::Image image) {
     image_loaded_count_++;
     if (quit_in_image_loaded_)
       base::MessageLoop::current()->QuitWhenIdle();
-    image_ = image;
+    image_ = std::move(image);
   }
 
   void OnImageFamilyLoaded(gfx::ImageFamily image_family) {

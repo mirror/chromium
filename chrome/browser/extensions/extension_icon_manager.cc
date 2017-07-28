@@ -69,7 +69,7 @@ void ExtensionIconManager::RemoveIcon(const std::string& extension_id) {
 }
 
 void ExtensionIconManager::OnImageLoaded(const std::string& extension_id,
-                                         const gfx::Image& image) {
+                                         gfx::Image image) {
   if (image.IsEmpty())
     return;
 
@@ -78,13 +78,12 @@ void ExtensionIconManager::OnImageLoaded(const std::string& extension_id,
   if (pending_icons_.erase(extension_id) == 0)
     return;
 
-  gfx::Image modified_image = image;
   if (monochrome_) {
     color_utils::HSL shift = {-1, 0, 0.6};
-    modified_image = gfx::Image(gfx::ImageSkiaOperations::CreateHSLShiftedImage(
+    image = gfx::Image(gfx::ImageSkiaOperations::CreateHSLShiftedImage(
         image.AsImageSkia(), shift));
   }
-  icons_[extension_id] = modified_image;
+  icons_[extension_id] = std::move(image);
 }
 
 void ExtensionIconManager::EnsureDefaultIcon() {

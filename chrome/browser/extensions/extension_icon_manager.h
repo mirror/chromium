@@ -41,8 +41,7 @@ class ExtensionIconManager {
   void set_monochrome(bool value) { monochrome_ = value; }
 
  protected:
-  virtual void OnImageLoaded(const std::string& extension_id,
-                             const gfx::Image& image);
+  virtual void OnImageLoaded(const std::string& extension_id, gfx::Image image);
 
  private:
   // Makes sure we've done one-time initialization of the default extension icon
