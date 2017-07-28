@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "b3e45d29_09bc1406",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T18:11:41Z",
+      "side": 1,
+      "message": "It seems better to make |suggestion_index| unsigned.",
+      "parentUuid": "a624f708_27cadd14",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a10806c_2e14e291",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 2
@@ -99,6 +117,24 @@
       "writtenOn": "2017-07-28T01:39:31Z",
       "side": 1,
       "message": "nit: s/int32_t/const int32_t/",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279be181_382841aa",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T18:11:41Z",
+      "side": 1,
+      "message": "Why is |tag_| signed?",
+      "parentUuid": "7a10806c_2e14e291",
       "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -298,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "fcaac082_4d97b36f",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T18:11:41Z",
+      "side": 1,
+      "message": "I think we should change this switch-case to a function.\n\nEditing code and paint code shouldn\u0027t be so highly coupled.\n\nBesides, I think the painting of kSuggestion marker should be skipped in this patch. We don\u0027t want to affect painting without a clear idea how the affection will be.",
+      "parentUuid": "5588aca1_58de8d72",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54c0c819_3925bf1c",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 2
@@ -381,6 +435,24 @@
       "side": 1,
       "message": "I don\u0027t think rubber-stamping is good thing. Please use another method to\ninform new marker type to AX team rather than updating case list.\n\nPlease keep in mind to make patch smaller and reduce review time and review cycle.",
       "parentUuid": "c10f50c9_86b2541e",
+      "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c499a59_07501253",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T18:11:41Z",
+      "side": 1,
+      "message": "I think we should change this switch-case to a function.\n\nEditing code and AX code shouldn\u0027t be so highly coupled.",
+      "parentUuid": "c7c9a2af_935f8589",
       "revId": "d8b8f4b12284eb706e1d4507cfccf42dfd990bac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
