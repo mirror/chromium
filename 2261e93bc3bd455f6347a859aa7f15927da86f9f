@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b8bd430_02c950e2",
+        "filename": "ios/chrome/browser/ui/tools_menu/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-28T17:58:05Z",
+      "side": 1,
+      "message": "Can you have this in a separate target so that usage in clean/ doesn\u0027t transitively include all of the old toolbar code?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "2261e93bc3bd455f6347a859aa7f15927da86f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
