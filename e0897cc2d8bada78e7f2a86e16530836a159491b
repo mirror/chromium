@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c56e918a_892729e9",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-28T20:57:19Z",
+      "side": 1,
+      "message": "Right, but this function doesn\u0027t actually insert the SafeBrowsing throttle, so this comment doesn\u0027t belong here.",
+      "parentUuid": "6d8cc985_ded222a3",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 76
+      },
+      "revId": "e0897cc2d8bada78e7f2a86e16530836a159491b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3886c0c3_285f3ffe",
         "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "How I understood this logic is: DeferToCalculateLoadPolicy can be either invoked from WillStartRequest (called exactly once) or WillRedirectRequest (may be invoked multiple times). If the policy is WOULD_DISALLOW it would be computed in WillStartRequest. Before that it would be the default value of LoadPolicy::ALLOW. Once it is set to WOULD_DISALLOW, for all subsequent invocations of this function which will be through WillRedirectRequest we just return from here instead of invoking GetLoadPolicyForSubdocument. Let me know if I am missing something.",
       "parentUuid": "3886c0c3_285f3ffe",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "e0897cc2d8bada78e7f2a86e16530836a159491b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3556943e_1dd2e68c",
+        "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-28T20:57:19Z",
+      "side": 1,
+      "message": "What if we\u0027re in the following situation, where we\u0027re loading an iframe with the following redirects\n\nbegin.com -\u003e a.com -\u003e b.com -\u003e disallowed.com -\u003e c.com -\u003e end.com\n\nWhere only disallowed.com is disallowed.\n\nWillStart starts with begin.com which is allowed.\nWillRedirect is called for a.com, b.com, c.com all returning allowed.\nWillRedirect is called for disallowed.com which returns WOULD_DISALLOW.\nAll subsequent calls to WillRedirect (c.com and end.com) use the WOULD_DISALLOW from disallowed.com.",
+      "parentUuid": "5d930250_10dc3a73",
       "range": {
         "startLine": 79,
         "startChar": 5,
