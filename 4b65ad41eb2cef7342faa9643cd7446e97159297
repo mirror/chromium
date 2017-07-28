@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3485ac88_3641aeaf",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappRegistryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-28T18:42:32Z",
+      "side": 1,
+      "message": "The URL should be a parameter to createWebApkIntent() because it is super important for your new test\n\nI don\u0027t mind if you add a new 3-arg version of createWebApkIntent() or change the 2-arg version to have 3-args",
+      "revId": "4b65ad41eb2cef7342faa9643cd7446e97159297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
