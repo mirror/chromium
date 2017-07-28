@@ -8,13 +8,15 @@
 #include <memory>
 
 #include "base/callback_forward.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/chromeos/fileapi/recent_model.h"
 #include "storage/browser/fileapi/async_file_util.h"
 
 namespace chromeos {
 
-class RecentModel;
+class RecentContext;
 
 // The implementation of storage::AsyncFileUtil for recent.
 //
@@ -92,6 +94,27 @@ class RecentAsyncFileUtil : public storage::AsyncFileUtil {
       const CreateSnapshotFileCallback& callback) override;
 
  private:
+  void GetFileInfoWithContext(
+      scoped_refptr<storage::FileSystemContext> file_system_context,
+      int fields,
+      const GetFileInfoCallback& callback,
+      RecentContext context,
+      const base::FilePath& path);
+  void GetFileInfoWithFilesMap(
+      scoped_refptr<storage::FileSystemContext> file_system_context,
+      int fields,
+      const GetFileInfoCallback& callback,
+      const base::FilePath& path,
+      const RecentModel::FilesMap& files_map);
+
+  void ReadDirectoryWithContext(
+      scoped_refptr<storage::FileSystemContext> file_system_context,
+      const ReadDirectoryCallback& callback,
+      RecentContext context,
+      const base::FilePath& path);
+  void ReadDirectoryWithFilesMap(const ReadDirectoryCallback& callback,
+                                 const RecentModel::FilesMap& files_map);
+
   // Owned by RecentBackendDelegate.
   RecentModel* model_;
 
