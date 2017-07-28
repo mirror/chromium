@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bec8d1c_7850eaab",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "This is inside the #if BUILDFLAG(ENABLE_OFFLINE_PAGES), but it\u0027s unrelated to that, right?",
+      "revId": "8c53c9e0cc6f691ff7a1458dcb08dfbf47ce11dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d58b2f9_0d68de1c",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "optional: With MakeUnique, it\u0027s okay to use auto instead of spelling out the unique_ptr type.",
+      "revId": "8c53c9e0cc6f691ff7a1458dcb08dfbf47ce11dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a669ea9_3fb91689",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "nit: Not required, since it\u0027s already included in the header.",
+      "revId": "8c53c9e0cc6f691ff7a1458dcb08dfbf47ce11dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9707bfbf_18dfad64",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "nit: Not used from here...",
+      "revId": "8c53c9e0cc6f691ff7a1458dcb08dfbf47ce11dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f037c5af_66920f06",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "...to here.",
+      "range": {
+        "startLine": 18,
+        "startChar": 47,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "8c53c9e0cc6f691ff7a1458dcb08dfbf47ce11dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5231a4_fac3a929",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "nit: #include \u003cmap\u003e",
+      "revId": "8c53c9e0cc6f691ff7a1458dcb08dfbf47ce11dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b917670b_0fe62808",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "nit: Not used",
+      "revId": "8c53c9e0cc6f691ff7a1458dcb08dfbf47ce11dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -34,6 +34,24 @@
       "revId": "d14d91f55013840845a58cdad66f6eab58f757d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f6f827_bd883983",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T12:32:31Z",
+      "side": 1,
+      "message": "Might be worth calling out explicitly that it can be sync or async. (In some other places, we take care to always run the callback async, since that tends to make things easier for the caller - only one possible code path.)",
+      "parentUuid": "781e8964_cf03424b",
+      "revId": "d14d91f55013840845a58cdad66f6eab58f757d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
