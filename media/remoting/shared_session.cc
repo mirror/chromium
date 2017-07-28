@@ -39,16 +39,24 @@ SharedSession::~SharedSession() {
 
 bool SharedSession::HasVideoCapability(
     mojom::RemotingSinkVideoCapability capability) const {
+#if defined(OS_ANDROID)
+  return true;
+#else
   return std::find(std::begin(sink_metadata_.video_capabilities),
                    std::end(sink_metadata_.video_capabilities),
                    capability) != std::end(sink_metadata_.video_capabilities);
+#endif
 }
 
 bool SharedSession::HasAudioCapability(
     mojom::RemotingSinkAudioCapability capability) const {
+#if defined(OS_ANDROID)
+  return true;
+#else
   return std::find(std::begin(sink_metadata_.audio_capabilities),
                    std::end(sink_metadata_.audio_capabilities),
                    capability) != std::end(sink_metadata_.audio_capabilities);
+#endif
 }
 
 bool SharedSession::HasFeatureCapability(
