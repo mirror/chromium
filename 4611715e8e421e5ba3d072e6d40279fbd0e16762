@@ -22,6 +22,30 @@
       "revId": "4611715e8e421e5ba3d072e6d40279fbd0e16762",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec604826_930712d2",
+        "filename": "WATCHLISTS",
+        "patchSetId": 11
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-28T09:49:39Z",
+      "side": 1,
+      "message": "Glancing the file, it looked majority of the rules are placing this at the head even limited to ones without blink_ (haven\u0027t counted though). Let me align with them. Consistency among net_ shouldn\u0027t matter, I think.",
+      "parentUuid": "48ba38ce_f15cd362",
+      "range": {
+        "startLine": 777,
+        "startChar": 19,
+        "endLine": 777,
+        "endChar": 20
+      },
+      "revId": "4611715e8e421e5ba3d072e6d40279fbd0e16762",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
