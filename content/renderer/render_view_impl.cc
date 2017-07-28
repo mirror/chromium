@@ -136,7 +136,6 @@
 #include "third_party/WebKit/public/web/WebColorSuggestion.h"
 #include "third_party/WebKit/public/web/WebDOMEvent.h"
 #include "third_party/WebKit/public/web/WebDOMMessageEvent.h"
-#include "third_party/WebKit/public/web/WebDataSource.h"
 #include "third_party/WebKit/public/web/WebDateTimeChooserCompletion.h"
 #include "third_party/WebKit/public/web/WebDateTimeChooserParams.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -207,7 +206,6 @@ using blink::WebApplicationCacheHostClient;
 using blink::WebColor;
 using blink::WebConsoleMessage;
 using blink::WebData;
-using blink::WebDataSource;
 using blink::WebDocument;
 using blink::WebDragOperation;
 using blink::WebElement;
