@@ -12,6 +12,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/time.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -147,6 +148,7 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // Maintains a map of service_manager::Identity -> pid for registered clients.
   std::unique_ptr<ProcessMap> process_map_;
   uint64_t next_dump_id_;
+  base::Time global_dump_start_time_;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(CoordinatorImpl);

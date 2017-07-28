@@ -27,14 +27,6 @@ CoordinationUnitManager::CoordinationUnitManager() = default;
 
 CoordinationUnitManager::~CoordinationUnitManager() = default;
 
-void CoordinationUnitManager::OnStart(
-    service_manager::BinderRegistry* registry,
-    service_manager::ServiceContextRefFactory* service_ref_factory) {
-  registry->AddInterface(base::Bind(&CoordinationUnitProviderImpl::Create,
-                                    base::Unretained(service_ref_factory),
-                                    base::Unretained(this)));
-}
-
 void CoordinationUnitManager::RegisterObserver(
     std::unique_ptr<CoordinationUnitGraphObserver> observer) {
   observers_.push_back(std::move(observer));
@@ -53,6 +45,11 @@ void CoordinationUnitManager::OnCoordinationUnitCreated(
 void CoordinationUnitManager::OnBeforeCoordinationUnitDestroyed(
     CoordinationUnitImpl* coordination_unit) {
   coordination_unit->BeforeDestroyed();
+  for (auto& observer : observers_) {
+    if (observer->ShouldObserve(coordination_unit)) {
+      coordination_unit->RemoveObserver(observer.get());
+    }
+  }
 }
 
 std::unique_ptr<ukm::UkmEntryBuilder>

@@ -14,6 +14,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
@@ -122,6 +123,10 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
     const base::trace_event::MemoryDumpRequestArgs& args_in,
     const RequestGlobalMemoryDumpCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  UMA_HISTOGRAM_COUNTS("MemoryInstrumentation.Debug.GlobalDumpQueueLength",
+                       queued_memory_dump_requests_.size());
+
   bool another_dump_already_in_progress = !queued_memory_dump_requests_.empty();
 
   // TODO(primiano): remove dump_guid from the request. For the moment callers
@@ -213,6 +218,8 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     NOTREACHED() << "No current dump request.";
     return;
   }
+
+  global_dump_start_time_ = base::Time::Now();
 
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN2(
       base::trace_event::MemoryDumpManager::kTraceCategory, "GlobalMemoryDump",
@@ -428,6 +435,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     pmd->process_type = response.second.process_type;
     pmd->chrome_dump = std::move(response.second.dump_ptr->chrome_dump);
     pmd->os_dump = CreatePublicOSDump(*os_dumps[pid]);
+    pmd->pid = pid;
   }
 
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
@@ -446,6 +454,11 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   const auto& callback = request->callback;
   const bool global_success = request->failed_memory_dump_count == 0;
   callback.Run(global_success, request->args.dump_guid, std::move(global_dump));
+  UMA_HISTOGRAM_LONG_TIMES("MemoryInstrumentation.Debug.GlobalDumpDuration",
+                           base::Time::Now() - global_dump_start_time_);
+  UMA_HISTOGRAM_COUNTS(
+      "MemoryInstrumentation.Debug.FailedProcessDumpsPerGlobalDump",
+      request->failed_memory_dump_count);
 
   char guid_str[20];
   sprintf(guid_str, "0x%" PRIx64, request->args.dump_guid);

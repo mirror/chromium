@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_manager.h"
@@ -15,7 +16,6 @@
 
 namespace service_manager {
 class ServiceContextRefFactory;
-class ServiceContextRef;
 }  // service_manager
 
 namespace resource_coordinator {
@@ -27,9 +27,7 @@ class CoordinationUnitProviderImpl : public mojom::CoordinationUnitProvider {
       CoordinationUnitManager* coordination_unit_manager);
   ~CoordinationUnitProviderImpl() override;
 
-  static void Create(
-      service_manager::ServiceContextRefFactory* service_ref_factory,
-      CoordinationUnitManager* coordination_unit_manager,
+  void BindToInterface(
       resource_coordinator::mojom::CoordinationUnitProviderRequest request);
 
   // Overridden from mojom::CoordinationUnitProvider:
@@ -38,8 +36,8 @@ class CoordinationUnitProviderImpl : public mojom::CoordinationUnitProvider {
       const CoordinationUnitID& id) override;
 
  private:
+  mojo::BindingSet<mojom::CoordinationUnitProvider> bindings_;
   service_manager::ServiceContextRefFactory* service_ref_factory_;
-  std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
   CoordinationUnitManager* coordination_unit_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(CoordinationUnitProviderImpl);

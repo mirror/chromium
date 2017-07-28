@@ -37,6 +37,17 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
 }
 
+// static
+std::vector<CoordinationUnitImpl*>
+CoordinationUnitImpl::GetCoordinationUnitsOfType(CoordinationUnitType type) {
+  std::vector<CoordinationUnitImpl*> results;
+  for (auto& el : g_cu_map()) {
+    if (el.second->id().type == type)
+      results.push_back(el.second);
+  }
+  return results;
+}
+
 CoordinationUnitImpl::CoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
