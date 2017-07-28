@@ -23,6 +23,8 @@
 #include "ui/gl/gl_fence.h"
 #include "ui/gl/gpu_timing.h"
 
+#include "base/trace_event/trace_event.h"
+
 namespace gpu {
 namespace gles2 {
 
@@ -569,8 +571,11 @@ void TimeElapsedQuery::Resume() {
 }
 
 void TimeElapsedQuery::Process(bool did_finish) {
+{
+  TRACE_EVENT0("gpu", "IsAvailable");
   if (!gpu_timer_->IsAvailable())
     return;
+}
 
   // Make sure disjoint value is up to date. This disjoint check is the only one
   // that needs to be done to validate that this query is valid. If a disjoint
@@ -956,7 +961,10 @@ void QueryManager::Query::MarkAsCompleted(uint64_t result) {
 void QueryManager::ProcessPendingQueries(bool did_finish) {
   while (!pending_queries_.empty()) {
     Query* query = pending_queries_.front().get();
-    query->Process(did_finish);
+    {
+      TRACE_EVENT0("gpu", "Process");
+      query->Process(did_finish);
+    }
     if (query->IsPending()) {
       break;
     }
