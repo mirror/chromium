@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9a5a70_37775624",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Oops |raw_image| should be |raw_image_| in comments.",
+      "range": {
+        "startLine": 59,
+        "startChar": 22,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89c8850_9e52a851",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Not sure what this is trying to say?",
+      "range": {
+        "startLine": 83,
+        "startChar": 63,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc1c751_157379df",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Both of these are referenced by [type]. How about aggregate them into one struct:\n\nstruct TypeInfo {\n  ReferenceTypeTraits traits;\n  std::vector\u003cReference\u003e refs;\n};\nstd::vector\u003cTypeInfo\u003e types_;\n\n?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29aa7fa5_f79619ff",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Both of these are referenced by [pool]. How about aggregate them into one struct:\n\nstruct PoolInfo {\n  std::vector\u003cTypeTag\u003e types;\n  size_t count;\n};\nstd::vector\u003cPoolInfo\u003e pools_;\n\n?",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 35
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58440c85_97c53631",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Relying on type cast operator seems hacky. Can this be be made explicit? E.g.:\n\nReference AsReference() const { ... }",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

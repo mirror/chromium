@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "15986ccb_ed068db1",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Vile.",
+      "parentUuid": "491bf3ac_939ae3d7",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 80
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a1ad2f_d85e69ae",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 1
@@ -577,6 +601,30 @@
     },
     {
       "key": {
+        "uuid": "558f86cc_35afce76",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dab1bd80_5622cd11",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01904b73_ef66248e",
         "filename": "chrome/installer/zucchini/image_index_unittest.cc",
         "patchSetId": 1
@@ -668,6 +716,30 @@
       "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b966bdcb_9fea1928",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df822019_ca2d5897",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -800,6 +872,30 @@
       "side": 1,
       "message": "I\u0027m not sure about putting TestReferenceReader in the same file as ReferenceReader, because it is only used for unittests. Also, if I extract ReferenceReader from disassembler.h, should I extract ReferenceWriter as well? I was thinking of having a TestReferenceWriter eventually, which could go with this one, not sure if we will need a full TestDisassembler though, but if its the case, it would use TestReferenceReader and TestReferenceWriter for each group.",
       "parentUuid": "876072dd_cbb62b0e",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42997bed_e9c8e1a5",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-28T18:30:49Z",
+      "side": 1,
+      "message": "Problem is disassembler.h is kinda bulky.... But it\u0027s really weird that ReferenceReader does not have its own file, but TestReferenceReader does -- and also in test_disassembler.h, which does not relaly have an disassembler stuff.",
+      "parentUuid": "aec699ee_81cb6999",
       "range": {
         "startLine": 5,
         "startChar": 8,
