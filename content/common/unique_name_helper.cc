@@ -8,7 +8,9 @@
 
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
+#include "crypto/sha2.h"
 
 namespace content {
 
@@ -22,7 +24,7 @@ class PendingChildFrameAdapter : public UniqueNameHelper::FrameAdapter {
 
   // FrameAdapter overrides:
   bool IsMainFrame() const override { return false; }
-  bool IsCandidateUnique(const std::string& name) const override {
+  bool IsCandidateUnique(base::StringPiece name) const override {
     return parent_->IsCandidateUnique(name);
   }
   int GetSiblingCount() const override {
@@ -53,6 +55,8 @@ class PendingChildFrameAdapter : public UniqueNameHelper::FrameAdapter {
 constexpr char kFramePathPrefix[] = "<!--framePath /";
 constexpr int kFramePathPrefixLength = 15;
 constexpr int kFramePathSuffixLength = 3;
+
+constexpr size_t kMaxRequestedNameSize = 128;
 
 bool IsNameWithFramePath(base::StringPiece name) {
   return name.starts_with(kFramePathPrefix) && name.ends_with("-->") &&
@@ -131,9 +135,18 @@ std::string AppendUniqueSuffix(const FrameAdapter* frame,
 }
 
 std::string CalculateNewName(const FrameAdapter* frame,
-                             const std::string& name) {
+                             base::StringPiece name) {
+  std::string hashed_name;
+  // By default, |name| is the browsing context name, which can be arbitrarily
+  // long. Since the generated name is part of history entries and FrameState,
+  // hash pathologically long names to avoid using a lot of memory.
+  if (name.size() > kMaxRequestedNameSize) {
+    uint8_t result[crypto::kSHA256Length];
+    crypto::SHA256HashString(name, result, arraysize(result));
+    hashed_name = base::HexEncode(result, arraysize(result));
+  }
   if (!name.empty() && frame->IsCandidateUnique(name) && name != "_blank")
-    return name;
+    return name.as_string();
 
   std::string candidate = GenerateCandidate(frame);
   if (frame->IsCandidateUnique(candidate))

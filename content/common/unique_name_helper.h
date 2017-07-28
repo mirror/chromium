@@ -74,7 +74,7 @@ class UniqueNameHelper {
     virtual ~FrameAdapter();
 
     virtual bool IsMainFrame() const = 0;
-    virtual bool IsCandidateUnique(const std::string& name) const = 0;
+    virtual bool IsCandidateUnique(base::StringPiece name) const = 0;
     // Returns the number of sibling frames of this frame. Note this should not
     // include this frame in the count.
     virtual int GetSiblingCount() const = 0;
