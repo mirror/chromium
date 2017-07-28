@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d990f727_a136290a",
+        "filename": "chrome/browser/chromeos/settings/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T16:58:17Z",
+      "side": 1,
+      "message": "Why don\u0027t you go ahead and add myself to this directory; I\u0027m reasonably familiar with the code and the others here haven\u0027t been active in this directory in quite a while as far as I am aware.",
+      "revId": "601b46087498f1b421e7bc13968b6edcdbae0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
