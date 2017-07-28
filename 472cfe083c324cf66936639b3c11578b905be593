@@ -22,6 +22,29 @@
       "revId": "472cfe083c324cf66936639b3c11578b905be593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e79a75_b02d4b00",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-28T16:09:06Z",
+      "side": 1,
+      "message": "If the goal is to move all Android bits, then this target should also move.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "472cfe083c324cf66936639b3c11578b905be593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
