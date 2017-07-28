@@ -6,15 +6,28 @@
 
 #include <stdint.h>
 
+#include <algorithm>
 #include <string>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
+#include "base/unguessable_token.h"
 #include "base/values.h"
 
 namespace base {
+namespace {
+// Helper for serialize/deserialize UnguessableToken.
+union UnguessableTokenRepresentation {
+  uint8_t buffer[2 * sizeof(uint64_t)];
+  struct {
+    uint64_t high;
+    uint64_t low;
+  };
+};
+}  // namespace
 
 // |Value| internally stores strings in UTF-8, so we have to convert from the
 // system native code to UTF-8 and back.
@@ -45,6 +58,38 @@ bool GetValueAsTimeDelta(const Value& value, TimeDelta* time) {
     return false;
   if (time)
     *time = TimeDelta::FromInternalValue(int_value);
+  return true;
+}
+
+std::unique_ptr<Value> CreateUnguessableTokenValue(
+    const UnguessableToken& token) {
+  UnguessableTokenRepresentation representation;
+  representation.high = token.GetHighForSerialization();
+  representation.low = token.GetLowForSerialization();
+
+  return MakeUnique<Value>(
+      HexEncode(representation.buffer, sizeof(representation.buffer)));
+}
+
+bool GetValueAsUnguessableToken(const Value& value, UnguessableToken* token) {
+  if (!value.is_string()) {
+    return false;
+  }
+
+  std::vector<uint8_t> high_low_bytes;
+  if (!HexStringToBytes(value.GetString(), &high_low_bytes)) {
+    return false;
+  }
+
+  UnguessableTokenRepresentation representation;
+  if (high_low_bytes.size() != sizeof(representation.buffer)) {
+    return false;
+  }
+
+  std::copy(high_low_bytes.begin(), high_low_bytes.end(),
+            std::begin(representation.buffer));
+  *token =
+      UnguessableToken::Deserialize(representation.high, representation.low);
   return true;
 }
 
