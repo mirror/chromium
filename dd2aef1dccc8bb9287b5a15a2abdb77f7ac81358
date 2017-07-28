@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04fae7c7_4703886d",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-28T19:49:27Z",
+      "side": 1,
+      "message": "Do you want to just add a templated HasValidInputs for every PaintOp so we don\u0027t accidentally end up missing something in the future?",
+      "range": {
+        "startLine": 781,
+        "startChar": 15,
+        "endLine": 781,
+        "endChar": 30
+      },
+      "revId": "dd2aef1dccc8bb9287b5a15a2abdb77f7ac81358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
