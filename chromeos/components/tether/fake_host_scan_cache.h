@@ -5,8 +5,8 @@
 #ifndef CHROMEOS_COMPONENTS_TETHER_FAKE_HOST_SCAN_CACHE_H_
 #define CHROMEOS_COMPONENTS_TETHER_FAKE_HOST_SCAN_CACHE_H_
 
+#include <map>
 #include <string>
-#include <unordered_map>
 #include <unordered_set>
 
 #include "base/macros.h"
@@ -27,9 +27,7 @@ class FakeHostScanCache : virtual public HostScanCache {
       const std::string& tether_network_guid);
   size_t size() { return cache_.size(); }
   bool empty() { return cache_.empty(); }
-  const std::unordered_map<std::string, HostScanCacheEntry> cache() {
-    return cache_;
-  }
+  const std::map<std::string, HostScanCacheEntry> cache() { return cache_; }
 
   // HostScanCache:
   void SetHostScanResult(const HostScanCacheEntry& entry) override;
@@ -42,7 +40,7 @@ class FakeHostScanCache : virtual public HostScanCache {
       const std::string& tether_network_guid) override;
 
  private:
-  std::unordered_map<std::string, HostScanCacheEntry> cache_;
+  std::map<std::string, HostScanCacheEntry> cache_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeHostScanCache);
 };

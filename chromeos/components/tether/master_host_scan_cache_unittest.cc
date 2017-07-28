@@ -36,7 +36,8 @@ class FakePersistentHostScanCache : public FakeHostScanCache,
   // PersistentHostScanCache:
   std::unordered_map<std::string, HostScanCacheEntry> GetStoredCacheEntries()
       override {
-    return cache();
+    return std::unordered_map<std::string, HostScanCacheEntry>(cache().begin(),
+                                                               cache().end());
   }
 };
 
