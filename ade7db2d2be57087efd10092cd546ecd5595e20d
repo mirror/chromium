@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "c9038b1a_14284939",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:26:55Z",
+      "side": 1,
+      "message": "IIUC source_type_ is used only for comparator and nowhere else. Do we need that comparator? Can we remove it as well as all of the source type logic?",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac9a4c9d_124dec86",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
@@ -64,6 +81,29 @@
         "startChar": 12,
         "endLine": 33,
         "endChar": 20
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1f1c8d_17a31ca8",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:26:55Z",
+      "side": 1,
+      "message": "Do we need a comparator? Are we storing RecentFile in any container as value?",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
       },
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
