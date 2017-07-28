@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/mach_override/mach_override.h"
 
 namespace chrome {
 namespace common {
@@ -86,6 +87,15 @@ TEST(CFBundleBlockerTest, IsBundleAllowed) {
         << ", bundle_id " << [bundle_id UTF8String]
         << ", version " << [version_print UTF8String];
   }
+}
+
+TEST(CFBundleBlockerTest, EnableCFBundleBlocker_AllocationAttempts) {
+  ASSERT_EQ(0UL, mach_override_ptr_allocation_attempts()) <<
+      "mach_override_ptr is already called, potentially unsafe to call again";
+  EXPECT_TRUE(EnableCFBundleBlocker());
+  ASSERT_GE(100UL, mach_override_ptr_allocation_attempts()) <<
+      "Too many allocation attempts. "
+      "See https://bugs.chromium.org/p/chromium/issues/detail?id=730918";
 }
 
 }  // namespace

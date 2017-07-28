@@ -28,7 +28,8 @@ namespace mac {
 //
 // This mechanism does not prevent CFBundle (or NSBundle) objects from being
 // created, but it does block them from loading modules into the process.
-void EnableCFBundleBlocker();
+// Returns whether the blocking mechanism setup was successful.
+bool EnableCFBundleBlocker();
 
 // Returns true if |bundle_id| and |version| identify a bundle that is allowed
 // to be loaded even when found in a blocked directory.
