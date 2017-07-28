@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d0cacd_53f2e6c1",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-28T16:59:12Z",
+      "side": 1,
+      "message": "Looks like this needs updating.",
+      "revId": "bf2963d5ce1527f38238dd8da6ce8481158257a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
