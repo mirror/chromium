@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "0f86340b_3650add4",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "some methods test cache_manager_ for null\u0027ness, are you sure about this non-null expectation?",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "530e6c46_2eb0a6b7",
         "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
         "patchSetId": 5
@@ -33,6 +50,46 @@
       "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90202aa7_2593bbc4",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "i\u0027d vote to not \u0027move\u0027 ptr or integer values and instead to pass the |observer| ptr directly by value (we aren\u0027t passing ownership)",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9e1623_9bf11ec7",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "why are these virtual?",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -84,6 +141,40 @@
       "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e861aa22_28a14a95",
+        "filename": "content/browser/cache_storage/cache_storage_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "is there any chance a CacheStorage object outlives |this|, just checking",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaabf7c0_7cf10693",
+        "filename": "content/browser/cache_storage/cache_storage_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "is there a reason to not use base::ObserverList\u003c\u003e?",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -173,6 +264,46 @@
     },
     {
       "key": {
+        "uuid": "9cf8caf4_bdeb13dd",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "this is a mouthful to make that assignment, i think its making a new observer? can this assignement be more direct, we shouldn\u0027t need the local ptr\n\ncache_storage_observer_ \u003d MakeUnique\u003cCacheStorageObserver\u003e(\n       GetWeakPtr()\n       xxx-\u003eGetCacheStorageContext());",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89eabe1_85d4d46e",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "lets not have any copy ctors, we have no reason to copy these objects around",
+      "range": {
+        "startLine": 250,
+        "startChar": 38,
+        "endLine": 250,
+        "endChar": 58
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c1f6470_e0649d42",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 5
@@ -210,6 +341,23 @@
       "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "203b2c25_46e25cde",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "i think you can just call .erase(origin)",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -256,6 +404,63 @@
       "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb4a42f9_db06e16d",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "I think we need a scoped_refptr\u003c\u003e here to be sure the ptr is valid\n(either that or we could store a WeakPtr\u003cCacheStorageManager\u003e to avoid adding the ref)",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734e14dc_4ba41e1d",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "Also, let\u0027s DISALLOW_COPY_AND_ASSIGN(CacheStorageObserver) since there\u0027s no need for that",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 3
+      },
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3eeebce_ba5a73d0",
+        "filename": "content/public/browser/cache_storage_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "please use forward decls to avoid #includes (in the impl.h file)",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -313,6 +518,41 @@
       "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c41fe292_2ada7d10",
+        "filename": "content/public/browser/cache_storage_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "I don\u0027t this we need to put that restriction on this abstract interface, depending in the derivative, it might make sense to copy and assign.\n\nI do think we should put this restriction on the concrete StorageHandler::CacheStorageObserver class, i\u0027ll put a comment over there too.",
+      "parentUuid": "0a64ac93_051c3967",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2f61c65_07907de2",
+        "filename": "content/public/browser/cache_storage_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T21:00:50Z",
+      "side": 1,
+      "message": "Lets avoid altering the public api for this since we don\u0027t have any consumers outside of the content lib, i think these methods and the Observer definition can go in the Impl class in content/browser.",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
