@@ -16,6 +16,8 @@ static_library("zucchini_lib") {
     "crc32.h",
     "disassembler.cc",
     "disassembler.h",
+    "image_index.cc",
+    "image_index.h",
     "image_utils.h",
     "io_utils.cc",
     "io_utils.h",
@@ -62,11 +64,13 @@ test("zucchini_unittests") {
     "buffer_source_unittest.cc",
     "buffer_view_unittest.cc",
     "crc32_unittest.cc",
+    "image_index_unittest.cc",
     "image_utils_unittest.cc",
     "io_utils_unittest.cc",
     "label_manager_unittest.cc",
     "patch_utils_unittest.cc",
     "suffix_array_unittest.cc",
+    "test_disassembler.h",
     "typed_value_unittest.cc",
   ]
 
