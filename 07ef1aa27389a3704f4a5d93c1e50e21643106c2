@@ -22,6 +22,30 @@
       "revId": "07ef1aa27389a3704f4a5d93c1e50e21643106c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3a0726_4f21b5e4",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-28T00:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc8db18_48fcb034",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "07ef1aa27389a3704f4a5d93c1e50e21643106c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
