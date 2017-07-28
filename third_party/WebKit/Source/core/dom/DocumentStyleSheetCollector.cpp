@@ -32,6 +32,7 @@
 #include "core/css/StyleSheet.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentStyleSheetCollection.h"
+#include "core/inspector/ConsoleMessage.h"
 
 namespace blink {
 
@@ -52,6 +53,15 @@ void DocumentStyleSheetCollector::AppendActiveStyleSheet(
 }
 
 void DocumentStyleSheetCollector::AppendSheetForList(StyleSheet* sheet) {
+  Document* document = nullptr;
+  if (sheet->ownerNode()) {
+    document = &sheet->ownerNode()->GetDocument();
+    if (document && document->IsHTMLImport()) {
+      document->MasterDocument().AddConsoleMessage(ConsoleMessage::Create(
+          kDeprecationMessageSource, kWarningMessageLevel,
+          "Stylesheet in HTML Import found in " + document->Url().GetString()));
+    }
+  }
   if (style_sheets_for_style_sheet_list_) {
     style_sheets_for_style_sheet_list_->push_back(sheet);
   } else {
