@@ -10,16 +10,11 @@ namespace base {
 // UserMetricsAction exists purely to standardize on the parameters passed to
 // UserMetrics. That way, our toolset can scan the source code reliable for
 // constructors and extract the associated string constants.
-// WARNING: When using UserMetricsAction you should use a string literal
-// parameter e.g.
-//   RecordAction(UserMetricsAction("my action name"));
-// This ensures that our processing scripts can associate this action's hash
-// with its metric name. Therefore, it will be possible to retrieve the metric
-// name from the hash later on.
 // Please see tools/metrics/actions/extract_actions.py for details.
 struct UserMetricsAction {
-  const char* str_;
-  explicit UserMetricsAction(const char* str) : str_(str) {}
+  const char* const str_;
+  template <size_t N>
+  explicit UserMetricsAction(const char (&str)[N]) : str_(str) {}
 };
 
 }  // namespace base

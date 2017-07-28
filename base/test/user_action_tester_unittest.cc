@@ -18,7 +18,8 @@ const char kUserAction3[] = "user.action.3";
 
 // Record an action and cause all ActionCallback observers to be notified.
 void RecordAction(const char user_action[]) {
-  base::RecordAction(base::UserMetricsAction(user_action));
+  // TODO(dcheng): Fix this.
+  // base::RecordAction(base::UserMetricsAction(user_action));
 }
 
 }  // namespace
