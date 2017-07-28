@@ -409,7 +409,9 @@ class LocalDeviceInstrumentationTestRun(
         time.strftime('%Y%m%dT%H%M%S-UTC', time.gmtime()),
         device.serial)
     logmon = logdog_logcat_monitor.LogdogLogcatMonitor(
-        device.adb, stream_name, filter_specs=LOGCAT_FILTERS)
+        device.adb, stream_name, filter_specs=LOGCAT_FILTERS,
+        symbolizer=self._test_instance.symbolizer,
+        abi=device.product_cpu_abi)
 
     with contextlib_ext.Optional(
         logmon, self._test_instance.should_save_logcat):

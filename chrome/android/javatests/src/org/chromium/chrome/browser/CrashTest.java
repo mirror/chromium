@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 
@@ -31,7 +30,6 @@ public class CrashTest {
      * disabled the majority of time.
      */
     @Test
-    @DisabledTest
     @SmallTest
     public void testIntentionalBrowserCrash() throws Exception {
         mActivityTestRule.startMainActivityFromLauncher();
