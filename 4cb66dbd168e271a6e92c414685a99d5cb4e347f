@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82923264_6ddbb9a7",
+        "filename": "services/viz/hit_test/public/interfaces/hit_test_region_list.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T08:33:26Z",
+      "side": 1,
+      "message": "Just to note that we will want to have even finer granularity (e.g. we would need a separate flag for mouse-wheel, and maybe even for mouse-move). But we can add those as they are needed.",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d162f9f_40e46d99",
+        "filename": "ui/aura/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T08:33:26Z",
+      "side": 1,
+      "message": "Don\u0027t need \u0027:client\u0027.",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a13a8ee_a29a73ae",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T08:33:26Z",
+      "side": 1,
+      "message": "I guess if there\u0027s no targeter, then we are using the window-bounds, with mouse+touch flags? I think that makes sense. A comment here to explicitly state that would be useful.",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366c0ccc_92dc6c87",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T08:33:26Z",
+      "side": 1,
+      "message": "We should probably check |child|\u0027s targeting policy first?",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8043c3c_47290b29",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T08:33:26Z",
+      "side": 1,
+      "message": "I think we should skip this if targeter \u0026\u0026 !targeter-\u003eSubtreeShouldBeExploredForEvent(child) (or at least part of it, for example, look at |child|\u0027s targeting policy etc.)?",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e48014_5f45ddba",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T08:33:26Z",
+      "side": 1,
+      "message": "Naming nit: HitTestDataProviderAura? In renderer, we can have the Renderer (or Blink?) suffix. In non-aura land (e.g. android, mac), we would have HtiTestDataProviderMac|Android etc. In all cases, it\u0027s for mus, so Mus suffix doesn\u0027t seem appropriate here.",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b98a827_e40bd521",
+        "filename": "ui/aura/mus/hit_test_data_provider_mus.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-28T08:33:26Z",
+      "side": 1,
+      "message": "explicit\n\nI assume the expectation is that |window| will always outlive this DataProvider? Can you add a comment to explicitly state that? (although from looking at the code, it\u0027s not clear if this is always the case)",
+      "revId": "4cb66dbd168e271a6e92c414685a99d5cb4e347f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
