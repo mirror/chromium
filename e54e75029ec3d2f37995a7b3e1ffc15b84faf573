@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b33f3e36_4d395442",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-28T21:11:31Z",
+      "side": 1,
+      "message": "With our offline conversation I agree it makes more sense to have this as an instance variable as then it\u0027s easier to understand what the generated values will be. Changing in the next patch.",
+      "parentUuid": "a934bd09_95ff2f04",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26f8969a_eb3cbb3a",
         "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T20:47:25Z",
       "side": 1,
       "message": "nit: {} because you have to lines in the if content.",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e01501_1db389c1",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-28T21:11:31Z",
+      "side": 1,
+      "message": "Yes, that needs addressing. I\u0027ll fix in the next CL.",
+      "parentUuid": "26f8969a_eb3cbb3a",
       "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "88d25148_5fbab349",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-28T21:11:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8c91b3b0_7ca922da",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b0902a_5d22b557",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-28T20:47:25Z",
       "side": 1,
       "message": "Here is an idea: let\u0027s take it a step further and move this code inside of DeleteStore()\n\nIt is here, because we originally didn\u0027t have the task_runner_ inside.",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56de0d6_d4caee28",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-28T21:11:31Z",
+      "side": 1,
+      "message": "Right. Also to be included in the next CL.",
+      "parentUuid": "19b0902a_5d22b557",
       "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
