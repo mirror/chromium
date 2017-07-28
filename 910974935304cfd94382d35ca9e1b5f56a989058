@@ -51,6 +51,24 @@
       "revId": "910974935304cfd94382d35ca9e1b5f56a989058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496e62e5_28d47b35",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-28T18:15:48Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b33f5620_53d6d8bf",
+      "revId": "910974935304cfd94382d35ca9e1b5f56a989058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
