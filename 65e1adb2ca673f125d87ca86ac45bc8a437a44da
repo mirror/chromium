@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "6db17e94_65056c98",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-28T22:49:10Z",
+      "side": 1,
+      "message": "Yeah, with StructTraits getting rid of all the copies on writing is relatively easy; getting rid of copies on reading is a bit harder, since the way messages are currently passed from this class ultimately into blink::MessagePort is by blink requesting a message, rather than this code pushing a message, and that makes keeping the mojo message alive until blink code has copied it into a SerializedScriptValue rather tricky. Of course solutions exist for that as well, but that might be a follow-up to my follow-up CL.",
+      "parentUuid": "2563d43e_cbb7e157",
+      "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269575f3_d5b991de",
         "filename": "content/common/message_port.mojom",
         "patchSetId": 4
@@ -111,6 +129,30 @@
       "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984ddc08_5fd00684",
+        "filename": "content/common/message_port.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-28T22:49:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "269575f3_d5b991de",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
