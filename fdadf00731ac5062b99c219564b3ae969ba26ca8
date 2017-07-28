@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9906c3c_c9f558f7",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-28T20:31:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7269a0b_a466dabf",
+      "revId": "fdadf00731ac5062b99c219564b3ae969ba26ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "907669cd_a5b88ccb",
         "filename": "services/metrics/public/cpp/ukm_recorder.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "fdadf00731ac5062b99c219564b3ae969ba26ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ca85db_2f7d4ab0",
+        "filename": "services/metrics/public/cpp/ukm_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-28T20:31:38Z",
+      "side": 1,
+      "message": "Oops, this snuck in from another change.  Reverted.",
+      "parentUuid": "907669cd_a5b88ccb",
+      "revId": "fdadf00731ac5062b99c219564b3ae969ba26ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
