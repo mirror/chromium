@@ -534,34 +534,15 @@ class SessionRestoreImpl : public content::NotificationObserver {
           highest_time = tab.last_active_time;
       }
 
+      int tab_index_offset = 0;
       for (int i = 0; i < static_cast<int>(window.tabs.size()); ++i) {
         const sessions::SessionTab& tab = *(window.tabs[i]);
 
         // Loads are scheduled for each restored tab unless the tab is going to
         // be selected as ShowBrowser() will load the selected tab.
         bool is_selected_tab = (i == selected_tab_index);
-        WebContents* contents = RestoreTab(tab, i, browser, is_selected_tab);
-
-        // RestoreTab can return nullptr if |tab| doesn't have valid data.
-        if (!contents)
-          continue;
-
-        // Sanitize the last active time.
-        base::TimeDelta delta = highest_time - tab.last_active_time;
-        contents->SetLastActiveTime(now - delta);
-
-        RestoredTab restored_tab(contents, is_selected_tab,
-                                 tab.extension_app_id.empty(), tab.pinned);
-        created_contents->push_back(restored_tab);
-
-        // If this isn't the selected tab, there's nothing else to do.
-        if (!is_selected_tab)
-          continue;
-
-        ShowBrowser(browser, browser->tab_strip_model()->GetIndexOfWebContents(
-                                 contents));
-        // TODO(sky): remove. For debugging 368236.
-        CHECK_EQ(browser->tab_strip_model()->GetActiveWebContents(), contents);
+        RestoreTab(tab, browser, created_contents, tab_index_offset, i,
+                   is_selected_tab, now, highest_time);
       }
     } else {
       // If the browser already has tabs, we want to restore the new ones after
@@ -570,29 +551,56 @@ class SessionRestoreImpl : public content::NotificationObserver {
       int tab_index_offset = initial_tab_count;
       for (int i = 0; i < static_cast<int>(window.tabs.size()); ++i) {
         const sessions::SessionTab& tab = *(window.tabs[i]);
+
         // Always schedule loads as we will not be calling ShowBrowser().
-        WebContents* contents =
-            RestoreTab(tab, tab_index_offset + i, browser, false);
-        if (contents) {
-          // Sanitize the last active time.
-          base::TimeDelta delta = highest_time - tab.last_active_time;
-          contents->SetLastActiveTime(now - delta);
-          RestoredTab restored_tab(contents, false,
-                                   tab.extension_app_id.empty(), tab.pinned);
-          created_contents->push_back(restored_tab);
-        }
+        bool is_selected_tab = false;
+        RestoreTab(tab, browser, created_contents, tab_index_offset, i,
+                   is_selected_tab, now, highest_time);
       }
     }
+  }
+
+  void RestoreTab(const sessions::SessionTab& tab,
+                  Browser* browser,
+                  std::vector<RestoredTab>* created_contents,
+                  int tab_index,
+                  int tab_index_offset,
+                  bool is_selected_tab,
+                  base::TimeTicks now,
+                  base::TimeTicks highest_time) {
+    WebContents* contents = RestoreTabImpl(tab, tab_index_offset + tab_index,
+                                           browser, is_selected_tab);
+
+    // RestoreTab can return nullptr if |tab| doesn't have valid data.
+    if (!contents)
+      return;
+
+    // Sanitize the last active time.
+    base::TimeDelta delta = highest_time - tab.last_active_time;
+    contents->SetLastActiveTime(now - delta);
+
+    RestoredTab restored_tab(contents, is_selected_tab,
+                             tab.extension_app_id.empty(), tab.pinned);
+    created_contents->push_back(restored_tab);
+
+    // If this isn't the selected tab, there's nothing else to do.
+    if (!is_selected_tab)
+      return;
+
+    ShowBrowser(browser,
+                browser->tab_strip_model()->GetIndexOfWebContents(contents));
+    // TODO(sky): remove. For debugging 368236.
+    CHECK_EQ(browser->tab_strip_model()->GetActiveWebContents(), contents);
   }
 
   // |tab_index| is ignored for pinned tabs which will always be pushed behind
   // the last existing pinned tab.
   // |tab_loader_| will schedule this tab for loading if |is_selected_tab| is
   // false.
-  WebContents* RestoreTab(const sessions::SessionTab& tab,
-                          const int tab_index,
-                          Browser* browser,
-                          bool is_selected_tab) {
+  WebContents* RestoreTabImpl(const sessions::SessionTab& tab,
+                              const int tab_index,
+                              Browser* browser,
+                              bool is_selected_tab) {
     // It's possible (particularly for foreign sessions) to receive a tab
     // without valid navigations. In that case, just skip it.
     // See crbug.com/154129.
