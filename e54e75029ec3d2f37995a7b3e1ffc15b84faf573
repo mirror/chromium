@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a934bd09_95ff2f04",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-28T20:47:25Z",
+      "side": 1,
+      "message": "why static variable instead of a field in class?\nThis does not feel right.",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f8969a_eb3cbb3a",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-28T20:47:25Z",
+      "side": 1,
+      "message": "nit: {} because you have to lines in the if content.",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c91b3b0_7ca922da",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-28T20:47:25Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b0902a_5d22b557",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-28T20:47:25Z",
+      "side": 1,
+      "message": "Here is an idea: let\u0027s take it a step further and move this code inside of DeleteStore()\n\nIt is here, because we originally didn\u0027t have the task_runner_ inside.",
+      "revId": "e54e75029ec3d2f37995a7b3e1ffc15b84faf573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
