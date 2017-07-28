@@ -10,10 +10,23 @@ TestPaletteDelegate::TestPaletteDelegate() {}
 
 TestPaletteDelegate::~TestPaletteDelegate() {}
 
+void TestPaletteDelegate::set_has_seen_stylus_pref(bool has_seen_stylus) {
+  has_seen_stylus_pref_ = has_seen_stylus;
+  seen_stylus_callback_list_.Notify(has_seen_stylus_pref_);
+}
+
 std::unique_ptr<PaletteDelegate::EnableListenerSubscription>
 TestPaletteDelegate::AddPaletteEnableListener(
     const EnableListener& on_state_changed) {
   return nullptr;
+}
+
+std::unique_ptr<PaletteDelegate::SeenStylusListenerSubscription>
+TestPaletteDelegate::AddSeenStylusListener(
+    const SeenStylusListener& on_state_changed) {
+  auto subscription = seen_stylus_callback_list_.Add(on_state_changed);
+  seen_stylus_callback_list_.Notify(has_seen_stylus_pref_);
+  return subscription;
 }
 
 void TestPaletteDelegate::CreateNote() {
@@ -55,6 +68,10 @@ void TestPaletteDelegate::ShowMetalayer(const base::Closure& closed) {
 
 void TestPaletteDelegate::HideMetalayer() {
   ++hide_metalayer_count_;
+}
+
+void TestPaletteDelegate::SetHasSeenStylusEvent() {
+  set_has_seen_stylus_pref(true);
 }
 
 }  // namespace ash

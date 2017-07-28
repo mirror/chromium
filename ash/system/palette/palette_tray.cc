@@ -12,6 +12,7 @@
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/palette/palette_tool_manager.h"
 #include "ash/system/palette/palette_utils.h"
@@ -30,6 +31,7 @@
 #include "ui/display/screen.h"
 #include "ui/events/devices/input_device_manager.h"
 #include "ui/events/devices/stylus_state.h"
+#include "ui/events/event_constants.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
@@ -38,6 +40,7 @@
 #include "ui/views/controls/separator.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
+#include "ui/views/pointer_watcher.h"
 
 namespace ash {
 
@@ -139,6 +142,32 @@ class TitleView : public views::View, public views::ButtonListener {
 };
 
 }  // namespace
+
+// StylusWatcher is used to monitor for stylus events, since we only want to
+// make the palette tray visible for devices without internal styluses once they
+// start using the stylus.
+class PaletteTray::StylusWatcher : views::PointerWatcher {
+ public:
+  StylusWatcher() {
+    ShellPort::Get()->AddPointerWatcher(this,
+                                        views::PointerWatcherEventTypes::BASIC);
+  }
+
+  ~StylusWatcher() override { ShellPort::Get()->RemovePointerWatcher(this); }
+
+  // views::PointerWatcher:
+  void OnPointerEventObserved(const ui::PointerEvent& event,
+                              const gfx::Point& location_in_screen,
+                              gfx::NativeView target) override {
+    if (event.pointer_details().pointer_type ==
+        ui::EventPointerType::POINTER_TYPE_PEN) {
+      Shell::Get()->palette_delegate()->SetHasSeenStylusEvent();
+    }
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(StylusWatcher);
+};
 
 PaletteTray::PaletteTray(Shelf* shelf)
     : TrayBackgroundView(shelf),
@@ -340,6 +369,13 @@ void PaletteTray::Initialize() {
   // which will take care of showing the palette.
   palette_enabled_subscription_ = delegate->AddPaletteEnableListener(base::Bind(
       &PaletteTray::OnPaletteEnabledPrefChanged, weak_factory_.GetWeakPtr()));
+
+  // If the device has an internal stylus, set the has seen stylus pref as true.
+  if (palette_utils::HasInternalStylus())
+    delegate->SetHasSeenStylusEvent();
+
+  seen_stylus_subscription_ = delegate->AddSeenStylusListener(base::Bind(
+      &PaletteTray::OnSeenStylusPrefChanged, weak_factory_.GetWeakPtr()));
 }
 
 bool PaletteTray::PerformAction(const ui::Event& event) {
@@ -443,9 +479,24 @@ void PaletteTray::OnPaletteEnabledPrefChanged(bool enabled) {
   }
 }
 
+void PaletteTray::OnSeenStylusPrefChanged(bool seen_stylus) {
+  has_seen_stylus_ = seen_stylus;
+
+  // On reading the pref, do not bother monitoring stylus events if the device
+  // has seen a stylus event before, otherwise start monitoring for stylus
+  // events.
+  if (seen_stylus)
+    watcher_.reset();
+  else
+    watcher_ = base::MakeUnique<StylusWatcher>();
+
+  UpdateIconVisibility();
+}
+
 void PaletteTray::UpdateIconVisibility() {
-  SetVisible(is_palette_enabled_ && palette_utils::HasStylusInput() &&
-             ShouldShowOnDisplay(this) && IsInUserSession());
+  SetVisible(has_seen_stylus_ && is_palette_enabled_ &&
+             palette_utils::HasStylusInput() && ShouldShowOnDisplay(this) &&
+             IsInUserSession());
 }
 
 // TestApi. For testing purposes.

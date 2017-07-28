@@ -710,6 +710,9 @@ const char kDisplayRotationLock[] = "settings.display.rotation_lock";
 // A boolean pref that specifies if the stylus tools should be enabled/disabled.
 const char kEnableStylusTools[] = "settings.enable_stylus_tools";
 
+// A boolean pref that specifies if a stylus event has been seen previously.
+const char kHasSeenStylus[] = "has_seen_stylus";
+
 // A boolean pref that specifies if the ash palette should be launched after an
 // eject input event has been received.
 const char kLaunchPaletteOnEjectEvent[] =

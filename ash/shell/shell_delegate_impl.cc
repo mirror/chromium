@@ -40,6 +40,11 @@ class PaletteDelegateImpl : public PaletteDelegate {
     on_state_changed.Run(false);
     return nullptr;
   }
+  std::unique_ptr<SeenStylusListenerSubscription> AddSeenStylusListener(
+      const SeenStylusListener& on_state_changed) override {
+    on_state_changed.Run(false);
+    return nullptr;
+  }
   void CreateNote() override {}
   bool HasNoteApp() override { return false; }
   bool ShouldAutoOpenPalette() override { return false; }
@@ -53,6 +58,7 @@ class PaletteDelegateImpl : public PaletteDelegate {
   bool IsMetalayerSupported() override { return false; }
   void ShowMetalayer(const base::Closure& closed) override {}
   void HideMetalayer() override {}
+  void SetHasSeenStylusEvent() override {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PaletteDelegateImpl);
