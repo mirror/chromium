@@ -31,7 +31,6 @@
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
 
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/wtf/PassRefPtr.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -88,10 +87,10 @@ bool UnacceleratedImageBufferSurface::WritePixels(const SkImageInfo& orig_info,
   return surface_->getCanvas()->writePixels(orig_info, pixels, row_bytes, x, y);
 }
 
-RefPtr<StaticBitmapImage> UnacceleratedImageBufferSurface::NewImageSnapshot(
+sk_sp<SkImage> UnacceleratedImageBufferSurface::NewImageSnapshot(
     AccelerationHint,
     SnapshotReason) {
-  return StaticBitmapImage::Create(surface_->makeImageSnapshot());
+  return surface_->makeImageSnapshot();
 }
 
 }  // namespace blink

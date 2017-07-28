@@ -52,8 +52,7 @@ class MODULES_EXPORT ImageBitmapRenderingContext final
   void SetIsHidden(bool) override {}
   bool isContextLost() const override { return false; }
   void SetCanvasGetContextResult(RenderingContext&) final;
-  PassRefPtr<StaticBitmapImage> GetImage(AccelerationHint,
-                                         SnapshotReason) const final;
+  PassRefPtr<Image> GetImage(AccelerationHint, SnapshotReason) const final;
   bool IsComposited() const final { return true; }
   bool IsAccelerated() const final;
 

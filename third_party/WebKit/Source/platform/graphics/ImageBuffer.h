@@ -62,6 +62,7 @@ namespace blink {
 
 class DrawingBuffer;
 class GraphicsContext;
+class Image;
 class ImageBufferClient;
 class IntPoint;
 class IntRect;
@@ -156,7 +157,8 @@ class PLATFORM_EXPORT ImageBuffer {
 
   void NotifySurfaceInvalid();
 
-  PassRefPtr<StaticBitmapImage> NewImageSnapshot(
+  sk_sp<SkImage> NewSkImageSnapshot(AccelerationHint, SnapshotReason) const;
+  PassRefPtr<Image> NewImageSnapshot(
       AccelerationHint = kPreferNoAcceleration,
       SnapshotReason = kSnapshotReasonUnknown) const;
 

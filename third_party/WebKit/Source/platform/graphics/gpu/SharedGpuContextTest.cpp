@@ -34,16 +34,12 @@ class SharedGpuContextTest : public Test {
 };
 
 TEST_F(SharedGpuContextTest, contextLossAutoRecovery) {
-  EXPECT_NE(SharedGpuContext::ContextProviderWrapper(), nullptr);
-  WeakPtr<WebGraphicsContext3DProviderWrapper> context =
-      SharedGpuContext::ContextProviderWrapper();
+  EXPECT_TRUE(SharedGpuContext::IsValid());
+  unsigned context_id = SharedGpuContext::ContextId();
   gl_.SetIsContextLost(true);
   EXPECT_FALSE(SharedGpuContext::IsValidWithoutRestoring());
-  EXPECT_TRUE(!!context);
-
-  // Context recreation results in old provider being discarded.
-  EXPECT_TRUE(!!SharedGpuContext::ContextProviderWrapper());
-  EXPECT_FALSE(!!context);
+  EXPECT_TRUE(SharedGpuContext::IsValid());
+  EXPECT_NE(context_id, SharedGpuContext::ContextId());
 }
 
 }  // unnamed namespace

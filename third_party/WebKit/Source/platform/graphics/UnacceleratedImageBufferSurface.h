@@ -59,8 +59,7 @@ class PLATFORM_EXPORT UnacceleratedImageBufferSurface
                    int x,
                    int y) override;
 
-  RefPtr<StaticBitmapImage> NewImageSnapshot(AccelerationHint,
-                                             SnapshotReason) override;
+  sk_sp<SkImage> NewImageSnapshot(AccelerationHint, SnapshotReason) override;
 
  private:
   sk_sp<SkSurface> surface_;

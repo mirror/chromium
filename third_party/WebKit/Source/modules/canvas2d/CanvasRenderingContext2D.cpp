@@ -57,7 +57,6 @@
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/DrawLooperBuilder.h"
 #include "platform/graphics/ImageBuffer.h"
-#include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/StrokeData.h"
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/graphics/paint/PaintFlags.h"
@@ -616,7 +615,7 @@ ImageBuffer* CanvasRenderingContext2D::GetImageBuffer() const {
       ->GetOrCreateImageBuffer();
 }
 
-PassRefPtr<StaticBitmapImage> blink::CanvasRenderingContext2D::GetImage(
+PassRefPtr<Image> blink::CanvasRenderingContext2D::GetImage(
     AccelerationHint hint,
     SnapshotReason reason) const {
   if (!HasImageBuffer())

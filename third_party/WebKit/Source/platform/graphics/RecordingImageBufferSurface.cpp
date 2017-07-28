@@ -11,7 +11,6 @@
 #include "platform/graphics/CanvasMetrics.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/ImageBuffer.h"
-#include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
 #include "platform/graphics/paint/PaintRecorder.h"
 #include "platform/wtf/CheckedNumeric.h"
@@ -180,7 +179,7 @@ SnapshotReasonToFallbackReason(SnapshotReason reason) {
   return RecordingImageBufferSurface::kFallbackReasonUnknown;
 }
 
-RefPtr<StaticBitmapImage> RecordingImageBufferSurface::NewImageSnapshot(
+sk_sp<SkImage> RecordingImageBufferSurface::NewImageSnapshot(
     AccelerationHint hint,
     SnapshotReason reason) {
   if (!fallback_surface_)

@@ -95,7 +95,6 @@
 #include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/geometry/IntSize.h"
-#include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
 #include "platform/graphics/gpu/AcceleratedImageBufferSurface.h"
@@ -732,7 +731,7 @@ ScriptPromise WebGLRenderingContextBase::commit(
         SkImageInfo::Make(width, height, kRGBA_8888_SkColorType,
                           CreationAttributes().alpha() ? kPremul_SkAlphaType
                                                        : kOpaque_SkAlphaType);
-    image = MakeImageSnapshot(image_info);
+    image = StaticBitmapImage::Create(MakeImageSnapshot(image_info));
   } else {
     image = GetDrawingBuffer()->TransferToStaticBitmapImage();
   }
@@ -743,7 +742,7 @@ ScriptPromise WebGLRenderingContextBase::commit(
       script_state, exception_state);
 }
 
-PassRefPtr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
+PassRefPtr<Image> WebGLRenderingContextBase::GetImage(
     AccelerationHint hint,
     SnapshotReason reason) const {
   if (!GetDrawingBuffer())
@@ -769,20 +768,14 @@ PassRefPtr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
   return buffer->NewImageSnapshot(hint, reason);
 }
 
-RefPtr<StaticBitmapImage> WebGLRenderingContextBase::MakeImageSnapshot(
+sk_sp<SkImage> WebGLRenderingContextBase::MakeImageSnapshot(
     SkImageInfo& image_info) {
   GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
-  WeakPtr<WebGraphicsContext3DProviderWrapper> shared_context_wrapper =
-      SharedGpuContext::ContextProviderWrapper();
-  if (!shared_context_wrapper)
-    return nullptr;
-  gpu::gles2::GLES2Interface* gl =
-      shared_context_wrapper->ContextProvider()->ContextGL();
+  gpu::gles2::GLES2Interface* gl = SharedGpuContext::Gl();
 
   SkSurfaceProps disable_lcd_props(0, kUnknown_SkPixelGeometry);
   sk_sp<SkSurface> surface = SkSurface::MakeRenderTarget(
-      shared_context_wrapper->ContextProvider()->GetGrContext(),
-      SkBudgeted::kYes, image_info, 0,
+      SharedGpuContext::Gr(), SkBudgeted::kYes, image_info, 0,
       image_info.alphaType() == kOpaque_SkAlphaType ? nullptr
                                                     : &disable_lcd_props);
   const GrGLTextureInfo* texture_info = skia::GrBackendObjectToGrGLTextureInfo(
@@ -793,8 +786,7 @@ RefPtr<StaticBitmapImage> WebGLRenderingContextBase::MakeImageSnapshot(
   GetDrawingBuffer()->CopyToPlatformTexture(
       gl, texture_target, texture_id, true, false, IntPoint(0, 0),
       IntRect(IntPoint(0, 0), GetDrawingBuffer()->Size()), kBackBuffer);
-  return AcceleratedStaticBitmapImage::CreateFromSkImage(
-      surface->makeImageSnapshot(), std::move(shared_context_wrapper));
+  return surface->makeImageSnapshot();
 }
 
 ImageData* WebGLRenderingContextBase::ToImageData(SnapshotReason reason) {
@@ -814,12 +806,11 @@ ImageData* WebGLRenderingContextBase::ToImageData(SnapshotReason reason) {
         SkImageInfo::Make(width, height, kRGBA_8888_SkColorType,
                           CreationAttributes().alpha() ? kPremul_SkAlphaType
                                                        : kOpaque_SkAlphaType);
-    RefPtr<StaticBitmapImage> snapshot = MakeImageSnapshot(image_info);
+    sk_sp<SkImage> snapshot = MakeImageSnapshot(image_info);
     if (snapshot) {
       image_data = ImageData::Create(GetDrawingBuffer()->Size());
-      snapshot->ImageForCurrentFrame()->readPixels(
-          image_info, image_data->data()->Data(), image_info.minRowBytes(), 0,
-          0);
+      snapshot->readPixels(image_info, image_data->data()->Data(),
+                           image_info.minRowBytes(), 0, 0);
     }
   }
   return image_data;

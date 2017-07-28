@@ -26,7 +26,6 @@
 #include "platform/graphics/RecordingImageBufferSurface.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
-#include "platform/graphics/gpu/SharedGpuContext.h"
 #include "platform/graphics/test/FakeGLES2Interface.h"
 #include "platform/graphics/test/FakeWebGraphicsContext3DProvider.h"
 #include "platform/loader/fetch/MemoryCache.h"
@@ -127,9 +126,10 @@ class CanvasRenderingContext2DTest : public ::testing::Test {
     return ToScriptStateForMainWorld(canvas_element_->GetFrame());
   }
 
-  void TearDown() override;
+  void TearDown();
   void UnrefCanvas();
   PassRefPtr<Canvas2DLayerBridge> MakeBridge(
+      std::unique_ptr<FakeWebGraphicsContext3DProvider>,
       const IntSize&,
       Canvas2DLayerBridge::AccelerationMode);
 
@@ -162,7 +162,6 @@ class CanvasRenderingContext2DTest : public ::testing::Test {
   Persistent<ImageData> partial_image_data_;
   FakeImageSource opaque_bitmap_;
   FakeImageSource alpha_bitmap_;
-  FakeGLES2Interface gl_;
 
   // Set this to override frame settings.
   FrameSettingOverrideFunction override_settings_function_ = nullptr;
@@ -198,12 +197,6 @@ void CanvasRenderingContext2DTest::CreateContext(
 }
 
 void CanvasRenderingContext2DTest::SetUp() {
-  SharedGpuContext::SetContextProviderFactoryForTesting([this] {
-    gl_.SetIsContextLost(false);
-    return std::unique_ptr<WebGraphicsContext3DProvider>(
-        new FakeWebGraphicsContext3DProvider(&gl_));
-  });
-
   Page::PageClients page_clients;
   FillWithEmptyClients(page_clients);
   dummy_page_holder_ = DummyPageHolder::Create(
@@ -244,14 +237,15 @@ void CanvasRenderingContext2DTest::TearDown() {
                                          BlinkGC::kGCWithSweep,
                                          BlinkGC::kForcedGC);
   ReplaceMemoryCacheForTesting(global_memory_cache_.Release());
-  SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
 }
 
 PassRefPtr<Canvas2DLayerBridge> CanvasRenderingContext2DTest::MakeBridge(
+    std::unique_ptr<FakeWebGraphicsContext3DProvider> provider,
     const IntSize& size,
     Canvas2DLayerBridge::AccelerationMode acceleration_mode) {
-  return AdoptRef(new Canvas2DLayerBridge(
-      size, 0, kNonOpaque, acceleration_mode, CanvasColorParams()));
+  return AdoptRef(new Canvas2DLayerBridge(std::move(provider), size, 0,
+                                          kNonOpaque, acceleration_mode,
+                                          CanvasColorParams()));
 }
 
 //============================================================================
@@ -930,9 +924,13 @@ TEST_F(CanvasRenderingContext2DTest, MAYBE_GetImageDataDisablesAcceleration) {
   RuntimeEnabledFeatures::SetCanvas2dFixedRenderingModeEnabled(false);
 
   CreateContext(kNonOpaque);
+  FakeGLES2Interface gl;
+  std::unique_ptr<FakeWebGraphicsContext3DProvider> context_provider(
+      new FakeWebGraphicsContext3DProvider(&gl));
   IntSize size(300, 300);
   RefPtr<Canvas2DLayerBridge> bridge =
-      MakeBridge(size, Canvas2DLayerBridge::kEnableAcceleration);
+      MakeBridge(std::move(context_provider), size,
+                 Canvas2DLayerBridge::kEnableAcceleration);
   std::unique_ptr<Canvas2DImageBufferSurface> surface(
       new Canvas2DImageBufferSurface(bridge, size));
   CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(surface));
@@ -999,9 +997,13 @@ TEST_F(CanvasRenderingContext2DTest, TextureUploadHeuristics) {
         delta;
 
     CreateContext(kNonOpaque);
+    FakeGLES2Interface gl;
+    std::unique_ptr<FakeWebGraphicsContext3DProvider> context_provider(
+        new FakeWebGraphicsContext3DProvider(&gl));
     IntSize size(dst_size, dst_size);
     RefPtr<Canvas2DLayerBridge> bridge =
-        MakeBridge(size, Canvas2DLayerBridge::kEnableAcceleration);
+        MakeBridge(std::move(context_provider), size,
+                   Canvas2DLayerBridge::kEnableAcceleration);
     std::unique_ptr<Canvas2DImageBufferSurface> surface(
         new Canvas2DImageBufferSurface(bridge, size));
     CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(surface));
@@ -1531,9 +1533,13 @@ class CanvasRenderingContext2DTestWithTestingPlatform
 TEST_F(CanvasRenderingContext2DTestWithTestingPlatform,
        ElementRequestsCompositingUpdateOnHibernateAndWakeUp) {
   CreateContext(kNonOpaque);
+  FakeGLES2Interface gl;
+  std::unique_ptr<FakeWebGraphicsContext3DProvider> context_provider(
+      new FakeWebGraphicsContext3DProvider(&gl));
   IntSize size(300, 300);
   RefPtr<Canvas2DLayerBridge> bridge =
-      MakeBridge(size, Canvas2DLayerBridge::kEnableAcceleration);
+      MakeBridge(std::move(context_provider), size,
+                 Canvas2DLayerBridge::kEnableAcceleration);
   // Force hibernatation to occur in an immediate task.
   bridge->DontUseIdleSchedulingForTesting();
   std::unique_ptr<Canvas2DImageBufferSurface> surface(

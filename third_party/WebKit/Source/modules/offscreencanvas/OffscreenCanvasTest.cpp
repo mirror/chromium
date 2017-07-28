@@ -11,9 +11,6 @@
 #include "core/testing/DummyPageHolder.h"
 #include "modules/canvas/HTMLCanvasElementModule.h"
 #include "modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.h"
-#include "platform/graphics/gpu/SharedGpuContext.h"
-#include "platform/graphics/test/FakeGLES2Interface.h"
-#include "platform/graphics/test/FakeWebGraphicsContext3DProvider.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -26,7 +23,6 @@ class OffscreenCanvasTest : public ::testing::Test {
  protected:
   OffscreenCanvasTest();
   void SetUp() override;
-  void TearDown() override;
 
   DummyPageHolder& Page() const { return *dummy_page_holder_; }
   Document& GetDocument() const { return *document_; }
@@ -50,17 +46,11 @@ class OffscreenCanvasTest : public ::testing::Test {
   Persistent<OffscreenCanvas> offscreen_canvas_;
   Persistent<OffscreenCanvasRenderingContext2D> context_;
   ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
-  FakeGLES2Interface gl_;
 };
 
 OffscreenCanvasTest::OffscreenCanvasTest() {}
 
 void OffscreenCanvasTest::SetUp() {
-  SharedGpuContext::SetContextProviderFactoryForTesting([this] {
-    gl_.SetIsContextLost(false);
-    return std::unique_ptr<WebGraphicsContext3DProvider>(
-        new FakeWebGraphicsContext3DProvider(&gl_));
-  });
   Page::PageClients page_clients;
   FillWithEmptyClients(page_clients);
   dummy_page_holder_ =
@@ -77,10 +67,6 @@ void OffscreenCanvasTest::SetUp() {
   context_ = static_cast<OffscreenCanvasRenderingContext2D*>(
       offscreen_canvas_->GetCanvasRenderingContext(document_, String("2d"),
                                                    attrs));
-}
-
-void OffscreenCanvasTest::TearDown() {
-  SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
 }
 
 TEST_F(OffscreenCanvasTest, AnimationNotInitiallySuspended) {

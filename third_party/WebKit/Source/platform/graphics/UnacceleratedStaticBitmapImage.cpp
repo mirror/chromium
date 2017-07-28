@@ -10,7 +10,6 @@ namespace blink {
 
 PassRefPtr<UnacceleratedStaticBitmapImage>
 UnacceleratedStaticBitmapImage::Create(sk_sp<SkImage> image) {
-  DCHECK(!image->isTextureBacked());
   return AdoptRef(new UnacceleratedStaticBitmapImage(std::move(image)));
 }
 
