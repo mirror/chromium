@@ -23909,6 +23909,8 @@ from previous Chrome versions.
   <int value="2137347307" label="enable-drive-apps-in-app-list"/>
   <int value="2137599770" label="enable-win32k-renderer-lockdown"/>
   <int value="2141463681" label="enable-offer-upload-credit-cards"/>
+  <int value="2141463682" label="EnableManualFallbacksFilling:enabled"/>
+  <int value="2141463683" label="EnableManualFallbacksFilling:disabled"/>
 </enum>
 
 <enum name="LoginDatabaseInitError">
