@@ -170,6 +170,14 @@ TestRunner.loadPanel = function(panel) {
 };
 
 /**
+ * @param {string} panel
+ * @return {!Promise.<?UI.Panel>}
+ */
+TestRunner.showPanel = function(panel) {
+  return UI.viewManager.showView(panel);
+};
+
+/**
  * @param {string} key
  * @param {boolean=} ctrlKey
  * @param {boolean=} altKey
