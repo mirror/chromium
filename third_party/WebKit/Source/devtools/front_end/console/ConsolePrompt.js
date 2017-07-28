@@ -104,16 +104,17 @@ Console.ConsolePrompt = class extends UI.Widget {
     var keyboardEvent = /** @type {!KeyboardEvent} */ (event);
     var newText;
     var isPrevious;
+    var selection = this._editor.selection();
 
     switch (keyboardEvent.keyCode) {
       case UI.KeyboardShortcut.Keys.Up.code:
-        if (this._editor.selection().endLine > 0)
+        if (selection.endLine > 0 || !selection.isEmpty())
           break;
         newText = this._history.previous(this.text());
         isPrevious = true;
         break;
       case UI.KeyboardShortcut.Keys.Down.code:
-        if (this._editor.selection().endLine < this._editor.fullRange().endLine)
+        if (selection.endLine < this._editor.fullRange().endLine || !selection.isEmpty())
           break;
         newText = this._history.next();
         break;
