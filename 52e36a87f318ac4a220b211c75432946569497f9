@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "d6395f76_e35cf66a",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-28T22:41:33Z",
+      "side": 1,
+      "message": "Checking the type is fine in general, I\u0027m just saying for the case where the observer needs an WebContentsCoordinationUnit pointer then using an explicit strongly typed callback for that, using the polymorphism I outlined above, is safer than using a type check + cast based on the result.",
+      "parentUuid": "ebd2afcc_450f2002",
+      "revId": "52e36a87f318ac4a220b211c75432946569497f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64203d8d_8db43311",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
         "patchSetId": 15
