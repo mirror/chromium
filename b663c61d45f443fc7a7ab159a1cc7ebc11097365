@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f50e3108_8620f2b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-28T15:56:26Z",
+      "side": 1,
+      "message": "nit: Maybe just replace this with contentViewCore.getContainerView() since this is the only place contentView is used in this method.",
+      "range": {
+        "startLine": 899,
+        "startChar": 12,
+        "endLine": 899,
+        "endChar": 23
+      },
+      "revId": "b663c61d45f443fc7a7ab159a1cc7ebc11097365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
