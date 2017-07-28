@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733cc84f_856317e4",
+        "filename": "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-28T15:15:18Z",
+      "side": 1,
+      "message": "Is it possible to return a std::unique_ptr\u003cContentSuggestionsService\u003e ?\nThis would allow us to get rid of the static_cast of line 93.",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 28
+      },
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb8df71_972266da",
+        "filename": "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-28T15:15:18Z",
+      "side": 1,
+      "message": "imo not very useful",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 52
+      },
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
