@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac9f146_26b5cf31",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-28T18:09:35Z",
+      "side": 1,
+      "message": "I assume that the RenderFrameHost now owns this object, and will delete it at the appropriate times.  This is also why you removed the \u0027delete this\u0027 statements below?\n\nCan you mention this change in the commit message?",
+      "revId": "de003e90a64b3b4d04594e06bf859f8bf337bbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c23651_a762d1f2",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-28T18:09:35Z",
+      "side": 1,
+      "message": "To make this obvious, you can make the ctor private and add a public static CreateForTest() factory method.",
+      "revId": "de003e90a64b3b4d04594e06bf859f8bf337bbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ff559d_68e433a0",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-28T18:09:35Z",
+      "side": 1,
+      "message": "Could this be done inside the delegate?  Otherwise the implementation of close() is split between PresentationConnection and the delegate.",
+      "revId": "de003e90a64b3b4d04594e06bf859f8bf337bbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7c212e_8324a4f1",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-28T18:09:35Z",
+      "side": 1,
+      "message": "These names aren\u0027t used in this header, so strictly speaking these forward declarations don\u0027t need to be put here.",
+      "revId": "de003e90a64b3b4d04594e06bf859f8bf337bbf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
