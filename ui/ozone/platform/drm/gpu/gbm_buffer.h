@@ -25,14 +25,14 @@ class GbmBuffer : public ScanoutBuffer {
  public:
   static scoped_refptr<GbmBuffer> CreateBuffer(
       const scoped_refptr<GbmDevice>& gbm,
-      uint32_t format,
       const gfx::Size& size,
-      uint32_t flags);
+      gfx::BufferFormat format,
+      gfx::BufferUsage usage);
   static scoped_refptr<GbmBuffer> CreateBufferWithModifiers(
       const scoped_refptr<GbmDevice>& gbm,
-      uint32_t format,
       const gfx::Size& size,
-      uint32_t flags,
+      gfx::BufferFormat format,
+      gfx::BufferUsage usage,
       const std::vector<uint64_t>& modifiers);
   static scoped_refptr<GbmBuffer> CreateBufferFromFds(
       const scoped_refptr<GbmDevice>& gbm,
@@ -41,7 +41,7 @@ class GbmBuffer : public ScanoutBuffer {
       std::vector<base::ScopedFD>&& fds,
       const std::vector<gfx::NativePixmapPlane>& planes);
   uint32_t GetFormat() const { return format_; }
-  uint32_t GetFlags() const { return flags_; }
+  gfx::BufferUsage GetBufferUsage() const { return usage_; }
   bool AreFdsValid() const;
   size_t GetFdCount() const;
   int GetFd(size_t plane) const;
@@ -67,7 +67,7 @@ class GbmBuffer : public ScanoutBuffer {
   GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
             gbm_bo* bo,
             uint32_t format,
-            uint32_t flags,
+            gfx::BufferUsage usage,
             uint64_t modifier,
             uint32_t addfb_flags,
             std::vector<base::ScopedFD>&& fds,
@@ -80,7 +80,7 @@ class GbmBuffer : public ScanoutBuffer {
       gbm_bo* bo,
       uint32_t format,
       const gfx::Size& size,
-      uint32_t flags,
+      gfx::BufferUsage usage,
       uint64_t modifiers,
       uint32_t addfb_flags);
 
@@ -95,7 +95,7 @@ class GbmBuffer : public ScanoutBuffer {
   uint32_t opaque_framebuffer_pixel_format_ = 0;
   uint64_t format_modifier_ = 0;
   uint32_t format_;
-  uint32_t flags_;
+  gfx::BufferUsage usage_;
   std::vector<base::ScopedFD> fds_;
   gfx::Size size_;
 
@@ -118,6 +118,7 @@ class GbmPixmap : public gfx::NativePixmap {
   int GetDmaBufOffset(size_t plane) const override;
   uint64_t GetDmaBufModifier(size_t plane) const override;
   gfx::BufferFormat GetBufferFormat() const override;
+  gfx::BufferUsage GetBufferUsage() const override;
   gfx::Size GetBufferSize() const override;
   bool ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                             int plane_z_order,
