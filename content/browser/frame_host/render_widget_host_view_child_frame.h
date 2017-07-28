@@ -273,6 +273,11 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   virtual bool HasEmbedderChanged();
 
+  // Returns false if the view cannot be shown. This is the case where the frame
+  // associated with this view, or a cross process parent frame has been hidden
+  // using CSS.
+  bool CanBecomeVisible();
+
   using FrameSwappedCallbackList = std::deque<std::unique_ptr<base::Closure>>;
   // Since frame-drawn callbacks are "fire once", we use std::deque to make
   // it convenient to swap() when processing the list.
