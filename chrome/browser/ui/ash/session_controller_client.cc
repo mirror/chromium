@@ -143,6 +143,8 @@ struct EqualsTraits<gfx::ImageSkia> {
 
 }  // namespace mojo
 
+bool SessionControllerClient::in_session_oobe_active_;
+
 SessionControllerClient::SessionControllerClient()
     : binding_(this), weak_ptr_factory_(this) {
   SessionManager::Get()->AddObserver(this);
@@ -167,6 +169,8 @@ SessionControllerClient::SessionControllerClient()
 
   DCHECK(!g_instance);
   g_instance = this;
+
+  in_session_oobe_active_ = false;
 }
 
 SessionControllerClient::~SessionControllerClient() {
@@ -290,6 +294,11 @@ bool SessionControllerClient::IsMultiProfileEnabled() {
   return (admitted_users_to_be_added + logged_in_users) > 1;
 }
 
+void SessionControllerClient::SetInSessionOobeActive(bool is_active) {
+  in_session_oobe_active_ = is_active;
+  SendSessionInfoIfChanged();
+}
+
 void SessionControllerClient::ActiveUserChanged(const User* active_user) {
   SendSessionInfoIfChanged();
 
@@ -326,7 +335,8 @@ void SessionControllerClient::OnUserImageChanged(
 
 // static
 bool SessionControllerClient::CanLockScreen() {
-  return !UserManager::Get()->GetUnlockUsers().empty();
+  return !UserManager::Get()->GetUnlockUsers().empty() &&
+         !in_session_oobe_active_;
 }
 
 // static
