@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94c97c1f_acec7dac",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T23:54:40Z",
+      "side": 1,
+      "message": "Need to use #ifdefs on these for DISABLE_FTP_SUPPORT / DISABLE_FILE_SUPPORT",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "2a8e6cb73037ce456f3d46007df680ead64118b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
