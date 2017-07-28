@@ -96,8 +96,8 @@ void PrefetchDispatcherImpl::QueueActionTasks() {
       base::MakeUnique<GeneratePageBundleTask>(
           service_->GetPrefetchStore(), service_->GetPrefetchGCMHandler(),
           service_->GetPrefetchNetworkRequestFactory(),
-          base::Bind(&PrefetchDispatcherImpl::DidPrefetchRequest,
-                     weak_factory_.GetWeakPtr(), "GeneratePageBundleRequest"));
+          base::Bind(&PrefetchDispatcherImpl::DidGenerateBundleRequest,
+                     weak_factory_.GetWeakPtr()));
   task_queue_.AddTask(std::move(generate_page_bundle_task));
 }
 
@@ -137,11 +137,25 @@ void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
 
   task_queue_.AddTask(base::MakeUnique<GetOperationTask>(
       operation_name, service_->GetPrefetchNetworkRequestFactory(),
-      base::Bind(&PrefetchDispatcherImpl::DidPrefetchRequest,
-                 weak_factory_.GetWeakPtr(), "GetOperation")));
+      base::Bind(&PrefetchDispatcherImpl::DidGetOperationRequest,
+                 weak_factory_.GetWeakPtr())));
 }
 
-void PrefetchDispatcherImpl::DidPrefetchRequest(
+void PrefetchDispatcherImpl::DidGenerateBundleRequest(
+    PrefetchRequestStatus status,
+    const std::string& operation_name,
+    const std::vector<RenderPageInfo>& pages) {
+  LogRequestResult("GeneratePageBundleRequest", status, operation_name, pages);
+}
+
+void PrefetchDispatcherImpl::DidGetOperationRequest(
+    PrefetchRequestStatus status,
+    const std::string& operation_name,
+    const std::vector<RenderPageInfo>& pages) {
+  LogRequestResult("GetOperationRequest", status, operation_name, pages);
+}
+
+void PrefetchDispatcherImpl::LogRequestResult(
     const std::string& request_name_for_logging,
     PrefetchRequestStatus status,
     const std::string& operation_name,
