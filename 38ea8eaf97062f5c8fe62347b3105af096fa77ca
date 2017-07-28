@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a78f349e_f8678883",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-28T14:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9730c094_5916fa4f",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af66adf0_d77e9d07",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SuggestionsSource.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1c63b4ee_f7b9f12f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SuggestionsSource.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-28T14:30:36Z",
+      "side": 1,
+      "message": "I assume that an uninitialized ScopedJavaLocalRef\u003cjobject\u003e is passed as null by RunCallbackAndroid, so {@code null}.",
+      "parentUuid": "af66adf0_d77e9d07",
+      "range": {
+        "startLine": 116,
+        "startChar": 64,
+        "endLine": 116,
+        "endChar": 77
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b306963_b8e9d2c4",
         "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e9f43d_245e2b24",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-28T14:30:36Z",
+      "side": 1,
+      "message": "Good points. In the Bridge, it is good to have distinct (long) names.\nRefactoring ContextualSuggestionsSource sounds good, but I would rather do it in a separate CL (for instance, when it no longer lives in ContentSuggestionsService).\nAbout naming in SnippetsBridge.java, I have no strong opinion, let you decide.",
+      "parentUuid": "4b306963_b8e9d2c4",
+      "range": {
+        "startLine": 356,
+        "startChar": 8,
+        "endLine": 356,
+        "endChar": 38
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
