@@ -101,7 +101,7 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
           if (type == PANGO_UNDERLINE_DOUBLE)
             underline.thick = true;
           else if (type == PANGO_UNDERLINE_ERROR)
-            underline.color = SK_ColorRED;
+            underline.underline_color = SK_ColorRED;
         }
         composition->underlines.push_back(underline);
       }

@@ -40,7 +40,8 @@ TEST(CompositionTextTest, CopyTest) {
     EXPECT_EQ(text.underlines[i].start_offset,
               text2.underlines[i].start_offset);
     EXPECT_EQ(text.underlines[i].end_offset, text2.underlines[i].end_offset);
-    EXPECT_EQ(text.underlines[i].color, text2.underlines[i].color);
+    EXPECT_EQ(text.underlines[i].underline_color,
+              text2.underlines[i].underline_color);
     EXPECT_EQ(text.underlines[i].thick, text2.underlines[i].thick);
     EXPECT_EQ(text.underlines[i].background_color,
               text2.underlines[i].background_color);

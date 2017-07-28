@@ -28,7 +28,7 @@ struct AttributeInfo {
 struct Underline {
   unsigned start_offset;
   unsigned end_offset;
-  uint32_t color;
+  uint32_t underline_color;
   bool thick;
   uint32_t background_color;
 };
@@ -99,7 +99,7 @@ void CompareUnderline(const Underline& a,
                       const ui::CompositionUnderline& b) {
   EXPECT_EQ(a.start_offset, b.start_offset);
   EXPECT_EQ(a.end_offset, b.end_offset);
-  EXPECT_EQ(a.color, b.color);
+  EXPECT_EQ(a.underline_color, b.underline_color);
   EXPECT_EQ(a.thick, b.thick);
   EXPECT_EQ(a.background_color, b.background_color);
 }
@@ -136,8 +136,8 @@ TEST(CompositionTextUtilPangoTest, ExtractCompositionText) {
     ui::ExtractCompositionTextFromGtkPreedit(text, pango_attrs, 0, &result);
 
     const Underline* underlines = kTestData[i].underlines;
-    for (size_t u = 0; underlines[u].color &&
-         u < result.underlines.size(); ++u) {
+    for (size_t u = 0;
+         underlines[u].underline_color && u < result.underlines.size(); ++u) {
       SCOPED_TRACE(testing::Message() << "Underline:" << u);
       CompareUnderline(underlines[u], result.underlines[u]);
     }
