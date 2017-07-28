@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95a2d265_ae2bd989",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-28T00:33:34Z",
+      "side": 1,
+      "message": "Let me know if you\u0027d like me to do something similar to |defaultSettingString_()| here - I couldn\u0027t figure out a way to pass arrays into computed bindings (so we could group the extension and policy strings into their own arrays) and otherwise thought maybe having so many strings passed in as arguments to a function might be hard to read, but I\u0027ll defer to your opinion on this.",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
