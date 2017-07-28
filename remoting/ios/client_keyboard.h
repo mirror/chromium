@@ -21,6 +21,9 @@
 @property(nonatomic) UITextAutocorrectionType autocorrectionType;
 @property(nonatomic) UITextSpellCheckingType spellCheckingType;
 
+//
+@property(nonatomic) BOOL hasExternalKeyboard;
+
 // This delegate is used to call back to handler key entry.
 @property(weak, nonatomic) id<ClientKeyboardDelegate> delegate;
 
