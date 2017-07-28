@@ -94,6 +94,30 @@
       "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee698c71_54a464da",
+        "filename": "net/cert/x509_util_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T19:24:09Z",
+      "side": 0,
+      "message": "yes, I think we generally should use @available over base::mac::IsAtLeast(). It does the same thing (except that @avail happens to return true on non-mac while base::mac::IsAtLeast() returns false on non-mac), and it also helps with the warning. So I think we want to remove the base::mac::IsAtLeast() functions eventually.",
+      "parentUuid": "1541cfbf_4de537dd",
+      "range": {
+        "startLine": 209,
+        "startChar": 18,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
