@@ -64,6 +64,14 @@ String GetDomainAndRegistry(const String& host, PrivateRegistryFilter filter) {
   return String(domain.data(), domain.length());
 }
 
+bool IsSameDomain(const String& a, const String& b) {
+  if (a == b)
+    return true;
+  String a_domain = GetDomainAndRegistry(a, kIncludePrivateRegistries);
+  String b_domain = GetDomainAndRegistry(b, kIncludePrivateRegistries);
+  return !a_domain.IsEmpty() && !b_domain.IsEmpty() && a_domain == b_domain;
+}
+
 PassRefPtr<SharedBuffer> ParseDataURLAndPopulateResponse(
     const KURL& url,
     ResourceResponse& response) {

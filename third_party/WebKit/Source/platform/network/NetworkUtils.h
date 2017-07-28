@@ -28,6 +28,8 @@ PLATFORM_EXPORT bool IsLocalHostname(const String& host, bool* is_local6);
 PLATFORM_EXPORT String GetDomainAndRegistry(const String& host,
                                             PrivateRegistryFilter);
 
+PLATFORM_EXPORT bool IsSameDomain(const String&, const String&);
+
 // Returns the decoded data url as ResourceResponse and SharedBuffer
 // if url had a supported mimetype and parsing was successful.
 PLATFORM_EXPORT PassRefPtr<SharedBuffer> ParseDataURLAndPopulateResponse(

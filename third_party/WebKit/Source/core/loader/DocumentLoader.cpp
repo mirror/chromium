@@ -1031,17 +1031,8 @@ bool DocumentLoader::ShouldPersistUserGestureValue(
   if (!CheckOriginIsHttpOrHttps(previous_security_origin) ||
       !CheckOriginIsHttpOrHttps(new_security_origin))
     return false;
-
-  if (previous_security_origin->Host() == new_security_origin->Host())
-    return true;
-
-  String previous_domain = NetworkUtils::GetDomainAndRegistry(
-      previous_security_origin->Host(),
-      NetworkUtils::kIncludePrivateRegistries);
-  String new_domain = NetworkUtils::GetDomainAndRegistry(
-      new_security_origin->Host(), NetworkUtils::kIncludePrivateRegistries);
-
-  return !previous_domain.IsEmpty() && previous_domain == new_domain;
+  return NetworkUtils::IsSameDomain(previous_security_origin->Host(),
+                                    new_security_origin->Host());
 }
 
 void DocumentLoader::InstallNewDocument(

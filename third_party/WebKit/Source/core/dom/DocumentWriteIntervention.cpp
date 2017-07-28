@@ -90,29 +90,8 @@ bool MaybeDisallowFetchForDocWrittenScript(ResourceRequest& request,
   if (!request.Url().ProtocolIsInHTTPFamily())
     return false;
 
-  // Avoid blocking same origin scripts, as they may be used to render main
-  // page content, whereas cross-origin scripts inserted via document.write
-  // are likely to be third party content.
-  String request_host = request.Url().Host();
-  String document_host = document.GetSecurityOrigin()->Domain();
-
-  bool same_site = false;
-  if (request_host == document_host)
-    same_site = true;
-
-  // If the hosts didn't match, then see if the domains match. For example, if
-  // a script is served from static.example.com for a document served from
-  // www.example.com, we consider that a first party script and allow it.
-  String request_domain = NetworkUtils::GetDomainAndRegistry(
-      request_host, NetworkUtils::kIncludePrivateRegistries);
-  String document_domain = NetworkUtils::GetDomainAndRegistry(
-      document_host, NetworkUtils::kIncludePrivateRegistries);
-  // getDomainAndRegistry will return the empty string for domains that are
-  // already top-level, such as localhost. Thus we only compare domains if we
-  // get non-empty results back from getDomainAndRegistry.
-  if (!request_domain.IsEmpty() && !document_domain.IsEmpty() &&
-      request_domain == document_domain)
-    same_site = true;
+  bool same_site = NetworkUtils::IsSameDomain(
+      request.Url().Host(), document.GetSecurityOrigin()->Domain());
 
   if (same_site) {
     // This histogram is introduced to help decide whether we should also check

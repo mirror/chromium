@@ -37,6 +37,7 @@
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/network/NetworkUtils.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebCachePolicy.h"
 
@@ -277,6 +278,11 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     const AtomicString& frame_name,
     bool replace_current_item) {
   UpdateContainerPolicy();
+
+  if (!NetworkUtils::IsSameDomain(GetDocument().GetSecurityOrigin()->Domain(),
+                                  url.Host())) {
+    return false;
+  }
 
   if (ContentFrame()) {
     ContentFrame()->Navigate(GetDocument(), url, replace_current_item,
