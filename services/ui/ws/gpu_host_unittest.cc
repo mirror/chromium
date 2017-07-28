@@ -9,8 +9,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "components/viz/service/gl/gpu_service.h"
 #include "gpu/config/gpu_info.h"
-#include "services/ui/gpu/gpu_service.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
 #include "services/ui/ws/gpu_client.h"
 #include "services/ui/ws/gpu_host_delegate.h"
@@ -86,7 +86,7 @@ class GpuHostTest : public testing::Test {
   base::Thread io_thread_;
   TestGpuHostDelegate gpu_host_delegate_;
   std::unique_ptr<TestGpuService> gpu_service_;
-  ui::mojom::GpuServicePtr gpu_service_ptr_;
+  viz::mojom::GpuServicePtr gpu_service_ptr_;
   std::unique_ptr<DefaultGpuHost> gpu_host_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuHostTest);

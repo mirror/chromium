@@ -9,7 +9,6 @@ mojom("interfaces") {
     "context_lost_reason.mojom",
     "gpu_host.mojom",
     "gpu_main.mojom",
-    "gpu_service.mojom",
   ]
 
   public_deps = [
@@ -19,6 +18,7 @@ mojom("interfaces") {
     "//media/mojo/interfaces",
     "//services/ui/public/interfaces",
     "//services/viz/compositing/privileged/interfaces",
+    "//services/viz/gl/privileged/interfaces",
     "//ui/gfx/geometry/mojo",
     "//ui/gfx/mojo",
     "//url/mojo:url_mojom_gurl",

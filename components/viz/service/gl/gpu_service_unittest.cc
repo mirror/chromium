@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/ui/gpu/gpu_service.h"
+#include "components/viz/service/gl/gpu_service.h"
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -15,7 +15,7 @@
 #include "services/ui/public/interfaces/gpu.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace ui {
+namespace viz {
 namespace test {
 
 class GpuServiceTest : public testing::Test {
@@ -61,7 +61,6 @@ class GpuServiceTest : public testing::Test {
   }
 
  private:
-  base::MessageLoop message_loop_;
   base::Thread io_thread_;
   std::unique_ptr<GpuService> gpu_service_;
   base::WaitableEvent wait_;
@@ -95,4 +94,4 @@ TEST_F(GpuServiceTest, ServiceDestroyedAfterBind) {
 }
 
 }  // namespace test
-}  // namespace ui
+}  // namespace viz
