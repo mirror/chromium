@@ -128,6 +128,30 @@
       "revId": "b797ee4cec360f05c9cc898fc885b64f557f8c1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85cf2fba_ec10df4b",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-28T23:50:49Z",
+      "side": 1,
+      "message": "Consider this instead:\n    // Simulates an Indication from the peripheral\u0027s GATT Service Changed\n    // Characteristic from BT 4.2 Vol 3 Part G 7.1. Used after services,\n    // characteristics, or descriptors are changed, added, or removed.\n    // The affected attribute range set to include all simulated\n    // attributes on the peripheral because this testing API does not\n    // specify attributes at the handle granularity.\n\nI want to cite the Bluetooth spec 4.2 and the Service Changed characteristic directly. The concept used by Web Bluetooth, but by the time it turns into the Web Bluetooth event types at https://webbluetoothcg.github.io/web-bluetooth/#event-types it has been processed by this section https://webbluetoothcg.github.io/web-bluetooth/#service-change-events. The test API should be dealing at the level of a remote bluetooth device, one that we could theoretically control over hardware and be testing with over physical bluetooth controllers.",
+      "parentUuid": "84ca9fd7_70f3a77c",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 240,
+        "endChar": 28
+      },
+      "revId": "b797ee4cec360f05c9cc898fc885b64f557f8c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
