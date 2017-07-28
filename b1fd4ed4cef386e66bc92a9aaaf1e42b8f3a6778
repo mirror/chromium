@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbac47a5_ca05a157",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T21:11:48Z",
+      "side": 1,
+      "message": "This will need ot be merged with Carlos\u0027s CL. Just FYI.",
+      "revId": "b1fd4ed4cef386e66bc92a9aaaf1e42b8f3a6778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1442e3d_607f0757",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T21:11:48Z",
+      "side": 1,
+      "message": "So we insert action tasks in the order from later stages in pipeline to the earlier? If so, it\u0027s be nice to add a comment to this effect, preferably with explanation of \"why\".",
+      "revId": "b1fd4ed4cef386e66bc92a9aaaf1e42b8f3a6778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc224749_4927737b",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T21:11:48Z",
+      "side": 1,
+      "message": "This is a part of implementation of a test class leaking into offline_pages namespace. Is there a reason to pull it out?",
+      "revId": "b1fd4ed4cef386e66bc92a9aaaf1e42b8f3a6778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e1f970_c8475e4c",
+        "filename": "components/offline_pages/core/prefetch/task_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T21:11:48Z",
+      "side": 1,
+      "message": "This also may be simplified once Carlos\u0027 patch lands. Add TODO?",
+      "revId": "b1fd4ed4cef386e66bc92a9aaaf1e42b8f3a6778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
