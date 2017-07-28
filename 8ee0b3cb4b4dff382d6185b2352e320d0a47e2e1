@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f0218e_4f5b9f2d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T22:39:27Z",
+      "side": 1,
+      "message": "nit:s/s/S/",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 20
+      },
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0efb44a_b385d0e8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T22:39:27Z",
+      "side": 1,
+      "message": "Please revise the comment accordingly.",
+      "range": {
+        "startLine": 838,
+        "startChar": 5,
+        "endLine": 841,
+        "endChar": 66
+      },
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837b0e9c_59f1922d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-28T22:39:27Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 986,
+        "startChar": 0,
+        "endLine": 989,
+        "endChar": 66
+      },
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
