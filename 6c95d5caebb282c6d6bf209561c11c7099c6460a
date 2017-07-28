@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "d78c29cb_92f8ab60",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "nit: If the item was not checked and it is updated ...",
+      "range": {
+        "startLine": 209,
+        "startChar": 26,
+        "endLine": 209,
+        "endChar": 33
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fb4ccc_d158db2c",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "This can be simplified for readability:\nif (checked \u0026\u0026 !item-\u003echecked())",
+      "range": {
+        "startLine": 213,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 22
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e4d890_0697db14",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "Revert this change? RadioItemUpdate is nonexistent.",
+      "range": {
+        "startLine": 261,
+        "startChar": 30,
+        "endLine": 261,
+        "endChar": 46
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d294981b_ecbac892",
         "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
         "patchSetId": 2
@@ -13,6 +82,156 @@
       "writtenOn": "2017-07-27T23:41:58Z",
       "side": 1,
       "message": "I added these tests because I wanted to test chrome.contextMenus.update. The menu_manager_unittest.cc only tests SanitizeRadioList.",
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f5b326_8ada9b9d",
+        "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "Thank you very much!",
+      "parentUuid": "d294981b_ecbac892",
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f3fc49_fb2449ad",
+        "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "Do you also need listener_created_item2.WaitUntilSatisfied?",
+      "range": {
+        "startLine": 327,
+        "startChar": 14,
+        "endLine": 327,
+        "endChar": 36
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7e3d9e_12ea6f3d",
+        "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "It would be easier to read the test if you extracted this checking into a helper function? Something like:\nVerifyRadioItem(const ExtensionId\u0026, const std::string\u0026 radio_uid, bool should_be_checked)?\n\nAnd then call\nVerifyRadioItem(extension-\u003eid(), \"radio1\", true);\nVerifyRadioItem(extension-\u003eid(), \"radio2\", false);",
+      "range": {
+        "startLine": 336,
+        "startChar": 15,
+        "endLine": 336,
+        "endChar": 24
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73ff1b2_bdf6d65d",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "Correct this? The next line is setting item1 to be checked.",
+      "range": {
+        "startLine": 669,
+        "startChar": 5,
+        "endLine": 669,
+        "endChar": 10
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c71ffea_f2af6874",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "I think you meant to put this comment before line 675 below?",
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f42b0e6_bcbdb522",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "As you point out in your comments, add a comment before this line saying 1 should be selected as it was updated latest.",
+      "range": {
+        "startLine": 676,
+        "startChar": 14,
+        "endLine": 676,
+        "endChar": 23
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e127968_9f070340",
+        "filename": "chrome/test/data/extensions/context_menus/radio_check/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 1,
+      "message": "indent these 3 lines to have 2 spaces less each. Also for line 64 below.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 37
+      },
       "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

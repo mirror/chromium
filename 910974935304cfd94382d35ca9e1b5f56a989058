@@ -33,6 +33,24 @@
       "revId": "910974935304cfd94382d35ca9e1b5f56a989058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33f5620_53d6d8bf",
+        "filename": "chrome/browser/extensions/menu_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-28T16:00:34Z",
+      "side": 0,
+      "message": "There isn\u0027t a scenario when two items have SetChecked called twice\n-\u003e Yes, thanks for digging into this. Maybe you want to comment here to say that SetChecked should not be called twice.\n\nSecondly, in this scenario after line 671, I would think that item 1 should be checked\n-\u003e Agreed.",
+      "parentUuid": "bdaeac92_075640c0",
+      "revId": "910974935304cfd94382d35ca9e1b5f56a989058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
