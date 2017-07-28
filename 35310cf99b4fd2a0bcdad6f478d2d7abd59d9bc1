@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e30d81a3_2e24c605",
+        "filename": "chrome/browser/chromeos/printing/printer_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-28T00:33:34Z",
+      "side": 1,
+      "message": "It seems like this might behave slightly unexpectedly when profiles are added after recording has already been enabled.  Maybe move this implementation into the factory, and have it remember state too, so it can initialize Trackers properly.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 3
+      },
+      "revId": "35310cf99b4fd2a0bcdad6f478d2d7abd59d9bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d82416_d0b0f412",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-28T00:33:34Z",
+      "side": 1,
+      "message": "use base::MakeUnique",
+      "range": {
+        "startLine": 649,
+        "startChar": 6,
+        "endLine": 649,
+        "endChar": 48
+      },
+      "revId": "35310cf99b4fd2a0bcdad6f478d2d7abd59d9bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
