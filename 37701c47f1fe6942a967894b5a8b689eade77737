@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3512f505_d1e82db8",
+        "filename": "chrome/installer/zucchini/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c3acc5_c88fc70e",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c872eb3_3c903541",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4961ee_e3fbf2ef",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Nop",
+      "parentUuid": "9c872eb3_3c903541",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b772ba2e_31bea971",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695bbdfd_983ca484",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787860b6_29fbf282",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59aa365_d9140c7f",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "787860b6_29fbf282",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "1839c962_bb6dfce4",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "FindReference() is used publicly. Come to think about it, we can always return Reference, and assume that a reference exists at location, because GetType() needs to be called first.",
+      "parentUuid": "eaa573c5_7b056e1a",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41fae72e_ac34b603",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 1
@@ -116,6 +224,30 @@
       "writtenOn": "2017-07-27T22:05:41Z",
       "side": 1,
       "message": "git cl format",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 80
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491bf3ac_939ae3d7",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "This is the result of git format.",
+      "parentUuid": "41fae72e_ac34b603",
       "range": {
         "startLine": 51,
         "startChar": 6,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "ef0bc303_a0138fd8",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3a1ad2f_d85e69ae",
+      "range": {
+        "startLine": 66,
+        "startChar": 26,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afe53534_4ee54422",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 1
@@ -165,6 +321,24 @@
       "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4ea6b2_838571ec",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afe53534_4ee54422",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "7886c8e0_a851feba",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Yes, this is only used during patch generation (in original implementation, ReferenceHolder was used; ImageIndex has similar duty, but stores additional stuff).",
+      "parentUuid": "7bb49284_480f6517",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 29
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03a1917c_aea4c292",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 1
@@ -211,6 +409,30 @@
       "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae4ae32_d07d815c",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a1917c_aea4c292",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "a8e2750e_c4365720",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53db4e1_338893ae",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 17
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f303bdf8_0cdcdb67",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 1
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "fee763cd_357e0f47",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f303bdf8_0cdcdb67",
+      "range": {
+        "startLine": 89,
+        "startChar": 52,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c37e4b98_760d7d2b",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 1
@@ -271,6 +541,30 @@
       "writtenOn": "2017-07-27T22:05:41Z",
       "side": 1,
       "message": "Maybe these can be std::map\u003cTypeTag, ...\u003e? Though in this case TypeCount and PoolCount need to be smarter (return 0 if empty, else return rbegin()-\u003efirst + 1).",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab1bd80_5622cd11",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "I guessing the reason for that is to avoid the resize O(n^2) weirdness. I refactored this a little, so I\u0027m not sure it is still necessary.",
+      "parentUuid": "c37e4b98_760d7d2b",
       "range": {
         "startLine": 94,
         "startChar": 1,
@@ -306,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "0f261450_0e176674",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01904b73_ef66248e",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0647b36b_07414169",
         "filename": "chrome/installer/zucchini/image_index_unittest.cc",
         "patchSetId": 1
@@ -317,6 +635,30 @@
       "writtenOn": "2017-07-27T22:05:41Z",
       "side": 1,
       "message": "git cl format",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df822019_ca2d5897",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "This is the result of git cl format.\nNote: endls are intentional (enforced by comments) to mark different references/raw data.",
+      "parentUuid": "0647b36b_07414169",
       "range": {
         "startLine": 103,
         "startChar": 5,
@@ -352,6 +694,30 @@
     },
     {
       "key": {
+        "uuid": "63d2540d_1490c0b1",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7288ee3a_0609edff",
+      "range": {
+        "startLine": 111,
+        "startChar": 53,
+        "endLine": 111,
+        "endChar": 54
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a489a1_b2283a79",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 1
@@ -372,6 +738,30 @@
       "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296641d3_daab1903",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20a489a1_b2283a79",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 6
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -398,6 +788,30 @@
     },
     {
       "key": {
+        "uuid": "aec699ee_81cb6999",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure about putting TestReferenceReader in the same file as ReferenceReader, because it is only used for unittests. Also, if I extract ReferenceReader from disassembler.h, should I extract ReferenceWriter as well? I was thinking of having a TestReferenceWriter eventually, which could go with this one, not sure if we will need a full TestDisassembler though, but if its the case, it would use TestReferenceReader and TestReferenceWriter for each group.",
+      "parentUuid": "876072dd_cbb62b0e",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b9eca5_1d04a6e8",
         "filename": "chrome/installer/zucchini/test_disassembler.h",
         "patchSetId": 1
@@ -412,6 +826,24 @@
       "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9812e1c5_9e7348a8",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-28T01:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b9eca5_1d04a6e8",
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
