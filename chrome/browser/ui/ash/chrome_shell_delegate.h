@@ -52,6 +52,7 @@ class ChromeShellDelegate : public ash::ShellDelegate,
                                    const ash::ShelfItem* item) override;
   ash::GPUSupport* CreateGPUSupport() override;
   base::string16 GetProductName() const override;
+  base::string16 GetProductOSName() const override;
   void OpenKeyboardShortcutHelpPage() const override;
   gfx::Image GetDeprecatedAcceleratorImage() const override;
   PrefService* GetActiveUserPrefService() const override;

@@ -66,6 +66,10 @@ bool WebNotificationTray::IsContextMenuEnabled() const {
   return true;
 }
 
+base::string16 WebNotificationTray::GetProductOSName() {
+  return base::string16();
+}
+
 void WebNotificationTray::OnMessageCenterTrayChanged() {
 }
 
