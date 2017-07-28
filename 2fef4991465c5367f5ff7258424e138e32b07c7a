@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0f38370_b328f4cf",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T19:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3a7c27_29f6e699",
+      "range": {
+        "startLine": 184,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3c53858_8cd221dd",
         "filename": "media/cdm/cdm_adapter.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccba370c_a229fb5c",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T19:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c53858_8cd221dd",
+      "range": {
+        "startLine": 188,
+        "startChar": 62,
+        "endLine": 188,
+        "endChar": 70
+      },
+      "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1f27627f_651f6624",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T19:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d412736_52a2fd25",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 9
+      },
+      "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fefa1062_09c668b2",
         "filename": "media/cdm/cdm_module.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "847f4baa_5f2c28f0",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T19:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fefa1062_09c668b2",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 20
+      },
+      "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd92d0d5_9dff9b98",
         "filename": "media/cdm/cdm_module.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-19T23:44:15Z",
       "side": 1,
       "message": "Why not use cdm_path everywhere?",
+      "range": {
+        "startLine": 61,
+        "startChar": 46,
+        "endLine": 61,
+        "endChar": 59
+      },
+      "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80d99fc_745a3319",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T19:58:39Z",
+      "side": 1,
+      "message": "I like to keep a separate |cdm_base_path| to make things more clear.",
+      "parentUuid": "cd92d0d5_9dff9b98",
       "range": {
         "startLine": 61,
         "startChar": 46,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a28f2ed8_6c12564b",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T19:58:39Z",
+      "side": 1,
+      "message": "That would work. Just personally I like to keep the |cdm_base_path| to make things more clear.",
+      "parentUuid": "ba98879b_24ed3f36",
+      "range": {
+        "startLine": 64,
+        "startChar": 29,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9132ca66_823f92a6",
         "filename": "media/cdm/cdm_module.cc",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-19T23:44:15Z",
       "side": 1,
       "message": "I think this should be set only at the very end (after calling initialize_cdm_module_func()).",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 17
+      },
+      "revId": "2fef4991465c5367f5ff7258424e138e32b07c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14dd4d7_51c6749d",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-28T19:58:39Z",
+      "side": 1,
+      "message": "Renamed to avoid confusion.",
+      "parentUuid": "9132ca66_823f92a6",
       "range": {
         "startLine": 103,
         "startChar": 2,
