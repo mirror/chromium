@@ -203,9 +203,11 @@ Frame* MixedContentChecker::InWhichFrameIsContentMixed(
     WebURLRequest::FrameType frame_type,
     const KURL& url,
     const LocalFrame* source) {
+  DCHECK(frame);
+
   // We only care about subresource loads; top-level navigations cannot be mixed
   // content. Neither can frameless requests.
-  if (frame_type == WebURLRequest::kFrameTypeTopLevel || !frame)
+  if (frame_type == WebURLRequest::kFrameTypeTopLevel)
     return nullptr;
 
   // Check the top frame first.
@@ -310,6 +312,8 @@ bool MixedContentChecker::ShouldBlockFetch(
     ResourceRequest::RedirectStatus redirect_status,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) {
+  DCHECK(frame);
+
   // Frame-level loads are checked by the browser if PlzNavigate is enabled. No
   // need to check them again here.
   if (frame->GetSettings()->GetBrowserSideNavigationEnabled() &&
@@ -508,6 +512,9 @@ bool MixedContentChecker::ShouldBlockWebSocket(
     LocalFrame* frame,
     const KURL& url,
     SecurityViolationReportingPolicy reporting_policy) {
+  if (!frame)
+    return false;
+
   Frame* mixed_frame = InWhichFrameIsContentMixed(
       frame, WebURLRequest::kFrameTypeNone, url, frame);
   if (!mixed_frame)
@@ -633,8 +640,11 @@ void MixedContentChecker::HandleCertificateError(
     const ResourceResponse& response,
     WebURLRequest::FrameType frame_type,
     WebURLRequest::RequestContext request_context) {
+  DCHECK(frame);
+
   Frame* effective_frame = EffectiveFrameForFrameType(frame, frame_type);
-  if (frame_type == WebURLRequest::kFrameTypeTopLevel || !effective_frame)
+  DCHECK(effective_frame);
+  if (frame_type == WebURLRequest::kFrameTypeTopLevel)
     return;
 
   // Use the current local frame's client; the embedder doesn't distinguish
