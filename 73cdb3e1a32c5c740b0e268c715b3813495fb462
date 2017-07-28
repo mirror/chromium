@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac9d48f_4651ef3b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-28T22:05:17Z",
+      "side": 1,
+      "message": "Promise\u003c?DOMException\u003e for better readability?",
+      "revId": "73cdb3e1a32c5c740b0e268c715b3813495fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f26e636_1988e296",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2022,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-28T22:05:17Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a VBox.",
+      "revId": "73cdb3e1a32c5c740b0e268c715b3813495fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79223c4_771c60ab",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-28T22:05:17Z",
+      "side": 1,
+      "message": "Let\u0027s just pass resolve and perform hide() in a then() of this promise? Hope this would help the weird formatting.",
+      "revId": "73cdb3e1a32c5c740b0e268c715b3813495fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
