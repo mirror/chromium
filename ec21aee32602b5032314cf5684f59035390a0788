@@ -16,6 +16,24 @@
       "revId": "ec21aee32602b5032314cf5684f59035390a0788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8253e93_50fbfc69",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T18:33:46Z",
+      "side": 1,
+      "message": "This isn\u0027t false for cast as far as I know. (See discussion on https://chromium-review.googlesource.com/#/c/587305/ -- this comment is meant to discourage changes like that one and like https://chromium-review.googlesource.com/c/583635/ -- the discussion for the latter was off gerrit, but it\u0027s since been reverted too). It\u0027s true simplechrome, but that does use its own custom c++ stdlib: It doesn\u0027t use the system libstdc++, which means it can be updated independent of all the bots, and it also currently uses something newer than 4.8.\n\nI think we can remove the `(!is_chromecast || is_cast_desktop_build)` bit eventually, and the simplechrome bots can explicitly set this to false when they do all their toolchain overrides, and then we can remove the !is_chromeos branch too.\n\nSo I\u0027d like to keep the contents of the comment. Happy to reword it to improve the phrasing, though :-)",
+      "parentUuid": "cf992374_f3d561db",
+      "revId": "ec21aee32602b5032314cf5684f59035390a0788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
