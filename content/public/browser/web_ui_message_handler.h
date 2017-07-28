@@ -5,6 +5,7 @@
 #ifndef CONTENT_PUBLIC_BROWSER_WEB_UI_MESSAGE_HANDLER_H_
 #define CONTENT_PUBLIC_BROWSER_WEB_UI_MESSAGE_HANDLER_H_
 
+#include <string>
 #include <vector>
 
 #include "base/gtest_prod_util.h"
@@ -24,6 +25,10 @@ namespace content {
 
 class WebUI;
 class WebUIImpl;
+
+// This type just needs an invalid value and the range of positive integers in a
+// Javascript number.
+typedef std::string WebUICallbackId;
 
 // Messages sent from the DOM are forwarded via the WebUI to handler
 // classes. These objects are owned by WebUI and destroyed when the
@@ -82,13 +87,13 @@ class CONTENT_EXPORT WebUIMessageHandler {
   // Helper method for responding to Javascript requests initiated with
   // cr.sendWithPromise() (defined in cr.js) for the case where the returned
   // promise should be resolved (request succeeded).
-  void ResolveJavascriptCallback(const base::Value& callback_id,
+  void ResolveJavascriptCallback(WebUICallbackId callback_id,
                                  const base::Value& response);
 
   // Helper method for responding to Javascript requests initiated with
   // cr.sendWithPromise() (defined in cr.js), for the case where the returned
   // promise should be rejected (request failed).
-  void RejectJavascriptCallback(const base::Value& callback_id,
+  void RejectJavascriptCallback(WebUICallbackId callback_id,
                                 const base::Value& response);
 
   // Helper method for notifying Javascript listeners added with
@@ -134,6 +139,8 @@ class CONTENT_EXPORT WebUIMessageHandler {
 
   // True if the page is for JavaScript calls from this handler.
   bool javascript_allowed_;
+
+  std::vector<std::string> callbacks_;
 
   WebUI* web_ui_;
 };

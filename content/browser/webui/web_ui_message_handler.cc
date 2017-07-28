@@ -32,11 +32,26 @@ void WebUIMessageHandler::DisallowJavascript() {
   javascript_allowed_ = false;
   DCHECK(!IsJavascriptAllowed());
 
+  for (size_t i = 0; i < callbacks_.size(); ++i)
+    callbacks_[i].clear();
+
   OnJavascriptDisallowed();
 }
 
 bool WebUIMessageHandler::IsJavascriptAllowed() const {
   return javascript_allowed_ && web_ui() && web_ui()->CanCallJavascript();
+}
+
+const WebUICallback* WebUIMessageHandler::GetCallbackFromArgs(
+    const base::ListValue* args) {
+  double callback_id;
+  if (!args || args->empty() || !args->GetDouble(0, &callback_id)) {
+    NOTREACHED();
+    callbacks_.emplace_back();
+  } else {
+    callbacks_.emplace_back(static_cast<int>(callback_id));
+  }
+  return &callbacks_.back();
 }
 
 bool WebUIMessageHandler::ExtractIntegerValue(const base::ListValue* value,
@@ -74,19 +89,25 @@ base::string16 WebUIMessageHandler::ExtractStringValue(
 }
 
 void WebUIMessageHandler::ResolveJavascriptCallback(
-    const base::Value& callback_id,
+    WebUICallback* callback,
     const base::Value& response) {
+  if (!callback || callback->empty())
+    return;
   // cr.webUIResponse is a global JS function exposed from cr.js.
-  CallJavascriptFunction("cr.webUIResponse", callback_id, base::Value(true),
-                         response);
+  CallJavascriptFunction("cr.webUIResponse", base::StringValue(*callback),
+                         base::Value(true), response);
+  callback->clear();
 }
 
 void WebUIMessageHandler::RejectJavascriptCallback(
-    const base::Value& callback_id,
+    WebUICallback* callback,
     const base::Value& response) {
+  if (!callback || callback->empty())
+    return;
   // cr.webUIResponse is a global JS function exposed from cr.js.
-  CallJavascriptFunction("cr.webUIResponse", callback_id, base::Value(false),
-                         response);
+  CallJavascriptFunction("cr.webUIResponse", base::StringValue(*callback),
+                         base::Value(false), response);
+  callback->clear();
 }
 
 }  // namespace content

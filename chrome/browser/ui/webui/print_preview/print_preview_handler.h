@@ -463,14 +463,14 @@ class PrintPreviewHandler
 
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   // Callback ID to be used to notify UI that privet search is finished.
-  std::string privet_search_callback_id_;
+  const WebUICallback* privet_search_callback_ = nullptr;
 
   // Callback ID to be used to notify UI that privet printing is finished.
-  std::string privet_print_callback_id_;
+  const WebUICallback* privet_print_callback_ = nullptr;
 #endif
 
   // Callback ID to be used to notify UI that PDF file selection has finished.
-  std::string pdf_callback_id_;
+  const WebUICallback* pdf_callback_ = nullptr;
 
   // Print settings to use in the local print request to send when
   // HandleHidePreview() is called.
