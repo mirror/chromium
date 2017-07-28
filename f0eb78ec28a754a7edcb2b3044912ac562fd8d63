@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c48ceb78_5e7382f4",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4202,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-28T20:16:13Z",
+      "side": 0,
+      "message": "Please move these method implementations from wherever they currently are to the BrowserCommands section just before the ChromeExecuteCommand method.",
+      "range": {
+        "startLine": 4202,
+        "startChar": 12,
+        "endLine": 4202,
+        "endChar": 49
+      },
+      "revId": "f0eb78ec28a754a7edcb2b3044912ac562fd8d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

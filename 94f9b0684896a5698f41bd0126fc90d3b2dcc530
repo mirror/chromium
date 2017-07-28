@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99187ec4_3aaa11cf",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-28T20:16:13Z",
+      "side": 1,
+      "message": "I don\u0027t want to use UI elements as parameters to commands, especially when the UI element itself has no direct relevance to the command. Use the navigation item instead, since that\u0027s what the implementation ends up doing.",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "94f9b0684896a5698f41bd0126fc90d3b2dcc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
