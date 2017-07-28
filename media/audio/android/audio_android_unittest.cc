@@ -160,10 +160,11 @@ std::ostream& operator<<(std::ostream& os, const AudioParameters& params) {
 // Gmock implementation of AudioInputStream::AudioInputCallback.
 class MockAudioInputCallback : public AudioInputStream::AudioInputCallback {
  public:
-  MOCK_METHOD4(OnData,
+  MOCK_METHOD5(OnData,
                void(AudioInputStream* stream,
                     const AudioBus* src,
-                    uint32_t hardware_delay_bytes,
+                    base::TimeDelta delay,
+                    base::TimeTicks delay_timestamp,
                     double volume));
   MOCK_METHOD1(OnError, void(AudioInputStream* stream));
 };
@@ -277,7 +278,8 @@ class FileAudioSink : public AudioInputStream::AudioInputCallback {
   // AudioInputStream::AudioInputCallback implementation.
   void OnData(AudioInputStream* stream,
               const AudioBus* src,
-              uint32_t hardware_delay_bytes,
+              base::TimeDelta delay,
+              base::TimeTicks delay_timestamp,
               double volume) override {
     const int num_samples = src->frames() * src->channels();
     std::unique_ptr<int16_t> interleaved(new int16_t[num_samples]);
@@ -325,7 +327,8 @@ class FullDuplexAudioSinkSource
   // AudioInputStream::AudioInputCallback implementation
   void OnData(AudioInputStream* stream,
               const AudioBus* src,
-              uint32_t hardware_delay_bytes,
+              base::TimeDelta delay,
+              base::TimeTicks delay_timestamp,
               double volume) override {
     const base::TimeTicks now_time = base::TimeTicks::Now();
     const int diff = (now_time - previous_time_).InMilliseconds();
@@ -665,7 +668,7 @@ class AudioAndroidInputTest : public AudioAndroidOutputTest,
     MockAudioInputCallback sink;
 
     base::RunLoop run_loop;
-    EXPECT_CALL(sink, OnData(audio_input_stream_, NotNull(), _, _))
+    EXPECT_CALL(sink, OnData(audio_input_stream_, NotNull(), _, _, _))
         .Times(AtLeast(num_callbacks))
         .WillRepeatedly(CheckCountAndPostQuitTask(
             &count, num_callbacks, base::ThreadTaskRunnerHandle::Get(),

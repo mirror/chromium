@@ -121,7 +121,8 @@ class MEDIA_EXPORT AudioInputStream {
     // implementation should return as soon as possible.
     virtual void OnData(AudioInputStream* stream,
                         const AudioBus* source,
-                        uint32_t hardware_delay_bytes,
+                        base::TimeDelta delay,
+                        base::TimeTicks delay_timestamp,
                         double volume) = 0;
 
     // There was an error while recording audio. The audio sink cannot be

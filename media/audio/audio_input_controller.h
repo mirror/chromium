@@ -130,7 +130,8 @@ class MEDIA_EXPORT AudioInputController
     virtual void Write(const AudioBus* data,
                        double volume,
                        bool key_pressed,
-                       uint32_t hardware_delay_bytes) = 0;
+                       base::TimeDelta delay,
+                       base::TimeTicks delay_timestamp) = 0;
 
     // Close this synchronous writer.
     virtual void Close() = 0;

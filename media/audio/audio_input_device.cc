@@ -438,9 +438,10 @@ void AudioInputDevice::AudioThreadCallback::Process(uint32_t pending_data) {
 
   // Deliver captured data to the client in floating point format and update
   // the audio delay measurement.
+  // TODO(olka, tommi): Do something with |delay_timestamp|.
   capture_callback_->Capture(
       audio_bus,
-      buffer->params.hardware_delay_bytes / bytes_per_ms_,  // Delay in ms
+      base::TimeDelta::FromMicroseconds(buffer->params.delay).InMilliseconds(),
       buffer->params.volume, buffer->params.key_pressed);
 
   if (++current_segment_id_ >= total_segments_)

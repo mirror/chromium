@@ -64,7 +64,8 @@ class CONTENT_EXPORT AudioInputSyncWriter
   void Write(const media::AudioBus* data,
              double volume,
              bool key_pressed,
-             uint32_t hardware_delay_bytes) override;
+             base::TimeDelta delay,
+             base::TimeTicks delay_timestamp) override;
 
   void Close() override;
 
@@ -84,7 +85,8 @@ class CONTENT_EXPORT AudioInputSyncWriter
   bool PushDataToFifo(const media::AudioBus* data,
                       double volume,
                       bool key_pressed,
-                      uint32_t hardware_delay_bytes);
+                      base::TimeDelta delay,
+                      base::TimeTicks delay_timestamp);
 
   // Writes as much data as possible from the fifo (|overflow_buses_|) to the
   // shared memory ring buffer. Returns true if all operations were successful,
@@ -94,7 +96,8 @@ class CONTENT_EXPORT AudioInputSyncWriter
   // Write audio parameters to current segment in shared memory.
   void WriteParametersToCurrentSegment(double volume,
                                        bool key_pressed,
-                                       uint32_t hardware_delay_bytes);
+                                       base::TimeDelta delay,
+                                       base::TimeTicks delay_timestamp);
 
   // Signals over the socket that data has been written to the current segment.
   // Updates counters and returns true if successful. Logs error and returns
@@ -167,7 +170,8 @@ class CONTENT_EXPORT AudioInputSyncWriter
   std::vector<std::unique_ptr<media::AudioBus>> overflow_buses_;
   struct OverflowParams {
     double volume;
-    uint32_t hardware_delay_bytes;
+    base::TimeDelta delay;
+    base::TimeTicks delay_timestamp;
     bool key_pressed;
   };
   std::deque<OverflowParams> overflow_params_;

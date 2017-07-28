@@ -106,7 +106,8 @@ void FakeAudioInputStream::ReadAudioFromSource() {
 
   audio_source_->OnMoreData(base::TimeDelta(), base::TimeTicks::Now(), 0,
                             audio_bus_.get());
-  callback_->OnData(this, audio_bus_.get(), 0, 1.0);
+  callback_->OnData(this, audio_bus_.get(), base::TimeDelta(),
+                    base::TimeTicks::Now(), 1.0);
 }
 
 using AudioSourceCallback = AudioOutputStream::AudioSourceCallback;
