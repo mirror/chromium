@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ae6bd8_d189a4e0",
+        "filename": "chromeos/components/tether/master_host_scan_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T23:04:54Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026, else it copies the pair\u003c\u003e a bunch",
+      "revId": "d91d57c6c5b4d88e6446dd6903d37bdf89bb3eb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
