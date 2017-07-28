@@ -46,6 +46,30 @@
       "revId": "6e6c625a43f186dc6d5e48a92fc435b5598ff958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d141e139_560566a3",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-28T15:45:10Z",
+      "side": 1,
+      "message": "Hi Jun, sorry for all the delays, busy days, I think my only concern is that the \u0027Mac\u0027 fix looks a but \u0027hacky\u0027 here. I didn\u0027t go through the details of your explanation yet, but having a DidStart() guarded by CanStart() inside the SendStartMessage() looks somewhat complicated.. Is this \u0027fix\u0027 needed for Mac only? or also other platforms?",
+      "parentUuid": "4ed5ec7d_8fb28b8f",
+      "range": {
+        "startLine": 121,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "6e6c625a43f186dc6d5e48a92fc435b5598ff958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
