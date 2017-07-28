@@ -1034,7 +1034,9 @@ class CORE_EXPORT Document : public ContainerNode,
   const SVGDocumentExtensions* SvgExtensions();
   SVGDocumentExtensions& AccessSVGExtensions();
 
-  void InitContentSecurityPolicy(ContentSecurityPolicy* = nullptr);
+  void InitContentSecurityPolicy(
+      ContentSecurityPolicy* = nullptr,
+      ContentSecurityPolicy* policy_to_inherit = nullptr);
 
   bool IsSecureTransitionTo(const KURL&) const;
 
