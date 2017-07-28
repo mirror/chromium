@@ -16,6 +16,41 @@
       "revId": "a1d905d6c3fbbe204d2385d6577d71c48158370d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f88088_7c2074d2",
+        "filename": "third_party/crashpad/crashpad/snapshot/win/pe_image_reader_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:04:33Z",
+      "side": 1,
+      "message": "\u003e Was the guard necessary to get things to compile? I was thinking it\u0027d be nicer to unconditionally define it if we can.\n\nI agree. This should be the build description’s responsibility.",
+      "parentUuid": "94868363_b23581ba",
+      "revId": "a1d905d6c3fbbe204d2385d6577d71c48158370d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c113b89a_d95b4a9b",
+        "filename": "third_party/tcmalloc/chromium/src/windows/patch_functions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-28T21:04:33Z",
+      "side": 1,
+      "message": "Should be able to get rid of this entirely.",
+      "revId": "a1d905d6c3fbbe204d2385d6577d71c48158370d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
