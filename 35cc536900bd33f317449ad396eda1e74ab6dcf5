@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "bf180b6e_e6d93f27",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-28T09:29:23Z",
+      "side": 1,
+      "message": "Great, thanks!",
+      "parentUuid": "74d7f113_f45f5927",
+      "revId": "35cc536900bd33f317449ad396eda1e74ab6dcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc1cfa31_c3766c4a",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
