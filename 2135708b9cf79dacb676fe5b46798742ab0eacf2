@@ -22,6 +22,30 @@
       "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e2bd55_07464b64",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-28T18:11:19Z",
+      "side": 1,
+      "message": "I think you can refactor the memory._MemoryInfra so that the methods for setting up the memory trace options \u0026 metrics are public method. That makes it easier for you to later add stuffs other than memory, including: cpu time, smoothness,..etc\n\n+Juan for opinions",
+      "parentUuid": "6ca8d15d_0e1f235e",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
