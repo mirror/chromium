@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0896c403_0aeeea18",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T23:25:48Z",
+      "side": 1,
+      "message": "It\u0027s worth a comment here to describe that we only one to call namespace-\u003eOpenStorageArea() once for the process as a whole.",
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fe6f63_135092f9",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T23:25:48Z",
+      "side": 1,
+      "message": "i think we might be able to do this with fewer code changes?\n\nbase::NullableString16 old_value;\nif (area-\u003ehas_keys_only())\n  old_value \u003d client_old_value;\n\n// and the rest can remain the same % old_value. vs -\u003e\n// wdyt?",
+      "range": {
+        "startLine": 106,
+        "startChar": 25,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82e1e27_fe9736e4",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T23:25:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s always true? I think there can be racey situations with messages in flight when the area is closed? Suppose we have this sequence of events...\n\nrendererA calls SetItem(k, valueA, ignoredClientOldValue)\nbrowsers sends mutationEventA(k, valueA, origOldValue)\nrendererA closes the connect\nrendererB calls SetItem(k, valueB, wrongClientOldValue)\nrendererB receives the mutationEventA(k, valueA, origOldValue) \u003c--- TOO LATE\nbrowser sends mutatuionEventB with (k, valueB, wrongClientOldValue) instead of valueA",
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35764af_dba458eb",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T23:25:48Z",
+      "side": 1,
+      "message": "ditto fewer code changes",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 26
+      },
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
