@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "8da3f788_b86ab2f9",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-28T12:08:32Z",
+      "side": 1,
+      "message": "http://crbug.com/749996",
+      "parentUuid": "841ec01b_0a1825ad",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1893f651_0602ffb7",
         "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
         "patchSetId": 5
@@ -257,6 +275,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73226fe1_fbb775e3",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-28T12:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a0fca91_6c6f4eb5",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -567,6 +603,24 @@
       "revId": "cc4ada43606fec81bf9587473319424f310ee767",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb05961_6799eaec",
+        "filename": "components/ntp_snippets/contextual_suggestions_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-28T12:08:32Z",
+      "side": 1,
+      "message": "Right, I created http://crbug.com/750006",
+      "parentUuid": "31886da8_ed17a5b8",
+      "revId": "cc4ada43606fec81bf9587473319424f310ee767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
