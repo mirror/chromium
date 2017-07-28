@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_VR_ELEMENTS_CLOSE_BUTTON_TEXTURE_H_
 
 #include "chrome/browser/vr/elements/button_texture.h"
+#include "ui/gfx/vector_icon_types.h"
 
 namespace gfx {
 class PointF;
@@ -16,6 +17,7 @@ namespace vr {
 class CloseButtonTexture : public ButtonTexture {
  public:
   CloseButtonTexture();
+  CloseButtonTexture(const gfx::VectorIcon& icon);
   ~CloseButtonTexture() override;
   gfx::Size GetPreferredTextureSize(int width) const override;
   gfx::SizeF GetDrawnSize() const override;
@@ -25,6 +27,7 @@ class CloseButtonTexture : public ButtonTexture {
   void Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) override;
 
   gfx::SizeF size_;
+  gfx::VectorIcon icon_;
 };
 
 }  // namespace vr

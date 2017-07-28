@@ -18,10 +18,13 @@
 namespace vr {
 
 class TabItemTexture;
+class UiSceneManager;
+class UiScene;
+class Tooltip;
 
 class TabItem : public TexturedElement {
  public:
-  TabItem();
+  TabItem(UiSceneManager* mgr, UiScene* scene);
   ~TabItem() override;
 
   // UiElement.
@@ -37,6 +40,7 @@ class TabItem : public TexturedElement {
   UiTexture* GetTexture() const override;
 
   std::unique_ptr<TabItemTexture> texture_;
+  Tooltip* tooltip_;
 
   DISALLOW_COPY_AND_ASSIGN(TabItem);
 };

@@ -69,6 +69,7 @@ class VrGLThread : public base::Thread,
   void OnUnsupportedMode(vr::UiUnsupportedMode mode) override;
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice) override;
+  void OpenNewTab(bool incognito) override;
 
   // vr::UiInterface implementation (VrShell and GL calling to the UI).
   void SetFullscreen(bool enabled) override;

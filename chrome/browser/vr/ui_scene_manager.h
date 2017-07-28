@@ -102,6 +102,7 @@ class UiSceneManager {
   void OnExitPromptChoice(bool chose_exit);
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
+  void OnNewTabButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
   ColorScheme::Mode mode() const;
   const ColorScheme& color_scheme() const;

@@ -13,7 +13,6 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icon_types.h"
 
 namespace vr {
 
@@ -23,7 +22,10 @@ constexpr float kIconScaleFactor = 0.5;
 
 }  // namespace
 
-CloseButtonTexture::CloseButtonTexture() = default;
+CloseButtonTexture::CloseButtonTexture() : icon_(vector_icons::kCloseIcon) {}
+
+CloseButtonTexture::CloseButtonTexture(const gfx::VectorIcon& icon)
+    : icon_(icon) {}
 
 CloseButtonTexture::~CloseButtonTexture() = default;
 
@@ -48,8 +50,7 @@ void CloseButtonTexture::Draw(SkCanvas* sk_canvas,
   canvas->Save();
   canvas->Translate(gfx::Vector2d(size_.height() * (1 - kIconScaleFactor) / 2,
                                   size_.height() * (1 - kIconScaleFactor) / 2));
-  PaintVectorIcon(canvas, vector_icons::kCloseIcon,
-                  size_.height() * kIconScaleFactor,
+  PaintVectorIcon(canvas, icon_, size_.height() * kIconScaleFactor,
                   color_scheme().close_button_foreground);
   canvas->Restore();
 }

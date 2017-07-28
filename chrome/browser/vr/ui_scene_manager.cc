@@ -9,6 +9,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "cc/base/math_util.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/vr/databinding/one_way_binding.h"
 #include "chrome/browser/vr/databinding/vector_binding.h"
 #include "chrome/browser/vr/elements/bar.h"
@@ -601,11 +602,12 @@ void OnModelAdded(UiSceneManager* mgr,
                   UiScene* scene,
                   PagedGridView* view,
                   TabBinding* tab_binding) {
-  auto element = base::MakeUnique<TabItem>();
+  auto element = base::MakeUnique<TabItem>(mgr, scene);
   element->set_id(mgr->AllocateId());
   element->set_draw_phase(kPhaseForeground);
   element->SetSize(kContentWidth / 4.1f, kContentHeight / 3.5f);
   element->SetVisible(true);
+  element->SetOpacity(0.0f);
   element->animation_player().SetTransitionedProperties({OPACITY, TRANSFORM});
   tab_binding->set_view(element.get());
   view->AddChild(element.get());
@@ -752,13 +754,26 @@ void UiSceneManager::CreateTabMenu() {
           base::Unretained(location_bar_thumb_)));
   scene_->bindings().push_back(std::move(width_binding));
 
+  std::unique_ptr<Button> add_tab_button_element = base::MakeUnique<Button>(
+      base::Bind(&UiSceneManager::OnNewTabButtonClicked,
+                 base::Unretained(this)),
+      base::MakeUnique<CloseButtonTexture>(kAddIcon));
+  add_tab_button_element->set_id(AllocateId());
+  add_tab_button_element->set_draw_phase(kPhaseForeground);
+  add_tab_button_element->SetSize(kCloseButtonWidth, kCloseButtonHeight);
+  add_tab_button_element->SetVisible(true);
+  UiElement* add_tab_button = add_tab_button_element.get();
+  scene_->AddUiElement(std::move(add_tab_button_element));
+
   auto tab_menu =
       base::MakeUnique<LinearLayout>(LinearLayout::Direction::kVertical);
   tab_menu->set_id(AllocateId());
   tab_menu->SetTranslate(0, kContentVerticalOffset, -kContentDistance + 0.01f);
   tab_menu->AddChild(page_grid_view_);
   tab_menu->AddChild(location_bar_);
+  tab_menu->AddChild(add_tab_button);
   tab_menu->set_hit_testable(false);
+  tab_menu->set_margin(0.1 * kContentHeight);
   scene_->AddUiElement(std::move(tab_menu));
 }
 
@@ -811,9 +826,15 @@ void UiSceneManager::ConfigureScene() {
   bool browsing_mode = !web_vr_mode_ && !showing_web_vr_splash_screen_;
 
   // Controls (URL bar, loading progress, etc).
+#if !HACKERY
   bool controls_visible = browsing_mode && !fullscreen_ && !prompting_to_exit_;
+#endif
   for (UiElement* element : control_elements_) {
+#if HACKERY
+    element->SetEnabled(false);
+#else
     element->SetEnabled(controls_visible);
+#endif
   }
 
   // Close button is a special control element that needs to be hidden when in
@@ -1086,6 +1107,10 @@ void UiSceneManager::OnCloseButtonClicked() {
   if (in_cct_) {
     browser_->ExitCct();
   }
+}
+
+void UiSceneManager::OnNewTabButtonClicked() {
+  browser_->OpenNewTab(false);
 }
 
 void UiSceneManager::OnUnsupportedMode(UiUnsupportedMode mode) {

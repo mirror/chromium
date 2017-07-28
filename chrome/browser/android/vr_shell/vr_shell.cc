@@ -531,12 +531,6 @@ void VrShell::DoUiAction(const UiAction action,
       Java_VrShellImpl_showTab(env, j_vr_shell_, id);
       return;
     }
-    case OPEN_NEW_TAB: {
-      bool incognito;
-      CHECK(arguments->GetBoolean("incognito", &incognito));
-      Java_VrShellImpl_openNewTab(env, j_vr_shell_, incognito);
-      return;
-    }
     case HISTORY_FORWARD:
       Java_VrShellImpl_navigateForward(env, j_vr_shell_);
       break;
@@ -642,6 +636,11 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_onExitVrRequestResult(env, j_vr_shell_,
                                          static_cast<int>(reason), should_exit);
+}
+
+void VrShell::OpenNewTab(bool incognito) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_openNewTab(env, j_vr_shell_, incognito);
 }
 
 void VrShell::UpdateVSyncInterval(base::TimeTicks vsync_timebase,

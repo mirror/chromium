@@ -153,6 +153,11 @@ void VrGLThread::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             reason, choice));
 }
 
+void VrGLThread::OpenNewTab(bool incognito) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::OpenNewTab, weak_vr_shell_, incognito));
+}
+
 void VrGLThread::SetFullscreen(bool enabled) {
   WaitUntilThreadStarted();
   task_runner()->PostTask(FROM_HERE,
