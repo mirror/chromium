@@ -916,7 +916,7 @@ static void DispatchEditableContentChangedEvents(Element* start_root,
 }
 
 static SelectionInDOMTree CorrectedSelectionAfterCommand(
-    const VisibleSelection& passed_selection,
+    const SelectionForUndoStep& passed_selection,
     Document* document) {
   if (!passed_selection.Base().IsConnected() ||
       !passed_selection.Extent().IsConnected() ||
@@ -945,7 +945,7 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
       cmd->TextDataForInputEvent(), IsComposingFromCommand(cmd));
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
-      cmd->EndingVisibleSelection(), GetFrame().GetDocument());
+      cmd->EndingSelection(), GetFrame().GetDocument());
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
