@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edd281d4_731039d2",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "nit: please resolve this TODO if possible.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59996523_aa172c42",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "style nit: please put as much contents as possible onto each line (up to 80 chars).",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5354b36a_c0689ad2",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "bikeshedding: I feel that \"including_domains\"/\"excluding_domains\" may be more clear than \"blacklist\"/\"whitelist\". But please ignore this comment if \"blacklist\"/\"whitelist\" are already commonly used terms in this scenario.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a3c9dc_e7c652b7",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "Is it just related to how the methods should be ordered in this interface? Please consider resolving this TODO before landing.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9fffa8_5598dfd9",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "Please replace the tabs with spaces.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c715df89_674149bf",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "Please add comment about why the method returns an interface request in the callback, instead of passing an interface pointer in the call. (IIRC, we have talked about this and there is a reason. But it may not be obvious to the readers.)",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4330a05_366385f6",
+        "filename": "content/common/cookie_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "please use \"explicit\"",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c03af7_66c44f54",
+        "filename": "content/common/cookie_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "nit: please remove \"pointer\" (because this is an \"interface request\", the opposite side of a pipe is called \"interface pointer\" and has no thing to do with this method).",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcfe6802_6b9d3e72",
+        "filename": "content/common/cookie_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "This member doesn\u0027t seem very useful, its value is set and immediately moved out during CookieServiceTest construction.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173aba77_484da91d",
+        "filename": "content/common/cookie_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "You could simply use |mojom::CookieServicePtr new_ptr| here. And you could use |new_ptr.reset()| or |new_ptr \u003d nullptr| to reset the pointer.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25522270_b04c09e1",
+        "filename": "content/common/cookie_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "Please consider moving large method definitions like this to the cc file.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d1d678_9092e67d",
+        "filename": "content/common/cookie_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "The if-condition on line line 73 will cause the second branch not reachable, right?",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1901f570_843a1726",
+        "filename": "content/common/cookie_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-28T19:21:31Z",
+      "side": 1,
+      "message": "nit: you could replace the next 3 lines with \"return out-\u003eIsCanonical()\".",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
