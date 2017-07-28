@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf992374_f3d561db",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-28T18:28:19Z",
+      "side": 1,
+      "message": "This phrasing is awkward and isn\u0027t even really accurate, since we have main waterfall builds for CrOS and Cast where this is false, right?\n\nI would probably change this to something like \"not using a custom libc++ is only supported if your configuration is built on the main waterfall.\"",
+      "revId": "ec21aee32602b5032314cf5684f59035390a0788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
