@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4347e385_701a220f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8GCController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-28T05:43:54Z",
+      "side": 1,
+      "message": "I checked the history.\nThis CL introduced the code:\nhttps://codereview.chromium.org/309723002/diff/40001/Source/bindings/v8/V8GCController.cpp\n\nI still don\u0027t understand what is the requirement for \"root\", but the original intention\nseems the import document are retained from its parent document, so the master document\nwould be the root.  So pointing to the local import document as a root may miss some\nopportunity for collecting garbage?\n\n+haraken do you have any insight for this?",
+      "parentUuid": "8791f7ba_550835af",
+      "revId": "dcc417fa692aad9414307b585bab79ff7eed94c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63ef1e02_b37da47f",
         "filename": "third_party/WebKit/Source/core/css/MediaValuesCached.cpp",
         "patchSetId": 4
