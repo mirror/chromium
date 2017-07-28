@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <map>
+#include <memory>
 #include <vector>
 
 #include "base/compiler_specific.h"
@@ -357,6 +358,13 @@ NET_EXPORT der::Input AdCaIssuersOid();
 // In dotted notation: 1.3.6.1.5.5.7.48.1
 NET_EXPORT der::Input AdOcspOid();
 
+// From RFC 5280:
+//
+//     id-ce-cRLDistributionPoints OBJECT IDENTIFIER ::=  { id-ce 31 }
+//
+// In dotted notation: 2.5.29.31
+NET_EXPORT der::Input CrlDistributionPointsOid();
+
 // Parses the Extensions sequence as defined by RFC 5280. Extensions are added
 // to the map |extensions| keyed by the OID. Parsing guarantees that each OID
 // is unique. Note that certificate verification must consume each extension
@@ -456,6 +464,44 @@ NET_EXPORT bool ParseAuthorityInfoAccess(
     const der::Input& authority_info_access_tlv,
     std::vector<base::StringPiece>* out_ca_issuers_uris,
     std::vector<base::StringPiece>* out_ocsp_uris) WARN_UNUSED_RESULT;
+
+// ParsedDistributionPoint represents a parsed DistributionPoint from RFC 5280.
+// It is simplified compared to that from RFC 5280 as it make assumptions about
+// which OPTIONAL fields are present, and which CHOICEs are used.
+//
+//   DistributionPoint ::= SEQUENCE {
+//    distributionPoint       [0]     DistributionPointName OPTIONAL,
+//    reasons                 [1]     ReasonFlags OPTIONAL,
+//    cRLIssuer               [2]     GeneralNames OPTIONAL }
+struct NET_EXPORT ParsedDistributionPoint {
+  ParsedDistributionPoint();
+  ParsedDistributionPoint(ParsedDistributionPoint&& other);
+  ~ParsedDistributionPoint();
+
+  // The list of URIs from distributionPoint (assuming it was present).
+  std::vector<der::Input> uris;
+
+  // TODO(eroman): Include the actual cRLIssuer.
+  bool has_crl_issuer = false;
+};
+
+// Some simplifications are made during parsing.
+//
+//  * Skips DistributionPoints that lack a "distributionPoint" field.
+//
+//  * Skips DistributionPoints that contain a "reasons" field. This is
+//    reasonable since RFC 5280 requires that conforming CAs "MUST include at
+//    least one DistributionPoint that points to a CRL that covers the
+//    certificate for all reasons".
+//
+//  * Only parses URIs from "distributionPoint". If the DistributionPoint uses
+//    "nameRelativeToCRLIssuer" rather than "fullName" it is skipped. And
+//     GeneralNames in "fullName" that are of a type other than
+//     "uniformResourceIdentifier" are also skipped.
+NET_EXPORT bool ParseCrlDistributionPoints(
+    const der::Input& distribution_points_tlv,
+    std::vector<ParsedDistributionPoint>* distribution_points)
+    WARN_UNUSED_RESULT;
 
 }  // namespace net
 
