@@ -30,6 +30,18 @@ public interface Tracker {
     @CheckResult
     boolean shouldTriggerHelpUI(String feature);
 
+    // This function can be called to query if a particular |feature| meets its
+    // particular precondition for triggering within the bounds of the current
+    // feature configuration.
+    // Calling this method requires the Tracker to already have been initialized.
+    // See {@link #isInitialized()} and {@link #AddOnInitializedCallback(Callback<Boolean>)} for how
+    // to ensure the call to this is delayed.
+    // This function can typically be used to ensure that expensive operations
+    // for tracking other state related to in-product help do not happen if
+    // in-product help has already been displayed for the given |feature|.
+    @TriggerState
+    int getTriggerState(String feature);
+
     /**
      * Must be called after display of feature enlightenment finishes for a particular feature.
      */
