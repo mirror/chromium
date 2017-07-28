@@ -58,7 +58,7 @@ bool CodecImage::BindTexImage(unsigned target) {
 
 void CodecImage::ReleaseTexImage(unsigned target) {}
 
-bool CodecImage::CopyTexImage(unsigned target) {
+bool CodecImage::CopyTexImage(unsigned target, unsigned internalformat) {
   if (!surface_texture_ || target != GL_TEXTURE_EXTERNAL_OES)
     return false;
 

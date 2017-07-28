@@ -178,7 +178,7 @@ void GLImageGLX::ReleaseTexImage(unsigned target) {
   glXReleaseTexImageEXT(gfx::GetXDisplay(), glx_pixmap_, GLX_FRONT_LEFT_EXT);
 }
 
-bool GLImageGLX::CopyTexImage(unsigned target) {
+bool GLImageGLX::CopyTexImage(unsigned target, unsigned internalformat) {
   return false;
 }
 

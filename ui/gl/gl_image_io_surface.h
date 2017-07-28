@@ -48,7 +48,7 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   bool BindTexImageWithInternalformat(unsigned target,
                                       unsigned internalformat) override;
   void ReleaseTexImage(unsigned target) override {}
-  bool CopyTexImage(unsigned target) override;
+  bool CopyTexImage(unsigned target, unsigned internalformat) override;
   bool CopyTexSubImage(unsigned target,
                        const gfx::Point& offset,
                        const gfx::Rect& rect) override;

@@ -3777,7 +3777,7 @@ class MockGLImage : public gl::GLImage {
   MOCK_METHOD0(GetInternalFormat, unsigned());
   MOCK_METHOD1(BindTexImage, bool(unsigned));
   MOCK_METHOD1(ReleaseTexImage, void(unsigned));
-  MOCK_METHOD1(CopyTexImage, bool(unsigned));
+  MOCK_METHOD2(CopyTexImage, bool(unsigned, unsigned));
   MOCK_METHOD3(CopyTexSubImage,
                bool(unsigned, const gfx::Point&, const gfx::Rect&));
   MOCK_METHOD5(ScheduleOverlayPlane, bool(gfx::AcceleratedWidget,
@@ -3853,7 +3853,7 @@ TEST_P(GLES2DecoderWithShaderTest, CopyTexImage) {
         .Times(1)
         .WillRepeatedly(Return(false))
         .RetiresOnSaturation();
-    EXPECT_CALL(*image.get(), CopyTexImage(GL_TEXTURE_2D))
+    EXPECT_CALL(*image.get(), CopyTexImage(GL_TEXTURE_2D, 0))
         .Times(1)
         .WillOnce(Return(true))
         .RetiresOnSaturation();
@@ -3901,7 +3901,7 @@ TEST_P(GLES2DecoderWithShaderTest, CopyTexImage) {
   EXPECT_CALL(*gl_, BindTexture(GL_TEXTURE_2D, kServiceTextureId))
       .Times(2)
       .RetiresOnSaturation();
-  EXPECT_CALL(*image.get(), CopyTexImage(GL_TEXTURE_2D))
+  EXPECT_CALL(*image.get(), CopyTexImage(GL_TEXTURE_2D, 0))
       .Times(1)
       .WillOnce(Return(true))
       .RetiresOnSaturation();

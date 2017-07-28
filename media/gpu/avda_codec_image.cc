@@ -42,7 +42,7 @@ bool AVDACodecImage::BindTexImage(unsigned target) {
 
 void AVDACodecImage::ReleaseTexImage(unsigned target) {}
 
-bool AVDACodecImage::CopyTexImage(unsigned target) {
+bool AVDACodecImage::CopyTexImage(unsigned target, unsigned internalformat) {
   if (!has_surface_texture_ || target != GL_TEXTURE_EXTERNAL_OES)
     return false;
 

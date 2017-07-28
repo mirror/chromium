@@ -140,12 +140,12 @@ void StreamTexture::UpdateTexImage() {
   }
 }
 
-bool StreamTexture::CopyTexImage(unsigned target) {
+bool StreamTexture::CopyTexImage(unsigned target, unsigned internalformat) {
   if (target != GL_TEXTURE_EXTERNAL_OES)
     return false;
 
   if (!owner_stub_ || !surface_texture_.get())
-    return true;
+    return false;
 
   GLint texture_id;
   glGetIntegerv(GL_TEXTURE_BINDING_EXTERNAL_OES, &texture_id);

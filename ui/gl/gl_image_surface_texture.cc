@@ -71,7 +71,8 @@ bool GLImageSurfaceTexture::BindTexImage(unsigned target) {
   return true;
 }
 
-bool GLImageSurfaceTexture::CopyTexImage(unsigned target) {
+bool GLImageSurfaceTexture::CopyTexImage(unsigned target,
+                                         unsigned internalformat) {
   return false;
 }
 

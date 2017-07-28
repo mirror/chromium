@@ -29,7 +29,7 @@ class GL_EXPORT GLImageSurfaceTexture : public GLImage {
   unsigned GetInternalFormat() override;
   bool BindTexImage(unsigned target) override;
   void ReleaseTexImage(unsigned target) override {}
-  bool CopyTexImage(unsigned target) override;
+  bool CopyTexImage(unsigned target, unsigned internalformat) override;
   bool CopyTexSubImage(unsigned target,
                        const gfx::Point& offset,
                        const gfx::Rect& rect) override;

@@ -101,7 +101,7 @@ TEST_F(CodecImageTest, ImageStartsUnrendered) {
 
 TEST_F(CodecImageTest, CopyTexImageIsInvalidForOverlayImages) {
   auto i = NewImage(kOverlay);
-  ASSERT_FALSE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES));
+  ASSERT_FALSE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES, 0));
 }
 
 TEST_F(CodecImageTest, ScheduleOverlayPlaneIsInvalidForSurfaceTextureImages) {
@@ -113,7 +113,7 @@ TEST_F(CodecImageTest, ScheduleOverlayPlaneIsInvalidForSurfaceTextureImages) {
 
 TEST_F(CodecImageTest, CopyTexImageFailsIfTargetIsNotOES) {
   auto i = NewImage(kSurfaceTexture);
-  ASSERT_FALSE(i->CopyTexImage(GL_TEXTURE_2D));
+  ASSERT_FALSE(i->CopyTexImage(GL_TEXTURE_2D, 0));
 }
 
 TEST_F(CodecImageTest, CopyTexImageFailsIfTheWrongTextureIsBound) {
@@ -121,13 +121,13 @@ TEST_F(CodecImageTest, CopyTexImageFailsIfTheWrongTextureIsBound) {
   GLuint wrong_texture_id;
   glGenTextures(1, &wrong_texture_id);
   glBindTexture(GL_TEXTURE_EXTERNAL_OES, wrong_texture_id);
-  ASSERT_FALSE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES));
+  ASSERT_FALSE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES, 0));
 }
 
 TEST_F(CodecImageTest, CopyTexImageCanBeCalledRepeatedly) {
   auto i = NewImage(kSurfaceTexture);
-  ASSERT_TRUE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES));
-  ASSERT_TRUE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES));
+  ASSERT_TRUE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES, 0));
+  ASSERT_TRUE(i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES, 0));
 }
 
 TEST_F(CodecImageTest, CopyTexImageTriggersFrontBufferRendering) {
@@ -137,7 +137,7 @@ TEST_F(CodecImageTest, CopyTexImageTriggersFrontBufferRendering) {
   EXPECT_CALL(*codec_, ReleaseOutputBuffer(_, true));
   EXPECT_CALL(*surface_texture_, WaitForFrameAvailable());
   EXPECT_CALL(*surface_texture_, UpdateTexImage());
-  i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES);
+  i->CopyTexImage(GL_TEXTURE_EXTERNAL_OES, 0);
   ASSERT_TRUE(i->was_rendered_to_front_buffer());
 }
 

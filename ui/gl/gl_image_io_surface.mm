@@ -289,10 +289,15 @@ bool GLImageIOSurface::BindTexImageWithInternalformat(unsigned target,
   return true;
 }
 
-bool GLImageIOSurface::CopyTexImage(unsigned target) {
+bool GLImageIOSurface::CopyTexImage(unsigned target, unsigned internalformat) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (format_ != gfx::BufferFormat::YUV_420_BIPLANAR)
+    return false;
+
+  // If the internalformat is 0, just copy image to it.
+  if (internalformat != TextureFormat(format_) && internalformat != GL_RGBA &&
+      internalformat != GL_RGB && internalformat != 0)
     return false;
 
   GLContext* gl_context = GLContext::GetCurrent();
