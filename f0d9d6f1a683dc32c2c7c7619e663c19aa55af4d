@@ -34,6 +34,24 @@
       "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d349250a_03898967",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-28T21:37:59Z",
+      "side": 1,
+      "message": "OK; the only thing I don\u0027t like is that it makes the mojo definition different from the C++ definition.  Even if the port is never passed via mojo, I think ideally these would stay consistent (mojo is just a mechanism to pass the data from process to process).\n\nI didn\u0027t see any typemap already defined for net::IPEndpoint in net/interfaces.  However a port could be added to CastMediaSink.\n\nWhat do you think?  Derek, any thoughts?",
+      "parentUuid": "c5917917_d0ca1c40",
+      "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
