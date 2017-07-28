@@ -52,7 +52,7 @@ class ImageLoaderTest : public ExtensionsTest {
     image_loaded_count_++;
     if (quit_in_image_loaded_)
       base::MessageLoop::current()->QuitWhenIdle();
-    image_family_ = image_family;
+    image_family_ = image_family.Clone();
   }
 
   void WaitForImageLoad() {
