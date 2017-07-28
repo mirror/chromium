@@ -26,6 +26,7 @@ import org.chromium.chrome.browser.autofill.PersonalDataManager.CreditCard;
 import org.chromium.chrome.browser.payments.PaymentRequestTestRule.MainActivityStartCallback;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.util.RenderTestRule;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -42,6 +43,10 @@ public class PaymentRequestFreeShippingTest implements MainActivityStartCallback
     @Rule
     public PaymentRequestTestRule mPaymentRequestTestRule =
             new PaymentRequestTestRule("payment_request_free_shipping_test.html", this);
+
+    @Rule
+    public RenderTestRule mRenderTestRule =
+            new RenderTestRule("components/test/data/payments/render_tests");
 
     @Override
     public void onMainActivityStarted()
@@ -60,10 +65,13 @@ public class PaymentRequestFreeShippingTest implements MainActivityStartCallback
     @Test
     @MediumTest
     @Feature({"Payments"})
-    public void testPay() throws InterruptedException, ExecutionException, TimeoutException {
+    public void testPay() throws Throwable {
         mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
+        mRenderTestRule.render(
+                mPaymentRequestTestRule.getActivity().getTabsView(), "free_shipping");
         mPaymentRequestTestRule.clickAndWait(
                 R.id.button_primary, mPaymentRequestTestRule.getReadyForUnmaskInput());
+        mRenderTestRule.render(mPaymentRequestTestRule.getActivity().getTabsView(), "unmask");
         mPaymentRequestTestRule.setTextInCardUnmaskDialogAndWait(
                 R.id.card_unmask_input, "123", mPaymentRequestTestRule.getReadyToUnmask());
         mPaymentRequestTestRule.clickCardUnmaskButtonAndWait(
