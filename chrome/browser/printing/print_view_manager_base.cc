@@ -274,6 +274,19 @@ void PrintViewManagerBase::RenderFrameDeleted(
   }
 }
 
+#if defined(OS_WIN) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
+void PrintViewManagerBase::OnSystemDialogCancelled() {
+  // System dialog was cancelled. Clean up the print job and notify the
+  // background printing manager.
+  ReleasePrinterQuery();
+  TerminatePrintJob(true);
+  content::NotificationService::current()->Notify(
+      chrome::NOTIFICATION_PRINT_JOB_RELEASED,
+      content::Source<content::WebContents>(web_contents()),
+      content::NotificationService::NoDetails());
+}
+#endif
+
 bool PrintViewManagerBase::OnMessageReceived(
     const IPC::Message& message,
     content::RenderFrameHost* render_frame_host) {
@@ -282,6 +295,10 @@ bool PrintViewManagerBase::OnMessageReceived(
     IPC_MESSAGE_HANDLER(PrintHostMsg_DidPrintPage, OnDidPrintPage)
     IPC_MESSAGE_HANDLER(PrintHostMsg_ShowInvalidPrinterSettingsError,
                         OnShowInvalidPrinterSettingsError)
+#if defined(OS_WIN) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_SystemDialogCancelled,
+                        OnSystemDialogCancelled);
+#endif
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled || PrintManager::OnMessageReceived(message, render_frame_host);

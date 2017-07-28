@@ -958,6 +958,7 @@ PrintWebViewHelper::PrintWebViewHelper(content::RenderFrame* render_frame,
       is_printing_enabled_(true),
       notify_browser_of_print_failure_(true),
       print_for_preview_(false),
+      system_dialog_cancelled_(false),
       delegate_(std::move(delegate)),
       print_node_in_progress_(false),
       is_loading_(false),
@@ -1589,6 +1590,12 @@ void PrintWebViewHelper::DidFinishPrinting(PrintingResult result) {
     case FAIL_PRINT:
       if (notify_browser_of_print_failure_ && print_pages_params_) {
         Send(new PrintHostMsg_PrintingFailed(routing_id(), cookie));
+      } else if (system_dialog_cancelled_) {
+#if defined(OS_WIN) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
+        // Notify the print view manager that the job is cancelled so it can
+        // clean up and destroy the preview dialog. Windows only.
+        Send(new PrintHostMsg_SystemDialogCancelled(routing_id()));
+#endif
       }
       break;
 
@@ -1812,6 +1819,13 @@ bool PrintWebViewHelper::UpdatePrintSettings(
                                             &settings, &canceled));
   if (canceled) {
     notify_browser_of_print_failure_ = false;
+#if defined(OS_WIN)
+    bool system_dialog = false;
+    if (job_settings->GetBoolean(kSettingShowSystemDialog, &system_dialog) &&
+        system_dialog && print_for_preview_) {
+      system_dialog_cancelled_ = true;
+    }
+#endif
     return false;
   }
 

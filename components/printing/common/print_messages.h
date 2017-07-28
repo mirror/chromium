@@ -448,6 +448,10 @@ IPC_MESSAGE_ROUTED1(PrintHostMsg_PrintingFailed,
                     int /* document cookie */)
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#if defined(OS_WIN)
+IPC_MESSAGE_ROUTED0(PrintHostMsg_SystemDialogCancelled);
+#endif
+
 // Tell the browser print preview failed.
 IPC_MESSAGE_ROUTED1(PrintHostMsg_PrintPreviewFailed,
                     int /* document cookie */)
