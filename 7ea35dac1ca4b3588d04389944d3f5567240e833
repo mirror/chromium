@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69b30c7a_a256fb8f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T02:44:26Z",
+      "side": 1,
+      "message": "Sorry I forgot to mention in earlier patch, but could you please leave DCHECK_CURRENTLY_ON in the dtor for slightly better readability?\n\nDCHECK_CURRENTLY_ON(BrowserThread::UI);",
+      "range": {
+        "startLine": 105,
+        "startChar": 62,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "7ea35dac1ca4b3588d04389944d3f5567240e833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dead548_06c5dd91",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T02:44:26Z",
+      "side": 1,
+      "message": "Could you move this to dtor?",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 55
+      },
+      "revId": "7ea35dac1ca4b3588d04389944d3f5567240e833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
