@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4a9b5f3_c9ddb62b",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-28T22:53:56Z",
+      "side": 1,
+      "message": "This was based on the old comment. Agreed and cleaned up. PTAL.",
+      "parentUuid": "c01f4044_c377ce34",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "d3604606da62b65fc08d218747cf91987d2ae824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f16b2c9_4b90c5e3",
         "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d3604606da62b65fc08d218747cf91987d2ae824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d88d02_fd9786aa",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-28T22:53:56Z",
+      "side": 1,
+      "message": "Agreed, reformatted the method.",
+      "parentUuid": "6f16b2c9_4b90c5e3",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 33
+      },
+      "revId": "d3604606da62b65fc08d218747cf91987d2ae824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
