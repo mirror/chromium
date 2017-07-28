@@ -62,6 +62,8 @@ const int kSessionLengthLimitMaxMs = 24 * 60 * 60 * 1000;  // 24 hours.
 
 SessionControllerClient* g_instance = nullptr;
 
+bool in_session_oobe_active = false;
+
 // Returns the session id of a given user or 0 if user has no session.
 uint32_t GetSessionId(const User& user) {
   const AccountId& account_id = user.GetAccountId();
@@ -167,6 +169,8 @@ SessionControllerClient::SessionControllerClient()
 
   DCHECK(!g_instance);
   g_instance = this;
+
+  in_session_oobe_active = false;
 }
 
 SessionControllerClient::~SessionControllerClient() {
@@ -290,6 +294,11 @@ bool SessionControllerClient::IsMultiProfileEnabled() {
   return (admitted_users_to_be_added + logged_in_users) > 1;
 }
 
+void SessionControllerClient::UpdateInSessionOobeStatus(bool status) {
+  in_session_oobe_active = status;
+  SendSessionInfoIfChanged();
+}
+
 void SessionControllerClient::ActiveUserChanged(const User* active_user) {
   SendSessionInfoIfChanged();
 
@@ -326,7 +335,8 @@ void SessionControllerClient::OnUserImageChanged(
 
 // static
 bool SessionControllerClient::CanLockScreen() {
-  return !UserManager::Get()->GetUnlockUsers().empty();
+  return !UserManager::Get()->GetUnlockUsers().empty() &&
+         !in_session_oobe_active;
 }
 
 // static

@@ -73,6 +73,9 @@ class SessionControllerClient
 
   static bool IsMultiProfileEnabled();
 
+  // Update the in session oobe status.
+  void UpdateInSessionOobeStatus(bool status);
+
   // user_manager::UserManager::UserSessionStateObserver:
   void ActiveUserChanged(const user_manager::User* active_user) override;
   void UserAddedToSession(const user_manager::User* added_user) override;
