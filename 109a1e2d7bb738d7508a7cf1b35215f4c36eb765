@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19c8df34_5bcf4328",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-28T01:13:08Z",
+      "side": 1,
+      "message": "Without also adding:\nconfigs +\u003d [ \"//build/config/android:hide_all_but_jni\" ]\n\nI think your library will a bit of bloat from unwanted exported symbols.",
+      "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
