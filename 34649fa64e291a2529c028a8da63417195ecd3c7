@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f433cb9c_653cf97f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-28T12:34:19Z",
+      "side": 1,
+      "message": "Is this sentence true? I don\u0027t think it\u0027s required for the browser to determine if the touch action is allowed. It\u0027s required to verify etc as you mention below.",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "34649fa64e291a2529c028a8da63417195ecd3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
