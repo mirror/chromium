@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c222c14_811475dd",
+        "filename": "chrome/browser/chromeos/fileapi/recent_async_file_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T04:55:33Z",
+      "side": 1,
+      "message": "Is this line needed?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9a4c9d_124dec86",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T04:55:33Z",
+      "side": 1,
+      "message": "The naming seems confusing. Original sounds like the original, real, without changes. What if the original file name does not conform to Chrome OS file name restrictions? Will it be altered? If so, then it\u0027s no longer original. Why do we need this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96501247_7faf51cf",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T04:55:33Z",
+      "side": 1,
+      "message": "Could you clarify how is this duration used? Is it the time since last access or since last time the entry is added to the cache?",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b789658_fa97951f",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T04:55:33Z",
+      "side": 1,
+      "message": "Is FilesMap supposed to be large? Will passing by value here cause a copy? If so, should we use unique_ptr here?",
+      "range": {
+        "startLine": 82,
+        "startChar": 56,
+        "endLine": 82,
+        "endChar": 64
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b828c3a_2177a634",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T04:55:33Z",
+      "side": 1,
+      "message": "I honestly don\u0027t know. Is std::move needed here?",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba00ded5_1b86353f",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T04:55:33Z",
+      "side": 1,
+      "message": "Shall we add a limit on number of recents per each source and/or total?",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 53
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15eb200_c090909e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T04:55:33Z",
+      "side": 1,
+      "message": "How many recents do we expect to be in the map? What\u0027s the expected impact on memory?",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
