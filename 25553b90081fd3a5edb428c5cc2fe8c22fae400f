@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4ea17f3_9d4432ab",
+        "filename": "chrome/browser/interstitials/chrome_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-28T23:02:09Z",
+      "side": 1,
+      "message": "Note about this: the way we do this in //base is to add a\n\n#error Unsupported target architecture.\n\nhere in this #else. This avoids issue like your comment mentions above of forgetting an impl.",
+      "revId": "25553b90081fd3a5edb428c5cc2fe8c22fae400f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
