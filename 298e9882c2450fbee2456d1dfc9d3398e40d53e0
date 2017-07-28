@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "375b5725_2eafe1b7",
+        "filename": "chrome/browser/chromeos/fileapi/recent_async_file_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:08:06Z",
+      "side": 1,
+      "message": "Yes because we need to retain a reference count to FileSystemContext.",
+      "parentUuid": "14ba7295_9e3cf89b",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "298e9882c2450fbee2456d1dfc9d3398e40d53e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa51f4fa_88fda1eb",
         "filename": "chrome/browser/chromeos/fileapi/recent_async_file_util.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "298e9882c2450fbee2456d1dfc9d3398e40d53e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbee2cec_1002c1c2",
+        "filename": "chrome/browser/chromeos/fileapi/recent_async_file_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-28T06:08:06Z",
+      "side": 1,
+      "message": "IMO passing by value is often better because we can use move to avoid copy. If we make this const RecentContext\u0026, then we always need to copy it to the internal storage of callbacks.",
+      "parentUuid": "fa51f4fa_88fda1eb",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "298e9882c2450fbee2456d1dfc9d3398e40d53e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
