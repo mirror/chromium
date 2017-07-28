@@ -16,6 +16,24 @@
       "revId": "c47613b02a33a1ed0ec75812767fd166d2f35758",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b7f88d_720ecba9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-28T01:32:57Z",
+      "side": 1,
+      "message": "Test added. With PreferCompositingToLCDTextEnabled (e.g. Android devices) we should composite large scrollers w/, w/o will-change:transform.",
+      "parentUuid": "89d3d6d5_6f529fff",
+      "revId": "c47613b02a33a1ed0ec75812767fd166d2f35758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
