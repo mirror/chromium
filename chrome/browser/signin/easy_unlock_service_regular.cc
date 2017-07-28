@@ -739,10 +739,10 @@ void EasyUnlockServiceRegular::SyncProfilePrefsToLocalState() {
       proximity_auth::prefs::kEasyUnlockProximityThreshold,
       profile_prefs->GetInteger(
           proximity_auth::prefs::kEasyUnlockProximityThreshold));
-  user_prefs_dict->SetBooleanWithoutPathExpansion(
+  user_prefs_dict->SetKey(
       proximity_auth::prefs::kEasyUnlockProximityThreshold,
-      profile_prefs->GetBoolean(
-          proximity_auth::prefs::kProximityAuthIsChromeOSLoginEnabled));
+      base::Value(profile_prefs->GetBoolean(
+          proximity_auth::prefs::kProximityAuthIsChromeOSLoginEnabled)));
 
   DictionaryPrefUpdate update(local_state,
                               prefs::kEasyUnlockLocalStateUserPrefs);
