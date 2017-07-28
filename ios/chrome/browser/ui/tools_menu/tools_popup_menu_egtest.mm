@@ -53,8 +53,7 @@ id<GREYMatcher> FindInPageButton() {
         performAction:grey_tap()];
   }
 
-  [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityID(kToolsMenuTableViewId)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::ToolsMenuTableView()]
       assertWithMatcher:grey_notVisible()];
 }
 
