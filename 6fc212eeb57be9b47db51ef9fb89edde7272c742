@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2872cdbb_302762d3",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9bbdf9c0_8ebb88e5",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d8ee64e_bcf104bd",
         "filename": "media/remoting/BUILD.gn",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf990699_f071649e",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Done. One can\u0027t really get out with just these two classes it seems though...",
+      "parentUuid": "2d8ee64e_bcf104bd",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "21cc8e5f_6ad6fe31",
+        "filename": "media/remoting/courier_renderer_norpc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c59465a_9ef056de",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a76d2267_a121f655",
         "filename": "media/remoting/demuxer_stream_adapter.h",
         "patchSetId": 3
@@ -106,6 +178,30 @@
       "writtenOn": "2017-07-25T21:22:07Z",
       "side": 1,
       "message": "Thanks for fixing this.",
+      "range": {
+        "startLine": 111,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1905f10a_8cbe8974",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "I\u0027m reverting this following your suggestions.",
+      "parentUuid": "a76d2267_a121f655",
       "range": {
         "startLine": 111,
         "startChar": 1,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "244d0a64_ce9ca649",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b4ef7f_73dc3036",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 67
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1158dce5_85d697cf",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 3
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "a29694ad_d2cfeafd",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Don\u0027t see how this helps with minimizing the change. CanBeRemoting depends on this class and SharedSession.",
+      "parentUuid": "1158dce5_85d697cf",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 47
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7696c7f8_bdab85a0",
         "filename": "media/remoting/shared_session.cc",
         "patchSetId": 3
@@ -184,6 +328,30 @@
       "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a29aacd_1ce0510e",
+        "filename": "media/remoting/shared_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7696c7f8_bdab85a0",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "19b8e94a_c5e2bef1",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "thakis@ helpfully told me about // nogncheck",
+      "parentUuid": "ca7b802d_188e6947",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82f57c87_007ad00a",
         "filename": "media/remoting/shared_session.h",
         "patchSetId": 3
@@ -257,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "dd909ff8_13082770",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f57c87_007ad00a",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 42
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e491b6d_437604e1",
         "filename": "media/remoting/shared_session.h",
         "patchSetId": 3
@@ -277,6 +493,30 @@
       "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daca6d5_7ed3e18c",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-28T00:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e491b6d_437604e1",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 41
+      },
+      "revId": "6fc212eeb57be9b47db51ef9fb89edde7272c742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
