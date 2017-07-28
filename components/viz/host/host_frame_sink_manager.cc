@@ -57,10 +57,11 @@ void HostFrameSinkManager::CreateCompositorFrameSink(
 
   data.is_root = false;
   data.has_created_compositor_frame_sink = true;
+  data.handles_frame_sink_id_invalidation = true;
 
+  RegisterFrameSinkId(frame_sink_id);
   frame_sink_manager_->CreateCompositorFrameSink(
       frame_sink_id, std::move(request), std::move(client));
-  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
 }
 
 void HostFrameSinkManager::DestroyCompositorFrameSink(
@@ -71,11 +72,15 @@ void HostFrameSinkManager::DestroyCompositorFrameSink(
   FrameSinkData& data = iter->second;
   DCHECK(data.HasCompositorFrameSinkData());
   if (data.has_created_compositor_frame_sink) {
-    // This will also destroy the CompositorFrameSink pipe to the client.
-    frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id);
     data.has_created_compositor_frame_sink = false;
   } else {
     data.support = nullptr;
+  }
+
+  if (data.handles_frame_sink_id_invalidation) {
+    // This will also destroy the mojom::CompositorFrameSink pipe to the client.
+    frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id);
+    data.is_frame_sink_id_registered = false;
   }
 
   if (data.IsEmpty())
@@ -110,6 +115,25 @@ void HostFrameSinkManager::UnregisterFrameSinkHierarchy(
     frame_sink_data_map_.erase(iter);
 }
 
+void HostFrameSinkManager::RegisterFrameSinkId(
+    const FrameSinkId& frame_sink_id) {
+  FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
+  DCHECK(!data.is_frame_sink_id_registered);
+  frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
+  data.is_frame_sink_id_registered = true;
+}
+
+void HostFrameSinkManager::InvalidateFrameSinkId(
+    const FrameSinkId& frame_sink_id) {
+  FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
+  DCHECK(data.is_frame_sink_id_registered);
+  frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id);
+  data.is_frame_sink_id_registered = false;
+
+  if (data.IsEmpty())
+    frame_sink_data_map_.erase(frame_sink_id);
+}
+
 std::unique_ptr<CompositorFrameSinkSupport>
 HostFrameSinkManager::CreateCompositorFrameSinkSupport(
     CompositorFrameSinkSupportClient* client,
@@ -122,15 +146,22 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
   FrameSinkData& data = frame_sink_data_map_[frame_sink_id];
   DCHECK(!data.HasCompositorFrameSinkData());
 
+  // Register here if we are supposed to handle invalidation and make
+  // CompositorFrameSinkSupport not handle invalidation.
+  if (handles_frame_sink_id_invalidation)
+    RegisterFrameSinkId(frame_sink_id);
+  DCHECK(data.is_frame_sink_id_registered);
+
   auto support = CompositorFrameSinkSupport::Create(
-      client, frame_sink_manager_impl_, frame_sink_id, is_root,
-      handles_frame_sink_id_invalidation, needs_sync_points);
+      client, frame_sink_manager_impl_, frame_sink_id, is_root, false,
+      needs_sync_points);
   support->SetDestructionCallback(
       base::BindOnce(&HostFrameSinkManager::DestroyCompositorFrameSink,
                      weak_ptr_factory_.GetWeakPtr(), frame_sink_id));
 
-  data.support = support.get();
   data.is_root = is_root;
+  data.handles_frame_sink_id_invalidation = handles_frame_sink_id_invalidation;
+  data.support = support.get();
 
   return support;
 }

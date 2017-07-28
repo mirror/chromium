@@ -19,7 +19,6 @@
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface.h"
-#include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/compositor/surface_utils.h"
@@ -66,8 +65,7 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       weak_factory_(this) {
   if (!service_manager::ServiceManagerIsRemote()) {
-    GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(
-        frame_sink_id_);
+    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
     CreateCompositorFrameSinkSupport();
   }
 }
@@ -75,10 +73,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
 RenderWidgetHostViewChildFrame::~RenderWidgetHostViewChildFrame() {
   if (!service_manager::ServiceManagerIsRemote()) {
     ResetCompositorFrameSinkSupport();
-    if (GetFrameSinkManager()) {
-      GetFrameSinkManager()->surface_manager()->InvalidateFrameSinkId(
-          frame_sink_id_);
-    }
+    if (GetHostFrameSinkManager())
+      GetHostFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
 

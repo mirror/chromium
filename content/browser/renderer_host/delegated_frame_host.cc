@@ -55,8 +55,7 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   factory->GetContextFactory()->AddObserver(this);
   factory->GetContextFactoryPrivate()
-      ->GetFrameSinkManager()
-      ->surface_manager()
+      ->GetHostFrameSinkManager()
       ->RegisterFrameSinkId(frame_sink_id_);
   CreateCompositorFrameSinkSupport();
 }
@@ -774,8 +773,7 @@ DelegatedFrameHost::~DelegatedFrameHost() {
   ResetCompositorFrameSinkSupport();
 
   factory->GetContextFactoryPrivate()
-      ->GetFrameSinkManager()
-      ->surface_manager()
+      ->GetHostFrameSinkManager()
       ->InvalidateFrameSinkId(frame_sink_id_);
 
   DCHECK(!vsync_manager_.get());
