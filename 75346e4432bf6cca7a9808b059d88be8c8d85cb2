@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d57b2883_ad35403a",
+        "filename": "third_party/crashpad/README.chromium",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-28T19:00:16Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be changed, we\u0027ll need to make these changes in upstream as well, and then the readme will be updated when the changes are rolled in from the crashpad repo.",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "75346e4432bf6cca7a9808b059d88be8c8d85cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
