@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93880647_3217cf69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-28T18:35:34Z",
+      "side": 1,
+      "message": "Could you plz fix these newlines? :-p",
+      "revId": "b5676bf51190db493aa1acdfe788c0bb1c3949fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
