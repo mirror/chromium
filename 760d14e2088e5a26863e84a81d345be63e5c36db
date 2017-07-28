@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a641562_f532ac81",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-07-28T12:45:58Z",
+      "side": 1,
+      "message": "I was implementing simple low-pass filter for linear accelerometer (windows) and noticed same issue. I used base::RetainedRef(this), i)); instead of passing \u0027this\u0027 https://chromium-review.googlesource.com/c/591467/\n\nJun Cai, Reilly, should base::RetainedRef be used instead of passing \u0027this\u0027 directly?",
+      "revId": "760d14e2088e5a26863e84a81d345be63e5c36db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
