@@ -14,6 +14,21 @@
       <include name="IDR_VR_SHELL_DDCONTROLLER_APP_PATCH" file="vr_shell\tex\ddcontroller_app.png" type="BINDATA" />
       <include name="IDR_VR_SHELL_DDCONTROLLER_TOUCHPAD_PATCH" file="vr_shell\tex\ddcontroller_touchpad.png" type="BINDATA" />
       <include name="IDR_VR_SHELL_DDCONTROLLER_SYSTEM_PATCH" file="vr_shell\tex\ddcontroller_system.png" type="BINDATA" />
+      <include name="IDR_VR_SHELL_TAB_MOCK_0"
+        file="..\..\test\data\android\UiCapture\fire.jpg"
+        type="BINDATA" />
+      <include name="IDR_VR_SHELL_TAB_MOCK_1"
+        file="..\..\test\data\android\UiCapture\conductor.jpg"
+        type="BINDATA" />
+      <include name="IDR_VR_SHELL_TAB_MOCK_2"
+        file="..\..\test\data\android\UiCapture\frog.jpg"
+        type="BINDATA" />
+      <include name="IDR_VR_SHELL_TAB_MOCK_3"
+        file="..\..\test\data\android\UiCapture\gig.jpg"
+        type="BINDATA" />
+      <include name="IDR_VR_SHELL_TAB_MOCK_4"
+        file="..\..\test\data\android\UiCapture\goat.jpg"
+        type="BINDATA" />
     </includes>
   </release>
 </grit>

@@ -208,10 +208,8 @@ TEST(AnimationPlayerTest, OpacityTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::OPACITY};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::OPACITY};
+  player.transition().duration = UsToDelta(10000);
 
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
@@ -241,10 +239,8 @@ TEST(AnimationPlayerTest, ReversedOpacityTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::OPACITY};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::OPACITY};
+  player.transition().duration = UsToDelta(10000);
 
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
@@ -276,10 +272,8 @@ TEST(AnimationPlayerTest, LayoutOffsetTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::LAYOUT_OFFSET};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::LAYOUT_OFFSET};
+  player.transition().duration = UsToDelta(10000);
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
 
@@ -316,10 +310,8 @@ TEST(AnimationPlayerTest, TransformTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::TRANSFORM};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::TRANSFORM};
+  player.transition().duration = UsToDelta(10000);
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
 
@@ -358,10 +350,8 @@ TEST(AnimationPlayerTest, ReversedTransformTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::TRANSFORM};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::TRANSFORM};
+  player.transition().duration = UsToDelta(10000);
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
 
@@ -398,10 +388,8 @@ TEST(AnimationPlayerTest, BoundsTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::BOUNDS};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::BOUNDS};
+  player.transition().duration = UsToDelta(10000);
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
 
@@ -434,10 +422,8 @@ TEST(AnimationPlayerTest, ReversedBoundsTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::BOUNDS};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::BOUNDS};
+  player.transition().duration = UsToDelta(10000);
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
 
@@ -469,10 +455,8 @@ TEST(AnimationPlayerTest, BackgroundColorTransitions) {
   TestAnimationTarget target;
   AnimationPlayer player;
   player.set_target(&target);
-  Transition transition;
-  transition.target_properties = {TargetProperty::BACKGROUND_COLOR};
-  transition.duration = UsToDelta(10000);
-  player.set_transition(transition);
+  player.transition().target_properties = {TargetProperty::BACKGROUND_COLOR};
+  player.transition().duration = UsToDelta(10000);
   base::TimeTicks start_time = UsToTicks(1000000);
   player.Tick(start_time);
 

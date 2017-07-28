@@ -138,6 +138,9 @@ class UiElement : public cc::AnimationTarget {
   bool scrollable() const { return scrollable_; }
   void set_scrollable(bool scrollable) { scrollable_ = scrollable; }
 
+  bool selectable() const { return selectable_; }
+  void set_selectable(bool selectable) { selectable_ = selectable; }
+
   // The computed lock to the FoV, incorporating lock of parent objects.
   bool computed_lock_to_fov() const { return computed_lock_to_fov_; }
   void set_computed_lock_to_fov(bool computed_lock) {
@@ -146,7 +149,7 @@ class UiElement : public cc::AnimationTarget {
 
   // The size of the object.  This does not affect children.
   gfx::SizeF size() const { return size_; }
-  void SetSize(float width, float hight);
+  virtual void SetSize(float width, float height);
 
   // It is assumed that operations is of size 4 with a component for layout
   // translation, translation, rotation and scale, in that order (see
@@ -157,6 +160,7 @@ class UiElement : public cc::AnimationTarget {
   // will animate if you've set a transition. If you need to animate more than
   // one operation simultaneously, please use |SetTransformOperations| below.
   void SetLayoutOffset(float x, float y);
+  void SetLayoutOffset(float x, float y, float z);
   void SetTranslate(float x, float y, float z);
   void SetRotate(float x, float y, float z, float radians);
   void SetScale(float x, float y, float z);
@@ -246,6 +250,7 @@ class UiElement : public cc::AnimationTarget {
   // TODO(vollick): elements should own their children. UiScene can turn into
   // recursive operations on the UiElement tree.
   void AddChild(UiElement* child);
+  void RemoveChild(UiElement* child);
   UiElement* parent() { return parent_; }
 
   gfx::Point3F GetCenter() const;
@@ -293,6 +298,9 @@ class UiElement : public cc::AnimationTarget {
   virtual void OnSetMode();
 
   std::vector<UiElement*>& children() { return children_; }
+  const std::vector<UiElement*>& children() const { return children_; }
+
+  base::TimeTicks last_frame_time() const { return last_frame_time_; }
 
  private:
   // Valid IDs are non-negative.
@@ -316,6 +324,8 @@ class UiElement : public cc::AnimationTarget {
   bool is_overlay_ = false;
 
   bool scrollable_ = false;
+
+  bool selectable_ = false;
 
   // The size of the object.  This does not affect children.
   gfx::SizeF size_ = {1.0f, 1.0f};

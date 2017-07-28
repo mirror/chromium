@@ -81,6 +81,9 @@ struct ColorScheme {
 
   // Splash screen colors.
   SkColor splash_screen_background;
+
+  SkColor location_bar_thumb;
+  SkColor location_bar_background;
 };
 
 }  // namespace vr
