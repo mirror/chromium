@@ -111,8 +111,9 @@ void FetchContext::AddResourceTiming(const ResourceTimingInfo&) {}
 
 void FetchContext::SendImagePing(const KURL&) {}
 
-void FetchContext::AddConsoleMessage(const String&,
-                                     FetchContext::LogMessageType) const {}
+void FetchContext::AddJSWarningConsoleMessage(const String&) const {}
+
+void FetchContext::AddJSErrorConsoleMessage(const String&) const {}
 
 void FetchContext::PopulateResourceRequest(
     Resource::Type,

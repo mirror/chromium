@@ -62,6 +62,16 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequest(
   return blocked_reason;
 }
 
+void BaseFetchContext::AddJSWarningConsoleMessage(const String& message) const {
+  AddConsoleMessage(
+      ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel, message));
+}
+
+void BaseFetchContext::AddJSErrorConsoleMessage(const String& message) const {
+  AddConsoleMessage(
+      ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel, message));
+}
+
 void BaseFetchContext::PrintAccessDeniedMessage(const KURL& url) const {
   if (url.IsNull())
     return;
@@ -146,8 +156,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   if (origin_restriction != FetchParameters::kNoOriginRestriction &&
       security_origin && !security_origin->CanDisplay(url)) {
     if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
-      AddConsoleMessage("Not allowed to load local resource: " +
-                        url.GetString());
+      AddJSErrorConsoleMessage("Not allowed to load local resource: " +
+                               url.GetString());
     }
     RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::requestResource URL was not "
                                  "allowed by SecurityOrigin::CanDisplay";

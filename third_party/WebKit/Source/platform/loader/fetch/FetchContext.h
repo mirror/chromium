@@ -72,8 +72,6 @@ class PLATFORM_EXPORT FetchContext
   WTF_MAKE_NONCOPYABLE(FetchContext);
 
  public:
-  enum LogMessageType { kLogErrorMessage, kLogWarningMessage };
-
   static FetchContext& NullInstance();
 
   virtual ~FetchContext() {}
@@ -182,8 +180,10 @@ class PLATFORM_EXPORT FetchContext
     return false;
   }
   virtual void SendImagePing(const KURL&);
-  virtual void AddConsoleMessage(const String&,
-                                 LogMessageType = kLogErrorMessage) const;
+
+  virtual void AddJSWarningConsoleMessage(const String&) const;
+  virtual void AddJSErrorConsoleMessage(const String&) const;
+
   virtual SecurityOrigin* GetSecurityOrigin() const { return nullptr; }
 
   // Populates the ResourceRequest using the given values and information
