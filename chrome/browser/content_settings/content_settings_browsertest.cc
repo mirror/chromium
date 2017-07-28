@@ -6,6 +6,7 @@
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/browsing_data/browsing_data_cookie_helper.h"
@@ -13,6 +14,7 @@
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
+#include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/browser/net/url_request_mock_util.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/profiles/profile.h"
@@ -100,6 +102,10 @@ class ContentSettingsTest : public InProcessBrowserTest {
         base::BindOnce(&chrome_browser_net::SetUrlRequestMocksEnabled, true));
   }
 
+  void SetUpCommandLine(base::CommandLine* cmd) override {
+    cmd->AppendSwitch(switches::kEnableExperimentalWebPlatformFeatures);
+  }
+
   // Check the cookie for the given URL in an incognito window.
   void CookieCheckIncognitoWindow(const GURL& url, bool cookies_enabled) {
     ASSERT_TRUE(content::GetCookies(browser()->profile(), url).empty());
@@ -119,6 +125,44 @@ class ContentSettingsTest : public InProcessBrowserTest {
     incognito = CreateIncognitoBrowser();
     ASSERT_TRUE(content::GetCookies(incognito->profile(), url).empty());
     CloseBrowserSynchronously(incognito);
+  }
+
+  // Check the client hints for the given URL in an incognito window.
+  void ClientHintsCheckIncognitoWindow(const GURL& url) {
+    // Start incognito browser twice to ensure that client hints prefs are
+    // not carried over.
+    for (size_t i = 0; i < 2; ++i) {
+      base::HistogramTester histogram_tester;
+
+      Browser* incognito = CreateIncognitoBrowser();
+      ui_test_utils::NavigateToURL(incognito, url);
+
+      histogram_tester.ExpectUniqueSample(
+          "ContentSettings.ClientHints.UpdateEventCount", 1, 1);
+
+      content::FetchHistogramsFromChildProcesses();
+      SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+      // |url| sets two client hints.
+      histogram_tester.ExpectUniqueSample(
+          "ContentSettings.ClientHints.UpdateSize", 2, 1);
+
+      // At least one renderer must have been created. All the renderers created
+      // must have read 0 client hints.
+      EXPECT_LE(1u, histogram_tester
+                        .GetAllSamples(
+                            "ContentSettings.ClientHints.CountRulesReceived")
+                        .size());
+      for (const auto& bucket : histogram_tester.GetAllSamples(
+               "ContentSettings.ClientHints.CountRulesReceived")) {
+        EXPECT_EQ(0, bucket.min);
+      }
+      // |url| sets client hints persist duration to 3600 seconds.
+      histogram_tester.ExpectUniqueSample(
+          "ContentSettings.ClientHints.PersistDuration", 3600 * 1000, 1);
+
+      CloseBrowserSynchronously(incognito);
+    }
   }
 
   void PreBasic(const GURL& url) {
@@ -216,6 +260,37 @@ IN_PROC_BROWSER_TEST_F(ContentSettingsTest, BlockCookiesUsingExceptions) {
 
   ui_test_utils::NavigateToURL(browser(), unblocked_url);
   ASSERT_FALSE(GetCookies(browser()->profile(), unblocked_url).empty());
+}
+
+// Loads a webpage that requests persisting of client hints. Verifies that
+// the browser receives the mojo notification from the renderer and persists the
+// client hints to the disk.
+IN_PROC_BROWSER_TEST_F(ContentSettingsTest, ClientHintsHttps) {
+  https_server_.ServeFilesFromSourceDirectory("content/test/data");
+
+  ASSERT_TRUE(https_server_.Start());
+  GURL url = https_server_.GetURL("/client_hints_lifetime.html");
+  ASSERT_TRUE(url.SchemeIsHTTPOrHTTPS());
+  ASSERT_TRUE(url.SchemeIsCryptographic());
+
+  ClientHintsCheckIncognitoWindow(url);
+
+  base::HistogramTester histogram_tester;
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  histogram_tester.ExpectUniqueSample(
+      "ContentSettings.ClientHints.UpdateEventCount", 1, 1);
+
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  // client_hints_lifetime.html sets two client hints.
+  histogram_tester.ExpectUniqueSample("ContentSettings.ClientHints.UpdateSize",
+                                      2, 1);
+  // client_hints_lifetime.html sets client hints persist duration to 3600
+  // seconds.
+  histogram_tester.ExpectUniqueSample(
+      "ContentSettings.ClientHints.PersistDuration", 3600 * 1000, 1);
 }
 
 // This fails on ChromeOS because kRestoreOnStartup is ignored and the startup
