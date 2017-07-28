@@ -230,6 +230,7 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
 
       // The rest of the ops should only affect our state canvas.
       case PaintOpType::Annotate:
+      case PaintOpType::ClipDeviceRect:
       case PaintOpType::ClipRect:
       case PaintOpType::Concat:
       case PaintOpType::Scale:
