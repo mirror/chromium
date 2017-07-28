@@ -22,6 +22,30 @@
       "revId": "e6754e4331b57722774055832ac8f5a63c3dde92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86142339_3c29d4ab",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-28T22:23:07Z",
+      "side": 1,
+      "message": "lol, sorry, right now I can potentially add a static variable in CommandLineParameter.java like \n```\nBLANK_FLAG \u003d \"\"\nDEFAULT_FLAG \u003d \"\"\n```\n\nThis will be converted into a test rule parameterization. Something like\n\n```\n@RuleParameter\nstatic List\u003cTestRule\u003e sCommandLineRules \u003d new ArrayList\u003c\u003e()\n\nstatic {\n  sCommandLineRules.add(new CommandLineTestRule(DEFAULT_CHROME_TEST_FLAGS));\n  sCommandLineRules.add(new CommandLineTestRule(DEFAULT_CHROME_TEST_FLAGS + \"disable-feature...\"));\n}\n```\nwhich can be abstracted into a static method somewhere in a test rule in chrome.",
+      "parentUuid": "cacb5540_a01939b4",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "e6754e4331b57722774055832ac8f5a63c3dde92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
