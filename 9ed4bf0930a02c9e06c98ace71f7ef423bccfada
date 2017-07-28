@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa1a811f_c76be5dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-28T11:15:42Z",
+      "side": 1,
+      "message": "as discussed, this does not measure GONE views. please make sure it works in cases where the view never had a chance to be measured. For example, what happens if you measure only the first child?",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "9ed4bf0930a02c9e06c98ace71f7ef423bccfada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6215779b_e93aa7c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-28T11:15:42Z",
+      "side": 1,
+      "message": "List of what? if you don\u0027t care about the type use List\u003c?\u003e or List\u003cObject\u003e. Here it looks like it should be List\u003cTileView\u003e. You should have gotten IDE warnings and hints about that, no?",
+      "range": {
+        "startLine": 169,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 16
+      },
+      "revId": "9ed4bf0930a02c9e06c98ace71f7ef423bccfada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
