@@ -34,6 +34,24 @@
       "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71a4783_8aa3afb2",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-28T01:33:26Z",
+      "side": 1,
+      "message": "I\u0027ll certainly defer to you. If you have symbols you need to export, then it\u0027s not appropriate. But as far as I can tell, the current state of cast_shared_library is \"hide_all_but_jni_onload\", so it\u0027s not currently exporting symbols.\n\nI\u0027d also advise using \"cast_loadable_module\" if you have a shared_library where you want to export non-JNI symbols (that\u0027s basically the only distinction between shared_libarary and loadable_module for target_os\u003d\"android\")",
+      "parentUuid": "eae043ef_c4f51dea",
+      "revId": "109a1e2d7bb738d7508a7cf1b35215f4c36eb765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
