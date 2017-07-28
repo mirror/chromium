@@ -25,7 +25,7 @@
 #include "content/public/browser/presentation_service_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/frame_navigate_params.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h"
 #include "url/gurl.h"
 
@@ -47,18 +47,34 @@ class CONTENT_EXPORT PresentationServiceImpl
       public WebContentsObserver,
       public PresentationServiceDelegate::Observer {
  public:
-  ~PresentationServiceImpl() override;
-
   using NewPresentationCallback =
       base::OnceCallback<void(const base::Optional<PresentationInfo>&,
                               const base::Optional<PresentationError>&)>;
 
-  // Static factory method to create an instance of PresentationServiceImpl.
-  // |render_frame_host|: The RFH the instance is associated with.
-  // |request|: The instance will be bound to this request. Used for Mojo setup.
-  static void CreateMojoService(
+  // Creates a PresentationServiceImpl using the given RenderFrameHost.
+  static std::unique_ptr<PresentationServiceImpl> Create(
+      RenderFrameHost* render_frame_host);
+
+  // Note: Use |PresentationServiceImpl::Create| instead. This constructor
+  // should only be directly invoked in tests.
+  // |render_frame_host|: The RFH this instance is associated with.
+  // |web_contents|: The WebContents to observe.
+  // |controller_delegate|: Where Presentation API requests are delegated to in
+  // controller frame. Set to nullptr if current frame is receiver frame. Not
+  // owned by this class.
+  // |receiver_delegate|: Where Presentation API requests are delegated to in
+  // receiver frame. Set to nullptr if current frame is controller frame. Not
+  // owned by this class.
+  PresentationServiceImpl(
       RenderFrameHost* render_frame_host,
-      mojo::InterfaceRequest<blink::mojom::PresentationService> request);
+      WebContents* web_contents,
+      ControllerPresentationServiceDelegate* controller_delegate,
+      ReceiverPresentationServiceDelegate* receiver_delegate);
+  ~PresentationServiceImpl() override;
+
+  // Creates a binding between this object and |request|. Note that a
+  // PresentationServiceImpl instance can be bound to multiple requests.
+  void Bind(blink::mojom::PresentationServiceRequest request);
 
   // PresentationService implementation.
   void SetDefaultPresentationUrls(
@@ -145,23 +161,6 @@ class CONTENT_EXPORT PresentationServiceImpl
 
     DISALLOW_COPY_AND_ASSIGN(NewPresentationCallbackWrapper);
   };
-
-  // |render_frame_host|: The RFH this instance is associated with.
-  // |web_contents|: The WebContents to observe.
-  // |controller_delegate|: Where Presentation API requests are delegated to in
-  // controller frame. Set to nullptr if current frame is receiver frame. Not
-  // owned by this class.
-  // |receiver_delegate|: Where Presentation API requests are delegated to in
-  // receiver frame. Set to nullptr if current frame is controller frame. Not
-  // owned by this class.
-  PresentationServiceImpl(
-      RenderFrameHost* render_frame_host,
-      WebContents* web_contents,
-      ControllerPresentationServiceDelegate* controller_delegate,
-      ReceiverPresentationServiceDelegate* receiver_delegate);
-
-  // Creates a binding between this object and |request|.
-  void Bind(blink::mojom::PresentationServiceRequest request);
 
   // WebContentsObserver override.
   void DidFinishNavigation(NavigationHandle* navigation_handle) override;
@@ -272,9 +271,8 @@ class CONTENT_EXPORT PresentationServiceImpl
   base::hash_map<int, linked_ptr<NewPresentationCallbackWrapper>>
       pending_reconnect_presentation_cbs_;
 
-  // RAII binding of |this| to an Presentation interface request.
-  // The binding is removed when binding_ is cleared or goes out of scope.
-  std::unique_ptr<mojo::Binding<blink::mojom::PresentationService>> binding_;
+  // RAII binding of |this| to an Presentation interface requests.
+  mojo::BindingSet<blink::mojom::PresentationService> bindings_;
 
   // ID of the RenderFrameHost this object is associated with.
   int render_process_id_;

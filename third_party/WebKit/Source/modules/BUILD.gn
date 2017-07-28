@@ -296,6 +296,7 @@ source_set("unit_tests") {
     "peerconnection/RTCPeerConnectionTest.cpp",
     "presentation/MockWebPresentationClient.h",
     "presentation/PresentationAvailabilityTest.cpp",
+    "presentation/PresentationConnectionTest.cpp",
     "presentation/PresentationReceiverTest.cpp",
     "presentation/PresentationRequestTest.cpp",
     "push_messaging/PushManagerTest.cpp",
