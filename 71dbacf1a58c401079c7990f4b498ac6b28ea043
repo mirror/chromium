@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b476f3c5_20375dda",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-28T16:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e67642d9_1eba3483",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0135238_d3d6c5ce",
         "filename": "cc/output/gl_renderer.cc",
         "patchSetId": 2
@@ -87,6 +105,24 @@
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f360d6_30a03c6b",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-28T16:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afd953e8_d3e4be57",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "bee83af2_9e13379d",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-28T16:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "599afcf6_a1cf28a3",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0997ae1e_d3a7c6eb",
         "filename": "cc/output/shader.cc",
         "patchSetId": 2
@@ -175,6 +229,24 @@
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9f2d15_f1f7b7f5",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-28T16:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf3bb4a1_8bf8fbfb",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +297,24 @@
       "side": 1,
       "message": "I think to optimize shaders in next CL, but Ok, I try to make it in this CL.",
       "parentUuid": "62ae90ff_f88abc1f",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4867b603_ba08c151",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-28T16:26:10Z",
+      "side": 1,
+      "message": "I think it\u0027s better to do in next CL.\nThere are a lot of modifications...\nAnd for bisect, perf-bisect, etc it is better to do small, granular commits.",
+      "parentUuid": "4945e7c4_c3a10e47",
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
