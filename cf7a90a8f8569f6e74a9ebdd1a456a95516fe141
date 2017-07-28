@@ -16,6 +16,24 @@
       "revId": "cf7a90a8f8569f6e74a9ebdd1a456a95516fe141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8beaa2_843e8514",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-28T18:20:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e6eb8a3_68b20bcf",
+      "revId": "cf7a90a8f8569f6e74a9ebdd1a456a95516fe141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
