@@ -633,6 +633,30 @@ void VRDisplay::submitFrame() {
     return;
   }
 
+  // Wait for the previous render to finish, to avoid losing frames in the
+  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
+  // Other devices may have different preferences. Do this step as late
+  // as possible before SubmitFrame to ensure we can do as much work as
+  // possible in parallel with the previous frame's rendering. On the other
+  // hand, waiting late has the downside that overlapping GPU work confuses
+  // scheduling leading to weird timing, see crbug.com/747159. As a
+  // compromise, do a shallow flush, wait, then set up the mailbox.
+  // This helps in most cases, but deferred renderers such as Sketchfab
+  // may still end up with bad timing.
+  {
+    TRACE_EVENT0("gpu", "ShallowFlush");
+    context_gl_->ShallowFlushCHROMIUM();
+  }
+  {
+    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+
   // Check if the canvas got resized, if yes send a bounds update.
   int current_width = rendering_context_->drawingBufferWidth();
   int current_height = rendering_context_->drawingBufferHeight();
@@ -689,21 +713,6 @@ void VRDisplay::submitFrame() {
   auto mailbox = static_image->GetMailbox();
   TRACE_EVENT_END0("gpu", "VRDisplay::GetMailbox");
   auto sync_token = static_image->GetSyncToken();
-
-  // Wait for the previous render to finish, to avoid losing frames in the
-  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
-  // Other devices may have different preferences. Do this step as late
-  // as possible before SubmitFrame to ensure we can do as much work as
-  // possible in parallel with the previous frame's rendering.
-  {
-    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
-    while (pending_previous_frame_render_) {
-      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
-        DLOG(ERROR) << "Failed to receive SubmitFrame response";
-        break;
-      }
-    }
-  }
 
   pending_previous_frame_render_ = true;
   pending_submit_frame_ = true;
