@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04359631_23af4e33",
+        "filename": "cc/trees/damage_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-28T14:21:00Z",
+      "side": 1,
+      "message": "nit: I think I understand what this is saying, but it might be hard to follow for someone reading this comment without context. Here\u0027s a suggestion for an alternative way to say this:\n\"We want to make sure that the background filter doesn\u0027t cause empty damage to get expanded. We position child1 so that an expansion of the empty rect would have non-empty intersection with child1 in its target space (root space).\"",
+      "revId": "7bd4c76518185ff6adc2a83eff656355a5bb7e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
