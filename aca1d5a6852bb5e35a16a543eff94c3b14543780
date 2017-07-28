@@ -70,6 +70,30 @@
       "revId": "aca1d5a6852bb5e35a16a543eff94c3b14543780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74d4d94_cd8a8e2e",
+        "filename": "ios/chrome/browser/ui/authentication/authentication_ui_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-28T09:27:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f93a1466_ad71510b",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "aca1d5a6852bb5e35a16a543eff94c3b14543780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
