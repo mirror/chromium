@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f059c7f_fcf6cf63",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T22:26:26Z",
+      "side": 1,
+      "message": "one more nit: googletest\u0027s _EQ macros want the argument order (expected, actual), so these args should likely be swapped. it looks like this is an issue throughout this file, though.",
+      "revId": "06607dd8920c9ff5d55df253e8b58449ec50fbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
