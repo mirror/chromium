@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fb56b5e_4492ec4f",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "No. The CrashDumpManager is actually not needed in single process because the browser process can write the minidump directly.",
+      "parentUuid": "935512ca_b5a5ba0c",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "714c229c_208c7bfc",
         "filename": "android_webview/browser/aw_browser_terminator.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad1c0680_8132061a",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "714c229c_208c7bfc",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ac234d_fe19372e",
         "filename": "chrome/browser/chrome_browser_main_android.cc",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-24T17:50:58Z",
       "side": 1,
       "message": "wrong change",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5aa7062_c73e357f",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Yeah, this is where I think the naming could be improved. It\u0027s odd having two things called *Observer. However I think that this change is right. The point is that the CrashDumpManager\u003d\u003eChildProcessCrashObserver needs to be added to the CrashDumpObserver singleton (which needs to be created) here.",
+      "parentUuid": "81ac234d_fe19372e",
       "range": {
         "startLine": 44,
         "startChar": 9,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "1190c8e7_f1f806b3",
+        "filename": "components/crash/content/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "562336aa_18423a63",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41b6c017_536b580c",
         "filename": "components/crash/content/browser/child_process_crash_observer.cc",
         "patchSetId": 1
@@ -96,6 +174,30 @@
       "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9619944_db291d99",
+        "filename": "components/crash/content/browser/child_process_crash_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b6c017_536b580c",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "ef7b4f8b_b7d47935",
+        "filename": "components/crash/content/browser/child_process_crash_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "586e3ca4_6912231a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a54d6f2_70c571da",
         "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
         "patchSetId": 1
@@ -142,6 +268,30 @@
       "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feffc4c4_0d6ab349",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Yeah. MinidumpFile is probably better.",
+      "parentUuid": "6a54d6f2_70c571da",
+      "range": {
+        "startLine": 40,
+        "startChar": 43,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "5b5a579d_444f76c1",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10eb8a5a_502b5306",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614681cf_51c6e330",
         "filename": "components/crash/content/browser/crash_dump_manager_android.h",
         "patchSetId": 1
@@ -193,6 +361,24 @@
       "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6b2fac_13cecf0a",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-07-28T17:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "614681cf_51c6e330",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
