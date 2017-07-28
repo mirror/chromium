@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a93026_cf5bda15",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "To save some vertical space in this already big list please add those to the CROS section above ending at line 678.",
+      "range": {
+        "startLine": 688,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 24
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbec1db_6fd1450a",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "nit: Remove this empty line.",
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1b094b_09befaf6",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9818,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "Replace with \u003cph name\u003d\"PRODUCT_OS_NAME\"\u003e$2\u003cex\u003eGoogle Chrome OS\u003c/ex\u003e\u003c/ph\u003e",
+      "range": {
+        "startLine": 9818,
+        "startChar": 48,
+        "endLine": 9818,
+        "endChar": 104
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e56c0c8_7afab0a2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9835,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "Check or decide yourself if this should be made untraslatable resource by putting it in a \u003cph\u003e tag. Usually names of products are.",
+      "range": {
+        "startLine": 9835,
+        "startChar": 66,
+        "endLine": 9835,
+        "endChar": 77
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3e37de_ffa1a7e1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9837,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "maybe replace with \"otherwise\"? As it is right now seems like there are further undisclosed conditions that have to be met - e.g. full moon, eclipse etc. :D",
+      "range": {
+        "startLine": 9837,
+        "startChar": 285,
+        "endLine": 9837,
+        "endChar": 310
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95508b6_bb438bcf",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9851,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "If this is used as name again put in \u003cph\u003e tags. Or else be prepared to help the translators get that right (or not get it right and not ask you).",
+      "range": {
+        "startLine": 9851,
+        "startChar": 36,
+        "endLine": 9851,
+        "endChar": 40
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d43d071_a8af6beb",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9855,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "\"non-empty\" sounds better imo.",
+      "range": {
+        "startLine": 9855,
+        "startChar": 37,
+        "endLine": 9855,
+        "endChar": 46
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

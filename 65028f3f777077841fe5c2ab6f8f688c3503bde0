@@ -34,6 +34,47 @@
       "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12360c8a_861ccd21",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "Correct whatever preference is global for all profiles should end up in the local state pref store. In case of something only settable by one user (or none in case of enterprise owned device) this is fine. Putting here something that everyone can edit is a recipe for chaos unfortunately there are cases where this is unavoidable like for keyboard layouts that sort-of kind-of have to be preserved on the login screen too. \n\nYour case is clear and fine though. :)",
+      "parentUuid": "dcb8d625_64d1ce4d",
+      "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b29edfa_c712108a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9855,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-28T09:22:33Z",
+      "side": 1,
+      "message": "If the device owner is setting this value in something else then the pref behind this policy this is true. \n\nE.g. you have another pref somewhere \"other.devicename\" and then upon setting up case you do realcastname \u003d castreceivername.empty() ? otherprefname : castreceivername; then its fine. \n\nIf you want however to let the user override the empty pref then you will need a handler that will ignore an empty set value in the policy store as it if has not been set as we discussed yesterday in chat.",
+      "range": {
+        "startLine": 9855,
+        "startChar": 254,
+        "endLine": 9855,
+        "endChar": 295
+      },
+      "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
