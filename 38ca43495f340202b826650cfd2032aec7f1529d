@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a50c81b7_7cb883b8",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-28T22:53:34Z",
+      "side": 1,
+      "message": "Added this here so we refresh the slider when the setting changes. See demo here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d749288#c5",
+      "range": {
+        "startLine": 107,
+        "startChar": 9,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "38ca43495f340202b826650cfd2032aec7f1529d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "revId": "2acc854a2045ed376d3220c2ab17df5076520d29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a566cd_0ff562d5",
+        "filename": "chrome/test/data/webui/settings/device_page_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-28T22:53:34Z",
+      "side": 1,
+      "message": "Added a TODO for now.",
+      "parentUuid": "7e8480cf_fa814674",
+      "revId": "2acc854a2045ed376d3220c2ab17df5076520d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
