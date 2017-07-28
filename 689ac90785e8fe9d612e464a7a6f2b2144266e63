@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3506ce6e_72808776",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-28T20:20:57Z",
+      "side": 1,
+      "message": "From the reviews I got for my own CLs, I think people prefer using ContainsKey for readability and don\u0027t care too much on the overhead of one more [] operator. I am not strongly preferring either way myself. Just a suggestion.",
+      "parentUuid": "a6498415_2c2f2a1a",
+      "revId": "689ac90785e8fe9d612e464a7a6f2b2144266e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b9e3289_cbf76831",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
         "patchSetId": 9
