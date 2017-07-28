@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73eb1ea4_9e7e2605",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-28T18:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4b96000_9b97f5bd",
+      "range": {
+        "startLine": 122,
+        "startChar": 74,
+        "endLine": 122,
+        "endChar": 78
+      },
+      "revId": "7024c408e3ba9f406a06b701adc09aa0466c4ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7fb9078_1a41021b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7024c408e3ba9f406a06b701adc09aa0466c4ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff989b2_61358a06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/MostVisitedSitesBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-28T18:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7fb9078_1a41021b",
+      "range": {
+        "startLine": 127,
+        "startChar": 62,
+        "endLine": 127,
+        "endChar": 64
+      },
+      "revId": "7024c408e3ba9f406a06b701adc09aa0466c4ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
