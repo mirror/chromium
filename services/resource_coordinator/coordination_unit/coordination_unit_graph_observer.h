@@ -11,6 +11,8 @@
 namespace resource_coordinator {
 
 class CoordinationUnitImpl;
+class FrameCoordinationUnitImpl;
+class WebContentsCoordinationUnitImpl;
 
 // An observer API for the coordination unit graph maintained by GRC.
 //
@@ -56,6 +58,15 @@ class CoordinationUnitGraphObserver {
   virtual void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,
                                  const mojom::PropertyType property_type,
                                  const base::Value& value) {}
+
+  virtual void OnFramePropertyChanged(
+      const FrameCoordinationUnitImpl* coordination_unit,
+      const mojom::PropertyType property_type,
+      const base::Value& value) {}
+  virtual void OnWebContentsPropertyChanged(
+      const WebContentsCoordinationUnitImpl* coordination_unit,
+      const mojom::PropertyType property_type,
+      const base::Value& value) {}
 
   // Called whenever parent-child relationship ends where the
   // |coordination_unit| was the parent and the |child_coordination_unit|.

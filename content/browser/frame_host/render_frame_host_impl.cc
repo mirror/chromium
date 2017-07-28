@@ -1236,6 +1236,10 @@ void RenderFrameHostImpl::OnAudibleStateChanged(bool is_audible) {
   else
     GetProcess()->OnAudioStreamRemoved();
   is_audible_ = is_audible;
+
+  GetFrameResourceCoordinator()->SetProperty(
+      resource_coordinator::mojom::PropertyType::kAudible,
+      base::MakeUnique<base::Value>(is_audible_));
 }
 
 void RenderFrameHostImpl::OnDidAddMessageToConsole(
@@ -3494,15 +3498,23 @@ RenderFrameHostImpl::GetMojoImageDownloader() {
 
 resource_coordinator::ResourceCoordinatorInterface*
 RenderFrameHostImpl::GetFrameResourceCoordinator() {
-  if (!frame_resource_coordinator_) {
+  if (frame_resource_coordinator_)
+    return frame_resource_coordinator_.get();
+
+  if (!resource_coordinator::IsResourceCoordinatorEnabled()) {
     frame_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            ServiceManagerConnection::GetForProcess()->GetConnector(),
+            nullptr, resource_coordinator::CoordinationUnitType::kFrame);
+  } else {
+    auto* connection = ServiceManagerConnection::GetForProcess();
+    frame_resource_coordinator_ =
+        base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
+            connection ? connection->GetConnector() : nullptr,
             resource_coordinator::CoordinationUnitType::kFrame);
-    if (parent_) {
-      parent_->GetFrameResourceCoordinator()->AddChild(
-          *frame_resource_coordinator_);
-    }
+  }
+  if (parent_) {
+    parent_->GetFrameResourceCoordinator()->AddChild(
+        *frame_resource_coordinator_);
   }
   return frame_resource_coordinator_.get();
 }

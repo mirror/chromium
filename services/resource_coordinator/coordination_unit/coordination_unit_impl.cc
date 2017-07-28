@@ -10,14 +10,10 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_id.h"
 
 namespace resource_coordinator {
-
-#define NOTIFY_OBSERVERS(observers, Method, ...) \
-  for (auto& observer : observers) {             \
-    observer.Method(__VA_ARGS__);                \
-  }
 
 namespace {
 
@@ -35,6 +31,14 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
     const CoordinationUnitImpl* coordination_unit) {
   DCHECK(coordination_unit->id().type == CoordinationUnitType::kFrame);
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
+}
+
+// static
+const WebContentsCoordinationUnitImpl*
+CoordinationUnitImpl::ToWebContentsCoordinationUnit(
+    const CoordinationUnitImpl* coordination_unit) {
+  DCHECK(coordination_unit->id().type == CoordinationUnitType::kWebContents);
+  return static_cast<const WebContentsCoordinationUnitImpl*>(coordination_unit);
 }
 
 CoordinationUnitImpl::CoordinationUnitImpl(
@@ -323,8 +327,7 @@ void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
   const base::Value& property =
       *(properties_[property_type] = std::move(value));
   PropagateProperty(property_type, property);
-  NOTIFY_OBSERVERS(observers_, OnPropertyChanged, this, property_type,
-                   property);
+  OnPropertyChanged(property_type, property);
 }
 
 void CoordinationUnitImpl::BeforeDestroyed() {
@@ -339,6 +342,12 @@ void CoordinationUnitImpl::AddObserver(
 void CoordinationUnitImpl::RemoveObserver(
     CoordinationUnitGraphObserver* observer) {
   observers_.RemoveObserver(observer);
+}
+
+void CoordinationUnitImpl::OnPropertyChanged(
+    const mojom::PropertyType property_type,
+    const base::Value& value) {
+  NOTIFY_OBSERVERS(observers_, OnPropertyChanged, this, property_type, value);
 }
 
 }  // namespace resource_coordinator
