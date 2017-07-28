@@ -2019,6 +2019,42 @@ UI.createFileSelectorElement = function(callback) {
  */
 UI.MaxLengthForDisplayedURLs = 150;
 
+UI.MessageDialog = class extends UI.VBox {
+  /**
+   * @param {string} message
+   * @param {function()} callback
+   */
+  constructor(message, callback) {
+    super(true);
+    this.registerRequiredCSS('ui/confirmDialog.css');
+    this.contentElement.createChild('div', 'message').createChild('span').textContent = message;
+    var okButton = UI.createTextButton(Common.UIString('OK'), callback, '', true);
+    this.contentElement.createChild('div', 'button').appendChild(okButton);
+  }
+
+  /**
+   * @param {string} message
+   * @param {!Document|!Element=} where
+   * @return {!Promise}
+   */
+  static show(message, where) {
+    return new Promise(resolve => {
+      var dialog = new UI.Dialog();
+      dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
+      dialog.setDimmed(true);
+      new UI
+          .MessageDialog(
+              message,
+              () => {
+                dialog.hide();
+                resolve();
+              })
+          .show(dialog.contentElement);
+      dialog.show(where);
+    });
+  }
+};
+
 /**
  * @unrestricted
  */

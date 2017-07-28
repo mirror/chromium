@@ -80,6 +80,7 @@ Profiler.ProfileHeader = class extends Common.Object {
 
   /**
    * @param {!File} file
+   * @return {!Promise<?string>}
    */
   loadFromFile(file) {
     throw new Error('Not implemented');
@@ -94,6 +95,12 @@ Profiler.ProfileHeader = class extends Common.Object {
 
   setFromFile() {
     this._fromFile = true;
+  }
+
+  /**
+   * @param {!Protocol.Profiler.Profile} profile
+   */
+  setProfile(profile) {
   }
 };
 
