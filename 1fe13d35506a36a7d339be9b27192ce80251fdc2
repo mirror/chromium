@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "27891aee_a49c392f",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Makes sense, thanks for clarifying.",
+      "parentUuid": "791a4e9c_8f9721ba",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f4b998b_434dda03",
         "filename": "components/ui_devtools/protocol.json",
         "patchSetId": 2
@@ -92,6 +110,24 @@
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3e9c3e_be91acc9",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7da47dd_c31d8745",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "a8ad9314_76fd6574",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d1ce0f9_1194a395",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca404ce1_ca5621cd",
         "filename": "components/ui_devtools/protocol.json",
         "patchSetId": 2
@@ -200,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "240bd8d5_13c95ef9",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40dd1d8d_e34e02a8",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea82921_5c1280f6",
         "filename": "components/ui_devtools/protocol.json",
         "patchSetId": 2
@@ -229,6 +301,24 @@
       "side": 1,
       "message": "Thanks Terry. As our follow-up discussion, we need the Overlay domain here since web frontend devtools has migrated since M61 stable.\n\nIn this .json, define the HighlightConfig type in the Overlay domain as you have done here, but don\u0027t define it in the DOM domain.  \n-\u003e This can\u0027t change at the moment since web devtool defines the same way.\n\nHave the UIDevToolsDOMAgent::layer_for_highlighting_ member instead be owned by UIDevToolsOverlayAgent.\nMove UIDevToolsDOMAgent::HighlightNode() and possibly other highlighting-related methods into UIDevToolsOverlayAgent.\n-\u003e layer_for_highlighting_ is used for highlighting on the UI side (window/widget/view) which is currently accessible only by DOM agent and not Overlay agent so it\u0027s better to leave the variable where it is.",
       "parentUuid": "bea82921_5c1280f6",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53689a5_d7976332",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "\u003e Thanks Terry. As our follow-up discussion, we need the Overlay domain here since web frontend devtools has migrated since M61 stable.\n\u003e \n\u003e In this .json, define the HighlightConfig type in the Overlay domain as you have done here, but don\u0027t define it in the DOM domain.  \n\u003e -\u003e This can\u0027t change at the moment since web devtool defines the same way.\n\nAh ok, I think I see why this is the case. Thanks for clarifying.\n\n\u003e \n\u003e Have the UIDevToolsDOMAgent::layer_for_highlighting_ member instead be owned by UIDevToolsOverlayAgent.\n\u003e Move UIDevToolsDOMAgent::HighlightNode() and possibly other highlighting-related methods into UIDevToolsOverlayAgent.\n\u003e -\u003e layer_for_highlighting_ is used for highlighting on the UI side (window/widget/view) which is currently accessible only by DOM agent and not Overlay agent so it\u0027s better to leave the variable where it is.\n\nWhat I am suggesting with my second and third points is that the Overlay agent should be the one that owns and has direct access to |layer_for_highlighting_| instead of the DOM agent. If you were to move the member variable from UIDevToolsDOMAgent to UIDevToolsOverlayAgent, then I think you can also make the following changes to the four functions in which |layer_for_highlighting_| is currently being accessed:\n\n(1) UIDevToolsDOMAgent::hideHighlight(). This is a command received from the FE, so it would need to stay within the .json. However if I understand correctly you can change this to \"redirect\": \"Overlay\" (like what you did with the showHighlight command), and then define showHighlight() in UIDevToolsOverlayAgent.\n\n(2) UIDevToolsDOMAgent::Reset(). Here, I think you would just be able to remove the line of code referencing |layer_for_highlighting_|.\n\n(3) UIDevToolsDOMAgent::UpdateHighlight(). This is just a helper function, and you should be able to move the whole thing from UIDevToolsDOMAgent to UIDevToolsOverlayAgent.\n\n(4) UIDevToolsDOMAgent::HighlightNode(). Same as (3).\n\nPlease let me know what you think.",
+      "parentUuid": "34b110c1_fc978f97",
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -323,6 +413,24 @@
     },
     {
       "key": {
+        "uuid": "f5fbdcb3_15eff2e3",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "My understanding of Sadrul\u0027s suggestion would be to have a single function rather than three separate nearly-identical ones.",
+      "parentUuid": "1cd4e6c5_bffc487f",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b317aff9_92547b06",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -393,6 +501,24 @@
     },
     {
       "key": {
+        "uuid": "5d09ab79_467df1f6",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Because it is possible for |window| to be the target of an event located at |p| even if |p| is not within the window\u0027s bounds, I don\u0027t think it is correct to perform the check of !window-\u003ebounds().Contains(p). I think this check should be removed, and all you need to do is \u0027continue\u0027 if window-\u003eGetEventHandlerForPoint(p) is null.",
+      "parentUuid": "df115870_fbfccb35",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1665753_ba56ed82",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -443,6 +569,24 @@
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49cc300_af9535ee",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Thanks, the code structure in PS9 looks great.",
+      "parentUuid": "5d5121a9_aea26031",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -528,6 +672,30 @@
     },
     {
       "key": {
+        "uuid": "fc523ae8_9097f596",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94c1d3f8_f315c649",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e59be01_b582de99",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 2
@@ -563,6 +731,24 @@
     },
     {
       "key": {
+        "uuid": "6623fcfc_d99df69b",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4fa83576_fc6a33ec",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7e50676_30601902",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 2
@@ -592,6 +778,24 @@
       "side": 1,
       "message": "I think it\u0027s possible. Let me work this out.",
       "parentUuid": "c7e50676_30601902",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df20ba9_7edff86c",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "In person I think you mentioned that you weren\u0027t sure it was possible to add a test for the mouse hover behavior (i.e., hovering on the actual UI element will highlight the corresponding element in the DOM tree). Can you please remind me what the reason for this is?",
+      "parentUuid": "4a197621_b1809a05",
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -633,6 +837,24 @@
     },
     {
       "key": {
+        "uuid": "e15cf166_25db9a02",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ah, that makes sense then. Consider adding a comment here such as \"Do not process mouse events until the element tree has been populated\" (or similar) to explain why the check is necessary.",
+      "parentUuid": "553aa757_8bbf1904",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "359119bb_815a5a9e",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 2
@@ -665,6 +887,24 @@
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555cfcf6_aca50cce",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b7aa5f04_d9d57498",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -703,6 +943,24 @@
     },
     {
       "key": {
+        "uuid": "f838f6d1_7f81c167",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Hm, I see. Let\u0027s leave this comment thread open to see if Sadrul has any thoughts on this during OWNERS review.",
+      "parentUuid": "b2d67ec6_23061c3f",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36afecad_dde6998f",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
         "patchSetId": 2
@@ -735,6 +993,24 @@
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ed34c9_d6307d2a",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2d416a1_9f6f3db3",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3bfdb7_e7a149ac",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Since you\u0027ve removed enable() and disable() from the header of the new class, I think they should also be removed here.",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f257e9_c4b854be",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "nit: Consider some or all of the following variable name suggestions to improve readability:\n\n* Change \u0027window\u0027 to \u0027root_window\u0027\n* Change \u0027point_window\u0027 to \u0027targeted_window\u0027\n* Change \u0027widget\u0027 to \u0027targeted_widget\u0027\n* Change \u0027view\u0027 to \u0027root_view\u0027\n* Change \u0027p_inside\u0027 to \u0027point_in_targeted_window\u0027 or similar\n* Change \u0027point_view\u0027 to \u0027targeted_view\u0027",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870a0b99_a355d53d",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "nit: Use {} since the return statement spans more than one line (same comment for line 263).",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e225fd_37a85eb0",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "Should it ever be possible for this to be reached? If not, consider adding a NOTREACHED() before the return.",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c0c660_28a8eb15",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "nit: when you have something related to a location as a parameter (such as a point or a rect), in the function-level documentation it is nice to specify which coordinate space that parameter is in.",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4c3c5e_d0f7d8c7",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-28T21:45:52Z",
+      "side": 1,
+      "message": "nit: It is helpful to include brief documentation above each test case that briefly explains the purpose of the test.",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
