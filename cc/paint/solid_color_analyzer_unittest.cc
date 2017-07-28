@@ -264,5 +264,69 @@ TEST_F(SolidColorAnalyzerTest, SaveLayer) {
   EXPECT_FALSE(IsSolidColor());
 }
 
+TEST_F(SolidColorAnalyzerTest, ClipRRectCoversCanvas) {
+  SkVector radii[4] = {
+      SkVector::Make(10.0, 15.0), SkVector::Make(20.0, 25.0),
+      SkVector::Make(30.0, 35.0), SkVector::Make(40.0, 45.0),
+  };
+
+  int rr_size = 600;
+  int canvas_size = 255;
+  gfx::Rect canvas_rect(canvas_size, canvas_size);
+  PaintFlags flags;
+  flags.setColor(SK_ColorWHITE);
+
+  struct {
+    SkVector offset;
+    bool expected;
+  } cases[] = {
+      // Not within bounding box of |rr|.
+      {SkVector::Make(100.0, 100.0), false},
+
+      // Intersects UL corner.
+      {SkVector::Make(0.0, 0.0), false},
+
+      // Between UL and UR.
+      {SkVector::Make(-50.0, 0), true},
+
+      // Intersects UR corner.
+      {SkVector::Make(canvas_size - rr_size, 0), false},
+
+      // Between UR and LR.
+      {SkVector::Make(canvas_size - rr_size, -50.0), true},
+
+      // Intersects LR corner.
+      {SkVector::Make(canvas_size - rr_size, canvas_size - rr_size), false},
+
+      // Between LL and LR
+      {SkVector::Make(-50, canvas_size - rr_size), true},
+
+      // Intersects LL corner
+      {SkVector::Make(0, canvas_size - rr_size), false},
+
+      // Between UL and LL
+      {SkVector::Make(0, -50), true},
+
+      // In center
+      {SkVector::Make(-100, -100), true},
+  };
+
+  for (size_t i = 0; i < arraysize(cases); ++i) {
+    TearDown();
+    SetUp();
+    Initialize(canvas_rect);
+
+    SkRect bounding_rect = SkRect::MakeXYWH(
+        cases[i].offset.x(), cases[i].offset.y(), rr_size, rr_size);
+
+    SkRRect rr;
+    rr.setRectRadii(bounding_rect, radii);
+
+    canvas()->clipRRect(rr, SkClipOp::kIntersect, false);
+    canvas()->drawRect(RectToSkRect(canvas_rect), flags);
+    EXPECT_EQ(cases[i].expected, IsSolidColor()) << "Case " << i << " failed.";
+  }
+}
+
 }  // namespace
 }  // namespace cc

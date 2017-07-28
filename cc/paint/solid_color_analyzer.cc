@@ -72,6 +72,36 @@ bool IsFullQuad(const SkCanvas& canvas, const SkRect& drawn_rect) {
   return device_rect.contains(clip_rect);
 }
 
+// Returns true if the specified drawn_rounded_rect will cover the entire canvas
+// and that the canvas is not clipped (i.e. it covers ALL of the canvas).
+bool IsFullQuad(const SkCanvas& canvas, const SkRRect& drawn_rrect) {
+  if (!canvas.isClipRect())
+    return false;
+
+  SkIRect clip_irect;
+  if (!canvas.getDeviceClipBounds(&clip_irect))
+    return false;
+
+  // if the clip is smaller than the canvas, we're partly clipped, so abort.
+  if (!clip_irect.contains(SkIRect::MakeSize(canvas.getBaseLayerSize())))
+    return false;
+
+  const SkMatrix& matrix = canvas.getTotalMatrix();
+  // If the transform results in a non-axis aligned
+  // rect, then be conservative and return false.
+  if (!matrix.isScaleTranslate())
+    return false;
+
+  SkMatrix inverse;
+  if (!matrix.invert(&inverse))
+    return false;
+
+  SkRect clip_rect;
+  clip_rect.set(clip_irect);
+  inverse.mapRectScaleTranslate(&clip_rect, clip_rect);
+  return drawn_rrect.contains(clip_rect);
+}
+
 void CheckIfSolidColor(const SkCanvas& canvas,
                        SkColor color,
                        SkBlendMode blendmode,
@@ -124,6 +154,17 @@ void CheckIfSolidRect(const SkCanvas& canvas,
   } else {
     *is_solid_color = false;
   }
+}
+
+void CheckIfSolidRRectClip(const SkCanvas& canvas,
+                           const SkRRect& rrect,
+                           bool* is_solid_color) {
+  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
+               "SolidColorAnalyzer::HandleRRect");
+  bool does_cover_canvas = IsFullQuad(canvas, rrect);
+  if (does_cover_canvas)
+    *is_solid_color = true;
+  return;
 }
 
 }  // namespace
@@ -208,9 +249,14 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
       // cover the canvas.
       // TODO(vmpstr): We could investigate handling these.
       case PaintOpType::ClipPath:
-      case PaintOpType::ClipRRect:
         return base::nullopt;
-
+      case PaintOpType::ClipRRect: {
+        const ClipRRectOp* rrect_op = static_cast<const ClipRRectOp*>(op);
+        CheckIfSolidRRectClip(canvas, rrect_op->rrect, &is_solid);
+        if (!is_solid)
+          return base::nullopt;
+        break;
+      }
       case PaintOpType::DrawRect: {
         if (++num_ops > max_ops_to_analyze)
           return base::nullopt;
