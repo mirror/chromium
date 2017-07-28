@@ -16,6 +16,24 @@
       "revId": "f5acb09af338cbca97c8141714ba2a49461a7d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12294fc5_3d626b7e",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-28T09:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68247504_9941f8ec",
+      "revId": "f5acb09af338cbca97c8141714ba2a49461a7d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
