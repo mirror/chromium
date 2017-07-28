@@ -18,7 +18,8 @@ namespace service_manager {
 //   requests for remote interfaces.
 // An instance of this class is used by the GetInterface() methods on
 // Connection.
-class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
+class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider
+    : public mojom::InterfaceProvider {
  public:
   using ForwardCallback = base::Callback<void(const std::string&,
                                               mojo::ScopedMessagePipeHandle)>;
@@ -59,7 +60,7 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
   // remote interface requests.
   explicit InterfaceProvider(mojom::InterfaceProviderPtr interface_provider);
 
-  ~InterfaceProvider();
+  ~InterfaceProvider() override;
 
   // Closes the currently bound InterfaceProviderPtr for this object, allowing
   // it to be rebound to a new InterfaceProviderPtr.
@@ -75,9 +76,6 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
   // this call is exclusive to Bind(). In addition, and unlike Bind(), this MUST
   // be called before any calls to GetInterface() are made.
   void Forward(const ForwardCallback& callback);
-
-  // Returns a raw pointer to the remote InterfaceProvider.
-  mojom::InterfaceProvider* get() { return interface_provider_.get(); }
 
   // Sets a closure to be run when the remote InterfaceProvider pipe is closed.
   void SetConnectionLostClosure(const base::Closure& connection_lost_closure);
@@ -98,8 +96,6 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
   void GetInterface(mojo::InterfaceRequest<Interface> request) {
     GetInterface(Interface::Name_, std::move(request.PassMessagePipe()));
   }
-  void GetInterface(const std::string& name,
-                    mojo::ScopedMessagePipeHandle request_handle);
 
   // Returns a callback to GetInterface<Interface>(). This can be passed to
   // BinderRegistry::AddInterface() to forward requests.
@@ -110,6 +106,10 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT InterfaceProvider {
         &InterfaceProvider::BindInterfaceRequestFromSource<Interface>,
         GetWeakPtr());
   }
+
+  // service_manager::mojom::InterfaceProvider:
+  void GetInterface(const std::string& name,
+                    mojo::ScopedMessagePipeHandle request_handle) override;
 
  private:
   template <typename Interface>
