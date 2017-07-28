@@ -15,10 +15,15 @@ DataOffer::DataOffer(DataOfferDelegate* delegate,
     : delegate_(delegate),
       mime_types_(mime_types),
       source_actions_(source_actions),
-      dnd_action_(dnd_action) {}
+      dnd_action_(dnd_action),
+      weak_factory_(this) {}
 
 DataOffer::~DataOffer() {
   delegate_->OnDataOfferDestroying(this);
+}
+
+base::WeakPtr<DataOffer> DataOffer::AsWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 void DataOffer::Accept(const std::string& mime_type) {

@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/exo/wm_helper.h"
 
 namespace ui {
@@ -17,6 +18,7 @@ class DropTargetEvent;
 namespace exo {
 
 class DataDeviceDelegate;
+class DataOffer;
 class DataSource;
 class Surface;
 
@@ -54,6 +56,8 @@ class DataDevice : public WMHelper::DragDropObserver {
   Surface* GetEffectiveTargetForEvent(const ui::DropTargetEvent& event) const;
 
   DataDeviceDelegate* const delegate_;
+
+  base::WeakPtr<DataOffer> data_offer_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };
