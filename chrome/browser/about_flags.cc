@@ -1989,6 +1989,11 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-use-zoom-for-dsf", flag_descriptions::kEnableUseZoomForDsfName,
      flag_descriptions::kEnableUseZoomForDsfDescription, kOsAll,
      MULTI_VALUE_TYPE(kEnableUseZoomForDSFChoices)},
+    {"enable-manual-fallbacks-filling",
+     flag_descriptions::kEnableManualFallbacksFillingName,
+     flag_descriptions::kEnableManualFallbacksFillingDescription, kOsAll,
+     FEATURE_VALUE_TYPE(
+         password_manager::features::kEnableManualFallbacksFilling)},
 #if defined(OS_MACOSX)
     {"enable-harfbuzz-rendertext", flag_descriptions::kHarfbuzzRendertextName,
      flag_descriptions::kHarfbuzzRendertextDescription, kOsMac,
