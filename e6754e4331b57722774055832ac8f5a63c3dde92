@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cacb5540_a01939b4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-07-28T22:03:34Z",
+      "side": 1,
+      "message": "Note to Mark: although the annotation is not super clear, \"\" here refers to the testing option with the default command line. This test class is run twice with the default option (enabled) and with the other option which is to disable the feature. So you don\u0027t need to worry about testing coverage here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "e6754e4331b57722774055832ac8f5a63c3dde92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
