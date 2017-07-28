@@ -206,8 +206,11 @@ unsigned GLImageNativePixmap::GetInternalFormat() {
   return internalformat_;
 }
 
-bool GLImageNativePixmap::CopyTexImage(unsigned target) {
+bool GLImageNativePixmap::CopyTexImage(unsigned target,
+                                       unsigned internalformat) {
   if (egl_image_ == EGL_NO_IMAGE_KHR) {
+    if (internalformat != GL_RGBA && internalformat != 0)
+      return false;
     // Pass-through image type fails to bind and copy; make sure we
     // don't draw with uninitialized texture.
     std::vector<unsigned char> data(size_.width() * size_.height() * 4);
@@ -215,7 +218,7 @@ bool GLImageNativePixmap::CopyTexImage(unsigned target) {
                  GL_UNSIGNED_BYTE, data.data());
     return true;
   }
-  return GLImageEGL::CopyTexImage(target);
+  return GLImageEGL::CopyTexImage(target, internalformat);
 }
 
 bool GLImageNativePixmap::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,

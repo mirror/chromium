@@ -53,10 +53,11 @@ class GL_EXPORT GLImage : public base::RefCounted<GLImage> {
   // Release image from texture currently bound to |target|.
   virtual void ReleaseTexImage(unsigned target) = 0;
 
-  // Define texture currently bound to |target| by copying image into it.
-  // Returns true on success. It is valid for an implementation to always
-  // return false.
-  virtual bool CopyTexImage(unsigned target) = 0;
+  // Define texture currently bound to |target| by copying image into it. If the
+  // |internalformat| is not consistent with image's format, return false.
+  // Returns true on success. It is valid for an implementation to always return
+  // false.
+  virtual bool CopyTexImage(unsigned target, unsigned internalformat) = 0;
 
   // Copy |rect| of image to |offset| in texture currently bound to |target|.
   // Returns true on success. It is valid for an implementation to always

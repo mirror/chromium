@@ -36,7 +36,7 @@ class GLImageSync : public gl::GLImage {
   unsigned GetInternalFormat() override;
   bool BindTexImage(unsigned target) override;
   void ReleaseTexImage(unsigned target) override;
-  bool CopyTexImage(unsigned target) override;
+  bool CopyTexImage(unsigned target, unsigned internalformat) override;
   bool CopyTexSubImage(unsigned target,
                        const gfx::Point& offset,
                        const gfx::Rect& rect) override;
@@ -89,7 +89,7 @@ void GLImageSync::ReleaseTexImage(unsigned target) {
   NOTREACHED();
 }
 
-bool GLImageSync::CopyTexImage(unsigned target) {
+bool GLImageSync::CopyTexImage(unsigned target, unsigned internalformat) {
   return false;
 }
 

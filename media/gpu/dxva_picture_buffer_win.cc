@@ -36,7 +36,9 @@ class DummyGLImage : public gl::GLImage {
   // this doesn't do anything and always succeeds.
   bool BindTexImage(unsigned target) override { return true; }
   void ReleaseTexImage(unsigned target) override {}
-  bool CopyTexImage(unsigned target) override { return false; }
+  bool CopyTexImage(unsigned target, unsigned internalformat) override {
+    return false;
+  }
   bool CopyTexSubImage(unsigned target,
                        const gfx::Point& offset,
                        const gfx::Rect& rect) override {
