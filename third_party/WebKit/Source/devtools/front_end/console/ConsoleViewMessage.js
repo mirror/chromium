@@ -45,6 +45,8 @@ Console.ConsoleViewMessage = class {
     this._repeatCount = 1;
     this._closeGroupDecorationCount = 0;
     this._nestingLevel = nestingLevel;
+    /** @type {number|undefined} */
+    this._logicalTimestamp;
 
     /** @type {?DataGrid.DataGrid} */
     this._dataGrid = null;
@@ -872,6 +874,20 @@ Console.ConsoleViewMessage = class {
   matchesFilterText(filter) {
     var text = this.contentElement().deepTextContent();
     return text.toLowerCase().includes(filter.toLowerCase());
+  }
+
+  /**
+   * @param {number} timestamp
+   */
+  setLogicalTimestamp(timestamp) {
+    this._logicalTimestamp = timestamp;
+  }
+
+  /**
+   * @return {number}
+   */
+  logicalTimestamp() {
+    return typeof this._logicalTimestamp === 'undefined' ? this._message.timestamp : this._logicalTimestamp;
   }
 
   updateTimestamp() {
