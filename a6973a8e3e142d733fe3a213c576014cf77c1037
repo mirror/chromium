@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f98bc938_bafd6fc2",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-28T22:17:02Z",
+      "side": 1,
+      "message": "The value will be put in a base::DictionaryValue which accepts unique_ptr. And this keeps consistency with other function signature in this file.",
+      "parentUuid": "b4fbf4e9_afd3a95b",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ac285a7_e46fbe50",
         "filename": "base/value_conversions.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-28T21:47:00Z",
       "side": 1,
       "message": "I would suggest just using a union internally for serialization / deserialization.\n\nunion UnguessableTokenRepresentation {\n  uint8_t buffer[128];\n  struct {\n    uint64_t high;\n    uint64_t low;\n  };\n};\n\nand static_assert that sizeof(UnguessableTokenRepresentation) \u003d\u003d sizeof(UnguessableToken)",
+      "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111e50a2_a3bba536",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-28T22:17:02Z",
+      "side": 1,
+      "message": "union sgtm. I don\u0027t think static_assert is indeeded for this case. Here we just need to care how to construct UnguessableToken instead of implementation.",
+      "parentUuid": "1ac285a7_e46fbe50",
       "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66499196_d1081719",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-28T22:17:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea58a2f6_c94fe44a",
+      "revId": "a6973a8e3e142d733fe3a213c576014cf77c1037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
