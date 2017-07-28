@@ -79,9 +79,7 @@ class DeviceCatcher : HidService::Observer {
 
 class TestConnectCallback {
  public:
-  TestConnectCallback()
-      : callback_(base::Bind(&TestConnectCallback::SetConnection,
-                             base::Unretained(this))) {}
+  TestConnectCallback() {}
   ~TestConnectCallback() {}
 
   void SetConnection(scoped_refptr<HidConnection> connection) {
@@ -94,10 +92,12 @@ class TestConnectCallback {
     return connection_;
   }
 
-  const HidService::ConnectCallback& callback() { return callback_; }
+  HidService::ConnectCallback GetCallback() {
+    return base::BindOnce(&TestConnectCallback::SetConnection,
+                          base::Unretained(this));
+  }
 
  private:
-  HidService::ConnectCallback callback_;
   base::RunLoop run_loop_;
   scoped_refptr<HidConnection> connection_;
 };
@@ -182,7 +182,7 @@ TEST_F(HidConnectionTest, ReadWrite) {
   if (!UsbTestGadget::IsTestEnabled()) return;
 
   TestConnectCallback connect_callback;
-  service_->Connect(device_guid_, connect_callback.callback());
+  service_->Connect(device_guid_, connect_callback.GetCallback());
   scoped_refptr<HidConnection> conn = connect_callback.WaitForConnection();
   ASSERT_TRUE(conn.get());
 
