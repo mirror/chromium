@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c4b38bb_13122da5",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2490,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-07-28T23:31:10Z",
+      "side": 0,
+      "message": "FYI, I believe this was an original oversight in https://codereview.chromium.org/2855943002/ (line 2461), since it\u0027s the entire point of that CL.  It was previously passing because because without base::RunLoop().Run(), there were 0 cards, meaning no masked cards to diff against and no duplicates to avoid (so offer upload).",
+      "range": {
+        "startLine": 2490,
+        "startChar": 9,
+        "endLine": 2490,
+        "endChar": 14
+      },
+      "revId": "8b5c96123b992e826759c0aedded7606028c60de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
