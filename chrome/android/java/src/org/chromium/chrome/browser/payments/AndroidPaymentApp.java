@@ -19,6 +19,7 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.JsonWriter;
 
 import org.chromium.IsReadyToPayService;
@@ -109,13 +110,16 @@ public class AndroidPaymentApp
      * @param webContents The web contents.
      * @param packageName The name of the package of the payment app.
      * @param activity    The name of the payment activity in the payment app.
-     * @param label       The UI label to use for the payment app.
+     * @param label       The UI label to use for the payment app. Should not be null or empty.
+     * @param description The UI description (sub-label) to use for the payment app. Can be null or
+     *                    empty.
      * @param icon        The icon to use in UI for the payment app.
      * @param isIncognito Whether the user is in incognito mode.
      */
     public AndroidPaymentApp(WebContents webContents, String packageName, String activity,
-            String label, Drawable icon, boolean isIncognito) {
-        super(packageName, label, null, icon);
+            String label, @Nullable String description, Drawable icon, boolean isIncognito) {
+        super(packageName, label, description, icon);
+        assert !TextUtils.isEmpty(label);
         ThreadUtils.assertOnUiThread();
         mHandler = new Handler();
         mWebContents = webContents;
