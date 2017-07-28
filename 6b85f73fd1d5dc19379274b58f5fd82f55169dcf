@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "4d2e341f_c399fe9c",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T00:27:49Z",
+      "side": 1,
+      "message": "This comment can be removed, doesn\u0027t add more info.",
+      "revId": "6b85f73fd1d5dc19379274b58f5fd82f55169dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da8130ea_51edee8d",
         "filename": "components/offline_pages/core/prefetch/import_archives_task.cc",
         "patchSetId": 1

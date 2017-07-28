@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7413a2f_015e4692",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T00:27:49Z",
+      "side": 1,
+      "message": "extra empty line",
+      "revId": "e926fb07daa136cd9a0fe354cd55d43b7594b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946b4253_11e6ee31",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T00:27:49Z",
+      "side": 1,
+      "message": "Need to remove \"OR IGNORE\"",
+      "revId": "e926fb07daa136cd9a0fe354cd55d43b7594b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc058c9_85de76b8",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T00:27:49Z",
+      "side": 1,
+      "message": "extra empty line",
+      "revId": "e926fb07daa136cd9a0fe354cd55d43b7594b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd76dccd_42893af8",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T00:27:49Z",
+      "side": 1,
+      "message": "No need to add this comment, it doesnt\u0027 add info.",
+      "revId": "e926fb07daa136cd9a0fe354cd55d43b7594b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cd5591_cb112f0a",
+        "filename": "components/offline_pages/core/prefetch/import_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-28T00:27:49Z",
+      "side": 1,
+      "message": "Discussed offlien, but here is capture:\n\nYou have 2 tasks combined here.\nTask 1: reads 1 DOWNLOADED and updates it to IMPORTING, in one transaction.\n        then, calls importer-\u003eImportArchive(). Importer should keep a list of offlien_id currently being imported.\nTask2 : EventHandler, created/queued when Archive is imported, via entry point on PrefetchDipatcher. Transitions item completed to FINISHED.\nTask3: (it is not yet here, may be a separate patch), Reconciler - looks at all IMPORTING, reconciles with a list in Importer, moves stuck items to FINISHED with error code.",
+      "revId": "e926fb07daa136cd9a0fe354cd55d43b7594b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
