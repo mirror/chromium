@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be679d5c_826a5774",
+        "filename": "ash/login/ui/login_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-28T18:18:44Z",
+      "side": 1,
+      "message": "I wonder should we unify the blur experience across all the UI. There are other place to blur background. Should we use the same blur sigma?",
+      "revId": "3b83010857783b096de6fe3223ebdea8daa69b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
