@@ -469,6 +469,14 @@ TEST(PaintOpBufferTest, SaveDrawRestore_SingleOpRecordWithSingleNonDrawOp) {
   EXPECT_EQ(1, canvas.restore_count_);
 }
 
+TEST(PaintOpBufferTest, SaveLayerRestore_NoFlagsDraw) {
+  PaintOpBuffer buffer;
+  uint8_t alpha = 100;
+  buffer.push<SaveLayerAlpha>(nullptr, alpha, false);
+  buffer.push<DrawColorOp>(SK_ColorRED, SkBlendMode::kSrc);
+  buffer.push<Restore>();
+}
+
 TEST(PaintOpBufferTest, DiscardableImagesTracking_EmptyBuffer) {
   PaintOpBuffer buffer;
   EXPECT_FALSE(buffer.HasDiscardableImages());
