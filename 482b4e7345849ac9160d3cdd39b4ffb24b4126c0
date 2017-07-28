@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6c65db6_a26e5dbb",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-28T19:59:09Z",
+      "side": 1,
+      "message": "How about crating LanguagePickerCancelButton function for this matcher?",
+      "range": {
+        "startLine": 606,
+        "startChar": 18,
+        "endLine": 606,
+        "endChar": 30
+      },
+      "revId": "482b4e7345849ac9160d3cdd39b4ffb24b4126c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5728d52_8b0c2dd3",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-28T19:59:09Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 621,
+        "startChar": 17,
+        "endLine": 621,
+        "endChar": 33
+      },
+      "revId": "482b4e7345849ac9160d3cdd39b4ffb24b4126c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
