@@ -33,7 +33,8 @@ interface CompositorFrameSink {
   // DidReceiveCompositorFrameAck() asynchronously when the frame has been
   // processed in order to unthrottle the next frame.
   SubmitCompositorFrame(cc.mojom.LocalSurfaceId local_surface_id,
-                        cc.mojom.CompositorFrame frame);
+                        cc.mojom.CompositorFrame frame,
+                        uint64 submit_time);
 
   // Notifies the frame sink that a BeginFrame was completed, but that no
   // CompositorFrame was produced as a result of it.

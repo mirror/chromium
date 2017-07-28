@@ -580,7 +580,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // cc::mojom::CompositorFrameSink implementation.
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
-                             cc::CompositorFrame frame) override;
+                             cc::CompositorFrame frame,
+                             uint64_t submit_time) override;
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
 
   // Signals that a frame with token |frame_token| was finished processing. If
