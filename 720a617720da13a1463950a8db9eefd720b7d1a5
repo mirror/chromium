@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e40f1c20_db10dfad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Moved this here, let me know if there\u0027s a better place for it.",
+      "range": {
+        "startLine": 617,
+        "startChar": 9,
+        "endLine": 617,
+        "endChar": 27
+      },
+      "revId": "720a617720da13a1463950a8db9eefd720b7d1a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

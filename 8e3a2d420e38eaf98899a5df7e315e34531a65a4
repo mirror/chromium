@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac12cc3_f24293f6",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorCSSAgent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "5cb0dd37_a3df7217",
+      "range": {
+        "startLine": 195,
+        "startChar": 48,
+        "endLine": 195,
+        "endChar": 64
+      },
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2153077_c39dda24",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4339022d_ec9a7eb9",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3338,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2153077_c39dda24",
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8f61fc08_47f47427",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5488d525_07bf175e",
+      "range": {
+        "startLine": 614,
+        "startChar": 18,
+        "endLine": 614,
+        "endChar": 96
+      },
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c569909c_72a969b0",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 6
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-28T00:19:24Z",
       "side": 1,
       "message": "Good idea!",
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5eebaa_b63e9e5b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Thanks! I will do it in a follow-up CL as this one was already complicated enough.\n\nMy thought was to use requestAnimationFrame, any objections/alternate ideas?",
+      "parentUuid": "c569909c_72a969b0",
       "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "0639ba0f_e06a205b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb06b000_69780709",
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc766359_232beb72",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 6
@@ -119,6 +221,30 @@
       "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41be7d2e_2f5221b6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc766359_232beb72",
+      "range": {
+        "startLine": 885,
+        "startChar": 23,
+        "endLine": 885,
+        "endChar": 36
+      },
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "c7d7d915_d4a2f32d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b98233da_c254a1f4",
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "748425be_84633932",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 6
@@ -176,6 +320,30 @@
       "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c546486c_03463b62",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "748425be_84633932",
+      "range": {
+        "startLine": 1064,
+        "startChar": 40,
+        "endLine": 1064,
+        "endChar": 45
+      },
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +370,30 @@
     },
     {
       "key": {
+        "uuid": "4369434d_abf28e7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10343e1b_3dc18e58",
+      "range": {
+        "startLine": 1247,
+        "startChar": 36,
+        "endLine": 1247,
+        "endChar": 57
+      },
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b002b3cd_0f305135",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 6
@@ -219,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "3da37864_3aa9f302",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Oops, done",
+      "parentUuid": "b002b3cd_0f305135",
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f28a55_72324c76",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 6
@@ -233,6 +443,24 @@
       "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb161a7e_a38ca403",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f28a55_72324c76",
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +487,30 @@
     },
     {
       "key": {
+        "uuid": "7f189c40_5061d1fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 2019,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c287d97d_2b130bd8",
+      "range": {
+        "startLine": 2019,
+        "startChar": 16,
+        "endLine": 2019,
+        "endChar": 22
+      },
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c74e697_5b4a69e2",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
         "patchSetId": 6
@@ -282,6 +534,30 @@
     },
     {
       "key": {
+        "uuid": "832ab170_d01c91d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 2023,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c74e697_5b4a69e2",
+      "range": {
+        "startLine": 2023,
+        "startChar": 10,
+        "endLine": 2023,
+        "endChar": 145
+      },
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca1c3e12_7444b2e9",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/Icon.js",
         "patchSetId": 6
@@ -293,6 +569,24 @@
       "writtenOn": "2017-07-28T00:19:24Z",
       "side": 1,
       "message": "I think we should have double-checkmark instead of these two. WDYT?",
+      "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84635c87_50ab2246",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Icon.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-28T04:11:35Z",
+      "side": 1,
+      "message": "The double checkmark is too wide for a small icon :\\",
+      "parentUuid": "ca1c3e12_7444b2e9",
       "revId": "8e3a2d420e38eaf98899a5df7e315e34531a65a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
