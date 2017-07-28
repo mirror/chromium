@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faf016e4_ce18cf19",
+        "filename": ".eslintrc.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T21:32:12Z",
+      "side": 0,
+      "message": "I\u0027m assuming you didn\u0027t mean to check this change in?",
+      "revId": "433f6f98f2af46c8e47ba6a54580b62da573b248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
