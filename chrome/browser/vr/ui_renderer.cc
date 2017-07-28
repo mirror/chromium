@@ -135,25 +135,11 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
                               const RenderInfo& render_info,
                               const ControllerInfo& controller_info,
                               bool draw_reticle) {
-  if (elements.empty()) {
-    return;
-  }
-  bool drawn_reticle = false;
   for (const auto* element : elements) {
-    // If we have no element to draw the reticle on, draw it after the
-    // background (the initial draw phase).
-    if (!controller_info.reticle_render_target && draw_reticle &&
-        !drawn_reticle &&
-        element->draw_phase() >= scene_->first_foreground_draw_phase()) {
-      DrawReticle(view_proj_matrix, render_info, controller_info);
-      drawn_reticle = true;
-    }
-
     DrawElement(view_proj_matrix, *element, render_info.content_texture_size);
-
-    if (draw_reticle && (controller_info.reticle_render_target == element)) {
-      DrawReticle(view_proj_matrix, render_info, controller_info);
-    }
+  }
+  if (draw_reticle) {
+    DrawReticle(view_proj_matrix, render_info, controller_info);
   }
   vr_shell_renderer_->Flush();
 }

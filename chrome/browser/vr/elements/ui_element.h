@@ -26,6 +26,10 @@ namespace base {
 class TimeTicks;
 }
 
+namespace blink {
+class WebGestureEvent;
+}
+
 namespace vr {
 
 class Animation;
@@ -91,6 +95,17 @@ class UiElement : public cc::AnimationTarget {
   virtual void OnMove(const gfx::PointF& position);
   virtual void OnButtonDown(const gfx::PointF& position);
   virtual void OnButtonUp(const gfx::PointF& position);
+  virtual void OnFlingBegin(std::unique_ptr<blink::WebGestureEvent> gesture,
+                            const gfx::PointF& position);
+  virtual void OnFlingCancel(std::unique_ptr<blink::WebGestureEvent> gesture,
+                             const gfx::PointF& position);
+  virtual void OnScrollBegin(std::unique_ptr<blink::WebGestureEvent> gesture,
+                             const gfx::PointF& position);
+  virtual void OnScrollUpdate(std::unique_ptr<blink::WebGestureEvent> gesture,
+                              const gfx::PointF& position);
+  virtual void OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
+                           const gfx::PointF& position);
+
   // Whether the point (relative to the origin of the element), should be
   // considered on the element. All elements are considered rectangular by
   // default though elements may override this function to handle arbitrary
@@ -120,6 +135,9 @@ class UiElement : public cc::AnimationTarget {
   bool is_overlay() const { return is_overlay_; }
   void set_is_overlay(bool is_overlay) { is_overlay_ = is_overlay; }
 
+  bool scrollable() const { return scrollable_; }
+  void set_scrollable(bool scrollable) { scrollable_ = scrollable; }
+
   // The computed lock to the FoV, incorporating lock of parent objects.
   bool computed_lock_to_fov() const { return computed_lock_to_fov_; }
   void set_computed_lock_to_fov(bool computed_lock) {
@@ -139,6 +157,7 @@ class UiElement : public cc::AnimationTarget {
   // will animate if you've set a transition. If you need to animate more than
   // one operation simultaneously, please use |SetTransformOperations| below.
   void SetLayoutOffset(float x, float y);
+  void SetLayoutOffset(float x, float y, float z);
   void SetTranslate(float x, float y, float z);
   void SetRotate(float x, float y, float z, float radians);
   void SetScale(float x, float y, float z);
@@ -228,6 +247,7 @@ class UiElement : public cc::AnimationTarget {
   // TODO(vollick): elements should own their children. UiScene can turn into
   // recursive operations on the UiElement tree.
   void AddChild(UiElement* child);
+  void RemoveChild(UiElement* child);
   UiElement* parent() { return parent_; }
 
   gfx::Point3F GetCenter() const;
@@ -275,6 +295,9 @@ class UiElement : public cc::AnimationTarget {
   virtual void OnSetMode();
 
   std::vector<UiElement*>& children() { return children_; }
+  const std::vector<UiElement*>& children() const { return children_; }
+
+  base::TimeTicks last_frame_time() const { return last_frame_time_; }
 
  private:
   // Valid IDs are non-negative.
@@ -296,6 +319,8 @@ class UiElement : public cc::AnimationTarget {
   // If true, then this element will be drawn in the world viewport, but above
   // all other elements.
   bool is_overlay_ = false;
+
+  bool scrollable_ = false;
 
   // The size of the object.  This does not affect children.
   gfx::SizeF size_ = {1.0f, 1.0f};

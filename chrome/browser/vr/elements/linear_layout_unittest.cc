@@ -73,11 +73,11 @@ TEST(LinearLayout, VerticalLayout) {
   rect_b.LocalTransform().TransformPoint(&position_b);
 
   EXPECT_FLOAT_EQ(0.0f, position_a.x());
-  EXPECT_FLOAT_EQ(-15.0f, position_a.y());
+  EXPECT_FLOAT_EQ(15.0f, position_a.y());
   EXPECT_FLOAT_EQ(0.0f, position_a.z());
 
   EXPECT_FLOAT_EQ(0.0f, position_b.x());
-  EXPECT_FLOAT_EQ(10.0f, position_b.y());
+  EXPECT_FLOAT_EQ(-10.0f, position_b.y());
   EXPECT_FLOAT_EQ(0.0f, position_b.z());
 
   rect_a.SetVisible(false);

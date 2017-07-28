@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/vr/color_scheme.h"
+#include "chrome/browser/vr/databinding/binding.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
 #include "third_party/skia/include/core/SkColor.h"
 
@@ -96,11 +97,14 @@ class UiScene {
 
   void OnGLInitialized();
 
+  std::vector<std::unique_ptr<Binding>>& bindings() { return bindings_; }
+
  private:
   void Animate(const base::TimeTicks& current_time);
   void ApplyRecursiveTransforms(UiElement* element);
 
   std::vector<std::unique_ptr<UiElement>> ui_elements_;
+  std::vector<std::unique_ptr<Binding>> bindings_;
   UiElement* content_element_ = nullptr;
   ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 

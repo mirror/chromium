@@ -27,6 +27,7 @@ void UiScene::AddUiElement(std::unique_ptr<UiElement> element) {
 }
 
 void UiScene::RemoveUiElement(int element_id) {
+  // This should remove the element from its parent's child list.
   for (auto it = ui_elements_.begin(); it != ui_elements_.end(); ++it) {
     if ((*it)->id() == element_id) {
       if ((*it)->fill() == Fill::CONTENT) {
@@ -50,6 +51,9 @@ void UiScene::RemoveAnimation(int element_id, int animation_id) {
 }
 
 void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
+  for (auto& binding : bindings_) {
+    binding->Update();
+  }
   for (const auto& element : ui_elements_) {
     // Process all animations before calculating object transforms.
     element->Animate(current_time);
@@ -64,6 +68,14 @@ void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
 }
 
 void UiScene::PrepareToDraw() {
+  // We may have repositioned elements due to input (eg, we may have been
+  // dragging, we therefore have to bake elements.
+  for (auto& element : ui_elements_) {
+    element->set_dirty(true);
+  }
+  for (auto& element : ui_elements_) {
+    ApplyRecursiveTransforms(element.get());
+  }
   for (const auto& element : ui_elements_) {
     element->PrepareToDraw();
   }
