@@ -22,6 +22,30 @@
       "revId": "cb163ad5c760057e46235c333c8ebe6680680746",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a533f61_fa3c507a",
+        "filename": "chrome/browser/resources/settings/people_page/lock_screen.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T16:45:01Z",
+      "side": 1,
+      "message": "+dpapad@ - Thoughts on this?",
+      "parentUuid": "434d953e_09873ffe",
+      "range": {
+        "startLine": 202,
+        "startChar": 11,
+        "endLine": 202,
+        "endChar": 26
+      },
+      "revId": "cb163ad5c760057e46235c333c8ebe6680680746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
