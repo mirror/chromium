@@ -15,6 +15,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "content/test/test_content_browser_client.h"
@@ -336,31 +337,54 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
 // connection error but we don't properly check for it. This occurs because we
 // send a sync window.open IPC after the RenderFrameHost is destroyed.
 //
-// This test reproduces the issue by calling window.close, and then
-// window.open in a task that runs immediately after window.close (which
-// internally posts a task to send the IPC). This ensures that the
-// RenderFrameHost is destroyed by the time the window.open IPC reaches the
-// browser process.
+// The test creates two WebContents rendered in the same process. The first is
+// is the window-opener of the second, which enables relaying information back
+// to the browser process from the second WebContents after it is destroyed.
+//
+// The issue is then reproduced by asynchronously triggering a call to
+// window.open() in the second WebContents, then immediately closing the
+// WebContents afterwards. This synchronously destroys the RenderFrameHost on
+// the browser side without processing any messages, so by the time the
+// CreateNewWindow sync IPC is dispatched, the main RFH is destroyed.
+//
+// Note that if the WebContents scheduled a call to window.close() to close
+// itself after it calls window.open(), the CreateNewWindow sync IPC could have
+// been dispatched *before* ViewHostMsg_Close in the browser process, if that
+// happened to be waiting for a reply to another sync IPC on the UI thread, in
+// which case incoming sync IPCs to this thread are dispatched, but the message
+// loop is not pumped, so proxied non-sync IPCs are not delivered.
 IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
                        FrameDetached_WindowOpenIPCFails) {
   NavigateToURL(shell(), GetTestUrl("", "title1.html"));
   EXPECT_EQ(1u, Shell::windows().size());
-  GURL test_url = GetTestUrl("render_frame_host", "window_open_and_close.html");
+  GURL test_url = GetTestUrl("render_frame_host", "window_open.html");
   std::string open_script =
       base::StringPrintf("popup = window.open('%s');", test_url.spec().c_str());
 
+  TestNavigationObserver second_contents_navigation_observer(nullptr, 1);
+  second_contents_navigation_observer.StartWatchingNewWebContents();
   EXPECT_TRUE(content::ExecuteScript(shell(), open_script));
-  ASSERT_EQ(2u, Shell::windows().size());
+  second_contents_navigation_observer.Wait();
 
+  ASSERT_EQ(2u, Shell::windows().size());
   Shell* new_shell = Shell::windows()[1];
   RenderFrameDeletedObserver deleted_observer(
       new_shell->web_contents()->GetMainFrame());
+  ExecuteScriptAsync(new_shell, "callWindowOpen();");
+  new_shell->Close();
   deleted_observer.WaitUntilDeleted();
 
-  bool is_closed = false;
+  bool did_call_window_open = false;
   EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      shell(), "domAutomationController.send(popup.closed)", &is_closed));
-  EXPECT_TRUE(is_closed);
+      shell(), "domAutomationController.send(!!popup.didCallWindowOpen)",
+      &did_call_window_open));
+  EXPECT_TRUE(did_call_window_open);
+
+  std::string result_of_window_open;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(), "domAutomationController.send(String(popup.resultOfWindowOpen))",
+      &result_of_window_open));
+  EXPECT_EQ("null", result_of_window_open);
 }
 
 // After a navigation, the StreamHandle must be released.
