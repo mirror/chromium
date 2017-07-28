@@ -203,6 +203,9 @@ ui::AXPlatformNode* NativeViewAccessibilityBase::GetFromNodeID(int32_t id) {
   return nullptr;
 }
 
+void NativeViewAccessibilityBase::EnableAccessibilityMode(
+    ui::AXMode mode_flags) {}
+
 gfx::AcceleratedWidget
 NativeViewAccessibilityBase::GetTargetForNativeAccessibilityEvent() {
   return gfx::kNullAcceleratedWidget;

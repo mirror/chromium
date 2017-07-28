@@ -108,6 +108,8 @@ class AuraLinuxApplication
 
   ui::AXPlatformNode* GetFromNodeID(int32_t id) override { return nullptr; }
 
+  void EnableAccessibilityMode(ui::AXMode mode_flags) override {}
+
   gfx::AcceleratedWidget GetTargetForNativeAccessibilityEvent() override {
     return gfx::kNullAcceleratedWidget;
   }

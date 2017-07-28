@@ -996,6 +996,10 @@ ui::AXPlatformNode* BrowserAccessibility::GetFromNodeID(int32_t id) {
   return nullptr;
 }
 
+void BrowserAccessibility::EnableAccessibilityMode(ui::AXMode mode_flags) {
+  // Not all BrowserAccessibility subclasses care about mode changes
+}
+
 gfx::AcceleratedWidget
 BrowserAccessibility::GetTargetForNativeAccessibilityEvent() {
   BrowserAccessibilityDelegate* root_delegate =

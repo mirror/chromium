@@ -7,6 +7,7 @@
 
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_export.h"
+#include "ui/accessibility/ax_modes.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -74,6 +75,13 @@ class AX_EXPORT AXPlatformNodeDelegate {
   virtual gfx::NativeViewAccessible GetFocus() = 0;
 
   virtual ui::AXPlatformNode* GetFromNodeID(int32_t id) = 0;
+
+  // On same platforms (windows), we do not enable accessibility until specific
+  // APIs are accessed.  This is due to the vast majority of accessibility
+  // clients are only basically accessing the role, state, name, value, and
+  // location of objects. On these platforms (windows), this delegate method is
+  // called to instruct accessiblity to be enabled.
+  virtual void EnableAccessibilityMode(ui::AXMode mode_flags) = 0;
 
   //
   // Events.

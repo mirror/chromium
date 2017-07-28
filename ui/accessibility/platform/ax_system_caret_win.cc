@@ -98,6 +98,8 @@ gfx::NativeViewAccessible AXSystemCaretWin::GetFocus() {
   return nullptr;
 }
 
+void AXSystemCaretWin::EnableAccessibilityMode(ui::AXMode mode_flags) {}
+
 gfx::AcceleratedWidget
 AXSystemCaretWin::GetTargetForNativeAccessibilityEvent() {
   return event_target_;

@@ -32,8 +32,10 @@ class CONTENT_EXPORT BrowserAccessibilityWin : public BrowserAccessibility {
   void OnLocationChanged() override;
   base::string16 GetText() const override;
 
+  // AXPlatformNodeDelegate.
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   ui::AXPlatformNode* GetFromNodeID(int32_t id) override;
+  void EnableAccessibilityMode(ui::AXMode mode_flags);
 
   class BrowserAccessibilityComWin* GetCOM() const;
 

@@ -44,6 +44,7 @@ class AX_EXPORT AXSystemCaretWin : private AXPlatformNodeDelegate {
   gfx::NativeViewAccessible HitTestSync(int x, int y) override;
   gfx::NativeViewAccessible GetFocus() override;
   ui::AXPlatformNode* GetFromNodeID(int32_t id) override;
+  void EnableAccessibilityMode(ui::AXMode mode_flags) override;
   gfx::AcceleratedWidget GetTargetForNativeAccessibilityEvent() override;
   bool AccessibilityPerformAction(const ui::AXActionData& data) override;
   bool ShouldIgnoreHoveredStateForTesting() override;
