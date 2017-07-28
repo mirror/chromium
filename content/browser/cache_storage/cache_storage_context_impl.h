@@ -12,6 +12,7 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/cache_storage_context.h"
 #include "content/public/browser/cache_storage_usage_info.h"
+#include "url/gurl.h"
 
 namespace base {
 class FilePath;
@@ -65,6 +66,10 @@ class CONTENT_EXPORT CacheStorageContextImpl
   // CacheStorageContext
   void GetAllOriginsInfo(const GetUsageInfoCallback& callback) override;
   void DeleteForOrigin(const GURL& origin) override;
+
+  // Only callable on the IO thread.
+  void AddObserver(CacheStorageContext::Observer* observer) override;
+  void RemoveObserver(CacheStorageContext::Observer* observer) override;
 
  protected:
   ~CacheStorageContextImpl() override;

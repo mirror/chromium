@@ -33,6 +33,7 @@
 #include "storage/common/database/database_identifier.h"
 #include "storage/common/quota/quota_status_code.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -251,6 +252,34 @@ void CacheStorageManager::SetBlobParametersForCache(
   blob_context_ = blob_storage_context;
 }
 
+void CacheStorageManager::AddObserver(CacheStorageContext::Observer* observer) {
+  observers_.insert(observer);
+}
+
+void CacheStorageManager::RemoveObserver(
+    CacheStorageContext::Observer* observer) {
+  auto in_list = observers_.find(observer);
+  if (in_list != observers_.end())
+    observers_.erase(in_list);
+}
+
+void CacheStorageManager::NotifyCacheListChanged(const GURL& origin) {
+  if (observers_.empty())
+    return;
+
+  for (CacheStorageContext::Observer* observer : observers_)
+    observer->OnCacheListChanged(url::Origin(origin));
+}
+
+void CacheStorageManager::NotifyCacheContentChanged(const GURL& origin,
+                                                    const std::string& name) {
+  if (observers_.empty())
+    return;
+
+  for (CacheStorageContext::Observer* observer : observers_)
+    observer->OnCacheContentChanged(url::Origin(origin), name);
+}
+
 void CacheStorageManager::GetAllOriginsUsage(
     const CacheStorageContext::GetUsageInfoCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -434,7 +463,7 @@ CacheStorage* CacheStorageManager::FindOrCreateCacheStorage(
     CacheStorage* cache_storage = new CacheStorage(
         ConstructOriginPath(root_path_, origin), IsMemoryBacked(),
         cache_task_runner_.get(), request_context_getter_, quota_manager_proxy_,
-        blob_context_, origin);
+        blob_context_, this, origin);
     cache_storage_map_.insert(
         std::make_pair(origin, base::WrapUnique(cache_storage)));
     return cache_storage;

@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -83,6 +84,12 @@ class CONTENT_EXPORT CacheStorageManager {
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
       base::WeakPtr<storage::BlobStorageContext> blob_storage_context);
 
+  void AddObserver(CacheStorageContext::Observer* observer);
+  void RemoveObserver(CacheStorageContext::Observer* observer);
+
+  void NotifyCacheListChanged(const GURL& origin);
+  void NotifyCacheContentChanged(const GURL& origin, const std::string& name);
+
   base::WeakPtr<CacheStorageManager> AsWeakPtr() {
     return weak_ptr_factory_.GetWeakPtr();
   }
@@ -149,6 +156,8 @@ class CONTENT_EXPORT CacheStorageManager {
   // The map owns the CacheStorages and the CacheStorages are only accessed on
   // |cache_task_runner_|.
   CacheStorageMap cache_storage_map_;
+
+  base::flat_set<CacheStorageContext::Observer*> observers_;
 
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
   base::WeakPtr<storage::BlobStorageContext> blob_context_;

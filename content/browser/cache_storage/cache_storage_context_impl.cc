@@ -16,6 +16,7 @@
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 #include "storage/browser/quota/special_storage_policy.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -97,6 +98,20 @@ void CacheStorageContextImpl::DeleteForOrigin(const GURL& origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (cache_manager_)
     cache_manager_->DeleteOriginData(origin);
+}
+
+void CacheStorageContextImpl::AddObserver(
+    CacheStorageContext::Observer* observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(cache_manager_);
+  cache_manager_->AddObserver(std::move(observer));
+}
+
+void CacheStorageContextImpl::RemoveObserver(
+    CacheStorageContext::Observer* observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(cache_manager_);
+  cache_manager_->RemoveObserver(std::move(observer));
 }
 
 void CacheStorageContextImpl::CreateCacheStorageManager(

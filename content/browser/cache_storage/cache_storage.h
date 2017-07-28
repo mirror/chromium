@@ -33,6 +33,7 @@ class BlobStorageContext;
 }
 
 namespace content {
+class CacheStorageManager;
 class CacheStorageCacheHandle;
 class CacheStorageIndex;
 class CacheStorageScheduler;
@@ -63,6 +64,7 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
       scoped_refptr<storage::QuotaManagerProxy> quota_manager_proxy,
       base::WeakPtr<storage::BlobStorageContext> blob_context,
+      CacheStorageManager* cache_storage_manager,
       const GURL& origin);
 
   // Any unfinished asynchronous operations may not complete or call their
@@ -260,6 +262,9 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
 
   // The origin that this CacheStorage is associated with.
   GURL origin_;
+
+  // The manager that owns this cache storage.
+  CacheStorageManager* cache_storage_manager_;
 
   base::CancelableClosure index_write_task_;
 

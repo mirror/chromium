@@ -10,6 +10,8 @@
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
 #include "content/public/browser/cache_storage_usage_info.h"
+#include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -20,10 +22,25 @@ class CacheStorageContext
   using GetUsageInfoCallback = base::Callback<void(
       const std::vector<CacheStorageUsageInfo>& usage_info)>;
 
+  class Observer {
+   public:
+    virtual void OnCacheListChanged(const url::Origin& origin){};
+    virtual void OnCacheContentChanged(const url::Origin& origin,
+                                       const std::string& cache_name){};
+
+   protected:
+    virtual ~Observer(){};
+  };
+
   // Methods used in response to browsing data and quota manager requests.
   // Must be called on the IO thread.
   virtual void GetAllOriginsInfo(const GetUsageInfoCallback& callback) = 0;
   virtual void DeleteForOrigin(const GURL& origin_url) = 0;
+
+  // Methods used for live updating in devtools.
+  // Must be called on the IO thread.
+  virtual void AddObserver(Observer* observer) = 0;
+  virtual void RemoveObserver(Observer* observer) = 0;
 
  protected:
   friend class base::RefCountedThreadSafe<CacheStorageContext>;
