@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a21a7ef_6dce6cbb",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-28T14:28:17Z",
+      "side": 0,
+      "message": "Meta-comment: maybe we can create another small-ish CL that just moves these classes into their own files?  I like to keep landing small changes.\n\nAlso: should the destination directory be maybe content/child/loader?\n\n(Other loading-related files are generally in content/child, and content/renderer can depend on content/child while the other is not possible, so having these in content/child might be a bit handier. Also I think this is more about loading rather than net.  ...that\u0027s said our final plan is move them further to network service, so where put them now is probably not a big problem)",
+      "revId": "983299c943a4ba6eec819c91ff6f6b429df4e90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
