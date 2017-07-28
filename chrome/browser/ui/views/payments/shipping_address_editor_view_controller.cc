@@ -368,6 +368,21 @@ void ShippingAddressEditorViewController::UpdateEditorFields() {
           autofill::GetFieldTypeFromString(field_type);
       EditorField::ControlType control_type =
           EditorField::ControlType::TEXTFIELD;
+
+      if (server_field_type == autofill::ADDRESS_HOME_STREET_ADDRESS) {
+        editor_fields_.emplace_back(
+            autofill::ADDRESS_HOME_LINE1,
+            l10n_util::GetStringUTF16(IDS_PAYMENTS_ADDRESS_LINE_1),
+            EditorField::LengthHint::HINT_LONG,
+            /*required=*/true, control_type);
+        editor_fields_.emplace_back(
+            autofill::ADDRESS_HOME_LINE2,
+            l10n_util::GetStringUTF16(IDS_PAYMENTS_ADDRESS_LINE_2),
+            EditorField::LengthHint::HINT_LONG,
+            /*required=*/false, control_type);
+        continue;
+      }
+
       if (server_field_type == autofill::ADDRESS_HOME_COUNTRY ||
           (server_field_type == autofill::ADDRESS_HOME_STATE &&
            !failed_to_load_region_data_)) {

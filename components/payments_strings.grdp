@@ -161,6 +161,12 @@
   <message name="IDS_PAYMENTS_CANCEL_PAYMENT" desc="Label of the secondary button in payment request editors. Clicking that button closes the dialog and aborts the payment request completely">
     Cancel Payment
   </message>
+  <message name="IDS_PAYMENTS_ADDRESS_LINE_1" desc="The label for the address line 1 field in the shipping address editor.">
+    Address line 1
+  </message>
+  <message name="IDS_PAYMENTS_ADDRESS_LINE_2" desc="The label for the address line 2 field in the shipping address editor.">
+    Address line 2
+  </message>
 
   <!-- Credit Card form -->
   <if expr="is_ios">

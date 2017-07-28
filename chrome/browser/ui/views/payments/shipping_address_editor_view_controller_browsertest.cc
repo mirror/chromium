@@ -60,7 +60,7 @@ class PaymentRequestShippingAddressEditorTest
         textfield_text = base::ASCIIToUTF16(kNameFull);
         break;
       }
-      case (autofill::ADDRESS_HOME_STREET_ADDRESS): {
+      case (autofill::ADDRESS_HOME_LINE1): {
         textfield_text = base::ASCIIToUTF16(kHomeAddress);
         break;
       }
@@ -88,7 +88,7 @@ class PaymentRequestShippingAddressEditorTest
 
   void SetCommonFields() {
     SetFieldTestValue(autofill::NAME_FULL);
-    SetFieldTestValue(autofill::ADDRESS_HOME_STREET_ADDRESS);
+    SetFieldTestValue(autofill::ADDRESS_HOME_LINE1);
     SetFieldTestValue(autofill::ADDRESS_HOME_CITY);
     SetFieldTestValue(autofill::ADDRESS_HOME_ZIP);
     SetFieldTestValue(autofill::PHONE_HOME_WHOLE_NUMBER);
