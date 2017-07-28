@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.webapps;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
@@ -47,6 +48,8 @@ public class WebappRegistryTest {
     private static final String REGISTRY_FILE_NAME = "webapp_registry";
     private static final String KEY_WEBAPP_SET = "webapp_set";
     private static final String KEY_LAST_CLEANUP = "last_cleanup";
+
+    private static final String START_URL = "https://foo.com";
 
     private static final int INITIAL_TIME = 0;
 
@@ -642,6 +645,29 @@ public class WebappRegistryTest {
         assertEquals(null, storage6);
     }
 
+    @Test
+    @Feature({"WebApk"})
+    public void testGetWebappDataStorageForUrlWithWebApk() throws Exception {
+        final String testUrl = START_URL + "/index.html";
+
+        String webApkId = WebApkConstants.WEBAPK_ID_PREFIX + "WebApk";
+        registerWebapp(webApkId,
+                new FetchStorageCallback(createWebApkIntent(webApkId, "org.chromium.webapk")));
+
+        // testUrl should return null.
+        WebappDataStorage storage1 =
+                WebappRegistry.getInstance().getWebappDataStorageForUrl(testUrl);
+        assertNull(storage1);
+
+        String webappId = "webapp";
+        registerWebapp(webappId, new FetchStorageCallback(createShortcutIntent(START_URL)));
+
+        // testUrl should return the webapp.
+        WebappDataStorage storage2 =
+                WebappRegistry.getInstance().getWebappDataStorageForUrl(testUrl);
+        assertEquals(webappId, storage2.getId());
+    }
+
     private Set<String> addWebappsToRegistry(String... webapps) {
         final Set<String> expected = new HashSet<>(Arrays.asList(webapps));
         mSharedPreferences.edit().putStringSet(WebappRegistry.KEY_WEBAPP_SET, expected).apply();
@@ -660,7 +686,7 @@ public class WebappRegistryTest {
     private Intent createWebApkIntent(String webappId, String webApkPackage) {
         Intent intent = new Intent();
         intent.putExtra(ShortcutHelper.EXTRA_ID, webappId)
-                .putExtra(ShortcutHelper.EXTRA_URL, "https://foo.com")
+                .putExtra(ShortcutHelper.EXTRA_URL, START_URL)
                 .putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackage);
         return intent;
     }
