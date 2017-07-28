@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "619c6363_2f8e8f7f",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-28T20:51:11Z",
+      "side": 1,
+      "message": "is it ok to call this twice per crash?",
+      "revId": "77da2ed9379480d4f74792bba701bf48a79fe5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e792909_b714ec3b",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-28T20:51:11Z",
+      "side": 1,
+      "message": "don\u0027t call into other things while holding a lock",
+      "revId": "77da2ed9379480d4f74792bba701bf48a79fe5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
