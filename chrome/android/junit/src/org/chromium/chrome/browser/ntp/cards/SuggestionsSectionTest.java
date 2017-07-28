@@ -790,7 +790,7 @@ public class SuggestionsSectionTest {
     }
 
     private OfflinePageItem createOfflinePageItem(String url, long offlineId) {
-        return new OfflinePageItem(url, offlineId, "", "", "", 0, 0, 0, 0);
+        return new OfflinePageItem(url, offlineId, "", "", "", 0, 0, 0, 0, "");
     }
 
     private void verifyAction(
