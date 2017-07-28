@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80e6836a_951d144e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-28T13:30:08Z",
+      "side": 1,
+      "message": "Curious: Is this statement true on ChromeOS? Non-browser windows are ARC windows, and I think they\u0027re always rectangular as well? In which case we should totally handle ARC windows on ChromeOS.",
+      "revId": "47dd38ac46fd987a0cbda179530629187219c964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
