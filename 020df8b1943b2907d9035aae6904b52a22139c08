@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f35949c_643ec029",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-28T21:11:52Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "ca6cf683_222c353e",
+      "revId": "020df8b1943b2907d9035aae6904b52a22139c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4133e903_49b81466",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3fb2923d_1cd03944",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-28T21:11:52Z",
+      "side": 1,
+      "message": "Yep, that\u0027s a mistake.  I put the comment back where it belongs.",
+      "parentUuid": "4133e903_49b81466",
+      "revId": "020df8b1943b2907d9035aae6904b52a22139c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d566489d_6405c748",
         "filename": "third_party/WebKit/Source/core/paint/ScrollableAreaPainter.cpp",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-28T18:57:14Z",
       "side": 1,
       "message": "Could this let custom scrollbars paint on top of the border when they previously wouldn\u0027t?",
+      "revId": "020df8b1943b2907d9035aae6904b52a22139c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0620d1_1f64062e",
+        "filename": "third_party/WebKit/Source/core/paint/ScrollableAreaPainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-28T21:11:52Z",
+      "side": 1,
+      "message": "No, this preserves the previous clipping behavior; the old VisibleContentRect(kIncludeScrollbars) was equal to Layer()-\u003esize().",
+      "parentUuid": "d566489d_6405c748",
       "revId": "020df8b1943b2907d9035aae6904b52a22139c08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
