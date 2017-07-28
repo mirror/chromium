@@ -163,7 +163,7 @@ std::unique_ptr<WebRequestCondition> WebRequestCondition::Create(
     if (condition_attribute_name == keys::kInstanceTypeKey) {
       // Skip this.
     } else if (name_is_url ||
-               condition_attribute_name == keys::kFirstPartyForCookiesUrlKey) {
+               condition_attribute_name == keys::kSiteForCookiesUrlKey) {
       const base::DictionaryValue* dict = NULL;
       if (!condition_attribute_value.GetAsDictionary(&dict)) {
         *error = base::StringPrintf(kInvalidTypeOfParamter,

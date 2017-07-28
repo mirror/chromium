@@ -106,7 +106,7 @@ interface WebSocket {
   AddChannelRequest(url.mojom.Url url,
                     array<string> requested_protocols,
                     url.mojom.Origin origin,
-                    url.mojom.Url first_party_for_cookies,
+                    url.mojom.Url site_for_cookies,
                     string user_agent_override,
                     WebSocketClient client);
 
