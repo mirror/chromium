@@ -273,7 +273,7 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(URLS);
 
         // Render them to the layout.
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(((TileView) layout.getChildAt(0)).getUrl(), is(URLS[0]));
         assertThat(((TileView) layout.getChildAt(1)).getUrl(), is(URLS[1]));
@@ -294,7 +294,7 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(URLS[0], URLS[1], URLS[0]);
 
         // Render them to the layout. The duplicated URL is skipped.
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(((TileView) layout.getChildAt(0)).getUrl(), is(URLS[0]));
         assertThat(((TileView) layout.getChildAt(1)).getUrl(), is(URLS[1]));
@@ -319,7 +319,7 @@ public class TileGroupUnitTest {
         layout.addView(view2);
 
         // The tiles should be updated, the old ones removed.
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(layout.indexOfChild(view1), is(-1));
         assertThat(layout.indexOfChild(view2), is(-1));
@@ -347,7 +347,7 @@ public class TileGroupUnitTest {
         layout.addView(view2);
 
         // The tiles should be updated, the old ones reused.
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(layout.getChildAt(0), CoreMatchers.<View>is(view1));
         assertThat(layout.getChildAt(1), CoreMatchers.<View>is(view2));
@@ -395,7 +395,7 @@ public class TileGroupUnitTest {
         // Notify for a second set.
         notifyTileUrlsAvailable(URLS);
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent
@@ -414,7 +414,7 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(URLS);
         tileGroup.onSwitchToForeground(/* trackLoadTask: */ false);
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent (same as sync)
@@ -433,7 +433,7 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(URLS);
         tileGroup.onSwitchToForeground(/* trackLoadTask: */ true);
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent
@@ -481,7 +481,7 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(urls);
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTileViews(layout);
+        tileGroup.renderTiles(layout);
 
         reset(mTileGroupObserver);
         reset(mTileGroupDelegate);
