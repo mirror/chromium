@@ -914,7 +914,8 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
     }
 
     if ((attributeName.trim() || newText.trim()) && oldText !== newText) {
-      this._node.setAttribute(attributeName, newText, moveToNextAttributeIfNeeded.bind(this));
+      this._node.setAttribute(attributeName, newText, moveToNextAttributeIfNeeded.bind(this))
+          .then(this._updateFlags.bind(this));
       return;
     }
 
@@ -968,7 +969,7 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
       var newTreeItem = treeOutline.selectNodeAfterEdit(wasExpanded, error, nodeId);
       moveToNextAttributeIfNeeded.call(newTreeItem);
     }
-    this._node.setNodeName(newText, changeTagNameCallback);
+    this._node.setNodeName(newText, changeTagNameCallback).then(this._updateFlags.bind(this));
   }
 
   /**
@@ -1630,6 +1631,12 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
   _editAsHTML() {
     var promise = Common.Revealer.revealPromise(this.node());
     promise.then(() => UI.actionRegistry.action('elements.edit-as-html').execute());
+  }
+
+  /** Whenever the node is changed in any way, the parent is notified, to propogate any resulting flag changes. */
+  _updateFlags() {
+    if (this._node.nodeType() === Node.ELEMENT_NODE && !this.isClosingTag())
+      this.treeOutline._updateFlagsForNode(this._node);
   }
 };
 
