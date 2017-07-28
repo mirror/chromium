@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2570485b_3a5291cd",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T22:29:59Z",
+      "side": 1,
+      "message": "Hmm... I guess we should have a non vector variant that just reads a fixed number of bytes.\n(If you don\u0027t want to implement in this CL, you can add TODO(dcheng): I can take care of it in a followup)",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "ae0258e2195c919e16bc0c29f1304fe0279d68ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
