@@ -67,6 +67,14 @@ PaletteDelegateChromeOS::AddPaletteEnableListener(
   return subscription;
 }
 
+std::unique_ptr<PaletteDelegateChromeOS::SeenStylusListenerSubscription>
+PaletteDelegateChromeOS::AddSeenStylusListener(
+    const SeenStylusListener& on_state_changed) {
+  auto subscription = seen_stylus_callback_list_.Add(on_state_changed);
+  OnSeenStylusPrefChanged();
+  return subscription;
+}
+
 void PaletteDelegateChromeOS::CreateNote() {
   if (!profile_)
     return;
@@ -119,6 +127,13 @@ void PaletteDelegateChromeOS::OnPaletteEnabledPrefChanged() {
   }
 }
 
+void PaletteDelegateChromeOS::OnSeenStylusPrefChanged() {
+  if (profile_) {
+    seen_stylus_callback_list_.Notify(
+        profile_->GetPrefs()->GetBoolean(prefs::kHasSeenStylus));
+  }
+}
+
 void PaletteDelegateChromeOS::SetProfile(Profile* profile) {
   profile_ = profile;
   pref_change_registrar_.reset();
@@ -132,9 +147,14 @@ void PaletteDelegateChromeOS::SetProfile(Profile* profile) {
       prefs::kEnableStylusTools,
       base::Bind(&PaletteDelegateChromeOS::OnPaletteEnabledPrefChanged,
                  base::Unretained(this)));
+  pref_change_registrar_->Add(
+      prefs::kHasSeenStylus,
+      base::Bind(&PaletteDelegateChromeOS::OnSeenStylusPrefChanged,
+                 base::Unretained(this)));
 
-  // Run listener with new pref value, if any.
+  // Run listeners with new pref values, if any.
   OnPaletteEnabledPrefChanged();
+  OnSeenStylusPrefChanged();
 }
 
 void PaletteDelegateChromeOS::OnPartialScreenshotDone(
@@ -213,6 +233,11 @@ void PaletteDelegateChromeOS::HideMetalayer() {
   service->HideMetalayer();
 
   ash::Shell::Get()->highlighter_controller()->DisableHighlighter();
+}
+
+void PaletteDelegateChromeOS::SetHasSeenStylusEvent() {
+  if (profile_)
+    profile_->GetPrefs()->SetBoolean(prefs::kHasSeenStylus, true);
 }
 
 }  // namespace chromeos
