@@ -46,7 +46,6 @@
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/html/imports/HTMLImportsController.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectorTraceEvents.h"
@@ -239,15 +238,6 @@ FrameFetchContext::~FrameFetchContext() {
   document_loader_ = nullptr;
 }
 
-LocalFrame* FrameFetchContext::FrameOfImportsController() const {
-  DCHECK(document_);
-  HTMLImportsController* imports_controller = document_->ImportsController();
-  DCHECK(imports_controller);
-  LocalFrame* frame = imports_controller->Master()->GetFrame();
-  DCHECK(frame);
-  return frame;
-}
-
 RefPtr<WebTaskRunner> FrameFetchContext::GetTaskRunner() const {
   return GetFrame()->FrameScheduler()->LoadingTaskRunner();
 }
@@ -269,8 +259,10 @@ KURL FrameFetchContext::GetFirstPartyForCookies() const {
 }
 
 LocalFrame* FrameFetchContext::GetFrame() const {
-  if (!document_loader_)
-    return FrameOfImportsController();
+  if (!document_loader_) {
+    DCHECK(document_);
+    return document_->GetFrameOfMasterDocument();
+  }
 
   DCHECK(!IsDetached());
   LocalFrame* frame = document_loader_->GetFrame();
@@ -359,7 +351,8 @@ inline DocumentLoader* FrameFetchContext::MasterDocumentLoader() const {
   if (document_loader_)
     return document_loader_.Get();
 
-  return FrameOfImportsController()->Loader().GetDocumentLoader();
+  DCHECK(document_);
+  return document_->GetFrameOfMasterDocument()->Loader().GetDocumentLoader();
 }
 
 void FrameFetchContext::DispatchDidChangeResourcePriority(

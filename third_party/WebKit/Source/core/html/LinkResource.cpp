@@ -33,7 +33,6 @@
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/html/HTMLLinkElement.h"
-#include "core/html/imports/HTMLImportsController.h"
 
 namespace blink {
 
@@ -47,11 +46,7 @@ bool LinkResource::ShouldLoadResource() const {
 }
 
 LocalFrame* LinkResource::LoadingFrame() const {
-  HTMLImportsController* imports_controller =
-      owner_->GetDocument().ImportsController();
-  if (!imports_controller)
-    return owner_->GetDocument().GetFrame();
-  return imports_controller->Master()->GetFrame();
+  return owner_->GetDocument().MasterDocument().GetFrame();
 }
 
 Document& LinkResource::GetDocument() {
