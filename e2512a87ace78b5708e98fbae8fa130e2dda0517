@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df59050e_8b5ba2fc",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-28T20:56:18Z",
+      "side": 1,
+      "message": "If editing (re-configuring) the printer failed, there will be an error message showing in the cups printers page, see https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/printing_page/cups_printers.js?rcl\u003d8e6b846f7cd265ddc7e6d060966db51b27b177a1\u0026l\u003d89.",
+      "parentUuid": "dddd6615_6f202abe",
+      "range": {
+        "startLine": 577,
+        "startChar": 6,
+        "endLine": 577,
+        "endChar": 12
+      },
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feefea3e_1f6899ea",
         "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.html",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T17:01:10Z",
       "side": 1,
       "message": "Should the styling between this and the protocol dropdown be similar?\n\nhttp://shortn/_tv7uIB4HV9",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 37
+      },
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d8adb4_34545980",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-28T20:56:18Z",
+      "side": 1,
+      "message": "I modified the protocol dropdown style to match the manufacuture and model dropdown style here. https://screenshot.googleplex.com/P7J7861G4kk",
+      "parentUuid": "feefea3e_1f6899ea",
       "range": {
         "startLine": 80,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "53023b65_3a78e9ba",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-28T20:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b50af14e_4fc0eb23",
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392f1c92_2722b155",
         "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.js",
         "patchSetId": 6
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "22027792_bfb0c94a",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_edit_printer_dialog.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-28T20:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392f1c92_2722b155",
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fae1a4b_7013fbd7",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 6
@@ -93,6 +177,30 @@
       "writtenOn": "2017-07-25T16:49:00Z",
       "side": 1,
       "message": "These fields (Printer#manufacturer and Printer#model) aren\u0027t guaranteed to map to the correct PPD anymore.  You want the fields in ppd_reference().  However, you probably need to consult PpdProvider for the appropriate fields.  The PPD name is represented as \u0027effective_make_and_model\u0027.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 55
+      },
+      "revId": "e2512a87ace78b5708e98fbae8fa130e2dda0517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e35974_beb1711d",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-28T20:56:18Z",
+      "side": 1,
+      "message": "As discussed offline, I will leave it as-is until the reverse PpdProvider reverse lookup is implemented.",
+      "parentUuid": "5fae1a4b_7013fbd7",
       "range": {
         "startLine": 80,
         "startChar": 0,
