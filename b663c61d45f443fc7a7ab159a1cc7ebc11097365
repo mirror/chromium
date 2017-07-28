@@ -22,6 +22,30 @@
       "revId": "b663c61d45f443fc7a7ab159a1cc7ebc11097365",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4cb329_0d1e6c08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-28T17:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f50e3108_8620f2b4",
+      "range": {
+        "startLine": 899,
+        "startChar": 12,
+        "endLine": 899,
+        "endChar": 23
+      },
+      "revId": "b663c61d45f443fc7a7ab159a1cc7ebc11097365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
