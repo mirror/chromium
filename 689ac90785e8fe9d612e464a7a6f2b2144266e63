@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6498415_2c2f2a1a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-28T20:15:54Z",
+      "side": 1,
+      "message": "using find that returns an iterator is just one time get from map, but if we use ContainsKey then it will be a find operation from map in ContainsKey, and then another [] operation below in order to get the value.",
+      "parentUuid": "05bd42fc_da53c2d7",
+      "revId": "689ac90785e8fe9d612e464a7a6f2b2144266e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b9e3289_cbf76831",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
         "patchSetId": 9
