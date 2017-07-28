@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d58d547_fbf9770b",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-28T22:09:21Z",
+      "side": 1,
+      "message": "Flip to early return.",
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440d67c5_a1dce438",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-28T22:09:21Z",
+      "side": 1,
+      "message": ".is_valid()",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b24e606_24724f42",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-28T22:09:21Z",
+      "side": 1,
+      "message": "Do you need to run the destructor? Why not just leak it.",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe5fc98_6ad55a0b",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-28T22:09:21Z",
+      "side": 1,
+      "message": "You can remove this and the default constructor will be invalid.",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c46aef_dc4f702e",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-28T22:09:21Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "49a1d5ed308e77604695c51abbd867c2506a3311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
