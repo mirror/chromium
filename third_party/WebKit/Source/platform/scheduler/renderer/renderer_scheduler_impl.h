@@ -127,6 +127,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void SetRAILModeObserver(RAILModeObserver* observer) override;
   bool MainThreadSeemsUnresponsive(
       base::TimeDelta main_thread_responsiveness_threshold) override;
+  void SetRendererProcessType(const std::string& process_type) override;
 
   // RenderWidgetSignals::Observer implementation:
   void SetAllRenderWidgetsHidden(bool hidden) override;
@@ -621,6 +622,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     TaskDurationMetricReporter hidden_task_duration_reporter;
     TaskDurationMetricReporter visible_task_duration_reporter;
     TaskDurationMetricReporter hidden_music_task_duration_reporter;
+    base::Optional<std::string> process_type;
   };
 
   struct AnyThread {
