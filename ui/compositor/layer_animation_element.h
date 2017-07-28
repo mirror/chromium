@@ -214,7 +214,11 @@ class COMPOSITOR_EXPORT LayerAnimationElement {
   // call made to {Progress, ProgressToEnd}.
   double last_progressed_fraction() const { return last_progressed_fraction_; }
 
+  std::string ToString() const;
+
  protected:
+  virtual std::string DebugName() const;
+
   // Called once each time the animation element is run before any call to
   // OnProgress.
   virtual void OnStart(LayerAnimationDelegate* delegate) = 0;
