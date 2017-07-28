@@ -561,6 +561,7 @@ views::View* NetworkListView::CreatePowerStatusView(const NetworkInfo& info) {
 
   // Show the numeric battery percentage on hover.
   icon->SetTooltipText(base::FormatPercent(network->battery_percentage()));
+  icon->SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
 
   return icon;
 }
