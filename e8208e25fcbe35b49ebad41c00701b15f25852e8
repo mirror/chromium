@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d839fb88_74aa9132",
+        "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-28T19:28:42Z",
+      "side": 1,
+      "message": "web::Thread::FILE is deprecated crbug.com/689520. I\u0027ll clarify this in web_thread.h.\n\nYou should use base/task/scheduler/post_task.h with PostTastAndReplyWithResult:\n\nbase::PostTaskAndReplyWithResult(\n    base::CreateTaskRunnerWithTraits(\n        {base::MayBlock(), base::TaskPriority::BACKGROUND}).get(),\n    FROM_HERE,\n    base::BindOnce(\u0026CreateSentinel),\n    base::BindOnce(\u0026RecordFirstRunMetricsInternal, ...));",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 67
+      },
+      "revId": "e8208e25fcbe35b49ebad41c00701b15f25852e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
