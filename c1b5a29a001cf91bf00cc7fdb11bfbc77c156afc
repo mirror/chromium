@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69a7bf6b_2dfbea70",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-28T01:40:56Z",
+      "side": 1,
+      "message": "I wanted to say like \"used from renderer\".\nshimazu@ said that it is obvious because this is mojo interface, so removed this comment.\nDone.",
+      "parentUuid": "7d7de07a_f6de397b",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d2c86a_e1acf8c7",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc7b103_afb6f54d",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-28T01:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d2c86a_e1acf8c7",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8a11224c_d27e16c0",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-28T01:40:56Z",
+      "side": 1,
+      "message": "Thank you, I think that\u0027s right. It had replaced by security_origin_ now.",
+      "parentUuid": "301ce92d_50f56c44",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78be61ca_3b44e59b",
         "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
         "patchSetId": 22
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e50d2b5a_cdeb3d60",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-28T01:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78be61ca_3b44e59b",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ed9d598_c0251f2d",
         "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
         "patchSetId": 22
@@ -84,6 +156,24 @@
       "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90e2480_06ae375a",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-28T01:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ed9d598_c0251f2d",
+      "revId": "c1b5a29a001cf91bf00cc7fdb11bfbc77c156afc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
