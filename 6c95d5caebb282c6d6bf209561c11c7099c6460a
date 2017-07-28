@@ -463,6 +463,30 @@
       "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546efc8f_96ba4674",
+        "filename": "chrome/test/data/extensions/context_menus/radio_check/test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-28T20:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c91ed9e_bb323fb7",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "6c95d5caebb282c6d6bf209561c11c7099c6460a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
