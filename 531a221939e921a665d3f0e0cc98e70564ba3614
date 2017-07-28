@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c16ef7d4_719a2d13",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-28T21:05:36Z",
+      "side": 1,
+      "message": "nit: \u0027.\u0027 or \u0027:\u0027 at end of comment.",
+      "revId": "531a221939e921a665d3f0e0cc98e70564ba3614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
