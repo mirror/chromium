@@ -59,8 +59,14 @@ class MockScrollableArea : public GarbageCollectedFinalized<MockScrollableArea>,
   IntSize MaximumScrollOffsetInt() const override {
     return ExpandedIntSize(maximum_scroll_offset_);
   }
-  int VisibleHeight() const override { return 768; }
-  int VisibleWidth() const override { return 1024; }
+  int VisibleHeight(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return 768;
+  }
+  int VisibleWidth(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return 1024;
+  }
   bool ScrollAnimatorEnabled() const override { return false; }
   int PageStep(ScrollbarOrientation) const override { return 0; }
   void ScrollControlWasSetNeedsPaintInvalidation() {}
