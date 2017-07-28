@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/origin_trials/trial_token_validator.h"
+#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 
 #include <memory>
 #include <set>
@@ -12,6 +12,7 @@
 #include "base/strings/string_util.h"
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/origin_trial_policy.h"
 #include "net/http/http_response_headers.h"
@@ -279,9 +280,11 @@ TEST_F(TrialTokenValidatorTest, ValidateValidTokenWithIncorrectKey) {
 
 // Flaky on Android swarming bots: crbug.com/672294
 #if defined(OS_ANDROID)
-#define MAYBE_ValidatorRespectsDisabledFeatures DISABLED_ValidatorRespectsDisabledFeatures
+#define MAYBE_ValidatorRespectsDisabledFeatures \
+  DISABLED_ValidatorRespectsDisabledFeatures
 #else
-#define MAYBE_ValidatorRespectsDisabledFeatures ValidatorRespectsDisabledFeatures
+#define MAYBE_ValidatorRespectsDisabledFeatures \
+  ValidatorRespectsDisabledFeatures
 #endif
 TEST_F(TrialTokenValidatorTest, MAYBE_ValidatorRespectsDisabledFeatures) {
   std::string feature;
@@ -341,7 +344,8 @@ TEST_F(TrialTokenValidatorTest, ValidateRequestNoTokens) {
 
 // Flaky on Android swarming bots: crbug.com/672294
 #if defined(OS_ANDROID)
-#define MAYBE_ValidateRequestMultipleHeaders DISABLED_ValidateRequestMultipleHeaders
+#define MAYBE_ValidateRequestMultipleHeaders \
+  DISABLED_ValidateRequestMultipleHeaders
 #else
 #define MAYBE_ValidateRequestMultipleHeaders ValidateRequestMultipleHeaders
 #endif
@@ -361,9 +365,11 @@ TEST_F(TrialTokenValidatorTest, MAYBE_ValidateRequestMultipleHeaders) {
 
 // Flaky on Android swarming bots: crbug.com/672294
 #if defined(OS_ANDROID)
-#define MAYBE_ValidateRequestMultipleHeaderValues DISABLED_ValidateRequestMultipleHeaderValues
+#define MAYBE_ValidateRequestMultipleHeaderValues \
+  DISABLED_ValidateRequestMultipleHeaderValues
 #else
-#define MAYBE_ValidateRequestMultipleHeaderValues ValidateRequestMultipleHeaderValues
+#define MAYBE_ValidateRequestMultipleHeaderValues \
+  ValidateRequestMultipleHeaderValues
 #endif
 TEST_F(TrialTokenValidatorTest, MAYBE_ValidateRequestMultipleHeaderValues) {
   response_headers_->AddHeader(std::string("Origin-Trial: ") + kExpiredToken +

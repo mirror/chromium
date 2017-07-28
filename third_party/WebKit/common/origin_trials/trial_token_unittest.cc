@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/origin_trials/trial_token.h"
+#include "third_party/WebKit/common/origin_trials/trial_token.h"
 
 #include <memory>
 
@@ -174,13 +174,9 @@ const char* kInvalidTokens[] = {
     // Invalid JSON
     "{",
     // Not an object
-    "\"abcde\"",
-    "123.4",
-    "[0, 1, 2]",
+    "\"abcde\"", "123.4", "[0, 1, 2]",
     // Missing keys
-    "{}",
-    "{\"something\": 1}",
-    "{\"origin\": \"https://a.a\"}",
+    "{}", "{\"something\": 1}", "{\"origin\": \"https://a.a\"}",
     "{\"origin\": \"https://a.a\", \"feature\": \"a\"}",
     "{\"origin\": \"https://a.a\", \"expiry\": 1458766277}",
     "{\"feature\": \"FeatureName\", \"expiry\": 1458766277}",

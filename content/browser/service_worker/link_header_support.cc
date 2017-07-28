@@ -12,7 +12,6 @@
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_request_handler.h"
-#include "content/common/origin_trials/trial_token_validator.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -22,6 +21,7 @@
 #include "content/public/common/origin_util.h"
 #include "net/http/http_util.h"
 #include "net/url_request/url_request.h"
+#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 
 namespace content {
 

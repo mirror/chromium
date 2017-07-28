@@ -4,7 +4,7 @@
 
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
 
-#include "content/common/origin_trials/trial_token_validator.h"
+#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 #include "third_party/WebKit/public/platform/WebOriginTrialTokenStatus.h"
 
 namespace content {
