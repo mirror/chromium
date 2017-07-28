@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68ba5bc4_3a9304fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-28T01:00:04Z",
+      "side": 1,
+      "message": "Done. And with a much simpler solution.",
+      "parentUuid": "58283fce_2f543c21",
+      "revId": "c412b3fdf0e28a6a0dba1431a9ebfe961d30a82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20036410_c28e45b7",
         "filename": "cc/trees/layer_tree_host_unittest_scroll.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-28T00:41:05Z",
       "side": 1,
       "message": "Why is this not a free function? (ie why is it on LayerTreeTest instead of just anonymous namespace?)",
+      "range": {
+        "startLine": 2175,
+        "startChar": 8,
+        "endLine": 2175,
+        "endChar": 21
+      },
+      "revId": "c412b3fdf0e28a6a0dba1431a9ebfe961d30a82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c0061c_1d85ac88",
+        "filename": "cc/trees/layer_tree_host_unittest_scroll.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2175,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-28T01:00:04Z",
+      "side": 1,
+      "message": "Not needed anymore. But I had to put a function on LayerTreeTest because LayerTreeHostImplForTesting which exposes the |client_| is not declared. Did I miss a better way to get around that?",
+      "parentUuid": "20036410_c28e45b7",
       "range": {
         "startLine": 2175,
         "startChar": 8,
