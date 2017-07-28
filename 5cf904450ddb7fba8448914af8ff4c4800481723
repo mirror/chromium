@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95fb5645_028db06f",
+        "filename": "net/cert/x509_util_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T16:27:26Z",
+      "side": 0,
+      "message": "I didn\u0027t understand this comment. It says 10.9, but then the code only ran on 10.12+, and the first thing in the if says \"if we\u0027re on 10.12 we have to early out sometimes actually\". I mechanically replaced it with corresponding new code, but I\u0027m not sure the existing code does what it was intended to do.",
+      "range": {
+        "startLine": 209,
+        "startChar": 18,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5cf904450ddb7fba8448914af8ff4c4800481723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
