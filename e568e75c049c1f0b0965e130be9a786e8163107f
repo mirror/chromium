@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f2bb865_d5a1baa4",
+        "filename": "device/serial/serial_device_enumerator_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-28T12:21:37Z",
+      "side": 1,
+      "message": "Done. Will create a separate cleanup CL later for this.",
+      "parentUuid": "5cb1ff8c_f2ca50e4",
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bb966fa_3e381ae2",
         "filename": "extensions/browser/api/serial/serial_api.cc",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e2fd86_1e933705",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-28T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bb966fa_3e381ae2",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 19
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f67cd18a_5657b46b",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-28T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8d076f7_f58e3da0",
+      "range": {
+        "startLine": 101,
+        "startChar": 48,
+        "endLine": 101,
+        "endChar": 68
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "423f6fd3_615daefb",
         "filename": "services/device/device_service.cc",
         "patchSetId": 11
@@ -85,6 +151,30 @@
       "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d651fb5_8bffcf74",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-28T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "423f6fd3_615daefb",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 44
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "920c7a4b_f4e529f0",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-28T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a63c4899_34aecb65",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1744740f_667f69c0",
         "filename": "services/device/public/interfaces/serial.mojom",
         "patchSetId": 11
@@ -122,6 +236,30 @@
       "writtenOn": "2017-07-27T15:38:23Z",
       "side": 1,
       "message": "We should ideally add a test here, but I understand that it will be challenging. Is there a way to adapt what\u0027s being done in serial_apitest.cc?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e0ea6b_86617611",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-28T12:21:37Z",
+      "side": 1,
+      "message": "We could create a service unit test for this just like services/device/battery/battery_monitor_impl_unittest.cc, but I was thinking it would be a weak test compared with existing serial_apitest.cc, which is doing an end-to-end test and can pass now(actually consuming Device Service\u0027s SerialDeviceEnumerator interface when running).\n\nMaybe we\u0027d better enhance serial_apitest.cc to make it more meaningful as bellow?\n  - Change serial_apitest.cc, call service_manager::ServiceContext::SetGlobalBinderForTesting() to intercept bind request, make the fake impl to return several fake devices back. Just like what we did before in content/browser/power_monitor_browsertest.cc.\n  - Change the test extension script chrome/test/data/extensions/api_test/serial/real_hardware/background.js, check the returned devices accurately one by one.",
+      "parentUuid": "1744740f_667f69c0",
       "range": {
         "startLine": 10,
         "startChar": 2,
@@ -148,6 +286,24 @@
       "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cdb402_553294a2",
+        "filename": "services/device/serial/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-28T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca5defd_d65d8ea9",
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
