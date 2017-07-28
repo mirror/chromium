@@ -156,6 +156,8 @@ public class WebappRegistry {
         int largestOverlap = 0;
         for (HashMap.Entry<String, WebappDataStorage> entry : mStorages.entrySet()) {
             WebappDataStorage storage = entry.getValue();
+            if (storage.getId().startsWith(WebApkConstants.WEBAPK_ID_PREFIX)) continue;
+
             String scope = storage.getScope();
             if (url.startsWith(scope) && scope.length() > largestOverlap) {
                 bestMatch = storage;
