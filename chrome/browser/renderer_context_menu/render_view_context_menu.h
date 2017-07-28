@@ -193,6 +193,7 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   void ExecRestartPackagedApp();
   void ExecPrint();
   void ExecRouteMedia();
+  void ExecPictureInPicture();
   void ExecTranslate();
   void ExecLanguageSettings(int event_flags);
   void ExecProtocolHandlerSettings(int event_flags);

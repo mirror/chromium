@@ -85,6 +85,7 @@
 #define IDC_ROUTE_MEDIA                 35011
 #define IDC_WINDOW_MUTE_TAB             35012
 #define IDC_WINDOW_PIN_TAB              35013
+#define IDC_PICTURE_IN_PICTURE          35014
 
 // Clipboard commands
 #define IDC_CUT                         36000

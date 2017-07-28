@@ -176,6 +176,9 @@ are declared in build/common.gypi.
   </translations>
   <release seq="1" allow_pseudo="false">
     <messages fallback_to_english="true">
+      <message name="IDS_PICTURE_IN_PICTURE_MENU_ITEM_TITLE" desc="desc">
+        Picture in Picture
+      </message>
       <!-- Bookmarks specific strings -->
       <part file="bookmarks_strings.grdp" />
 

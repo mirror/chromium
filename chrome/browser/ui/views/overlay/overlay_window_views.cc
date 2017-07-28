@@ -29,7 +29,7 @@ void OverlayWindowViews::Init() {
   params.visible_on_all_workspaces = true;
 
   widget_->Init(params);
-  widget_->Show();
+  widget_->Show(); // redundant to Show()?
 
   // TODO(apacible): Set the WidgetDelegate for more control over behavior.
   // http://crbug/726621
