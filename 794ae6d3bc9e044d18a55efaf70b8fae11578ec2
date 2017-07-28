@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef314f23_c82b8e29",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-28T14:52:42Z",
+      "side": 0,
+      "message": "Add a comment explaining why one is raw and the other isn\u0027t?",
+      "range": {
+        "startLine": 736,
+        "startChar": 21,
+        "endLine": 736,
+        "endChar": 31
+      },
+      "revId": "794ae6d3bc9e044d18a55efaf70b8fae11578ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
