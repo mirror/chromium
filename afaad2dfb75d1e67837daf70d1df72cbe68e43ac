@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af7f41e3_8a2dfd7d",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T20:12:20Z",
+      "side": 1,
+      "message": "Give the full path to automation.idl here",
+      "revId": "afaad2dfb75d1e67837daf70d1df72cbe68e43ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653baf2d_3f9d29c2",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-28T20:12:20Z",
+      "side": 1,
+      "message": "Give the full path to automation.idl here",
+      "revId": "afaad2dfb75d1e67837daf70d1df72cbe68e43ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
