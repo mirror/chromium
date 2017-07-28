@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3528ac1a_1e340635",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-28T15:57:51Z",
+      "side": 1,
+      "message": "Just to be safe, use self.currentBVC.dispatcher to call the command.",
+      "range": {
+        "startLine": 1436,
+        "startChar": 7,
+        "endLine": 1436,
+        "endChar": 11
+      },
+      "revId": "2692039c3b2e6e4ec089faf51f61d68c2955f5a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
