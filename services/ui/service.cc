@@ -354,9 +354,8 @@ void Service::OnFirstDisplayReady() {
 }
 
 void Service::OnNoMoreDisplays() {
-  // We may get here from the destructor, in which case there is no messageloop.
-  if (base::RunLoop::IsRunningOnCurrentThread())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  DCHECK(context());
+  context()->RequestQuit();
 }
 
 bool Service::IsTestConfig() const {
