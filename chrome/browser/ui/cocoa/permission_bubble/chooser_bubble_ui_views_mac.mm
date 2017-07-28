@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.h"
 
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chooser_controller/chooser_controller.h"
 #include "chrome/browser/platform_util.h"
@@ -15,8 +16,20 @@
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 
+namespace {
+
+constexpr base::Feature kCocoaPermissionBubbles = {
+    "CocoaPermissionBubbles", base::FEATURE_DISABLED_BY_DEFAULT};
+
+bool UseViewsBubbles() {
+  return ui::MaterialDesignController::IsSecondaryUiMaterial() ||
+         !base::FeatureList::IsEnabled(kCocoaPermissionBubbles);
+}
+
+}  // namespace
+
 std::unique_ptr<BubbleUi> ChooserBubbleDelegate::BuildBubbleUi() {
-  if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+  if (!UseViewsBubbles()) {
     return base::MakeUnique<ChooserBubbleUiCocoa>(
         browser_, std::move(chooser_controller_));
   }
