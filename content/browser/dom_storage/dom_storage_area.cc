@@ -74,7 +74,7 @@ DOMStorageArea::CommitBatch::CommitBatch() : clear_all_first(false) {
 DOMStorageArea::CommitBatch::~CommitBatch() {}
 
 size_t DOMStorageArea::CommitBatch::GetDataSize() const {
-  return DOMStorageMap::CountBytes(changed_values);
+  return DOMStorageMap::CountBytes(changed_values, false /* has_only_keys */);
 }
 
 // static
@@ -401,7 +401,7 @@ void DOMStorageArea::InitialImportIfNeeded() {
   base::TimeTicks before = base::TimeTicks::Now();
   DOMStorageValuesMap initial_values;
   backing_->ReadAllValues(&initial_values);
-  map_->SwapValues(&initial_values);
+  map_->TakeValuesFrom(&initial_values);
   is_initial_import_done_ = true;
   base::TimeDelta time_to_import = base::TimeTicks::Now() - before;
   UMA_HISTOGRAM_TIMES("LocalStorage.BrowserTimeToPrimeLocalStorage",

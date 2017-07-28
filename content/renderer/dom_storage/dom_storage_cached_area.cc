@@ -164,7 +164,7 @@ void DOMStorageCachedArea::Prime(int connection_id) {
   UMA_HISTOGRAM_TIMES("LocalStorage.TimeToPrimeLocalStorage",
                       time_to_prime);
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
-  map_->SwapValues(&values);
+  map_->TakeValuesFrom(&values);
 
   size_t local_storage_size_kb = map_->bytes_used() / 1024;
   // Track localStorage size, from 0-6MB. Note that the maximum size should be
