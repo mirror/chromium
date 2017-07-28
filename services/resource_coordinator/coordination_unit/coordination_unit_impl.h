@@ -28,9 +28,12 @@ class FrameCoordinationUnitImpl;
 class CoordinationUnitImpl : public mojom::CoordinationUnit {
  public:
   CoordinationUnitImpl(
+      mojom::CoordinationUnitRequest request,
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~CoordinationUnitImpl() override;
+
+  static void AssertNoActiveCoordinationUnits();
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
       const CoordinationUnitImpl* coordination_unit);
@@ -71,6 +74,7 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   properties_for_testing() const {
     return properties_;
   }
+  mojo::Binding<mojom::CoordinationUnit>& binding() { return binding_; }
 
  protected:
   // Propagate property change to relevant |CoordinationUnitImpl| instances.
@@ -116,6 +120,7 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   mojom::CoordinationPolicyPtr current_policy_;
 
   base::ObserverList<CoordinationUnitGraphObserver> observers_;
+  mojo::Binding<mojom::CoordinationUnit> binding_;
 
   // TODO(crbug.com/691886) Consider switching properties_.
   base::Optional<bool> state_flags_[kNumStateFlags];

@@ -20,6 +20,7 @@ struct CoordinationUnitID;
 namespace coordination_unit_factory {
 
 std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
+    mojom::CoordinationUnitRequest request,
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref);
 

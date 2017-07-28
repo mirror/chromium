@@ -115,13 +115,14 @@ TEST_F(CoordinationUnitGraphObserverTest, CallbacksInvoked) {
 
   std::unique_ptr<CoordinationUnitImpl> process_coordination_unit =
       coordination_unit_factory::CreateCoordinationUnit(
-          process_cu_id, service_context_ref_factory()->CreateRef());
+          nullptr, process_cu_id, service_context_ref_factory()->CreateRef());
   std::unique_ptr<CoordinationUnitImpl> root_frame_coordination_unit =
       coordination_unit_factory::CreateCoordinationUnit(
-          root_frame_cu_id, service_context_ref_factory()->CreateRef());
+          nullptr, root_frame_cu_id,
+          service_context_ref_factory()->CreateRef());
   std::unique_ptr<CoordinationUnitImpl> frame_coordination_unit =
       coordination_unit_factory::CreateCoordinationUnit(
-          frame_cu_id, service_context_ref_factory()->CreateRef());
+          nullptr, frame_cu_id, service_context_ref_factory()->CreateRef());
 
   coordination_unit_manager().OnCoordinationUnitCreated(
       process_coordination_unit.get());

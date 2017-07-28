@@ -37,10 +37,15 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
 }
 
+void CoordinationUnitImpl::AssertNoActiveCoordinationUnits() {
+  CHECK(g_cu_map().empty());
+}
+
 CoordinationUnitImpl::CoordinationUnitImpl(
+    mojom::CoordinationUnitRequest request,
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : id_(id.type, id.id) {
+    : id_(id.type, id.id), binding_(this, std::move(request)) {
   auto it = g_cu_map().insert(std::make_pair(id_, this));
   DCHECK(it.second);  // Inserted successfully
 

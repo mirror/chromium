@@ -21,7 +21,8 @@ namespace {
 std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
     CoordinationUnitType type) {
   CoordinationUnitID cu_id(type, std::string());
-  return coordination_unit_factory::CreateCoordinationUnit(cu_id, nullptr);
+  return coordination_unit_factory::CreateCoordinationUnit(nullptr, cu_id,
+                                                           nullptr);
 }
 
 }  // namespace

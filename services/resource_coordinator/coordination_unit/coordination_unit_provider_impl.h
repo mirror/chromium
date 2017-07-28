@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "mojo/public/cpp/bindings/interface_request.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_manager.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit_provider.mojom.h"
 
@@ -31,6 +30,9 @@ class CoordinationUnitProviderImpl : public mojom::CoordinationUnitProvider {
       service_manager::ServiceContextRefFactory* service_ref_factory,
       CoordinationUnitManager* coordination_unit_manager,
       resource_coordinator::mojom::CoordinationUnitProviderRequest request);
+
+  void OnConnectionError(
+      std::unique_ptr<CoordinationUnitImpl> coordination_unit);
 
   // Overridden from mojom::CoordinationUnitProvider:
   void CreateCoordinationUnit(

@@ -20,20 +20,22 @@ namespace resource_coordinator {
 namespace coordination_unit_factory {
 
 std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
+    mojom::CoordinationUnitRequest request,
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref) {
   switch (id.type) {
     case CoordinationUnitType::kFrame:
       return base::MakeUnique<FrameCoordinationUnitImpl>(
-          id, std::move(service_ref));
+          std::move(request), id, std::move(service_ref));
     case CoordinationUnitType::kProcess:
       return base::MakeUnique<ProcessCoordinationUnitImpl>(
-          id, std::move(service_ref));
+          std::move(request), id, std::move(service_ref));
     case CoordinationUnitType::kWebContents:
       return base::MakeUnique<WebContentsCoordinationUnitImpl>(
-          id, std::move(service_ref));
+          std::move(request), id, std::move(service_ref));
     default:
-      return base::MakeUnique<CoordinationUnitImpl>(id, std::move(service_ref));
+      return base::MakeUnique<CoordinationUnitImpl>(std::move(request), id,
+                                                    std::move(service_ref));
   }
 }
 

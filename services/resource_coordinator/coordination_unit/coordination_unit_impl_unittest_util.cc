@@ -35,7 +35,7 @@ void CoordinationUnitImplTestBase::TearDown() {
 std::unique_ptr<CoordinationUnitImpl>
 CoordinationUnitImplTestBase::CreateCoordinationUnit(CoordinationUnitID cu_id) {
   return coordination_unit_factory::CreateCoordinationUnit(
-      cu_id, service_context_ref_factory()->CreateRef());
+      nullptr, cu_id, service_context_ref_factory()->CreateRef());
 }
 
 std::unique_ptr<CoordinationUnitImpl>
