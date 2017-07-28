@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "07d2e8a8_9cb68a48",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T06:42:22Z",
+      "side": 1,
+      "message": "Is this used for anything else or only to sort?",
+      "parentUuid": "4a9460dc_314d0b31",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97437226_d4e969c9",
         "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
         "patchSetId": 4
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "RecentFile implementations can choose to cache FileInfo instead of querying each time. Actually RecentFile for ARC media view will cache documents:\n\nhttps://chromium-review.googlesource.com/c/588730/2/chrome/browser/chromeos/fileapi/recent_arc_media_source.cc#75",
       "parentUuid": "97437226_d4e969c9",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8410c4a1_3e326cda",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T06:42:22Z",
+      "side": 1,
+      "message": "Are we going to have any source without FileInfo cache inside? If not, then it should be reasonable to put the common code here.",
+      "parentUuid": "eb07bafe_e22e709c",
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -166,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "2175df30_2ff5b72d",
+        "filename": "chrome/browser/chromeos/fileapi/recent_file.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T06:42:22Z",
+      "side": 1,
+      "message": "file_name SGTM.",
+      "parentUuid": "954975e9_3e8ac65d",
+      "range": {
+        "startLine": 55,
+        "startChar": 17,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96501247_7faf51cf",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -201,6 +261,30 @@
       "side": 1,
       "message": "This is a cache time for the whole FilesMap, not each file entry.",
       "parentUuid": "96501247_7faf51cf",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6a234a7_fc041176",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T06:42:22Z",
+      "side": 1,
+      "message": "What\u0027s the meaning for duration here? Since when is the duration measured? Please update the comment in the code.",
+      "parentUuid": "ce0c998f_bb0db88c",
       "range": {
         "startLine": 33,
         "startChar": 12,
@@ -283,6 +367,30 @@
       "side": 1,
       "message": "Yes, we need to sort files to make deduplication suffix as stable as possible.\n\nFor example, both Drive source and Downloads source provided \"kitten.jpg\", where either one is renamed to \"kitten (1).jpg\" in Recent. If we don\u0027t sort files in stable manner, it is not deterministic which one is renamed for each reload.",
       "parentUuid": "8b1f1c8d_17a31ca8",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8e22bf7_059f118f",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T06:42:22Z",
+      "side": 1,
+      "message": "We\u0027re sorting in regards of file path, so we shouldn\u0027t need to care about source type nor unique id IIUC.",
+      "parentUuid": "16904133_e60f08fd",
       "range": {
         "startLine": 37,
         "startChar": 7,
@@ -389,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "a0d8a732_b6576f75",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T06:42:22Z",
+      "side": 1,
+      "message": "Ah, I haven\u0027t done much Chromium coding for a while, a lot changed since then.",
+      "parentUuid": "b20ce846_9849c74c",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba00ded5_1b86353f",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -471,6 +603,30 @@
       "side": 1,
       "message": "To avoid possible races I want to avoid deleting whole states. I\u0027m happy to delete cache in states instead.",
       "parentUuid": "267af922_5217be1c",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe3d6342_eb571337",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T06:42:22Z",
+      "side": 1,
+      "message": "My concern was memory consumption, so number of keys doesn\u0027t grow huge over time if we never clear it.",
+      "parentUuid": "b66baf29_3646fd22",
       "range": {
         "startLine": 235,
         "startChar": 25,
