@@ -560,8 +560,8 @@ void TapSuppressDialogsButton() {
                         kLinkID, true /* menu should appear */)];
 
   // Tap on the "Open In New Tab" button.
-  id<GREYMatcher> newTabMatcher = testing::ContextMenuItemWithText(
-      l10n_util::GetNSStringWithFixup(IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB));
+  id<GREYMatcher> newTabMatcher =
+      testing::ButtonWithAccessibilityLabel(@"Open in New Tab");
   [[EarlGrey selectElementWithMatcher:newTabMatcher] performAction:grey_tap()];
 
   // This test case requires that a dialog is presented in the onload event so
