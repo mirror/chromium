@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af943c8b_b625dfd5",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-28T21:34:17Z",
+      "side": 1,
+      "message": "Profile is still being used here, ...",
+      "range": {
+        "startLine": 208,
+        "startChar": 10,
+        "endLine": 208,
+        "endChar": 56
+      },
+      "revId": "ff2d3b01b986a3dca9fe3704fa00309ce983f04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5ecaef_ee47e64f",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-28T21:34:17Z",
+      "side": 1,
+      "message": "... and here.\n\nSo I guess my question is what is the benefit of this change? Or is it just an intermediate step until we\u0027re able to remove Profile use entirely?",
+      "range": {
+        "startLine": 257,
+        "startChar": 6,
+        "endLine": 257,
+        "endChar": 51
+      },
+      "revId": "ff2d3b01b986a3dca9fe3704fa00309ce983f04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
