@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f191174_19a6ec3b",
+        "filename": "base/values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-28T20:40:19Z",
+      "side": 1,
+      "message": "Here no call to |as_string| is necessary, because |emplace| does an explicit construction and base::StringPiece has an explicit operator std::string() as of http://crrev.com/2758163003.\n\nI initially expected a compilation error here, but it is quite nice that this just works.",
+      "range": {
+        "startLine": 283,
+        "startChar": 21,
+        "endLine": 283,
+        "endChar": 24
+      },
+      "revId": "43778c6f254f436d577515029ae62e048d2331cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
