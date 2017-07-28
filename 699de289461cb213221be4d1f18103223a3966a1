@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5572d094_632963b0",
+        "filename": "components/cryptauth/secure_channel.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-28T03:15:01Z",
+      "side": 1,
+      "message": "Split this into two lines. The unary ++ operation can be confusing.",
+      "range": {
+        "startLine": 93,
+        "startChar": 24,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf5333c_2433885d",
+        "filename": "components/cryptauth/secure_channel_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-28T03:15:01Z",
+      "side": 1,
+      "message": "Do you really need a vector for this? You seem to be just comparing the last sequence_number below.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adaaff93_acc496ea",
+        "filename": "components/cryptauth/secure_channel_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-28T03:15:01Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ",
+      "range": {
+        "startLine": 274,
+        "startChar": 6,
+        "endLine": 274,
+        "endChar": 17
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078962d3_1d32e3e2",
+        "filename": "components/cryptauth/wire_message.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-28T03:15:01Z",
+      "side": 1,
+      "message": "No explicit here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520e144d_69ff77a5",
+        "filename": "components/cryptauth/wire_message.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-28T03:15:01Z",
+      "side": 1,
+      "message": "Is this a valid use case of WireMessage?",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 78
+      },
+      "revId": "699de289461cb213221be4d1f18103223a3966a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
