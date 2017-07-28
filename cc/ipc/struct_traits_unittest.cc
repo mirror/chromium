@@ -87,7 +87,7 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
     std::move(callback).Run(std::move(r));
   }
 
-  void EchoReturnedResource(const ReturnedResource& r,
+  void EchoReturnedResource(const viz::ReturnedResource& r,
                             EchoReturnedResourceCallback callback) override {
     std::move(callback).Run(r);
   }
@@ -118,7 +118,7 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
   }
 
   void EchoTransferableResource(
-      const TransferableResource& t,
+      const viz::TransferableResource& t,
       EchoTransferableResourceCallback callback) override {
     std::move(callback).Run(t);
   }
@@ -244,13 +244,13 @@ TEST_F(StructTraitsTest, CompositorFrame) {
       render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   solid_quad->SetNew(sqs, rect2, rect2, color2, force_anti_aliasing_off);
 
-  // TransferableResource constants.
+  // viz::TransferableResource constants.
   const uint32_t tr_id = 1337;
   const viz::ResourceFormat tr_format = viz::ALPHA_8;
   const gfx::BufferFormat tr_buffer_format = gfx::BufferFormat::R_8;
   const uint32_t tr_filter = 1234;
   const gfx::Size tr_size(1234, 5678);
-  TransferableResource resource;
+  viz::TransferableResource resource;
   resource.id = tr_id;
   resource.format = tr_format;
   resource.buffer_format = tr_buffer_format;
@@ -287,7 +287,7 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   EXPECT_EQ(begin_frame_ack, output.metadata.begin_frame_ack);
 
   ASSERT_EQ(1u, output.resource_list.size());
-  TransferableResource out_resource = output.resource_list[0];
+  viz::TransferableResource out_resource = output.resource_list[0];
   EXPECT_EQ(tr_id, out_resource.id);
   EXPECT_EQ(tr_format, out_resource.format);
   EXPECT_EQ(tr_buffer_format, out_resource.buffer_format);
@@ -688,7 +688,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
                                 SurfaceDrawQuadType::FALLBACK, nullptr);
 
   const gfx::Rect rect4(1234, 5678, 9101112, 13141516);
-  const ResourceId resource_id4(1337);
+  const viz::ResourceId resource_id4(1337);
   const RenderPassId render_pass_id = 1234u;
   const gfx::RectF mask_uv_rect(0, 0, 1337.1f, 1234.2f);
   const gfx::Size mask_texture_size(1234, 5678);
@@ -703,7 +703,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
                            filters_origin, tex_coord_rect);
 
   const gfx::Rect rect5(123, 567, 91011, 131415);
-  const ResourceId resource_id5(1337);
+  const viz::ResourceId resource_id5(1337);
   const float vertex_opacity[4] = {1.f, 2.f, 3.f, 4.f};
   const bool premultiplied_alpha = true;
   const gfx::PointF uv_top_left(12.1f, 34.2f);
@@ -723,7 +723,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
                             nearest_neighbor, secure_output_only);
 
   const gfx::Rect rect6(321, 765, 11109, 151413);
-  const ResourceId resource_id6(1234);
+  const viz::ResourceId resource_id6(1234);
   const gfx::Size resource_size_in_pixels(1234, 5678);
   const gfx::Transform matrix(16.1f, 15.3f, 14.3f, 13.7f, 12.2f, 11.4f, 10.4f,
                               9.8f, 8.1f, 7.3f, 6.3f, 5.7f, 4.8f, 3.4f, 2.4f,
@@ -981,13 +981,13 @@ TEST_F(StructTraitsTest, ReturnedResource) {
   const int count = 1234;
   const bool lost = true;
 
-  ReturnedResource input;
+  viz::ReturnedResource input;
   input.id = id;
   input.sync_token = sync_token;
   input.count = count;
   input.lost = lost;
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  ReturnedResource output;
+  viz::ReturnedResource output;
   proxy->EchoReturnedResource(input, &output);
   EXPECT_EQ(id, output.id);
   EXPECT_EQ(sync_token, output.sync_token);
@@ -1142,7 +1142,7 @@ TEST_F(StructTraitsTest, TransferableResource) {
       gpu::SyncToken(command_buffer_namespace, extra_data_field,
                      command_buffer_id, release_count);
   mailbox_holder.texture_target = texture_target;
-  TransferableResource input;
+  viz::TransferableResource input;
   input.id = id;
   input.format = format;
   input.filter = filter;
@@ -1153,7 +1153,7 @@ TEST_F(StructTraitsTest, TransferableResource) {
   input.shared_bitmap_sequence_number = shared_bitmap_sequence_number;
   input.is_overlay_candidate = is_overlay_candidate;
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  TransferableResource output;
+  viz::TransferableResource output;
   proxy->EchoTransferableResource(input, &output);
   EXPECT_EQ(id, output.id);
   EXPECT_EQ(format, output.format);
