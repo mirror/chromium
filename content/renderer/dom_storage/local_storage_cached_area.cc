@@ -350,7 +350,7 @@ void LocalStorageCachedArea::EnsureLoaded() {
   }
 
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
-  map_->SwapValues(&values);
+  map_->TakeValuesFrom(&values);
 
   base::TimeDelta time_to_prime = base::TimeTicks::Now() - before;
   UMA_HISTOGRAM_TIMES("LocalStorage.MojoTimeToPrime", time_to_prime);
