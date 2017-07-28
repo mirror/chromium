@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "796105d8_837d1a88",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-28T13:54:14Z",
+      "side": 1,
+      "message": "payment_request.js is also injected conditionally and is listed as dependency in the next line. Could you explain the difference between those two?",
+      "parentUuid": "351c8be3_160108fa",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9be33385_ffd3e0c6",
         "filename": "ios/chrome/browser/web/chrome_web_client.mm",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f4350c4c_1e3ff66e",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-28T13:54:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be33385_ffd3e0c6",
+      "range": {
+        "startLine": 170,
+        "startChar": 25,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "822767b5_da211020",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 8
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "2ffcecc1_23f44084",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-28T13:54:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "822767b5_da211020",
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae8ca6da_a2a9596a",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-27T18:24:25Z",
       "side": 1,
       "message": "Is this file compiled by JS Compiler, or are the annotations just for documentation purposes?\n\nIf it is compiled, I don\u0027t see how this is passing compilation without errors. The compiler should throw a \"missing return statement\", since the function says it returns something but it does not. Same question for other methods in this file.",
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346e6510_522abcd8",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-28T13:54:14Z",
+      "side": 1,
+      "message": "I changed js_compile_unchecked to js_compile_checked in BUILD.gn (so far there is no reason to omit checking), and I got some errors from compiler (fixed in next patch set), but there were no \"missing return statement\" errors. Am I missing something? Should I include the file somewhere for more strict checking?",
+      "parentUuid": "ae8ca6da_a2a9596a",
       "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
