@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2805e996_dd864493",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-28T20:12:00Z",
+      "side": 1,
+      "message": "oh, I actually meant why don\u0027t we use the bindings_ when create CU? When we finish construct the CU, we can just call AddBinding, do I understand correctly? So that we don\u0027t need a separate binding_ and a separate method Bind.",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 54
+      },
+      "revId": "efdb4ebe49d3d1c762f2435ea17c972fd5b091c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
