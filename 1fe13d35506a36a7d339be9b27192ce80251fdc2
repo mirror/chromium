@@ -305,6 +305,24 @@
     },
     {
       "key": {
+        "uuid": "1cd4e6c5_bffc487f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-28T01:34:58Z",
+      "side": 1,
+      "message": "I add this function UIElement::FindUIElementIdForBackendElement() and remove FindUIElementIdFor(Window|Widget|View) here. Let me know how it goes. Thanks!",
+      "parentUuid": "f334c007_140c9bdd",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b317aff9_92547b06",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
