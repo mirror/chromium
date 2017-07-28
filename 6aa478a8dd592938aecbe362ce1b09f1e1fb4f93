@@ -1,0 +1,279 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826d5374_c791b949",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "DCHECK(host_) or if (host_) ?\nI guess |host_| could be nullptr since the request can come later than shutdown since the Mojo pipe is not associated with the channel, so \"if (host_)\" seems appropriate.",
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5feffaeb_07295dca",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c23b1f_d189a0e7",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "Actually this is the *impl* of blink::mojom::SharedWorkerContentSettingsProxy, but I think we don\u0027t have to mention that since it\u0027s obvious from NON_EXPORTED_BASE(public blink::mojom::SharedWorkerContentSettingsProxy). \nInstead, it\u0027d be better to say like the following in general:\n- The task of this class\n- Its lifetime\n- Relationships with other classes\n\n// though I\u0027m still learning on it :p",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 75
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3bc17b_57c0c597",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "- The task of this class\n- Its lifetime\n- Relationships with other classes\n\nFor example:\n\nPasses the content settings information to the renderer counterpart through Mojo connection.\nCreated on SharedWorker::Start() and connected to the counterpart at the moment. Kept alive while the connection is held in the renderer.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d388255_5ee319a1",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "Can AllowFileSystem/AllowIndededDB be removed from here?",
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9991e4fd_b6982abe",
+        "filename": "content/common/worker_messages.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "We should clarify what the handle is for since mojo::MessagePipeHandle is considered as a kind of base class and we should be careful not to mix another interface up. \nHow about renaming it to \"content_settings_proxy_handle\" or \"content_settings_handle\" and add a comment like \n\"// For blink::mojom::SharedWorkerContentSettingsProxy\" between L.51-52.",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 51
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834138cf_921d3302",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "We no longer need this because this patch don\u0027t use InterfaceProvider anymore.",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 58
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ff372a_4a70186e",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 55
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba915dda_ea9ef776",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "I think you don\u0027t need to create mojo::ScopedMessagePipeHandle on heap. \nHow about just calling ctor?\nmojo::ScopedMessagePipeHandle(std::move(content_settings_ptr_handle))",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 149,
+        "endChar": 49
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84408feb_aaa24cd2",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "content_settings_handle or content_settings_proxy_handle to align with the param of StartWorker.",
+      "range": {
+        "startLine": 58,
+        "startChar": 30,
+        "endLine": 58,
+        "endChar": 57
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d99c47f_3034a2a6",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "Could you add the name of the variable?",
+      "range": {
+        "startLine": 99,
+        "startChar": 25,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63641b9_7bf16743",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "This looks like the instance of |host_info_| is created on the browser process.\nI don\u0027t think we need to say how the PtrInfo was passed since SharedWorkerContentSettingsProxy doesn\u0027t care about the path which mojom::blink::SWCSPPtrInfo was carried through.\nInstead, it\u0027s better to mention how |host_info_| is used and its lifetime. \nFor example:\n\nThis is set on the main thread at the ctor, and moved to a thread local storage on the worker thread when GetService() is called for the first time.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 69
+      },
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e84539_548aa427",
+        "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-28T04:03:30Z",
+      "side": 1,
+      "message": "It\u0027s better to clarify the name of the variable to say this is for SharedWorkerContentSettingsProxy.",
+      "revId": "6aa478a8dd592938aecbe362ce1b09f1e1fb4f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
