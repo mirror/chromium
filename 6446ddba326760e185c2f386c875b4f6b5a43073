@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f69cb15e_1252f309",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-28T20:37:51Z",
+      "side": 1,
+      "message": "Why assert IO allowed in no-op destructor? I think you probably want a SequenceChecker instead to check usage/destruction on same thread?",
+      "revId": "6446ddba326760e185c2f386c875b4f6b5a43073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac40dd9c_63e2f2c0",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 2
@@ -19,6 +36,23 @@
         "endLine": 160,
         "endChar": 59
       },
+      "revId": "6446ddba326760e185c2f386c875b4f6b5a43073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43864a7_1c3b59c9",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-28T20:37:51Z",
+      "side": 1,
+      "message": "Or even base::MakeRefCounted while you\u0027re here.",
       "revId": "6446ddba326760e185c2f386c875b4f6b5a43073",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
