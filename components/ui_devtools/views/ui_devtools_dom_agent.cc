@@ -665,6 +665,41 @@ void UIDevToolsDOMAgent::DrawR1TopPartialLeftR2(const gfx::RectF& pinned_rectF,
   }
 }
 
+void UIDevToolsDOMAgent::DrawR1BottomPartialLeftR2(
+    const gfx::RectF& pinned_rectF,
+    const gfx::RectF& hovered_rectF,
+    const cc::PaintFlags& flags,
+    gfx::Canvas* canvas_) {
+  float x1, y1, x2, y2;
+  LOG(ERROR) << __PRETTY_FUNCTION__;
+
+  LOG(ERROR) << "Line point 1: " << pinned_rectF.x() << ", "
+             << pinned_rectF.y() + pinned_rectF.height() / 2 << " -- Point 2: "
+             << pinned_rectF.x() + hovered_rectF.x() - pinned_rectF.x() << ", "
+             << pinned_rectF.y() + pinned_rectF.height() / 2;
+  if (is_swap_) {
+    x1 = hovered_rectF.x() + hovered_rectF.width() / 2;
+    y1 = pinned_rectF.y() + pinned_rectF.height();
+    x2 = hovered_rectF.x() + hovered_rectF.width() / 2;
+    y2 = hovered_rectF.y();
+
+    // Vertical left dotted line.
+    canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+    DrawTextOnLine(gfx::Rect(x1, y1, x2 - x1, y2 - y1), canvas_,
+                   RectSide::BOTTOM_SIDE);
+  } else {
+    x1 = pinned_rectF.x() + pinned_rectF.width() / 2;
+    y1 = hovered_rectF.y() + hovered_rectF.height();
+    x2 = pinned_rectF.x() + pinned_rectF.width() / 2;
+    y2 = pinned_rectF.y();
+
+    // Vertical left dotted line.
+    canvas_->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
+    DrawTextOnLine(gfx::Rect(x1, y1, x2 - x1, y2 - y1), canvas_,
+                   RectSide::BOTTOM_SIDE);
+  }
+}
+
 void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
   LOG(ERROR) << __PRETTY_FUNCTION__
              << " -- show_distances_: " << show_distances_;
@@ -723,11 +758,10 @@ void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
       DrawR1BottomFullLeftR2(pinned_rectF, hovered_rectF, flags, canvas_);
       return;
     case RectPositionsType::R1_TOP_PARTIAL_LEFT_R2:
-      LOG(ERROR) << __PRETTY_FUNCTION__;
       DrawR1TopPartialLeftR2(pinned_rectF, hovered_rectF, flags, canvas_);
       return;
     case RectPositionsType::R1_BOTTOM_PARTIAL_LEFT_R2:
-      NOTIMPLEMENTED();
+      DrawR1BottomPartialLeftR2(pinned_rectF, hovered_rectF, flags, canvas_);
       return;
     case RectPositionsType::R1_INTERSECTS_R2:
       NOTIMPLEMENTED();
