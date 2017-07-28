@@ -5,11 +5,16 @@
 #ifndef COMPONENTS_EXO_WM_HELPER_H_
 #define COMPONENTS_EXO_WM_HELPER_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "ui/base/cursor/cursor.h"
 
 namespace aura {
+namespace client {
+class DragDropDelegate;
+}
 class Window;
 }
 
@@ -20,6 +25,7 @@ class ManagedDisplayInfo;
 
 namespace ui {
 class EventHandler;
+class DropTargetEvent;
 }
 
 namespace exo {
@@ -81,6 +87,17 @@ class WMHelper {
     virtual ~DisplayConfigurationObserver() {}
   };
 
+  class DragDropObserver {
+   public:
+    virtual void OnDragEntered(const ui::DropTargetEvent& event) = 0;
+    virtual int OnDragUpdated(const ui::DropTargetEvent& event) = 0;
+    virtual void OnDragExited() = 0;
+    virtual int OnPerformDrop(const ui::DropTargetEvent& event) = 0;
+
+   protected:
+    virtual ~DragDropObserver() {}
+  };
+
   virtual ~WMHelper();
 
   static void SetInstance(WMHelper* helper);
@@ -100,6 +117,8 @@ class WMHelper {
   void AddDisplayConfigurationObserver(DisplayConfigurationObserver* observer);
   void RemoveDisplayConfigurationObserver(
       DisplayConfigurationObserver* observer);
+  void AddDragDropObserver(DragDropObserver* observer);
+  void RemoveDragDropObserver(DragDropObserver* observer);
 
   virtual const display::ManagedDisplayInfo& GetDisplayInfo(
       int64_t display_id) const = 0;
@@ -114,6 +133,8 @@ class WMHelper {
   virtual void AddPostTargetHandler(ui::EventHandler* handler) = 0;
   virtual void RemovePostTargetHandler(ui::EventHandler* handler) = 0;
   virtual bool IsTabletModeWindowManagerEnabled() const = 0;
+
+  aura::client::DragDropDelegate* drag_drop_delegate() const;
 
  protected:
   WMHelper();
@@ -130,14 +151,21 @@ class WMHelper {
   void NotifyTabletModeEnded();
   void NotifyKeyboardDeviceConfigurationChanged();
   void NotifyDisplayConfigurationChanged();
+  void NotifyDragEntered(const ui::DropTargetEvent& event);
+  int NotifyDragUpdated(const ui::DropTargetEvent& event);
+  void NotifyDragExited();
+  int NotifyPerformDrop(const ui::DropTargetEvent& event);
 
  private:
+  class ExoDragDropDelegate;
   base::ObserverList<ActivationObserver> activation_observers_;
   base::ObserverList<FocusObserver> focus_observers_;
   base::ObserverList<CursorObserver> cursor_observers_;
   base::ObserverList<TabletModeObserver> tablet_mode_observers_;
   base::ObserverList<InputDeviceEventObserver> input_device_event_observers_;
   base::ObserverList<DisplayConfigurationObserver> display_config_observers_;
+  base::ObserverList<DragDropObserver> drag_drop_observers_;
+  std::unique_ptr<ExoDragDropDelegate> drag_drop_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(WMHelper);
 };
