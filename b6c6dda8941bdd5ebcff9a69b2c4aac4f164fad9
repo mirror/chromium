@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "276bddbf_6557b205",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T21:46:37Z",
+      "side": 1,
+      "message": "can you update this comment to provide more detail about why this is needed (i.e. sometimes focus requests are ignored while the page is loading) and also add a link to the bug?",
+      "revId": "b6c6dda8941bdd5ebcff9a69b2c4aac4f164fad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
