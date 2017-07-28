@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a224f078_266ed11d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-28T08:28:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31db19a2_feebd16d",
+      "revId": "8ee07a30490b066212eff5c7234277d00325c934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a8bcc10_13fb5c67",
         "filename": "ios/chrome/browser/ui/commands/start_voice_search_command.h",
         "patchSetId": 1
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "9366c758_a14bd482",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-28T08:28:34Z",
+      "side": 1,
+      "message": "True.",
+      "parentUuid": "f49ba51b_01a1bed4",
+      "range": {
+        "startLine": 325,
+        "startChar": 6,
+        "endLine": 325,
+        "endChar": 25
+      },
+      "revId": "8ee07a30490b066212eff5c7234277d00325c934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d034d3e6_269bed46",
         "filename": "ios/public/provider/chrome/browser/voice/voice_search_provider.h",
         "patchSetId": 1
@@ -76,6 +118,30 @@
       "writtenOn": "2017-07-27T18:33:11Z",
       "side": 1,
       "message": "You probably need to keep the single-param version around, and provide a default implementation for the two-param version that just passes nil for the dispatcher, so that downstream doesn\u0027t break after this CL lands.",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 53
+      },
+      "revId": "8ee07a30490b066212eff5c7234277d00325c934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eefd5ae_b4052b96",
+        "filename": "ios/public/provider/chrome/browser/voice/voice_search_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-28T08:28:34Z",
+      "side": 1,
+      "message": "absolutely",
+      "parentUuid": "d034d3e6_269bed46",
       "range": {
         "startLine": 45,
         "startChar": 34,
