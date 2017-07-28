@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb0553bf_226589d0",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-28T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b12f3c9_eb7099d8",
+      "range": {
+        "startLine": 127,
+        "startChar": 41,
+        "endLine": 127,
+        "endChar": 43
+      },
+      "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eb89837_0ff92a01",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b5a415_d0d0ab7e",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-28T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eb89837_0ff92a01",
+      "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6ecf4c90_75bc1bbc",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-28T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df440de_c333f819",
+      "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c46c3ec8_ba9dbbb7",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-27T22:25:33Z",
       "side": 1,
       "message": "Why do we need the hash of the process name. Could you just use the process name instead?",
+      "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d813a65_4b255cc5",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-28T21:36:23Z",
+      "side": 1,
+      "message": "I think the process ID saved in the trace event is supposed to be a number (it\u0027s generally the actual process ID)... I don\u0027t know if it has to be, but it seemed a little more consistent to do it that way.",
+      "parentUuid": "c46c3ec8_ba9dbbb7",
       "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "8eb8dd25_25ab1d39",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-28T21:36:23Z",
+      "side": 1,
+      "message": "Ohh... \"id\" was automatically created by PerfTraceEvent. I can change that now!",
+      "parentUuid": "037d3dfd_145aef00",
+      "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfcac8ba_3b941f42",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 5
@@ -104,6 +200,24 @@
       "writtenOn": "2017-07-27T22:25:33Z",
       "side": 1,
       "message": "Add some info / documentation for what all of these things mean.\n\nph? \u0027S\u0027? \u0027B\u0027?",
+      "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c184890f_812230ac",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-28T21:36:23Z",
+      "side": 1,
+      "message": "This was also to deal with PerfTraceEvent (it\u0027s replacing the deprecated event types \"start\"/\"finish\" with \"begin\"/\"end\"), but I can rewrite that as well.",
+      "parentUuid": "cfcac8ba_3b941f42",
       "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +238,24 @@
       "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297243d0_c9b93466",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-28T21:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e9697d8_b2f53bb5",
+      "revId": "53330ddd2295f6be1eebe6018704eb2f4218a286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
