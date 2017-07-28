@@ -52,6 +52,24 @@
       "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eabf272_10d28d42",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-28T21:55:46Z",
+      "side": 1,
+      "message": "Yes, I agree that mojo should be in consistent with C++. dcheng@ would probably strongly disagree with this patch if they are not...\n\nWe can pump port field to MRP (not sure if it worth the effect since we do not need it in MRP)\nor I can create some internal structrue with port field and pass it around in CastMediaSinkServiceImpl, instead of passing MediaSinkInternal objects.",
+      "parentUuid": "d349250a_03898967",
+      "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
