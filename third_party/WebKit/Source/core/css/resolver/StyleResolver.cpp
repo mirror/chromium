@@ -1294,21 +1294,19 @@ static inline bool IsValidCueStyleProperty(CSSPropertyID id) {
     case CSSPropertyOutlineWidth:
     case CSSPropertyVisibility:
     case CSSPropertyWhiteSpace:
-    // FIXME: 'text-decoration' shorthand to be handled when available.
-    // See https://chromiumcodereview.appspot.com/19516002 for details.
-    case CSSPropertyTextDecoration:
     case CSSPropertyTextShadow:
     case CSSPropertyBorderStyle:
-      return true;
     case CSSPropertyTextDecorationLine:
     case CSSPropertyTextDecorationStyle:
     case CSSPropertyTextDecorationColor:
     case CSSPropertyTextDecorationSkip:
-      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return true;
     case CSSPropertyFontVariationSettings:
       DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
       return true;
+    case CSSPropertyTextDecoration:
+      // Shorthands are expanded at parse time (except 'font')
+      NOTREACHED();
     default:
       break;
   }
@@ -1410,20 +1408,10 @@ static inline bool IsValidFirstLetterStyleProperty(CSSPropertyID id) {
     case CSSPropertyWebkitMarginStart:
     case CSSPropertyWebkitMarginTopCollapse:
     case CSSPropertyWordSpacing:
-      return true;
-    case CSSPropertyFontVariationSettings:
-      DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
-      return true;
-    case CSSPropertyTextDecoration:
-      DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
-      return true;
     case CSSPropertyTextDecorationColor:
     case CSSPropertyTextDecorationLine:
     case CSSPropertyTextDecorationStyle:
     case CSSPropertyTextDecorationSkip:
-      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
-      return true;
-
     // text-shadow added in text decoration spec:
     // http://www.w3.org/TR/css-text-decor-3/#text-shadow-property
     case CSSPropertyTextShadow:
@@ -1433,6 +1421,12 @@ static inline bool IsValidFirstLetterStyleProperty(CSSPropertyID id) {
     // Properties that we currently support outside of spec.
     case CSSPropertyVisibility:
       return true;
+    case CSSPropertyFontVariationSettings:
+      DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
+      return true;
+    case CSSPropertyTextDecoration:
+      // Shorthands are expanded at parse time (except 'font')
+      NOTREACHED();
 
     default:
       return false;

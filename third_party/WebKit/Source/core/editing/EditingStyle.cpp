@@ -68,10 +68,7 @@ namespace blink {
 using namespace cssvalue;
 
 static const CSSPropertyID& TextDecorationPropertyForEditing() {
-  static const CSSPropertyID kProperty =
-      RuntimeEnabledFeatures::CSS3TextDecorationsEnabled()
-          ? CSSPropertyTextDecorationLine
-          : CSSPropertyTextDecoration;
+  static const CSSPropertyID kProperty = CSSPropertyTextDecorationLine;
   return kProperty;
 }
 
@@ -81,17 +78,27 @@ static const CSSPropertyID& TextDecorationPropertyForEditing() {
 // NOTE: Use either allEditingProperties() or inheritableEditingProperties() to
 // respect runtime enabling of properties.
 static const CSSPropertyID kStaticEditingProperties[] = {
-    CSSPropertyBackgroundColor, CSSPropertyColor, CSSPropertyFontFamily,
-    CSSPropertyFontSize, CSSPropertyFontStyle, CSSPropertyFontVariantLigatures,
-    CSSPropertyFontVariantCaps, CSSPropertyFontWeight, CSSPropertyLetterSpacing,
-    CSSPropertyOrphans, CSSPropertyTextAlign,
-    // FIXME: CSSPropertyTextDecoration needs to be removed when CSS3 Text
-    // Decoration feature is no longer experimental.
-    CSSPropertyTextDecoration, CSSPropertyTextDecorationLine,
-    CSSPropertyTextIndent, CSSPropertyTextTransform, CSSPropertyWhiteSpace,
-    CSSPropertyWidows, CSSPropertyWordSpacing,
-    CSSPropertyWebkitTextDecorationsInEffect, CSSPropertyWebkitTextFillColor,
-    CSSPropertyWebkitTextStrokeColor, CSSPropertyWebkitTextStrokeWidth,
+    CSSPropertyBackgroundColor,
+    CSSPropertyColor,
+    CSSPropertyFontFamily,
+    CSSPropertyFontSize,
+    CSSPropertyFontStyle,
+    CSSPropertyFontVariantLigatures,
+    CSSPropertyFontVariantCaps,
+    CSSPropertyFontWeight,
+    CSSPropertyLetterSpacing,
+    CSSPropertyOrphans,
+    CSSPropertyTextAlign,
+    CSSPropertyTextDecorationLine,
+    CSSPropertyTextIndent,
+    CSSPropertyTextTransform,
+    CSSPropertyWhiteSpace,
+    CSSPropertyWidows,
+    CSSPropertyWordSpacing,
+    CSSPropertyWebkitTextDecorationsInEffect,
+    CSSPropertyWebkitTextFillColor,
+    CSSPropertyWebkitTextStrokeColor,
+    CSSPropertyWebkitTextStrokeWidth,
     CSSPropertyCaretColor};
 
 enum EditingPropertiesType {
@@ -105,8 +112,7 @@ static const Vector<CSSPropertyID>& AllEditingProperties() {
     CSSPropertyMetadata::FilterEnabledCSSPropertiesIntoVector(
         kStaticEditingProperties, WTF_ARRAY_LENGTH(kStaticEditingProperties),
         properties);
-    if (RuntimeEnabledFeatures::CSS3TextDecorationsEnabled())
-      properties.erase(properties.Find(CSSPropertyTextDecoration));
+    properties.erase(properties.Find(CSSPropertyTextDecoration));
   }
   return properties;
 }
@@ -848,10 +854,9 @@ bool EditingStyle::ConflictsWithInlineStyleOfElement(
       if (!conflicting_properties)
         return true;
       conflicting_properties->push_back(CSSPropertyTextDecoration);
-      // Because text-decoration expands to text-decoration-line when CSS3
-      // Text Decoration is enabled, we also state it as conflicting.
-      if (RuntimeEnabledFeatures::CSS3TextDecorationsEnabled())
-        conflicting_properties->push_back(CSSPropertyTextDecorationLine);
+      // Because text-decoration expands to text-decoration-line,
+      // we also state it as conflicting.
+      conflicting_properties->push_back(CSSPropertyTextDecorationLine);
       if (extracted_style)
         extracted_style->SetProperty(
             TextDecorationPropertyForEditing(),

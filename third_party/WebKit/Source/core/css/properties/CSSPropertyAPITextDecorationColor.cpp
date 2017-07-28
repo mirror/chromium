@@ -15,7 +15,6 @@ const CSSValue* CSSPropertyAPITextDecorationColor::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) {
-  DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
   return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
 }
 

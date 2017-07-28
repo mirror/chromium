@@ -818,10 +818,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyGridRowGap:
       return ConsumeLengthOrPercent(range_, context_->Mode(),
                                     kValueRangeNonNegative);
-    case CSSPropertyTextDecoration:
-      DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
-      return CSSPropertyTextDecorationLineUtils::ConsumeTextDecorationLine(
-          range_);
     case CSSPropertyWebkitTransformOriginX:
     case CSSPropertyWebkitPerspectiveOriginX:
       return CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueLeft,
