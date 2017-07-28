@@ -40,8 +40,12 @@ SDK.AnalysisModel = class extends SDK.SDKModel {
 
     /** @type {!Map<!SDK.DOMNode, !Array<!SDK.AnalysisModel.Flag>>} */
     this._flags = new Map();
+    /** @type {!Array<!SDK.DOMNode>} */
+    this._groups = [];
     /** @type {!Map<!SDK.DOMNode, !Set<!SDK.DOMNode>>} */
     this._descendants = new Map();
+    /** @type {!Map<string, number>} */
+    this._counts = new Map();
   }
 
   /**
@@ -68,15 +72,18 @@ SDK.AnalysisModel = class extends SDK.SDKModel {
   }
 
   /**
-   * @param {!SDK.DOMNode} node
-   * @return {!Array<!SDK.AnalysisModel.Flag>}
+   * @return {!Array<!SDK.DOMNode>}
    */
-  flagsForDescendants(node) {
-    var descendants = this._descendants.get(node);
-    if (!descendants)
-      return [];
+  flagGroups() {
+    return this._groups;
+  }
 
-    return Array.from(descendants).reduce((flags, descendant) => flags.concat(this._flags.get(descendant) || []), []);
+  /**
+   * @param {string} level
+   * @return {number}
+   */
+  flagCount(level) {
+    return this._counts.get(level) || 0;
   }
 
   /**
@@ -95,28 +102,69 @@ SDK.AnalysisModel = class extends SDK.SDKModel {
 
   /**
    * @param {!SDK.DOMNode} node
+   * @return {!Array<!SDK.AnalysisModel.Flag>}
+   */
+  flagsForDescendants(node) {
+    var descendants = this._descendants.get(node);
+    if (!descendants)
+      return [];
+
+    return Array.from(descendants).reduce((flags, descendant) => flags.concat(this._flags.get(descendant) || []), []);
+  }
+
+  /**
+   * @param {!SDK.DOMNode} node
    * @param {!Array<!SDK.AnalysisModel.Flag>} flags
    */
   nodeFlagged(node, flags) {
+    var previous = this._flags.get(node);
+    if (previous) {
+      for (var flag of previous)
+        this._counts.set(flag.level, this._counts.get(flag.level) - 1);
+    }
+    for (var flag of flags)
+      this._counts.set(flag.level, (this._counts.get(flag.level) || 0) + 1);
     this._flags.set(node, flags);
     var parent = node;
     while ((parent = parent.parentNode) !== null)
       this._modifyDescendant(parent, node, flags.length !== 0);
+    this.dispatchEventToListeners(SDK.AnalysisModel.Events.NodeFlagged, {node: node, flags: flags});
+  }
+
+  /**
+   * @param {!SDK.DOMNode} node
+   */
+  addFlagGroup(node) {
+    this._groups.push(node);
+    this.dispatchEventToListeners(SDK.AnalysisModel.Events.FlagGroup, node);
+  }
+
+  clearFlags() {
+    this.dispatchEventToListeners(SDK.AnalysisModel.Events.ClearFlags);
   }
 };
 
 SDK.SDKModel.register(SDK.AnalysisModel, SDK.Target.Capability.DOM, true);
+
+/** @enum {symbol} */
+SDK.AnalysisModel.Events = {
+  NodeFlagged: Symbol('NodeFlagged'),
+  FlagGroup: Symbol('FlagGroup'),
+  ClearFlags: Symbol('ClearFlags'),
+};
 
 /**
  * @unrestricted
  */
 SDK.AnalysisModel.Flag = class {
   /**
+   * @param {!SDK.AnalysisModel.FlagsDelegate} delegate
    * @param {string} level
    * @param {string} label
    * @param {!Array<!SDK.AnalysisModel.Annotation>=} annotations
    */
-  constructor(level, label, annotations) {
+  constructor(delegate, level, label, annotations) {
+    this.delegate = delegate;
     this.level = level;
     this.label = label;
     this.annotations = annotations || [];
@@ -140,4 +188,18 @@ SDK.AnalysisModel.Annotation = class {
 /** @enum {symbol} */
 SDK.AnalysisModel.Annotation.Types = {
   Attribute: Symbol('Annotation.Types.Attribute'),
+};
+
+/**
+ * @interface
+ */
+SDK.AnalysisModel.FlagsDelegate = function() {};
+
+SDK.AnalysisModel.FlagsDelegate.prototype = {
+  /**
+   * @param {!SDK.DOMNode} node
+   */
+  highlightFlag(node) {},
+
+  unhighlightFlags() {}
 };
