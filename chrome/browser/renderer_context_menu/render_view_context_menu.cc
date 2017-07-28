@@ -1438,7 +1438,6 @@ void RenderViewContextMenu::AppendPasswordItems() {
 }
 
 // Menu delegate functions -----------------------------------------------------
-
 bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
   {
     bool enabled = false;
