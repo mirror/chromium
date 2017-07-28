@@ -9,6 +9,7 @@
 
 @class OpenNewTabCommand;
 @class ReadingListAddCommand;
+@class TabHistoryCell;
 
 // Protocol for commands that will generally be handled by the "current tab",
 // which in practice is the BrowserViewController instance displaying the tab.
@@ -49,6 +50,15 @@
 
 // Shows the QR scanner UI.
 - (void)showQRScanner;
+
+// Shows the tab history popup containing the tab's backward history.
+- (void)showTabHistoryPopupForBackwardHistory;
+
+// Shows the tab history popup containing the tab's forward history.
+- (void)showTabHistoryPopupForForwardHistory;
+
+// Navigate back/forward to the selected entry in the tab's history.
+- (void)navigateToHistoryCell:(TabHistoryCell*)cell;
 
 @end
 
