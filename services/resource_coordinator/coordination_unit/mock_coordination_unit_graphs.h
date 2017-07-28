@@ -12,7 +12,7 @@ namespace resource_coordinator {
 class CoordinationUnitImpl;
 
 // The following coordination unit graph topology is created to emulate a
-// scenario when a single tab are executes in a single process:
+// scenario when a single tab is executing in a single process:
 //
 // T   P
 //  \ /
