@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4907d1bf_74ac1ae0",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-28T19:02:39Z",
+      "side": 1,
+      "message": "Should this be DCHECK instead?",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "44d57436005280ee7c65c96523990d73180d1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784d40da_68642ded",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-28T19:02:39Z",
+      "side": 1,
+      "message": "If only Create() is to be called by users, make this one private.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "44d57436005280ee7c65c96523990d73180d1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
