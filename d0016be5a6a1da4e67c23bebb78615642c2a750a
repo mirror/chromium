@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d47f84_582bdfd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-28T23:45:11Z",
+      "side": 1,
+      "message": "You\u0027ve made some significant changes to buffer size logic. Can you document those in the commit msg?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee955b5_cb4b1223",
+        "filename": "content/renderer/media/audio_renderer_mixer_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-28T23:45:11Z",
+      "side": 1,
+      "message": "This comment is confusing. I think it needs an \"or\" after the first comma. But also the placement (at a glance anyway) reads like it applies to just the \"if\", when parts of it describe the \"else\". I\u0027d split it up or ad some space between l32 and l33",
+      "range": {
+        "startLine": 29,
+        "startChar": 25,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec7a43b_abcc0afc",
+        "filename": "content/renderer/media/audio_renderer_mixer_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-28T23:45:11Z",
+      "side": 1,
+      "message": "Do yo mean for this to be sample_rate()",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d0944e_77d4d889",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-28T23:45:11Z",
+      "side": 1,
+      "message": "Can you expand this - I wouldn\u0027t know what it conveys if I wasn\u0027t reviewing the CL thta added it. \n\nSomething like NR1+ suppports power efficient low latency playback. Best practice is to let it handle the resampling.",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5a5d30_37810376",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-28T23:45:11Z",
+      "side": 1,
+      "message": "Can you make comment say why we target 20ms? \n\nAlso, why does this CL increase it from 10 -\u003e 20? Does this increase time to playback metrics? Acceptable increase?",
+      "range": {
+        "startLine": 397,
+        "startChar": 13,
+        "endLine": 397,
+        "endChar": 17
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283b2f53_4740e619",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-28T23:45:11Z",
+      "side": 1,
+      "message": "I had to look at the diff to understand this sentence. The meaning of \"where\" is easily assigned to both *not* resampling and *when* resampling.",
+      "range": {
+        "startLine": 400,
+        "startChar": 35,
+        "endLine": 400,
+        "endChar": 40
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
