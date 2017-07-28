@@ -257,9 +257,15 @@ bool DownloadCommands::IsCommandVisible(Command command) const {
 void DownloadCommands::ExecuteCommand(Command command) {
   switch (command) {
     case SHOW_IN_FOLDER:
+      safe_browsing::DownloadProtectionService::
+          MaybeSendDangerousDownloadExecutionReport(
+              download_item_, true /* show_download_in_folder */);
       download_item_->ShowDownloadInShell();
       break;
     case OPEN_WHEN_COMPLETE:
+      safe_browsing::DownloadProtectionService::
+          MaybeSendDangerousDownloadExecutionReport(
+              download_item_, false /* show_download_in_folder */);
       download_item_->OpenDownload();
       break;
     case ALWAYS_OPEN_TYPE: {

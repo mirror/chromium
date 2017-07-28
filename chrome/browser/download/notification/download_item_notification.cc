@@ -20,6 +20,7 @@
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/notifications/profile_notification.h"
+#include "chrome/browser/safe_browsing/download_protection_service.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
@@ -258,6 +259,9 @@ void DownloadItemNotification::OnNotificationClick() {
     case content::DownloadItem::COMPLETE:
       base::RecordAction(
           UserMetricsAction("DownloadNotification.Click_Completed"));
+      safe_browsing::DownloadProtectionService::
+          MaybeSendDangerousDownloadExecutionReport(
+              item_, false /* show_download_in_folder */);
       item_->OpenDownload();
       CloseNotificationByUser();
       break;

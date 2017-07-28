@@ -28,6 +28,7 @@
 #include "chrome/browser/download/drag_download_item.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/safe_browsing/download_protection_service.h"
 #include "chrome/browser/ui/webui/fileicon_source.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
@@ -163,8 +164,12 @@ void MdDownloadsDOMHandler::HandleGetDownloads(const base::ListValue* args) {
 void MdDownloadsDOMHandler::HandleOpenFile(const base::ListValue* args) {
   CountDownloadsDOMEvents(DOWNLOADS_DOM_EVENT_OPEN_FILE);
   content::DownloadItem* file = GetDownloadByValue(args);
-  if (file)
+  if (file) {
+    safe_browsing::DownloadProtectionService::
+        MaybeSendDangerousDownloadExecutionReport(
+            file, false /* show_download_in_folder */);
     file->OpenDownload();
+  }
 }
 
 void MdDownloadsDOMHandler::HandleDrag(const base::ListValue* args) {
@@ -233,8 +238,12 @@ void MdDownloadsDOMHandler::HandleDiscardDangerous(
 void MdDownloadsDOMHandler::HandleShow(const base::ListValue* args) {
   CountDownloadsDOMEvents(DOWNLOADS_DOM_EVENT_SHOW);
   content::DownloadItem* file = GetDownloadByValue(args);
-  if (file)
+  if (file) {
+    safe_browsing::DownloadProtectionService::
+        MaybeSendDangerousDownloadExecutionReport(
+            file, true /* show_download_in_folder */);
     file->ShowDownloadInShell();
+  }
 }
 
 void MdDownloadsDOMHandler::HandlePause(const base::ListValue* args) {

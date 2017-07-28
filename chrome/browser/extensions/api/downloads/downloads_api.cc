@@ -52,6 +52,7 @@
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/renderer_host/chrome_render_message_filter.h"
+#include "chrome/browser/safe_browsing/download_protection_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -1392,6 +1393,9 @@ ExtensionFunction::ResponseAction DownloadsShowFunction::Run() {
   std::string error;
   if (InvalidId(download_item, &error))
     return RespondNow(Error(error));
+  safe_browsing::DownloadProtectionService::
+      MaybeSendDangerousDownloadExecutionReport(
+          download_item, true /* show_download_in_folder */);
   download_item->ShowDownloadInShell();
   RecordApiFunctions(DOWNLOADS_FUNCTION_SHOW);
   return RespondNow(NoArguments());
@@ -1434,6 +1438,9 @@ ExtensionFunction::ResponseAction DownloadsOpenFunction::Run() {
             errors::kOpenPermission, &error)) {
     return RespondNow(Error(error));
   }
+  safe_browsing::DownloadProtectionService::
+      MaybeSendDangerousDownloadExecutionReport(
+          download_item, false /* show_download_in_folder */);
   download_item->OpenDownload();
   RecordApiFunctions(DOWNLOADS_FUNCTION_OPEN);
   return RespondNow(NoArguments());
