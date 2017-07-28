@@ -16,6 +16,24 @@
       "revId": "aea0d83ab862e445d69d40e83a456221cdf829c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2109ecd9_f9ef86b4",
+        "filename": "components/image_fetcher/ios/ios_image_decoder_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-28T13:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "facdeac6_af5b8b2e",
+      "revId": "aea0d83ab862e445d69d40e83a456221cdf829c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
