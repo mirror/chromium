@@ -22,6 +22,30 @@
       "revId": "4a61955906921fecca6979ba58cd9b72dacf922a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba60a712_012afcb1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 64812,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-28T19:42:09Z",
+      "side": 1,
+      "message": "Done. For my own reference, is this mainly for better readability on the graphs? I just notice there are very many BooleanX enums, some of them quite similar. Thanks!",
+      "parentUuid": "7ff0110a_2560fbb8",
+      "range": {
+        "startLine": 64812,
+        "startChar": 10,
+        "endLine": 64812,
+        "endChar": 17
+      },
+      "revId": "4a61955906921fecca6979ba58cd9b72dacf922a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
