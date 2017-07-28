@@ -11,13 +11,18 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
+#include "chrome/browser/ui/views/bookmarks/bookmark_promo_bubble_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/gfx/color_utils.h"
+#include "ui/gfx/paint_vector_icon.h"
 
 StarView::StarView(CommandUpdater* command_updater, Browser* browser)
-    : BubbleIconView(command_updater, IDC_BOOKMARK_PAGE), browser_(browser) {
+    : BubbleIconView(command_updater, IDC_BOOKMARK_PAGE),
+      browser_(browser),
+      bookmark_promo_observing_(false) {
   set_id(VIEW_ID_STAR_BUTTON);
   SetToggled(false);
 }
@@ -28,6 +33,16 @@ void StarView::SetToggled(bool on) {
   BubbleIconView::SetActiveInternal(on);
   SetTooltipText(l10n_util::GetStringUTF16(
       on ? IDS_TOOLTIP_STARRED : IDS_TOOLTIP_STAR));
+}
+
+void StarView::SetBookmarkPromoObserving(bool is_observing) {
+  bookmark_promo_observing_ = is_observing;
+  SetActiveInternal(bookmark_promo_observing_);
+  if (bookmark_promo_observing_) {
+    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
+  } else {
+    AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
+  }
 }
 
 void StarView::OnExecuting(
@@ -59,9 +74,20 @@ void StarView::ExecuteCommand(ExecuteSource source) {
 }
 
 views::BubbleDialogDelegateView* StarView::GetBubble() const {
+  if (bookmark_promo_observing_) {
+    return BookmarkPromoBubbleView::bookmark_promo_bubble();
+  }
   return BookmarkBubbleView::bookmark_bubble();
 }
 
 const gfx::VectorIcon& StarView::GetVectorIcon() const {
   return active() ? toolbar::kStarActiveIcon : toolbar::kStarIcon;
+}
+
+SkColor StarView::GetInkDropBaseColor() const {
+  return bookmark_promo_observing_
+             ? color_utils::DeriveDefaultIconColor(
+                   GetNativeTheme()->GetSystemColor(
+                       ui::NativeTheme::kColorId_ProminentButtonColor))
+             : BubbleIconView::GetInkDropBaseColor();
 }
