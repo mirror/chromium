@@ -5924,7 +5924,7 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation",
+          "--disable-features=browser-side-navigation",
           "--gs-results-bucket=chromium-result-details"
         ],
         "merge": {
@@ -5932,11 +5932,11 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_chrome_public_test_apk"
+            "renderer_side_navigation_chrome_public_test_apk"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_chrome_public_test_apk",
+        "name": "renderer_side_navigation_chrome_public_test_apk",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -6012,7 +6012,7 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation",
+          "--disable-features=browser-side-navigation",
           "--gs-results-bucket=chromium-result-details"
         ],
         "merge": {
@@ -6020,11 +6020,11 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_chrome_sync_shell_test_apk"
+            "renderer_side_navigation_chrome_sync_shell_test_apk"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_chrome_sync_shell_test_apk",
+        "name": "renderer_side_navigation_chrome_sync_shell_test_apk",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -6097,18 +6097,18 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
         "merge": {
           "args": [
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_components_browsertests"
+            "renderer_side_navigation_components_browsertests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_components_browsertests",
+        "name": "renderer_side_navigation_components_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -6182,18 +6182,18 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
         "merge": {
           "args": [
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_components_unittests"
+            "renderer_side_navigation_components_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_components_unittests",
+        "name": "renderer_side_navigation_components_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -6267,18 +6267,18 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
         "merge": {
           "args": [
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_content_browsertests"
+            "renderer_side_navigation_content_browsertests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_content_browsertests",
+        "name": "renderer_side_navigation_content_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -6355,7 +6355,7 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation",
+          "--disable-features=browser-side-navigation",
           "--gs-results-bucket=chromium-result-details"
         ],
         "merge": {
@@ -6363,11 +6363,11 @@
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_content_shell_test_apk"
+            "renderer_side_navigation_content_shell_test_apk"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_content_shell_test_apk",
+        "name": "renderer_side_navigation_content_shell_test_apk",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -6441,18 +6441,18 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
         "merge": {
           "args": [
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_content_unittests"
+            "renderer_side_navigation_content_unittests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_content_unittests",
+        "name": "renderer_side_navigation_content_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -7207,18 +7207,18 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
         "merge": {
           "args": [
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_unit_tests"
+            "renderer_side_navigation_unit_tests"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_unit_tests",
+        "name": "renderer_side_navigation_unit_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -7363,18 +7363,18 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
         "merge": {
           "args": [
             "--bucket",
             "chromium-result-details",
             "--test-name",
-            "browser_side_navigation_webview_instrumentation_test_apk"
+            "renderer_side_navigation_webview_instrumentation_test_apk"
           ],
           "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
         },
-        "name": "browser_side_navigation_webview_instrumentation_test_apk",
+        "name": "renderer_side_navigation_webview_instrumentation_test_apk",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [

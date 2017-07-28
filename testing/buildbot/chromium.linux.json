@@ -3761,9 +3761,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_browser_tests",
+        "name": "renderer_side_navigation_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 5
@@ -3826,9 +3826,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_components_browsertests",
+        "name": "renderer_side_navigation_components_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -3842,9 +3842,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_components_unittests",
+        "name": "renderer_side_navigation_components_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -3864,9 +3864,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_content_browsertests",
+        "name": "renderer_side_navigation_content_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -3891,9 +3891,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_content_unittests",
+        "name": "renderer_side_navigation_content_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -3947,9 +3947,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_extensions_browsertests",
+        "name": "renderer_side_navigation_extensions_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4017,9 +4017,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_headless_browsertests",
+        "name": "renderer_side_navigation_headless_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4039,9 +4039,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_interactive_ui_tests",
+        "name": "renderer_side_navigation_interactive_ui_tests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4241,9 +4241,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_unit_tests",
+        "name": "renderer_side_navigation_unit_tests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4442,9 +4442,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_browser_tests",
+        "name": "renderer_side_navigation_browser_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 10
@@ -4507,9 +4507,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_components_browsertests",
+        "name": "renderer_side_navigation_components_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4523,9 +4523,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_components_unittests",
+        "name": "renderer_side_navigation_components_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4545,9 +4545,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_content_browsertests",
+        "name": "renderer_side_navigation_content_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4572,9 +4572,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_content_unittests",
+        "name": "renderer_side_navigation_content_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4628,9 +4628,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_extensions_browsertests",
+        "name": "renderer_side_navigation_extensions_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4698,9 +4698,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_headless_browsertests",
+        "name": "renderer_side_navigation_headless_browsertests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -4721,9 +4721,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_interactive_ui_tests",
+        "name": "renderer_side_navigation_interactive_ui_tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 3
@@ -4921,9 +4921,9 @@
       },
       {
         "args": [
-          "--enable-browser-side-navigation"
+          "--disable-features=browser-side-navigation"
         ],
-        "name": "browser_side_navigation_unit_tests",
+        "name": "renderer_side_navigation_unit_tests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },
