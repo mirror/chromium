@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40dea93_2ecb6413",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T22:31:03Z",
+      "side": 1,
+      "message": "please keep explicit on the ctor with one param, it\u0027s not really needed for the ctor with multiple params",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b9a320_63c78237",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T22:31:03Z",
+      "side": 1,
+      "message": "If we tread more lightly on the existing interface, I think we might be able to maintain greater code reuse between the two modes.\n\nInstead of having a parallel set of mutating methods that don\u0027t reutrn the old value, we can just define the behavior such that |old_value| will not be accessed or modified for |only_keys| mode. This way, higher level code could populate old_value with the client_old_value in |only_keys| mode, processing thereafter is the same.",
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618b2a01_eb5a3198",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T22:31:03Z",
+      "side": 1,
+      "message": "The old method name is ok, i think we just need to document the behavior in |keys_only| mode. In that mode, |this| does not contain values so the |map| will always be empty upon return. And upon return, |this| will contain all the keys present in map but no values, in keeping with keys_only mode",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b484027d_971f4740",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-28T22:31:03Z",
+      "side": 1,
+      "message": "It feels sketchy to overload the values in the map with string\u0027ified integers corresponding to the size. I\u0027d rather see something more obvious with the types we want (map\u003cstring, int\u003e) for the keys_only case. If you\u0027re concerned about the size of two collections and two iterators instead of one (not sure it matters that much), i think we could use unions since the two cases are mutually exclusive.\n\nunion {\n  DOMStorageValuesMap keys_values_;\n  std::map\u003cstring, int\u003e keys_only_;\n}\nunion {\n  xxx::Iterator keys_values_iterator;\n  xxx::Iterator keys_only_iterator_;\n}",
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
