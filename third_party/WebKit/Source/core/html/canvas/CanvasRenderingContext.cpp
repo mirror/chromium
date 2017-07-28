@@ -156,6 +156,10 @@ CanvasRenderingContext::ContextType CanvasRenderingContext::ContextTypeFromId(
       RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()) {
     return kContextImageBitmap;
   }
+  if (id == "vrpresent" && (RuntimeEnabledFeatures::WebVREnabled() /*||
+      OriginTrials::webVREnabled(document.GetExecutionContext())*/)) {
+    return kContextVRPresent;
+  }
   return kContextTypeCount;
 }
 

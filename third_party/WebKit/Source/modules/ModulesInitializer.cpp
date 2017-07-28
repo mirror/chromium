@@ -69,6 +69,7 @@
 #include "modules/time_zone_monitor/TimeZoneMonitorClient.h"
 #include "modules/vr/NavigatorVR.h"
 #include "modules/vr/VRController.h"
+#include "modules/vr/latest/VRPresentationContext.h"
 #include "modules/webdatabase/DatabaseManager.h"
 #include "modules/webdatabase/InspectorDatabaseAgent.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
@@ -114,6 +115,8 @@ void ModulesInitializer::Initialize() {
       WTF::MakeUnique<WebGL2RenderingContext::Factory>());
   HTMLCanvasElement::RegisterRenderingContextFactory(
       WTF::MakeUnique<ImageBitmapRenderingContext::Factory>());
+  HTMLCanvasElement::RegisterRenderingContextFactory(
+      WTF::MakeUnique<VRPresentationContext::Factory>());
 
   // OffscreenCanvas context types must be registered with the OffscreenCanvas.
   OffscreenCanvas::RegisterRenderingContextFactory(
