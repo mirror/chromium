@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd101683_06d4aa02",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-28T22:32:23Z",
+      "side": 1,
+      "message": "I think having an explicit default value adds to the readability of the code. So if you don\u0027t mind, I\u0027ll keep it.",
+      "parentUuid": "270cb150_d1db4b47",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "796e2e48_e9848a40",
         "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173d8bfc_32b36846",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-28T22:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "796e2e48_e9848a40",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e72ea1c3_78001f55",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-28T22:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96dd72fb_1dc33ff2",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3354d08_18460425",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb90c77_395881be",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16111,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-28T22:32:23Z",
+      "side": 1,
+      "message": "Makes sense. Dropped \"Card\" from the names and the descriptions and using \"CleanupWebui\" instead.",
+      "parentUuid": "a3354d08_18460425",
+      "revId": "3195ce788b9a4a507c78211df81f6d349e9b1f97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
