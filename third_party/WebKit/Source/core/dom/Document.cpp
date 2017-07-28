@@ -5614,6 +5614,11 @@ void Document::FinishedParsing() {
   well_formed_ = parser && parser->WellFormed();
 
   if (LocalFrame* frame = this->GetFrame()) {
+    // Guarantee at least one call to the client specifying a title.
+    DCHECK_NE(nullptr, frame_->Client());
+    if (title_.IsEmpty())
+      frame->Client()->DispatchDidReceiveTitle(String());
+
     // Don't update the layout tree if we haven't requested the main resource
     // yet to avoid adding extra latency. Note that the first layout tree update
     // can be expensive since it triggers the parsing of the default stylesheets
