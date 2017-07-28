@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870d6a91_c94f8ae9",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-28T20:42:08Z",
+      "side": 1,
+      "message": "Fixing this bug (and writing this test) was the motivation for this entire CL, btw.",
+      "revId": "dbc6c2c10ccabbad0031de79fcfb8052a38c315c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
