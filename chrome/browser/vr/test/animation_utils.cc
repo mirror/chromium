@@ -40,11 +40,12 @@ std::unique_ptr<cc::Animation> CreateBoundsAnimation(int id,
 }
 
 base::TimeTicks UsToTicks(uint64_t us) {
-  return base::TimeTicks::FromInternalValue(us);
+  base::TimeTicks to_return;
+  return base::TimeDelta::FromMicroseconds(us) + to_return;
 }
 
 base::TimeDelta UsToDelta(uint64_t us) {
-  return base::TimeDelta::FromInternalValue(us);
+  return base::TimeDelta::FromMicroseconds(us);
 }
 
 base::TimeTicks MsToTicks(uint64_t ms) {
