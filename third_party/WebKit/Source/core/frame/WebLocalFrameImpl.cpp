@@ -916,6 +916,11 @@ WebDataSource* WebLocalFrameImpl::DataSource() const {
   return DataSourceForDocLoader(GetFrame()->Loader().GetDocumentLoader());
 }
 
+WebDataSource* WebLocalFrameImpl::GetNewerDataSource() const {
+  DCHECK(GetFrame());
+  return DataSourceForDocLoader(GetFrame()->Loader().GetNewerDocumentLoader());
+}
+
 void WebLocalFrameImpl::EnableViewSourceMode(bool enable) {
   if (GetFrame())
     GetFrame()->SetInViewSourceMode(enable);

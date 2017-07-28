@@ -114,6 +114,11 @@ class CORE_EXPORT FrameLoader final {
   DocumentLoader* ProvisionalDocumentLoader() const {
     return provisional_document_loader_.Get();
   }
+  DocumentLoader* GetNewerDocumentLoader() const {
+    if (provisional_document_loader_)
+      return provisional_document_loader_;
+    return document_loader_;
+  }
 
   void LoadFailed(DocumentLoader*, const ResourceError&);
 
