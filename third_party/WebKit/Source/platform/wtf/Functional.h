@@ -210,26 +210,41 @@ class Function;
 template <typename R, typename... Args, FunctionThreadAffinity threadAffinity>
 class Function<R(Args...), threadAffinity> {
   USING_FAST_MALLOC(Function);
-  WTF_MAKE_NONCOPYABLE(Function);
 
  public:
-  Function(base::Callback<R(Args...)> callback)
+  Function() {}
+  explicit Function(base::Callback<R(Args...)> callback)
       : callback_(std::move(callback)) {}
+  ~Function() { DCHECK_CALLED_ON_VALID_THREAD(thread_checker_); }
 
-  ~Function() { DCHECK(thread_checker_.CalledOnValidThread()); }
+  Function(const Function&) = delete;
+  Function& operator=(const Function&) = delete;
 
-  R operator()(Args... args) {
-    DCHECK(thread_checker_.CalledOnValidThread());
+  Function(Function&& other) : callback_(std::move(other.callback_)) {
+    DCHECK_CALLED_ON_VALID_THREAD(other.thread_checker_);
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DETACH_FROM_THREAD(other.thread_checker_);
+  }
+
+  Function& operator=(Function&& other) {
+    DCHECK_CALLED_ON_VALID_THREAD(other.thread_checker_);
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DETACH_FROM_THREAD(other.thread_checker_);
+    callback_ = std::move(other.callback_);
+    return *this;
+  }
+
+  R operator()(Args... args) const {
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
     return callback_.Run(std::forward<Args>(args)...);
   }
 
   bool IsCancelled() const { return callback_.IsCancelled(); }
+  explicit operator bool() const { return static_cast<bool>(callback_); }
+  void* Identifier() const { return callback_.Identifier(); }
 
-  friend base::Callback<R(Args...)> ConvertToBaseCallback(
-      std::unique_ptr<Function> function) {
-    if (function)
-      return std::move(function->callback_);
-    return base::Callback<R(Args...)>();
+  friend base::Callback<R(Args...)> ConvertToBaseCallback(Function function) {
+    return std::move(function.callback_);
   }
 
  private:
@@ -237,30 +252,29 @@ class Function<R(Args...), threadAffinity> {
       typename std::conditional<threadAffinity == kSameThreadAffinity,
                                 base::ThreadChecker,
                                 base::ThreadCheckerDoNothing>::type;
+#if DCHECK_IS_ON()
   MaybeThreadChecker thread_checker_;
+#endif
   base::Callback<R(Args...)> callback_;
 };
 
 template <FunctionThreadAffinity threadAffinity,
           typename FunctionType,
           typename... BoundParameters>
-std::unique_ptr<
-    Function<base::MakeUnboundRunType<FunctionType, BoundParameters...>,
-             threadAffinity>>
+Function<base::MakeUnboundRunType<FunctionType, BoundParameters...>,
+         threadAffinity>
 BindInternal(FunctionType function, BoundParameters&&... bound_parameters) {
   using UnboundRunType =
       base::MakeUnboundRunType<FunctionType, BoundParameters...>;
-  return WTF::WrapUnique(new Function<UnboundRunType,
-                                      threadAffinity>(base::Bind(
+  return Function<UnboundRunType, threadAffinity>(base::Bind(
       function,
       typename ParamStorageTraits<typename std::decay<BoundParameters>::type>::
-          StorageType(std::forward<BoundParameters>(bound_parameters))...)));
+          StorageType(std::forward<BoundParameters>(bound_parameters))...));
 }
 
 template <typename FunctionType, typename... BoundParameters>
-std::unique_ptr<
-    Function<base::MakeUnboundRunType<FunctionType, BoundParameters...>,
-             kSameThreadAffinity>>
+Function<base::MakeUnboundRunType<FunctionType, BoundParameters...>,
+         kSameThreadAffinity>
 Bind(FunctionType function, BoundParameters&&... bound_parameters) {
   return BindInternal<kSameThreadAffinity>(
       function, std::forward<BoundParameters>(bound_parameters)...);

@@ -64,6 +64,10 @@ void CallbackBase<CopyMode::MoveOnly>::Reset() {
   bind_state_ = nullptr;
 }
 
+void* CallbackBase<CopyMode::MoveOnly>::Identifier() const {
+  return bind_state_.get();
+}
+
 bool CallbackBase<CopyMode::MoveOnly>::IsCancelled() const {
   DCHECK(bind_state_);
   return bind_state_->IsCancelled();
