@@ -22,6 +22,30 @@
       "revId": "dd2aef1dccc8bb9287b5a15a2abdb77f7ac81358",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b1c056_bf1a9307",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-28T19:51:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure that would really add much, because there\u0027s not really a way to generalize \"does this op have an skclipop\" in the same way that we do with \"does this op have flags\".  So, I\u0027d imagine the templated functions would look pretty much the same as this set of deserialize functions.  Are you picturing something different?",
+      "parentUuid": "04fae7c7_4703886d",
+      "range": {
+        "startLine": 781,
+        "startChar": 15,
+        "endLine": 781,
+        "endChar": 30
+      },
+      "revId": "dd2aef1dccc8bb9287b5a15a2abdb77f7ac81358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
