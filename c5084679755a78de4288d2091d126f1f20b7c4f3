@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ce813ee_3eccb765",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-28T11:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d3060df_6c5ec8b4",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "c5084679755a78de4288d2091d126f1f20b7c4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca7020ef_a2ae930a",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 17
