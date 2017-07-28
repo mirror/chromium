@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6686e5_7a4d091d",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "How about using array for both ssim and mse and use VideoFrame::kY[U,V]Plane to identify them.\n\ndouble ssim[VideoFrame::kMaxPlanes]\nint64_t mse[VideoFrame::kMaxPlanes]",
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a45898_4d712952",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "Can we unify the naming in these functions? \ns \u003d orig, sp \u003d orig_strid, r \u003d recon, rp \u003d recon_stride?\n\nBesides, please add a link to explain SSIM in the comment.",
+      "range": {
+        "startLine": 860,
+        "startChar": 39,
+        "endLine": 860,
+        "endChar": 0
+      },
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287e356f_68890a7f",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "nit: remove static.",
+      "range": {
+        "startLine": 880,
+        "startChar": 0,
+        "endLine": 880,
+        "endChar": 6
+      },
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461448d1_51e0d54e",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "Is 64^2 arbitrary chosen?",
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0887fd9_d9c4a594",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "static_cast\u003cdouble\u003e(ssim_n)/ssim_d",
+      "range": {
+        "startLine": 900,
+        "startChar": 17,
+        "endLine": 900,
+        "endChar": 18
+      },
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cee3b7_dc728647",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "How about just use int64_t for these variables ?\n\nChromium\u0027s coding style suggest: \n\"Do not use unsigned types to mean “this value should never be \u003c 0”. For that, use assertions or run-time checks (as appropriate)\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md",
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ac5653_d19675c1",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "In addition to return the average of ssim, could we also log the min ssim of these windows. In our experience, sometimes, the artifacts are just in few pixels, which might be ignored after the average.",
+      "range": {
+        "startLine": 938,
+        "startChar": 22,
+        "endLine": 938,
+        "endChar": 33
+      },
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad057f5c_b19403cf",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "CHECK_EQ(origianl_frame.visible_rect().size(), output_frame.visible_rect.size());",
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2045510_e0f96ab2",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-28T07:08:56Z",
+      "side": 1,
+      "message": "We can get the width (height) of each plane by\nVideoFrames::Columns (Rows). So that we can put the following in a loop\n\nint planes[] \u003d {kYPlane, kVPlane, kUPlane}\nfor (auto p : planes) {\n  ....\n}",
+      "range": {
+        "startLine": 988,
+        "startChar": 0,
+        "endLine": 988,
+        "endChar": 61
+      },
+      "revId": "93d3bab7179fd0ad8bb8eb0546ed28472baf2c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
