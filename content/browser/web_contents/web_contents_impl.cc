@@ -4612,6 +4612,13 @@ bool WebContentsImpl::IsShowingContextMenu() const {
   return showing_context_menu_;
 }
 
+void WebContentsImpl::OnOcclusionStateChanged(bool occluded) {
+  if (occluded)
+    WasOccluded();
+  else
+    WasUnOccluded();
+}
+
 void WebContentsImpl::SetShowingContextMenu(bool showing) {
   DCHECK_NE(showing_context_menu_, showing);
   showing_context_menu_ = showing;

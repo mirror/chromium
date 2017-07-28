@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "build/build_config.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_bubble_type.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -29,9 +30,11 @@ class ExclusiveAccessControllerBase : public content::NotificationObserver {
   GURL GetExclusiveAccessBubbleURL() const;
   virtual GURL GetURLForExclusiveAccessBubble() const;
 
+#if defined(OS_MACOSX)
   content::WebContents* exclusive_access_tab() const {
     return tab_with_exclusive_access_;
   }
+#endif
 
   // Functions implemented by derived classes:
 

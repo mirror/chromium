@@ -154,15 +154,10 @@ const CGFloat kShowFraction = 1.0;
 - (void)updateToolbarStyleExitingTabFullscreen:(BOOL)isExitingTabFullscreen {
   FullscreenToolbarStyle oldStyle = toolbarStyle_;
 
-  if ([browserController_ isFullscreenForTabContentOrExtension] &&
-      !isExitingTabFullscreen) {
-    toolbarStyle_ = FullscreenToolbarStyle::TOOLBAR_NONE;
-  } else {
-    PrefService* prefs = [browserController_ profile]->GetPrefs();
-    toolbarStyle_ = prefs->GetBoolean(prefs::kShowFullscreenToolbar)
-                        ? FullscreenToolbarStyle::TOOLBAR_PRESENT
-                        : FullscreenToolbarStyle::TOOLBAR_HIDDEN;
-  }
+  PrefService* prefs = [browserController_ profile]->GetPrefs();
+  toolbarStyle_ = prefs->GetBoolean(prefs::kShowFullscreenToolbar)
+                      ? FullscreenToolbarStyle::TOOLBAR_PRESENT
+                      : FullscreenToolbarStyle::TOOLBAR_HIDDEN;
 
   if (oldStyle != toolbarStyle_)
     [self updateToolbarLayout];

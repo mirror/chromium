@@ -739,6 +739,7 @@ class CONTENT_EXPORT WebContentsImpl
   void FocusedNodeTouched(bool editable) override;
   void DidReceiveCompositorFrame() override;
   bool IsShowingContextMenuOnPage() const override;
+  void OnOcclusionStateChanged(bool occluded) override;
 
   // RenderFrameHostManager::Delegate ------------------------------------------
 

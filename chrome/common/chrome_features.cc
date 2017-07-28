@@ -137,6 +137,11 @@ const base::Feature kConsistentOmniboxGeolocation{
     "ConsistentOmniboxGeolocation", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
+#if defined(OS_MACOSX)
+const base::Feature kContentFullscreen{"ContentFullscreen",
+                                       base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 #if defined(OS_ANDROID)
 // Experiment to extract structured metadata for app indexing.
 const base::Feature kCopylessPaste{"CopylessPaste",

@@ -515,6 +515,14 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 // Methods having to do with fullscreen mode.
 @interface BrowserWindowController(Fullscreen)
 
+// Creates a SeparateFullscreenWindow with the RenderWidgetHostViewCocoa of the
+// WebContents.
+- (NSWindow*)createSeparateWindowForTab:(content::WebContents*)separatedTab;
+
+// Get the NSWindow of the active WebContents used to display Content
+// Fullscreen.
+- (NSWindow*)getActiveWebContentsSeparateWindow;
+
 // Enters Browser AppKit Fullscreen.
 - (void)enterBrowserFullscreen;
 

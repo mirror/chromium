@@ -123,4 +123,6 @@ bool RenderWidgetHostDelegate::IsShowingContextMenuOnPage() const {
   return false;
 }
 
+void RenderWidgetHostDelegate::OnOcclusionStateChanged(bool occluded) {}
+
 }  // namespace content

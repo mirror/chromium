@@ -66,6 +66,7 @@
 #include "content/public/browser/render_widget_host.h"
 #import "content/public/browser/render_widget_host_view_mac_delegate.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_switches.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "media/base/video_frame.h"
 #include "skia/ext/platform_canvas.h"
@@ -761,7 +762,12 @@ void RenderWidgetHostViewMac::Show() {
 
 void RenderWidgetHostViewMac::Hide() {
   ScopedCAActionDisabler disabler;
-  [cocoa_view_ setHidden:YES];
+  // When the content is in the SeparateFullscreenWindow,
+  // RenderWidgetHostViewCocoa should always be visible because it's not in the
+  // FramedBrowserWindow anymore.
+  if (!GetWebContents()->IsFullscreenForCurrentTab()) {
+    [cocoa_view_ setHidden:YES];
+  }
 
   render_widget_host_->WasHidden();
   browser_compositor_->SetRenderWidgetHostIsHidden(true);
@@ -2723,6 +2729,27 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   NSNotificationCenter* notificationCenter =
       [NSNotificationCenter defaultCenter];
 
+  // Occlusion is highly undesirable for browser tests, since it will
+  // flakily change test behavior.
+  static bool isDisabled = base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kDisableBackgroundingOccludedWindowsForTesting);
+
+  if (!isDisabled) {
+    if (oldWindow) {
+      [notificationCenter
+          removeObserver:self
+                    name:NSWindowDidChangeOcclusionStateNotification
+                  object:oldWindow];
+    }
+    if (newWindow) {
+      [notificationCenter
+          addObserver:self
+             selector:@selector(windowChangedOcclusionState:)
+                 name:NSWindowDidChangeOcclusionStateNotification
+               object:newWindow];
+    }
+  }
+
   if (oldWindow) {
     [notificationCenter
         removeObserver:self
@@ -2769,6 +2796,24 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
                            selector:@selector(windowDidResignKey:)
                                name:NSWindowDidResignKeyNotification
                              object:newWindow];
+  }
+}
+
+- (void)windowChangedOcclusionState:(NSNotification*)notification {
+  NSWindow* window = [notification object];
+  WebContents* webContents = renderWidgetHostView_->GetWebContents();
+  if (window && webContents && !webContents->IsBeingDestroyed()) {
+    if ([window occlusionState] & NSWindowOcclusionStateVisible) {
+      // Notify the WebContentsImpl of the change in its occlusion state:
+      // WasUnOccluded.
+      renderWidgetHostView_->render_widget_host_->delegate()
+          ->OnOcclusionStateChanged(false);
+    } else {
+      // Notify the WebContentsImpl of the change in its occlusion state:
+      // WasOccluded.
+      renderWidgetHostView_->render_widget_host_->delegate()
+          ->OnOcclusionStateChanged(true);
+    }
   }
 }
 
