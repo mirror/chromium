@@ -40,9 +40,14 @@ class DownloadServiceImpl : public DownloadService {
   void CancelDownload(const std::string& guid) override;
   void ChangeDownloadCriteria(const std::string& guid,
                               const SchedulingParams& params) override;
+  Logger* GetLogger() override;
 
  private:
   void OnControllerInitialized();
+
+  // logger_ needs to be destructed last as many other components can depend on
+  // it.
+  std::unique_ptr<Logger> logger_;
 
   // config_ needs to be destructed after controller_ and service_config_ which
   // hold onto references to it.
