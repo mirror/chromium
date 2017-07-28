@@ -70,6 +70,24 @@
       "revId": "ec21aee32602b5032314cf5684f59035390a0788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d196ae8_cc6859fe",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-28T19:06:11Z",
+      "side": 1,
+      "message": "Oh, you\u0027re right, I was misreading it as `(!is_chromecast || !is_cast_desktop_build)`. And, yeah, good point about win-clang, I can imagine that as long as we\u0027re linking to other libs in the Win SDK we probably have to use the MSVC stdlib as well.\n\nI like the sentence in the your last paragraph; that sounds fine.",
+      "parentUuid": "6766df81_c9d9060d",
+      "revId": "ec21aee32602b5032314cf5684f59035390a0788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
