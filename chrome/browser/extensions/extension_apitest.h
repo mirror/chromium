@@ -68,8 +68,8 @@ class ExtensionApiTest : public ExtensionBrowserTest {
   void SetUpOnMainThread() override;
   void TearDownOnMainThread() override;
 
-  // Load |extension_name| and wait for pass / fail notification.
-  // |extension_name| is a directory in "test/data/extensions/api_test".
+  // Loads |extension_name| and waits for pass / fail notification.
+  // |extension_name| is a directory in "chrome/test/data/extensions/api_test".
   bool RunExtensionTest(const std::string& extension_name);
 
   // Similar to RunExtensionTest, except sets an additional string argument
@@ -96,6 +96,10 @@ class ExtensionApiTest : public ExtensionBrowserTest {
 
   // Same as RunExtensionTestIncognito, but disables file access.
   bool RunExtensionTestIncognitoNoFileAccess(const std::string& extension_name);
+
+  // Same as RunExtensionTest, but |extension_name| is a directory in
+  // "extensions/test/data".
+  bool RunExtensionTestFromExtensionsData(const std::string& extension_name);
 
   // Returns true if the Subtest and Page tests are being skipped. This is
   // will only be true for windows debug builds, see http://crbug.com/177163.
@@ -191,8 +195,20 @@ class ExtensionApiTest : public ExtensionBrowserTest {
   // If it failed, what was the error message?
   std::string message_;
 
+  // Test data directory shared with //extensions.
+  base::FilePath shared_test_data_dir_;
+
  private:
-  bool RunExtensionTestImpl(const std::string& extension_name,
+  // Calls RunExtensionTestImpl by appending |extension_name| to the test data
+  // directory, "chrome/test/data/extensions/api_test".
+  bool RunExtensionTestByName(const std::string& extension_name,
+                              const std::string& test_page,
+                              const char* custom_arg,
+                              int flags);
+
+  // Loads |extension_path| extension and/or |page_url| and waits for
+  // PASSED or FAILED notification.
+  bool RunExtensionTestImpl(const base::FilePath& extension_path,
                             const std::string& test_page,
                             const char* custom_arg,
                             int flags);
