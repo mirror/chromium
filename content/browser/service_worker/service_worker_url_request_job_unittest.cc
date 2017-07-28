@@ -34,6 +34,7 @@
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/blob_handle.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/request_context_frame_type.h"
@@ -202,6 +203,7 @@ class ServiceWorkerURLRequestJobTest
   }
 
   void SetUpWithHelper(std::unique_ptr<EmbeddedWorkerTestHelper> helper) {
+    const bool kServicification = true;
     helper_ = std::move(helper);
 
     // Create a registration and service worker version.
@@ -253,21 +255,24 @@ class ServiceWorkerURLRequestJobTest
                                          false /* notify_controllerchange */);
 
     // Set up scaffolding for handling URL requests.
-    ChromeBlobStorageContext* chrome_blob_storage_context =
-        ChromeBlobStorageContext::GetFor(browser_context_.get());
-    // Wait for chrome_blob_storage_context to finish initializing.
-    base::RunLoop().RunUntilIdle();
-    storage::BlobStorageContext* blob_storage_context =
-        chrome_blob_storage_context->context();
-    url_request_job_factory_.reset(new net::URLRequestJobFactoryImpl);
-    std::unique_ptr<MockProtocolHandler> handler(new MockProtocolHandler(
-        provider_host->AsWeakPtr(), browser_context_->GetResourceContext(),
-        blob_storage_context->AsWeakPtr(), this));
-    protocol_handler_ = handler.get();
-    url_request_job_factory_->SetProtocolHandler("https", std::move(handler));
-    url_request_job_factory_->SetProtocolHandler(
-        "blob", CreateMockBlobProtocolHandler(blob_storage_context));
-    url_request_context_.set_job_factory(url_request_job_factory_.get());
+    if (kServicification) {
+    } else {
+      ChromeBlobStorageContext* chrome_blob_storage_context =
+          ChromeBlobStorageContext::GetFor(browser_context_.get());
+      // Wait for chrome_blob_storage_context to finish initializing.
+      base::RunLoop().RunUntilIdle();
+      storage::BlobStorageContext* blob_storage_context =
+          chrome_blob_storage_context->context();
+      url_request_job_factory_.reset(new net::URLRequestJobFactoryImpl);
+      std::unique_ptr<MockProtocolHandler> handler(new MockProtocolHandler(
+          provider_host->AsWeakPtr(), browser_context_->GetResourceContext(),
+          blob_storage_context->AsWeakPtr(), this));
+      protocol_handler_ = handler.get();
+      url_request_job_factory_->SetProtocolHandler("https", std::move(handler));
+      url_request_job_factory_->SetProtocolHandler(
+          "blob", CreateMockBlobProtocolHandler(blob_storage_context));
+      url_request_context_.set_job_factory(url_request_job_factory_.get());
+    }
 
     helper_->context()->AddProviderHost(std::move(provider_host));
   }

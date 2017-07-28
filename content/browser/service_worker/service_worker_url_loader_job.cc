@@ -31,7 +31,6 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
       blob_client_binding_(this),
       binding_(this),
       weak_factory_(this) {
-  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
 }
 
 ServiceWorkerURLLoaderJob::~ServiceWorkerURLLoaderJob() {}
