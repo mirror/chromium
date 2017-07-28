@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75aad27c_19daff35",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-28T21:31:11Z",
+      "side": 1,
+      "message": "If you use cancelable_task_tracker_.PostTask in CheckUrlAgainstWhitelist function, you probably won\u0027t need this \"if\" statement here.  (see my comment below)",
+      "revId": "6cd5e1d0cb1c4f833146f5db6673f84fefced9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8974d12_29b9455a",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-28T21:31:11Z",
+      "side": 1,
+      "message": "You need to use cancelable_task_tracker_, otherwise cancelable_task_tracker_.TryCancelAll() has no effect on this post task.",
+      "revId": "6cd5e1d0cb1c4f833146f5db6673f84fefced9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
