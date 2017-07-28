@@ -34,6 +34,24 @@
       "revId": "1986cb6e5f0bd317aa209dd0a61b1d6efa1f42dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b662636_8f2a29b8",
+        "filename": "chrome/browser/ui/search/instant_search_prerenderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-28T15:48:40Z",
+      "side": 1,
+      "message": "Ah, I\u0027ve run into static global variables in unit tests before, not fun...\n\nIf we\u0027re gonna do something about this, let\u0027s do it properly and go with SetUp/TearDown. (I *think* the dtor will always run, but I\u0027m not completely sure.)\nPlease also add a comment saying why this is there, otherwise it\u0027s at risk of being \"cleaned up\" by the next editor. Thanks!",
+      "parentUuid": "de3e4ab6_5318294b",
+      "revId": "1986cb6e5f0bd317aa209dd0a61b1d6efa1f42dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
