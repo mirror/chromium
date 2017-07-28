@@ -23,4 +23,9 @@ target_link_libraries(traffic_annotation_extractor
   clangTooling
   )
 
+cr_add_test(traffic_annotation_extractor_test
+    python tests/test.py
+    ${CMAKE_BINARY_DIR}/bin/clang
+    )
+
 cr_install(TARGETS traffic_annotation_extractor RUNTIME DESTINATION bin)
