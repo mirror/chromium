@@ -41,18 +41,18 @@ struct WebCompositionUnderline {
   WebCompositionUnderline()
       : start_offset(0),
         end_offset(0),
-        color(0),
+        underline_color(0),
         thick(false),
         background_color(0) {}
 
   WebCompositionUnderline(unsigned s,
                           unsigned e,
-                          WebColor c,
+                          WebColor uc,
                           bool t,
                           WebColor bc)
       : start_offset(s),
         end_offset(e),
-        color(c),
+        underline_color(uc),
         thick(t),
         background_color(bc) {}
 
@@ -66,7 +66,7 @@ struct WebCompositionUnderline {
   // if members change.
   unsigned start_offset;
   unsigned end_offset;
-  WebColor color;
+  WebColor underline_color;
   bool thick;
   WebColor background_color;
 };

@@ -492,7 +492,7 @@ void InputMethodController::AddCompositionUnderlines(
       continue;
 
     GetDocument().Markers().AddCompositionMarker(
-        ephemeral_line_range, underline.GetColor(),
+        ephemeral_line_range, underline.UnderlineColor(),
         underline.Thick() ? StyleableMarker::Thickness::kThick
                           : StyleableMarker::Thickness::kThin,
         underline.BackgroundColor());

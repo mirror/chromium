@@ -82,7 +82,9 @@ struct StructTraits<ui::mojom::CompositionUnderlineDataView,
   static uint32_t end_offset(const ui::CompositionUnderline& c) {
     return c.end_offset;
   }
-  static uint32_t color(const ui::CompositionUnderline& c) { return c.color; }
+  static uint32_t underline_color(const ui::CompositionUnderline& c) {
+    return c.underline_color;
+  }
   static uint32_t thick(const ui::CompositionUnderline& c) { return c.thick; }
   static uint32_t background_color(const ui::CompositionUnderline& c) {
     return c.background_color;

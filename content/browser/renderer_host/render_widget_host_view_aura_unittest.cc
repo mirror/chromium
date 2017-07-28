@@ -1655,7 +1655,8 @@ TEST_F(RenderWidgetHostViewAuraTest, SetCompositionText) {
       EXPECT_EQ(underlines[i].start_offset,
                 std::get<1>(params)[i].start_offset);
       EXPECT_EQ(underlines[i].end_offset, std::get<1>(params)[i].end_offset);
-      EXPECT_EQ(underlines[i].color, std::get<1>(params)[i].color);
+      EXPECT_EQ(underlines[i].underline_color,
+                std::get<1>(params)[i].underline_color);
       EXPECT_EQ(underlines[i].thick, std::get<1>(params)[i].thick);
       EXPECT_EQ(underlines[i].background_color,
                 std::get<1>(params)[i].background_color);

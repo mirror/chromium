@@ -30,7 +30,7 @@ ConvertUIUnderlinesToBlinkUnderlines(
   std::vector<blink::WebCompositionUnderline> underlines;
   for (const auto& underline : ui_underlines) {
     blink::WebCompositionUnderline blink_underline(
-        underline.start_offset, underline.end_offset, underline.color,
+        underline.start_offset, underline.end_offset, underline.underline_color,
         underline.thick, underline.background_color);
     underlines.push_back(blink_underline);
   }
