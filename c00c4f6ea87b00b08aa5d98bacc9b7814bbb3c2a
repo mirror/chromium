@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "330572f9_ee66a88d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T20:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9858f74_cbe37c10",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38bdfb2_06b85064",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f6b21f_af9cd086",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T20:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c38bdfb2_06b85064",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b4175858_849928f6",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T20:41:03Z",
+      "side": 1,
+      "message": "Not here - this code clears highlight when I move with Ctrl without a button.",
+      "parentUuid": "7f683203_4b2e0341",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3906cfed_ccca7a82",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70cc5ea_39c9db11",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T20:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3906cfed_ccca7a82",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7ff3f922_236dee3e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T20:41:03Z",
+      "side": 1,
+      "message": "We do at line 1007.",
+      "parentUuid": "ccd7c402_b38875e5",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4566a732_388081b7",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-26T21:07:30Z",
       "side": 1,
       "message": "nit: the word viewport is a bit confusing, considering we actually pass page coordinates.",
+      "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a55aac3_9fe81ef6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-28T20:41:03Z",
+      "side": 1,
+      "message": "I am mimicking captureScreenshot. If anything, we should rename everywhere.",
+      "parentUuid": "4566a732_388081b7",
       "revId": "c00c4f6ea87b00b08aa5d98bacc9b7814bbb3c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
