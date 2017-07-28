@@ -633,10 +633,6 @@ void VRDisplay::submitFrame() {
     return;
   }
 
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::Flush_1");
-  context_gl_->Flush();
-  TRACE_EVENT_END0("gpu", "VRDisplay::Flush_1");
-
   // Check if the canvas got resized, if yes send a bounds update.
   int current_width = rendering_context_->drawingBufferWidth();
   int current_height = rendering_context_->drawingBufferHeight();
@@ -668,26 +664,17 @@ void VRDisplay::submitFrame() {
     }
   }
 
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetImage");
-  RefPtr<Image> image_ref = rendering_context_->GetImage(
-      kPreferAcceleration, kSnapshotReasonCreateImageBitmap);
-  TRACE_EVENT_END0("gpu", "VRDisplay::GetImage");
-
-  // Hardware-accelerated rendering should always be texture backed,
-  // as implemented by AcceleratedStaticBitmapImage. Ensure this is
-  // the case, don't attempt to render if using an unexpected drawing
-  // path.
-  if (!image_ref.Get() || !image_ref->IsTextureBacked()) {
-    NOTREACHED() << "WebVR requires hardware-accelerated rendering to texture";
-    return;
-  }
+  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
+  RefPtr<StaticBitmapImage> image_ref =
+      rendering_context_->GetStaticBitmapImage();
 
   // The AcceleratedStaticBitmapImage must be kept alive until the
   // mailbox is used via createAndConsumeTextureCHROMIUM, the mailbox
   // itself does not keep it alive. We must keep a reference to the
   // image until the mailbox was consumed.
-  StaticBitmapImage* static_image =
-      static_cast<StaticBitmapImage*>(image_ref.Get());
+  StaticBitmapImage* static_image = image_ref.Get();
+  TRACE_EVENT_END0("gpu", "VRDisplay::GetStaticBitmapImage");
+
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::EnsureMailbox");
   static_image->EnsureMailbox();
   TRACE_EVENT_END0("gpu", "VRDisplay::EnsureMailbox");
@@ -703,9 +690,6 @@ void VRDisplay::submitFrame() {
   TRACE_EVENT_END0("gpu", "VRDisplay::GetMailbox");
   // Flush to avoid black screen flashes which appear to be related to
   // "fence sync must be flushed before generating sync token" GL errors.
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::Flush_2");
-  context_gl_->Flush();
-  TRACE_EVENT_END0("gpu", "VRDisplay::Flush_2");
   auto sync_token = static_image->GetSyncToken();
 
   // Wait for the previous render to finish, to avoid losing frames in the
