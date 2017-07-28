@@ -16,6 +16,24 @@
       "revId": "730ce8f97653038d5f21283ed46290c53b4ab6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ccceea_ef0bfbf7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-07-28T06:21:35Z",
+      "side": 1,
+      "message": "Updated commit message \nThanks",
+      "parentUuid": "a080f6c2_ee7a844f",
+      "revId": "730ce8f97653038d5f21283ed46290c53b4ab6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
