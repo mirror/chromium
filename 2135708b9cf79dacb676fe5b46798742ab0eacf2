@@ -46,6 +46,52 @@
       "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e174c09d_823cc9b3",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-07-28T19:23:20Z",
+      "side": 1,
+      "message": "Nit: it can fit into one line.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33aacc92_8ae3bd7a",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-07-28T19:23:20Z",
+      "side": 1,
+      "message": "Indent in line 20.",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
