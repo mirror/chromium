@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf8d1679_fd6f9eb4",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-28T00:22:51Z",
+      "side": 1,
+      "message": "I think so, but let me double check with the engineer who implemented this.",
+      "parentUuid": "ec96406f_c8168295",
+      "revId": "8422458c06ff6b5634e8172b62cbe65cbe6f76d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "506f8c15_3d94274e",
         "filename": "ash/login/ui/login_constants.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8422458c06ff6b5634e8172b62cbe65cbe6f76d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbd85fd_29ec6454",
+        "filename": "ash/login/ui/login_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-28T00:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506f8c15_3d94274e",
+      "revId": "8422458c06ff6b5634e8172b62cbe65cbe6f76d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
