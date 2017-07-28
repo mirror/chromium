@@ -282,6 +282,30 @@
       "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281b38e7_25a047c6",
+        "filename": "remoting/proto/file_transfer.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-07-28T01:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48338faa_1f9085a3",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "a5e55b0d58bbb30eae7277ec80d7fb3509f57861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
