@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1892cfc4_db43e171",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-07-28T23:33:53Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll fix this when re-submitting.  I\u0027ll submit a new version next week.",
+      "parentUuid": "facc66b5_56927cda",
+      "revId": "c89dff7138aabdc5957b742e8b87486661f6f816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29c4a32b_85395ff5",
         "filename": "content/gpu/gpu_main.cc",
         "patchSetId": 10
