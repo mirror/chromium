@@ -52,6 +52,24 @@
       "revId": "ec21aee32602b5032314cf5684f59035390a0788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6766df81_c9d9060d",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-28T19:01:18Z",
+      "side": 1,
+      "message": "It\u0027s `(!is_chromecast || is_cast_desktop_build)` and I think is_cast_desktop_build is true on all our bots.\n\nIt\u0027s true that this is set to false in android builds, but for android we use the libc++ from the NDK, not the system libstdc++. (And https://crbug.com/747675 tracks using use_custom_libcxx on Android too.) Now that I wrote this, I\u0027m not sure how things work out for the host part of an android build -- but I think is_linux is true in the host part.\n\nwin/clang will use the MSVC stdlib for the time being. We could evaluate libc++, but we haven\u0027t looked at that at all yet. And the MSVC stdlib is pretty good actually, and, crucially, it\u0027s also hermetic and we can update without having to update bots.\n\nWhat I want to say here is \"if you\u0027re on posix (but not mac or ios), and you set this to false, you\u0027re on your own\". But you\u0027re right, this does contradict the Android setup, at least for now.\n\nMaybe: \"For main waterfall bots, this may only be set to false for configurations that by other means link against a hermetic C++ standard library either statically, or can update the whole system\u0027s C++ standard library (chromeos)\" That\u0027s a bit more precise (but only-mostly matches mac and ios) but it\u0027s also harder to understand.\n\n\"Don\u0027t check in changes that set this to false for more platforms; doing so is not supported.\" might work?",
+      "parentUuid": "390264cf_eebf296e",
+      "revId": "ec21aee32602b5032314cf5684f59035390a0788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
