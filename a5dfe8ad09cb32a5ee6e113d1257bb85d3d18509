@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "263390a3_876fe729",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T22:00:28Z",
+      "side": 1,
+      "message": "Why are we calling SetHasSeenStylusEvent() if the device does not support stylus? That goes opposite to what I\u0027d expect.",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ba095b_5bab4940",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T22:00:28Z",
+      "side": 1,
+      "message": "Please always register the observer so the initialization path is more consistent. Right now I don\u0027t think has_seen_stylus_ is set to true for internal devices.",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ad3c04_e481b320",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T22:00:28Z",
+      "side": 1,
+      "message": "Can you reorder the comment so it matches the if/else? Right now they are flip-flopped.",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0226b2_a826cd0d",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T22:00:28Z",
+      "side": 1,
+      "message": "What about just moving ShellTestApi().SetPaletteDelegate(...) before the AshTestBase::SetUp() call?",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050ea06a_f073283f",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T22:00:28Z",
+      "side": 1,
+      "message": "Ah, maybe the earlier approach with a separate derived class was better. Up to you if you want to revert (calling Initialize multiple times is really unexpected/unusual).",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1713b8_99fafd77",
+        "filename": "ash/system/palette/test_palette_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-28T22:00:28Z",
+      "side": 1,
+      "message": "Make sure to remove the fake_ (not renaming SetHasSeenStylusEvent() is okay).",
+      "revId": "a5dfe8ad09cb32a5ee6e113d1257bb85d3d18509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
