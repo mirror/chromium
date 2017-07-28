@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "706707e3_d71625ff",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T21:21:39Z",
+      "side": 1,
+      "message": "SessionControllerClient::Get()-\u003ein_session_oobe_active()",
+      "revId": "7de7cdfeaf0003655ce76002405029bfa97024f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f03b16_30accbb4",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T21:21:39Z",
+      "side": 1,
+      "message": "|status| is unclear. This should be SetInSessionOobeActive().",
+      "revId": "7de7cdfeaf0003655ce76002405029bfa97024f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ae09b1_1569b864",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-28T21:21:39Z",
+      "side": 1,
+      "message": "Why static?",
+      "revId": "7de7cdfeaf0003655ce76002405029bfa97024f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
