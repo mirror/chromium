@@ -27,8 +27,8 @@
 #include "gin/per_context_data.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
-#include "third_party/WebKit/public/web/WebDataSource.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebDocumentLoader.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "v8/include/v8.h"
@@ -281,10 +281,10 @@ GURL ScriptContext::GetDataSourceURLForFrame(
   // changes to match the parent document after Gmail document.writes into
   // it to create the editor.
   // http://code.google.com/p/chromium/issues/detail?id=86742
-  blink::WebDataSource* data_source = frame->ProvisionalDataSource()
-                                          ? frame->ProvisionalDataSource()
-                                          : frame->DataSource();
-  return data_source ? GURL(data_source->GetRequest().Url()) : GURL();
+  blink::WebDocumentLoader* loader = frame->GetProvisionalDocumentLoader()
+                                         ? frame->GetProvisionalDocumentLoader()
+                                         : frame->GetDocumentLoader();
+  return loader ? GURL(loader->GetRequest().Url()) : GURL();
 }
 
 // static

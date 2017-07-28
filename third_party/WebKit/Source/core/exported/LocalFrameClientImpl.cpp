@@ -42,9 +42,9 @@
 #include "core/events/MouseEvent.h"
 #include "core/events/UIEventWithKeyState.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
-#include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebDevToolsFrontendImpl.h"
+#include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
@@ -414,7 +414,7 @@ void LocalFrameClientImpl::DispatchDidStartProvisionalLoad(
   if (web_frame_->Client()) {
     WrappedResourceRequest wrapped_request(request);
     web_frame_->Client()->DidStartProvisionalLoad(
-        WebDataSourceImpl::FromDocumentLoader(loader), wrapped_request);
+        WebDocumentLoaderImpl::FromDocumentLoader(loader), wrapped_request);
   }
   if (WebDevToolsAgentImpl* dev_tools = DevToolsAgent())
     dev_tools->DidStartProvisionalLoad(web_frame_->GetFrame());
@@ -530,7 +530,7 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
       !UIEventWithKeyState::NewTabModifierSetFromIsolatedWorld())
     policy = kNavigationPolicyNewForegroundTab;
 
-  WebDataSourceImpl* ds = WebDataSourceImpl::FromDocumentLoader(loader);
+  WebDocumentLoaderImpl* ds = WebDocumentLoaderImpl::FromDocumentLoader(loader);
 
   WrappedResourceRequest wrapped_resource_request(request);
   WebFrameClient::NavigationPolicyInfo navigation_info(
@@ -745,10 +745,10 @@ DocumentLoader* LocalFrameClientImpl::CreateDocumentLoader(
     ClientRedirectPolicy client_redirect_policy) {
   DCHECK(frame);
 
-  WebDataSourceImpl* ds =
-      WebDataSourceImpl::Create(frame, request, data, client_redirect_policy);
+  WebDocumentLoaderImpl* ds = WebDocumentLoaderImpl::Create(
+      frame, request, data, client_redirect_policy);
   if (web_frame_->Client())
-    web_frame_->Client()->DidCreateDataSource(web_frame_, ds);
+    web_frame_->Client()->DidCreateDocumentLoader(web_frame_, ds);
   return ds;
 }
 
