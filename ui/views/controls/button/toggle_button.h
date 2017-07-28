@@ -23,6 +23,8 @@ class VIEWS_EXPORT ToggleButton : public CustomButton {
   void SetIsOn(bool is_on, bool animate);
   bool is_on() const { return is_on_; }
 
+  void set_locked(bool locked) { locked_ = locked; }
+
   // views::View:
   gfx::Size CalculatePreferredSize() const override;
 
@@ -43,9 +45,12 @@ class VIEWS_EXPORT ToggleButton : public CustomButton {
 
   // views::View:
   const char* GetClassName() const override;
+  bool CanAcceptEvent(const ui::Event& event) override;
   void OnBoundsChanged(const gfx::Rect& previous_bounds) override;
   void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
+  void OnFocus() override;
+  void OnBlur() override;
 
   // CustomButton:
   void NotifyClick(const ui::Event& event) override;
@@ -59,9 +64,14 @@ class VIEWS_EXPORT ToggleButton : public CustomButton {
   // gfx::AnimationDelegate:
   void AnimationProgressed(const gfx::Animation* animation) override;
 
-  bool is_on_;
-  gfx::SlideAnimation slide_animation_;
+  bool is_on_ = false;
+  gfx::SlideAnimation slide_animation_{this};
   ThumbView* thumb_view_;
+
+  // When locked, this button won't accept input. Different from
+  // View::SetEnabled in that the view retains focus when locked but not when
+  // disabled.
+  bool locked_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ToggleButton);
 };
