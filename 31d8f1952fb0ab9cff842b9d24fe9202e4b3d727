@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d8dffc_55f26684",
+        "filename": "components/viz/service/gl/gpu_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-28T09:37:08Z",
+      "side": 1,
+      "message": "We should eventually rename this the GLService, but maybe in a different CL.",
+      "revId": "31d8f1952fb0ab9cff842b9d24fe9202e4b3d727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8540333_004bdf2f",
+        "filename": "services/ui/gpu/interfaces/gpu_main.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-28T09:37:08Z",
+      "side": 1,
+      "message": "This interfaces will eventually be in services/viz/main/privileged/interfaces.",
+      "revId": "31d8f1952fb0ab9cff842b9d24fe9202e4b3d727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
