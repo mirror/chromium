@@ -34,6 +34,24 @@
       "revId": "ec21aee32602b5032314cf5684f59035390a0788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390264cf_eebf296e",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-28T18:47:55Z",
+      "side": 1,
+      "message": "I think you lost me here. If (is_linux \u0026\u0026 is_chromecast) then, as written below, use_custom_libcxx will be false, right? Do you mean that it won\u0027t be false when we change this to remove the bit you want to remove? Also, what about Android (where this is also false, right)?\n\nSeparately, if the point is more that we want to be moving to libc++ where we can, maybe this is better phrased as \"TODO(crbug.com/XYZ): Move all non-Mac/iOS bots to libc++ and make stdlibc++ self-supported\" or something like that? Presumably win clang will also be libc++?",
+      "parentUuid": "f8253e93_50fbfc69",
+      "revId": "ec21aee32602b5032314cf5684f59035390a0788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
