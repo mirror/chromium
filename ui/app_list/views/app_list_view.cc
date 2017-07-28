@@ -352,6 +352,7 @@ void AppListView::InitContents(gfx::NativeView parent, int initial_apps_page) {
   if (is_fullscreen_app_list_enabled_) {
     // The shield view that colors the background of the app list and makes it
     // transparent.
+
     app_list_background_shield_ = new views::View;
     app_list_background_shield_->SetPaintToLayer(ui::LAYER_SOLID_COLOR);
     app_list_background_shield_->layer()->SetColor(SK_ColorBLACK);
@@ -450,7 +451,7 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   app_list_overlay_view_params.bounds = app_list_overlay_view_bounds;
   app_list_overlay_view_params.layer_type = ui::LAYER_SOLID_COLOR;
   fullscreen_widget_->Init(app_list_overlay_view_params);
-
+  fullscreen_widget_->GetLayer()->SetBackgroundBlur(20.0f);
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 }
 
@@ -845,6 +846,7 @@ void AppListView::Layout() {
   if (!is_fullscreen_app_list_enabled_)
     return;
   contents_view->Layout();
+
   app_list_background_shield_->SetBoundsRect(contents_bounds);
 }
 
