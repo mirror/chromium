@@ -95,12 +95,23 @@ typedef	struct	{
 }	BranchIsland;
 
 /**************************
+*
+*	Statistics
+*
+**************************/
+static u_int64_t g_match_override_allocation_attempts = 0;
+
+/**************************
 *	
 *	Funky Protos
 *	
 **************************/
 #pragma mark	-
 #pragma mark	(Funky Protos)
+
+u_int64_t mach_override_ptr_allocation_attempts() {
+  return g_match_override_allocation_attempts;
+}
 
 	mach_error_t
 allocateBranchIsland(
@@ -399,6 +410,7 @@ allocateBranchIsland(
 		assert( sizeof( BranchIsland ) <= PAGE_SIZE );
 		vm_address_t page = 0;
 #if defined(__i386__)
+    ++g_match_override_allocation_attempts;
 		err = vm_allocate( mach_task_self(), &page, PAGE_SIZE, VM_FLAGS_ANYWHERE );
 		if( err == err_none )
 			*island = (BranchIsland*) page;
@@ -425,6 +437,7 @@ allocateBranchIsland(
 
 		while( !err && !allocated && page < last ) {
 
+      ++g_match_override_allocation_attempts;
 			err = vm_allocate( task_self, &page, PAGE_SIZE, 0 );
 			if( err == err_none )
 				allocated = 1;
@@ -455,6 +468,7 @@ allocateBranchIsland(
 			err = KERN_NO_SPACE;
 #endif
 	} else {
+    ++g_match_override_allocation_attempts;
 		void *block = malloc( sizeof( BranchIsland ) );
 		if( block )
 			*island = block;
