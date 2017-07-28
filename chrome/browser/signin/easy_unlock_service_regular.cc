@@ -735,10 +735,10 @@ void EasyUnlockServiceRegular::SyncProfilePrefsToLocalState() {
   // crbug.com/747635.
   std::unique_ptr<base::DictionaryValue> user_prefs_dict(
       new base::DictionaryValue());
-  user_prefs_dict->SetIntegerWithoutPathExpansion(
+  user_prefs_dict->SetKey(
       proximity_auth::prefs::kEasyUnlockProximityThreshold,
-      profile_prefs->GetInteger(
-          proximity_auth::prefs::kEasyUnlockProximityThreshold));
+      base::Value(profile_prefs->GetInteger(
+          proximity_auth::prefs::kEasyUnlockProximityThreshold)));
   user_prefs_dict->SetKey(
       proximity_auth::prefs::kEasyUnlockProximityThreshold,
       base::Value(profile_prefs->GetBoolean(

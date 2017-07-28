@@ -56,8 +56,8 @@ std::unique_ptr<base::DictionaryValue> WebCryptoAlgorithmToBaseValue(
   const blink::WebCryptoRsaHashedKeyGenParams* rsaHashedKeyGen =
       algorithm.RsaHashedKeyGenParams();
   if (rsaHashedKeyGen) {
-    dict->SetIntegerWithoutPathExpansion("modulusLength",
-                                         rsaHashedKeyGen->ModulusLengthBits());
+    dict->SetKey("modulusLength",
+                 base::Value(rsaHashedKeyGen->ModulusLengthBits()));
     const blink::WebVector<unsigned char>& public_exponent =
         rsaHashedKeyGen->PublicExponent();
     dict->SetWithoutPathExpansion(
