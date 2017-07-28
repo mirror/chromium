@@ -176,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "fb2fa4fd_7abe070d",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-28T18:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d20f24_a1b722b2",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e00822_90b6b01f",
         "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
         "patchSetId": 4
@@ -243,6 +261,24 @@
       "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ba524f_ed785502",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-28T18:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deca6909_e1f1322d",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -489,6 +525,24 @@
       "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414b56dd_51d4779b",
+        "filename": "components/offline_pages/core/renovations/page_renovator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-28T18:32:06Z",
+      "side": 1,
+      "message": "I\u0027m keeping this just to be explicit. Also, if one of the includes stops including logging.h, I don\u0027t want this to break the build.",
+      "parentUuid": "f7821579_38ca8bb3",
+      "revId": "b373cc3f8f3965aa960a49c24098245eecc3ee3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
