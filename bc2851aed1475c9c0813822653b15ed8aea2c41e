@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7d27598_0da1faf0",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T16:56:29Z",
+      "side": 1,
+      "message": "So this means that sticky would jitter right? Because we would update the scroll on the compositor but not the sticky element position until the next main frame. I think the right long term thing to do here is also tweak the sticky element position within the scroller by similarly compositing a dummy node which sets the offset in the display list. We should track this issue somewhere.",
+      "revId": "bc2851aed1475c9c0813822653b15ed8aea2c41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c67b96_e60b1367",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T16:56:29Z",
+      "side": 1,
+      "message": "I think this should be !\u003d kFullCompositedScrolling as I believe this is the path for how we apply composited scrolling to an element which is explicitly promoted.",
+      "revId": "bc2851aed1475c9c0813822653b15ed8aea2c41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc0e26e_69754120",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T16:56:29Z",
+      "side": 1,
+      "message": "This would be a good time to use UnbackedScrolling (if the flag is enabled). Also actually returning the new value even if we don\u0027t have the rest of the code yet would allow us to add some tests that we calculate this new property correctly",
+      "range": {
+        "startLine": 1961,
+        "startChar": 33,
+        "endLine": 1961,
+        "endChar": 55
+      },
+      "revId": "bc2851aed1475c9c0813822653b15ed8aea2c41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb46439f_0e9108a5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-28T16:56:29Z",
+      "side": 1,
+      "message": "Unbacked is a little confusing, maybe kRasterCompositedScrolling?",
+      "revId": "bc2851aed1475c9c0813822653b15ed8aea2c41e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
