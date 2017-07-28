@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40a0bb25_1e277487",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T15:29:21Z",
+      "side": 1,
+      "message": "If Foo runes, PRE_Foo is guaranteed to run before it with the same profile directory.  They are *not* guaranteed to run consecutively, however.",
+      "parentUuid": "c442cb32_72b24f5f",
+      "revId": "c8c087a1dfd778ef379e4f7274d0fcbbbeecb2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5929c108_a657e7c1",
         "filename": "chrome/browser/net/profile_network_context_service.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T15:02:20Z",
       "side": 1,
       "message": "This looks different to ProfileImpl::GetCacheParameters for me (which would, I think, append a the basename of the builtin-default path to cache_subdir?). There is also the entire schpiel with GetUserCacheDirectory there, too (implementing things like ~/.cache on Linux), which seems missing; unless profile-\u003eGetPath implements this which feels not fitting the method name.",
+      "revId": "c8c087a1dfd778ef379e4f7274d0fcbbbeecb2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45bf692_f3c1a7e9",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T15:29:21Z",
+      "side": 1,
+      "message": "Thanks!  You\u0027re right, I was completely misreading the code.  Also looks like we don\u0027t have a single integration test for that.  I\u0027ll upload a CL that fixes that.  Feel free to wait until then before continuing the review, just thought I\u0027d post my responses now.",
+      "parentUuid": "5929c108_a657e7c1",
       "revId": "c8c087a1dfd778ef379e4f7274d0fcbbbeecb2c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "590b512f_8e25af8e",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T15:29:21Z",
+      "side": 1,
+      "message": "The way the media cache works is we take the main URLRequestContext, create a copy of it (i.e., sharing raw pointers to all components), and then replace the cache itself.  I don\u0027t think we want to expose an API that does that via the network service.  So for now, I\u0027m keeping that behavior (Currently, in production, ProfileIOData still has raw access to the URLRequestContext after this logic is applied to it.  That\u0027s not the case when the network service is enabled, but that route isn\u0027t expected to do sane things).",
+      "parentUuid": "10427868_08039908",
+      "revId": "c8c087a1dfd778ef379e4f7274d0fcbbbeecb2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3623fb80_45bc00f1",
         "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
         "patchSetId": 10
@@ -64,6 +118,30 @@
       "writtenOn": "2017-07-28T15:02:20Z",
       "side": 1,
       "message": "This will fail on Android, I think; and we want it to return DISK_SIMPLE there since CreateCacheBackend(.., DISK_BLOCKFILE) on Android always fails.",
+      "range": {
+        "startLine": 515,
+        "startChar": 43,
+        "endLine": 515,
+        "endChar": 0
+      },
+      "revId": "c8c087a1dfd778ef379e4f7274d0fcbbbeecb2c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694f7067_b86e945b",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T15:29:21Z",
+      "side": 1,
+      "message": "Yea, noticed the failures.  Will fix.  Thanks!",
+      "parentUuid": "3623fb80_45bc00f1",
       "range": {
         "startLine": 515,
         "startChar": 43,

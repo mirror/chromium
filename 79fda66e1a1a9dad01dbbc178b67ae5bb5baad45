@@ -16,6 +16,24 @@
       "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a840cbf1_9725876a",
+        "filename": "chrome/browser/profiles/off_the_record_profile_io_data.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-28T15:29:21Z",
+      "side": 0,
+      "message": "After the builder is set up, ProfileIOData passes it, along with the settings object that profile_network_context_service.cc creates, to a NetworkContext, which does additional configuration to the URLRequestContextBuilder before constructing the URLRequestContext.\n\nIt\u0027s a complicated arrangement, but lets us move configuration over one thing at a time, without having to keep the old configuration code, and lets us use the new logic in production, so we don\u0027t switch everything over at once, so hopefully find bugs incrementally, as opposed to at the end of the project.",
+      "parentUuid": "362c86a8_33dd5b91",
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
