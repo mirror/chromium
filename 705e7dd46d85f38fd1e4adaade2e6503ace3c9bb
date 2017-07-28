@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d20418a6_c63d88ee",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-28T18:51:34Z",
+      "side": 1,
+      "message": "why does this need to be static? can you find a class to add it to as a member?\n\nplease also add a comment documenting what it means.",
+      "revId": "705e7dd46d85f38fd1e4adaade2e6503ace3c9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
