@@ -75,7 +75,7 @@ class PasswordStoreWin::DBHandler : public WebDataServiceConsumer {
   scoped_refptr<PasswordWebDataService> web_data_service_;
 
   // This creates a cycle between us and PasswordStore. The cycle is broken
-  // from PasswordStoreWin::ShutdownOnUIThread, which deletes us.
+  // from PasswordStoreWin::ShutdownOnUIThread(), which deletes us.
   scoped_refptr<PasswordStoreWin> password_store_;
 
   PendingRequestMap pending_requests_;
@@ -138,7 +138,7 @@ PasswordStoreWin::DBHandler::GetIE7Results(
         matched_form->date_created = info.date_created;
 
         // Add this PasswordForm to the saved password table. We're on the DB
-        // thread already, so we use AddLoginImpl.
+        // sequence already, so we use AddLoginImpl.
         password_store_->AddLoginImpl(*matched_form);
         matched_forms.push_back(std::move(matched_form));
       }
@@ -185,12 +185,12 @@ void PasswordStoreWin::DBHandler::OnWebDataServiceRequestDone(
 }
 
 PasswordStoreWin::PasswordStoreWin(
-    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
-    scoped_refptr<base::SequencedTaskRunner> background_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+    scoped_refptr<base::SequencedTaskRunner> background_task_runner,
     std::unique_ptr<password_manager::LoginDatabase> login_db,
     const scoped_refptr<PasswordWebDataService>& web_data_service)
-    : PasswordStoreDefault(main_thread_runner,
-                           background_thread_runner,
+    : PasswordStoreDefault(main_task_runner,
+                           background_task_runner,
                            std::move(login_db)) {
   db_handler_.reset(new DBHandler(web_data_service, this));
 }
@@ -198,7 +198,7 @@ PasswordStoreWin::PasswordStoreWin(
 PasswordStoreWin::~PasswordStoreWin() {
 }
 
-void PasswordStoreWin::ShutdownOnBackgroundThread() {
+void PasswordStoreWin::ShutdownOnBackgroundSequence() {
   DCHECK(GetBackgroundTaskRunner()->RunsTasksInCurrentSequence());
   db_handler_.reset();
 }
@@ -206,7 +206,7 @@ void PasswordStoreWin::ShutdownOnBackgroundThread() {
 void PasswordStoreWin::ShutdownOnUIThread() {
   GetBackgroundTaskRunner()->PostTask(
       FROM_HERE,
-      base::Bind(&PasswordStoreWin::ShutdownOnBackgroundThread, this));
+      base::Bind(&PasswordStoreWin::ShutdownOnBackgroundSequence, this));
   PasswordStoreDefault::ShutdownOnUIThread();
 }
 
