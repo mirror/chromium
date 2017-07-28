@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5e2af0bc_6a95e193",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-28T21:05:01Z",
+      "side": 1,
+      "message": "I\u0027ll. On the other hands, new CL doesn\u0027t change gbm_flags to BufferUsage, because now gbm_buffer keeps BufferUsage.",
+      "parentUuid": "4847e67e_620ddb13",
+      "revId": "0851de51b99d97ee2ed4173e44d3e8c65e6ab01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0597eeac_71bd1948",
         "filename": "ui/gfx/native_pixmap.h",
         "patchSetId": 2
