@@ -104,6 +104,24 @@
       "revId": "c1fc10d9fab23c111f1c8bf8742d5654e6521f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc24ee98_858d80d0",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-28T16:44:58Z",
+      "side": 1,
+      "message": "That was a page load metrics specific detail and we were considering removing it in a subsequent change. I think it\u0027s fine to record for all mime types in the navhandle destructor.",
+      "parentUuid": "da3055cc_1a5f5cfd",
+      "revId": "c1fc10d9fab23c111f1c8bf8742d5654e6521f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
