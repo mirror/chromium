@@ -16,6 +16,24 @@
       "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb8d625_64d1ce4d",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-28T00:29:14Z",
+      "side": 1,
+      "message": "I am not either :) My idea is that because the name can only be set by the device owner (and is seen the same by every user), this is local state rather than user preference. I can be wrong of course. How would you handle that case?\n\nJulian?",
+      "parentUuid": "480c2dcc_e7e94ba1",
+      "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
