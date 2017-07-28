@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "888a56fe_1de778a2",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-28T23:50:03Z",
+      "side": 1,
+      "message": "ResourceResponseInfo",
+      "range": {
+        "startLine": 137,
+        "startChar": 39,
+        "endLine": 137,
+        "endChar": 51
+      },
+      "revId": "a49cb39badde5b92f0d3255987b143638becc381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5d8a6c_b3a4ec8b",
+        "filename": "third_party/WebKit/public/platform/WebURLResponse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-28T23:50:03Z",
+      "side": 1,
+      "message": "how about DownloadToBlob, download_to_blob_, download_to_blob or \"download to blob\"?",
+      "range": {
+        "startLine": 268,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 19
+      },
+      "revId": "a49cb39badde5b92f0d3255987b143638becc381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
