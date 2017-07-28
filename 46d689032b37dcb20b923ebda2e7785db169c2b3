@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34045d49_2f73526a",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T14:13:26Z",
+      "side": 1,
+      "message": "hmm. it wouldn\u0027t be set on a 32-bit OS. i\u0027ve switched to a check that will work in all cases.",
+      "parentUuid": "ec7c8892_e64168d8",
+      "range": {
+        "startLine": 341,
+        "startChar": 39,
+        "endLine": 341,
+        "endChar": 57
+      },
+      "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25c8f7d5_3af1aea6",
         "filename": "chrome/test/mini_installer/test_installer.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T11:48:22Z",
       "side": 1,
       "message": "Similarly: what if this isn\u0027t set?\n\nMaybe: if not all(os.getenv(x) for x in (\u0027ProgramFiles(x86)\u0027, \u0027TMP\u0027, ...)):\n  return\n\nPerhaps consider something more system-driven such as win32api\u0027s \"GetSystemDirectory\": http://docs.activestate.com/activepython/2.4/pywin32/win32api.html\n\nwin32api also has \"GetTempPath\".\n\nActually, given that, this might be better as:\n\n1) Figure out installer drive: \"C:\"\n2) Iterate over \"os.getenv(\u0027TMP\u0027) and win32api.GetTempPath()\" and see if they match that drive. If they do, set TMP to equal that path.\n3) Create your own on the installer drive.\n\nWDYT?",
+      "range": {
+        "startLine": 343,
+        "startChar": 24,
+        "endLine": 343,
+        "endChar": 40
+      },
+      "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ffe25c_e309f926",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T14:13:26Z",
+      "side": 1,
+      "message": "I\u0027ve switched the logic around a bit -- it\u0027s a little closer to your suggestion. WDYT?",
+      "parentUuid": "25c8f7d5_3af1aea6",
       "range": {
         "startLine": 343,
         "startChar": 24,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b532f517_2c1339ba",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T14:13:26Z",
+      "side": 1,
+      "message": "fancy! done.",
+      "parentUuid": "e2ec4c90_c2696061",
+      "range": {
+        "startLine": 356,
+        "startChar": 4,
+        "endLine": 356,
+        "endChar": 18
+      },
+      "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3fe783b_9d7f5d98",
         "filename": "chrome/test/mini_installer/test_installer.py",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-27T11:48:22Z",
       "side": 1,
       "message": "This only affects subprocesses. Is this WAI? If so, please add a comment saying that TMP is intentionally unchanged for the current process.",
+      "range": {
+        "startLine": 359,
+        "startChar": 2,
+        "endLine": 359,
+        "endChar": 11
+      },
+      "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045ded92_c0057908",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-28T14:13:26Z",
+      "side": 1,
+      "message": "do you mean that os.environ isn\u0027t being modified? if so, i\u0027ve changed that. is there another reason why you think modifying TMP won\u0027t take effect for the current process?",
+      "parentUuid": "b3fe783b_9d7f5d98",
       "range": {
         "startLine": 359,
         "startChar": 2,
