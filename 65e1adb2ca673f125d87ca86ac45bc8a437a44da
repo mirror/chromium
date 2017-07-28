@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2563d43e_cbb7e157",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-28T22:15:29Z",
+      "side": 1,
+      "message": "In theory, StructTraits should let you eliminate this entirely, since it could use ArrayDataView without copying the bytes (other than writing them to the wire)",
+      "parentUuid": "e6376839_6b1fc4b0",
+      "revId": "65e1adb2ca673f125d87ca86ac45bc8a437a44da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269575f3_d5b991de",
         "filename": "content/common/message_port.mojom",
         "patchSetId": 4
