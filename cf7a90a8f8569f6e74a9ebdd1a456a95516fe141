@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e6eb8a3_68b20bcf",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-28T14:01:24Z",
+      "side": 1,
+      "message": "This needs logic about resetting this when a tab is made foreground again.",
+      "revId": "cf7a90a8f8569f6e74a9ebdd1a456a95516fe141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
